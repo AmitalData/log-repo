@@ -39,14 +39,18 @@ export function FillWarehouseStorageWeightDetails(warehouseDetails : WarehouseSt
 }
 
 export function FillWarehouseStoragePricing(warehousePricingList: WarehouseStorage[]) {
-
-    cy.get(BaseSelectors.DeleteButton).its('length').then(deleteButtons => {
-        for(let i = 0; i < deleteButtons; i++){
-            cy.get(BaseSelectors.DeleteButton).first().click();
-            cy.Click(BaseSelectors.RedButton+BaseSelectors.LastElement,BaseSelectors.ContainYes)
+        if (Cypress.$(BaseSelectors.LogitudeIconButton).length > 2) {  
+            DeletePricingDefaults()
         }
-    });
-
+    AddPricingDefaults(warehousePricingList);
+}
+function DeletePricingDefaults(){
+    for (let i = 0; i < BaseSelectors.DeleteButton.length; i++) {
+        cy.get(BaseSelectors.DeleteButton).first().click();
+        cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, BaseSelectors.ContainYes)
+    }
+}	
+function AddPricingDefaults(warehousePricingList: WarehouseStorage[]){
     for (let i = 0; i < warehousePricingList.length; i++) {
         cy.Click(BaseSelectors.AddButton, null)
         FillCell(BaseSelectors.StepFromColumn, i, BaseSelectors.WarehouseStoragePricingStepFrom, warehousePricingList[i].StepFrom)

@@ -60,7 +60,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             this.tenant = entityPM.Tenant;
             this.entityPM = entityPM;
-            //this.isUpdateTotalVats = false;
             this.objectContext = objectContext;
             this.myCommonContext = CommonDataContext.GetContext(tenant);
             this.invoiceRepository = new APInvoiceRepository(objectContext);
@@ -70,6 +69,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.invoicePaymentRepository = new APInvoicePaymentRepository(objectContext);
             this.paymentRepository = new APPaymentRepository(objectContext);
             this.shipmentPayableRepository = new ShipmentPayableRepository(tenant);
+
             this.GetLoggedContact();
             this.GetAccountingSystemData();
         }
@@ -125,6 +125,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             APInvoiceValidator.Validate(entityPM, invoice, isNewEntity, this.objectContext, myCommonContext);
             APInvoiceTracing.Trace(entityPM, invoice, isNewEntity);
 
+            this.BuildShipmentsNumbers();
             this.CreateInvoiceEntities();
             this.BuildSearchFields();
             setApproved = entityPM.SetApproved;
@@ -162,7 +163,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             APInvoiceValidator.Validate(entityPM, invoice, isNewEntity, this.objectContext, myCommonContext);
             APInvoiceTracing.Trace(entityPM, invoice, isNewEntity);
-            
+
+            this.BuildShipmentsNumbers();
             this.UpdateInvoiceEntities();
             this.BuildSearchFields();
             setApproved = entityPM.SetApproved;
@@ -206,6 +208,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     }
                 }
             }
+
 
             this.BuildSearchFields();
             invoiceRepository.Update(invoice);
@@ -1384,6 +1387,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     }
                 }
             }
+        }
+
+        private void BuildShipmentsNumbers()
+        {
+            APInvoiceShipmentsNumbersBehaviour invoiceShipmentsNumbersBehaviour = new APInvoiceShipmentsNumbersBehaviour(entityPM);
+            invoiceShipmentsNumbersBehaviour.CopmuteShipmentsNumbers();
         }
     }
 }

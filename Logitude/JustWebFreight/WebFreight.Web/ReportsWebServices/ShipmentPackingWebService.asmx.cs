@@ -141,6 +141,10 @@ namespace WebFreight.Web.ReportsWebServices
                                          where a.Id == shipment.OnCarriageToPortId
                                          select a).FirstOrDefault();
 
+                Port onForwardingToPort = (from a in commonContext.Ports
+                                           where a.Id == shipment.OnForwardingToPortId
+                                           select a).FirstOrDefault();
+
                 Port mainCarriageToPort = (from a in commonContext.Ports
                                            where a.Id == shipment.MainCarriageToPortId
                                            select a).FirstOrDefault();
@@ -188,6 +192,11 @@ namespace WebFreight.Web.ReportsWebServices
                                 break;
                             }
                     }
+                }
+
+                else if (onForwardingToPort != null)
+                {
+                    provider.DestinationPortName = onForwardingToPort.EnglishName;
                 }
 
                 else if (onCarriageToPort != null)

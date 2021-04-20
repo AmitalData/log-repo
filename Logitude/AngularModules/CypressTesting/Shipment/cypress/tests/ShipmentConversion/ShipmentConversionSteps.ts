@@ -83,7 +83,6 @@ Then("type should be {string}", (expectedShipmentType: string) => {
 
 Then("following events should appear in events tab", (dataTable) => {
     let eventDetailsList = Assists.CreateSet<EventTypeDetails>(dataTable);
-    eventDetailsList = ShipmentConversionEventsMapping(eventDetailsList);
     Actions.ValidateEventsTab(eventDetailsList);
 });
 
@@ -110,9 +109,3 @@ Then("the button {string} should appear in packages tab", (buttonContains: strin
 });
 
 
-function ShipmentConversionEventsMapping(eventDetailsList: EventTypeDetails[]): EventTypeDetails[]{
-    for (let i = 0; i < eventDetailsList.length; i++) {
-        eventDetailsList[i].Notes = eventDetailsList[i].Notes.replace(/\"OldShipmentNumber\"/gi, ShipmentConversionContext.ShipmentNumber);
-    }
-    return eventDetailsList;
-}

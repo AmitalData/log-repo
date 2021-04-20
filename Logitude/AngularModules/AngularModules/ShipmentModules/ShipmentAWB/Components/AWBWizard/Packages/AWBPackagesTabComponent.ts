@@ -887,6 +887,9 @@ export class AWBPackagesTabComponent extends BaseComponent {
             logitudeWindow.Title = windowTitle;
             logitudeWindow.DataContext = itemComponent;
             logitudeWindow.Show("./ShipmentModules/ShipmentAWB/Components/AWBWizard/Packages/AWBAddEditCommodityComponent");
+            logitudeWindow.WindowClosed.subscribe(($event: any) => {
+                this.SetShipmentProperitesFromCommodity(null);
+            });
         });
     }
 
@@ -927,33 +930,53 @@ export class AWBPackagesTabComponent extends BaseComponent {
             this.EntityPM.IsMultipleCommodities = newValue;
             this.SetUIProperties();
             this.ChangeDataStructure();
-            this.BuildData();
         }
     }
+
     private ChangeDataStructure() {
-        this.Validate();
-        this.FireWizardEvent();
+        this.Validate();        
         var firstCommodity: ShipmentCommodityPM = this.GetFirstCommodity();        
 
         if (this.IsMultipleCommodities) {
-            this.InitializeCommoditPackages(firstCommodity);
-            this.UpdateFirstCommodity(firstCommodity);
-            this.SetShipmentProperitesFromCommodity(null);             
-            this.EntityPM.AddCommodity(firstCommodity);
+            if (this.EntityPM.ShipmentLevelCode == "C" && this.EntityPM.ShipmentConsoleShipments.length > 0) {
+                this.GetPackagesFromConnectedHouses(firstCommodity);
+            }
+
+            else {
+                this.ChangeShipmentToMultipleCommodities(firstCommodity);
+            }
         }
 
         else {
-            var packages: ShipmentPackagePM[] = this.CreateShipmentPackages();            
-            this.SetShipmentProperitesFromCommodity(null);
-            firstCommodity.CommodityPackages = [];
-            this.EntityPM.AddCommodity(firstCommodity);
-
-            packages.forEach(item => {
-                this.EntityPM.AddPackage(item);
-            });
+            this.ChangeShipmentToSingleCommodity(firstCommodity);
         }
     }   
-    
+    private ChangeShipmentToMultipleCommodities(firstCommodity: ShipmentCommodityPM) {
+        this.EntityPM.ShipmentCommodities = [];
+        this.InitializeCommoditPackages(firstCommodity);
+        this.UpdateFirstCommodity(firstCommodity);
+        this.EntityPM.AddCommodity(firstCommodity);
+        this.EntityPM.ShipmentPackages = [];
+        this.SetShipmentProperitesFromCommodity(null);
+        this.BuildData();
+        this.FireWizardEvent();
+    }
+    private ChangeShipmentToSingleCommodity(firstCommodity: ShipmentCommodityPM) {
+        var packages: ShipmentPackagePM[] = this.CreateShipmentPackages();
+        this.SetShipmentProperitesFromCommodity(firstCommodity);
+        this.EntityPM.ShipmentCommodities = [];
+        firstCommodity.CommodityPackages = [];
+        this.EntityPM.AddCommodity(firstCommodity);
+
+        this.EntityPM.ShipmentPackages = [];
+        packages.forEach(item => {
+            this.EntityPM.AddPackage(item);
+        });
+
+        this.BuildData();
+        this.FireWizardEvent();
+    }
+
     private GetFirstCommodity(): ShipmentCommodityPM {
         var firstCommodity: ShipmentCommodityPM = this.EntityPM.ShipmentCommodities.filter(d => d.IsFirstLine)[0];
 
@@ -1038,9 +1061,6 @@ export class AWBPackagesTabComponent extends BaseComponent {
         return newPackage;
     }
     private SetShipmentProperitesFromCommodity(firstCommodity: ShipmentCommodityPM) {
-        this.EntityPM.ShipmentPackages = [];
-        this.EntityPM.ShipmentCommodities = [];
-
         if (firstCommodity) {
             this.EntityPM.RateClassCode = firstCommodity.RateClassCode;
             this.EntityPM.AWBChargeRate = firstCommodity.ChargeRate;
@@ -1050,7 +1070,7 @@ export class AWBPackagesTabComponent extends BaseComponent {
 
         else {
             this.EntityPM.RateClassCode = null;
-            this.EntityPM.AWBChargeRate = null;
+            this.EntityPM.AWBChargeRate = ArrayTool.Sum(this.EntityPM.ShipmentCommodities, "ChargeRate");
             this.EntityPM.AWBCommodityItemNumber = null;
             this.EntityPM.DescriptionOfGoods = null;            
         }
@@ -1066,6 +1086,99 @@ export class AWBPackagesTabComponent extends BaseComponent {
         });
 
         return packages;
+    }
+
+    private GetPackagesFromConnectedHouses(firstCommodity: ShipmentCommodityPM) {
+        this.DomainService.GetShipmentConsolidationPackages(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
+            this.CurrentSession.StartBusyIndicatorLoading();
+
+            if (myResponse != null) {
+                if (!myResponse.HasError) {
+                    var allPackages: ShipmentPackagePM[] = myResponse.Result;
+
+                    if (allPackages.length > 0) {
+                        allPackages.forEach(item => {
+                            var matchedItem = this.EntityPM.ShipmentPackages.filter(f => f.Height == item.Height && f.Width == item.Width && f.Length == item.Length && f.PackageTypeId == item.PackageTypeId)[0];
+                            if (matchedItem != null) {
+                                this.UpdateMasterPackageFromMatchedHousePackage(matchedItem, item);
+                            }
+
+                            else {
+                                this.CreateNewMasterPackageFromHousePackage(item);                                
+                            }
+                        });
+                    }
+
+                    this.ChangeShipmentToMultipleCommodities(firstCommodity);
+                    this.CurrentSession.StopBusyIndicator();
+                }
+            }
+        });
+    }
+    CreateNewMasterPackageFromHousePackage(housePackage: ShipmentPackagePM) {
+        var newPackage = new ShipmentPackagePM(this.EntityPM);
+        newPackage.ShipmentId = this.EntityPM.Id;
+        newPackage.ClassNumber = housePackage.ClassNumber;
+        newPackage.ContainerNumber = housePackage.ContainerNumber;
+        newPackage.Description = housePackage.Description;
+        newPackage.FlashPoint = housePackage.FlashPoint;
+        newPackage.Harmonize = housePackage.Harmonize;
+        newPackage.Height = housePackage.Height;
+        newPackage.IMDGCode = housePackage.IMDGCode;
+        newPackage.IsContainer = housePackage.IsContainer;
+        newPackage.IsDangerous = housePackage.IsDangerous;
+        newPackage.Length = housePackage.Length;
+        newPackage.MarksAndNumbers = housePackage.MarksAndNumbers;
+        newPackage.MaterialDescription = housePackage.MaterialDescription;
+        newPackage.PackageTypeId = housePackage.PackageTypeId;
+        newPackage.PackageTypeName = housePackage.PackageTypeName;
+        newPackage.PackagingGroup = housePackage.PackagingGroup;
+        newPackage.Quantity = housePackage.Quantity;
+        newPackage.ShipperSeal = housePackage.ShipperSeal;
+        newPackage.CarrierSeal = housePackage.CarrierSeal;
+        newPackage.SOC = housePackage.SOC;
+        newPackage.Tare = housePackage.Tare;
+        newPackage.Temperature = housePackage.Temperature;
+        newPackage.Tenant = housePackage.Tenant;
+        newPackage.UnNumber = housePackage.UnNumber;
+        newPackage.Ventilation = housePackage.Ventilation;
+        newPackage.Volume = housePackage.Volume;
+        newPackage.VolumetricWeight = housePackage.VolumetricWeight;
+        newPackage.Weight = housePackage.Weight;
+        newPackage.Width = housePackage.Width;
+        newPackage.OriginalShipmentPackageId = housePackage.Id;
+        this.EntityPM.AddPackage(newPackage);
+    }
+    UpdateMasterPackageFromMatchedHousePackage(masterPackage: ShipmentPackagePM, housePackage: ShipmentPackagePM) {
+
+        // Quantity
+        if (AppTool.IsNullOrEmpty(masterPackage.Quantity)) {
+            masterPackage.Quantity = housePackage.Quantity;
+        }
+
+        else {
+            masterPackage.Quantity = masterPackage.Quantity + housePackage.Quantity;
+        }
+
+        // Weight
+        if (AppTool.IsNullOrEmpty(masterPackage.Weight)) {
+            masterPackage.Weight = housePackage.Weight;
+        }
+
+        else {
+            masterPackage.Weight = masterPackage.Weight + housePackage.Weight;
+        }
+
+        // Volume
+        if (AppTool.IsNullOrEmpty(masterPackage.Width) || AppTool.IsNullOrEmpty(masterPackage.Height) || AppTool.IsNullOrEmpty(masterPackage.Length)) {
+            masterPackage.Volume = (masterPackage.Weight * this.EntityPM.Ratio) / 1000;
+            masterPackage.VolumetricWeight = masterPackage.Weight;
+        }
+
+        else {
+            masterPackage.Volume = (masterPackage.Width * masterPackage.Height * masterPackage.Length * masterPackage.Quantity) / 1000000;
+            masterPackage.VolumetricWeight = (masterPackage.Volume * 1000) / this.EntityPM.Ratio;
+        }
     }
 
     public BuildData() {

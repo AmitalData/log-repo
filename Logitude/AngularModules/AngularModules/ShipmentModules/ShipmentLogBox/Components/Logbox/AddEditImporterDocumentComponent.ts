@@ -549,7 +549,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
                         //}
                         this._documentExtendedService.update(this.EntityPm, true).subscribe((myResult:any) => {
                             this.CurrentSession.StopBusyIndicator();
-                            this.CurrentSession.CloseCurrentWindow();
+                            this.CurrentSession.CurrentWindow.Close(this.EntityPm.Id); 
                         });
                         //Context.SubmitChanges().Completed += new EventHandler(SaveOp_Completed);
                     }
@@ -579,7 +579,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
                     //}
                     this._documentExtendedService.update(this.EntityPm, true).subscribe((myResult:any) => {
                         this.CurrentSession.StopBusyIndicator();
-                        this.CurrentSession.CloseCurrentWindow();
+                        this.CurrentSession.CurrentWindow.Close(this.EntityPm.Id); 
                     });
                     //Context.SubmitChanges().Completed += new EventHandler(SaveOp_Completed);
                 }
@@ -589,7 +589,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
                     //}
                     this._documentExtendedService.update(this.EntityPm, true).subscribe((myResult:any) => {
                         this.CurrentSession.StopBusyIndicator();
-                        this.CurrentSession.CloseCurrentWindow();
+                        this.CurrentSession.CurrentWindow.Close(this.EntityPm.Id); 
                     });
                 }
             }

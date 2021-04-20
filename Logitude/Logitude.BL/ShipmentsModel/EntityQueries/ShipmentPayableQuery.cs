@@ -130,6 +130,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                     TariffNumber = a.TariffNumber,
                                                     TariffLineId = a.TariffLineId,
                                                     TariffVersion = a.TariffVersion,
+                                                    VatAmountProfit = a.VatAmountProfit,
+                                                    VatAmountLocal = a.VatAmountLocal,
                                                 }).ToList();
 
             return myResult;
@@ -207,6 +209,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        TariffLineId = a.TariffLineId,
                        TariffNumber = a.TariffNumber,
                        TariffVersion = a.TariffVersion,
+                       VatAmountProfit = a.VatAmountProfit,
+                       VatAmountLocal = a.VatAmountLocal,
                    }).FirstOrDefault();
 
             return myResult;

@@ -190,8 +190,13 @@
     <None Include="DBOthers\QuoteModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateQuotes.dxml" />
     <None Include="DBOthers\QuoteModel\Triggers\Trigger_AutomaticLastUpdateDateQuoteComputedFields.dxml" />
     <None Include="DBOthers\QuoteModel\Triggers\Trigger_AutomaticLastUpdateDateQuotes.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdateShipmentPayablesVatAmounts.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdateShipmentReceivablesVatAmounts.dxml" />
     <None Include="DBScripts\CommonModel\202103161606_AddNewUOMPercentOForeignChargesLocalAmounts.sxml" />
+    <None Include="DBScripts\CommonModel\202104161424_UpdateTenantRatios.sxml" />
+    <None Include="DBScripts\CommonModel\202104161425_UpdateTenantRatiosOnCloud.sxml" />
     <None Include="DBScripts\GlobalModel\202102161503_UpdateTenantManagmentPrivatLabelDomain.sxml" />
+    <None Include="DBScripts\GlobalModel\AddCollaborationToolSgipmentUpdateBatchService.sxml" />
     <None Include="DBScripts\InfrastructureModel\202101120950_ModifyDBMigrationLastScriptTrigger.sxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\dbo.usp_DoTheTableDeletionSet.dxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\usp_SearchForeignkeyTree.dxml" />
@@ -284,6 +289,7 @@
     <None Include="DBScripts\GlobalModel\202010151325_InsertDocumentApprovalQueue.sxml" />
     <None Include="DBScripts\GlobalModel\202012291502_AddWarmCargoTrackingForBatchServicesDefinitions.sxml" />
     <None Include="DBScripts\GlobalModel\202012311128_UpdateWarmCargoTrackingForBatchServicesDefinitionsToInActive.sxml" />
+    <None Include="DBScripts\GlobalModel\AddCollaborationToolBatchService.sxml" />
     <None Include="DBScripts\InfrastructureModel\GetDateFormateFunction.sxml" />
     <None Include="DBScripts\InfrastructureModel\DropChangeCurrencyFunctions.sxml" />
     <None Include="DBScripts\InfrastructureModel\GetLastRateFunction.sxml" />
@@ -292,6 +298,15 @@
     <None Include="DBScripts\InvoiceModel\202012201448_SAT voided invoices and payments.sxml" />
     <None Include="DBScripts\InvoiceModel\202101231210_FillPartnerIdARInvoices.sxml" />
     <None Include="DBScripts\InvoiceModel\202101231212_FillPartnerIdARPayments.sxml" />
+    <None Include="DBScripts\QuoteModel\202103071310_RemoveQuoteComputedFileds.sxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DBScripts\InvoiceModel\202104120952_FillARInvoiceShipmentsNumbersBackward.sxml" />
+    <None Include="DBScripts\InvoiceModel\202104121143_FillAPInvoiceShipmentsNumbersBackward.sxml" />
+    <None Include="DBScripts\ShipmentModel\202103201130_CreateCalculatePayableVatOpenAmountFunction.sxml" />
+    <None Include="DBScripts\ShipmentModel\202103211530_FillVatAmountLocalVatAmountProfitInShipmentReceivables.sxml" />
+    <None Include="DBScripts\ShipmentModel\202103211530_FillVatAmountLocalVatAmountProfitInShipmentReceivablesOpenLines.sxml" />
+    <None Include="DBScripts\ShipmentModel\202103211610_FillVatAmountLocalVatAmountProfitInShipmentPayables.sxml" />
     <None Include="DBScripts\InvoiceModel\202128011350_AddNotesToAPInvoiceSearchField.sxml" />
     <None Include="DBScripts\InvoiceModel\202128011350_AddNotesToAPPaymentSearchField.sxml" />
     <None Include="DBScripts\InvoiceModel\202128011350_AddNotesToARInvoiceSearchField.sxml" />
@@ -459,6 +474,7 @@
     <None Include="DBScripts\ShipmentModel\202006111515_AddShipmentSubTypesToTenants.sxml" />
     <None Include="DBScripts\ShipmentModel\202006140958_FillAirShipmentShipmentTypeField.sxml" />
     <None Include="DBScripts\ShipmentModel\202006141227_FillShipmentSubTypeBackward.sxml" />
+    <None Include="DBScripts\ShipmentModel\202104181355_UpdateContainerNumbersAndTypesArray.sxml" />
     <None Include="DBScripts\ShipmentModel\202009031302_FillDataFromShipmentPackagesToShipmentComputedFields.sxml" />
     <None Include="DBScripts\ShipmentModel\202008110940_SetIsBondedWarehouseField.sxml" />
     <None Include="DBScripts\ShipmentModel\202007051320_UpdateAirShipmentSubType.sxml" />
@@ -996,6 +1012,7 @@
     <None Include="EntityFiles\CommonDataModel\CardSearch.lxml" />
     <None Include="EntityFiles\CommonDataModel\Horse.lxml" />
     <None Include="EntityFiles\CommonDataModel\HybridTenantState.lxml" />
+    <None Include="EntityFiles\CommonDataModel\ReportExecutionLog.lxml" />
     <None Include="EntityFiles\CommonDataModel\TariffCarrierTranslation.lxml">
       <SubType>Designer</SubType>
     </None>

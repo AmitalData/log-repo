@@ -16,11 +16,12 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {NewEntityArgs} from '../../../../Infrastructure/Args';
-import {AppTool} from '../../../../Infrastructure/Tools';
+import { AppTool, DateTool} from '../../../../Infrastructure/Tools';
 import {AddressPM} from '../../../../Common/EntityPMs/AddressPM';
 import {AddEditPartnerArgs} from '../../../../Shipment/Args';
-import {ShipmentTool} from '../../../../Shipment/Tools';
+import { ShipmentTool, ShipmentGenerator} from '../../../../Shipment/Tools';
 import { ContactInputTemplateArgs } from '../../../../CommonModules/CommonPartners/Components/Templates/ContactInputTemplate';
+import { CurrencyRatesService, LastRate } from '../../../../Common/Services/CurrencyRatesService';
 
 @Component({
     
@@ -32,6 +33,8 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
     public ObjectTableName: string;
     public ItemsCollection: PartnerItem[];
     private CurrentSession = SessionLocator.SelectedSession;
+    public AllRates: LastRate[] = [];
+
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = this.entityArgs.EntityPM;
         this.ObjectTableName = this.entityArgs.ObjectTableName;
@@ -90,6 +93,7 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
     ngOnInit() {        
         if (this.EntityPM != null) {
             this.UpdateScreen();
+            this.LoadAllRates();
         }
     }
 
@@ -169,6 +173,16 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
         if (this.EntityPM.ReleasingAgentId != null) {
             this.ItemsCollection.push(new PartnerItem(this, "REAGT"));
         }
+    }
+
+    LoadAllRates() {
+        var todayDate: Date = DateTool.GetCurrentDateAsUtc();
+        var myCurrencyRatesService: CurrencyRatesService = new CurrencyRatesService();
+        myCurrencyRatesService.getAll(SessionLocator.LocalCurrencyId, todayDate).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.AllRates = myResponse.Result;
+            }
+        });
     }
 
     get ShowAddPartners() {
@@ -408,7 +422,17 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
                 });
             }
         }
+
+        this.UpdateVatAmountsOfShipmentReceivables();
     }
+
+    private UpdateVatAmountsOfShipmentReceivables() {
+        var Generator = new ShipmentGenerator(this.EntityPM, this.AllRates);
+        this.EntityPM.ShipmentReceivables.forEach(item => {
+            Generator.CalculateReceivableVatAmount(item);
+        });
+    }
+
     UpdateSalesmanClicked() {
         if (this.SalesmanUpdated) {
             this.EntityPM.SalesmanUserId = this.UpdateSalesmanId;

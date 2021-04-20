@@ -1033,27 +1033,6 @@ namespace WebFreight.Web.MetaDataUpdate
 
         //    AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
         //    {
-        //        DefaultText = "References",
-        //        FullFieldLable = "ConnectedEntityReferences",
-        //        FieldName = "ConnectedEntityReferences",
-        //        FieldsDataType = "Text",
-        //        IsMaxLength = true,
-        //        MaxLength = 120,
-        //        MinLength = 0,
-        //        ObjectTableId = InvoiceObject.Id,
-        //        ObjectTableName = "ARInvoice",
-        //        Tenant = 0,
-        //        TextCodeType = "F",
-        //        ValidForQuerySection1 = "ARInvoice",
-        //        ListPropertyPath = "ConnectedEntityReferences",
-        //        PMPropertyPath = "ConnectedEntityReferences",
-        //        FullLocalDefaultText = "אסמכתאות",
-        //        ListLocalDefaultText = "אסמכתאות",
-        //        ShortLocalDefaultText = "אסמכתאות",
-        //    }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-        //    AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-        //    {
         //        DefaultText = "Unpaid Invoices",
         //        FullFieldLable = "UnpaidInvoices",
         //        FieldName = "UnpaidInvoices",
@@ -4639,27 +4618,6 @@ namespace WebFreight.Web.MetaDataUpdate
         //        ShortLocalDefaultText = "מספר שטר מטען ראשי",
         //        FullLocalDefaultText = "מספר שטר מטען ראשי",
         //        ListLocalDefaultText = "מספר שטר מטען ראשי",
-        //    }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-        //    AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-        //    {
-        //        DefaultText = "References",
-        //        FullFieldLable = "ConnectedEntityReferences",
-        //        FieldName = "ConnectedEntityReferences",
-        //        FieldsDataType = "Text",
-        //        IsMaxLength = true,
-        //        MaxLength = 120,
-        //        MinLength = 0,
-        //        ObjectTableId = APInvoiceObject.Id,
-        //        ObjectTableName = "APInvoice",
-        //        Tenant = 0,
-        //        TextCodeType = "F",
-        //        ValidForQuerySection1 = "APInvoice",
-        //        ListPropertyPath = "ConnectedEntityReferences",
-        //        PMPropertyPath = "ConnectedEntityReferences",
-        //        ShortLocalDefaultText = "אסמכתאות",
-        //        FullLocalDefaultText = "אסמכתאות",
-        //        ListLocalDefaultText = "אסמכתאות",
         //    }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
         //    AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()

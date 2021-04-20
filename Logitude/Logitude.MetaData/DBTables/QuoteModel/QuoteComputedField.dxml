@@ -39,7 +39,8 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="DeliveryFrom"
+    Name="DeliveryTo"
+    OldNames="DeliveryFrom"
     Type="varchar"
     Size="500">
     <Constraints
@@ -91,11 +92,11 @@
     <Constraints
       Nullable="true" />
   </Column>
-	<Index
-   Columns="AutomaticLastUpdateDate" />
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="Quotes"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Index
+    Columns="AutomaticLastUpdateDate" />
 </Table>

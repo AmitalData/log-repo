@@ -512,17 +512,17 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          on acc.Id equals moredata.AccountId into moredataJoinT
                          from moredata in moredataJoinT.DefaultIfEmpty()
 
-                         join card in _AccountingContext.Cards.Where(r => r.Tenant == _Param.Tenant)
-                          on acc.Id equals card.GLAccountId into cardJoinT
+                         join card in _AccountingContext.GLAccountCardsDatas.Where(r => r.Tenant == _Param.Tenant)
+                          on acc.CardsDataId equals card.Id into cardJoinT
                          from card in cardJoinT.DefaultIfEmpty()
 
-                         join cust in _AccountingContext.Customers.Where(r => r.Tenant == _Param.Tenant)
-                         on card.Id equals cust.Id into custJoinT
-                         from cust in custJoinT.DefaultIfEmpty()
+                         //join cust in _AccountingContext.Customers.Where(r => r.Tenant == _Param.Tenant)
+                         //on card.Id equals cust.Id into custJoinT
+                         //from cust in custJoinT.DefaultIfEmpty()
 
-                         join custOFiles in _AccountingContext.CustomerOpenFilesAmounts.Where(r => r.Tenant == _Param.Tenant)
-                         on card.Id equals custOFiles.CustomerId into custOFilesJoinT
-                         from custOFiles in custOFilesJoinT.DefaultIfEmpty()
+                         //join custOFiles in _AccountingContext.CustomerOpenFilesAmounts.Where(r => r.Tenant == _Param.Tenant)
+                         //on card.Id equals custOFiles.CustomerId into custOFilesJoinT
+                         //from custOFiles in custOFilesJoinT.DefaultIfEmpty()
 
                          let glaPeriod = _AccountingContext.GLAccountInterestPeriods.Where(r => r.Tenant == _Param.Tenant && r.GLAccountId == acc.Id && r.PeriodStartDate <= currentDate)
                          .OrderByDescending(d => d.PeriodStartDate).FirstOrDefault()
@@ -541,7 +541,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          AccountTermName = card.PaymentTerm.EnglishName,
                          ChartOfAccountLocalName = acc.ChartOfAccountsName,
 
-                             CurrencyId = acc.ReconcileMethodCode == "0" ? tenant.CurrencyId : acc.CurrencyId,
+                        CurrencyId = acc.ReconcileMethodCode == "0" ? tenant.CurrencyId : acc.CurrencyId,
 
                          AccountTermLocalName = card.PaymentTerm.LocalName,
                          AccountSalesmanName = card.SalesmanUser.Contact.EnglishName,
@@ -576,9 +576,9 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          CurrencyCode = acc.CurrencyCode,
                              CreditLimitAmount =
                              //cust!=null?(double)cust.CreditLimitAmount:0,
-                             cust != null ? (cust.CreditLimitAmount != null ? (double)cust.CreditLimitAmount : 0) : 0,
+                             card != null ? (card.CreditLimit != null ? (double)card.CreditLimit : 0) : 0,
 
-                             CreditStatusAmount_AsIs = cust != null ? (cust.CreditLimitAmount != null ? (double)cust.CreditLimitAmount : 0) : 0,
+                             CreditStatusAmount_AsIs = card != null ? (card.CreditLimit != null ? (double)card.CreditLimit : 0) : 0,
                              BalanceInLocalCurrency = moredata != null ? (decimal)moredata.BalanceInLocalCurrency : 0.00m,
 
                              LocalBalanceInDue = moredata != null ? (decimal)moredata.LocalBalanceInDue : 0.00m,
@@ -596,7 +596,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          //)
                          //),
 
-                         TotalOpenShipments = custOFiles != null ? custOFiles.TotalOpenFilesAmount : 0,
+                         TotalOpenShipments = card != null ? card.TotalOpenShipments : 0,
                              TotalFutureOpenCheques = moredata != null ? (decimal)moredata.TotFutureOpenChequesInLocalCur : 0,
                              TotalOpenCheques = moredata != null ? (decimal)moredata.TotalOpenChequesInLocalCur : 0,
 

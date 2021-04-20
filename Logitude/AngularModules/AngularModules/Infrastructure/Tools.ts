@@ -536,25 +536,37 @@ export class AppTool {
             }
         }
 
-        if (myResult == null ) {
+        if (myResult == null) {
             {
                 switch (transportModeId) {
-                    case "A": { myResult = 6; break; }
-                    case "O": { myResult = 1; break; }
-                    case "I":
-                        {
-                            if (shipmentTypeId == "LTL") {
-                                myResult = 3.3;
-                            }
-
-                            else {
-                                myResult = 1;
-                            }
-
-                            break;
-                        }
-                    default:
+                    case "A": {
+                        myResult = SessionLocator.TenantPM.AirRatio;
                         break;
+                    }
+
+                    case "O": {
+                        if (shipmentTypeId == "FCL" || shipmentTypeId == "FCLD") {
+                            myResult = SessionLocator.TenantPM.FCLRatio;
+                        }
+
+                        else {
+                            myResult = SessionLocator.TenantPM.LCLRatio;
+                        }
+
+                        break;
+                    }
+
+                    case "I": {
+                        if (shipmentTypeId == "FTL") {
+                            myResult = SessionLocator.TenantPM.FTLRatio;
+                        }
+
+                        else {
+                            myResult = SessionLocator.TenantPM.LTLRatio;
+                        }
+
+                        break;
+                    }
                 }
             }
         }
@@ -569,14 +581,14 @@ export class AppTool {
             case "lcld":
             case "ltl":
                 {
-                    myResult = 3.3;
+                    myResult = SessionLocator.TenantPM.LTLRatio;
                     break;
                 }
             case "ftl":
             case "fcl":
             case "fcld":        
                 {
-                    myResult = 1;
+                    myResult = SessionLocator.TenantPM.FTLRatio;
                     break;
                 }
             default:
@@ -584,6 +596,7 @@ export class AppTool {
         }
         return myResult;
     }
+
     public static GetRatioFromDimFactor(myDimFactor: number, dimentionCode: string, weightCode: string) {
 
         var myResult: number = null;

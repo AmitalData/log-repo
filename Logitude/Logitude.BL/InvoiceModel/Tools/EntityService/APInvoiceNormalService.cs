@@ -38,6 +38,9 @@ using Simplog.Data.InfrastructureModel;
 using Logitude.BL.InvoiceModel.Tools.Initializers;
 using Logitude.BL.ExternalService;
 using Logitude.BL.InvoiceModel.Tools.Behaviours;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.InvoiceModel.Tools.Behaviours.APInvoiceBehaviours;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -59,7 +62,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private ShipmentRepository shipmentRepository;
         private ShipmentPayableRepository shipmentPayableRepository;
         private string QBOAPPaymentId;
-
         private APInvoiceServiceInitializer initializer;
 
         public APInvoiceNormalService(IInvoiceContext objectContext, APInvoicePM entityPM)
@@ -79,9 +81,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             allPayables = new List<ShipmentPayable>();
             shipmentRepository = new ShipmentRepository(tenant);
             shipmentPayableRepository = new ShipmentPayableRepository(tenant);
-
-            //this.GetLoggedContact();
-            //this.GetAccountingSystem();
         }
         public APInvoiceNormalService(MockInvoiceContext objectContext, APInvoicePM entityPM)
         {
@@ -90,53 +89,16 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.tenant = entityPM.Tenant;
             this.entityPM = entityPM;
-            //this.isInvoiceLinesChanged = false;
-            //this.invoiceRepository = new APInvoiceRepository(objectContext);
             this.invoiceLineRepository = new APInvoiceLineRepository(objectContext);
-            //this.invoiceTotalVatRepository = new APInvoiceTotalVATRepository(objectContext);
             this.invoiceEntityRepository = new APInvoiceEntityRepository(objectContext);
             this.invoicePaymentRepository = new APInvoicePaymentRepository(objectContext);
             this.paymentRepository = new APPaymentRepository(objectContext);
-            //this.vatTypeRepository = new VatTypeRepository(commonMockContext);
-            //this.accountingSettingRepository = new AccountingSettingRepository(commonMockContext);
-            //this.accountingSystemRepository = new AccountingSystemRepository(commonMockContext);
 
             allShipments = new List<Shipment>();
             allPayables = new List<ShipmentPayable>();
             shipmentRepository = new ShipmentRepository(shipmentMockContext);
             shipmentPayableRepository = new ShipmentPayableRepository(shipmentMockContext);
-
-            //this.GetLoggedContact();
-            //this.GetAccountingSystem();
         }
-
-        //private void GetLoggedContact()
-        //{
-        //    if (entityPM.CreatedFromAPI)
-        //    {
-        //        this.loggedContactId = entityPM.CreatedByUserId;
-        //    }
-
-        //    else
-        //    {
-        //        ContactRepository contactRepository = new ContactRepository(tenant);
-
-        //        string email = HttpContext.Current.User.Identity.Name;
-
-        //        if (email != null)
-        //        {
-        //            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
-        //            this.loggedContactId = loggedContact.Id;
-        //        }
-
-        //        else
-        //        {
-        //            ContactPM loggedContact = new ContactQuery(tenant).GetContactByNameAndTenant(SecurityUtility.GetAuthenticatedUser(), tenant, true);
-        //            this.loggedContactId = loggedContact.Id;
-        //        }
-        //    }
-        //}
-
 
         private List<APInvoiceLinePM> invoiceLinesChangeSet = new List<APInvoiceLinePM>();
         private List<APInvoicePaymentPM> invoicePaymentsChangeSet = new List<APInvoicePaymentPM>();
@@ -183,8 +145,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.UpdateInvoiceEntities();
             }
 
+            this.BuildShipmentsNumbers();
             this.UpdateInvoiceLines();
-            //this.UpdateTotalVats();
             this.BuildSearchFields();
 
             var setApproved = entityPM.SetApproved;
@@ -202,6 +164,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             if (!entityPM.IsGeneralInvoice)
             {
                 this.UpdateAllPayablesAccountedAmountAndStatus();
+                this.UpdateAllPayablesVatAmount();
             }
 
             this.UpdateInvoiceAmountDue();
@@ -444,11 +407,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
 
             this.invoice = initializer.EntityPOCO;
-
             this.ValidateHigherStatus();
-
             this.initializer.HandleBehaviours();
-
             this.InitializeComponent();
 
             APInvoiceValidator.Validate(entityPM, invoice, initializer.IsNewEntity, initializer.Context, initializer.CommonContext, this.MainShipmentConcurrencyGUID);
@@ -463,7 +423,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
 
             this.UpdateInvoiceLines();
-            //this.UpdateTotalVats();
+            this.BuildShipmentsNumbers();
 
             // Journal Work
             this.AddAPInvoiceJournalAndJournalLines(entityPM, entityPM.SetApproved);
@@ -480,8 +440,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 helper.APInvoiceQuickbooksValidating(entityPM, initializer.Flags.IsSetApproved, initializer.IsNewEntity, initializer.Context, initializer.CommonContext);
             }
 
-
-
             EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice, EntityPM = entityPM, OldEntityPM = new APInvoicePM(), AutomationType = "OnUpdate", ObjectTableName = "APInvoice", Tenant = entityPM.Tenant, EntityId = entityPM.Id, EntityAutomationMappingPMFields = new EntityAutomationAPInvoiceMappingPMFields() });
             entityAutomationService.RunAutomation();
 
@@ -496,6 +454,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             if (!entityPM.IsGeneralInvoice)
             {
                 this.UpdateAllPayablesAccountedAmountAndStatus();
+                this.UpdateAllPayablesVatAmount();
             }
 
             if (invoicePaymentsChangeSet != null)
@@ -517,14 +476,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     }
                 }
             }
-
+            
             this.BuildSearchFields();
             initializer.Repository.Update(invoice);
             initializer.Repository.SubmitChanges();
 
             if (!String.IsNullOrEmpty(QBOAPPaymentId))
             {
-
                 APPaymentHelper service = new APPaymentHelper();
                 APPaymentQuery PaymentQuery = new APPaymentQuery(paymentRepository);
                 APPaymentPM paymentPM = PaymentQuery.GetSinglePM(QBOAPPaymentId, tenant);
@@ -1438,6 +1396,134 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
         }
+
+        double? invoiceLinesVatAmountLocal = 0;
+        double? invoiceLinesVatAmountProfit = 0;
+        private void UpdateAllPayablesVatAmount()
+        {
+            if (allPayables.Count > 0)
+            {
+                List<string> allPayablesIds = allPayables.Select(s => s.Id).ToList();
+                List<APInvoiceLine> allPayablesInvoicesLines = invoiceLineRepository.GetPayablesInvoicesLines(allPayablesIds, tenant);
+                foreach (ShipmentPayable myPayable in allPayables)
+                {
+                    List<APInvoiceLine> myInvoiceslines = allPayablesInvoicesLines.Where(d => d.EntityPayableId == myPayable.Id).ToList();
+                    invoiceLinesVatAmountLocal = 0;
+                    invoiceLinesVatAmountProfit = 0;
+                    foreach (APInvoiceLine invoiceline in myInvoiceslines)
+                    {
+                        this.ManagePayableLinesVatAmount(invoiceline);
+                    }
+                    this.UpdateOpenPayablesVatAmount(myPayable);
+                    shipmentPayableRepository.Update(myPayable);
+                }
+                shipmentPayableRepository.SubmitChanges();
+            }
+        }
+        private void ManagePayableLinesVatAmount(APInvoiceLine invoiceline)
+        {
+            VatType lineVatType = initializer.AllVatTypes.Where(d => d.Id == invoiceline.VatTypeId).FirstOrDefault();
+            if (lineVatType != null)
+            {
+                if (!lineVatType.IsMultiPercentage)
+                {
+                    invoiceLinesVatAmountLocal = invoiceLinesVatAmountLocal + (invoiceline.LocalCurrencyAmount + invoiceline.LocalCurrencyAmount * invoiceline.VatPercentage / 100);
+                    invoiceLinesVatAmountProfit = invoiceLinesVatAmountProfit + (invoiceline.ProfitCurrencyAmount + invoiceline.ProfitCurrencyAmount * invoiceline.VatPercentage / 100);
+                }
+
+                else
+                {
+                    this.CalculatePayablesVatAmountInMultiVat_InvoiceLine(invoiceline.VatTypeId, invoiceline.LocalCurrencyAmount, invoiceline.ProfitCurrencyAmount);
+                }
+            }
+        }
+
+        private void CalculatePayablesVatAmountInMultiVat_InvoiceLine(string vatTypeId, double? LocalAmount, double? profitAmount)
+        {
+            List<VATTypesGroup> allVATTypesGroup = (from d in initializer.CommonContext.VATTypesGroups where d.Tenant == initializer.Tenant select d).ToList();
+            List<VATTypesGroup> vatTypesGroup = allVATTypesGroup.Where(d => d.GroupVATTypeId == vatTypeId).ToList();
+            invoiceLinesVatAmountLocal = invoiceLinesVatAmountLocal+ LocalAmount;
+            invoiceLinesVatAmountProfit = invoiceLinesVatAmountProfit + profitAmount;
+            foreach (VATTypesGroup itemGroup in vatTypesGroup)
+            {
+                VatType vatType = initializer.AllVatTypes.Where(d => d.Id == itemGroup.SingleVATTypeId).FirstOrDefault();
+                VatTypePercentagePM myPercentagePM = initializer.AllVatPercentages.Where(d => d.VatTypeId == itemGroup.SingleVATTypeId).FirstOrDefault();
+                if (myPercentagePM != null)
+                {
+                    var vatTypePercentage = MethodHelper.GetValue(myPercentagePM.Percentage);
+                    invoiceLinesVatAmountLocal = invoiceLinesVatAmountLocal + (LocalAmount * vatTypePercentage / 100);
+                    invoiceLinesVatAmountProfit = invoiceLinesVatAmountProfit + (profitAmount * vatTypePercentage / 100);
+                }
+            }
+        }
+
+        private void UpdateOpenPayablesVatAmount(ShipmentPayable myPayable)
+        {
+            double? openAmountInLocalCurrency = CalculatePayableVatOpenAmount(myPayable, myPayable.OpenAmountInLocalCurrency);
+            double? openAmountInProfitCurrency = CalculatePayableVatOpenAmount(myPayable, myPayable.OpenAmountInProfitCurrency);
+            myPayable.VatAmountLocal = MethodHelper.Round(invoiceLinesVatAmountLocal + (openAmountInLocalCurrency == null ? 0 : openAmountInLocalCurrency), 2);
+            myPayable.VatAmountProfit = MethodHelper.Round(invoiceLinesVatAmountProfit + (openAmountInProfitCurrency == null ? 0 : openAmountInProfitCurrency), 2);
+        }
+
+        private double? CalculatePayableVatOpenAmount(ShipmentPayable shipmentPayable, double? amount)
+        {
+            string payableVatTypeId = this.GetPayableVatTypeId(shipmentPayable);
+            double? vatAmount = null;
+            if (!string.IsNullOrEmpty(payableVatTypeId))
+            {
+                VatType lineVatType = initializer.AllVatTypes.Where(d => d.Id == payableVatTypeId).FirstOrDefault();
+                if (lineVatType != null)
+                {
+                    if (!lineVatType.IsMultiPercentage)
+                    {
+                        var vatTypePercentagePM = initializer.AllVatPercentages.Where(d => d.VatTypeId == payableVatTypeId).FirstOrDefault();
+                        if (vatTypePercentagePM != null)
+                        {
+                            var percentage = vatTypePercentagePM.Percentage;
+                            vatAmount = MethodHelper.Round(amount + (amount * percentage / 100), 2);
+                        }
+                    }
+                    else
+                    {
+                        vatAmount = CalculatePayablesVatAmountInMultiVat_OpenLine(lineVatType.Id, amount);
+                    }
+                }
+            }
+            return vatAmount;
+        }
+        private string GetPayableVatTypeId(ShipmentPayable shipmentPayable)
+        {
+            string payableVatTypeId = null;
+            if (!string.IsNullOrEmpty(shipmentPayable.VendorId))
+            {
+                Card myCard = CardRepository.GetSingleCard(shipmentPayable.VendorId, tenant, false);
+                if (myCard != null)
+                    payableVatTypeId = myCard.VatTypeId;
+            }
+
+            if (string.IsNullOrEmpty(payableVatTypeId))
+                payableVatTypeId = shipmentPayable.VatTypeId;
+
+            return payableVatTypeId;
+        }
+
+        private double?  CalculatePayablesVatAmountInMultiVat_OpenLine(string vatTypeId, double? amount)
+        {
+            double? vatAmount = amount;
+            List<VATTypesGroup> allVATTypesGroup = (from d in initializer.CommonContext.VATTypesGroups where d.Tenant == initializer.Tenant select d).ToList();
+            List<VATTypesGroup> vatTypesGroup = allVATTypesGroup.Where(d => d.GroupVATTypeId == vatTypeId).ToList();
+            foreach (VATTypesGroup itemGroup in vatTypesGroup)
+            {
+                VatTypePercentagePM myPercentagePM = initializer.AllVatPercentages.Where(d => d.VatTypeId == itemGroup.SingleVATTypeId).FirstOrDefault();
+                if (myPercentagePM != null)
+                {
+                    var vatTypePercentage = MethodHelper.GetValue(myPercentagePM.Percentage);
+                    vatAmount = vatAmount + (amount * vatTypePercentage / 100);
+                }
+            }
+            return MethodHelper.Round(vatAmount, 2);
+        }
+
         #endregion
 
         #region InvoiceEntities
@@ -2006,6 +2092,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     UpdateShipmentProfitClass.UpdatePayables(entityPM.MainEntityId, tenant, true);
                     UpdateShipmentProfitClass.UpdateProfit(entityPM.MainEntityId, tenant);
+                    UpdateShipmentProfitClass.UpdateShipmentHousesPayablesVatAmounts(entityPM.MainEntityId, tenant);
                 }
             }
         }
@@ -2224,5 +2311,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             else return null;
         }
         #endregion
+
+        private void BuildShipmentsNumbers()
+        {
+            APInvoiceShipmentsNumbersBehaviour invoiceShipmentsNumbersBehaviour = new APInvoiceShipmentsNumbersBehaviour(entityPM);
+            invoiceShipmentsNumbersBehaviour.CopmuteShipmentsNumbers();
+        }
     }
 }

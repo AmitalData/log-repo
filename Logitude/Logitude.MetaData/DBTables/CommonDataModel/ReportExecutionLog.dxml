@@ -19,6 +19,12 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="CreateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="CreatedByUserId"
     Type="varchar"
     Size="15">
@@ -38,12 +44,6 @@
     Size="-1">
     <Constraints
       Nullable="true" />
-  </Column>
-  <Column
-    Name="CreateDate"
-    Type="datetime">
-    <Constraints
-      Nullable="false" />
   </Column>
   <Column
     Name="DoneDate"
@@ -86,6 +86,12 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="DisablePreview"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="ExecutedByServerName"
     Type="varchar"
     Size="100">
@@ -93,11 +99,11 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="DisablePreview"
-    OldNames="ExcelOnly"
-    Type="bit">
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
@@ -108,5 +114,15 @@
     ForeignKeyColumn="StatusCode"
     ReferencedTable="CommunicationStatusTypes"
     ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ReportId"
+    ReferencedTable="Reports"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ReportTemplateId"
+    ReferencedTable="ReportsTemplates"
+    ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

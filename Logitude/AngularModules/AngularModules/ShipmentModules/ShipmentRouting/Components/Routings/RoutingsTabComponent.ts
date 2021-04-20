@@ -54,10 +54,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             this.IsChildFeatureExists = true;
         }
 
-        var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "PRE")[0];   
-        if (this.EntityPM.ShipmentLevelCode == "D" || (this.EntityPM.ShipmentLevelCode == "C" && featureToggle)) {
-            this.IsAddingPreOnCarriageVisible = true;
-        }
+        this.CheckPreOnCarriageVisibility();       
     }
 
     private SessionEvent: any = null;
@@ -81,6 +78,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.CheckPreOnCarriageVisibility();
                     this.UpdateScreen();
                 }
             });
@@ -131,6 +129,14 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
 
         else {
             this.BuildItemsCollection();
+        }
+    }
+
+    CheckPreOnCarriageVisibility() {
+        this.IsAddingPreOnCarriageVisible = false;
+        var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "PRE")[0];
+        if (this.EntityPM.ShipmentLevelCode == "D" || (this.EntityPM.ShipmentLevelCode == "C" && featureToggle)) {
+            this.IsAddingPreOnCarriageVisible = true;
         }
     }
 
@@ -1175,6 +1181,7 @@ export class RoutingItem extends BaseComponent {
             this.PickUpDeliveryNumber = this.Pickup.PickUpDeliveryNumber;
             this.FollowupLegTypeDeparture = type + 'Departure' + this.PickUpDeliveryNumber;
             this.FollowupLegTypeArrival = type + 'Arrival' + this.PickUpDeliveryNumber;
+            this.IsDeleteButtonEnabled = this.fatherComponent.IsEditingEnabled;
         }
 
         else if (entity instanceof ShipmentDeliveryPM) {
@@ -1184,6 +1191,7 @@ export class RoutingItem extends BaseComponent {
             this.PickUpDeliveryNumber = this.Delivery.PickUpDeliveryNumber;
             this.FollowupLegTypeDeparture = type + 'Departure' + this.PickUpDeliveryNumber;
             this.FollowupLegTypeArrival = type + 'Arrival' + this.PickUpDeliveryNumber;
+            this.IsDeleteButtonEnabled = this.fatherComponent.IsEditingEnabled;
         }
 
         else {
@@ -1191,9 +1199,14 @@ export class RoutingItem extends BaseComponent {
             this.ObjectTableName = fatherComponent.ObjectTableName;
 
             if (this.fatherComponent.IsEditingEnabled) {
+                this.IsDeleteButtonEnabled = true;
+
                 if (this.EntityPM.ShipmentLevelCode == "H" && !AppTool.IsNullOrEmpty(this.EntityPM.MasterShipmentDataId) && (type == "On Carriage" || type == "Pre Carriage")) {
                     this.IsDeleteButtonEnabled = false;
                 }
+            }
+            else {
+                this.IsDeleteButtonEnabled = false;
             }
 
             if (type == "WarehouseLeg" || type == "WarehouseLeg_Pickups") {

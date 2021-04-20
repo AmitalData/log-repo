@@ -12,7 +12,7 @@ import {ShipmentDomainService} from '../../Services/ShipmentDomainService';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
 import { MenuButtonsTemplateArgs} from './MenuButtonsTemplateComponent';
-import {ShipmentTool} from '../../Tools';
+import {ShipmentTool, RoutingHelper} from '../../Tools';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {ShipmentValidator} from '../../Validators/ShipmentValidator';
 import {AppTool, DateTool} from '../../../Infrastructure/Tools';
@@ -521,6 +521,14 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                         if (this.Reload) {
                             this.entityArgs.EditComponent.ReloadEntityPM();
                         }
+
+                        if (this.isConvertFromHouseToDirect) {
+                            this.StartConvertingShipmentFromHouseToDirect();
+                        }
+
+                        if (this.isConvertFromDirectToHouse) {
+                            this.StartConvertingShipmentFromDirectToHouse();
+                        }
                     }
 
                     this.StopFlags();
@@ -559,6 +567,8 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         this.IsConvertToFTLClicked = false;
         this.IsConvertDirectionClicked = false;
         this.IsSendToAMANACClicked = false;
+        this.isConvertFromHouseToDirect = false;
+        this.isConvertFromDirectToHouse = false;
     }
     Validate() {
         var validator = new ShipmentValidator();
@@ -809,28 +819,37 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
             });
         });
     }
+
+    private isConvertFromHouseToDirect: boolean = false;
+    private isConvertFromDirectToHouse: boolean = false;
     private ConvertShipmentFromHouseToDirect() {
+        var errors: string[] = [];
+        Validator.TryValidateObject(this.EntityPM, "Shipment", errors);
+
+        if (errors.length == 0) {
+            this.isConvertFromHouseToDirect = true;
+            this.OkButton();
+        }
+    }
+    private ConvertShipmentFromDirectToHouse() {
+        var errors: string[] = [];
+        Validator.TryValidateObject(this.EntityPM, "Shipment", errors);
+
+        if (errors.length == 0) {
+            this.isConvertFromDirectToHouse = true;
+            this.OkButton();
+        }
+    }
+    private StartConvertingShipmentFromHouseToDirect() {
         this.currentActionName = "ConvertShipmentFromHouseToDirect";
+
+        this.ActionStepsStateList = this.CreateConvertingFromHouseToDirectActionSteps();
         var args = new MenuButtonsTemplateArgs();
         args.ObjectTableName = "Shipment";
         args.EntityPM = this.EntityPM;
         args.IsNotesStackPanelVisible = true;
-        this.ActionStepsStateList = new Array<ActionsStepsState>();
-        var state: ActionsStepsState = new ActionsStepsState();
-        if (this.EntityPM.DirectionId == "E" || this.EntityPM.DirectionId == "D" || this.EntityPM.DirectionId == "R") {
-            var settingCode = "HAWBCounter" + this.EntityPM.TransportModeId + "_E_D";
-            var tenantSettingPM = SessionLocator.TenantSettings.filter(p => p.SettingCode == settingCode)[0];
-            if (tenantSettingPM != null) {
-                if (tenantSettingPM.DontIncludeDirects) {
-                    state = new ActionsStepsState();
-                    state.Message = "The HAWB field will be removed";
-                    state.State = "Warning";
-                    this.ActionStepsStateList.push(state);
-                }
-            }
-        }
-
         args.ActionStepsStateList = this.ActionStepsStateList;
+
         var logWindow = new LogitudeWindow();
         logWindow.WindowArgs = args;
         logWindow.Width = 500;
@@ -843,68 +862,126 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                 if (d == "confirm") {
                     this.EntityPM.ConvertFromHouseToDirect = true;
                     this.EntityPM.ConvertFromDirectToHouse = false;
+                    RoutingHelper.RemovePreForwardingLeg(this.EntityPM);
+                    RoutingHelper.RemoveOnForwardingLeg(this.EntityPM);
                     this.OkButton();
                 }
                 this.ResetButtonClicked();
             });
         });
-    }
-    private ConvertShipmentFromDirectToHouse() {
-        if (this.EntityPM != null) {
-            if (ShipmentTool.IsInlandDomestic(this.EntityPM)) {
-                var messageWindow: MessageWindow = new MessageWindow();
-                messageWindow.Title = "Converting Shipment";
-                messageWindow.Show("Converting inland domestic house to direct is not allowed");
+    }    
+    private StartConvertingShipmentFromDirectToHouse() {
+        if (ShipmentTool.IsInlandDomestic(this.EntityPM)) {
+            var messageWindow: MessageWindow = new MessageWindow();
+            messageWindow.Title = "Converting Shipment";
+            messageWindow.Show("Converting inland domestic house to direct is not allowed");
+        }
+
+        else {
+            this.currentActionName = "ConvertShipmentFromDirectToHouse";
+            this.ActionStepsStateList = this.CreateConvertingFromDirectToHouseActionSteps();
+
+            var args = new MenuButtonsTemplateArgs();
+            args.ObjectTableName = "Shipment";
+            args.EntityPM = this.EntityPM;
+            args.IsNotesStackPanelVisible = true;
+            args.ActionStepsStateList = this.ActionStepsStateList;
+
+            var logWindow = new LogitudeWindow();
+            if (this.EntityPM.MainCarriageIsFromStack) {                
+                args.EnabledOkButton = false;
+                logWindow.Width = 700;
+                logWindow.Height = 400;
             }
 
             else {
-                this.currentActionName = "ConvertShipmentFromDirectToHouse";
-                var args = new MenuButtonsTemplateArgs();
-                args.ObjectTableName = "Shipment";
-                args.EntityPM = this.EntityPM;
-                args.IsNotesStackPanelVisible = true;
-                this.ActionStepsStateList = new Array<ActionsStepsState>();
-                var state: ActionsStepsState = new ActionsStepsState();
-
-                var logWindow = new LogitudeWindow();
-                if (this.EntityPM.MainCarriageIsFromStack) {
-                    state = new ActionsStepsState();
-                    state.Message = TextCodeTranslator.Translate("Shipment.M.MasterAWBNumberTakenFromStack");
-                    state.State = "Error";
-                    this.ActionStepsStateList.push(state);
-                    args.EnabledOkButton = false;
-                    logWindow.Width = 700;
-                    logWindow.Height = 400;
-                }
-
-                else {
-                    logWindow.Width = 450;
-                    logWindow.Height = 300;
-                }
-
-                args.ActionStepsStateList = this.ActionStepsStateList;
-                logWindow.WindowArgs = args;
-
-                logWindow.Title = "Convert Shipment From Direct To House";
-                logWindow.Show('./Shipment/Components/MenuButtons/MenuButtonsTemplateComponent');
-                logWindow.ComponentLoaded.subscribe(s => {
-                    logWindow.WindowClosed.subscribe(d => {
-                        this.EntityPM.EventNote = s.EventNotes;
-                        if (d == "confirm") {
-                            if (!this.EntityPM.MainCarriageIsFromStack) {
-                                this.EntityPM.ConvertFromDirectToHouse = true;
-                                this.EntityPM.ConvertFromHouseToDirect = false;
-                            }
-
-                            this.OkButton();
+                logWindow.Width = 450;
+                logWindow.Height = 300;
+            }
+            
+            logWindow.WindowArgs = args;
+            logWindow.Title = "Convert Shipment From Direct To House";
+            logWindow.Show('./Shipment/Components/MenuButtons/MenuButtonsTemplateComponent');
+            logWindow.ComponentLoaded.subscribe(s => {
+                logWindow.WindowClosed.subscribe(d => {
+                    this.EntityPM.EventNote = s.EventNotes;
+                    if (d == "confirm") {
+                        if (!this.EntityPM.MainCarriageIsFromStack) {
+                            this.EntityPM.ConvertFromDirectToHouse = true;
+                            this.EntityPM.ConvertFromHouseToDirect = false;
+                            RoutingHelper.RemovePreCarriageLeg(this.EntityPM);
+                            RoutingHelper.RemoveOnCarriageLeg(this.EntityPM);
                         }
 
-                        this.ResetButtonClicked();
-                    });
+                        this.OkButton();
+                    }
+
+                    this.ResetButtonClicked();
                 });
-            }
+            });
         }
     }
+    private CreateConvertingFromHouseToDirectActionSteps(): ActionsStepsState[] {
+        var actionStepsStateList = new Array<ActionsStepsState>();
+        var state = new ActionsStepsState();
+
+        if (this.EntityPM.DirectionId == "E" || this.EntityPM.DirectionId == "D" || this.EntityPM.DirectionId == "R") {
+            var settingCode = "HAWBCounter" + this.EntityPM.TransportModeId + "_E_D";
+            var tenantSettingPM = SessionLocator.TenantSettings.filter(p => p.SettingCode == settingCode)[0];
+            if (tenantSettingPM != null) {
+                if (tenantSettingPM.DontIncludeDirects) {
+                    state = new ActionsStepsState();
+                    state.Message = "The HAWB field will be removed";
+                    state.State = "Warning";
+                    actionStepsStateList.push(state);
+                }
+            }
+        }
+
+        if (this.EntityPM.HasPreForwarding) {
+            state = new ActionsStepsState();
+            state.Message = "Pre Forwarding data will be removed";
+            state.State = "Warning";
+            actionStepsStateList.push(state);
+        }
+
+        if (this.EntityPM.HasOnForwarding) {
+            state = new ActionsStepsState();
+            state.Message = "On Forwarding data will be removed";
+            state.State = "Warning";
+            actionStepsStateList.push(state);
+        }
+
+        return actionStepsStateList;
+    }
+    private CreateConvertingFromDirectToHouseActionSteps(): ActionsStepsState[] {
+        var actionStepsStateList = new Array<ActionsStepsState>();
+        var state = new ActionsStepsState();
+
+        if (this.EntityPM.MainCarriageIsFromStack) {
+            state = new ActionsStepsState();
+            state.Message = TextCodeTranslator.Translate("Shipment.M.MasterAWBNumberTakenFromStack");
+            state.State = "Error";
+            actionStepsStateList.push(state);
+        }
+
+        if (this.EntityPM.HasPreCarriage) {
+            state = new ActionsStepsState();
+            state.Message = "Pre Carriage data will be removed";
+            state.State = "Warning";
+            actionStepsStateList.push(state);
+        }
+
+        if (this.EntityPM.HasOnCarriage) {
+            state = new ActionsStepsState();
+            state.Message = "On Carriage data will be removed";
+            state.State = "Warning";
+            actionStepsStateList.push(state);
+        }
+
+        return actionStepsStateList;
+    }
+
     private ConvertShipmentToCustomFile() {
         this.currentActionName = "ConvertToCustomFile";
         this.EntityPM.ShipmentLevelCode = "A";
@@ -1334,6 +1411,17 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
             || this.EntityPM.Transshipment2ATA != null || this.EntityPM.Transshipment3ATA != null) {
             errors.push("Shipment has departed/arrived, can't change direction");
         }
+        else if (this.HasPayablesAmounts() && this.HasReceivablesAmounts()) {
+            errors.push("Shipment has Payables and Receivables amounts, can't change direction");
+        }
+
+        else if (this.HasPayablesAmounts()) {
+            errors.push("Shipment has Payables amounts, can't change direction");
+        }
+
+        else if (this.HasReceivablesAmounts()) {
+            errors.push("Shipment has Receivables amounts, can't change direction");
+        }
 
         if (errors.length == 0) {
             this.shipmentService.CheckIfConnectedEntryOrRelease(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
@@ -1353,6 +1441,30 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
             this.ShowConvertShipmentDirectionWindow(errors);
         }
     }
+
+    private HasPayablesAmounts() {
+        var hasAnyPayablesAmount: boolean = false;
+        if (this.EntityPM.ShipmentPayables != null) {
+            var filterdPayableLineWithAmounts = this.EntityPM.ShipmentPayables.filter(payable => payable.ExpectedAmount != null && payable.ExpectedAmount != 0.0)[0];
+            if (filterdPayableLineWithAmounts != null) {
+                hasAnyPayablesAmount = true;
+            }            
+        }       
+        return hasAnyPayablesAmount;
+    }
+
+    private HasReceivablesAmounts() {
+        var hasAnyReceivablesAmount: boolean = false;
+        if (this.EntityPM.ShipmentReceivables != null) {
+            var filterdReceivableLineWithAmounts = this.EntityPM.ShipmentReceivables.filter(payable => payable.TotalAmount != null && payable.TotalAmount != 0.0)[0];
+            if (filterdReceivableLineWithAmounts != null) {
+                hasAnyReceivablesAmount = true;
+            }   
+        }
+        return hasAnyReceivablesAmount;
+    }
+
+
     private ShowConvertShipmentDirectionWindow(errors: string[]) {
         this.currentActionName = "ConvertShipmentDirection";
 

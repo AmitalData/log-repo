@@ -700,6 +700,31 @@ export class TenantPM {
     public set SharedLogisMasterMessageLink(newValue: boolean) { if (this.sharedLogisMasterMessageLink != newValue) { this.sharedLogisMasterMessageLink = newValue; this.MarkAsDirty("SharedLogisMasterMessageLink"); } }
        
 	 
+    private airRatio: number;
+    public get AirRatio() { return this.airRatio; }
+    public set AirRatio(newValue: number) { if (this.airRatio != newValue) { this.airRatio = newValue; this.MarkAsDirty("AirRatio"); } }
+       
+	 
+    private lCLRatio: number;
+    public get LCLRatio() { return this.lCLRatio; }
+    public set LCLRatio(newValue: number) { if (this.lCLRatio != newValue) { this.lCLRatio = newValue; this.MarkAsDirty("LCLRatio"); } }
+       
+	 
+    private fCLRatio: number;
+    public get FCLRatio() { return this.fCLRatio; }
+    public set FCLRatio(newValue: number) { if (this.fCLRatio != newValue) { this.fCLRatio = newValue; this.MarkAsDirty("FCLRatio"); } }
+       
+	 
+    private lTLRatio: number;
+    public get LTLRatio() { return this.lTLRatio; }
+    public set LTLRatio(newValue: number) { if (this.lTLRatio != newValue) { this.lTLRatio = newValue; this.MarkAsDirty("LTLRatio"); } }
+       
+	 
+    private fTLRatio: number;
+    public get FTLRatio() { return this.fTLRatio; }
+    public set FTLRatio(newValue: number) { if (this.fTLRatio != newValue) { this.fTLRatio = newValue; this.MarkAsDirty("FTLRatio"); } }
+       
+	 
 
     public OldEntityPM: TenantPM;
 		

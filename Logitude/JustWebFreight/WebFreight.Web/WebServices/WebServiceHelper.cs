@@ -1376,7 +1376,6 @@ namespace WebFreight.Web.WebServices
 
             return myResult;
         }
-
         internal string GetDeliveryPickUpAddress(PickUpAndDeliveriesArguments arguments)
         {
             string address = "";
@@ -1454,6 +1453,76 @@ namespace WebFreight.Web.WebServices
             }
             return address;
         }
+
+        public PickUpDeliveryPlaceData GetPickUpDeliveryPlaceData(ShipmentPickUpDelivery entity, string entityType)
+        {
+            PickUpDeliveryPlaceData myResult = new PickUpDeliveryPlaceData();
+
+            if (entity != null)
+            {
+                string pickUpDeliveryTypeCode = entityType == "Delivery" ? entity.PickUpDeliveryToTypeCode : entity.PickUpDeliveryFromTypeCode;
+                string addressId = entityType == "Delivery" ? entity.ToAddressId : entity.FromAddressId;
+                string portId = entityType == "Delivery" ? entity.ToPortId : entity.FromPortId;
+                string city = entityType == "Delivery" ? entity.ToAddressCity : entity.FromAddressCity;
+                string addressCountryId = entityType == "Delivery" ? entity.ToAddressCountryId : entity.FromAddressCountryId;
+
+                switch (pickUpDeliveryTypeCode)
+                {
+                    case "PART":
+                        {
+                            if (!string.IsNullOrEmpty(addressId))
+                            {
+                                Address myPartnerAddress = addressRepository.GetSingleAddress(addressId, tenant);
+                                if (myPartnerAddress != null)
+                                {
+                                    myResult.City = myPartnerAddress.City;
+                                    myResult.CountryCode = myPartnerAddress.Country == null ? "" : myPartnerAddress.Country.Code;
+                                    myResult.CountryName = myPartnerAddress.Country == null ? "" : myPartnerAddress.Country.EnglishName;
+                                    myResult.StateCode = myPartnerAddress.State == null ? "" : myPartnerAddress.State.Code;
+                                    myResult.StateName = myPartnerAddress.State == null ? "" : myPartnerAddress.State.EnglishName;
+                                }
+                            }
+
+                            break;
+                        }
+
+                    case "PORT":
+                        {
+                            if (!string.IsNullOrEmpty(portId))
+                            {
+                                PortPM myPort = PortQuery.GetSinglePort(tenant, portId, true);
+                                if (myPort != null)
+                                {
+                                    myResult.PortCode = myPort.Code;
+                                    myResult.PortName = myPort.EnglishName;
+                                    myResult.City = myPort.EnglishName;
+                                    myResult.CountryCode = myPort.CountryCode;
+                                    myResult.CountryName = myPort.CountryName;
+                                    myResult.StateCode = myPort.StateCode;
+                                    myResult.StateName = myPort.StateName;
+                                }
+                            }
+
+                            break;
+                        }
+
+                    case "CASL":
+                        {
+                            myResult.City = city;
+                            CountryRepository countryRepository = new CountryRepository(tenant);
+                            Country country = countryRepository.GetSingleCountry(addressCountryId, tenant);
+                            if (country != null)
+                            {
+                                myResult.CountryCode = country.Code;
+                                myResult.CountryName = country.EnglishName;
+                            }
+                            break;
+                        }
+                }
+            }
+
+            return myResult;
+        }
     }
 
     public class PlaceOfReceiptData
@@ -1473,5 +1542,27 @@ namespace WebFreight.Web.WebServices
         public string AddressCity { get; set; }
         public string AddressZipCode { get; set; }
         public string AddressCountryId { get; set; }
+    }
+
+    public class PickUpDeliveryPlaceData
+    { 
+        public PickUpDeliveryPlaceData()
+        {
+            this.PortCode = "";
+            this.PortName = "";
+            this.City = "";
+            this.CountryCode = "";
+            this.CountryName = "";
+            this.StateCode = "";
+            this.StateName = "";
+        }
+
+        public string PortCode { get; set; }
+        public string PortName { get; set; }
+        public string City { get; set; }
+        public string CountryCode { get; set; }
+        public string CountryName { get; set; }
+        public string StateCode { get; set; }
+        public string StateName { get; set; }
     }
 }

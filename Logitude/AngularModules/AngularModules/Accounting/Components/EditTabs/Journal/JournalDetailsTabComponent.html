@@ -394,306 +394,314 @@
 
             <td style="height: 100%;padding-bottom: 88px;">
               <div class="CellContent" style="bottom: 75px;">
-                <logitude-edit-grid GridWidth="100%"
-                                    GridHeight="100%"
-                                    [ItemSource]="JournalLines"
-                                    [UseVirtuallization]="true"
-                                    [IsReadOnly]="journalDisabled"
-                                    (RowEnded)="OnRowEnded($event)"
-                                    (Ondblclick)="OnFocus()">
+                  <logitude-edit-grid GridWidth="100%"
+                                      GridHeight="100%"
+                                      [ItemSource]="JournalLines"
+                                      [UseVirtuallization]="true"
+                                      [IsReadOnly]="journalDisabled"
+                                      (RowEnded)="OnRowEnded($event)"
+                                      (Ondblclick)="OnFocus()">
 
-                  <!-- Line -->
-                  <log-column [header]="'JournalLine.F.Line' | TextCodeTranslationPipe" [width]="'50'" [Alignment]="isRTL ? 'right' : 'left'">
-                    <ng-template let-item>
-                      <log-cell-template [IgnoreMods]="true" [TabIndex]="-1" #logcelltemplate>
-                        <div class="TextTrimming" text-start>
-                          <span>{{item.Line}}</span>
-                        </div>
-                      </log-cell-template>
-                    </ng-template>
-                  </log-column>
+                      <!-- Line -->
+                      <log-column [header]="'JournalLine.F.Line' | TextCodeTranslationPipe" [width]="'50'" [Alignment]="isRTL ? 'right' : 'left'">
+                          <ng-template let-item>
+                              <log-cell-template [IgnoreMods]="true" [TabIndex]="-1" #logcelltemplate>
+                                  <div class="TextTrimming" text-start>
+                                      <span>{{item.Line}}</span>
+                                  </div>
+                              </log-cell-template>
+                          </ng-template>
+                      </log-column>
 
-                  <!-- ActionCode -->
-                  <log-column [header]="'JournalLine.F.ActionName' | TextCodeTranslationPipe" [width]="'120'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'ActionId'">
-                    <ng-template let-item>
-                      <log-cell-template #logcelltemplate>
-                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
-                          <span>{{item.ActionName}}</span>
-                        </div>
-                        <div *ngIf="logcelltemplate.IsEditMode">
-                          <LogLov [ObjectFieldName]="'ActionId'"
-                                  [ObjectTableName]="'JournalLine'"
-                                  [DataContext]="item"
-                                  [LookUpTableName]="'JournalActionType'"
-                                  [HideColumns]="true"
-                                  [DisplayMemberPath]="'LocalName'"
-                                  (SelectedItemChanged)="item.JournalActionType = $event"
-                                  [FocusOnMe]="true"
-                                  [SelectedValue]="ActionId">
-                          </LogLov>
+                      <!-- ActionCode -->
+                      <log-column [header]="'JournalLine.F.ActionName' | TextCodeTranslationPipe" [width]="'120'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'ActionId'">
+                          <ng-template let-item>
+                              <log-cell-template #logcelltemplate>
+                                  <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
+                                      <span>{{item.ActionName}}</span>
+                                  </div>
+                                  <div *ngIf="logcelltemplate.IsEditMode">
+                                      <LogLov [ObjectFieldName]="'ActionId'"
+                                              [ObjectTableName]="'JournalLine'"
+                                              [DataContext]="item"
+                                              [LookUpTableName]="'JournalActionType'"
+                                              [HideColumns]="true"
+                                              [DisplayMemberPath]="'LocalName'"
+                                              (SelectedItemChanged)="item.JournalActionType = $event"
+                                              [FocusOnMe]="true"
+                                              [SelectedValue]="ActionId">
+                                      </LogLov>
 
-                        </div>
-                      </log-cell-template>
-                    </ng-template>
-                  </log-column>
+                                  </div>
+                              </log-cell-template>
+                          </ng-template>
+                      </log-column>
 
-                  <!-- AccDay -->
-                  <log-column [header]="'Journal.O.AccDay' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'AccDay'">
-                    <ng-template let-item>
-                      <log-cell-template [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="item.ActionCode ? true : false" #logcelltemplate>
-                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
-                          <span>{{item.AccDay}}</span>
-                        </div>
-                        <div *ngIf="logcelltemplate.IsEditMode">
-                          <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'AccDay'" [InputType]="'integer'" [DataContext]="item"
-                                    (LostFocus)="item.AccDay_LostFocus($event)"  [Text]="item.AccDay" [ObjectTableName]="'JournalLine'" [HideColumns]="true"></LogTextBox>
-                        </div>
-                      </log-cell-template>
-                    </ng-template>
-                  </log-column>
+                      <!-- AccDay -->
+                      <log-column [header]="'Journal.O.AccDay' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'AccDay'">
+                          <ng-template let-item>
+                              <log-cell-template [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="item.ActionCode ? true : false" #logcelltemplate>
+                                  <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
+                                      <span>{{item.AccDay}}</span>
+                                  </div>
+                                  <div *ngIf="logcelltemplate.IsEditMode">
+                                      <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'AccDay'" [InputType]="'integer'" [DataContext]="item"
+                                                  (LostFocus)="item.AccDay_LostFocus($event)"  [Text]="item.AccDay" [ObjectTableName]="'JournalLine'" [HideColumns]="true"></LogTextBox>
+                                  </div>
+                              </log-cell-template>
+                          </ng-template>
+                      </log-column>
 
-                  <!-- Ref. Date -->
-                  <log-column [header]="'JournalLine.F.DocumentDate' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'DocumentDate'">
-                    <ng-template let-item>
-                      <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="item.ActionCode ? true : false">
-                        <div *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
-                          <span>{{item.DocumentDate | DateTimeToDatePipe}}</span>
-                        </div>
-                        <div *ngIf="logcelltemplate.IsEditMode">
-                          <LogDatePicker [ObjectFieldName]="'DocumentDate'" [ObjectTableName]="ObjectTableName"
-                                         [DataContext]="item" [HideColumns]="true" [FocusOnMe]="'true'"></LogDatePicker>
+                      <!-- Ref. Date -->
+                      <log-column [header]="'JournalLine.F.DocumentDate' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'DocumentDate'">
+                          <ng-template let-item>
+                              <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="item.ActionCode ? true : false">
+                                  <div *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
+                                      <span>{{item.DocumentDate | DateTimeToDatePipe}}</span>
+                                  </div>
+                                  <div *ngIf="logcelltemplate.IsEditMode">
+                                      <LogDatePicker [ObjectFieldName]="'DocumentDate'" [ObjectTableName]="ObjectTableName"
+                                                     [DataContext]="item" [HideColumns]="true" [FocusOnMe]="'true'"></LogDatePicker>
 
-                        </div>
-                      </log-cell-template>
-                    </ng-template>
-                  </log-column>
+                                  </div>
+                              </log-cell-template>
+                          </ng-template>
+                      </log-column>
 
-                  <!-- Due Date -->
-                  <log-column [header]="'JournalLine.F.DueDate' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'DueDate'">
-                    <ng-template let-item>
-                      <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="item.ActionCode ? true : false">
-                        <div *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
-                          <span>{{item.DueDate | DateTimeToDatePipe}}</span>
-                        </div>
-                        <div *ngIf="logcelltemplate.IsEditMode">
-                          <LogDatePicker [ObjectFieldName]="'DueDate'" [ObjectTableName]="ObjectTableName"
-                                         [DataContext]="item" [HideColumns]="true" [FocusOnMe]="'true'"></LogDatePicker>
+                      <!-- Due Date -->
+                      <log-column [header]="'JournalLine.F.DueDate' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'DueDate'">
+                          <ng-template let-item>
+                              <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="item.ActionCode ? true : false">
+                                  <div *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
+                                      <span>{{item.DueDate | DateTimeToDatePipe}}</span>
+                                  </div>
+                                  <div *ngIf="logcelltemplate.IsEditMode">
+                                      <LogDatePicker [ObjectFieldName]="'DueDate'" [ObjectTableName]="ObjectTableName"
+                                                     [DataContext]="item" [HideColumns]="true" [FocusOnMe]="'true'"></LogDatePicker>
 
-                        </div>
-                      </log-cell-template>
-                    </ng-template>
-                  </log-column>
+                                  </div>
+                              </log-cell-template>
+                          </ng-template>
+                      </log-column>
 
-                  <!-- C. Account -->
-                  <log-column [header]="'JournalLine.F.CreditAccountName' | TextCodeTranslationPipe" [width]="'150'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'CreditAccountId'">
-                    <ng-template let-item>
-                      <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="item.ActionCode ? true : false">
-                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
-                          <span *ngIf="Approved || Voided" class="hyperlink" (click)="item.GLAccountHyperlinkClicked()">{{item.CreditAccountName}}</span>
-                          <span *ngIf="!Approved && !Voided">{{item.CreditAccountName}}</span>
+                      <!-- C. Account -->
+                      <log-column [header]="'JournalLine.F.CreditAccountName' | TextCodeTranslationPipe" [width]="'150'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'CreditAccountId'">
+                          <ng-template let-item>
+                              <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="item.ActionCode ? true : false">
+                                  <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
+                                      <span *ngIf="Approved || Voided" class="hyperlink" (click)="item.GLAccountHyperlinkClicked()">{{item.CreditAccountName}}</span>
+                                      <span *ngIf="!Approved && !Voided">{{item.CreditAccountName}}</span>
 
-                        </div>
-                        <div *ngIf="logcelltemplate.IsEditMode">
-                          <LogLov [ObjectFieldName]="'CreditAccountId'"
-                                  [ObjectTableName]="'JournalLine'"
-                                  [DataContext]="item"
-                                  [DependencyFilter1Value]="false"
-                                  (SelectedItemChanged)="item.CreditAccount = $event"
-                                  [LookUpTableName]="'GLAccount'"
-                                  [DisplayMemberPath]="'LocalName'"
-                                  [QueryFilterItems]="item.CreditAccountFilterItems"
-                                  [HideColumns]="true"
-                                  [RunToggleMode]="true"
-                                  [FocusOnMe]="'true'">
-                          </LogLov>
+                                  </div>
+                                  <div *ngIf="logcelltemplate.IsEditMode">
+                                      <LogLov [ObjectFieldName]="'CreditAccountId'"
+                                              [ObjectTableName]="'JournalLine'"
+                                              [DataContext]="item"
+                                              [DependencyFilter1Value]="false"
+                                              (SelectedItemChanged)="item.CreditAccount = $event"
+                                              [LookUpTableName]="'GLAccount'"
+                                              [DisplayMemberPath]="'LocalName'"
+                                              [QueryFilterItems]="item.CreditAccountFilterItems"
+                                              [HideColumns]="true"
+                                              [RunToggleMode]="true"
+                                              [FocusOnMe]="'true'">
+                                      </LogLov>
 
-                        </div>
-                      </log-cell-template>
-                    </ng-template>
-                  </log-column>
+                                  </div>
+                              </log-cell-template>
+                          </ng-template>
+                      </log-column>
 
-                  <!-- D. Account -->
-                  <log-column [header]="'JournalLine.F.DebitAccountName' | TextCodeTranslationPipe" [width]="'150'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'DebitAccountId'">
-                    <ng-template let-item>
-                      <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="item.ActionCode ? true : false">
-                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
-                          <span></span>
-                          <span *ngIf="Approved || Voided" class="hyperlink" (click)="item.DebitAccountHyperlinkClicked()">{{item.DebitAccountName}}</span>
-                          <span *ngIf="!Approved && !Voided">{{item.DebitAccountName}}</span>
-
-
-
-                        </div>
-                        <div *ngIf="logcelltemplate.IsEditMode">
-                          <LogLov [ObjectFieldName]="'DebitAccountId'"
-                                  [ObjectTableName]="'JournalLine'"
-                                  [DataContext]="item"
-                                  [DependencyFilter1Value]="false"
-                                  (SelectedItemChanged)="item.DebitAccount = $event"
-                                  [LookUpTableName]="'GLAccount'"
-                                  [DisplayMemberPath]="'LocalName'"
-                                  [QueryFilterItems]="item.DebitAccountFilterItems"
-                                  [RunToggleMode]="true"
-                                  [HideColumns]="true"
-                                  [FocusOnMe]="'true'">
-                          </LogLov>
-
-                        </div>
-
-                      </log-cell-template>
-                    </ng-template>
-                  </log-column>
-
-                  <!-- LocalAmount -->
-                  <log-column [width]="'100'" [binding]="'LocalAmount'" [Alignment]="isRTL ? 'right' : 'left'" [header]="txt_Amount + ' (' + TenantCurrency + ')'">
-                    <ng-template let-item>
-                      <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="item.ActionCode ? true : false">
-                        <div style="width:100%;height:100%;">
-                          <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align: right;direction: ltr !important;">
-                            <span>{{item.LocalAmount | NumbersPipe:'N2'}}</span>
-                          </div>
-                          <div *ngIf="logcelltemplate.IsEditMode">
-                            <LogTextBox [DigitsAfterPoint]="2" [FocusOnMe]="'true'" [DebounceTime]="3000" [ObjectFieldName]="'LocalAmount'" [InputType]="'sigdouble'" [DataContext]="item"
-                                        (ValueChanged)="item.AmountChanged('local',$event,item.ForeignAmount)" [Text]="item.LocalAmount" [ObjectTableName]="'JournalLine'" [HideColumns]="true"></LogTextBox>
-                          </div>
-                        </div>
-                      </log-cell-template>
-                    </ng-template>
-                  </log-column>
-
-                  <!-- Currency -->
-                  <log-column [header]="'JournalLine.F.CurrencyCode' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'CurrencyId'">
-                    <ng-template let-item>
-                      <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="item.ActionCode ? true : false">
-                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
-                          <span>{{item.CurrencyCode}}</span>
-                        </div>
-                        <div *ngIf="logcelltemplate.IsEditMode">
-                          <LogLov [ObjectFieldName]="'CurrencyId'"
-                                  [ObjectTableName]="'JournalLine'"
-                                  [DataContext]="item"
-                                  [LookUpTableName]="'Currency'"
-                                  (SelectedItemChanged)="item.Currency = $event"
-                                  [HideColumns]="true"
-                                  [FocusOnMe]="true">
-                          </LogLov>
-                        </div>
-                      </log-cell-template>
-                    </ng-template>
-                  </log-column>
-
-                  <!-- ForeignAmount -->
-                  <log-column [width]="'100'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'ForeignAmount'" [header]="'JournalLine.F.ForeignAmount' | TextCodeTranslationPipe">
-                    <ng-template let-item>
-                      <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode&&item.enableForeighAmountField ? 0 : -1" [IsEnabled]="item.enableForeighAmountField && item.ActionCode ? true : false">
-                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align: right;direction: ltr !important;">
-                          <div [attr.id]="'tooltip-' + item.Line" id="t" class="small-tooltip" (mouseover)="item.OnMouseOver()" (mouseleave)="item.OnMouseLeave()">
-                            <span>{{item.ForeignAmount | NumbersPipe:'N2'}}</span>
-                            <div *ngIf="item.currencyRate" [attr.id]="'tooltip-body-' + item.Line" class="small-tooltip-body">
-                              <div class="popup-arrow"></div>
-
-                              <div *ngIf="!item.isRateManualy" class="tooltip-text">{{'Accounting.General.O.ExchangeRatesetbysystem' | TextCodeTranslationPipe}}: {{item.currencyRate}}</div>
-
-                              <div *ngIf="item.isRateManualy && item.GetManualyRate()!=null" class="tooltip-text">
-                                {{'Accounting.General.O.ExchangeRatesetbyuser' | TextCodeTranslationPipe}}: {{item.GetManualyRate()}}
-                              </div>
-
-                            </div>
-                          </div>
+                      <!-- D. Account -->
+                      <log-column [header]="'JournalLine.F.DebitAccountName' | TextCodeTranslationPipe" [width]="'150'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'DebitAccountId'">
+                          <ng-template let-item>
+                              <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="item.ActionCode ? true : false">
+                                  <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
+                                      <span></span>
+                                      <span *ngIf="Approved || Voided" class="hyperlink" (click)="item.DebitAccountHyperlinkClicked()">{{item.DebitAccountName}}</span>
+                                      <span *ngIf="!Approved && !Voided">{{item.DebitAccountName}}</span>
 
 
-                        </div>
-                        <div *ngIf="logcelltemplate.IsEditMode">
 
-                          <LogTextBox [DigitsAfterPoint]="2" [FocusOnMe]="'true'" [DebounceTime]="3000" [ObjectFieldName]="'ForeignAmount'" [InputType]="'sigdouble'" [DataContext]="item"
-                                      (ValueChanged)="item.AmountChanged('foreign',item.LocalAmount,$event)" [ObjectTableName]="'JournalLine'" [HideColumns]="true"></LogTextBox>
+                                  </div>
+                                  <div *ngIf="logcelltemplate.IsEditMode">
+                                      <LogLov [ObjectFieldName]="'DebitAccountId'"
+                                              [ObjectTableName]="'JournalLine'"
+                                              [DataContext]="item"
+                                              [DependencyFilter1Value]="false"
+                                              (SelectedItemChanged)="item.DebitAccount = $event"
+                                              [LookUpTableName]="'GLAccount'"
+                                              [DisplayMemberPath]="'LocalName'"
+                                              [QueryFilterItems]="item.DebitAccountFilterItems"
+                                              [RunToggleMode]="true"
+                                              [HideColumns]="true"
+                                              [FocusOnMe]="'true'">
+                                      </LogLov>
 
-                        </div>
+                                  </div>
 
-                      </log-cell-template>
-                    </ng-template>
-                  </log-column>
+                              </log-cell-template>
+                          </ng-template>
+                      </log-column>
 
-                  <!-- Reference1 -->
-                  <log-column [width]="'75'" [visibility]="'visibile'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'Reference1'" [header]="txt_Reference+' 1'">
-                    <ng-template let-item>
-                      <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="item.ActionCode ? true : false">
-                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
-                          <span>{{item.Reference1}}</span>
-                        </div>
-                        <div *ngIf="logcelltemplate.IsEditMode">
-                          <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Reference1'" [InputType]="'ntext'" [DataContext]="item"
-                                      [ObjectTableName]="'JournalLine'" [HideColumns]="true"></LogTextBox>
+                      <!-- LocalAmount -->
+                      <log-column [width]="'100'" [binding]="'LocalAmount'" [Alignment]="isRTL ? 'right' : 'left'" [header]="txt_Amount + ' (' + TenantCurrency + ')'">
+                          <ng-template let-item>
+                              <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="item.ActionCode ? true : false">
+                                  <div style="width:100%;height:100%;">
+                                      <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align: right;direction: ltr !important;">
+                                          <span>{{item.LocalAmount | NumbersPipe:'N2'}}</span>
+                                      </div>
+                                      <div *ngIf="logcelltemplate.IsEditMode">
+                                          <LogTextBox [DigitsAfterPoint]="2" [FocusOnMe]="'true'" [DebounceTime]="3000" [ObjectFieldName]="'LocalAmount'" [InputType]="'sigdouble'" [DataContext]="item"
+                                                      (ValueChanged)="item.AmountChanged('local',$event,item.ForeignAmount)" [Text]="item.LocalAmount" [ObjectTableName]="'JournalLine'" [HideColumns]="true"></LogTextBox>
+                                      </div>
+                                  </div>
+                              </log-cell-template>
+                          </ng-template>
+                      </log-column>
 
-                        </div>
+                      <!-- Currency -->
+                      <log-column [header]="'JournalLine.F.CurrencyCode' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'CurrencyId'">
+                          <ng-template let-item>
+                              <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="item.ActionCode ? true : false">
+                                  <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
+                                      <span>{{item.CurrencyCode}}</span>
+                                  </div>
+                                  <div *ngIf="logcelltemplate.IsEditMode">
+                                      <LogLov [ObjectFieldName]="'CurrencyId'"
+                                              [ObjectTableName]="'JournalLine'"
+                                              [DataContext]="item"
+                                              [LookUpTableName]="'Currency'"
+                                              (SelectedItemChanged)="item.Currency = $event"
+                                              [HideColumns]="true"
+                                              [FocusOnMe]="true">
+                                      </LogLov>
+                                  </div>
+                              </log-cell-template>
+                          </ng-template>
+                      </log-column>
 
-                      </log-cell-template>
-                    </ng-template>
-                  </log-column>
+                      <!-- ForeignAmount -->
+                      <log-column [width]="'100'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'ForeignAmount'" [header]="'JournalLine.F.ForeignAmount' | TextCodeTranslationPipe">
+                          <ng-template let-item>
+                              <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode&&item.enableForeighAmountField ? 0 : -1" [IsEnabled]="item.enableForeighAmountField && item.ActionCode ? true : false">
+                                  <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align: right;direction: ltr !important;">
+                                      <div [attr.id]="'tooltip-' + item.Line" id="t" class="small-tooltip" (mouseover)="item.OnMouseOver()" (mouseleave)="item.OnMouseLeave()">
+                                          <span>{{item.ForeignAmount | NumbersPipe:'N2'}}</span>
+                                          <div *ngIf="item.currencyRate" [attr.id]="'tooltip-body-' + item.Line" class="small-tooltip-body">
+                                              <div class="popup-arrow"></div>
 
-                  <!-- Reference2 -->
-                  <log-column [width]="'75'" [visibility]="'visibile'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'Reference2'" [header]="txt_Reference + ' 2'">
-                    <ng-template let-item>
-                      <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="item.ActionCode ? true : false">
-                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
-                          <span>{{item.Reference2}}</span>
-                        </div>
-                        <div *ngIf="logcelltemplate.IsEditMode">
-                          <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Reference2'" [InputType]="'ntext'" [DataContext]="item"
-                                      [ObjectTableName]="'JournalLine'" [HideColumns]="true"></LogTextBox>
+                                              <div *ngIf="!item.isRateManualy" class="tooltip-text">{{'Accounting.General.O.ExchangeRatesetbysystem' | TextCodeTranslationPipe}}: {{item.currencyRate}}</div>
 
-                        </div>
+                                              <div *ngIf="item.isRateManualy && item.GetManualyRate()!=null" class="tooltip-text">
+                                                  {{'Accounting.General.O.ExchangeRatesetbyuser' | TextCodeTranslationPipe}}: {{item.GetManualyRate()}}
+                                              </div>
 
-                      </log-cell-template>
-                    </ng-template>
-                  </log-column>
+                                          </div>
+                                      </div>
 
-                  <!-- Reference3 -->
-                  <log-column [width]="'75'" [visibility]="'visibile'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'Reference3'" [header]="txt_Reference + ' 3'">
-                    <ng-template let-item>
-                      <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="item.ActionCode ? true : false">
-                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
-                          <span>{{item.Reference3}}</span>
-                        </div>
-                        <div *ngIf="logcelltemplate.IsEditMode">
-                          <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Reference3'" [InputType]="'ntext'" [DataContext]="item"
-                                      [ObjectTableName]="'JournalLine'" [HideColumns]="true"></LogTextBox>
 
-                        </div>
+                                  </div>
+                                  <div *ngIf="logcelltemplate.IsEditMode">
 
-                      </log-cell-template>
-                    </ng-template>
-                  </log-column>
+                                      <LogTextBox [DigitsAfterPoint]="2" [FocusOnMe]="'true'" [DebounceTime]="3000" [ObjectFieldName]="'ForeignAmount'" [InputType]="'sigdouble'" [DataContext]="item"
+                                                  (ValueChanged)="item.AmountChanged('foreign',item.LocalAmount,$event)" [ObjectTableName]="'JournalLine'" [HideColumns]="true"></LogTextBox>
 
-                  <!-- Notes -->
-                  <log-column [width]="'250'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'Notes'" [header]="'Accounting.General.O.Notes' | TextCodeTranslationPipe">
-                    <ng-template let-item>
-                      <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="item.ActionCode ? true : false">
-                        <div [attr.title]="item.Notes" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
-                          <span>{{item.Notes}} </span>
-                          <!--<span>Rate:{{item.currencyRate}}, Manual: {{item.isRateManualy}}</span>-->
+                                  </div>
 
-                        </div>
-                        <div *ngIf="logcelltemplate.IsEditMode">
-                          <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Notes'" [InputType]="'ntext'" [DataContext]="item"
-                                      [ObjectTableName]="'JournalLine'" [HideColumns]="true"></LogTextBox>
+                              </log-cell-template>
+                          </ng-template>
+                      </log-column>
 
-                        </div>
-                      </log-cell-template>
-                    </ng-template>
-                  </log-column>
+                      <!-- Reference1 -->
+                      <log-column [width]="'75'" [visibility]="'visibile'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'Reference1'" [header]="txt_Reference+' 1'">
+                          <ng-template let-item>
+                              <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="item.ActionCode ? true : false">
+                                  <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
+                                      <span>{{item.Reference1}}</span>
+                                  </div>
+                                  <div *ngIf="logcelltemplate.IsEditMode">
+                                      <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Reference1'" [InputType]="'ntext'" [DataContext]="item"
+                                                  [ObjectTableName]="'JournalLine'" [HideColumns]="true"></LogTextBox>
 
-                  <!-- Buttons -->
-                  <log-column [width]="'50'" [visibility]="'visibile'" [Alignment]="isRTL ? 'right' : 'left'">
-                    <ng-template let-item>
-                      <log-cell-template [IgnoreMods]="true">
-                        <span class="CellSeparator"></span>
-                        <IconButton float-start [Name]="'Delete'" [disabled]="journalDisabled" [IsSmall]="true"
-                                    style="display: block; margin-left:3px; margin-top:4px;" (click)="RemoveLine(item)"></IconButton>
-                      </log-cell-template>
-                    </ng-template>
-                  </log-column>
-                </logitude-edit-grid>
+                                  </div>
+
+                              </log-cell-template>
+                          </ng-template>
+                      </log-column>
+
+                      <!-- Reference2 -->
+                      <log-column [width]="'75'" [visibility]="'visibile'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'Reference2'" [header]="txt_Reference + ' 2'">
+                          <ng-template let-item>
+                              <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="item.ActionCode ? true : false">
+                                  <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
+                                      <span>{{item.Reference2}}</span>
+                                  </div>
+                                  <div *ngIf="logcelltemplate.IsEditMode">
+                                      <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Reference2'" [InputType]="'ntext'" [DataContext]="item"
+                                                  [ObjectTableName]="'JournalLine'" [HideColumns]="true"></LogTextBox>
+
+                                  </div>
+
+                              </log-cell-template>
+                          </ng-template>
+                      </log-column>
+
+                      <!-- Reference3 -->
+                      <log-column [width]="'75'" [visibility]="'visibile'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'Reference3'" [header]="txt_Reference + ' 3'">
+                          <ng-template let-item>
+                              <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="item.ActionCode ? true : false">
+                                  <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
+                                      <span>{{item.Reference3}}</span>
+                                  </div>
+                                  <div *ngIf="logcelltemplate.IsEditMode">
+                                      <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Reference3'" [InputType]="'ntext'" [DataContext]="item"
+                                                  [ObjectTableName]="'JournalLine'" [HideColumns]="true"></LogTextBox>
+
+                                  </div>
+
+                              </log-cell-template>
+                          </ng-template>
+                      </log-column>
+
+                      <!-- Notes -->
+                      <log-column [width]="'250'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'Notes'" [header]="'Accounting.General.O.Notes' | TextCodeTranslationPipe">
+                          <ng-template let-item>
+                              <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="item.ActionCode ? true : false">
+                                  <div [attr.title]="item.Notes" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
+                                      <span>{{item.Notes}} </span>
+                                      <!--<span>Rate:{{item.currencyRate}}, Manual: {{item.isRateManualy}}</span>-->
+
+                                  </div>
+                                  <div *ngIf="logcelltemplate.IsEditMode">
+                                      <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Notes'" [InputType]="'ntext'" [DataContext]="item"
+                                                  [ObjectTableName]="'JournalLine'" [HideColumns]="true"></LogTextBox>
+                                  </div>
+                              </log-cell-template>
+                          </ng-template>
+                      </log-column>
+
+                      <!-- Buttons -->
+                      <log-column [width]="'50'" [visibility]="'visibile'" [Alignment]="'left'" >
+                          <ng-template let-item>
+                              <log-cell-template [IgnoreMods]="true">
+                                  <IconButton *ngIf="Approved" float-start [Name]="'Edit'" [IsSmall]="true" (click)="EditJournalLineNotes(item)"
+                                              style="display: block; margin-left:3px; margin-top:4px;"></IconButton>
+                              </log-cell-template>
+                          </ng-template>
+                      </log-column>
+
+                      <log-column [width]="'50'" [visibility]="'visibile'" [Alignment]="isRTL ? 'right' : 'left'">
+                          <ng-template let-item>
+                              <log-cell-template [IgnoreMods]="true">
+                                  <span class="CellSeparator"></span>
+                                  <IconButton float-start [Name]="'Delete'" [disabled]="journalDisabled" [IsSmall]="true"
+                                              style="display: block; margin-left:3px; margin-top:4px;" (click)="RemoveLine(item)"></IconButton>
+                              </log-cell-template>
+                          </ng-template>
+                      </log-column>
+                  </logitude-edit-grid>
               </div>
             </td>
 

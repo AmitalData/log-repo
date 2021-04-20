@@ -184,6 +184,18 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public string GrossWeightUnitCode  { get; set; }
        [DataMember]
        public string ForwardingShipmentNumber  { get; set; }
+       [DataMember]
+       public string ShipmentTypeCode  { get; set; }
+       [DataMember]
+       public string CustomerEnglishName  { get; set; }
+       [DataMember]
+       public string CustomerLocalName  { get; set; }
+       [DataMember]
+       public string FromPortCode  { get; set; }
+       [DataMember]
+       public string ToPortCode  { get; set; }
+       [DataMember]
+       public int? NumberOfPackages  { get; set; }
    }
 
 }

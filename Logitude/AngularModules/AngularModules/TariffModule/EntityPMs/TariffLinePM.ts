@@ -562,6 +562,36 @@ export class TariffLinePM {
     public set Surcharge10CurrencyId(newValue: string) { if (this.surcharge10CurrencyId != newValue) { this.surcharge10CurrencyId = newValue; this.MarkAsDirty("Surcharge10CurrencyId"); } }
        
 	 
+    private viaPortId: string;
+    public get ViaPortId() { return this.viaPortId; }
+    public set ViaPortId(newValue: string) { if (this.viaPortId != newValue) { this.viaPortId = newValue; this.MarkAsDirty("ViaPortId"); } }
+       
+	 
+    private viaPortText: string;
+    public get ViaPortText() { return this.viaPortText; }
+    public set ViaPortText(newValue: string) { if (this.viaPortText != newValue) { this.viaPortText = newValue; this.MarkAsDirty("ViaPortText"); } }
+       
+	 
+    private viaPortName: string;
+    public get ViaPortName() { return this.viaPortName; }
+    public set ViaPortName(newValue: string) { if (this.viaPortName != newValue) { this.viaPortName = newValue; this.MarkAsDirty("ViaPortName"); } }
+       
+	 
+    private viaPortCombinedCode: string;
+    public get ViaPortCombinedCode() { return this.viaPortCombinedCode; }
+    public set ViaPortCombinedCode(newValue: string) { if (this.viaPortCombinedCode != newValue) { this.viaPortCombinedCode = newValue; this.MarkAsDirty("ViaPortCombinedCode"); } }
+       
+	 
+    private viaPortCode: string;
+    public get ViaPortCode() { return this.viaPortCode; }
+    public set ViaPortCode(newValue: string) { if (this.viaPortCode != newValue) { this.viaPortCode = newValue; this.MarkAsDirty("ViaPortCode"); } }
+       
+	 
+    private viaPortHasWrongTransMode: boolean;
+    public get ViaPortHasWrongTransMode() { return this.viaPortHasWrongTransMode; }
+    public set ViaPortHasWrongTransMode(newValue: boolean) { if (this.viaPortHasWrongTransMode != newValue) { this.viaPortHasWrongTransMode = newValue; this.MarkAsDirty("ViaPortHasWrongTransMode"); } }
+       
+	 
 
     public OldEntityPM: TariffLinePM;
 	

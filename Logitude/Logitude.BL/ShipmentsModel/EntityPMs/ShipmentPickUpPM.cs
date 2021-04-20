@@ -160,7 +160,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string AgentId { get; set; }
         public string ParentPickUpDeliveryId { get; set; }
         public int? ChildPickUpIndex { get; set; }
-        
+        public string BookingConfirmationNumber { get; set; }
+
         private List<ShipmentPickUpDeliveryPackagePM> shipmentPickUpDeliveryPackages;
         [Include]
         [Composition]

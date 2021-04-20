@@ -14,7 +14,7 @@ namespace Logitude.BL.QuoteModel.EntityLists
         public bool ConnectedToTicket { get; set; }
         public string ToLocation { get; set; }
         public string FromLocation { get; set; }
-        public string DeliveryFrom { get; set; }
+        public string DeliveryTo { get; set; }
         public string PickupFrom { get; set; }
         public double? EstimatedPayablesInSales { get; set; }
         public double? EstimatedPayablesInLocal { get; set; }

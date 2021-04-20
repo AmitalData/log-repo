@@ -728,8 +728,21 @@ getHeaderCurrency(CurrencyId:string){
         }
     }
 
-  
-
+    EditJournalLineNotes(line: any) {
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 450;
+        logWindow.Height = 200;
+        logWindow.Title = TextCodeTranslator.Translate("Journal.M.EditLineNote");
+        logWindow.WindowArgs = { journalLine: line };
+        logWindow.ComponentLoaded.subscribe(comp => {
+            logWindow.WindowClosed.subscribe(s => {
+                if (s) {
+                    this.JournalLines.Collection.filter(line => line.Line == line.Line)[0].Note = comp.Note;
+                }
+            });
+        });
+        logWindow.Show('./Accounting/Components/EditTabs/Journal//UpdateJournalLineNoteComponent');
+    }
 }
 
 
@@ -1538,6 +1551,7 @@ class JournalLineModel extends BaseComponent {
         });
 
     }
+
 
     //#endregion
 }

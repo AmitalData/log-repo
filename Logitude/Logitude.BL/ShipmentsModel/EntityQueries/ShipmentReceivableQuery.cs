@@ -99,6 +99,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                        ShipmentNumber = a.Shipment == null ? null : a.Shipment.ShipmentNumber,
                                                        QuoteSaleMinAmount = a.QuoteSaleMinAmount,
                                                        QuoteSaleMaxAmount = a.QuoteSaleMaxAmount,
+                                                       VatAmountProfit = a.VatAmountProfit,
+                                                       VatAmountLocal = a.VatAmountLocal,
                                                    }).ToList();
             return myResult;
         }
@@ -158,6 +160,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        ShipmentNumber = a.Shipment == null ? null : a.Shipment.ShipmentNumber,
                        QuoteSaleMinAmount = a.QuoteSaleMinAmount,
                        QuoteSaleMaxAmount = a.QuoteSaleMaxAmount,
+                       VatAmountProfit = a.VatAmountProfit,
+                       VatAmountLocal = a.VatAmountLocal,
                    }).FirstOrDefault();
 
             return myResult;

@@ -1,4 +1,4 @@
-@release @dev
+@release @dev @all
 Feature: Convert Shipment from House to Direct, Direct to House, FCL to LCL, LCL to FCL and Shipment Direction
     The user creates a Direct Export Ocean FCL shipment,
     changes direction to Import, changes type to House,
@@ -31,7 +31,6 @@ Feature: Convert Shipment from House to Direct, Direct to House, FCL to LCL, LCL
         And following events should appear in events tab
             | Event                        | Notes                               |
             | Shipment Direction Converted | Converted from [Export] to [Import] |
-            | Shipment Number Changed      | Old Number: "OldShipmentNumber"     |
 
     Scenario: Change shipment type to house
         Given the user open direct to house conversion wizard

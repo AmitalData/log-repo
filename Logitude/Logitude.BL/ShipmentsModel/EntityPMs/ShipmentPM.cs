@@ -2647,6 +2647,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string OriginOnCarriageToPortId { get; set; }
         public string OriginPreCarriageToPortId { get; set; }
         public string OriginOnCarriageFromPortId { get; set; }
+        public string TotalTax { get; set; }
+        public string WarehouseLegLocalName { get; set; }
+        public string WarehouseLegEnglishName { get; set; }
 
     }
 

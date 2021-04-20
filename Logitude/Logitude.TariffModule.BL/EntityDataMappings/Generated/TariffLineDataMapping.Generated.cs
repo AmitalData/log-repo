@@ -101,7 +101,9 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         Surcharge7CurrencyId, 
 	         Surcharge8CurrencyId, 
 	         Surcharge9CurrencyId, 
-	         Surcharge10CurrencyId,
+	         Surcharge10CurrencyId, 
+	         ViaPortId, 
+	         ViaPortText,
 	      }
 
 
@@ -207,7 +209,13 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         Surcharge7CurrencyId, 
 	         Surcharge8CurrencyId, 
 	         Surcharge9CurrencyId, 
-	         Surcharge10CurrencyId,
+	         Surcharge10CurrencyId, 
+	         ViaPortId, 
+	         ViaPortText, 
+	         ViaPortName, 
+	         ViaPortCombinedCode, 
+	         ViaPortCode, 
+	         ViaPortHasWrongTransMode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -609,6 +617,16 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge10CurrencyId))
             {
 				entityPOCO.Surcharge10CurrencyId = entityPM.Surcharge10CurrencyId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ViaPortId))
+            {
+				entityPOCO.ViaPortId = entityPM.ViaPortId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ViaPortText))
+            {
+				entityPOCO.ViaPortText = entityPM.ViaPortText;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -1017,6 +1035,16 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 					entityPM.Surcharge10CurrencyId = entityPOCO.Surcharge10CurrencyId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ViaPortId))
+            {
+					entityPM.ViaPortId = entityPOCO.ViaPortId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ViaPortText))
+            {
+					entityPM.ViaPortText = entityPOCO.ViaPortText;
+            }
+
 		}
 
 		public void PMToOldPM(TariffLinePM entityPM, TariffLinePM oldEntityPM)
@@ -1416,6 +1444,16 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge10CurrencyId))
             {
                 oldEntityPM.Surcharge10CurrencyId = entityPM.Surcharge10CurrencyId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ViaPortId))
+            {
+                oldEntityPM.ViaPortId = entityPM.ViaPortId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ViaPortText))
+            {
+                oldEntityPM.ViaPortText = entityPM.ViaPortText;
             }
 			
 		}

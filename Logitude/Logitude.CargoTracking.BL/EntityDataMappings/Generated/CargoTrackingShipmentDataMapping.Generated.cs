@@ -96,7 +96,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         DeliveryNotes, 
 	         DeliveryExceptionReason, 
 	         GrossWeightUnitCode, 
-	         ForwardingShipmentNumber,
+	         ForwardingShipmentNumber, 
+	         ShipmentTypeCode,
 	      }
 
 
@@ -185,7 +186,13 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         DeliveryNotes, 
 	         DeliveryExceptionReason, 
 	         GrossWeightUnitCode, 
-	         ForwardingShipmentNumber,
+	         ForwardingShipmentNumber, 
+	         ShipmentTypeCode, 
+	         CustomerEnglishName, 
+	         CustomerLocalName, 
+	         FromPortCode, 
+	         ToPortCode, 
+	         NumberOfPackages,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -562,6 +569,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForwardingShipmentNumber))
             {
 				entityPOCO.ForwardingShipmentNumber = entityPM.ForwardingShipmentNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentTypeCode))
+            {
+				entityPOCO.ShipmentTypeCode = entityPM.ShipmentTypeCode;
 			}
 			}
 
@@ -943,6 +955,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.ForwardingShipmentNumber = entityPOCO.ForwardingShipmentNumber;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ShipmentTypeCode))
+            {
+					entityPM.ShipmentTypeCode = entityPOCO.ShipmentTypeCode;
+            }
+
 		}
 
 		public void PMToOldPM(CargoTrackingShipmentPM entityPM, CargoTrackingShipmentPM oldEntityPM)
@@ -1317,6 +1334,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForwardingShipmentNumber))
             {
                 oldEntityPM.ForwardingShipmentNumber = entityPM.ForwardingShipmentNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentTypeCode))
+            {
+                oldEntityPM.ShipmentTypeCode = entityPM.ShipmentTypeCode;
             }
 			
 		}

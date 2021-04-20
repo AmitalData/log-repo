@@ -254,6 +254,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                 VolumeUnit: this.EntityPM.VolumeUnitCode,
                 IsShipment: true,
                 FatherComponent: this,
+                ViaPort: this.EntityPM.Transshipment1FromPortId,
                 TariffType: tariffType
             };
             var logWindow = new LogitudeWindow();
@@ -2181,6 +2182,9 @@ export class ShipmentPayableItem extends BaseComponent {
                     }
                 });
             }
+
+            var Generator = new ShipmentGenerator(this.fatherComponent.EntityPM, this.fatherComponent.AllRates);
+            Generator.CalculatePayableVatAmount(this.EntityPM);
         }
     }
 
@@ -2287,6 +2291,8 @@ export class ShipmentPayableItem extends BaseComponent {
             });
 
             this.ComputeInsidePayablesData();
+            var Generator = new ShipmentGenerator(this.fatherComponent.EntityPM, this.fatherComponent.AllRates);
+            Generator.CalculatePayableVatAmount(this.EntityPM);
         }
     }
 
@@ -2294,6 +2300,8 @@ export class ShipmentPayableItem extends BaseComponent {
     set ExpectedAmountInProfitCurrency(newVaule: number) {
         if (this.EntityPM.ExpectedAmountInProfitCurrency != newVaule) {
             this.EntityPM.ExpectedAmountInProfitCurrency = AppTool.Round(newVaule, 2);
+            var Generator = new ShipmentGenerator(this.fatherComponent.EntityPM, this.fatherComponent.AllRates);
+            Generator.CalculatePayableVatAmount(this.EntityPM);
         }
     }
 

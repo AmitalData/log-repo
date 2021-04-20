@@ -259,6 +259,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         
         private void FillGeneralData()
         {
+            FillFiltersFieldsValuesInDataProvider();
             TenantPM currentTenant = TenantQuery.GetSingleTenantPM(tenant, false);
             Address tenantAddress = addressRepository.GetSingleAddress(currentTenant.AddressId, currentTenant.Id);
             Card FilterdCustomer = null;
@@ -326,7 +327,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             List<StatementRecord> list_APPayments = new List<StatementRecord>();
 
             List<Currency> allCurrencies = (from d in commonContext.Currencies where d.Tenant == tenant select d).ToList();
-
+            
             switch (invoicePaymentFilter)
             {
                 case "Invoices":
@@ -1041,6 +1042,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                  }).ToList();
 
             return myList;
+        }
+        private void FillFiltersFieldsValuesInDataProvider()
+        {
+            dataProvider.FromDate = fromDate != null ? fromDate : null;
+            dataProvider.ToDate = toDate != null ? toDate : null;
+            dataProvider.Currency = currencyCodeFilter != null ? currencyCodeFilter : "All Currencies";
+            dataProvider.AROrAPFilter = ARAPFilter == null ? "All AR and AP" : ARAPFilter;
+            dataProvider.PaymentOrInvoiceFilter = invoicePaymentFilter == null ? "All Payments and Invoices" : invoicePaymentFilter;
         }
     }
 

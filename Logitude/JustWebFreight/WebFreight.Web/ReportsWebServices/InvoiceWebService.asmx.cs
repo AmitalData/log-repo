@@ -379,7 +379,8 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicedataprovider.TrailerNumber = shipment.TrailerNumber;
                     invoicedataprovider.SpecialServiceType = shipment.SpecialServicesTypeName;
                     invoicedataprovider.WarehouseFreeDays = shipment.WarehouseStorageFreeDays == null ? 0 : shipment.WarehouseStorageFreeDays.Value;
-                    invoicedataprovider.PreCarriageVessel = !string.IsNullOrEmpty(shipment.PreCarriageVesselName) ? shipment.PreCarriageVesselName : shipment.MasterPreCarriageVesselName;
+                    invoicedataprovider.PreCarriageVessel = shipment.PreCarriageVesselName;
+                    invoicedataprovider.PreForwardingVessel = shipment.PreForwardingVesselName;
 
                     User salesman = userRepository.GetSingleUser(shipment.SalesmanUserId, shipment.Tenant, false);
                     if (salesman != null)
@@ -858,6 +859,10 @@ namespace WebFreight.Web.ReportsWebServices
                                              where a.Id == shipment.OnCarriageToPortId
                                              select a).FirstOrDefault();
 
+                    Port onForwardingToPort = (from a in commonContext.Ports.Include("Country")
+                                               where a.Id == shipment.OnForwardingToPortId
+                                               select a).FirstOrDefault();
+
                     if (mainCarriageFromPort != null)
                     {
                         invoicedataprovider.MainCarriageFromPortName = mainCarriageFromPort.EnglishName;
@@ -881,11 +886,18 @@ namespace WebFreight.Web.ReportsWebServices
                         invoicedataprovider.FinalDestinationPortCountryLocalName = finalDistinationPort.Country != null ? finalDistinationPort.Country.LocalName : "";
                     }
 
-                    if (onCarriageToPort != null)
+                    if(onForwardingToPort != null)
+                    {
+                        invoicedataprovider.FianlDestinationInclOnCarriagePortName = onForwardingToPort.EnglishName;
+                        invoicedataprovider.FianlDestinationInclOnCarriagePortCode = onForwardingToPort.Code + (onForwardingToPort.Country != null ? " (" + onForwardingToPort.Country.Code + ")" : "");
+                    }
+
+                    else if (onCarriageToPort != null)
                     {
                         invoicedataprovider.FianlDestinationInclOnCarriagePortName = onCarriageToPort.EnglishName;
                         invoicedataprovider.FianlDestinationInclOnCarriagePortCode = onCarriageToPort.Code + (onCarriageToPort.Country != null ? " (" + onCarriageToPort.Country.Code + ")" : "");
                     }
+
                     else if (finalDistinationPort != null)
                     {
                         invoicedataprovider.FianlDestinationInclOnCarriagePortName = finalDistinationPort.EnglishName;
@@ -1697,6 +1709,7 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicedataprovider.AmountInWordsFrench = FirstCharToUpper(numbersConverterToWords.NumbersToFrench((int)invoiceAmount.Value) + " ") + invoicedataprovider.InvoicecurrencyLocalName + " " + FrenchFractions;
                 invoicedataprovider.AmountInWordsFrenchWithFR = FirstCharToUpper(numbersConverterToWords.NumbersToFrench((int)invoiceAmount.Value) + " ") + invoicedataprovider.InvoicecurrencyLocalName + " " + FrenchFractionsWords;
                 invoicedataprovider.AmountInWordsFrenchNoFR = FirstCharToUpper(numbersConverterToWords.NumbersToFrench((int)invoiceAmount.Value) + " ") + invoicedataprovider.InvoicecurrencyLocalName;
+                invoicedataprovider.NewAmountInWordsFrenchWithFraction = FirstCharToUpper(numbersConverterToWords.ConvertNumbersToFrenchNewVersion(invoiceAmount.Value, invoicedataprovider.InvoicecurrencyLocalName));
                 invoicedataprovider.AmountInWordsSpanishWithZero = FirstCharToUpper(numbersConverterToWords.NumbersToSpanish((int)invoiceAmount.Value) + " ") + invoicedataprovider.InvoicecurrencyLocalName + " " + strWithZeros;
                 invoicedataprovider.AmountsInEnglishWithZero = FirstCharToUpper(numbersConverterToWords.NumbersToEnglish((int)invoiceAmount.Value) + " ") + invoicedataprovider.InvoicecurrencyLocalName + " " + strWithZeros;
                 invoicedataprovider.AmountInWordsRussian = FirstCharToUpper(numbersConverterToWords.NumbersToRussian((int)invoiceAmount.Value) + " ") + invoicedataprovider.InvoicecurrencyLocalName + " " + strWithZeros;
