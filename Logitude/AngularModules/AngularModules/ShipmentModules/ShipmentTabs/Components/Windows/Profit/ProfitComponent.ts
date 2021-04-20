@@ -262,8 +262,8 @@ export class ProfitComponent {
                 record.Profit = -1 * (item.PayableOpenedAmount + item.PayableAcountedAmount);
             }
 
-            if (this.IncludingVAT && item.ReceivableAmountWithVat && item.PayableAmountWithVat)
-                record.Profit = (item.ReceivableAmountWithVat) - (item.PayableAmountWithVat);
+            if (this.IncludingVAT)
+                record.Profit = (record.ReceivableAmountWithVat) - (record.PayableAmountWithVat);
 
             this.ProfitsCollection.push(record);
         });
@@ -278,14 +278,14 @@ export class ProfitComponent {
             record.ReceivableAmount = this.Fixed(item.ReceivableOpenedAmount + item.ReceivableAcountedAmount);
             record.ReceivableAmountWithVat = this.Fixed(item.ReceivableAmountWithVat);
 
-            if (this.IncludingVAT && item.ReceivableAmountWithVat) {
-                record.Profit =  item.ReceivableAmountWithVat;
+            if (this.IncludingVAT && record.ReceivableAmountWithVat) {
+                record.Profit = record.ReceivableAmountWithVat;
             }
             else {
                 record.Profit =  item.ReceivableOpenedAmount + item.ReceivableAcountedAmount;
             }
 
-            record.Profit = this.IncludingVAT ? item.ReceivableAmountWithVat : item.ReceivableOpenedAmount + item.ReceivableAcountedAmount;
+            record.Profit = this.IncludingVAT ? record.ReceivableAmountWithVat : item.ReceivableOpenedAmount + item.ReceivableAcountedAmount;
             this.ProfitsCollection.push(record);
         });
     }
@@ -385,8 +385,9 @@ export class ProfitComponent {
                 record.Profit = -1 * (item.PayableOpenedAmount + item.PayableAcountedAmount);
             }
 
-            if (this.IncludingVAT && item.ReceivableAmountWithVat && item.PayableAmountWithVat) {
-                record.Profit = (item.ReceivableAmountWithVat) - (item.PayableAmountWithVat);
+            if (this.IncludingVAT) {
+
+                record.Profit = (record.ReceivableAmountWithVat) - (record.PayableAmountWithVat);
             }
        
             this.ProfitsCollection.push(record);
@@ -402,8 +403,8 @@ export class ProfitComponent {
             record.ReceivableAmount = this.Fixed(item.ReceivableOpenedAmount + item.ReceivableAcountedAmount);
             record.ReceivableAmountWithVat = this.Fixed(item.ReceivableAmountWithVat);
 
-            if (this.IncludingVAT && item.ReceivableAmountWithVat) {
-                record.Profit =  item.ReceivableAmountWithVat ;
+            if (this.IncludingVAT && record.ReceivableAmountWithVat) {
+                record.Profit = record.ReceivableAmountWithVat ;
             }
             else {
                 record.Profit = item.ReceivableOpenedAmount + item.ReceivableAcountedAmount;

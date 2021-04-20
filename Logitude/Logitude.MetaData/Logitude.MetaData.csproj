@@ -190,6 +190,8 @@
     <None Include="DBOthers\QuoteModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateQuotes.dxml" />
     <None Include="DBOthers\QuoteModel\Triggers\Trigger_AutomaticLastUpdateDateQuoteComputedFields.dxml" />
     <None Include="DBOthers\QuoteModel\Triggers\Trigger_AutomaticLastUpdateDateQuotes.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdateShipmentPayablesVatAmounts.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdateShipmentReceivablesVatAmounts.dxml" />
     <None Include="DBScripts\CommonModel\202103161606_AddNewUOMPercentOForeignChargesLocalAmounts.sxml" />
     <None Include="DBScripts\CommonModel\202104161424_UpdateTenantRatios.sxml" />
     <None Include="DBScripts\CommonModel\202104161425_UpdateTenantRatiosOnCloud.sxml" />
@@ -303,6 +305,7 @@
     <None Include="DBScripts\InvoiceModel\202104121143_FillAPInvoiceShipmentsNumbersBackward.sxml" />
     <None Include="DBScripts\ShipmentModel\202103201130_CreateCalculatePayableVatOpenAmountFunction.sxml" />
     <None Include="DBScripts\ShipmentModel\202103211530_FillVatAmountLocalVatAmountProfitInShipmentReceivables.sxml" />
+    <None Include="DBScripts\ShipmentModel\202103211530_FillVatAmountLocalVatAmountProfitInShipmentReceivablesOpenLines.sxml" />
     <None Include="DBScripts\ShipmentModel\202103211610_FillVatAmountLocalVatAmountProfitInShipmentPayables.sxml" />
     <None Include="DBScripts\InvoiceModel\202128011350_AddNotesToAPInvoiceSearchField.sxml" />
     <None Include="DBScripts\InvoiceModel\202128011350_AddNotesToAPPaymentSearchField.sxml" />

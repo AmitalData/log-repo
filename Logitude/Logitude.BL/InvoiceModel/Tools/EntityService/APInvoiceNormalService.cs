@@ -2092,6 +2092,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     UpdateShipmentProfitClass.UpdatePayables(entityPM.MainEntityId, tenant, true);
                     UpdateShipmentProfitClass.UpdateProfit(entityPM.MainEntityId, tenant);
+                    UpdateShipmentProfitClass.UpdateShipmentHousesPayablesVatAmounts(entityPM.MainEntityId, tenant);
                 }
             }
         }
