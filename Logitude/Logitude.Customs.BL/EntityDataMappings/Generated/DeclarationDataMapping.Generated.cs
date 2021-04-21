@@ -396,7 +396,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         PhysicalCheck, 
 	         FinalLoadingSiteName, 
 	         ShipCodeName,
-	      }
+			 CancelRejectionReasonName,
+		}
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
@@ -2677,10 +2678,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.CustomCancelRequestRemarks)) //T4 find type == nText 
             {
                 entityPM.CustomCancelRequestRemarks = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CustomCancelRequestRemarks));
-            }
-            if (!String.IsNullOrWhiteSpace(entityPM.CancelRequestRejectionReason)) //T4 find type == nText 
-            {
-                entityPM.CancelRequestRejectionReason = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CancelRequestRejectionReason));
             }
             if (!String.IsNullOrWhiteSpace(entityPM.AmendmentErrorXml)) //T4 find type == nText 
             {

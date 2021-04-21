@@ -400,8 +400,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string CancelRequestStatusCode { get; set; }
 	      
         public virtual CancellationRequestStatus CancelRequestStatus { get; set; }
+        [ForeignKey("CancelRequestRejectReasonType")]
         [Column("CancelRequestRejectionReason")]
 	    public string CancelRequestRejectionReason { get; set; }
+	      
+        public virtual CancelRequestRejectReasonType CancelRequestRejectReasonType { get; set; }
         [Column("CancelRequestApproveDate")]
 	    public DateTime? CancelRequestApproveDate { get; set; }
         [Column("IsClaimable")]

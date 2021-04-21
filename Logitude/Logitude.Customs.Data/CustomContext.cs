@@ -112,6 +112,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CancellationRequestStatusMap());
 	
+            modelBuilder.Configurations.Add(new CancelRequestRejectReasonTypeMap());
+	
             modelBuilder.Configurations.Add(new CargoIdentifireTypeMap());
 	
             modelBuilder.Configurations.Add(new CargoIdentityQualifierMap());
@@ -1448,6 +1450,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CancellationRequestStatus> CancellationRequestStatuses 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CancelRequestRejectReasonType> CancelRequestRejectReasonTypes 
 	 {
 	      get; set;
 	 

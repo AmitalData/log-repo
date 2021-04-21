@@ -1295,6 +1295,7 @@
     <TypeScriptCompile Include="Customs\EntityLists\AutonomyRegionTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CancellationReasonRequestTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CancellationRequestStatusList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\CancelRequestRejectReasonTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CargoSealIdentifierList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CargoTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ClaimReasonTypeList.ts" />
@@ -1360,6 +1361,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\AutonomyRegionTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CancellationReasonRequestTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CancellationRequestStatusPM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\CancelRequestRejectReasonTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CargoSealIdentifierPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CargoSealPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CargoTypePM.ts" />
@@ -1458,6 +1460,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\AutonomyRegionTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CancellationReasonRequestTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CancellationRequestStatusListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\CancelRequestRejectReasonTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CargoSealIdentifierListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CargoTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ClaimReasonTypeListService.ts" />
@@ -1535,6 +1538,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\TreatmentWayListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\UpdateCodeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\AutonomyRegionTypePMService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardPMs\CancelRequestRejectReasonTypePMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CargoSealIdentifierPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CourierDeclarationPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CourierPendingReasonPMService.ts" />

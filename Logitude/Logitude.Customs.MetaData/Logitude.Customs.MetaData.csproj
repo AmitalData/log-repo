@@ -171,6 +171,7 @@
     <None Include="DBTables\Bank.dxml" />
     <None Include="DBTables\CancellationReasonRequestType.dxml" />
     <None Include="DBTables\CancellationRequestStatus.dxml" />
+    <None Include="DBTables\CancelRequestRejectReasonType.dxml" />
     <None Include="DBTables\CargoIdentifireType.dxml" />
     <None Include="DBTables\CargoIdentityQualifier.dxml" />
     <None Include="DBTables\CargoSplitRequestStatus.dxml" />
@@ -516,6 +517,7 @@
     <None Include="EntityFiles\ExporterRoleType.lxml" />
     <None Include="EntityFiles\FclLclCode.lxml" />
     <None Include="EntityFiles\LoadingSiteType.lxml" />
+    <None Include="EntityFiles\CancelRequestRejectReasonType.lxml" />
     <None Include="EntityFiles\NbcDeclarationType.lxml" />
     <None Include="EntityFiles\CargoSeal.lxml" />
     <None Include="EntityFiles\CargoSealIdentifier.lxml" />
