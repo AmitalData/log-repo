@@ -4,4 +4,5 @@
       update BIReportFolders set PermissionForAll = 1
     ]]>       
   </Sql>
+  <Oracle Version="1"></Oracle>
 </Script>

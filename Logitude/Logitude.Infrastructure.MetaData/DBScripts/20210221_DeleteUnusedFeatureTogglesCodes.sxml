@@ -4,4 +4,5 @@
       DELETE FROM FeatureToggles WHERE ToggleCode = 'BDR' or  ToggleCode = 'BDW' or ToggleCode = 'CST' or ToggleCode = 'RRW' or ToggleCode = 'TJC' or ToggleCode = 'CWH';
     ]]>       
   </Sql>
+  <Oracle Version="1"></Oracle>
 </Script>
