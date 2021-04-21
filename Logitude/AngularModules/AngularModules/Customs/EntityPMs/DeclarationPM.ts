@@ -1349,6 +1349,11 @@ export class DeclarationPM {
     public set PhysicalCheck(newValue: number) { if (this.physicalCheck != newValue) { this.physicalCheck = newValue; this.MarkAsDirty("PhysicalCheck"); } }
        
 	 
+    private cancelRejectionReasonName: string;
+    public get CancelRejectionReasonName() { return this.cancelRejectionReasonName; }
+    public set CancelRejectionReasonName(newValue: string) { if (this.cancelRejectionReasonName != newValue) { this.cancelRejectionReasonName = newValue; this.MarkAsDirty("CancelRejectionReasonName"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		

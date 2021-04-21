@@ -393,7 +393,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         PalestinianCode, 
 	         RequestedCustomsDocId, 
 	         ExportDeclarationOfficeCode, 
-	         PhysicalCheck,
+	         PhysicalCheck, 
+	         CancelRejectionReasonName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
