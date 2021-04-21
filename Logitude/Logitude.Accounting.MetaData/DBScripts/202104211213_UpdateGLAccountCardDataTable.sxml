@@ -1,0 +1,79 @@
+﻿<Script DBType="Main" Module="Accounting" AOT="true"  TargetTableName="GLAccounts">
+  <Sql Version="1">
+    <![CDATA[
+
+declare @isMultiCurrency bit
+declare @cardDataId varchar(15)
+declare @Id varchar(15)
+declare @SalesmanUserId varchar(15)
+declare @phone varchar(40)
+declare @TotalOpenShipments varchar(15)
+declare @GLAccountCardsDataId varchar(15)  
+declare @paymentTermId varchar(15)
+declare @vatnumber varchar(15)
+declare @collector varchar(15)
+Declare @tenant int
+declare @singleAccountId varchar(15)
+declare @creditLimitAmount decimal(18,2)
+declare @cardId varchar(15)
+declare @mainGLACcountId varchar(15)
+declare @cards table (Id varchar(15),paymentTermId varchar(15),  SalesmanUserId varchar(15), vatnumber varchar(15) , collectorId varchar(15),Phone varchar(40), creditLimit decimal(18,2),glaccountid varchar(15) )
+
+Declare GLAccountCards cursor 
+
+    for
+    select IsMultiCurrency, CardsDataId, GLAccounts.Id, GLAccounts.Tenant from GLAccounts join cards on GLAccounts.Id = Cards.GLAccountId where  $LastCounterWhere$ and cards.PartnerTypeId='CS' or cards.PartnerTypeId ='VD'  order by GLAccounts.IsMultiCurrency desc
+    OPEN GLAccountCards FETCH NEXT FROM GLAccountCards  into @isMultiCurrency , @cardDataId, @Id, @tenant
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+      insert into @cards (Id,paymentTermId,SalesmanUserId,VatNumber,collectorId,Phone,glaccountid) select Id, PaymentTermId, SalesmanUserId,VatNumber,CollectorId,Phone,GLAccountId from Cards  where GLAccountId = @Id
+	select * from @cards
+	select  paymentTermId  top1 from @cards where paymentTermId is not null
+	set @paymentTermId = (select    top 1  percent paymenttermId from @cards where paymentTermId is not null) 
+	   set @vatnumber = (select top 1  percent VatNumber  from @cards where vatnumber is not null ) 
+		set @collector = (select top 1  percent collectorId   from @cards where collectorId is not null) 
+		set @SalesmanUserId = (select top 1  percent  SalesmanUserId   from @cards where SalesmanUserId is not null) 
+		set @phone = (select   top 1  percent Phone from @cards where Phone is not null) 	  
+	   set @cardId = (select top 1 Id   from @cards) 
+		set @creditLimitAmount = (select CreditLimitAmount top1  from Customers where Id = @cardId and CreditLimitAmount is not null) 
+		set @TotalOpenShipments = (select TotalOpenFilesAmount from CustomerOpenFilesAmounts where CustomerId = @cardId)
+
+	if( @cardDataId is null and @isMultiCurrency=1)
+	begin
+	EXECUTE usp_GetNextTableIdValue @GLAccountCardsDataId OUTPUT,'GLAccountCardsData'
+ 
+	  insert into GLAccountCardsDatas (Id,PaymentTermId,SalesmanUserId,CollectorUserId,VatNumber,Phone,Tenant,CreditLimit,TotalOpenShipments) values (@GLAccountCardsDataId,@paymentTermId,@SalesmanUserId,@collector,@vatnumber,@phone,@tenant,@creditLimitAmount,@TotalOpenShipments)
+	  update glaccounts set CardsDataId= @GLAccountCardsDataId where Id in (select glaccountid from GLAccountCurrencies where MainGLAccountId=@Id)
+	update glaccounts set CardsDataId = @GLAccountCardsDataId where Id= @Id
+	end
+   
+   else if(@cardDataId is null and @isMultiCurrency=0)
+   begin 
+   set @singleAccountId = (select Id from GLAccountCurrencies where GLAccountId = @Id)
+   if(@singleAccountId is null)
+   begin
+   	EXECUTE usp_GetNextTableIdValue @GLAccountCardsDataId OUTPUT,'GLAccountCardsData'
+
+	  
+	  insert into GLAccountCardsDatas (Id,PaymentTermId,SalesmanUserId,CollectorUserId,VatNumber,Phone,Tenant,CreditLimit,TotalOpenShipments) values (@GLAccountCardsDataId,@paymentTermId,@SalesmanUserId,@collector,@vatnumber,@phone,@tenant,@creditLimitAmount,@TotalOpenShipments)
+
+	update glaccounts set CardsDataId = @GLAccountCardsDataId where Id= @Id
+   end
+   else
+   begin 
+   set @mainGLACcountId =(select MainGLAccountId from GLAccountCurrencies where GLAccountId = @Id)
+   set @cardDataId =(select CardsDataId from GLAccounts where Id=@mainGLACcountId)
+   update GLAccounts set CardsDataId =@cardDataId where Id=@Id
+   end
+   end
+   delete from @cards
+    FETCH NEXT FROM GLAccountCards INTO   @isMultiCurrency , @cardDataId, @Id,@tenant
+	END
+	CLOSE GLAccountCards
+	DEALLOCATE GLAccountCards
+    
+    
+   
+    ]]>       
+  </Sql>
+</Script>
