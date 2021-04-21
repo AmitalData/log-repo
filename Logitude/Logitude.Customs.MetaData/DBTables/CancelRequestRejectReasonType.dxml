@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
-  Name="CancelRequestRejectReasonTypess"
-  OldNames="CancelRequestRejectReasonTypes"
+  Name="CancelRequestRejectReasonTypes"
+  OldNames="CancelRequestRejectReasonTypess"
   Schema="Customs"
   DBType="Main"
   Module="Customs">

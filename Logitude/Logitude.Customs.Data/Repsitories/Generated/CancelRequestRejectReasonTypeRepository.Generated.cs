@@ -30,21 +30,21 @@ namespace Logitude.Customs.Data.Repsitories
 		
 		public  CancelRequestRejectReasonType GetSingle(string code)
         {
-            return (from a in context.CancelRequestRejectReasonTypess
+            return (from a in context.CancelRequestRejectReasonTypes
                     where a.Code == code 
                     select a).FirstOrDefault();
         }
 
         public IQueryable<CancelRequestRejectReasonType> GetAll()
         {
-            return from a in context.CancelRequestRejectReasonTypess  
+            return from a in context.CancelRequestRejectReasonTypes  
                    select a;
         }
 				 
         public CancelRequestRejectReasonType GetSingle(EntityKeyFields entityKeys)
         {
             CancelRequestRejectReasonTypeKeys keys = entityKeys as CancelRequestRejectReasonTypeKeys;
-            return (from a in context.CancelRequestRejectReasonTypess
+            return (from a in context.CancelRequestRejectReasonTypes
                     where a.Code == keys.Code
                     select a).FirstOrDefault();
         }
@@ -53,26 +53,26 @@ namespace Logitude.Customs.Data.Repsitories
         public void Add(CancelRequestRejectReasonType entity)
         {
             onAdd();
-            context.CancelRequestRejectReasonTypess.Add(entity);
+            context.CancelRequestRejectReasonTypes.Add(entity);
         }
 
         public void Remove(CancelRequestRejectReasonType entity)
         {
-            context.CancelRequestRejectReasonTypess.Attach(entity);
-            context.CancelRequestRejectReasonTypess.Remove(entity);
+            context.CancelRequestRejectReasonTypes.Attach(entity);
+            context.CancelRequestRejectReasonTypes.Remove(entity);
         }
 
         partial void onUpdate();//Partial Methods Definition in Generated
         public void Update(CancelRequestRejectReasonType entity)
         {
             onUpdate();
-            context.CancelRequestRejectReasonTypess.Attach(entity);
+            context.CancelRequestRejectReasonTypes.Attach(entity);
             context.SetAsModified(entity);
         }
 
         public List<CancelRequestRejectReasonType> All()
         {
-            return context.CancelRequestRejectReasonTypess.ToList();
+            return context.CancelRequestRejectReasonTypes.ToList();
         }
 
         private ICustomContext context

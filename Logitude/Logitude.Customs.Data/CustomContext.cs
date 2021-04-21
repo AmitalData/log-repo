@@ -1379,7 +1379,7 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
-	 public IDbSet<CancelRequestRejectReasonType> CancelRequestRejectReasonTypess 
+	 public IDbSet<CancelRequestRejectReasonType> CancelRequestRejectReasonTypes 
 	 {
 	      get; set;
 	 
