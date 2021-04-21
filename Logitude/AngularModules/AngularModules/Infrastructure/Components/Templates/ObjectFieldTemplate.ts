@@ -61,14 +61,13 @@ export class ObjectFieldTemplate implements OnInit, AfterViewInit, OnDestroy {
   }
 
     ngOnInit() {
-
-        if (AppTool.IsNullOrEmpty(this.Direction))
+          if (AppTool.IsNullOrEmpty(this.Direction))
         this.Direction = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
+        this.TextAlign = this.Direction == 'rtl' ? 'right' : 'left';
 
-         
-    if (ObjectsLocator.GlobalSetting) {
-      this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
-      }
+       if (ObjectsLocator.GlobalSetting) {
+          this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+        }
       this.LoadData();
   }
 
