@@ -26,6 +26,15 @@ namespace Logitude.Test.Base.Hooks
             SetupPartnerPreparationVariables();
         }
 
+        public static void PrepareTheData(string email, string password,string url)
+        {
+            SetupBaseSettingsForForm(email, password, url);
+            SetupDefaultUserAuthentication();
+            SetupDefaultUserTenant();
+            SetupLocationPreparationVariables();
+            SetupPartnerPreparationVariables();
+        }
+
         private static void SetupBaseSettings()
         {
             Configurations configurations = GetConfigurations();
@@ -35,6 +44,17 @@ namespace Logitude.Test.Base.Hooks
                 Settings.DefaultUserCredentials = GetUserCredentialsFromConfigurations(configurations, true);
                 Settings.OtherUserCredentials = GetUserCredentialsFromConfigurations(configurations, false);
             }
+        }
+
+        private static void SetupBaseSettingsForForm(string email, string password, string url)
+        {
+            Settings.ServerUrl = url;
+            Credentials userCredentials = new Credentials
+            {
+                Email = email,
+                Password = password
+            };
+            Settings.DefaultUserCredentials = userCredentials;
         }
 
         private static void SetupUsersAuthentication()
@@ -187,6 +207,7 @@ namespace Logitude.Test.Base.Hooks
             PartnersData.AirlineBAId = partnersVariables.AirlineBAId;
             PartnersData.ShippingLineMSCUId = partnersVariables.ShippingLineMSCUId;
             PartnersData.ShippingLineMAEUId = partnersVariables.ShippingLineMAEUId;
+            PartnersData.ShippingLineYMLUId = partnersVariables.ShippingLineYMLUId;
             PartnersData.WarehouseId = partnersVariables.WarehouseId;
         }
     }

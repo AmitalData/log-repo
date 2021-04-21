@@ -60,6 +60,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="AutoGenerators\AccountingClassesGenerator1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AccountingClassesGenerator.tt</DependentUpon>
+    </Compile>
     <Compile Include="AutoGenerators\ContextGenerator.cs">
       <DependentUpon>ContextGenerator.tt</DependentUpon>
       <AutoGen>True</AutoGen>

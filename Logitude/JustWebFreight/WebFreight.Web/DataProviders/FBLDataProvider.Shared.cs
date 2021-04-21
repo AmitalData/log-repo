@@ -30,6 +30,7 @@ namespace WebFreight.Web.DataProviders
         public string PlaceOfReceipt { get; set; }        
         public string PlaceOfDelivery { get; set; }
         public string OnCarriageToPort { get; set; }
+        public string OnForwardingToPort { get; set; }
         public string MainCarriageVesselName { get; set; }
         public string MainCarriageVesselNameAndNumber { get; set; }
         public string LoadingPortName { get; set; }
@@ -138,6 +139,10 @@ namespace WebFreight.Web.DataProviders
         public string PreCarriageBy { get; set; }
         public string PreCarriageFromPort { get; set; }
         public string PreCarriageVesselName { get; set; }
+
+        public string PreForwardingBy { get; set; }
+        public string PreForwardingFromPort { get; set; }
+        public string PreForwardingVesselName { get; set; }
 
         public double? OpenReceivablesInLocalCurrency { get; set; }
         public double? OpenReceivablesInProfitCurrency { get; set; }

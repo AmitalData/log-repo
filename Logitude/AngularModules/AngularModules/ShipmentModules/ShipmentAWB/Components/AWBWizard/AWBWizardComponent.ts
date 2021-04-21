@@ -48,6 +48,7 @@ import { ChargesTypeListService } from '../../../../Common/Services/StandardList
 import { MeasurementListService } from '../../../../Common/Services/StandardLists/MeasurementListService';
 import { ShipmentAWBPrintOnlyPM } from '../../../../Shipment/EntityPMs/ShipmentAWBPrintOnlyPM';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { Cloner } from '../../../../Infrastructure/Utilities/Cloner';
 
 @Component({
     
@@ -86,6 +87,7 @@ export class AWBWizardComponent implements AfterViewInit{
     SetWindowArgs(windowArgs: AWBWizardArgs) {
         this.WindowArgs = windowArgs;
         this.InitializeWizard();
+        this.Clone();
     }
 
     private isViewInited = false;
@@ -2680,6 +2682,8 @@ export class AWBWizardComponent implements AfterViewInit{
         });
     }
     private OnSaveCompletedSuccessfully() {
+        this.CurrentSession.FireEvent("RefreshPackagesTabFromAWBWizard");
+
         if (this.isReloadingOnSave) {
             this.isReloadingOnSave = false;
             this.isExecutingMethod = true;
@@ -3331,6 +3335,7 @@ export class AWBWizardComponent implements AfterViewInit{
     }
 
     private CloseWizardWindow() {
+        this.RejectChanges();
         this.CloseWindow();
     }
     private CloseWindow() {
@@ -3432,6 +3437,16 @@ export class AWBWizardComponent implements AfterViewInit{
                 this.CurrentSession.StopBusyIndicator();
             }
         });
+    }
+
+    private myCloner: Cloner;
+    private Clone() {
+        this.myCloner = new Cloner(this.EntityPM);
+        this.myCloner.AddField('IsMultipleCommodities');
+        this.myCloner.AddEntity(this.EntityPM);
+    }
+    private RejectChanges() {
+        this.myCloner.RejectChanges();
     }
 }
 

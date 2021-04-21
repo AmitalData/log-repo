@@ -42,7 +42,25 @@
                         <td>
                             <table>
                                 <tr>
-                                    <td>{{'Shipment.TH.Packages' | TextCodeTranslationPipe}}</td>
+                                    <td style="width:1px;">{{'Shipment.TH.Packages' | TextCodeTranslationPipe}}</td>
+
+                                    <td style="width:10px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width:340px;" *ngIf="EntityPM.IsMultipleCommodities">
+                                        <div class="MediaFill">
+                                            <div class="MediaFillAbsolute OrangeInfo" style="top: 2px; bottom: 2px; padding: 0px;">
+                                                <div style="line-height: 25px; margin-left: 5px; float: left; color:black; font-size:11px;">
+                                                    Shipment is multi commodity, to edit please open the wizard
+                                                </div>                                               
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
 
                                     <td style="width: 90px">
                                         <button id="{{ 'AddPackage' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled" class="Button" (click)="AddPackageClicked()">{{AddButtonLabel}}</button>

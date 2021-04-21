@@ -134,9 +134,9 @@ namespace Logitude.Accounting.Data
 	
             modelBuilder.Configurations.Add(new GLAccountMap());
 	
-            modelBuilder.Configurations.Add(new GLAccountCardsDataMap());
-	
             modelBuilder.Configurations.Add(new GLAccountAgingDataMap());
+	
+            modelBuilder.Configurations.Add(new GLAccountCardsDataMap());
 	
             modelBuilder.Configurations.Add(new GLAccountCounterMap());
 	

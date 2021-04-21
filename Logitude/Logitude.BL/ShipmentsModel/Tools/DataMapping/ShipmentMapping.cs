@@ -149,6 +149,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.ManifestLastSharingDate = entityPM.ManifestLastSharingDate;
             entityPoco.CountryForStatisticsId = entityPM.CountryForStatisticsId;
             entityPoco.CreatedByPartner = entityPM.CreatedByPartner;
+            
             if (entityPM.IsExceptionResolved)
             {
                 entityPoco.ExceptionDescription = null;
@@ -165,7 +166,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.CustomConnectToShipment = entityPM.CustomConnectToShipment;
 
             MapConcurrencyFields(entityPM, entityPoco, entityMasterData, myPackagesList.Count, isNewEntity);
-
             MapMasterData(entityPM, entityPoco, entityMasterData, isNewEntity);
             MapRoutings(entityPM, entityPoco, entityMasterData, isNewEntity);
             MapPartners(entityPM, entityPoco, isNewEntity);
@@ -455,22 +455,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.ChargeStorageCurrencyId = entityPM.ChargeStorageCurrencyId;
             entityPoco.WeightMeasurementCode = entityPM.WeightMeasurementCode;
             entityPoco.WeightRoundingCode = entityPM.WeightRoundingCode;
-
             entityPoco.IsCFSWarehouse = entityPM.IsCFSWarehouse;
             entityPoco.IsCFSWarehouseChanged = entityPM.IsCFSWarehouseChanged;
             entityPoco.FinalArrivalDate = entityPM.FinalArrivalDate;
             entityPoco.EstimatedFinalArrivalDate = entityPM.EstimatedFinalArrivalDate;
             entityPoco.ActualFinalArrivalDate = entityPM.ActualFinalArrivalDate;
-
             entityPoco.IsAccrualsApproved = entityPM.IsAccrualsApproved;
             entityPoco.AccrualsApprovalDate = entityPM.AccrualsApprovalDate;
-
             entityPoco.AssignedToTruckerDate = entityPM.AssignedToTruckerDate;
             entityPoco.TruckerId = entityPM.TruckerId;
-
             entityPoco.AssginedToCustomsAgentDate = entityPM.AssginedToCustomsAgentDate;
             entityPoco.AssginedtoCustomsAgentId = entityPM.AssginedtoCustomsAgentId;
-
 
             BuildSearchField(entityPM, entityPoco, entityMasterData, myPackagesList);
             if (!LBcurrentTenant.IsDocumentsArchive)
@@ -479,6 +474,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             }
 
             entityPM.PackagesDeleted = false;
+            entityPM.ConvertFromDirectToHouse = false;
+            entityPM.ConvertFromHouseToDirect = false;
 
             ValidateMAWBStackField(entityPoco, entityMasterData);
         }
@@ -1781,37 +1778,54 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             {
                 if (entityMasterData != null)
                 {
-                    entityMasterData.PreCarriageFromPortId = entityPM.PreCarriageFromPortId;
-                    entityMasterData.PreCarriageToPortId = entityPM.PreCarriageToPortId;
-                    entityMasterData.PreCarriageCarrierId = entityPM.PreCarriageCarrierId;
-                    entityMasterData.PreCarriageCarrierNumber = entityPM.PreCarriageCarrierNumber;
-                    entityMasterData.PreCarriageVesselId = entityPM.PreCarriageVesselId;
-                    entityMasterData.PreCarriageTransportModeId = entityPM.PreCarriageTransportModeId;
-                    entityMasterData.OnCarriageFromPortId = entityPM.OnCarriageFromPortId;
-                    entityMasterData.OnCarriageToPortId = entityPM.OnCarriageToPortId;
-                    entityMasterData.OnCarriageCarrierId = entityPM.OnCarriageCarrierId;
-                    entityMasterData.OnCarriageCarrierNumber = entityPM.OnCarriageCarrierNumber;
-                    entityMasterData.OnCarriageVesselId = entityPM.OnCarriageVesselId;
-                    entityMasterData.OnCarriageTransportModeId = entityPM.OnCarriageTransportModeId;
+                    MapPreOnCarriage(entityPM, entityMasterData);
+
+                    if(entityPM.ConvertFromHouseToDirect)
+                    {
+                        MapPreOnForwarding(entityPM, entityPoco);
+                    }                    
                 }
             }
 
             else
             {
-                entityPoco.PreForwardingFromPortId = entityPM.PreForwardingFromPortId;
-                entityPoco.PreForwardingToPortId = entityPM.PreForwardingToPortId;
-                entityPoco.PreForwardingCarrierId = entityPM.PreForwardingCarrierId;
-                entityPoco.PreForwardingCarrierNumber = entityPM.PreForwardingCarrierNumber;
-                entityPoco.PreForwardingVesselId = entityPM.PreForwardingVesselId;
+                MapPreOnForwarding(entityPM, entityPoco);
 
-                entityPoco.PreForwardingTransportModeId = entityPM.PreForwardingTransportModeId;
-                entityPoco.OnForwardingFromPortId = entityPM.OnForwardingFromPortId;
-                entityPoco.OnForwardingToPortId = entityPM.OnForwardingToPortId;
-                entityPoco.OnForwardingCarrierId = entityPM.OnForwardingCarrierId;
-                entityPoco.OnForwardingCarrierNumber = entityPM.OnForwardingCarrierNumber;
-                entityPoco.OnForwardingVesselId = entityPM.OnForwardingVesselId;
-                entityPoco.OnForwardingTransportModeId = entityPM.OnForwardingTransportModeId;
+                if (entityPM.ConvertFromDirectToHouse)
+                {
+                    MapPreOnCarriage(entityPM, entityMasterData);
+                }                
             }
+        }
+        private static void MapPreOnCarriage(ShipmentPM entityPM, ShipmentMasterData entityMasterData)
+        {
+            entityMasterData.PreCarriageFromPortId = entityPM.PreCarriageFromPortId;
+            entityMasterData.PreCarriageToPortId = entityPM.PreCarriageToPortId;
+            entityMasterData.PreCarriageCarrierId = entityPM.PreCarriageCarrierId;
+            entityMasterData.PreCarriageCarrierNumber = entityPM.PreCarriageCarrierNumber;
+            entityMasterData.PreCarriageVesselId = entityPM.PreCarriageVesselId;
+            entityMasterData.PreCarriageTransportModeId = entityPM.PreCarriageTransportModeId;
+            entityMasterData.OnCarriageFromPortId = entityPM.OnCarriageFromPortId;
+            entityMasterData.OnCarriageToPortId = entityPM.OnCarriageToPortId;
+            entityMasterData.OnCarriageCarrierId = entityPM.OnCarriageCarrierId;
+            entityMasterData.OnCarriageCarrierNumber = entityPM.OnCarriageCarrierNumber;
+            entityMasterData.OnCarriageVesselId = entityPM.OnCarriageVesselId;
+            entityMasterData.OnCarriageTransportModeId = entityPM.OnCarriageTransportModeId;
+        }
+        private static void MapPreOnForwarding(ShipmentPM entityPM, Shipment entityPoco)
+        {
+            entityPoco.PreForwardingFromPortId = entityPM.PreForwardingFromPortId;
+            entityPoco.PreForwardingToPortId = entityPM.PreForwardingToPortId;
+            entityPoco.PreForwardingCarrierId = entityPM.PreForwardingCarrierId;
+            entityPoco.PreForwardingCarrierNumber = entityPM.PreForwardingCarrierNumber;
+            entityPoco.PreForwardingVesselId = entityPM.PreForwardingVesselId;
+            entityPoco.PreForwardingTransportModeId = entityPM.PreForwardingTransportModeId;
+            entityPoco.OnForwardingFromPortId = entityPM.OnForwardingFromPortId;
+            entityPoco.OnForwardingToPortId = entityPM.OnForwardingToPortId;
+            entityPoco.OnForwardingCarrierId = entityPM.OnForwardingCarrierId;
+            entityPoco.OnForwardingCarrierNumber = entityPM.OnForwardingCarrierNumber;
+            entityPoco.OnForwardingVesselId = entityPM.OnForwardingVesselId;
+            entityPoco.OnForwardingTransportModeId = entityPM.OnForwardingTransportModeId;
         }
         private static void MapPartners(ShipmentPM entityPM, Shipment entityPoco, bool isNewEntity)
         {

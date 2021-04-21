@@ -1,5 +1,5 @@
-﻿<Script DBType="Main" Module="Common" TargetTableName="Tenants" Env="Logitude,local">
-  <Sql Version="2">
+﻿<Script DBType="Main" Module="Common" TargetTableName="Tenants" Env="Logitude,local,test">
+  <Sql Version="3">
     <![CDATA[
 
       update Tenants

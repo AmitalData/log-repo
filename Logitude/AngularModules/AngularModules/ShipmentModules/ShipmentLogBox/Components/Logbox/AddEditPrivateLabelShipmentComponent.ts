@@ -1,4 +1,7 @@
-import {ShipmentArchiveFilter} from '../../../../Controls/ShipmentArchiveFilter';
+
+declare var window: any;
+
+import { ShipmentArchiveFilter } from '../../../../Controls/ShipmentArchiveFilter';
 import {TransportsFilter} from '../../../../Controls/TransportsFilter';
 import {Component, Output, EventEmitter, OnInit, AfterViewInit} from '@angular/core';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -26,9 +29,15 @@ import {ShipmentPMService} from '../../../../Shipment/Services/StandardPMs/Shipm
 import {PortExtendedPMService} from '../../../../Common/Services/ExtendedPMs/PortExtendedPMService';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
+import { DocumentsFilingExtendedPMService } from '../../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
+import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
+import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
+import { LogBoxSignatureClientService } from '../../../../Shipment/Services/Others/LogBoxSignatureClientService';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    
+
     templateUrl: './AddEditPrivateLabelShipmentComponent.html',
     //providers: [Http, ServiceArgs, EntityListService]
 })
@@ -40,6 +49,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
     ValidationErrorsList: any[];
     WarningErrorsList: any[];
     IsNew: boolean = true;
+    public IsDSVTenant: boolean = false;
     public _EntityStatusListService: EntityStatusListService;
     public _DepartmentListService: DepartmentListService;
     public _BranchListService: BranchListService;
@@ -47,6 +57,12 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
     public _PortExtendedPMService: PortExtendedPMService;
     public _ShipmentPMService: ShipmentPMService;
     public PLShortName: string = "";
+    public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService;
+    public _LogBoxSignatureClientService: LogBoxSignatureClientService;
+
+    private messageWindow: MessageWindow = new MessageWindow();
+    private _entityResourceService: EntityResourceService = new EntityResourceService();
+
     public TransportationTypes: any[];// = [new TransportationTypes("Ashdod", "O", "ASH", "IL"), new TransportationTypes("Haifa", "O", "HFA", "IL"), new TransportationTypes("Eilat", "O", "ETH", "IL")];
     public FilterId_A: string;
     public FilterId_O: string;
@@ -57,6 +73,9 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
         if (SessionLocator.PrivateLableSettings) {
             this.PLShortName = SessionLocator.PrivateLableSettings.PrivateLabelShortName;
         }
+
+        this.IsDSVTenant =  SessionLocator.PrivateLableSettings.PrivateLabelDomain.toLowerCase().indexOf("dsv") > -1;
+
         if (this.CurrentSession == null) {
             this.FilterId_A = "TransportFilter_A_-1_-1";
             this.FilterId_O = "TransportFilter_O_-1_-1";
@@ -77,7 +96,216 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
         this._ShipmentPMService = new ShipmentPMService();
         this._PortExtendedPMService = new PortExtendedPMService();
         this._PackageTypeListService = new PackageTypeListService();
+        this._documentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
+        this._LogBoxSignatureClientService = new LogBoxSignatureClientService();
+
+
+
     }
+    //
+    RefreshTimer: any;
+
+    documentsFilings: any[];
+    LoadDocumentsFilings() {
+        if (this.EntityPM && this.EntityPM.Id) {
+            this.documentsFilings = [];
+            var objectTable = window.ObjectTables.filter(x => x.Name === "Shipment")[0];
+            this._documentsFilingExtendedPMService.getAllDocumentsFilingsByEntityIdAndObjectTable(this.EntityPM.Id, objectTable.Id, "I", SessionLocator.Tenant).subscribe((res: any) => {
+                this.documentsFilings = res.Result.filter(a => a.IsDeleted == false);
+
+            });
+        }
+    }
+
+
+    LoadDocumentsFilingById(id: string) {
+        this._documentsFilingExtendedPMService.getDocumentsFilingsById(id).subscribe((res: any) => {
+            if (!this.documentsFilings) this.documentsFilings = [];
+            this.documentsFilings.push(res.Result);
+
+        });
+    }
+
+    DownloadDocumentFile(item) {
+        ServiceLocator.SendTotangoUserActivity("LogBox", "Document Viewed");
+        DownloadManager.DownloadPage(item.DocumentId);
+
+
+    }
+
+    UpdateDocumentsFilings(entityId:string) {
+        if (!this.IsDSVTenant && this.documentsFilings) {
+            this.documentsFilings.filter(d => !d.EntityId).forEach((documentsFiling) => {
+                documentsFiling.EntityId = entityId;
+                this._documentsFilingExtendedPMService.update(documentsFiling).subscribe((res: any) => {
+                });
+            });
+        }
+    }
+
+
+    ConnectButtonClicked(entity: any) {
+        if (!this.IsDSVTenant) {
+            this.CurrentSession.StartBusyIndicator("Loading ...");
+            this._documentsFilingExtendedPMService.IsEntityHasSharedDocs(entity.Id, SessionLocator.Tenant).subscribe((res: any) => {
+                this.CurrentSession.StopBusyIndicator();
+                let hasSharedDocs: boolean = res.Result;
+                var newWindow = new LogitudeWindow();
+                newWindow.Width = 1050;
+                newWindow.Height = 700;
+                newWindow.Title = "Connect/Create new shipment in " + "abed"; //SessionLocator.PrivateLableSettings.PrivateLabelShortName;
+                var windowArgs: any = {};
+                windowArgs.SourceEntity = entity;
+                windowArgs.HasSharedDocs = hasSharedDocs;
+                newWindow.WindowArgs = windowArgs;
+                newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/ForwarderShipmentsComponent');
+                newWindow.WindowClosed.subscribe(($event: any) => {
+                    this.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
+                });
+            });
+        }
+    }
+
+    IsAddDocumentButtonClick: boolean = false;
+    AddDocumentClick() {
+        if (!this.IsAddDocumentButtonClick) {
+            this.IsAddDocumentButtonClick = true;
+
+            this._entityResourceService.getEntityResourceByTableName("DocumentsFiling").subscribe((response1: any) => {
+                var windowArgs: any = {};
+                windowArgs.SelectedShipment = this.EntityPM;
+                windowArgs.IsNewDocument = true;
+
+                var logitudeWindow = new LogitudeWindow();
+                logitudeWindow.WindowArgs = windowArgs;
+                logitudeWindow.Width = 960;
+                logitudeWindow.Height = 620;
+                logitudeWindow.Title = "";
+                logitudeWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditImporterDocumentComponent');
+                logitudeWindow.WindowClosed.subscribe(($event: any) => {
+                    this.IsAddDocumentButtonClick = false;
+
+
+                    if (this.EntityPM && this.EntityPM.Id) {
+                        this.LoadDocumentsFilings();
+                    }
+                    else {
+                        this.LoadDocumentsFilingById($event);
+                    }
+                });
+            });
+        }
+    }
+
+
+    Timers: { [Id: string]: any; } = {};
+    TimerStartDate: Date;
+    SetDigitallySigned(EntityPm) {//id 
+        if (this.RefreshTimer) {
+            clearTimeout(this.RefreshTimer);
+        }
+        this.TimerStartDate = DateTool.GetCurrentDateTimeAsUtc();
+        this.RefreshTimer = setInterval(() => this.LoadDocumentsFilings(), 5000);
+
+        if (!FeatureLocator.HasFeaturePermession("General", "LBDS")) {
+            var window = new ConfirmWindow();
+            window.Width = 450;
+            window.Height = 190;
+            window.Title = "You have no permession";
+            window.YesButtonText = "Ok";
+            window.ShowNoButton = false;
+            window.Show("Your package doesn't include this module..");
+        }
+
+        else {
+            if (EntityPm.FileExtension.toLowerCase() == "pdf") {
+                if (EntityPm.IsCustomReference == true) {
+                    var confirmWindow = new ConfirmWindow();
+                    confirmWindow.Title = "Confirm Deletion";
+                    confirmWindow.Width = 450;
+                    confirmWindow.Height = 190;
+                    confirmWindow.YesButtonText = "Ok";
+                    confirmWindow.NoButtonText = "Cancel";
+                    confirmWindow.Show("Document was already sent to customs and cannot be updated , we will create a copy of them for the customs agent.");
+                    confirmWindow.WindowClosed.subscribe((event: any) => {
+                        if (confirmWindow.Yes) {
+                            this.CurrentSession.CurrentWindow.StartBusyIndicator("Signing in progress..");
+                            EntityPm.DontAddToQueue = true;
+                            EntityPm.SignRequestByUserEmail = SessionLocator.LoggedUserPM.Email;
+                            EntityPm.SignDueDate = DateTool.GetCurrentDateTimeAsUtc();
+                            var CurrMin = EntityPm.SignDueDate.getMinutes() + 5;
+                            EntityPm.SignDueDate.setMinutes(CurrMin);
+                            EntityPm.CancellSignRequest = false;
+                            this._LogBoxSignatureClientService.GetSignRequestReceived(EntityPm).subscribe((Result: any) => {
+                                ServiceLocator.SendTotangoUserActivity("LogBox", "Sign Document");
+                                if (Result.Result != null && Result.Result.HasError) {
+                                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                                    this.messageWindow.Width = 300;
+                                    this.messageWindow.Height = 150;
+                                    this.messageWindow.Title = "Warning !";
+                                    this.messageWindow.Message = Result.Result.ErrorsArray[0];
+                                    this.messageWindow.Show(this.messageWindow.Message);
+                                }
+                                else if (Result.Result == null) {
+                                    this.messageWindow.Width = 300;
+                                    this.messageWindow.Height = 150;
+                                    this.messageWindow.Title = "Warning !";
+                                    this.messageWindow.Message = "Please make sure that cloud sign app installed to your computer.";
+                                    this.messageWindow.Show(this.messageWindow.Message);
+                                }
+     
+
+                            });
+                        }
+                    });
+                }
+                else {
+                    this.CurrentSession.CurrentWindow.StartBusyIndicator("Signing in progress..");
+                    EntityPm.DontAddToQueue = true;
+                    EntityPm.SignRequestByUserEmail = SessionLocator.LoggedUserPM.Email;
+                    EntityPm.SignDueDate = DateTool.GetCurrentDateTimeAsUtc();
+                    var CurrMin = EntityPm.SignDueDate.getMinutes() + 5;
+                    EntityPm.SignDueDate.setMinutes(CurrMin);
+                    EntityPm.CancellSignRequest = false;
+                    this._LogBoxSignatureClientService.GetSignRequestReceived(EntityPm).subscribe((Result: any) => {
+                        ServiceLocator.SendTotangoUserActivity("LogBox", "Sign Document");
+                        if (Result.Result != null && Result.Result.HasError) {
+                            this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                            this.messageWindow.Width = 300;
+                            this.messageWindow.Height = 150;
+                            this.messageWindow.Title = "Warning !";
+                            this.messageWindow.Message = Result.Result.ErrorsArray[0];
+                            this.messageWindow.Show(this.messageWindow.Message);
+                        }
+                        else if (Result.Result == null) {
+                            this.messageWindow.Width = 300;
+                            this.messageWindow.Height = 150;
+                            this.messageWindow.Title = "Warning !";
+                            this.messageWindow.Message = "Please make sure that cloud sign app installed to your computer.";
+                            this.messageWindow.Show(this.messageWindow.Message);
+                        }
+                    });
+                }
+            }
+            else {
+                var window = new ConfirmWindow();
+                window.Width = 450;
+                window.Height = 190;
+                window.Title = "Warning !";
+                window.YesButtonText = "Ok";
+                window.ShowNoButton = false;
+                window.Show("You can only sign PDF files ..");
+            }
+        }
+    }
+
+
+
+
+
+
+
+
     transportItemClicked(itemValue: string) {
         if (this.TransportModeId != itemValue) {
             this.TransportModeId = itemValue;
@@ -304,6 +532,9 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
             else {
                 this.PLForwarding = false;
             }
+
+
+            this.LoadDocumentsFilings();
         }
     }
 
@@ -395,6 +626,11 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
     public get House() { return this.EntityPM.House }
     public set House(newValue: string) { this.EntityPM.House = newValue; }
 
+    public get Remarks() { return this.EntityPM.Notes }
+    public set Remarks(newValue: string) { this.EntityPM.Notes = newValue; }
+
+
+
     private containerNumber: string;
     public get ContainerNumber() {
         if (this.EntityPM.ShipmentPackages && this.EntityPM.ShipmentPackages.length > 0) {
@@ -462,30 +698,42 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
         if (AppTool.IsNullOrEmpty(this.CustomerReference1)) {
             this.ValidationErrorsList.push(msg.replace("%FieldName", "OrderNumber"));
         }
-        if (this.CustomerReference2 && this.CustomerReference2.length > 30) {
-            this.ValidationErrorsList.push("My Reference can't be more than 30 characters");
-        }
-        if (!AppTool.IsNullOrEmpty(this.PackagesQuantity) && this.isInt(this.PackagesQuantity) == false) {
-            this.ValidationErrorsList.push("Quantity Must be integer.");
-        }
-       
-        if ((typeof this.PackagesQuantity != 'number' || this.PackagesQuantity.toString() == "NaN") && this.PackagesQuantity != null) {
-            this.ValidationErrorsList.push("Quantity must be numaric value");
-        }
-        if ((typeof this.GrossWeight != 'number' || this.GrossWeight.toString() == "NaN") && this.GrossWeight != null) {
-            this.ValidationErrorsList.push("Weight must be numaric value");
-        }
-        if (!AppTool.IsNullOrEmpty(this.ContainerNumber) && (AppTool.IsNullOrEmpty(this.PackagesQuantity) || AppTool.IsNullOrEmpty(this.GrossWeight))) {
-            this.ValidationErrorsList.push("Weight and Quantity are required");
-        }
-        else {
-            if (this.EntityPM.ShipmentPackages.length > 0) {
-                //this.EntityPM.ShipmentPackages[0].ContainerNumber = newValue;
-                this.EntityPM.ShipmentPackages[0].Weight = this.GrossWeight;
-                this.EntityPM.ShipmentPackages[0].PackageTypeId = this.UnAssignedPackageTypeId;
-                this.EntityPM.ShipmentPackages[0].Quantity = this.PackagesQuantity;
+
+
+        if (this.IsDSVTenant) {
+
+            if (this.CustomerReference2 && this.CustomerReference2.length > 30) {
+                this.ValidationErrorsList.push("My Reference can't be more than 30 characters");
+            }
+            if (!AppTool.IsNullOrEmpty(this.PackagesQuantity) && this.isInt(this.PackagesQuantity) == false) {
+                this.ValidationErrorsList.push("Quantity Must be integer.");
+            }
+
+            if ((typeof this.PackagesQuantity != 'number' || this.PackagesQuantity.toString() == "NaN") && this.PackagesQuantity != null) {
+                this.ValidationErrorsList.push("Quantity must be numaric value");
+            }
+            if ((typeof this.GrossWeight != 'number' || this.GrossWeight.toString() == "NaN") && this.GrossWeight != null) {
+                this.ValidationErrorsList.push("Weight must be numaric value");
+            }
+            if (!AppTool.IsNullOrEmpty(this.ContainerNumber) && (AppTool.IsNullOrEmpty(this.PackagesQuantity) || AppTool.IsNullOrEmpty(this.GrossWeight))) {
+                this.ValidationErrorsList.push("Weight and Quantity are required");
+            }
+            else {
+                if (this.EntityPM.ShipmentPackages.length > 0) {
+                    //this.EntityPM.ShipmentPackages[0].ContainerNumber = newValue;
+                    this.EntityPM.ShipmentPackages[0].Weight = this.GrossWeight;
+                    this.EntityPM.ShipmentPackages[0].PackageTypeId = this.UnAssignedPackageTypeId;
+                    this.EntityPM.ShipmentPackages[0].Quantity = this.PackagesQuantity;
+                }
             }
         }
+
+        else {
+            if (this.ShipperName && this.ShipperName.length > 50) {
+                this.ValidationErrorsList.push("Supplier Name can't be more than 5 characters");
+            }
+        }
+
         if (this.ValidationErrorsList.length == 0) {
             this._PortExtendedPMService.getSinglePort(this.SelectedTransportationTypes.ToPortCode, this.SelectedTransportationTypes.CountryCode, SessionLocator.Tenant).subscribe((myResult:any) => {
                 if (myResult.Result) {
@@ -634,42 +882,37 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
         if (AppTool.IsNullOrEmpty(this.CustomerReference1)) {
             this.ValidationErrorsList.push(msg.replace("%FieldName", "OrderNumber"));
         }
-        if (!AppTool.IsNullOrEmpty(this.PackagesQuantity) && this.isInt(this.PackagesQuantity) == false) {
-            this.ValidationErrorsList.push("Quantity Must be integer.");
-        }
-        //if (AppTool.IsNullOrEmpty(this.CustomerReference2)) {
-        //    this.ValidationErrorsList.push(msg.replace("%FieldName", "My Reference"));
-        //}
-        var isMasterAllDigits = this.Master != null ? /^\d+$/.test(this.Master) : true;//typeof this.Master;
-        if (!isMasterAllDigits) {
-            this.ValidationErrorsList.push("Master Field must be all digits");
-        }
-        if ((typeof this.PackagesQuantity != 'number' || this.PackagesQuantity.toString() == "NaN") && this.PackagesQuantity != null) {
-            this.ValidationErrorsList.push("Quantity must be numaric value");
-        }
-        //Master Field must be all digits
-        if ((typeof this.GrossWeight != 'number' || this.GrossWeight.toString() == "NaN") && this.GrossWeight != null) {
-            this.ValidationErrorsList.push("Weight must be numaric value");
-        }
-        if (!AppTool.IsNullOrEmpty(this.ContainerNumber) && (AppTool.IsNullOrEmpty(this.PackagesQuantity) || AppTool.IsNullOrEmpty(this.GrossWeight))) {
-            this.ValidationErrorsList.push("Weight and Quantity are required");
-        }
-        else {
-            if (this.EntityPM.ShipmentPackages.length > 0) {
-                //this.EntityPM.ShipmentPackages[0].ContainerNumber = newValue;
-                this.EntityPM.ShipmentPackages[0].Weight = this.GrossWeight;
-                this.EntityPM.ShipmentPackages[0].PackageTypeId = this.UnAssignedPackageTypeId;
-                this.EntityPM.ShipmentPackages[0].Quantity = this.PackagesQuantity;
+
+        if (this.IsDSVTenant) {
+            if (!AppTool.IsNullOrEmpty(this.PackagesQuantity) && this.isInt(this.PackagesQuantity) == false) {
+                this.ValidationErrorsList.push("Quantity Must be integer.");
+            }
+            //if (AppTool.IsNullOrEmpty(this.CustomerReference2)) {
+            //    this.ValidationErrorsList.push(msg.replace("%FieldName", "My Reference"));
+            //}
+            var isMasterAllDigits = this.Master != null ? /^\d+$/.test(this.Master) : true;//typeof this.Master;
+            if (!isMasterAllDigits) {
+                this.ValidationErrorsList.push("Master Field must be all digits");
+            }
+            if ((typeof this.PackagesQuantity != 'number' || this.PackagesQuantity.toString() == "NaN") && this.PackagesQuantity != null) {
+                this.ValidationErrorsList.push("Quantity must be numaric value");
+            }
+            //Master Field must be all digits
+            if ((typeof this.GrossWeight != 'number' || this.GrossWeight.toString() == "NaN") && this.GrossWeight != null) {
+                this.ValidationErrorsList.push("Weight must be numaric value");
+            }
+            if (!AppTool.IsNullOrEmpty(this.ContainerNumber) && (AppTool.IsNullOrEmpty(this.PackagesQuantity) || AppTool.IsNullOrEmpty(this.GrossWeight))) {
+                this.ValidationErrorsList.push("Weight and Quantity are required");
+            }
+            else {
+                if (this.EntityPM.ShipmentPackages.length > 0) {
+                    this.EntityPM.ShipmentPackages[0].Weight = this.GrossWeight;
+                    this.EntityPM.ShipmentPackages[0].PackageTypeId = this.UnAssignedPackageTypeId;
+                    this.EntityPM.ShipmentPackages[0].Quantity = this.PackagesQuantity;
+                }
             }
         }
 
-        //if (AppTool.IsNullOrEmpty(this.FromPortId)) {
-        //    this.ValidationErrorsList.push(msg.replace("%FieldName", "Gatway"));
-        //}
-
-        //if (AppTool.IsNullOrEmpty(this.ToPortId)) {
-        //    this.ValidationErrorsList.push(msg.replace("%FieldName", "Destination"));
-        //}
         if (this.ValidationErrorsList.length == 0) {
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
             this.isSaveClicked = false;
@@ -690,42 +933,20 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                 this.EntityPM.StatusDate = DateTool.GetCurrentDateTimeAsUtc();
                 this.EntityPM.CustomerId = SessionLocator.TenantPM.CustomerId;
                 this.EntityPM.CustomerName = SessionLocator.TenantPM.CustomerId;
-                this.EntityPM.ConsigneeId = SessionLocator.TenantPM.CustomerId;
+                this.EntityPM.ConsigneeId =SessionLocator.TenantPM.CustomerId;
                 this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
                 this.EntityPM.NewConcurrencyGUID = Guid.newGuid();
                 this.EntityPM.Tenant = SessionLocator.Tenant;
-                //if (this.TransportModeId == "O" && this.PackageType == "LCL") {
-                //    this.EntityPM.ShipmentTypeId = "LCLD";
-                //}
-                //else if (this.TransportModeId == "I" && this.PackageType == "LCL") {
-                //    this.EntityPM.ShipmentTypeId = "LTL";
-                //}
-                //else {
-                //    this.EntityPM.ShipmentTypeId = this.PackageType;
-                //}
-
-                //var myResult = false;
-                //if (this.TransportModeId == "A") {
-                //    myResult = true;
-                //}
-
-                //else if (this.TransportModeId == "O" && this.EntityPM.ShipmentTypeId == "LCLD") {
-                //    myResult = true;
-                //}
-
-                //else if (this.TransportModeId == "I" && this.EntityPM.ShipmentTypeId == "LTL") {
-                //    myResult = true;
-                //}
-                //if (myResult == false) {
+    
                 this.EntityPM.NumberOfContainers = this.PackagesQuantity;
                 //}
                 //else {
                 this.EntityPM.NumberOfPackages = this.PackagesQuantity;
                 //}
 
-                //if (this.PLForwarding == true) {
-                this.EntityPM.ForwarderPartnerId = SessionLocator.PrivateLableSettings.HybridPartnerId;
-                //}
+                if (SessionLocator.PrivateLableSettings) {
+                    this.EntityPM.ForwarderPartnerId = SessionLocator.PrivateLableSettings.HybridPartnerId;
+                }
                 if (this.PLForwarding == true) {
                     this.EntityPM.ShipmentAddtionalDataXML = "<PLForwarding>true</PLForwarding>";
                 }
@@ -737,8 +958,9 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                         ServiceLocator.SendTotangoUserActivity("LogBox", "New Shipment");
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         this.CurrentSession.CloseCurrentWindowEmit("MyShipmentAdded");
-                        //ParentViewModel.setImporterFilter();
-                        //ParentViewModel.LoadAllData();
+                        this.UpdateDocumentsFilings(myResult.Result.Id);
+                        this.ConnectButtonClicked(myResult.Result);
+
                     }
                     else {
                         this.ValidationErrorsList = myResult.ErrorsArray;

@@ -91,6 +91,12 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                     this.SetGenerateData();
                     this.BuildItemsSource();
                 }
+
+                else if (s == "RefreshPackagesTabFromAWBWizard") {
+                    this.ItemsSource = new ObservableCollection([]);
+                    this.SetUIProperties();
+                    this.SetGenerateData();
+                }
             });
 
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
@@ -359,8 +365,13 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     public IsTotalsFieldEnabled: boolean = true;
     public IsAddInsideButtonEnabled: boolean = false;
     SetUIProperties() {
+        if (this.EntityPM.IsMultipleCommodities) {
+            this.IsEditingEnabled = false;
+        }
 
-        this.IsEditingEnabled = ShipmentTool.IsEditingEnabled(this.EntityPM);
+        else {
+            this.IsEditingEnabled = ShipmentTool.IsEditingEnabled(this.EntityPM);
+        }
 
         this.UIProperties.SetEnabled("DimensionsUnitCode", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("GrossWeightUnitCode", this.ObjectTableName, this.IsEditingEnabled);
@@ -384,6 +395,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         this.UIProperties.SetEnabled("AWBCommodityItemNumber", this.ObjectTableName, isTotalsFieldEnabled && !this.EntityPM.IsMultipleCommodities);
         this.SetUIProperties_DimFactor();
         this.SetUIProperties_DimensionsUnitCode();
+
     }
     SetUIProperties_InsideButton() {
         var isButtonEnabled = false;
@@ -424,14 +436,16 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     }
 
     BuildItemsSource() {
-        var itemsCollection: ShipmentPackageItem[] = [];
+        if (!this.EntityPM.IsMultipleCommodities) {
+            var itemsCollection: ShipmentPackageItem[] = [];
 
-        this.EntityPM.ShipmentPackages.forEach((item) => {
-            itemsCollection.push(new ShipmentPackageItem(item, this));
-        })
+            this.EntityPM.ShipmentPackages.forEach((item) => {
+                itemsCollection.push(new ShipmentPackageItem(item, this));
+            })
 
-        this.ItemsSource.InsertCollection(itemsCollection);
-        this.SetGenerateData();
+            this.ItemsSource.InsertCollection(itemsCollection);
+            this.SetGenerateData();
+        }
     }
 
     // Measurments

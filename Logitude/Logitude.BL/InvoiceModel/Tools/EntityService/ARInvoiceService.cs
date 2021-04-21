@@ -4003,6 +4003,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         }
                     }
                 }
+
+                UpdateShipmentProfitClass.UpdateShipmentHousesReceivablesVatAmounts(entityPM.MainEntityId, tenant);
             }
         }
         private void AfterServiceFinished()

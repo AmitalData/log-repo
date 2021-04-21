@@ -74,8 +74,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         }
         private GLAccountCardsDataPM MapGLAccountCardsDataFields(GLAccountCardsDataPM gLAccountCardsDataPM)
         {
-            gLAccountCardsDataPM.CollectorUserId = SetCollectorId(); 
-            gLAccountCardsDataPM.CreditLimit = GetCustomerCreditLimitAmount();
+            gLAccountCardsDataPM.CollectorUserId = SetCollectorId();
+            gLAccountCardsDataPM.CreditLimit = SetCreditLimit();
             gLAccountCardsDataPM.PaymentTermId = SetPaymentTerm();
             gLAccountCardsDataPM.Tenant = tenant;
             gLAccountCardsDataPM.SalesmanUserId = SetSalesmanUserId();
@@ -83,6 +83,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             gLAccountCardsDataPM.VatNumber = SetVatNumber();
             gLAccountCardsDataPM.TotalOpenShipments = GetTotalOpenFilesAmount();
             return gLAccountCardsDataPM;
+        }
+
+        private double? SetCreditLimit()
+        {
+            var cardWithCreditLimit = connectedCards.Where(d => d.CreditLimitAmount != null).FirstOrDefault();
+            if (cardWithCreditLimit == null) return null;
+            else return cardWithCreditLimit.CreditLimitAmount;
         }
         private string SetCollectorId()
         {
@@ -184,9 +191,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
      
         private decimal? GetTotalOpenFilesAmount()
         {
-            CustomerOpenFilesAmountPM customerOpenFilesAmountPM = GetCustomerOpenFilesAmount();
-            if (customerOpenFilesAmountPM == null) { return (decimal)0.0; }
-            else { return customerOpenFilesAmountPM.TotalOpenFilesAmount; }
+            List<CustomerOpenFilesAmountPM> customerOpenFilesAmountPMs = GetCustomerOpenFilesAmount();
+            var customerTotalOpenFilesAmount = customerOpenFilesAmountPMs.Where(d => d.TotalOpenFilesAmount != 0).FirstOrDefault();
+            if (customerTotalOpenFilesAmount == null) return null;
+            else return customerTotalOpenFilesAmount.TotalOpenFilesAmount;
         }
         private void SaveGLAccountChanges(GLAccountPM accountPM)
         {
@@ -195,10 +203,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             glaccountUpdate.Update(accountPM);
         }
 
-        private CustomerOpenFilesAmountPM GetCustomerOpenFilesAmount()
+        private List<CustomerOpenFilesAmountPM> GetCustomerOpenFilesAmount()
         {
             CustomerOpenFilesAmountQuery customerOpenFilesAmount = new CustomerOpenFilesAmountQuery(tenant);
-            return customerOpenFilesAmount.GetSinglePMByCustomerId(cardId, tenant);
+            List<string> cardIds = connectedCards.Select(d => d.Id).ToList();
+         return customerOpenFilesAmount.GetCustomerOpenFilesByCustomerIds(cardIds, tenant);
         }
 
         private GLAccountCardsDataPM GetGLAccountCardsDataPM()

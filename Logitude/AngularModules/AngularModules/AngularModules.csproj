@@ -52,6 +52,7 @@
     <Content Include="Accounting\Components\EditTabs\InterestReport\GeneralTab\InterestReportLineByDateDetails\InterestReportLineByDateDetailsComponent.html" />
     <Content Include="Accounting\Components\EditTabs\Interest\DetailsTab\AddEditInterestBasesPeriod\AddEditInterestBasesPeriodComponent.html" />
     <Content Include="Accounting\Components\EditTabs\Interest\DetailsTab\InterestBasesTypeDetailsTabComponent.html" />
+    <Content Include="Accounting\Components\EditTabs\Journal\UpdateJournalLineNoteComponent.html" />
     <Content Include="Accounting\Components\EditTabs\OpenFormatReport\OpenFormatReportLogTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\PaymentCheque\PaymentChequeGeneralTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\ExternalReconciliation\ExternalRecoDetailsTabComponent.html" />
@@ -312,6 +313,7 @@
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationConditionsDetailsComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\CreateTaskResultComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationsConditionsViewDetailsComponent.html" />
+    <Content Include="InvoiceModules\ARPayment\Components\Other\ARPaymentMultiChequesComponent.html" />
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityComponent.html" />
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityPackageComponent.html" />
     <Content Include="TasksApp\Components\TasksAppComponent.html" />
@@ -319,6 +321,7 @@
     <Content Include="_Resources\css\PrimeWebComponent.css" />
     <Content Include="_Resources\js\UnifreightJSBridge.js" />
     <TypeScriptCompile Include="Abstractions\Services\BaseService.ts" />
+    <TypeScriptCompile Include="Accounting\Components\EditTabs\Journal\UpdateJournalLineNoteComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Maintenance\Tester\AccountingMainTesterComponent.ts" />
     <TypeScriptCompile Include="App\DynamicLoader\LazyWidgetsLogitude.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\CopyJournalComponent.ts" />
@@ -2969,6 +2972,7 @@
     <TypeScriptCompile Include="InvoiceModules\ARPayment\Components\EditTabs\EditMultiCurrency.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARPayment\Components\NewEntity\ARPaymentTransferTemplate.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARPayment\Components\NewEntity\NewARPaymentComponent.ts" />
+    <TypeScriptCompile Include="InvoiceModules\ARPayment\Components\Other\ARPaymentMultiChequesComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARPayment\Components\Other\CancelARPaymentComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARPayment\ModuleARPayment.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARPayment\ModuleDeclarations.ts" />

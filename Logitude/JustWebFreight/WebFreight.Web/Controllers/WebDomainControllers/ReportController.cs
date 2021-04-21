@@ -202,7 +202,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                 ReportExecutionLogRepository reportExecutionLogRepository = new ReportExecutionLogRepository(tenant);
-                ReportExecutionLog reportExecutionLog = reportExecutionLogRepository.GetSingleReportExecutionLog(reportKey, tenant);
+                ReportExecutionLog reportExecutionLog = reportExecutionLogRepository.GetReportExecutionLog(reportKey, tenant);
                 ReportBuildResult result = new ReportBuildResult();
                 if (reportExecutionLog != null)
                 {

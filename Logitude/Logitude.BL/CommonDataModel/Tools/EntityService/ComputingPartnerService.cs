@@ -38,6 +38,16 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.GetLoggedContact();
         }
 
+        public ComputingPartnerService(ICommonDataContext objectContext, ComputingPartnerPM entityPM, string loggedContactId)
+        {
+            this.tenant = entityPM.LoggedTenantId;
+            this.entityPM = entityPM;
+            this.objectContext = objectContext;
+            this.entityRepository = new ComputingPartnerRepository(objectContext);
+            this.computingPartnerTableRepository = new ComputingPartnerTableRepository(objectContext);
+            this.loggedContactId = loggedContactId;
+        }
+
         private void GetLoggedContact()
         {
             ContactRepository contactRepository = new ContactRepository(tenant);
