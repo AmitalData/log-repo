@@ -298,7 +298,7 @@ namespace Logitude.Server.Tools
 
             try
             {
-                if (LogitudeSettings.DeploymentStage != "amitaloracletk1")//Islam //(LogitudeSettings.QueueServiceMode != "db")
+                if (!LogitudeSettings.IsCostomsDeploy &&   LogitudeSettings.DeploymentStage != "amitaloracletk1")//Islam //(LogitudeSettings.QueueServiceMode != "db")
                 {
 
                     DbQueueService queueservice = new DbQueueService(queueName, tenant);
