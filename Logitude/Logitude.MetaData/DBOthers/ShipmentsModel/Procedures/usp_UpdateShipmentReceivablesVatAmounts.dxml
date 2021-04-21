@@ -29,7 +29,8 @@ declare @LocalCurrencyAmount as float
 declare @ProfitCurrencyAmount as float
 declare @IsRegionalTax as bit
 declare @RegionalTaxPercentage  as float
-    
+declare @ChargeTypeId as varchar(15)
+
 BEGIN
 	-- Loop Houses
 	declare @HouseId as varchar(15)
@@ -44,10 +45,10 @@ BEGIN
   -- Open lines 
       DECLARE DataCursor CURSOR READ_ONLY
          	FOR
-         	SELECT ShipmentReceivables.Id, ShipmentReceivables.Tenant, VatTypeId, CreateDate, TotalAmountLocal, AmountInProfitCurrency, Shipments.CustomerId
+         	SELECT ShipmentReceivables.Id, ShipmentReceivables.Tenant, VatTypeId, CreateDate, TotalAmountLocal, AmountInProfitCurrency, Shipments.CustomerId, ChargesTypeId
          	FROM ShipmentReceivables 
          	left join Shipments  on Shipments.Id = ShipmentReceivables.ShipmentId where ShipmentReceivables.ARInvoiceLineId is null and ShipmentId = @HouseId
-         	OPEN DataCursor FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @ShipmentReceivablesVatTypeId, @CreateDate, @TotalAmountLocal, @AmountInProfitCurrency, @CustomerId
+         	OPEN DataCursor FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @ShipmentReceivablesVatTypeId, @CreateDate, @TotalAmountLocal, @AmountInProfitCurrency, @CustomerId, @ChargeTypeId
          	WHILE @@FETCH_STATUS = 0
          	BEGIN
     
@@ -62,7 +63,7 @@ BEGIN
          
          	if (@ReceivableVatTypeId is null) 
          	begin
-         		set @ReceivableVatTypeId = @VatTypeId;
+         		set @ReceivableVatTypeId = (select top 1 VatTypeId from ChargesTypes where Id =  @ChargeTypeId);
          	end
     
          	set @IsMultiPercentage = (select IsMultiPercentage from VatTypes where Tenant = @Tenant AND Id = @ReceivableVatTypeId)
@@ -102,7 +103,7 @@ BEGIN
          
           update ShipmentReceivables set VatAmountLocal =  Round(@VatAmountLocal, 2),  VatAmountProfit =  Round(@VatAmountProfit,2) where Id = @EntityId and Tenant = @Tenant
 
-         	FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @ShipmentReceivablesVatTypeId,@CreateDate, @TotalAmountLocal, @AmountInProfitCurrency, @CustomerId
+         	FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @ShipmentReceivablesVatTypeId,@CreateDate, @TotalAmountLocal, @AmountInProfitCurrency, @CustomerId, @ChargeTypeId
          	END
          	CLOSE DataCursor
          	DEALLOCATE DataCursor

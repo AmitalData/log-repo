@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Accounting"   TargetTableName="GLAccountCardsDatas">
-  <Sql Version="5">
+  <Sql Version="6">
     <![CDATA[
 
 declare @isMultiCurrency bit

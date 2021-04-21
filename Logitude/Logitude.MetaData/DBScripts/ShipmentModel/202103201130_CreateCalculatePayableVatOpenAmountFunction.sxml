@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Shipment" Pre="true">
-  <Sql Version="5">
+  <Sql Version="6">
     <![CDATA[
     
     IF EXISTS (SELECT *
@@ -11,7 +11,7 @@
     DECLARE @Sql NVARCHAR(MAX)
     SET @Sql = 
     '
-    CREATE FUNCTION dbo.CalculatePayableVatOpenAmount (@CardId varchar(15),@VatTypeId varchar(15), @Tenant int, @CreateDate datetime, @amount float)
+    CREATE FUNCTION dbo.CalculatePayableVatOpenAmount (@CardId varchar(15),@ChargeTypeId varchar(15), @Tenant int, @CreateDate datetime, @amount float)
     RETURNS float
     WITH EXECUTE AS CALLER
     AS
@@ -32,7 +32,7 @@
 
 	     if (@PayableVatTypeId is null) 
 	     begin
-           set @PayableVatTypeId = @VatTypeId;
+          set @PayableVatTypeId = (select top 1 VatTypeId from ChargesTypes where Id =  @ChargeTypeId);
 	     end
 
 	     if (@PayableVatTypeId is not null) 
