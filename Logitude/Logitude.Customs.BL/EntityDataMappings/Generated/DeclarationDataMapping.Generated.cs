@@ -395,9 +395,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ExportDeclarationOfficeCode, 
 	         PhysicalCheck, 
 	         FinalLoadingSiteName, 
-	         ShipCodeName,
-			 CancelRejectionReasonName,
-		}
+	         ShipCodeName, 
+	         CancelRejectionReasonName,
+	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
