@@ -53,6 +53,7 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
         if (FeatureLocator.HasFeaturePermession("APInvoice", "APInvoiceEditExchangeRate")) {
             this.IsEditExchangeRateVisible = true;
         }
+        this.SetShipmentSearchApiQueryFilter("D,C,H,A");
     }
 
     private SaveCompletedEvent: any = null;
@@ -91,6 +92,13 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
     private myPaymentTermListService: PaymentTermListService;
     InitializeServices() {
         this.myPaymentTermListService = new PaymentTermListService();
+    }
+
+    SetShipmentSearchApiQueryFilter(shipmentsLevelCods: string) {
+        this.apiQueryFilters = new ApiQueryFilters();
+        this.apiQueryFilters.PageIndex = 0;
+        this.apiQueryFilters.PageSize = 10;
+        this.apiQueryFilters.addAdditionalFilter("ShipmentLevelCode", shipmentsLevelCods, null, null, "InList", true, true, false, "string");
     }
 
     public IsEditingEnabled: boolean = false;
@@ -710,21 +718,16 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
     LevelCodeitemClicked(itemValue: string) {
         if (this.LevelCodeSelectedValue != itemValue) {
             this.LevelCodeSelectedValue = itemValue;
+            var shipmentsLevelCods = "";
 
             if (itemValue == "All") {
-                this.apiQueryFilters = null;
-            } else {
-                this.apiQueryFilters = new ApiQueryFilters();
-                this.apiQueryFilters.PageIndex = 0;
-                this.apiQueryFilters.PageSize = 10;
-
-                if (itemValue == "MasterAndDirect") {   
-                    this.apiQueryFilters.addAdditionalFilter("ShipmentLevelCode", "D,C", null, null, "InList", true, true, false, "string");
-                } else if (itemValue == "HouseAndDirect") {
-                        this.apiQueryFilters.addAdditionalFilter("ShipmentLevelCode", "D,H", null, null, "InList", true, true, false, "string");
-                } 
+                shipmentsLevelCods = "D,C,H,A";
+            } else if (itemValue == "MasterAndDirect") {
+                shipmentsLevelCods = "D,C";
+            } else if (itemValue == "HouseAndDirect") {
+                shipmentsLevelCods = "D,H";                  
             }
-            
+            this.SetShipmentSearchApiQueryFilter(shipmentsLevelCods);
         }
     }
 
