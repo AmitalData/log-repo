@@ -29,7 +29,7 @@ export class CancelRequestRejectReasonTypePMService {
  private _apiUrl: string;
  constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/cancelrequestrejectreasontypess';      
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/cancelrequestrejectreasontypes';      
     }
 
 	get(code: string) {       

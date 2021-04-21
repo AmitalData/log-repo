@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CancelRequestRejectReasonTypeUpdateClass
    {  		
-		public const string HashString = "1c5b079a199a2960c8e26541899db472";
+		public const string HashString = "ca21a1cf6800fd4e028f8589514c1a1c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -88,9 +88,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			
 	             				    ObjectTableName =  "Customs.CancelRequestRejectReasonType",
 			      				    IsNew =  false,
-			      				    DBTableName =  "Customs.CancelRequestRejectReasonTypess",
+			      				    DBTableName =  "Customs.CancelRequestRejectReasonTypes",
 			      				    ObjectTableSingular =  "Customs.CancelRequestRejectReasonType",
-			      				    ObjectTablePlural =  "Customs.CancelRequestRejectReasonTypess",
+			      				    ObjectTablePlural =  "Customs.CancelRequestRejectReasonTypes",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,

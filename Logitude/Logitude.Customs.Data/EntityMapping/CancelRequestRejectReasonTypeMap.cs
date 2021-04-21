@@ -19,17 +19,7 @@ namespace Logitude.Customs.Data.EntityMapping
 	    string dbms;
         public CancelRequestRejectReasonTypeMap()
         { 
-		
-     dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-    if (dbms == "oracle")
-    {
-	  this.ToTable("CancelRequestRejectReasonTypes", "Customs");
-	}
-    else
-    {
-	  this.ToTable("CancelRequestRejectReasonTypess", "Customs");
-	}
-
+			  this.ToTable("CancelRequestRejectReasonTypes", "Customs");
 		
 		    this.HasKey(t => new { t.Code });
 	 

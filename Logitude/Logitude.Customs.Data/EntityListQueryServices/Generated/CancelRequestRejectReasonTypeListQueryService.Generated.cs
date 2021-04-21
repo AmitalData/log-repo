@@ -30,7 +30,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<CancelRequestRejectReasonType> iQueryable = (from a in context.CancelRequestRejectReasonTypess
+            IQueryable<CancelRequestRejectReasonType> iQueryable = (from a in context.CancelRequestRejectReasonTypes
                                                select a);
             			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
 
@@ -131,7 +131,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
         public CancelRequestRejectReasonTypeList GetSingle(string code)
         {
-            IQueryable<CancelRequestRejectReasonType> CancelRequestRejectReasonTypeQuery = (from a in context.CancelRequestRejectReasonTypess
+            IQueryable<CancelRequestRejectReasonType> CancelRequestRejectReasonTypeQuery = (from a in context.CancelRequestRejectReasonTypes
                                                        where a.Code == code
                                                        select a);
 
@@ -147,7 +147,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<CancelRequestRejectReasonType> iQueryable = (from a in context.CancelRequestRejectReasonTypess  select a);
+            IQueryable<CancelRequestRejectReasonType> iQueryable = (from a in context.CancelRequestRejectReasonTypes  select a);
 
 			  			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
 
