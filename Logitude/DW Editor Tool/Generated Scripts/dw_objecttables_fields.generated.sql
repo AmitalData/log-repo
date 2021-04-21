@@ -1139,9 +1139,6 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_QuotesLocalCurrencyNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_QuotesLocalCurrencyNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesLocalCurrencyNewId,0,'Fact_Quotes','[Local Currency]','Local Currency','Dimension','false',0,0,'DIM_Currencies','false','false','true','Money','false','false','false','false','false')  
-declare @Fact_QuotesDeliveryToNewId varchar(15)
-execute usp_GetNextTableIdValue @Fact_QuotesDeliveryToNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesDeliveryToNewId,0,'Fact_Quotes','[Delivery To]','Delivery To','nText','false',0,250,'false','false','false','Routings','false','false','false','Quote.DeliveryAddress','true','false')  
 declare @Fact_QuotesPickupFromNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_QuotesPickupFromNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesPickupFromNewId,0,'Fact_Quotes','[Pickup From]','Pickup From','Text','false',0,500,'false','false','true','Routings','false','false','false','QuoteComputedField.PickupFrom','false','false')  
@@ -1256,9 +1253,9 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_QuotesFromLocationNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_QuotesFromLocationNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesFromLocationNewId,0,'Fact_Quotes','[From Location]','From Location','Text','false',0,500,'false','false','true','Routings','false','false','false','QuoteComputedField.FromLocation','false','false')  
-declare @Fact_QuotesDeliveryFromNewId varchar(15)
-execute usp_GetNextTableIdValue @Fact_QuotesDeliveryFromNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesDeliveryFromNewId,0,'Fact_Quotes','[Delivery From]','Delivery From','Text','false',0,500,'false','false','true','Routings','false','false','false','QuoteComputedField.DeliveryFrom','false','false')  
+declare @Fact_QuotesDeliveryToNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesDeliveryToNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesDeliveryToNewId,0,'Fact_Quotes','[Delivery To]','Delivery To','Text','false',0,500,'false','false','true','Routings','false','false','false','QuoteComputedField.DeliveryTo','false','false')  
 ------------------------------------------------------------------------------------
 declare @Fact_ShipmentsNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ShipmentsNewId OUTPUT,'DWObjectTable' 
