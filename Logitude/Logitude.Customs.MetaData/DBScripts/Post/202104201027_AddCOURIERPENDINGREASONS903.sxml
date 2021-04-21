@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script DBType="Main" Module="Customs" Pre="true">
+  <Sql Version="1">
+  </Sql>
+
+  <Oracle Version="4">
+    <![CDATA[
+ declare
+ n int := 0;
+begin
+  select count(*) into n
+  from COURIERPENDINGREASONS
+ where code='903';
+ if n = 0 then
+ 
+Insert into 
+COURIERPENDINGREASONS (CODE,LOCALNAME,SEARCHFIELDS,ENGLISHNAME,INACTIVE,ERRORPLACE,TENANT,UNIFREIGHTSTATUSCODE,ID) 
+values ('903','מספר טלפון לא תקין','Invalid phone number,מספר טלפון לא תקין,903','Invalid phone number',0,'1',1,null,'903');
+
+
+commit;
+  end if;
+end;
+
+    ]]>
+  </Oracle>
+</Script>

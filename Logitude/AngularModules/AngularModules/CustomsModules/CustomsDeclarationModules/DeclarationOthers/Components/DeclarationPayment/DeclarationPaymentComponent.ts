@@ -28,7 +28,7 @@ import { CustomerActivityTypePM } from '../../../../../Customs/EntityPMs/Custome
 import { UserList } from '../../../../../Common/EntityLists/UserList';
 import { CustomBankList } from '../../../../../Customs/EntityLists/CustomBankList';
 import { AmitalGatewayUtil } from '../../../../../Infrastructure/Utilities/AmitalGatewayUtil';
-import { UnifreightController } from '../../../../../Customs/Controller/UnifreightController';
+import { UnifreightController, UnifreightInstructionController } from '../../../../../Customs/Controller/UnifreightController';
 import { CustomMessageProgressHelper, CustomMessageProgressComponent, ShowProgressBarParams } from '../../../../CustomsControls/Components/CustomMessageProgressComponent';
 
 import { ObjectTablePM } from '../../../../../Infrastructure/EntityPMs/ObjectTablePM';
@@ -2272,7 +2272,8 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                         SessionLocator.SelectedSession.StopBusyIndicator();
                         confirmWindow.WindowClosed.subscribe((event: any) => {
                             if (confirmWindow.Yes) {
-                                this.ActualSendToTransfer();
+                                //this.ActualSendToTransfer();
+                                this.InstructionActualSendToTransfer()
                             }
                         });
                         return;
@@ -2409,6 +2410,17 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
     }
 
+    InstructionActualSendToTransfer() {
+        let myUnifreightInstructionController = new UnifreightInstructionController(this.EntityPM, "COLLECT_TRANSFER");
+        myUnifreightInstructionController
+            .ShowInstruction(
+                () => {
+                    console.log("Instruction return - continue TransferToCollectorMethod");
+                    this.ActualSendToTransfer();
+                },
+                () => { console.log("Instruction return - do not continue 2 TransferToCollectorMethod!!"); }
+            );
+    }
     ActualSendToTransfer() {
 
         if (this.customSendOptions == null) {
@@ -2601,7 +2613,8 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 confirmWindow.WindowClosed.subscribe((event: any) => {
                     if (confirmWindow.Yes) {
-                        this.ActualSendToTransfer();
+                        //this.ActualSendToTransfer();
+                        this.InstructionActualSendToTransfer();
                     }
                 });
 
