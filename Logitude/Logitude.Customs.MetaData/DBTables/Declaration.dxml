@@ -909,8 +909,8 @@
   </Column>
   <Column
     Name="CancelRequestRejectionReason"
-    Type="nvarchar"
-    Size="512">
+    Type="varchar"
+    Size="4">
     <Constraints
       Nullable="true" />
   </Column>
@@ -957,7 +957,7 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="TransshipmentApprovalDateTime"   
+    Name="TransshipmentApprovalDateTime"
     Type="datetime">
     <Constraints
       Nullable="true" />
@@ -1188,6 +1188,11 @@
   <Relation
     ForeignKeyColumn="CancelRequestStatusCode"
     ReferencedTable="CancellationRequestStatuses"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="CancelRequestRejectionReason"
+    ReferencedTable="CancelRequestRejectReasonTypes"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
   <Relation

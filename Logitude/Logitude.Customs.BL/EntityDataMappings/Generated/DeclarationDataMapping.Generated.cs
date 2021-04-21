@@ -2676,10 +2676,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 entityPM.CustomCancelRequestRemarks = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CustomCancelRequestRemarks));
             }
-            if (!String.IsNullOrWhiteSpace(entityPM.CancelRequestRejectionReason)) //T4 find type == nText 
-            {
-                entityPM.CancelRequestRejectionReason = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CancelRequestRejectionReason));
-            }
             if (!String.IsNullOrWhiteSpace(entityPM.AmendmentErrorXml)) //T4 find type == nText 
             {
                 entityPM.AmendmentErrorXml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.AmendmentErrorXml));
