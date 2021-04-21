@@ -439,6 +439,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 }
             }
 
+            if (entityPOCO.CancelRequestRejectReasonType != null)
+            {
+                CancelRequestRejectReasonTypeQueryService CancelRequestRejectReasonTypeQueryService = new CancelRequestRejectReasonTypeQueryService(entityPOCO.Tenant);
+                CancelRequestRejectReasonTypePM CancelRequestRejectReasonTypePM = CancelRequestRejectReasonTypeQueryService.GetSingle(entityPOCO.CancelRequestRejectionReason, false, true);
+                if (CancelRequestRejectReasonTypePM != null)
+                {
+                    entityPM.CancelRejectionReasonName = CancelRequestRejectReasonTypePM.LocalName;
+                }
+            }
+
             UpdateCourierDeclarationFields(entityPM, entityPOCO);
 
             if (entityPOCO.AcceptanceStatusCode != null)

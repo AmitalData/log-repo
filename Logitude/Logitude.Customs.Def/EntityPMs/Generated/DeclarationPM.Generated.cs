@@ -5377,6 +5377,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string cancelRejectionReasonName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CancelRejectionReasonName  
+	   {
+	    
+	     get
+		{
+		   return cancelRejectionReasonName;
+		 }
+		 set
+		 {
+		   if(cancelRejectionReasonName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CancelRejectionReasonName",OldValue=cancelRejectionReasonName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   cancelRejectionReasonName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
