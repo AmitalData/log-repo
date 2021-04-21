@@ -200,13 +200,17 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
  
 
     LoadDocumentPage(pageIndex: number = null, selectItem: boolean = false) {
-        if (this.SelectedTicket) {
+         if (this.SelectedTicket) {
 
             this.StartBusyIndicator("Loading page...");
 
             var index = pageIndex ? pageIndex : this.CurrentPageIndex;
-
+ 
             if (index == 0) index = 1;
+
+            if (this.invoiceItem != null && !AppTool.IsNullOrEmpty(this.invoiceItem.OcrPageNumber) && this.invoiceItem.OcrPageNumber != 0 && selectItem) {
+                index = this.invoiceItem.OcrPageNumber;
+            }
 
             console.log("Load Page: ", index);
 

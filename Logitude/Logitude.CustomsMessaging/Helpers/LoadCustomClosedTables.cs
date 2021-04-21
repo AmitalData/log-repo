@@ -615,6 +615,11 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(vendorTransactionType, vendorTransactionTypeObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(vendorTransactionType);
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData CancelRequestRejectReasonType = closedSystemTables.Where(d => d.id == "1927").FirstOrDefault();
+            ObjectTable CancelRequestRejectReasonTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.CancelRequestRejectReasonType", 0, false);
+            InsertClosedTableRecord(CancelRequestRejectReasonType, CancelRequestRejectReasonTypeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(CancelRequestRejectReasonType);
+
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData validCustomsItem = closedSystemTables.Where(d => d.id == "1966").FirstOrDefault();
             ObjectTable validCustomsItemObjectTable = objectTableRepository.GetObjectTableByName("Customs.ValidCustomsItem", 0, false);
             InsertClosedTableRecord(validCustomsItem, validCustomsItemObjectTable, customsClosedTables, customsClosedTableRepository);

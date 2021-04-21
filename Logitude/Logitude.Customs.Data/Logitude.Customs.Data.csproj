@@ -114,6 +114,7 @@
     <Compile Include="EntityKeys\AutonomyRegionTypeKeys.cs" />
     <Compile Include="EntityKeys\CancellationReasonRequestTypeKeys.cs" />
     <Compile Include="EntityKeys\CancellationRequestStatusKeys.cs" />
+    <Compile Include="EntityKeys\CancelRequestRejectReasonTypeKeys.cs" />
     <Compile Include="EntityKeys\CargoSealIdentifierKeys.cs" />
     <Compile Include="EntityKeys\CargoSealKeys.cs" />
     <Compile Include="EntityKeys\CargoSplitRequestStatusKeys.cs" />
@@ -213,6 +214,7 @@
     <Compile Include="EntityListQueryServices\AutonomyRegionTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CancellationReasonRequestTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CancellationRequestStatusListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\CancelRequestRejectReasonTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CargoSealIdentifierListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CargoSealListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CargoSplitRequestStatusListQueryService.cs" />
@@ -278,6 +280,7 @@
     <Compile Include="EntityListQueryServices\Generated\AutonomyRegionTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CancellationReasonRequestTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CancellationRequestStatusListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\CancelRequestRejectReasonTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CargoSealIdentifierListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CargoSealListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CargoSplitRequestStatusListQueryService.Generated.cs" />
@@ -411,6 +414,7 @@
     <Compile Include="EntityLists\Generated\AutonomyRegionTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CancellationReasonRequestTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CancellationRequestStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\CancelRequestRejectReasonTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CargoSealIdentifierList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CargoSealList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CargoSplitRequestStatusList.Generated.cs" />
@@ -511,6 +515,7 @@
     <Compile Include="EntityMapping\AutonomyRegionTypeMap.cs" />
     <Compile Include="EntityMapping\CancellationReasonRequestTypeMap.cs" />
     <Compile Include="EntityMapping\CancellationRequestStatusMap.cs" />
+    <Compile Include="EntityMapping\CancelRequestRejectReasonTypeMap.cs" />
     <Compile Include="EntityMapping\CargoSealIdentifierMap.cs" />
     <Compile Include="EntityMapping\CargoSealMap.cs" />
     <Compile Include="EntityMapping\CargoSplitRequestStatusMap.cs" />
@@ -610,6 +615,7 @@
     <Compile Include="EntityPOCOs\AutonomyRegionType.cs" />
     <Compile Include="EntityPOCOs\CancellationReasonRequestType.cs" />
     <Compile Include="EntityPOCOs\CancellationRequestStatus.cs" />
+    <Compile Include="EntityPOCOs\CancelRequestRejectReasonType.cs" />
     <Compile Include="EntityPOCOs\CargoSeal.cs" />
     <Compile Include="EntityPOCOs\CargoSealIdentifier.cs" />
     <Compile Include="EntityPOCOs\CargoSplitRequestStatus.cs" />
@@ -710,6 +716,7 @@
     <Compile Include="Repsitories\AutonomyRegionTypeRepository.cs" />
     <Compile Include="Repsitories\CancellationReasonRequestTypeRepository.cs" />
     <Compile Include="Repsitories\CancellationRequestStatusRepository.cs" />
+    <Compile Include="Repsitories\CancelRequestRejectReasonTypeRepository.cs" />
     <Compile Include="Repsitories\CargoSealIdentifierRepository.cs" />
     <Compile Include="Repsitories\CargoSealRepository.cs" />
     <Compile Include="Repsitories\CargoSplitRequestStatusRepository.cs" />
@@ -775,6 +782,7 @@
     <Compile Include="Repsitories\Generated\AutonomyRegionTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CancellationReasonRequestTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CancellationRequestStatusRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\CancelRequestRejectReasonTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CargoSealIdentifierRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CargoSealRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CargoSplitRequestStatusRepository.Generated.cs" />

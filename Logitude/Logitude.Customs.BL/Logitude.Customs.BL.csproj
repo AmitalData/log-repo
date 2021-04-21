@@ -306,6 +306,7 @@
     <Compile Include="EntityDataMappings\BankDataMapping.cs" />
     <Compile Include="EntityDataMappings\CancellationReasonRequestTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\CancellationRequestStatusDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CancelRequestRejectReasonTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\CargoIdentifireTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\CargoIdentityQualifierDataMapping.cs" />
     <Compile Include="EntityDataMappings\CargoSealDataMapping.cs" />
@@ -494,6 +495,7 @@
     <Compile Include="EntityDataMappings\Generated\BankDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CancellationReasonRequestTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CancellationRequestStatusDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CancelRequestRejectReasonTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CargoIdentifireTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CargoIdentityQualifierDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CargoSealDataMapping.Generated.cs" />
@@ -978,6 +980,7 @@
     <Compile Include="EntityQueryServices\Generated\AutonomyRegionTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CancellationReasonRequestTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CancellationRequestStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CancelRequestRejectReasonTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DocumentRejectTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ExportDeclarationClosingDataQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ExporterRoleTypeQueryService.Generated.cs" />
@@ -1481,6 +1484,7 @@
     <Compile Include="EntityUpdateServices\Generated\AmountTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CancellationReasonRequestTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CancellationRequestStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CancelRequestRejectReasonTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ClaimReasonTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ClassificationTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsShipUpdateService.Generated.cs" />
