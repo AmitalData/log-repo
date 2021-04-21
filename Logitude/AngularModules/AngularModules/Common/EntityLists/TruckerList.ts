@@ -40,7 +40,7 @@ export class TruckerList {
 		PrimaryContactEmail: string;
 		PrimaryContactPhone: string;
 		StateName: string;
-    GLAccountNumber: string;
-    TransmitToPort: boolean;
+		GLAccountNumber: string;
+		TransmitToPort: boolean;
 	
-}
+}

@@ -168,6 +168,7 @@
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\ShippingLine\ShippinglineGeneralTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\TariffTranslations\AddEditTariffTranslationComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\TariffTranslations\TariffTranslationsTabComponent.html" />
+    <Content Include="CommonModules\CommonPartners\Components\EditTabs\Trucker\ExportGeneraInTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\Trucker\TruckerDocsInTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\AccountingPartner\AccountingPartnerDocsInTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\Vendor\VendorDocsInTabComponent.html" />
@@ -298,6 +299,7 @@
     <TypeScriptCompile Include="App\DynamicLoader\LazyWidgetsLogitude.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\CopyJournalComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\ShippingLine\ShippinglineGeneralTabComponent.ts" />
+    <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\Trucker\ExportGeneraInTabComponent.ts" />
     <TypeScriptCompile Include="Common\CustomFilters\ChargesTypeCustomFilter.ts" />
     <TypeScriptCompile Include="Common\CustomFilters\ChargesTypeCustomFilter.ts" />
     <TypeScriptCompile Include="Common\CustomFilters\ChargesTypeCustomFilter.ts" />
