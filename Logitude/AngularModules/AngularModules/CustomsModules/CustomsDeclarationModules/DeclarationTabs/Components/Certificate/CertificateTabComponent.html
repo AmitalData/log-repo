@@ -475,8 +475,9 @@
                                                     </div>
                                                 </td>
                                                 <td></td>
-                                                <td style="width:120px">
-                                                    <SearchTextBox [PlaceHolder]="'Customs.CustomsDocument.SupplierInvoiceItem' | TextCodeTranslationPipe" (SearchTextChangeEvent)="Search($event)"></SearchTextBox>
+                                                <td style="width:130px">
+                                                    <!--SearchTextBox [PlaceHolder]="'Customs.CustomsDocument.SupplierInvoiceItem' | TextCodeTranslationPipe" (SearchTextChangeEvent)="Search($event)"></SearchTextBox>-->
+                                                    <SearchTextBox [PlaceHolder]="'פרט מכס/מספר פריט'" (SearchTextChangeEvent)="Search($event)"></SearchTextBox>
                                                 </td>
                                             </tr>
                                         </table>
