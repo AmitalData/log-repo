@@ -527,6 +527,7 @@
      if(@ArrivedDate is null) begin set @IsArrived= 0; end
 	 if(@MainCarriageATD is null) begin set @IsDeparted=0; end
      if(@CustomsClearanceDate is null) begin set @IsCustomsCleared= 0 end
+	 if(@ContainersNumbersAndTypesArray = '[]') begin set @ContainersNumbersAndTypesArray = null end
 	 -------------------------------------------------
 
 	 ----------------Entry And Release-------------------
