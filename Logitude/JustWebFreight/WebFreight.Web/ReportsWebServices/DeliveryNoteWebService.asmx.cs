@@ -344,7 +344,7 @@ namespace WebFreight.Web.ReportsWebServices
                 this.MapShipperReferences();
                 this.MapShipperAddress();
                 this.MapShipperContact();
-                this.MapShipperCardInfo();
+                this.MapShipperCard();
             }
         }
         private void MapShipperReferences()
@@ -391,7 +391,7 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
         }
-        private void MapShipperCardInfo()
+        private void MapShipperCard()
         {
             Card card = CardRepository.GetSingleCard(shipment.ShipperId, tenant, true);
             if (card != null)
