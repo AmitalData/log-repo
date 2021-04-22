@@ -165,7 +165,7 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
                     this.warehouseEntryPM.ToTypeCode = "PORT";
                 }
 
-                this.MapMasterShipmentNumber(args.ConnectedTo);
+                this.MapConnectedShipmentFields(args.ConnectedTo);
             }
 
 
@@ -188,11 +188,17 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
     }
 
 
-    MapMasterShipmentNumber(connectedTo: string) {
-        if (this.ShipmentPM.ShipmentLevelCode == "H" && connectedTo == "Shipment") {
+    MapConnectedShipmentFields(connectedTo: string) {
+        if (connectedTo == "Shipment") {
+            this.MapMasterShipmentNumber();
+        }
+    }
+
+    MapMasterShipmentNumber() {
+        if (this.ShipmentPM.ShipmentLevelCode == "H") {
             this.warehouseEntryPM.MasterShipmentNumber = this.ShipmentPM.MasterShipmentNumber;
         }
-        else if (connectedTo == "Shipment") {
+        else {
             this.warehouseEntryPM.MasterShipmentNumber = this.ShipmentPM.ShipmentNumber;
         }
     }
