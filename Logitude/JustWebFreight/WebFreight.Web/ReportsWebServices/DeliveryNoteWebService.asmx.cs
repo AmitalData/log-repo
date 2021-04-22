@@ -343,6 +343,7 @@ namespace WebFreight.Web.ReportsWebServices
             {
                 dataProvider.ClientReferenceNumber = shipment.CustomerReference1 != null ? shipment.CustomerReference1 : "";
                 dataProvider.ShipperReference2 = shipment.ShipperReference2;
+                dataProvider.ShipperReference1 = shipment.ShipperReference1;
 
                 Card card = CardRepository.GetSingleCard(shipment.ShipperId, tenant, true);
                 if (card != null)
