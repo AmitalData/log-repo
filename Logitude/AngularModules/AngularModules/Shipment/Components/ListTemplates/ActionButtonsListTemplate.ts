@@ -178,7 +178,7 @@ export class ActionButtonsListTemplate {
                 windowArgs.IsNew = false;
                 windowArgs.EntityPM = myResult.Result
                 newWindow.WindowArgs = windowArgs;
-                if ((SessionLocator.PrivateLableSettings) {
+                if ((SessionLocator.PrivateLableSettings)) {
                     newWindow.Height = this.IsDSV ?  376 : 420;
                     newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditPrivateLabelShipmentComponent');
                 }
