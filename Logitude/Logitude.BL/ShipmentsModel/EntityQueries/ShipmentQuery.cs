@@ -13599,7 +13599,93 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return Tuple.Create(shipmentNumber, bookingConfirmationNumber);
         }
 
+
+        public CargoTrackingShipmentCustomsData GetCargoTrackingShipmentCustomsData(string shipmentId, int tenant)
+        {
+            Shipment shipment = repository.GetShipmentForCargoTracking(shipmentId, tenant);
+
+            if (shipment.ShipmentAdditionalCloudData != null)
+            {
+                ShipmentAdditionalCloudCustomData cloudCustomData = GetDeserializedCloudCustomData(shipment.ShipmentAdditionalCloudData);
+                CargoTrackingShipmentCustomsData shipmentCustomsData = BuildCargoTrackingShipmentCustomsData(cloudCustomData, tenant);
+
+                return shipmentCustomsData;
+            }
+
+            return null;
+        }
+
+        private CargoTrackingShipmentCustomsData BuildCargoTrackingShipmentCustomsData(ShipmentAdditionalCloudCustomData cloudCustomData, int tenant)
+        {
+            return new CargoTrackingShipmentCustomsData()
+            {
+                DeclarationNumber = cloudCustomData.DeclarationNo,
+                TotalValueInNIS = Convert.ToDecimal(cloudCustomData.GoodsValue),
+                TotalValueInForeignCurrency = cloudCustomData.GoodsValueDetails.Sum(good => Convert.ToDecimal(good.Value)),
+                GoodsDescription = cloudCustomData.MishgorDescOfGoods1,
+                TotalTax = Convert.ToDecimal(cloudCustomData.TotalTax),
+                ImporterVatAmount = CalculateImporterVatAmountFromCloudCustomData(cloudCustomData),
+                TaxDetails = BuildCargoTrackingShipmentCustomTaxDetails(cloudCustomData),
+                CurrencyCode = cloudCustomData.GoodsValueDetails.FirstOrDefault()?.CurrencyName,
+                CurrencySign = GetCurrencySignFromCloudCustomData(cloudCustomData, tenant)
+            };
+
+        }
+
+        private static string GetCurrencySignFromCloudCustomData(ShipmentAdditionalCloudCustomData cloudCustomData, int tenant)
+        {
+            CurrencyQuery currencyQuery = new CurrencyQuery(tenant);
+            string currencyCode = cloudCustomData.GoodsValueDetails.FirstOrDefault()?.CurrencyName;
+            var currency = currencyQuery.GetSinglePMByCode(currencyCode, tenant);
+            string sign = currency?.Sign;
+            return sign;
+        }
+
+        private decimal CalculateImporterVatAmountFromCloudCustomData(ShipmentAdditionalCloudCustomData cloudCustomData)
+        {
+            return cloudCustomData.TaxesDetails.Where(detail => detail.TaxTypeCode == "15")
+                                                .Sum(detail => Convert.ToDecimal(detail.TaxAmount));
+        }
+        private List<CargoTrackingShipmentCustomTaxDetails> BuildCargoTrackingShipmentCustomTaxDetails(ShipmentAdditionalCloudCustomData cloudCustomData)
+        {
+            return cloudCustomData.TaxesDetails.Select(detail => new CargoTrackingShipmentCustomTaxDetails()
+            {
+                TaxTypeName = detail.Taxtypename,
+                TaxAmount = Convert.ToDecimal(detail.TaxAmount),
+                TaxBasis = detail.TaxBasis
+            }).ToList();
+        }
+
+        private static ShipmentAdditionalCloudCustomData GetDeserializedCloudCustomData(ShipmentAdditionalCloudData shipmentAdditionalCloudData)
+        {
+            ShipmentCloudCustomDataDeserializer deserializer = new ShipmentCloudCustomDataDeserializer();
+            var cloudCustomData = deserializer.BuildCustomDataFromXML(shipmentAdditionalCloudData);
+            return cloudCustomData;
+        }
     }
+
+    public class CargoTrackingShipmentCustomsData
+    {
+        public string DeclarationNumber { get; set; }
+        public string DeclarationStatus { get; set; }
+        public string CurrencySign { get; set; }
+        public string CurrencyCode { get; set; }
+        public string CurrencyName { get; set; }
+        public string GoodsDescription { get; set; }
+        public decimal ImporterVatAmount { get; set; }
+        public decimal TotalValueInNIS { get; set; }
+        public decimal TotalValueInForeignCurrency { get; set; }
+        public decimal TotalTax { get; set; }
+
+        public List<CargoTrackingShipmentCustomTaxDetails> TaxDetails;
+    }
+    public class CargoTrackingShipmentCustomTaxDetails
+    {
+        public string TaxTypeName { get; set; }
+        public string TaxBasis{ get; set; }
+        public decimal TaxAmount { get; set; }
+    }
+
 
     public class DeparturesArrivalsDataItem
     {
