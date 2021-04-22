@@ -307,6 +307,7 @@ namespace TestTenantConfiguration
             SignUpInfoClass signUpInfo = CreateSignUpInfoInstance();
             String Password = SignUpClass.StartSignUp(signUpInfo);
             this.Tenant = signUpInfo.Tenant;
+            SetControlPropertyValue(TenantNumber, "Text", this.Tenant.ToString());
         }
 
         private SignUpInfoClass CreateSignUpInfoInstance()
@@ -531,9 +532,16 @@ namespace TestTenantConfiguration
                 ContactId = ContactId,
                 SignedDatetime = TenantServerConfigration.GetCurrentDateTime(this.Tenant),
                 Tenant = this.Tenant,
-                TermsofUseVersion = 2
+                TermsofUseVersion = LastTermOfUseLastVersion()
             };
             return entityPM;
+        }
+
+        private int LastTermOfUseLastVersion()
+        {
+            TermsofUseQuery termsofUseQuery = new TermsofUseQuery(this.Tenant);
+            TermsofUsePM termsofUsePM = termsofUseQuery.GetTermsofUseDeflut();
+            return termsofUsePM.Version;
         }
         #endregion
 
@@ -925,11 +933,11 @@ namespace TestTenantConfiguration
 
         private void PrepareDataForTenant()
         {
+            this.Title = "Prepare Data";
             SetControlPropertyValue(Timerlbl, "Text", "Preparing Tenant Data ...");
             SetControlPropertyValue(Timerlbl, "ForeColor", Color.DodgerBlue);
 
             string LogitudeURL = System.Configuration.ConfigurationSettings.AppSettings.Get("LogitudeURL");
-
             Logitude.Test.Base.Hooks.BeforeTestRun.PrepareTheData(this.TenantEmail, this.NewPassword, LogitudeURL);
             Logitude.ShipmentTests.Hooks.BeforeTestRun.SetupShipmentPreparationVariables();
 
