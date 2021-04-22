@@ -167,6 +167,8 @@ namespace Logitude.WarehouseLib.Data.EntityPOCOs
 	    public string TruckerReference { get; set; }
         [Column("ChildEntityReference")]
 	    public string ChildEntityReference { get; set; }
+        [Column("MasterShipmentNumber")]
+	    public string MasterShipmentNumber { get; set; }
     }
 }
 	 
