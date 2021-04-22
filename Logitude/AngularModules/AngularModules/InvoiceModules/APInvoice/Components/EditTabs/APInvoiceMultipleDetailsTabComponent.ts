@@ -39,7 +39,7 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
     public isRTL: boolean = false;
     public apiQueryFilters: ApiQueryFilters = null;
     private CurrentSession = SessionLocator.SelectedSession;
-
+    private shipmentsLevelCods: string = "D,C,H,A";
     constructor(private entityArgs: EntityArgs) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
@@ -53,7 +53,7 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
         if (FeatureLocator.HasFeaturePermession("APInvoice", "APInvoiceEditExchangeRate")) {
             this.IsEditExchangeRateVisible = true;
         }
-        this.SetShipmentSearchApiQueryFilter("D,C,H,A");
+        this.SetShipmentSearchApiQueryFilter(this.shipmentsLevelCods);
     }
 
     private SaveCompletedEvent: any = null;
@@ -718,16 +718,15 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
     LevelCodeitemClicked(itemValue: string) {
         if (this.LevelCodeSelectedValue != itemValue) {
             this.LevelCodeSelectedValue = itemValue;
-            var shipmentsLevelCods = "";
 
             if (itemValue == "All") {
-                shipmentsLevelCods = "D,C,H,A";
+                this.shipmentsLevelCods = "D,C,H,A";
             } else if (itemValue == "MasterAndDirect") {
-                shipmentsLevelCods = "D,C";
+                this.shipmentsLevelCods = "D,C";
             } else if (itemValue == "HouseAndDirect") {
-                shipmentsLevelCods = "D,H";                  
+                this.shipmentsLevelCods = "D,H";                  
             }
-            this.SetShipmentSearchApiQueryFilter(shipmentsLevelCods);
+            this.SetShipmentSearchApiQueryFilter(this.shipmentsLevelCods);
         }
     }
 
