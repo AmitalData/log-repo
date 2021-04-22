@@ -274,7 +274,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 quoteComputedFieldRepository.Update(quoteComputedFieldEntityPOCO);
                 quoteComputedFieldRepository.SubmitChanges();
                 followUpRepository.SubmitChanges();
-
+                 
                 this.GetForeignFields(entityPM, entityPoco);
 
                 TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Quote");
@@ -314,6 +314,9 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
                 entityPM.FollowUps = new List<QuoteFollowUpPM>();
             }
+
+
+            this.quoteFollowUpUpdateService = new QuoteFollowUpUpdateService(this.entityPM, this.tenant);
 
             quoteFollowUpUpdateService.RefreshFollowUps(); 
         }
@@ -540,8 +543,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             DateTime todayDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
 
-            this.entityPM.MarkFollowUpsAsDone = false;
-            this.quoteFollowUpUpdateService = new QuoteFollowUpUpdateService(this.entityPM, this.tenant);
+            this.entityPM.MarkFollowUpsAsDone = false; 
 
             this.isAdhoc = entityPM.QuoteTypeCode == "A" ? true : false;
             this.isInlandDomestic = (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I");
