@@ -283,8 +283,19 @@
    declare @Transshipment2AdditionalMAWBOBLBL as nvarchar(20)
    declare @Transshipment3AdditionalMAWBOBLBL as nvarchar(20)
    declare @QuoteNumber as nvarchar(20)
-  
+    
+   declare @PreForwardingETD as datetime
+   declare @PreForwardingETA as datetime
+   declare @PreForwardingATA as datetime
+   declare @PreForwardingATD as datetime
 
+   declare @PreForwardingCarrier as int 
+   declare @PreForwardingCarrierNumber as varchar(15)
+   declare @PreForwardingFromPort as int
+   declare @PreForwardingToPort as int
+
+   declare @ShipmentLevelCode as varchar(1)
+    
 	DECLARE ShipmentsCursor CURSOR READ_ONLY
 	FOR
 	SELECT dw_Shipments.Id, SourceTenant.[Tenant Number], ParentTenant.[Tenant Number] ,  NewDIM_Directions.Name, TransportModes.Name ,NewDIM_Levels.Name, NewDIM_Types.Name, NewDIM_OBLTypes.Name, NewDIM_Departments.Id_Number ,NewDIM_Branches.Id_Number , dw_Shipments.ShipmentNumber, dw_Shipments.House ,dw_ShipmentMasterDatas.Master,shipperPartners.Id_Number, consigneePartners.Id_Number,
@@ -298,7 +309,7 @@
 	dw_ShipmentMasterDatas.MainCarriageCarrierNumber,dw_Shipments.ProjectNumber,dw_Shipments.OtherPrepaidCollectId,dw_Shipments.TEU,dw_Shipments.ValueOfGoods,
 	mainCarriageCarrierPartners.Id_Number,valueOfGoodsCurrency.Id_Number,WarehouseLegWarehousePartners.Id_Number,freightForwarder.Id_Number,createdByUser.Id_Number,customerAgentImportPartners.Id_Number , customerAgentExportPartners.Id_Number, dw_ShipmentMasterDatas.AirlinePrefix,
 	dw_ShipmentMasterDatas.BookingConfirmationNumber , dw_ShipmentMasterDatas.MainCarriageFinalDestinationATA , dw_ShipmentMasterDatas.MAWBOBLDate , dw_Shipments.CustomsDeclarationNumber ,  dw_Shipments.FirstOperationalCloseDate,
-	dw_Shipments.EstimatedFinalArrivalDate , dw_Shipments.ActualFinalArrivalDate,  dw_Shipments.Routing , dw_Shipments.DescriptionOfGoods , dw_Shipments.PreCarriageETD , dw_ShipmentMasterDatas.MainCarriageFinalDestinationETA , NewDIM_MoveTypes.Id_Number , NewDIM_Vessels.Id_Number , NewDIM_SpecialServicesTypes.Id_Number,
+	dw_Shipments.EstimatedFinalArrivalDate , dw_Shipments.ActualFinalArrivalDate,  dw_Shipments.Routing , dw_Shipments.DescriptionOfGoods , dw_ShipmentMasterDatas.PreCarriageETD , dw_ShipmentMasterDatas.MainCarriageFinalDestinationETA , NewDIM_MoveTypes.Id_Number , NewDIM_Vessels.Id_Number , NewDIM_SpecialServicesTypes.Id_Number,
 	dw_ShipmentMasterDatas.MasterShipmentNumber , dw_Shipments.ARInvoices , @dw_Shipments.CustomFieldsVariable, dw_ShipmentMasterDatas.CutoffDate , ConsolidatorIdPartners.Id_Number,dw_Shipments.ConsolidatorReference,dw_Shipments.Notes ,Notify1Partners.Id_Number,dw_Shipments.Notify1Reference, Notify2Partners.Id_Number,dw_Shipments.Notify2Reference,ColoaderPartners.Id_Number,dw_Shipments.ColoaderReference1,ShipperNotExporterPartners.Id_Number,dw_Shipments.ShipperNotExporterReference,ReleasingAgentPartners.Id_Number,dw_Shipments.ReleasingAgentReference1,
 	dw_Shipments.IncludesCustoms , dw_Shipments.DeclarationNumber , dw_Shipments.DeclarationDate, dw_Shipments.CustomsClearanceDate,dw_Shipments.TerminalAvailable,dw_Shipments.WarehouseLegLastFreeDate,  dw_Shipments.WarehouseLegActualEntryDate, dw_Shipments.WarehouseLegExpectedEntryDate, dw_Shipments.WarehouseLegActualReleaseDate, dw_Shipments.WarehouseLegExpectedReleaseDate,  dw_Shipments.ChargeableWeightUnitCode,
 	dw_ShipmentComputedFields.FirstPickupATD, dw_ShipmentComputedFields.FirstPickupATA,dw_ShipmentComputedFields.FinalDeliveryETD, dw_ShipmentComputedFields.FinalDeliveryETA,dw_ShipmentComputedFields.FinalDeliveryATD,dw_ShipmentComputedFields.FinalDeliveryATA, dw_ShipmentMasterDatas.Transshipment1ETA , dw_ShipmentMasterDatas.Transshipment1ETD , dw_ShipmentMasterDatas.Transshipment1ATA ,  dw_ShipmentMasterDatas.Transshipment1ATD ,Transshipment1Vessel.Id_Number,Transshipment1Carrier.Id_Number,dw_ShipmentMasterDatas.Transshipment1AdditionalMAWBOBLBL, dw_ShipmentComputedFields.FirstPickupLocation, dw_ShipmentComputedFields.ContainersNumbers , dw_Shipments.Ratio , dw_Shipments.VolumetricWeight
@@ -309,16 +320,18 @@
 	fisrtPickupTruckerPartners.Id_Number,dw_ShipmentComputedFields.PickupTruckerNumber,dw_ShipmentComputedFields.PickupDriver,dw_ShipmentComputedFields.PickupTrailerNumber,dw_ShipmentComputedFields.PickupNotes,finalDeliveryTruckerIdPartners.Id_Number, dw_ShipmentComputedFields.DeliveryTruckerNumber,dw_ShipmentComputedFields.DeliveryDriver,dw_ShipmentComputedFields.DeliveryTrailerNumber,dw_ShipmentComputedFields.DeliveryNotes ,dw_ShipmentMasterDatas.DocumentsClosingDate,dw_ShipmentComputedFields.DeliveryDate,dw_ShipmentComputedFields.OnHandDate,dw_ShipmentComputedFields.PODDate,dw_Shipments.WarehouseLegActualEntryDate, dw_ShipmentComputedFields.BookingConfirmationSent, dw_ShipmentComputedFields.PreAlertSent, dw_ShipmentComputedFields.DeliveryNoticeSent, dw_ShipmentComputedFields.ExpectedArrivalNoticeSent, dw_ShipmentComputedFields.T1Received, dw_ShipmentComputedFields.ArrivalNoticeSent, dw_ShipmentComputedFields.ContainersNumbersAndTypesArray
 	,NewDIM_ShipmentStatuses.Id_Number , dw_Shipments.ComputedStatusDate, dw_Shipments.DangerousUnNumber,
 
-		dw_Shipments.PreCarriageCarrierNumber, dw_Shipments.OnCarriageCarrierNumber, PreCarriageTransportModes.Name,PreCarriageFromPort.Id_Number,
+		dw_ShipmentMasterDatas.PreCarriageCarrierNumber, dw_Shipments.OnForwardingCarrierNumber, PreCarriageTransportModes.Name,PreCarriageFromPort.Id_Number,
 	OnCarriageFromPort.Id_Number, PreCarriageToPort.Id_Number,OnCarriageToPort.Id_Number, Transshipment1FromPort.Id_Number,Transshipment2FromPort.Id_Number,
 	Transshipment3FromPort.Id_Number,Transshipment1ToPort.Id_Number, Transshipment2ToPort.Id_Number, Transshipment3ToPort.Id_Number,PreCarriageCarrier.Id_Number,
-	OnCarriageCarrier.Id_Number,dw_Shipments.PreCarriageETA, dw_Shipments.PreCarriageATD,dw_Shipments.PreCarriageATA,dw_Shipments.OnCarriageETD, dw_Shipments.OnCarriageETA, 
-	dw_Shipments.OnCarriageATD, dw_Shipments.OnCarriageATA, dw_ShipmentMasterDatas.Transshipment2ATA, dw_ShipmentMasterDatas.Transshipment3ATA, dw_ShipmentMasterDatas.Transshipment2ETA , 
+	OnCarriageCarrier.Id_Number,dw_ShipmentMasterDatas.PreCarriageETA, dw_ShipmentMasterDatas.PreCarriageATD,dw_ShipmentMasterDatas.PreCarriageATA,dw_Shipments.OnForwardingETD, dw_Shipments.OnForwardingETA, 
+	dw_Shipments.OnForwardingATD, dw_Shipments.OnForwardingATA, dw_ShipmentMasterDatas.Transshipment2ATA, dw_ShipmentMasterDatas.Transshipment3ATA, dw_ShipmentMasterDatas.Transshipment2ETA , 
 	dw_ShipmentMasterDatas.Transshipment3ETA,dw_ShipmentMasterDatas.Transshipment2ATD, dw_ShipmentMasterDatas.Transshipment3ATD, dw_ShipmentMasterDatas.Transshipment2ETD , 
 	dw_ShipmentMasterDatas.Transshipment3ETD,dw_ShipmentMasterDatas.Transshipment2AdditionalMAWBOBLBL, dw_ShipmentMasterDatas.Transshipment3AdditionalMAWBOBLBL,
-	Transshipment2Carrier.Id_Number,Transshipment3Carrier.Id_Number, dw_Shipments.QuoteNumber
+	Transshipment2Carrier.Id_Number,Transshipment3Carrier.Id_Number, dw_Shipments.QuoteNumber,
 
-
+	 dw_Shipments.ShipmentLevelCode,dw_Shipments.PreForwardingETD, dw_Shipments.PreForwardingETA, dw_Shipments.PreForwardingATA,dw_Shipments.PreForwardingATD,
+	 dw_Shipments.PreForwardingCarrierNumber, PreForwardingCarrier.Id_Number, PreForwardingFromPort.Id_Number,PreForwardingToPort.Id_Number
+	  
 	 
 
     From dw_Shipments
@@ -376,7 +389,7 @@
 	inner JOIN NewDIM_Partners ReleasingAgentPartners ON dw_Shipments.ReleasingAgentId = ReleasingAgentPartners.Id
     inner JOIN NewDIM_Vessels Transshipment1Vessel ON dw_ShipmentMasterDatas.Transshipment1VesselId = Transshipment1Vessel.Id
 	inner JOIN NewDIM_Partners Transshipment1Carrier ON dw_ShipmentMasterDatas.Transshipment1CarrierId = Transshipment1Carrier.Id
-	inner JOIN NewDIM_TransportModes  OnCarriageTransportModes ON dw_Shipments.OnCarriageTransportModeId = OnCarriageTransportModes.Code
+	inner JOIN NewDIM_TransportModes  OnCarriageTransportModes ON dw_Shipments.OnForwardingTransportModeId = OnCarriageTransportModes.Code
 	inner JOIN NewDIM_Partners ConsigneeNotImporter ON dw_Shipments.ConsigneeNotImporterId = ConsigneeNotImporter.Id
 	inner JOIN NewDIM_Partners IssuingCarrierAgent ON dw_Shipments.IssuingCarrierAgentId = IssuingCarrierAgent.Id
 	inner JOIN NewDIM_Ports DeliveryToPort  ON dw_ShipmentComputedFields.DeliveryToPortId = DeliveryToPort.Id
@@ -389,21 +402,23 @@
     inner JOIN NewDIM_Partners fisrtPickupTruckerPartners ON dw_ShipmentComputedFields.PickupTruckerId = fisrtPickupTruckerPartners.Id
     inner JOIN NewDIM_Partners finalDeliveryTruckerIdPartners ON dw_ShipmentComputedFields.DeliveryTruckerId = finalDeliveryTruckerIdPartners.Id
 	 
-   inner JOIN NewDIM_TransportModes  PreCarriageTransportModes ON dw_Shipments.PreCarriageTransportModeId = PreCarriageTransportModes.Code
-   inner JOIN NewDIM_Ports PreCarriageFromPort  ON dw_Shipments.PreCarriageFromPortId = PreCarriageFromPort.Id
-   inner JOIN NewDIM_Ports PreCarriageToPort  ON dw_Shipments.PreCarriageToPortId = PreCarriageToPort.Id
-   inner JOIN NewDIM_Ports OnCarriageFromPort  ON dw_Shipments.OnCarriageFromPortId = OnCarriageFromPort.Id
-   inner JOIN NewDIM_Ports OnCarriageToPort  ON dw_Shipments.OnCarriageToPortId = OnCarriageToPort.Id
+   inner JOIN NewDIM_TransportModes  PreCarriageTransportModes ON dw_ShipmentMasterDatas.PreCarriageTransportModeId = PreCarriageTransportModes.Code
+   inner JOIN NewDIM_Ports PreCarriageFromPort  ON dw_ShipmentMasterDatas.PreCarriageFromPortId = PreCarriageFromPort.Id
+   inner JOIN NewDIM_Ports PreCarriageToPort  ON dw_ShipmentMasterDatas.PreCarriageToPortId = PreCarriageToPort.Id
+   inner JOIN NewDIM_Ports OnCarriageFromPort  ON dw_ShipmentMasterDatas.OnCarriageFromPortId = OnCarriageFromPort.Id
+   inner JOIN NewDIM_Ports OnCarriageToPort  ON dw_ShipmentMasterDatas.OnCarriageToPortId = OnCarriageToPort.Id
 
    inner JOIN NewDIM_Ports Transshipment1FromPort  ON dw_ShipmentMasterDatas.Transshipment1FromPortId = Transshipment1FromPort.Id
    inner JOIN NewDIM_Ports Transshipment2FromPort  ON dw_ShipmentMasterDatas.Transshipment2FromPortId = Transshipment2FromPort.Id
    inner JOIN NewDIM_Ports Transshipment3FromPort  ON dw_ShipmentMasterDatas.Transshipment3FromPortId = Transshipment3FromPort.Id 
-   inner JOIN NewDIM_Partners PreCarriageCarrier  ON dw_Shipments.PreCarriageCarrierId = PreCarriageCarrier.Id
-   inner JOIN NewDIM_Partners OnCarriageCarrier  ON dw_Shipments.OnCarriageCarrierId = OnCarriageCarrier.Id   
+   inner JOIN NewDIM_Partners PreCarriageCarrier  ON dw_ShipmentMasterDatas.PreCarriageCarrierId = PreCarriageCarrier.Id
+   inner JOIN NewDIM_Partners OnCarriageCarrier  ON dw_Shipments.OnForwardingCarrierId = OnCarriageCarrier.Id   
    inner JOIN NewDIM_Partners Transshipment2Carrier ON dw_ShipmentMasterDatas.Transshipment2CarrierId = Transshipment2Carrier.Id
    inner JOIN NewDIM_Partners Transshipment3Carrier ON dw_ShipmentMasterDatas.Transshipment3CarrierId = Transshipment3Carrier.Id
 
-
+   inner JOIN NewDIM_Partners PreForwardingCarrier  ON dw_Shipments.PreForwardingCarrierId = PreForwardingCarrier.Id
+   inner JOIN NewDIM_Ports PreForwardingFromPort  ON dw_Shipments.PreForwardingFromPortId = PreForwardingFromPort.Id
+   inner JOIN NewDIM_Ports PreForwardingToPort  ON dw_Shipments.PreForwardingToPortId = PreForwardingToPort.Id
 
 	 where dw_Shipments.IsCancelled = 0 and dw_Shipments.ShipmentLevelCode in ('H','D' , 'C') 
 
@@ -430,7 +445,11 @@
 	  @Transshipment1FromPort, @Transshipment2FromPort, @Transshipment3FromPort, @Transshipment1ToPort, @Transshipment2ToPort,@Transshipment3ToPort, @PreCarriageCarrier, 
 	  @OnCarriageCarrier,@PreCarriageETA, @PreCarriageATD, @PreCarriageATA, @OnCarriageETD, @OnCarriageETA,@OnCarriageATD, @OnCarriageATA, @Transshipment2ATA,
 	  @Transshipment3ATA, @Transshipment2ETA, @Transshipment3ETA, @Transshipment2ATD, @Transshipment3ATD, @Transshipment2ETD, @Transshipment3ETD,
-      @Transshipment2AdditionalMAWBOBLBL, @Transshipment3AdditionalMAWBOBLBL, @Transshipment2Carrier,@Transshipment3Carrier, @QuoteNumber
+      @Transshipment2AdditionalMAWBOBLBL, @Transshipment3AdditionalMAWBOBLBL, @Transshipment2Carrier,@Transshipment3Carrier, @QuoteNumber,
+
+	  @ShipmentLevelCode,
+	  @PreForwardingETD,@PreForwardingETA,@PreForwardingATA,@PreForwardingATD, 
+	  @PreForwardingCarrierNumber, @PreForwardingCarrier, @PreForwardingFromPort, @PreForwardingToPort
 
 
 
@@ -465,6 +484,22 @@
 	 set @Type = 'Air';
 	 end
     ----------------------------------------------
+
+	  ------- Pre Carriage & On Carriage for house shipment ----
+	  if(@ShipmentLevelCode = 'H')
+	   begin
+	  SET @PreCarriageCarrierNumber = @PreForwardingCarrierNumber;
+	  SET @PreCarriageCarrier = @PreForwardingCarrier;
+	  SET @PreCarriageETD = @PreForwardingETD;
+	  SET @PreCarriageETA = @PreForwardingETA;
+	  SET @PreCarriageATA = @PreForwardingATA;
+	  SET @PreCarriageATD = @PreForwardingATD;
+	  SET @PreCarriageFromPort = @PreForwardingFromPort;
+	  SET @PreCarriageToPort = @PreForwardingToPort;   
+	   end
+
+
+
 
 	--------------ToPort-------------------------
     if(@DirectionId != 'D' or @TransportModeId != 'I')
@@ -629,7 +664,8 @@ END CATCH
 	@Transshipment3ToPort, @PreCarriageCarrier,  @OnCarriageCarrier,@PreCarriageETA, @PreCarriageATD,   @PreCarriageATA, @OnCarriageETD, @OnCarriageETA,
 	@OnCarriageATD, @OnCarriageATA, @Transshipment2ATA, @Transshipment3ATA, @Transshipment2ETA , @Transshipment3ETA , @Transshipment2ATD,
     @Transshipment3ATD, @Transshipment2ETD, @Transshipment3ETD, @Transshipment2AdditionalMAWBOBLBL, @Transshipment3AdditionalMAWBOBLBL, 
-	@Transshipment2Carrier,@Transshipment3Carrier, @QuoteNumber
+	@Transshipment2Carrier,@Transshipment3Carrier, @QuoteNumber,   @ShipmentLevelCode, @PreForwardingETD,@PreForwardingETA,@PreForwardingATA,@PreForwardingATD,
+	 @PreForwardingCarrierNumber, @PreForwardingCarrier, @PreForwardingFromPort, @PreForwardingToPort  
 
 
 		End
