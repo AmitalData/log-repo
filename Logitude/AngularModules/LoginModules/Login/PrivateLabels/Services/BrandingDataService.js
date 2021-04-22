@@ -34,7 +34,11 @@ export var BrandingDataService = (function () {
     BrandingDataService.SetPrivateLabelsDataRequest = function (brandingData, baseUrl) {
         PrivateLabelsBrandingData.Tenant = brandingData.Tenant;
         PrivateLabelsBrandingData.MainColor = brandingData.MainColor || "#000000";
+        PrivateLabelsBrandingData.SecondaryColor = brandingData.SecondaryColor || "#000000";
         document.documentElement.style.setProperty('--MainColor', PrivateLabelsBrandingData.MainColor);
+        document.documentElement.style.setProperty('--SecondaryColor', PrivateLabelsBrandingData.SecondaryColor);
+        this.MainColor = PrivateLabelsBrandingData.MainColor;
+        this.SecondaryColor = PrivateLabelsBrandingData.SecondaryColor;
         BrandingDataService.SetPrivateLabelsImages(brandingData, baseUrl);
     };
     BrandingDataService.ConvertHexaToRGBA = function (color) {
@@ -175,6 +179,7 @@ export var BrandingDataService = (function () {
         { id: "SmallLogo", image: "./Images/PrivateLabel/LogBoxLogo.png" },
     ];
     BrandingDataService.MainColor = null;
+    BrandingDataService.SecondaryColor = null;
     return BrandingDataService;
 }());
 //# sourceMappingURL=BrandingDataService.js.map

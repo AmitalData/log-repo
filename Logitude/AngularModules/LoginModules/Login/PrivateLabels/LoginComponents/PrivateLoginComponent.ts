@@ -24,6 +24,8 @@ export class PrivateLoginComponent extends LoginComponent implements OnInit {
     public SmallLogo: string = ""; 
     public showSpinner = true;
     public IsDSV = false;
+    public SecondaryColor: string = null;
+
     constructor(
         private ss: LoginService,
         private privateLabelsBrandingDataService: PrivateLabelsBrandingDataService) {
@@ -51,9 +53,11 @@ export class PrivateLoginComponent extends LoginComponent implements OnInit {
 
     GetPrivateLabelsData(privateUrl: string) {
         this.privateLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetPrivateLabelsDataRequest(privateUrl)).subscribe((response: ServiceResponse) => {
-            if (response.Result) { 
+            if (response.Result) {   
+                this.SecondaryColor = response.Result.SecondaryColor; 
+                BrandingDataService.SecondaryColor = this.SecondaryColor;
                 BrandingDataService.SetPrivateLabelsDataRequest(response.Result, privateUrl);
-                //this.MainColor = response.Result.MainColor;
+                //this.MainColor = response.Result.MainColor; 
                 //BrandingDataService.MainColor = this.MainColor;
                 this.GetLoginPageImages();  
             } })
