@@ -1,6 +1,6 @@
 ﻿using Confluent.Kafka;
 
-namespace CommunicationWorkerRole.Messages
+namespace Logitude.Server.Tools.Messages
 {
     public class Consumer
     {

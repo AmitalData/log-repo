@@ -378,9 +378,6 @@
     <Compile Include="AutoSignUpWorkerRole.cs" />
     <Compile Include="CollaborationToolShipmentUpdateWR.cs" />
     <Compile Include="CollaborationToolTaskWR.cs" />
-    <Compile Include="Constants\MessageType.cs" />
-    <Compile Include="Messages\Consumer.cs" />
-    <Compile Include="Messages\KafkaCredentials.cs" />
     <Compile Include="Services\QuoteSchedulerTaskService.cs" />
     <Compile Include="WarmCargoTracking.cs" />
     <Compile Include="BatchTaskExecutionWR.cs" />
