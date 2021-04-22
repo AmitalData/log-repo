@@ -190,7 +190,6 @@ namespace TestTenantConfiguration
             this.label3.Size = new System.Drawing.Size(105, 29);
             this.label3.TabIndex = 14;
             this.label3.Text = "Tenant:";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // TenantNumber
             // 
@@ -204,7 +203,6 @@ namespace TestTenantConfiguration
             this.TenantNumber.TabIndex = 15;
             this.TenantNumber.TabStop = false;
             this.TenantNumber.Text = "Tenant num";
-            this.TenantNumber.TextChanged += new System.EventHandler(this.TenantNumber_TextChanged);
             // 
             // Form1
             // 
