@@ -37,7 +37,6 @@ namespace TestTenantConfiguration
             this.TenantEmailTextBox = new System.Windows.Forms.TextBox();
             this.TenantCompanyTextBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.InProcess = new System.Windows.Forms.Label();
             this.NewPasswordText = new System.Windows.Forms.TextBox();
             this.ValidateCopy = new System.Windows.Forms.Label();
             this.TenantEmailValidation = new System.Windows.Forms.Label();
@@ -111,16 +110,6 @@ namespace TestTenantConfiguration
             this.label4.Size = new System.Drawing.Size(137, 29);
             this.label4.TabIndex = 6;
             this.label4.Text = "Password:";
-            // 
-            // InProcess
-            // 
-            this.InProcess.AutoSize = true;
-            this.InProcess.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.InProcess.Location = new System.Drawing.Point(37, 394);
-            this.InProcess.Name = "InProcess";
-            this.InProcess.Size = new System.Drawing.Size(101, 19);
-            this.InProcess.TabIndex = 7;
-            this.InProcess.Text = "";
             // 
             // NewPasswordText
             // 
@@ -201,7 +190,6 @@ namespace TestTenantConfiguration
             this.Controls.Add(this.TenantEmailValidation);
             this.Controls.Add(this.ValidateCopy);
             this.Controls.Add(this.NewPasswordText);
-            this.Controls.Add(this.InProcess);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.TenantCompanyTextBox);
             this.Controls.Add(this.TenantEmailTextBox);
@@ -225,7 +213,6 @@ namespace TestTenantConfiguration
         private System.Windows.Forms.TextBox TenantEmailTextBox;
         private System.Windows.Forms.TextBox TenantCompanyTextBox;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label InProcess;
         private System.Windows.Forms.TextBox NewPasswordText;
         private System.Windows.Forms.Label ValidateCopy;
         private System.Windows.Forms.Label TenantCompanyValidation;
