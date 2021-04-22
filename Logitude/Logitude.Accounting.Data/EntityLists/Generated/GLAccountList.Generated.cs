@@ -254,6 +254,24 @@ namespace Logitude.Accounting.Data.EntityLists
        public string CardsDataId  { get; set; }
        [DataMember]
        public string PaymentTermName  { get; set; }
+       [DataMember]
+       public decimal? Period0  { get; set; }
+       [DataMember]
+       public decimal? Period1  { get; set; }
+       [DataMember]
+       public decimal? Period2  { get; set; }
+       [DataMember]
+       public decimal? Period3  { get; set; }
+       [DataMember]
+       public decimal? Period4  { get; set; }
+       [DataMember]
+       public decimal? Period5  { get; set; }
+       [DataMember]
+       public decimal? PeriodPast  { get; set; }
+       [DataMember]
+       public decimal? PeriodFuture  { get; set; }
+       [DataMember]
+       public int? TotalOpenTransactions  { get; set; }
    }
 
 }

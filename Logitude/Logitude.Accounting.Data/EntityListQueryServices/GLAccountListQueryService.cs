@@ -32,6 +32,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             GLAccountRepository repository = new GLAccountRepository(context);
             IQueryable<GLAccountList> query = (from a in iQueryable.Include("ChartOfAccount").Include("ChartOfAccountsType")
                                                join md in context.GLAccountMoreDatas on a.Id equals md.AccountId
+                                               join ad in context.GLAccountAgingDatas on a.Id equals ad.AccountId
                                                select new GLAccountList()
                                                     {
                                                         Id = a.Id,
@@ -149,12 +150,21 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
                                                         ConsolidationVat = a.ConsolidationVat,
                                                         IsEquipmentVendor = a.IsEquipmentVendor,
-                                                        //CustomerGLAccountName = a.CustomerGLAccount.LocalName !=null? a.CustomerGLAccount.LocalName : a.CustomerGLAccount.EnglishName,
-                                                        //CustomerGLAccountNumber = a.CustomerGLAccount.DisplayNumber,
-                                                        //ParentAccountName = a.ParentAccount.LocalName != null ? a.ParentAccount.LocalName : a.CustomerGLAccount.EnglishName,
-                                                        //ParentAccountNumber = a.ParentAccount.DisplayNumber,
+                                                   //CustomerGLAccountName = a.CustomerGLAccount.LocalName !=null? a.CustomerGLAccount.LocalName : a.CustomerGLAccount.EnglishName,
+                                                   //CustomerGLAccountNumber = a.CustomerGLAccount.DisplayNumber,
+                                                   //ParentAccountName = a.ParentAccount.LocalName != null ? a.ParentAccount.LocalName : a.CustomerGLAccount.EnglishName,
+                                                   //ParentAccountNumber = a.ParentAccount.DisplayNumber,
 
-
+                                                   // GLaccount Aging Datas
+                                                        Period0 = ad.Period0,
+                                                        Period1 = ad.Period1,
+                                                        Period2 = ad.Period2,
+                                                        Period3 = ad.Period3,
+                                                        Period4 = ad.Period4,
+                                                        Period5 = ad.Period5,
+                                                        PeriodPast = ad.PeriodPast,
+                                                        PeriodFuture = ad.PeriodFuture,
+                                                        TotalOpenTransactions = ad.TotalOpenTransactions,
 
                                                });
             return query;
