@@ -1,9 +1,9 @@
-﻿using CommunicationWorkerRole.Constants;
-using CommunicationWorkerRole.Messages;
-using Confluent.Kafka;
+﻿using Confluent.Kafka;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
+using Logitude.Server.Tools.Constants;
+using Logitude.Server.Tools.Messages;
 using Logitude.SystemLogs;
 using Newtonsoft.Json;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;

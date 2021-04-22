@@ -1,6 +1,6 @@
 ﻿using System.Configuration;
 
-namespace CommunicationWorkerRole.Messages
+namespace Logitude.Server.Tools.Messages
 {
     public static class KafkaCredentials
     {

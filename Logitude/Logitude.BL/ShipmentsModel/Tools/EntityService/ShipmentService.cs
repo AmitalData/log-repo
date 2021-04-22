@@ -54,6 +54,9 @@ using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.Server.Tools.EntityChanges;
 using Logitude.BL.ShipmentsModel.Tools.Initializers;
 using Logitude.BL.ShipmentsModel.EntityOtherServices;
+using Logitude.Server.Tools.Messages;
+using Logitude.Server.Tools.Constants;
+using Newtonsoft.Json;
 
 namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 {
@@ -557,8 +560,21 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.RefreshFollowUpDate();
                 this.UpdateExtendedTasksDueDate();
 
+                // Produce shipment update msg
+                ProduceShipmentUpdateKafkaMessage();
+
                 scope.Complete();
                 #endregion
+            }
+        }
+
+        private void ProduceShipmentUpdateKafkaMessage()
+        {
+            if (entityPM.Tenant == 1321 || entityPM.Tenant == 951)
+            {
+                var ShipmentUpdateMessageProducer = new Producer();
+                var serializedShipmentUpdateMessage = JsonConvert.SerializeObject(entityPM, Formatting.Indented);
+                ShipmentUpdateMessageProducer.Produce(MessageType.Shipment, serializedShipmentUpdateMessage);
             }
         }
 
