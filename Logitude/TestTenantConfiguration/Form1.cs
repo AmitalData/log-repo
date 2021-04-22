@@ -51,7 +51,7 @@ namespace TestTenantConfiguration
     {
         private int Tenant;
         private string AgentId, AddressId, EmployeeId, ContactID;
-        private string TenantEmail, TenantCompanyName, NewPassword;
+        private string TenantEmail, TenantCompanyName, NewPassword , Title;
         private bool ValidateEmail = false, ValidateCompany = false;
 
         public Form1()
@@ -246,17 +246,29 @@ namespace TestTenantConfiguration
 
         private void CreateTenantMethods()
         {
-            CreateTenantConfiguration();
+            try
+            {
+                CreateTenantConfiguration();
 
-            //Maintenance settings
-            ComputingPartnersPrepare();
-            UpdateQuoteSettings();
-            UpdateAMANACTab();
-            UpdateTrialStatus();
-            TicketPrepareData();
+                //Maintenance settings
+                ComputingPartnersPrepare();
+                UpdateQuoteSettings();
+                UpdateAMANACTab();
+                UpdateTrialStatus();
+                TicketPrepareData();
 
-            //Prepare data location , partners , shipment
-            PrepareDataForTenant();
+                //Prepare data location , partners , shipment
+                PrepareDataForTenant();
+            }
+            catch (Exception ex)
+            {
+                var msg = ex.Message;
+                if (ex.InnerException != null)
+                {
+                    msg = msg + ex.InnerException.Message;
+                }
+                MessageBox.Show(msg, this.Title, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         #region Create Tenant Configuration
@@ -291,9 +303,11 @@ namespace TestTenantConfiguration
         #region SignUp 
         private void Signup()
         {
+            this.Title = "SignUp";
             SignUpInfoClass signUpInfo = CreateSignUpInfoInstance();
             String Password = SignUpClass.StartSignUp(signUpInfo);
             this.Tenant = signUpInfo.Tenant;
+            SetControlPropertyValue(TenantNumber, "Text", this.Tenant.ToString());
         }
 
         private SignUpInfoClass CreateSignUpInfoInstance()
@@ -315,6 +329,7 @@ namespace TestTenantConfiguration
         #region Agent
         private void CreateAgent()
         {
+            this.Title = "Agent";
             AgentPM agentPM = CreateAgentInstance();
             AgentService service = new AgentService(MyContext, agentPM, ContactID);
             service.Create(agentPM);
@@ -338,6 +353,7 @@ namespace TestTenantConfiguration
         #region Address
         private void CreateAddress()
         {
+            this.Title = "Address";
             AddressPM addressPM = CreateAddressInstance();
             AddressService service = new AddressService(MyContext, addressPM.Tenant);
             service.Create(addressPM);
@@ -377,6 +393,7 @@ namespace TestTenantConfiguration
         #region Rates
         private void CreateRatesTables()
         {
+            this.Title = "rate";
             RatesTablePM RatesPM = CreateRatesTablesInstance("USD", "NIS", TenantServerConfigration.GetCurrentDateTime(this.Tenant), 3.8);
             RatesTablePM RatesPM2 = CreateRatesTablesInstance("USD", "EUR", DateHelper.GetDate("2019:6:24:0:0:0"), 4);
             RatesTablePM RatesPM3 = CreateRatesTablesInstance("USD", "EUR", TenantServerConfigration.GetCurrentDateTime(this.Tenant), 3.8);
@@ -448,6 +465,7 @@ namespace TestTenantConfiguration
         #region Update Tenant
         private void UpdateTenant()
         {
+            this.Title = "update tenant";
             TenantQuery tenantQuery = new TenantQuery(this.Tenant);
             TenantPM tenantPM = tenantQuery.GetSinglePM(this.Tenant);
             tenantPM.AgentId = this.AgentId;
@@ -463,7 +481,7 @@ namespace TestTenantConfiguration
             tenantPM.CountryName = "State Of Palestine";
             tenantPM.PaymentTermId = GetPaymentTermIdByName("Net 30");
             tenantPM.PackageCode = "DVMT";
-
+            
 
             //CommonDataDomainService domain = new CommonDataDomainService();
             //domain.UpdateTenantPM(tenantPM);
@@ -499,6 +517,7 @@ namespace TestTenantConfiguration
         #region Accept Terms
         private void AcceptTerms()
         {
+            this.Title = "accept terms";
             TermsofUseSignaturePM MyTenant = CreateTermInstance(this.ContactID);
             TermsofUseSignaturePM CustomerCareTenant = CreateTermInstance(GetContactIdByEmail("specflowtest_customercare@logitudeworld.com", 0));
             TermsofUseSignatureService service = new TermsofUseSignatureService(MyContext, MyTenant.Tenant);
@@ -513,19 +532,28 @@ namespace TestTenantConfiguration
                 ContactId = ContactId,
                 SignedDatetime = TenantServerConfigration.GetCurrentDateTime(this.Tenant),
                 Tenant = this.Tenant,
-                TermsofUseVersion = 2
+                TermsofUseVersion = LastTermOfUseLastVersion()
             };
             return entityPM;
+        }
+
+        private int LastTermOfUseLastVersion()
+        {
+            TermsofUseQuery termsofUseQuery = new TermsofUseQuery(this.Tenant);
+            TermsofUsePM termsofUsePM = termsofUseQuery.GetTermsofUseDeflut();
+            return termsofUsePM.Version;
         }
         #endregion
 
         #region Getting started 
         private void displayGettingStarted()
         {
+            this.Title = "Display getting started";
             ContactQuery query = new ContactQuery(this.Tenant);
             ContactPM contact = query.GetSingleContact(this.TenantEmail, this.Tenant);
             contact.DisplayGettingStarted = false;
             contact.IsHybrid = true;
+            contact.DontShowLocalLabels = true; //language
             ICommonDataContext MyContext = CommonDataContext.GetContext(this.Tenant);
             ContactService service = new ContactService(MyContext, this.Tenant);
             service.Update(contact);
@@ -535,6 +563,7 @@ namespace TestTenantConfiguration
         #region Reset Password
         private void ResetPassword()
         {
+            this.Title = "Reset password";
             this.NewPassword = "!Cypress1";
             PasswordChangeHelper passwordChangeHelper = new PasswordChangeHelper();
             bool succeeded = passwordChangeHelper.ChangePassword(this.TenantEmail, this.NewPassword);
@@ -553,6 +582,7 @@ namespace TestTenantConfiguration
 
         private void ComputingPartnersPrepare()
         {
+            this.Title = "Computing partners";
             CreateNewTableForTranslation();
             CreateTranslationsInComputingPartners();
         }
@@ -678,6 +708,7 @@ namespace TestTenantConfiguration
         #region Quote Settings
         private void UpdateQuoteSettings()
         {
+            this.Title = "Quote Settings";
             QuoteSettingPM entityPM = CreateQuoteDomainInstnace();
             IQuotesContext objectContext = QuotesContext.GetContext(entityPM.Tenant);
             QuoteSettingService myService = new QuoteSettingService(objectContext, entityPM.Tenant);
@@ -726,6 +757,7 @@ namespace TestTenantConfiguration
         #region AMANAC Tab
         private void UpdateAMANACTab()
         {
+            this.Title = "AMANAC tab";
             CustomsInterfaceSettingPM customsInterfaceSettingPM = CreateCustomsInterfaceSettingsInstance();
             CustomsInterfaceSettingService service = new CustomsInterfaceSettingService(MyContext, customsInterfaceSettingPM.Tenant, this.ContactID);
             service.Update(customsInterfaceSettingPM);
@@ -750,6 +782,7 @@ namespace TestTenantConfiguration
         #region Trial
         private void UpdateTrialStatus()
         {
+            this.Title = "Trial";
             TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(this.Tenant);
             TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePM(this.Tenant);
             tenantManagementPM.IsTrial = false;
@@ -778,6 +811,7 @@ namespace TestTenantConfiguration
 
         private void TicketPrepareData()
         {
+            this.Title = "Ticket";
             TicketConstructor();
             CreateEmployeeGroup();
             CreateClassifiactionInstance();
@@ -899,11 +933,11 @@ namespace TestTenantConfiguration
 
         private void PrepareDataForTenant()
         {
+            this.Title = "Prepare Data";
             SetControlPropertyValue(Timerlbl, "Text", "Preparing Tenant Data ...");
             SetControlPropertyValue(Timerlbl, "ForeColor", Color.DodgerBlue);
 
             string LogitudeURL = System.Configuration.ConfigurationSettings.AppSettings.Get("LogitudeURL");
-
             Logitude.Test.Base.Hooks.BeforeTestRun.PrepareTheData(this.TenantEmail, this.NewPassword, LogitudeURL);
             Logitude.ShipmentTests.Hooks.BeforeTestRun.SetupShipmentPreparationVariables();
 

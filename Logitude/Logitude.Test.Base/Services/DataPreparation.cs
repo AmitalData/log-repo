@@ -19,7 +19,7 @@ namespace Logitude.Test.Base.Services
         {
             return new LocationsVariables
             {
-                PortLHRId = GetPortId("LHR", null),
+                PortLHRId = GetPortId("GBLHR", null ,true),
                 PortLASDomesticId = GetPortId("LAS", "US"),
                 PortMIADomesticId = GetPortId("MIA", "US"),
                 PortAirJFKId = GetPortId("JFK", "US"),
