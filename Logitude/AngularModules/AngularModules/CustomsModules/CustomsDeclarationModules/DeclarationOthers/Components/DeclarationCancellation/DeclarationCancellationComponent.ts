@@ -99,6 +99,13 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
             this.EntityPM.CancelRequestRejectionReason = value;
         }
     }
+
+    get CancelRejectionReasonName() { return this.EntityPM.CancelRejectionReasonName; }
+    set CancelRejectionReasonName(value: string) {
+        if (this.EntityPM.CancelRejectionReasonName != value) {
+            this.EntityPM.CancelRejectionReasonName = value;
+        }
+    }
     constructor(private EntityResourceService: EntityResourceService, private _declarationPMService: DeclarationPMService, private _DeclarationWebService: DeclarationWebService) {
         super();
       

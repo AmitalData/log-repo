@@ -999,6 +999,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CoolingReportingMethodViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomerIdentificationTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DeliveryTypeViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CancelRequestRejectReasonTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ExportDeclarationClosingDataViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ExportDeliveryDocumentMessageViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ExportReferenceViewsController.Generated.cs" />
@@ -1011,6 +1012,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\StuffingSiteTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\SupplierPartyTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\TransportMeansTypeViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CancelRequestRejectReasonTypeController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ExportDeclarationClosingDataController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ExportStorgeController.Generated.cs" />
     <Compile Include="Controllers\Integration\IntegrationTestController.cs" />
@@ -2966,6 +2968,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CalculatedChartsOfAccountUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CancellationReasonRequestTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CancellationRequestStatusUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CancelRequestRejectReasonTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CargoSealIdentifierUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CargoSealUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CargoSplitRequestStatusUpdateClass.cs" />

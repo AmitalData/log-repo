@@ -287,7 +287,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.CancelRequestStatusCode).HasColumnName("CancelRequestStatusCode").HasMaxLength(3).IsUnicode(false);
 
-            this.Property(t => t.CancelRequestRejectionReason).HasColumnName("CancelRequestRejectionReason").HasMaxLength(512).IsUnicode(true);
+            this.Property(t => t.CancelRequestRejectionReason).HasColumnName("CancelRequestRejectionReason").HasMaxLength(4).IsUnicode(false);
 
             this.Property(t => t.CancelRequestApproveDate).HasColumnName("CancelRequestApproveDate");
 

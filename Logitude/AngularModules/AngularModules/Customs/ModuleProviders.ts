@@ -242,6 +242,7 @@ import { AmendRequestRejectReasonTypeListService } from './Services/StandardList
 import { ReleaseMessageTypeListService } from './Services/StandardLists/ReleaseMessageTypeListService';
 import { DocumentRejectTypeListService } from './Services/StandardLists/DocumentRejectTypeListService';
 import { FclLclCodeListService } from './Services/StandardLists/FclLclCodeListService';
+import { CancelRequestRejectReasonTypeListService } from './Services/StandardLists/CancelRequestRejectReasonTypeListService';
 import { SecurityClearenceTypeCodeListService } from './Services/StandardLists/SecurityClearenceTypeCodeListService';
 import { CargoTypeListService } from './Services/StandardLists/CargoTypeListService';
 
@@ -667,6 +668,9 @@ export class ModuleProviders {
             case "HandingCodeListService": { myResult = new HandingCodeListService(); break; } 
             case "ExportStorgeListService": { myResult = new ExportStorgeListService(); break; } 
 
+            case "AmendCancellRequestInitiatorListService": { myResult = new AmendCancellRequestInitiatorListService(); break; }
+            case "FclLclCodeListService": { myResult = new FclLclCodeListService(); break; }
+            case "CancelRequestRejectReasonTypeListService": { myResult = new CancelRequestRejectReasonTypeListService(); break; }
 
              //#endregion                
 
