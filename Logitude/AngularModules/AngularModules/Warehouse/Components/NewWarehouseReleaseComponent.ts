@@ -160,6 +160,7 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
                 this.warehouseReleasePM.DirectionId = this.ShipmentPM.DirectionId;
                 this.warehouseReleasePM.ConnectedTo = args.ConnectedTo;
                 this.warehouseReleasePM.ChildEntityReference = args.ChildEntityReference;
+                this.MapMasterShipmentNumber(args.ConnectedTo);
             } else {
                 this.warehouseReleasePM.ShipmentId = args.ShipmentId;
                 this.warehouseReleasePM.ConnectedTo = args.ConnectedTo;
@@ -190,6 +191,14 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
         }
     }
 
+    MapMasterShipmentNumber(connectedTo: string) {
+        if (this.ShipmentPM.ShipmentLevelCode == "H" && connectedTo == "Shipment") {
+            this.warehouseReleasePM.MasterShipmentNumber = this.ShipmentPM.MasterShipmentNumber;
+        }
+        else if (connectedTo == "Shipment") {
+            this.warehouseReleasePM.MasterShipmentNumber = this.ShipmentPM.ShipmentNumber;
+        }
+    }
    
     SetDefultWarehouseValue(args: any) {
         if (!AppTool.IsNullOrEmpty(args.WarehouseId)) this.warehouseReleasePM.WarehouseId = args.WarehouseId;
@@ -260,6 +269,7 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
 
         if (this.ShipmentPM) {
             this.warehouseReleasePM.ShipmentNumber = shipment.ShipmentNumber;
+            this.MapMasterShipmentNumber("Shipment");
         }
 
 
