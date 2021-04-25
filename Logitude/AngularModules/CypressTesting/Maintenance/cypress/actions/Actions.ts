@@ -30,24 +30,26 @@ import { StateDetails } from "../models/StateDetails";
 import { CityDetails } from "../models/CityDetails";
 import { CurrencyDetails } from "../models/CurrencyDetails";
 import { GlobalZoneDetails } from "../models/GlobalZoneDetails"
-import {CommodityDetails} from "../models/CommodityDetails"
+import { CommodityDetails } from "../models/CommodityDetails"
 import { QuoteSelectors } from "../../../Quote/cypress/selectors/Selectors";
 import { ShipmentSelectors } from "../../../Shipment/cypress/selectors/Selectors";
 import { ReceivableDetails } from "../../../Shipment/cypress/models/ReceivableDetails";
 import { RegionDetails } from "../models/RegionDetails";
+
 //#region variables
-let CityName=null;
-let StateName=null;
-let GlobalZoneName=null;
-let CommodityName=null;
-let RegionName=null;
-let inActiveCountry=false;
-let inActiveState=false;
+let CityCode = null;
+let StateCode = null;
+let GlobalZoneCode = null;
+let CommodityName = null;
+let RegionName = null;
+let inActiveCountry = false;
+let inActiveState = false;
 let inActiveCity = false;
 let inActiveGlobalZone = false;
-let inActiveCommodity=false;
-let inActiveRegion=false;
+let inActiveCommodity = false;
+let inActiveRegion = false;
 //#endregion
+
 //#region General Actions
 export function OpenMaintenanceMenu() {
     cy.Click(BaseSelectors.MaintenanceMenu, null)
@@ -63,9 +65,9 @@ export function OpenMaintenanceItemFromMaintenanceMenu(maintenanceItemNameToSear
     cy.Click(maintenanceItemSelector, null);
 }
 
-export function FillChangePasswordWindow( NewPassword: string, RetypePassword: string) {
+export function FillChangePasswordWindow(NewPassword: string, RetypePassword: string) {
     cy.GetCurrentPassword().then(CurrentPassword => {
-    cy.FillLogTextBox(MaintenanceSelectors.CurrentPassword, CurrentPassword.toString())
+        cy.FillLogTextBox(MaintenanceSelectors.CurrentPassword, CurrentPassword.toString())
     })
     cy.FillLogTextBox(MaintenanceSelectors.NewPassword, NewPassword)
     if (RetypePassword != null) {
@@ -88,8 +90,8 @@ export function OpenTabInMaintenanceMenu(maintenanceItemNameToSearch: string, ma
 export function OpenNewWizard(tabName: string) {
     cy.Click(MaintenanceSelectors.NewWizardButton(tabName), null);
 }
-function GenerateRandomNumber(NumberLength:number) {
-    let NewRandomCode = gr.GenerateRandomNumberAndString(NumberLength)   
+function GenerateRandomNumber(NumberLength: number) {
+    let NewRandomCode = gr.GenerateRandomNumberAndString(NumberLength)
     return NewRandomCode;
 }
 //#endregion
@@ -103,12 +105,12 @@ export function FillVendorDetails(vendorDetails: VendorDetails) {
     cy.FillLogTextBox(MaintenanceSelectors.VendorAddress1, vendorDetails.Address1);
     cy.FillLogTextBox(MaintenanceSelectors.VendorZipCode, vendorDetails.Zip);
     cy.FillLogTextBox(MaintenanceSelectors.VendorCity, vendorDetails.City);
-    cy.FillLogLov(MaintenanceSelectors.VendorCountry, vendorDetails.Country,true);
-    cy.FillLogLov(MaintenanceSelectors.VendorState, vendorDetails.State,true);
+    cy.FillLogLov(MaintenanceSelectors.VendorCountry, vendorDetails.Country, true);
+    cy.FillLogLov(MaintenanceSelectors.VendorState, vendorDetails.State, true);
 }
 
 export function FillVendorContactDetails(conatactDetails: ContactDetails) {
-    FillCheckBoxProcess(MaintenanceSelectors.VendorContactCheckBox,conatactDetails.AddContact)
+    FillCheckBoxProcess(MaintenanceSelectors.VendorContactCheckBox, conatactDetails.AddContact)
     cy.FillLogTextBox(MaintenanceSelectors.VendorContactEnglishName, conatactDetails.EnglishName);
     cy.FillLogTextBox(MaintenanceSelectors.VendorContactPosition, conatactDetails.Position);
     cy.FillLogTextBox(MaintenanceSelectors.VendorContactBusinessPhone, conatactDetails.BusinessPhone);
@@ -308,7 +310,7 @@ export function AssertCloseSaveVessel() {
 
 function FillVesselName(vesselName: string) {
     if (vesselName) {
-        VesselContext.Name = vesselName.toLowerCase() == "random" ? (gr.GenerateRandomNumberAndString(5)) : vesselName;
+        VesselContext.Name = vesselName.toLowerCase() == "random" ? (GenerateRandomNumber(5)) : vesselName;
         cy.FillLogTextBox(MaintenanceSelectors.VesselName, VesselContext.Name);
     }
 }
@@ -322,7 +324,7 @@ function FillVesselCode(vesselCode: string) {
 }
 
 function FillNewRandomCode() {
-    let NewRandomCode = gr.GenerateRandomNumberAndString(5)
+    let NewRandomCode = GenerateRandomNumber(5)
     VesselContext.Name = NewRandomCode;
     VesselContext.Code = NewRandomCode;
     cy.FillLogTextBox(MaintenanceSelectors.VesselName, VesselContext.Name);
@@ -396,17 +398,17 @@ export function OpenNewContactWizard() {
 
 export function FillContactDetails(contactDetails: ContactDetails) {
     FillContactEmail(contactDetails.Email);
-    cy.FillLogTextBox(MaintenanceSelectors.ContactEnglishName , contactDetails.EnglishName)
-    cy.FillLogTextBox(MaintenanceSelectors.ContactLocalName , contactDetails.LocalName)
-    cy.FillLogTextBox(MaintenanceSelectors.ContactPosition , contactDetails.Position)
-    cy.FillLogTextBox(MaintenanceSelectors.ContactBusinessPhone , contactDetails.BusinessPhone)
-    cy.FillLogTextBox(MaintenanceSelectors.ContactMobile , contactDetails.Mobile)
-    cy.FillLogTextBox(MaintenanceSelectors.ContactFax , contactDetails.Fax)
+    cy.FillLogTextBox(MaintenanceSelectors.ContactEnglishName, contactDetails.EnglishName)
+    cy.FillLogTextBox(MaintenanceSelectors.ContactLocalName, contactDetails.LocalName)
+    cy.FillLogTextBox(MaintenanceSelectors.ContactPosition, contactDetails.Position)
+    cy.FillLogTextBox(MaintenanceSelectors.ContactBusinessPhone, contactDetails.BusinessPhone)
+    cy.FillLogTextBox(MaintenanceSelectors.ContactMobile, contactDetails.Mobile)
+    cy.FillLogTextBox(MaintenanceSelectors.ContactFax, contactDetails.Fax)
     cy.FillLogTextBox(MaintenanceSelectors.ContactNotes, contactDetails.Notes)
     FillContactDatepicker(contactDetails.BirthdayDate, Constants.Birthday);
-    FillCheckBoxProcess(MaintenanceSelectors.ContactBirthdayReminder ,contactDetails.BirthdayReminder);
+    FillCheckBoxProcess(MaintenanceSelectors.ContactBirthdayReminder, contactDetails.BirthdayReminder);
     FillContactDatepicker(contactDetails.AnniversaryDate, Constants.Anniversary);
-    FillCheckBoxProcess(MaintenanceSelectors.ContactAnniversaryReminder,contactDetails.AnniversaryReminder);
+    FillCheckBoxProcess(MaintenanceSelectors.ContactAnniversaryReminder, contactDetails.AnniversaryReminder);
 }
 
 export function CreateContact() {
@@ -590,7 +592,7 @@ function AssertContactDatepickerNotSelected(dateType: string) {
 
 //#region Quote Template
 export function FillQuoteTemplateName(quoteTemplateName: string) {
-    let NameToFill = quoteTemplateName.toLowerCase() == "random" ? ("Quote_" + gr.GenerateRandomNumberAndString(4)) : quoteTemplateName;
+    let NameToFill = quoteTemplateName.toLowerCase() == "random" ? ("Quote_" + GenerateRandomNumber(4)) : quoteTemplateName;
     QuoteTemplateContext.Name = NameToFill
     cy.FillLogTextBox(MaintenanceSelectors.QuoteTemplateName, QuoteTemplateContext.Name);
 }
@@ -797,11 +799,11 @@ export function AssertVoidInvoiceMessage(Message: string) {
 
 //#region Customer Settings
 export function FillCustomerSettingsDetails(customerSettingsDetails: CustomerSettingsDetails) {
-    FillCheckBoxProcess(MaintenanceSelectors.IsCustomerTelephoneRequiredCheckBox,customerSettingsDetails.IsCustomerTelphoneRequired)
-    FillCheckBoxProcess(MaintenanceSelectors.IsPotentialCustomerTelephoneRequiredCheckBox,customerSettingsDetails.IsPotentialCustomerTelphoneRequired)
-    FillCheckBoxProcess(MaintenanceSelectors.IsCustomerFaxRequiredCheckBox,customerSettingsDetails.IsCustomerFaxRequired)
-    FillCheckBoxProcess(MaintenanceSelectors.IsPotentialCustomerFaxRequiredCheckBox,customerSettingsDetails.IsPotentialCustomerFaxRequired)
-    FillCheckBoxProcess(MaintenanceSelectors.IsCustomerAddress1RequiredCheckBox,customerSettingsDetails.IsCustomerAddress1Required)
+    FillCheckBoxProcess(MaintenanceSelectors.IsCustomerTelephoneRequiredCheckBox, customerSettingsDetails.IsCustomerTelphoneRequired)
+    FillCheckBoxProcess(MaintenanceSelectors.IsPotentialCustomerTelephoneRequiredCheckBox, customerSettingsDetails.IsPotentialCustomerTelphoneRequired)
+    FillCheckBoxProcess(MaintenanceSelectors.IsCustomerFaxRequiredCheckBox, customerSettingsDetails.IsCustomerFaxRequired)
+    FillCheckBoxProcess(MaintenanceSelectors.IsPotentialCustomerFaxRequiredCheckBox, customerSettingsDetails.IsPotentialCustomerFaxRequired)
+    FillCheckBoxProcess(MaintenanceSelectors.IsCustomerAddress1RequiredCheckBox, customerSettingsDetails.IsCustomerAddress1Required)
 }
 
 export function UpdateCustomerSettings() {
@@ -828,14 +830,14 @@ export function OpenNewPotentialCustomerWizard() {
     cy.Click(MaintenanceSelectors.NewCustomerButton, null);
 }
 export function FillPotentialCustomerDetails(customerDetails: CustomerDetails) {
-    cy.FillLogTextBox(MaintenanceSelectors.PotentialCustomerName , customerDetails.CompanyName)
-    cy.FillLogTextBox(MaintenanceSelectors.PotentialCustomerCity , customerDetails.City)
-    cy.FillLogLov(MaintenanceSelectors.PotentialCustomerCountry , customerDetails.Country,true)
-    cy.FillLogLov(MaintenanceSelectors.PotentialCustomerState , customerDetails.State,true)
-    cy.FillLogTextBox(MaintenanceSelectors.PotentialCustomerPhoneNumber , customerDetails.PhoneNumber)
-    cy.FillLogTextBox(MaintenanceSelectors.PotentialCustomerFaxNumber , customerDetails.FaxNumber)
-    cy.FillLogTextBox(MaintenanceSelectors.PotentialCustomerAddress1 , customerDetails.Address1)
-    FillCheckBoxProcess(MaintenanceSelectors.PotentialCustomerAddContactCheckBox ,customerDetails.AddContact )
+    cy.FillLogTextBox(MaintenanceSelectors.PotentialCustomerName, customerDetails.CompanyName)
+    cy.FillLogTextBox(MaintenanceSelectors.PotentialCustomerCity, customerDetails.City)
+    cy.FillLogLov(MaintenanceSelectors.PotentialCustomerCountry, customerDetails.Country, true)
+    cy.FillLogLov(MaintenanceSelectors.PotentialCustomerState, customerDetails.State, true)
+    cy.FillLogTextBox(MaintenanceSelectors.PotentialCustomerPhoneNumber, customerDetails.PhoneNumber)
+    cy.FillLogTextBox(MaintenanceSelectors.PotentialCustomerFaxNumber, customerDetails.FaxNumber)
+    cy.FillLogTextBox(MaintenanceSelectors.PotentialCustomerAddress1, customerDetails.Address1)
+    FillCheckBoxProcess(MaintenanceSelectors.PotentialCustomerAddContactCheckBox, customerDetails.AddContact)
 }
 
 export function AddPotentialCustomer() {
@@ -901,26 +903,26 @@ function OpenPersonalSettingsTab() {
 
 //#region Country
 export function FillCountryDetails(countryDetails: CountryDetails) {
-    cy.FillLogTextBox(MaintenanceSelectors.CountryCode,countryDetails.CountryCode);
-    cy.FillLogTextBox(MaintenanceSelectors.CountryEnglishName,countryDetails.CountryName);
-    cy.FillLogTextBox(MaintenanceSelectors.CountryLocalName,countryDetails.CountryLocalName);
-    cy.FillLogLov(MaintenanceSelectors.CountryGlobalZone,countryDetails.CountryGlobalZone,true);
-    FillCheckBoxProcess(MaintenanceSelectors.InActiveCountryCheckBox,countryDetails.InactiveCountry);
-    FillCheckBoxProcess(MaintenanceSelectors.CountryECCheckBox,countryDetails.EC);
-    FillCheckBoxProcess(MaintenanceSelectors.CountryIsNorthAmericaCheckBox,countryDetails.NorthAmerica);
-    FillCheckBoxProcess(MaintenanceSelectors.CountryIsStateRequiredCheckBox,countryDetails.IsStateRequired);
-    FillCheckBoxProcess(MaintenanceSelectors.CountryHasCitiesCheckBox,countryDetails.HasCities);
-    cy.FillLogTextBox(MaintenanceSelectors.CountryNotes,countryDetails.Notes);
+    cy.FillLogTextBox(MaintenanceSelectors.CountryCode, countryDetails.CountryCode);
+    cy.FillLogTextBox(MaintenanceSelectors.CountryEnglishName, countryDetails.CountryName);
+    cy.FillLogTextBox(MaintenanceSelectors.CountryLocalName, countryDetails.CountryLocalName);
+    cy.FillLogLov(MaintenanceSelectors.CountryGlobalZone, countryDetails.CountryGlobalZone, true);
+    FillCheckBoxProcess(MaintenanceSelectors.InActiveCountryCheckBox, countryDetails.InactiveCountry);
+    FillCheckBoxProcess(MaintenanceSelectors.CountryECCheckBox, countryDetails.EC);
+    FillCheckBoxProcess(MaintenanceSelectors.CountryIsNorthAmericaCheckBox, countryDetails.NorthAmerica);
+    FillCheckBoxProcess(MaintenanceSelectors.CountryIsStateRequiredCheckBox, countryDetails.IsStateRequired);
+    FillCheckBoxProcess(MaintenanceSelectors.CountryHasCitiesCheckBox, countryDetails.HasCities);
+    cy.FillLogTextBox(MaintenanceSelectors.CountryNotes, countryDetails.Notes);
 
 }
 
 export function FillRandomCountryLocalName(LocalName: string) {
-    let randomLocalName = GenerateRandomName(LocalName, 10)
+    let randomLocalName = LocalName.toLowerCase() == "random" ? (GenerateRandomNumber(10)) : LocalName;
     cy.FillLogTextBox(MaintenanceSelectors.CountryLocalName, randomLocalName)
 }
 
-export function FillCountryCode(CountryCode:string){
-    cy.FillLogTextBox(MaintenanceSelectors.CountryCode , CountryCode)
+export function FillCountryCode(CountryCode: string) {
+    cy.FillLogTextBox(MaintenanceSelectors.CountryCode, CountryCode)
 }
 
 export function CreateCountry() {
@@ -995,12 +997,12 @@ export function AssertEditCountry() {
 export function AssertPutCountry() {
     BaseAssertion.AssertStatusCode(RequestAliases.PutCountry, 200).
         then((interception) => {
-            inActiveCountry = interception.response.body.InActive;   
+            inActiveCountry = interception.response.body.InActive;
         });
 }
 
 export function CountryConversionEventsMapping(eventDetailsList: EventTypeDetails[]): EventTypeDetails[] {
-    ConversionEventsMapping(eventDetailsList,inActiveCountry)
+    ConversionEventsMapping(eventDetailsList, inActiveCountry)
     return eventDetailsList;
 }
 
@@ -1011,18 +1013,16 @@ export function ValidateErrorPopUpMessage(Message: string) {
 //#endregion
 
 //#region State
-export function FillStateDetails(stateDetails:StateDetails){
-    var RandomStateNumber=GetRandomStateCodeNumber();
-    cy.FillLogTextBox(MaintenanceSelectors.StateCode , stateDetails.StateCode.toLowerCase() == "random"?RandomStateNumber:stateDetails.StateCode)
-    cy.FillLogTextBox(MaintenanceSelectors.StateEnglishName , stateDetails.StateName.toLowerCase() == "random"?RandomStateNumber: stateDetails.StateName)
-    cy.FillLogTextBox(MaintenanceSelectors.StateLocalName , stateDetails.StateLocalName.toLowerCase() == "random"?RandomStateNumber:stateDetails.StateLocalName)
-    cy.FillLogLov(MaintenanceSelectors.StateCountry , stateDetails.Country,true)
-    FillCheckBoxProcess(MaintenanceSelectors.InActiveStateCheckBox,stateDetails.InactiveState)
-    cy.FillLogTextBox(MaintenanceSelectors.StateNotes , stateDetails.Notes)
+export function FillStateDetails(stateDetails: StateDetails) {
+    var RandomStateNumber = GenerateRandomNumber(10);
+    cy.FillLogTextBox(MaintenanceSelectors.StateCode, stateDetails.StateCode.toLowerCase() == "random" ? RandomStateNumber : stateDetails.StateCode)
+    cy.FillLogTextBox(MaintenanceSelectors.StateEnglishName, stateDetails.StateName)
+    cy.FillLogTextBox(MaintenanceSelectors.StateLocalName, stateDetails.StateLocalName)
+    cy.FillLogLov(MaintenanceSelectors.StateCountry, stateDetails.Country, true)
+    FillCheckBoxProcess(MaintenanceSelectors.InActiveStateCheckBox, stateDetails.InactiveState)
+    cy.FillLogTextBox(MaintenanceSelectors.StateNotes, stateDetails.Notes)
 }
-function GetRandomStateCodeNumber(){
-    return gr.GenerateRandomNumberAndString(10);
-    }
+
 export function CreateState() {
     DefinePostStateRequest()
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
@@ -1038,39 +1038,41 @@ export function AssertCreateState() {
         if (interception.response.statusCode === 400) {
             ReCreateState();
         }
-        else{
-            AssertPostState(interception.response.statusCode, 200,interception.response.body.EnglishName) 
-        }        
-    }) 
+        else {
+            AssertPostState(interception.response.statusCode, 200, interception.response.body.Code)
+        }
+    })
 }
-function ReCreateState(){
-    let stateCode=  GenerateRandomNumber(10);
-    cy.FillLogTextBox(MaintenanceSelectors.StateCode , stateCode)
-    cy.FillLogTextBox(MaintenanceSelectors.StateEnglishName , stateCode)
-    cy.FillLogTextBox(MaintenanceSelectors.StateLocalName , stateCode)
+
+function ReCreateState() {
+    let stateCode = GenerateRandomNumber(10);
+    cy.FillLogTextBox(MaintenanceSelectors.StateCode, stateCode)
+    cy.FillLogTextBox(MaintenanceSelectors.StateEnglishName, stateCode)
+    cy.FillLogTextBox(MaintenanceSelectors.StateLocalName, stateCode)
     CreateState();
     AssertCreateState();
 }
-export function AssertPostState(responseStatusCode: number, expectedStatusCode: number,stateName:string) {
+
+export function AssertPostState(responseStatusCode: number, expectedStatusCode: number, stateCode: string) {
     assert.equal(responseStatusCode, expectedStatusCode)
-    StateName=stateName
+    StateCode = stateCode
 }
 
 export function SearchState() {
-    DefineStateViewsGetByFiltersRequest(StateName);
-    cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, StateName);
+    DefineStateViewsGetByFiltersRequest(StateCode);
+    cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, StateCode);
     AssertStateViewsGetByFilters();
 }
+
 export function DefineStateViewsGetByFiltersRequest(StateName: string) {
     cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(StateName + "&GetCount=false"), RequestAliases.GetFilterSearch);
 }
+
 export function AssertSearchState() {
     cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
-        expect(text).to.contain(StateName);
+        expect(text).to.contain(StateCode);
     });
 }
-
-
 
 export function AssertStateViewsGetByFilters() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
@@ -1095,10 +1097,7 @@ function AssertStatesGetSingle() {
 }
 
 export function FillStateLocalName(LocalName: string) {
-    let LocalNameToFill = LocalName.toLowerCase() == "random" ? (gr.GenerateRandomNumberAndString(10)) : LocalName; 
-    if (LocalName) {
-        cy.FillLogTextBox(MaintenanceSelectors.StateLocalName, LocalNameToFill)
-    }
+    cy.FillLogTextBox(MaintenanceSelectors.StateLocalName, LocalName)
 }
 
 export function EditState() {
@@ -1120,15 +1119,10 @@ export function AssertPutState() {
             inActiveState = interception.response.body.InActive;
         });
 }
-
 //#endregion
 
 //#region Common 
-function GenerateRandomName(Name:string ,lenght:number){
-    return Name.toLowerCase() == "random" ? (gr.GenerateRandomNumberAndString(lenght)) : Name; 
-}
-
-export function ChangeInactiveCheckBoxValue(InActivateSelector:string) {
+export function ChangeInactiveCheckBoxValue(InActivateSelector: string) {
     cy.get(InActivateSelector).then($InActiveStatesCheckBox => {
         if ($InActiveStatesCheckBox.is(':checked')) {
             cy.get(InActivateSelector).uncheck({ force: true })
@@ -1167,20 +1161,19 @@ function AssertGetByFilters() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetByFilter, 200);
 }
 //#endregion
+
 //#region city
-export function FillCityDetails(cityDetails:CityDetails){
-    var RandomCityNumber=GetRandomCityCodeNumber();
-    cy.FillLogTextBox(MaintenanceSelectors.CityCode , cityDetails.CityCode.toLowerCase() == "random"?RandomCityNumber:cityDetails.CityCode)
-    cy.FillLogTextBox(MaintenanceSelectors.CityEnglishName , cityDetails.CityName.toLowerCase() == "random"?RandomCityNumber:cityDetails.CityName)
-    cy.FillLogTextBox(MaintenanceSelectors.CityLocalName , cityDetails.CityLocalName.toLowerCase() == "random"?RandomCityNumber:cityDetails.CityLocalName)
-    cy.FillLogLov(MaintenanceSelectors.CityCountry , cityDetails.Country,true)
-    cy.FillLogLov(MaintenanceSelectors.CityState , cityDetails.Country,true)
-    FillCheckBoxProcess(MaintenanceSelectors.InActiveCityCheckBox,cityDetails.InactiveCity)
-    cy.FillLogTextBox(MaintenanceSelectors.CityNotes , cityDetails.Notes)
+export function FillCityDetails(cityDetails: CityDetails) {
+    var RandomCityNumber = GenerateRandomNumber(15);
+    cy.FillLogTextBox(MaintenanceSelectors.CityCode, cityDetails.CityCode.toLowerCase() == "random" ? RandomCityNumber : cityDetails.CityCode)
+    cy.FillLogTextBox(MaintenanceSelectors.CityEnglishName, cityDetails.CityName)
+    cy.FillLogTextBox(MaintenanceSelectors.CityLocalName, cityDetails.CityLocalName)
+    cy.FillLogLov(MaintenanceSelectors.CityCountry, cityDetails.Country, true)
+    cy.FillLogLov(MaintenanceSelectors.CityState, cityDetails.Country, true)
+    FillCheckBoxProcess(MaintenanceSelectors.InActiveCityCheckBox, cityDetails.InactiveCity)
+    cy.FillLogTextBox(MaintenanceSelectors.CityNotes, cityDetails.Notes)
 }
-function GetRandomCityCodeNumber(){
-return gr.GenerateRandomNumberAndString(15);
-}
+
 export function CreateCity() {
     DefinePostCityRequest()
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
@@ -1189,32 +1182,32 @@ export function CreateCity() {
 function DefinePostCityRequest() {
     cy.DefineRequestWait(RestAPI.POST, Urls.CountryCities, RequestAliases.PostCity);
 }
-export function AssertCreateCity(){
+export function AssertCreateCity() {
     let intercept = cy.wait("@" + RequestAliases.PostCity);
     intercept.then((interception) => {
         if (interception.response.statusCode === 400) {
             ReCreateCity();
         }
-        else{
-            AssertPostCity(interception.response.statusCode, 200,interception.response.body.EnglishName) 
-        }        
-    }) 
+        else {
+            AssertPostCity(interception.response.statusCode, 200, interception.response.body.Code)
+        }
+    })
 }
-function ReCreateCity(){
-    let cityCode=  GenerateRandomNumber(15);
-    cy.FillLogTextBox(MaintenanceSelectors.CityCode , cityCode)
-    cy.FillLogTextBox(MaintenanceSelectors.CityEnglishName , cityCode)
-    cy.FillLogTextBox(MaintenanceSelectors.CityLocalName , cityCode)
+function ReCreateCity() {
+    let cityCode = GenerateRandomNumber(15);
+    cy.FillLogTextBox(MaintenanceSelectors.CityCode, cityCode)
+    cy.FillLogTextBox(MaintenanceSelectors.CityEnglishName, cityCode)
+    cy.FillLogTextBox(MaintenanceSelectors.CityLocalName, cityCode)
     CreateCity();
     AssertCreateCity();
 }
-export function AssertPostCity(responseStatusCode: number, expectedStatusCode: number,cityName:string) {
+export function AssertPostCity(responseStatusCode: number, expectedStatusCode: number, cityCode: string) {
     assert.equal(responseStatusCode, expectedStatusCode)
-    CityName=cityName
+    CityCode = cityCode
 }
 export function SearchCity() {
-    DefineCityViewsGetByFiltersRequest(CityName);
-    cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, CityName);
+    DefineCityViewsGetByFiltersRequest(CityCode);
+    cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, CityCode);
     AssertCitiesViewsGetByFilters();
 }
 export function AssertCitiesViewsGetByFilters() {
@@ -1222,7 +1215,7 @@ export function AssertCitiesViewsGetByFilters() {
 }
 export function AssertSearchCity() {
     cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
-        expect(text).to.contain(CityName);
+        expect(text).to.contain(CityCode);
     });
 }
 
@@ -1245,10 +1238,7 @@ function AssertCountryCitiesGetSingle() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetSignle, 200);
 }
 export function FillCityLocalName(LocalName: string) {
-    let LocalNameToFill = LocalName.toLowerCase() == "random" ? (gr.GenerateRandomNumberAndString(10)) : LocalName; 
-    if (LocalName) {
-        cy.FillLogTextBox(MaintenanceSelectors.CityLocalName, LocalNameToFill)
-    }
+    cy.FillLogTextBox(MaintenanceSelectors.CityLocalName, LocalName)
 }
 export function EditCity() {
     DefinePutCityRequest();
@@ -1261,35 +1251,34 @@ function DefinePutCityRequest() {
 export function AssertPutCity() {
     BaseAssertion.AssertStatusCode(RequestAliases.PutCity, 200).
         then((interception) => {
-           inActiveCity = interception.response.body.InActive;
+            inActiveCity = interception.response.body.InActive;
         });
 }
-export function ConversionEventsMapping(eventDetailsList: EventTypeDetails[],inActiveField:boolean){
+export function ConversionEventsMapping(eventDetailsList: EventTypeDetails[], inActiveField: boolean) {
     for (let i = 0; i < eventDetailsList.length; i++) {
-    if (inActiveField) {
-        eventDetailsList[i].Notes = eventDetailsList[i].Notes.replace(/\"status\"/gi, "Inactivated");
+        if (inActiveField) {
+            eventDetailsList[i].Notes = eventDetailsList[i].Notes.replace(/\"status\"/gi, "Inactivated");
+        }
+        else {
+            eventDetailsList[i].Notes = eventDetailsList[i].Notes.replace(/\"status\"/gi, "Activated");
+        }
     }
-    else {
-        eventDetailsList[i].Notes = eventDetailsList[i].Notes.replace(/\"status\"/gi, "Activated");
-    } 
-}  
 }
 //#endregion
 
 //#region Global Zone
-export function FillGlobalZoneCode(GlobalZoneCode:string){
-    cy.FillLogTextBox(MaintenanceSelectors.GlobalZoneCode , GlobalZoneCode)
+export function FillGlobalZoneCode(GlobalZoneCode: string) {
+    cy.FillLogTextBox(MaintenanceSelectors.GlobalZoneCode, GlobalZoneCode)
 }
-export function FillGlobalZoneDetails(globalZoneDetails:GlobalZoneDetails){
-    var RandomGlobalZoneNumber=GetRandomGlobalZoneCodeNumber();
-    cy.FillLogTextBox(MaintenanceSelectors.GlobalZoneCode, globalZoneDetails.GlobalZoneCode.toLowerCase() == "random"?RandomGlobalZoneNumber:globalZoneDetails.GlobalZoneCode)
-    cy.FillLogTextBox(MaintenanceSelectors.GlobalZoneEnglishName, globalZoneDetails.GlobalZoneName.toLowerCase() == "random"?RandomGlobalZoneNumber:globalZoneDetails.GlobalZoneName)
-    cy.FillLogTextBox(MaintenanceSelectors.GlobalZoneLocalName, globalZoneDetails.GlobalZoneLocalName.toLowerCase() == "random"?RandomGlobalZoneNumber:globalZoneDetails.GlobalZoneName)
-    FillCheckBoxProcess(MaintenanceSelectors.InActiveGlobalZoneCheckBox,globalZoneDetails.InactiveGlobalZone)
+
+export function FillGlobalZoneDetails(globalZoneDetails: GlobalZoneDetails) {
+    var RandomGlobalZoneNumber = GenerateRandomNumber(8);
+    cy.FillLogTextBox(MaintenanceSelectors.GlobalZoneCode, globalZoneDetails.GlobalZoneCode.toLowerCase() == "random" ? RandomGlobalZoneNumber : globalZoneDetails.GlobalZoneCode)
+    cy.FillLogTextBox(MaintenanceSelectors.GlobalZoneEnglishName, globalZoneDetails.GlobalZoneName)
+    cy.FillLogTextBox(MaintenanceSelectors.GlobalZoneLocalName, globalZoneDetails.GlobalZoneName)
+    FillCheckBoxProcess(MaintenanceSelectors.InActiveGlobalZoneCheckBox, globalZoneDetails.InactiveGlobalZone)
 }
-function GetRandomGlobalZoneCodeNumber(){
-    return gr.GenerateRandomNumberAndString(8);
-    }
+
 export function CreateGlobalZone() {
     DefinePostGlobalZoneRequest()
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
@@ -1305,46 +1294,54 @@ export function AssertCreateGlobalZone() {
         if (interception.response.statusCode === 400) {
             ReCreateGlobalZone();
         }
-        else{
-            AssertPostGlobalZone(interception.response.statusCode, 200,interception.response.body.EnglishName) 
-        }        
-    }) 
+        else {
+            AssertPostGlobalZone(interception.response.statusCode, 200, interception.response.body.Code)
+        }
+    })
 }
-function ReCreateGlobalZone(){
-    let globalZoneCode=  GenerateRandomNumber(8);
-    cy.FillLogTextBox(MaintenanceSelectors.GlobalZoneCode , globalZoneCode)
-    cy.FillLogTextBox(MaintenanceSelectors.GlobalZoneEnglishName , globalZoneCode)
-    cy.FillLogTextBox(MaintenanceSelectors.GlobalZoneLocalName , globalZoneCode)
+
+function ReCreateGlobalZone() {
+    let globalZoneCode = GenerateRandomNumber(8);
+    cy.FillLogTextBox(MaintenanceSelectors.GlobalZoneCode, globalZoneCode)
+    cy.FillLogTextBox(MaintenanceSelectors.GlobalZoneEnglishName, globalZoneCode)
+    cy.FillLogTextBox(MaintenanceSelectors.GlobalZoneLocalName, globalZoneCode)
     CreateGlobalZone();
     AssertCreateGlobalZone();
 }
-export function AssertPostGlobalZone(responseStatusCode: number, expectedStatusCode: number,globalZoneName:string) {
+
+export function AssertPostGlobalZone(responseStatusCode: number, expectedStatusCode: number, globalZoneCode: string) {
     assert.equal(responseStatusCode, expectedStatusCode)
-    GlobalZoneName=globalZoneName
+    GlobalZoneCode = globalZoneCode
 }
+
 export function SearchGlobalZone() {
-    DefineGlobalZoneViewsGetByFiltersRequest(GlobalZoneName);
-    cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, GlobalZoneName);
+    DefineGlobalZoneViewsGetByFiltersRequest(GlobalZoneCode);
+    cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, GlobalZoneCode);
     AsserGlobalZoneViewsGetByFilters();
 }
+
 export function DefineGlobalZoneViewsGetByFiltersRequest(GlobalZoneName: string) {
     cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(GlobalZoneName + "&GetCount=false"), RequestAliases.GetFilterSearch);
 }
 export function AsserGlobalZoneViewsGetByFilters() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
 }
+
 export function AssertSearchGlobalZone() {
     cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
-        expect(text).to.contain(GlobalZoneName);
+        expect(text).to.contain(GlobalZoneCode);
     });
 }
+
 export function OpenGlobalZone() {
     DefineGlobalZonesGetSingleRequest();
     cy.get(BaseSelectors.RowClass).eq(0).click();
 }
+
 function DefineGlobalZonesGetSingleRequest() {
     cy.DefineRequestWait(RestAPI.GET, Urls.GlobalZonesGetSingle, RequestAliases.GetSignle);
 }
+
 export function AssertOpenGlobalZone() {
     AssertGlobalZoneGetSingle();
     BaseAssertion.AssertElementExist(MaintenanceSelectors.GeneralEditScreen)
@@ -1353,12 +1350,11 @@ export function AssertOpenGlobalZone() {
 function AssertGlobalZoneGetSingle() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetSignle, 200);
 }
+
 export function FillGlobalZoneLocalName(LocalName: string) {
-    let LocalNameToFill = LocalName.toLowerCase() == "random" ? (gr.GenerateRandomNumberAndString(10)) : LocalName; 
-    if (LocalName) {
-        cy.FillLogTextBox(MaintenanceSelectors.GlobalZoneLocalName, LocalNameToFill)
-    }
+    cy.FillLogTextBox(MaintenanceSelectors.GlobalZoneLocalName, LocalName)
 }
+
 export function EditGlobalZone() {
     DefinePutGlobalZoneRequest();
     cy.Click(MaintenanceSelectors.GlobalZoneSaveButton, null);
@@ -1375,123 +1371,120 @@ export function AssertEditGlobalZone() {
 export function AssertPutGlobalZone() {
     BaseAssertion.AssertStatusCode(RequestAliases.PutGlobalZone, 200).
         then((interception) => {
-            inActiveGlobalZone= interception.response.body.InActive;
+            inActiveGlobalZone = interception.response.body.InActive;
         });
 }
 
 //#endregion
+
 //#region Commodity
-export function FillCommodityCode(CommodityCode:string){
-    cy.FillLogTextBox(MaintenanceSelectors.CommodityCode , CommodityCode)
+export function FillCommodityCode(CommodityCode: string) {
+    cy.FillLogTextBox(MaintenanceSelectors.CommodityCode, CommodityCode)
 }
-export function FillCommodityDetails(commodityDetails:CommodityDetails){
-    var RandomCommodityNumber=GetRandomCommodityCodeNumber();
-    cy.FillLogTextBox(MaintenanceSelectors.CommodityCode, commodityDetails.CommodityCode.toLowerCase() == "random"?RandomCommodityNumber:commodityDetails.CommodityCode)
-    cy.FillLogTextBox(MaintenanceSelectors.CommodityName, commodityDetails.CommodityName.toLowerCase() == "random"?RandomCommodityNumber:commodityDetails.CommodityName)
-    FillInputCheckBoxProcess(MaintenanceSelectors.InActiveCommodityCheckBox,commodityDetails.InactiveCommodity)
+export function FillCommodityDetails(commodityDetails: CommodityDetails) {
+    var RandomCommodityNumber = GenerateRandomNumber(15);
+    cy.FillLogTextBox(MaintenanceSelectors.CommodityCode, commodityDetails.CommodityCode.toLowerCase() == "random" ? RandomCommodityNumber : commodityDetails.CommodityCode)
+    cy.FillLogTextBox(MaintenanceSelectors.CommodityName, commodityDetails.CommodityName.toLowerCase() == "random" ? RandomCommodityNumber : commodityDetails.CommodityName)
+    FillInputCheckBoxProcess(MaintenanceSelectors.InActiveCommodityCheckBox, commodityDetails.InactiveCommodity)
 }
-function GetRandomCommodityCodeNumber(){
-    return gr.GenerateRandomNumberAndString(15);
-    }
 
-    export function CreateCommodity() {
-        DefinePostCommodityRequest()
-        cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
-    }
-    
-    function DefinePostCommodityRequest() {
-        cy.DefineRequestWait(RestAPI.POST, Urls.Commodities, RequestAliases.PostCommodity)
-    }
-    
-    export function AssertCreateCommodity() {
-        let intercept = cy.wait("@" + RequestAliases.PostCommodity);
-        intercept.then((interception) => {
-            if (interception.response.statusCode === 400) {
-                ReCreateCommodity();
-            }
-            else{
-                AssertPostCommodity(interception.response.statusCode, 200,interception.response.body.Name) 
-            }        
-        }) 
-    }
-    function ReCreateCommodity(){
-        var RandomCommodityNumber=GetRandomCommodityCodeNumber();
-        cy.FillLogTextBox(MaintenanceSelectors.CommodityCode, RandomCommodityNumber)
-        cy.FillLogTextBox(MaintenanceSelectors.CommodityName, RandomCommodityNumber)
-        CreateCommodity();
-        AssertCreateCommodity();
-    }
-    export function AssertPostCommodity(responseStatusCode: number, expectedStatusCode: number,commodityName:string) {
-        assert.equal(responseStatusCode, expectedStatusCode)
-        CommodityName=commodityName
-    }
-    export function SearchCommodity() {
-        DefineCommodityViewsGetByFiltersRequest(CommodityName);
-        cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, CommodityName);
-        AssertCommodityViewsGetByFilters();
-    }
-    export function DefineCommodityViewsGetByFiltersRequest(CommodityName: string) {
-        cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(CommodityName + "&GetCount=false"), RequestAliases.GetFilterSearch);
-    }
-    export function AssertCommodityViewsGetByFilters() {
-        BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
-    }
-    export function AssertSearchCommodity() {
-        cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
-            expect(text).to.contain(CommodityName);
-        });
-    }
-    export function OpenCommodity() {
-        DefineCommoditiesGetSingleRequest();
-        cy.get(BaseSelectors.RowClass).eq(0).click();
-    }
-    function DefineCommoditiesGetSingleRequest() {
-        cy.DefineRequestWait(RestAPI.GET, Urls.CommoditiesGetSingle, RequestAliases.GetSignle);
-    }
-    export function AssertOpenCommodity() {
-        AssertCommoditiesGetSingle();
-        BaseAssertion.AssertElementExist(MaintenanceSelectors.GeneralEditScreen)
-    }
-    
-    function AssertCommoditiesGetSingle() {
-        BaseAssertion.AssertStatusCode(RequestAliases.GetSignle, 200);
-    }
-    export function FillCommodityName(Name: string) {
-        let NameToFill = Name.toLowerCase() == "random" ? (gr.GenerateRandomNumberAndString(10)) : Name; 
-        if (Name) {
-            cy.FillLogTextBox(MaintenanceSelectors.CommodityName, NameToFill)
-        }
-    }
-    export function EditCommodity() {
-        DefinePutCommodityRequest();
-        cy.Click(MaintenanceSelectors.CommoditySaveButton, null);
-    }
-    
-    function DefinePutCommodityRequest() {
-        cy.DefineRequestWait(RestAPI.PUT, Urls.Commodities, RequestAliases.PutCommodity);
-    }
-    
-    export function AssertEditCommodity() {
-        AssertPutCommodity();
-    }
-    
-    export function AssertPutCommodity() {
-        BaseAssertion.AssertStatusCode(RequestAliases.PutCommodity, 200).
-            then((interception) => {
-                inActiveCommodity= interception.response.body.InActive;
-            });
-    }
-//#endregion
-//#region Region
-export function FillRegionDetails(regionDetails:RegionDetails){
-    var RandomRegionName=GetRandomRegionName();
-    cy.FillLogTextBox(MaintenanceSelectors.RegionName, regionDetails.RegionName.toLowerCase() == "random"?RandomRegionName: regionDetails.RegionName)
-    cy.FillLogTextBox(MaintenanceSelectors.RegionLocalName, regionDetails.RegionLocalName.toLowerCase() == "random"?RandomRegionName: regionDetails.RegionLocalName)
-    FillInputCheckBoxProcess(MaintenanceSelectors.InActiveRegionCheckBox,regionDetails.InactiveRegion)
+export function CreateCommodity() {
+    DefinePostCommodityRequest()
+    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
 }
-function GetRandomRegionName(){
-    return gr.GenerateRandomNumberAndString(15);
+
+function DefinePostCommodityRequest() {
+    cy.DefineRequestWait(RestAPI.POST, Urls.Commodities, RequestAliases.PostCommodity)
+}
+
+export function AssertCreateCommodity() {
+    let intercept = cy.wait("@" + RequestAliases.PostCommodity);
+    intercept.then((interception) => {
+        if (interception.response.statusCode === 400) {
+            ReCreateCommodity();
+        }
+        else {
+            AssertPostCommodity(interception.response.statusCode, 200, interception.response.body.Name)
+        }
+    })
+}
+function ReCreateCommodity() {
+    var RandomCommodityNumber = GenerateRandomNumber(15);
+    cy.FillLogTextBox(MaintenanceSelectors.CommodityCode, RandomCommodityNumber)
+    cy.FillLogTextBox(MaintenanceSelectors.CommodityName, RandomCommodityNumber)
+    CreateCommodity();
+    AssertCreateCommodity();
+}
+export function AssertPostCommodity(responseStatusCode: number, expectedStatusCode: number, commodityName: string) {
+    assert.equal(responseStatusCode, expectedStatusCode)
+    CommodityName = commodityName
+}
+export function SearchCommodity() {
+    DefineCommodityViewsGetByFiltersRequest(CommodityName);
+    cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, CommodityName);
+    AssertCommodityViewsGetByFilters();
+}
+export function DefineCommodityViewsGetByFiltersRequest(CommodityName: string) {
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(CommodityName + "&GetCount=false"), RequestAliases.GetFilterSearch);
+}
+export function AssertCommodityViewsGetByFilters() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
+}
+export function AssertSearchCommodity() {
+    cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
+        expect(text).to.contain(CommodityName);
+    });
+}
+export function OpenCommodity() {
+    DefineCommoditiesGetSingleRequest();
+    cy.get(BaseSelectors.RowClass).eq(0).click();
+}
+function DefineCommoditiesGetSingleRequest() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.CommoditiesGetSingle, RequestAliases.GetSignle);
+}
+export function AssertOpenCommodity() {
+    AssertCommoditiesGetSingle();
+    BaseAssertion.AssertElementExist(MaintenanceSelectors.GeneralEditScreen)
+}
+
+function AssertCommoditiesGetSingle() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetSignle, 200);
+}
+export function FillCommodityName(Name: string) {
+    let NameToFill = Name.toLowerCase() == "random" ? (GenerateRandomNumber(10)) : Name;
+    if (Name) {
+        cy.FillLogTextBox(MaintenanceSelectors.CommodityName, NameToFill)
     }
+}
+export function EditCommodity() {
+    DefinePutCommodityRequest();
+    cy.Click(MaintenanceSelectors.CommoditySaveButton, null);
+}
+
+function DefinePutCommodityRequest() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.Commodities, RequestAliases.PutCommodity);
+}
+
+export function AssertEditCommodity() {
+    AssertPutCommodity();
+}
+
+export function AssertPutCommodity() {
+    BaseAssertion.AssertStatusCode(RequestAliases.PutCommodity, 200).
+        then((interception) => {
+            inActiveCommodity = interception.response.body.InActive;
+        });
+}
+//#endregion
+
+//#region Region
+export function FillRegionDetails(regionDetails: RegionDetails) {
+    var RandomRegionName = GenerateRandomNumber(15);
+    cy.FillLogTextBox(MaintenanceSelectors.RegionName, regionDetails.RegionName.toLowerCase() == "random" ? RandomRegionName : regionDetails.RegionName)
+    cy.FillLogTextBox(MaintenanceSelectors.RegionLocalName, regionDetails.RegionLocalName.toLowerCase() == "random" ? RandomRegionName : regionDetails.RegionLocalName)
+    FillInputCheckBoxProcess(MaintenanceSelectors.InActiveRegionCheckBox, regionDetails.InactiveRegion)
+}
+
 export function CreateRegion() {
     DefinePostRegionRequest()
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
@@ -1507,21 +1500,21 @@ export function AssertCreateRegion() {
         if (interception.response.statusCode === 400) {
             ReCreateRegion();
         }
-        else{
-            AssertPostRegion(interception.response.statusCode, 200,interception.request.body.name) 
-        }        
-    }) 
+        else {
+            AssertPostRegion(interception.response.statusCode, 200, interception.request.body.name)
+        }
+    })
 }
-function ReCreateRegion(){
-    var RandomRegionName=GetRandomCommodityCodeNumber();
+function ReCreateRegion() {
+    var RandomRegionName = GenerateRandomNumber(15);
     cy.FillLogTextBox(MaintenanceSelectors.RegionName, RandomRegionName)
     cy.FillLogTextBox(MaintenanceSelectors.RegionLocalName, RandomRegionName)
     CreateRegion();
     AssertCreateRegion();
 }
-export function AssertPostRegion(responseStatusCode: number, expectedStatusCode: number,regionName:string) {
+export function AssertPostRegion(responseStatusCode: number, expectedStatusCode: number, regionName: string) {
     assert.equal(responseStatusCode, expectedStatusCode)
-    RegionName=regionName
+    RegionName = regionName
 }
 export function SearchRegion() {
     DefineRegionViewsGetByFiltersRequest(RegionName);
@@ -1555,7 +1548,7 @@ function AssertRegionsGetSingle() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetSignle, 200);
 }
 export function FillRegionLocalName(Name: string) {
-    let NameToFill = Name.toLowerCase() == "random" ? (gr.GenerateRandomNumberAndString(15)) : Name; 
+    let NameToFill = Name.toLowerCase() == "random" ? (GenerateRandomNumber(15)) : Name;
     if (Name) {
         cy.FillLogTextBox(MaintenanceSelectors.RegionLocalName, NameToFill)
     }
@@ -1576,7 +1569,7 @@ export function AssertEditRegion() {
 export function AssertPutRegion() {
     BaseAssertion.AssertStatusCode(RequestAliases.PutRegions, 200).
         then((interception) => {
-            inActiveRegion= interception.response.body.inActive;
+            inActiveRegion = interception.response.body.inActive;
         });
 }
 //#endregion
