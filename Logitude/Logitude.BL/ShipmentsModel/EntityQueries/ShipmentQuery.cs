@@ -40,7 +40,6 @@ using System.Xml;
 using Logitude.Server.Tools;
 using System.Xml.Serialization;
 using System.Text;
-using ICSharpCode.SharpZipLib.BZip2;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
