@@ -760,7 +760,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             DeclarationCourierStatusPM myDeclarationCourierStatusPM = myDeclarationCourierStatusQueryService.GetSingle(declarationPM.Id, true, false);
             var updateDeclarationPending903InvalidPhoneNumberService = new UpdateDeclarationPending903InvalidPhoneNumberService(declarationPM);
             updateDeclarationPending903InvalidPhoneNumberService.Calc(myDeclarationCourierStatusPM);
-            if (myDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
+            if (myDeclarationCourierStatusPM != null && myDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
             {
                 
                 declarationCourierStatusUpdateService.Update(myDeclarationCourierStatusPM, true);
