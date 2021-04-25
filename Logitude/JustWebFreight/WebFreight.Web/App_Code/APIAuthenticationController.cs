@@ -118,6 +118,22 @@ namespace WebFreight.Web
 
         }
 
+        public HttpResponseMessage GetApiSettingsParametersByTanentSettings(string token)
+        {
+            try
+            {
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);           
+                ExternalAPIHelper externalAPIHelper = new ExternalAPIHelper(authToken.Tenant);
+                ExternalAPIResponseParameters responseParameters = externalAPIHelper.GetExternalAPIResponseParameters();
+
+                return Request.CreateResponse(HttpStatusCode.OK, responseParameters);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
     }
 
 }
