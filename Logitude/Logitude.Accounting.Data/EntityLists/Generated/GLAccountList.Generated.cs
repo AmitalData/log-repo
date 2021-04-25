@@ -254,6 +254,10 @@ namespace Logitude.Accounting.Data.EntityLists
        public string CardsDataId  { get; set; }
        [DataMember]
        public string PaymentTermName  { get; set; }
+       [DataMember]
+       public string LastReconciledBy  { get; set; }
+       [DataMember]
+       public DateTime? LastReconcileDate  { get; set; }
    }
 
 }
