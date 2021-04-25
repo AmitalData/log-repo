@@ -2373,7 +2373,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     }
 
     InstructionActualSendToTransfer() {
-        let myUnifreightInstructionController = new UnifreightInstructionController(this.EntityPM, "COLLECT_TRANSFER");
+        let myUnifreightInstructionController = new UnifreightInstructionController(this.DeclarationPM, "COLLECT_TRANSFER");
         myUnifreightInstructionController
             .ShowInstruction(
                 () => {
