@@ -26,6 +26,7 @@ using UnifreightIIG.Common.Utils;
 using Logitude.Server.Tools.ExternalServices;
 using Logitude.Customs.BL.Messaging.Maman;
 using Simplog.Server.Infrastructure.Helpers;
+using Unifreight.Data.AmitalModel.Repsitories;
 
 namespace CustomsWorkerRole.Test
 {
@@ -302,6 +303,16 @@ SELECT TOP 1000 [Id]
             {
                 Debug.WriteLine(ex.ToString());
             }
+        }
+
+        public static void TestUpdateLOGITUDE_FILE()
+        {
+            int tenant = 2;
+            var repo = new CFIFILEMRepository(tenant);
+            var res = repo.UpdateLOGITUDE_FILE(tenant,197, "1-3434");
+            repo.SubmitChanges();
+            //throw new NotImplementedException();
+
         }
 
         public static void GetListByCourierHAWB()
