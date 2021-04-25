@@ -439,7 +439,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 }
             }
 
-            if (entityPOCO.CancelRequestRejectReasonType != null)
+            if (entityPOCO.CancelRequestRejectionReason != null)
             {
                 CancelRequestRejectReasonTypeQueryService CancelRequestRejectReasonTypeQueryService = new CancelRequestRejectReasonTypeQueryService(entityPOCO.Tenant);
                 CancelRequestRejectReasonTypePM CancelRequestRejectReasonTypePM = CancelRequestRejectReasonTypeQueryService.GetSingle(entityPOCO.CancelRequestRejectionReason, false, true);
