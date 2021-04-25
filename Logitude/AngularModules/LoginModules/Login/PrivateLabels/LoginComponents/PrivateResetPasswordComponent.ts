@@ -20,7 +20,9 @@ export class PrivateResetPasswordComponent extends ResetPasswordComponent {
     public ForgetPasswordImage: string = "";
     public Id = "";
     public MainLogo: string = "";
-    public ContactUsEmail: string = "mailto:"+sessionStorage.getItem('ContactEmail'); 
+    public ContactUsEmail: string = "mailto:" + sessionStorage.getItem('ContactEmail'); 
+    public SecondaryColor: string = null;
+
     constructor(
         private ss: LoginService) {
         super(ss);
@@ -36,6 +38,7 @@ export class PrivateResetPasswordComponent extends ResetPasswordComponent {
         this.MainLogo = BrandingDataService.GetImage("MainLogo");   
         this.ForgetPasswordImage = BrandingDataService.GetImage("ForgetPasswordImage"); 
         //this.MainColor = BrandingDataService.MainColor; 
+        this.SecondaryColor = BrandingDataService.SecondaryColor; 
      } 
   }
  

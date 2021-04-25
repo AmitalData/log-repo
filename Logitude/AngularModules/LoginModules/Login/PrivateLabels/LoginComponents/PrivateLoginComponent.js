@@ -23,6 +23,7 @@ export var PrivateLoginComponent = (function (_super) {
         this.SmallLogo = "";
         this.showSpinner = true;
         this.IsDSV = false;
+        this.SecondaryColor = null;
     }
     PrivateLoginComponent.prototype.ngOnInit = function () {
         this.get_cookie_data();
@@ -45,8 +46,10 @@ export var PrivateLoginComponent = (function (_super) {
         var _this = this;
         this.privateLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetPrivateLabelsDataRequest(privateUrl)).subscribe(function (response) {
             if (response.Result) {
+                _this.SecondaryColor = response.Result.SecondaryColor;
+                BrandingDataService.SecondaryColor = _this.SecondaryColor;
                 BrandingDataService.SetPrivateLabelsDataRequest(response.Result, privateUrl);
-                //this.MainColor = response.Result.MainColor;
+                //this.MainColor = response.Result.MainColor; 
                 //BrandingDataService.MainColor = this.MainColor;
                 _this.GetLoginPageImages();
             }

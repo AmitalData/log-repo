@@ -124,7 +124,7 @@
                                                                             <table>
                                                                                 <tr>
                                                                                     <td style="width: 1px;">
-                                                                                        <button class="DSVLoginButton" (click)="LoginClicked()">LOGIN ></button>
+                                                                                        <button class="DSVLoginButton" (click)="LoginClicked()" [ngStyle]="SecondaryColor != null ? {'background': SecondaryColor} : {}">LOGIN ></button>
                                                                                     </td>
                                                                                     <td>
                                                                                         <table>
