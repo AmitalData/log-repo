@@ -486,6 +486,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new LoadingSiteTypeMap());
 	
+            modelBuilder.Configurations.Add(new LogisticsReferenceTypeMap());
+	
             modelBuilder.Configurations.Add(new MamanSpecialActionMap());
 	
             modelBuilder.Configurations.Add(new MamanSpecialActionStatusMap());
@@ -593,6 +595,10 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new ReferantExceptionMap());
 	
             modelBuilder.Configurations.Add(new ReferantTeamMap());
+	
+            modelBuilder.Configurations.Add(new ReferenceInputTypeMap());
+	
+            modelBuilder.Configurations.Add(new ReferenceStatusMap());
 	
             modelBuilder.Configurations.Add(new RefundCustomerActivityTypeMap());
 	
@@ -2501,6 +2507,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<LogisticsReferenceType> LogisticsReferenceTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<MamanSpecialAction> MamanSpecialActions 
 	 {
 	      get; set;
@@ -2820,6 +2832,18 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<ReferantTeam> ReferantTeams 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ReferenceInputType> ReferenceInputTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ReferenceStatus> ReferenceStatuses 
 	 {
 	      get; set;
 	 
