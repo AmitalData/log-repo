@@ -1,26 +1,26 @@
 declare var window: any;
-import {OnDestroy,Component, ChangeDetectorRef}  from '@angular/core';
-import {EntityArgs} from '../../../../../../Infrastructure/DataContracts/EntityArgs';
-import {AppTool, ArrayTool, DateTool} from '../../../../../../Infrastructure/Tools';
-import {FeatureLocator} from '../../../../../../Infrastructure/Utilities/FeatureLocator';
-import {SessionLocator} from '../../../../../../Infrastructure/Utilities/SessionLocator';
-import {TextCodeTranslator} from '../../../../../../Infrastructure/Utilities/TextCodeTranslator';
-import {BaseComponent} from '../../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {ObservableCollection} from '../../../../../../Infrastructure/Utilities/ObservableCollection';
-import {ServiceResponse} from '../../../../../../Infrastructure/DataContracts/ServiceResponse';
-import {ConfirmWindow} from '../../../../../../Controls/Windows/ConfirmWindow';
-import {DeclarationPMService} from '../../../../../../Customs/Services/StandardPMs/DeclarationPMService';
+import { OnDestroy, Component, ChangeDetectorRef } from '@angular/core';
+import { EntityArgs } from '../../../../../../Infrastructure/DataContracts/EntityArgs';
+import { AppTool, ArrayTool, DateTool } from '../../../../../../Infrastructure/Tools';
+import { FeatureLocator } from '../../../../../../Infrastructure/Utilities/FeatureLocator';
+import { SessionLocator } from '../../../../../../Infrastructure/Utilities/SessionLocator';
+import { TextCodeTranslator } from '../../../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { BaseComponent } from '../../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { ObservableCollection } from '../../../../../../Infrastructure/Utilities/ObservableCollection';
+import { ServiceResponse } from '../../../../../../Infrastructure/DataContracts/ServiceResponse';
+import { ConfirmWindow } from '../../../../../../Controls/Windows/ConfirmWindow';
+import { DeclarationPMService } from '../../../../../../Customs/Services/StandardPMs/DeclarationPMService';
 import { ConsignmentInternalTransitionPM } from '../../../../../../Customs/EntityPMs/ConsignmentInternalTransitionPM';
 import { ConsignmentPM } from '../../../../../../Customs/EntityPMs/ConsignmentPM';
 import { CouriersVatPM } from '../../../../../../Customs/EntityPMs/CouriersVatPM';
-import {DeclarationPM} from '../../../../../../Customs/EntityPMs/DeclarationPM';
-import {ConsignmentPackagePM} from '../../../../../../Customs/EntityPMs/ConsignmentPackagePM';
-import {ClientList} from '../../../../../../Customs/EntityLists/ClientList';
-import {LogTab} from '../../../../../../Infrastructure/Components/LogitudeComponents/LogTabsComponent';
-import {CustomsRequiredFieldListService} from '../../../../../../Customs/Services/StandardLists/CustomsRequiredFieldListService';
+import { DeclarationPM } from '../../../../../../Customs/EntityPMs/DeclarationPM';
+import { ConsignmentPackagePM } from '../../../../../../Customs/EntityPMs/ConsignmentPackagePM';
+import { ClientList } from '../../../../../../Customs/EntityLists/ClientList';
+import { LogTab } from '../../../../../../Infrastructure/Components/LogitudeComponents/LogTabsComponent';
+import { CustomsRequiredFieldListService } from '../../../../../../Customs/Services/StandardLists/CustomsRequiredFieldListService';
 import { CustomsRequestMenuService } from '../../../../../../Customs/Services/Others/CustomsRequestMenuService';
-import {DeliverySiteTypeListService} from '../../../../../../Customs/Services/StandardLists/DeliverySiteTypeListService';
-import {DeclarationEventManager} from '../../../../../../Customs/Utilities/DeclarationEventManager'
+import { DeliverySiteTypeListService } from '../../../../../../Customs/Services/StandardLists/DeliverySiteTypeListService';
+import { DeclarationEventManager } from '../../../../../../Customs/Utilities/DeclarationEventManager'
 import { AmitalGatewayUtil, UnifreightMessageM } from '../../../../../../Infrastructure/Utilities/AmitalGatewayUtil';
 import { ApiQueryFilters, FilterItem } from '../../../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { CouriersVatPMService } from '../../../../../../Customs/Services/StandardPMs/CouriersVatPMService';
@@ -29,18 +29,20 @@ import { MessageWindow } from '../../../../../../Controls/Windows/MessageWindow'
 import { LogitudeWindow } from '../../../../../../Controls/Windows/LogitudeWindow';
 import { WindowArgs } from '../../../../../../Infrastructure/DataContracts/WindowArgs';
 import { CustomsRequiredFieldExtendedListService } from '../../../../../../Customs/Services/ExtendedLists/CustomsRequiredFieldExtendedListService';
- import { Dictionary } from '../../../../../../Infrastructure/GenericTypes/Dictionary';
+import { Dictionary } from '../../../../../../Infrastructure/GenericTypes/Dictionary';
+import { DeclarationCourierStatusList } from '../../../../../../Customs/EntityLists/DeclarationCourierStatusList';
+import { DeclarationCourierStatusListService } from '../../../../../../Customs/Services/StandardLists/DeclarationCourierStatusListService';
+import { EntityResourceService } from '../../../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
     selector: 'ConsigmentTabContent',
-    
+
     templateUrl: './ConsigmentTabContentComponent.html',
 })
 
 export class ConsigmentTabContentComponent
     extends BaseComponent
-    implements OnDestroy
-{
+    implements OnDestroy {
     public EntityPM: ConsignmentPM;
     public declarationPM: DeclarationPM;
 
@@ -52,6 +54,8 @@ export class ConsigmentTabContentComponent
     public ParentIsDisplayOnly: boolean = false;
     ShowExcludeConsignmentBoolean: boolean = false;
     IsCourierDeclaration: boolean = false;
+    _DeclarationCourierStatus: DeclarationCourierStatusList;
+    entityResourceService: EntityResourceService = new EntityResourceService();
 
     public LoadingPortFilterItems: ApiQueryFilters;//38388
 
@@ -68,16 +72,17 @@ export class ConsigmentTabContentComponent
     public WeightValueFilterItems: ApiQueryFilters;
     private CurrentSession = SessionLocator.SelectedSession;
 
-  public  ConsignmentTypes: ConsignmentType[] = [{ Id: "E", Value: "יצוא" }, { Id: "I", Value: "יבוא" }];
+    public ConsignmentTypes: ConsignmentType[] = [{ Id: "E", Value: "יצוא" }, { Id: "I", Value: "יבוא" }];
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef) {
         super();
         this.ConsimentPackages = new ObservableCollection([]);
-       // this.declarationPM = entityArgs.EntityPM;
+        // this.declarationPM = entityArgs.EntityPM;
         this.WeightValueFilterItems = new ApiQueryFilters();
         this.WeightValueFilterItems.addAdditionalFilter("Code", "CC,CA,NC,PO,PP", null, null, "InListExact", false, false, false, "string", false, true);
 
         this.SiteList = [];
         this.LoadingPortFilterItems = new ApiQueryFilters();//38388
+
         this.Listen();
 
 
@@ -95,10 +100,10 @@ export class ConsigmentTabContentComponent
         //    this.Tab.ComponentReference.ngOnDestroy();
         //}
 
-      if (this.Tab) {
-        this.Tab.ComponentReference = null;
-        this.Tab = null;
-      }
+        if (this.Tab) {
+            this.Tab.ComponentReference = null;
+            this.Tab = null;
+        }
         if (this._SubDisplayModeChanged) {
             this._SubDisplayModeChanged.unsubscribe();
             this._SubDisplayModeChanged = null;
@@ -136,30 +141,31 @@ export class ConsigmentTabContentComponent
         logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/General/ConsigmentTabContent/ExportConsigmentContentComponent');
     }
     private Listen() {
-        this._SubDisplayModeChanged=
-        DeclarationEventManager.DisplayModeChanged.subscribe((IsDisplayOnly: any) => {
+        this._SubDisplayModeChanged =
+            DeclarationEventManager.DisplayModeChanged.subscribe((IsDisplayOnly: any) => {
 
-            if (this.ShowExcludeConsignmentBoolean && this.ExcludeConsignment)
-                this.IsDisplayOnly = true;
-            else
-                this.IsDisplayOnly = IsDisplayOnly;
+                if (this.ShowExcludeConsignmentBoolean && this.ExcludeConsignment)
+                    this.IsDisplayOnly = true;
+                else
+                    this.IsDisplayOnly = IsDisplayOnly;
 
-            this.ParentIsDisplayOnly = IsDisplayOnly;
+                this.ParentIsDisplayOnly = IsDisplayOnly;
 
-            this.SetScreenFieldsEditability();
-            if (this.declarationPM.TransportModeId != 'O') {
-                this.UIProperties.SetEnabled("ShipCode", this.ObjectTableName, this.IsDisplayOnly);
-            }
-            this.BuildSitesList();
-            this.SetTipsInsideCargoIdentifires(this.EntityPM.CargoTypeCode);
+                this.SetScreenFieldsEditability();
+                if (this.declarationPM.TransportModeId != 'O') {
+                    this.UIProperties.SetEnabled("ShipCode", this.ObjectTableName, this.IsDisplayOnly);
+                }
+                this.UIProperties.SetEnabled("CrateNumber", "Customs.DeclarationCourierStatus", false);
+                this.BuildSitesList();
+                this.SetTipsInsideCargoIdentifires(this.EntityPM.CargoTypeCode);
 
             });
         this._SubConsignmentsChanged =
-        DeclarationEventManager.ConsignmentsChanged.subscribe((e) => {
-            console.log("ConsignmentsChanged", this.declarationPM, e);
-            this.SetExcludeConsignmentVisibility();
+            DeclarationEventManager.ConsignmentsChanged.subscribe((e) => {
+                console.log("ConsignmentsChanged", this.declarationPM, e);
+                this.SetExcludeConsignmentVisibility();
 
-        });
+            });
     }
 
     SetExcludeConsignmentVisibility() {
@@ -228,8 +234,32 @@ export class ConsigmentTabContentComponent
         this.BuildSitesList();
         this.InitLOVFilters();//38388
         this.CheckRequrierdFieldsForSend();
-
+        this.GetDeclarationCourierStatusData();
+        
         console.log("Tabs Args: ", args);
+    }
+
+    GetDeclarationCourierStatusData() {
+        if (this.IsCourierDeclaration) {
+
+                let myDeclarationCourierStatusListService: DeclarationCourierStatusListService = new DeclarationCourierStatusListService();
+
+                let filters = new ApiQueryFilters();
+
+                filters.addAdditionalFilter("DeclarationId", this.declarationPM.Id, null, null, "Equals", false, false, false, "string");
+                filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
+                filters.PageSize = 1;
+                myDeclarationCourierStatusListService.getByFilters(filters)
+                    .subscribe((serviceResponse1: ServiceResponse) => {
+                        let mappedDeclarationCourierStatusList: Array<DeclarationCourierStatusList> = serviceResponse1.Result;
+                        if (mappedDeclarationCourierStatusList != null && mappedDeclarationCourierStatusList.length > 0) {
+                            this._DeclarationCourierStatus = mappedDeclarationCourierStatusList[0];
+                            this.CrateNumber = this._DeclarationCourierStatus.CrateNumber;
+                        }
+
+                    });
+          
+        }
     }
 
     SetDateVisibilty() {
@@ -293,6 +323,14 @@ export class ConsigmentTabContentComponent
         }
     }
     //#region Properties
+
+
+    public get CrateNumber() { return this._DeclarationCourierStatus != null ? this._DeclarationCourierStatus.CrateNumber : null; }
+    public set CrateNumber(newValue: string) {
+        if (this._DeclarationCourierStatus != null) {
+            this._DeclarationCourierStatus.CrateNumber = newValue;
+        }
+    }
 
     couriersVatId: string;
     public get CouriersVatId() { return this.couriersVatId; }
@@ -362,7 +400,7 @@ export class ConsigmentTabContentComponent
     public get DeliveryPlaceName() { return this.EntityPM ? this.EntityPM.DeliveryPlaceName : null; }
     public set DeliveryPlaceName(newValue: string) { this.EntityPM.DeliveryPlaceName = newValue; }
 
-    
+
 
     public get UnloadPortCode() { return this.EntityPM ? this.EntityPM.UnloadPortCode : null; }
     public set UnloadPortCode(newValue: string) {
@@ -398,7 +436,7 @@ export class ConsigmentTabContentComponent
             return null;
         }
         if (this.declarationPM.Direction == "E") {
-            return this.EntityPM.IsLastReleaseFromWarehous == "T" ? true : false; 
+            return this.EntityPM.IsLastReleaseFromWarehous == "T" ? true : false;
         }
         return this.EntityPM.IsLastReleaseFromWarehous;
     }
@@ -474,7 +512,7 @@ export class ConsigmentTabContentComponent
     public get ExportLoadingPortCode() { return this.EntityPM.ExportLoadingPortCode; }
     public set ExportLoadingPortCode(newValue: string) {
         this.EntityPM.ExportLoadingPortCode = newValue;
-      
+
     }
 
 
@@ -482,7 +520,7 @@ export class ConsigmentTabContentComponent
     public get ExportUnloadingPortCode() { return this.EntityPM.ExportUnloadingPortCode; }
     public set ExportUnloadingPortCode(newValue: string) {
         this.EntityPM.ExportUnloadingPortCode = newValue;
-       
+
     }
 
 
@@ -493,7 +531,7 @@ export class ConsigmentTabContentComponent
 
     }
 
-   
+
 
     public get ExportRecieverWareHouseCode() { return this.EntityPM.ExportRecieverWareHouseCode; }
     public set ExportRecieverWareHouseCode(newValue: string) {
@@ -587,13 +625,13 @@ export class ConsigmentTabContentComponent
 
     OpenEditDangerWindow(item) {
         if (!AppTool.IsNullOrEmpty(item)) {
-             var windowArgs: any = {};
+            var windowArgs: any = {};
             windowArgs.ConsignmentPackagesDangerPM = item.EntityPM;
             windowArgs.Declaration = this.declarationPM;
-             
+
             windowArgs.Parent = item;
             windowArgs.IsDisplayOnly = this.IsDisplayOnly;
-             if (item.EntityPM.LineNumber != item.EntityPM.entityParentPM.consignmentPackages[0].LineNumber) {
+            if (item.EntityPM.LineNumber != item.EntityPM.entityParentPM.consignmentPackages[0].LineNumber) {
                 windowArgs.IsDisplayOnlyContact = true;
             }
             var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ConsignmentPackagesDanger");
@@ -610,7 +648,7 @@ export class ConsigmentTabContentComponent
         }
     }
 
- 
+
     RemovePackageButton(item) {
 
         if (!AppTool.IsNullOrEmpty(item)) {
@@ -646,7 +684,7 @@ export class ConsigmentTabContentComponent
     OnRowEnded($event) {
         console.log("this.ConsimentPackages.Length : " + this.ConsimentPackages.Length);
         if (($event) == this.ConsimentPackages.Length) {
-            this.AddPackageButtonClicked(); 
+            this.AddPackageButtonClicked();
         }
     }
 
@@ -702,7 +740,7 @@ export class ConsigmentTabContentComponent
 
         if (!AppTool.IsNullOrEmpty(this.SecondCargoID)) {
             var secondCargoID: any = this.SecondCargoID;
-            if(this.SecondCargoID.length != 9 || isNaN(secondCargoID) || this.SecondCargoID.indexOf('e') >= 0) {
+            if (this.SecondCargoID.length != 9 || isNaN(secondCargoID) || this.SecondCargoID.indexOf('e') >= 0) {
                 var messageWindow = new MessageWindow();
                 messageWindow.Title = TextCodeTranslator.Translate("Customs.General.O.Warning");
                 messageWindow.Width = 250;
@@ -753,7 +791,7 @@ export class ConsigmentTabContentComponent
         }
     }
 
-    SendCargoQueryRequestMethod(){
+    SendCargoQueryRequestMethod() {
         let customsRequestMenuService = new CustomsRequestMenuService();
         let my = {
             "Mode": "SendCargoQueryRequestFromDeclaration",
@@ -772,21 +810,21 @@ export class ConsigmentTabContentComponent
 
     private SaveChangesAndSendRequest() {
         this.CurrentSession.StartBusyIndicatorSaving();
-        var sub=
-            this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((myResult:any) => {
+        var sub =
+            this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((myResult: any) => {
                 sub.unsubscribe();
-            var res: ServiceResponse = myResult;
-            if (!res.HasError) {
-                var entity = res.Result;
-                console.log("..Saved Successfully ", entity);
-                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                this.SendCargoQueryRequestMethod();
-            }
-            else {
-                //this.ValidationErrorsList = res.ErrorsArray;
-            }
-            this.CurrentSession.StopBusyIndicator();
-        });
+                var res: ServiceResponse = myResult;
+                if (!res.HasError) {
+                    var entity = res.Result;
+                    console.log("..Saved Successfully ", entity);
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    this.SendCargoQueryRequestMethod();
+                }
+                else {
+                    //this.ValidationErrorsList = res.ErrorsArray;
+                }
+                this.CurrentSession.StopBusyIndicator();
+            });
 
         this.CurrentSession.CurrentEditComponent.SaveChanges();
     }
@@ -845,34 +883,34 @@ export class ConsigmentTabContentComponent
 
     BuildSitesList() {
         var count: number = 1;
-    
+
         this.SiteList = [];
 
         this.AddSiteEnabled = true;
         for (var i = 0; i < this.EntityPM.ConsignmentInternalTransitions.length; i++) {
             var viewModel: ConsignmentInternalTransitionModel = new ConsignmentInternalTransitionModel(this.EntityPM.ConsignmentInternalTransitions[i], this);
-            viewModel.TransitionNumber = i + 1;  
+            viewModel.TransitionNumber = i + 1;
             if (viewModel.SiteCode == null) {
                 this.AddSiteEnabled = false;
             }
             this.SiteList.push(viewModel);
-            
+
 
         }
 
-            if (this.SiteList.length == 0) {
-                var item = new ConsignmentInternalTransitionPM(this.EntityPM);
-                var viewModel: ConsignmentInternalTransitionModel = new ConsignmentInternalTransitionModel(item, this);
-                viewModel.TransitionNumber
-                this.SiteList.push(viewModel);
-              //  this.EntityPM.AddConsignmentInternalTransition(item);
+        if (this.SiteList.length == 0) {
+            var item = new ConsignmentInternalTransitionPM(this.EntityPM);
+            var viewModel: ConsignmentInternalTransitionModel = new ConsignmentInternalTransitionModel(item, this);
+            viewModel.TransitionNumber
+            this.SiteList.push(viewModel);
+            //  this.EntityPM.AddConsignmentInternalTransition(item);
 
-                
-                this.AddSiteEnabled = false;
-            }
 
-            
+            this.AddSiteEnabled = false;
         }
+
+
+    }
 
     ApplyPadding(str: string) {
         var pad = "00"
@@ -885,7 +923,7 @@ export class ConsigmentTabContentComponent
         if (this.declarationPM.Direction == 'E') {
             isExport = true;
         }
-         var customsRequiredFieldListService: CustomsRequiredFieldListService = new CustomsRequiredFieldListService();
+        var customsRequiredFieldListService: CustomsRequiredFieldListService = new CustomsRequiredFieldListService();
         var table = window.ObjectTables.filter(d => d.Name == 'Customs.Consignment')[0];
         var filters = new ApiQueryFilters();
         filters.addAdditionalFilter("ObjectTableId", table.Id, null, null, "Equals", false, false, false, "string");
@@ -966,7 +1004,7 @@ export class ConsignmentInternalTransitionModel extends BaseComponent {
         this.EntityPM = item;
         this.Parent = parent;
         this.UIProperties.SetEnabled("SiteCode", this.ObjectTableName, !this.Parent.IsDisplayOnly);
-        
+
     }
 
     //#region Properties
@@ -995,20 +1033,20 @@ export class ConsignmentInternalTransitionModel extends BaseComponent {
         else {
             this.Parent.AddSiteEnabled = false;
         }
-       
+
     }
     //#endregion
-   
+
     OnMouseOver() {
         if (this.EntityPM.LineNumber > 1) {
-           this.DeleteSiteVisible = true;
+            this.DeleteSiteVisible = true;
         }
     }
 
     OnMouseLeave() {
-            if (!this.overCloseButton) {
-                this.DeleteSiteVisible = false;
-            }
+        if (!this.overCloseButton) {
+            this.DeleteSiteVisible = false;
+        }
     }
 
     // close button

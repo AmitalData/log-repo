@@ -139,6 +139,26 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
             var rep = new CustomsAirlineRepository(myCourierMasterPM.Tenant);
             var customsAirline = rep.GetSingle(myCourierMasterPM.AirlineId, myCourierMasterPM.Tenant);
 
+            string crateNumber = "";
+            var context = CustomContext.GetContext(myDeclarationPM.Tenant);
+            DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
+            DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(myDeclarationPM.Id, true, false);
+            if(currentDeclarationCourierStatusPM != null && !String.IsNullOrWhiteSpace(currentDeclarationCourierStatusPM.CrateNumber))crateNumber = currentDeclarationCourierStatusPM.CrateNumber;
+
+            string importerVat = "";
+            if (!String.IsNullOrWhiteSpace(myDeclarationPM.ImporterId))
+            {
+                ClientQueryService clientQueryService = new ClientQueryService(myCourierMasterPM.Tenant);
+
+                var clientPM = clientQueryService.GetSingle(myDeclarationPM.ImporterId, false, true); 
+                if (clientPM != null && !String.IsNullOrWhiteSpace(clientPM.Code)) importerVat = clientPM.Code;
+            }
+            else if(!String.IsNullOrWhiteSpace(myDeclarationPM.ImporterCode))
+            {
+                importerVat = myDeclarationPM.ImporterCode;
+            }
+
+
             var courierHawbMamanModel = new CourierOVSHAWBRequest()
             {
 
@@ -170,7 +190,8 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
                 CustomsSuspention = myDeclarationPM.CourierSuspentionCode??"",
                 Preclearence = myDeclarationPM.CourierCustomStatusCode== "1"  /*released*/,
 
-
+                ImporterVat = importerVat,
+                BoxBarcode = crateNumber,
 
 
             };
@@ -267,18 +288,20 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
         public string DeclarationNumber { get; set; }
         public string CustomsSuspention { get; set; }
         public bool Preclearence { get; set; }
-        
+
         //public string CustomIkuv { get; set; }
         //TAsk 46455.
 
         //public DateTime BaldarMessageTime { get; set; }
-        
-        
+
+
 
         //public int ResponseStatusCode { get; set; }
         //public string ResponseStatusMsg { get; set; }
 
+        public string ImporterVat { get; set; }
 
+        public string BoxBarcode { get; set; }
 
     }
 

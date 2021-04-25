@@ -280,6 +280,37 @@
 //                }
 //                if (!string.IsNullOrWhiteSpace(_LogitudeCommDecFile.WarehouseId)) this._MyDeclarationPM.Consignments[0].StorageSiteCode = TranslateDeliverySite(_LogitudeCommDecFile.WarehouseId);
 
+            //this._LOGICUSTFILE = XmlGenericUtil<LOGICUSTFILE>.DeSerializeObject(xmlLOGICUSTFILE);
+            //if (_LOGICUSTFILE.LogitudeCustomsFile == null || _LOGICUSTFILE.LogitudeCustomsFile.Length != 1)
+            //{
+            //    MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
+            //    MyGenericResponseObj.Message = "customFile.LogitudeCustomsFile.Length !=1 !!!";
+            //}
+            //else
+            //{
+            //    this._AmitalCustomsFile = _LOGICUSTFILE.LogitudeCustomsFile[0];
+            //    if (_MyDeclarationPM.IsCourierDeclaration == true)
+            //    {
+            //        UpdateNoIdUnder150();
+            //        CalcIsAutonomy();
+            //        CalcProcedureCurrentCode();
+            //        CalcInternalTransitionSite();
+            //        if (this.IsAutonomy)
+            //        {
+            //            UpdateDeclarationPending("901");
+            //        }
+            //        if(currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.CrateNumber != _LogitudeCommDecFile.CrateNumber)
+            //        {
+            //            currentDeclarationCourierStatusPM.CrateNumber = _LogitudeCommDecFile.CrateNumber;
+            //            if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+            //        }
+            //        if (currentDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
+            //        {
+            //            DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+            //            declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+            //        }
+            //    }
+            //}
 
 //                if (this._LogitudeCommDecFile.PACKAGES != null && this._LogitudeCommDecFile.PACKAGES.Count() > 0)
 //                {

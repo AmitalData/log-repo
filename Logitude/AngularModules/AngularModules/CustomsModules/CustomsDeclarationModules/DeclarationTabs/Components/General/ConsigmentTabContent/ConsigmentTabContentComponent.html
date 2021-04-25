@@ -434,18 +434,58 @@
                                                 <td></td>
                                                 <!--removed due task 45549-->
                                                 <!--<td>
-                                                    <div *ngIf="(ShowExcludeConsignmentBoolean && IsCourierDeclaration)">
-                                                        <LogLabel [ObjectFieldName]="'DeliveryPlaceName'" [ObjectTableName]="'Customs.Consignment'"
-                                                                  [DataContext]="DataContext"></LogLabel>
-                                                    </div>
+            <div *ngIf="(ShowExcludeConsignmentBoolean && IsCourierDeclaration)">
+                <LogLabel [ObjectFieldName]="'DeliveryPlaceName'" [ObjectTableName]="'Customs.Consignment'"
+                          [DataContext]="DataContext"></LogLabel>
+            </div>
+        </td>
+        <td rowspan="2" style="vertical-align: top;padding-top: 2px;">
+            <div *ngIf="(ShowExcludeConsignmentBoolean && IsCourierDeclaration)">
+                <LogTextBox [ObjectFieldName]="'DeliveryPlaceName'" [ObjectTableName]="'Customs.Consignment'"
+                            [HideColumns]="true"
+                            [DataContext]="DataContext"></LogTextBox>
+            </div>
+        </td>-->
+                                                <td><div></div></td>
+
+                                            </tr>
+                                           
+                                            <!-- CrateNumber -->
+                                            <tr *ngIf="IsCourierDeclaration">
+                                                <!--
+    <td style="width: 135px;">
+        <LogLabel [ObjectFieldName]="'CrateNumber'" [ObjectTableName]="'Customs.DeclarationCourierStatus'"
+                  [DataContext]="DataContext"></LogLabel>
+    </td>
+        -->
+                                                <LogLabel [NoObjectField]="true"
+                                                          [ObjectFieldName]="'CrateNumber'"
+                                                          [DataContext]="DataContext"
+                                                          [Text]="'מספר ארגז'">
+
+                                                </LogLabel>
+
+                                                <td style="width: 125px; ">
+
+                                                    <LogTextBox [ObjectFieldName]="'CrateNumber'" [ObjectTableName]="'Customs.DeclarationCourierStatus'"
+                                                                [HideColumns]="true"
+                                                                [InputType]="'text'"
+                                                                [DataContext]="DataContext"
+                                                                [Text]="CrateNumber">
+
+                                                    </LogTextBox>
+
+
                                                 </td>
-                                                <td rowspan="2" style="vertical-align: top;padding-top: 2px;">
-                                                    <div *ngIf="(ShowExcludeConsignmentBoolean && IsCourierDeclaration)">
-                                                        <LogTextBox [ObjectFieldName]="'DeliveryPlaceName'" [ObjectTableName]="'Customs.Consignment'"
-                                                                    [HideColumns]="true"
-                                                                    [DataContext]="DataContext"></LogTextBox>
-                                                    </div>
-                                                </td>-->
+
+                                                <!--
+    <td class="HeaderScreenValue">
+        <div class="TextTrimming" style="width: 100%; position: relative;">
+            {{_DeclarationCourierStatus.CrateNumber}}
+        </div>
+    </td>
+        -->
+                                                <td></td>
                                                 <td><div></div></td>
 
                                             </tr>
@@ -459,21 +499,21 @@
                                                 <!--removed due task 45549-->
                                                 <!-- WeightValue -->
                                                 <!--<td>
-                                                    <LogLabel [ObjectFieldName]="'WeightValue'"
-                                                              [DataContext]="DataContext"
-                                                              [TextCode]="'Customs.General.O.WeightValue'">
-                                                    </LogLabel>
-                                                </td>
-                                                <td>
-                                                    <LogLov [ObjectFieldName]="'WeightValue'"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [HideColumns]="true"
-                                                            [LookUpTableName]="'Customs.FreightPaymentMethod'"
-                                                            [SelectedValue]="WeightValue"
-                                                            [QueryFilterItems]="WeightValueFilterItems">
-                                                    </LogLov>
-                                                </td>-->
+            <LogLabel [ObjectFieldName]="'WeightValue'"
+                      [DataContext]="DataContext"
+                      [TextCode]="'Customs.General.O.WeightValue'">
+            </LogLabel>
+        </td>
+        <td>
+            <LogLov [ObjectFieldName]="'WeightValue'"
+                    [ObjectTableName]="ObjectTableName"
+                    [DataContext]="DataContext"
+                    [HideColumns]="true"
+                    [LookUpTableName]="'Customs.FreightPaymentMethod'"
+                    [SelectedValue]="WeightValue"
+                    [QueryFilterItems]="WeightValueFilterItems">
+            </LogLov>
+        </td>-->
                                                 <td><div></div></td>
                                             </tr>
 
