@@ -50,6 +50,6 @@
   <Relation
     ForeignKeyColumn="CourierPendingReasonCode"
     ReferencedTable="CourierPendingReasons"
-    ReferencedColumn="Id"
+    ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
 </Table>
