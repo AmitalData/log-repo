@@ -168,6 +168,7 @@
     <Compile Include="EntityKeys\GatepassReturnCodeKeys.cs" />
     <Compile Include="EntityKeys\HazardousSubstanceKeys.cs" />
     <Compile Include="EntityKeys\LoadingSiteTypeKeys.cs" />
+    <Compile Include="EntityKeys\LogisticsReferenceTypeKeys.cs" />
     <Compile Include="EntityKeys\MamanSpecialActionKeys.cs" />
     <Compile Include="EntityKeys\MamanSpecialActionStatusKeys.cs" />
     <Compile Include="EntityKeys\MamanStatusKeys.cs" />
@@ -180,6 +181,8 @@
     <Compile Include="EntityKeys\PointerLevelKeys.cs" />
     <Compile Include="EntityKeys\ReferantExceptionKeys.cs" />
     <Compile Include="EntityKeys\ReferantTeamKeys.cs" />
+    <Compile Include="EntityKeys\ReferenceInputTypeKeys.cs" />
+    <Compile Include="EntityKeys\ReferenceStatusKeys.cs" />
     <Compile Include="EntityKeys\RefundCustomerActivityTypeKeys.cs" />
     <Compile Include="EntityKeys\ReleaseMessageTypeKeys.cs" />
     <Compile Include="EntityKeys\RequestTypeKeys.cs" />
@@ -332,6 +335,7 @@
     <Compile Include="EntityListQueryServices\Generated\GatepassReturnCodeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\HazardousSubstanceListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\LoadingSiteTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\LogisticsReferenceTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\MamanSpecialActionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\MamanSpecialActionStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\MamanStatusListQueryService.Generated.cs" />
@@ -344,6 +348,8 @@
     <Compile Include="EntityListQueryServices\Generated\PointerLevelListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ReferantExceptionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ReferantTeamListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ReferenceInputTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ReferenceStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RefundCustomerActivityTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ReleaseMessageTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RequestTypeListQueryService.Generated.cs" />
@@ -366,6 +372,7 @@
     <Compile Include="EntityListQueryServices\Generated\UpdateCodeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\HazardousSubstanceListQueryService.cs" />
     <Compile Include="EntityListQueryServices\LoadingSiteTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\LogisticsReferenceTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\MamanSpecialActionListQueryService.cs" />
     <Compile Include="EntityListQueryServices\MamanSpecialActionStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\MamanStatusListQueryService.cs" />
@@ -378,6 +385,8 @@
     <Compile Include="EntityListQueryServices\PointerLevelListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ReferantExceptionListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ReferantTeamListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ReferenceInputTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ReferenceStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RefundCustomerActivityTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ReleaseMessageTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RequestTypeListQueryService.cs" />
@@ -465,6 +474,7 @@
     <Compile Include="EntityLists\Generated\GatepassReturnCodeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\HazardousSubstanceList.Generated.cs" />
     <Compile Include="EntityLists\Generated\LoadingSiteTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\LogisticsReferenceTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\MamanSpecialActionList.Generated.cs" />
     <Compile Include="EntityLists\Generated\MamanSpecialActionStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\MamanStatusList.Generated.cs" />
@@ -478,6 +488,8 @@
     <Compile Include="EntityLists\Generated\ProceduralFaultList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ReferantExceptionList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ReferantTeamList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ReferenceInputTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ReferenceStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\RefundCustomerActivityTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ReleaseMessageTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\RequestTypeList.Generated.cs" />
@@ -565,6 +577,7 @@
     <Compile Include="EntityMapping\GatepassReturnCodeMap.cs" />
     <Compile Include="EntityMapping\HazardousSubstanceMap.cs" />
     <Compile Include="EntityMapping\LoadingSiteTypeMap.cs" />
+    <Compile Include="EntityMapping\LogisticsReferenceTypeMap.cs" />
     <Compile Include="EntityMapping\MamanSpecialActionMap.cs" />
     <Compile Include="EntityMapping\MamanSpecialActionStatusMap.cs" />
     <Compile Include="EntityMapping\MamanStatusMap.cs" />
@@ -577,6 +590,8 @@
     <Compile Include="EntityMapping\PointerLevelMap.cs" />
     <Compile Include="EntityMapping\ReferantExceptionMap.cs" />
     <Compile Include="EntityMapping\ReferantTeamMap.cs" />
+    <Compile Include="EntityMapping\ReferenceInputTypeMap.cs" />
+    <Compile Include="EntityMapping\ReferenceStatusMap.cs" />
     <Compile Include="EntityMapping\RefundCustomerActivityTypeMap.cs" />
     <Compile Include="EntityMapping\ReleaseMessageTypeMap.cs" />
     <Compile Include="EntityMapping\RequestTypeMap.cs" />
@@ -664,6 +679,7 @@
     <Compile Include="EntityPOCOs\GatepassReturnCode.cs" />
     <Compile Include="EntityPOCOs\HazardousSubstance.cs" />
     <Compile Include="EntityPOCOs\LoadingSiteType.cs" />
+    <Compile Include="EntityPOCOs\LogisticsReferenceType.cs" />
     <Compile Include="EntityPOCOs\MamanSpecialAction.cs" />
     <Compile Include="EntityPOCOs\MamanSpecialActionStatus.cs" />
     <Compile Include="EntityPOCOs\MamanStatus.cs" />
@@ -677,6 +693,8 @@
     <Compile Include="EntityPOCOs\ProceduralFault.cs" />
     <Compile Include="EntityPOCOs\ReferantException.cs" />
     <Compile Include="EntityPOCOs\ReferantTeam.cs" />
+    <Compile Include="EntityPOCOs\ReferenceInputType.cs" />
+    <Compile Include="EntityPOCOs\ReferenceStatus.cs" />
     <Compile Include="EntityPOCOs\RefundCustomerActivityType.cs" />
     <Compile Include="EntityPOCOs\ReleaseMessageType.cs" />
     <Compile Include="EntityPOCOs\RequestType.cs" />
@@ -829,6 +847,7 @@
     <Compile Include="Repsitories\Generated\GatepassReturnCodeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\HazardousSubstanceRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\LoadingSiteTypeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\LogisticsReferenceTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\MamanSpecialActionRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\MamanSpecialActionStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\MamanStatusRepository.Generated.cs" />
@@ -841,6 +860,8 @@
     <Compile Include="Repsitories\Generated\PointerLevelRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ReferantExceptionRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ReferantTeamRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\ReferenceInputTypeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\ReferenceStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\RefundCustomerActivityTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ReleaseMessageTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\RequestTypeRepository.Generated.cs" />
@@ -863,6 +884,7 @@
     <Compile Include="Repsitories\Generated\UpdateCodeRepository.Generated.cs" />
     <Compile Include="Repsitories\HazardousSubstanceRepository.cs" />
     <Compile Include="Repsitories\LoadingSiteTypeRepository.cs" />
+    <Compile Include="Repsitories\LogisticsReferenceTypeRepository.cs" />
     <Compile Include="Repsitories\MamanSpecialActionRepository.cs" />
     <Compile Include="Repsitories\MamanSpecialActionStatusRepository.cs" />
     <Compile Include="Repsitories\MamanStatusRepository.cs" />
@@ -875,6 +897,8 @@
     <Compile Include="Repsitories\PointerLevelRepository.cs" />
     <Compile Include="Repsitories\ReferantExceptionRepository.cs" />
     <Compile Include="Repsitories\ReferantTeamRepository.cs" />
+    <Compile Include="Repsitories\ReferenceInputTypeRepository.cs" />
+    <Compile Include="Repsitories\ReferenceStatusRepository.cs" />
     <Compile Include="Repsitories\RefundCustomerActivityTypeRepository.cs" />
     <Compile Include="Repsitories\ReleaseMessageTypeRepository.cs" />
     <Compile Include="Repsitories\RequestTypeRepository.cs" />

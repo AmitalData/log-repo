@@ -82,10 +82,13 @@
     <Compile Include="EntityPMs\Generated\ExporterRoleTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\FclLclCodePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\LoadingSiteTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\LogisticsReferenceTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\NbcDeclarationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\PartyRelationshipTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ReferantExceptionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ReferantTeamPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ReferenceInputTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ReferenceStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ReleaseMessageTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SuppInvoiceItemsAbachStatementPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SupplierInvoiceItemsPricePM.Generated.cs" />
