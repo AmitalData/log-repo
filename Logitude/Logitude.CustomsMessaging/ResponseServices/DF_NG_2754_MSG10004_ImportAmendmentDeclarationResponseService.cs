@@ -965,19 +965,24 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     {
                                         case "3":
                                             {
-                                                //if(!isFromImporter)
-                                                //{
-                                                //    supplierInvoiceItemPM.ItemPrice = GetValueAmountType(goodsItemAmount.CustomsValueAmount);
-                                                //    supplierInvoiceItemPM.ItemPriceCurrencyCode = goodsItemAmount.CustomsValueAmount.currencyID.ToString();
-
-                                                //}
-                                                break;
+                                                if (!isFromImporter)
+                                                {
+                                                    if (item.Invoice != null && item.Invoice.DMExtensions != null && item.Invoice.DMExtensions.InvoiceAmount != null)
+                                                    {
+                                                        if (goodsItemAmount.CustomsValueAmount.currencyID.ToString() == item.Invoice.DMExtensions.InvoiceAmount.currencyID.ToString())
+                                                        {
+                                                            supplierInvoiceItemPM.ItemPrice = GetValueAmountType(goodsItemAmount.CustomsValueAmount);
+                                                            supplierInvoiceItemPM.ItemPriceCurrencyCode = goodsItemAmount.CustomsValueAmount.currencyID.ToString();
+                                                        }
+                                                    }
+                                                }
+                                                    break;
 
                                             }
                                         case "1":
                                             {
-                                               // if (isFromImporter)
-                                               // {
+                                               if (isFromImporter)
+                                                {
                                                 if (item.Invoice!= null && item.Invoice.DMExtensions != null && item.Invoice.DMExtensions.InvoiceAmount!= null )
                                                 {
                                                 if (goodsItemAmount.CustomsValueAmount.currencyID.ToString()== item.Invoice.DMExtensions.InvoiceAmount.currencyID.ToString())
@@ -986,8 +991,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                     supplierInvoiceItemPM.ItemPriceCurrencyCode = goodsItemAmount.CustomsValueAmount.currencyID.ToString();
                                                     }
                                                 }
-
-                                               // }
+  }
                                                 break;
 
                                             }
