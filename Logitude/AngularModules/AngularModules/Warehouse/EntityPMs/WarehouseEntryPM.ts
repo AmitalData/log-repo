@@ -414,6 +414,11 @@ export class WarehouseEntryPM {
     public set ToCountryId(newValue: string) { if (this.toCountryId != newValue) { this.toCountryId = newValue; this.MarkAsDirty("ToCountryId"); } }
        
 	 
+    private masterShipmentNumber: string;
+    public get MasterShipmentNumber() { return this.masterShipmentNumber; }
+    public set MasterShipmentNumber(newValue: string) { if (this.masterShipmentNumber != newValue) { this.masterShipmentNumber = newValue; this.MarkAsDirty("MasterShipmentNumber"); } }
+       
+	 
 
     public OldEntityPM: WarehouseEntryPM;
 		

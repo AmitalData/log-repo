@@ -344,6 +344,11 @@ export class WarehouseReleasePM {
     public set ChildEntityReference(newValue: string) { if (this.childEntityReference != newValue) { this.childEntityReference = newValue; this.MarkAsDirty("ChildEntityReference"); } }
        
 	 
+    private masterShipmentNumber: string;
+    public get MasterShipmentNumber() { return this.masterShipmentNumber; }
+    public set MasterShipmentNumber(newValue: string) { if (this.masterShipmentNumber != newValue) { this.masterShipmentNumber = newValue; this.MarkAsDirty("MasterShipmentNumber"); } }
+       
+	 
 
     public OldEntityPM: WarehouseReleasePM;
 		
