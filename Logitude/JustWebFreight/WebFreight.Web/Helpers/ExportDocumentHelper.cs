@@ -375,14 +375,14 @@ namespace WebFreight.Web.Helpers
 
         private static string ResolveDocumentFileNameFromDataFields(DocumentFileNameParameter documentFileNameParameter)
         {
-            string documentFileName = ResolveDocumentFileNameFromMainObjectTable(documentFileNameParameter);
-            documentFileName = ResolveDocumentFileNameFromDocumentTypeObjectTable(documentFileNameParameter, documentFileName);
-            documentFileName = ResolveDocumentFileNameFromDocumentFilingObjectTable(documentFileNameParameter, documentFileName);
+            string calculatedDocumentFileName = ResolveMainObjectTableFields(documentFileNameParameter);
+            calculatedDocumentFileName = ResolveDocumentTypeFields(documentFileNameParameter, calculatedDocumentFileName);
+            calculatedDocumentFileName = ResolveDocumentFilingFields(documentFileNameParameter, calculatedDocumentFileName);
 
-            return documentFileName;
+            return calculatedDocumentFileName;
         }
 
-        private static string ResolveDocumentFileNameFromDocumentFilingObjectTable(DocumentFileNameParameter documentFileNameParameter, string documentFileName)
+        private static string ResolveDocumentFilingFields(DocumentFileNameParameter documentFileNameParameter, string documentFileName)
         {
             string calculatedDocumentFileName = documentFileName;
             if (calculatedDocumentFileName.Contains("[DocumentsFiling"))
@@ -393,7 +393,7 @@ namespace WebFreight.Web.Helpers
             return calculatedDocumentFileName;
         }
 
-        private static string ResolveDocumentFileNameFromDocumentTypeObjectTable(DocumentFileNameParameter documentFileNameParameter, string documentFileName)
+        private static string ResolveDocumentTypeFields(DocumentFileNameParameter documentFileNameParameter, string documentFileName)
         {
             string calculatedDocumentFileName = documentFileName;
 
@@ -442,7 +442,7 @@ namespace WebFreight.Web.Helpers
             return calculatedDocumentFileName;
         }
 
-        private static string ResolveDocumentFileNameFromMainObjectTable(DocumentFileNameParameter documentFileNameParameter)
+        private static string ResolveMainObjectTableFields(DocumentFileNameParameter documentFileNameParameter)
         {
             HtmlEditorResolveArgs htmlResolveArgs = new HtmlEditorResolveArgs();
             HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
