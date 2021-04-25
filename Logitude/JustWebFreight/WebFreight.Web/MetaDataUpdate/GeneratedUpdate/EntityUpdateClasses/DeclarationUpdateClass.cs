@@ -79,7 +79,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "34f0bd15ec0603fa6a0680216cbbcc1b";
+
+		public const string HashString = "c1342589c7b1785940877c20f10f39bb";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -12910,7 +12911,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CancelRequestReasonCode",
 					  						DefaultText =  "Cancel Request Reason Code",
-					  						FullLocalDefaultText =  "קוד סיבת ביטול",
+					  						FullLocalDefaultText =  "סיבת ביטול",
 					  						ListFieldLable =  "CancelRequestReasonCodeListLable",
 					  						ListLableDefaultText =  "Cancel Request Reason Code",
 					  						ListLocalDefaultText =  "קוד סיבת ביטול",
@@ -13095,7 +13096,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomCancelRequestRemarks",
 					  						DefaultText =  "Custom Cancel Request Remarks",
-					  						FullLocalDefaultText =  "הערות מכס לביטול",
+					  						FullLocalDefaultText =  "הערות מכס",
 					  						ListFieldLable =  "CustomCancelRequestRemarksListLable",
 					  						ListLableDefaultText =  "Custom Cancel Request Remarks",
 					  						ListLocalDefaultText =  "הערות מכס לביטול",
@@ -13157,7 +13158,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CancelRequestStatusCode",
 					  						DefaultText =  "Cancel Request Status Code",
-					  						FullLocalDefaultText =  "סטטוס ביטול הבקשה",
+					  						FullLocalDefaultText =  "סטטוס הבקשה",
 					  						ListFieldLable =  "CancelRequestStatusCodeListLable",
 					  						ListLableDefaultText =  "Cancel Request Status Code",
 					  						ListLocalDefaultText =  "סטטוס ביטול הבקשה",

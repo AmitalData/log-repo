@@ -9,6 +9,7 @@
 //using Logitude.Customs.BL.Messaging.Customs;
 //using Logitude.Customs.BL.Messaging.U2L.ImportDeclaration;
 //using Logitude.Customs.Data;
+//using Logitude.Customs.Data.EntityKeys;
 //using Logitude.Customs.Data.EntityPOCOs;
 //using Logitude.Customs.Data.Repsitories;
 //using Logitude.Customs.Def.EntityPMs;
@@ -29,7 +30,6 @@
 //using Unifreight.BL.EntityPMs.UGenerated;
 //using Unifreight.BL.EntityQueryServices;
 //using Unifreight.Data.AmitalModel;
-//using Logitude.CustomsMessaging;
 
 //namespace Logitude.Customs.BL.Messaging.U2L.CommDec
 //{
@@ -50,9 +50,6 @@
 //        public string UpsertActionConst = "Logitude.Customs.BL.Messaging.U2L.CommDec.CommDecService.Upsert()";
 //        private Logitude.AmitalMessaging.Customs.CustomFile.CommDecFile.INVOICE _INVOICE;
 //        private DeclarationPM _MyDeclarationPM;
-
-      
-
 //        //private DeclarationPM _MyEntryDeclarationPM;
 //        private Stopwatch _Stopwatch;
 //        private bool _IsBuildItemsUnit = false;
@@ -69,36 +66,8 @@
 //        {
 
 //        }
+
 //        public override void ProccessGenericRequest(
-//              string xmlLOGICOMMDEC,
-//              ref string MoreParams,
-//              out string MessageOut)
-
-//        {
-//            MessageOut = "";
-//            int tenant = 0;
-//            tenant = ResolvedTenant();
-
-//            string defValue = GDFDATAQueryService.GetDefault(tenant, "ISRAEL", "CGG_OPN_DEC_MET", "NON", "NON");
-
-//            if(!string.IsNullOrEmpty(defValue) && defValue=="B")
-//            {
-//                 var messagingService = new ;
-
-//                messagingService.CreateCRS(tenant, null, null);
- 
-             
-//            }
-//            else
-//            {
-//                ProccessGenericRequestReal(xmlLOGICOMMDEC,ref MoreParams,out MessageOut);
-//            }
-
-
-//        }
-
-
-//        public void ProccessGenericRequestReal(
 //              string xmlLOGICOMMDEC,
 //              ref string MoreParams,
 //              out string MessageOut)
@@ -179,7 +148,7 @@
 //                string existId = myQueryService.GetIdByCustomFileNo(_LogitudeCommDecFile.CustomFileNo, ResolvedTenant());
 //                _LogitudeCommDecFile.Id = existId;
 //            }
-
+//            AppendLogLine("After Declaration Upsert " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
 //            /////////////////////////////////////////////////////////////
 //            _context = CustomContext.GetContext(ResolvedTenant());
 //            MyGenericResponseObj.Stage = "GetSingle";
@@ -280,6 +249,23 @@
 //                }
 //                if (!string.IsNullOrWhiteSpace(_LogitudeCommDecFile.WarehouseId)) this._MyDeclarationPM.Consignments[0].StorageSiteCode = TranslateDeliverySite(_LogitudeCommDecFile.WarehouseId);
 
+//                if (String.IsNullOrWhiteSpace(this._MyDeclarationPM.Consignments[0].UnloadPortCode))
+//                {
+//                    if (this._CourierMasterPM == null)
+//                    {
+//                        var myCourierMasterQueryService = new CourierMasterQueryService(_context);
+//                        _CourierMasterPM = myCourierMasterQueryService.GetByDeclarationId(this._MyDeclarationPM.Id, ResolvedTenant());
+//                    }
+//                    if (_CourierMasterPM != null)
+//                    {
+//                        CustomsAirlineQueryService customsAirlineQueryService = new CustomsAirlineQueryService(_CourierMasterPM.Tenant);
+//                        CustomsAirlinePM customsAirline = customsAirlineQueryService.GetSingle(_CourierMasterPM.AirlineId, false, true);
+//                        if (customsAirline != null)
+//                        {
+//                           if (!String.IsNullOrWhiteSpace(customsAirline.UnloadPortCode)) this._MyDeclarationPM.Consignments[0].UnloadPortCode = customsAirline.UnloadPortCode;
+//                        }
+//                    }
+//                }
 
 //                if (this._LogitudeCommDecFile.PACKAGES != null && this._LogitudeCommDecFile.PACKAGES.Count() > 0)
 //                {
@@ -420,36 +406,6 @@
 //                    }
 //                }
 //            }
-//            if(!string.IsNullOrWhiteSpace(_LogitudeCommDecFile.SiteCode) && this._MyDeclarationPM.Consignments != null && this._MyDeclarationPM.Consignments.Count() > 0 && (this._MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions == null || (this._MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions != null && this._MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions.Count() < 1)))
-//            {
-//                var internalBorderSiteType = new InternalBorderSiteTypeRepository(ResolvedTenant());
-//                var myinternalBorderSiteType = internalBorderSiteType.GetSingle(_LogitudeCommDecFile.SiteCode);
-//                string PackageTypeCode = "";
-//                if (myinternalBorderSiteType == null)
-//                {
-//                    PackageTypeCode = GetTranslationL2P("IIGC", "CTBBONDED", _LogitudeCommDecFile.SiteCode);
-//                }
-//                else
-//                {
-//                    PackageTypeCode = myinternalBorderSiteType.Code.ToString();
-//                }
-//                if (!string.IsNullOrWhiteSpace(PackageTypeCode))
-//                {
-
-//                    ConsignmentInternalTransitionPM transitionPM = new ConsignmentInternalTransitionPM()
-//                    {
-//                        ConsignmentNumber = this._MyDeclarationPM.Consignments[0].ConsignmentNumber,
-//                        DeclarationId = this._MyDeclarationPM.Consignments[0].DeclarationId,
-//                        LineNumber = 1,
-//                        Tenant = this._MyDeclarationPM.Consignments[0].Tenant,
-//                        SiteCode = PackageTypeCode,
-
-//                        ChangeSetOp = ChangeSetOperation.Insert,
-
-//                    };
-//                    this._MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions.Add(transitionPM);
-//                }
-//            }
 
 //            this._LOGICUSTFILE = XmlGenericUtil<LOGICUSTFILE>.DeSerializeObject(xmlLOGICUSTFILE);
 //            if (_LOGICUSTFILE.LogitudeCustomsFile == null || _LOGICUSTFILE.LogitudeCustomsFile.Length != 1)
@@ -462,15 +418,28 @@
 //                this._AmitalCustomsFile = _LOGICUSTFILE.LogitudeCustomsFile[0];
 //                if (_MyDeclarationPM.IsCourierDeclaration == true)
 //                {
+//                    UpdateNoIdUnder150();
 //                    CalcIsAutonomy();
 //                    CalcProcedureCurrentCode();
+//                    CalcInternalTransitionSite();
 //                    if (this.IsAutonomy)
 //                    {
 //                        UpdateDeclarationPending("901");
 //                    }
-//                    UpdateNoIdUnder150();
+//                    if(currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.CrateNumber != _LogitudeCommDecFile.CrateNumber)
+//                    {
+//                        currentDeclarationCourierStatusPM.CrateNumber = _LogitudeCommDecFile.CrateNumber;
+//                        if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+//                    }
+//                    if (currentDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
+//                    {
+//                        DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+//                        declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+//                    }
 //                }
 //            }
+
+//            //UpdateTrucker();
 
 //            _MyDeclarationPM.CurrentContextTag = UpsertActionConst; // moran 28.7.16 - Task 22249
 
@@ -527,6 +496,101 @@
 //            MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
 //        }
 
+//        private void CalcInternalTransitionSite()
+//        {
+//            if (new[] { "4000005", "4000512", "4000505", "4000012" }.Contains(this._MyDeclarationPM.ProcedureCurrentCode))
+//            {
+//                if (!string.IsNullOrWhiteSpace(_LogitudeCommDecFile.SiteCode) && this._MyDeclarationPM.Consignments != null && this._MyDeclarationPM.Consignments.Count() > 0 && (this._MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions == null || (this._MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions != null && this._MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions.Count() < 1)))
+//                {
+//                    var internalBorderSiteType = new InternalBorderSiteTypeRepository(ResolvedTenant());
+//                    var myinternalBorderSiteType = internalBorderSiteType.GetSingle(_LogitudeCommDecFile.SiteCode);
+//                    string PackageTypeCode = "";
+//                    if (myinternalBorderSiteType == null)
+//                    {
+//                        PackageTypeCode = GetTranslationL2P("IIGC", "CTBBONDED", _LogitudeCommDecFile.SiteCode);
+//                    }
+//                    else
+//                    {
+//                        PackageTypeCode = myinternalBorderSiteType.Code.ToString();
+//                    }
+//                    if (!string.IsNullOrWhiteSpace(PackageTypeCode))
+//                    {
+
+//                        ConsignmentInternalTransitionPM transitionPM = new ConsignmentInternalTransitionPM()
+//                        {
+//                            ConsignmentNumber = this._MyDeclarationPM.Consignments[0].ConsignmentNumber,
+//                            DeclarationId = this._MyDeclarationPM.Consignments[0].DeclarationId,
+//                            LineNumber = 1,
+//                            Tenant = this._MyDeclarationPM.Consignments[0].Tenant,
+//                            SiteCode = PackageTypeCode,
+
+//                            ChangeSetOp = ChangeSetOperation.Insert,
+
+//                        };
+//                        if (this._MyDeclarationPM.Consignments[0].ChangeSetOp != ChangeSetOperation.Insert)
+//                        {
+//                            this._MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
+//                        }
+//                        this._MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions.Add(transitionPM);
+//                    }
+//                }
+//            }
+//        }
+
+//        private void UpdateTrucker()
+//        {
+//            if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.TruckerId))
+//            {
+//                if (currentDeclarationCourierStatusPM == null)
+//                {
+//                    DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
+//                    currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
+//                }
+
+//                if (currentDeclarationCourierStatusPM != null)
+//                {
+//                    string truckerId = null;
+//                    CardRepository cardRep = new CardRepository(this._MyDeclarationPM.Tenant);
+//                    Card card = cardRep.GetSingleCard(_AmitalCustomsFile.TruckerId, this._MyDeclarationPM.Tenant);
+//                    if (card != null)
+//                    {
+//                        truckerId = _AmitalCustomsFile.TruckerId;
+//                    }
+//                    else
+//                    {
+//                        card = cardRep.GetSingleCardByCode(_AmitalCustomsFile.TruckerId, this._MyDeclarationPM.Tenant, true);
+//                        if (card != null)
+//                        {
+//                            truckerId = card.Id;
+//                        }
+//                    }
+
+//                    if (!String.IsNullOrWhiteSpace(truckerId) && truckerId != currentDeclarationCourierStatusPM.TruckerId)
+//                    {
+//                        DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+//                        currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+//                        currentDeclarationCourierStatusPM.TruckerId = truckerId;
+//                        AppendLogLine("try to update trucker " + truckerId + " to declarationCourierStatus for DeclarationPM.Id: " + _MyDeclarationPM.Id);
+//                        try
+//                        {
+//                            declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+//                        }
+//                        catch (DbEntityValidationException ex)
+//                        {
+//                            var FormatedException = ExceptionFormatUtil.GetFormated(ex);
+//                            AppendLogLine("ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
+//                            return;
+//                        }
+//                        catch (Exception e)
+//                        {
+//                            AppendLogLine("ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
+//                            return;
+//                        }
+//                    }
+//                }
+//            }
+//        }
+ 
 //        private void UpdateDeclarationPending(string declarationPendingCode)
 //        {
 //            if (currentDeclarationCourierStatusPM != null)
@@ -562,13 +626,50 @@
 //                    LogMessagingUtil.Instance.AppendLine("Set Courier Pending Reason Code To " + declarationPendingCode);
 //                    if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
 //                }
-//                if (currentDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
-//                {
-//                    DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
-//                    declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
-//                }
 //            }
 //        }
+//        //private void UpdateDeclarationPending(string declarationPendingCode)
+//        //{
+//        //    if (currentDeclarationCourierStatusPM != null)
+//        //    {
+//        //        CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(_context);
+//        //        CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingleCourierPendingReasonByCode(declarationPendingCode, _MyDeclarationPM.Tenant);
+//        //        if (courierPendingReasonPM == null)
+//        //        {
+//        //            LogMessagingUtil.Instance.AppendLine("לא קיים קוד Pending = " + declarationPendingCode + " בטבלת סיבות Pending");
+//        //            return;
+//        //        }
+//        //        LogMessagingUtil.Instance.AppendLine("Pending - " + declarationPendingCode);
+//        //        DeclarationPendingPM _declarationPendingPM = null;
+//        //        if (currentDeclarationCourierStatusPM.DeclarationPendings != null && currentDeclarationCourierStatusPM.DeclarationPendings.Count() > 0)
+//        //        {
+//        //            _declarationPendingPM = currentDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.DeclarationID == currentDeclarationCourierStatusPM.DeclarationId && r.CourierPendingReasonCode == courierPendingReasonPM.Id).FirstOrDefault();
+//        //        }
+//        //        if (_declarationPendingPM == null)
+//        //        {
+//        //            _declarationPendingPM = new DeclarationPendingPM();
+//        //            _declarationPendingPM.CourierPendingReasonCode = courierPendingReasonPM.Id;
+//        //            _declarationPendingPM.Status = "A";
+//        //            _declarationPendingPM.ChangeSetOp = ChangeSetOperation.Insert;
+//        //            currentDeclarationCourierStatusPM.DeclarationPendings.Add(_declarationPendingPM);
+//        //        }
+//        //        else if (_declarationPendingPM.Status != "A")
+//        //        {
+//        //            _declarationPendingPM.ChangeSetOp = ChangeSetOperation.Update;
+//        //            _declarationPendingPM.Status = "A";
+//        //        }
+//        //        if (_declarationPendingPM.ChangeSetOp != ChangeSetOperation.None)
+//        //        {
+//        //            LogMessagingUtil.Instance.AppendLine("Set Courier Pending Reason Code To " + declarationPendingCode);
+//        //            if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+//        //        }
+//        //        if (currentDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
+//        //        {
+//        //            DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+//        //            declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+//        //        }
+//        //    }
+//        //}
 
 //        private void CalcProcedureCurrentCode()
 //        {
@@ -632,25 +733,29 @@
 
 //        private void CalcIsAutonomy()
 //        {
-//            if (String.IsNullOrWhiteSpace(this._LogitudeCommDecFile.IsAutonomy) && !String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode) && this._MyDeclarationPM.ImporterCode.Substring(0, 1) == "8")
+//            /*if (String.IsNullOrWhiteSpace(this._LogitudeCommDecFile.IsAutonomy) && !String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode) && this._MyDeclarationPM.ImporterCode.Substring(0, 1) == "8")
 //            {
 //                this.IsAutonomy = true;
 //                return;
-//            }
-
-//            CustomsAutonomyKeywordQueryService customsAutonomyKeywordQueryService = new CustomsAutonomyKeywordQueryService(_context);
-//            var casualImportelTel = _AmitalCustomsFile.CasualImportelTel;
-//            if (!String.IsNullOrWhiteSpace(casualImportelTel)) casualImportelTel = _AmitalCustomsFile.CasualImportelTel.TrimStart(new Char[] { '0' });
-//            if (customsAutonomyKeywordQueryService.CheckIfsAutonomy(_AmitalCustomsFile.CasualImporterCity, casualImportelTel, ResolvedTenant()))
-//            {
-//                this.IsAutonomy = true;
-//                return;
-//            }
+//            }*/
 
 //            if (!String.IsNullOrWhiteSpace(this._LogitudeCommDecFile.IsAutonomy) && this._LogitudeCommDecFile.IsAutonomy.ToLower().Substring(0, 1) == "y")
 //            {
 //                this.IsAutonomy = true;
+//                return;
 //            }
+//            var palestinianCode = !String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode) ? this._MyDeclarationPM.ImporterCode : !String.IsNullOrWhiteSpace(this._MyDeclarationPM.PalestinianCode) ? this._MyDeclarationPM.PalestinianCode : null;
+//            CustomsAutonomyKeywordQueryService customsAutonomyKeywordQueryService = new CustomsAutonomyKeywordQueryService(_context);
+//            var casualImportelTel = _AmitalCustomsFile.CasualImportelTel;
+//            if (!String.IsNullOrWhiteSpace(casualImportelTel)) casualImportelTel = string.Concat(casualImportelTel.Where(c => !char.IsWhiteSpace(c)));
+//            if (!String.IsNullOrWhiteSpace(casualImportelTel)) casualImportelTel = _AmitalCustomsFile.CasualImportelTel.TrimStart(new Char[] { '0' });
+//            if (customsAutonomyKeywordQueryService.CheckIfsAutonomy(_AmitalCustomsFile.CasualImporterCity, casualImportelTel, palestinianCode, ResolvedTenant()))
+//            {
+//                this.IsAutonomy = true;
+//                return;
+//            }
+
+            
 //        }
 
 //        private void UpdateNoIdUnder150()
@@ -667,7 +772,7 @@
 //                        string defValue = GetDefault("ISRAEL", "CGO_NO_ID_150", "NON", myCard.Code, ResolvedTenant());
 //                        if (defValue == "Y")
 //                        {
-//                            if(this._MyDeclarationPM.SupplierInvoices.FirstOrDefault() != null && (this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().ChangeSetOp == ChangeSetOperation.Insert || (this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().ChangeSetOp != ChangeSetOperation.Insert && this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().InvoiceAmount.GetValueOrDefault() != this._SupplierInvoiceAmount)))
+//                            if (this._MyDeclarationPM.SupplierInvoices.FirstOrDefault() != null && (this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().ChangeSetOp == ChangeSetOperation.Insert || (this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().ChangeSetOp != ChangeSetOperation.Insert && this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().InvoiceAmount.GetValueOrDefault() != this._SupplierInvoiceAmount)))
 //                            {
 //                                ICustomContext dbContext = CustomContext.GetContext(ResolvedTenant());
 //                                DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), ResolvedTenant());
@@ -679,13 +784,46 @@
 //                                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
 //                                currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
 //                            }
-//                            if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.TotalInvoiceAmountInUSD != null && currentDeclarationCourierStatusPM.TotalInvoiceAmountInUSD < 150)
+//                            if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.TotalInvoiceAmountInUSD != null && currentDeclarationCourierStatusPM.TotalInvoiceAmountInUSD <= 150)
 //                            {
 //                                this._MyDeclarationPM.ImporterCode = null;
 //                                this._MyDeclarationPM.ImporterId = null;
 //                            }
 //                        }
 //                    }
+//                }
+//            }
+
+
+//            if (this._MyDeclarationPM.SupplierInvoices.FirstOrDefault() != null && (this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().ChangeSetOp == ChangeSetOperation.Insert || (this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().ChangeSetOp != ChangeSetOperation.Insert && this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().InvoiceAmount.GetValueOrDefault() != this._SupplierInvoiceAmount)))
+//            {
+//                ICustomContext dbContext = CustomContext.GetContext(ResolvedTenant());
+//                DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), ResolvedTenant());
+//                declarationUpdateService.Update(this._MyDeclarationPM, true);
+//                _context = CustomContext.GetContext(ResolvedTenant());
+//                var myQueryService = new DeclarationQueryService(_context);
+//                this._MyDeclarationPM = myQueryService.GetSingle(this._MyDeclarationPM.Id, true, false);
+//                this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+//                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
+//                currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
+//            }
+
+//            if (currentDeclarationCourierStatusPM == null)
+//            {
+//                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
+//                currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
+//            }
+
+//            if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.TotalInvoiceAmountInUSD != null && currentDeclarationCourierStatusPM.TotalInvoiceAmountInUSD <= 150)
+//            {
+//                if(!String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode))
+//                {
+//                    this._MyDeclarationPM.PalestinianCode = this._MyDeclarationPM.ImporterCode;
+//                    this._MyDeclarationPM.ImporterCode = null;
+//                }
+//                if (!String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterId))
+//                {
+//                    this._MyDeclarationPM.ImporterId = null;
 //                }
 //            }
 //        }
@@ -744,7 +882,7 @@
 //            {
 //                var myCourierDeclarationQueryService = new CourierDeclarationQueryService(_context);
 //                var myCourierDeclarationUpdateService = new CourierDeclarationUpdateService(_context, new Dictionary<string, IContext>(), ResolvedTenant());
-//                _CourierDeclarationPM = myCourierDeclarationQueryService.GetSingle(_MyDeclarationPM.Id, _CourierMasterPM.Id, false, true);
+//                _CourierDeclarationPM = myCourierDeclarationQueryService.GetSingle(_MyDeclarationPM.Id, _CourierMasterPM.Id, false, false);
 //                if (_CourierDeclarationPM == null)
 //                {
 //                    AppendLogLine("CourierDeclarationPM not found for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM.Id);
@@ -817,6 +955,8 @@
 //                    _CourierDeclarationPM.ChangeSetOp = ChangeSetOperation.Insert;
 //                    _CourierDeclarationPM.DeclarationId = _MyDeclarationPM.Id;
 //                    _CourierDeclarationPM.CourierMasterId = _CourierMasterPM.Id;
+
+            
 //                }
 //                else
 //                {
@@ -832,7 +972,31 @@
 //                    _CourierDeclarationPM.SequenceNumeric = sequenceNumericMax + 1;
 //                }
 //                _CourierDeclarationPM.Tenant = ResolvedTenant();
-                
+
+//                _context = CustomContext.GetContext(ResolvedTenant());
+//                CourierMasterRepository courierMasterRepository = new CourierMasterRepository(_context);
+//                if (courierMasterRepository != null)
+//                {
+//                    CourierMaster courierMaster = courierMasterRepository.GetSingle(new CourierMasterKeys() { Id = _CourierMasterPM.Id });
+//                    if (courierMaster != null)
+//                    {
+//                        DeclarationCourierStatusRepository rep = new DeclarationCourierStatusRepository(_context);
+//                        DeclarationCourierStatus decCourier = rep.GetDeclarationsById(_CourierDeclarationPM.DeclarationId, _CourierDeclarationPM.Tenant);
+//                        if (decCourier != null && !decCourier.IsClosedForFollowUp && _CourierDeclarationPM.ChangeSetOp == ChangeSetOperation.Insert)
+//                        {
+//                            DateTime stopLogAt = new DateTime(2021, 06, 01);
+//                            string logData = "";
+//                            var loggedUser = AuthenticationUtil.ResolveUserIdentityName(_CourierDeclarationPM.Tenant);
+//                            logData = $"_CourierDeclarationPM.DeclarationId={_CourierDeclarationPM.DeclarationId}, ChangeSetOp={_CourierDeclarationPM.ChangeSetOp}, decCourier.IsClosedForFollowUp={decCourier.IsClosedForFollowUp},OpenDeclarations ={courierMaster.OpenDeclarations}before update1";
+//                            LogitudeSettings.HandleLogMe("OpenDeclarations " + logData, false, "time", stopLogAt);
+
+//                            courierMaster.OpenDeclarations += 1;
+//                            courierMasterRepository.Update(courierMaster);
+//                            courierMasterRepository.SubmitChanges();
+//                        }
+//                    }
+//                }
+
 //                AppendLogLine("try to update CourierDeclaration for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM.Id);
 //                try
 //                {
