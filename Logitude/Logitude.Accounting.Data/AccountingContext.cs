@@ -142,6 +142,8 @@ namespace Logitude.Accounting.Data
 	
             modelBuilder.Configurations.Add(new GLAccountCurrencyMap());
 	
+            modelBuilder.Configurations.Add(new GLAccountFollowUpDataMap());
+	
             modelBuilder.Configurations.Add(new GLAccountInterestPeriodMap());
 	
             modelBuilder.Configurations.Add(new GLAccountMoreDataMap());
@@ -918,6 +920,12 @@ namespace Logitude.Accounting.Data
 	 }
 	
 	 public IDbSet<GLAccountCurrency> GLAccountCurrencies 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<GLAccountFollowUpData> GLAccountFollowUpDatas 
 	 {
 	      get; set;
 	 
