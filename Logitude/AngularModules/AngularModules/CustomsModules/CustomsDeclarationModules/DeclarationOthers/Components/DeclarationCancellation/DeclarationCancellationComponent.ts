@@ -282,6 +282,7 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
         this.UIProperties.SetEnabled("CustomCancelRequestRemarks", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("CancelRequestApproveDate", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("CancelRequestRejectionReason", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("CancelRejectionReasonName", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("CancelRequestNumber", this.ObjectTableName, false);
 
         if (this.CancelRequestStatusCode == "5" || this.CancelRequestStatusCode == "2") {
