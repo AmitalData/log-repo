@@ -1089,7 +1089,7 @@ BEGIN
 								else if (@MasterPayableMeasurementId = @PFCL_Id)
 								BEGIN
 									set @Quantity = @HousePercentForeignChargesLocalAmount
-									set @UnitPrice = @MasterPayableUnitPrice
+									set @UnitPrice =  @MasterPayableExpectedAmount / @Quantity * 100
 								END
 							END
 						

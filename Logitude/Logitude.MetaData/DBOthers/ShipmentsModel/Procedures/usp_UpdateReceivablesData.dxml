@@ -951,7 +951,7 @@ BEGIN
 								if (@IsUpdatingReceivable = 1)
 								BEGIN
 									set @Quantity = @HousePercentForeignChargesLocalAmount
-									set @UnitPrice = @MasterReceivableUnitPrice
+									set @UnitPrice = @MasterReceivableAmount / @Quantity * 100
 									set @Amount = @Quantity * @UnitPrice / 100
 									set @AmountLocal = @Amount * @MasterReceivableRate
 									set @AmountInProfitCurrency = @AmountLocal / @MasterReceivableProfitRate
