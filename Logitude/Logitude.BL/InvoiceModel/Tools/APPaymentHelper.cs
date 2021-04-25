@@ -65,6 +65,8 @@ namespace Logitude.BL.InvoiceModel.Tools
         private Boolean IsSameHomeCurrency = false;
         private string AccountingSystemCode;
         private APInvoicePaymentRepository invoicePaymentRepository;
+        private Tenant loggedTenant;
+        private AccountingSystemPM accountingSystem;
 
         private void GetObjectTableData()
         {
@@ -89,15 +91,15 @@ namespace Logitude.BL.InvoiceModel.Tools
                 else
                 {
                     commonContext = CommonContext;
-                    Tenant loggedTenant = (from a in commonContext.Tenants.Include("AccountingSetting") where a.Id == entityPM.Tenant select a).FirstOrDefault();
+                    loggedTenant = (from a in commonContext.Tenants.Include("AccountingSetting") where a.Id == entityPM.Tenant select a).FirstOrDefault();
                     tenant = loggedTenant.Id;
                     tenantName = loggedTenant.Company;
                     AccountingSystemCode = loggedTenant.AccountingSetting.AccountingSystemCode;
                     AccountingSystemQuery query = new AccountingSystemQuery(tenant);
-                    AccountingSystemPM AccountingSystemPM = query.GetSingleAccountingSystemPM(AccountingSystemCode);
+                    accountingSystem = query.GetSingleAccountingSystemPM(AccountingSystemCode);
 
                     if (loggedTenant.AccountingSetting != null)
-                        if ((AccountingSystemCode == "QBO" || AccountingSystemCode == "QBOG") && loggedTenant.AccountingSetting.IsAPPaymentsTransferEnabled && AccountingSystemPM.AllowAPPaymentsTransfer)
+                        if (IsQuickBooksAccoutingSystemTransfer(entityPM))
                         {
                             entityPM.ExternalAccountingEntityId = payment.ExternalAccountingEntityId;
                             APPayment = entityPM;
@@ -235,6 +237,16 @@ namespace Logitude.BL.InvoiceModel.Tools
                 }
             }
         }
+
+        private bool IsQuickBooksAccoutingSystemTransfer(APPaymentPM aPPaymentPM)
+        {
+            if (!(AccountingSystemCode == "QBO" || AccountingSystemCode == "QBOG")) return false;
+            if (!(loggedTenant.AccountingSetting.IsAPPaymentsTransferEnabled)) return false;
+            if (!(accountingSystem.AllowAPPaymentsTransfer)) return false;
+            if (!(aPPaymentPM.RegisterDate >= loggedTenant.AccountingSetting.APInvoiceTransferStartDate)) return false;
+            return true;
+        }
+
         public List<Intuit.Ipp.Data.Customer> GetQuickBooksOnlineCustomersByText(String sql, String tenant)
         {
 

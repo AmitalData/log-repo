@@ -103,7 +103,7 @@
                                 <td>
                                     <table>
                                         <!-- ARInvoiceTransferStartDate -->
-                                        <tr class="FormFieldRow" *ngIf="IsAccountingSystem_HV_RH || IsAccountingSystem_AI_GI">
+                                        <tr class="FormFieldRow" *ngIf="IsAccountingSystem_HV_RH || IsAccountingSystem_AI_GI || IsAccountingSystem_QB_QBO">
                                             <td style="width:185px;">
                                                 <LogLabel [ObjectFieldName]="'ARInvoiceTransferStartDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                             </td>
@@ -117,12 +117,14 @@
                                             </td>
 
                                             <td>
-                                                <div></div>
+                                                <div style="float:left;padding-left:3px;" *ngIf="IsAccountingSystem_QB_QBO">
+                                                    <HelpIcon [Header]="'QBO Start Date'" [Text]="'When choosing a date, block only ar invoices that are not transferred'"></HelpIcon>
+                                                </div>
                                             </td>
                                         </tr>
 
                                         <!-- APInvoiceTransferStartDate -->
-                                        <tr class="FormFieldRow" *ngIf="IsAccountingSystem_HV_RH || IsAccountingSystem_AI_GI">
+                                        <tr class="FormFieldRow" *ngIf="IsAccountingSystem_HV_RH || IsAccountingSystem_AI_GI || IsAccountingSystem_QB_QBO">
                                             <td style="width:185px;">
                                                 <LogLabel [ObjectFieldName]="'APInvoiceTransferStartDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                             </td>
@@ -136,7 +138,51 @@
                                             </td>
 
                                             <td>
-                                                <div></div>
+                                                <div style="float:left;padding-left:3px;" *ngIf="IsAccountingSystem_QB_QBO">
+                                                    <HelpIcon [Header]="'QBO Start Date'" [Text]="'When choosing a date, block only ap invoices that are not transferred'"></HelpIcon>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <!-- ARPaymentTransferStartDate -->
+                                        <tr class="FormFieldRow" *ngIf="IsAccountingSystem_QB_QBO">
+                                            <td style="width:185px;">
+                                                <LogLabel [ObjectFieldName]="'ARPaymentTransferStartDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td style="width:200px;">
+                                                <LogDatePicker [ObjectFieldName]="'ARPaymentTransferStartDate'" [SelectedDateValue]="ARPaymentTransferStartDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                            </td>
+
+                                            <td style="padding-left: 5px; width:20px;">
+                                                <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditTransferStartDateClicked('ARPayment')"></IconButton>
+                                            </td>
+
+                                            <td>
+                                                <div style="float:left;padding-left:3px;" *ngIf="IsAccountingSystem_QB_QBO">
+                                                    <HelpIcon [Header]="'QBO Start Date'" [Text]="'When choosing a date, block only ar payments that are not transferred'"></HelpIcon>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <!-- APPaymentTransferStartDate -->
+                                        <tr class="FormFieldRow" *ngIf="IsAccountingSystem_QB_QBO">
+                                            <td style="width:185px;">
+                                                <LogLabel [ObjectFieldName]="'APPaymentTransferStartDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td style="width:200px;">
+                                                <LogDatePicker [ObjectFieldName]="'APPaymentTransferStartDate'" [SelectedDateValue]="APPaymentTransferStartDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                            </td>
+
+                                            <td style="padding-left: 5px; width:20px;">
+                                                <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditTransferStartDateClicked('APPayment')"></IconButton>
+                                            </td>
+
+                                            <td>
+                                                <div style="float:left;padding-left:3px;" *ngIf="IsAccountingSystem_QB_QBO">
+                                                    <HelpIcon [Header]="'QBO Start Date'" [Text]="'When choosing a date, block only ap payments that are not transferred'"></HelpIcon>
+                                                </div>
                                             </td>
                                         </tr>
 
