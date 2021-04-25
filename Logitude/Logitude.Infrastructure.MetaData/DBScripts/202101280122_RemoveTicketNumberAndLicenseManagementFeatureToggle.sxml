@@ -5,4 +5,5 @@
       delete from toggles where Code = 'LIC' or Code = 'TJC'    
     ]]>
   </Sql>
+  <Oracle Version="1"></Oracle>
 </Script>
