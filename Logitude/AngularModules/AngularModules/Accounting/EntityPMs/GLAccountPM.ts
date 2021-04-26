@@ -738,6 +738,61 @@ export class GLAccountPM {
     public set PaymentTermName(newValue: string) { if (this.paymentTermName != newValue) { this.paymentTermName = newValue; this.MarkAsDirty("PaymentTermName"); } }
        
 	 
+    private period0: number;
+    public get Period0() { return this.period0; }
+    public set Period0(newValue: number) { if (this.period0 != newValue) { this.period0 = newValue; this.MarkAsDirty("Period0"); } }
+       
+	 
+    private period1: number;
+    public get Period1() { return this.period1; }
+    public set Period1(newValue: number) { if (this.period1 != newValue) { this.period1 = newValue; this.MarkAsDirty("Period1"); } }
+       
+	 
+    private period2: number;
+    public get Period2() { return this.period2; }
+    public set Period2(newValue: number) { if (this.period2 != newValue) { this.period2 = newValue; this.MarkAsDirty("Period2"); } }
+       
+	 
+    private period3: number;
+    public get Period3() { return this.period3; }
+    public set Period3(newValue: number) { if (this.period3 != newValue) { this.period3 = newValue; this.MarkAsDirty("Period3"); } }
+       
+	 
+    private period4: number;
+    public get Period4() { return this.period4; }
+    public set Period4(newValue: number) { if (this.period4 != newValue) { this.period4 = newValue; this.MarkAsDirty("Period4"); } }
+       
+	 
+    private period5: number;
+    public get Period5() { return this.period5; }
+    public set Period5(newValue: number) { if (this.period5 != newValue) { this.period5 = newValue; this.MarkAsDirty("Period5"); } }
+       
+	 
+    private periodPast: number;
+    public get PeriodPast() { return this.periodPast; }
+    public set PeriodPast(newValue: number) { if (this.periodPast != newValue) { this.periodPast = newValue; this.MarkAsDirty("PeriodPast"); } }
+       
+	 
+    private periodFuture: number;
+    public get PeriodFuture() { return this.periodFuture; }
+    public set PeriodFuture(newValue: number) { if (this.periodFuture != newValue) { this.periodFuture = newValue; this.MarkAsDirty("PeriodFuture"); } }
+       
+	 
+    private totalOpenTransactions: number;
+    public get TotalOpenTransactions() { return this.totalOpenTransactions; }
+    public set TotalOpenTransactions(newValue: number) { if (this.totalOpenTransactions != newValue) { this.totalOpenTransactions = newValue; this.MarkAsDirty("TotalOpenTransactions"); } }
+       
+	 
+    private lastReconciledBy: string;
+    public get LastReconciledBy() { return this.lastReconciledBy; }
+    public set LastReconciledBy(newValue: string) { if (this.lastReconciledBy != newValue) { this.lastReconciledBy = newValue; this.MarkAsDirty("LastReconciledBy"); } }
+       
+	 
+    private lastReconcileDate: Date;
+    public get LastReconcileDate() { return this.lastReconcileDate; }
+    public set LastReconcileDate(newValue: Date) { if (this.lastReconcileDate != newValue) { this.lastReconcileDate = newValue; this.MarkAsDirty("LastReconcileDate"); } }
+       
+	 
     private creditLimit: number;
     public get CreditLimit() { return this.creditLimit; }
     public set CreditLimit(newValue: number) { if (this.creditLimit != newValue) { this.creditLimit = newValue; this.MarkAsDirty("CreditLimit"); } }

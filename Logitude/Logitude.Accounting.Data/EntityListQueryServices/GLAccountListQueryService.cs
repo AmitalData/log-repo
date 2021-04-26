@@ -29,9 +29,12 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             string multi = TranslateTextsClass.Translate("GLAccounts.Q.Multi", 0);
             string active = TranslateTextsClass.Translate("GLAccounts.Q.Active", 0);
             string inactive = TranslateTextsClass.Translate("GLAccounts.Q.Inactive", 0);
+            Contact loggedContact = GetLoggedContact(iQueryable.FirstOrDefault().Tenant);
             GLAccountRepository repository = new GLAccountRepository(context);
             IQueryable<GLAccountList> query = (from a in iQueryable.Include("ChartOfAccount").Include("ChartOfAccountsType")
                                                join md in context.GLAccountMoreDatas on a.Id equals md.AccountId
+                                               join ad in context.GLAccountAgingDatas on a.Id equals ad.AccountId
+                                               join rd in context.GLAccountRecocileDatas on a.Id equals rd.AccountId
                                                select new GLAccountList()
                                                     {
                                                         Id = a.Id,
@@ -149,19 +152,40 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
                                                         ConsolidationVat = a.ConsolidationVat,
                                                         IsEquipmentVendor = a.IsEquipmentVendor,
-                                                        //CustomerGLAccountName = a.CustomerGLAccount.LocalName !=null? a.CustomerGLAccount.LocalName : a.CustomerGLAccount.EnglishName,
-                                                        //CustomerGLAccountNumber = a.CustomerGLAccount.DisplayNumber,
-                                                        //ParentAccountName = a.ParentAccount.LocalName != null ? a.ParentAccount.LocalName : a.CustomerGLAccount.EnglishName,
-                                                        //ParentAccountNumber = a.ParentAccount.DisplayNumber,
+                                                   //CustomerGLAccountName = a.CustomerGLAccount.LocalName !=null? a.CustomerGLAccount.LocalName : a.CustomerGLAccount.EnglishName,
+                                                   //CustomerGLAccountNumber = a.CustomerGLAccount.DisplayNumber,
+                                                   //ParentAccountName = a.ParentAccount.LocalName != null ? a.ParentAccount.LocalName : a.CustomerGLAccount.EnglishName,
+                                                   //ParentAccountNumber = a.ParentAccount.DisplayNumber,
 
+                                                   // GLaccount Aging Datas
+                                                        Period0 = ad.Period0,
+                                                        Period1 = ad.Period1,
+                                                        Period2 = ad.Period2,
+                                                        Period3 = ad.Period3,
+                                                        Period4 = ad.Period4,
+                                                        Period5 = ad.Period5,
+                                                        PeriodPast = ad.PeriodPast,
+                                                        PeriodFuture = ad.PeriodFuture,
+                                                        TotalOpenTransactions = ad.TotalOpenTransactions,
+
+                                                        // GLAccount Recocile Datas
+                                                        LastReconciledBy = loggedContact.DontShowLocalLabels ? rd.LastReconciledByUser.Contact.EnglishName : rd.LastReconciledByUser.Contact.LocalName == null ? rd.LastReconciledByUser.Contact.EnglishName: rd.LastReconciledByUser.Contact.LocalName,
+                                                        LastReconcileDate = rd.LastReconcileDateTime,
 
 
                                                });
             return query;
         }
 
-        
-		private IQueryable<GLAccount> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<GLAccount> iQueryable,int tenant)
+        private Contact GetLoggedContact(int tenant)
+        {
+            string email = AuthenticationUtil.GetLoggedUserEmail(tenant);
+            ContactRepository contactRepository = new ContactRepository(tenant);
+            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
+            return loggedContact;
+        }
+
+        private IQueryable<GLAccount> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<GLAccount> iQueryable,int tenant)
         {
             GLAccountCustomFilter filters = new GLAccountCustomFilter(tenant);
 
