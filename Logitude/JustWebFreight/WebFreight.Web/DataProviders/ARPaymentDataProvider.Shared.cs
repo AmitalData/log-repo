@@ -7,6 +7,7 @@ namespace WebFreight.Web.DataProviders
 {
     public class ARPaymentDataProvider : BaseDataProvider
     {
+        public string PaymentStatus { get; set; }
         public string PaymentId { get; set; }
 
         public string ARPaymentNo { get; set; }
