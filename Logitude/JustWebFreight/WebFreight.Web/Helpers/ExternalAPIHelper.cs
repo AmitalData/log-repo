@@ -9,7 +9,6 @@ namespace WebFreight.Web.Helpers
 {
     public class ExternalAPIHelper
     {
-        private int tenant;
         private ExternalAPIResponseParameters responseParameters;
         private TenantPM tenantPM;
         private TenantQuery tenantQuery;
@@ -22,10 +21,9 @@ namespace WebFreight.Web.Helpers
 
         public ExternalAPIHelper(int tenant)
         {
-            this.tenant = tenant;
             this.responseParameters = new ExternalAPIResponseParameters();
             this.responseParameters.Tenant = tenant;
-            this.tenantQuery = new TenantQuery(this.tenant);
+            this.tenantQuery = new TenantQuery(tenant);
             this.tenantPM = tenantQuery.GetSinglePM(tenant);
         }
 
@@ -93,7 +91,10 @@ namespace WebFreight.Web.Helpers
         private void AddGeneralTenantsAPISNames()
         {
             foreach(string name in generalTenantsAPISNames){
-                this.responseParameters.APIsNames.Add(name);
+                if (!this.responseParameters.APIsNames.Contains(name))
+                {
+                    this.responseParameters.APIsNames.Add(name);
+                }
             }
         }
 
@@ -101,7 +102,10 @@ namespace WebFreight.Web.Helpers
         {
             foreach (string name in fullAccountingTenantsAPISNames)
             {
-                this.responseParameters.APIsNames.Add(name);
+                if (!this.responseParameters.APIsNames.Contains(name))
+                { 
+                    this.responseParameters.APIsNames.Add(name);
+                }
             }
         }
 
@@ -109,7 +113,10 @@ namespace WebFreight.Web.Helpers
         {
             foreach (string name in hypridTenantsAPISNames)
             {
-                this.responseParameters.APIsNames.Add(name);
+                if (!this.responseParameters.APIsNames.Contains(name))
+                {
+                    this.responseParameters.APIsNames.Add(name);
+                }   
             }
         }
 
@@ -358,6 +365,7 @@ namespace WebFreight.Web.Helpers
             </Master>
             ");
         }
+
         private void AddRatesAPIsRequestText()
         {
             this.XMLRequestTexts.Add("RatesUpdate", @"<RatesUpdate xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
@@ -473,7 +481,9 @@ namespace WebFreight.Web.Helpers
 
         private void AddCustomerAPIsRequestText()
         {
-            this.XMLRequestTexts.Add("Customer", @"<Customer>
+            if (!this.XMLRequestTexts.ContainsKey("Customer"))
+            {
+                this.XMLRequestTexts.Add("Customer", @"<Customer>
                        <EnglishName>API Customer with GLAccount</EnglishName>
                        <LocalName>API Customer Local</LocalName>
                        <VatNumber>11001</VatNumber>
@@ -502,12 +512,15 @@ namespace WebFreight.Web.Helpers
                             <ChartOfAccount Code='TST'></ChartOfAccount>
                        </GLAccount>
                     </Customer>
-            ");
+               ");
+            }
         }
 
         private void AddVendorAPIsRequestText()
         {
-            this.XMLRequestTexts.Add("Vendor", @"<Vendor xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
+            if (!this.XMLRequestTexts.ContainsKey("Vendor"))
+            {
+                this.XMLRequestTexts.Add("Vendor", @"<Vendor xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
                        <EnglishName>API Vendor</EnglishName>
                        <LocalName>API Vendor Local</LocalName>
                        <VatNumber>1100110011</VatNumber>
@@ -524,7 +537,8 @@ namespace WebFreight.Web.Helpers
                             <ChartOfAccount Code='TST'></ChartOfAccount>
                        </GLAccount>
                     </Vendor>
-            ");
+               ");
+            }
         }
 
         private void AddARInvoiceAPIsRequestText()
