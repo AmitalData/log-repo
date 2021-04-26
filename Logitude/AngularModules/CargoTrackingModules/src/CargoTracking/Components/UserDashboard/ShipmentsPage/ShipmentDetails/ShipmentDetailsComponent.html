@@ -504,6 +504,76 @@
     </panel>
 
 
+    <panel style="order: 5;" [Title]="'Documents'"
+           [Name]="'DocumentsPanel'"
+           [ShowWhitePanelOnMobile]="false">
+
+        <div body>
+
+            <div class="hide-mobile" style="float: left;width: calc(100% - 300px);min-width: 720px;">
+
+                <table class="row-hover" style="width: 100%;">
+                    <tr class="header">
+                        <th >type</th>
+                        <th >create date</th>
+                        <th >customs ref</th>
+                        <th style="width: 100px;" class="hide-mobile"></th>
+                    </tr>
+                    <tr *ngFor="let item of [1,1,1,1,1,1]">
+                        <td>
+                            <img width="16" src="./assets/images/icons/info.png" style="top: 2px; position: relative;padding-right: 7px;" alt="">
+                            Sed luctus dui dapibus diam suscipit.
+                        </td>
+                        <td>10-Nov-2019, 14:36</td>
+                        <td>987654321</td>
+                        <th class="hide-mobile">
+                            <a href="javascript:;"><img width="16" src="./assets/images/icons/download.png" alt=""></a>
+                        </th>
+                    </tr>
+
+                </table>
+
+            </div>
+            <div class="hide-mobile" style="float: left; width: 250px;">
+                <div class="document-card">
+                    <h3>Dolar sit ameter</h3>
+                    <div class="text">
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. sed quod, ex unde eius? Nulla odio quaerat voluptatem tenetur?
+                    </div>
+                </div>
+            </div>
+            <div class="hide-mobile" style="clear: both;"></div>
+
+            <div class="mobile-only">
+                <div class="card document-mobile-card">
+                    <div class="details-section">
+                        <div class="row" style="margin-bottom: 5px;">
+                            <div class="col-50 card-title">Text</div>
+                            <div class="col-40 card-title">Text</div>
+                            <div class="col-10 text-end">
+                                <a href="javascript:;" style="padding: 10px 3px 0px 13px;"><img src="./assets/images/icons/more.png" alt=""></a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-50">
+                                supplier invoice
+                                <br>
+                                <span style="color: gray;font-size: 13px;">17/08/2020</span>
+
+                            </div>
+                            <div class="col-50">1547231</div>
+                        </div>
+                    </div>
+
+                    <div class="notes-section">
+                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ea provident
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </panel>
+
     <panel style="order: 7;"
            [Title]="'Partners'"
            [Name]="'PartnersPanel'"

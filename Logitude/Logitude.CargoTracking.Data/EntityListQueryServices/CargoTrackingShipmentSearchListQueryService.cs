@@ -156,4 +156,3 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
 
 }
-	

@@ -609,3 +609,57 @@ h1 {
         align-items: center;
     }
 }
+
+
+.document-card{
+    width: 100%;
+    height: 150px;
+    background: #F2F4F7;
+    padding: 30px 20px;
+    text-align: center;
+
+}
+
+.document-mobile-card{
+    position: relative;
+    padding: 0;
+}
+.row{
+    display: flex;
+}
+.row div{
+    /* display: inline-block; */
+}
+.col-50{
+    width: 50%;
+}
+.col-40{
+    width: 40%;
+}
+.col-10{
+    width: 10%;
+}
+.text-end{
+    text-align: end;
+}
+.card-title{
+    text-transform: uppercase;
+    color: var(--MainColor);
+    font-weight: 700;
+
+    font-size: 12px;
+}
+
+.document-mobile-card .notes-section{
+    text-align: center;
+    background: #F2F4F7;
+    padding: 10px 15px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    font-size: 13px;
+
+}
+
+.document-mobile-card .details-section{
+    padding: 10px 15px;
+}
