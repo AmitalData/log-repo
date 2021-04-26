@@ -13,9 +13,11 @@ namespace Logitude.CargoTracking.BL.CoreBL
         {
             CargoTrackingShipmentSearchListQueryService shipmentSearchQuery = GetCargoTrackingShipmentSearchQuery(shipmentFilters);
 
-            CargoTrackingShipmentsResponse response = new CargoTrackingShipmentsResponse();
-            response.Shipments = shipmentSearchQuery.GetShipmentsByFilters(pageIndex, pageSize, shipmentFilters).ToList();
-            response.ShipmentsCount = GetAllShipmentsCount(pageIndex, shipmentFilters);
+            CargoTrackingShipmentsResponse response = new CargoTrackingShipmentsResponse
+            {
+                Shipments = shipmentSearchQuery.GetShipmentsByFilters(pageIndex, pageSize, shipmentFilters).ToList(),
+                ShipmentsCount = GetAllShipmentsCount(pageIndex, shipmentFilters)
+            };
 
             return response;
         }

@@ -103,6 +103,7 @@
     <Compile Include="EntityPMs\Generated\GLAccountCardsDataPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\GLAccountCounterPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\GLAccountCurrencyPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\GLAccountFollowUpDataPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\GLAccountInterestPeriodPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\GLAccountMoreDataPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\GLAccountPM.Generated.cs" />

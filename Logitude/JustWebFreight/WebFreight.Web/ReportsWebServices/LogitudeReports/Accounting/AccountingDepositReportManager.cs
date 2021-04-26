@@ -120,7 +120,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         }
         private void FilterByQueryFilters()
         {
-            this.iQueryable = (from f in invoiceContext.ARPayments.Include("PaymentCurrency").Include("LocalCurrency").Include("AccountingPaymentMethod").Include("CreatedByUser").Include("CreatedByUser.Contact").Include("BankAccountLite").Include("AccountingPaymentMethod")
+            this.iQueryable = (from f in invoiceContext.ARPayments.Include("PaymentCurrency").Include("LocalCurrency").Include("AccountingPaymentMethod")
+                                                                  .Include("CreatedByUser").Include("CreatedByUser.Contact")
+                                                                  .Include("BankAccountLite").Include("AccountingPaymentMethod")
+                                                                  .Include("Status")
                                where f.Tenant == tenant
                                select f);
 
@@ -184,6 +187,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                                                        BankAccountLocalName = d.BankAccountLite != null ? d.BankAccountLite.LocalName : null,
                                                                        AccountNumber = d.BankAccountLite != null ? d.BankAccountLite.AccountNumber : null,
                                                                        BranchNumber = d.BankAccountLite != null ? d.BankAccountLite.BranchNumber : null,
+                                                                       PaymentStatus = d.Status != null ? d.Status.Name : null,
                                                                    }).OrderBy(o => o.PaymentCurrencyCode).ToList();
 
         }
