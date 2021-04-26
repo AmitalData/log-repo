@@ -442,7 +442,7 @@ export class QuoteMenuButtonsHandler {
                     }
 
                     this.Reload = true;
-
+                    this.entityArgs.EditComponent.SaveChanges();
                     this.isButtonClicked = false;
                 }
             });
