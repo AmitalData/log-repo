@@ -31,7 +31,8 @@ declare @OpenAmountInProfitCurrency as float
 declare @LocalCurrencyAmount as float 
 declare @ProfitCurrencyAmount as float 
 declare @InvoicelineVatPercentage as float 
-    
+declare @ChargeTypeId as varchar(15)
+
 BEGIN
 	-- Loop Houses
 	declare @HouseId as varchar(15)
@@ -46,9 +47,9 @@ BEGIN
 
       DECLARE DataCursor CURSOR READ_ONLY
       FOR
-      SELECT Id, Tenant, VendorId, VatTypeId, CreateDate, ExpectedAmountLocal, ExpectedAmountInProfitCurrency
+      SELECT Id, Tenant, VendorId, VatTypeId, CreateDate, ExpectedAmountLocal, ExpectedAmountInProfitCurrency, ChargesTypeId
       FROM ShipmentPayables where ShipmentId = @HouseId
-      OPEN DataCursor FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @CardId, @VatTypeId, @CreateDate, @ExpectedAmountLocal, @ExpectedAmountInProfitCurrency
+      OPEN DataCursor FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @CardId, @VatTypeId, @CreateDate, @ExpectedAmountLocal, @ExpectedAmountInProfitCurrency, @ChargeTypeId
       WHILE @@FETCH_STATUS = 0
       BEGIN
                 
@@ -102,8 +103,8 @@ BEGIN
       CLOSE APInvoiceLine_CURSOR
       DEALLOCATE APInvoiceLine_CURSOR
                 
-      set @OpenAmountInLocalCurrency =  dbo.CalculatePayableVatOpenAmount(@CardId,@VatTypeId, @Tenant, @CreateDate, @ExpectedAmountLocal) ;
-      set @OpenAmountInProfitCurrency = dbo.CalculatePayableVatOpenAmount(@CardId,@VatTypeId, @Tenant, @CreateDate, @ExpectedAmountInProfitCurrency);
+      set @OpenAmountInLocalCurrency =  dbo.CalculatePayableVatOpenAmount(@CardId,@ChargeTypeId, @Tenant, @CreateDate, @ExpectedAmountLocal) ;
+      set @OpenAmountInProfitCurrency = dbo.CalculatePayableVatOpenAmount(@CardId,@ChargeTypeId, @Tenant, @CreateDate, @ExpectedAmountInProfitCurrency);
                 	
         if(@OpenAmountInLocalCurrency is null) set @OpenAmountInLocalCurrency = 0;
       if(@OpenAmountInProfitCurrency is null) set @OpenAmountInProfitCurrency = 0;
@@ -113,7 +114,7 @@ BEGIN
                 
       update ShipmentPayables set VatAmountLocal = @VatAmountLocal, VatAmountProfit = @VatAmountProfit where Id = @EntityId and Tenant = @Tenant
                 
-      FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @CardId, @VatTypeId, @CreateDate, @ExpectedAmountLocal, @ExpectedAmountInProfitCurrency
+      FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @CardId, @VatTypeId, @CreateDate, @ExpectedAmountLocal, @ExpectedAmountInProfitCurrency, @ChargeTypeId
       END
       CLOSE DataCursor
       DEALLOCATE DataCursor
