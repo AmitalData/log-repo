@@ -1359,6 +1359,11 @@ export class DeclarationPM {
     public set ShipCodeName(newValue: string) { if (this.shipCodeName != newValue) { this.shipCodeName = newValue; this.MarkAsDirty("ShipCodeName"); } }
        
 	 
+    private cancelRejectionReasonName: string;
+    public get CancelRejectionReasonName() { return this.cancelRejectionReasonName; }
+    public set CancelRejectionReasonName(newValue: string) { if (this.cancelRejectionReasonName != newValue) { this.cancelRejectionReasonName = newValue; this.MarkAsDirty("CancelRejectionReasonName"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		

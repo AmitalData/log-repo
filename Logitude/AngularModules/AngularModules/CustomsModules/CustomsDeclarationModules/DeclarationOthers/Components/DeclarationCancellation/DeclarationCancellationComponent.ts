@@ -5,7 +5,7 @@ import { EntityResourceService } from '../../../../../Infrastructure/Services/En
 import { DeclarationPM } from '../../../../../Customs/EntityPMs/DeclarationPM';
 import { CustomSendOptionsArgs, RequestParamsBase, SendRequestVIA, TestCase } from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import { DeclarationPMService } from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
-import { AppTool } from '../../../../../Infrastructure/Tools';
+import { AppTool, DateTool } from '../../../../../Infrastructure/Tools';
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 import { GenericRequestParams } from '../../../../../Customs/DataContract/RequestParams/GenericRequestParams';
@@ -38,6 +38,13 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
         if (this.EntityPM.CancelRequestNumber != value) {
             this.EntityPM.CancelRequestNumber = value;
          }
+    }
+
+    get IsClaimable() { return this.EntityPM.IsClaimable; }
+    set IsClaimable(value: boolean) {
+        if (this.EntityPM.IsClaimable != value) {
+            this.EntityPM.IsClaimable = value;
+        }
     }
 
 
@@ -85,18 +92,35 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
         }
     }
 
-    get CancelRequestApproveDate() { return this.EntityPM.CancelRequestApproveDate; }
-    set CancelRequestApproveDate(value: Date) {
+    get CancelRequestApproveDate() {
+        if (this.EntityPM != null) {
+            if (this.EntityPM.CancelRequestApproveDate != null) {
+                var myFormats = DateTool.GetDateFormats(this.EntityPM.CancelRequestApproveDate);
+                return myFormats.DateString + " " + myFormats.ShortTimeString;
+            }
+        }
+        return null;
+    }
+    set CancelRequestApproveDate(value: string) {
         if (this.EntityPM.CancelRequestApproveDate != value) {
             this.EntityPM.CancelRequestApproveDate = value;
         }
     }
 
 
+  
+
     get CancelRequestRejectionReason() { return this.EntityPM.CancelRequestRejectionReason; }
     set CancelRequestRejectionReason(value: string) {
         if (this.EntityPM.CancelRequestRejectionReason != value) {
             this.EntityPM.CancelRequestRejectionReason = value;
+        }
+    }
+
+    get CancelRejectionReasonName() { return this.EntityPM.CancelRejectionReasonName; }
+    set CancelRejectionReasonName(value: string) {
+        if (this.EntityPM.CancelRejectionReasonName != value) {
+            this.EntityPM.CancelRejectionReasonName = value;
         }
     }
     constructor(private EntityResourceService: EntityResourceService, private _declarationPMService: DeclarationPMService, private _DeclarationWebService: DeclarationWebService) {
@@ -139,7 +163,7 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
 
             if (!AppTool.IsNullOrEmpty(response.Result) && response.Result == false) {
                 //  SessionLocator.SelectedSession.CurrentEditComponent.StopBusyIndicator();
-                this.ValidationErrorsList.push("חובה לצרף מסמך אחד לפחות. ");
+                this.ValidationErrorsList.push("חובה לצרף מכתב בקשה לביטול הצהרה. ");
             }
                     this.FillErrors();
                     if (this.ValidationErrorsList.length > 0) {
@@ -275,7 +299,9 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
         this.UIProperties.SetEnabled("CustomCancelRequestRemarks", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("CancelRequestApproveDate", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("CancelRequestRejectionReason", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("CancelRejectionReasonName", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("CancelRequestNumber", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("IsClaimable", this.ObjectTableName, false);
 
         if (this.CancelRequestStatusCode == "5" || this.CancelRequestStatusCode == "2") {
             this.UIProperties.SetEnabled("CancelRequestReasonExplanation", this.ObjectTableName, false);

@@ -46,6 +46,8 @@ using Logitude.Customs.BL.Messaging.Maman;
 using Logitude.Customs.BL.Messaging.ILOVS;
 using System.Diagnostics;
 using Logitude.Customs.BL.CloseTables;
+using System.Text.RegularExpressions;
+using Logitude.Customs.BL.BL;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -725,6 +727,19 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     UpdatePendingByKeyWordsByImporterName(entityPM, false);
                 }
             }
+
+            if (entityPM.CasualImporterTel!=null)
+            {
+                entityPM.CasualImporterTel = Regex.Replace(entityPM.CasualImporterTel, "[^.0-9]", "");///- יש להוריד את כל התווים הלא נומריים 
+                entityPM.CasualImporterTel = Regex.Replace(entityPM.CasualImporterTel, @"\s+", "");///שיהייה
+            }
+            if (entityPM.CasualImporterTel!= entityPOCO.CasualImporterTel)
+            {
+                UpdateDeclarationPending903InvalidPhoneNumber(entityPM);
+            }
+
+
+
             if (entityPM.IsCourierDeclaration && entityPM.ChangeSetOp == ChangeSetOperation.Update)
             {
                 if (CheckIfRequiredFieldForCourierHasChanged(entityPM, entityPOCO))
@@ -734,6 +749,26 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
 
             base.OnUpdating(entityPM, entityPOCO);
+        }
+
+        private void UpdateDeclarationPending903InvalidPhoneNumber(DeclarationPM declarationPM)
+        {
+            
+            ICustomContext context = MainContext as CustomContext;
+            DeclarationCourierStatusQueryService myDeclarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
+            DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(MainContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
+            DeclarationCourierStatusPM myDeclarationCourierStatusPM = myDeclarationCourierStatusQueryService.GetSingle(declarationPM.Id, true, false);
+            var updateDeclarationPending903InvalidPhoneNumberService = new UpdateDeclarationPending903InvalidPhoneNumberService(declarationPM);
+            if (myDeclarationCourierStatusPM==null)
+            {
+                return;// not courier !!
+            }
+            updateDeclarationPending903InvalidPhoneNumberService.Calc(myDeclarationCourierStatusPM);
+            if (myDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
+            {
+                
+                declarationCourierStatusUpdateService.Update(myDeclarationCourierStatusPM, true);
+            }
         }
 
         private void UpdateReferantData(DeclarationPM entityPM)

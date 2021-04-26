@@ -119,6 +119,7 @@
     <None Include="DBScripts\Post\2021011719371_UpdateREQUESTEDCUSTOMSDOCID.sxml" />
     <None Include="DBScripts\Post\2021011719372_UpdateREQUESTEDCUSTOMSDOCID2.sxml" />
     <None Include="DBScripts\Post\2021022202_UpdatephysicalcheckDeclaration.sxml" />
+    <None Include="DBScripts\Post\202104201027_AddCOURIERPENDINGREASONS903.sxml" />
     <None Include="DBScripts\Pre\202005210104_DropUnneededTables_Global.sxml" />
     <None Include="DBScripts\Pre\202005210105_DropUnneededTables_Main.sxml" />
     <None Include="DBScripts\Pre\202005210106_DropUnneededTables_SystemLogs.sxml" />
@@ -171,6 +172,7 @@
     <None Include="DBTables\Bank.dxml" />
     <None Include="DBTables\CancellationReasonRequestType.dxml" />
     <None Include="DBTables\CancellationRequestStatus.dxml" />
+    <None Include="DBTables\CancelRequestRejectReasonType.dxml" />
     <None Include="DBTables\CargoIdentifireType.dxml" />
     <None Include="DBTables\CargoIdentityQualifier.dxml" />
     <None Include="DBTables\CargoSplitRequestStatus.dxml" />
@@ -516,6 +518,7 @@
     <None Include="EntityFiles\ExporterRoleType.lxml" />
     <None Include="EntityFiles\FclLclCode.lxml" />
     <None Include="EntityFiles\LoadingSiteType.lxml" />
+    <None Include="EntityFiles\CancelRequestRejectReasonType.lxml" />
     <None Include="EntityFiles\NbcDeclarationType.lxml" />
     <None Include="EntityFiles\CargoSeal.lxml" />
     <None Include="EntityFiles\CargoSealIdentifier.lxml" />

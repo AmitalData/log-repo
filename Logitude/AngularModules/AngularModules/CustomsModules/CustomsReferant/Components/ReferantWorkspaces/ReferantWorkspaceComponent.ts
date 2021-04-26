@@ -41,6 +41,7 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
     public FilesRejectedByControllerVisibility: boolean = true;
     public FilesRejectedByClassificationVisibility: boolean = true;
     public AllCasesVisibility: boolean = true;
+    public FilesToPayVisibility: boolean = true;
     public isRTL: boolean = false;
     public ChartID: string = null;
     public InProgressDeclarationReferantDataId: string = "InProgressDeclarationReferantDataId_";
@@ -145,6 +146,9 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
             this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesInCreditControl"));
             this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesInCreditControl", true));
 
+            this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesToPay"));
+            this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesToPay", true));
+
             this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesAvailableFreeOfCharge"));
             this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesAvailableFreeOfCharge", true));
 
@@ -159,6 +163,7 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
 
             this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesRejectedByClassification"));
             this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesRejectedByClassification", true));
+
 
             this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("AllCases"));
             this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("AllCases", true));
@@ -373,6 +378,11 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
                 case "FilesInReview":
                     {
                         displayTitle = TextCodeTranslator.Translate("Customs.DeclarationReferantData.O.FilesInReview");
+                        break;
+                    }
+                case "FilesToPay":
+                    {
+                        displayTitle = TextCodeTranslator.Translate("Customs.DeclarationReferantData.O.FilesToPay");
                         break;
                     }
                 case "FilesInCreditControl":

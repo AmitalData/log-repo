@@ -1,4 +1,4 @@
-<table dir="rtl" *ngIf="EntityPM">
+<table dir="rtl" *ngIf="EntityPM"  >
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td colspan="4">
             <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
@@ -6,10 +6,12 @@
     </tr>
 
     <tr>
-        <td style="width: 80%; padding-top: 10px;">
+        <td style="width: 100%; padding-top: 10px;">
             <table>
                 <tr>
                     <td>
+                        <!--  <fieldset style=" height:100px;border: 1px solid #3bb3e2;">-->
+
                         <table>
 
                             <tr class="FormFieldRow">
@@ -18,7 +20,7 @@
                                               [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td><div></div></td>
-                                <td style="width:120px; " >
+                                <td style="width:120px; ">
                                     <LogTextBox [ObjectFieldName]="'CancelRequestNumber'" [InputType]="'integertext'" [DataContext]="DataContext"
                                                 [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                                 </td>
@@ -37,15 +39,15 @@
                                 </td>
                                 <td><div></div></td>
                                 <td style="width: 120px;">
-                                         <LogLov [ObjectFieldName]="'CancelRequestReasonCode'"
-                                                [ObjectTableName]="ObjectTableName"
-                                                [DataContext]="DataContext"
-                                                [SelectedValue]="CancelRequestReasonCode"
-                                                [LookUpTableName]="'Customs.CancellationReasonRequestType'"
-                                                [DisplayFieldsFromList]="'Code,LocalName'"
-                                                [HideColumns]="true">
-                                        </LogLov>
-                                 
+                                    <LogLov [ObjectFieldName]="'CancelRequestReasonCode'"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [SelectedValue]="CancelRequestReasonCode"
+                                            [LookUpTableName]="'Customs.CancellationReasonRequestType'"
+                                            [DisplayFieldsFromList]="'Code,LocalName'"
+                                            [HideColumns]="true">
+                                    </LogLov>
+
                                 </td>
                                 <td><div></div></td>
                                 <td style="width: 150px">
@@ -61,9 +63,23 @@
 
 
                             </tr>
+                            <!--</table>-->
+                            <!--</fieldset>-->
+                            <tr style="height :15px;" >
+                                <td colspan="7">
+                                    <hr size="3" width="100%" color="gray">
+                                </td>
 
+                            </tr>
+                            <tr style="height :15px;"  >
+                                <td class="TabTitleRow" colspan="7">
+                                    <div>תשובת המכס </div>
+                                </td>
+                            </tr>
+                            <!--   <fieldset style=" height:300px;border: 1px solid #3bb3e2;">-->
+                            <!--<table>-->
                             <tr class="FormFieldRow">
-                                <td style="width: 120px">
+                                <td style="width: 150px">
                                     <LogLabel [ObjectFieldName]="'CancelRequestStatusCode'" [ObjectTableName]="ObjectTableName"
                                               [DataContext]="DataContext"></LogLabel>
                                 </td>
@@ -71,26 +87,47 @@
                                 <td style="width: 120px;">
                                     <LogTextBox [ObjectFieldName]="'CancelRequestStatusName'"
                                                 [ObjectTableName]="ObjectTableName" [Text]="CancelRequestStatusName"
-                                                [HideColumns]="true" [DataContext]="DataContext" ></LogTextBox>
+                                                [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
                                     <!--<LogLov [ObjectFieldName]="'CancelRequestStatusCode'"
-            [ObjectTableName]="ObjectTableName"
-            [DataContext]="DataContext"
-            [SelectedValue]="CancelRequestStatusCode"
-            [HideAddLink]="true"
-            [LookUpTableName]="'Customs.CancellationRequestStatus'"
-            [DisplayFieldsFromList]="'Code,LocalName'">
-    </LogLov>-->
+                    [ObjectTableName]="ObjectTableName"
+                    [DataContext]="DataContext"
+                    [SelectedValue]="CancelRequestStatusCode"
+                    [HideAddLink]="true"
+                    [LookUpTableName]="'Customs.CancellationRequestStatus'"
+                    [DisplayFieldsFromList]="'Code,LocalName'">
+            </LogLov>-->
                                 </td>
                                 <td><div></div></td>
                                 <td style="width: 120px">
-                                    <LogLabel [ObjectFieldName]="'CustomCancelRequestRemarks'" [ObjectTableName]="ObjectTableName"
+                                    <LogLabel [ObjectFieldName]="'CancelRequestApproveDate'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td><div></div></td>
+                                <td style="width: 120px; ">
+                                    <LogTextBox [ObjectFieldName]="'CancelRequestApproveDate'" [ObjectTableName]="ObjectTableName" [Text]="CancelRequestApproveDate"
+                                                [HideColumns]="true" [DataContext]="DataContext" [InputType]="'ntext'"></LogTextBox>
+                                </td>
+
+
+
+                            </tr>
+                            <tr class="FormFieldRow">
+                                <td style="width: 120px">
+                                    <LogLabel [ObjectFieldName]="'IsClaimable'" [ObjectTableName]="ObjectTableName"
                                               [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td><div></div></td>
                                 <td style="width: 300px; ">
-                                    <LogTextBox [ObjectFieldName]="'CustomCancelRequestRemarks'"
-                                                [ObjectTableName]="ObjectTableName" [Text]="CustomCancelRequestRemarks"
-                                                [HideColumns]="true" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                    <LogCheckBox style="float:right" [Checked]="IsClaimable" [HideColumns]="true"
+                                                 [ObjectTableName]="ObjectTableName" [ObjectFieldName]="'IsClaimable'"
+                                                 [DataContext]="DataContext"></LogCheckBox>
+
+                                </td>
+                                <td><div></div></td>
+                                <td style="width: 120px">
+                                </td>
+                                <td><div></div></td>
+                                <td style="width: 300px; ">
                                 </td>
 
 
@@ -98,13 +135,14 @@
 
                             <tr class="FormFieldRow">
                                 <td style="width: 120px">
-                                    <LogLabel [ObjectFieldName]="'CancelRequestApproveDate'" [ObjectTableName]="ObjectTableName"
+                                    <LogLabel [ObjectFieldName]="'CustomCancelRequestRemarks'" [ObjectTableName]="ObjectTableName"
                                               [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td><div></div></td>
                                 <td style="width: 150px; ">
-                                    <LogTextBox [ObjectFieldName]="'CancelRequestApproveDate'" [ObjectTableName]="ObjectTableName" [Text]="CancelRequestApproveDate"
-                                                [HideColumns]="true" [DataContext]="DataContext" [InputType]="'ntext'"></LogTextBox>
+                                    <LogTextBox [ObjectFieldName]="'CustomCancelRequestRemarks'"
+                                                [ObjectTableName]="ObjectTableName" [Text]="CustomCancelRequestRemarks"
+                                                [HideColumns]="true" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
                                 </td>
                                 <td><div></div></td>
                                 <td style="width: 120px">
@@ -113,15 +151,15 @@
                                 </td>
                                 <td><div></div></td>
                                 <td style="width: 300px; ">
-                                    <LogTextBox [ObjectFieldName]="'CancelRequestRejectionReason'"
-                                                [ObjectTableName]="ObjectTableName" [Text]="CancelRequestRejectionReason"
+                                    <LogTextBox [ObjectFieldName]="'CancelRejectionReasonName'"
+                                                [ObjectTableName]="ObjectTableName" [Text]="CancelRejectionReasonName"
                                                 [HideColumns]="true" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
                                 </td>
 
 
                             </tr>
                         </table>
-
+                        <!--</fieldset>-->
                     </td>
                 </tr>
             </table>
