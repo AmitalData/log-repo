@@ -126,7 +126,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 GLAccountId = period.GLAccountId,
                 From = RefDateFrom.Value,
                 To = RefDateTo.Value,
-                DateTypeCode = "3",
+                DateTypeCode = "1",
                 Tenant = tenant,
                 PageSize = 30
             };
