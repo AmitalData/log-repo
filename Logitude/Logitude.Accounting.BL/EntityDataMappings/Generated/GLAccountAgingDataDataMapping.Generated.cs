@@ -25,12 +25,12 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         AccountId, 
 	         Tenant, 
 	         PeriodPast, 
-	         Period0, 
-	         Period1, 
-	         Period2, 
-	         Period3, 
-	         Period4, 
 	         Period5, 
+	         Period4, 
+	         Period3, 
+	         Period2, 
+	         Period1, 
+	         Period0, 
 	         PeriodFuture, 
 	         TotalOpenTransactions,
 	      }
@@ -42,12 +42,12 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         AccountId, 
 	         Tenant, 
 	         PeriodPast, 
-	         Period0, 
-	         Period1, 
-	         Period2, 
-	         Period3, 
-	         Period4, 
 	         Period5, 
+	         Period4, 
+	         Period3, 
+	         Period2, 
+	         Period1, 
+	         Period0, 
 	         PeriodFuture, 
 	         TotalOpenTransactions,
 	      }
@@ -68,24 +68,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 				entityPOCO.PeriodPast = entityPM.PeriodPast;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Period0))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Period5))
             {
-				entityPOCO.Period0 = entityPM.Period0;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Period1))
-            {
-				entityPOCO.Period1 = entityPM.Period1;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Period2))
-            {
-				entityPOCO.Period2 = entityPM.Period2;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Period3))
-            {
-				entityPOCO.Period3 = entityPM.Period3;
+				entityPOCO.Period5 = entityPM.Period5;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Period4))
@@ -93,9 +78,24 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 				entityPOCO.Period4 = entityPM.Period4;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Period5))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Period3))
             {
-				entityPOCO.Period5 = entityPM.Period5;
+				entityPOCO.Period3 = entityPM.Period3;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Period2))
+            {
+				entityPOCO.Period2 = entityPM.Period2;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Period1))
+            {
+				entityPOCO.Period1 = entityPM.Period1;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Period0))
+            {
+				entityPOCO.Period0 = entityPM.Period0;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PeriodFuture))
@@ -127,24 +127,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.PeriodPast = entityPOCO.PeriodPast;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Period0))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Period5))
             {
-					entityPM.Period0 = entityPOCO.Period0;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Period1))
-            {
-					entityPM.Period1 = entityPOCO.Period1;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Period2))
-            {
-					entityPM.Period2 = entityPOCO.Period2;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Period3))
-            {
-					entityPM.Period3 = entityPOCO.Period3;
+					entityPM.Period5 = entityPOCO.Period5;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Period4))
@@ -152,9 +137,24 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.Period4 = entityPOCO.Period4;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Period5))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Period3))
             {
-					entityPM.Period5 = entityPOCO.Period5;
+					entityPM.Period3 = entityPOCO.Period3;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Period2))
+            {
+					entityPM.Period2 = entityPOCO.Period2;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Period1))
+            {
+					entityPM.Period1 = entityPOCO.Period1;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Period0))
+            {
+					entityPM.Period0 = entityPOCO.Period0;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PeriodFuture))
@@ -183,24 +183,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 oldEntityPM.PeriodPast = entityPM.PeriodPast;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Period0))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Period5))
             {
-                oldEntityPM.Period0 = entityPM.Period0;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Period1))
-            {
-                oldEntityPM.Period1 = entityPM.Period1;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Period2))
-            {
-                oldEntityPM.Period2 = entityPM.Period2;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Period3))
-            {
-                oldEntityPM.Period3 = entityPM.Period3;
+                oldEntityPM.Period5 = entityPM.Period5;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Period4))
@@ -208,9 +193,24 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 oldEntityPM.Period4 = entityPM.Period4;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Period5))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Period3))
             {
-                oldEntityPM.Period5 = entityPM.Period5;
+                oldEntityPM.Period3 = entityPM.Period3;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Period2))
+            {
+                oldEntityPM.Period2 = entityPM.Period2;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Period1))
+            {
+                oldEntityPM.Period1 = entityPM.Period1;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Period0))
+            {
+                oldEntityPM.Period0 = entityPM.Period0;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PeriodFuture))
