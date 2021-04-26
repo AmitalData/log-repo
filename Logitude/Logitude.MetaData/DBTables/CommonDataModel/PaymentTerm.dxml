@@ -121,4 +121,6 @@
     ReferencedTable="PaymentTermDateTypes"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
+  <Index
+    Columns="AutomaticLastUpdateDate" />
 </Table>

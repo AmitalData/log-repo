@@ -110,6 +110,10 @@
             this.label37 = new System.Windows.Forms.Label();
             this.DWQuoteComputedFieldslabel = new System.Windows.Forms.Label();
             this.label39 = new System.Windows.Forms.Label();
+            this.DWPaymentTermslabel = new System.Windows.Forms.Label();
+            this.label40 = new System.Windows.Forms.Label();
+            this.DimPaymentTermsLabel = new System.Windows.Forms.Label();
+            this.label41 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // DestinationConnectionlTextBox
@@ -1113,11 +1117,63 @@
             this.label39.TabIndex = 242;
             this.label39.Text = "DW QuoteComputedFields";
             // 
+            // DWPaymentTermslabel
+            // 
+            this.DWPaymentTermslabel.AutoSize = true;
+            this.DWPaymentTermslabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.DWPaymentTermslabel.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.DWPaymentTermslabel.Location = new System.Drawing.Point(1632, 153);
+            this.DWPaymentTermslabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DWPaymentTermslabel.Name = "DWPaymentTermslabel";
+            this.DWPaymentTermslabel.Size = new System.Drawing.Size(0, 25);
+            this.DWPaymentTermslabel.TabIndex = 245;
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.BackColor = System.Drawing.SystemColors.Control;
+            this.label40.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label40.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.label40.Location = new System.Drawing.Point(1348, 154);
+            this.label40.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(184, 25);
+            this.label40.TabIndex = 244;
+            this.label40.Text = "DW PaymentTerms";
+            // 
+            // DimPaymentTermsLabel
+            // 
+            this.DimPaymentTermsLabel.AutoSize = true;
+            this.DimPaymentTermsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.DimPaymentTermsLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.DimPaymentTermsLabel.Location = new System.Drawing.Point(1632, 197);
+            this.DimPaymentTermsLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DimPaymentTermsLabel.Name = "DimPaymentTermsLabel";
+            this.DimPaymentTermsLabel.Size = new System.Drawing.Size(0, 25);
+            this.DimPaymentTermsLabel.TabIndex = 247;
+            // 
+            // label41
+            // 
+            this.label41.AutoSize = true;
+            this.label41.BackColor = System.Drawing.SystemColors.Control;
+            this.label41.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label41.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.label41.Location = new System.Drawing.Point(1348, 197);
+            this.label41.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(242, 25);
+            this.label41.TabIndex = 246;
+            this.label41.Text = "Dimension PaymentTerms";
+            // 
             // UpdateWarehouseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1799, 830);
+            this.Controls.Add(this.DimPaymentTermsLabel);
+            this.Controls.Add(this.label41);
+            this.Controls.Add(this.DWPaymentTermslabel);
+            this.Controls.Add(this.label40);
             this.Controls.Add(this.DWQuoteComputedFieldslabel);
             this.Controls.Add(this.label39);
             this.Controls.Add(this.DWQuoteslabel);
@@ -1292,5 +1348,9 @@
         private System.Windows.Forms.Label label37;
         private System.Windows.Forms.Label DWQuoteComputedFieldslabel;
         private System.Windows.Forms.Label label39;
+        private System.Windows.Forms.Label DWPaymentTermslabel;
+        private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.Label DimPaymentTermsLabel;
+        private System.Windows.Forms.Label label41;
     }
 }
