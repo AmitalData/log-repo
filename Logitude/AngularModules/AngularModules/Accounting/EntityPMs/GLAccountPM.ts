@@ -728,16 +728,44 @@ export class GLAccountPM {
             this.gLAccountChildren = newValue;
         }
     }
-
     private cardsDataId: string;
     public get CardsDataId() { return this.cardsDataId; }
     public set CardsDataId(newValue: string) { if (this.cardsDataId != newValue) { this.cardsDataId = newValue; this.MarkAsDirty("CardsDataId"); } }
        
 	 
-
     private paymentTermName: string;
     public get PaymentTermName() { return this.paymentTermName; }
     public set PaymentTermName(newValue: string) { if (this.paymentTermName != newValue) { this.paymentTermName = newValue; this.MarkAsDirty("PaymentTermName"); } }
+       
+	 
+    private creditLimit: number;
+    public get CreditLimit() { return this.creditLimit; }
+    public set CreditLimit(newValue: number) { if (this.creditLimit != newValue) { this.creditLimit = newValue; this.MarkAsDirty("CreditLimit"); } }
+       
+	 
+    private paymentTerm: string;
+    public get PaymentTerm() { return this.paymentTerm; }
+    public set PaymentTerm(newValue: string) { if (this.paymentTerm != newValue) { this.paymentTerm = newValue; this.MarkAsDirty("PaymentTerm"); } }
+       
+	 
+    private totalOpenShipments: number;
+    public get TotalOpenShipments() { return this.totalOpenShipments; }
+    public set TotalOpenShipments(newValue: number) { if (this.totalOpenShipments != newValue) { this.totalOpenShipments = newValue; this.MarkAsDirty("TotalOpenShipments"); } }
+       
+	 
+    private phone: string;
+    public get Phone() { return this.phone; }
+    public set Phone(newValue: string) { if (this.phone != newValue) { this.phone = newValue; this.MarkAsDirty("Phone"); } }
+       
+	 
+    private salesman: string;
+    public get Salesman() { return this.salesman; }
+    public set Salesman(newValue: string) { if (this.salesman != newValue) { this.salesman = newValue; this.MarkAsDirty("Salesman"); } }
+       
+	 
+    private collector: string;
+    public get Collector() { return this.collector; }
+    public set Collector(newValue: string) { if (this.collector != newValue) { this.collector = newValue; this.MarkAsDirty("Collector"); } }
        
 	 
 

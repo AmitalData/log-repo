@@ -128,6 +128,12 @@ export class GLAccountList {
 	ChartOfAccountsLocalName: string;
 	CardsDataId: string;
 	PaymentTermName: string;
+	CreditLimit: number;
+	PaymentTerm: string;
+	TotalOpenShipments: number;
+	Phone: string;
+	Salesman: string;
+	Collector: string;
 	
 }
  
