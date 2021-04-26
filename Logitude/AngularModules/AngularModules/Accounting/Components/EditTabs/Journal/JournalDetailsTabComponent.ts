@@ -231,29 +231,30 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     }
 
     private CheckIfJournalFromAPInvoiceAndCreatedExternally() {
-        const AccountingEntityCode_APInvoice = "4";
-        var isJournalCreatedFromAPInvoice = this.EntityPM.AccountingEntityCode == AccountingEntityCode_APInvoice;
+        var isJournalCreatedFromAPInvoice = this.CheckIfJournalFromAPInvoice();
+
         if (isJournalCreatedFromAPInvoice) {
-            this.GetAPInvoiceById(this.EntityPM.AccountingEntityId);
+            this.CheckIfAPInvoiceCreatedExternally(this.EntityPM.AccountingEntityId);
         }
     }
 
-    GetAPInvoiceById(id: string) {
+    private CheckIfJournalFromAPInvoice() {
+        const AccountingEntityCode_APInvoice = "4";
+        var isJournalCreatedFromAPInvoice = this.EntityPM.AccountingEntityCode == AccountingEntityCode_APInvoice;
+        return isJournalCreatedFromAPInvoice;
+    }
+
+    CheckIfAPInvoiceCreatedExternally(id: string) {
         this.apInvoicePMService.get(id).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
                 if (!myResponse.HasError) {
                     this.APInvoice = myResponse.Result;
-                    this.CheckIfAPInvoiceCreatedExternally();
+                    if (this.APInvoice.IsExternalEntity == false) {
+                        this.IsJournalEditableAfterApproval = true;
+                    }
                 }
             }
         });
-      
-    }
-
-    CheckIfAPInvoiceCreatedExternally() {
-        if (this.APInvoice.IsExternalEntity == false) {
-            this.IsJournalEditableAfterApproval = true;
-        }
     }
 
     FillGrid() {
