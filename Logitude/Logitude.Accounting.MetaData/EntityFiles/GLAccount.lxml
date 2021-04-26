@@ -12102,86 +12102,41 @@
       <QueryColumn
         QueryCode="&quot;All GLAccounts&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;Period0&quot;"
-        ColumnWidth="75" />
-      <QueryColumn
-        QueryCode="&quot;All GLAccounts&quot;"
-        IndexOrder="2"
-        ObjectFieldName="&quot;Period1&quot;"
-        ColumnWidth="75" />
-      <QueryColumn
-        QueryCode="&quot;All GLAccounts&quot;"
-        IndexOrder="3"
-        ObjectFieldName="&quot;Period2&quot;"
-        ColumnWidth="75" />
-      <QueryColumn
-        QueryCode="&quot;All GLAccounts&quot;"
-        IndexOrder="4"
-        ObjectFieldName="&quot;Period3&quot;"
-        ColumnWidth="75" />
-      <QueryColumn
-        QueryCode="&quot;All GLAccounts&quot;"
-        IndexOrder="5"
-        ObjectFieldName="&quot;Period4&quot;"
-        ColumnWidth="75" />
-      <QueryColumn
-        QueryCode="&quot;All GLAccounts&quot;"
-        IndexOrder="6"
-        ObjectFieldName="&quot;Period5&quot;"
-        ColumnWidth="75" />
-      <QueryColumn
-        QueryCode="&quot;All GLAccounts&quot;"
-        IndexOrder="7"
-        ObjectFieldName="&quot;PeriodPast&quot;"
-        ColumnWidth="75" />
-      <QueryColumn
-        QueryCode="&quot;All GLAccounts&quot;"
-        IndexOrder="8"
-        ObjectFieldName="&quot;PeriodFuture&quot;"
-        ColumnWidth="75" />
-      <QueryColumn
-        QueryCode="&quot;All GLAccounts&quot;"
-        IndexOrder="9"
-        ObjectFieldName="&quot;TotalOpenTransactions&quot;"
-        ColumnWidth="80" />
-      <QueryColumn
-        QueryCode="&quot;All GLAccounts&quot;"
-        IndexOrder="10"
         ObjectFieldName="&quot;LocalName&quot;"
         ColumnWidth="160" />
       <QueryColumn
         QueryCode="&quot;All GLAccounts&quot;"
-        IndexOrder="11"
+        IndexOrder="2"
         ObjectFieldName="&quot;EnglishName&quot;"
         ColumnWidth="160" />
       <QueryColumn
         QueryCode="&quot;All GLAccounts&quot;"
-        IndexOrder="12"
+        IndexOrder="3"
         ObjectFieldName="&quot;CurrencyCode&quot;"
         ColumnWidth="80" />
       <QueryColumn
         QueryCode="&quot;All GLAccounts&quot;"
-        IndexOrder="13"
+        IndexOrder="4"
         ObjectFieldName="&quot;IsMultiCurrency&quot;"
         ColumnWidth="110" />
       <QueryColumn
         QueryCode="&quot;All GLAccounts&quot;"
-        IndexOrder="14"
+        IndexOrder="5"
         ObjectFieldName="&quot;BalanceInLocalCurrency&quot;"
         ColumnWidth="180" />
       <QueryColumn
         QueryCode="&quot;All GLAccounts&quot;"
-        IndexOrder="15"
+        IndexOrder="6"
         ObjectFieldName="&quot;ChartOfAccountsName&quot;"
         ColumnWidth="140" />
       <QueryColumn
         QueryCode="&quot;All GLAccounts&quot;"
-        IndexOrder="16"
+        IndexOrder="7"
         ObjectFieldName="&quot;ChartOfAccountsTypeName&quot;"
         ColumnWidth="160" />
       <QueryColumn
         QueryCode="&quot;All GLAccounts&quot;"
-        IndexOrder="17"
+        IndexOrder="8"
         ObjectFieldName="&quot;Inactive&quot;"
         ColumnWidth="75" />
     </QueryColumns>

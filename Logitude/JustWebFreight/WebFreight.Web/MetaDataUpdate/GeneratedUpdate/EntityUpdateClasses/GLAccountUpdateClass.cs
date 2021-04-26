@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "0d4416af569424c7202ae56719eefec3";
+		public const string HashString = "506f0046cde22ab20d1825bd761e9fbd";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -9406,39 +9406,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn AllGLAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "GLAccount.DisplayNumber" , ColumnWidth = 85 }, addedQueryColumns);
 
-			 QueryColumn AllGLAccountsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "GLAccount.Period0" , ColumnWidth = 75 }, addedQueryColumns);
+			 QueryColumn AllGLAccountsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "GLAccount.LocalName" , ColumnWidth = 160 }, addedQueryColumns);
 
-			 QueryColumn AllGLAccountsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "GLAccount.Period1" , ColumnWidth = 75 }, addedQueryColumns);
+			 QueryColumn AllGLAccountsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "GLAccount.EnglishName" , ColumnWidth = 160 }, addedQueryColumns);
 
-			 QueryColumn AllGLAccountsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "GLAccount.Period2" , ColumnWidth = 75 }, addedQueryColumns);
+			 QueryColumn AllGLAccountsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "GLAccount.CurrencyCode" , ColumnWidth = 80 }, addedQueryColumns);
 
-			 QueryColumn AllGLAccountsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "GLAccount.Period3" , ColumnWidth = 75 }, addedQueryColumns);
+			 QueryColumn AllGLAccountsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "GLAccount.IsMultiCurrency" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn AllGLAccountsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "GLAccount.Period4" , ColumnWidth = 75 }, addedQueryColumns);
+			 QueryColumn AllGLAccountsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "GLAccount.BalanceInLocalCurrency" , ColumnWidth = 180 }, addedQueryColumns);
 
-			 QueryColumn AllGLAccountsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "GLAccount.Period5" , ColumnWidth = 75 }, addedQueryColumns);
+			 QueryColumn AllGLAccountsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "GLAccount.ChartOfAccountsName" , ColumnWidth = 140 }, addedQueryColumns);
 
-			 QueryColumn AllGLAccountsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "GLAccount.PeriodPast" , ColumnWidth = 75 }, addedQueryColumns);
+			 QueryColumn AllGLAccountsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "GLAccount.ChartOfAccountsTypeName" , ColumnWidth = 160 }, addedQueryColumns);
 
-			 QueryColumn AllGLAccountsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "GLAccount.PeriodFuture" , ColumnWidth = 75 }, addedQueryColumns);
-
-			 QueryColumn AllGLAccountsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "GLAccount.TotalOpenTransactions" , ColumnWidth = 80 }, addedQueryColumns);
-
-			 QueryColumn AllGLAccountsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "GLAccount.LocalName" , ColumnWidth = 160 }, addedQueryColumns);
-
-			 QueryColumn AllGLAccountsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "GLAccount.EnglishName" , ColumnWidth = 160 }, addedQueryColumns);
-
-			 QueryColumn AllGLAccountsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "GLAccount.CurrencyCode" , ColumnWidth = 80 }, addedQueryColumns);
-
-			 QueryColumn AllGLAccountsQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "GLAccount.IsMultiCurrency" , ColumnWidth = 110 }, addedQueryColumns);
-
-			 QueryColumn AllGLAccountsQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 14, ObjectFieldCode = "GLAccount.BalanceInLocalCurrency" , ColumnWidth = 180 }, addedQueryColumns);
-
-			 QueryColumn AllGLAccountsQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 15, ObjectFieldCode = "GLAccount.ChartOfAccountsName" , ColumnWidth = 140 }, addedQueryColumns);
-
-			 QueryColumn AllGLAccountsQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 16, ObjectFieldCode = "GLAccount.ChartOfAccountsTypeName" , ColumnWidth = 160 }, addedQueryColumns);
-
-			 QueryColumn AllGLAccountsQueryColumn_17 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 17, ObjectFieldCode = "GLAccount.Inactive" , ColumnWidth = 75 }, addedQueryColumns);
+			 QueryColumn AllGLAccountsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "GLAccount.Inactive" , ColumnWidth = 75 }, addedQueryColumns);
 
              AdvancedQueryFilter AllGLAccountsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.AccountTypeCode", PredefinedValue = "1",PredefinedValue2 = null, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
