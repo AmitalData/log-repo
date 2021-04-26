@@ -123,7 +123,7 @@ namespace WebFreight.Web
             try
             {
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);           
-                ExternalAPIHelper externalAPIHelper = new ExternalAPIHelper(authToken.Tenant);
+                ExternalAPITemplatesBuilder externalAPIHelper = new ExternalAPITemplatesBuilder(authToken.Tenant);
                 ExternalAPIResponseParameters responseParameters = externalAPIHelper.GetExternalAPIResponseParameters();
 
                 return Request.CreateResponse(HttpStatusCode.OK, responseParameters);
