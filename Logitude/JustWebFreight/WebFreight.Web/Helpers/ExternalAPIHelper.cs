@@ -372,8 +372,8 @@ namespace WebFreight.Web.Helpers
 	                                        <ComputingPartnerCode>AMS</ComputingPartnerCode>
 	                                        <RateUpdate>
 		                                        <Currency Code='USD' PartnerCode='USD'></Currency>
-                                                <RateDate>2021 - 11 - 29</RateDate>
-                                                <Rate> 5 </Rate>
+                                                <RateDate>2021-11-29</RateDate>
+                                                <Rate>5</Rate>
                                             </RateUpdate>
                                             </RatesUpdate>
             ");
