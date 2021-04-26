@@ -20,7 +20,6 @@ namespace RestClientApplication
     {
         //string uri = "http://localhost:9996/api/";
         string Token;
-        private int ratesUpdateIndex = 17;
         APIResponseParameters responseParameters = null;
         public Form1()
         {
@@ -36,19 +35,33 @@ namespace RestClientApplication
 
         private void BuildOperationComboBox()
         {
-            if(apiCombo.SelectedIndex == ratesUpdateIndex)
+            if (apiCombo.SelectedItem != null)
             {
-                this.operationCombo.Items.Clear();
-                this.operationCombo.Items.Add("Create (POST)");
+                if (apiCombo.SelectedItem.Equals("Rates Update"))
+                {                 
+                    this.operationCombo.SelectedItem = null;
+                    this.operationCombo.Items.Clear();
+                    this.operationCombo.Items.Add("Create (POST)");
+                }
+                else
+                {
+                    AddGeneralOperationsToComboBox();
+                }
             }
             else
             {
-                this.operationCombo.Items.Clear();
-                this.operationCombo.Items.Add("Create (POST)");
-                this.operationCombo.Items.Add("Update (PUT)");
-                this.operationCombo.Items.Add("Get");
-                this.operationCombo.Items.Add("Cancel");
+                AddGeneralOperationsToComboBox();
             }
+        }
+
+        private void AddGeneralOperationsToComboBox()
+        {
+            this.operationCombo.SelectedItem = null;
+            this.operationCombo.Items.Clear();
+            this.operationCombo.Items.Add("Create (POST)");
+            this.operationCombo.Items.Add("Update (PUT)");
+            this.operationCombo.Items.Add("Get");
+            this.operationCombo.Items.Add("Cancel");
         }
 
         private bool isConnected;
