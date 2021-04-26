@@ -501,11 +501,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         {
             CargoTrackingShipmentRepository repo = new CargoTrackingShipmentRepository(context);
             IQueryable<CargoTrackingShipment> shipments = repo.GetByShipmentIds(ShipmentIds, tenant);
-            //var xx = shipments.Count();
 
             IQueryable<CargoTrackingShipmentList> shipmentsListQuerable = GetIqueryableList(shipments);
-
-            //var xsx = shipmentsListQuerable.Count();
 
             return shipmentsListQuerable;
         }

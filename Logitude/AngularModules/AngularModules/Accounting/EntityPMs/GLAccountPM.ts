@@ -783,6 +783,16 @@ export class GLAccountPM {
     public set TotalOpenTransactions(newValue: number) { if (this.totalOpenTransactions != newValue) { this.totalOpenTransactions = newValue; this.MarkAsDirty("TotalOpenTransactions"); } }
        
 	 
+    private lastReconciledBy: string;
+    public get LastReconciledBy() { return this.lastReconciledBy; }
+    public set LastReconciledBy(newValue: string) { if (this.lastReconciledBy != newValue) { this.lastReconciledBy = newValue; this.MarkAsDirty("LastReconciledBy"); } }
+       
+	 
+    private lastReconcileDate: Date;
+    public get LastReconcileDate() { return this.lastReconcileDate; }
+    public set LastReconcileDate(newValue: Date) { if (this.lastReconcileDate != newValue) { this.lastReconcileDate = newValue; this.MarkAsDirty("LastReconcileDate"); } }
+       
+	 
 
     public OldEntityPM: GLAccountPM;
 		

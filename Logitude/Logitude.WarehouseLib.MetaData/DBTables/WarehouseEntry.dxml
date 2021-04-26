@@ -422,6 +422,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="MasterShipmentNumber"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

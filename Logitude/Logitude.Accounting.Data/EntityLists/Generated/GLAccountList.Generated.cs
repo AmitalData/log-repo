@@ -272,6 +272,10 @@ namespace Logitude.Accounting.Data.EntityLists
        public decimal? PeriodFuture  { get; set; }
        [DataMember]
        public int? TotalOpenTransactions  { get; set; }
+       [DataMember]
+       public string LastReconciledBy  { get; set; }
+       [DataMember]
+       public DateTime? LastReconcileDate  { get; set; }
    }
 
 }

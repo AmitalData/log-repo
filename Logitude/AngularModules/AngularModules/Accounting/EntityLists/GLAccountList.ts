@@ -137,6 +137,8 @@ export class GLAccountList {
 	PeriodPast: number;
 	PeriodFuture: number;
 	TotalOpenTransactions: number;
+	LastReconciledBy: string;
+	LastReconcileDate: Date;
 	
 }
  

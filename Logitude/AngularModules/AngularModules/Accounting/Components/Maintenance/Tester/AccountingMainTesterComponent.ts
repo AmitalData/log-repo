@@ -231,6 +231,7 @@ export class AccountingMainTesterComponent extends BaseComponent {
             IsReconciled: null,
             ChartOfAccountsTypeCode: "",
             SalesmanId: "",
+            IncludeRelatedCurrenciesAccount:false
 
         };
         let opr = "CardIndexNew_Click";

@@ -71,7 +71,8 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         IsUsed, 
 	         TruckerId, 
 	         TruckerReference, 
-	         ChildEntityReference,
+	         ChildEntityReference, 
+	         MasterShipmentNumber,
 	      }
 
 
@@ -134,7 +135,8 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         Destination, 
 	         TruckerId, 
 	         TruckerReference, 
-	         ChildEntityReference,
+	         ChildEntityReference, 
+	         MasterShipmentNumber,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -386,6 +388,11 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChildEntityReference))
             {
 				entityPOCO.ChildEntityReference = entityPM.ChildEntityReference;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MasterShipmentNumber))
+            {
+				entityPOCO.MasterShipmentNumber = entityPM.MasterShipmentNumber;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -644,6 +651,11 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 					entityPM.ChildEntityReference = entityPOCO.ChildEntityReference;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MasterShipmentNumber))
+            {
+					entityPM.MasterShipmentNumber = entityPOCO.MasterShipmentNumber;
+            }
+
 		}
 
 		public void PMToOldPM(WarehouseReleasePM entityPM, WarehouseReleasePM oldEntityPM)
@@ -893,6 +905,11 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChildEntityReference))
             {
                 oldEntityPM.ChildEntityReference = entityPM.ChildEntityReference;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MasterShipmentNumber))
+            {
+                oldEntityPM.MasterShipmentNumber = entityPM.MasterShipmentNumber;
             }
 			
 		}

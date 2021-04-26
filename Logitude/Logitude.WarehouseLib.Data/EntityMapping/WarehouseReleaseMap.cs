@@ -122,6 +122,8 @@ namespace Logitude.WarehouseLib.Data.EntityMapping
             this.Property(t => t.TruckerReference).HasColumnName("TruckerReference").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.ChildEntityReference).HasColumnName("ChildEntityReference").HasMaxLength(25).IsUnicode(false);
+
+            this.Property(t => t.MasterShipmentNumber).HasColumnName("MasterShipmentNumber").HasMaxLength(100).IsUnicode(false);
         }
     }
 }

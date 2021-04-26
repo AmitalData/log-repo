@@ -136,7 +136,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 var isDebitTransaction = (transactionPM.ForeignAmountDebit + transactionPM.LocalAmountDebit) != 0;
                 if (isDebitTransaction)
+                {
                     arpaymentCheques = GetChequeOfDepositTransaction(transactionPM.SourceId, transactionPM.Tenant);
+                    bool transactionHasOnlyOneCheque = !string.IsNullOrEmpty(transactionPM.Reference2);
+                    if (transactionHasOnlyOneCheque)
+                        arpaymentCheques = FilterChequesByTransactionReference2(transactionPM, arpaymentCheques);
+                }
                 else
                     arpaymentCheques = GetChequeOfDepositTransaction(transactionPM.Reference2, transactionPM.SourceId, transactionPM.Tenant);
             }
@@ -146,7 +151,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             return arpaymentCheques;
         }
-
+        private static List<ARPaymentChequePM> FilterChequesByTransactionReference2(LedgerTransactionPM transactionPM, List<ARPaymentChequePM> arpaymentCheques)
+        {
+            arpaymentCheques = arpaymentCheques.Where(d => d.ChequeNumber == transactionPM.Reference2).ToList();
+            return arpaymentCheques;
+        }
         private List<ARPaymentChequePM> GetChequeOfDepositTransaction(string transactionReference, string depositId, int tenant)
         {
             List<ARPaymentChequePM> arpaymentCheques = GetChequesOfDeposit(tenant, depositId);

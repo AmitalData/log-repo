@@ -56,6 +56,7 @@ export class WarehouseReleaseList {
 	Ratio: number;
 	TruckerId: string;
 	TruckerReference: string;
+	MasterShipmentNumber: string;
 	
 }
  
