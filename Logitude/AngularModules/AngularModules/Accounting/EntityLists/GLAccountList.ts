@@ -128,6 +128,8 @@ export class GLAccountList {
 	ChartOfAccountsLocalName: string;
 	CardsDataId: string;
 	PaymentTermName: string;
+	LastReconciledBy: string;
+	LastReconcileDate: Date;
 	
 }
  

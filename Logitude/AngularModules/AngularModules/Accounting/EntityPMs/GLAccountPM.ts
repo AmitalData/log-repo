@@ -728,16 +728,24 @@ export class GLAccountPM {
             this.gLAccountChildren = newValue;
         }
     }
-
     private cardsDataId: string;
     public get CardsDataId() { return this.cardsDataId; }
     public set CardsDataId(newValue: string) { if (this.cardsDataId != newValue) { this.cardsDataId = newValue; this.MarkAsDirty("CardsDataId"); } }
        
 	 
-
     private paymentTermName: string;
     public get PaymentTermName() { return this.paymentTermName; }
     public set PaymentTermName(newValue: string) { if (this.paymentTermName != newValue) { this.paymentTermName = newValue; this.MarkAsDirty("PaymentTermName"); } }
+       
+	 
+    private lastReconciledBy: string;
+    public get LastReconciledBy() { return this.lastReconciledBy; }
+    public set LastReconciledBy(newValue: string) { if (this.lastReconciledBy != newValue) { this.lastReconciledBy = newValue; this.MarkAsDirty("LastReconciledBy"); } }
+       
+	 
+    private lastReconcileDate: Date;
+    public get LastReconcileDate() { return this.lastReconcileDate; }
+    public set LastReconcileDate(newValue: Date) { if (this.lastReconcileDate != newValue) { this.lastReconcileDate = newValue; this.MarkAsDirty("LastReconcileDate"); } }
        
 	 
 
