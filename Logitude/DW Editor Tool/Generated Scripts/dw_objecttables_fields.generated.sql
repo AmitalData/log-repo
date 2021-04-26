@@ -469,6 +469,32 @@ declare @DIM_PartnersBillToNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_PartnersBillToNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_PartnersBillToNewId,0,'DIM_Partners','[Bill To]','Bill To','Text','false',0,70,'false','false','true','false','false','false','false','false')  
 ------------------------------------------------------------------------------------
+declare @DIM_PaymentTermsNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_PaymentTermsNewId OUTPUT,'DWObjectTable' 
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn,HasCustomFields,MaxNumberOfCustomFields) Values(@DIM_PaymentTermsNewId,0,'','DIM_PaymentTerms','DIM_PaymentTerms','Dimension','false','[Name]','false','false',0)  
+--Fields --
+declare @DIM_PaymentTermsId_NumberNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_PaymentTermsId_NumberNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_PaymentTermsId_NumberNewId,0,'DIM_PaymentTerms','[Id_Number]','Id_Number','Integer','true',0,0,'true','false','false','false','false','false','false','false')  
+declare @DIM_PaymentTermsIdNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_PaymentTermsIdNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_PaymentTermsIdNewId,0,'DIM_PaymentTerms','[Id]','Id','Text','true',0,15,'false','false','false','false','false','false','true','false')  
+declare @DIM_PaymentTermsNameNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_PaymentTermsNameNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_PaymentTermsNameNewId,0,'DIM_PaymentTerms','[Name]','Name','Text','true',0,40,'false','false','true','false','true','false','false','false')  
+declare @DIM_PaymentTermsLocalNameNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_PaymentTermsLocalNameNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_PaymentTermsLocalNameNewId,0,'DIM_PaymentTerms','[Local Name]','Local Name','Text','false',0,40,'false','false','true','false','true','false','false','false')  
+declare @DIM_PaymentTermsCodeNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_PaymentTermsCodeNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,LOVAdditionalColumns,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_PaymentTermsCodeNewId,0,'DIM_PaymentTerms','[Code]','Code','Text','true',0,4,'false','false','true','[Name]','false','false','false','false','false')  
+declare @DIM_PaymentTermsSourceTenantNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_PaymentTermsSourceTenantNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,ViewFieldDisplayName,DontDisplayInView,IsMultipleSelection) Values(@DIM_PaymentTermsSourceTenantNewId,0,'DIM_PaymentTerms','[Source Tenant]','Source Tenant','Integer','true',0,0,'false','false','false','false','false','false','Tenant','false','false')  
+declare @DIM_PaymentTermsParentTenantNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_PaymentTermsParentTenantNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_PaymentTermsParentTenantNewId,0,'DIM_PaymentTerms','[Parent Tenant]','Parent Tenant','Integer','true',0,0,'false','false','false','false','false','false','true','false')  
+------------------------------------------------------------------------------------
 declare @DIM_PortsNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_PortsNewId OUTPUT,'DWObjectTable' 
 insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_PortsNewId,0,'','DIM_Ports','DIM_Ports','Dimension','false','[Name]','false')  

@@ -213,6 +213,7 @@
     <Content Include="WarehouseScript\BuildWarehouse\BuildOBLTypeDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WarehouseScript\BuildWarehouse\BuildPaymentTermsDimensionTable.sql" />
     <Content Include="WarehouseScript\BuildWarehouse\BuildQuoteClosingReasonsDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -294,6 +295,7 @@
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdateIncotermDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WarehouseScript\IncrementalWarehouse\UpdatePaymentTermsDimensionTable.sql" />
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdatePortsDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
