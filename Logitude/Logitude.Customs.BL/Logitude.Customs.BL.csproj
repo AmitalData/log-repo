@@ -713,6 +713,7 @@
     <Compile Include="EntityDataMappings\Generated\LeadDocumentExceptionTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\LeadDocumentTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\LoadingSiteTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\LogisticsReferenceTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\MamanSpecialActionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\MamanSpecialActionStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\MamanStatusDataMapping.Generated.cs" />
@@ -770,6 +771,8 @@
     <Compile Include="EntityDataMappings\Generated\RansomViolationTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ReferantExceptionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ReferantTeamDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ReferenceInputTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ReferenceStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\RefundCustomerActivityTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\RegisteredWarehouseSiteTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ReleaseMessageTypeDataMapping.Generated.cs" />
@@ -875,6 +878,7 @@
     <Compile Include="EntityDataMappings\LeadDocumentExceptionTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\LeadDocumentTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\LoadingSiteTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\LogisticsReferenceTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\MamanSpecialActionDataMapping.cs" />
     <Compile Include="EntityDataMappings\MamanSpecialActionStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\MamanStatusDataMapping.cs" />
@@ -932,6 +936,8 @@
     <Compile Include="EntityDataMappings\RansomViolationTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ReferantExceptionDataMapping.cs" />
     <Compile Include="EntityDataMappings\ReferantTeamDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ReferenceInputTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ReferenceStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\RefundCustomerActivityTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\RegisteredWarehouseSiteTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ReleaseMessageTypeDataMapping.cs" />
@@ -1039,8 +1045,11 @@
     <Compile Include="EntityQueryServices\Generated\FullnessCodeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\HandingCodeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\LoadingSiteTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\LogisticsReferenceTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\NDMessageActionCodeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ReferantTeamQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ReferenceInputTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ReferenceStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ReleaseMessageTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\SecurityClearenceTypeCodeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\StuffingSiteTypeQueryService.Generated.cs" />
@@ -1564,10 +1573,13 @@
     <Compile Include="EntityUpdateServices\Generated\FullnessCodeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\HandingCodeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\LoadingSiteTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\LogisticsReferenceTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\NbcDeclarationTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\NDMessageActionCodeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\PartyRelationshipTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ReferantTeamUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ReferenceInputTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ReferenceStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ReleaseMessageTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SecurityClearenceTypeCodeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\StuffingSiteTypeUpdateService.Generated.cs" />

@@ -534,6 +534,21 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(dangerousGoodsPackingReqTable, dangerousGoodsPackingReqObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(dangerousGoodsPackingReqTable);
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData LogisticsReferenceTypeTable = closedSystemTables.Where(d => d.id == "2032").FirstOrDefault();
+            ObjectTable LogisticsReferenceTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.LogisticsReferenceType", 0, false);
+            InsertClosedTableRecord(LogisticsReferenceTypeTable, LogisticsReferenceTypeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(LogisticsReferenceTypeTable);
+
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData ReferenceStatusTable = closedSystemTables.Where(d => d.id == "2130").FirstOrDefault();
+            ObjectTable ReferenceStatusObjectTable = objectTableRepository.GetObjectTableByName("Customs.ReferenceStatus", 0, false);
+            InsertClosedTableRecord(ReferenceStatusTable, ReferenceStatusObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(ReferenceStatusTable);
+
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData ReferenceInputTypeTable = closedSystemTables.Where(d => d.id == "1713").FirstOrDefault();
+            ObjectTable ReferenceInputTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.ReferenceInputType", 0, false);
+            InsertClosedTableRecord(ReferenceInputTypeTable, ReferenceInputTypeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(ReferenceInputTypeTable);
+
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData itemGovernmentProcedureTypeTable = closedSystemTables.Where(d => d.id == "1422").FirstOrDefault();
             ObjectTable itemGovernmentProcedureTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.ItemGovernmentProcedureType", 0, false);
             InsertClosedTableRecord(itemGovernmentProcedureTypeTable, itemGovernmentProcedureTypeObjectTable, customsClosedTables, customsClosedTableRepository);

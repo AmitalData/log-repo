@@ -396,6 +396,9 @@ import { HandingCodeListService } from './Services/StandardLists/HandingCodeList
 import { StuffingSiteTypeListService } from './Services/StandardLists/StuffingSiteTypeListService';
 import { ContainerTypeListService } from './Services/StandardLists/ContainerTypeListService';
 import { ExportStorgeListService } from './Services/StandardLists/ExportStorgeListService';
+import { LogisticsReferenceTypeListService } from './Services/StandardLists/LogisticsReferenceTypeListService';
+import { ReferenceStatusListService } from './Services/StandardLists/ReferenceStatusListService';
+import { ReferenceInputTypeListService } from './Services/StandardLists/ReferenceInputTypeListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -640,6 +643,10 @@ export class ModuleProviders {
             case "ClaimReasonTypeListService": { myResult = new ClaimReasonTypeListService(); break; }
             case "AmountTypeListService": { myResult = new AmountTypeListService(); break; }
             case "PartyRelationshipTypeListService": { myResult = new PartyRelationshipTypeListService(); break; }
+            case "ReferenceInputTypeListService": { myResult = new ReferenceInputTypeListService(); break; }
+            case "ReferenceStatusListService": { myResult = new ReferenceStatusListService(); break; }
+            case "LogisticsReferenceTypeListService": { myResult = new LogisticsReferenceTypeListService(); break; }
+
 
             case "CustomsShipListService": { myResult = new CustomsShipListService(); break; }
             case "NbcDeclarationTypeListService": { myResult = new NbcDeclarationTypeListService(); break; }
