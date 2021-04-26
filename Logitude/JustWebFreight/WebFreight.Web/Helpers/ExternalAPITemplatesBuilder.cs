@@ -7,7 +7,7 @@ using System.Web;
 
 namespace WebFreight.Web.Helpers
 {
-    public class ExternalAPIHelper
+    public class ExternalAPITemplatesBuilder
     {
         private ExternalAPIResponseParameters responseParameters;
         private TenantPM tenantPM;
@@ -19,7 +19,7 @@ namespace WebFreight.Web.Helpers
                                                                   "Customer Open Files Amount", "GL Account More Data","CargoTrackingShipmentDetails" };
         private Dictionary<string,string> XMLRequestTexts;
 
-        public ExternalAPIHelper(int tenant)
+        public ExternalAPITemplatesBuilder(int tenant)
         {
             this.responseParameters = new ExternalAPIResponseParameters();
             this.responseParameters.Tenant = tenant;
@@ -67,56 +67,35 @@ namespace WebFreight.Web.Helpers
                 this.responseParameters.APIsNames = new List<string>();
                 if (this.responseParameters.ApiTanentType == "General")
                 {
-                    AddGeneralTenantsAPISNames();
+                    AddTenantAPIsNames(generalTenantsAPISNames);
                 }
                 else if (this.responseParameters.ApiTanentType == "FullAccounting")
                 {
-                    AddGeneralTenantsAPISNames();
-                    AddFullAccountingTenantsAPISNames();
+                    AddTenantAPIsNames(generalTenantsAPISNames);
+                    AddTenantAPIsNames(fullAccountingTenantsAPISNames);
                 }
                 else if(this.responseParameters.ApiTanentType == "Hybrid")
                 {
-                    AddGeneralTenantsAPISNames();
-                    AddHypridTenantsAPISNames();
+                    AddTenantAPIsNames(generalTenantsAPISNames);
+                    AddTenantAPIsNames(hypridTenantsAPISNames);
                 }
                 else if (this.responseParameters.ApiTanentType == "All")
                 {
-                    AddGeneralTenantsAPISNames();
-                    AddHypridTenantsAPISNames();
-                    AddFullAccountingTenantsAPISNames();
+                    AddTenantAPIsNames(generalTenantsAPISNames);
+                    AddTenantAPIsNames(hypridTenantsAPISNames);
+                    AddTenantAPIsNames(fullAccountingTenantsAPISNames);
                 }
             }
         }
 
-        private void AddGeneralTenantsAPISNames()
+        private void AddTenantAPIsNames(string[] apisNames)
         {
-            foreach(string name in generalTenantsAPISNames){
-                if (!this.responseParameters.APIsNames.Contains(name))
-                {
-                    this.responseParameters.APIsNames.Add(name);
-                }
-            }
-        }
-
-        private void AddFullAccountingTenantsAPISNames()
-        {
-            foreach (string name in fullAccountingTenantsAPISNames)
-            {
-                if (!this.responseParameters.APIsNames.Contains(name))
-                { 
-                    this.responseParameters.APIsNames.Add(name);
-                }
-            }
-        }
-
-        private void AddHypridTenantsAPISNames()
-        {
-            foreach (string name in hypridTenantsAPISNames)
+            foreach(string name in apisNames)
             {
                 if (!this.responseParameters.APIsNames.Contains(name))
                 {
                     this.responseParameters.APIsNames.Add(name);
-                }   
+                }
             }
         }
 
