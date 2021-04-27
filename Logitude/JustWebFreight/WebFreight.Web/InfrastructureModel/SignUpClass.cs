@@ -2095,6 +2095,7 @@ namespace WebFreight.Web.InfrastructureModel
                         IsFollowUp = eventType.IsFollowUp,
                         IsManualEntry = eventType.IsManualEntry,
                         ObjectTableId = tenantZeroObject.Id,
+                        EventTypeCategoryCode = eventType.EventTypeCategoryCode,
                         LocalName = eventType.LocalName,
                         ShortView = eventType.ShortView,
                         SearchFields = eventType.SearchFields,
