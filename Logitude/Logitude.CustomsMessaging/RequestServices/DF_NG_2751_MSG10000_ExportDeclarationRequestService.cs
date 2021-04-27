@@ -729,7 +729,14 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             customDeclaration.ExportDeclarationOfficeID = SetIDTypeValue<DeclarationDeclarationOfficeIDType>(declarationPM.ExportDeclarationOfficeCode);
             customDeclaration.TypeCode = SetCodeTypeValue<DeclarationTypeCodeType>(declarationPM.DeclarationTypeCode);// MUST  hard coded
-
+            if (!String.IsNullOrWhiteSpace(declarationPM.DeclarationDocumentId))
+            {
+                customDeclaration.PreviousDocument = new DeclarationPreviousDocument
+                {
+                    ID = SetIDTypeValue<PreviousDocumentIdentificationIDType>(declarationPM.DeclarationDocumentId),
+                    TypeCode = SetCodeTypeValue<PreviousDocumentTypeCodeType>(declarationPM.DeclarationDocumentTypeCode)
+                };
+            }
             customDeclaration.DMExtensions = GetDMExtensions(declarationPM);
             customDeclaration.AdditionalDocument = GetDeclarationAdditionalDocuments(declarationPM);
             customDeclaration.Agent = GetDeclarationAgent(declarationPM);
