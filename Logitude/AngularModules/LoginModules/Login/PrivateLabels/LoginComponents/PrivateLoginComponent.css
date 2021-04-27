@@ -167,7 +167,7 @@ input:not(.DSVLoginButton) {
     -webkit-box-shadow: inset 0px 1px 0px 0px #f29c93;
      background: #212E63;
     */
-    background: white;
+    background: #212E63;
 }
 
     .DSVLoginButton:hover {
