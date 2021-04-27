@@ -74,6 +74,11 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                         return ButtonLoadConsolTaxRep_Click(tenant, _TextBoxParam);
                     }
                     break;
+                case "ButtonLoadJournals_ISL_Click":
+                    {
+                        return ButtonLoadJournals_ISL_Click(tenant, _TextBoxParam);
+                    }
+                    break;
 
                 case "WorkWithoutQueue_Click":
                     {
@@ -807,6 +812,44 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                     myConsolidatedTaxReportFlatFileAnalyser.Analyse(null, null, fileConsolidatedTaxReport);
 
                         gateWayTesterResult.JsonOut = "TaxRep Ok";
+
+
+
+
+            }
+            catch (Exception eee)
+            {
+                //param = null;
+                //throw;
+                gateWayTesterResult.ExceptionMess = eee.ToString();
+            }
+            finally
+            {
+
+                gateWayTesterResult.Log = gateWayTesterResult.Log ?? "";
+                gateWayTesterResult.Log += LogMessagingUtil.Instance.ToString();
+            }
+            return gateWayTesterResult;
+        }
+
+
+        private GateWayTesterResult ButtonLoadJournals_ISL_Click(int tenant, string textBoxParam)
+        {
+
+            var gateWayTesterResult = new GateWayTesterResult();
+
+
+            try
+            {
+
+
+                string fileJournals_ISL = textBoxParam;
+
+
+                var myJournalsCSVFlatFileAnalyser_ISL = new JournalsCSVFlatFileAnalyser_ISL();
+                myJournalsCSVFlatFileAnalyser_ISL.Analyse(null, fileJournals_ISL);
+
+                gateWayTesterResult.JsonOut = "Journals Loaded Ok";
 
 
 
