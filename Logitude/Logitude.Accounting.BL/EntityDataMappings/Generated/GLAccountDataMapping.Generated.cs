@@ -213,15 +213,17 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         Period5, 
 	         PeriodPast, 
 	         PeriodFuture, 
-	         TotalOpenTransactions,
+	         TotalOpenTransactions, 
 	         LastReconciledBy, 
-	         LastReconcileDate,
+	         LastReconcileDate, 
 	         CreditLimit, 
 	         PaymentTerm, 
 	         TotalOpenShipments, 
 	         Phone, 
 	         Salesman, 
-	         Collector,
+	         Collector, 
+	         FollowupDate, 
+	         FollowupNotes,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

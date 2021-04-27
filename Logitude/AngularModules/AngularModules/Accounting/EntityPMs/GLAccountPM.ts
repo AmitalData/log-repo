@@ -823,6 +823,16 @@ export class GLAccountPM {
     public set Collector(newValue: string) { if (this.collector != newValue) { this.collector = newValue; this.MarkAsDirty("Collector"); } }
        
 	 
+    private followupDate: Date;
+    public get FollowupDate() { return this.followupDate; }
+    public set FollowupDate(newValue: Date) { if (this.followupDate != newValue) { this.followupDate = newValue; this.MarkAsDirty("FollowupDate"); } }
+       
+	 
+    private followupNotes: string;
+    public get FollowupNotes() { return this.followupNotes; }
+    public set FollowupNotes(newValue: string) { if (this.followupNotes != newValue) { this.followupNotes = newValue; this.MarkAsDirty("FollowupNotes"); } }
+       
+	 
 
     public OldEntityPM: GLAccountPM;
 		

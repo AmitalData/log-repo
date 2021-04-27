@@ -145,6 +145,8 @@ export class GLAccountList {
 	Phone: string;
 	Salesman: string;
 	Collector: string;
+	FollowupDate: Date;
+	FollowupNotes: string;
 	
 }
  

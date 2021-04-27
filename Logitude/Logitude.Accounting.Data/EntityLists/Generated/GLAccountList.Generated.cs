@@ -277,7 +277,7 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public DateTime? LastReconcileDate  { get; set; }
        [DataMember]
-       public decimal? CreditLimit  { get; set; }
+       public double? CreditLimit  { get; set; }
        [DataMember]
        public string PaymentTerm  { get; set; }
        [DataMember]
@@ -288,6 +288,10 @@ namespace Logitude.Accounting.Data.EntityLists
        public string Salesman  { get; set; }
        [DataMember]
        public string Collector  { get; set; }
+       [DataMember]
+       public DateTime? FollowupDate  { get; set; }
+       [DataMember]
+       public string FollowupNotes  { get; set; }
    }
 
 }
