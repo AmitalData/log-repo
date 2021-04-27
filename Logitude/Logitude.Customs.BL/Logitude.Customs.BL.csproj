@@ -1925,6 +1925,7 @@
     <Compile Include="Messaging\CustomsAnalyzeQueue\CourierOVSStatusAvailabilityQService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\CourierOVSStatusAvailabilitySplitterQService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\CustomAnalyzerQueueBase.cs" />
+    <Compile Include="Messaging\CustomsAnalyzeQueue\ILSWSQHAWBService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\MamanQHAWBService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\MamanQSPCLService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\MamanStatusAvailabilityQService.cs" />
@@ -1952,6 +1953,8 @@
     <Compile Include="Messaging\ILOVS\CourierOVSECTHMessageRequestService.cs" />
     <Compile Include="Messaging\ILOVS\CourierOVSECTHMessageResponseService.cs" />
     <Compile Include="Messaging\ILOVS\CourierOVSSpecialActionRequestService.cs" />
+    <Compile Include="Messaging\ILSWS\CourierECSWSTHRMessageRequestService.cs" />
+    <Compile Include="Messaging\ILSWS\CourierECSWSTHRMessageResponseService.cs" />
     <Compile Include="Messaging\L2U\CustomFile\CustomCertificatesService.cs" />
     <Compile Include="Messaging\L2U\CustomFile\CustomFileCreditService.cs" />
     <Compile Include="Messaging\L2U\CustomFile\CustomFileCreditService.Model.cs" />

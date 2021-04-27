@@ -32,6 +32,7 @@ using Logitude.Customs.Data.EntityLists;
 using WebFreight.Web.CustomWebServices.BL.XLSExport;
 using System.IO;
 using System.Net.Http.Headers;
+using Logitude.Customs.BL.Messaging.ILSWS;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
@@ -647,6 +648,11 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                     {
                         var courierGWMessageECTHRDataMamanService = new CourierOVSECTHMessageRequestService();
                         response = courierGWMessageECTHRDataMamanService.BuildQueueSendWebAPI(declarationId, tenant);
+                    }
+                    else if (def.DEFDATA.Contains("ILSWS") && declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILSWS") // OVS
+                    {
+                        var courierECSWSTHRMessageRequestService = new CourierECSWSTHRMessageRequestService();
+                        response = courierECSWSTHRMessageRequestService.BuildQueueSendWebAPI(declarationId, tenant);
                     }
                     else
                     {

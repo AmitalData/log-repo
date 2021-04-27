@@ -3,6 +3,7 @@ using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.BL.Messaging.Customs;
 using Logitude.Customs.BL.Messaging.ILOVS;
+using Logitude.Customs.BL.Messaging.ILSWS;
 using Logitude.Customs.BL.Messaging.Maman;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.Repsitories;
@@ -161,6 +162,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         var courierGWMessageECTHRDataMamanService = new CourierOVSECTHMessageRequestService();
                         response = courierGWMessageECTHRDataMamanService.BuildQueueSendWebAPI(itemDeclarationIdStorageSiteCode.Key, requestParams.Tenant);
+                    }
+                    else if (def.DEFDATA.Contains("ILSWS") && itemDeclarationIdStorageSiteCode.Value == "ILSWS") // OVS
+                    {
+                        var courierECSWSTHRMessageRequestService = new CourierECSWSTHRMessageRequestService();
+                        response = courierECSWSTHRMessageRequestService.BuildQueueSendWebAPI(itemDeclarationIdStorageSiteCode.Key, requestParams.Tenant);
                     }
 
                     scope.Complete();
