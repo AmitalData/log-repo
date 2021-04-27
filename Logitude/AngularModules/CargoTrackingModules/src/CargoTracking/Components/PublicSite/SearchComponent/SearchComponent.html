@@ -32,7 +32,7 @@
         </div>
         <div class=" ">
             <div>
-                <form [formGroup]="searchForm" (ngSubmit)="Search()">
+                <form [formGroup]="searchForm" (ngSubmit)="Search(null)">
 
                     <div class="search-text ">
                         <input #input id="CargoTracking_Search" type="text " class="gray " [(ngModel)]="SearchText " placeholder="Search by Shipment References / Cargo Identifiers / Container No." formControlName="SearchText" name="SearchText " />

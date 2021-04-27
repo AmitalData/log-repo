@@ -62,7 +62,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
                 this.Shipments = SearchComponent.Last_Search_Shipments;
                }
                else{
-                 this.Search();
+                 this.Search("on init");
                }
            }
         // if(localStorage.getItem('SearchKey') == this.SearchText){
@@ -208,7 +208,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
     PostUserValidation(CaptchaParameters: CaptchaParameters) {
         this.searchService.PostUserValidation(CaptchaParameters).subscribe(
             (result: any) => {
-                if ((result && (result.HasError == true || result.ExceptionMessage)) || !result) {                  
+                if (result && result.HasError == true  ) {                  
                     this.CaptchaKey = result ? result.CaptchaKey : "";
                     this.errorMessage = "";
                     if (result.InValidCaptcha) {
@@ -218,25 +218,25 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
                         this.IsShowAreaCaptcha = true;
                         this.CaptchaImageUrl = result.CaptchaImage;
                     }
-                        this.errorMessage = "";
-                         if (result.InValidCaptcha && result.CaptchaImage) this.errorMessage = "Please re-enter the characters you see in the image above";
+                    if (result.InValidCaptcha && result.CaptchaImage) this.errorMessage = "Please re-enter the characters you see in the image above";
 
                 }
 
                 else {
                     this.IsShowAreaCaptcha = false;
+                    this.ResetStorageData();
                     this.LoadShipments();
 
                 }
             });
     }
-    Search()
+    Search(searchSource:any)
     {
         if (this.IsShowAreaCaptcha) {
             this.ValidateUser();
         }
         else {
-            this.CheckSearchTimes();          
+            this.CheckSearchTimes(searchSource);          
             if (this.tenant != null && this.SearchText) {
                 // this.router.navigate(['public-tracking/search',  this.SearchText]);
                 // this.router.navigate(['public-tracking/search',  this.SearchText]);
@@ -247,11 +247,11 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         }
 
     }
-    CheckSearchTimes() {
+    CheckSearchTimes(searchSource: any) {
         this.currentDate = new Date();
         if (this.searchCounter == 0) sessionStorage.setItem("FirstSearchDate", this.currentDate.getTime());
-        var FirstSearchDate: any = sessionStorage.getItem("FirstSearchDate");     
-        ++this.searchCounter;
+        var FirstSearchDate: any = sessionStorage.getItem("FirstSearchDate");
+        if (searchSource==null)++this.searchCounter;
         var difference: any = this.currentDate.getTime() - FirstSearchDate;
         if (difference <= 100000) {
             if (this.searchCounter == 20) {
@@ -287,9 +287,6 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
     }
     LoadShipments()
     {
-
-
-
         this.noResult = false;
         var searchText = this._SearchText.trim().toLowerCase();
         if (searchText) {
