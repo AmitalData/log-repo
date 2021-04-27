@@ -93,7 +93,7 @@ namespace Logitude.CustomsMessaging.Dca
                 
                 string externalId = //GetExternalId(_SelectedFile);
                     _DCAFileModel.OurRefExtrenalId;
-                if (externalId != myESBResponseParser.ResponseHeader.ExternalId && externalId != myESBResponseParser.ResponseHeader.ExternalId +"_E")
+                if (externalId != myESBResponseParser.ResponseHeader.ExternalId && externalId != myESBResponseParser.ResponseHeader.ExternalId +"_EX")
                 {
 
                     this.ErrorMessage = ("Exception:it must be GetExternalId(selectedFile) (" + externalId + ")  == myESBResponseParser.ResponseHeader.ExternalId (" + myESBResponseParser.ResponseHeader.ExternalId + ")") + _DCAFileModel.ErrorMessage;
