@@ -185,6 +185,7 @@ BEGIN
 		declare @OpenAmountInProfitCurrency as float
 		declare @ExpectedAmountRatio as float
 		declare @HousePercentForeignChargesLocalAmount as float
+    declare @AllHousesQuantities as float
 	END
 		
 	-- Loop Master Payables (1: Not PRFR)
@@ -452,19 +453,7 @@ BEGIN
 									set @Quantity = @HouseGrossWeightPerTon
 									set @UnitPrice = @Ratio * @MasterPayableUnitPrice
 								END
-
-								-- @PFCL_Id
-								else if (@MasterPayableMeasurementId = @PFCL_Id)
-								BEGIN
-									if (@AllHousesGrossWeightPerStorageDays <> 0)
-									begin
-										set @Ratio = @MasterPayableQuantity / @AllHousesGrossWeightPerStorageDays
-									end
-
-									set @Quantity = @HouseGrossWeightPerStorageDays
-									set @UnitPrice = @Ratio * @MasterPayableUnitPrice
-								END
-
+                
 								-- GrossWeightPerStorageDays
 								else if (@MasterPayableMeasurementId = @SCGW_Id)
 								BEGIN
@@ -942,8 +931,9 @@ BEGIN
 				set @IsCreatingPayable = 0
 				set @HousePayableMeasurementId = @MasterPayableMeasurementId			
 				set @HousePercentForeignChargesLocalAmount = (select sum(isnull(ExpectedAmountLocal,0)) from ShipmentPayables where ShipmentId = @HouseId AND  CurrencyId != (select CurrencyId from tenants where Id = @Tenant) AND MeasurementId != @PFCL_Id)	
+				set @AllHousesQuantities = (select sum(isnull(ExpectedAmountLocal,0)) from ShipmentPayables WHERE ShipmentId in (select id from shipments where ShipmentLevelCode = 'H' AND MasterShipmentDataId = @MasterId and Tenant = @Tenant)	AND CurrencyId != (select CurrencyId from tenants where Id = @Tenant) AND MeasurementId != @PFCL_Id)
 
-				-- IsCreatingPayable
+        -- IsCreatingPayable
 				BEGIN
 					if (@MasterPayableAmountTypeCode = 'NEXP')
 					BEGIN
@@ -1089,7 +1079,7 @@ BEGIN
 								else if (@MasterPayableMeasurementId = @PFCL_Id)
 								BEGIN
 									set @Quantity = @HousePercentForeignChargesLocalAmount
-									set @UnitPrice =  @MasterPayableExpectedAmount / @Quantity * 100
+									set @UnitPrice = @MasterPayableExpectedAmount / @AllHousesQuantities * 100
 								END
 							END
 						
