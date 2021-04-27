@@ -55,7 +55,7 @@ export class ShipmentsListComponent implements AfterViewInit
     ShipmentTypeAndDirectionTooltip: string;
     SupplierOrClientTitle: string;
     ShipmenTypeForRouting: string;
-    
+
 
 
 
@@ -89,7 +89,7 @@ export class ShipmentsListComponent implements AfterViewInit
     }
 
     SetShipmentTypeAndDirectionTooltip(shipment: CargoTrackingShipmentList) {
-        var type = ""; 
+        var type = "";
         var direction = "";
         switch (shipment.TransportModeId) {
             case 'A': {
@@ -142,7 +142,7 @@ export class ShipmentsListComponent implements AfterViewInit
     }
 
     SetShipmenTypeForRouting(shipment: CargoTrackingShipmentList) {
-        
+
         if (shipment.ShipmentLevelCode == 'D') {
             this.ShipmenTypeForRouting = "Direct"
         }
@@ -206,9 +206,10 @@ export class ShipmentsListComponent implements AfterViewInit
             .map(d => (
                 {
                     IsSelected: false,
-                    Name: d.CompanyName.substring(0,d.CompanyName.indexOf('(')),
+                    Name: d.CompanyName.substring(0,d.CompanyName.lastIndexOf('(')),
                     ...d }
                 ));
+
 
 
         console.log("[Invited Customers]", this.InvitedCustomersIds);
@@ -409,7 +410,7 @@ export class ShipmentsListComponent implements AfterViewInit
         }
     }
 
-    
+
     SetEstimationORActualDate(shipment: CargoTrackingShipmentList) {
         if (shipment.ArrivalDate != null) {
             this.TitleOfEstimationORActualDate = 'ATA'
@@ -434,7 +435,7 @@ export class ShipmentsListComponent implements AfterViewInit
             this.TitleOfEstimationORActualDate = 'ATA'
             this.ValueOfEstimationORActualDate = null;
         }
-        
+
 
 
 
