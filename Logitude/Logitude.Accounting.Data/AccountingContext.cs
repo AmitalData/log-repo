@@ -281,17 +281,17 @@ namespace Logitude.Accounting.Data
 				
 			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.PeriodPast).HasPrecision(16, 2);
 				
-			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.Period0).HasPrecision(16, 2);
-				
-			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.Period1).HasPrecision(16, 2);
-				
-			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.Period2).HasPrecision(16, 2);
-				
-			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.Period3).HasPrecision(16, 2);
+			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.Period5).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.Period4).HasPrecision(16, 2);
 				
-			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.Period5).HasPrecision(16, 2);
+			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.Period3).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.Period2).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.Period1).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.Period0).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.PeriodFuture).HasPrecision(16, 2);
 				
