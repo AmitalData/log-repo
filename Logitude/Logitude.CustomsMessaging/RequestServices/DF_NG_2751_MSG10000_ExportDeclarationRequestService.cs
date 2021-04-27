@@ -821,7 +821,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             //DMExtensions.ReleaseDateTime = new ReleaseDateType() {
             //    Value = DateTime.Today
             //};
-            DMExtensions.ReferenceDateTime = DataTypeConvertorUtil.Convert(DateTime.Today);
+            DMExtensions.ReferenceDateTime = DataTypeConvertorUtil.Convert(declarationPM.TaxationDateTime);
             ;
 
             DMExtensions.AgentFileReferenceID = SetIDTypeValue<AgentFileReferenceIDType>(declarationPM.CustomFileNo); //new AgentFileReferenceIDType() { Value = declarationPM.CustomFileNo };
