@@ -121,6 +121,8 @@ namespace Logitude.Accounting.BL.CoreBL
                                 v_total = taxLineDTO.VatableInvoiceAmount;
                                 break;
                         }
+                        if (!v_vatable.HasValue) v_vatable = 0m;
+                        if (!v_total.HasValue) v_total = 0m;
                         var taxReportLine = new TaxReportLinePM()
                         {
                             ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
