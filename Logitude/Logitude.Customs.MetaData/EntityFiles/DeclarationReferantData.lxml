@@ -5784,7 +5784,6 @@
     IsPackagable="true"
     DefaultSortName="&quot;SortedColumns&quot;"
     DefaultSortDirection="&quot;Ascending&quot;"
-    SpotlightDataTemplate="&quot;ReferantSpotlightDataTemplate&quot;"
     IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn

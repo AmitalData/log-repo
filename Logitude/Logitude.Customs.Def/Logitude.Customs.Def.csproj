@@ -93,11 +93,14 @@
     <Compile Include="EntityPMs\Generated\FullnessCodePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\HandingCodePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\LoadingSiteTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\LogisticsReferenceTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\NbcDeclarationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\NDMessageActionCodePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\PartyRelationshipTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ReferantExceptionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ReferantTeamPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ReferenceInputTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ReferenceStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ReleaseMessageTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SecurityClearenceTypeCodePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\StuffingSiteTypePM.Generated.cs" />
