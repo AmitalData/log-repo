@@ -611,6 +611,18 @@ Line4
         this.PostOp(opr, str, () => { });
     }
 
+    ButtonLoadJournals_ISL_Click() {
+        let opr = "ButtonLoadJournals_ISL_Click";
+        let str: string =
+            `Please insert page, you can add a header  //Tenant=1071
+Line2
+Line3
+`;
+        this.PostOp(opr, str, () => { });
+    }
+
+
+
     SetJournalExample() {
         let journal = {
             "Id": null,
