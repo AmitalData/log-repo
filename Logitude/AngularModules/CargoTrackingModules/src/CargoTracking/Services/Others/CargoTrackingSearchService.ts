@@ -6,10 +6,13 @@ import { catchError, map } from 'rxjs/operators';
 import { defer } from 'rxjs';
 import {CargoTrackingShipmentSearchList} from '../../EntityLists/CargoTrackingShipmentSearchList';
 import { CargoTrackingShipmentFilters } from 'src/CargoTracking/DataContracts/CargoTrackingShipmentFilters';
+import { CaptchaParameters } from 'src/CargoTracking/DataContracts/CaptchaParameters';
+import { ServiceResponse } from '../../DataContracts/ServiceResponse';
 
 @Injectable()
 export class CargoTrackingSearchService {
     private _apiUrl: string;
+    private httpHeaders: HttpHeaders;
     constructor(private _http: HttpClient , @Inject('BASE_URL') baseUrl: string) {
         // this._apiUrl = "http://localhost:9996/"  + 'api/CargoTrackingSearch';
         this._apiUrl = ServiceHelper.GetAppURL(baseUrl)  + 'api/CargoTrackingSearch';
@@ -79,6 +82,34 @@ export class CargoTrackingSearchService {
 					})));
 		});
 	}
+
+    GetCaptchaData() {
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetCaptchaData/' ,
+                { headers: ServiceHelper.GetHeaders() })
+                .pipe(
+                    map((response: HttpResponse<any>) => {
+                        return response;
+                    }, catchError(error => {
+                        return error;
+                    })));
+        });
+    }
+    PostUserValidation(captchaParameters: CaptchaParameters) {
+     
+        var url = '/PutUserValidation/?';
+        var callUrl = this._apiUrl.concat(url);
+        return this._http.put(callUrl, captchaParameters, { headers: ServiceHelper.GetHeaders() }).pipe(
+            map((response: ServiceResponse) => {
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse = response;
+                return serviceResponse;
+            }),
+            catchError(null));
+    }
+
+  
+
     private ParseFiltersIntoURL(shipmentFilters: CargoTrackingShipmentFilters)
     {
         var urlparameters = '';

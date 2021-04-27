@@ -38,6 +38,7 @@ using Logitude.CargoTracking.BL.EntityQueryServices;
 using System.Threading;
 using Logitude.CargoTracking.Def.DataContracts;
 using Logitude.CargoTracking.BL.CoreBL;
+using WebFreight.Web.DataContracts;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code
 {
@@ -170,6 +171,56 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             List<string> references = shipmentsQuery.GetShipmentPublicReferences(SecurityKey, tenant);
             return references;
         }
+
+        [HttpGet]
+        public HttpResponseMessage GetCaptchaData()
+        {
+            try
+            {
+                CaptchaHelper captchaHelper = new CaptchaHelper();
+                UserData data = new UserData();
+                captchaHelper.AddCaptchaKey(null,data,"Search");
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, data);
+                return reponseMessage;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+       
+        [HttpPut]
+        public HttpResponseMessage PutUserValidation(CaptchaParameters captchaParameters)
+        {
+            try
+            {
+                UserData userData = CheckCaptchaState(captchaParameters);
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, userData);
+                return reponseMessage;
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+        private UserData CheckCaptchaState(CaptchaParameters loginParameters)
+        {
+            CaptchaHelper captchaHelper = new CaptchaHelper();
+            UserData data = new UserData();
+            if (!captchaHelper.CheckCaptchaCodeValidated(loginParameters.CaptchaCode, loginParameters.CaptchaKey, null, false))
+            {
+                captchaHelper.AddCaptchaKey(null, data, "Search");               
+            }
+
+
+            return data;
+        }
+
+
     }
 
     public class CargoTrackingSearchArgs
