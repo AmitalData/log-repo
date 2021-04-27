@@ -679,13 +679,14 @@
                                     <td style="width: 1px;">
                                         {{'ARPayment.S.Details.ARInvoices' | TextCodeTranslationPipe}}
                                     </td>
-
                                     <td style="width: 1px; padding-left: 5px;">
                                         ({{TransactionsList?.Length}})
-                                        <span class="HiddenBtn" (click)="GetData()">R</span>
-
                                     </td>
-
+                                <!--    <td> <span class="HiddenBtn" (click)="GetData()">R</span></td>-->
+                                    <td width="5px"></td>
+                                    <td *ngIf="isMultipleCheques " style="width:20px">
+                                        <img style="width:21px" src="./Images/Icons/RedX.png" title="{{'ARPayment.O.CantPerformReconciliation' | TextCodeTranslationPipe}}" />
+                                    </td>
                                     <td>
                                         <div></div>
                                     </td>
@@ -710,12 +711,12 @@
                                                     GridHeight="100%" [ItemSource]="TransactionsList" [UseVirtuallization]="true">
 
                                     <!-- Is Reconciled -->
-                                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'30'">
+                                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'30'" [header]="">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true">
                                                 <CheckBox [IsChecked]="item.IsChecked || item.IsReconciled || item.PaymentReconciledAmount != 0"
                                                           (Checked)="item.IsChecked = $event"
-                                                          [IsEnabled]="!item.IsReconciled && (item.PaymentReconciledAmount == 0) && !(IsGridReadOnly || IsDisplayOnly)">
+                                                          [IsEnabled]="!item.IsReconciled && (item.PaymentReconciledAmount == 0) && !(IsGridReadOnly || IsDisplayOnly) && !isMultipleCheques">
                                                 </CheckBox>
                                             </log-cell-template>
                                         </ng-template>
@@ -784,7 +785,7 @@
                                                                 [InputType]="'decimal'" [DigitsAfterPoint]="2"
                                                                 [DataContext]="item" [ObjectTableName]="item.ObjectTableName"
                                                                 [HideColumns]="true" [Text]="item.AmountToReconcile"
-                                                                [ForceDisable]="IsDisplayOnly"
+                                                                [ForceDisable]="IsDisplayOnly || isMultipleCheques"
                                                                 (LostFocus)="item.OnAmountToReconcileLostFocus(logcelltemplate,AmountToReconcileTextBox)">
                                                     </LogTextBox>
                                                 </div>
