@@ -295,6 +295,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
         private ShipmentPM shipmentPM;
         private int tenant;
         private int? storageDays;
+        private int? freeDays;
         private ShipmentReceivablePM storageShipmentReceivable;
         private bool readyToCalculateStorage = true;
         private DateTime todayDate;
@@ -308,7 +309,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
 
         public void StartCalculations()
         {
-            this.storageDays = this.ComputeStorageDaye();
+            this.storageDays = this.ComputeStorageDays();
+            this.freeDays = this.GetFreeDays();
             this.readyToCalculateStorage = this.CheckIfReadyToCalculateStorage();
 
             if (readyToCalculateStorage)
@@ -331,7 +333,31 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 this.DeleteStorageShipmentReceivable();                
             }
         }
+        private int? ComputeStorageDays()
+        {
+            int? storageDays = null;
 
+            if (shipmentPM.WarehouseLegActualEntryDate != null && shipmentPM.WarehouseLegActualReleaseDate != null)
+            {
+                if (shipmentPM.WarehouseLegActualReleaseDate >= shipmentPM.WarehouseLegActualEntryDate)
+                {
+                    storageDays = (shipmentPM.WarehouseLegActualReleaseDate - shipmentPM.WarehouseLegActualEntryDate).Value.Days;
+                }
+            }
+
+            return storageDays;
+        }
+        private int? GetFreeDays()
+        {
+            int? freeDays = 0;
+
+            if (shipmentPM.WarehouseStorageFreeDays != null)
+            {
+                freeDays = shipmentPM.WarehouseStorageFreeDays;
+            }
+
+            return freeDays;
+        }
         private bool CheckIfReadyToCalculateStorage()
         {
             if (shipmentPM.WarehouseLegActualEntryDate == null)
@@ -364,28 +390,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 return false;
             }
 
-            if (storageDays <= shipmentPM.WarehouseStorageFreeDays)
+            if (storageDays <= freeDays)
             {
                 return false;
             }
 
             return true;
         }
-        private int? ComputeStorageDaye()
-        {
-            int? storageDays = null;
-
-            if (shipmentPM.WarehouseLegActualEntryDate != null && shipmentPM.WarehouseLegActualReleaseDate != null)
-            {
-                if (shipmentPM.WarehouseLegActualReleaseDate >= shipmentPM.WarehouseLegActualEntryDate)
-                {
-                    storageDays = (shipmentPM.WarehouseLegActualReleaseDate - shipmentPM.WarehouseLegActualEntryDate).Value.Days;
-                }
-            }
-
-            return storageDays;
-        }
-
         private void CreateStorageShipmentReceivable(double? amount)
         {
             if (amount != null && amount != 0)
@@ -589,7 +600,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
         }
         private CalculatedPricingItem CreateCalculatedPricingItem(ShipmentStoragePricingPM shipmentStoragePricing, double? weight, List<CalculatedPricingItem> myPricigs)
         {
-            int? allChargeableDays = storageDays - shipmentPM.WarehouseStorageFreeDays;
+            int? allChargeableDays = storageDays - freeDays;
 
             CalculatedPricingItem calculatedPricingItem = new CalculatedPricingItem();
             calculatedPricingItem.LineNumber = shipmentStoragePricing.LineNumber;
