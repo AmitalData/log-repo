@@ -312,6 +312,7 @@
     <Content Include="InvoiceModules\ARPayment\Components\Other\ARPaymentMultiChequesComponent.html" />
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityComponent.html" />
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityPackageComponent.html" />
+    <Content Include="ShipmentModules\ShipmentTabs\Components\ProductItems\ProductItemsTabComponent.html" />
     <Content Include="TasksApp\Components\TasksAppComponent.html" />
     <Content Include="TasksApp\Scripts\tasks-app.js" />
     <Content Include="_Resources\css\PrimeWebComponent.css" />
@@ -7388,6 +7389,7 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\Components\Partners\PartnersTabComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\Components\Payables\AddEditPayableComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\Components\Payables\PayablesTabComponent.ts" />
+    <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\Components\ProductItems\ProductItemsTabComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\Components\Receivables\AddEditReceivableComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\Components\Receivables\ReceivablesTabComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\Components\Shipments\ShipmentsTabComponent.ts" />

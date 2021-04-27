@@ -1,0 +1,28 @@
+
+<div class="TabHolder">
+    <table>
+        <tr class="TabTitleRow">
+            <td>
+                <table>
+                    <tr>
+                        <td>{{'Shipment.TH.ProductItems' | TextCodeTranslationPipe}}</td>
+
+                        <td style="width: 21px">
+                            <IconButton [Name]="'Add'" [IsEnabled]="IsEditingEnabled" (click)="AddProductItem()"></IconButton>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <div class="MediaFill">
+                    <ScrollViewer>
+                    </ScrollViewer>
+                </div>
+            </td>
+        </tr>
+
+    </table>
+</div>
