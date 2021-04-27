@@ -11,7 +11,7 @@ import { ChildDirective } from '../../Directives/ChildDirective';
 
   templateUrl: "./ObjectFieldTemplate.html",
   selector: 'ObjectFieldTemplate',
-    inputs: ['ObjectTable', 'ObjectField', 'FieldName', 'Entity', 'IsHeaderScreenTemplate', 'IsListColumnCellTemplate', 'IsListColumnHeaderTemplate', 'IsSpotLightTemplate', 'SpotlightDataTemplate', 'EntityChangedData','RowIndex'],
+    inputs: ['ObjectTable', 'ObjectField', 'FieldName', 'Entity', 'IsHeaderScreenTemplate', 'IsListColumnCellTemplate', 'IsListColumnHeaderTemplate', 'IsSpotLightTemplate', 'SpotlightDataTemplate', 'EntityChangedData', 'RowIndex', 'Direction'],
 })
 
 // https://github.com/angular/angular/issues/10762
@@ -35,7 +35,7 @@ export class ObjectFieldTemplate implements OnInit, AfterViewInit, OnDestroy {
   public IsListColumnHeaderTemplate: boolean = false;
   public IsSpotLightTemplate: boolean = false;
   public SpotlightDataTemplate: string;
-  public Direction: string = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
+    public Direction: string;
   public TextAlign = this.Direction == 'rtl' ? 'right' : 'left';
   public NumberFieldTextAlign: string = "right";
   public isRTL: boolean = false;
@@ -60,10 +60,14 @@ export class ObjectFieldTemplate implements OnInit, AfterViewInit, OnDestroy {
   constructor(private changeDetector: ChangeDetectorRef) {
   }
 
-  ngOnInit() {
-    if (ObjectsLocator.GlobalSetting) {
-      this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
-      }
+    ngOnInit() {
+          if (AppTool.IsNullOrEmpty(this.Direction))
+        this.Direction = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
+        this.TextAlign = this.Direction == 'rtl' ? 'right' : 'left';
+
+       if (ObjectsLocator.GlobalSetting) {
+          this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+        }
       this.LoadData();
   }
 

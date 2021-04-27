@@ -51,8 +51,8 @@ namespace Logitude.Customs.Data.DataContracts
         public string AttachmentTypeCode { get; set; }
         [DataMember]
         public string CertificateTicketId { get; set; }
-
-
+        [DataMember]
+        public string SearchFields { get; set; }
 
     }
 }

@@ -1,0 +1,45 @@
+<style>
+    .NoSelect {
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Chrome/Safari/Opera */
+        -khtml-user-select: none; /* Konqueror */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+        user-select: none; /* Non-prefixed version, currently not supported by any browser */
+    }
+
+    .myTitleClass {
+        color: blue;
+        text-decoration: underline;
+    }
+
+        .myTitleClass:hover .edit {
+            visibility: visible;
+            /*display:block;*/
+            opacity: 1;
+        }
+
+    .edit {
+        float: left;
+        visibility: hidden;
+        /*display:none;*/
+        opacity: 0;
+        margin: 2px;
+    }
+</style>
+<div style="height: 24px;direction:ltr">
+    <table *ngIf="EntityPM">
+        <tr >
+            <td colspan="2">
+                <div class="ShortTitleControl">
+
+                    <span *ngIf="EntityPM.StorageNo" style="float: left; width: auto; padding: 0px 4px;">  {{EntityPM.StorageNo}}  - </span>
+                    <span *ngIf="EntityPM.FclLcl" style="float: left; width: auto; padding: 0px 4px;">  {{EntityPM.FclLcl=='F'?'FCL' :'LCL'}}  - </span>
+                    <span *ngIf="EntityPM.ExporterName" style="float: left; width: auto; padding: 0px 4px;">  {{EntityPM.ExporterName}} </span> 
+
+                </div>
+            </td>
+        </tr>
+     </table>
+</div>
+

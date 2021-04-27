@@ -174,6 +174,14 @@ namespace Logitude.Customs.Data.EntityLists
        public string Hatara  { get; set; }
        [DataMember]
        public string CustomStatus  { get; set; }
+       [DataMember]
+       public string ShipAgentName  { get; set; }
+       [DataMember]
+       public string LoadingSiteCode  { get; set; }
+       [DataMember]
+       public string FinalDestinationCode  { get; set; }
+       [DataMember]
+       public string Routing  { get; set; }
    }
 
 }

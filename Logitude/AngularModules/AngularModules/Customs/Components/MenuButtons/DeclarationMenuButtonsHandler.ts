@@ -10,7 +10,7 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
 import { MenuButtonPM } from '../../../Infrastructure/EntityPMs/MenuButtonPM';
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 import { AmitalGatewayUtil, UnifreightMessageM } from '../../../Infrastructure/Utilities/AmitalGatewayUtil';
-import { UnifreightController } from '../../Controller/UnifreightController';
+import { UnifreightController, UnifreightInstructionController } from '../../Controller/UnifreightController';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { DeclarationPMService } from '../../Services/StandardPMs/DeclarationPMService';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -596,7 +596,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         };
         var logWindow = new LogitudeWindow();
         logWindow.Width = 600;
-        logWindow.Height = 300;
+        logWindow.Height = 350;
         logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.DeclarationCancellation");
         logWindow.WindowArgs = args;
         logWindow.ShowCloseButton = true;
@@ -611,7 +611,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         };
         var logWindow = new LogitudeWindow();
         logWindow.Width = 600;
-        logWindow.Height = 300;
+        logWindow.Height = 350;
         logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.DeclarationCancellation");
         logWindow.WindowArgs = args;
         logWindow.ShowCloseButton = true;
@@ -843,7 +843,17 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         confirmWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.TransferToCollector"));
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
-                this.ActualSendToTransfer();
+                //this.ActualSendToTransfer();
+                let myUnifreightInstructionController = new UnifreightInstructionController(this.EntityPM, "COLLECT_TRANSFER");
+                myUnifreightInstructionController
+                    .ShowInstruction(
+                        () => {
+                            console.log("Instruction return - continue TransferToCollectorMethod");
+                            this.ActualSendToTransfer();
+                        },
+                        () => { console.log("Instruction return - do not continue 2 TransferToCollectorMethod!!"); }
+                    );
+                
             }
         });
     }

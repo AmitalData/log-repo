@@ -83,6 +83,28 @@ namespace WebFreight.Web.CustomModel.DomainServices
             return queryService.GetListCount(queryOperations, tenant);
         }
 
+        public List<ExportStorgeList> GetExportStorgeFilters(byte[] xmlFilters, int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+            ////SecurityUtility.CheckContactFeature("Customs.Declaration", "READ", tenant);
+
+            customContext = CustomContext.GetContext(tenant);
+            ExportStorgeListQueryService listService = new ExportStorgeListQueryService(customContext);
+            QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
+            return listService.GetList(queryOperations, tenant);
+
+
+        }
+
+        public int GetExportStorgeFiltersCount(byte[] xmlFilters, int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+            //SecurityUtility.CheckContactFeature("Customs.Declaration", "READ", tenant);
+            customContext = CustomContext.GetContext(tenant);
+            ExportStorgeListQueryService queryService = new ExportStorgeListQueryService(customContext);
+            QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
+            return queryService.GetListCount(queryOperations, tenant);
+        }
 
         public List<CourierMasterList> GetCourierMasterFilters(byte[] xmlFilters, int tenant)
         {

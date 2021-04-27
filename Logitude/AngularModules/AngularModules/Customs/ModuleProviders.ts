@@ -242,6 +242,7 @@ import { AmendRequestRejectReasonTypeListService } from './Services/StandardList
 import { ReleaseMessageTypeListService } from './Services/StandardLists/ReleaseMessageTypeListService';
 import { DocumentRejectTypeListService } from './Services/StandardLists/DocumentRejectTypeListService';
 import { FclLclCodeListService } from './Services/StandardLists/FclLclCodeListService';
+import { CancelRequestRejectReasonTypeListService } from './Services/StandardLists/CancelRequestRejectReasonTypeListService';
 import { SecurityClearenceTypeCodeListService } from './Services/StandardLists/SecurityClearenceTypeCodeListService';
 import { CargoTypeListService } from './Services/StandardLists/CargoTypeListService';
 
@@ -301,6 +302,7 @@ import { CustomsCountryPMService } from './Services/StandardPMs/CustomsCountryPM
 import { PendingByKeywordPMService } from './Services/StandardPMs/PendingByKeywordPMService';
 import { ReferantTeamPMService } from './Services/StandardPMs/ReferantTeamPMService';
 
+import { ExportStorgePMService } from './Services/StandardPMs/ExportStorgePMService';
 
 //#endregion
 
@@ -394,6 +396,9 @@ import { HandingCodeListService } from './Services/StandardLists/HandingCodeList
 import { StuffingSiteTypeListService } from './Services/StandardLists/StuffingSiteTypeListService';
 import { ContainerTypeListService } from './Services/StandardLists/ContainerTypeListService';
 import { ExportStorgeListService } from './Services/StandardLists/ExportStorgeListService';
+import { LogisticsReferenceTypeListService } from './Services/StandardLists/LogisticsReferenceTypeListService';
+import { ReferenceStatusListService } from './Services/StandardLists/ReferenceStatusListService';
+import { ReferenceInputTypeListService } from './Services/StandardLists/ReferenceInputTypeListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -638,6 +643,10 @@ export class ModuleProviders {
             case "ClaimReasonTypeListService": { myResult = new ClaimReasonTypeListService(); break; }
             case "AmountTypeListService": { myResult = new AmountTypeListService(); break; }
             case "PartyRelationshipTypeListService": { myResult = new PartyRelationshipTypeListService(); break; }
+            case "ReferenceInputTypeListService": { myResult = new ReferenceInputTypeListService(); break; }
+            case "ReferenceStatusListService": { myResult = new ReferenceStatusListService(); break; }
+            case "LogisticsReferenceTypeListService": { myResult = new LogisticsReferenceTypeListService(); break; }
+
 
             case "CustomsShipListService": { myResult = new CustomsShipListService(); break; }
             case "NbcDeclarationTypeListService": { myResult = new NbcDeclarationTypeListService(); break; }
@@ -666,6 +675,9 @@ export class ModuleProviders {
             case "HandingCodeListService": { myResult = new HandingCodeListService(); break; } 
             case "ExportStorgeListService": { myResult = new ExportStorgeListService(); break; } 
 
+            case "AmendCancellRequestInitiatorListService": { myResult = new AmendCancellRequestInitiatorListService(); break; }
+            case "FclLclCodeListService": { myResult = new FclLclCodeListService(); break; }
+            case "CancelRequestRejectReasonTypeListService": { myResult = new CancelRequestRejectReasonTypeListService(); break; }
 
              //#endregion                
 
@@ -724,6 +736,7 @@ export class ModuleProviders {
             case "PendingByKeywordPMService": { myResult = new PendingByKeywordPMService(); break; }
             case "CurrencyTypePMService": { myResult = new CurrencyTypePMService(); break; }
             case "ReferantTeamPMService": { myResult = new ReferantTeamPMService(); break; }
+            case "ExportStorgePMService": { myResult = new ExportStorgePMService(); break; }
 
             //#endregion
 

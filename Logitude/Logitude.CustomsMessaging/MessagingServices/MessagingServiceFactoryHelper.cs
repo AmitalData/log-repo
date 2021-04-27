@@ -377,6 +377,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
               ((new Unifreight_L2US01_US2L01_SivugMessagingService()).MainInterfaceCode);
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+           DCAInUCUW2L_OpenDeclarationsByIntegratorInterfaceMessagingService>
+           ((new DCAInUCUW2L_OpenDeclarationsByIntegratorInterfaceMessagingService()).MainInterfaceCode);
+
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
               DCAInUniDebug01_MsgMessagingService>
               ((new DCAInUniDebug01_MsgMessagingService()).MainInterfaceCode);
 

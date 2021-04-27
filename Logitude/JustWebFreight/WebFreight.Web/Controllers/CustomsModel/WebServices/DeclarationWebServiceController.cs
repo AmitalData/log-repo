@@ -1951,6 +1951,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 //Get DeclarationCancellation Attachments
                 bool isAttachmentNumberIsMoreThenAllow = false;
                 List<CustomsDocumentPM> customsDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDoc(new GetTicketsParams() { ParentEntityId = declarationId, ParentEntityCode = "DeclarationCancellation" }, tenant);
+
+                customsDocumentPMList = customsDocumentPMList.Where(x => x.DocumentTypeCode == "IL_679" && ! string.IsNullOrEmpty(x.CustomsDocId) ).ToList();
                 if (customsDocumentPMList != null && customsDocumentPMList.Count() > 0)
                 {
                     isAttachmentNumberIsMoreThenAllow = true;

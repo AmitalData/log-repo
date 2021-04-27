@@ -259,7 +259,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                         var feature = features.Features.FirstOrDefault(x => x.Code == "SendDeclaration902");
                         if (feature != null)
                         {
-                            LogMessagingUtil.Instance.AppendLine("Feature = " + "פעיל");
+                            _LogitudeScheduler.Request_Code= "2750";
                             SendGenericRequest();
                         }
                     }

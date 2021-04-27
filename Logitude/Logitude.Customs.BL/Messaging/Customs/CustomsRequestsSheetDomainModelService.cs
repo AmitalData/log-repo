@@ -172,29 +172,31 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 ThrowIfNoAvailablePersonalSignServer();
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
-                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("CustomsRequestsSheetService CreateNew():interfaceTypeCode  " +
-                    requestParams.InterfaceTypeCode);
+ 
+                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("CustomsRequestsSheetService CreateNew():interfaceTypeCode  " +
+                        requestParams.InterfaceTypeCode);
 
 
-                    this.CreateNewComm();
-                    this.CreateNewRequestSheet();
-                    this.BuildSteps();
+                        this.CreateNewComm();
+                        this.CreateNewRequestSheet();
+                        this.BuildSteps();
 
-                    requestParams.CustomsRequestsSheetId = this._MyCustomsRequestsSheetPM.Id;
+                        requestParams.CustomsRequestsSheetId = this._MyCustomsRequestsSheetPM.Id;
 
-                    this.StartStep(CustomsStepEnum.StartRequestParams, null);
-                    OnCreateSetDefault();
+                        this.StartStep(CustomsStepEnum.StartRequestParams, null);
+                        OnCreateSetDefault();
 
-                    UpdateConnectedEntitys(reqSheetDetails);
-                    var mem =
-                        XmlGenericUtil<TRequestParams>.MemoryStreamSerialize(requestParams);
-                    //this.Serialize<TRequestParams>(requestParams);
-                    LogMessagingUtil.Instance.AppendLine("CustomsRequestsSheetDomainModelService.CreateNew(WithoutEndStepWithoutTransactionScope):took:" + sw.ElapsedMilliseconds);
-                    this.EndStepWithoutTransactionScope(mem, CommStatusEnum.D);
-                    this.StartCustomsRequestStepEnum = this.GetCurrentProcessState();
+                        UpdateConnectedEntitys(reqSheetDetails);
+                        var mem =
+                            XmlGenericUtil<TRequestParams>.MemoryStreamSerialize(requestParams);
+                        //this.Serialize<TRequestParams>(requestParams);
+                        LogMessagingUtil.Instance.AppendLine("CustomsRequestsSheetDomainModelService.CreateNew(WithoutEndStepWithoutTransactionScope):took:" + sw.ElapsedMilliseconds);
+                        this.EndStepWithoutTransactionScope(mem, CommStatusEnum.D);
+                        this.StartCustomsRequestStepEnum = this.GetCurrentProcessState();
 
-                    scope.Complete();
-
+                        scope.Complete();
+                    
+                   
                 }
                 RequestSheetContext.Current.SetRSContext(requestParams);
 

@@ -41,5 +41,6 @@ export class TruckerList {
 		PrimaryContactPhone: string;
 		StateName: string;
 		GLAccountNumber: string;
+		TransmitToPort: boolean;
 	
 }

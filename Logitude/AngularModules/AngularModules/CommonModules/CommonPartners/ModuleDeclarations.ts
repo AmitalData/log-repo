@@ -27,6 +27,7 @@ import { CustomAgentDocsInTabComponent } from './Components/EditTabs/CustomAgent
 import { ShippingAgentDocsInTabComponent } from './Components/EditTabs/ShippingAgent/ShippingAgentDocsInTabComponent';
 import { ShippingLineDocsInTabComponent } from './Components/EditTabs/ShippingLine/ShippingLineDocsInTabComponent';
 import { TruckerDocsInTabComponent } from './Components/EditTabs/Trucker/TruckerDocsInTabComponent';
+import { ExportGeneraInTabComponent } from './Components/EditTabs/Trucker/ExportGeneraInTabComponent';
 import { VendorDocsInTabComponent } from './Components/EditTabs/Vendor/VendorDocsInTabComponent';
 import { AccountingPartnerDocsInTabComponent } from './Components/EditTabs/AccountingPartner/AccountingPartnerDocsInTabComponent';
 import { WarehouseDocsInTabComponent } from './Components/EditTabs/Warehouse/WarehouseDocsInTabComponent';
@@ -74,6 +75,7 @@ export const Components =
         ShippingAgentDocsInTabComponent,
         ShippingLineDocsInTabComponent,
         TruckerDocsInTabComponent,
+        ExportGeneraInTabComponent,
         VendorDocsInTabComponent,
         AccountingPartnerDocsInTabComponent,
         WarehouseDocsInTabComponent,
@@ -126,6 +128,7 @@ export class ModuleDeclarations {
             case "ShippingAgentDocsInTabComponent": { myResult = ShippingAgentDocsInTabComponent; break; }
             case "ShippingLineDocsInTabComponent": { myResult = ShippingLineDocsInTabComponent; break; }
             case "TruckerDocsInTabComponent": { myResult = TruckerDocsInTabComponent; break; }
+            case "ExportGeneraInTabComponent": { myResult = ExportGeneraInTabComponent; break; }
             case "VendorDocsInTabComponent": { myResult = VendorDocsInTabComponent; break; }
             case "AccountingPartnerDocsInTabComponent": { myResult = AccountingPartnerDocsInTabComponent; break; }
             case "WarehouseDocsInTabComponent": { myResult = WarehouseDocsInTabComponent; break; }

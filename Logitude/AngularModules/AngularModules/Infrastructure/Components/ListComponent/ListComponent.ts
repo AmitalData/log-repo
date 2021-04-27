@@ -662,9 +662,9 @@ export class ListComponent implements OnInit, AfterViewInit {
 
         if (this.ObjectTableName == "Customs.ExportStorge") {
             this.LayoutDirection = "ltr";
-            ObjectsLocator.GlobalSetting.LayoutDirection = 'ltr';
-        } else {
-            ObjectsLocator.GlobalSetting.LayoutDirection = 'rtl';
+            this.RTL = false;
+            this.ShowViews = false;
+            this.EnglishView = true;
         }
     }
 
@@ -931,6 +931,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
     private listArgs: ListComponentArgs;
     ShowViews: boolean = true;
+    EnglishView: boolean = false;
     ResourcesLoaded: boolean = false;
 
   MenuTableQuerySection: string;
@@ -2583,9 +2584,9 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         else if (this.ObjectTableName == "Currency") {
             this.NewEntityButtonLabel = TextCodeTranslator.Translate("General.B.Add");
         }
-        // else if (this.ObjectTableName == "UserDefinedReport") {
-        //     this.NewEntityButtonLabel = TextCodeTranslator.Translate("Accounting.General.O.NewUserDefinedReport");
-        // }
+         else if (this.ObjectTableName == "Customs.ExportStorge") {
+            this.NewEntityButtonLabel = "New Storage"
+         }
         else {
             //this.NewEntityButtonLabel = "New " + TextCodeTranslator.TranslateTable(this.ObjectTableName);
             if (AppTool.IsNullOrEmpty(this.listArgs.NewButtonLabel)) {

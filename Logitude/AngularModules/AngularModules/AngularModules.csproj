@@ -171,6 +171,7 @@
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\ShippingLine\ShippinglineGeneralTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\TariffTranslations\AddEditTariffTranslationComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\TariffTranslations\TariffTranslationsTabComponent.html" />
+    <Content Include="CommonModules\CommonPartners\Components\EditTabs\Trucker\ExportGeneraInTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\Trucker\TruckerDocsInTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\AccountingPartner\AccountingPartnerDocsInTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\Vendor\VendorDocsInTabComponent.html" />
@@ -319,6 +320,7 @@
     <Content Include="TasksApp\Components\TasksAppComponent.html" />
     <Content Include="TasksApp\Scripts\tasks-app.js" />
     <Content Include="_Resources\css\PrimeWebComponent.css" />
+    <Content Include="Customs\Components\ShortTitles\ExportStorgeShortTitleComponent.html" />
     <Content Include="_Resources\js\UnifreightJSBridge.js" />
     <TypeScriptCompile Include="Abstractions\Services\BaseService.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\Journal\UpdateJournalLineNoteComponent.ts" />
@@ -327,6 +329,7 @@
     <TypeScriptCompile Include="Accounting\Components\Others\CopyJournalComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\ShippingAgent\ShippingAgentGeneralTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\ShippingLine\ShippinglineGeneralTabComponent.ts" />
+    <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\Trucker\ExportGeneraInTabComponent.ts" />
     <TypeScriptCompile Include="Common\CustomFilters\ChargesTypeCustomFilter.ts" />
     <TypeScriptCompile Include="Common\CustomFilters\ChargesTypeCustomFilter.ts" />
     <TypeScriptCompile Include="Common\CustomFilters\ChargesTypeCustomFilter.ts" />
@@ -1307,6 +1310,7 @@
     <TypeScriptCompile Include="Customs\Components\ListTemplates\EndDateComponent.ts" />
     <TypeScriptCompile Include="Customs\Components\ListTemplates\SupplierInvoiceItemListTemplate.ts" />
     <TypeScriptCompile Include="Customs\Components\MenuButtons\PhysicalCheckMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="Customs\Components\ShortTitles\ExportStorgeShortTitleComponent.ts" />
     <TypeScriptCompile Include="Customs\Components\Spotlight\ReferantSpotlightDataTemplate.ts" />
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\BankAccountToRefundRequestParams.ts" />
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\CargoSealsRequestParams.ts" />
@@ -1326,6 +1330,7 @@
     <TypeScriptCompile Include="Customs\EntityLists\AutonomyRegionTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CancellationReasonRequestTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CancellationRequestStatusList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\CancelRequestRejectReasonTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CargoSealIdentifierList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CargoTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ClaimReasonTypeList.ts" />
@@ -1359,6 +1364,7 @@
     <TypeScriptCompile Include="Customs\EntityLists\HandingCodeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\HazardousSubstanceList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\LoadingSiteTypeList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\LogisticsReferenceTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\NbcDeclarationTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\NDMessageActionCodeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\PartyRelationshipTypeList.ts" />
@@ -1366,6 +1372,8 @@
     <TypeScriptCompile Include="Customs\EntityLists\PendingErrorPlaceList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ReferantExceptionList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ReferantTeamList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\ReferenceInputTypeList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\ReferenceStatusList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\RefundCustomerActivityTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ReleaseMessageTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\RequestTypeList.ts" />
@@ -1391,6 +1399,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\AutonomyRegionTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CancellationReasonRequestTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CancellationRequestStatusPM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\CancelRequestRejectReasonTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CargoSealIdentifierPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CargoSealPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CargoTypePM.ts" />
@@ -1435,6 +1444,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\HandingCodePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\HazardousSubstancePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\LoadingSiteTypePM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\LogisticsReferenceTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\NbcDeclarationTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\NDMessageActionCodePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\PartyRelationshipTypePM.ts" />
@@ -1442,6 +1452,8 @@
     <TypeScriptCompile Include="Customs\EntityPMs\PendingErrorPlacePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ReferantExceptionPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ReferantTeamPM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\ReferenceInputTypePM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\ReferenceStatusPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\RefundCustomerActivityTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ReleaseMessageTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\RequestTypePM.ts" />
@@ -1489,6 +1501,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\AutonomyRegionTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CancellationReasonRequestTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CancellationRequestStatusListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\CancelRequestRejectReasonTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CargoSealIdentifierListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CargoTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ClaimReasonTypeListService.ts" />
@@ -1534,6 +1547,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\HandingCodeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\HazardousSubstanceListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\LoadingSiteTypeListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\LogisticsReferenceTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\NbcDeclarationTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\NDMessageActionCodeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\PartyRelationshipTypeListService.ts" />
@@ -1549,6 +1563,8 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\ProceduralFaultsListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ReferantExceptionListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ReferantTeamListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\ReferenceInputTypeListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\ReferenceStatusListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\RefundCustomerActivityTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ReleaseMessageTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\RequestTypeListService.ts" />
@@ -1566,6 +1582,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\TreatmentWayListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\UpdateCodeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\AutonomyRegionTypePMService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardPMs\CancelRequestRejectReasonTypePMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CargoSealIdentifierPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CourierDeclarationPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CourierPendingReasonPMService.ts" />
@@ -1585,11 +1602,14 @@
     <TypeScriptCompile Include="Customs\Services\StandardPMs\ExportStorgePMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\GatepassRequestPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\GatepassRequestsPMService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardPMs\LogisticsReferenceTypePMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\NbcDeclarationTypePMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\PendingByKeywordPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\ProceduralFaultsPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\ReferantExceptionPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\ReferantTeamPMService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardPMs\ReferenceInputTypePMService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardPMs\ReferenceStatusPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\TPGFileTypePMService.ts" />
     <TypeScriptCompile Include="Customs\Services\WebServices\CustomDocumentViewerService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\DeficitsPMService.ts" />

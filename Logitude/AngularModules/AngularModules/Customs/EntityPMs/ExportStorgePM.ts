@@ -564,6 +564,11 @@ export class ExportStorgePM {
     public set CustomStatus(newValue: string) { if (this.customStatus != newValue) { this.customStatus = newValue; this.MarkAsDirty("CustomStatus"); } }
        
 	 
+    private routing: string;
+    public get Routing() { return this.routing; }
+    public set Routing(newValue: string) { if (this.routing != newValue) { this.routing = newValue; this.MarkAsDirty("Routing"); } }
+       
+	 
 
     public OldEntityPM: ExportStorgePM;
 		

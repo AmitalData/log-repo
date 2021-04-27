@@ -2504,6 +2504,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string routing ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Routing  
+	   {
+	    
+	     get
+		{
+		   return routing;
+		 }
+		 set
+		 {
+		   if(routing != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Routing",OldValue=routing,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   routing=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

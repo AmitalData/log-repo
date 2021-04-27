@@ -1,9 +1,10 @@
-﻿import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {ObjectsLocator} from '../../Infrastructure/Locators/ObjectsLocator';
+import { AppTool } from '../../Infrastructure/Tools';
 
 @Component({
     selector: 'BackButton',
-    inputs: ['Text', 'IsEnabled'],
+    inputs: ['Text', 'IsEnabled', 'LayoutDirection'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 
     template:
@@ -94,7 +95,7 @@ import {ObjectsLocator} from '../../Infrastructure/Locators/ObjectsLocator';
 export class BackButton implements OnInit {
     public Text: string = "Back";
     public IsHover: boolean = false;
-    LayoutDirection: string = 'ltr';
+    LayoutDirection: string = '';
 
     private isEnabled: boolean = true;
     get IsEnabled() { return this.isEnabled; }
@@ -104,6 +105,7 @@ export class BackButton implements OnInit {
         }
     }
     constructor() {
+        if (AppTool.IsNullOrEmpty(this.LayoutDirection)) this.LayoutDirection = 'ltr';
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
     }
 

@@ -88,6 +88,10 @@ export class ExportStorgeList {
 	ExporterRef: string;
 	Hatara: string;
 	CustomStatus: string;
+	ShipAgentName: string;
+	LoadingSiteCode: string;
+	FinalDestinationCode: string;
+	Routing: string;
 	
 }
  

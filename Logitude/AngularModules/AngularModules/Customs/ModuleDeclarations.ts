@@ -11,6 +11,7 @@ import {EndDateComponent} from './Components/ListTemplates/EndDateComponent';
 
 //Short Titles
 import {DeclarationShortTitleComponent} from './Components/ShortTitles/DeclarationShortTitleComponent';
+import { ExportStorgeShortTitleComponent } from './Components/ShortTitles/ExportStorgeShortTitleComponent';
 
 
 
@@ -50,7 +51,7 @@ export const Components =
         //short titles
         DeclarationShortTitleComponent,
      
-       
+        ExportStorgeShortTitleComponent,
      
   
       
@@ -88,7 +89,8 @@ export class ModuleDeclarations {
             case "EndDateComponent": { myResult = EndDateComponent; break; }
                         //short titles
             case "DeclarationShortTitleComponent": {myResult = DeclarationShortTitleComponent; break;}
-         
+            case "ExportStorgeShortTitleComponent": { myResult = ExportStorgeShortTitleComponent; break; }
+
            
 
           

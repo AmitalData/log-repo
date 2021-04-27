@@ -225,6 +225,7 @@
     <Compile Include="MessagingServices\DCAInUCBUD2LT_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUniCustomTableZip_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUniDebug01_MsgMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUCUW2L_OpenDeclarationsByIntegratorInterfaceMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInVAL_NG_8228_RequiredDocumentVerificationDecisionMassagingService.cs" />
     <Compile Include="MessagingServices\DF_9070_ExportDeclarationDataMessagingService.cs" />
     <Compile Include="MessagingServices\DF_NG_2751_MSG10000_ExportDeclarationMessagingService.cs" />
@@ -341,6 +342,7 @@
     <Compile Include="ResponseServices\DF_NG_2757_MSG10004_ExportDeclarationResponseService.cs" />
     <Compile Include="ResponseServices\DF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsgResponseService.cs" />
     <Compile Include="ResponseServices\SaveDF_MSG5002_DeclarationCancellationRequestMsgResponseService.cs" />
+    <Compile Include="ResponseServices\DCAInUCUW2L_OpenDeclarationsByIntegratorInterfaceResponseService.cs" />
     <Compile Include="ResponseServices\UniCustomBatchSend2715Bonded_MsgResponseService.cs" />
     <Compile Include="ResponseServices\DeclarationErrorPointer\DeclarationCorrectionsPointerService.cs" />
     <Compile Include="ResponseServices\DEPO_NG_2753_MSG4_DepositBankAccountToRefundUpdateRequestResponseService.cs" />
@@ -497,6 +499,7 @@
     <Compile Include="Testers\SendUnifreightCustomInterfaceTester.cs" />
     <Compile Include="Testers\SubmitDeclarationTestService.cs" />
     <Compile Include="MessagingServices\TPG_8304_DeficitFileFilterParamMessagingService.cs" />
+    <Compile Include="U2L\CommDec\CommDecService.cs" />
     <Compile Include="U2L\Sivug\SivugUpsertService.cs" />
     <Compile Include="UnifreightGateway\AnalyzeQueueMessageService.cs" />
     <Compile Include="UnifreightGateway\CacheManagerService.cs" />

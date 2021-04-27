@@ -2281,6 +2281,22 @@ namespace Logitude.Customs.Def.ClosedTable
                 //  NeedSignature = false
             });
 
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "UCUW2L",
+                InOut = InOutEnum.I.ToString(),
+                Description = "מסר פתיחת הצהרה ממסר אינטגרטור",
+                DcaPrefixName = "UCUW2L_Out.",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = 5,
+                AllowRestore = true,
+
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "",
+                //  NeedSignature = false
+            });
+
 
             all.Add(new InterfaceManagementDetails()
             {

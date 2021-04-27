@@ -39,6 +39,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<Bank> Banks { get; }
 		 IDbSet<CancellationReasonRequestType> CancellationReasonRequestTypes { get; }
 		 IDbSet<CancellationRequestStatus> CancellationRequestStatuses { get; }
+		 IDbSet<CancelRequestRejectReasonType> CancelRequestRejectReasonTypes { get; }
 		 IDbSet<CargoIdentifireType> CargoIdentifireTypes { get; }
 		 IDbSet<CargoIdentityQualifier> CargoIdentityQualifiers { get; }
 		 IDbSet<CargoSeal> CargoSeals { get; }
@@ -235,6 +236,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<LeadDocumentExceptionType> LeadDocumentExceptionTypes { get; }
 		 IDbSet<LeadDocumentType> LeadDocumentTypes { get; }
 		 IDbSet<LoadingSiteType> LoadingSiteTypes { get; }
+		 IDbSet<LogisticsReferenceType> LogisticsReferenceTypes { get; }
 		 IDbSet<MamanSpecialAction> MamanSpecialActions { get; }
 		 IDbSet<MamanSpecialActionStatus> MamanSpecialActionStatuses { get; }
 		 IDbSet<MamanStatus> MamanStatuses { get; }
@@ -290,6 +292,8 @@ namespace Logitude.Customs.Data
 		 IDbSet<RansomViolationType> RansomViolationTypes { get; }
 		 IDbSet<ReferantException> ReferantExceptions { get; }
 		 IDbSet<ReferantTeam> ReferantTeams { get; }
+		 IDbSet<ReferenceInputType> ReferenceInputTypes { get; }
+		 IDbSet<ReferenceStatus> ReferenceStatuses { get; }
 		 IDbSet<RefundCustomerActivityType> RefundCustomerActivityTypes { get; }
 		 IDbSet<RegisteredWarehouseSiteType> RegisteredWarehouseSiteTypes { get; }
 		 IDbSet<ReleaseMessageType> ReleaseMessageTypes { get; }
