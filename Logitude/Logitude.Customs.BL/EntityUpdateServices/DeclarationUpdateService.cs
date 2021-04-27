@@ -165,6 +165,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
                 // moran 31.5.15 - Task 13325 <--
             }
+            if(entityPM.IsAmendment!=true)
             entityPM.TaxationDateTime = DateTime.Now.Date;
             
         if (entityPM.IsAmendment==true)
