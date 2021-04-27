@@ -38,6 +38,8 @@ using Unifreight.Data.AmitalModel;
 using Logitude.Customs.Def.Messaging.Customs;
 using System.Xml.Linq;
 using Logitude.Customs.BL.Validators;
+using System.Configuration;
+using System.Globalization;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -51,9 +53,21 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         private void UpdateUnifreight(DeclarationPM dirtyDeclarationPM)
         {
+            DateTime stopLogAt = DateTime.MinValue; 
+            string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20210427HD368109.LogUntilDateyyyyMMdd"];
+            if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+            {
+                stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd,
+                                                    "yyyyMMdd",
+                                                    CultureInfo.InvariantCulture,
+                                                    DateTimeStyles.None);
+            }
+            string logData = "";
+
             if (dirtyDeclarationPM.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Update &&
                 dirtyDeclarationPM.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Insert) //Yuval Chalup 02.06.2015 AMI-53891 (Update CCUFILEM on creating a new Declaration)
             {
+                LogitudeSettings.HandleLogMe("ChangeSetOperation == " + dirtyDeclarationPM.ChangeSetOp, false, "UpdateUnifreight_" + dirtyDeclarationPM.Id, stopLogAt);
                 return;
             }
             OurVersionToUpdateDeclarationPlatformFeeAndPrimaryInvoice(dirtyDeclarationPM);
@@ -61,6 +75,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //if (!setting.IsConnectedToUniFreight)
             if(!dirtyDeclarationPM.IsConnectedToUnifreight)
             {
+                LogitudeSettings.HandleLogMe("IsConnectedToUnifreight == " + dirtyDeclarationPM.IsConnectedToUnifreight, false, "UpdateUnifreight_" + dirtyDeclarationPM.Id, stopLogAt);
                 return;
             }
 
