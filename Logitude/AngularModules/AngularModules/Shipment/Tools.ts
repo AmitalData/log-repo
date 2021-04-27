@@ -4230,12 +4230,24 @@ export class RoutingHelper {
             ShipmentTool.BuildAWBPlaceField(entityPM);
 
             // Previous.To == this.From
-            if (!AppTool.IsNullOrEmpty(entityPM.PreCarriageFromPortId)) {
-                entityPM.PreCarriageToPortId = myPortId;
-                entityPM.PreCarriageToPortCode = myPortCode;
-                entityPM.PreCarriageToPortName = myPortName;
-                entityPM.PreCarriageToPortCountryCode = myPortCountryCode;
-                entityPM.PreCarriageToPortCountryName = myPortCountryName;
+            if (entityPM.ShipmentLevelCode == "H" && AppTool.IsNullOrEmpty(entityPM.MasterShipmentDataId)) {
+                if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingFromPortId)) {
+                    entityPM.PreForwardingToPortId = myPortId;
+                    entityPM.PreForwardingToPortCode = myPortCode;
+                    entityPM.PreForwardingToPortName = myPortName;
+                    entityPM.PreForwardingToPortCountryCode = myPortCountryCode;
+                    entityPM.PreForwardingToPortCountryName = myPortCountryName;
+                }
+            }
+
+            else {
+                if (!AppTool.IsNullOrEmpty(entityPM.PreCarriageFromPortId)) {
+                    entityPM.PreCarriageToPortId = myPortId;
+                    entityPM.PreCarriageToPortCode = myPortCode;
+                    entityPM.PreCarriageToPortName = myPortName;
+                    entityPM.PreCarriageToPortCountryCode = myPortCountryCode;
+                    entityPM.PreCarriageToPortCountryName = myPortCountryName;
+                }
             }
         }
     }
@@ -4605,6 +4617,14 @@ export class RoutingHelper {
                 entityPM.OnCarriageFromPortCountryCode = myPortCountryCode;
                 entityPM.OnCarriageFromPortCountryName = myPortCountryName;
             }
+
+            else if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingToPortId)) {
+                entityPM.OnForwardingFromPortId = myPortId;
+                entityPM.OnForwardingFromPortCode = myPortCode;
+                entityPM.OnForwardingFromPortName = myPortName;
+                entityPM.OnForwardingFromPortCountryCode = myPortCountryCode;
+                entityPM.OnForwardingFromPortCountryName = myPortCountryName;
+            }
         }
     }
 
@@ -4740,14 +4760,17 @@ export class RoutingHelper {
             entityPM.PreForwardingToPortCountryName = myPortCountryName;
 
             // next.From == this.To
-            entityPM.FromCountryId = myPortCountryId;
-            entityPM.FromCountryIsEC = myPortCountryEC;
-            entityPM.MainCarriageFromPortId = myPortId;
-            entityPM.MainCarriageFromPortCode = myPortCode;
-            entityPM.MainCarriageFromPortName = myPortName;
-            entityPM.MainCarriageFromPortCountryCode = myPortCountryCode;
-            entityPM.MainCarriageFromPortCountryName = myPortCountryName;
-
+            if (AppTool.IsNullOrEmpty(entityPM.MasterShipmentDataId)) {
+                entityPM.FromCountryId = myPortCountryId;
+                entityPM.FromCountryIsEC = myPortCountryEC;
+                entityPM.MainCarriageFromPortId = myPortId;
+                entityPM.MainCarriageFromPortCode = myPortCode;
+                entityPM.MainCarriageFromPortName = myPortName;
+                entityPM.MainCarriageFromPortCountryCode = myPortCountryCode;
+                entityPM.MainCarriageFromPortCountryName = myPortCountryName;
+                entityPM.FromPortId = myPortId;
+            }
+           
             ShipmentTool.ComputeSCI(entityPM);
             ShipmentTool.BuildAWBPlaceField(entityPM);
         }
@@ -4777,45 +4800,22 @@ export class RoutingHelper {
             entityPM.OnForwardingFromPortCountryName = myPortCountryName;
 
             // Previous.To == this.From
-            if (entityPM.Transshipment3FromPortId != null && entityPM.Transshipment3ToPortId != null) {
-                entityPM.Transshipment3ToPortId = myPortId;
-                entityPM.Transshipment3ToPortCode = myPortCode;
-                entityPM.Transshipment3ToPortName = myPortName;
-                entityPM.Transshipment3ToPortCountryCode = myPortCountryCode;
-                entityPM.Transshipment3ToPortCountryName = myPortCountryName;
-            }
-
-            else if (entityPM.Transshipment2FromPortId != null && entityPM.Transshipment2ToPortId != null) {
-                entityPM.Transshipment2ToPortId = myPortId;
-                entityPM.Transshipment2ToPortCode = myPortCode;
-                entityPM.Transshipment2ToPortName = myPortName;
-                entityPM.Transshipment2ToPortCountryCode = myPortCountryCode;
-                entityPM.Transshipment2ToPortCountryName = myPortCountryName;
-            }
-
-            else if (entityPM.Transshipment1FromPortId != null && entityPM.Transshipment1ToPortId != null) {
-                entityPM.Transshipment1ToPortId = myPortId;
-                entityPM.Transshipment1ToPortCode = myPortCode;
-                entityPM.Transshipment1ToPortName = myPortName;
-                entityPM.Transshipment1ToPortCountryCode = myPortCountryCode;
-                entityPM.Transshipment1ToPortCountryName = myPortCountryName;
-            }
-
-            else {
+            if (AppTool.IsNullOrEmpty(entityPM.MasterShipmentDataId)) {
                 entityPM.MainCarriageToPortId = myPortId;
                 entityPM.MainCarriageToPortCode = myPortCode;
                 entityPM.MainCarriageToPortName = myPortName;
                 entityPM.MainCarriageToPortCountryCode = myPortCountryCode;
-                entityPM.MainCarriageToPortCountryName = myPortCountryName;
-            }
+                entityPM.MainCarriageToPortCountryName = myPortCountryName;          
 
-            entityPM.ToCountryId = myPortCountryId;
-            entityPM.FinalDistenationPortId = myPortId;
-            entityPM.MainCarriageFinalDestinationPortId = myPortId;
-            entityPM.MainCarriageFinalDestinationPortCode = myPortCode;
-            entityPM.MainCarriageFinalDestinationPortName = myPortName;
-            entityPM.MainCarriageFinalDestinationPortCountryCode = myPortCountryCode;
-            entityPM.MainCarriageFinalDestinationPortCountryName = myPortCountryName;
+                entityPM.ToCountryId = myPortCountryId;
+                entityPM.FinalDistenationPortId = myPortId;
+                entityPM.MainCarriageFinalDestinationPortId = myPortId;
+                entityPM.MainCarriageFinalDestinationPortCode = myPortCode;
+                entityPM.MainCarriageFinalDestinationPortName = myPortName;
+                entityPM.MainCarriageFinalDestinationPortCountryCode = myPortCountryCode;
+                entityPM.MainCarriageFinalDestinationPortCountryName = myPortCountryName;
+                entityPM.ToPortId = myPortId;
+            }
         }
     }
 

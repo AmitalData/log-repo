@@ -175,9 +175,22 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
 
                     if (iHousePM != null)
                     {
+                        UpdateDisconnectedHousePorts();
                         UpdateShipment();
                     }
                 }
+            }
+        }
+        private void UpdateDisconnectedHousePorts()
+        {
+            if(!string.IsNullOrEmpty(iHousePM.PreForwardingFromPortId) && !string.IsNullOrEmpty(iHousePM.PreForwardingToPortId))
+            {
+                iHousePM.PreForwardingToPortId = iHousePM.FromPortId;
+            }
+
+            if (!string.IsNullOrEmpty(iHousePM.OnForwardingFromPortId) && !string.IsNullOrEmpty(iHousePM.OnForwardingToPortId))
+            {
+                iHousePM.OnForwardingFromPortId = iHousePM.ToPortId;
             }
         }
         private void RunRegistryDateProcedure(string myShipmentId)

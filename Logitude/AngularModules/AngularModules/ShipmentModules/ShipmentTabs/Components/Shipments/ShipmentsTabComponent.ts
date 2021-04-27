@@ -680,25 +680,46 @@ class HAWBItem {
     }
 
     private AddRemove() {
-
         if (this.IsChecked) {
-            var itemPM = this.fatherComponent.EntityPM.ShipmentConsoleShipments.filter(f => f.Id == this.Id)[0];
-            if (itemPM == null) {
-                itemPM = new ConsoleShipmentPM(this.fatherComponent.EntityPM);
-                itemPM.Id = this.Id;
-                itemPM.ShipmentNumber = this.fatherComponent.EntityPM.ShipmentNumber;
-                itemPM.MasterShipmentDataId = this.fatherComponent.EntityPM.Id;
-                this.fatherComponent.EntityPM.AddConsoleShipment(itemPM);
-                this.fatherComponent.Save();
-            }
+            this.AddConsoleShipment();            
         }
 
         else {
-            var itemPM = this.fatherComponent.EntityPM.ShipmentConsoleShipments.filter(f => f.Id == this.Id)[0];
-            if (itemPM != null) {
+            this.RemoveConsoleShipment();           
+        }
+    }
+    private AddConsoleShipment() {
+        var itemPM = this.fatherComponent.EntityPM.ShipmentConsoleShipments.filter(f => f.Id == this.Id)[0];
+        if (itemPM == null) {
+            itemPM = new ConsoleShipmentPM(this.fatherComponent.EntityPM);
+            itemPM.Id = this.Id;
+            itemPM.ShipmentNumber = this.fatherComponent.EntityPM.ShipmentNumber;
+            itemPM.MasterShipmentDataId = this.fatherComponent.EntityPM.Id;
+            this.fatherComponent.EntityPM.AddConsoleShipment(itemPM);
+            this.fatherComponent.Save();
+        }
+    }
+    private RemoveConsoleShipment() {
+        var itemPM = this.fatherComponent.EntityPM.ShipmentConsoleShipments.filter(f => f.Id == this.Id)[0];
+        if (itemPM != null) {
+            if (!AppTool.IsNullOrEmpty(itemPM.PreForwardingFromPortId) || !AppTool.IsNullOrEmpty(itemPM.OnForwardingFromPortId)) {
+                this.ConfirmRemovingConsoleShipment(itemPM);
+            }
+
+            else {
+                this.fatherComponent.EntityPM.RemoveConsoleShipment(itemPM);
+                this.fatherComponent.Save();
+            }            
+        }
+    }
+    private ConfirmRemovingConsoleShipment(itemPM: ConsoleShipmentPM) {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Show("Disconnecting this house will change Pre/ On Forwarding Ports, proceed ?");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
                 this.fatherComponent.EntityPM.RemoveConsoleShipment(itemPM);
                 this.fatherComponent.Save();
             }
-        }
+        });
     }
 }
