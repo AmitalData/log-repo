@@ -29,29 +29,28 @@ export var PrivateLoginComponent = (function (_super) {
         this.get_cookie_data();
         this.privateUrl = SessionInfo.GetLogitudeURL();
         // Get Images from storage, then request from server to change
-        this.GetImagesFromStorage();
+        this.GetLoginPageData();
         this.GetPrivateLabelsData(this.privateUrl);
         this.IsDSV = window.sessionStorage.getItem("IsDSV") == "true";
     };
-    PrivateLoginComponent.prototype.GetImagesFromStorage = function () {
-        this.GetLoginPageImages();
-    };
-    PrivateLoginComponent.prototype.GetLoginPageImages = function () {
+    PrivateLoginComponent.prototype.GetLoginPageData = function () {
         this.BackgroundImage = BrandingDataService.GetImage("BackgroundImage");
         this.MainLogo = BrandingDataService.GetImage("MainLogo");
         this.LoginImage = BrandingDataService.GetImage("LoginImage");
-        this.showSpinner = false;
+        this.SecondaryColor = BrandingDataService.GetColor("SecondaryColor");
+        if (this.checkImagesValues()) {
+            this.showSpinner = false;
+        }
+    };
+    PrivateLoginComponent.prototype.checkImagesValues = function () {
+        return this.BackgroundImage != null && this.MainLogo != null && this.LoginImage != null;
     };
     PrivateLoginComponent.prototype.GetPrivateLabelsData = function (privateUrl) {
         var _this = this;
         this.privateLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetPrivateLabelsDataRequest(privateUrl)).subscribe(function (response) {
             if (response.Result) {
-                _this.SecondaryColor = response.Result.SecondaryColor;
-                BrandingDataService.SecondaryColor = _this.SecondaryColor;
                 BrandingDataService.SetPrivateLabelsDataRequest(response.Result, privateUrl);
-                //this.MainColor = response.Result.MainColor; 
-                //BrandingDataService.MainColor = this.MainColor;
-                _this.GetLoginPageImages();
+                _this.GetLoginPageData();
             }
         });
         this.showSpinner = false;

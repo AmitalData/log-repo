@@ -1,10 +1,7 @@
 ﻿import { Component } from '@angular/core'; 
 import { ResetPasswordComponent } from '../../Components/ResetPasswordComponent';
-import { LoginService } from '../../LoginService';  
-import { SessionInfo } from '../../SessionInfo';
-import { ServiceResponse } from '../DataContracts/ServiceResponse';
-import { BrandingDataService } from '../Services/BrandingDataService';
-import { PrivateLabelsBrandingDataService } from '../Services/PrivateLabelsBrandingDataService';
+import { LoginService } from '../../LoginService';   
+import { BrandingDataService } from '../Services/BrandingDataService'; 
 
 @Component({
     selector: 'PrivateResetPasswordComponent',
@@ -37,8 +34,7 @@ export class PrivateResetPasswordComponent extends ResetPasswordComponent {
         this.BackgroundImage = BrandingDataService.GetImage("BackgroundImage"); 
         this.MainLogo = BrandingDataService.GetImage("MainLogo");   
         this.ForgetPasswordImage = BrandingDataService.GetImage("ForgetPasswordImage"); 
-        //this.MainColor = BrandingDataService.MainColor; 
-        this.SecondaryColor = BrandingDataService.SecondaryColor; 
+        this.SecondaryColor = BrandingDataService.GetColor("SecondaryColor");  
      } 
   }
  

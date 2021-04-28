@@ -27,8 +27,7 @@ export var PrivateResetPasswordComponent = (function (_super) {
         this.BackgroundImage = BrandingDataService.GetImage("BackgroundImage");
         this.MainLogo = BrandingDataService.GetImage("MainLogo");
         this.ForgetPasswordImage = BrandingDataService.GetImage("ForgetPasswordImage");
-        //this.MainColor = BrandingDataService.MainColor; 
-        this.SecondaryColor = BrandingDataService.SecondaryColor;
+        this.SecondaryColor = BrandingDataService.GetColor("SecondaryColor");
     };
     PrivateResetPasswordComponent.decorators = [
         { type: Component, args: [{

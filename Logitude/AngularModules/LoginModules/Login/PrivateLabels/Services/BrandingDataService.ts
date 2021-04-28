@@ -1,4 +1,5 @@
-﻿ import { Headers } from '@angular/http';
+﻿ import { Console } from '@angular/core/src/console';
+import { Headers } from '@angular/http';
 import { PrivateLabelsBrandingData } from '../DataContracts/PrivateLabelsBrandingData'; 
 import { PrivateLabelsBrandingDataRequest } from '../DataContracts/PrivateLabelsBrandingDataRequest';
 import { PrivateLabelsImage } from '../DataContracts/PrivateLabelsImage';
@@ -69,6 +70,7 @@ export class BrandingDataService {
         this.SecondaryColor = PrivateLabelsBrandingData.SecondaryColor;
 
         BrandingDataService.SetPrivateLabelsImages(brandingData, baseUrl);
+        BrandingDataService.SetPrivateLabelsColors(brandingData);
     }
 
     public static ConvertHexaToRGBA(color: string) {
@@ -77,13 +79,46 @@ export class BrandingDataService {
             return 'rgba(' + parseInt(color.slice(-6, -4), 16) + ',' + parseInt(color.slice(-4, -2), 16) + ',' + parseInt(color.slice(-2), 16) + ',' + alpha + ')';
         }
     }
+
+    private static SetPrivateLabelsColors(BrandingData: any) {
+        this.SetMainColor(BrandingData);
+        this.SetSecondaryColor(BrandingData); 
+    }
+
+
+
+    private static SetMainColor(BrandingData: any) {
+        if (BrandingData.MainColor) { 
+            this.StoreImageInStorage("MainColor", "MainColor", BrandingData.MainColor);
+        }  
+    }
+
+
+    private static SetSecondaryColor(BrandingData: any) {
+        if (BrandingData.SecondaryColor) {
+            this.StoreImageInStorage("SecondaryColor", "SecondaryColor", BrandingData.SecondaryColor);
+        }
+    }
+     
+    public static GetColor(ColorStorageKey: string) {
+
+        let color = JSON.parse(localStorage.getItem(ColorStorageKey));  
+        if (color && color.Id != null) { 
+            return color.Data;
+        }
+        else { 
+            return color;
+        }
+           
+    }
+
     private static SetPrivateLabelsImages(BrandingData: any, baseUrl: string) {
         this.SetBackgroundImage(BrandingData);
         this.SetLoginImage(BrandingData);
         this.SetLoginProgressImage(BrandingData);
         this.SetForgetPasswordImage(BrandingData); 
         this.SetMainLogo(BrandingData); 
-        this.SetSmallLogo(BrandingData);  
+        this.SetSmallLogo(BrandingData);   
     }
 
     // Bingind as [src] img 
@@ -201,6 +236,7 @@ export class BrandingDataService {
         return JSON.parse(localStorage.getItem(ImgStorageKey));
     }
 
+    
 
     private static GetImageIdFromStorage(ImgStorageKey: string) {
         var ImgId: string = null;
