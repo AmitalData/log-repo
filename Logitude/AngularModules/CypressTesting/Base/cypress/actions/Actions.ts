@@ -121,12 +121,48 @@ export function ClickOnRowDependingOnValue(value: string) {
 export function CloseWindow() {
     cy.Click(BaseSelectors.button, BaseSelectors.ContainClose)
 }
+export function FormatDate(date: string): string{
+    var currentDateArray = date.split("/");
+    return currentDateArray[0] + " " + GetMonth(currentDateArray[1]) + " " + currentDateArray[2];
+}
 
-export function GetTodayDate() {
+function GetMonth(monthNum: string) {
+    switch (monthNum) {
+      case "01": return "Jan"; 
+      case "02": return "Feb"; 
+      case "03": return "Mar"; 
+      case "04": return "Apr"; 
+      case "05": return "May"; 
+      case "06": return "June"; 
+      case "07": return "July"; 
+      case "08": return "Aug"; 
+      case "09": return "Sept"; 
+      case "10": return "Oct"; 
+      case "11": return "Nov"; 
+      case "12": return "Dec"; 
+    }
+  }
+export function AssertDateOneOf(daySelector:string){
+    cy.get(daySelector).then(($day) => {
+        const day = $day.text()
+        expect(day).to.be.oneOf([FormatDate(GetTodayDate()),FormatDate(GetYesterdayDate()),FormatDate(GetYesterdayDate())] ) 
+})
+   
+  }
+  export function GetTodayDate() {
     var todayDate = new Date
     return FormateTheDate(todayDate)
 }
-
+export function GetYesterdayDate() {
+    var yesterdayDate = new Date();
+    yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+    return FormateTheDate(yesterdayDate)
+}
+export function GetTomorrowDate() {
+    var tomorrowDate = new Date();
+    tomorrowDate.setDate(tomorrowDate.getDate() + 1);
+    return FormateTheDate(tomorrowDate)
+}
 export function SubstractDaysFromDate(Days: number) {
     var todayDate = new Date
     var pastDate = new Date
