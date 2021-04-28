@@ -2891,7 +2891,9 @@
     <Folder Include="GlobalModel\APIDataContract\QueryService\" />
     <Folder Include="TaxesApprovalModel\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="ICSharpDLL\ICSharpCode.SharpZipLib.dll" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
       <SubType>Designer</SubType>
