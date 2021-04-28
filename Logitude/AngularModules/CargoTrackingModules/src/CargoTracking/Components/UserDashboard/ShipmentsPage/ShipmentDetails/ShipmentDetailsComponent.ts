@@ -155,6 +155,9 @@ export class ShipmentDetailsComponent implements AfterViewInit {
                 this.ShipmentCustomsData = result;
                 this.loadingCustomsData = false;
             }
+        },()=>{
+            this.loadingCustomsData = false;
+
         });
     }
 
