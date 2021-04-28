@@ -14,5 +14,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string SKU { get; set; }
         public string Remarks { get; set; }
         public bool InActive { get; set; }
+        public string Description { get; set; }
+
     }
 }

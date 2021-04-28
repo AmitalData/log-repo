@@ -44,6 +44,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     SKU = entityPoco.SKU,
                     Remarks = entityPoco.Remarks,
                     InActive = entityPoco.InActive,
+                    Description = entityPoco.Description,
                 };
             }
 
@@ -61,6 +62,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    SKU = entity.SKU,
                                                    Remarks = entity.Remarks,
                                                    InActive = entity.InActive,
+                                                   Description = entity.Description,
                                                };
             return result;
         }

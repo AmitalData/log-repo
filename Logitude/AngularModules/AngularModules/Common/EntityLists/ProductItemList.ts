@@ -13,5 +13,6 @@ export class ProductItemList {
 		SKU: string;
 		Remarks: string;
 		InActive: boolean;
+		Description: string;
 	
 }
