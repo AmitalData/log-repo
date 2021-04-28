@@ -1,11 +1,11 @@
 ﻿
 <Script DBType="Main" Module="Quote"  Pre="true">
-  <Sql Version="1">
+  <Sql Version="2">
     <![CDATA[
-if exists (SELECT * FROM sys.tables WHERE name='QuoteComputedFields')
-  begin 
-        DELETE FROM QuoteComputedFields
-  end
+--if exists (SELECT * FROM sys.tables WHERE name='QuoteComputedFields')
+--  begin 
+--        DELETE FROM QuoteComputedFields
+--  end
 
     ]]>
   </Sql>

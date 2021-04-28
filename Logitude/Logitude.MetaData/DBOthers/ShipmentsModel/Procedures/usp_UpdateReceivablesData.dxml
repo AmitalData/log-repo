@@ -102,6 +102,7 @@ BEGIN
 				declare @AllHousesTotalChargeableWeightInKG as float
 				declare @AllHousesTotalVolumeInCBM as float
 				declare @AllHousesGrossWeightPerStorageDays as float;
+        declare @AllHousesQuantities as float
 
 				if exists (select * from Shipments where ShipmentLevelCode = 'H' AND MasterShipmentDataId = @MasterId)
 				begin
@@ -835,7 +836,8 @@ BEGIN
 
 						set @IsCreatingReceivable = 0
 						set @HouseReceivableMeasurementId = @MasterReceivableMeasurementId
-				        set @HousePercentForeignChargesLocalAmount = (select sum(isnull(TotalAmountLocal,0)) from ShipmentReceivables where ShipmentId = @HouseId AND  CurrencyId != (select CurrencyId from tenants where Id = @Tenant) AND MeasurementId != @PFCL_Id)	
+				    set @HousePercentForeignChargesLocalAmount = (select sum(isnull(TotalAmountLocal,0)) from ShipmentReceivables where ShipmentId = @HouseId AND  CurrencyId != (select CurrencyId from tenants where Id = @Tenant) AND MeasurementId != @PFCL_Id)	
+				    set @AllHousesQuantities = (select sum(isnull(TotalAmountLocal,0)) from ShipmentReceivables WHERE ShipmentId in (select id from shipments where ShipmentLevelCode = 'H' AND MasterShipmentDataId = @MasterId and Tenant = @Tenant)	AND CurrencyId != (select CurrencyId from tenants where Id = @Tenant) AND MeasurementId != @PFCL_Id)
 
 						-- IsCreatingReceivable
 						BEGIN
@@ -951,7 +953,7 @@ BEGIN
 								if (@IsUpdatingReceivable = 1)
 								BEGIN
 									set @Quantity = @HousePercentForeignChargesLocalAmount
-									set @UnitPrice = @MasterReceivableUnitPrice
+									set @UnitPrice = @MasterReceivableAmount /  @AllHousesQuantities * 100
 									set @Amount = @Quantity * @UnitPrice / 100
 									set @AmountLocal = @Amount * @MasterReceivableRate
 									set @AmountInProfitCurrency = @AmountLocal / @MasterReceivableProfitRate

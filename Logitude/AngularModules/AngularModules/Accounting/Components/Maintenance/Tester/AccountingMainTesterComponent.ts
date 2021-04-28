@@ -195,7 +195,7 @@ export class AccountingMainTesterComponent extends BaseComponent {
     RebuildFIXGLAccountAgingData_Click() {
         let opr = "RebuildFIXGLAccountAgingData_Click";
         let obj = { /*MyTenant: SessionLocator.Tenant,*/ Aging4AccountTypeCode: 'Customer2', MyGLAccId: "1-152", Aging4AccountTypeCode_Options: 'Customer2;Vendor3',};
-        this.StrandartOp(opr, obj, () => { });
+        //this.StrandartOp(opr, obj, () => { });
 
         this.StrandartOp(opr, obj, () => {
             let resObj = JSON.parse(this.JsonOut);
@@ -610,6 +610,18 @@ Line4
 `;
         this.PostOp(opr, str, () => { });
     }
+
+    ButtonLoadJournals_ISL_Click() {
+        let opr = "ButtonLoadJournals_ISL_Click";
+        let str: string =
+            `Please insert page, you can add a header  //Tenant=1071
+Line2
+Line3
+`;
+        this.PostOp(opr, str, () => { });
+    }
+
+
 
     SetJournalExample() {
         let journal = {

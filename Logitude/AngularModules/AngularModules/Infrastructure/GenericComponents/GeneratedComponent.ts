@@ -44,7 +44,7 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
         this.IsNewEntityCall = isNewEntityCall;
         this.ShowTitle = showTitle;
         this.ChildObjectTableName = childObjectTableName;
-        this.ChildObjectTableId = window.ObjectTables.filter((x: any) => x.Name === this.ChildObjectTableName)[0].Id;
+        this.ChildObjectTableId = window.ObjectTables.filter((x: any) => x.Name === this.ChildObjectTableName)[0]?.Id;
         this.BuildScreen();
         this.Listen();
     }

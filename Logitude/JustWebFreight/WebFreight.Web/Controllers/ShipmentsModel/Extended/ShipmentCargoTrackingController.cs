@@ -50,17 +50,30 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
         {
             try
             {
-                string logKey = PerformanceLogger.LogCurrentTime();
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                int tenant = GetAuthinticatedTenant();
 
-                ShipmentQuery shipmentQuery = new ShipmentQuery(authToken.Tenant);
-                ShipmentPM shipmentPM = shipmentQuery.GetShipmentPMForCargoTrackingByEntityId(id, authToken.Tenant);
-
-                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+                ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+                ShipmentPM shipmentPM = shipmentQuery.GetShipmentPMForCargoTrackingByEntityId(id, tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, shipmentPM);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+        public HttpResponseMessage GetShipmentCustomsData(string shipmentId)
+        {
+            try
+            {
+                int tenant = GetAuthinticatedTenant();
+
+                ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+                CargoTrackingShipmentCustomsData customsData = shipmentQuery.GetCargoTrackingShipmentCustomsData(shipmentId, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, customsData);
             }
             catch (Exception ex)
             {
@@ -73,10 +86,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
         {
             try
             {
-                string logKey = PerformanceLogger.LogCurrentTime();
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                int tenant = GetAuthinticatedTenant();
+
 
                 AddressQuery addressQuery = new AddressQuery(authToken.Tenant);
                 List<AddressList> addresses = addressQuery.GetAddressesByCardIds(partnersIds, authToken.Tenant);
@@ -90,5 +101,16 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
 
         }
 
+        private int GetAuthinticatedTenant()
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            var tenant = authToken.Tenant;
+            SecurityUtility.AuthenticationOnTenant(tenant);
+            return tenant;
+        }
+
+
     }
+
 }

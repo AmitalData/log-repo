@@ -4302,6 +4302,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     {
                         this.initializer.IsUpdatingHouses = true;
                     }
+                    else if (entityPM.ShipmentConsoleShipments != null && entityPM.ShipmentConsoleShipments.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert).Any())
+                    {
+                        this.initializer.IsUpdatingHouses = true;
+                    }
                 }
             }
         }
