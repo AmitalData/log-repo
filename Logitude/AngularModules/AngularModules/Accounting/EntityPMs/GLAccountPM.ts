@@ -793,6 +793,46 @@ export class GLAccountPM {
     public set LastReconcileDate(newValue: Date) { if (this.lastReconcileDate != newValue) { this.lastReconcileDate = newValue; this.MarkAsDirty("LastReconcileDate"); } }
        
 	 
+    private creditLimit: number;
+    public get CreditLimit() { return this.creditLimit; }
+    public set CreditLimit(newValue: number) { if (this.creditLimit != newValue) { this.creditLimit = newValue; this.MarkAsDirty("CreditLimit"); } }
+       
+	 
+    private paymentTerm: string;
+    public get PaymentTerm() { return this.paymentTerm; }
+    public set PaymentTerm(newValue: string) { if (this.paymentTerm != newValue) { this.paymentTerm = newValue; this.MarkAsDirty("PaymentTerm"); } }
+       
+	 
+    private totalOpenShipments: number;
+    public get TotalOpenShipments() { return this.totalOpenShipments; }
+    public set TotalOpenShipments(newValue: number) { if (this.totalOpenShipments != newValue) { this.totalOpenShipments = newValue; this.MarkAsDirty("TotalOpenShipments"); } }
+       
+	 
+    private phone: string;
+    public get Phone() { return this.phone; }
+    public set Phone(newValue: string) { if (this.phone != newValue) { this.phone = newValue; this.MarkAsDirty("Phone"); } }
+       
+	 
+    private salesman: string;
+    public get Salesman() { return this.salesman; }
+    public set Salesman(newValue: string) { if (this.salesman != newValue) { this.salesman = newValue; this.MarkAsDirty("Salesman"); } }
+       
+	 
+    private collector: string;
+    public get Collector() { return this.collector; }
+    public set Collector(newValue: string) { if (this.collector != newValue) { this.collector = newValue; this.MarkAsDirty("Collector"); } }
+       
+	 
+    private followupDate: Date;
+    public get FollowupDate() { return this.followupDate; }
+    public set FollowupDate(newValue: Date) { if (this.followupDate != newValue) { this.followupDate = newValue; this.MarkAsDirty("FollowupDate"); } }
+       
+	 
+    private followupNotes: string;
+    public get FollowupNotes() { return this.followupNotes; }
+    public set FollowupNotes(newValue: string) { if (this.followupNotes != newValue) { this.followupNotes = newValue; this.MarkAsDirty("FollowupNotes"); } }
+       
+	 
 
     public OldEntityPM: GLAccountPM;
 		

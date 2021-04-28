@@ -139,6 +139,14 @@ export class GLAccountList {
 	TotalOpenTransactions: number;
 	LastReconciledBy: string;
 	LastReconcileDate: Date;
+	CreditLimit: number;
+	PaymentTerm: string;
+	TotalOpenShipments: number;
+	Phone: string;
+	Salesman: string;
+	Collector: string;
+	FollowupDate: Date;
+	FollowupNotes: string;
 	
 }
  
