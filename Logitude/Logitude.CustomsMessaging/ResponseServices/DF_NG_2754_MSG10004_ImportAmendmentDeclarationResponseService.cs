@@ -745,7 +745,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     if (item.Invoice.DMExtensions.InvoiceAmount != null) supplierInvoicePM.InvoiceCurrencyTypeCode = item.Invoice.DMExtensions.InvoiceAmount.currencyID.ToString();
                     //SetAmountTypeValue *************
                     //InvoiceCurrencyTypeCode
-                    if (item.Invoice.DMExtensions.ActualPayedAmount != null) supplierInvoicePM.ActualPayedAmount = GetValueAmountType(item.Invoice.DMExtensions.ActualPayedAmount);
+                    if (item.Invoice.DMExtensions.ActualPayedAmount != null)
+                    { supplierInvoicePM.ActualPayedAmount = GetValueAmountType(item.Invoice.DMExtensions.ActualPayedAmount);
+
+                        if(item.Invoice.DMExtensions.ActualPayedAmount.currencyID!=null)
+                        supplierInvoicePM.ActualPayedCurrencyTypeCode = item.Invoice.DMExtensions.ActualPayedAmount.currencyID.ToString();
+
+                    }
                 }
                 //ActualPayedCurrencyTypeCode
                 if (item.Supplier != null) supplierInvoicePM.VendorId = GetVendorId(GetValueIDType(item.Supplier.ID), tenant, context);
