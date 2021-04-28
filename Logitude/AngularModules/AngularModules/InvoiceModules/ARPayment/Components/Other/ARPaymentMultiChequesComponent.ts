@@ -54,7 +54,7 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
             this.AddFirstChequeRecord();
             this.CalculateTotal();
             this.UpdateChequeCounter();
-            this.IsDisplayOnly = this.paymentPM.StatusCode == "AD" ? true : false;
+            this.IsDisplayOnly = this.paymentPM.StatusCode == "AD" || this.paymentPM.StatusCode == "VD"  ? true : false;
         }
     }
     UpdateChequeCounter() {
