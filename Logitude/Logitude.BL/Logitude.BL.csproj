@@ -72,7 +72,7 @@
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\JustWebFreight\WebFreight.Web\bin\ICSharpCode.SharpZipLib.dll</HintPath>
+      <HintPath>ICSharpDLL\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="Intuit.Ipp.Core, Version=7.5.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\IppDotNetSdkForQuickBooksApiV3.7.5.0\lib\Intuit.Ipp.Core.dll</HintPath>
