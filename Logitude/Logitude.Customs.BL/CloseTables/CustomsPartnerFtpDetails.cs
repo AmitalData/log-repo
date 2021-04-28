@@ -22,6 +22,9 @@ namespace Logitude.Customs.BL.CloseTables
         public const string InterfaceName_ECOVSTHR_Response = "ECOVSTHR+RS";//EC = E-Commerce
         public const string InterfaceName_ECMMNSPCL_REQUEST = "ECSPCL";//EC = E-Commerce
         public const string InterfaceName_ECMMNSPCL_Response = "ECSPCL+RS";//EC = E-Commerce
+        public const string InterfaceName_ECSWSTHR_REQUEST = "ECSWSTHR";//EC = E-Commerce
+        public const string InterfaceName_ECSWSTHR_RESPONE = "ECSWSTHR+RS";//EC = E-Commerce
+
 
         public const string InterfaceName_ECOVSSPCL_REQUEST = "ECOVSSPCL+RQ";//EC = E-Commerce
         public const string InterfaceName_ECOVSSPCL_RESPONE = "ECOVSSPCL+RS";//EC = E-Commerce
@@ -32,6 +35,7 @@ namespace Logitude.Customs.BL.CloseTables
         public const string InterfaceName_Ftp2Maman2470 = "ECM2470";//EC = E-Commerce 2 maman 2470
         public const string PartnerCode_Mamam = "MAMAN";
         public const string PartnerCode_ILOVS = "ILOVS";
+        public const string PartnerCode_ILSWS = "ILSWS";
         public const string TypeCode_Out = "OUT";
         public const string TypeCode_In = "IN";
 
@@ -213,7 +217,27 @@ namespace Logitude.Customs.BL.CloseTables
                 Subject="Status/Availability ILOVS",
                 ServerInternalDef= true
             },
+              new InterfaceDetails()
+            {
+                Code = InterfaceName_ECSWSTHR_REQUEST,
+                Name = "ש.מ.ב לסוויספורט",
+                TypeCode = TypeCode_Out,
+                Partner = PartnerCode_ILSWS,
+                ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
+                ResponseCode = InterfaceName_ECSWSTHR_RESPONE,
+            },
+            new InterfaceDetails()
+            {
+                Code = InterfaceName_ECSWSTHR_RESPONE,
+                Name = "ש.מ.ב מסוויספורט",
+                TypeCode = TypeCode_In,
+                Partner = PartnerCode_ILSWS,
+                ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
+                AnalyzeQueueService= AnalyzeQueueServiceEnum.SwissPortQHAWBService,
+                Subject="ש.מ.ב מסוויספורט",
+                ServerInternalDef= true,
 
+            },
 
             };
             ///
@@ -335,6 +359,7 @@ namespace Logitude.Customs.BL.CloseTables
         OVSStatusAvailabilityService,
         MamanQHAWBService,
         MamanQSPCLService,
+        SwissPortQHAWBService,
     }
     public enum CourierWEBAPICredentialType
     {
