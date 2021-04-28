@@ -753,8 +753,7 @@ export class QuoteMenuButtonsHandler {
     }
 
     IsSetAsSentQuote: boolean = false;
-    private SetAsSentToCustomer() {
-        console.log("Test Object reference error -> Set As Sent To Customer");
+    private SetAsSentToCustomer() { 
         this.isLCL = QuoteUtilities.IsLCLQuote(this.EntityPM);
         this.CheckUpdateQuantities();
 
@@ -802,8 +801,7 @@ export class QuoteMenuButtonsHandler {
     }
 
     private CancelQuote() {
-        this.Validate();
-        console.log("Test Object reference error for canceled quotes");
+        this.Validate(); 
         if (this.isValid) {
             var myService: ShipmentDomainService = new ShipmentDomainService();
             myService.GetShipmentsCountByQuoteId(this.EntityPM.Id).subscribe((myResult: ServiceResponse) => {
@@ -1211,8 +1209,7 @@ export class QuoteMenuButtonsHandler {
     }
 
     private OnNotesWindowClosed(actionType: string) {
-        this.isButtonClicked = false;
-        console.log("Test Object reference error for canceled quotes");
+        this.isButtonClicked = false; 
         if (actionType == "sent") {
             this.EntityPM.IsClosed = false;
             this.EntityPM.ActionType = "SetAsSentToCustomer";

@@ -3148,6 +3148,190 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private double? creditLimit ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public double? CreditLimit  
+	   {
+	    
+	     get
+		{
+		   return creditLimit;
+		 }
+		 set
+		 {
+		   if(creditLimit != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreditLimit",OldValue=creditLimit,NewValue=value,PropertyType="double?"};
+		    NotifyPropertyChanged(values);
+		   creditLimit=value;
+		   }
+			
+		 }
+	   }
+	  private string paymentTerm ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PaymentTerm  
+	   {
+	    
+	     get
+		{
+		   return paymentTerm;
+		 }
+		 set
+		 {
+		   if(paymentTerm != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PaymentTerm",OldValue=paymentTerm,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   paymentTerm=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? totalOpenShipments ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? TotalOpenShipments  
+	   {
+	    
+	     get
+		{
+		   return totalOpenShipments;
+		 }
+		 set
+		 {
+		   if(totalOpenShipments != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TotalOpenShipments",OldValue=totalOpenShipments,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   totalOpenShipments=value;
+		   }
+			
+		 }
+	   }
+	  private string phone ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Phone  
+	   {
+	    
+	     get
+		{
+		   return phone;
+		 }
+		 set
+		 {
+		   if(phone != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Phone",OldValue=phone,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   phone=value;
+		   }
+			
+		 }
+	   }
+	  private string salesman ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Salesman  
+	   {
+	    
+	     get
+		{
+		   return salesman;
+		 }
+		 set
+		 {
+		   if(salesman != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Salesman",OldValue=salesman,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   salesman=value;
+		   }
+			
+		 }
+	   }
+	  private string collector ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Collector  
+	   {
+	    
+	     get
+		{
+		   return collector;
+		 }
+		 set
+		 {
+		   if(collector != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Collector",OldValue=collector,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   collector=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? followupDate ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? FollowupDate  
+	   {
+	    
+	     get
+		{
+		   return followupDate;
+		 }
+		 set
+		 {
+		   if(followupDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FollowupDate",OldValue=followupDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   followupDate=value;
+		   }
+			
+		 }
+	   }
+	  private string followupNotes ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FollowupNotes  
+	   {
+	    
+	     get
+		{
+		   return followupNotes;
+		 }
+		 set
+		 {
+		   if(followupNotes != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FollowupNotes",OldValue=followupNotes,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   followupNotes=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
