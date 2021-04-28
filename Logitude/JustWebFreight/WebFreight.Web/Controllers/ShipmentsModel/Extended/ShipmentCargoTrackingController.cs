@@ -89,8 +89,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                 int tenant = GetAuthinticatedTenant();
 
 
-                AddressQuery addressQuery = new AddressQuery(authToken.Tenant);
-                List<AddressList> addresses = addressQuery.GetAddressesByCardIds(partnersIds, authToken.Tenant);
+                AddressQuery addressQuery = new AddressQuery(tenant);
+                List<AddressList> addresses = addressQuery.GetAddressesByCardIds(partnersIds, tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, addresses);
             }
