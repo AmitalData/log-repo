@@ -10,7 +10,7 @@ import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/Cargo
 import { CargoTrackingShipmentWithMilestones, Milestone } from 'src/CargoTracking/Components/PublicSite/PublicShipmentDetailsComponent/PublicShipmentDetailsComponent';
 import { CargoTrackingPortService } from '../../../../Services/Others/CargoTrackingPortService';
 import { CargoTrackingShipmentService } from '../../../../Services/Others/CargoTrackingShipmentService';
-
+import { CargoTrackingShipmentCustomsData } from "../../../../DataContracts/CargoTrackingShipmentCustomsData";
 @Component({
     selector: 'ShipmentDetailsComponent',
     templateUrl: './ShipmentDetailsComponent.html',
@@ -33,6 +33,7 @@ export class ShipmentDetailsComponent implements AfterViewInit {
     SearchText: string = "";
     CustomsBrokerReference: string;
     ShipmentPM: any;
+    ShipmentCustomsData: CargoTrackingShipmentCustomsData
     get tenant() {
         return CargoTrackingBrandingData.Tenant;
     }
@@ -106,6 +107,7 @@ export class ShipmentDetailsComponent implements AfterViewInit {
                 this.ShipmentReferences = result.ShipmentList.CustomerReference ? result.ShipmentList.CustomerReference.split(',') : null;
                 this.SetRoutingVariables();
                 this.GetShipmentPM();
+                this.GetShipmentCustomsData();
 
             }
 
@@ -144,6 +146,21 @@ export class ShipmentDetailsComponent implements AfterViewInit {
             }
         });
     }
+
+    loadingCustomsData: boolean = false;
+    GetShipmentCustomsData() {
+        this.loadingCustomsData = true;
+        this.cargoTrackingShipmentService.GetShipmentCustomsData(this.Shipment.ShipmentList.EntityId).subscribe((result: any) => {
+            if (result) {
+                this.ShipmentCustomsData = result;
+                this.loadingCustomsData = false;
+            }
+        },()=>{
+            this.loadingCustomsData = false;
+
+        });
+    }
+
     private GetIdFromURI() {
 
         let _id = this.route.snapshot.paramMap.get('SecurityKey');

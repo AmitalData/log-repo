@@ -24,5 +24,17 @@ export class CargoTrackingShipmentService {
             }),
             catchError(null));
     }
+
+    GetShipmentCustomsData(shipmentId: string) {
+        var authHeaders = ServiceHelper.GetHeadersWithToken();
+
+        return this._http.get(`${this._apiUrl}/GetShipmentCustomsData?shipmentId=${shipmentId}`, authHeaders).pipe(
+            map((response: ServiceResponse) => {
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse = response;
+                return serviceResponse;
+            }),
+            catchError(null));
+    }
 }
 
