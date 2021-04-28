@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace WebFreight.Web.DataProviders
 {
-    public class ShipmentProfitDataProvider
+    public class ShipmentProfitDataProvider:BaseDataProvider
     {
         public DateTime IssueDate { get; set; }
 
@@ -14,7 +14,7 @@ namespace WebFreight.Web.DataProviders
         public string ProfitInLocalCurrency { get; set; }
         public string EstimateProfitInLocalCurrency { get; set; }
         public string DifferenceInLocalCurrency { get; set; }
-
+        public string MasterShipmentNumber { get; set; }
         public string ProfitCurrencyCode { get; set; }
         public string ProfitCurrencyName { get; set; }
         public string PayablesInProfitCurrency { get; set; }

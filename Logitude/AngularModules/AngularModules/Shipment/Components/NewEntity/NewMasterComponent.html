@@ -230,6 +230,8 @@
                                                         <div style="font-size: 13px; color: #6E7172;">{{'Shipment.S.NewShipment.Routings' | TextCodeTranslationPipe}}</div>
                                                         <CheckBox [Top]="5" [IsChecked]="true" [Text]="'Shipment.S.NewShipment.MainCarriage' | TextCodeTranslationPipe" [IsEnabled]="false"></CheckBox>
                                                         <CheckBox [Top]="5" *ngIf="TransportModeId == 'A'" [IsChecked]="IsCopyFlights" (Checked)="IsCopyFlights = $event" [Text]="'Include flights'"></CheckBox>
+                                                        <CheckBox [Top]="5" *ngIf="TransportModeId == 'A'" [IsChecked]="IsCopyPreCarriage" (Checked)="IsCopyPreCarriage = $event" [Text]="'Pre carriage'"></CheckBox>
+                                                        <CheckBox [Top]="5" *ngIf="TransportModeId == 'A'" [IsChecked]="IsCopyOnCarriage" (Checked)="IsCopyOnCarriage = $event" [Text]="'On carriage'"></CheckBox>
                                                         <div style="height:1px; width: 100%; background: #999999; opacity:0.3; margin-top: 5px; margin-bottom: 5px;"></div>
                                                     </div>
 

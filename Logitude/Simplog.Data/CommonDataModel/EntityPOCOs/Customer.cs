@@ -13,7 +13,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string Id { get; set; }      
         public int Tenant { get; set; }
         public string RankId { get; set; }
-        public string BillToId { get; set; }
         public string AccountManagerUserId { get; set; }
         public string SalesmanUserId { get; set; }
         public bool StartWorkingManuallySet { get; set; }
@@ -33,9 +32,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public DateTime? AutomaticLastUpdateDate { get; set; }
         public string EORInumber { get; set; }
         public virtual Card Card { get; set; }
-
-        [ForeignKey("BillToId")]
-        public virtual Card BillToCard { get; set; }
 
         [ForeignKey("SalesmanUserId")]
         public virtual User SalesmanUser { get; set; }

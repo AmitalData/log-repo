@@ -348,6 +348,9 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                              WarehouseLegLastFreeDate = f.WarehouseLegLastFreeDate,
                              LastFinalDestination = f.LastFinalDestination,
                              EstimatedFinalArrivalDate = f.EstimatedFinalArrivalDate,
+                             MainCarriageVesselName = f.MainCarriageVesselName, 
+                             WarehouseLegTerminalName = f.WarehouseLegTerminalName,
+                             BookingConfirmationNumber = f.BookingConfirmationNumber,
                          };
 
             query2 = filter.GetFilteredQuery<ShipmentList>(listQueryOperation, query2);
@@ -601,7 +604,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                                                        OrderChargeableWeight = myShipment.OrderChargeableWeight,
                                                        OrderVolumetricWeight = myShipment.OrderVolumetricWeight,
                                                        PackagesQuantity = myShipment.PackagesQuantity,
-                                                       PreCarriageETD = myShipment.PreCarriageETD,
+                                                       PreCarriageETD = myMaster.PreCarriageETD,
                                                        ProductCode = myShipment.ProductCode,
                                                        ProfitExchangeRate = myShipment.ProfitExchangeRate,
                                                        ProfitInLocalCurrency = myShipment.ProfitInLocalCurrency,
@@ -1447,7 +1450,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                                                        OrderChargeableWeight = myShipment.OrderChargeableWeight,
                                                        OrderVolumetricWeight = myShipment.OrderVolumetricWeight,
                                                        PackagesQuantity = myShipment.PackagesQuantity,
-                                                       PreCarriageETD = myShipment.PreCarriageETD,
+                                                       PreCarriageETD = myMaster.PreCarriageETD,
                                                        ProductCode = myShipment.ProductCode,
                                                        ProfitExchangeRate = myShipment.ProfitExchangeRate,
                                                        ProfitInLocalCurrency = myShipment.ProfitInLocalCurrency,
@@ -2508,14 +2511,14 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             return myResult;
         }
 
-        public ImporterQueriesDataCounts GetShipmentsQueriesCounts(int tenant, string transportModeId, string SearchFilter,string TypeCode = null)
-        {
-            SecurityUtility.AuthenticationOnTenant(tenant);
+        //public ImporterQueriesDataCounts GetShipmentsQueriesCounts(int tenant, string transportModeId, string SearchFilter,string TypeCode = null)
+        //{
+        //    SecurityUtility.AuthenticationOnTenant(tenant);
 
-            shipmentQuery = new ShipmentQuery(tenant);
-            ImporterQueriesDataCounts result = shipmentQuery.GetShipmentsQueriesCounts(tenant, transportModeId, SearchFilter, ServiceContext.User.Identity.Name, TypeCode);
-            return result;
-        }
+        //    shipmentQuery = new ShipmentQuery(tenant);
+        //    ImporterQueriesDataCounts result = shipmentQuery.GetShipmentsQueriesCounts(tenant, transportModeId, SearchFilter, ServiceContext.User.Identity.Name, TypeCode);
+        //    return result;
+        //}
 
         public ShipmentPM GetUnSecuredShipmentPMTest(int tenant)
         {

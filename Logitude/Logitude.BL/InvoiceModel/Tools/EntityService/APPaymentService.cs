@@ -705,13 +705,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         #region PaymentInvoice
         private void CreatePaymentInvoice(APPaymentInvoicePM item)
         {
-            item.APPaymentId = entityPM.Id;
-            item.ForeignCurrencyId = entityPM.PaymentCurrencyId;
-            item.Id = IdCounter.GetNumber("APInvoicePayment", entityPM.Tenant);
+            this.ValidateIfSameRecordAdded(item);
+            
+                item.APPaymentId = entityPM.Id;
+                item.ForeignCurrencyId = entityPM.PaymentCurrencyId;
+                item.Id = IdCounter.GetNumber("APInvoicePayment", entityPM.Tenant);
 
-            APInvoicePayment newObject = new APInvoicePayment();
-            APPaymentMapping.MapEntityInvoicePyament(item, newObject, true);
-            invoicePaymentRepository.Add(newObject);
+                APInvoicePayment newObject = new APInvoicePayment();
+                APPaymentMapping.MapEntityInvoicePyament(item, newObject, true);
+                invoicePaymentRepository.Add(newObject);            
         }
 
         private void UpdatePaymentInvoice(APPaymentInvoicePM item)
@@ -734,7 +736,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 foreach (APInvoicePayment deletedItem in data)
                 {
                     invoicePaymentRepository.Remove(deletedItem);
-        }
+                }
             }
         }
         #endregion
@@ -1142,6 +1144,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.PaymentMethodCode);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ChequeOrPaymentRef);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.PrintNotes);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.InternalNotes);
 
             #region Card
             if (!string.IsNullOrEmpty(entityPM.VendorId))
@@ -1181,6 +1184,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         }
         #endregion
 
+        private void ValidateIfSameRecordAdded(APPaymentInvoicePM item)
+        {
+            IQueryable<APInvoicePayment> invoicePayments = invoicePaymentRepository.GetAPInvoicePayments(item.APPaymentId, item.APInvoiceId, entityPM.Tenant);
+            if (invoicePayments.Count() > 0)
+            {
+                throw new Exception("This payment already connected to same invoice");
+            }
+        }
         private void TraceConnected()
         {
             foreach (APPaymentInvoicePM item in changedList)

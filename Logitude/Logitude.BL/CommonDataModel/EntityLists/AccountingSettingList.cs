@@ -36,8 +36,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public DateTime? ARPaymentTransferStartDate { get; set; }
         public bool AllowPositiveAmountsInTheCreditNote { get; set; }
         public string QBOrealMeID { get; set; }
-        public string QBOAccessToken { get; set; }
-        public string QBOAccessTokenSecret { get; set; }
         public bool TransferToDropboxActivated { get; set; }
         public bool EnableMultiPercentageVATTypes { get; set; }
         public bool NotifyPastDateOnInvoiceEdit { get; set; }

@@ -246,6 +246,7 @@
                                     <div [id]="LogGridId + colIndex + 'rowtemplate'+rowIndex" [style.visibility]="col.EnableHoverVisibility ? 'hidden' : 'visible'">
                                         <list-template *ngIf="col.IsCustomTemplate" style="text-indent: 10px; overflow: hidden; text-overflow: ellipsis;"
                                                        [rowData]="row.rowData"
+                                                       [EntityChangedData]="row.rowData"
                                                        [SearchTerm]="searchFields"
                                                        [AdditionalData]="{rowIndex:row.rowIndex,gridId:LogGridId,RowOutEvent:RowOutEvent,RowOverEvent:RowOverEvent}"
                                                        [PassAdditionalData]="PassAdditionalDataToTemplates"

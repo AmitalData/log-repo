@@ -68,7 +68,7 @@
                 </tr>
 
                 <!-- TypeCode-->
-                <tr class="FormFieldRow">
+                <tr *ngIf="ShowTypeCode" class="FormFieldRow">
                     <td>
                         <LogLabel [ObjectFieldName]="'TypeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>

@@ -302,7 +302,7 @@
                         <AdvancedDatePicker style="display: block;width: 110px;" float-start [ObjectFieldName]="'FromDate'"
                                        [ObjectTableName]="ObjectTableName" [NoObjectField]="true" [DataContext]="DataContext" [InputType]="'date'" [TimeMode]="'12'"
                                        [SelectedDateValue]="FromDate" [ShowToolTip]="true"></AdvancedDatePicker>
-                        <div style="display: inline-block; padding: 0 12px;" text-start>
+                        <div style="padding: 0;text-align: center">
                             {{'Accounting.General.O.To' | TextCodeTranslationPipe}}
                         </div>
                     </td>
@@ -360,7 +360,7 @@
 
                     <!-- 2 -->
                     <td style="padding-top: 5px;">
-                        <ComboBox style="display: inline-block; width: 100px;" [ItemsSource]="CategoriesList" (SelectedItemChanged)="SelectedItemChanged($event)" [IsDisabled]="IsCategoryDisabled"></ComboBox>
+                        <ComboBox style="display: inline-block; width: 100px;" [ItemsSource]="CategoriesList" [SelectedItem]="SelectedCategory" (SelectedItemChanged)="SelectedItemChanged($event)" [IsDisabled]="IsCategoryDisabled"></ComboBox>
 
                         <div style="display: inline-block; width: 117px;padding: 0 5px;" [ngSwitch]="SelectedCategory" [class.disabled]="IsCategoryDisabled">
 

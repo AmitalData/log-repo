@@ -23,7 +23,7 @@ export class QuoteSaleCurrencyTypeComponent implements OnInit {
     }
 
     FillComboBox() {
-        var hasToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "QMC" && d.TenantNumber == SessionLocator.Tenant)[0]
+        var hasToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "QMC")[0]
 
         this.ItemsSource.push(new CodeNameClass("F", TextCodeTranslator.Translate("Quote.O.Charges.Fixed")));
         this.ItemsSource.push(new CodeNameClass("S", TextCodeTranslator.Translate("Quote.O.Charges.SameAsCost")));

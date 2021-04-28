@@ -157,5 +157,7 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string Field10 { get; set; }
 
         public string PartnerId { get; set; }
+        [ForeignKey("PartnerId")]
+        public virtual Card Partner { get; set; }
     }
 }

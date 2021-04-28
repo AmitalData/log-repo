@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class CustomsTransferHeaderUpdateClass
    {  		
-		public const string HashString = "2ad82e2b15bf248eb2fcc0f748b09ab7";
+		public const string HashString = "4fbfa84962f95d6ac059969ee243e5aa";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -89,7 +89,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	             				    ObjectTableName =  "CustomsTransferHeader",
 			      				    IsNew =  true,
 			      				    DBTableName =  "CustomsTransferHeaders",
-			      				    OldDBTableName =  "CustomsTransferHeaders",
 			      				    ObjectTableSingular =  "Customs Transfer Header",
 			      				    ObjectTablePlural =  "Customs Transfer Headers",
 			      				    HasCustomFilter =  true,
@@ -146,7 +145,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CreatedByUserId",
-					  						OldFieldName =  "CreatedByUserId",
 					  						ObjectTableName =  "CustomsTransferHeader",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -204,7 +202,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "CustomsTransferHeader",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -242,7 +239,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Search Transfer No./ File Name",
+					  						DefaultText =  "Search Transfer No./ File Name/ Shipment No.",
 					  						ListFieldLable =  "SearchFieldsListLable",
 					  						ListLableDefaultText =  "Search ...",
 					  						IsMaxLength =  false,
@@ -264,7 +261,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "TransferNumber",
-					  						OldFieldName =  "TransferNumber",
 					  						ObjectTableName =  "CustomsTransferHeader",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -324,7 +320,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "TransferDate",
-					  						OldFieldName =  "TransferDate",
 					  						ObjectTableName =  "CustomsTransferHeader",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -384,7 +379,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "FileName",
-					  						OldFieldName =  "FileName",
 					  						ObjectTableName =  "CustomsTransferHeader",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -444,7 +438,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CustomsTransferTypeCode",
-					  						OldFieldName =  "CustomsTransferTypeCode",
 					  						ObjectTableName =  "CustomsTransferHeader",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "CustomsTransferType",
@@ -502,7 +495,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CustomsTransferTypeName",
-					  						OldFieldName =  "CustomsTransferTypeName",
 					  						ObjectTableName =  "CustomsTransferHeader",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -562,7 +554,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Notes",
-					  						OldFieldName =  "Notes",
 					  						ObjectTableName =  "CustomsTransferHeader",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -622,7 +613,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CreatedByUserName",
-					  						OldFieldName =  "CreatedByUserName",
 					  						ObjectTableName =  "CustomsTransferHeader",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -682,7 +672,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CustomsTransferLines",
-					  						OldFieldName =  "CustomsTransferLines",
 					  						ObjectTableName =  "CustomsTransferHeader",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -740,7 +729,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ShipmentNumber",
-					  						OldFieldName =  "ShipmentNumber",
 					  						ObjectTableName =  "CustomsTransferHeader",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,

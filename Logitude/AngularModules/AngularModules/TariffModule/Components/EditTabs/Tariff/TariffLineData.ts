@@ -530,6 +530,82 @@ export class AirCostTariffLineData extends BaseComponent {
         }
     }
 
+    // Via Port
+    get ViaPortId() {
+        return this.EntityPM.ViaPortId;
+    }
+    set ViaPortId(value: string) {
+        if (this.EntityPM.ViaPortId != value) {
+            this.EntityPM.ViaPortId = value;
+            this.SetUIProperties();
+            this.CheckIfLineHasError();
+        }
+    }
+
+    get ViaPortCode() {
+        return this.EntityPM.ViaPortCode;
+    }
+    set ViaPortCode(value: string) {
+        if (this.EntityPM.ViaPortCode != value) {
+            this.EntityPM.ViaPortCode = value;
+        }
+    }
+
+    get ViaPortCombinedCode() {
+        return this.EntityPM.ViaPortCombinedCode;
+    }
+    set ViaPortCombinedCode(value: string) {
+        if (this.EntityPM.ViaPortCombinedCode != value) {
+            this.EntityPM.ViaPortCombinedCode = value;
+        }
+    }
+
+    viaPort: PortList;
+    get ViaPort() { return this.viaPort; }
+    set ViaPort(value: PortList) {
+        if (this.viaPort != value) {
+            this.viaPort = value;
+        }
+        if (!AppTool.IsNullOrEmpty(value)) {
+            this.ViaPortCode = value.Code;
+            this.ViaPortCombinedCode = value.CombinedCode;
+        } else {
+            this.ViaPortCode = null;
+            this.ViaPortCombinedCode = null;
+        }
+    }
+
+    get ViaPortValue() {
+        if (this.FatherComponent.IsAir) {
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.ViaPortCode)) {
+                return this.EntityPM.ViaPortCode;
+            }
+
+            else {
+                return this.EntityPM.ViaPortText;
+            }
+        } else {
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.ViaPortCombinedCode)) {
+                return this.EntityPM.ViaPortCombinedCode;
+            }
+
+            else {
+                return this.EntityPM.ViaPortText;
+            }
+        }
+    }
+
+    get ViaPortColor() {
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.ViaPortId)) {
+            return FontTool.Black;
+        }
+
+        else {
+            return FontTool.Red;
+        }
+    }
+
+
     get Notes() {
         return this.EntityPM.Notes;
     }
@@ -1092,13 +1168,26 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         }
     }
     private SetUIProperties_Currency() {
-        var isCurrencyRequired: boolean = false;
+        var isDefaultCurrencyRequired: boolean = false;
+        var isDefaultCurrencyEnabled: boolean = false;
 
-        if (AppTool.IsNullOrEmpty(this.CurrencyId)) {
-            isCurrencyRequired = true;
+        if (this.IsDifferentCurrenciesPerCharge) {
+            isDefaultCurrencyRequired = false;
+            isDefaultCurrencyEnabled = false;
+        }
+        else {
+            isDefaultCurrencyEnabled = true;
+            if (AppTool.IsNullOrEmpty(this.CurrencyId)) {
+                isDefaultCurrencyRequired = true;
+            }
         }
 
-        this.UIProperties.SetRequired("CurrencyId", this.ObjectTableName, isCurrencyRequired);
+        this.UIProperties.SetRequired("CurrencyId", this.ObjectTableName, isDefaultCurrencyRequired);
+        this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, isDefaultCurrencyEnabled);
+
+        for (var i = 1; i <= 10; i++) {
+            this.UIProperties.SetEnabled("Surcharge" + i + "CurrencyId", this.ObjectTableName, !isDefaultCurrencyEnabled);
+        }
     }
     private SetUIProperties_MinPrices() {
         this.UIProperties.SetVisibility("Surcharge1MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(1));
@@ -1211,7 +1300,6 @@ export class AirSurchargeTariffLineData extends BaseComponent {
             }
         }
     }
-
 
     private CompareSurcharge1Price() {
         if (this.ComparedEntity != null) {
@@ -1537,6 +1625,84 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         }
     }
 
+    // Via Port
+    get ViaPortId() {
+        return this.EntityPM.ViaPortId;
+    }
+    set ViaPortId(value: string) {
+        if (this.EntityPM.ViaPortId != value) {
+            this.EntityPM.ViaPortId = value;
+            this.EntityPM.LineEdited = true;
+
+            this.SetUIProperties_To();
+            this.CheckIfLineHasError();
+        }
+    }
+
+    get ViaPortCode() {
+        return this.EntityPM.ViaPortCode;
+    }
+    set ViaPortCode(value: string) {
+        if (this.EntityPM.ViaPortCode != value) {
+            this.EntityPM.ViaPortCode = value;
+        }
+    }
+
+    get ViaPortCombinedCode() {
+        return this.EntityPM.ViaPortCombinedCode;
+    }
+    set ViaPortCombinedCode(value: string) {
+        if (this.EntityPM.ViaPortCombinedCode != value) {
+            this.EntityPM.ViaPortCombinedCode = value;
+        }
+    }
+
+    viaPort: PortList;
+    get ViaPort() { return this.viaPort; }
+    set ViaPort(value: PortList) {
+        if (this.viaPort != value) {
+            this.viaPort = value;
+        }
+        if (!AppTool.IsNullOrEmpty(value)) {
+            this.ViaPortCode = value.Code;
+            this.ViaPortCombinedCode = value.CombinedCode;
+        } else {
+            this.ViaPortCode = null;
+            this.ViaPortCombinedCode = null;
+        }
+    }
+
+    get ViaPortValue() {
+        if (this.FatherComponent.IsAir) {
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.ViaPortCode)) {
+                return this.EntityPM.ViaPortCode;
+            }
+
+            else {
+                return this.EntityPM.ViaPortText;
+            }
+        } else {
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.ViaPortCombinedCode)) {
+                return this.EntityPM.ViaPortCombinedCode;
+            }
+
+            else {
+                return this.EntityPM.ViaPortText;
+            }
+        }
+    }
+
+    get ViaPortColor() {
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.ViaPortId)) {
+            return FontTool.Black;
+        }
+
+        else {
+            return FontTool.Red;
+        }
+    }
+
     currency: CurrencyList;
     get Currency() { return this.currency; }
     set Currency(value: CurrencyList) {
@@ -1593,6 +1759,127 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     set Notes(value: string) {
         if (this.EntityPM.Notes != value) {
             this.EntityPM.Notes = value;
+            this.EntityPM.LineEdited = true;
+        }
+    }
+
+    get IsDifferentCurrenciesPerCharge() {
+        return this.EntityPM.IsDifferentCurrenciesPerCharge;
+    }
+    set IsDifferentCurrenciesPerCharge(value: boolean) {
+        if (this.EntityPM.IsDifferentCurrenciesPerCharge != value) {
+            this.EntityPM.IsDifferentCurrenciesPerCharge = value;
+
+            this.SetUIProperties_Currency();
+            this.SurchargesCurrencies(this.CurrencyId);
+
+            if (value) {
+                this.CurrencyId = null;
+            }
+            else {
+                for (var i = 1; i <= 10; i++) {
+                    this["Surcharge" + i + "CurrencyId"] = null;
+                }
+            }
+        }
+    }
+
+    get Surcharge1CurrencyId() {
+        return this.EntityPM.Surcharge1CurrencyId;
+    }
+    set Surcharge1CurrencyId(value: string) {
+        if (this.EntityPM.Surcharge1CurrencyId != value) {
+            this.EntityPM.Surcharge1CurrencyId = value;
+            this.EntityPM.LineEdited = true;
+        }
+    }
+
+    get Surcharge2CurrencyId() {
+        return this.EntityPM.Surcharge2CurrencyId;
+    }
+    set Surcharge2CurrencyId(value: string) {
+        if (this.EntityPM.Surcharge2CurrencyId != value) {
+            this.EntityPM.Surcharge2CurrencyId = value;
+            this.EntityPM.LineEdited = true;
+        }
+    }
+
+    get Surcharge3CurrencyId() {
+        return this.EntityPM.Surcharge3CurrencyId;
+    }
+    set Surcharge3CurrencyId(value: string) {
+        if (this.EntityPM.Surcharge3CurrencyId != value) {
+            this.EntityPM.Surcharge3CurrencyId = value;
+            this.EntityPM.LineEdited = true;
+        }
+    }
+
+    get Surcharge4CurrencyId() {
+        return this.EntityPM.Surcharge4CurrencyId;
+    }
+    set Surcharge4CurrencyId(value: string) {
+        if (this.EntityPM.Surcharge4CurrencyId != value) {
+            this.EntityPM.Surcharge4CurrencyId = value;
+            this.EntityPM.LineEdited = true;
+        }
+    }
+
+    get Surcharge5CurrencyId() {
+        return this.EntityPM.Surcharge5CurrencyId;
+    }
+    set Surcharge5CurrencyId(value: string) {
+        if (this.EntityPM.Surcharge5CurrencyId != value) {
+            this.EntityPM.Surcharge5CurrencyId = value;
+            this.EntityPM.LineEdited = true;
+        }
+    }
+
+    get Surcharge6CurrencyId() {
+        return this.EntityPM.Surcharge6CurrencyId;
+    }
+    set Surcharge6CurrencyId(value: string) {
+        if (this.EntityPM.Surcharge6CurrencyId != value) {
+            this.EntityPM.Surcharge6CurrencyId = value;
+            this.EntityPM.LineEdited = true;
+        }
+    }
+
+    get Surcharge7CurrencyId() {
+        return this.EntityPM.Surcharge7CurrencyId;
+    }
+    set Surcharge7CurrencyId(value: string) {
+        if (this.EntityPM.Surcharge7CurrencyId != value) {
+            this.EntityPM.Surcharge7CurrencyId = value;
+            this.EntityPM.LineEdited = true;
+        }
+    }
+
+    get Surcharge8CurrencyId() {
+        return this.EntityPM.Surcharge8CurrencyId;
+    }
+    set Surcharge8CurrencyId(value: string) {
+        if (this.EntityPM.Surcharge8CurrencyId != value) {
+            this.EntityPM.Surcharge8CurrencyId = value;
+            this.EntityPM.LineEdited = true;
+        }
+    }
+
+    get Surcharge9CurrencyId() {
+        return this.EntityPM.Surcharge9CurrencyId;
+    }
+    set Surcharge9CurrencyId(value: string) {
+        if (this.EntityPM.Surcharge9CurrencyId != value) {
+            this.EntityPM.Surcharge9CurrencyId = value;
+            this.EntityPM.LineEdited = true;
+        }
+    }
+
+    get Surcharge10CurrencyId() {
+        return this.EntityPM.Surcharge10CurrencyId;
+    }
+    set Surcharge10CurrencyId(value: string) {
+        if (this.EntityPM.Surcharge10CurrencyId != value) {
+            this.EntityPM.Surcharge10CurrencyId = value;
             this.EntityPM.LineEdited = true;
         }
     }
@@ -2140,6 +2427,14 @@ export class AirSurchargeTariffLineData extends BaseComponent {
             this.isLineSelected = value;
         }
     }
+
+    private SurchargesCurrencies(defaultCurrencyId: string) {
+        for (var i = 1; i <= 10; i++) {
+            if (this.FatherComponent["Surcharge" + i + "PriceVisibility"]) {
+                this["Surcharge" + i + "CurrencyId"] = defaultCurrencyId;
+            }
+        }
+    }
 }
 
 export class OceanFCLFreightTariffLineData extends BaseComponent {
@@ -2545,6 +2840,72 @@ export class OceanFCLFreightTariffLineData extends BaseComponent {
             return FontTool.Red;
         }
     }
+
+    // Via Port
+    get ViaPortId() {
+        return this.EntityPM.ViaPortId;
+    }
+    set ViaPortId(value: string) {
+        if (this.EntityPM.ViaPortId != value) {
+            this.EntityPM.ViaPortId = value;
+            this.SetUIProperties();
+            this.CheckIfLineHasError();
+        }
+    }
+
+    get ViaPortCode() {
+        return this.EntityPM.ViaPortCode;
+    }
+    set ViaPortCode(value: string) {
+        if (this.EntityPM.ViaPortCode != value) {
+            this.EntityPM.ViaPortCode = value;
+        }
+    }
+
+    get ViaPortCombinedCode() {
+        return this.EntityPM.ViaPortCombinedCode;
+    }
+    set ViaPortCombinedCode(value: string) {
+        if (this.EntityPM.ViaPortCombinedCode != value) {
+            this.EntityPM.ViaPortCombinedCode = value;
+        }
+    }
+
+    viaPort: PortList;
+    get ViaPort() { return this.viaPort; }
+    set ViaPort(value: PortList) {
+        if (this.viaPort != value) {
+            this.viaPort = value;
+        }
+        if (!AppTool.IsNullOrEmpty(value)) {
+            this.ViaPortCode = value.Code;
+            this.ViaPortCombinedCode = value.CombinedCode;
+        } else {
+            this.ViaPortCode = null;
+            this.ViaPortCombinedCode = null;
+        }
+    }
+
+    get ViaPortValue() {
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.ViaPortCombinedCode)) {
+            return this.EntityPM.ViaPortCombinedCode;
+        }
+
+        else {
+            return this.EntityPM.ViaPortText;
+        }
+    }
+
+    get ViaPortColor() {
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.ViaPortId)) {
+            return FontTool.Black;
+        }
+
+        else {
+            return FontTool.Red;
+        }
+    }
+
 
     get Notes() {
         return this.EntityPM.Notes;

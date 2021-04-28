@@ -18,6 +18,8 @@
 	INNER JOIN dw_States ON dw_Ports.StateId = dw_States.Id
 	INNER JOIN dw_Countries ON dw_Ports.CountryId = dw_Countries.Id
 	INNER JOIN dw_DWHSettings ON dw_Ports.Tenant = dw_DWHSettings.Tenant
+	where dw_Ports.Id !='-1'
+
 	OPEN PortsCursor FETCH NEXT FROM PortsCursor INTO @Id , @Name, @Code , @LocalName  , @CombinedCode, @Country , @State , @SourceTenant , @ParentTenant, @AutomaticLastUpdateDate, @InActive
 	WHILE @@FETCH_STATUS = 0
 	BEGIN

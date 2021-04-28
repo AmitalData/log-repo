@@ -48,6 +48,7 @@ export class VersionHistoryTabComponent implements OnDestroy {
     public selectedRow: any;
     public changeScrollPosition: EventEmitter<any> = new EventEmitter();
     public darkerColler: string = "#f8ca12";
+    public IsViaFieldVisible: boolean = true;
 
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = entityArgs.EntityPM;
@@ -63,6 +64,7 @@ export class VersionHistoryTabComponent implements OnDestroy {
 
         else if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
             this.IsDownloadExcelTemplateVisible = false;
+            this.IsViaFieldVisible = false;
             this.GetAllChargesTypes();
         }
         
@@ -572,6 +574,10 @@ export class VersionHistoryTabComponent implements OnDestroy {
             tariffLine.DestinationPortCode = item.DestinationPortCode;
             tariffLine.DestinationPortCombinedCode = item.DestinationPortCombinedCode;
             tariffLine.DestinationPortName = item.DestinationPortName;
+            tariffLine.ViaPortId = item.ViaPortId;
+            tariffLine.ViaPortCode = item.ViaPortCode;
+            tariffLine.ViaPortCombinedCode = item.ViaPortCombinedCode;
+            tariffLine.ViaPortName = item.ViaPortName;
             tariffLine.Index = item.Index;
             tariffLine.Notes = item.Notes;
             tariffLine.TransitTime = item.TransitTime;
@@ -616,6 +622,17 @@ export class VersionHistoryTabComponent implements OnDestroy {
                 tariffLine.Surcharge8MinPrice = item.Surcharge8MinPrice;
                 tariffLine.Surcharge9MinPrice = item.Surcharge9MinPrice;
                 tariffLine.Surcharge10MinPrice = item.Surcharge10MinPrice;
+                tariffLine.IsDifferentCurrenciesPerCharge = item.IsDifferentCurrenciesPerCharge;
+                tariffLine.Surcharge1CurrencyId = item.Surcharge1CurrencyId;
+                tariffLine.Surcharge2CurrencyId = item.Surcharge2CurrencyId;
+                tariffLine.Surcharge3CurrencyId = item.Surcharge3CurrencyId;
+                tariffLine.Surcharge4CurrencyId = item.Surcharge4CurrencyId;
+                tariffLine.Surcharge5CurrencyId = item.Surcharge5CurrencyId;
+                tariffLine.Surcharge6CurrencyId = item.Surcharge6CurrencyId;
+                tariffLine.Surcharge7CurrencyId = item.Surcharge7CurrencyId;
+                tariffLine.Surcharge8CurrencyId = item.Surcharge8CurrencyId;
+                tariffLine.Surcharge9CurrencyId = item.Surcharge9CurrencyId;
+                tariffLine.Surcharge10CurrencyId = item.Surcharge10CurrencyId;
             }
 
             else if (this.EntityPM.TypeCode == "OFC") {
@@ -632,6 +649,7 @@ export class VersionHistoryTabComponent implements OnDestroy {
                 tariffLine.StartDate = item.StartDate;
                 tariffLine.CurrencyId = item.CurrencyId;
                 tariffLine.CurrencyCode = item.CurrencyCode;
+                tariffLine.IsDifferentCurrenciesPerCharge = item.IsDifferentCurrenciesPerCharge;
 
                 item.ContainersPrices.forEach(containerItem => {
                     var containerPrice = new TariffLinesContainersPricePM(tariffLine);
@@ -641,6 +659,8 @@ export class VersionHistoryTabComponent implements OnDestroy {
                     containerPrice.Price3 = containerItem.Price3;
                     containerPrice.Price4 = containerItem.Price4;
                     containerPrice.Price5 = containerItem.Price5;
+                    containerPrice.CostPrice = containerItem.CostPrice;
+                    containerPrice.CurrencyId = containerItem.CurrencyId;
                     tariffLine.AddTariffLinesContainersPrice(containerPrice);
                 });
             }
@@ -688,6 +708,8 @@ export class VersionHistoryTariffLine {
     public DestinationPortCode: string;
     public OriginPortCombinedCode: string;
     public DestinationPortCombinedCode: string;
+    public ViaPortCode: string;
+    public ViaPortCombinedCode: string;
     public Notes: string;
     public ExpirationDate: Date;
     public IsFromAllOtherPorts: boolean;
@@ -695,6 +717,7 @@ export class VersionHistoryTariffLine {
     public CurrencyCode: string;
     public StartDate: Date;
     public TransitTime: string;
+    public IsDifferentCurrenciesPerCharge: boolean;;
 
     //AFC || OLC
     public MinPrice: number;
@@ -775,8 +798,10 @@ export class VersionHistoryTariffLine {
     private AssignCommonData() {
         this.OriginPortCode = this.myTariffLine.OriginPortCode;
         this.DestinationPortCode = this.myTariffLine.DestinationPortCode;
+        this.ViaPortCode = this.myTariffLine.ViaPortCode;
         this.OriginPortCombinedCode = this.myTariffLine.OriginPortCombinedCode;
         this.DestinationPortCombinedCode = this.myTariffLine.DestinationPortCombinedCode;
+        this.ViaPortCombinedCode = this.myTariffLine.ViaPortCombinedCode;
         this.Notes = this.myTariffLine.Notes;
         this.ExpirationDate = this.myTariffLine.ExpirationDate;
         this.IsFromAllOtherPorts = this.myTariffLine.IsFromAllOtherPorts;
@@ -784,6 +809,7 @@ export class VersionHistoryTariffLine {
         this.CurrencyCode = this.myTariffLine.CurrencyCode;
         this.StartDate = this.myTariffLine.StartDate;
         this.TransitTime = this.myTariffLine.TransitTime;
+        this.IsDifferentCurrenciesPerCharge = this.myTariffLine.IsDifferentCurrenciesPerCharge;
     }
 
     private AssignData_FreightCost() {

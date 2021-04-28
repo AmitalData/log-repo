@@ -243,7 +243,7 @@
                                                                                             </td>
                                                                                         </tr>
 
-                                                                                        <tr *ngIf="ResultCodeSelected.Code !='SETSLA' && !(ResultCodeSelected.Code =='FIELDSET' && ObjectTableName == 'Shipment')" style="height:25px">
+                                                                                        <tr *ngIf="ResultCodeSelected.Code !='SETSLA' && ResultCodeSelected.Code !='CREATETASK' &&!(ResultCodeSelected.Code =='FIELDSET' && ObjectTableName == 'Shipment')" style="height:25px">
                                                                                             <td style="width:10px">
                                                                                                 <div></div>
                                                                                             </td>
@@ -253,7 +253,7 @@
                                                                                             </td>
                                                                                             <td [style.width]="TypeWidth">
 
-                                                                                                <table style="vertical-align:top;height:25px">
+                                                                                                <table  style="vertical-align:top;height:25px">
                                                                                                     <tr style="vertical-align:top;height:25px">
                                                                                                         <td style="vertical-align:central;width:100px;">
                                                                                                             <RadioButton [Name]="'DateRadio'" [Text]="'Immediately'" [IsChecked]="IsSelectedImmediatly" (Checked)="SelectedDelayedImmediatlRadioClcik('Immeduiatly')"></RadioButton>
@@ -410,6 +410,13 @@
                                                                                             </td>
                                                                                         </tr>
 
+                                                                                        <tr style="height:1px">
+                                                                                            <td colspan="4">
+                                                                                                <div class="LocationDirective" LocationDirective Code="CREATETASK"> </div>
+                                                                                            </td>
+                                                                                        </tr>
+
+
                                                                                         <!--Documen tType Area-->
                                                                                         <tr *ngIf="IsResultEmail || IsSendDocument" style="height:2px;">
                                                                                             <td colspan="4" style="height:2px">
@@ -552,17 +559,41 @@
                                                                                                                 </div>
                                                                                                             </td>
                                                                                                         </tr>
+
+                                                                                                        <tr *ngIf="ShowDocumentsCopy" style="height: 3px;">
+                                                                                                            <td style="height: 3px">
+                                                                                                                <div style="height:3px"></div>
+                                                                                                            </td>
+                                                                                                        </tr>
+
+                                                                                                        <tr *ngIf="ShowDocumentsCopy">
+                                                                                                            <td>
+                                                                                                                <div>
+                                                                                                                    <table>
+                                                                                                                        <tr>
+                                                                                                                            <td style="width:10px"></td>
+                                                                                                                            <td class="CellStretched" style="width:120px;vertical-align:central">
+                                                                                                                                <p style="font-size:12px;color:#6E7172">Copy Name</p>
+                                                                                                                            </td>
+
+                                                                                                                            <td style="vertical-align:central;width:200px">
+                                                                                                                                <div style="text-align:left;width:200px;vertical-align:central">
+                                                                                                                                    <ComboBox style="width:200px;" (SelectedItemChanged)="DocumentTypeCopySelected = $event" [ItemsSource]="DocumentTypeCopyLists" [SelectedItem]="DocumentTypeCopySelected" [Binding]="'Name'"></ComboBox>
+                                                                                                                                </div>
+                                                                                                                            </td>
+
+                                                                                                                            <td>
+                                                                                                                                <div></div>
+                                                                                                                            </td>
+                                                                                                                        </tr>
+                                                                                                                    </table>
+                                                                                                                </div>
+                                                                                                            </td>
+                                                                                                        </tr>
                                                                                                     </table>
-
-
-
                                                                                                 </div>
                                                                                             </td>
-
-
                                                                                         </tr>
-
-
 
                                                                                         <tr>
                                                                                             <td colspan="4">

@@ -209,11 +209,12 @@ namespace CommunicationWorkerRole
                                 }
 
                                 ValidateAutomationResultClass validateResult = generalAutomationResultService.ValidateAutomation(automation, entityChange, AutomationConditionFieldLists, automationLastUpdateDate, executedImmediately ? "": "Delayed");
+                                entityChangesAutomation.ConditionsList = validateResult.ConditionsList;
 
                                 if (validateResult.IsAutomationValid && executedImmediately && validateResult.Type == "Delayed")
                                 {
                                     DelaytimeDetails delaytimeDetails = new DelaytimeDetails() { Type = validateResult.Type, Delaytime = validateResult.Delaytime, DelaytimeIndicator = validateResult.DelaytimeIndicator, DelaytimeOp = validateResult.DelaytimeOp, SelectedDelaytimeFieldCode = validateResult.SelectedDelaytimeFieldCode };
-                                    generalAutomationResultService.AddAutomationQueue(new AutomationQueueArgs() { EntityChangeId = entityChange.Id, AutomationId = automation.Id, AutomationType = type, EntityId = entityId, Tenant = automation.Tenant, AutomationDelayTime = generalAutomationResultService.GetAutomationDelayTime(delaytimeDetails, AutomationConditionFieldLists) });
+                                    generalAutomationResultService.AddAutomationQueue(new AutomationQueueArgs() { EntityChangeId = entityChange.Id, AutomationId = automation.Id, AutomationType = type, EntityId = entityId, Tenant = automation.Tenant, AutomationDelayTime = generalAutomationResultService.GetAutomationDelayTime(delaytimeDetails, AutomationConditionFieldLists, entityChange.Tenant) });
                                     queueservice.Complete();
                                     LogDoneItemInMemory();
 
@@ -269,7 +270,7 @@ namespace CommunicationWorkerRole
                                     {
                                         AutomationSendDocument automationSendDocument = automatedBackup.AutomationSendDocument;
                                         string objectTableName = objectTable != null ? objectTable.Name : "";
-                                        AutomationSendEmailArgs automationSendEmailArgs = new AutomationSendEmailArgs() { EntityId = entityChange.EntityId, CreateByUserId = entityChange.CreateByUserId, ObjectTableId = entityChange.ObjectTableId, Tenant = entityChange.Tenant, AutomationConditionFieldLists = AutomationConditionFieldLists, Automation = automation, ObjectTableName = objectTableName, ReportTemplateId = automatedBackup.ReportTemplateId };
+                                        AutomationSendEmailArgs automationSendEmailArgs = new AutomationSendEmailArgs() { EntityId = entityChange.EntityId, CreateByUserId = entityChange.CreateByUserId, ObjectTableId = entityChange.ObjectTableId, Tenant = entityChange.Tenant, AutomationConditionFieldLists = AutomationConditionFieldLists, Automation = automation, ObjectTableName = objectTableName, ReportTemplateId = automatedBackup.ReportTemplateId, DocumentCopyId = automatedBackup.DocumentCopyId };
                                         if (automationSendDocument.SendVia == "EMAIL")
                                         {
                                             AutomationHelper automationHelper = new AutomationHelper();
@@ -305,7 +306,7 @@ namespace CommunicationWorkerRole
                                     {
                                         string objectTableName = objectTable != null ? objectTable.Name : "";
                                         AutomationHelper automationHelper = new AutomationHelper();
-                                        string comunicationLogId = automationHelper.ExecuteEmailAutomation(new AutomationSendEmailArgs() { EntityId = entityChange.EntityId, CreateByUserId = entityChange.CreateByUserId, ObjectTableId = entityChange.ObjectTableId, Tenant = entityChange.Tenant, AutomationConditionFieldLists = AutomationConditionFieldLists, Automation = automation, ObjectTableName = objectTableName, ReportTemplateId = automatedBackup.ReportTemplateId });
+                                        string comunicationLogId = automationHelper.ExecuteEmailAutomation(new AutomationSendEmailArgs() { EntityId = entityChange.EntityId, CreateByUserId = entityChange.CreateByUserId, ObjectTableId = entityChange.ObjectTableId, Tenant = entityChange.Tenant, AutomationConditionFieldLists = AutomationConditionFieldLists, Automation = automation, ObjectTableName = objectTableName, ReportTemplateId = automatedBackup.ReportTemplateId, DocumentCopyId = automatedBackup.DocumentCopyId });
                                         MarkEntityChangeExecutedRecord(entityChange, entityChangesAutomation, entityChangesAutomationsLists);
                                     }
                                     else
@@ -559,6 +560,7 @@ namespace CommunicationWorkerRole
             else if (resultCode == "QUEUE") result = "Queued Task";
             else if (resultCode == "SENDINTERFACE") result = "Send Interface";
             else if (resultCode == "SENDDOCUMENT") result = "Documents Send";
+            else if (resultCode == "CREATETASK") result = "Create Task";
 
             return result;
 
@@ -827,6 +829,11 @@ namespace CommunicationWorkerRole
             entityChangeAutomationList = entityChangeAutomationList.Concat(GetEntityChangeAutomationList(entityChange.SendInterfaceAutomationFailedXml)).ToList();
             entityChangeAutomationList = entityChangeAutomationList.Concat(GetEntityChangeAutomationList(entityChange.SendDocumentAutomationSsucceedXml)).ToList();
             entityChangeAutomationList = entityChangeAutomationList.Concat(GetEntityChangeAutomationList(entityChange.SendDocumentAutomationFailedXml)).ToList();
+            entityChangeAutomationList = entityChangeAutomationList.Concat(GetEntityChangeAutomationList(entityChange.CreateTaskAutomationSsucceedXml)).ToList();
+            entityChangeAutomationList = entityChangeAutomationList.Concat(GetEntityChangeAutomationList(entityChange.CreateTaskAutomationFailedXml)).ToList();
+
+
+
             return entityChangeAutomationList;
         }
 

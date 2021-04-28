@@ -42,6 +42,9 @@ namespace WebFreight.Web.DataProviders
         public DateTime? Date { get; set; }
         public string InvoiceNumber { get; set; }
         public string BillToName { get; set; }
+        public string PartnerName { get; set; }
+        public string Shipper { get; set; }
+        public string Consignee { get; set; }
         public string OurReference { get; set; }
         public string CustomerReference { get; set; }
         public string Routing { get; set; }

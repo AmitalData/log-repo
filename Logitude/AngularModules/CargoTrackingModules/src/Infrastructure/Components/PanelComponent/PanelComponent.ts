@@ -18,6 +18,7 @@ export class PanelComponent implements OnInit
     @Input() DetailsTitle: string = "";
     @Input() HeaderLinkText: string;
     @Input() Title: string = "";
+    @Input() TransparentBackground: boolean = false;
 
     constructor() { }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,9 +27,10 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public DateTime ValueDate { get; set; }
        
         public string CurrencyId { get; set; }
-       
-       
-       
+
+        [ForeignKey("StatusCode")]
+        public virtual ARPaymentChequeStatusReplica ARPaymentChequeStatusReplica { get; set; }
+
         public decimal LocalAmount { get; set; }
        
         public decimal ForeignAmount { get; set; }

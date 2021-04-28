@@ -49,6 +49,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                     string lastUpdate = GetLastAuomationUpdateDate(automationResultArgs.AutomationObjectTable, automationResultArgs.OtherAutomationObjectTable, automation);
 
                     ValidateAutomationResultClass validateResult = this.ValidateAutomation(automation, entityChange, automationFieldLists, lastUpdate, "");
+                    entityChangesAutomation.ConditionsList = validateResult.ConditionsList;
 
                     if (validateResult.Type == "Delayed")
                     {
@@ -62,7 +63,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                         if (validateResult.Type == "Delayed")
                         {
                             DelaytimeDetails delaytimeDetails = new DelaytimeDetails() { Type = validateResult.Type, Delaytime = validateResult.Delaytime, DelaytimeIndicator = validateResult.DelaytimeIndicator, DelaytimeOp = validateResult.DelaytimeOp, SelectedDelaytimeFieldCode = validateResult.SelectedDelaytimeFieldCode };
-                            AddAutomationQueue(new AutomationQueueArgs() { EntityChangeId = entityChange.Id, AutomationId = automation.Id, AutomationType = processtype, EntityId = entityId, Tenant = automation.Tenant, AutomationDelayTime = GetAutomationDelayTime(delaytimeDetails, automationFieldLists) });
+                            AddAutomationQueue(new AutomationQueueArgs() { EntityChangeId = entityChange.Id, AutomationId = automation.Id, AutomationType = processtype, EntityId = entityId, Tenant = automation.Tenant, AutomationDelayTime = GetAutomationDelayTime(delaytimeDetails, automationFieldLists, entityChange.Tenant) });
                         }
 
                         else
@@ -72,7 +73,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
 
                     }
                     else
-                    {
+                    { 
                         entityChangesAutomation.DoneDate = TenantServerConfigration.GetCurrentDateTime(entityChange.Tenant);
                         automationResultArgs.MainEntityChangeService.EntityChangesAutomationsFailedList.Add(entityChangesAutomation);
                         entityChangesAutomation.ExecutionTime = (int)((DateTime.Now.Ticks - dateNow.Ticks) / TimeSpan.TicksPerMillisecond);

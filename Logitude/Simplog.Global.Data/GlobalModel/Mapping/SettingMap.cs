@@ -39,10 +39,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.NotificationHubConnectionString).HasMaxLength(600).IsUnicode(false);
             this.Property(t => t.ForwarderTenantsURL).HasMaxLength(600).IsUnicode(false);
             this.Property(t => t.CustomerTenantsURL).HasMaxLength(600).IsUnicode(false);
-            this.Property(t => t.DomainName).HasMaxLength(100).IsUnicode(false);
-            this.Property(t => t.QBOConsumerKey).HasMaxLength(100).IsUnicode(false);
-            this.Property(t => t.QBOAppToken).HasMaxLength(100).IsUnicode(false);
-            this.Property(t => t.QBOConsumerSecretKey).HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.DomainName).HasMaxLength(100).IsUnicode(false);            
             this.Property(t => t.ProductName).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.EmailAlertSignature).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.QueueServiceMode).HasMaxLength(15).IsUnicode(false);

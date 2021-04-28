@@ -17,6 +17,7 @@
    declare @Incoterm as int
 
       declare @CreatedByUser as int
+	    --@[DeclareCustomFieldsVariable]
 
 
 	     declare @Tenant as int
@@ -56,9 +57,7 @@
    declare @IncludeDelivery as bit
    declare @IsQuoteDataExternal as bit
    declare @IsQuoteDocumentExternal as bit
-
-   declare @DeliveryAddress as nvarchar(250)
-   declare @PickUpAddress as nvarchar(250)
+    
       
    declare @FromCountry as int
    declare @ToCountry as int
@@ -66,7 +65,18 @@
 		   declare @ConsigneePartnerType  as varchar(20)
 		   	   declare @CustomerPartnerType  as varchar(20)
 
-  
+   declare @ConnectedToShipment as bit
+   declare @ConnectedToTicket as bit
+   declare @ToLocation as varchar(500)
+   declare @FromLocation as varchar(500)
+   declare @DeliveryFrom as varchar(500)
+   declare @PickupFrom as varchar(500)
+   declare @EstimatedPayablesInSales as float
+   declare @EstimatedPayablesInLocal as float
+   declare @EstimatedReceivablesInLocal as float
+   declare @EstimatedReceivablesInSales as float
+   declare @EstimateProfit as float
+   declare @LocalCurrency as int
 
 	DECLARE QuotesCursor CURSOR READ_ONLY
 	FOR
@@ -78,8 +88,10 @@
 	SaleCurrency.Id_Number,dw_Quotes.Subject, dw_Quotes.GrossWeightInKG ,dw_Quotes.ChargeableWeightInKG,dw_Quotes.VolumeInCBM,dw_Quotes.NumberOfPackages , 
 	dw_Quotes.NumberOfContainers,dw_Quotes.ExpirationDate,dw_Quotes.IsAutomaticallyClosed, dw_Quotes.IncludePickUp , 
 	dw_Quotes.IncludeDelivery , dw_Quotes.StageDueDate , dw_Quotes.IsQuoteDataExternal, dw_Quotes.IsQuoteDocumentExternal,
-	dw_Quotes.DeliveryAddress,dw_Quotes.PickUpAddress,dw_Quotes.AutomaticallyCloseDate   , FromCountry.Id_Number , ToCountry.Id_Number , shipperPartners.[Partner Type]  , consigneePartners.[Partner Type],customerPartners.[Partner Type]
-
+	dw_Quotes.AutomaticallyCloseDate   , FromCountry.Id_Number , ToCountry.Id_Number , shipperPartners.[Partner Type]  , consigneePartners.[Partner Type], @dw_Quotes.CustomFieldsVariable , customerPartners.[Partner Type],
+	dw_QuoteComputedFields.ConnectedToShipment, dw_QuoteComputedFields.ConnectedToTicket, dw_QuoteComputedFields.ToLocation, dw_QuoteComputedFields.FromLocation, 
+	dw_QuoteComputedFields.DeliveryFrom, dw_QuoteComputedFields.PickupFrom, dw_QuoteComputedFields.EstimatedPayablesInSales, dw_QuoteComputedFields.EstimatedPayablesInLocal, 
+	dw_QuoteComputedFields.EstimatedReceivablesInLocal, dw_QuoteComputedFields.EstimatedReceivablesInSales, dw_Quotes.EstimateProfit, LocalCurrency.Id_Number
 
 
 
@@ -112,18 +124,23 @@
 	inner JOIN NewDIM_Countries FromCountry ON fromPort.CountryId = FromCountry.Id
 
 
+		inner JOIN dw_CustomObjectFields  ON dw_Quotes.Tenant = dw_CustomObjectFields.Tenant and dw_CustomObjectFields.ObjectTableName = 'Quote'
 
 
 	inner JOIN dw_Ports toPort ON dw_Quotes.ToPortId = toPort.Id
 	inner JOIN NewDIM_Countries ToCountry ON toPort.CountryId = ToCountry.Id
-
+	inner JOIN dw_QuoteComputedFields ON dw_Quotes.Id = dw_QuoteComputedFields.Id
+	inner JOIN dw_Tenants  ON dw_Quotes.Tenant = dw_Tenants.Id
+	inner JOIN NewDIM_Currencies LocalCurrency ON dw_Tenants.CurrencyId = LocalCurrency.Id
 
 
 	OPEN QuotesCursor FETCH NEXT FROM QuotesCursor   into  @Id ,@Tenant , @SourceTenant, @ParentTenant ,@Direction , @TransportMode , @Type,@Department ,@Branch,@QuoteNumber
 	 ,@Shipper ,@Consignee, @Agent ,@Customer , @Incoterm ,@CreatedByUser ,@OpenDate , @SentDate ,@AcceptedDate ,@DeclinedDate ,@StartDate ,@LastActivityDate
 	, @Salesman ,@QuoteStages, @Notes ,@QuoteClosingReasons , @EstimatedProfitInLocal 
 	, @SaleCurrency ,@Subject , @GrossWeightInKG ,@ChargeableWeightInKG ,@VolumeInCBM ,@NumberOfPackages ,@NumberOfContainers
-	 , @ExpirationDate ,@IsAutomaticallyClosed ,@IncludePickUp ,@IncludeDelivery ,@StageDueDate ,@IsQuoteDataExternal ,@IsQuoteDocumentExternal,@DeliveryAddress ,@PickUpAddress,@AutomaticallyCloseDate , @FromCountry, @ToCountry  , @ShipperPartnerType ,@ConsigneePartnerType ,  @CustomerPartnerType
+	 , @ExpirationDate ,@IsAutomaticallyClosed ,@IncludePickUp ,@IncludeDelivery ,@StageDueDate ,@IsQuoteDataExternal ,@IsQuoteDocumentExternal,@AutomaticallyCloseDate , @FromCountry, @ToCountry  , @ShipperPartnerType ,@ConsigneePartnerType , @CursorCustomFieldsVariable ,  @CustomerPartnerType
+	 , @ConnectedToShipment, @ConnectedToTicket, @ToLocation, @FromLocation,@DeliveryFrom, @PickupFrom, @EstimatedPayablesInSales
+	 , @EstimatedPayablesInLocal, @EstimatedReceivablesInLocal, @EstimatedReceivablesInSales, @EstimateProfit,  @LocalCurrency 
 		 
 
 
@@ -133,7 +150,11 @@
 	 
 	 BEGIN TRY  
 
-	 
+	 	 ------------Resolve Custom Field Data Type Code-------------------
+            
+			    --@[ResolveCustomFieldDataTypeCodeVariable]
+
+	 ----------------------------------------------------
 
 	       declare @IsPotentialShipper as bit  set @IsPotentialShipper =0;if(@ShipperPartnerType = 'Potential Customer') begin set @IsPotentialShipper = 1 end 
 		   declare @IsPotentialConsignee as bit  set @IsPotentialConsignee =0;if(@ConsigneePartnerType = 'Potential Customer') begin set @IsPotentialConsignee = 1 end 
@@ -144,18 +165,23 @@
 	   ,[Salesman] , [Stage] , [Notes] ,[Closing Reason] , [Estimated Profit in Local Currency] ,
 	   [Sales Currency] , [Subject] , [Gross Weight In Kg] , [Chargeable Weight in Kg], [Volume in CBM] , [Number of Packages] , [Number of Containers] , 
 	   [Expiration Date] , [Close Auto by System] , [Include Pickup] , [Include Delivery],
-	   [Stage Due Date] , [Is Quote Data External] , [Is Quote Document External] , [Delivery To] ,[Pickup From] , [Close Date], [From Port Country] ,[To Port Country] ,[Is Potential Shipper], [Is Potential Consignee],[Is Potential Customer],
+	   [Stage Due Date] , [Is Quote Data External] , [Is Quote Document External], [Close Date], 
+	   [From Port Country] ,[To Port Country] ,[Is Potential Shipper], [Is Potential Consignee],[Is Potential Customer],
 
-	   [Local Currency] )
+	   [CustomFieldNamesVariable], [Connected To Shipment], [Connected To Ticket],[To Location], [From Location],
+	   [Delivery From], [Pickup From], [Estimated Payables in Sales Currency], [Estimated Payables in Local Currency],
+	   [Estimated Receivables in Local Currency], [Estimated Receivables in Sales Currency], [Estimated Profit in Sales Currency], [Local Currency]  )
 	   
 	   
       values(@Id  , @SourceTenant, @ParentTenant ,@Direction , @TransportMode , @Type,@Department ,@Branch,@QuoteNumber
 	 ,@Shipper ,@Consignee, @Agent ,@Customer , @Incoterm ,@CreatedByUser ,dbo.GetDateFormateAsNumber(@OpenDate)    , dbo.GetDateFormateAsNumber(@SentDate)  , dbo.GetDateFormateAsNumber(@AcceptedDate)  ,dbo.GetDateFormateAsNumber(@DeclinedDate)    ,dbo.GetDateFormateAsNumber(@StartDate)   ,dbo.GetDateFormateAsNumber(@LastActivityDate) 
 	, @Salesman ,@QuoteStages, @Notes ,@QuoteClosingReasons , @EstimatedProfitInLocal 
 	, @SaleCurrency ,@Subject , @GrossWeightInKG ,@ChargeableWeightInKG ,@VolumeInCBM ,@NumberOfPackages ,@NumberOfContainers
-	 , dbo.GetDateFormateAsNumber(@ExpirationDate)  ,@IsAutomaticallyClosed ,@IncludePickUp ,@IncludeDelivery ,dbo.GetDateFormateAsNumber(@StageDueDate)   ,@IsQuoteDataExternal ,@IsQuoteDocumentExternal,@DeliveryAddress ,@PickUpAddress,dbo.GetDateFormateAsNumber(@AutomaticallyCloseDate) 
-	  , @FromCountry , @ToCountry ,@IsPotentialShipper ,  @IsPotentialConsignee,@IsPotentialCustomer,
-	  1
+	 , dbo.GetDateFormateAsNumber(@ExpirationDate)  ,@IsAutomaticallyClosed ,@IncludePickUp ,@IncludeDelivery ,dbo.GetDateFormateAsNumber(@StageDueDate)   ,
+	 @IsQuoteDataExternal ,@IsQuoteDocumentExternal,dbo.GetDateFormateAsNumber(@AutomaticallyCloseDate) 
+	  , @FromCountry , @ToCountry ,@IsPotentialShipper ,  @IsPotentialConsignee , @IsPotentialCustomer,[CustomFieldValuesVariable],
+	   @ConnectedToShipment, @ConnectedToTicket, @ToLocation, @FromLocation,@DeliveryFrom, @PickupFrom, @EstimatedPayablesInSales
+	 , @EstimatedPayablesInLocal, @EstimatedReceivablesInLocal, @EstimatedReceivablesInSales, @EstimateProfit,  @LocalCurrency 
 	 )
 
 
@@ -182,8 +208,9 @@ END CATCH
 	 ,@Shipper ,@Consignee, @Agent ,@Customer , @Incoterm ,@CreatedByUser ,@OpenDate , @SentDate ,@AcceptedDate ,@DeclinedDate ,@StartDate ,@LastActivityDate
 	, @Salesman ,@QuoteStages, @Notes ,@QuoteClosingReasons , @EstimatedProfitInLocal 
 	, @SaleCurrency ,@Subject , @GrossWeightInKG ,@ChargeableWeightInKG ,@VolumeInCBM ,@NumberOfPackages ,@NumberOfContainers
-	 , @ExpirationDate ,@IsAutomaticallyClosed ,@IncludePickUp ,@IncludeDelivery ,@StageDueDate ,@IsQuoteDataExternal ,@IsQuoteDocumentExternal,@DeliveryAddress ,@PickUpAddress,@AutomaticallyCloseDate,@FromCountry , @ToCountry  , @ShipperPartnerType,@ConsigneePartnerType ,  @CustomerPartnerType
-		 
+	 , @ExpirationDate ,@IsAutomaticallyClosed ,@IncludePickUp ,@IncludeDelivery ,@StageDueDate ,@IsQuoteDataExternal ,@IsQuoteDocumentExternal,@AutomaticallyCloseDate,@FromCountry , @ToCountry  , @ShipperPartnerType,@ConsigneePartnerType , @CursorCustomFieldsVariable , @CustomerPartnerType
+	 ,@ConnectedToShipment, @ConnectedToTicket, @ToLocation, @FromLocation,@DeliveryFrom, @PickupFrom, @EstimatedPayablesInSales
+	 , @EstimatedPayablesInLocal, @EstimatedReceivablesInLocal, @EstimatedReceivablesInSales, @EstimateProfit, @LocalCurrency  
 
 		End
 	CLOSE QuotesCursor

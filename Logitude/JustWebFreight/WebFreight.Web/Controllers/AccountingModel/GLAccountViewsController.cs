@@ -168,7 +168,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                     (theDate.Day == 1 && theDate.Month == 1);
                 ac.CalculateBalance(
                     openBalancePlease_ReCalcYearTransfer,
-                    totalDateType, theDate,false, true, false);
+                    totalDateType, theDate,false, true, false,
+                    false);
 
                 ac.AccountBalance.LogMessage = null;
 
@@ -250,7 +251,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 var ac = new Logitude.Accounting.BL.CoreBL.AccountBalanceByDateCodeService(null, tenant, accountId, null);
                 ac.ReSetAccountList(false, false);
                 bool openBalancePlease_ReCalcYearTransfer = true;//Yaron said this is Default !!!
-                ac.CalculateBalance(openBalancePlease_ReCalcYearTransfer, totalDateType, theDate, false, true, false);
+                ac.CalculateBalance(openBalancePlease_ReCalcYearTransfer, totalDateType, theDate, false, true, false
+                    ,false);
 
                 ac.AccountBalance.LogMessage = null;
 

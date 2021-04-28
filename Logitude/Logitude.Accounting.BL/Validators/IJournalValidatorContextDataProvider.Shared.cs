@@ -21,7 +21,10 @@ namespace Logitude.Accounting.BL.Validators
         List<String> GetGLAccountCurrencyList(string CustomerGLAccountId, int tenant);
         string CheckExternalNoAndSystemReturnJournalNumber(string externalNo, string externalSystem, int tenant);
     }
-
+    public interface IJournalValidatorRateDataProvider
+    {
+        bool ExistRate(string TenantCurrency, string foreignCurrencyId, DateTime? date, int tenent);
+    }
     public interface IExternalReconcileDataProvider 
     {
         BankAccountPM GetBankAccountFromTransferAccount(string myLedgerTransactionTransferInCreditAccountId, int tenant);//DO NOT USE OBJECT FROM DIFF TENANT

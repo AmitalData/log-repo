@@ -31,7 +31,7 @@ export class AutomationsConditionAreaComponent extends BaseComponent implements 
       
     }
     item: any;
-    ngOnInit() {
+    ngOnInit() { 
         if (!this.ListHeight) {
             this.ListHeight = "120px";
         }

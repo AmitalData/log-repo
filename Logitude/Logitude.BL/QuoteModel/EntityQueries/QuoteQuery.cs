@@ -294,6 +294,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                RegionalTaxId = f.RegionalTaxId,
                                                RegionalTaxPercentage=f.RegionalTaxPercentage,
                                                IsMultiCurrency = f.IsMultiCurrency,
+
                                            };
             return result;
         }
@@ -1340,7 +1341,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 LastStageDate = entityPOCO.LastStageDate,
                 QuotationSections = entityPOCO.QuotationSections,
                 NumberOfFollowUps = entityPOCO.NumberOfFollowUps,
-                SameOrFixed = entityPOCO.IsSaleCurrencySameAsCost ? "Same as Cost Currency" : "Fixed",
+                SameOrFixed = entityPOCO.IsSaleCurrencySameAsCost ? "Same as Cost Currency" : entityPOCO.IsMultiCurrency ? "Multi" : "Fixed",
                 QuoteLevel = entityPOCO.ShipmentTypeId,
                 GrossWeightEdited = entityPOCO.GrossWeightEdited,
                 ChargeableWeightEdited = entityPOCO.ChargeableWeightEdited,

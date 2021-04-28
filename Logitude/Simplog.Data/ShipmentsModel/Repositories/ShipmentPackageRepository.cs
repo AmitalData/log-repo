@@ -51,10 +51,9 @@ namespace Simplog.Data.ShipmentsModel.Repositories
 
         public IQueryable<ShipmentPackage> GetPackagesFromShipmentsIds(List<string> shipmentsIds, int tenant)
         {
-            IQueryable<ShipmentPackage> shipments = (from a in context.ShipmentPackages.Include("PackageType")
+            IQueryable<ShipmentPackage> shipments = (from a in context.ShipmentPackages.Include("PackageType").Include("LCLPackageType")
                                                      where a.Tenant == tenant && shipmentsIds.Contains(a.ShipmentId)
                                                      select a);
-
             return shipments;
         }
 

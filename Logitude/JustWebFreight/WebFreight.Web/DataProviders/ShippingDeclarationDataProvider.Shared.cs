@@ -40,6 +40,7 @@ namespace WebFreight.Web.DataProviders
         public string ProjectNumber { get; set; }
         public string MasterNumber { get; set; }
         public string PreCarriageCarrierName { get; set; }
+        public string PreForwardingCarrierName { get; set; }
         public string ForeignPortOfUnloading { get; set; }
 
         public bool Containerized { get; set; }
@@ -76,6 +77,11 @@ namespace WebFreight.Web.DataProviders
         public string PreCarriageFromPort { get; set; }
         public string PreCarriageToPort { get; set; }
         public string OnCarriageToPort { get; set; }
+
+        public string PreForwardingFromPort { get; set; }
+        public string PreForwardingToPort { get; set; }
+        public string OnForwardingToPort { get; set; }
+
         public string MainCarriageVesselCode { get; set; }
         public string MainCarriageVesselName { get; set; }
         public string MainCarriageVesselNameAndNumber { get; set; }
@@ -119,12 +125,17 @@ namespace WebFreight.Web.DataProviders
 
         public DateTime? PreCarriageETD { get; set; }
         public DateTime? PreCarriageETA { get; set; }
+
+        public DateTime? PreForwardingETD { get; set; }
+        public DateTime? PreForwardingETA { get; set; }
         public string MainCarriageETD { get; set; }
         public DateTime? MainCarriageETD_DateTime { get; set; }
         public DateTime? MainCarriageETA_DateTime { get; set; }
         public string MainCarriageETA { get; set; }
         public string OnCarriageETA { get; set; }
         public DateTime? OnCarriageETA_DateTime { get; set; }
+        public string OnForwardingETA { get; set; }
+        public DateTime? OnForwardingETA_DateTime { get; set; }
         public string FinalDestinationETA { get; set; }
         public DateTime? FinalDestinationETA_DateTime { get; set; }
         public string Broker { get; set; }
@@ -285,6 +296,7 @@ namespace WebFreight.Web.DataProviders
         public string InsidePackagesDetails { get; set; }
 
         public string PickupTruckerName { get; set; }
+        public string PickupTruckerNumber { get; set; }
         public string PickupTruckerInfo { get; set; }
         public string DeliveryTruckerName { get; set; }
         public string DeliveryTruckerInfo { get; set; }
@@ -302,8 +314,10 @@ namespace WebFreight.Web.DataProviders
         public string FreightForwardedAddress { get; set; }
         public string FreightForwardedAddressWithoutCountry { get; set; }
         public string Incoterm { get; set; }
-
         public string Salesman { get; set; }
+        public string SalesmanEmail { get; set; }
+        public string UserPhoneNumber { get; set; }   
+        public string UserMobileNumber { get; set; }
         public double? TotalPayables { get; set; }
         public string CustomsAgent { get; set; }
         public double? TotalPayablesForMainCarriageCarrier { get; set; }
@@ -318,7 +332,7 @@ namespace WebFreight.Web.DataProviders
         public string DeliveryFromAddress { get; set; }
 
         public DateTime? ETD_DateTime { get; set; }
-
+        public string ValueOfGoodsCurrencyCode { get; set; }
         public string ValueOfGoodsCurrency { get; set; }
         public double? ValueOfGoods { get; set; }
 
@@ -334,6 +348,7 @@ namespace WebFreight.Web.DataProviders
         public string Transshipment2FromPortCode { get; set; }
         public string Transshipment2ToPortCode { get; set; }
         public string PreCarriageCarrierAddress { get; set; }
+        public string PreForwardingCarrierAddress { get; set; }
         public DateTime? Transshipment1ETA { get; set; }
 
         public string BranchAddress { get; set; }
@@ -483,6 +498,10 @@ namespace WebFreight.Web.DataProviders
         //If no delivery, show pickup/delivery address of the consignee
         //If no pickup/delivery address, show the chosen address on the consignee
         public string DeliveryAddress_New { get; set; }
-        
+
+        public string AWBCommodityItemNumber { get; set; }
+        public string FirstPickupLoadNumber { get; set; }
+        public string LastDeliveryLoadNumber { get; set; }
+        public string MainCarriageLoadNumber { get; set; }
     }
 }

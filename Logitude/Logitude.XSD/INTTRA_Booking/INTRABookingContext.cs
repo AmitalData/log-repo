@@ -145,53 +145,56 @@ namespace Logitude.XSD.INTTRA_Booking
                     this.MoveType_Name = myTranslatedCode;
                 }
 
-                switch (this.MoveType_Name.ToLower())
+                if (this.MasterData != null)
                 {
-                    case "doortodoor":
-                        {
-                            if (this.Shipment.PreCarriageFromPortId == null || this.Shipment.PreCarriageToPortId == null)
+                    switch (this.MoveType_Name.ToLower())
+                    {
+                        case "doortodoor":
                             {
-                                this.Errors.Add("Pre Carriage is required");
+                                if (this.MasterData.PreCarriageFromPortId == null || this.MasterData.PreCarriageToPortId == null)
+                                {
+                                    this.Errors.Add("Pre Carriage is required");
+                                }
+
+                                if (this.MasterData.OnCarriageFromPortId == null || this.MasterData.OnCarriageToPortId == null)
+                                {
+                                    this.Errors.Add("On Carriage is required");
+                                }
+
+                                break;
                             }
 
-                            if (this.Shipment.OnCarriageFromPortId == null || this.Shipment.OnCarriageToPortId == null)
+                        case "doortoport":
                             {
-                                this.Errors.Add("On Carriage is required");
+                                if (this.MasterData.PreCarriageFromPortId == null || this.MasterData.PreCarriageToPortId == null)
+                                {
+                                    this.Errors.Add("Pre Carriage is required");
+                                }
+
+                                break;
                             }
 
-                            break;
-                        }
-
-                    case "doortoport":
-                        {
-                            if (this.Shipment.PreCarriageFromPortId == null || this.Shipment.PreCarriageToPortId == null)
+                        case "porttodoor":
                             {
-                                this.Errors.Add("Pre Carriage is required");
+                                if (this.MasterData.OnCarriageFromPortId == null || this.MasterData.OnCarriageToPortId == null)
+                                {
+                                    this.Errors.Add("On Carriage is required");
+                                }
+
+                                break;
                             }
 
-                            break;
-                        }
-
-                    case "porttodoor":
-                        {
-                            if (this.Shipment.OnCarriageFromPortId == null || this.Shipment.OnCarriageToPortId == null)
+                        case "porttoport":
                             {
-                                this.Errors.Add("On Carriage is required");
+                                break;
                             }
 
-                            break;
-                        }
-
-                    case "porttoport":
-                        {
-                            break;
-                        }
-
-                    default:
-                        {
-                            this.Errors.Add("Illegal value in move type");
-                            break;
-                        }
+                        default:
+                            {
+                                this.Errors.Add("Illegal value in move type");
+                                break;
+                            }
+                    }
                 }
             }
         }
@@ -1030,7 +1033,7 @@ namespace Logitude.XSD.INTTRA_Booking
                             {
                                 if (iHarmonizeDescription == null)
                                 {
-                                    iHarmonizeDescription = "HS Code: " + itemHarmonize.Harmonize;
+                                    iHarmonizeDescription =  itemHarmonize.Harmonize;
                                 }
 
                                 else
@@ -1050,7 +1053,7 @@ namespace Logitude.XSD.INTTRA_Booking
                     {
                         if (!string.IsNullOrEmpty(myShipmentPackage.Harmonize))
                         {
-                            string iHarmonizeDescription = "HS Code: " + myShipmentPackage.Harmonize;
+                            string iHarmonizeDescription =  myShipmentPackage.Harmonize;
 
                             commodityClassificationTypeList.Add(new INTTRA_Booking.CommodityClassificationType()
                             {
@@ -1065,7 +1068,7 @@ namespace Logitude.XSD.INTTRA_Booking
             {
                 if (!string.IsNullOrEmpty(Shipment.MainHarmonize))
                 {
-                    string iHarmonizeDescription = "HS Code: " + Shipment.MainHarmonize;
+                    string iHarmonizeDescription = Shipment.MainHarmonize;
                     commodityClassificationTypeList.Add(new INTTRA_Booking.CommodityClassificationType()
                     {
                         Type = INTTRA_Booking.CommodityClassificationTypeValues.USHTS,

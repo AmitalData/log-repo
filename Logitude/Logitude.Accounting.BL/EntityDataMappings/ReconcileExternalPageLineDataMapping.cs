@@ -43,8 +43,12 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 ExternalReconciliationLineQueryService recoLineQS = new ExternalReconciliationLineQueryService(entityPOCO.Tenant);
                 ExternalReconciliationQueryService recoQS = new ExternalReconciliationQueryService(entityPOCO.Tenant);
                 ExternalReconciliationLine reconciliationLine = recoLineQS.GetByBankPageLineId(entityPOCO.Id, entityPOCO.Tenant);
-                ExternalReconciliationPM reco = recoQS.GetSingle(reconciliationLine.ReconciliationId, false,false);
-                entityPM.ReconciliationNumber = reco.ReconciliationNumber.ToString();
+
+                if(reconciliationLine != null)
+                {
+                    ExternalReconciliationPM reco = recoQS.GetSingle(reconciliationLine.ReconciliationId, false, false);
+                    entityPM.ReconciliationNumber = reco.ReconciliationNumber.ToString();
+                }
             }
 
             entityPM.Amount = entityPOCO.CreditAmount != 0 ? entityPOCO.CreditAmount : entityPOCO.DebitAmount;

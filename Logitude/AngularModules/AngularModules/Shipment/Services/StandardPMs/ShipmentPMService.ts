@@ -32,6 +32,7 @@ import { ShipmentAssemblyPM } from '../../EntityPMs/ShipmentAssemblyPM';
 import { ShipmentStoragePricingPM } from '../../EntityPMs/ShipmentStoragePricingPM';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { PickUpDeliveryPackageHarmonizePM } from '../../EntityPMs/PickUpDeliveryPackageHarmonizePM';
+import { CommodityPackagePM } from '../../EntityPMs/CommodityPackagePM';
 
 @Injectable()
 
@@ -434,17 +435,7 @@ export class ShipmentPMService {
         ShipmentPMInitService.InitValues(entityPM, true);
 
         return entityPM;
-    }
-    //handleError(error: Response) {
-
-    //    var apiException = error.json();
-    //    var response: ServiceResponse;
-    //    response = new ServiceResponse();
-    //    response.HasError = true;
-    //    response.ErrorsArray.push(apiException.ShortErrorMessage);
-
-    //    return of(response);
-    //}
+    }    
     clone(jsonPM: any) {
         var entityPM: any;
         entityPM = {};
@@ -522,11 +513,6 @@ export class ShipmentPMService {
                 entityPM.OldEntityPM.AWBOCIPMs.push(this.clone(entityPM.AWBOCIPMs[item]));
             }
 
-            entityPM.OldEntityPM.ShipmentCommodities = [];
-            for (var item in entityPM.ShipmentCommodities) {
-                entityPM.OldEntityPM.ShipmentCommodities.push(this.clone(entityPM.ShipmentCommodities[item]));
-            }
-
             entityPM.OldEntityPM.ShipmentOrderPackages = [];
             for (var item in entityPM.ShipmentOrderPackages) {
                 entityPM.OldEntityPM.ShipmentOrderPackages.push(this.clone(entityPM.ShipmentOrderPackages[item]));
@@ -588,6 +574,20 @@ export class ShipmentPMService {
                 }
 
                 entityPM.OldEntityPM.ShipmentPackages.push(newPackage);
+            }
+
+            entityPM.OldEntityPM.ShipmentCommodities = [];
+            for (var item in entityPM.ShipmentCommodities) {
+
+                var myShipmentCommodity = entityPM.ShipmentCommodities[item];
+                var newCommodity: ShipmentCommodityPM = this.clone(myShipmentCommodity);
+                newCommodity.CommodityPackages = [];
+
+                for (var k1 in myShipmentCommodity.CommodityPackages) {
+                    newCommodity.CommodityPackages.push(this.clone(myShipmentCommodity.CommodityPackages[k1]));
+                }
+
+                entityPM.OldEntityPM.ShipmentCommodities.push(newCommodity);
             }
 
             entityPM.OldEntityPM.ShipmentPickUps = [];
@@ -768,8 +768,7 @@ export class ShipmentPMService {
 
                 itemPM.UniqueKey = Guid.newGuid();
                 itemPM.ChangeSetOp = "None";
-                itemJson.ChangeSetOp = "None";
-
+                itemJson.ChangeSetOp = "None";            
                 itemPM.OldEntityPM = this.clone(itemPM);
 
                 this.MapInsideShipmentPackages(itemPM, itemJson, mapParent);
@@ -853,27 +852,30 @@ export class ShipmentPMService {
         }       
     }
     MapShipmentCommodities(entityPM: ShipmentPM, jsonPM: any, mapParent: boolean = true) {
+
         var oldCollection: ShipmentCommodityPM[] = [];
         if (entityPM.OldEntityPM && !mapParent) {
             oldCollection = entityPM.OldEntityPM.ShipmentCommodities;
         }
 
         entityPM.ShipmentCommodities = new Array<ShipmentCommodityPM>();
-        for (var item in jsonPM.ShipmentCommodities) {
-           
-            var itemJson = jsonPM.ShipmentCommodities[item];
+
+        for (var pack in jsonPM.ShipmentCommodities) {
+
+            var itemJson = jsonPM.ShipmentCommodities[pack];
             if (mapParent && (itemJson.ChangeSetOp == "Delete" || itemJson.ChangeSetOp == 3)) {
                 continue;
             }
+
             var itemPM: ShipmentCommodityPM;
-            if (mapParent) {
+            if (mapParent) { // get mapping
                 itemPM = new ShipmentCommodityPM(entityPM);
             }
 
-            else {
+            else {// update mapping             
                 itemPM = new ShipmentCommodityPM(null);
             }
-
+            itemPM.DisableMarkAsDirty = true;
             var pmKeys = Object.keys(itemJson);
             for (var key in pmKeys) {
 
@@ -885,13 +887,20 @@ export class ShipmentPMService {
                 itemPM[property] = itemJson[property];
             }
 
-           
+
             if (mapParent) {
 
-                itemPM.OldEntityPM = this.clone(itemPM);
                 itemPM.UniqueKey = Guid.newGuid();
                 itemPM.ChangeSetOp = "None";
                 itemJson.ChangeSetOp = "None";
+                itemPM.OldEntityPM = this.clone(itemPM);
+
+                this.MapShipmentCommodityPackages(itemPM, itemJson, mapParent);
+                itemPM.OldEntityPM.CommodityPackages = [];
+                for (var k2 in itemPM.CommodityPackages) {
+                    var clonedInside = this.clone(itemPM.CommodityPackages[k2]);
+                    itemPM.OldEntityPM.CommodityPackages.push(clonedInside);
+                }
             }
 
             else {
@@ -905,22 +914,47 @@ export class ShipmentPMService {
                     itemPM.ChangeSetOp = "Insert";
                 }
 
+                this.MapShipmentCommodityPackages(itemPM, itemJson, mapParent);
+                itemPM.EntityParentPM = null;
                 itemPM.OldEntityPM = null;
             }
+
+            itemPM.DisableMarkAsDirty = false;
             itemPM.IsDirty = false;
             entityPM.ShipmentCommodities.push(itemPM);
         }
 
         if (oldCollection) {
-            for (var item in oldCollection) {
-                if (entityPM.ShipmentCommodities.filter(p => p.UniqueKey === oldCollection[item].UniqueKey).length === 0) {
-                    if (oldCollection[item]) {
-                        oldCollection[item].ChangeSetOp = "Delete";
-                        entityPM.ShipmentCommodities.push(oldCollection[item]);
+
+            for (var pack in oldCollection) {
+                if (entityPM.ShipmentCommodities.filter(p => p.UniqueKey === oldCollection[pack].UniqueKey).length === 0) {
+                    if (oldCollection[pack]) {
+                        var oldpackageJson = oldCollection[pack];
+                        var deletedPM: ShipmentCommodityPM = new ShipmentCommodityPM(null);
+                        deletedPM.DisableMarkAsDirty = true;
+                        var pmKeys = Object.keys(oldpackageJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldpackageJson[property];
+                        }
+
+                        deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+
+                        this.MapShipmentCommodityPackages(deletedPM, oldpackageJson, mapParent);
+
+                        deletedPM.OldEntityPM = null;
+                        entityPM.ShipmentCommodities.push(deletedPM);
                     }
                 }
             }
-        }
+        } 
     }
     MapShipmentOrderPackages(entityPM: ShipmentPM, jsonPM: any, mapParent: boolean = true) {
         var oldCollection: ShipmentOrderPackagePM[] = [];
@@ -2332,6 +2366,84 @@ export class ShipmentPMService {
                         oldCollection[pack].ChangeSetOp = "Delete";
                         oldCollection[pack].OldEntityPM = null;
                         entityPM.InsidePackageHarmonizes.push(oldCollection[pack]);
+                    }
+                }
+            }
+        }
+    }
+    MapShipmentCommodityPackages(entityPM: ShipmentCommodityPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldCollection: CommodityPackagePM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldCollection = entityPM.OldEntityPM.CommodityPackages;
+        }
+
+        entityPM.CommodityPackages = new Array<CommodityPackagePM>();
+
+        for (var pack in jsonPM.CommodityPackages) {
+            var itemJson = jsonPM.CommodityPackages[pack];
+            if (mapParent && (itemJson.ChangeSetOp == "Delete" || itemJson.ChangeSetOp == 3)) {
+                continue;
+            }
+
+            var itemPM: CommodityPackagePM;
+            if (mapParent) { 
+                itemPM = new CommodityPackagePM(entityPM);
+            }
+
+            else {           
+                itemPM = new CommodityPackagePM(null);
+            }
+
+            var pmKeys = Object.keys(itemJson);
+            for (var key in pmKeys) {
+                if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties") {
+                    continue;
+                }
+
+                var property = pmKeys[key];
+                itemPM[property] = itemJson[property];
+            }
+
+            if (mapParent) {
+                itemPM.UniqueKey = Guid.newGuid();
+                itemPM.ChangeSetOp = "None";
+                itemJson.ChangeSetOp = "None";
+                itemPM.OldEntityPM = this.clone(itemPM);
+
+            }
+
+            else {
+                if (entityPM.ChangeSetOp === "Delete") {
+                    itemPM.ChangeSetOp = "Delete";
+                }
+                else {
+                    if (itemPM.UniqueKey) {
+                        if (itemJson.IsDirty) {
+                            itemPM.ChangeSetOp = "Update";
+                        }
+                    }
+
+                    else {
+                        itemPM.ChangeSetOp = "Insert";
+                    }
+                }
+
+                itemPM.OldEntityPM = null;
+                itemPM.EntityParentPM = null;
+            }
+            itemPM.IsDirty = false;
+            entityPM.CommodityPackages.push(itemPM);
+        }
+
+        if (oldCollection) {
+
+            for (var pack in oldCollection) {
+                if (entityPM.CommodityPackages.filter(p => p.UniqueKey === oldCollection[pack].UniqueKey).length === 0) {
+                    if (oldCollection[pack]) {
+                        oldCollection[pack].ChangeSetOp = "Delete";
+                        oldCollection[pack].OldEntityPM = null;
+                        entityPM.CommodityPackages.push(oldCollection[pack]);
                     }
                 }
             }

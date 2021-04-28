@@ -81,6 +81,7 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public double? CostUnitPrice { get; set; }
         public double? CostTotalAmount { get; set; }
         public double? CostTotalAmountLocal { get; set; }
+        public double? CostAmountInSaleCurrency { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string SaleCurrencyId { get; set; }
@@ -157,7 +158,6 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public double? CostUnitPrice3InSaleCurrency { get; set; }
         public double? CostUnitPrice4InSaleCurrency { get; set; }
         public double? CostUnitPrice5InSaleCurrency { get; set; }
-        public double? CostAmountInSaleCurrency { get; set; }
 
         public bool IsBackToBack { get; set; }
 

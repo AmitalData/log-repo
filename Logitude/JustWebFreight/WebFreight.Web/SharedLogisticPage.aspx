@@ -24,6 +24,7 @@
     <link href="HtmlHelpers/CSS/LogitudeMainCss.css" rel="stylesheet" type="text/css"/>
     <script src="HtmlHelpers/JS/Logitude.Converters.js" type="text/javascript"></script>
     <script src="HtmlHelpers/JS/Logitude.Entites.js" type="text/javascript"></script>
+    <script src="HtmlHelpers/JS/LogitudeTools.js" type="text/javascript"></script>        	    
     <script src="HtmlHelpers/JS/ContactActivityLog.js" type="text/javascript"></script>
     <script src="HtmlHelpers/JS/highlight.pack.js" type="text/javascript"></script>
 
@@ -116,6 +117,8 @@
         <input id="SavedSelectedQuery_INV" />
         <input id="SavedSearchText_SHI" />
         <input id="SavedSearchText_INV" />
+        <input id="TokenInput" runat="server" />
+        <input id="LoginInput" runat="server" />
     </form>
 
     <div id="ContainerHeader" style="position:absolute; top:0px; z-index:0; width:100%; height:65px; background: url('HtmlHelpers/Images/Bars_Images/HeaderBar.png') repeat-x;"></div>
@@ -739,14 +742,24 @@
 
     <script type="text/javascript">
 
-        function ViewShipment(ShipmentId) {
-            
-            document.location.href = "SharedLogistic/ShipmentPage.aspx?id=" + ShipmentId + ":" + $.CurrentCardId + ":" + $.CurrentTenant + ":" + $.CurrentEmail + ":" + $.CurrentCardType + ":"+ $.IsBrandingEnabled;
+        function ViewShipment(ShipmentId) {      
+            ChangePage("/SharedLogistic/ShipmentPage.aspx", ShipmentId);
+            //document.location.href = "SharedLogistic/ShipmentPage.aspx?id=" + ShipmentId + ":" + $.CurrentCardId + ":" + $.CurrentTenant + ":" + $.CurrentEmail + ":" + $.CurrentCardType + ":" + $.IsBrandingEnabled;
          }
 
         function ViewInvoice(InvoiceId) {
-            
-            document.location.href = "SharedLogistic/InvoicePage.aspx?id=" + InvoiceId + ":" + $.CurrentCardId + ":" + $.CurrentTenant + ":" + $.CurrentEmail + ":" + $.CurrentCardType + ":" + $.IsBrandingEnabled;
+            ChangePage("/SharedLogistic/InvoicePage.aspx", InvoiceId);
+            //document.location.href = "SharedLogistic/InvoicePage.aspx?id=" + InvoiceId + ":" + $.CurrentCardId + ":" + $.CurrentTenant + ":" + $.CurrentEmail + ":" + $.CurrentCardType + ":" + $.IsBrandingEnabled;
+        }
+
+        function ChangePage(url, entityId) {
+
+            var loginData = entityId + ":" + $.CurrentCardId + ":" + $.CurrentTenant + ":" + $.CurrentEmail + ":" + $.CurrentCardType + ":" + $.IsBrandingEnabled;
+
+            var params = [];
+            params.push({ name: "Token", value: $.Token });
+            params.push({ name: "LoginData", value: loginData });
+            PostFormParams(url, params);
         }
     </script>
 

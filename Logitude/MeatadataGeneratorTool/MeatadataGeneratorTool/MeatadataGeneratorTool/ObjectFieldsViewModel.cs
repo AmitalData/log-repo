@@ -1090,8 +1090,19 @@ namespace MeatadataGeneratorTool
 
 
 
-
-
+        private string additionalQuerySections;
+        public string AdditionalQuerySections
+        {
+            get
+            {
+                return additionalQuerySections;
+            }
+            set
+            {
+                additionalQuerySections = value;
+                FirePropertyChanged("AdditionalQuerySections");
+            }
+        }
 
 
         string hTMLListComponentURL;

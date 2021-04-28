@@ -9,7 +9,7 @@ using Simplog.Server.Infrastructure.Helpers;
 
 namespace Simplog.Data.QuoteModel.Mocks
 {
-    public class MockQuoteContext:IQuotesContext
+    public class MockQuoteContext : IQuotesContext
     {
         List<MarkUpType> markUpTypes;
         MockObjectSet<MarkUpType> markUpObjectSet;
@@ -205,7 +205,7 @@ namespace Simplog.Data.QuoteModel.Mocks
         public IDbSet<QuoteTemplateExcludedSection> QuoteTemplateExcludedSections
         {
             get { throw new NotImplementedException(); }
-        }         
+        }
         public IDbSet<QuoteClosingReason> QuoteClosingReasons
         {
             get
@@ -248,6 +248,11 @@ namespace Simplog.Data.QuoteModel.Mocks
             get { throw new NotImplementedException(); }
         }
         public IDbSet<QuoteSetting> QuoteSettings
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public IDbSet<QuoteComputedField> QuoteComputedField
         {
             get { throw new NotImplementedException(); }
         }

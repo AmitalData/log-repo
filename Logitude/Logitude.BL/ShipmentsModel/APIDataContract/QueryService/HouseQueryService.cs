@@ -219,7 +219,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                 temp.StatusDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
                 temp.AWBCurrencyId = MyTenantPM.FreightCurrencyId;
                 temp.ProfitCurrencyId = MyTenantPM.ProfitCurrencyId;
-                temp.OnCarriageAdditionalTransportModeCode = "BYTR";
+                temp.OnForwardingAdditionalTransportModeCode = "BYTR";
 
                 if (string.IsNullOrEmpty(temp.VolumeUnitCode))
                 {
@@ -548,7 +548,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                     temp.DimensionsUnitCode = MyTenantPM.DimensionsUnitCode;
                     temp.GrossWeightUnitCode = MyTenantPM.GrossWeightUnitCode;
                     temp.ChargeableWeightUnitCode = MyTenantPM.ChargeableWeightUnitCode;
-                    temp.OnCarriageAdditionalTransportModeCode = "BYTR";
+                    temp.OnForwardingAdditionalTransportModeCode = "BYTR";
 
                     switch (temp.DirectionId)
                     {

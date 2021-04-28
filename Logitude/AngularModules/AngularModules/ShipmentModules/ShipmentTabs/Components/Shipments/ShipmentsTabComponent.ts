@@ -128,7 +128,8 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
         var myShipmentSubTypeListService: ShipmentSubTypeListService = new ShipmentSubTypeListService();
         myShipmentSubTypeListService.getAll().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
-                this.allShipmentSubTypes = myResponse.Result;                
+                this.allShipmentSubTypes = myResponse.Result;
+                this.allShipmentSubTypes = this.allShipmentSubTypes.filter(d => !d.Inactive);
             }
         });
     }
@@ -473,6 +474,13 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
                     var subType: ShipmentSubTypeList = this.allShipmentSubTypes.filter(d => d.Code == subTypeCode)[0];
                     if (subType) {
                         myShipmentSubTypeId = subType.Id;
+                    }
+
+                    else {
+                        var defaultSubType: ShipmentSubTypeList = this.allShipmentSubTypes.filter(d => d.ShipmentTypeCode == myShipmentTypeId)[0];
+                        if (defaultSubType) {
+                            myShipmentSubTypeId = defaultSubType.Id;
+                        }
                     }
                 }
             }

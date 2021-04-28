@@ -25,7 +25,7 @@
                                                 <td style="font-size:14px; color:#1B90CB;">Cross Dock Entries</td>
 
                                                 <td style="width:140px;">
-                                                    <button *ngIf="IsNewWarehouseEntryVisible" [disabled]="DisableNewWarehouseEntryButton" class="Button" (click)="NewWarehouseEntryButtonClicked()">New Cross Dock Entry</button>
+                                                    <button *ngIf="IsNewWarehouseEntryVisible" [disabled]="DisableNewWarehouseEntryButton" class="Button" (click)="NewWarehouseEntryButtonClicked()" attr.data-cy="{{'NewCrossDock_Entry'}}" >New Cross Dock Entry</button>
                                                 </td>
 
                                             </tr>
@@ -59,14 +59,14 @@
                                                                         </td>
 
                                                                         <td class="GridViewCell TextTrimming" style="width: 150px; max-width:150px; min-width:150px;">
-                                                                            <span class="hyperlink" (click)="ViewEntity(item)">{{item.EntityNumber}}</span>  
+                                                                            <span class="hyperlink" attr.data-cy="{{'Hyperlink_' + item.EntityNumber}}" (click)="ViewEntity(item)">{{item.EntityNumber}}</span>  
                                                                         </td>
 
-                                                                        <td class="GridViewCell TextTrimming" style="width: 150px; max-width:150px; min-width:150px;">
+                                                                        <td class="GridViewCell TextTrimming" style="width: 150px; max-width:150px; min-width:150px;" attr.data-cy="{{'Status_'+ item.EntityNumber}}" >
                                                                             {{item.EntityStatus}}
                                                                         </td>
 
-                                                                        <td class="GridViewCell" [ngStyle]="{color: item.Foreground}" style="width: 200px; max-width:200px; min-width:200px;">
+                                                                        <td class="GridViewCell" [ngStyle]="{color: item.Foreground}" style="width: 200px; max-width:200px; min-width:200px;" attr.data-cy="{{'Date_'+ item.EntityNumber}}">
                                                                             {{item.EntityDate | DateTimeToDatePipe}} {{item.DateType}}
                                                                         </td>
 
@@ -106,7 +106,7 @@
                                                 <td style="font-size:14px; color:#1B90CB;">Cross Dock Releases</td>
 
                                                 <td style="width:140px;">
-                                                    <button *ngIf="IsNewWarehouseReleaseVisible" [disabled]="DisableNewWarehouseReleaseButton" class="Button" (click)="NewWarehouseReleaseButtonClicked()">New Cross Dock Release</button>
+                                                    <button *ngIf="IsNewWarehouseReleaseVisible" [disabled]="DisableNewWarehouseReleaseButton" class="Button" (click)="NewWarehouseReleaseButtonClicked()" attr.data-cy="{{'NewCrossDock_Release'}}" >New Cross Dock Release</button>
                                                 </td>
 
                                             </tr>
@@ -141,14 +141,14 @@
 
                                                                         <td class="GridViewCell TextTrimming" style="width: 150px; max-width:150px; min-width:150px;">
                                                                       
-                                                                            <span class="hyperlink" (click)="ViewEntity(item)">{{item.EntityNumber}}</span>  
+                                                                            <span class="hyperlink" attr.data-cy="{{'Hyperlink_' + item.EntityNumber}}" (click)="ViewEntity(item)">{{item.EntityNumber}}</span>  
                                                                         </td>
 
-                                                                        <td class="GridViewCell TextTrimming" style="width: 150px; max-width:150px; min-width:150px;">
+                                                                        <td class="GridViewCell TextTrimming" style="width: 150px; max-width:150px; min-width:150px;" attr.data-cy="{{'Status_'+ item.EntityNumber}}">
                                                                             {{item.EntityStatus}}
                                                                         </td>
 
-                                                                        <td class="GridViewCell" [ngStyle]="{color: item.Foreground}" style="width: 200px; max-width:200px; min-width:200px;">
+                                                                        <td class="GridViewCell" [ngStyle]="{color: item.Foreground}" style="width: 200px; max-width:200px; min-width:200px;" attr.data-cy="{{'Date_'+ item.EntityNumber}}">
                                                                             {{item.EntityDate | DateTimeToDatePipe}} {{item.DateType}}
                                                                         </td>
 

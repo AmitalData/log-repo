@@ -349,6 +349,11 @@ export class LedgerTransactionPM {
     public set CalculatedForeignAmount(newValue: number) { if (this.calculatedForeignAmount != newValue) { this.calculatedForeignAmount = newValue; this.MarkAsDirty("CalculatedForeignAmount"); } }
        
 	 
+    private accountDisplayNumber: string;
+    public get AccountDisplayNumber() { return this.accountDisplayNumber; }
+    public set AccountDisplayNumber(newValue: string) { if (this.accountDisplayNumber != newValue) { this.accountDisplayNumber = newValue; this.MarkAsDirty("AccountDisplayNumber"); } }
+       
+	 
 
     public OldEntityPM: LedgerTransactionPM;
 		

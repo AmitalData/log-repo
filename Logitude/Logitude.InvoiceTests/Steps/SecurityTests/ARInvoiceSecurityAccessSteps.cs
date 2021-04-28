@@ -1,11 +1,13 @@
 ﻿using FluentAssertions;
 using Logitude.InvoiceTests.Models.Invoice;
 using Logitude.Test.Base.Context;
-using Logitude.Test.Base.Models;
 using Logitude.Test.Base.Services;
 using TechTalk.SpecFlow;
 using System.Collections.Generic;
 using System.Linq;
+using Logitude.Test.Base.Models.Api;
+using Logitude.Test.Base.Models.UserTenantPreparation;
+using Logitude.Test.Base.Models.Shared;
 
 namespace Logitude.InvoiceTests.Steps.SecurityTests
 {
@@ -19,40 +21,48 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
             Context = context;
         }
 
-        [When(@"Get AR Invoice request sent for User's Tenant")]
+        #region Step Region
+        #region Get AR Invoice from user's tenant 
+        [When(@"get a AR Invoice from user's AR Invoices list")]
         public void WhenGetARInvoiceRequestSentForUserSTenant()
         {
-            ARInvoicePM firstUserARInvoice = GetAnARInvoiceForFirstUser();
+            ARInvoicePM firstUserARInvoice = GetAnARInvoiceFromFirstUserList();
             Context.FirstUserPMData.Id = firstUserARInvoice?.Id;
         }
 
-        [When(@"Get AR Invoice request sent for other Tenant")]
-        public void WhenGetARInvoiceRequestSentForOtherTenant()
-        {
-            GetARInvoiceForTheSecondUserBaseOnFirstUserARInvoices();
-        }
-
-        [Then(@"AR Invoice should be exists")]
+        [Then(@"the AR Invoice should exist")]
         public void ThenARInvoiceShouldBeExists()
         {
             Context.FirstUserPMData.Id.Should().NotBeNull();
         }
+        #endregion
 
-        [Then(@"AR Invoice should not be exists")]
+        #region Get AR Invoice from other tenant 
+        [When(@"get a AR Invoice from Other Tenant")]
+        public void WhenGetARInvoiceRequestSentForOtherTenant()
+        {
+            ApiResponse<ARInvoicePM> response = GetAnARInvoiceForFirstUser(UserOtherTenant.Token);
+            Context.SecondUserPMData.Id = response.Data?.Id;
+        }
+
+        [Then(@"the AR Invoice should not exist")]
         public void ThenARInvoiceShouldNotBeExists()
         {
             Context.SecondUserPMData.Id.Should().BeNull();
         }
+        #endregion
 
-        private void GetARInvoiceForTheSecondUserBaseOnFirstUserARInvoices()
+        #endregion
+
+        #region Private Function Region
+        private ApiResponse<ARInvoicePM> GetAnARInvoiceForFirstUser(string Token)
         {
-            ARInvoicePM firstUserARInvoice = GetAnARInvoiceForFirstUser();
+            ARInvoicePM firstUserARInvoice = GetAnARInvoiceFromFirstUserList();
             string arInvoicesGetSingleUrl = Urls.ARInvoicesGetSingle(firstUserARInvoice?.Id);
-            ApiResponse<ARInvoicePM> response = APICaller.CallGet<ARInvoicePM>(arInvoicesGetSingleUrl, UserOtherTenant.Token);
-            Context.SecondUserPMData.Id = response.Data?.Id;
+            return APICaller.CallGet<ARInvoicePM>(arInvoicesGetSingleUrl, UserOtherTenant.Token);
         }
 
-        private ARInvoicePM GetAnARInvoiceForFirstUser()
+        private ARInvoicePM GetAnARInvoiceFromFirstUserList()
         {
             ApiQueryFilters apiQueryFilters = new ApiQueryFilters
             {
@@ -63,5 +73,6 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
             ApiResponse<IEnumerable<ARInvoicePM>> response = APICaller.CallGetByFilters<IEnumerable<ARInvoicePM>>(Urls.ARInvoiceViewsGetByFilters, UserTenant.Token, apiQueryFilters);
             return response.Data?.FirstOrDefault();
         }
+        #endregion
     }
 }

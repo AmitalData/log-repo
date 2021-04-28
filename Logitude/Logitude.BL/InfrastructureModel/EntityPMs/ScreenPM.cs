@@ -25,6 +25,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string Name { get; set; }
         public int  UserTenant { get; set; }
 
+
         [Include]
         [Association("ScreenScreenField", "Id", "ScreenId")]
         public virtual List<ScreenFieldPM> ScreenFields { get; set; }

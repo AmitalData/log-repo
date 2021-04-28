@@ -53,6 +53,7 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="true"
+  IsBusinessUnitEnabled="false"
   Code1="&quot;554c&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -1133,6 +1134,16 @@
     FeatureCode="&quot;GENERAL&quot;"
     FeatureTextCodeCode="&quot;Department.Features.General&quot;"
     FeatureDefaultText="&quot;General&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
+  <Tab
+    TabName="&quot;Events&quot;"
+    ObjectTableName="&quot;Department&quot;"
+    Code="&quot;DAEV&quot;"
+    ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;"
+    TextCode="&quot;Department.TH.Events&quot;"
+    IsPackagable="false"
+    IndexOrder="1"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <EventTypes>

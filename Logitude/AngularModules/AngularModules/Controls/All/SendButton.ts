@@ -92,8 +92,8 @@ export class SendButton implements OnInit {
 
         // var idIndex = this.CurrentSession.GetNewId("SenButton");
 
-        this._CustomSendOptionsComponentId = ControlsIdCounter.GetNextControlIdCounter("CustomSendOptionsComponent")+"";
-        this._CustomSendOptionsComponentMenuId = ControlsIdCounter.GetNextControlIdCounter("CustomSendOptionsComponentMenuId")+"";
+        this._CustomSendOptionsComponentId = "SendButtom_" + ControlsIdCounter.GetNextControlIdCounter("CustomSendOptionsComponent");
+        this._CustomSendOptionsComponentMenuId = "SendButtomMenu_" + ControlsIdCounter.GetNextControlIdCounter("CustomSendOptionsComponentMenuId");
         this.ControlId = ControlsIdCounter.GetNextControlIdCounter("ComboBox")+"";
         this.ListControlId = ControlsIdCounter.GetNextControlIdCounter("List")+"";
     }

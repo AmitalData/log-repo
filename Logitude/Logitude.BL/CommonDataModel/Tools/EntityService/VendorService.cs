@@ -43,7 +43,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private ICommonDataContext objectContext;
         private CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository;
         private ContactService contactService;
-
+        private CardService cardService;
         public VendorService(ICommonDataContext objectContext,int tenant)
         {
             this.tenant = tenant;
@@ -54,6 +54,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.contactRepository = new ContactRepository(objectContext);
             this.cardContactRepository = new CardContactRepository(objectContext);
             this.cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(objectContext);
+            cardService = new CardService(objectContext, tenant);
             this.GetLoggedContact();
         }
 
@@ -88,7 +89,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
             this.entityPM = entityPM;
             this.isNewEntity = true;
-            this.entityPM.Id = string.IsNullOrEmpty(this.entityPM.Id) ? IdCounter.GetNumber("Card", tenant).ToString() : this.entityPM.Id;
+            this.entityPM.Id = string.IsNullOrEmpty(this.entityPM.Id) || this.entityPM.IsHybrid ? IdCounter.GetNumber("Card", tenant).ToString() : this.entityPM.Id;
 
             this.entityCard = new Card()
             {
@@ -206,7 +207,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             cardRepository.Update(entityCard);
             entityRepository.Update(entityPOCO);
             entityRepository.SubmitChanges();
-
+            cardService.HandleGLAccountCardData(entityCard.Id, entityCard.GLAccountId, entityCard.Tenant);
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms != "oracle")
             {

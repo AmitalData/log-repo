@@ -1,4 +1,9 @@
-﻿using Logitude.Test.Base.Models;
+﻿using Logitude.Test.Base.Models.Api;
+using Logitude.Test.Base.Models.Infrastructure;
+using Logitude.Test.Base.Models.Shared;
+using Logitude.Test.Base.Models.UserTenantPreparation;
+using Logitude.Test.Base.Models.LocationsPreparation;
+using Logitude.Test.Base.Models.PartnersPreparation;
 using Logitude.Test.Base.Services;
 using System;
 using System.Collections.Generic;
@@ -21,15 +26,35 @@ namespace Logitude.Test.Base.Hooks
             SetupPartnerPreparationVariables();
         }
 
+        public static void PrepareTheData(string email, string password,string url)
+        {
+            SetupBaseSettingsForForm(email, password, url);
+            SetupDefaultUserAuthentication();
+            SetupDefaultUserTenant();
+            SetupLocationPreparationVariables();
+            SetupPartnerPreparationVariables();
+        }
+
         private static void SetupBaseSettings()
         {
             Configurations configurations = GetConfigurations();
             if(configurations != null)
             {
-                Settings.ServerUrl = configurations.General.ServerUrl;
+                Settings.ServerUrl = configurations.ServerSettings.Url;
                 Settings.DefaultUserCredentials = GetUserCredentialsFromConfigurations(configurations, true);
                 Settings.OtherUserCredentials = GetUserCredentialsFromConfigurations(configurations, false);
             }
+        }
+
+        private static void SetupBaseSettingsForForm(string email, string password, string url)
+        {
+            Settings.ServerUrl = url;
+            Credentials userCredentials = new Credentials
+            {
+                Email = email,
+                Password = password
+            };
+            Settings.DefaultUserCredentials = userCredentials;
         }
 
         private static void SetupUsersAuthentication()
@@ -46,14 +71,14 @@ namespace Logitude.Test.Base.Hooks
 
         private static void SetupLocationPreparationVariables()
         {
-            ApiResponse<LocationsVariables> locationsVariablesResponse = APICaller.CallGet<LocationsVariables>(Urls.IntegrationTestGetBaseLocations, UserTenant.Token);
-            LocationsDataMap(locationsVariablesResponse.Data);
+            LocationsVariables locationsVariables = DataPreparation.GetLocationsVariables();
+            LocationsDataMap(locationsVariables);
         }
 
         private static void SetupPartnerPreparationVariables()
         {
-            ApiResponse<PartnersVariables> partnersVariablesResponse = APICaller.CallGet<PartnersVariables>(Urls.IntegrationTestGetBasePartners, UserTenant.Token);
-            PartnersDataMap(partnersVariablesResponse.Data);
+            PartnersVariables partnersVariables = DataPreparation.GetPartnersVariables();
+            PartnersDataMap(partnersVariables);
         }
 
         private static Configurations GetConfigurations()
@@ -133,7 +158,9 @@ namespace Logitude.Test.Base.Hooks
                 Filter1Operator = "Contains",
                 Filter1Value = Settings.DefaultUserCredentials.Email
             };
+
             ApiResponse<IEnumerable<User>> usersResponse = APICaller.CallGetByFilters<IEnumerable<User>>(Urls.UserViewsGetByFilters, UserTenant.Token, apiQueryFilters);
+
             User user = usersResponse.Data?.FirstOrDefault();
             UserTenant.BranchId = user?.BranchId;
             UserTenant.DepartmentId = user?.DepartmentId;
@@ -143,33 +170,44 @@ namespace Logitude.Test.Base.Hooks
         private static void LocationsDataMap(LocationsVariables locationsVariables)
         {
             LocationsData.PortLHRId = locationsVariables.PortLHRId;
-            LocationsData.PortLASId = locationsVariables.PortLASId;
-            LocationsData.PortMIAId = locationsVariables.PortMIAId;
-            LocationsData.PortJFKId = locationsVariables.PortJFKId;
-            LocationsData.PortSOUId = locationsVariables.PortSOUId;
-            LocationsData.PortNYCId = locationsVariables.PortNYCId;
+            LocationsData.PortLASDomesticId = locationsVariables.PortLASDomesticId;
+            LocationsData.PortMIADomesticId = locationsVariables.PortMIADomesticId;
+            LocationsData.PortAirJFKId = locationsVariables.PortAirJFKId;
+            LocationsData.PortOceanNYCId = locationsVariables.PortOceanNYCId;
+            LocationsData.PortOceanSOUId = locationsVariables.PortOceanSOUId;
+            LocationsData.PortInlandNYCId = locationsVariables.PortInlandNYCId;
             LocationsData.PortLONId = locationsVariables.PortLONId;
             LocationsData.PortMANId = locationsVariables.PortMANId;
-            LocationsData.GlobalZoneEUId = locationsVariables.GlobalZoneEUId;
             LocationsData.CountryUSId = locationsVariables.CountryUSId;
             LocationsData.CountryGBId = locationsVariables.CountryGBId;
+            LocationsData.CountryTSId = locationsVariables.CountryTSId;
             LocationsData.StateAKId = locationsVariables.StateAKId;
+            LocationsData.CityAnchorageId = locationsVariables.CityAnchorageId;
+            LocationsData.CityManchesterId = locationsVariables.CityManchesterId;
         }
 
         private static void PartnersDataMap(PartnersVariables partnersVariables)
         {
             PartnersData.VendorId = partnersVariables.VendorId;
             PartnersData.AgentId = partnersVariables.AgentId;
+            PartnersData.AgentCode = partnersVariables.AgentCode;
             PartnersData.CustomerId = partnersVariables.CustomerId;
             PartnersData.CustomAgentId = partnersVariables.CustomAgentId;
             PartnersData.ShippingAgentId = partnersVariables.ShippingAgentId;
             PartnersData.PotentialCustomerId = partnersVariables.PotentialCustomerId;
-            PartnersData.TruckerId = partnersVariables.TruckerId;
-            PartnersData.ShipperExport1 = partnersVariables.ShipperExport1;
+            PartnersData.TruckerTLONId = partnersVariables.TruckerTLONId;
+            PartnersData.TruckerTNYCId = partnersVariables.TruckerTNYCId;
+            PartnersData.ShipperExportId = partnersVariables.ShipperExportId;
+            PartnersData.ShipperExportCode = partnersVariables.ShipperExportCode;
+            PartnersData.ShipperImportId = partnersVariables.ShipperImportId;
+            PartnersData.ShipperImportCode = partnersVariables.ShipperImportCode;
+            PartnersData.ConsigneeExportId = partnersVariables.ConsigneeExportId;
+            PartnersData.ConsigneeImportId = partnersVariables.ConsigneeImportId;
             PartnersData.AirlineAAId = partnersVariables.AirlineAAId;
             PartnersData.AirlineBAId = partnersVariables.AirlineBAId;
             PartnersData.ShippingLineMSCUId = partnersVariables.ShippingLineMSCUId;
             PartnersData.ShippingLineMAEUId = partnersVariables.ShippingLineMAEUId;
+            PartnersData.ShippingLineYMLUId = partnersVariables.ShippingLineYMLUId;
             PartnersData.WarehouseId = partnersVariables.WarehouseId;
         }
     }

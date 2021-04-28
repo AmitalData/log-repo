@@ -5,7 +5,9 @@ using Logitude.Test.Base.Services;
 using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow;
-using Logitude.Test.Base.Models;
+using Logitude.Test.Base.Models.Api;
+using Logitude.Test.Base.Models.UserTenantPreparation;
+using Logitude.Test.Base.Models.Shared;
 
 namespace Logitude.InvoiceTests.Steps.SecurityTests
 {
@@ -18,40 +20,49 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
             Context = context;
         }
 
-        [When(@"First user get the first AP Payment from AP Payments list")]
+        #region Step Region
+
+        #region Get AP Payment from user's tenant 
+        [When(@"get a AP Payment from user's AP Payment list")]
         public void WhenFirstUserGetTheFirstAPPaymentFromAPPaymentsList()
         {
-            IEnumerable<APPaymentPM> firstUserAPPaymentsList = GetAPPaymentListForFirstUser();
-            Context.FirstUserPMData.Id = firstUserAPPaymentsList?.FirstOrDefault()?.Id;
+            APPaymentPM firstUserAPPayments = GetAPPaymentFromFirstUserList();
+            Context.FirstUserPMData.Id = firstUserAPPayments?.Id;
         }
 
-        [When(@"Second user get the AP Payment that requested by first user")]
-        public void WhenSecondUserGetTheAPPaymentThatRequestedByFirstUser()
-        {
-            GetAPPaymentForTheSecondUserBaseOnFirstUserAPPayments();
-        }
-
-        [Then(@"AP Payment for first user should be exists")]
+        [Then(@"the AP Payment should exist")]
         public void ThenAPPaymentForFirstUserShouldBeExists()
         {
             Context.FirstUserPMData.Id.Should().NotBeNull();
         }
+        #endregion
 
-        [Then(@"AP Payment for second user should not be exists")]
+        #region Get AP Payment from other tenant  
+        [When(@"get a AP Payment from Other Tenant")]
+        public void WhenSecondUserGetTheAPPaymentThatRequestedByFirstUser()
+        {
+            ApiResponse<APPaymentPM> response = GetAPPaymentForFirstUser(UserOtherTenant.Token);
+            Context.SecondUserPMData.Id = response.Data?.Id;
+        }
+
+        [Then(@"the AP Payment should not exist")]
         public void ThenAPPaymentForSecondUserShouldNotBeExists()
         {
             Context.SecondUserPMData.Id.Should().BeNull();
         }
+        #endregion
 
-        private void GetAPPaymentForTheSecondUserBaseOnFirstUserAPPayments()
+        #endregion
+
+        #region Private Function Region
+        private ApiResponse<APPaymentPM> GetAPPaymentForFirstUser(string Token)
         {
-            IEnumerable<APPaymentPM> firstUserAPPaymentsList = GetAPPaymentListForFirstUser();
-            string apPaymentsGetSingleUrl = Urls.APPaymentsGetSingle(firstUserAPPaymentsList?.FirstOrDefault()?.Id);
-            ApiResponse<APPaymentPM> response = APICaller.CallGet<APPaymentPM>(apPaymentsGetSingleUrl, UserOtherTenant.Token);
-            Context.SecondUserPMData.Id = response.Data?.Id;
+            APPaymentPM firstUserAPPaymentsList = GetAPPaymentFromFirstUserList();
+            string apPaymentsGetSingleUrl = Urls.APPaymentsGetSingle(firstUserAPPaymentsList?.Id);
+            return APICaller.CallGet<APPaymentPM>(apPaymentsGetSingleUrl, Token);
         }
 
-        private IEnumerable<APPaymentPM> GetAPPaymentListForFirstUser()
+        private APPaymentPM GetAPPaymentFromFirstUserList()
         {
             ApiQueryFilters apiQueryFilters = new ApiQueryFilters
             {
@@ -60,7 +71,9 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
             };
 
             ApiResponse<IEnumerable<APPaymentPM>> response = APICaller.CallGetByFilters<IEnumerable<APPaymentPM>>(Urls.APPaymentViewsGetByFilters, UserTenant.Token, apiQueryFilters);
-            return response.Data;
+            return response.Data?.FirstOrDefault();
         }
+        #endregion
+
     }
 }

@@ -408,6 +408,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string MainCarriageToPortCountryCode { get; set; }
         public string MainCarriageToPortCountryName { get; set; }
         public string MainCarriageVesselId { get; set; }
+        public string MainCarriageVesselName { get; set; }
         public bool? MainCarriageIsFromStack { get; set; }
         public string MainCarriageCarrierNumber { get; set; }
         public string MainCarriageCarrierId { get; set; }
@@ -623,6 +624,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public double? GrossWeightPerTon { get; set; }
 
         public string WarehouseLegWarehouseId { get; set; }
+        public string WarehouseLegTerminalName { get; set; }
         public string WarehouseLegAddressId { get; set; }
         public string WarehouseLegTerminalCode { get; set; }
         public DateTime? WarehouseLegExpectedEntryDate { get; set; }
@@ -663,5 +665,48 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string ARInvoices { get; set; }
         public double? NotInvoicedReceivablesAmount { get; set; }
 
+        public string PreForwardingTransportModeId { get; set; }
+        public string PreForwardingFromPortId { get; set; }
+        public string PreForwardingToPortId { get; set; }
+        public string PreForwardingCarrierId { get; set; }
+        public string PreForwardingCarrierNumber { get; set; }
+        public string PreForwardingCarrierName { get; set; }
+        public string PreForwardingCarrierCode { get; set; }
+        public string PreForwardingFromPortCode { get; set; }
+        public string PreForwardingFromPortName { get; set; }
+        public string PreForwardingFromPortCountryCode { get; set; }
+        public string PreForwardingFromPortCountryName { get; set; }
+        public string PreForwardingToPortCode { get; set; }
+        public string PreForwardingToPortName { get; set; }
+        public string PreForwardingToPortCountryCode { get; set; }
+        public string PreForwardingToPortCountryName { get; set; }
+        public DateTime? PreForwardingETD { get; set; }
+        public DateTime? PreForwardingATD { get; set; }
+        public DateTime? PreForwardingETA { get; set; }
+        public DateTime? PreForwardingATA { get; set; }
+        public string PreForwardingVesselId { get; set; }
+        public string PreForwardingCarrierWebSite { get; set; }
+
+        public string OnForwardingTransportModeId { get; set; }
+        public string OnForwardingFromPortId { get; set; }
+        public string OnForwardingToPortId { get; set; }
+        public string OnForwardingCarrierId { get; set; }
+        public string OnForwardingCarrierNumber { get; set; }
+        public string OnForwardingCarrierName { get; set; }
+        public string OnForwardingCarrierCode { get; set; }
+        public string OnForwardingFromPortCode { get; set; }
+        public string OnForwardingFromPortName { get; set; }
+        public string OnForwardingFromPortCountryCode { get; set; }
+        public string OnForwardingFromPortCountryName { get; set; }
+        public string OnForwardingToPortCode { get; set; }
+        public string OnForwardingToPortName { get; set; }
+        public string OnForwardingToPortCountryCode { get; set; }
+        public string OnForwardingToPortCountryName { get; set; }
+        public DateTime? OnForwardingETD { get; set; }
+        public DateTime? OnForwardingATD { get; set; }
+        public DateTime? OnForwardingETA { get; set; }
+        public DateTime? OnForwardingATA { get; set; }
+        public string OnForwardingVesselId { get; set; }
+        public string OnForwardingCarrierWebSite { get; set; }
     }
 }

@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;7059&quot;"
+  Code="&quot;c009&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -4629,8 +4629,8 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Accounting.O.MoreThanPaymentCheque&quot;"
-      DefaultText="&quot;There are more than one cheques for this payment&quot;"
-      LocalDefaultText="&quot;קיימת יותר מהמחאה אחת עבור קבלה זו&quot;"
+      DefaultText="&quot;There are more than one Cheque for this payment. Click on Edit to view them&quot;"
+      LocalDefaultText="&quot;ישנם מספר שקים לקבלה זאת, לחץ על כפתור &quot;עריכה&quot; כדי להציגם&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -5064,6 +5064,17 @@
       DefaultText="&quot;Please note that in addition to paying VAT, %br We need your approval to pay: %br Purchase tax in the amount of %PurchaseTax ₪ %br Customs in the amount of %CustomsTax ₪ %br Do you confirm?&quot;"
       LocalDefaultText="&quot;אנא תשומת ליבך כי בנוסף לתשלום המע&quot;מ, %br יש לנו צורך באישורך לשלם: %br מס קנייה בסך של %PurchaseTax ₪ %br מכס בסך של %CustomsTax ₪ %br האם אתה מאשר?&quot;"
       TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.LastLogin&quot;"
+      DefaultText="&quot;Last login&quot;"
+      LocalDefaultText="&quot;תאריך חיבור אחרון&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MH.ReportExecutionLogs&quot;"
+      DefaultText="&quot;Report Execution Logs&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
@@ -6704,7 +6715,8 @@
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      IsBusinessUnitEnabled="false" 
+      ToggleCode="&quot;TAR&quot;"/>
     <Feature
       Code="&quot;CREATETENANT&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
@@ -7052,6 +7064,42 @@
       FeatureTypeCode="&quot;OTH&quot;"
       FeatureTextCodeCode="&quot;General.Features.AGENTDOCUMENTSPERMISSION&quot;"
       FeatureDefaultText="&quot;Documents Permission Agent View&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;ChangeLocalProfitCurrency&quot;"
+      FeatureTypeCode="&quot;OTH&quot;"
+      FeatureTextCodeCode="&quot;General.Features.ChangeLocalProfitCurrency&quot;"
+      FeatureDefaultText="&quot;Change Local/Profit Currency&quot;"
+      IsPackagable="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;DailyCurrenciesRates&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.DailyCurrenciesRates&quot;"
+      FeatureDefaultText="&quot;Daily Currencies Rates&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;REPORTEXECUTIONLOGS&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.REPORTEXECUTIONLOGS&quot;"
+      FeatureDefaultText="&quot;Report Execution Logs&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;DefaultRatios&quot;"
+      FeatureTypeCode="&quot;OTH&quot;"
+      FeatureTextCodeCode="&quot;General.Features.DefaultRatios&quot;"
+      FeatureDefaultText="&quot;Default Ratios&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

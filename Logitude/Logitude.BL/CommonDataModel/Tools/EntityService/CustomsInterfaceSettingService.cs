@@ -43,6 +43,16 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.GetLoggedData();
         }
 
+        public CustomsInterfaceSettingService(ICommonDataContext objectContext, int tenant, string loggedContactId)
+        {
+            ContactQuery contactQuery = new ContactQuery(tenant);
+            this.tenant = tenant;
+            this.ObjectContext = objectContext;
+            this.entityRepository = new CustomsInterfaceSettingRepository(objectContext);
+            this.fTPDetailRepository = new FTPDetailRepository(objectContext);
+            this.loggedContact = contactQuery.GetSinglePM(loggedContactId, tenant);
+        }
+
         private void GetLoggedData()
         {
             ContactQuery contactQuery = new ContactQuery(tenant);

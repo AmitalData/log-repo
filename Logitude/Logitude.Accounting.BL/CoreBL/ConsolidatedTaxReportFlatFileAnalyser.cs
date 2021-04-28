@@ -109,6 +109,8 @@ namespace Logitude.Accounting.BL.CoreBL
                         switch (taxLineDTO.LineTypeCode)
                         {
                             case "S":
+                                v_total = taxLineDTO.VatableInvoiceAmount;
+                                break;
                             case "M":
                             case "I":
                                 v_vatable = taxLineDTO.VatableInvoiceAmount;
@@ -623,7 +625,11 @@ namespace Logitude.Accounting.BL.CoreBL
             catch (Exception e)
             { }
 
-            if (rec.InvoiceAmountSign == "-") rec.VatableInvoiceAmount = -rec.VatableInvoiceAmount;
+            if (rec.InvoiceAmountSign == "-")
+            {
+                rec.VatableInvoiceAmount = -rec.VatableInvoiceAmount;
+                rec.VatAmount = -rec.VatAmount;
+            }
 
             rec.APS_Reference = rawLine.Substring(52 - 1, 9);
 

@@ -249,7 +249,7 @@
   <Column
     Name="DeliveryTruckerNumber"
     Type="varchar"
-    Size="15">
+    Size="30">
     <Constraints
       Nullable="true" />
   </Column>
@@ -284,7 +284,7 @@
   <Column
     Name="PickupTruckerNumber"
     Type="varchar"
-    Size="15">
+    Size="30">
     <Constraints
       Nullable="true" />
   </Column>

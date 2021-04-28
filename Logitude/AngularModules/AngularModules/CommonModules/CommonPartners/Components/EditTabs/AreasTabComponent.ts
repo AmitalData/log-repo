@@ -231,6 +231,7 @@ export class AreaItemClass extends BaseComponent {
                 areaPort.Name = item.Name;
                 areaPort.AddedDate = item.AddedDate;
                 areaPort.AddedByUserId = item.AddedByUserId;
+                areaPort.Id = item.Id;
                 this.savedItems.push(areaPort);
             });
         }

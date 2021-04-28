@@ -349,7 +349,7 @@ namespace WebFreight.Web.Helpers
 
             if (string.IsNullOrEmpty(calculatedFileName)) calculatedFileName = documentFileNameParameter.DocumentType.Name;
 
-            if (documentFileNameParameter.DocumentTypeCopy != null && documentFileNameParameter.DocumentType.Name != documentFileNameParameter.DocumentTypeCopy.Name)
+            if (documentFileNameParameter.DocumentTypeCopy != null && documentFileNameParameter.DocumentType.Name != documentFileNameParameter.DocumentTypeCopy.Name && string.IsNullOrEmpty(documentFileNameParameter.DocumentType.FileName))
             {
                 calculatedFileName += "_" + documentFileNameParameter.DocumentTypeCopy.Name;
             }
@@ -557,6 +557,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         MemoryStream memorystream = new MemoryStream(byteArray);
                         XmlSerializer serializer = new XmlSerializer(typeof(AWBDataProvider));
                         AWBDataProvider awbDataProvider = (AWBDataProvider)serializer.Deserialize(memorystream);
+                        BaseDataProviderService.FillBaseVariableFields(awbDataProvider, tenant);
 
                         theT2 = System.DateTime.Now.Ticks;
                         //AzureLog.SaveLogsInStorage("Data provider :" + Convert.ToString((t2 - t1) / TimeSpan.TicksPerMillisecond), "P", tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "");
@@ -581,6 +582,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         MemoryStream memorystream = new MemoryStream(byteArray);
                         XmlSerializer serializer = new XmlSerializer(typeof(AWBDataProvider));
                         AWBDataProvider awbDataProvider = (AWBDataProvider)serializer.Deserialize(memorystream);
+                        BaseDataProviderService.FillBaseVariableFields(awbDataProvider, tenant);
 
                         theT2 = System.DateTime.Now.Ticks;
                         //AzureLog.SaveLogsInStorage("Data provider :" + Convert.ToString((t2 - t1) / TimeSpan.TicksPerMillisecond), "P", tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "");
@@ -598,6 +600,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         MemoryStream memorystream = new MemoryStream(byteArray);
                         XmlSerializer serializer = new XmlSerializer(typeof(DeclarationFormsDataProvider));
                         DeclarationFormsDataProvider formsDataProvider = (DeclarationFormsDataProvider)serializer.Deserialize(memorystream);
+                        BaseDataProviderService.FillBaseVariableFields(formsDataProvider, tenant);
 
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "FORM", Name = "DeclarationFormsDataProvider", BusinessObjectValue = formsDataProvider };
@@ -610,6 +613,8 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                     {
                         InterestPrintService service = new InterestPrintService();
                         InterestDataProvider InterestReportDP = service.LoadDataProvider(entityId, tenant);
+                        BaseDataProviderService.FillBaseVariableFields(InterestReportDP, tenant);
+
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "ITDT", Name = "InterestDataProvider", BusinessObjectValue = InterestReportDP };
                         report = LoadandRender(defaulttemplate, currentBusinessObject, tenant);
@@ -620,6 +625,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                     {
                         JournalPrintService service = new JournalPrintService();
                         JournalDataProvider journalDP = service.LoadDataProvider(entityId, tenant);
+                        BaseDataProviderService.FillBaseVariableFields(journalDP, tenant);
 
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "JRPR", Name = "JournalDataProvider", BusinessObjectValue = journalDP };
@@ -633,6 +639,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                     {
                         BankDepositPrintService service = new BankDepositPrintService();
                         BankDepositDataProvider bankDepositDP = service.LoadDataProvider(entityId, tenant);
+                        BaseDataProviderService.FillBaseVariableFields(bankDepositDP, tenant);
 
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "BDPR", Name = "BankDepositDataProvider", BusinessObjectValue = bankDepositDP };
@@ -646,6 +653,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                     {
                         PaymentChequePrintService service = new PaymentChequePrintService();
                         PaymentChequeDataProvider paymentChequeDP = service.LoadDataProvider(entityId, tenant);
+                        BaseDataProviderService.FillBaseVariableFields(paymentChequeDP, tenant);
 
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "PCDR", Name = "PaymentChequeDataProvider", BusinessObjectValue = paymentChequeDP };
@@ -692,8 +700,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         fbLdataprovider.InServerSide = true;
                         theT2 = System.DateTime.Now.Ticks;
                         //AzureLog.SaveLogsInStorage("Data provider :" + Convert.ToString((t2 - t1) / TimeSpan.TicksPerMillisecond), "P", tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "");
-                        fbLdataprovider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
-
+                        BaseDataProviderService.FillBaseVariableFields(fbLdataprovider, tenant);
 
                         StiDataColumnsCollection packagesLinesColumns = new StiDataColumnsCollection();
                         packagesLinesColumns.Add("PackageMarksAndNumbers", typeof(string));
@@ -724,6 +731,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                 case "COO":
                 case "BCO":
                 case "716SD":
+                case "PND":
                 case "SFBL":
                 case "BCS":
                 case "IFI":
@@ -775,7 +783,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         theT2 = System.DateTime.Now.Ticks;
                         //AzureLog.SaveLogsInStorage("Data provider :" + Convert.ToString((t2 - t1) / TimeSpan.TicksPerMillisecond), "P", tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "");
 
-                        shippingDeclarationdataprovider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        BaseDataProviderService.FillBaseVariableFields(shippingDeclarationdataprovider, tenant);
 
                         StiDataColumnsCollection packagesLinesColumns = new StiDataColumnsCollection();
                         packagesLinesColumns.Add("PackageMarksAndNumbers", typeof(string));
@@ -808,6 +816,10 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         MemoryStream memorystream = new MemoryStream(byteArray);
                         XmlSerializer serializer = new XmlSerializer(typeof(List<AWBLabelsDataProvider>));
                         List<AWBLabelsDataProvider> awblabelsdataprovider = (List<AWBLabelsDataProvider>)serializer.Deserialize(memorystream);
+                        foreach (AWBLabelsDataProvider aWBLabelsDataProvider in awblabelsdataprovider)
+                        {
+                            BaseDataProviderService.FillBaseVariableFields(aWBLabelsDataProvider, tenant);
+                        }
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "AWB Labels", Name = "AWBLabelsDataProvider", BusinessObjectValue = awblabelsdataprovider };
                         report = LoadandRender(defaulttemplate, currentBusinessObject, tenant);
                     }
@@ -824,6 +836,8 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         MemoryStream memorystream = new MemoryStream(byteArray);
                         XmlSerializer serializer = new XmlSerializer(typeof(DeliveryNoteDataProvider));
                         DeliveryNoteDataProvider deliverynotedataprovider = (DeliveryNoteDataProvider)serializer.Deserialize(memorystream);
+                        BaseDataProviderService.FillBaseVariableFields(deliverynotedataprovider, tenant);
+
                         theT2 = System.DateTime.Now.Ticks;
                         //AzureLog.SaveLogsInStorage("Data provider :" + Convert.ToString((t2 - t1) / TimeSpan.TicksPerMillisecond), "P", tenant,User != null ? User.Identity.Name : "",User != null ? User.Identity.Name : "");
 
@@ -868,6 +882,8 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         MemoryStream memorystream = new MemoryStream(byteArray);
                         XmlSerializer serializer = new XmlSerializer(typeof(DeliveryNoteDataProvider));
                         DeliveryNoteDataProvider deliverynotedataprovider = (DeliveryNoteDataProvider)serializer.Deserialize(memorystream);
+                        BaseDataProviderService.FillBaseVariableFields(deliverynotedataprovider, tenant);
+
                         deliverynotedataprovider.InServerSide = true;
                         theT2 = System.DateTime.Now.Ticks;
                         //AzureLog.SaveLogsInStorage("Data provider :" + Convert.ToString((t2 - t1) / TimeSpan.TicksPerMillisecond), "P", tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "");
@@ -904,7 +920,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         InvoiceDataProvider invoicedataprovider = invoiceWebService.GetInvoiceDataProvider(childEntityId, documentTypeCopyId, tenant);//(InvoiceDataProvider)serializer.Deserialize(memorystream);
                         theT2 = System.DateTime.Now.Ticks;
                         //AzureLog.SaveLogsInStorage("Data provider :" + Convert.ToString((t2 - t1) / TimeSpan.TicksPerMillisecond), "P");
-                        invoicedataprovider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        BaseDataProviderService.FillBaseVariableFields(invoicedataprovider, tenant);
 
 
                         StiDataColumnsCollection reportInvoiceLines = new StiDataColumnsCollection();
@@ -938,8 +954,8 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         XmlSerializer serializer = new XmlSerializer(typeof(InvoiceDataProvider));
                         InvoiceDataProvider invoicedataprovider = (InvoiceDataProvider)serializer.Deserialize(memorystream);
                         theT2 = System.DateTime.Now.Ticks;
+                        BaseDataProviderService.FillBaseVariableFields(invoicedataprovider, tenant);
 
-                        invoicedataprovider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
                         StiDataColumnsCollection invoiceLinesColumnsCollection = new StiDataColumnsCollection();
                         invoiceLinesColumnsCollection.Add("Description", typeof(string));
                         invoiceLinesColumnsCollection.Add("Quantity", typeof(string));
@@ -1001,6 +1017,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         XmlSerializer serializer = new XmlSerializer(typeof(CMRDataProvider));
                         CMRDataProvider cmrDataProvider = (CMRDataProvider)serializer.Deserialize(memorystream);
                         theT2 = System.DateTime.Now.Ticks;
+                        BaseDataProviderService.FillBaseVariableFields(cmrDataProvider, tenant);
 
                         StiDataColumnsCollection containerColumnsCollection = new StiDataColumnsCollection();
                         containerColumnsCollection.Add("Weight", typeof(string));
@@ -1022,6 +1039,8 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         MemoryStream memorystream = new MemoryStream(byteArray);
                         XmlSerializer serializer = new XmlSerializer(typeof(CMRDataProvider));
                         CMRDataProvider cmrDataProvider = (CMRDataProvider)serializer.Deserialize(memorystream);
+                        BaseDataProviderService.FillBaseVariableFields(cmrDataProvider, tenant);
+
                         theT2 = System.DateTime.Now.Ticks;
                         // AzureLog.SaveLogsInStorage("Data provider :" + Convert.ToString((t2 - t1) / TimeSpan.TicksPerMillisecond), "P", tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "");
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "SCMR", Name = "CMRDataProvider", BusinessObjectValue = cmrDataProvider };
@@ -1044,6 +1063,8 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         MemoryStream memorystream = new MemoryStream(byteArray);
                         XmlSerializer serializer = new XmlSerializer(typeof(ManifestDataProvider));
                         ManifestDataProvider manifestDataProvider = (ManifestDataProvider)serializer.Deserialize(memorystream);
+                        BaseDataProviderService.FillBaseVariableFields(manifestDataProvider, tenant);
+
                         theT2 = System.DateTime.Now.Ticks;
                         // AzureLog.SaveLogsInStorage("Data provider :" + Convert.ToString((t2 - t1) / TimeSpan.TicksPerMillisecond), "P", tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "");
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "785A", Name = "ManifestDataProvider", BusinessObjectValue = manifestDataProvider };
@@ -1067,6 +1088,8 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         MemoryStream memorystream = new MemoryStream(byteArray);
                         XmlSerializer serializer = new XmlSerializer(typeof(ManifestDataProvider));
                         ManifestDataProvider manifestDataProvider = (ManifestDataProvider)serializer.Deserialize(memorystream);
+                        BaseDataProviderService.FillBaseVariableFields(manifestDataProvider, tenant);
+
                         theT2 = System.DateTime.Now.Ticks;
                         // AzureLog.SaveLogsInStorage("Data provider :" + Convert.ToString((t2 - t1) / TimeSpan.TicksPerMillisecond), "P", tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "");
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "785O", Name = "ManifestDataProvider", BusinessObjectValue = manifestDataProvider };
@@ -1088,6 +1111,8 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         MemoryStream memorystream = new MemoryStream(byteArray);
                         XmlSerializer serializer = new XmlSerializer(typeof(ShipmentProfitDataProvider));
                         ShipmentProfitDataProvider shipmentProfitProvider = (ShipmentProfitDataProvider)serializer.Deserialize(memorystream);
+                        BaseDataProviderService.FillBaseVariableFields(shipmentProfitProvider, tenant);
+
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "Shipment Profit", Name = "ShipmentProfitDataProvider", BusinessObjectValue = shipmentProfitProvider };
                         report = LoadandRender(defaulttemplate, currentBusinessObject, tenant);
@@ -1108,6 +1133,8 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         MemoryStream memorystream = new MemoryStream(byteArray);
                         XmlSerializer serializer = new XmlSerializer(typeof(PreAlertDataProvider));
                         PreAlertDataProvider preAlertProvider = (PreAlertDataProvider)serializer.Deserialize(memorystream);
+                        BaseDataProviderService.FillBaseVariableFields(preAlertProvider, tenant);
+
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "Pre Alert", Name = "PreAlertDataProvider", BusinessObjectValue = preAlertProvider };
                         report = LoadandRender(defaulttemplate, currentBusinessObject, tenant);
@@ -1120,6 +1147,8 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         theT1 = System.DateTime.Now.Ticks;
                         PaymentWebService paymentService = new PaymentWebService();
                         PaymentDataProvider paymentProvider = paymentService.GetPaymentDataForAPi(entityId, tenant, documentTypeId);
+                        BaseDataProviderService.FillBaseVariableFields(paymentProvider, tenant);
+
                         //MemoryStream memorystream = new MemoryStream(byteArray);
                         //XmlSerializer serializer = new XmlSerializer(typeof(PaymentDataProvider));
                         //PaymentDataProvider paymentProvider = (PaymentDataProvider)serializer.Deserialize(memorystream);
@@ -1138,6 +1167,8 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         MemoryStream memorystream = new MemoryStream(byteArray);
                         XmlSerializer serializer = new XmlSerializer(typeof(APPaymentDataProvider));
                         APPaymentDataProvider apPaymentProvider = (APPaymentDataProvider)serializer.Deserialize(memorystream);
+                        BaseDataProviderService.FillBaseVariableFields(apPaymentProvider, tenant);
+
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "APPaymant", Name = "APPaymentDataProvider", BusinessObjectValue = apPaymentProvider };
                         report = LoadandRender(defaulttemplate, currentBusinessObject, tenant);
@@ -1153,6 +1184,8 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         MemoryStream memorystream = new MemoryStream(byteArray);
                         XmlSerializer serializer = new XmlSerializer(typeof(ShipmentPackingDataProvider));
                         ShipmentPackingDataProvider shipmentPackingProvider = (ShipmentPackingDataProvider)serializer.Deserialize(memorystream);
+                        BaseDataProviderService.FillBaseVariableFields(shipmentPackingProvider, tenant);
+
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "Packing List", Name = "ShipmentPackingDataProvider", BusinessObjectValue = shipmentPackingProvider };
                         report = LoadandRender(defaulttemplate, currentBusinessObject, tenant);
@@ -1167,6 +1200,8 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         MemoryStream memorystream = new MemoryStream(byteArray);
                         XmlSerializer serializer = new XmlSerializer(typeof(ShipmentProfitInvoicesDataProvider));
                         ShipmentProfitInvoicesDataProvider shipmentProfitProvider = (ShipmentProfitInvoicesDataProvider)serializer.Deserialize(memorystream);
+                        BaseDataProviderService.FillBaseVariableFields(shipmentProfitProvider, tenant);
+
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "Shipment Profit Invoice", Name = "ShipmentProfitInvoicesDataProvider", BusinessObjectValue = shipmentProfitProvider };
                         report = LoadandRender(defaulttemplate, currentBusinessObject, tenant);
@@ -1179,8 +1214,8 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         APInvoiceWebService invoiceWebService = new APInvoiceWebService();
                         APInvoiceDataProvider invoicedataprovider = invoiceWebService.GetAPInvoiceDataProvider(childEntityId, tenant);
                         theT2 = System.DateTime.Now.Ticks;
-                        invoicedataprovider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
 
+                        BaseDataProviderService.FillBaseVariableFields(invoicedataprovider, tenant);
 
 
                         StiDataColumnsCollection reportInvoiceLines = new StiDataColumnsCollection();
@@ -1211,7 +1246,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         APInvoiceWebService invoiceWebService = new APInvoiceWebService();
                         APInvoiceDataProvider invoicedataprovider = invoiceWebService.GetAPInvoiceDataProvider(entityId, tenant);
                         theT2 = System.DateTime.Now.Ticks;
-                        invoicedataprovider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        BaseDataProviderService.FillBaseVariableFields(invoicedataprovider, tenant);
 
                         StiDataColumnsCollection multipleShipmentsColumnsCollection = new StiDataColumnsCollection();
                         multipleShipmentsColumnsCollection.Add("MasterNumber", typeof(string));
@@ -1241,6 +1276,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         OpportunitySummaryWebService opportunitySummaryWebService = new OpportunitySummaryWebService();
                         OpportunitySummaryDataProvider opportunitySummaryDataProvider = opportunitySummaryWebService.GetOpportunitySummaryDataProvider(entityId, tenant, documentTypeCode);
                         theT2 = System.DateTime.Now.Ticks;
+                        BaseDataProviderService.FillBaseVariableFields(opportunitySummaryDataProvider, tenant);
 
                         StiDataColumnsCollection opportunityProductColumnsCollection = new StiDataColumnsCollection();
                         opportunityProductColumnsCollection.Add("ProductName", typeof(string));
@@ -1289,6 +1325,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         MemoryStream memorystream = new MemoryStream(byteArray);
                         XmlSerializer serializer = new XmlSerializer(typeof(CrossDockEntryDataProvider));
                         CrossDockEntryDataProvider crossDockEntryDataProvider = (CrossDockEntryDataProvider)serializer.Deserialize(memorystream);
+                        BaseDataProviderService.FillBaseVariableFields(crossDockEntryDataProvider, tenant);
 
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "CrossDockEntry", Name = "CrossDockEntryDataProvider", BusinessObjectValue = crossDockEntryDataProvider };
@@ -1306,6 +1343,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         MemoryStream memorystream = new MemoryStream(byteArray);
                         XmlSerializer serializer = new XmlSerializer(typeof(CrossDockReleaseDataProvider));
                         CrossDockReleaseDataProvider crossDockReleaseDataProvider = (CrossDockReleaseDataProvider)serializer.Deserialize(memorystream);
+                        BaseDataProviderService.FillBaseVariableFields(crossDockReleaseDataProvider, tenant);
 
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "CrossDockRelease", Name = "CrossDockReleaseDataProvider", BusinessObjectValue = crossDockReleaseDataProvider };
@@ -1323,6 +1361,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         MemoryStream memorystream = new MemoryStream(byteArray);
                         XmlSerializer serializer = new XmlSerializer(typeof(CrossDockReleaseDataProvider));
                         CrossDockReleaseDataProvider crossDockReleaseDataProvider = (CrossDockReleaseDataProvider)serializer.Deserialize(memorystream);
+                        BaseDataProviderService.FillBaseVariableFields(crossDockReleaseDataProvider, tenant);
 
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "CrossDockRelease", Name = "CrossDockReleaseDataProvider", BusinessObjectValue = crossDockReleaseDataProvider };
@@ -1340,6 +1379,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         MemoryStream memorystream = new MemoryStream(byteArray);
                         XmlSerializer serializer = new XmlSerializer(typeof(ShipmentInventoryDataProvider));
                         ShipmentInventoryDataProvider shipmentInventoryDataProvider = (ShipmentInventoryDataProvider)serializer.Deserialize(memorystream);
+                        BaseDataProviderService.FillBaseVariableFields(shipmentInventoryDataProvider, tenant);
 
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "Shipment Inventory", Name = "ShipmentInventoryDataProvider", BusinessObjectValue = shipmentInventoryDataProvider };
@@ -1356,7 +1396,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         FBLDataProvider fbLdataprovider = (FBLDataProvider)serializer.Deserialize(memorystream);
                         fbLdataprovider.InServerSide = true;
                         theT2 = System.DateTime.Now.Ticks;
-                        fbLdataprovider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        BaseDataProviderService.FillBaseVariableFields(fbLdataprovider, tenant);
 
 
                         StiDataColumnsCollection packagesLinesColumns = new StiDataColumnsCollection();
@@ -1401,7 +1441,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         fbLdataprovider.InServerSide = true;
                         theT2 = System.DateTime.Now.Ticks;
                         //AzureLog.SaveLogsInStorage("Data provider :" + Convert.ToString((t2 - t1) / TimeSpan.TicksPerMillisecond), "P", tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "");
-                        fbLdataprovider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        BaseDataProviderService.FillBaseVariableFields(fbLdataprovider, tenant);
 
                         StiDataColumnsCollection packagesLinesColumns = new StiDataColumnsCollection();
                         packagesLinesColumns.Add("PackageMarksAndNumbers", typeof(string));
@@ -1428,7 +1468,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         XmlSerializer serializer2 = new XmlSerializer(typeof(ShippingDeclarationDataProvider));
                         ShippingDeclarationDataProvider shippingDeclarationdataprovider = (ShippingDeclarationDataProvider)serializer2.Deserialize(memorystream2);
                         theT2 = System.DateTime.Now.Ticks;
-                        shippingDeclarationdataprovider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        BaseDataProviderService.FillBaseVariableFields(shippingDeclarationdataprovider, tenant);
 
 
 

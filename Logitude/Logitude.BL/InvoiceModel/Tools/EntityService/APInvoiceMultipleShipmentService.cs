@@ -30,6 +30,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.ExternalService;
 using Logitude.BL.InvoiceModel.Tools.Behaviours;
 using Logitude.BL.InvoiceModel.Tools.Behaviours.APInvoiceBehaviours;
+using Logitude.BL.InvoiceModel.EntityOtherServices;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -51,12 +52,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private APPaymentRepository paymentRepository;
         private ShipmentPayableRepository shipmentPayableRepository;
         private string QBOAPPaymentId;
-
+        private bool IsTransferEnabled;
+        private bool CanTransferToFTP;
+        private bool TransferToFTPActivated;
+        private bool setApproved;
         public APInvoiceMultipleShipmentService(IInvoiceContext objectContext, APInvoicePM entityPM)
         {
             this.tenant = entityPM.Tenant;
             this.entityPM = entityPM;
-            //this.isUpdateTotalVats = false;
             this.objectContext = objectContext;
             this.myCommonContext = CommonDataContext.GetContext(tenant);
             this.invoiceRepository = new APInvoiceRepository(objectContext);
@@ -66,6 +69,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.invoicePaymentRepository = new APInvoicePaymentRepository(objectContext);
             this.paymentRepository = new APPaymentRepository(objectContext);
             this.shipmentPayableRepository = new ShipmentPayableRepository(tenant);
+
             this.GetLoggedContact();
             this.GetAccountingSystemData();
         }
@@ -121,9 +125,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             APInvoiceValidator.Validate(entityPM, invoice, isNewEntity, this.objectContext, myCommonContext);
             APInvoiceTracing.Trace(entityPM, invoice, isNewEntity);
 
+            this.BuildShipmentsNumbers();
             this.CreateInvoiceEntities();
             this.BuildSearchFields();
-            var setApproved = entityPM.SetApproved;
+            setApproved = entityPM.SetApproved;
             APInvoiceMultipleShipmentsHelper helper = new APInvoiceMultipleShipmentsHelper();
             helper.APInvoiceMultipleShipmentsQuickbooksValidating(entityPM, setApproved, isNewEntity, this.objectContext, this.myCommonContext);
 
@@ -138,7 +143,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.GetForeignFields();
             this.RunStoredProcedures();
 
-
+            this.CreateAPInvoiceMessage();
         }
 
         public void Update(bool mapComposition = false)
@@ -158,11 +163,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             APInvoiceValidator.Validate(entityPM, invoice, isNewEntity, this.objectContext, myCommonContext);
             APInvoiceTracing.Trace(entityPM, invoice, isNewEntity);
-            
+
+            this.BuildShipmentsNumbers();
             this.UpdateInvoiceEntities();
             this.BuildSearchFields();
-            var IsSetApproved = entityPM.SetApproved;
-
+            setApproved = entityPM.SetApproved;
 
             APInvoiceMultipleShipmentsHelper helper = new APInvoiceMultipleShipmentsHelper();
             if (entityPM.SetReSendQBO)
@@ -172,16 +177,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
             else
             {
-                helper.APInvoiceMultipleShipmentsQuickbooksValidating(entityPM, IsSetApproved, isNewEntity, this.objectContext, this.myCommonContext);
+                helper.APInvoiceMultipleShipmentsQuickbooksValidating(entityPM, setApproved, isNewEntity, this.objectContext, this.myCommonContext);
             }
-
-
-
+            
             EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice, EntityPM = entityPM, OldEntityPM = new APInvoicePM(), AutomationType = "OnUpdate", ObjectTableName = "APInvoice", Tenant = entityPM.Tenant, EntityId = entityPM.Id, EntityAutomationMappingPMFields = new EntityAutomationAPInvoiceMappingPMFields() });
             entityAutomationService.RunAutomation();
 
-
             APInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity);
+            this.CreateAPInvoiceMessage();
+
             invoiceRepository.Update(invoice);
             invoiceRepository.SubmitChanges();
 
@@ -205,6 +209,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
 
+
             this.BuildSearchFields();
             invoiceRepository.Update(invoice);
             invoiceRepository.SubmitChanges();
@@ -221,13 +226,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     APPayment payment = repository.GetSingleAPPayment(paymentPM.Id, tenant);
                     service.APPaymentQuickbooksValidating(paymentPM, true, false, payment, this.objectContext, this.myCommonContext, false, false);
                 }
-
             }
 
             this.GetForeignFields();
             this.RunStoredProcedures();
-
-
         }
 
         #region Initialize
@@ -256,7 +258,16 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             if (entityPM.SetApproved)
             {
-                entityPM.StatusCode = "AD";
+                if (entityPM.AmountInInvoiceCurrency == 0)
+                {
+                    entityPM.StatusCode = "PD";
+                }
+
+                else
+                {
+                    entityPM.StatusCode = "AD";
+                }
+
                 entityPM.ApprovedDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                 entityPM.ApprovedByUserId = loggedContactId;
             }
@@ -408,6 +419,17 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.isJournalMode = accountingSystem.IsJournalMode;
             this.isExternalCodesFromTable = accountingSystem.IsExternalCodesFromTable;
+
+            if (accountingSetting != null && accountingSystem != null)
+            {
+                this.CanTransferToFTP = accountingSystem.CanTransferToFTP;
+                this.TransferToFTPActivated = accountingSetting.TransferToFTPActivated;
+
+                if (accountingSetting.IsAPInvoicesTransferEnabled && accountingSystem.AllowAPInvoicesTransfer)
+                {
+                    this.IsTransferEnabled = true;
+                }
+            }
 
             this.InitializeExternalFields();
             this.InitializeTransferFields();
@@ -610,8 +632,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     if (allActiveInvoiceLines.Count == 0)
                     {
-                        isReady = false;
-                        myError = string.IsNullOrEmpty(myError) ? linesError : myError + "," + linesError;
+                        //isReady = false;
+                        //myError = string.IsNullOrEmpty(myError) ? linesError : myError + "," + linesError;
                     }
 
                     else
@@ -983,6 +1005,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void CreateInvoicePayment(APInvoicePaymentPM itemPM)
         {
+            this.ValidateIfSameRecordAdded(itemPM);
+
             itemPM.Id = IdCounter.GetNumber("APInvoicePayment", entityPM.Tenant);
 
             APInvoicePayment invoicePayment = new APInvoicePayment()
@@ -1222,6 +1246,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             invoice.PaidDate = entityPM.PaidDate;
         }
+
+        private void ValidateIfSameRecordAdded(APInvoicePaymentPM item)
+        {
+            IQueryable<APInvoicePayment> invoicePayments = invoicePaymentRepository.GetAPInvoicePayments(item.APPaymentId, item.APInvoiceId, entityPM.Tenant);
+            if (invoicePayments.Count() > 0)
+            {
+                throw new Exception("This invoice already connected to same payment");
+            }
+        }
         #endregion
 
         #region SearchField
@@ -1233,6 +1266,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.VATNumber);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.HouseNumber);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.MasterNumber);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.InternalNotes);
 
             #region Card
             if (!string.IsNullOrEmpty(entityPM.VendorId))
@@ -1263,11 +1297,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
             #endregion
-
-            if (mySearchFields.Length > 1000)
-            {
-                mySearchFields = mySearchFields.Substring(0, 1000);
-            }
 
             entityPM.SearchFields = mySearchFields;
             invoice.SearchFields = mySearchFields;
@@ -1333,6 +1362,37 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     }
                 }
             }
+        }
+
+        private void CreateAPInvoiceMessage()
+        {
+            if (setApproved && IsTransferEnabled)
+            {
+                if (CanTransferToFTP && TransferToFTPActivated)
+                {
+                    if (!string.IsNullOrEmpty(entityPM.TransferError))
+                    {
+                        throw new ApplicationException(entityPM.TransferError);
+                    }
+                    else
+                    {
+                        bool isFTP = CanTransferToFTP && TransferToFTPActivated;
+
+                        this.invoice = invoiceRepository.GetSingleAPInvoice(this.entityPM.Id, this.entityPM.Tenant);
+                        List<APInvoice> entities = new List<APInvoice>();
+                        entities.Add(this.invoice);
+
+                        APInvoiceMessageHelper myHelper = new APInvoiceMessageHelper(entities, this.invoice.InvoiceNumber + ".xml", tenant, false, isFTP);
+                        myHelper.Transfer();
+                    }
+                }
+            }
+        }
+
+        private void BuildShipmentsNumbers()
+        {
+            APInvoiceShipmentsNumbersBehaviour invoiceShipmentsNumbersBehaviour = new APInvoiceShipmentsNumbersBehaviour(entityPM);
+            invoiceShipmentsNumbersBehaviour.CopmuteShipmentsNumbers();
         }
     }
 }

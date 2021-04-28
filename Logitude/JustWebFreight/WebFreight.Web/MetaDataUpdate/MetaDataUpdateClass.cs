@@ -4917,6 +4917,7 @@ namespace WebFreight.Web.MetaDataUpdate
             ObjectTable ShippingLinesObject = tenantObjectTables.Where(o => o.Name == "ShippingLine").FirstOrDefault();
             ObjectTable ShipmentObject = tenantObjectTables.Where(o => o.Name == "Shipment").FirstOrDefault();
             ObjectTable CustomerTenantAccessCardObject = tenantObjectTables.Where(o => o.Name == "CustomerTenantAccessCard").FirstOrDefault();
+            ObjectTable BIReportObject = tenantObjectTables.Where(o => o.Name == "BIReport").FirstOrDefault();
             Tip airlineTip = AddTips.AddTip(new TipDetails()
             {
                 Code = "AIRT",
@@ -4973,6 +4974,17 @@ namespace WebFreight.Web.MetaDataUpdate
                 VisibilityDefaultValue = true,
                 ShortTextCode = "CustomerTenantAccessCard.Tip.NewCardTip",
                 ShortTextCodeCode = "CustomerTenantAccessCard.Tip.NewCardTip",
+            }, TipRepository, TextCodeRepository, tips, textCodes);
+
+            Tip BIReportTip = AddTips.AddTip(new TipDetails()
+            {
+                Code = "BIRE",
+                Tenant = 0,
+                ShortTextCodeDefaultText = "You can create a new BI report or add from the reports we added for you by clicking on Upload a Standard BI Report button.",
+                ObjectTableId = BIReportObject.Id,
+                VisibilityDefaultValue = true,
+                ShortTextCode = "BIReport.Tip.BITip",
+                ShortTextCodeCode = "BIReport.Tip.BITip",
             }, TipRepository, TextCodeRepository, tips, textCodes);
 
             this.ObjectContext.SaveChanges();
@@ -63192,7 +63204,7 @@ namespace WebFreight.Web.MetaDataUpdate
             // Shared Exceptions
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.AllAWBPrintReceivablesMustMatchShipmentAWBCurrency", DefaultText = "All AWB Print Shipment Receivables must match the Shipment AWB Currency", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.AllAWBPrintPayablesMustMatchShipmentAWBCurrency", DefaultText = "All AWB Print Shipment Payables must match the Shipment AWB Currency", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.AllAWBPrintOnliesMustMatchShipmentAWBCurrency", DefaultText = "All AWB Print Shipment Onlies must match the Shipment AWB Currency", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.AllAWBPrintOnliesMustMatchShipmentAWBCurrency", DefaultText = "All AWB Print Shipment Onlies (from the AWB wizard) must match the Shipment AWB Currency ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             #endregion
 
             #region Queries

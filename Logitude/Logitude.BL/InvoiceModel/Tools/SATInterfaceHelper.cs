@@ -381,6 +381,7 @@ namespace Logitude.BL.InvoiceModel.Tools
             MeasurementRepository measurementRepository = new MeasurementRepository(commonContext);
             ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(commonContext);
             VatTypeRepository vatTypeRepository = new VatTypeRepository(commonContext);
+            PaymentTermRepository paymentTermRepository = new PaymentTermRepository(commonContext);
 
 
             IInvoiceContext invoiceCotnext = InvoiceContext.GetContext(entityPM.Tenant);
@@ -411,6 +412,8 @@ namespace Logitude.BL.InvoiceModel.Tools
             Address branchAddress = null;
             Address mainAddress = null;
             Tenant currentTenant = tenantRepository.GetSingleTenant(entityPM.Tenant);
+            PaymentTerm paymentTerm = paymentTermRepository.GetSinglePaymentTerm(entityPM.PaymentTermId);
+
             if (!string.IsNullOrEmpty(entityPM.BranchId))
             {
                 Branch branch = branchRepository.GetSingleBranch(entityPM.BranchId, entityPM.Tenant);
@@ -619,6 +622,14 @@ namespace Logitude.BL.InvoiceModel.Tools
             {
                 comprobante.TipoDeComprobante = "I";//Profact.TimbraCFDI33.ComprobanteTipoDeComprobante.ingreso;
             }
+            if (paymentTerm.LocalName != null)
+            {
+                comprobante.CondicionesDePago = paymentTerm.LocalName;
+            }
+            else
+            {
+                comprobante.CondicionesDePago = paymentTerm.EnglishName;
+            }
             BuildRelatedInvoiceTag(entityPM, invoiceCotnext, comprobante);
 
             if (branchAddress != null && !string.IsNullOrEmpty(branchAddress.ZipCode))
@@ -627,7 +638,7 @@ namespace Logitude.BL.InvoiceModel.Tools
             }
             else
                 comprobante.LugarExpedicion = currentTenant.Address.ZipCode;
-
+           
 
 
             //Llenamos los conceptos
@@ -1406,8 +1417,8 @@ namespace Logitude.BL.InvoiceModel.Tools
             }
             else
             {
-                entityPoco.SATTransferStatusCode = entityPM.SATTransferStatusCode = "NT";
-                entityPoco.TransmissionError = entityPM.TransmissionError = null;
+                entityPoco.SATTransferStatusCode = entityPM.SATTransferStatusCode = "ND";
+                //entityPoco.TransmissionError = entityPM.TransmissionError = null;
             }
         }
 
@@ -2145,6 +2156,11 @@ namespace Logitude.BL.InvoiceModel.Tools
 
                 this.BuildProfactCommunicationLog33(comprobante, entityPM.Tenant, entityPM.Id, entityPM.PaymentNo.ToString(), true, true);
                 entityPoco.SATTransferStatusCode = entityPM.SATTransferStatusCode = "TG";
+            }
+            else
+            {
+                entityPoco.SATTransferStatusCode = entityPM.SATTransferStatusCode = "ND";
+                //entityPoco.TransmissionError = entityPM.TransmissionError = null;
             }
         }
 

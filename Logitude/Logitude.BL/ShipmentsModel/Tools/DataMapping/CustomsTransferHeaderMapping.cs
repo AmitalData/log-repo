@@ -31,6 +31,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.TransferNumber);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.FileName);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ShipmentNumber);
 
             entityPM.SearchFields = mySearchFields;
             entity.SearchFields = mySearchFields;

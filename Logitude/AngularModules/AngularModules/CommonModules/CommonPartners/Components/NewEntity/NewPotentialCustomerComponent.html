@@ -337,7 +337,7 @@
                                                                         <table>
                                                                             <tr>
                                                                                 <td style="width: 16px;">
-                                                                                    <CheckBox [IsChecked]="IsAddContactChecked" (Checked)="IsAddContactChecked = $event"></CheckBox>
+                                                                                    <CheckBox [IsChecked]="IsAddContactChecked" id="{{'AddContactCheckBox' | IdGeneratorPipe}}"(Checked)="IsAddContactChecked = $event"></CheckBox>
                                                                                 </td>
 
                                                                                 <td style="width: 5px;">

@@ -1,18 +1,18 @@
-<div   class="app-content"  [ngStyle]="{ 'background-image': BackGroundImg}">
+<div   class="app-content" style="background-size: contain;" [ngStyle]="{ 'background-image': BackGroundImg}">
      <!-- Mobile Menu -->
     <div *ngIf="displayMenu" class="side-menu" [style.left]="displayMenu ? '0' : '-65%'">
         <div style="width: 60%; float: left; background-color: #965982;">
             <img class="logo" src="./assets/menu-logo.png" width="100px" alt="" />
-         
+
                 <ul class="nav-mobile">
                     <li (click)="displayMenu = false" routerLink="/search">Home</li>
-                    <li (click)="displayMenu = false" routerLink="/pageb">Page B</li>
-                    <li (click)="displayMenu = false" routerLink="/Cargo-Tracking/login" style="float: right;">Login</li>
+                    <!-- <li (click)="displayMenu = false" routerLink="/pageb">Page B</li> -->
+                    <!-- <li (click)="displayMenu = false" routerLink="/cargo-tracking/login" style="float: right;">Login</li> -->
                 </ul>
             </div>
         <div style="width: 40%; float: right;" (click)="displayMenu = false"></div>
     </div>
-  
+
     <!-- Mobile App Bar -->
     <div class="mobile-header">
         <div class="icon" *ngIf="GetBackEnabled()">
@@ -20,23 +20,25 @@
             <img src="./assets/images/icons/left-arrow.png" (click)="back()" />
         </div>
         <!-- <div class="title">Cargo Tracking</div> -->
-        <img *ngIf="ComapnyLogo"  style="width:76px;height:26px" [attr.src]="ComapnyLogo" routerLink="/search" alt="" />
-  
-  
+        <img *ngIf="ComapnyLogo" [attr.src]="ComapnyLogo" routerLink="/search" alt="" />
+
+
     </div>
-  
+
     <!-- Web Header -->
     <div class="web-header-wrapper">
         <div class="web-header hide-mobile">
-            <div class="logo">
-                <img *ngIf="ComapnyLogo" style="border:0;outline:none" [attr.src]="ComapnyLogo"  />
+            <div class="logo-wrapper">
+                <div class="logo">
+                    <img *ngIf="ComapnyLogo" style="border:0;outline:none" [attr.src]="ComapnyLogo"  />
+                </div>
             </div>
-           
+
 
             <div  class="nav">
                 <ul class="left-nav" [class.show]="displayMenu" style="margin-top: 11px;">
 
-                    <li  (click)="GoToPrivateSite()" style="float: right;">Cargo-Tracking</li>
+                    <!-- <li  (click)="GoToPrivateSite()" style="float: right;">cargo-tracking</li> -->
 
 
                 </ul>
@@ -44,20 +46,20 @@
 
         </div>
     </div>
-  
+
     <!-- <div style="width: 100%;height: 55px;"></div> -->
-  
-    <div style="min-height: calc(100vh - 110px);">
+
+    <div style="min-height: calc(82vh - 110px);">
         <router-outlet *ngIf="IsBrandingDataLoaded"></router-outlet>
     </div>
-  
+
     <footer>
         <!-- {{ currentDate | date:'y'}} {{companyLabel}} &copy; &nbsp; -->
         <span style="color: black;">Powered By</span>  &nbsp;
         <img width="16" src="./assets/images/misc/poweredby.png" alt="powered by">
         <span style="color: black;">{{companyName}}</span>  &nbsp;
-  
-  
+
+
     </footer>
-  
+
   </div>

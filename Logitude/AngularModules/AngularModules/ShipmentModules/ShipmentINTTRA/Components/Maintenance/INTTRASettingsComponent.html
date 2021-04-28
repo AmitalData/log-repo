@@ -61,7 +61,7 @@
                                                         </td>
 
                                                         <td style="padding-left: 5px;">
-                                                            <div>
+                                                            <div data-cy="OutSettingsHostActions">
                                                                 <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditFTPClicked('Out')" [IsEnabled]="OutSettingsId"></IconButton>
                                                                 <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddFTPClicked('Out')"></IconButton>
                                                                 <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteFTPClicked('Out')" [IsEnabled]="OutSettingsId"></IconButton>
@@ -80,7 +80,7 @@
                                                         </td>
 
                                                         <td style="padding-left: 5px;">
-                                                            <div>
+                                                            <div data-cy="InSettingsHostActions">
                                                                 <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditFTPClicked('In')" [IsEnabled]="InSettingsId"></IconButton>
                                                                 <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddFTPClicked('In')"></IconButton>
                                                                 <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteFTPClicked('In')" [IsEnabled]="InSettingsId"></IconButton>
@@ -196,15 +196,15 @@
                                                                     {{item.EnglishName}}
                                                                 </td>
 
-                                                                <td class="CellStretched" style="width: 150px; min-width: 150px; max-width: 150px;">
+                                                                <td class="CellStretched" style="width: 150px; min-width: 150px; max-width: 150px;" [attr.data-cy]="item.EnglishName + '_INTTRAId'">
                                                                     <LogTextBox [ObjectFieldName]="'INTTRAId'" [ObjectTableName]="'Branch'" [DataContext]="item" [Text]="item.INTTRAId" [HideColumns]="true"></LogTextBox>
                                                                 </td>
 
-                                                                <td class="CellStretched" style="width: 150px; min-width: 150px; max-width: 150px;">
+                                                                <td class="CellStretched" style="width: 150px; min-width: 150px; max-width: 150px;" [attr.data-cy]="item.EnglishName + '_INTTRAAlias'">
                                                                     <LogTextBox [ObjectFieldName]="'INTTRAAlias'" [ObjectTableName]="'Branch'" [DataContext]="item" [Text]="item.INTTRAAlias" [HideColumns]="true"></LogTextBox>
                                                                 </td>
 
-                                                                <td class="CellStretched" style="width: 150px; min-width: 150px; max-width: 150px;">
+                                                                <td class="CellStretched" style="width: 150px; min-width: 150px; max-width: 150px;" [attr.data-cy]="item.EnglishName + '_INTTRAContact'">
                                                                     <LogLov [ObjectFieldName]="'INTTRAContactId'"
                                                                             [ObjectTableName]="'Branch'"
                                                                             [SelectedValue]="item.INTTRAContactId"
@@ -293,10 +293,10 @@
                                                             </table>
                                                         </td>
 
-                                                        <td *ngFor="let itemCarrier of item.Carriers" style="width: 100px; min-width: 100px; max-width: 100px;">
+                                                        <td *ngFor="let itemCarrier of item.Carriers; let i = index" style="width: 100px; min-width: 100px; max-width: 100px;">
                                                             <div class="MediaFill">
                                                                 <div class="MediaFillRelative">
-                                                                    <div class="CenterCenter" style="width: 16px; height: 16px;">
+                                                                    <div class="CenterCenter" style="width: 16px; height: 16px;" [attr.data-cy]="item.Code + '_' + Branches[i].EnglishName + '_Registration'">
                                                                         <CheckBox [IsChecked]="itemCarrier.IsRegistered" (Checked)="itemCarrier.IsRegistered = $event"></CheckBox>
                                                                     </div>
                                                                 </div>

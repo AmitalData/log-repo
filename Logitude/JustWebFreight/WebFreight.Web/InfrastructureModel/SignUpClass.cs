@@ -738,7 +738,7 @@ namespace WebFreight.Web.InfrastructureModel
                     }
                 }
             }
-
+            signUpInfo.Tenant = tenant;
             return password;
         }
 
@@ -1293,6 +1293,13 @@ namespace WebFreight.Web.InfrastructureModel
             newTenant.MasterExportOtherPrepaidCollectId = tenantZero.MasterExportOtherPrepaidCollectId;
             newTenant.MasterImportFreightPrepaidCollectId = tenantZero.MasterImportFreightPrepaidCollectId;
             newTenant.MasterImportOtherPrepaidCollectId = tenantZero.MasterImportOtherPrepaidCollectId;
+
+            newTenant.AirRatio = tenantZero.AirRatio;
+            newTenant.FCLRatio = tenantZero.FCLRatio;
+            newTenant.LCLRatio = tenantZero.LCLRatio;
+            newTenant.FTLRatio = tenantZero.FTLRatio;
+            newTenant.LTLRatio = tenantZero.LTLRatio;
+
             if (CheckIsDayLightSettingsRequiredForEnvironment())
             {
                 newTenant.DayLightStartDate = tenantZero.DayLightStartDate;
@@ -1841,6 +1848,7 @@ namespace WebFreight.Web.InfrastructureModel
                     IsManuallySet = a.IsManuallySet,
                     DisplayInLOV = a.DisplayInLOV,
                     FromDateTypeCode = "INV",
+                    Code = a.Code,
                 };
 
                 thePaymentTermRepository.Add(newPaymentTerm);
@@ -1858,7 +1866,7 @@ namespace WebFreight.Web.InfrastructureModel
                 AutomationHelper automationHelper = new AutomationHelper();
                 List<string> automationDocumentTypeIds = automationHelper.GetAutomationDocumentTypeIds(tenant);
 
-                if (((!docType.InActive && docType.IsCopiedAtSignup && docType.IsEnabledForCustomers) || automationDocumentTypeIds.Contains(docType.Id)) && (string.IsNullOrEmpty(docType.CountryCode) || (docType.CountryCode == countryCode)))
+                if (((!docType.InActive && docType.IsCopiedAtSignup && docType.IsEnabledForCustomers) || automationDocumentTypeIds.Contains(docType.Id)) && (string.IsNullOrEmpty(docType.CountryCode?.Trim()) || (docType.CountryCode == countryCode)))
                 {
                     ObjectTable tenantZeroObject = tenantZeroObjectTables.Where(d => d.Id == docType.ObjectTableId).FirstOrDefault();
                     if (tenantZeroObject != null)
@@ -1956,12 +1964,12 @@ namespace WebFreight.Web.InfrastructureModel
             {
                 DocumentType usedDocumenttype = currentTenantDocumentType.Where(d => d.Code == documenttype.Code && d.Tenant == theTenant && !d.InActive && d.IsCopiedAtSignup).FirstOrDefault();
                 sameCountry = documenttype.CountryCode == coutryCode;
-                if (usedDocumenttype != null && (string.IsNullOrEmpty(documenttype.CountryCode) || sameCountry))
+                if (usedDocumenttype != null && (string.IsNullOrEmpty(documenttype.CountryCode?.Trim()) || sameCountry))
                 {
                     List<DocumentTypeTemplate> documentTypeTemplates = new List<DocumentTypeTemplate>();
                     foreach (DocumentTypeTemplatePM documentTypeTemplatePM in documentTypeTemplateList.Where(d => d.DocumentTypeId == documenttype.Id))
                     {
-                        if (sameCountry || (string.IsNullOrEmpty(documentTypeTemplatePM.CountryCode) || documentTypeTemplatePM.CountryCode == coutryCode)) {
+                        if (sameCountry || (string.IsNullOrEmpty(documentTypeTemplatePM.CountryCode?.Trim()) || documentTypeTemplatePM.CountryCode == coutryCode)) {
                             DocumentTypeTemplate newDocumentTypeTemplate = GetInstanceFromDocumentTypeTemplate(theTenant, usedDocumenttype, documentTypeTemplatePM);
                             theDocumentTypeTemplateRepository.Add(newDocumentTypeTemplate);
                             documentTypeTemplates.Add(newDocumentTypeTemplate); 

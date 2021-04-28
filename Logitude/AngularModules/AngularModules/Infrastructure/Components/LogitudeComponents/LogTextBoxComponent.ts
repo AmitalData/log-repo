@@ -225,7 +225,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
 
         this.StaticPlaceHolder = this.Placeholder;
         if (this.IsRatioBox == true) {
-            this.DigitsAfterPoint = 1;
+            this.DigitsAfterPoint = 3;
             this.InputDivStyle = {};
         }
 
@@ -1257,8 +1257,9 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                                     if (this.AllowPercentage && (this.TextValue + "").indexOf('%') > -1){
                                         this.TextValue = val.toFixed(4);
                                     }
-                                    else{
-                                        this.TextValue = val.toFixed(this.DigitsAfterPoint);
+                                    else {
+                                       this.TextValue = AppTool.Round(val, this.DigitsAfterPoint).toString();
+                                       // this.TextValue = val.toFixed(this.DigitsAfterPoint);
                                        
                                     }
                                     if (this.TextValue.indexOf('.') > -1 && this.decimalSeparator != '.') {
@@ -1497,8 +1498,10 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
         if(!isNullOrUndefined(this.ObjectField) && this.ObjectField.IsCustom)
         {
             const customField:CustomFieldClass = this.DataContext[this.ObjectFieldName];
-            newValue = customField.GetFieldDataTypeValue(this.ObjectField, customField.Value);
-            newValue =  this.FormatTextValue(newValue);
+            if (customField != null && customField != undefined) {
+                newValue = customField.GetFieldDataTypeValue(this.ObjectField, customField.Value);
+                newValue =  this.FormatTextValue(newValue);
+            }
         }
 
         if (newValue + "" != this.TextValue) {

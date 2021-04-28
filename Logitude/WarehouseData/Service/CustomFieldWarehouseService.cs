@@ -19,16 +19,16 @@ namespace WarehouseData.Helper
         }
 
 
-        public string BuildCustomFields(string sqlString , int customFieldsCount)
+        public string BuildCustomFields(string sqlString , TableClass tableClass)
         {
             string result = sqlString;
-            this.customFieldsCount = customFieldsCount;
+            this.customFieldsCount = tableClass.MaxNumberOfCustomFields;
             if (!string.IsNullOrEmpty(result))
             {
                 result = ResolveDeclareCustomFieldsVariable(result);
                 result = ResolveCustomFieldNamesVariable(result);
                 result = ResolveCustomFieldValuesVariable(result);
-                result = ResolveShipmentsCustomFieldsVariable(result);
+                result = ResolveCustomFieldsVariable(result , tableClass.Dw_TableName);
                 result = ResolveCursorCustomFieldsVariable(result);
 
             }
@@ -37,61 +37,50 @@ namespace WarehouseData.Helper
 
         private string ResolveCursorCustomFieldsVariable(string sql)
         {
-            int i = 1;
             string result = string.Empty;
             if (sql.Contains("@CursorCustomFieldsVariable"))
             {
-                i = 1;
-                result = string.Empty;
-                while (i <= customFieldsCount)
+                int count = 1;
+                while (count <= customFieldsCount)
                 {
-                    result += "@Field" + i + ",";
-                    i += 1;
+                    result += "@Field" + count + ",";
+                    count += 1;
                 }
-                result += "@CustomFields,";
-                result += "^";
-                result = result.Replace(",^", "");
+
+                result += "@CustomFields";
                 sql = sql.Replace("@CursorCustomFieldsVariable", result);
             }
             return sql;
         }
 
-        private string ResolveShipmentsCustomFieldsVariable(string sql)
+        private string ResolveCustomFieldsVariable(string sql , string dwTableName)
         {
-            int i = 1;
             string result = string.Empty;
-            if (sql.Contains("@dw_Shipments.CustomFieldsVariable"))
+            if (sql.Contains("@"+ dwTableName + ".CustomFieldsVariable"))
             {
-                i = 1;
+                int count = 1;
                 result = string.Empty;
-                while (i <= customFieldsCount)
+                while (count <= customFieldsCount)
                 {
-                    result += "dw_Shipments.Field" + i + ",";
-                    i += 1;
+                    result += (dwTableName + ".Field" + count + ",");
+                    count += 1;
                 }
-                result += "dw_CustomObjectFields.CustomFields,";
-
-                result += "^";
-                result = result.Replace(",^", "");
-                sql = sql.Replace("@dw_Shipments.CustomFieldsVariable", result);
+                result += "dw_CustomObjectFields.CustomFields";
+                sql = sql.Replace("@" + dwTableName + ".CustomFieldsVariable", result);
             }
             return sql;
         }
 
         private string ResolveCustomFieldValuesVariable(string sql)
         {
-            int i = 1;
             string result = string.Empty;
-
             if (sql.Contains("[CustomFieldValuesVariable]"))
             {
-                i = 1;
-                result = string.Empty;
-                while (i <= customFieldsCount)
+                int count = 1;
+                while (count <= customFieldsCount)
                 {
-                    result += "dbo.ResolveCustomFieldValue(@Field" + i + ",'Field" + i + "' ,@CustomFields)" + (i < customFieldsCount ? "," : "");
-
-                    i += 1;
+                    result += "dbo.ResolveCustomFieldValue(@Field" + count + ",'Field" + count + "' ,@CustomFields)" + (count < customFieldsCount ? "," : "");
+                    count += 1;
                 }
 
                 sql = sql.Replace("[CustomFieldValuesVariable]", result);
@@ -101,16 +90,14 @@ namespace WarehouseData.Helper
 
         private string ResolveCustomFieldNamesVariable(string sql)
         {
-            int i = 1;
             string result = string.Empty;
             if (sql.Contains("[CustomFieldNamesVariable]"))
             {
-                i = 1;
-                result = string.Empty;
-                while (i <= customFieldsCount)
+                int count = 1;
+                while (count <= customFieldsCount)
                 {
-                    result += "[Field" + i + "]" + (i < customFieldsCount ? "," : "");
-                    i += 1;
+                    result += "[Field" + count + "]" + (count < customFieldsCount ? "," : "");
+                    count += 1;
                 }
 
                 sql = sql.Replace("[CustomFieldNamesVariable]", result);
@@ -121,20 +108,18 @@ namespace WarehouseData.Helper
 
         private string ResolveDeclareCustomFieldsVariable(string sql)
         {
-            int i = 1;
             string result = string.Empty;
-
             if (sql.Contains("--@[DeclareCustomFieldsVariable]"))
             {
-                while (i <= customFieldsCount)
+                int count = 1;
+                while (count <= customFieldsCount)
                 {
-                    result += "   declare @Field" + i + " as varchar(2000) \r\n";
+                    result += "   declare @Field" + count + " as varchar(2000) \r\n";
 
-                    i += 1;
+                    count += 1;
                 }
                 result += "   declare @CustomFields as varchar(4000) \r\n";
 
-                //DataTypeCode
                 sql = sql.Replace("--@[DeclareCustomFieldsVariable]", result);
             }
 
@@ -299,7 +284,6 @@ namespace WarehouseData.Helper
         private string FillCustomObjectFieldsTempTable(int tenant, DataTable customObjectFieldsTable, bool isIncrementDataWarehouse)
         {
             string result = "";
-            string customFields = "";
             string customObjectFieldTableName = isIncrementDataWarehouse ? "dw_CustomObjectFields" : "#dw_CustomObjectFieldsTemp";
             List<string> tablesAddedCustomField = new List<string>();
 
@@ -312,6 +296,7 @@ namespace WarehouseData.Helper
             foreach (var customObjectFieldsGroup in customObjectFieldsGroups)
             {
 
+                string customFields = "";
 
                 List<DataRow> fields = customObjectFieldsGroup.ToList();
                 string objectTableName = string.Empty;
@@ -334,7 +319,7 @@ namespace WarehouseData.Helper
                 result += "insert into " + customObjectFieldTableName + " (Tenant, ObjectTableName , CustomFields) Values (" + tenant.ToString() + ", '" + objectTableName + "' , '" + customFields + "') \n";
             }
 
-            foreach (string tableName in tableLists.Where(d=>d.HasCustomFields).Select(d=>d.TableName).ToList())
+            foreach (string tableName in tableLists.Where(d=>d.HasCustomFields).GroupBy(d=>d.TableName).Select(d=>d.First().TableName).ToList())
             {
                 var table = tablesAddedCustomField.Where(d => d == tableName).FirstOrDefault();
                 if (table == null)

@@ -81,6 +81,7 @@ namespace WebFreight.Web.ReportsWebServices
  
                 if (bankAccount != null)
                 {
+                    apPaymentDataProvider.BankAccountEnglishName = bankAccount.EnglishName;
                     if (loggedContact.DontShowLocalLabels)
                     {
                         apPaymentDataProvider.BankAccountName = bankAccount.EnglishName;
@@ -137,9 +138,8 @@ namespace WebFreight.Web.ReportsWebServices
 
                 if (currentObjectTable != null)
                 {
-                    //payment number
                     apPaymentDataProvider.APPaymentNo = currentPayment.PaymentNo != null ? currentPayment.PaymentNo : "";
-
+                    
                     //paid to = bill to name + address
                     Card paidToCard = (from a in commonContext.Cards.Include("Airline")
                                        where a.Id == currentPayment.VendorId && a.Tenant == currentPayment.Tenant
@@ -150,11 +150,6 @@ namespace WebFreight.Web.ReportsWebServices
                         apPaymentDataProvider.PaidToVatNo = paidToCard.VatNumber != null ? paidToCard.VatNumber : "";
                         apPaymentDataProvider.IRSPlace = paidToCard.IRSPlace;
                         apPaymentDataProvider.IRSNumber = paidToCard.IRSNumber;
-                        //apPaymentDataProvider.VendorBankName = paidToCard.BankName;
-                        //apPaymentDataProvider.VendorBankAddress = paidToCard.BankAddress;
-                        //apPaymentDataProvider.VendorSwift = paidToCard.Swift;
-                        //apPaymentDataProvider.VendorBankAccountNumber = paidToCard.AccountNumber;
-                        //apPaymentDataProvider.VendorIBANNo = paidToCard.IBANNumber;
                         apPaymentDataProvider.ClientNumber = paidToCard.Code; //client number
                         apPaymentDataProvider.PaidToName = paidToCard.EnglishName;
                         apPaymentDataProvider.BankAddress = paidToCard.BankAddress;
@@ -258,6 +253,8 @@ namespace WebFreight.Web.ReportsWebServices
                         apPaymentDataProvider.PaymentCurrencyName = paymentCurrency.LocalName;
                     }
 
+                    this.PrintAmountInWord(currentPayment, apPaymentDataProvider);
+                   
                     //print notes
                     apPaymentDataProvider.PrintNotes = currentPayment.PrintNotes != null ? currentPayment.PrintNotes : "";
 
@@ -406,7 +403,6 @@ namespace WebFreight.Web.ReportsWebServices
 
             return apPaymentDataProvider;
         }
-     
 
         private APPaymentDataProvider SetDataProviderbankFields(APPayment payment, APPaymentDataProvider apPaymentDataProvider)
         {
@@ -447,8 +443,6 @@ namespace WebFreight.Web.ReportsWebServices
 
         }
 
-    
-
         private string GetPartnerAccountNumber(Card card)
         {
           
@@ -462,8 +456,27 @@ namespace WebFreight.Web.ReportsWebServices
             else return null;
 
         }
-    }
 
+        private void PrintAmountInWord(APPayment payment, APPaymentDataProvider apPaymentDataProvider)
+        {
+            var result = (decimal)payment.AmountInPaymentCurrency - Math.Truncate((decimal)payment.AmountInPaymentCurrency);
+            var Firstdigits = (int)(Math.Round(result, 2) * 100);
+           
+            var FrenchFractions = "";
+            if (Firstdigits > 0)
+            {
+                FrenchFractions = Firstdigits + " Cts";
+            }
 
-    
+            NumbersConverterToWords numbersConverterToWords = new NumbersConverterToWords();
+            apPaymentDataProvider.TotalPaymentInWordFR = FirstCharToUpper(numbersConverterToWords.NumbersToFrench((int)payment.AmountInPaymentCurrency) + " ") + apPaymentDataProvider.PaymentCurrencyName + " " + FrenchFractions;
+
+        }
+        public static string FirstCharToUpper(string input)
+        {
+            if (String.IsNullOrEmpty(input))
+                return "";
+            return input.First().ToString().ToUpper() + input.Substring(1);
+        }
+    }    
 }

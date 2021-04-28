@@ -349,6 +349,18 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="VatAmountLocal"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="VatAmountProfit"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ShipmentId"
     ReferencedTable="Shipments"

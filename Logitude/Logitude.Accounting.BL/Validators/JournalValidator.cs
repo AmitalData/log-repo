@@ -16,6 +16,9 @@ using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Utils;
 using Microsoft.Practices.Unity;
 using Simplog.Data.Helpers;
+using Simplog.Data.InfrastructureModel;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -79,13 +82,15 @@ namespace Logitude.Accounting.BL.Validators
 
 
         public const string K_AccountingPeriodsByTypeRegular = "AccountingPeriodsByTypeRegular";
+        public const string K_TenantCurrencyId = "K_TenantCurrencyId";
         public const string K_DateTimeUtcNow = "K_DateTimeUtcNow";
         public const string K_FullAccountingSettingPM = "FullAccountingSettingPM";
         public const string K_SuppressCheckGLAccountIsMultiCurrencyWI40640 = "K_SuppressCheckGLAccountIsMultiCurrencyWI40640";//Task 40640: טיפול בסרביס לפקודת יומן - במקרה של כרטיס מפוצל לרשום על הפיצול
         public const string M_AccountingSameOppositeReference = "Journal.M.SameOppositeReference";
 
         public const string M_AllDateMustInit = "Journal.M.AllDateMustInit";
-        
+        public const string M_FutureDateIsNotAllowedInLine = "Journal.O.haveFutureAccountingorReferenceDate";
+
         public static ValidationResult IsJournalValid(
   JournalPM myJournalPM,
   System.ComponentModel.DataAnnotations.ValidationContext accountingValidationContextServiceProvider)
@@ -102,7 +107,11 @@ namespace Logitude.Accounting.BL.Validators
         
 
         private string _JLineNumberTExt;
-
+        string TenantCurrency;
+        RatesTableRepository ratesTableRepository;
+        
+        bool IsFutureDateErrorsExist = false;
+        string FutureDateErrorsMessage = "";
         public  ValidationResult IsJournalValid(
           JournalPM myJournalPM,
           System.ComponentModel.DataAnnotations.ValidationContext accountingValidationContextServiceProvider)
@@ -116,7 +125,8 @@ namespace Logitude.Accounting.BL.Validators
                 var serializedObject = ProxyUtil.JsonConvertSerialize(myJournalPM);
                 Debug.WriteLine(serializedObject);
             }
-            List<string> errorsList = new List<string>();
+            var errorsList = new MyList<string>();
+            
 
             bool valid = true;
 
@@ -132,18 +142,22 @@ namespace Logitude.Accounting.BL.Validators
 
                 string msg =
                     TranslateMyTextCode("Journal.M.YouShouldHaveOneLineAtLeast", 0);
-                //TranslateTextsClass.Translate("Journal.M.YouShouldHaveOneLineAtLeast", 0, useLocal);
+                //TranslateMyTextCode("Journal.M.YouShouldHaveOneLineAtLeast", 0, useLocal);
                 ;
-                errorsList.Add(msg);
+                errorsList.AddNew(msg);
             }
             var myDataProvider = accountingValidationContextServiceProvider.GetService(typeof(IJournalValidatorContextDataProvider)) as IJournalValidatorContextDataProvider;
             var myIExternalReconcileDataProvider = accountingValidationContextServiceProvider.GetService(typeof(IExternalReconcileDataProvider)) as IExternalReconcileDataProvider;
             FullAccountingSettingPM tenantFullAccountingSettingPM = null;
+             TenantCurrency = GetTenantCurrency(myJournalPM, accountingValidationContextServiceProvider);
+            //IWebFreightContext webFreightContext = WebFreightContext.GetContext(myJournalPM.Tenant);
+             //ratesTableRepository = new RatesTableRepository(webFreightContext);
+
             if (accountingValidationContextServiceProvider.Items.ContainsKey(JournalValidator.K_FullAccountingSettingPM))
             {
                 tenantFullAccountingSettingPM = accountingValidationContextServiceProvider.Items[JournalValidator.K_FullAccountingSettingPM] as FullAccountingSettingPM;
             }
-            DateTime? currDateTimeUtcNow = null; ;
+            DateTime? currDateTimeUtcNow = null; 
 
             if (accountingValidationContextServiceProvider.Items.ContainsKey(JournalValidator.K_DateTimeUtcNow))
             {
@@ -167,7 +181,7 @@ namespace Logitude.Accounting.BL.Validators
                     {
                         if (!IsMonthOpenForAccountingDate(accountingPeriodsByTypeRegular.AsQueryable(), myJournalPM.AccountingDate))
                         {
-                            errorsList.Add(transText);
+                            errorsList.AddNew(transText);
                             valid = false;
                         }
                     }
@@ -175,7 +189,7 @@ namespace Logitude.Accounting.BL.Validators
                     {
                         if (!IsMonthOpenForAccountingDate(accountingPeriodsByTypeRegular.AsQueryable(),(DateTime) myJournalPM.APPaymentCancelDate))
                         {
-                            errorsList.Add(transText);
+                            errorsList.AddNew(transText);
                             valid = false;
                         }
 
@@ -204,7 +218,7 @@ namespace Logitude.Accounting.BL.Validators
                     string basic_text_ExternalExist =
                         //"There is a Journal ("+ journalNumber + ") with the same ExternalNo And ExternalSystem";
                         JournalValidator.M_ExternalNoAlreadyExists_1 + journalNumber + JournalValidator.M_ExternalNoAlreadyExists_2;
-                    errorsList.Add(basic_text_ExternalExist);
+                    errorsList.AddNew(basic_text_ExternalExist);
                     //TranslateMyTextCode(JournalValidator.M_ExternalNoAlreadyExists_1, myJournalPM.Tenant)
                     //    + myJournalPM.ExternalNo
                     //    + TranslateMyTextCode(JournalValidator.M_ExternalNoAlreadyExists_2, myJournalPM.Tenant)
@@ -245,17 +259,18 @@ namespace Logitude.Accounting.BL.Validators
 #endif
             if (currDateTimeUtcNow.GetValueOrDefault().Date < myJournalPM.AccountingDate.Date)
             {
-                errorsList.Add(TranslateMyTextCode(JournalValidator.M_AccountingFutureDateForbidden, myJournalPM.Tenant));
+                errorsList.AddNew(TranslateMyTextCode(JournalValidator.M_AccountingFutureDateForbidden, myJournalPM.Tenant));
                 valid = false;
             }
             if (myJournalPM.DocumentDate != null && (currDateTimeUtcNow.GetValueOrDefault().Date < myJournalPM.DocumentDate.Value.Date))
             {
-                errorsList.Add(TranslateMyTextCode(JournalValidator.M_AccountingFutureDateForbidden, myJournalPM.Tenant));
+                errorsList.AddNew(TranslateMyTextCode(JournalValidator.M_AccountingFutureDateForbidden, myJournalPM.Tenant));
                 valid = false;
             }
+
             if (myJournalPM.JournalLines.Any(l => currDateTimeUtcNow.GetValueOrDefault().Date < l.AccountingDate.Date))
             {
-                errorsList.Add(TranslateMyTextCode(JournalValidator.M_AccountingFutureDateForbidden, myJournalPM.Tenant));
+
                 valid = false;
             }
             if (myJournalPM.JournalLines.Any(l =>
@@ -263,22 +278,22 @@ namespace Logitude.Accounting.BL.Validators
                 l.AccountingDate.Date.Month != myJournalPM.AccountingDate.Date.Month
                 ))
             {
-                errorsList.Add(TranslateMyTextCode(JournalValidator.M_JLAccountingDateMustWithinJournalMonth, myJournalPM.Tenant));
+                errorsList.AddNew(TranslateMyTextCode(JournalValidator.M_JLAccountingDateMustWithinJournalMonth, myJournalPM.Tenant));
             }
 
             //47045 onRegilarJournalAvoidTheSameReference4DebitOrCredit_DochMaaam(errorsList,myJournalPM);
 
             if (myJournalPM.JournalLines.Any(l => l.AccountingDate == DateTime.MinValue))
             {
-                errorsList.Add(TranslateMyTextCode(JournalValidator.M_AllDateMustInit, myJournalPM.Tenant));
+                errorsList.AddNew(TranslateMyTextCode(JournalValidator.M_AllDateMustInit, myJournalPM.Tenant));
             }
             if (myJournalPM.JournalLines.Any(l => l.DueDate == DateTime.MinValue))
             {
-                errorsList.Add(TranslateMyTextCode(JournalValidator.M_AllDateMustInit, myJournalPM.Tenant));
+                errorsList.AddNew(TranslateMyTextCode(JournalValidator.M_AllDateMustInit, myJournalPM.Tenant));
             }
             if (myJournalPM.JournalLines.Any(l => l.DocumentDate == DateTime.MinValue))
             {
-                errorsList.Add(TranslateMyTextCode(JournalValidator.M_AllDateMustInit, myJournalPM.Tenant));
+                errorsList.AddNew(TranslateMyTextCode(JournalValidator.M_AllDateMustInit, myJournalPM.Tenant));
             }
             int seq = 0;
             foreach (JournalLinePM currJournalLinePM in myJournalPM.JournalLines
@@ -294,7 +309,7 @@ namespace Logitude.Accounting.BL.Validators
                     seq++;
                     if (currJournalLinePM.Line != seq)
                     {
-                        errorsList.Add(JournalValidator.M_LineSequence + seq.ToString() + " !=" + currJournalLinePM.Line.ToString());
+                        errorsList.AddNew(JournalValidator.M_LineSequence + seq.ToString() + " !=" + currJournalLinePM.Line.ToString());
                     }
                     //if (item.ForeignAmount == 0)
                     if (currJournalLinePM.ForeignAmount
@@ -312,19 +327,19 @@ namespace Logitude.Accounting.BL.Validators
                     }
                     if (string.IsNullOrWhiteSpace(currJournalLinePM.ActionCode) && string.IsNullOrWhiteSpace(currJournalLinePM.ActionTypeCode))
                     {
-                        errorsList.Add(TranslateMyTextCode(JournalValidator.M_ActionCode, myJournalPM.Tenant));
+                        errorsList.AddNew(TranslateMyTextCode(JournalValidator.M_ActionCode, myJournalPM.Tenant));
                     }
                     if (currJournalLinePM.ActionTypeCode == "2" && (currJournalLinePM.DebitAccountId == null))
                     {
-                        errorsList.Add(TranslateMyTextCode(JournalValidator.M_ActionCodeDebit, myJournalPM.Tenant));
+                        errorsList.AddNew(TranslateMyTextCode(JournalValidator.M_ActionCodeDebit, myJournalPM.Tenant));
                     }
                     if (currJournalLinePM.ActionTypeCode == "1" && (currJournalLinePM.CreditAccountId == null))
                     {
-                        errorsList.Add(TranslateMyTextCode(JournalValidator.M_ActionCodeCredit, myJournalPM.Tenant));
+                        errorsList.AddNew(TranslateMyTextCode(JournalValidator.M_ActionCodeCredit, myJournalPM.Tenant));
                     }
                     if ((currJournalLinePM.ActionTypeCode == "3" || currJournalLinePM.ActionTypeCode == "4") && ((currJournalLinePM.DebitAccountId == null) || (currJournalLinePM.CreditAccountId == null)))
                     {
-                        errorsList.Add(TranslateMyTextCode(JournalValidator.M_ActionCodeCreditAndCreditMeanDebit, myJournalPM.Tenant));
+                        errorsList.AddNew(TranslateMyTextCode(JournalValidator.M_ActionCodeCreditAndCreditMeanDebit, myJournalPM.Tenant));
                     }
                     //if (!currJournalLinePM.DueDate.HasValue)
                     //{
@@ -335,7 +350,7 @@ namespace Logitude.Accounting.BL.Validators
                     {
                         if ((currJournalLinePM.DocumentDate) > (currJournalLinePM.DueDate))
                         {
-                            errorsList.Add(TranslateMyTextCode(JournalValidator.M_DocumentDateBiggerDueDate, myJournalPM.Tenant));
+                            errorsList.AddNew(TranslateMyTextCode(JournalValidator.M_DocumentDateBiggerDueDate, myJournalPM.Tenant));
                         }
                     }
                     if (currJournalLinePM.ForeignAmount == 0)
@@ -350,7 +365,7 @@ namespace Logitude.Accounting.BL.Validators
                                 var mM_FAMltiExchangerateNELA = TranslateMyTextCode(JournalValidator.M_FAMltiExchangerateNELA, myJournalPM.Tenant);
                                 //mM_FAMltiExchangerateNELA=mM_FAMltiExchangerateNELA??"Foreign amount ({0}) multiplied by the exchange rate ({1}) does not equal the local amount ({2})";
                                 mM_FAMltiExchangerateNELA = String.Format(mM_FAMltiExchangerateNELA, currJournalLinePM.ForeignAmount, currJournalLinePM.ExchangeRate, currJournalLinePM.LocalAmount);
-                                errorsList.Add(mM_FAMltiExchangerateNELA);
+                                errorsList.AddNew(mM_FAMltiExchangerateNELA);
                             }
                         }
                     }
@@ -368,7 +383,7 @@ namespace Logitude.Accounting.BL.Validators
                                 var mM_FAMltiExchangerateNELA = TranslateMyTextCode(JournalValidator.M_FAMltiExchangerateNELA, myJournalPM.Tenant);
                                 //mM_FAMltiExchangerateNELA=mM_FAMltiExchangerateNELA??"Foreign amount ({0}) multiplied by the exchange rate ({1}) does not equal the local amount ({2})";
                                 mM_FAMltiExchangerateNELA = String.Format(mM_FAMltiExchangerateNELA, currJournalLinePM.ForeignAmount, currJournalLinePM.ExchangeRate, currJournalLinePM.LocalAmount);
-                                errorsList.Add(mM_FAMltiExchangerateNELA);
+                                errorsList.AddNew(mM_FAMltiExchangerateNELA);
                             }
                         }
                     }
@@ -404,7 +419,7 @@ namespace Logitude.Accounting.BL.Validators
                                         var mM_FAMltiExchangerateNELA = TranslateMyTextCode(JournalValidator.M_FAMltiExchangerateNELA, myJournalPM.Tenant);
                                         //mM_FAMltiExchangerateNELA=mM_FAMltiExchangerateNELA??"Foreign amount ({0}) multiplied by the exchange rate ({1}) does not equal the local amount ({2})";
                                         mM_FAMltiExchangerateNELA = String.Format(mM_FAMltiExchangerateNELA, currJournalLinePM.ForeignAmount, currJournalLinePM.ExchangeRate, currJournalLinePM.LocalAmount);
-                                        errorsList.Add(mM_FAMltiExchangerateNELA);
+                                        errorsList.AddNew(mM_FAMltiExchangerateNELA);
                                     }
                                 }
                             }
@@ -423,7 +438,7 @@ namespace Logitude.Accounting.BL.Validators
                             {
                                 Mustbegreaterthancurrentdate = "Due Date ,Must be greater than current date ";
                             }
-                            errorsList.Add(Mustbegreaterthancurrentdate);
+                            errorsList.AddNew(Mustbegreaterthancurrentdate);
                         }
                     }
                     CalculateTotals(currJournalLinePM, ref creditTotal, ref debitTotal);
@@ -435,7 +450,7 @@ namespace Logitude.Accounting.BL.Validators
                             CurrencyPM currency = myDataProvider.GetCurrency(currJournalLinePM.CurrencyId, currJournalLinePM.Tenant);
                             if (currency == null)
                             {
-                                errorsList.Add(TranslateMyTextCode(JournalValidator.M_currencydoesnotexist, myJournalPM.Tenant));
+                                errorsList.AddNew(TranslateMyTextCode(JournalValidator.M_currencydoesnotexist, myJournalPM.Tenant));
                             }
                         }
 
@@ -489,6 +504,7 @@ namespace Logitude.Accounting.BL.Validators
                         }
 
                     }
+                    ValidateExchangeRate(accountingValidationContextServiceProvider,currJournalLinePM, errorsList);
 
                 }
                 finally
@@ -501,14 +517,20 @@ namespace Logitude.Accounting.BL.Validators
             {
                 if ((myJournalPM.StatusCode == "1") || (myJournalPM.StatusCode == "2"))//Draft = 0,//WaitingforApprove = 1,//Approved = 2,//Voided = 3
                 {
-                    errorsList.Add(TranslateMyTextCode(JournalValidator.M_JournalAmountNotMatched, myJournalPM.Tenant));
+                   errorsList.AddNew(TranslateMyTextCode(JournalValidator.M_JournalAmountNotMatched, myJournalPM.Tenant)+ " " + Math.Abs(debitTotal - creditTotal));
                 }
+            }
+            ValidateJournalLinesForFutureDate(myJournalPM);
+            bool journalHasFutureDateErrors = CheckIfFutureDateErrorsExist(myJournalPM);
+            if(journalHasFutureDateErrors)
+            {
+                errorsList.Add(FutureDateErrorsMessage);
             }
 
             ValidateJournalReconciles(myJournalPM, accountingValidationContextServiceProvider, errorsList, myIExternalReconcileDataProvider);
 
             ValidateJournalExternalReconciles(myJournalPM, errorsList, myIExternalReconcileDataProvider);
-
+          
             if (errorsList.Count == 0)
             {
                 return ValidationResult.Success;
@@ -528,10 +550,74 @@ namespace Logitude.Accounting.BL.Validators
 
 
 
+        }
+
+        private MyList<string> ValidateExchangeRate(ValidationContext accountingValidationContextServiceProvider, JournalLinePM journalLine, MyList<string> errors)
+        {
+            if (journalLine.CurrencyId == TenantCurrency) return errors;
+            var myIJournalValidatorRateDataProvider = accountingValidationContextServiceProvider.GetService(typeof(IJournalValidatorRateDataProvider)) as IJournalValidatorRateDataProvider;
+            if (myIJournalValidatorRateDataProvider==null)
+            {
+                return errors; 
+            }
+            //RatesTable entityPoco = ratesTableRepository.GetExchageRateByValueAndDate(TenantCurrency, journalLine.CurrencyId, journalLine.AccountingDate, journalLine.Tenant);
+            bool existRate =myIJournalValidatorRateDataProvider.ExistRate(TenantCurrency, journalLine.CurrencyId, journalLine.AccountingDate, journalLine.Tenant);
+            if (!existRate /*entityPoco == null*/)
+            {
+                errors.Add(TranslateMyTextCode("Journal.O.ExchangeRateValidation", journalLine.Tenant) + " " + journalLine.Line);
+            }
+
+            return errors;
+        }
+        private string GetTenantCurrency(JournalPM journal, ValidationContext accountingValidationContextServiceProvider)
+        {
+            string tenantCurrencyId = "";
+            if (accountingValidationContextServiceProvider.Items.ContainsKey(JournalValidator.K_TenantCurrencyId))
+            {
+                tenantCurrencyId = accountingValidationContextServiceProvider.Items[JournalValidator.K_TenantCurrencyId] as string;
+            }
+            return tenantCurrencyId;
+            //TenantQuery tenantQuery = new TenantQuery(journal.Tenant);
+            //TenantPM tenantPM = tenantQuery.GetSinglePM(journal.Tenant);
+            //return tenantPM.CurrencyId;
 
         }
 
-        private  void ValidateJournalReconciles(JournalPM myJournalPM, ValidationContext accountingValidationContextServiceProvider, List<string> errorsList, IExternalReconcileDataProvider myIExternalReconcileDataProvider)
+        private void ValidateJournalLinesForFutureDate(JournalPM myJournalPM)
+        {
+            foreach (JournalLinePM journalLinePM in myJournalPM.JournalLines)
+            {
+                bool journalLineHasFutureDate = CheckJournalLineForFutureDate(journalLinePM);
+                if (journalLineHasFutureDate)
+                {
+                    FutureDateErrorsMessage += TranslateMyTextCode("Journal.O.haveFutureAccountingorReferenceDate", journalLinePM.Tenant);
+                    IsFutureDateErrorsExist = true;
+                    return;
+                }
+            }
+        }
+   
+        private bool CheckJournalLineForFutureDate(JournalLinePM journalLinePM)
+        {
+            DateTime? currDateTimeUtcNow = null;
+            currDateTimeUtcNow = TenantServerConfigration.GetCurrentDateTime(journalLinePM.Tenant);
+            return currDateTimeUtcNow.GetValueOrDefault().Date < journalLinePM.AccountingDate.Date || currDateTimeUtcNow.GetValueOrDefault().Date < journalLinePM.DocumentDate.Date; ;
+        }
+   
+        private bool CheckIfFutureDateErrorsExist(JournalPM myJournalPM)
+        {
+            const string statusCode_JournalApproved = "2";
+            const string AccountingEntityCode_Journal = "1";
+            var isJournalManuallyCreated = myJournalPM.AccountingEntityCode == AccountingEntityCode_Journal;
+            var isIsFutureDateErrorsExistAndJournalApproved = IsFutureDateErrorsExist && myJournalPM.StatusCode == statusCode_JournalApproved;
+            if (isIsFutureDateErrorsExistAndJournalApproved && isJournalManuallyCreated)
+                return true;
+            else
+                return false;
+        }
+
+        private void ValidateJournalReconciles(JournalPM myJournalPM, ValidationContext accountingValidationContextServiceProvider, List<string> errorsList, IExternalReconcileDataProvider myIExternalReconcileDataProvider)
+
         {
             if (myJournalPM.JournalReconciles.Count == 0)
             {
@@ -579,7 +665,7 @@ accountingValidationContextServiceProvider
 
         }
 
-        private  void ValidateJournalExternalReconciles(JournalPM myJournalPM, List<string> errorsList, IExternalReconcileDataProvider myIExternalReconcileDataProvider)
+        private  void ValidateJournalExternalReconciles(JournalPM myJournalPM, MyList<string> errorsList, IExternalReconcileDataProvider myIExternalReconcileDataProvider)
         {
             if (myJournalPM.JournalExternalReconciles.Count() == 0)
             {
@@ -628,11 +714,14 @@ accountingValidationContextServiceProvider
                     {
                         myExternalReconcileMoveBankCheckFromTransfer2GLAccountService.OnAdjustMustInit(myJournalPM.JournalLines[3].DebitAccountId, "");
                     }
-                    LedgerTransactionPM myLedgerTransactionBankTransferPM;
+                    List<LedgerTransactionPM> myLedgerTransactionBankTransferPMs;
                     BankAccountPM bankAccountFromTransfer;
                     ReconcileExternalPageLinePM myReconcileExternalPageLinePM;
                     string errString;
-                    myExternalReconcileMoveBankCheckFromTransfer2GLAccountService.PrepareAndValidate(myJournalPM.Tenant, false, myJournalPM.JournalExternalReconciles[0].LedgerTransactionId, myJournalPM.JournalExternalReconciles[0].ReconcileExternalPageLineId, out myLedgerTransactionBankTransferPM, out bankAccountFromTransfer, out myReconcileExternalPageLinePM, out errString);
+                    myExternalReconcileMoveBankCheckFromTransfer2GLAccountService.PrepareAndValidate(myJournalPM.Tenant, false,
+                        ///myJournalPM.JournalExternalReconciles[0].LedgerTransactionId
+                        myJournalPM.JournalExternalReconciles.Select(r=>r.LedgerTransactionId).ToList()
+                        , myJournalPM.JournalExternalReconciles[0].ReconcileExternalPageLineId, out myLedgerTransactionBankTransferPMs, out bankAccountFromTransfer, out myReconcileExternalPageLinePM, out errString);
                     if (!string.IsNullOrWhiteSpace(errString))
                     {
                         errorsList.Add(errString);
@@ -643,7 +732,7 @@ accountingValidationContextServiceProvider
         }
 
 
-         void onRegilarJournalAvoidTheSameReference4DebitOrCredit_DochMaaam(List<string> errorsList, JournalPM myJournalPM)
+         void onRegilarJournalAvoidTheSameReference4DebitOrCredit_DochMaaam(MyList<string> errorsList, JournalPM myJournalPM)
         {
             var regular = new JournalTypeDetails() { JournalTypeID = "0", EnglishName = "Regular", LocalName = "רגיל" };
                     if (myJournalPM.TypeCode == regular.Code) //AddClosedTables.AddJournalType(new JournalTypeDetails() { JournalTypeID = "0", EnglishName = "Regular", LocalName = "רגיל" }, journalTypeRepository);
@@ -758,14 +847,14 @@ accountingValidationContextServiceProvider
             return useLocal;
         }
 
-        private  void CheckGLAccountCurrency(List<string> errorsList, IJournalValidatorContextDataProvider myDataProvider, string glAccId, string jlCurrencyId)
+        private  void CheckGLAccountCurrency(MyList<string> errorsList, IJournalValidatorContextDataProvider myDataProvider, string glAccId, string jlCurrencyId)
         {
             throw new NotImplementedException();
         }
 
         private  void CheckGLAccount(
             bool isCreditSide,
-            List<string> errorsList,
+            MyList<string> errorsList,
             IJournalValidatorContextDataProvider myGLAccountDataProvider, 
             string glAccId, string jlCurrencyId
             , FullAccountingSettingPM tenantFullAccountingSettingPM,
@@ -1016,5 +1105,13 @@ accountingValidationContextServiceProvider
 
     }
 
+    public class MyList<t>:List<t>
+    {
+
+        public new void AddNew(t item)
+        {
+            base.Add(item);
+        }
+    }
 
 }

@@ -150,6 +150,52 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public int? PackagesQuantity  { get; set; }
        [DataMember]
        public string DirectionId  { get; set; }
+       [DataMember]
+       public string ShipmentLevelCode  { get; set; }
+       [DataMember]
+       public bool AssignedTruckerDone  { get; set; }
+       [DataMember]
+       public DateTime? AssignedTruckerDate  { get; set; }
+       [DataMember]
+       public DateTime? AssignedTruckerEstimationDate  { get; set; }
+       [DataMember]
+       public string AssignedTruckerNotes  { get; set; }
+       [DataMember]
+       public bool? AssignedCustomsAgentDone  { get; set; }
+       [DataMember]
+       public DateTime? AssignedCustomsAgentDate  { get; set; }
+       [DataMember]
+       public DateTime? AssignedCustomsAgentEstDate  { get; set; }
+       [DataMember]
+       public string AssignedCustomsAgentNotes  { get; set; }
+       [DataMember]
+       public string AssignedCustomsAgentExcReason  { get; set; }
+       [DataMember]
+       public bool DeliveryDone  { get; set; }
+       [DataMember]
+       public DateTime? DeliveryDate  { get; set; }
+       [DataMember]
+       public DateTime? DeliveryEstimationDate  { get; set; }
+       [DataMember]
+       public string DeliveryNotes  { get; set; }
+       [DataMember]
+       public string DeliveryExceptionReason  { get; set; }
+       [DataMember]
+       public string GrossWeightUnitCode  { get; set; }
+       [DataMember]
+       public string ForwardingShipmentNumber  { get; set; }
+       [DataMember]
+       public string ShipmentTypeCode  { get; set; }
+       [DataMember]
+       public string CustomerEnglishName  { get; set; }
+       [DataMember]
+       public string CustomerLocalName  { get; set; }
+       [DataMember]
+       public string FromPortCode  { get; set; }
+       [DataMember]
+       public string ToPortCode  { get; set; }
+       [DataMember]
+       public int? NumberOfPackages  { get; set; }
    }
 
 }

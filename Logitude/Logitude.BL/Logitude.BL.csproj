@@ -70,6 +70,10 @@
     <Reference Include="HtmlAgilityPack, Version=1.8.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.8.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\JustWebFreight\WebFreight.Web\bin\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="Intuit.Ipp.Core, Version=7.5.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\IppDotNetSdkForQuickBooksApiV3.7.5.0\lib\Intuit.Ipp.Core.dll</HintPath>
     </Reference>
@@ -235,6 +239,7 @@
     <Compile Include="CommonDataModel\APIDataContract\DocumentsFiling.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\GLAccount.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Incoterm.Generated.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\LastMileDetails.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Measurement.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\PaymentTerm.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\PODBlobInfo.cs" />
@@ -252,7 +257,9 @@
     <Compile Include="CommonDataModel\APIDataContract\QueryService\CustomerQueryService.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\CustomFieldQueryService.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\DocumentsFilingQueryService.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\QueryService\LastMileDetailsQueryService.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\PaymentTermQueryService.Generated.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\QueryService\ShipmentCardQueryService.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\UserQueryService.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\VatTypeQueryService.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\VendorQueryService.cs" />
@@ -334,6 +341,10 @@
     <Compile Include="CommonDataModel\CustomFilters\CardDataSearchService.cs" />
     <Compile Include="CommonDataModel\CustomFilters\ChargesTypeCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\CommunicationLogCustomFilter.cs" />
+    <Compile Include="CommonDataModel\CustomFilters\ReportExecutionLogCustomFilter.cs" />
+    <Compile Include="CommonDataModel\EntityLists\ReportExecutionLogList.cs" />
+    <Compile Include="CommonDataModel\EntityPMs\ReportExecutionLogPM.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\ReportExecutionLogQuery.cs" />
     <Compile Include="CommonDataModel\ExternalService\CustomerDataSearchService.cs" />
     <Compile Include="CommonDataModel\CustomFilters\CustomsShipperCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\AccountingPartnerCustomFilter.cs" />
@@ -405,6 +416,7 @@
     <Compile Include="CommonDataModel\Tools\EntityService\CarrierAreaService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\CustomerOpenFilesAmountService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\DocumentsExecutionLogService.cs" />
+    <Compile Include="CommonDataModel\Tools\EntityService\GLAccountCardDataService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\HorseService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\NumberOfUsersService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\TariffCarrierTranslationService.cs" />
@@ -420,6 +432,11 @@
     <Compile Include="DataContracts\ExportDocumentArgs.cs" />
     <Compile Include="DataContracts\QuoteDashboardArguments.cs" />
     <Compile Include="ExternalService\IEntityAutomationMappingPMFields.cs" />
+    <Compile Include="Helpers\ObjectFieldPropertyGetter.cs" />
+    <Compile Include="InfrastructureModel\APIDataContract\EntityStatus.Generated.cs" />
+    <Compile Include="InfrastructureModel\APIDataContract\QueryService\EntityStatusQueryService.Generated.cs" />
+    <Compile Include="InfrastructureModel\APIDataContract\Messages\RatesUpdateService.cs" />
+    <Compile Include="InfrastructureModel\APIDataContract\RatesUpdate.cs" />
     <Compile Include="InfrastructureModel\FieldShortNameGetters\ObjectFieldsShortNamesGetter.cs" />
     <Compile Include="GlobalModel\EntityLists\BluesnapTransactionList.cs" />
     <Compile Include="GlobalModel\EntityLists\HelpResourceList.cs" />
@@ -483,6 +500,7 @@
     <Compile Include="InvoiceModel\APIDataContract\QueryService\ARPaymentInvoiceQueryService.cs" />
     <Compile Include="InvoiceModel\APIDataContract\QueryService\ARPaymentStatusQueryService.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\XSD\APInvoiceXSD.cs" />
+    <Compile Include="InvoiceModel\CoreBL\FullAccountingARPaymentApproveService.cs" />
     <Compile Include="InvoiceModel\CustomFilters\ARInvoiceTypeCustomFilter.cs" />
     <Compile Include="InvoiceModel\EntityPMs\ARPaymentChequeReplicaPM.cs" />
     <Compile Include="InvoiceModel\EntityPMs\ARPaymentChequeStatusReplicaPM.cs" />
@@ -491,10 +509,12 @@
     <Compile Include="InvoiceModel\Tools\Behaviours\APInvoiceBehaviours\APInvoiceAmountDueBehaviour.cs" />
     <Compile Include="InvoiceModel\Tools\Behaviours\APInvoiceBehaviours\APInvoiceFieldsBehaviour.cs" />
     <Compile Include="InvoiceModel\Tools\Behaviours\APInvoiceBehaviours\APInvoiceLinesBehavior.cs" />
+    <Compile Include="InvoiceModel\Tools\Behaviours\APInvoiceBehaviours\APInvoiceShipmentsNumbersBehaviour.cs" />
     <Compile Include="InvoiceModel\Tools\Behaviours\APInvoiceBehaviours\APInvoiceTotalVatsBehavior.cs" />
     <Compile Include="ExternalService\EntityAutomationService.cs" />
     <Compile Include="InvoiceModel\Tools\Behaviours\ARInvoiceBehaviours\ARInvoiceApproveBehaviour.cs" />
     <Compile Include="InvoiceModel\Tools\Behaviours\ARInvoiceBehaviours\ARInvoiceFieldsBehaviour.cs" />
+    <Compile Include="InvoiceModel\Tools\Behaviours\ARInvoiceBehaviours\ARInvoiceShipmentsNumbersBehaviour.cs" />
     <Compile Include="InvoiceModel\Tools\Behaviours\EntityAutomationAPInvoiceMappingPMFields.cs" />
     <Compile Include="InvoiceModel\Tools\Initializers\APInvoiceServiceInitializer.cs" />
     <Compile Include="InvoiceModel\Tools\Initializers\ARInvoiceServiceInitializer.cs" />
@@ -610,16 +630,22 @@
     <Compile Include="InvoiceModel\Tools\TraceEvents\ARInvoiceStockTracing.cs" />
     <Compile Include="InvoiceModel\Tools\Validating\ARInvoiceStockValidating.cs" />
     <Compile Include="Helpers\ShipmentComputedFieldsHelper.cs" />
+    <Compile Include="QuoteModel\EntityLists\QuoteComputedFieldList.cs" />
+    <Compile Include="QuoteModel\EntityPMs\QuoteComputedFieldPM.cs" />
     <Compile Include="QuoteModel\EntityQueries\Charts\DashboardQuery.cs" />
     <Compile Include="QuoteModel\EntityQueries\Charts\QuoteConversionQuery.cs" />
     <Compile Include="QuoteModel\EntityQueries\Charts\SentQuotesKPIQuery.cs" />
     <Compile Include="QuoteModel\EntityQueries\Charts\TopFiveSalesmanQuery.cs" />
     <Compile Include="QuoteModel\EntityQueries\Charts\QuotesByCountryQuery.cs" />
     <Compile Include="QuoteModel\EntityQueries\Charts\StageFunnelQuery.cs" />
+    <Compile Include="QuoteModel\EntityQueries\QuoteComputedFieldQuery.cs" />
+    <Compile Include="QuoteModel\Tools\Behaviours\EntityAutomationQuoteMappingPMFields.cs" />
     <Compile Include="QuoteModel\Tools\Behaviours\QuoteBehaviours\QuoteFieldsBehaviour.cs" />
     <Compile Include="QuoteModel\Tools\Behaviours\QuoteBehaviours\QuoteSalesmanBehavior.cs" />
+    <Compile Include="QuoteModel\Tools\Behaviours\UpdateQuoteComputedFieldBehaviour.cs" />
     <Compile Include="QuoteModel\Tools\DataMapping\QuoteMapping.QuoteClosingReasonService.cs" />
     <Compile Include="QuoteModel\Tools\EntityService\QuoteClosingReasonService.cs" />
+    <Compile Include="QuoteModel\Tools\EntityService\QuoteFollowUpUpdateService.cs" />
     <Compile Include="QuoteModel\Tools\EntityService\QuoteSubjectService.cs" />
     <Compile Include="QuoteModel\Tools\Initializers\QuoteServiceInitializer.cs" />
     <Compile Include="QuoteModel\Tools\TraceEvents\QuoteTracing.QuoteClosingReason.cs" />
@@ -2431,6 +2457,7 @@
     <Compile Include="ShipmentsModel\APIDataContract\Master.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\Messages\ShipmentNumbersXML.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\OceanOrInlandPackage.Generated.cs" />
+    <Compile Include="ShipmentsModel\APIDataContract\Package.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\Payable.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\PickUp.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\AirPackageQueryService.Generated.cs" />
@@ -2451,6 +2478,7 @@
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\MasterQueryService.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\OceanOrInlandPackageQueryService.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\OceanOrInlandPackageQueryService.cs" />
+    <Compile Include="ShipmentsModel\APIDataContract\QueryService\PackageQueryService.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\PayableQueryService.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\PickUpQueryService.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\ReceivableQueryService.Generated.cs" />
@@ -2567,6 +2595,7 @@
     <Compile Include="ShipmentsModel\EntityLists\ShipmentTypeList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\SpecialServicesTypeList.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\APILogsDataPM.cs" />
+    <Compile Include="ShipmentsModel\EntityOtherServices\ExternalTasksQueueService.cs" />
     <Compile Include="ShipmentsModel\EntityOtherServices\CustomsTransferService.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\AWBAdditionalHandlingInfoPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\AWBChargesCodePM.cs" />
@@ -2668,6 +2697,7 @@
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentAssemblyQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentAWBPrintOnlyQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentCarrierStatusQuery.cs" />
+    <Compile Include="ShipmentsModel\EntityQueries\ShipmentCloudCustomDataDeserializer.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentCommodityQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentConsoleShipmentQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentCustomerTypeQuery.cs" />
@@ -2697,6 +2727,7 @@
     <Compile Include="ShipmentsModel\EntityQueries\SpecialServicesTypeQuery.cs" />
     <Compile Include="ShipmentsModel\Testing\General.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\IShipmentBehaviour.cs" />
+    <Compile Include="ShipmentsModel\Tools\Behaviours\MasterHousesBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviourFacade.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\CompositionBehaviours\OrderPackagesBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\MapCompositionBehaviour.cs" />
@@ -2707,6 +2738,7 @@
     <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\ShipmentFieldsBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\ShipmentMasterEntityBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\ShipmentNumberBehaviour.cs" />
+    <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\ShipmentOperationalDateBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\ShipmentPartnersBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\ShipmentQuoteBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\Validators\ShipmentMasterIsUsedValidator.cs" />

@@ -45,6 +45,9 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string ToAddressZipCode { get; set; }
         public string ToAddressCountryId { get; set; }
         public string ToAddress { get; set; }               //250
+        public string ParentPickUpDeliveryId { get; set; }
+        public int? ChildPickUpIndex { get; set; }
+        public int? ChildDeliveryIndex { get; set; }
 
         [ForeignKey("TransportModeCode")]
         public PickUpDeliveryTransportMode TransportMode { get; set; }
@@ -94,5 +97,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
       
         [ForeignKey("ToAddressId")]
         public Address ToAddressObj { get; set; }
+
+        [ForeignKey("ParentPickUpDeliveryId")]
+        public ShipmentPickUpDelivery ParentPickUpDelivery { get; set; }
     }
 }

@@ -375,19 +375,23 @@ export class DWObjectFieldsDetails extends BaseComponent {
 
     private GetMultiSelectedDisplayName() {
         let textValue = "";
-        let dimensionTableCode = this.DimensionTableCode ? this.DimensionTableCode : this.ParentDimTabelName;
-        let headerName = dimensionTableCode == "DIM_Partners" ? "Local Name" : this.Code.substring(1, this.Code.length - 1);
         if (this.multiSelectedValueLists && this.multiSelectedValueLists.length > 0) {
-            this.multiSelectedValueLists.forEach((field) => {
-                textValue += this.ResolveValue(field, headerName) + ";";
+            let dimensionTableCode = this.DimensionTableCode ? this.DimensionTableCode : this.ParentDimTabelName;
+            let fieldCode = (dimensionTableCode == "DIM_Partners" && this.LOVAdditionalColumns && this.LOVAdditionalColumns.indexOf('[Local Name]') != -1) ? "Local Name" : this.Code;
+            let fieldName = fieldCode ? fieldCode.replace('[', '').replace(']', '') : "";
+            this.multiSelectedValueLists.forEach((item) => {
+                textValue += this.ResolveValue(item, fieldName);
+                textValue += !this.IsLastItemInMultiSelectedValueLists(item) ? ";" : "";
             });
-
-            textValue += "@@";
-            textValue = textValue.replace(";@@", "");
-            textValue = textValue.replace("@@", "");
         }
         return textValue;
     }
+
+
+    private IsLastItemInMultiSelectedValueLists(item: MultiSelectedValue) {
+        return this.multiSelectedValueLists.indexOf(item) == (this.multiSelectedValueLists.length - 1);
+    }
+
 
     private ResolveValue(Values: MultiSelectedValue, header: string) {
         var i = "";

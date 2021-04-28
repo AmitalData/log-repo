@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -93,6 +94,18 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             
                 return context.AWBHandlingCodes.Where(a => a.AirlineId == airlineId);
             
+        }
+
+        public List<string> GetAWBHandlingCodesByIds(List<string> specialHandlingIds)
+        {
+            List<string> specialHandlingCodes = new List<string>();
+            if (specialHandlingIds != null && specialHandlingIds.Count() > 0)
+            {
+                specialHandlingCodes = (from a in context.AWBHandlingCodes
+                                        where specialHandlingIds.Contains(a.Id)
+                                        select a.Code).ToList();
+            }
+            return specialHandlingCodes;
         }
     }
 }

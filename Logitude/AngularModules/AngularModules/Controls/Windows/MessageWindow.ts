@@ -39,6 +39,11 @@ export class MessageWindow {
     public Show(message: string) {
         this.Message = message;
 
+        if (message.indexOf("Internet Connection Problem:") > -1) {
+            this.Width = 440;
+            this.Height = 440;
+        }
+
         if (!this.CurrentSession) {
             this.CurrentSession = SessionLocator.SelectedSession;
         }

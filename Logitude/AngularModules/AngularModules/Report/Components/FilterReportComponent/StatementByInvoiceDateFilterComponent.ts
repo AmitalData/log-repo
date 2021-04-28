@@ -15,7 +15,8 @@ import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 
 export class StatementByInvoiceDateFilterComponent extends BaseComponent   {
     public ReportsPreview: ReportsPreviewComponent;
-    public CustomerId: string = null;    
+    public CustomerId: string = null;
+    public PartnerId: string = null;    
     public ObjectTableName: string = "Report";
     public RunReportTitle: string = "Run Report";
     public ValidationErrorsList: string[];
@@ -36,6 +37,10 @@ export class StatementByInvoiceDateFilterComponent extends BaseComponent   {
         this.RunReportTitle = "Preview";
     }
 
+    GetMainCustomerFieldName() {
+        return null;
+    }
+
     IsPartnersChanged() {
         return false;
     }
@@ -52,6 +57,16 @@ export class StatementByInvoiceDateFilterComponent extends BaseComponent   {
             queryFilterItem.Operator = "Equals";
             queryFilterItems.push(queryFilterItem);
         }
+
+        if (!AppTool.IsNullOrEmpty(this.PartnerId)) {
+            queryFilterItem = new QueryFilterItem();
+            queryFilterItem.DisplayInList = false;
+            queryFilterItem.FieldName = "PartnerId";
+            queryFilterItem.FieldValue = this.PartnerId;
+            queryFilterItem.Operator = "Equals";
+            queryFilterItems.push(queryFilterItem);
+        }
+        
         return queryFilterItems;
     }
 
@@ -74,8 +89,8 @@ export class StatementByInvoiceDateFilterComponent extends BaseComponent   {
 
     ValidateSelectedFilters() {
         this.ValidationErrorsList = [];
-        if (AppTool.IsNullOrEmpty(this.CustomerId)) {
-            this.ValidationErrorsList.push("Please select a partner");
+        if (AppTool.IsNullOrEmpty(this.PartnerId)) {
+            this.ValidationErrorsList.push("Please select a Partner");
             return false;
         }
         return true;

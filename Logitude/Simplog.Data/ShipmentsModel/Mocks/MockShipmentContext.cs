@@ -23,7 +23,7 @@ namespace Simplog.Data.ShipmentsModel.Mocks
                 MockCommonContext commonContext = new MockCommonContext();
                 return new MockObjectSet<Shipment>(new List<Shipment>() { 
                   
-                new Shipment() {Tenant=1, Id = "1-1", IsAccountingClosed = false , FromPort=Ports.Where(d=>d.Id=="1-1").FirstOrDefault() , FromPortId="1-1" , ToPort=Ports.Where(d=>d.Id=="1-2").FirstOrDefault() , ToPortId="1-2" , TransportMode=webcontext.TransportModes.Where(d=>d.Id=="111").FirstOrDefault() , TransportModeId="111" , OnCarriageFromPort=commonContext.Ports.Where(d=>d.Id=="1-1").FirstOrDefault() , OnCarriageFromPortId="1-1" , ShipmentLevel=ShipmentLevels.Where(d=>d.Code=="SL").FirstOrDefault(), ShipmentLevelCode="SL"  , EntityStatus=webcontext.EntityStatus.Where(d=>d.Id=="111").FirstOrDefault() , StatusId="111"}, 
+                new Shipment() {Tenant=1, Id = "1-1", IsAccountingClosed = false , FromPort=Ports.Where(d=>d.Id=="1-1").FirstOrDefault() , FromPortId="1-1" , ToPort=Ports.Where(d=>d.Id=="1-2").FirstOrDefault() , ToPortId="1-2" , TransportMode=webcontext.TransportModes.Where(d=>d.Id=="111").FirstOrDefault() , TransportModeId="111", ShipmentLevel=ShipmentLevels.Where(d=>d.Code=="SL").FirstOrDefault(), ShipmentLevelCode="SL"  , EntityStatus=webcontext.EntityStatus.Where(d=>d.Id=="111").FirstOrDefault() , StatusId="111"}, 
                 new Shipment() { Id = Guid.NewGuid().ToString(), IsAccountingClosed = true }, 
                 new Shipment() { Id = Guid.NewGuid().ToString(), IsAccountingClosed = false }, }); }
         }

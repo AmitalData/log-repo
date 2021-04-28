@@ -165,6 +165,10 @@ namespace WebFreight.Web.DataProviders
         public DateTime? PreCarriageATD { get; set; }
         public string PreCarriageCarrierCode { get; set; }
         public string PreCarriageCarrierNumber { get; set; }
+        public DateTime? PreForwardingETD { get; set; }
+        public DateTime? PreForwardingATD { get; set; }
+        public string PreForwardingCarrierCode { get; set; }
+        public string PreForwardingCarrierNumber { get; set; }
         public DateTime? PickupETD { get; set; }
         public DateTime? PickupATD { get; set; }
         public DateTime? MainCarriageATD { get; set; }

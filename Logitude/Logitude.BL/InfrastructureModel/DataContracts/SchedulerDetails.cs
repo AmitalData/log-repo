@@ -19,6 +19,8 @@ namespace Logitude.BL.InfrastructureModel.DataContracts
 
         [DataMember]
         public ReportSchedulerDetails ReportDetails { get; set; }
+        [DataMember]
+        public bool SendIfEmpty { get; set; }
 
     }
 
@@ -60,6 +62,8 @@ namespace Logitude.BL.InfrastructureModel.DataContracts
         public ReportSchedulerRecepients Recepients { get; set; }
         [DataMember]
         public List<QueryFilterItem> ReportFilterItems { get; set; }
+        [DataMember]
+        public string MainCustomerFieldName { get; set; }
     }
 
     [DataContract(Namespace = "")]

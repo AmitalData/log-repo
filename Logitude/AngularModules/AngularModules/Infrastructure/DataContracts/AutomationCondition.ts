@@ -1,4 +1,4 @@
-﻿
+
 
 import {Injectable} from '@angular/core';
 
@@ -23,5 +23,6 @@ export class AutomationCondition {
     //public PartnerObjectFieldId: string;
     public PartnerObjectFieldCode: string;
     public ObjectFieldCode: string;
+    public IsValid;
 }
 

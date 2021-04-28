@@ -230,7 +230,13 @@ export class PayablesComponent extends BaseComponent {
     }
     OkButtonClicked() {
         this.ItemsSource.Collection.forEach(p => {
-            if (p.IsAdded) this.EntityPM.AddReceivable(p.ReceivablePM);
+            if (p.IsAdded) {
+                if (p.ReceivablePM.MeasurementCode == "PFCL") {
+                    p.ReceivablePM.Quantity = ArrayTool.Sum(this.ItemsSource.Collection.filter(d => d.IsAdded && d.CurrencyCode != SessionLocator.LocalCurrencyCode && d.MeasurementCode != "PFCL"), "ReceivableAmountLocal");
+                    p.ComputeReceivableAmount();
+                }
+                this.EntityPM.AddReceivable(p.ReceivablePM);
+            }
         });
 
         this.BuildObsList();
@@ -623,7 +629,14 @@ export class GenerateFromPayablesModelData extends BaseComponent {
                     case "FIXD": {
                         _Ratio = this.PayablePM.Quantity / this.ShipmentPM.ShipmentConsoleShipments.length;
                         unitPrice = _Ratio * this.PayablePM.UnitPrice;
-                        quantity = 1;
+                        quantity = this.ShipmentPM.ShipmentConsoleShipments.filter(d => d.Id == item.ShipmentId)[0].TEU;
+                        break;
+                    }
+
+                    case "PFCL": {
+                        _Ratio = this.PayablePM.Quantity / this.ShipmentPM.ShipmentConsoleShipments.length;
+                        unitPrice = _Ratio * this.PayablePM.UnitPrice;
+                        quantity = ArrayTool.Sum(this.ShipmentPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "ExpectedAmountLocal");
                         break;
                     }
 
@@ -709,7 +722,7 @@ export class GenerateFromPayablesModelData extends BaseComponent {
         }
     }
 
-    ComputeReceivableAmount() {
+    public ComputeReceivableAmount() {
         var amount: number = null;
         var amountLocal: number = null;
         var amountProfit: number = null;

@@ -40,20 +40,20 @@ export class ResetPasswordComponent implements OnInit {
             this.GetcargoTrackingData(baseUrl);
     }
 
-    
+
     private GoToError401(){
         this.router.navigate(['Error401']);
     }
 
     private GetcargoTrackingData(baseUrl:string) {
         this.LogoImgSrc = "./assets/images/logo/White.jpg";
-        this.cargoTrackingBrandingDataExtendedService.GetCargoTrackingBrandingDataForPrivateSite(ServiceHelper.GetcargoTrackingDataRequest(baseUrl)).subscribe((response: ServiceResponse) => { 
+        this.cargoTrackingBrandingDataExtendedService.GetUserDashboardBrandingData(ServiceHelper.GetcargoTrackingDataRequest(baseUrl)).subscribe((response: ServiceResponse) => {
             if(response.Result){
                 this.Tenant = response.Result.Tenant;
                 ServiceHelper.SetCargoTrackingDate(response.Result,baseUrl);
                 this.LogoImgSrc = this.loginServiceHelper.GetLoginLogoImg();
-                this.MainColor = response.Result.MainColor != null ? ServiceHelper.ConvertHexaToRGBA(response.Result.MainColor) : null;
-                this.SecondaryColor = response.Result.SecondaryColor != null ? ServiceHelper.ConvertHexaToRGBA(response.Result.SecondaryColor) : null;
+                this.MainColor = response.Result.MainColor;
+                this.SecondaryColor = response.Result.SecondaryColor;
             }
             else{
                 this.GoToError401();
@@ -67,7 +67,7 @@ export class ResetPasswordComponent implements OnInit {
     }
 
     private initComponent() {
-        document.body.style.background = "#fff";
+        // document.body.style.background = "#fff";
     }
 
     private captchaCode: string = "";
@@ -153,8 +153,8 @@ export class ResetPasswordComponent implements OnInit {
         //this.Tenant = this.route.snapshot.queryParams?.tenant;
         if(this.Tenant)
 
-            this.router.navigate(["Cargo-Tracking/login"]);//,{ queryParams: {tenant: this.Tenant}}
+            this.router.navigate(["cargo-tracking/login"]);//,{ queryParams: {tenant: this.Tenant}}
         else
-            this.router.navigate(["Cargo-Tracking/login"]);
+            this.router.navigate(["cargo-tracking/login"]);
     }
 }

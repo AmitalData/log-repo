@@ -1,5 +1,5 @@
 <div *ngIf="!isLoading && !Shipment" class="no-result">
-    <h2>    Sorry, Can't find this shipment </h2>
+    <h2> Sorry, Can't find this shipment </h2>
 </div>
 
 <!-- Progress Indicator -->
@@ -18,20 +18,22 @@
     <div class="box-header">
         <div class="icon hide-mobile">
             <div class="circle-image">
-                <svg  width="47px"  height="24px" viewBox="0 0 39 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                                <title>1AA85C09-5F26-422B-B8DF-3A21F62D731B</title>
-                                <g id="Desktop-DSV" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                    <g id="Search-Results" transform="translate(-375.000000, -1009.000000)" fill="var(--secondaryColor)">
-                                        <g  transform="translate(308.000000, 934.000000)">
-                                            <g  transform="translate(45.000000, 46.000000)">
-                                                <g id="Group-3">
-                                                    <path [attr.d]="GetModesvgPath()" [attr.transform]="transform"  />
-                                                </g>
-                                            </g>
-                                        </g>
+                <svg width="47px" height="24px" viewBox="0 0 39 24" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <title>1AA85C09-5F26-422B-B8DF-3A21F62D731B</title>
+                    <g id="Desktop-DSV" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <g id="Search-Results" transform="translate(-375.000000, -1009.000000)"
+                            fill="var(--secondaryColor)">
+                            <g transform="translate(308.000000, 934.000000)">
+                                <g transform="translate(45.000000, 46.000000)">
+                                    <g id="Group-3">
+                                        <path [attr.d]="GetModesvgPath()" [attr.transform]="transform" />
                                     </g>
                                 </g>
-                            </svg>
+                            </g>
+                        </g>
+                    </g>
+                </svg>
             </div>
         </div>
 
@@ -42,18 +44,18 @@
 
         <div class="field">
             <div class="label">
-                References 
+                References
                 &nbsp;
-                <a *ngIf="ShipmentReferences && ShipmentReferences.length > 2" 
-                    (click)="showMoreReferences=!showMoreReferences" 
+                <a *ngIf="ShipmentReferences && ShipmentReferences.length > 2"
+                    (click)="showMoreReferences=!showMoreReferences"
                     style="cursor: pointer;text-decoration: underline; font-size: 11px;">
                     {{showMoreReferences?'Show Less':'See all'}}
-                </a> 
-            
+                </a>
+
             </div>
             <div class="value">
-
-                <div  *ngIf="IsLoadingReferences">
+                <div *ngIf="Shipment.House != null">{{Shipment.House}}</div>
+                <div *ngIf="IsLoadingReferences">
                     Loading...
                 </div>
 
@@ -77,8 +79,7 @@
             <div class="label">Destination Port</div>
             <div class="value">{{ Shipment.ToPortName }}</div>
         </div>
-
-        <img class="hide-tablet" src="./assets/images/misc/cargo.svg" alt="">
+        <img class="ShipmentHeaderImage" *ngIf="ShipmentHeaderImage"  [attr.src]="ShipmentHeaderImage" alt="" />
     </div>
 
     <div class="panel-container">
@@ -93,12 +94,16 @@
 
                     <div class="milestones">
                         <div class="start">
-                            <svg width="34px" height="31px" viewBox="0 0 34 31" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <svg width="34px" height="31px" viewBox="0 0 34 31" version="1.1"
+                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                 <title>23C7C304-A02E-4644-B879-3E0D786778CD</title>
                                 <g id="Desktop-DSV" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                    <g id="Shipment-1-future-steps" transform="translate(-357.000000, -330.000000)" fill="var(--secondaryColor)">
+                                    <g id="Shipment-1-future-steps" transform="translate(-357.000000, -330.000000)"
+                                        fill="var(--secondaryColor)">
                                         <g id="In-progress" transform="translate(356.000000, 329.000000)">
-                                            <path d="M4.8441088,3.60531712 L4.8441088,4.88673712 C4.8441088,6.29834032 5.992624,7.44957712 7.4064952,7.44957712 C8.8205176,7.44957712 9.9693352,6.29834032 9.9693352,4.88673712 L9.9693352,4.88673712 L9.9693352,3.60531712 L25.3448632,3.60531712 L25.3448632,4.88673712 C25.3448632,6.29834032 26.493832,7.44957712 27.9077032,7.44957712 C29.3217256,7.44957712 30.4699384,6.29834032 30.4699384,4.88673712 L30.4699384,4.88673712 L30.4699384,3.60531712 L31.5387712,3.60531712 C33.072544,3.60531712 34.3141984,4.86662752 34.3141984,6.42338272 L34.3141984,6.42338272 L34.3141984,28.9766771 C34.3141984,30.5281403 33.0714856,31.7944403 31.5375616,31.7944403 L31.5375616,31.7944403 L3.7766368,31.7944403 C2.2425616,31.7944403 1,30.5281403 1,28.9766771 L1,28.9766771 L1,6.42338272 C1,4.86662752 2.2415032,3.60531712 3.7755784,3.60531712 L3.7755784,3.60531712 L4.8441088,3.60531712 Z M31.7513584,11.2932323 L3.5626888,11.2932323 L3.5626888,28.9766771 C3.5626888,29.1115475 3.6600616,29.2316003 3.7766368,29.2316003 L3.7766368,29.2316003 L31.5375616,29.2316003 C31.6539856,29.2316003 31.7513584,29.1115475 31.7513584,28.9766771 L31.7513584,28.9766771 L31.7513584,11.2932323 Z M8.74683784,23.7901845 L8.74683784,27.4142973 L5.12317864,27.4142973 L5.12317864,23.7901845 L8.74683784,23.7901845 Z M14.1079362,23.7901845 L14.1079362,27.4142973 L10.484277,27.4142973 L10.484277,23.7901845 L14.1079362,23.7901845 Z M19.4690346,23.7901845 L19.4690346,27.4142973 L15.8452242,27.4142973 L15.8452242,23.7901845 L19.4690346,23.7901845 Z M24.8299818,23.7901845 L24.8299818,27.4142973 L21.2063226,27.4142973 L21.2063226,23.7901845 L24.8299818,23.7901845 Z M8.74683784,18.5111877 L8.74683784,22.1351493 L5.12317864,22.1351493 L5.12317864,18.5111877 L8.74683784,18.5111877 Z M14.1079362,18.5111877 L14.1079362,22.1351493 L10.484277,22.1351493 L10.484277,18.5111877 L14.1079362,18.5111877 Z M19.4690346,18.5111877 L19.4690346,22.1351493 L15.8452242,22.1351493 L15.8452242,18.5111877 L19.4690346,18.5111877 Z M30.1910802,18.5111877 L30.1910802,22.1351493 L26.567421,22.1351493 L26.567421,18.5111877 L30.1910802,18.5111877 Z M24.8299818,18.5111877 L24.8299818,22.1351493 L21.2063226,22.1351493 L21.2063226,18.5111877 L24.8299818,18.5111877 Z M8.74683784,13.2321909 L8.74683784,16.8558501 L5.12317864,16.8558501 L5.12317864,13.2321909 L8.74683784,13.2321909 Z M14.1079362,13.2321909 L14.1079362,16.8558501 L10.484277,16.8558501 L10.484277,13.2321909 L14.1079362,13.2321909 Z M19.4690346,13.2321909 L19.4690346,16.8558501 L15.8452242,16.8558501 L15.8452242,13.2321909 L19.4690346,13.2321909 Z M30.1910802,13.2321909 L30.1910802,16.8558501 L26.567421,16.8558501 L26.567421,13.2321909 L30.1910802,13.2321909 Z M24.8299818,13.2321909 L24.8299818,16.8558501 L21.2063226,16.8558501 L21.2063226,13.2321909 L24.8299818,13.2321909 Z M7.40652544,1.00006048 C8.11474624,1.00006048 8.68794544,1.57341088 8.68794544,2.28148048 L8.68794544,4.88670688 C8.68794544,5.59477648 8.11474624,6.16812688 7.40652544,6.16812688 C6.69845584,6.16812688 6.12510544,5.59477648 6.12510544,4.88670688 L6.12510544,2.28148048 C6.12510544,1.57341088 6.69845584,1.00006048 7.40652544,1.00006048 Z M27.9077183,1 C28.6157879,1 29.1891383,1.5733504 29.1891383,2.28142 L29.1891383,2.28142 L29.1891383,4.8866464 C29.1891383,5.594716 28.6157879,6.1680664 27.9077183,6.1680664 C27.1994975,6.1680664 26.6261471,5.594716 26.6261471,4.8866464 L26.6261471,4.8866464 L26.6261471,2.28142 C26.6261471,1.5733504 27.1994975,1 27.9077183,1 Z" id="Calander-icon-active"></path>
+                                            <path
+                                                d="M4.8441088,3.60531712 L4.8441088,4.88673712 C4.8441088,6.29834032 5.992624,7.44957712 7.4064952,7.44957712 C8.8205176,7.44957712 9.9693352,6.29834032 9.9693352,4.88673712 L9.9693352,4.88673712 L9.9693352,3.60531712 L25.3448632,3.60531712 L25.3448632,4.88673712 C25.3448632,6.29834032 26.493832,7.44957712 27.9077032,7.44957712 C29.3217256,7.44957712 30.4699384,6.29834032 30.4699384,4.88673712 L30.4699384,4.88673712 L30.4699384,3.60531712 L31.5387712,3.60531712 C33.072544,3.60531712 34.3141984,4.86662752 34.3141984,6.42338272 L34.3141984,6.42338272 L34.3141984,28.9766771 C34.3141984,30.5281403 33.0714856,31.7944403 31.5375616,31.7944403 L31.5375616,31.7944403 L3.7766368,31.7944403 C2.2425616,31.7944403 1,30.5281403 1,28.9766771 L1,28.9766771 L1,6.42338272 C1,4.86662752 2.2415032,3.60531712 3.7755784,3.60531712 L3.7755784,3.60531712 L4.8441088,3.60531712 Z M31.7513584,11.2932323 L3.5626888,11.2932323 L3.5626888,28.9766771 C3.5626888,29.1115475 3.6600616,29.2316003 3.7766368,29.2316003 L3.7766368,29.2316003 L31.5375616,29.2316003 C31.6539856,29.2316003 31.7513584,29.1115475 31.7513584,28.9766771 L31.7513584,28.9766771 L31.7513584,11.2932323 Z M8.74683784,23.7901845 L8.74683784,27.4142973 L5.12317864,27.4142973 L5.12317864,23.7901845 L8.74683784,23.7901845 Z M14.1079362,23.7901845 L14.1079362,27.4142973 L10.484277,27.4142973 L10.484277,23.7901845 L14.1079362,23.7901845 Z M19.4690346,23.7901845 L19.4690346,27.4142973 L15.8452242,27.4142973 L15.8452242,23.7901845 L19.4690346,23.7901845 Z M24.8299818,23.7901845 L24.8299818,27.4142973 L21.2063226,27.4142973 L21.2063226,23.7901845 L24.8299818,23.7901845 Z M8.74683784,18.5111877 L8.74683784,22.1351493 L5.12317864,22.1351493 L5.12317864,18.5111877 L8.74683784,18.5111877 Z M14.1079362,18.5111877 L14.1079362,22.1351493 L10.484277,22.1351493 L10.484277,18.5111877 L14.1079362,18.5111877 Z M19.4690346,18.5111877 L19.4690346,22.1351493 L15.8452242,22.1351493 L15.8452242,18.5111877 L19.4690346,18.5111877 Z M30.1910802,18.5111877 L30.1910802,22.1351493 L26.567421,22.1351493 L26.567421,18.5111877 L30.1910802,18.5111877 Z M24.8299818,18.5111877 L24.8299818,22.1351493 L21.2063226,22.1351493 L21.2063226,18.5111877 L24.8299818,18.5111877 Z M8.74683784,13.2321909 L8.74683784,16.8558501 L5.12317864,16.8558501 L5.12317864,13.2321909 L8.74683784,13.2321909 Z M14.1079362,13.2321909 L14.1079362,16.8558501 L10.484277,16.8558501 L10.484277,13.2321909 L14.1079362,13.2321909 Z M19.4690346,13.2321909 L19.4690346,16.8558501 L15.8452242,16.8558501 L15.8452242,13.2321909 L19.4690346,13.2321909 Z M30.1910802,13.2321909 L30.1910802,16.8558501 L26.567421,16.8558501 L26.567421,13.2321909 L30.1910802,13.2321909 Z M24.8299818,13.2321909 L24.8299818,16.8558501 L21.2063226,16.8558501 L21.2063226,13.2321909 L24.8299818,13.2321909 Z M7.40652544,1.00006048 C8.11474624,1.00006048 8.68794544,1.57341088 8.68794544,2.28148048 L8.68794544,4.88670688 C8.68794544,5.59477648 8.11474624,6.16812688 7.40652544,6.16812688 C6.69845584,6.16812688 6.12510544,5.59477648 6.12510544,4.88670688 L6.12510544,2.28148048 C6.12510544,1.57341088 6.69845584,1.00006048 7.40652544,1.00006048 Z M27.9077183,1 C28.6157879,1 29.1891383,1.5733504 29.1891383,2.28142 L29.1891383,2.28142 L29.1891383,4.8866464 C29.1891383,5.594716 28.6157879,6.1680664 27.9077183,6.1680664 C27.1994975,6.1680664 26.6261471,5.594716 26.6261471,4.8866464 L26.6261471,4.8866464 L26.6261471,2.28142 C26.6261471,1.5733504 27.1994975,1 27.9077183,1 Z"
+                                                id="Calander-icon-active"></path>
                                         </g>
                                     </g>
                                 </g>
@@ -108,14 +113,16 @@
                         </div>
                         <div class="middle" *ngIf="InProgressShipment || Delivered">
                             <!--<img class="path " [attr.src]="GetModeIcon()" alt=" " />-->
-                            <svg  width="47px"  height="24px" viewBox="0 0 39 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <svg width="47px" height="24px" viewBox="0 0 39 24" version="1.1"
+                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                 <title>1AA85C09-5F26-422B-B8DF-3A21F62D731B</title>
                                 <g id="Desktop-DSV" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                    <g id="Search-Results" transform="translate(-375.000000, -1009.000000)" fill="var(--secondaryColor)">
-                                        <g  transform="translate(308.000000, 934.000000)">
-                                            <g  transform="translate(45.000000, 46.000000)">
+                                    <g id="Search-Results" transform="translate(-375.000000, -1009.000000)"
+                                        fill="var(--secondaryColor)">
+                                        <g transform="translate(308.000000, 934.000000)">
+                                            <g transform="translate(45.000000, 46.000000)">
                                                 <g id="Group-3">
-                                                    <path [attr.d]="GetModesvgPath()" [attr.transform]="transform"  />
+                                                    <path [attr.d]="GetModesvgPath()" [attr.transform]="transform" />
                                                 </g>
                                             </g>
                                         </g>
@@ -127,12 +134,16 @@
                         </div>
                         <div class="end">
 
-                            <svg width="24px" height="33px" viewBox="0 0 24 33" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <svg width="24px" height="33px" viewBox="0 0 24 33" version="1.1"
+                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                 <title>77E5C82D-08E6-4278-98AE-10E5958AFF86</title>
                                 <g id="Desktop-DSV" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                    <g id="Styleguide-1" transform="translate(-982.000000, -713.000000)" [attr.fill]="DileveredIconColor">
+                                    <g id="Styleguide-1" transform="translate(-982.000000, -713.000000)"
+                                        [attr.fill]="DileveredIconColor">
                                         <g id="Delivered" transform="translate(325.000000, 713.000000)">
-                                            <path d="M669,0 C675.627402,0 681,5.35580833 681,11.9625 C681,20.2293208 669,33 669,33 C669,33 657,20.2293208 657,11.9625 C657,5.35580833 662.372598,0 669,0 Z M669,5.5 C665.49138,5.5 662.647059,8.27025 662.647059,11.6875 C662.647059,15.10475 665.49138,17.875 669,17.875 C672.508663,17.875 675.352941,15.10475 675.352941,11.6875 C675.352941,8.27025 672.508663,5.5 669,5.5 Z" id="PIN-icon-Active"></path>
+                                            <path
+                                                d="M669,0 C675.627402,0 681,5.35580833 681,11.9625 C681,20.2293208 669,33 669,33 C669,33 657,20.2293208 657,11.9625 C657,5.35580833 662.372598,0 669,0 Z M669,5.5 C665.49138,5.5 662.647059,8.27025 662.647059,11.6875 C662.647059,15.10475 665.49138,17.875 669,17.875 C672.508663,17.875 675.352941,15.10475 675.352941,11.6875 C675.352941,8.27025 672.508663,5.5 669,5.5 Z"
+                                                id="PIN-icon-Active"></path>
                                         </g>
                                     </g>
                                 </g>
@@ -145,60 +156,61 @@
 
                     <div class="line-progressbar">
                         <div class="line" [class.colored-line]="InProgressShipment||Delivered"></div>
-                        <div class="line end"  [class.colored-line]="Delivered" ></div>
+                        <div class="line end" [class.colored-line]="Delivered"></div>
 
                         <div class="dot start"></div>
-                        <div class="dot middle" [class.outline]="InProgressShipment" [class.colored]="Delivered" *ngIf="InProgressShipment || Delivered"></div>
+                        <div class="dot middle" [class.outline]="InProgressShipment" [class.colored]="Delivered"
+                            *ngIf="InProgressShipment || Delivered"></div>
                         <div class="dot end gray" [class.colored]="Delivered"></div>
                     </div>
 
                 </div>
 
- 
+
                 <div class="title hide-mobile">Shipment Milestones Details</div>
                 <div *ngIf="MilstonesExist">
-                    <div class="tag">Future milestones</div>
-                    <ul *ngIf="FuturesMilestoneFields" class="steps-list">
+                    <div class="tag"  *ngIf="isPlannedMilestonesExist">Planned Milestones</div>
+                    <ul *ngIf="isPlannedMilestonesExist" class="steps-list">
                         <li *ngFor="let item of FuturesMilestoneFields" class="dimmed">
                             <ng-container *ngIf="item.EstimationDate">
                                 <div class="tick"> </div>
-                                <div class="date" style="width: 130px;">{{item.EstimationDate | date: 'dd/MM/yyyy, HH:MM'}}</div>
                                 <div class="caption" style="width: 205px;">{{item.Name}}</div>
-                                <div class="desc" style="width: calc(100% - 450px); padding: 0;">{{item.Notes}} </div>
+                                <div class="date" style="width: 130px;">{{item.EstimationDate | date: 'dd/MM/yyyy, HH:mm'}}</div>
+                                <div class="desc" style="width: calc(100% - 450px); padding: 0;" [attr.title]="item.Notes">{{item.Notes}} </div>
                             </ng-container>
-
                         </li>
                     </ul>
 
                     <div class="tag">Current Milestone</div>
-                    <ul *ngIf="CurrentMilestoneField" class="steps-list">
-                        <li class="highlighted">
-                            <ng-container *ngIf="CurrentMilestoneField.Date">
+                    <ul class="steps-list">
+                        <li class="highlighted" *ngIf="CurrentMilestoneField.Date">
+                            <ng-container>
                                 <div class="tick"> </div>
-                                <div class="date" style="width: 130px;">{{CurrentMilestoneField.Date | date:  'dd/MM/yyyy, HH:MM'}}</div>
                                 <div class="caption" style="width: 205px;">{{CurrentMilestoneField.Name}}</div>
-                                <div class="desc" style="width: calc(100% - 450px); padding: 0;">{{CurrentMilestoneField.Notes}} </div>
+                                <div class="date" style="width: 130px;">{{CurrentMilestoneField.Date | date: 'dd/MM/yyyy, HH:mm'}}</div>
+                                <div class="desc" style="width: calc(100% - 450px); padding: 0;" [attr.title]="CurrentMilestoneField.Notes">{{CurrentMilestoneField.Notes}}</div>
                             </ng-container>
                         </li>
                     </ul>
 
                     <div class="tag">Completed Milestones</div>
                     <ul *ngIf="CompletedMilestoneFields" class="steps-list">
-                        <li *ngFor="let item of CompletedMilestoneFields">
+                        <li *ngFor="let item of CompletedMilestoneFields" [class.hide]='!item.Date'>
                             <ng-container *ngIf="item.Date">
                                 <div class="tick"> <img src="./assets/images/icons/tick.png" alt=""> </div>
-                                <div class="date" style="width: 130px;">{{item.Date | date: 'dd/MM/yyyy, HH:MM'}}</div>
                                 <div class="caption" style="width: 205px;">{{item.Name}}</div>
-                                <div class="desc" style="width: calc(100% - 450px); padding: 0;">{{item.Notes}}</div>
+                                <div class="date" style="width: 130px;">{{item.Date | date: 'dd/MM/yyyy, HH:mm'}}</div>
+                                <div class="desc" style="width: calc(100% - 450px); padding: 0;" [attr.title]="item.Notes">{{item.Notes}}</div>
                             </ng-container>
                         </li>
                     </ul>
                 </div>
-                <div *ngIf="!MilstonesExist" style=" height: 300px; vertical-align: middle;" >
-                    <div style="text-align: center;  vertical-align: middle;font-weight: bold;font-size: 16px;color: #D2D2D2; margin-top:150px ;">
-                    No Milstone Data Exists
+                <div *ngIf="!MilstonesExist" style=" height: 300px; vertical-align: middle;">
+                    <div
+                        style="text-align: center;  vertical-align: middle;font-weight: bold;font-size: 16px;color: #D2D2D2; margin-top:150px ;">
+                        No Milstone Data Exists
                     </div>
-                 
+
                 </div>
             </div>
 
@@ -210,18 +222,13 @@
                 <h2 class="hide-mobile hide-tablet">Shipment Details</h2>
 
                 <div class="field">
-                    <div class="label">Creation Date</div>
-                    <div class="value">{{ Shipment.CreateDate   | date: 'dd/MM/yyyy' }}</div>
+                    <div class="label">{{ShipmentLabel}}</div>
+                    <div class="value">{{ ShipmentReference}}</div>
                 </div>
 
                 <div class="field">
                     <div class="label">Gross Weight</div>
-                    <div class="value">{{ Shipment.GrossWeight }}</div>
-                </div>
-
-                <div class="field">
-                    <div class="label">Requested Delivery date</div>
-                    <div class="value">21-Mar-2020, 23:00</div>
+                    <div class="value">{{ Shipment.GrossWeight | number }} {{Shipment.GrossWeightUnitCode||''}}</div>
                 </div>
 
                 <div class="field">
@@ -242,16 +249,15 @@
                             <li *ngFor="let ref of ShipmentContainers.slice(0,2), let i = index">{{ref}}</li>
                         </ul>
                         &nbsp;
-                        <a *ngIf="ShipmentContainers.length > 2" 
-                            (click)="showMoreContainers=!showMoreContainers" 
+                        <a *ngIf="ShipmentContainers.length > 2" (click)="showMoreContainers=!showMoreContainers"
                             style="cursor: pointer;text-decoration: underline; font-size: 11px;">
                             {{showMoreContainers?'Show Less':'See all'}}
-                        </a> 
+                        </a>
                     </div>
 
                 </div>
 
- 
+
             </div>
 
         </div>

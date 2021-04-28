@@ -63,6 +63,11 @@ export class ShipmentReceivablePM {
     public set ChargesGroupCode(newValue: string) { if (this.chargesGroupCode != newValue) { this.chargesGroupCode = newValue; this.MarkAsDirty("ChargesGroupCode"); } }
        
 	 
+    private isExpenseCharge: boolean;
+    public get IsExpenseCharge() { return this.isExpenseCharge; }
+    public set IsExpenseCharge(newValue: boolean) { if (this.isExpenseCharge != newValue) { this.isExpenseCharge = newValue; this.MarkAsDirty("IsExpenseCharge"); } }
+       
+	 
     private shipmentReceivableLineStatusCode: string;
     public get ShipmentReceivableLineStatusCode() { return this.shipmentReceivableLineStatusCode; }
     public set ShipmentReceivableLineStatusCode(newValue: string) { if (this.shipmentReceivableLineStatusCode != newValue) { this.shipmentReceivableLineStatusCode = newValue; this.MarkAsDirty("ShipmentReceivableLineStatusCode"); } }
@@ -316,7 +321,17 @@ export class ShipmentReceivablePM {
 	 
 
     public ChildShipmentReceivablesChangeSet: Array<ShipmentReceivablePM>= [];
-		 
+		     private vatAmountLocal: number;
+    public get VatAmountLocal() { return this.vatAmountLocal; }
+    public set VatAmountLocal(newValue: number) { if (this.vatAmountLocal != newValue) { this.vatAmountLocal = newValue; this.MarkAsDirty("VatAmountLocal"); } }
+       
+	 
+    private vatAmountProfit: number;
+    public get VatAmountProfit() { return this.vatAmountProfit; }
+    public set VatAmountProfit(newValue: number) { if (this.vatAmountProfit != newValue) { this.vatAmountProfit = newValue; this.MarkAsDirty("VatAmountProfit"); } }
+       
+	 
+
     public OldEntityPM: ShipmentReceivablePM;
 	    
 	private entityParentPM: any;

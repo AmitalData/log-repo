@@ -47,7 +47,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string BankBranch { get; set; }
 
         public string BankAccount { get; set; }
-
+        public string StatusName { get; set; }
         public string StatusCode { get; set; }
         public ChangeSetOperation ChangeSetOp { get; set; }
 

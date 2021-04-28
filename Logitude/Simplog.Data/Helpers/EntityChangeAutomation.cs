@@ -24,9 +24,8 @@ namespace Simplog.Data.Helpers
         public string AutomationName { get; set; }
         public string AutomationDescription { get; set; }
         public string type { get; set; }
-        public int ExecutionTime { get; set; }
-    }
-
-
+        public int ExecutionTime { get; set; } 
+        public List<AutomationCondition> ConditionsList { get; set; }
+    } 
 
 }

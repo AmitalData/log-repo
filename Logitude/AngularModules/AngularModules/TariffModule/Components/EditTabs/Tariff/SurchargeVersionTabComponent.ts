@@ -47,6 +47,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     public SelectedVersionNumber: number;
     public OriginDependencyFilterValue: string = "A";
     public DestinationDependencyFilterValue = "A";
+    public ViaDependencyFilterValue = "A";
     public IsAir: boolean = false;
     public selectedRow: any;
     public changeScrollPosition: EventEmitter<any> = new EventEmitter();
@@ -74,6 +75,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         if (this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
             this.OriginDependencyFilterValue = "O";
             this.DestinationDependencyFilterValue = "O";
+            this.ViaDependencyFilterValue = "O";
         }
     }
 
@@ -290,7 +292,18 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     public Surcharge8MinPriceVisibility: boolean;
     public Surcharge9MinPriceVisibility: boolean;
     public Surcharge10MinPriceVisibility: boolean;
-    
+
+    public Surcharge1PricePercentageVisibility: boolean;
+    public Surcharge2PricePercentageVisibility: boolean;
+    public Surcharge3PricePercentageVisibility: boolean;
+    public Surcharge4PricePercentageVisibility: boolean;
+    public Surcharge5PricePercentageVisibility: boolean;
+    public Surcharge6PricePercentageVisibility: boolean;
+    public Surcharge7PricePercentageVisibility: boolean;
+    public Surcharge8PricePercentageVisibility: boolean;
+    public Surcharge9PricePercentageVisibility: boolean;
+    public Surcharge10PricePercentageVisibility: boolean;
+
     private tariffCharges: CodeNameClass[] = [];
     SetSurchargesLabelsAndVisibility() {
         this.tariffCharges = [];
@@ -325,6 +338,12 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
                     if (iMeasurement.Code == "FIXD") {
                         isMeasurmentFixed = true;
+                    }
+
+                    if (iMeasurement.Code == 'PRFR' || iMeasurement.Code == 'PRVL') { 
+                        this['Surcharge' + index + 'PricePercentageVisibility'] = true;
+                    } else {
+                        this['Surcharge' + index + 'PricePercentageVisibility'] = false;
                     }
                 }
 
@@ -715,6 +734,17 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             tariffLine.Surcharge8MinPrice = item.Surcharge8MinPrice;
             tariffLine.Surcharge9MinPrice = item.Surcharge9MinPrice;
             tariffLine.Surcharge10MinPrice = item.Surcharge10MinPrice;
+            tariffLine.IsDifferentCurrenciesPerCharge = item.IsDifferentCurrenciesPerCharge;
+            tariffLine.Surcharge1CurrencyId = item.Surcharge1CurrencyId;
+            tariffLine.Surcharge2CurrencyId = item.Surcharge2CurrencyId;
+            tariffLine.Surcharge3CurrencyId = item.Surcharge3CurrencyId;
+            tariffLine.Surcharge4CurrencyId = item.Surcharge4CurrencyId;
+            tariffLine.Surcharge5CurrencyId = item.Surcharge5CurrencyId;
+            tariffLine.Surcharge6CurrencyId = item.Surcharge6CurrencyId;
+            tariffLine.Surcharge7CurrencyId = item.Surcharge7CurrencyId;
+            tariffLine.Surcharge8CurrencyId = item.Surcharge8CurrencyId;
+            tariffLine.Surcharge9CurrencyId = item.Surcharge9CurrencyId;
+            tariffLine.Surcharge10CurrencyId = item.Surcharge10CurrencyId;
             copiedVersion.AddTariffLine(tariffLine);
         });
 

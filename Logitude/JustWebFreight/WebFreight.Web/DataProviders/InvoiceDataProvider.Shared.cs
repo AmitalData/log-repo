@@ -75,6 +75,7 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentType { get; set; }
         public string HouseNumber { get; set; }
         public string ClientNumber { get; set; }
+        public string SpecialServiceType { get; set; }
         public string Shipper { get; set; }
         public string Shipper_LocalName { get; set; }
         public string ShipperAddress { get; set; }
@@ -281,6 +282,7 @@ namespace WebFreight.Web.DataProviders
         public string ARInvoiceField10 { get; set; }
         public string MasterNumber { get; set; }
         public string SalesMan { get; set; }
+        public string BillToSalesMan { get; set; }
         public string CustomsDeclarationNumber { get; set; }
         public string Origin { get; set; }
         public string FinalDestination { get; set; }
@@ -396,6 +398,7 @@ namespace WebFreight.Web.DataProviders
         public string AmountInWordsFrench { get; set; }
         public string AmountInWordsFrenchWithFR { get; set; }
         public string AmountInWordsFrenchNoFR { get; set; }
+        public string NewAmountInWordsFrenchWithFraction { get; set; }
 
         public string AmountInWordsSpanish { get; set; }
         public string AmountInWordsSpanishWithZero { get; set; }
@@ -436,10 +439,12 @@ namespace WebFreight.Web.DataProviders
         public string ValueOfGoodsCurrency { get; set; }
         public class InvoicesReport
         {
+            public string BillToVatNumber { get; set; }
             public string InvoiceType { get; set; }
             public string InvoiceNumber { get; set; }
             public string InternalNumber { get; set; }
             public string BillTo { get; set; }
+            public string PartnerName { get; set; }
             public DateTime InvoiceDate { get; set; }
             public string OurRefNumber { get; set; }
             public string InvoiceStatus { get; set; }
@@ -549,7 +554,7 @@ namespace WebFreight.Web.DataProviders
         public string TrailerNumber { get; set; }
         public int WarehouseFreeDays { get; set; }
         public string PreCarriageVessel { get; set; }
-
+        public string PreForwardingVessel { get; set; }
         public int? StorageFreeDays { get; set; }
         public int? StorageDays { get; set; }
         public List<StoragePricing> ShipmentStoragePricings { get; set; }

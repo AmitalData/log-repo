@@ -25,7 +25,7 @@ export class AWBDangerousPackageComponent extends BaseComponent {
 
     SetWindowArgs(entityPM: ShipmentPM) {
         this.EntityPM = entityPM;
-        this.ObjectTableName = this.EntityPM.ShipmentLevelCode == "C" ? "Master" : "Shipment";
+        this.ObjectTableName = "Shipment";
         this.SetUIProperties();
         this.Clone();
     }
@@ -37,6 +37,14 @@ export class AWBDangerousPackageComponent extends BaseComponent {
         this.UIProperties.SetEnabled("DangerousIMDGCode", this.ObjectTableName, this.IsDangerous);
         this.UIProperties.SetEnabled("DangerousFlashPoint", this.ObjectTableName, this.IsDangerous);
         this.UIProperties.SetEnabled("DangerousMaterialDescription", this.ObjectTableName, this.IsDangerous);
+        this.UIProperties.SetEnabled("EmergencyContactId", this.ObjectTableName, this.IsDangerous);
+    }
+
+    get EmergencyContactId() { return this.EntityPM.EmergencyContactId; }
+    set EmergencyContactId(value: string) {
+        if (this.EntityPM.EmergencyContactId != value) {
+            this.EntityPM.EmergencyContactId = value;
+        }
     }
 
     get IsDangerous() { return this.EntityPM.IsDangerous; }
@@ -148,6 +156,7 @@ export class AWBDangerousPackageComponent extends BaseComponent {
         this.myCloner.AddField('DangerousIMDGCode');
         this.myCloner.AddField('DangerousFlashPoint');
         this.myCloner.AddField('DangerousMaterialDescription');
+        this.myCloner.AddField('EmergencyContactId');
         this.myCloner.AddEntity(this.EntityPM);
     }
 

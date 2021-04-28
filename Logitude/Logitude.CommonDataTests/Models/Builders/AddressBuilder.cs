@@ -1,13 +1,10 @@
-﻿using Logitude.Test.Base.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Logitude.Test.Base.Models.LocationsPreparation;
+using Logitude.Test.Base.Models.PartnersPreparation;
+using Logitude.Test.Base.Models.UserTenantPreparation;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 
-namespace Logitude.CommonDataTests.Models.Builders
+namespace Logitude.CommonTests.Models.Builders
 {
     public class AddressBuilder
     {
@@ -187,14 +184,14 @@ namespace Logitude.CommonDataTests.Models.Builders
             {
                 Tenant = UserTenant.Tenant,
                 CountryId = LocationsData.CountryUSId,
-                AgentId = PartnersData.AgentId,
+                //AgentId = PartnersData.AgentId,
                 StateId = LocationsData.StateAKId,
-                CountryName = "United States of America",
-                CountryEnglishName = "United States of America",
-                CountryCode = "US",
-                StateCode = "AK",
-                HasStates=true ,
-                IsStateRequired=true
+                //CountryName = "United States of America",
+                //CountryEnglishName = "United States of America",
+                //CountryCode = "US",
+                //StateCode = "AK",
+                //HasStates=true ,
+                //IsStateRequired=true
 
             };
             return this;

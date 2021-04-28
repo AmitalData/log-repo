@@ -94,6 +94,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string SearchFields { get; set; }
 
         public string MainEntityId { get; set; }
+        public string MasterEntityId { get; set; }
         public string MainEntityReference { get; set; }
         public double? AmountDue { get; set; }
 
@@ -116,7 +117,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string BranchName { get; set; }
 
         public bool IsPrinted { get; set; }
-        public string ConnectedEntityReferences { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public CustomFieldClass Field1 { get; set; }
@@ -209,7 +209,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public DateTime? SATApprovalDate { get; set; }
         public bool IsShowAmountLocalCurrencyColumnInSharedLogistics { get; set; }
 
-        
+        public string ShipmentsNumbers { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string BankAccountLiteId { get; set; }

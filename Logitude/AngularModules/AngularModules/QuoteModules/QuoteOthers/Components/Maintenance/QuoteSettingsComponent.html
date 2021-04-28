@@ -276,7 +276,7 @@
                         </td>
                     </tr>
 
-                    <tr style="height: 100px;">
+                    <tr style="height: 140px;">
                         <td>
                             <div class="MediaFill">
                                 <SectionBox>
@@ -305,11 +305,25 @@
 
                                             <tr class="FormFieldRow">
                                                 <td>
-                                                    <LogLabel [ObjectFieldName]="'AutomaticallyCloseDays'" [NoObjectField]="true"  [Text]="'Automatically Close Days'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                    <LogLabel [ObjectFieldName]="'AutomaticallyCloseDays'" [NoObjectField]="true" [Text]="'Automatically Close Days'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
                                                 <td>
                                                     <LogTextBox [InputType]="'unsinteger'" [ObjectFieldName]="'AutomaticallyCloseDays'" [Text]="AutomaticallyCloseDays" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                </td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'QuoteExpirationDays'" [NoObjectField]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogTextBox [InputType]="'unsinteger'" [ObjectFieldName]="'QuoteExpirationDays'" [Text]="QuoteExpirationDays" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                                 </td>
 
                                                 <td>

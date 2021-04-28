@@ -10,6 +10,9 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
+import { FullAccountingSettingPM } from '../../../../Accounting/EntityPMs/FullAccountingSettingPM';
+import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
+import { TenantPM } from '../../../../Common/EntityPMs/TenantPM';
 
 @Component({
 
@@ -22,17 +25,21 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
     public ValidationErrorsList: string[] = [];
     @Output() RunReportEvent: EventEmitter<ReportFliter> = new EventEmitter<ReportFliter>();
     isReady: boolean = false;
-    IsSalesmanRestricted: boolean = false;
+    IsSalesmanRestricted: boolean = false ;
     public SalesmanFilterItems: ApiQueryFilters;
     public ChartOfAccountTypeFilterItems: ApiQueryFilters;
+    private FullAccountingSetting: FullAccountingSettingPM = new FullAccountingSettingPM();
+    public TenantPM: TenantPM = SessionLocator.TenantPM;
+    private CurrentSession = SessionLocator.SelectedSession;
 
     entityResourceService: EntityResourceService = new EntityResourceService();
     public isRTL: boolean = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
     public showLocal: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
-    constructor()
+    constructor(public entityListService: EntityListService)
     {
         super();
+        this.TenantPM = SessionLocator.TenantPM;
 
         this.GetResources();
 
@@ -53,10 +60,17 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
 
     private SetMonthFilterDefaults()
     {
-        var newDate = new Date();
-        var currentMonth = newDate.getMonth() + 1;
-        //this.NumberOfMonths = currentMonth - 6; // 6 backward
-        this.NumberOfMonths = 6;
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.entityListService.getSingle(this.TenantPM.Id.toString(), "FullAccountingSetting").then((res: any) => {
+            this.CurrentSession.StopBusyIndicator();
+            res.subscribe(myResponse => {
+                if (myResponse != null) {
+                    var res = myResponse.Result;
+                    this.FullAccountingSetting = res;
+                    this.NumberOfMonths = this.FullAccountingSetting.NumberOfAgingMonths;
+                }
+            })
+        });
     }
 
     private InitFilters()
@@ -125,6 +139,8 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
             }
         }
 
+        this.UIProperties.SetEnabled("ChartOfAccountsId_Dummy", "GLAccount", !this.Customer);
+
 
     }
 
@@ -150,20 +166,25 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
         if (this.customer != value) {
             this.customer = value;
 
-            if (value)
+            if (value){
+                this.ChartOfAccountsId_Dummy = null;
                 this.IsCategoryDisabled = true;
+            }
             else
                 this.IsCategoryDisabled = false;
+
+            this.SetUIProperties();
+
         }
     }
 
-    private _ChartOfAccountsTypeCode : string;
+    private _ChartOfAccountsTypeCode : string = "3";
     public get ChartOfAccountsTypeCode() : string {
         return this._ChartOfAccountsTypeCode;
     }
     public set ChartOfAccountsTypeCode(v : string) {
         this._ChartOfAccountsTypeCode = v;
-        this.ChartOfAccountsId = null;
+        this.ChartOfAccountsId_Dummy = null;
     }
 
     private chartOfAccount: any;
@@ -177,11 +198,11 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
     }
 
 
-    private _ChartOfAccountsId : string;
-    public get ChartOfAccountsId() : string {
+    private _ChartOfAccountsId : string = null;
+    public get ChartOfAccountsId_Dummy() : string {
         return this._ChartOfAccountsId;
     }
-    public set ChartOfAccountsId(v : string) {
+    public set ChartOfAccountsId_Dummy(v : string) {
         this._ChartOfAccountsId = v;
     }
 
@@ -367,7 +388,7 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
             myFilterItems.push(new QueryFilterItem("BalanceFilterValue", this.balance || 0, "decimal"));
 
             myFilterItems.push(new QueryFilterItem("ChartOfAccountsTypeCode", this.ChartOfAccountsTypeCode ? this.ChartOfAccountsTypeCode : null));
-            myFilterItems.push(new QueryFilterItem("ChartOfAccountId", this.ChartOfAccount ? this.ChartOfAccount.Id : null));
+            myFilterItems.push(new QueryFilterItem("ChartOfAccountsId", this.ChartOfAccountsId_Dummy));
 
 
 
@@ -424,12 +445,19 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
         this.Customer = null;
         this.Salesman = null;
         this.Collector = null;
+        this.ChartOfAccountsId_Dummy = null;
+        this.UIProperties.SetValidity("ChartOfAccountsId", "GLAccount", true,"");
+        this.UIProperties.SetRequired("ChartOfAccountsId", "GLAccount", false);
+
+
         switch (this.filterSelectedValue) {
             case 'filter_customer':
                 this.AccountTypeCode = '2';
+                this.ChartOfAccountsTypeCode = '3';
                 break;
             case 'filter_vendor':
                 this.AccountTypeCode = '3';
+                this.ChartOfAccountsTypeCode = '4';
                 break;
             default:
                 break;

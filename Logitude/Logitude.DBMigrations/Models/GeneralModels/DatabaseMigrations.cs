@@ -21,7 +21,8 @@ namespace Logitude.DBMigrations.Models
         protected string DXMLFileName;
 
         protected string MissingIndexesWarnings = "";
-
+        protected string MissingUniqueConstraintsWarnings = "";
+        
         public string GetScript()
         {
             CurrentTable = GetCurrentTableDefinitionFromDB();
@@ -132,6 +133,11 @@ namespace Logitude.DBMigrations.Models
             return MissingIndexesWarnings;
         }
 
+        public string GetMissingUniqueConstraintsWarnings()
+        {
+            return MissingUniqueConstraintsWarnings;
+        }
+
         public string GetUniqueConstraintsScript()
         {
             string tableUniqueConstraintsScript = "";
@@ -172,7 +178,7 @@ namespace Logitude.DBMigrations.Models
                             if (IsNotContainDBConfigurationEnvironment(uniqueConstraint.Env))
                             {
                                 UniqueConstraintDefinition currentTableUniqueConstraint = GetUniqueConstraintFromCurrentTable(uniqueConstraint);
-                                tableUniqueConstraintsScript += GetDropUniqueConstraintScript(currentTableUniqueConstraint);
+                                MissingUniqueConstraintsWarnings += "Warning: Different Environment For Unique Constraint In DXML File " + DXMLFileName + ", The Found Unique Constraint On DB Is " + currentTableUniqueConstraint.ConstraintName + "\n";
                             }
                         }
                     }

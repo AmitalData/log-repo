@@ -42,7 +42,7 @@ export class HomeComponent implements OnDestroy{
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     @ViewChild("ApplicationLocation", { read: ViewContainerRef, static: false }) ApplicationLocation: ViewContainerRef;
     SettingBtnVisibility: boolean = false;
-    IsShowLastSuccessfulLoginComponent: boolean = true;
+    IsShowUserDetailsArea: boolean = true;
     public IfBlueSnapContracts: boolean = false;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private BluesnapContractService: BluesnapContractPMService = new BluesnapContractPMService();
@@ -146,6 +146,7 @@ export class HomeComponent implements OnDestroy{
     public IsBluesnapAccount: boolean = false;
     public IsCountryIsrael: boolean = false;
     public IsBlusnapOneTimeActivated: boolean = false;
+    public IsDailyCurrenciesRatesVisible: boolean = false; 
     
     InitializeAppHeader() {
         this.EnvironmentUrl = Environment.GetEnvironmentUrl();
@@ -170,6 +171,8 @@ export class HomeComponent implements OnDestroy{
         if (!this.IsLogBox && FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsCurrenciesRatesVisible = true;
         }
+
+        this.ShowDailyCurrenciesRates();
 
         if (FeatureLocator.HasFeaturePermession("General", "SIGNATURESETTING")) {
             this.IsSignatureVisible = true;
@@ -207,12 +210,19 @@ export class HomeComponent implements OnDestroy{
 
     }
 
+    private ShowDailyCurrenciesRates() {
+        if (FeatureLocator.HasFeaturePermession("General", "DailyCurrenciesRates")) {
+            this.IsDailyCurrenciesRatesVisible = true;
+        }
+    }
+
     // UserSettings
     public authHeader;   
     public TrialMessage: string = null;
     private trialTimer: any;
     private loginService: LoginService
-    private messageWindow: MessageWindow = new MessageWindow();
+    private messageWindow: MessageWindow = new MessageWindow(); 
+
     GetUserSetting() {
 
 
@@ -755,7 +765,7 @@ export class HomeComponent implements OnDestroy{
         this.Retries = 0;
         this.RunComponentTimer();
 
-        if (this.Tabs.length > 4) this.IsShowLastSuccessfulLoginComponent = false;
+        if (this.Tabs.length > 4) this.IsShowUserDetailsArea = false;
   
     }
     SelectionChanged(clickdTab: SessionTabItem) {
@@ -790,6 +800,21 @@ export class HomeComponent implements OnDestroy{
             }
         }
     }
+
+
+
+    CurrenciesRatesClicked() {
+        var windowTitle = "Edit exchange rates";
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = windowTitle;
+        this._entityResourceService.getEntityResourceByTableName("RatesTable").subscribe((response: any) => {
+            logWindow.Show('./Common/Components/Maintenance/RatesMainTabComponent');
+        });
+    }
+
+
+
+
     CreateSession(tabItem: SessionTabItem) {
         if (this.isLoaderReady) {
             if (tabItem.IsSelected) {
@@ -910,7 +935,7 @@ export class HomeComponent implements OnDestroy{
             tabItem = null;
 
             if (this.Tabs.length <= 4) {
-                if (!this.IsShowLastSuccessfulLoginComponent) this.IsShowLastSuccessfulLoginComponent = true;
+                if (!this.IsShowUserDetailsArea) this.IsShowUserDetailsArea = true;
             }
         }
     }
@@ -1009,14 +1034,7 @@ export class HomeComponent implements OnDestroy{
         }
 
     }
-    CurrenciesRatesClicked() {
-        var windowTitle = "Edit exchange rates";
-        var logWindow = new LogitudeWindow();
-        logWindow.Title = windowTitle;
-        this._entityResourceService.getEntityResourceByTableName("RatesTable").subscribe((response:any) => {
-            logWindow.Show('./Common/Components/Maintenance/RatesMainTabComponent');
-        });
-    }
+
     DataBackupClicked() {
 
 
@@ -1632,7 +1650,7 @@ export class HomeComponent implements OnDestroy{
             tabItem = null;
 
             if (this.Tabs.length <= 4) {
-                if (!this.IsShowLastSuccessfulLoginComponent) this.IsShowLastSuccessfulLoginComponent = true;
+                if (!this.IsShowUserDetailsArea) this.IsShowUserDetailsArea = true;
             }
         }
     }
@@ -1773,8 +1791,10 @@ export class HomeComponent implements OnDestroy{
         document.cookie = `${name}=${value}; ${expires}${cpath}`;
     }
     
-    ViewReleaseNotes() {
-        window.open(ObjectsLocator.GlobalSetting.ReleaseNotesURL);
+    ViewReleaseNotes() {        
+        var url = ServiceHelper.GetLogitudeURL() + 'WebPages/HowToDownloadPage.aspx';
+        var params: any[] = [{ name: "Token", value: SessionInfo.DocumentDownloadToken }, { name: "Code", value: ObjectsLocator.GlobalSetting.ReleaseNotesURL }]
+        ServiceHelper.OpenWindowWithParams(url, params);
     }
 
     HideReleaseMessageClicked() {        

@@ -44,8 +44,23 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             
             return customerOpenFilesAmount;
         }
+        public List<CustomerOpenFilesAmountPM> GetCustomerOpenFilesByCustomerIds(List<string> customerIds, int tenant)
+        {
+            List<CustomerOpenFilesAmountPM> customerOpenFilesAmounts = (from a in repository.context.CustomerOpenFilesAmounts
+                                                                        where a.Tenant == tenant && customerIds.Contains(a.CustomerId)
 
-     
+                                                                        select new CustomerOpenFilesAmountPM()
+                                                                        {
+                                                                            CustomerId = a.CustomerId,
+                                                                            TotalOpenFilesAmount = a.TotalOpenFilesAmount,
+                                                                            Tenant = a.Tenant,
+
+                                                                        }).ToList();
+
+
+            return customerOpenFilesAmounts;
+        }
+
 
 
     }

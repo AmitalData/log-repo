@@ -336,6 +336,7 @@ namespace Simplog.Data.QuoteModel
         public IDbSet<QuoteClosingReason> QuoteClosingReasons { get; set; }
         public IDbSet<QuoteStage> QuoteStages { get; set; }
         public IDbSet<QuoteRating> QuoteRatings { get; set; }
+        public IDbSet<QuoteComputedField> QuoteComputedField { get; set; }
         public IDbSet<QuoteTemplateSectionModification> QuoteTemplateSectionModifications { get; set; }
         public IDbSet<QuoteTemplateExcludedSection> QuoteTemplateExcludedSections { get; set; }
         public IDbSet<QuoteTotalVAT> QuoteTotalVATs { get; set; }

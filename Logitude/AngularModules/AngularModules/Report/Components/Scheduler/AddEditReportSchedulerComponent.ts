@@ -6,7 +6,7 @@ import { ReportGroupList } from '../../EntityLists/ReportGroupList';
 import { ReportList } from '../../EntityLists/ReportList';
 import { ReportsTemplateListExtendedService } from '../../../Common/Services/ExtendedLists/ReportsTemplateListExtendedService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { ReportSchedulerRecepients } from '../../../Infrastructure/DataContracts/SchedulerDetails';
+import { ReportSchedulerRecepients, ReportSchedulerDetails } from '../../../Infrastructure/DataContracts/SchedulerDetails';
 @Component({
     
     templateUrl: './AddEditReportSchedulerComponent.html',
@@ -16,6 +16,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     public ReportGroupList: ReportGroupList;
     public ReportList: ReportList;
+    public ValidationErrorsList: string[] = [];
     IsPreviwReport: boolean = false;
     reportsTemplateListExtendedService: ReportsTemplateListExtendedService;
     private PageChild_RETASK: any = null;
@@ -155,9 +156,8 @@ export class AddEditReportSchedulerComponent implements OnInit {
     }
 
     SetRecepientsDetails(isReloaded) {
-        if (this.PageChild_PRREP.IsPartnersChanged("3")) {
-            this.PageChild_OPEMA.CleanRecepientsLists();
-        }
+        const isPartnersChanged = this.PageChild_PRREP.IsPartnersChanged("3");
+        if (isPartnersChanged) this.PageChild_OPEMA.CleanRecepientsLists();
         this.PageChild_PRREP.PrepareContactList();
         var windowArgs: any = {};
         var recepients: ReportSchedulerRecepients = this.PageChild_RETASK.DataContext.SchedulerDetails.ReportDetails.Recepients;
@@ -170,6 +170,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
         windowArgs.IsUserFromReport = this.PageChild_PRREP.PartnersObslist ? true : false;
         windowArgs.IsSchedulerReport = true;
         windowArgs.isReloaded = isReloaded;
+        windowArgs.ClearRecepients = isPartnersChanged;
         this.PageChild_OPEMA.SetWindowArgs(windowArgs);
     }
 
@@ -206,16 +207,14 @@ export class AddEditReportSchedulerComponent implements OnInit {
     }
 
     SaveButtonClicked() {
-        var reportFilterItems = this.PageChild_PRREP.GetReportFilterItems();
-        var reportTemplateId = this.PageChild_PRREP.GetReportTemplate();
-        var recepients = this.GetAllRecepients();
-        this.PageChild_RETASK.SaveButtonClicked(reportFilterItems, reportTemplateId, recepients);
-        //this.CurrentSession.CloseCurrentWindow();
-
-        //if (this.PageChild_RETASK?.ValidationErrorsList?.length > 0) {
-        //    this.SelectedTabLocation = 0;
-        //}
-
+        const reportSchedulerDetails: ReportSchedulerDetails = {
+            ReportFilterItems: this.PageChild_PRREP.GetReportFilterItems(),
+            ReportTemplateId: this.PageChild_PRREP.GetReportTemplateId(),
+            Recepients: this.GetAllRecepients(),
+            MainCustomerFieldName: this.PageChild_PRREP.GetReportFilterMainCustomerFieldName(),
+            CreatedByUserId: SessionLocator.LoggedUserId
+        };
+        this.PageChild_RETASK.SaveButtonClicked(reportSchedulerDetails);
     }
 
     GetAllRecepients() {
@@ -227,16 +226,39 @@ export class AddEditReportSchedulerComponent implements OnInit {
     }
 
     BackButtonClicked() {
-        if (this.SelectedTabLocation == 1) {
-            this.IsPreviwReport = false;
-            //this.CurrentSession.ResizeCurrentWindow(900);
-            this.SetSelectedItem("RETASK");
-        }
-        else if (this.SelectedTabLocation == 2) {
-            this.SetSelectedItem("PRREP");
-            this.PageChild_PRREP.IsPartnersChanged("2");
+        switch (this.SelectedTabLocation) {
+            case 1:
+                this.reOpenReportTaskTab();
+                break;
+            case 2:
+                this.backFromRecepientsTab();
+                break;
         }
         this.SelectedTabLocation -= 1;
+    }
+
+    private backFromRecepientsTab() {
+        if (this.itHaveAnError()) {
+            this.reOpenReportTaskTab();
+            this.SelectedTabLocation -= 1;
+        }
+        else {
+            this.reOpenReportPreviewTab();
+        }
+    }
+
+    private itHaveAnError() {
+        return this.ValidationErrorsList && this.ValidationErrorsList.length > 0;
+    }
+
+    private reOpenReportPreviewTab() {
+        this.SetSelectedItem("PRREP");
+        this.PageChild_PRREP.IsPartnersChanged("2");
+    }
+
+    private reOpenReportTaskTab() {
+        this.IsPreviwReport = false;
+        this.SetSelectedItem("RETASK");
     }
 
     DisableFinishButton() {

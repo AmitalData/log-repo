@@ -185,24 +185,31 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                 d.First().AccountDisplayNumber + "/" + d.First().CurrencyCode : d.First().AccountDisplayNumber,
                     CustomerCreditLimit = (decimal)d.First().CreditLimitAmount,
                     CustomerVatNumber = d.First().CustomerVatNumber,
-                    CustomerPaymentTerm = d.First().AccountTermLocalName,
+                    CustomerPaymentTerm = d.First().AccountTermLocalName,                    
                     GLAccountStandardInterestRate = d.First().GLAccountStandardInterestRate,
-                    //AccountSalesmanName = d.First().AccountSalesmanName,
-                    //AccountSalesmanLocalName = d.First().AccountSalesmanLocalName,
-                    //AccountCollectorName = d.First().AccountCollectorName,
-                    //AccountCollectorLocalName = d.First().AccountCollectorLocalName,
-                    //Category1Name = d.First().Category1Name,
-                    //Category2Name = d.First().Category2Name,
-                    //Category3Name = d.First().Category3Name,
-                    //Category4Name = d.First().Category4Name,
-                    //Category5Name = d.First().Category5Name,
-                    //Category6Name = d.First().Category6Name,
-                    //Category1LocalName = d.First().Category1LocalName,
-                    //Category2LocalName = d.First().Category2LocalName,
-                    //Category3LocalName = d.First().Category3LocalName,
-                    //Category4LocalName = d.First().Category4LocalName,
-                    //Category5LocalName = d.First().Category5LocalName,
-                    //Category6LocalName = d.First().Category6LocalName,
+                    AccountSalesmanName = d.First().AccountSalesmanName,
+                    AccountSalesmanLocalName = d.First().AccountSalesmanLocalName,
+                    AccountCollectorName = d.First().AccountCollectorName,
+                    AccountCollectorLocalName = d.First().AccountCollectorLocalName,
+                    Category1Name = d.First().Category1Name,
+                    Category2Name = d.First().Category2Name,
+                    Category3Name = d.First().Category3Name,
+                    Category4Name = d.First().Category4Name,
+                    Category5Name = d.First().Category5Name,
+                    Category6Name = d.First().Category6Name,
+                    Category1LocalName = d.First().Category1LocalName,
+                    Category2LocalName = d.First().Category2LocalName,
+                    Category3LocalName = d.First().Category3LocalName,
+                    Category4LocalName = d.First().Category4LocalName,
+                    Category5LocalName = d.First().Category5LocalName,
+                    Category6LocalName = d.First().Category6LocalName,
+
+
+                    ChartOfAccountsLocalName = d.First().ChartOfAccountsLocalName,
+                    ChartOfAccountsEnglishName = d.First().ChartOfAccountsEnglishName,
+                    ChartOfAccountsTypeEnglishName = d.First().ChartOfAccountsTypeEnglishName,
+                    ChartOfAccountsTypeLocalName = d.First().ChartOfAccountsTypeLocalName,
+
 
                 }).ToList();
             else
@@ -219,22 +226,29 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     CustomerVatNumber = d.First().CustomerVatNumber,
                     CustomerPaymentTerm = d.First().AccountTermLocalName,
                     GLAccountStandardInterestRate = d.First().GLAccountStandardInterestRate,
-                    //AccountSalesmanName = d.First().AccountSalesmanName,
-                    //AccountSalesmanLocalName = d.First().AccountSalesmanLocalName,
-                    //AccountCollectorName = d.First().AccountCollectorName,
-                    //AccountCollectorLocalName = d.First().AccountCollectorLocalName,
-                    //Category1Name = d.First().Category1Name,
-                    //Category2Name = d.First().Category2Name,
-                    //Category3Name = d.First().Category3Name,
-                    //Category4Name = d.First().Category4Name,
-                    //Category5Name = d.First().Category5Name,
-                    //Category6Name = d.First().Category6Name,
-                    //Category1LocalName = d.First().Category1LocalName,
-                    //Category2LocalName = d.First().Category2LocalName,
-                    //Category3LocalName = d.First().Category3LocalName,
-                    //Category4LocalName = d.First().Category4LocalName,
-                    //Category5LocalName = d.First().Category5LocalName,
-                    //Category6LocalName = d.First().Category6LocalName,
+                    AccountSalesmanName = d.First().AccountSalesmanName,
+                    AccountSalesmanLocalName = d.First().AccountSalesmanLocalName,
+                    AccountCollectorName = d.First().AccountCollectorName,
+                    AccountCollectorLocalName = d.First().AccountCollectorLocalName,
+                    Category1Name = d.First().Category1Name,
+                    Category2Name = d.First().Category2Name,
+                    Category3Name = d.First().Category3Name,
+                    Category4Name = d.First().Category4Name,
+                    Category5Name = d.First().Category5Name,
+                    Category6Name = d.First().Category6Name,
+                    Category1LocalName = d.First().Category1LocalName,
+                    Category2LocalName = d.First().Category2LocalName,
+                    Category3LocalName = d.First().Category3LocalName,
+                    Category4LocalName = d.First().Category4LocalName,
+                    Category5LocalName = d.First().Category5LocalName,
+                    Category6LocalName = d.First().Category6LocalName,
+
+
+
+                    ChartOfAccountsLocalName = d.First().ChartOfAccountsLocalName,
+                    ChartOfAccountsEnglishName = d.First().ChartOfAccountsEnglishName,
+                    ChartOfAccountsTypeEnglishName = d.First().ChartOfAccountsTypeEnglishName,
+                    ChartOfAccountsTypeLocalName = d.First().ChartOfAccountsTypeLocalName,
 
                 }).ToList();
             totalData.AgingPeriods.AddRange(groupedPeriodsByAccount);
@@ -249,7 +263,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             if (showDetailedCurrencyAccounts) { 
                 groupedPeriodsByAccount = result.Where(d => d.Total != null && d.CurrencyCode == totalData.TenantCurrencyCode).GroupBy(d => d.AccountAndCurr).Distinct().Select(d => new AgingPeriod()
                 {
-                    PeriodName = showLocals ? "יתרה בשח" : "Local",
+                    PeriodName = showLocals ? "יתרה בשח להיום" : "Local",
                     Total = d.Sum(x => x.Total),
                     AccountName = (d.First().AccountLocalName != null ? d.First().AccountLocalName : d.First().AccountEnglishName) + " / " + d.First().CurrencyCode,
                     AccountLocalName = d.First().AccountLocalName + " / " + d.First().CurrencyCode,
@@ -261,28 +275,35 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     CustomerVatNumber = d.First().CustomerVatNumber,
                     CustomerPaymentTerm = d.First().AccountTermLocalName,
                     GLAccountStandardInterestRate = d.First().GLAccountStandardInterestRate,
-                    //AccountSalesmanName = d.First().AccountSalesmanName,
-                    //AccountSalesmanLocalName = d.First().AccountSalesmanLocalName,
-                    //AccountCollectorName = d.First().AccountCollectorName,
-                    //AccountCollectorLocalName = d.First().AccountCollectorLocalName,
-                    //Category1Name = d.First().Category1Name,
-                    //Category2Name = d.First().Category2Name,
-                    //Category3Name = d.First().Category3Name,
-                    //Category4Name = d.First().Category4Name,
-                    //Category5Name = d.First().Category5Name,
-                    //Category6Name = d.First().Category6Name,
-                    //Category1LocalName = d.First().Category1LocalName,
-                    //Category2LocalName = d.First().Category2LocalName,
-                    //Category3LocalName = d.First().Category3LocalName,
-                    //Category4LocalName = d.First().Category4LocalName,
-                    //Category5LocalName = d.First().Category5LocalName,
-                    //Category6LocalName = d.First().Category6LocalName,
+                    AccountSalesmanName = d.First().AccountSalesmanName,
+                    AccountSalesmanLocalName = d.First().AccountSalesmanLocalName,
+                    AccountCollectorName = d.First().AccountCollectorName,
+                    AccountCollectorLocalName = d.First().AccountCollectorLocalName,
+                    Category1Name = d.First().Category1Name,
+                    Category2Name = d.First().Category2Name,
+                    Category3Name = d.First().Category3Name,
+                    Category4Name = d.First().Category4Name,
+                    Category5Name = d.First().Category5Name,
+                    Category6Name = d.First().Category6Name,
+                    Category1LocalName = d.First().Category1LocalName,
+                    Category2LocalName = d.First().Category2LocalName,
+                    Category3LocalName = d.First().Category3LocalName,
+                    Category4LocalName = d.First().Category4LocalName,
+                    Category5LocalName = d.First().Category5LocalName,
+                    Category6LocalName = d.First().Category6LocalName,
 
-                }).ToList();
+                    ChartOfAccountsLocalName = d.First().ChartOfAccountsLocalName,
+                    ChartOfAccountsEnglishName = d.First().ChartOfAccountsEnglishName,
+                    ChartOfAccountsTypeEnglishName = d.First().ChartOfAccountsTypeEnglishName,
+                    ChartOfAccountsTypeLocalName = d.First().ChartOfAccountsTypeLocalName,
+
+
+
+            }).ToList();
             totalData.AgingPeriods.AddRange(groupedPeriodsByAccount);
                 groupedPeriodsByAccount = result.Where(d => d.Total != null && d.CurrencyCode != totalData.TenantCurrencyCode).GroupBy(d => d.AccountAndCurr).Distinct().Select(d => new AgingPeriod()
                 {
-                    PeriodName = showLocals ? "יתרה בשח" : "Local",
+                    PeriodName = showLocals ? "יתרה בשח להיום" : "Local",
                     Total = d.First().BalanceInLocalCurrency,
                     AccountName = (d.First().AccountLocalName != null ? d.First().AccountLocalName : d.First().AccountEnglishName) + " / " + d.First().CurrencyCode,
                     AccountLocalName = d.First().AccountLocalName + " / " + d.First().CurrencyCode,
@@ -294,29 +315,34 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     CustomerVatNumber = d.First().CustomerVatNumber,
                     CustomerPaymentTerm = d.First().AccountTermLocalName,
                     GLAccountStandardInterestRate = d.First().GLAccountStandardInterestRate,
-                    //AccountSalesmanName = d.First().AccountSalesmanName,
-                    //AccountSalesmanLocalName = d.First().AccountSalesmanLocalName,
-                    //AccountCollectorName = d.First().AccountCollectorName,
-                    //AccountCollectorLocalName = d.First().AccountCollectorLocalName,
-                    //Category1Name = d.First().Category1Name,
-                    //Category2Name = d.First().Category2Name,
-                    //Category3Name = d.First().Category3Name,
-                    //Category4Name = d.First().Category4Name,
-                    //Category5Name = d.First().Category5Name,
-                    //Category6Name = d.First().Category6Name,
-                    //Category1LocalName = d.First().Category1LocalName,
-                    //Category2LocalName = d.First().Category2LocalName,
-                    //Category3LocalName = d.First().Category3LocalName,
-                    //Category4LocalName = d.First().Category4LocalName,
-                    //Category5LocalName = d.First().Category5LocalName,
-                    //Category6LocalName = d.First().Category6LocalName,
+                    AccountSalesmanName = d.First().AccountSalesmanName,
+                    AccountSalesmanLocalName = d.First().AccountSalesmanLocalName,
+                    AccountCollectorName = d.First().AccountCollectorName,
+                    AccountCollectorLocalName = d.First().AccountCollectorLocalName,
+                    Category1Name = d.First().Category1Name,
+                    Category2Name = d.First().Category2Name,
+                    Category3Name = d.First().Category3Name,
+                    Category4Name = d.First().Category4Name,
+                    Category5Name = d.First().Category5Name,
+                    Category6Name = d.First().Category6Name,
+                    Category1LocalName = d.First().Category1LocalName,
+                    Category2LocalName = d.First().Category2LocalName,
+                    Category3LocalName = d.First().Category3LocalName,
+                    Category4LocalName = d.First().Category4LocalName,
+                    Category5LocalName = d.First().Category5LocalName,
+                    Category6LocalName = d.First().Category6LocalName,
+
+                    ChartOfAccountsLocalName = d.First().ChartOfAccountsLocalName,
+                    ChartOfAccountsEnglishName = d.First().ChartOfAccountsEnglishName,
+                    ChartOfAccountsTypeEnglishName = d.First().ChartOfAccountsTypeEnglishName,
+                    ChartOfAccountsTypeLocalName = d.First().ChartOfAccountsTypeLocalName,
 
                 }).ToList();
             }
             else
                 groupedPeriodsByAccount = result.Where(d => d.Total != null).GroupBy(d => d.AccountId).Distinct().Select(d => new AgingPeriod()
                 {
-                    PeriodName = showLocals ? "יתרה בשח" : "Local",
+                    PeriodName = showLocals ? "יתרה בשח להיום" : "Local",
                     Total = d.FirstOrDefault() == null ? 0 : d.FirstOrDefault().BalanceInLocalCurrency,
                     AccountName = (d.First().AccountLocalName != null ? d.First().AccountLocalName : d.First().AccountEnglishName),
                     AccountLocalName = d.First().AccountLocalName,
@@ -327,22 +353,27 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     CustomerVatNumber = d.First().CustomerVatNumber,
                     CustomerPaymentTerm = d.First().AccountTermLocalName,
                     GLAccountStandardInterestRate = d.First().GLAccountStandardInterestRate,
-                    //AccountSalesmanName = d.First().AccountSalesmanName,
-                    //AccountSalesmanLocalName = d.First().AccountSalesmanLocalName,
-                    //AccountCollectorName = d.First().AccountCollectorName,
-                    //AccountCollectorLocalName = d.First().AccountCollectorLocalName,
-                    //Category1Name = d.First().Category1Name,
-                    //Category2Name = d.First().Category2Name,
-                    //Category3Name = d.First().Category3Name,
-                    //Category4Name = d.First().Category4Name,
-                    //Category5Name = d.First().Category5Name,
-                    //Category6Name = d.First().Category6Name,
-                    //Category1LocalName = d.First().Category1LocalName,
-                    //Category2LocalName = d.First().Category2LocalName,
-                    //Category3LocalName = d.First().Category3LocalName,
-                    //Category4LocalName = d.First().Category4LocalName,
-                    //Category5LocalName = d.First().Category5LocalName,
-                    //Category6LocalName = d.First().Category6LocalName,
+                    AccountSalesmanName = d.First().AccountSalesmanName,
+                    AccountSalesmanLocalName = d.First().AccountSalesmanLocalName,
+                    AccountCollectorName = d.First().AccountCollectorName,
+                    AccountCollectorLocalName = d.First().AccountCollectorLocalName,
+                    Category1Name = d.First().Category1Name,
+                    Category2Name = d.First().Category2Name,
+                    Category3Name = d.First().Category3Name,
+                    Category4Name = d.First().Category4Name,
+                    Category5Name = d.First().Category5Name,
+                    Category6Name = d.First().Category6Name,
+                    Category1LocalName = d.First().Category1LocalName,
+                    Category2LocalName = d.First().Category2LocalName,
+                    Category3LocalName = d.First().Category3LocalName,
+                    Category4LocalName = d.First().Category4LocalName,
+                    Category5LocalName = d.First().Category5LocalName,
+                    Category6LocalName = d.First().Category6LocalName,
+
+                    ChartOfAccountsLocalName = d.First().ChartOfAccountsLocalName,
+                    ChartOfAccountsEnglishName = d.First().ChartOfAccountsEnglishName,
+                    ChartOfAccountsTypeEnglishName = d.First().ChartOfAccountsTypeEnglishName,
+                    ChartOfAccountsTypeLocalName = d.First().ChartOfAccountsTypeLocalName,
 
                 }).ToList();
 
@@ -429,6 +460,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             {
                 if (item.PeriodName.Contains("b4"))
                     item.PeriodName = item.PeriodName.Replace("b4", showLocals ? "לפני" : "Before");
+
+                if (item.PeriodName.Contains("FutureAmount"))
+                    item.PeriodName = item.PeriodName.Replace("FutureAmount", showLocals ? "סיכום תקופות עתידיות" : "FutureAmount");
             }
         }
 
@@ -509,22 +543,26 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     record.CustomerPaymentTerm = item.AccountTermLocalName;
                     record.GLAccountStandardInterestRate = item.GLAccountStandardInterestRate;
 
-                    //record.AccountSalesmanName = item.AccountSalesmanName;
-                    //record.AccountSalesmanLocalName = item.AccountSalesmanLocalName;
-                    //record.AccountCollectorName = item.AccountCollectorName;
-                    //record.AccountCollectorLocalName = item.AccountCollectorLocalName;
-                    //record.Category1Name = item.Category1Name;
-                    //record.Category2Name = item.Category2Name;
-                    //record.Category3Name = item.Category3Name;
-                    //record.Category4Name = item.Category4Name;
-                    //record.Category5Name = item.Category5Name;
-                    //record.Category6Name = item.Category6Name;
-                    //record.Category1LocalName = item.Category1LocalName;
-                    //record.Category2LocalName = item.Category2LocalName;
-                    //record.Category3LocalName = item.Category3LocalName;
-                    //record.Category4LocalName = item.Category4LocalName;
-                    //record.Category5LocalName = item.Category5LocalName;
-                    //record.Category6LocalName = item.Category6LocalName;
+                    record.ChartOfAccountsLocalName = item.ChartOfAccountsLocalName;
+                    record.ChartOfAccountsEnglishName = item.ChartOfAccountsEnglishName;
+                    record.ChartOfAccountsTypeEnglishName = item.ChartOfAccountsTypeEnglishName;
+                    record.ChartOfAccountsTypeLocalName = item.ChartOfAccountsTypeLocalName;
+
+
+                    record.AccountSalesmanName = item.AccountSalesmanName;
+                    record.AccountSalesmanLocalName = item.AccountSalesmanLocalName;
+                    record.AccountCollectorName = item.AccountCollectorName;
+                    record.AccountCollectorLocalName = item.AccountCollectorLocalName;
+                    record.Category1Name = item.Category1Name;
+                    record.Category2Name = item.Category2Name;
+                    record.Category3Name = item.Category3Name;
+                    record.Category4Name = item.Category4Name;
+                    record.Category5Name = item.Category5Name;
+                    record.Category1LocalName = item.Category1LocalName;
+                    record.Category2LocalName = item.Category2LocalName;
+                    record.Category3LocalName = item.Category3LocalName;
+                    record.Category4LocalName = item.Category4LocalName;
+                    record.Category5LocalName = item.Category5LocalName;
 
                     record.Total = item.Total;
 
@@ -549,22 +587,26 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     record.CustomerVatNumber = item.CustomerVatNumber;
                     record.CustomerPaymentTerm = item.AccountTermLocalName;
                     record.GLAccountStandardInterestRate = item.GLAccountStandardInterestRate;
-                    //record.AccountSalesmanName = item.AccountSalesmanName;
-                    //record.AccountSalesmanLocalName = item.AccountSalesmanLocalName;
-                    //record.AccountCollectorName = item.AccountCollectorName;
-                    //record.AccountCollectorLocalName = item.AccountCollectorLocalName;
-                    //record.Category1Name = item.Category1Name;
-                    //record.Category2Name = item.Category2Name;
-                    //record.Category3Name = item.Category3Name;
-                    //record.Category4Name = item.Category4Name;
-                    //record.Category5Name = item.Category5Name;
-                    //record.Category6Name = item.Category6Name;
-                    //record.Category1LocalName = item.Category1LocalName;
-                    //record.Category2LocalName = item.Category2LocalName;
-                    //record.Category3LocalName = item.Category3LocalName;
-                    //record.Category4LocalName = item.Category4LocalName;
-                    //record.Category5LocalName = item.Category5LocalName;
-                    //record.Category6LocalName = item.Category6LocalName;
+
+                    record.ChartOfAccountsLocalName = item.ChartOfAccountsLocalName;
+                    record.ChartOfAccountsEnglishName = item.ChartOfAccountsEnglishName;
+                    record.ChartOfAccountsTypeEnglishName = item.ChartOfAccountsTypeEnglishName;
+                    record.ChartOfAccountsTypeLocalName = item.ChartOfAccountsTypeLocalName;
+
+                    record.AccountSalesmanName = item.AccountSalesmanName;
+                    record.AccountSalesmanLocalName = item.AccountSalesmanLocalName;
+                    record.AccountCollectorName = item.AccountCollectorName;
+                    record.AccountCollectorLocalName = item.AccountCollectorLocalName;
+                    record.Category1Name = item.Category1Name;
+                    record.Category2Name = item.Category2Name;
+                    record.Category3Name = item.Category3Name;
+                    record.Category4Name = item.Category4Name;
+                    record.Category5Name = item.Category5Name;
+                    record.Category1LocalName = item.Category1LocalName;
+                    record.Category2LocalName = item.Category2LocalName;
+                    record.Category3LocalName = item.Category3LocalName;
+                    record.Category4LocalName = item.Category4LocalName;
+                    record.Category5LocalName = item.Category5LocalName;
 
                     record.Total = item.Total;
 
@@ -643,6 +685,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             reportParameters.GroupByDate = GetFilterValue<string>("GroupByDate") == "filter_Due" ? AgingReportParam.DateEnum.DueDate : AgingReportParam.DateEnum.AccountingDate;
             reportParameters.AgingMethod = GetFilterValue<string>("AgingMethod") == "Open Transaction" ? AgingReportParam.MethodEnum.ReconcileOpenBalanceMethod.ToString() : AgingReportParam.MethodEnum.TotalByMonthFIFOMethod.ToString();
             reportParameters.Aging4AccountTypeCode = (GetFilterValue<string>("GLAccountType") == "2") ? AgingReportParam.Aging4AccountTypeCodeEnum.Customer2 : AgingReportParam.Aging4AccountTypeCodeEnum.Vendor3;
+
+
+            reportParameters.ChartOfAccountsTypeCode = GetFilterValue<string>("ChartOfAccountsTypeCode");
+            reportParameters.ChartOfAccountsId = GetFilterValue<string>("ChartOfAccountsId");
+
 
             SetReportCategoryParameters(reportParameters);
 

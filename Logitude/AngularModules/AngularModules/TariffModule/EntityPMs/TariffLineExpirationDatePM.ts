@@ -17,6 +17,15 @@ export class TariffLineExpirationDatePM {
         }
     }
 
+    private viaPortId: string;
+    public get ViaPortId() { return this.viaPortId; }
+    public set ViaPortId(newValue: string) {
+        if (this.viaPortId != newValue) {
+            this.viaPortId = newValue;
+        }
+    }
+
+
     private expirationDate: Date;
     public get ExpirationDate() { return this.expirationDate; }
     public set ExpirationDate(newValue: Date) {

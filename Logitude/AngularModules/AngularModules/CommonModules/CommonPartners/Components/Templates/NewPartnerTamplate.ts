@@ -216,6 +216,7 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
         this.SetUIProperties_TelFax();
         this.SetUIProperties_State();
         this.SetUIProperties_Contact();
+        this.SetUIProperties_City();
     }
 
     private SetUIProperties_Code() {
@@ -366,6 +367,15 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
         }
 
         this.UIProperties.SetRequired("ContactName", this.ObjectTableName, isRequired);
+    }
+
+    SetUIProperties_City() {
+        var isRequired = false;
+
+        if (AppTool.IsNullOrEmpty(this.City) && this.PartnerTypeId != "PO") {
+            isRequired = true;
+        }
+        this.UIProperties.SetRequired("City", this.ObjectTableName, isRequired);
     }
 
     // Address
@@ -526,6 +536,7 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
     set City(newValue: string) {
         if (this.Address.City != newValue) {
             this.Address.City = newValue;
+            this.SetUIProperties_City();
         }
     }
 
@@ -824,8 +835,7 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
         var msg: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
         this.ValidateCardCode(errors, msg);
-
-        Validator.TryValidateObject(this.Address, this.ObjectTableName, errors);
+        this.ValidateAddress(errors);
 
         var isLanguageValid = AddressValidator.IsMainAddressEnglishCharacters(this.Address);
         if (!isLanguageValid) {
@@ -886,6 +896,20 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
 
         return errors;
     }
+
+    private ValidateAddress(errors: string[]) {
+        var newPotentialAddressCity = this.Address.City;
+        if (AppTool.IsNullOrEmpty(this.Address.City) && this.PartnerTypeId == "PO") {
+            this.Address.City = (AppTool.IsNullOrEmpty(this.Address.City) ? " Potential city " : this.Address.City);
+        }
+
+        Validator.TryValidateObject(this.Address, this.ObjectTableName, errors);
+
+        if (this.PartnerTypeId == "PO") {
+            this.Address.City = newPotentialAddressCity;
+        }
+    }
+
     private ValidateCardCode(errors: string[], msg:string) {
         if (this.PartnerTypeId == "TR" || this.PartnerTypeId == "WH") {
             if (AppTool.IsNullOrEmpty(this.CardCode)) {

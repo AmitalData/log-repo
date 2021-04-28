@@ -1,7 +1,9 @@
 ﻿using FluentAssertions;
 using Logitude.ShipmentTests.Models;
 using Logitude.ShipmentTests.Models.Builders;
-using Logitude.Test.Base.Models;
+using Logitude.Test.Base.Models.Api;
+using Logitude.Test.Base.Models.Shared;
+using Logitude.Test.Base.Models.UserTenantPreparation;
 using Logitude.Test.Base.Services;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
@@ -19,47 +21,64 @@ namespace Logitude.ShipmentTests.Steps
             ShipmentContext = shipmentContext;
         }
 
-        [Given(@"A master shipment fields")]
-        public void GivenAMasterShipmentFields(Table table)
+        #region Step Region
+
+        #region Create master shipment steps
+        [Given(@"a master shipment with the following properties")]
+        public void GivenAMasterShipmentWithTheFollowingProperties(Table table)
         {
             ShipmentContext.MasterShipment = CreateShipmentInstance(table);
         }
 
-        [When(@"Create master shipment API request sent")]
-        public void WhenCreateMasterShipmentAPIRequestSent()
+        [When(@"create master shipment")]
+        public void WhenCreateMasterShipment()
         {
-            var Response = APICaller.CallPost<ShipmentPM>(ShipmentContext.MasterShipment, Urls.ShipmentController, UserTenant.Token);
-            ShipmentContext.MasterShipment = Response?.Data;
+            ApiResponse<ShipmentPM> response = APICaller.CallPost<ShipmentPM>(ShipmentContext.MasterShipment, Urls.ShipmentController, UserTenant.Token);
+            ShipmentContext.MasterShipment = response?.Data;
         }
 
-        [Then(@"A new master created successfully")]
-        public void ThenANewMasterCreatedSuccessfully()
+        [Then(@"the master should create successfully")]
+        public void ThenTheMasterShouldCreateSuccessfully()
         {
             ShipmentContext.MasterShipment.Id.Should().NotBeNull();
         }
+        #endregion
 
-        [Given(@"A house shipment fields")]
-        public void GivenAHouseShipmentFields(Table table)
+        #region Create house shipment steps
+        [Given(@"a house shipment with the following properties")]
+        public void GivenAHouseShipmentWithTheFollowingProperties(Table table)
         {
             ShipmentContext.HouseShipment = CreateShipmentInstance(table);
         }
 
-        [When(@"Create house shipment API request sent")]
-        public void WhenCreateHouseShipmentAPIRequestSent()
+        [When(@"create house shipment")]
+        public void WhenCreateHouseShipment()
         {
-            ShipmentContext.HouseShipment = new ShipmentBuilder().WithModel(ShipmentContext.HouseShipment)
-                                                     .MasterShipmentDataId(ShipmentContext.MasterShipment.Id)
-                                                     .Build();
-            var response = APICaller.CallPost<ShipmentPM>(ShipmentContext.HouseShipment, Urls.ShipmentController, UserTenant.Token);
+            ApiResponse<ShipmentPM> response = CreateAndConnectHouseToMaster(ShipmentContext.HouseShipment, ShipmentContext.MasterShipment.Id);
             ShipmentContext.HouseShipment = response?.Data;
         }
 
-        [Then(@"A new house created successfully")]
-        public void ThenANewHouseCreatedSuccessfully()
+        [Then(@"the house should create successfully")]
+        public void ThenTheHouseShouldCreateSuccessfully()
         {
             ShipmentContext.HouseShipment.Id.Should().NotBeNull();
         }
 
+        #endregion
+
+        #endregion
+
+        #region Private Function Region
+        private ApiResponse<ShipmentPM> CreateAndConnectHouseToMaster(ShipmentPM houseShipment, string masterShipmentDataId)
+        {
+            ShipmentContext.HouseShipment = new ShipmentBuilder().WithModel(houseShipment)
+                                                     .MasterShipmentDataId(masterShipmentDataId)
+                                                     .Build();
+            return APICaller.CallPost<ShipmentPM>(houseShipment, Urls.ShipmentController, UserTenant.Token);
+        }
+        #endregion
+
+        #region Build Models Region
         private ShipmentPM CreateShipmentInstance(Table DataTable)
         {
             dynamic dataTable = DataTable.CreateDynamicInstance();
@@ -74,5 +93,6 @@ namespace Logitude.ShipmentTests.Steps
                 .MainCarriageFromPortIdByCode((string)dataTable.MainCarriageFromPort)
                 .Build();
         }
+        #endregion
     }
 }

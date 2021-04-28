@@ -2,11 +2,6 @@
     <tr style="height:100%;vertical-align:top;">
         <td>
             <table>
-                <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
-                    <td>
-                        <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
-                    </td>
-                </tr>
                 <tr>
                     <td>
                         <ScrollViewer>
@@ -79,6 +74,18 @@
 
                                                                             <td style="width:250px;">
                                                                                 <CheckBox [IsChecked]="EntityPM.InActive" (Checked)="EntityPM.InActive = $event"></CheckBox>
+                                                                            </td>
+                                                                            <td></td>
+                                                                        </tr>
+
+                                                                        <tr class="FormFieldRow">
+                                                                            <td style="width:90px;vertical-align:central">
+                                                                                <LogLabel [ObjectFieldName]="'SendIfEmpty'" [Text]="'Send If Empty'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                            </td>
+
+
+                                                                            <td style="width:250px;">
+                                                                                <CheckBox [IsChecked]="SendIfEmpty" (Checked)="SendIfEmpty = $event"></CheckBox>
                                                                             </td>
                                                                             <td></td>
                                                                         </tr>

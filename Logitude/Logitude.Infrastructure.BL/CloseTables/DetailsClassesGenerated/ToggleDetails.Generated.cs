@@ -34,6 +34,7 @@ namespace Logitude.Infrastructure.BL
                 Name = "EnableAzureRootFolder", 
                 SearchFields = "EZR,EnableAzureRootFolder", 
                 Code = "EZR", 
+                Description = "Enable storing azure files under main root folder", 
 			});
 			 
             all.Add(new ToggleDetails()
@@ -41,27 +42,15 @@ namespace Logitude.Infrastructure.BL
                 Code = "LEX", 
                 Name = "LogBoxExport", 
                 SearchFields = "LEX,LogBoxExport", 
+                Description = "Enable Export Shipment", 
 			});
 			 
             all.Add(new ToggleDetails()
             {    
                 Code = "URT", 
                 Name = "Unicargo Report Toggle", 
-                SearchFields = "URT,Unicargo Report Toggle", 
-			});
-			 
-            all.Add(new ToggleDetails()
-            {    
-                Code = "BDR", 
-                Name = "Build Document Report Service", 
-                SearchFields = "BDR,Build Document Report Service", 
-			});
-			 
-            all.Add(new ToggleDetails()
-            {    
-                Code = "RRW", 
-                Name = "Run Report Via WorkerRole", 
-                SearchFields = "RRW,Run Report Via WorkerRole", 
+                SearchFields = "URT,Unicargo Report Toggle,Activated a special report for Unicargo", 
+                Description = "Activated a special report for Unicargo", 
 			});
 			 
             all.Add(new ToggleDetails()
@@ -69,20 +58,7 @@ namespace Logitude.Infrastructure.BL
                 Code = "FPG", 
                 Name = "ARPayment Fetcha Pago", 
                 SearchFields = "FPG,ARPayment Fetcha Pago", 
-			});
-			 
-            all.Add(new ToggleDetails()
-            {    
-                Code = "TJC", 
-                Name = "Ticket Jumping Counter", 
-                SearchFields = "TJC,Ticket Jumping Counter", 
-			});
-			 
-            all.Add(new ToggleDetails()
-            {    
-                Code = "BDW", 
-                Name = "Build Document Via WorkerRole", 
-                SearchFields = "BDW,Build Document Via WorkerRole", 
+                Description = "Display Fetcha Pago in ARPayment  Screens", 
 			});
 			 
             all.Add(new ToggleDetails()
@@ -90,6 +66,7 @@ namespace Logitude.Infrastructure.BL
                 Code = "RRS", 
                 Name = "Run Report on Secondary DB", 
                 SearchFields = "RRS,Run Report on Secondary DB", 
+                Description = "Running Report on Secondery DB", 
 			});
 			 
             all.Add(new ToggleDetails()
@@ -97,27 +74,23 @@ namespace Logitude.Infrastructure.BL
                 Code = "LV2", 
                 Name = "LogGrid V2", 
                 SearchFields = "LGV2,LogGrid V2", 
-			});
-			 
-            all.Add(new ToggleDetails()
-            {    
-                Name = "Card Searchs Toggle", 
-                Code = "CST", 
-                SearchFields = "CST,Card Searchs Toggle", 
+                Description = "Use Logitude Grid  version 2", 
 			});
 			 
             all.Add(new ToggleDetails()
             {    
                 Code = "SUB", 
                 Name = "Shipment Sub Type", 
-                SearchFields = "SUB,Shipment Sub Type", 
+                SearchFields = "SUB,Shipment Sub Type,Enables users to manage the shipment sub-types,", 
+                Description = "Enables users to manage the shipment sub-types", 
 			});
 			 
             all.Add(new ToggleDetails()
             {    
                 Code = "HRS", 
                 Name = "Horse", 
-                SearchFields = "HRS,Horse", 
+                SearchFields = "HRS,Horse,Activates Horse Management in shipments", 
+                Description = "Activates Horse Management in shipments", 
 			});
 			 
             all.Add(new ToggleDetails()
@@ -125,13 +98,15 @@ namespace Logitude.Infrastructure.BL
                 Code = "KPI", 
                 Name = "KPI Document Fields", 
                 SearchFields = "KPI,KPI Document Fields", 
+                Description = "Display KPI documents fields in Bi report", 
 			});
 			 
             all.Add(new ToggleDetails()
             {    
                 Code = "STR", 
-                SearchFields = "STR,Storage Pricing", 
+                SearchFields = "STR,Storage Pricing,Enables the storage invoicing mechanism", 
                 Name = "Storage Pricing", 
+                Description = "Enables the storage invoicing mechanism", 
 			});
 			 
             all.Add(new ToggleDetails()
@@ -139,41 +114,38 @@ namespace Logitude.Infrastructure.BL
                 Code = "OI2", 
                 Name = "OceanInsightsV2", 
                 SearchFields = "OI2,OceanInsightsV2", 
+                Description = "Use Ocean insights tracking api version 2", 
 			});
 			 
             all.Add(new ToggleDetails()
             {    
                 Name = "Shipment Warning Checkbox", 
                 Code = "SWC", 
-                SearchFields = "SWC,Shipment Warning Checkbox", 
+                SearchFields = "SWC,Shipment Warning Checkbox,Enables the credit limit new shipment warning", 
+                Description = "Enables the credit limit new shipment warning", 
 			});
 			 
             all.Add(new ToggleDetails()
             {    
                 Code = "AMS", 
                 Name = "AMS in Export", 
-                SearchFields = "AMS,AMS in Export", 
+                SearchFields = "AMS,AMS in Export,Activates AMS customs transmission in export shipments", 
+                Description = "Activates AMS customs transmission in export shipments", 
 			});
 			 
             all.Add(new ToggleDetails()
             {    
                 Code = "API", 
-                SearchFields = "API,API Update", 
+                SearchFields = "API,API Update,Allows tenants to update shipments via API", 
                 Name = "API Update", 
-			});
-			 
-            all.Add(new ToggleDetails()
-            {    
-                Code = "LIC", 
-                Name = "License Management", 
-                SearchFields = "LIC,License Management", 
+                Description = "Allows tenants to update shipments via API", 
 			});
 			 
             all.Add(new ToggleDetails()
             {    
                 Name = "CRM Customer Quick Search", 
                 Code = "CQS", 
-                SearchFields = "CQS,CRM Customer Quick Search", 
+                SearchFields = "CQS,CRM Customer Quick Search,CRM Customer Quick Search", 
                 Description = "CRM Customer Quick Search", 
 			});
 			 
@@ -181,14 +153,14 @@ namespace Logitude.Infrastructure.BL
             {    
                 Name = "Charges Types Direction Restrictions", 
                 Code = "CTR", 
-                SearchFields = "CTR,Charges Types Direction Restrictions", 
+                SearchFields = "CTR,Charges Types Direction Restrictions,Charges Types Direction Restrictions", 
                 Description = "Charges Types Direction Restrictions", 
 			});
 			 
             all.Add(new ToggleDetails()
             {    
                 Name = "Branch Code in Counters", 
-                SearchFields = "Branch Code in Counters", 
+                SearchFields = "BCC,Branch Code in Counters,Branch Code in Counters", 
                 Description = "Branch Code in Counters", 
                 Code = "BCC", 
 			});
@@ -196,9 +168,9 @@ namespace Logitude.Infrastructure.BL
             all.Add(new ToggleDetails()
             {    
                 Code = "ACP", 
-                SearchFields = "ACP,Accruals Approvement", 
+                SearchFields = "ACP,Accruals Approvement,Activates the accruals approve checkbox in shipment profit", 
                 Name = "Accruals Approvement", 
-                Description = "Accruals Approvement Toggle", 
+                Description = "Activates the accruals approve checkbox in shipment profit", 
 			});
 			 
             all.Add(new ToggleDetails()
@@ -206,32 +178,82 @@ namespace Logitude.Infrastructure.BL
                 Code = "EQW", 
                 Name = "Export Query Data Via WorkerRole", 
                 Description = "Export Query Data to Excel Via WorkerRole", 
-                SearchFields = "Export Query Data Via WorkerRole", 
+                SearchFields = "EQW,Export Query Data Via WorkerRole,Export Query Data to Excel Via WorkerRole", 
 			});
 			 
             all.Add(new ToggleDetails()
             {    
                 Name = " Improved Search in Customers Views", 
                 Code = "SCV", 
-                SearchFields = "SCV, Improved Search in Customers Views", 
-                Description = " Improved Search in Customers Views", 
+                SearchFields = "SCV, Improved Search in Customers Views, Improved Search in Customers Views", 
+                Description = "Improved Search in Customers Views", 
 			});
 			 
             all.Add(new ToggleDetails()
             {    
                 Code = "TAR", 
                 Name = "All Tariffs", 
-                SearchFields = "TAR,All Tariffs", 
+                SearchFields = "TAR,All Tariffs,Hide Tariffs Menu", 
                 Description = "Hide Tariffs Menu", 
 			});
-
-			 all.Add(new ToggleDetails()
+			 
+            all.Add(new ToggleDetails()
             {    
                 Code = "QMC", 
                 Name = "Quote Multi Currency Mode", 
-                SearchFields = "QMC, Quote Multi Currency Mode", 
+                SearchFields = "QMC,Quote Multi Currency Mode,Quote Multi Currency Mode", 
                 Description = "Quote Multi Currency Mode", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "ADC", 
+                Name = "Automation Document Copies", 
+                SearchFields = "ADC,Automation Document Copies", 
+                Description = "Automation Document Copies", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "DSR", 
+                Name = "Documents Send Result in AP Invoices Automation", 
+                Description = "Documents Send Result in AP Invoices Automation", 
+                SearchFields = "DSR,Documents Send Result in AP Invoices Automation", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "AWB Multiple Commodities", 
+                Code = "AMC", 
+                SearchFields = "AMC,AWB Multiple Commodities", 
+                Description = "AWB Multiple Commodities", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "MAP", 
+                Name = "Multipile AP Shipment", 
+                SearchFields = "MAP,Multipile AP Shipment", 
+                Description = "Multipile AP Shipment", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "CPH", 
+                Name = "Consequent Pickup/Delivery", 
+                SearchFields = "CPH,Consequent Pickup/Delivery", 
+                Description = "Consequent Pickup/Delivery", 
+			});
+
+            all.Add(new ToggleDetails()
+            {    
+                Code = "PRE", 
+                Name = "Master Pre/On Carriage", 
+                SearchFields = "PRE,Master Pre/On Carriage", 
+                Description = "Master Pre/On Carriage", 
+			});
+
+			
             return all;
        }
 

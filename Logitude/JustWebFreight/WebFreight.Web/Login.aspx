@@ -24,7 +24,7 @@
     <link href="HtmlHelpers/CSS/sunburst.css" rel="stylesheet" type="text/css"/>
     <link href="HtmlHelpers/CSS/app.css" rel="stylesheet" type="text/css"/>
     <link href="HtmlHelpers/CSS/LogitudeMainCss.css" rel="stylesheet" type="text/css"/>
-    <script src="HtmlHelpers/JS/Logitude.Tools.js" type="text/javascript"></script>        	    
+    <script src="HtmlHelpers/JS/LogitudeTools.js" type="text/javascript"></script>        	    
     <script src="Scripts/json2.min.js" type="text/javascript"></script>
     <script src="HtmlHelpers/JS/highlight.pack.js" type="text/javascript"></script>     	
        
@@ -1386,12 +1386,16 @@
                 var tokenCard = ExternalTenant ? "CardId_" + userdata.CurrentTenant : "CardId";
                 window.localStorage.setItem(tokenKey, userdata.Token);
                 window.localStorage.setItem(tokenCard, userdata.CardId);
-
-
-
             }
+
             var logindata = userdata.UserName + ":" + userdata.CurrentTenant + ":" + userdata.CardId + ":" + userdata.CardType + ":" + userdata.IsBrandingEnabled;
-            document.location.href = "SharedLogisticPage.aspx?userdata=" + logindata;
+            //document.location.href = "SharedLogisticPage.aspx?userdata=" + logindata;
+            
+            var params = [];
+            params.push({ name: "Token", value: userdata.Token });
+            params.push({ name: "LoginData", value: logindata });
+            PostFormParams("/SharedLogisticPage.aspx", params);
+
             $("#loginBusyindicator").hide();
         };
 
@@ -1902,12 +1906,40 @@
 
 
         function OnLoad() {
+            const myDomain = GetLoggedDomain();
+            //var isDSV = (url.toLowerCase().indexOf("dsv.co.il") > -1 || IsDSVLocalRun()) ? true : false;
+            
 
-            var url = window.location.href;
-            var isDSV = url.toLowerCase().indexOf("dsv.co.il") > -1 ? true : false;
+            var plUrl = "api/PrivateLable/getisprivatelableurl/?url=" + myDomain;
+            $.ajax({
+                url: plUrl,
+                type: 'GET',
+                contentType: 'application/json',
+
+                success: function (result) {
+                    if (result && result.EnablePrivateLable) {
+                        SystemLogin(result)
+                    }
+                    else {
+                        SystemLogin(null);
+                    }
+                },
+
+                error: function (jqXHR, textStatus, errorThrown) {
+
+                }
+            });
+        }
+
+        function GetLoggedDomain() {
+            const url = window.location.href;
             var myDomain = url.split('/')[2];
+            myDomain = myDomain.split(':')[0];
 
-
+            return myDomain;
+        }
+        function SystemLogin(privateLable) {
+            var isCargoTracking = IsaCargoTrackingDomain(window.location.href);
             var url = "api/LogitudeApplication"
             $.ajax({
                 url: url,
@@ -1917,34 +1949,28 @@
                 success: function (result) {
                     if (result == true) {
                         IsShowUpgradeScreen = true;
-                        if (isDSV == true) {
-
+                        if (privateLable) {
                             window.sessionStorage.setItem("Environment", "LogBox");
                             document.location.href = "WebPages/UpgradeScreen.aspx";
                         }
                         else BrandingFunction();
-
                     }
                     else {
                         IsShowUpgradeScreen = false;
-                        if (isDSV) {
-                            DSVLogin(myDomain);
-                        } else {
-
+                        if (isCargoTracking) {
+                            RedirectToCargotrackingSite(window.location.href);
+                        }
+                        else if (privateLable) {
+                            PrivateLableLogin(privateLable);
+                        }
+                        else {
                             ComplateLoadProess();
                             BrandingFunction();
-
                             var Containerelem = document.getElementById("Container");
                             if (Containerelem) {
                                 Containerelem.style.display = 'block';
                             }
-
-
-
-
                         }
-
-
                     }
                 },
 
@@ -1952,50 +1978,37 @@
 
                 }
             });
-
-
         }
 
+        function IsLocalRun() {
+            const url = window.location.href;
+            if (url)
+                return url.toLowerCase().indexOf("localhost") > -1;
+            else
+                return false;
+        }
 
+        function PrivateLableLogin(privateLable) {
+            if (privateLable) {
+                window.sessionStorage.setItem("ContactEmail", privateLable.ContactUsEmail);
+                window.sessionStorage.setItem("IsPrivateLabel", true);
+                window.sessionStorage.setItem("SmallLogoURL", privateLable.SmallLogoURL);
+                window.sessionStorage.setItem("LogoURL", privateLable.LogoURL);
+                window.sessionStorage.setItem("PrivateLabelUrl", privateLable.PrivateLabelUrl);
+                window.sessionStorage.setItem("PrivateLabelShortName", privateLable.PrivateLabelShortName);
+                window.sessionStorage.setItem("IsDSV", privateLable.PrivateLabelDomain.toLowerCase().indexOf("dsv") > -1);
+            }
 
-        function DSVLogin(myDomain) {
-
-
-            var myLogoMethodUrl = "api/PrivateLable/getisprivatelableurl/?url=" + myDomain;
-            $.ajax({
-                url: myLogoMethodUrl,
-                type: 'GET',
-                contentType: 'application/json',
-
-                success: function (result) {
-                    if (result) IsPrivateLabel = result.EnablePrivateLable;
-                    if (IsPrivateLabel == true) {
-                        window.sessionStorage.setItem("ContactEmail", result.ContactUsEmail);
-                        window.sessionStorage.setItem("IsPrivateLabel", IsPrivateLabel);
-                        window.sessionStorage.setItem("SmallLogoURL", result.SmallLogoURL);
-                        window.sessionStorage.setItem("LogoURL", result.LogoURL);
-                        window.sessionStorage.setItem("PrivateLabelUrl", result.PrivateLabelUrl);
-                        window.sessionStorage.setItem("PrivateLabelShortName", result.PrivateLabelShortName);
-
-                        //$("#BackToLogin").attr("href", "Login.aspx?tenant=" + BrandingTenant);
-
-                    }
-                    var urlMenu = "";
-                    var mypageUrl = document.URL;
-                    if (mypageUrl && mypageUrl.indexOf("Menu=") > -1) {
-                        urlMenu = mypageUrl.split("Menu=")[1];
-                        document.location.href = "AngularLogin" + "/index.html" + ("?Menu=" + urlMenu);
-                    }
-                    else {
-
-                        document.location.href = "AngularLogin" + "/index.html";
-                    }
-                    //document.location.href = "AngularLogin" + "/index.html";
-                },
-            });
-
-
-
+            var urlMenu = "";
+            var mypageUrl = document.URL;
+            if (mypageUrl && mypageUrl.indexOf("Menu=") > -1) {
+                urlMenu = mypageUrl.split("Menu=")[1];
+                document.location.href = "AngularLogin" + "/index.html" + ("?Menu=" + urlMenu);
+            }
+            else {
+                const privateLableLocal = IsLocalRun() ? "?PLlocal" : "";
+                document.location.href = "AngularLogin" + "/index.html" + privateLableLocal;
+            }
         }
 
         function ComplateLoadProess() {
@@ -2077,7 +2090,22 @@
 
         }
 
-</script>
+        function IsaCargoTrackingDomain(domain) {
+            const cargoTrackingDomainKeywords = ["tracking.", "ecommerce."];
+            for (var i = 0; i < cargoTrackingDomainKeywords.length; i++) {
+                if (domain.indexOf(cargoTrackingDomainKeywords[i])>-1) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function RedirectToCargotrackingSite(domain) {
+            //var d = window.location.href + "/CargoTracking";
+            window.location.href = window.location.href + "CargoTracking";
+        }
+
+    </script>
 
     <script type="text/javascript"> 
 <!-- 

@@ -42,6 +42,7 @@ export class InvoicesByPartnerFilterComponent extends BaseComponent   {
     }
     queryFilterItems: QueryFilterItem[];
     public CustomerId = null;
+    public PartnerId = null;
     queryFilterItem: QueryFilterItem;
     public ObjectTableName: string = "Report";
 
@@ -159,8 +160,14 @@ export class InvoicesByPartnerFilterComponent extends BaseComponent   {
                 this.queryFilterItems.push(this.queryFilterItem);
             }
 
-
-
+            if (this.PartnerId) {
+                this.queryFilterItem = new QueryFilterItem();
+                this.queryFilterItem.DisplayInList = false;
+                this.queryFilterItem.FieldName = "PartnerId";
+                this.queryFilterItem.FieldValue = this.PartnerId;
+                this.queryFilterItem.Operator = "Equals";
+                this.queryFilterItems.push(this.queryFilterItem);
+            }
 
 
 

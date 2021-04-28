@@ -89,7 +89,25 @@ using Simplog.Data.CommonDataModel;
 				   temp.LocalName = MyEntityPM.LocalName;
 				   temp.EnglishName = MyEntityPM.EnglishName;
 				   ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant); 
-				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.CombinedCode,ComputingPartnerName,"Port");  					
+				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.CombinedCode,ComputingPartnerName,"Port");   
+
+			  
+				   if(MyEntityPM.CountryId != null)
+				   {
+					   CountryQueryService CountryService0 = new CountryQueryService(Tenant);
+					   					   temp.Country = CountryService0.GetCountryById(MyEntityPM.CountryId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				    
+
+			  
+				   if(MyEntityPM.StateId != null)
+				   {
+					   StateQueryService StateService1 = new StateQueryService(Tenant);
+					   					   temp.State = StateService1.GetStateById(MyEntityPM.StateId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				   					
 				   return temp;
 			}
             catch (Exception ex)
@@ -181,6 +199,48 @@ using Simplog.Data.CommonDataModel;
 
 										}  
 
+					
+					CountryQueryService CountryCountryService = new CountryQueryService(Tenant);
+					if(MyEntity.Country != null)
+					{
+						var myCountryPM = CountryCountryService.CountryDataMappingAndValidatin(MyEntity.Country,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myCountryPM != null)
+						{ 
+
+						 
+							if(!IsUpdate)
+							{								//throw new ApplicationException("Country Can't be update"); 
+								temp.CountryId = myCountryPM.Id;
+						  
+							}  
+
+							
+						} 
+
+					}
+			
+					
+					StateQueryService StateStateService = new StateQueryService(Tenant);
+					if(MyEntity.State != null)
+					{
+						var myStatePM = StateStateService.StateDataMappingAndValidatin(MyEntity.State,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myStatePM != null)
+						{ 
+
+						 
+							if(!IsUpdate)
+							{								//throw new ApplicationException("State Can't be update"); 
+								temp.StateId = myStatePM.Id;
+						  
+							}  
+
+							
+						} 
+
+					}
+			
 										   
 					return temp;
 		    }

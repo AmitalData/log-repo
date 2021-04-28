@@ -40,6 +40,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                        HasExecutedRecord = a.HasExecutedRecord,
                                                        ObjectTableId = a.ObjectTableId,
                                                        ExecutionTime = a.ExecutionTime,
+
                                                    }).OrderByDescending(d => d.CreateDate).ToList();
             #region CreateByUserName
 
@@ -117,6 +118,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              SendInterfaceAutomationSsucceedXml = a.SendInterfaceAutomationSsucceedXml,
                              SendDocumentAutomationFailedXml = a.SendDocumentAutomationFailedXml,
                              SendDocumentAutomationSsucceedXml = a.SendDocumentAutomationSsucceedXml,
+                             CreateTaskAutomationFailedXml = a.CreateTaskAutomationFailedXml ,
+                             CreateTaskAutomationSsucceedXml = a.CreateTaskAutomationSsucceedXml,
 
                          }).FirstOrDefault();
             return query;
