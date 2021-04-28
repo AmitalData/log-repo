@@ -2653,6 +2653,7 @@
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentPickUpDeliveryPackagePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentPickUpPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentPM.cs" />
+    <Compile Include="ShipmentsModel\EntityPMs\ShipmentProductItemPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentReceivableLineStatusPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentReceivablePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentReceivableStatusPM.cs" />
@@ -2717,6 +2718,7 @@
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentPickUpDeliveryQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentPickUpQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentPreperationIntegrationVariables.cs" />
+    <Compile Include="ShipmentsModel\EntityQueries\ShipmentProductItemQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentReceivableLineStatusQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentReceivableQuery.cs" />
@@ -2753,6 +2755,7 @@
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.ShipmentCustomsTransmission.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.ShipmentStoragePricing.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.ShipmentSubType.cs" />
+    <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.ProductItem.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentTypeMapping.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\FBLStockMapping.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\OceanInsightsRequestMapping.cs" />

@@ -693,7 +693,7 @@ namespace WebFreight.Web.WcfApi
                         entityPM.StatusDate = entityPM.CreateDateTime;
 
                         service = new ShipmentService(objectContext, entityPM, contact.Email);
-                        service.SetChangeSet(entityPM.ShipmentPackages, new List<ShipmentOrderPackagePM>(), entityPM.ShipmentPickUps, entityPM.ShipmentDeliveries, new List<ShipmentReceivablePM>(), new List<ShipmentPayablePM>(), new List<ShipmentFollowUpPM>(), new List<ShipmentAWBPrintOnlyPM>(), new List<ConsoleShipmentPM>(), new List<ShipmentCarrierStatusPM>(), new List<AWBOCIPM>(), new List<ShipmentCommodityPM>(), new List<ShipmentAssemblyPM>(), new List<ShipmentStoragePricingPM>());
+                        service.SetChangeSet(entityPM.ShipmentPackages, new List<ShipmentOrderPackagePM>(), entityPM.ShipmentPickUps, entityPM.ShipmentDeliveries, new List<ShipmentReceivablePM>(), new List<ShipmentPayablePM>(), new List<ShipmentFollowUpPM>(), new List<ShipmentAWBPrintOnlyPM>(), new List<ConsoleShipmentPM>(), new List<ShipmentCarrierStatusPM>(), new List<AWBOCIPM>(), new List<ShipmentCommodityPM>(), new List<ShipmentAssemblyPM>(), new List<ShipmentStoragePricingPM>(), new List<ShipmentProductItemPM>());
 
                         service.Create();
 
@@ -774,7 +774,7 @@ namespace WebFreight.Web.WcfApi
                             entityPM.ShipmentDeliveries.Add(deliveryPM);
                         }
 
-                        service.SetChangeSet(entityPM.ShipmentPackages, new List<ShipmentOrderPackagePM>(), entityPM.ShipmentPickUps, entityPM.ShipmentDeliveries, new List<ShipmentReceivablePM>(), new List<ShipmentPayablePM>(), new List<ShipmentFollowUpPM>(), new List<ShipmentAWBPrintOnlyPM>(), new List<ConsoleShipmentPM>(), new List<ShipmentCarrierStatusPM>(), new List<AWBOCIPM>(), new List<ShipmentCommodityPM>(), new List<ShipmentAssemblyPM>(), new List<ShipmentStoragePricingPM>());
+                        service.SetChangeSet(entityPM.ShipmentPackages, new List<ShipmentOrderPackagePM>(), entityPM.ShipmentPickUps, entityPM.ShipmentDeliveries, new List<ShipmentReceivablePM>(), new List<ShipmentPayablePM>(), new List<ShipmentFollowUpPM>(), new List<ShipmentAWBPrintOnlyPM>(), new List<ConsoleShipmentPM>(), new List<ShipmentCarrierStatusPM>(), new List<AWBOCIPM>(), new List<ShipmentCommodityPM>(), new List<ShipmentAssemblyPM>(), new List<ShipmentStoragePricingPM>(), new List<ShipmentProductItemPM>());
 
 
                         
