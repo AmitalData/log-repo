@@ -600,6 +600,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         else
                             consignmentPM.IsLastReleaseFromWarehous = "F";
                     }
+                    else
+                    {
+                        consignmentPM.IsLastReleaseFromWarehous = "N";
+
+                    }
                     consignmentPM.OriginCountryCode = GetValueCodeType(consignment.DMExtensions.ExportationCountryCode);
 
                     if (consignment.DMExtensions.RegisteredFacility != null && consignment.DMExtensions.RegisteredFacility.Count() > 0)
