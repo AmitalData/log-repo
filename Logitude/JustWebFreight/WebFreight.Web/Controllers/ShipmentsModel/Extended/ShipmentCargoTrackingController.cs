@@ -1,6 +1,7 @@
 ﻿using ICSharpCode.SharpZipLib.BZip2;
 using ICSharpCode.SharpZipLib.Zip;
 using Logitude.BL.CommonDataModel.DataContracts;
+using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
@@ -81,6 +82,25 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
 
         }
 
+        public HttpResponseMessage GetPartnersAddresses([FromUri] List<string> partnersIds)
+        {
+            try
+            {
+                int tenant = GetAuthinticatedTenant();
+
+
+                AddressQuery addressQuery = new AddressQuery(tenant);
+                List<AddressList> addresses = addressQuery.GetAddressesByCardIds(partnersIds, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, addresses);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
         private int GetAuthinticatedTenant()
         {
             string token = HttpContext.Current.Request.Headers["Token"];
@@ -89,6 +109,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
             SecurityUtility.AuthenticationOnTenant(tenant);
             return tenant;
         }
+
+
     }
 
 }
