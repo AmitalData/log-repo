@@ -34,12 +34,12 @@ declare @ChargeTypeId as varchar(15)
 BEGIN
 	-- Loop Houses
 	declare @HouseId as varchar(15)
-	DECLARE HousesCursor CURSOR READ_ONLY
+	DECLARE ReceivableHousesCursor CURSOR READ_ONLY
 	FOR
 	SELECT Id
 	FROM Shipments
 	WHERE ShipmentLevelCode = 'H' AND MasterShipmentDataId = @ShipmentId
-	OPEN HousesCursor FETCH NEXT FROM HousesCursor INTO @HouseId
+	OPEN ReceivableHousesCursor FETCH NEXT FROM ReceivableHousesCursor INTO @HouseId
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
   -- Open lines 
@@ -89,7 +89,7 @@ BEGIN
          		FETCH NEXT FROM VatGroups_CURSOR INTO @SingleVATTypeId
          		WHILE @@FETCH_STATUS = 0
          		BEGIN 
-         			set @VatPercentage = (select top 1 Percentage from VatTypePercentages where VatTypeId = @SingleVATTypeId AND Tenant = @Tenant and FromDate <= GETDATE() order by FromDate desc)
+         			set @VatPercentage = (select top 1 Percentage from VatTypePercentages where VatTypeId = @SingleVATTypeId AND Tenant = @Tenant and FromDate <= @CreateDate order by FromDate desc)
          			if(@VatPercentage is not null)
               begin
                 set @VatAmountLocal = @VatAmountLocal + (@TotalAmountLocal * @VatPercentage / 100);
@@ -112,12 +112,12 @@ BEGIN
      -- Connected lines 
      DECLARE DataCursor CURSOR READ_ONLY
      	FOR
-         SELECT ShipmentReceivables.Id, ShipmentReceivables.Tenant, ARInvoiceLines.VatTypeId, ShipmentReceivables.CreateDate, TotalAmountLocal,LocalCurrencyAmount, ProfitCurrencyAmount, VatPercentage, IsRegionalTax, RegionalTaxPercentage
+         SELECT ShipmentReceivables.Id, ShipmentReceivables.Tenant, ARInvoiceLines.VatTypeId, ARInvoices.CreateDate, TotalAmountLocal, ShipmentReceivables.AmountInProfitCurrency, VatPercentage, IsRegionalTax, RegionalTaxPercentage
      	FROM ShipmentReceivables
      	left join ARInvoiceLines  on ARInvoiceLines.Id = ShipmentReceivables.ARInvoiceLineId
      	left join ARInvoices  on ARInvoices.Id = ARInvoiceLines.ARInvoiceId
      	where ShipmentReceivables.ARInvoiceLineId is not null  and ShipmentId = @HouseId
-     	OPEN DataCursor FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @VatTypeId, @CreateDate, @TotalAmountLocal, @LocalCurrencyAmount, @ProfitCurrencyAmount, @VatPercentage, @IsRegionalTax,@RegionalTaxPercentage
+     	OPEN DataCursor FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @VatTypeId, @CreateDate, @LocalCurrencyAmount, @ProfitCurrencyAmount, @VatPercentage, @IsRegionalTax,@RegionalTaxPercentage
      	WHILE @@FETCH_STATUS = 0
      	BEGIN
      	
@@ -153,7 +153,7 @@ BEGIN
      		FETCH NEXT FROM VatGroups_CURSOR INTO @SingleVATTypeId
      		WHILE @@FETCH_STATUS = 0
      		BEGIN 
-     			set @VatPercentage = (select top 1 Percentage from VatTypePercentages where VatTypeId = @SingleVATTypeId AND Tenant = @Tenant and FromDate <= GETDATE() order by FromDate desc)
+     			set @VatPercentage = (select top 1 Percentage from VatTypePercentages where VatTypeId = @SingleVATTypeId AND Tenant = @Tenant and FromDate <= @CreateDate order by FromDate desc)
      			if(@VatPercentage is not null)
           begin
             set @VatAmountLocal = @VatAmountLocal + (@LocalCurrencyAmount * @VatPercentage / 100);
@@ -165,17 +165,17 @@ BEGIN
      		DEALLOCATE VatGroups_CURSOR
      	end
      
-      update ShipmentReceivables set VatAmountLocal =  Round(@VatAmountLocal, 2),  VatAmountProfit =  Round(@VatAmountProfit,2) where Id = @EntityId and Tenant = @Tenant
+        update ShipmentReceivables set VatAmountLocal =  Round(@VatAmountLocal, 2),  VatAmountProfit =  Round(@VatAmountProfit,2) where Id = @EntityId and Tenant = @Tenant
 
-     	FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @VatTypeId, @CreateDate, @TotalAmountLocal, @LocalCurrencyAmount,@ProfitCurrencyAmount, @VatPercentage, @IsRegionalTax, @RegionalTaxPercentage
+     	FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @VatTypeId, @CreateDate, @LocalCurrencyAmount,@ProfitCurrencyAmount, @VatPercentage, @IsRegionalTax, @RegionalTaxPercentage
      	END
      	CLOSE DataCursor
      	DEALLOCATE DataCursor
 
-	FETCH NEXT FROM HousesCursor INTO @HouseId
+	FETCH NEXT FROM ReceivableHousesCursor INTO @HouseId
 	END
-	CLOSE HousesCursor
-	DEALLOCATE HousesCursor
+	CLOSE ReceivableHousesCursor
+	DEALLOCATE ReceivableHousesCursor
 
 END
 ]]></SqlScript>
