@@ -245,6 +245,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
                 transactionsDataProvider.Transactions.Add(reportTransaction);
             }
+
+            transactionsDataProvider.LastCumulativeOpenAmount = transactions[transactions.Count - 1].CumulativeOpenAmount;
         }
 
         private List<GLAccountList> GetGLAccountsInsideTransactions(List<LedgerTransactionList> transactions)
