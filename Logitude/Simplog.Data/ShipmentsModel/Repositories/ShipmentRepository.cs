@@ -286,6 +286,10 @@ namespace Simplog.Data.ShipmentsModel.Repositories
                                             .Include("ShipmentAdditionalCloudData")
                                             .Include("WarehouseLegCard")
                                             .Include("ShipmentType")
+                                            .Include("ShipperCard")
+                                            .Include("EntityStatus").Include("ComputedEntityStatus").Include("ShipmentType").Include("Incoterm")
+                                            .Include("ShipmentReceivableStatus").Include("ShipmentPayableStatus").Include("ShipmentLevel").Include("NextLeg")
+                                            .Include("ShipmentType").Include("ShipmentMasterData").Include("SpecialServicesType").Include("MoveType")
                     where shipment.Id == id && shipment.Tenant == tenant
                     select shipment)
                     .FirstOrDefault();

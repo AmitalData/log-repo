@@ -13512,23 +13512,53 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             Shipment shipment = repository.GetShipmentForCargoTracking(id, tenant);
 
-            ShipmentPM shipmentPM = new ShipmentPM()
+            ShipmentPM shipmentPM = CreateShipmentPMForCargoTracking(tenant, shipment);
+
+            SetShipmentCloudDataFields(shipment, shipmentPM);
+
+            return shipmentPM;
+        }
+
+        private ShipmentPM CreateShipmentPMForCargoTracking(int tenant, Shipment shipment)
+        {
+            return new ShipmentPM()
             {
                 Id = shipment.Id,
                 CustomFileNumber = shipment.CustomFileNumber,
+                ShipmentTypeName = shipment.ShipmentType?.Name,
+                ShipperId = shipment.ShipperId,
+                ConsigneeId = shipment.ConsigneeId,
+                FreightForwarderId = shipment.FreightForwarderId,
+                CustomerId = shipment.CustomerId,
+                AgentId = shipment.AgentId,
+                IssuingCarrierAgentId = shipment.IssuingCarrierAgentId,
+                CustomAgentExportId = shipment.CustomAgentExportId,
+                CustomAgentImportId = shipment.CustomAgentImportId,
+                Notify1Id = shipment.Notify1Id,
+                Notify2Id = shipment.Notify2Id,
+                ShipperNotExporterId = shipment.ShipperNotExporterId,
+                ConsigneeNotImporterId = shipment.ConsigneeNotImporterId,
+                CustomClearancePointId = shipment.CustomClearancePointId,
+                ColoaderId = shipment.ColoaderId,
+                FreelancerId = shipment.FreelancerId,
+                ConsolidatorId = shipment.ConsolidatorId,
+                ReleasingAgentId = shipment.ReleasingAgentId,
+
                 IncotermName = shipment.Incoterm?.Name,
                 IncotermCode = shipment.Incoterm?.Code,
                 WarehouseLegEnglishName = shipment.WarehouseLegCard?.EnglishName,
                 WarehouseLegLocalName = shipment.WarehouseLegCard?.LocalName,
                 PackagesTypesNames = GetShipmentPackagesTypeNames(tenant, shipment.Id),
                 NumberOfPackages = GetShipmentPackagesQuantity(tenant, shipment.Id),
-                Volume = GetShipmentPackagesVolume(tenant, shipment.Id),
-                ShipmentTypeName = shipment.ShipmentType?.Name,
+                Volume = GetShipmentPackagesVolume(tenant, shipment.Id)
             };
+        }
 
-            SetShipmentCloudDataFields(shipment, shipmentPM);
-
-            return shipmentPM;
+        private static Address GetCardAddress(int tenant, string cardId)
+        {
+            AddressRepository addressRepository = new AddressRepository(tenant);
+            Address shipperAddress = addressRepository.GetSingleAddress(cardId, tenant);
+            return shipperAddress;
         }
 
         private static void SetShipmentCloudDataFields(Shipment shipment, ShipmentPM shipmentPM)
