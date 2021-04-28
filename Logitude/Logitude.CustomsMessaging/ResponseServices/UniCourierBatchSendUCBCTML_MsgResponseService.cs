@@ -57,6 +57,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 port2SendList.Add("ILOVL");
             }
+            if (def.DEFDATA.Contains("ILSWS")) // OVS
+            {
+                port2SendList.Add("ILSWS");
+            }
 
 
 

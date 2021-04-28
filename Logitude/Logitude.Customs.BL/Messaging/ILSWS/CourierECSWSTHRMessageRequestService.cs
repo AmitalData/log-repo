@@ -15,6 +15,8 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Linq;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
 
@@ -33,12 +35,17 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
             {
                 return $"חסרים שדות חובה :{String.Join(",", requiredField)}";
             }
-            return BuildUpdateHawbStatus(declarationId, tenant, messageToSWS);
+            XmlDocument XMLmessageToSWS = DeserializeXmlNode(messageToSWS);
+            return BuildUpdateHawbStatus(declarationId, tenant, XMLmessageToSWS);
         }
 
-        public List<string> GetRequiredField(string messageToMaman)
+        public XmlDocument DeserializeXmlNode(string messagetoILSWS)
         {
-            return ProxyUtil.GetRequiredFieldInArrayJson(messageToMaman,
+            return ProxyUtil.DeserializeXmlNode(messagetoILSWS); // can remove once they start accepting json format
+        }
+        public List<string> GetRequiredField(string messagetoILSWS)
+        {
+            return ProxyUtil.GetRequiredFieldInArrayJson(messagetoILSWS,
                       new List<string>()
                       {
                     "CourierHawbDate",
@@ -54,11 +61,11 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
                       );
         }
 
-        public  string BuildUpdateHawbStatus(string declarationId, int tenant, string messageToSWS)
+        public  string BuildUpdateHawbStatus(string declarationId, int tenant, XmlDocument messageToSWS)
         {
             //using (var scop = TransactionFactory.GetTransaction())
             {
-                byte[] bytearray = Encoding.UTF8.GetBytes(messageToSWS);
+                byte[] bytearray = Encoding.UTF8.GetBytes(messageToSWS.OuterXml);
 
 
 
