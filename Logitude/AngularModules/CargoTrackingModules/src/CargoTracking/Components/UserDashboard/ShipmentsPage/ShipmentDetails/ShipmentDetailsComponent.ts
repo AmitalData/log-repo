@@ -239,8 +239,8 @@ export class ShipmentDetailsComponent implements AfterViewInit
             if (this.ShipmentPM.FreightForwarderId)
                 this.PartnerCards.push(this.CreateFreightForwarderPartnerCard());
 
-            if (this.ShipmentPM.CustomerId)
-                this.PartnerCards.push(this.CreateCustomerPartnerCard());
+            // if (this.ShipmentPM.CustomerId)
+            //     this.PartnerCards.push(this.CreateCustomerPartnerCard());
 
             if (this.ShipmentPM.AgentId)
                 this.PartnerCards.push(this.CreateAgentPartnerCard());
@@ -549,7 +549,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
     private CreateIssuingCarrierAgentPartnerCard()
     {
         let issuingCarrierAgent = new PartnerCard();
-        issuingCarrierAgent.Type = "Issuing Carrier";
+        issuingCarrierAgent.Type = "Issuing Carrier's Agent";
         issuingCarrierAgent.Name = this.ShipmentPM.IssuingCarrierAgentName;
         issuingCarrierAgent.Address = this.GetPartnerAddress(this.ShipmentPM.IssuingCarrierAgentId);
         issuingCarrierAgent.PhoneNumber = this.GetPartnerPhoneNumberFromAddress(this.ShipmentPM.IssuingCarrierAgentId);

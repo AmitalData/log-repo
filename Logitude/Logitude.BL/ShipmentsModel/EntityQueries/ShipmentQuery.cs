@@ -13514,6 +13514,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             ShipmentPM shipmentPM = CreateShipmentPMForCargoTracking(tenant, shipment);
 
+            shipmentPM = MapShipmentToShipmentPM(shipmentPM, shipment,null,null,false);
+
             SetShipmentCloudDataFields(shipment, shipmentPM);
 
             return shipmentPM;
@@ -13526,24 +13528,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 Id = shipment.Id,
                 CustomFileNumber = shipment.CustomFileNumber,
                 ShipmentTypeName = shipment.ShipmentType?.Name,
-                ShipperId = shipment.ShipperId,
-                ConsigneeId = shipment.ConsigneeId,
-                FreightForwarderId = shipment.FreightForwarderId,
-                CustomerId = shipment.CustomerId,
-                AgentId = shipment.AgentId,
-                IssuingCarrierAgentId = shipment.IssuingCarrierAgentId,
-                CustomAgentExportId = shipment.CustomAgentExportId,
-                CustomAgentImportId = shipment.CustomAgentImportId,
-                Notify1Id = shipment.Notify1Id,
-                Notify2Id = shipment.Notify2Id,
-                ShipperNotExporterId = shipment.ShipperNotExporterId,
-                ConsigneeNotImporterId = shipment.ConsigneeNotImporterId,
-                CustomClearancePointId = shipment.CustomClearancePointId,
-                ColoaderId = shipment.ColoaderId,
-                FreelancerId = shipment.FreelancerId,
-                ConsolidatorId = shipment.ConsolidatorId,
-                ReleasingAgentId = shipment.ReleasingAgentId,
-
                 IncotermName = shipment.Incoterm?.Name,
                 IncotermCode = shipment.Incoterm?.Code,
                 WarehouseLegEnglishName = shipment.WarehouseLegCard?.EnglishName,
