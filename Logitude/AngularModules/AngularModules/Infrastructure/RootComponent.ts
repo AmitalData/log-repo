@@ -296,23 +296,7 @@ export class RootComponent implements AfterViewInit {
           if (myResult.IsTermOfUse) {
               this.ClearLocation();
               if (this.isPrivateLable == true) {
-                  let privateLableTermOfUsePage = "./InfrastructureModules/InfrastructureOthers/Components/TermsOfUse/CustomTermsOfUse/";
-                  privateLableTermOfUsePage += this.isDSV ? "DSVTermsOfUseStartupComponent" : "HybridTermsOfUseStartupComponent";
-                  SessionLocator.DynamicLoader.Load(privateLableTermOfUsePage, this.Child.Location)
-                      .then(cmpRef => {
-                          cmpRef.instance.ComponentRef = cmpRef;
-                          cmpRef.instance.Load(myResult.Version);
-                          cmpRef.instance.TermsOfUseCompleted.subscribe(($event: any) => {
-
-                              if ($event == "Accept") {
-                                  this.ViewHomeComponent();
-                              }
-
-                              else if ($event == "Decline") {
-                                  this.SignOutCompleted();
-                              }
-                          });
-                      });
+                  this.LoadPrivateLableTermsOfUseComponent(myResult);
               }
             else {
               SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureOthers/Components/TermsOfUse/TermsOfUseStartupComponent", this.Child.Location)
@@ -351,6 +335,28 @@ export class RootComponent implements AfterViewInit {
       }
     });
   }
+    LoadPrivateLableTermsOfUseComponent(myResult: TermsofUseArgs) {
+        if (!this.isDSV) this.ViewHomeComponent();
+        else {
+            let privateLableTermOfUsePage = "./InfrastructureModules/InfrastructureOthers/Components/TermsOfUse/CustomTermsOfUse/";
+            privateLableTermOfUsePage += this.isDSV ? "DSVTermsOfUseStartupComponent" : "HybridTermsOfUseStartupComponent";
+            SessionLocator.DynamicLoader.Load(privateLableTermOfUsePage, this.Child.Location)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Load(myResult.Version);
+                    cmpRef.instance.TermsOfUseCompleted.subscribe(($event: any) => {
+
+                        if ($event == "Accept") {
+                            this.ViewHomeComponent();
+                        }
+                        else if ($event == "Decline") {
+                            this.SignOutCompleted();
+                        }
+                    });
+                });
+        }
+    }
+
   SignOutCompleted() {
 
     var loginService = new LoginService();
