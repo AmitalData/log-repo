@@ -377,9 +377,10 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicedataprovider.MainCarriageLastdestinationPortName = shipment.MainCarriageFinalDestinationPortName;
                     invoicedataprovider.MainCarriageLastdestinationPortCode = shipment.MainCarriageFinalDestinationPortCode;
                     invoicedataprovider.TrailerNumber = shipment.TrailerNumber;
-
+                    invoicedataprovider.SpecialServiceType = shipment.SpecialServicesTypeName;
                     invoicedataprovider.WarehouseFreeDays = shipment.WarehouseStorageFreeDays == null ? 0 : shipment.WarehouseStorageFreeDays.Value;
-                    invoicedataprovider.PreCarriageVessel = !string.IsNullOrEmpty(shipment.PreCarriageVesselName) ? shipment.PreCarriageVesselName : shipment.MasterPreCarriageVesselName;
+                    invoicedataprovider.PreCarriageVessel = shipment.PreCarriageVesselName;
+                    invoicedataprovider.PreForwardingVessel = shipment.PreForwardingVesselName;
 
                     User salesman = userRepository.GetSingleUser(shipment.SalesmanUserId, shipment.Tenant, false);
                     if (salesman != null)
@@ -858,6 +859,10 @@ namespace WebFreight.Web.ReportsWebServices
                                              where a.Id == shipment.OnCarriageToPortId
                                              select a).FirstOrDefault();
 
+                    Port onForwardingToPort = (from a in commonContext.Ports.Include("Country")
+                                               where a.Id == shipment.OnForwardingToPortId
+                                               select a).FirstOrDefault();
+
                     if (mainCarriageFromPort != null)
                     {
                         invoicedataprovider.MainCarriageFromPortName = mainCarriageFromPort.EnglishName;
@@ -881,11 +886,18 @@ namespace WebFreight.Web.ReportsWebServices
                         invoicedataprovider.FinalDestinationPortCountryLocalName = finalDistinationPort.Country != null ? finalDistinationPort.Country.LocalName : "";
                     }
 
-                    if (onCarriageToPort != null)
+                    if(onForwardingToPort != null)
+                    {
+                        invoicedataprovider.FianlDestinationInclOnCarriagePortName = onForwardingToPort.EnglishName;
+                        invoicedataprovider.FianlDestinationInclOnCarriagePortCode = onForwardingToPort.Code + (onForwardingToPort.Country != null ? " (" + onForwardingToPort.Country.Code + ")" : "");
+                    }
+
+                    else if (onCarriageToPort != null)
                     {
                         invoicedataprovider.FianlDestinationInclOnCarriagePortName = onCarriageToPort.EnglishName;
                         invoicedataprovider.FianlDestinationInclOnCarriagePortCode = onCarriageToPort.Code + (onCarriageToPort.Country != null ? " (" + onCarriageToPort.Country.Code + ")" : "");
                     }
+
                     else if (finalDistinationPort != null)
                     {
                         invoicedataprovider.FianlDestinationInclOnCarriagePortName = finalDistinationPort.EnglishName;
@@ -1268,7 +1280,7 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicedataprovider.IRSNumber = billToCard.IRSNumber;
                     invoicedataprovider.BillToCustomerCode = billToCard.Code;
                     invoicedataprovider.ReceivablesExternalID = billToCard.ReceivablesAccountingCard;
-
+                    
                     Address billToCardAddress = addressRepository.GetSingleAddress(currentInvoice.BillToAddressId, tenant);
                     if (billToCardAddress != null)
                     {
@@ -1293,7 +1305,7 @@ namespace WebFreight.Web.ReportsWebServices
                             }
 
                             if (billToCardAddress.State != null)
-                            invoicedataprovider.BillToState = loggedcontact.DontShowLocalLabels ? billToCardAddress.State.EnglishName : billToCardAddress.State.LocalName;
+                                invoicedataprovider.BillToState = loggedcontact.DontShowLocalLabels ? billToCardAddress.State.EnglishName : billToCardAddress.State.LocalName;
 
                             if (billToCardAddress.IsLocalLanguage && !string.IsNullOrEmpty(invoicedataprovider.BillTo_LocalName))
                             {
@@ -1335,7 +1347,7 @@ namespace WebFreight.Web.ReportsWebServices
                     }
 
                     Address billingAddress = addressRepository.GetBillingAddressByCardId(billToCard.Id, tenant);
-                    if(billingAddress != null)
+                    if (billingAddress != null)
                     {
                         invoicedataprovider.BillToBillingAddress = General.GetAddress(billingAddress);
                     }
@@ -1697,6 +1709,7 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicedataprovider.AmountInWordsFrench = FirstCharToUpper(numbersConverterToWords.NumbersToFrench((int)invoiceAmount.Value) + " ") + invoicedataprovider.InvoicecurrencyLocalName + " " + FrenchFractions;
                 invoicedataprovider.AmountInWordsFrenchWithFR = FirstCharToUpper(numbersConverterToWords.NumbersToFrench((int)invoiceAmount.Value) + " ") + invoicedataprovider.InvoicecurrencyLocalName + " " + FrenchFractionsWords;
                 invoicedataprovider.AmountInWordsFrenchNoFR = FirstCharToUpper(numbersConverterToWords.NumbersToFrench((int)invoiceAmount.Value) + " ") + invoicedataprovider.InvoicecurrencyLocalName;
+                invoicedataprovider.NewAmountInWordsFrenchWithFraction = FirstCharToUpper(numbersConverterToWords.ConvertNumbersToFrenchNewVersion(invoiceAmount.Value, invoicedataprovider.InvoicecurrencyLocalName));
                 invoicedataprovider.AmountInWordsSpanishWithZero = FirstCharToUpper(numbersConverterToWords.NumbersToSpanish((int)invoiceAmount.Value) + " ") + invoicedataprovider.InvoicecurrencyLocalName + " " + strWithZeros;
                 invoicedataprovider.AmountsInEnglishWithZero = FirstCharToUpper(numbersConverterToWords.NumbersToEnglish((int)invoiceAmount.Value) + " ") + invoicedataprovider.InvoicecurrencyLocalName + " " + strWithZeros;
                 invoicedataprovider.AmountInWordsRussian = FirstCharToUpper(numbersConverterToWords.NumbersToRussian((int)invoiceAmount.Value) + " ") + invoicedataprovider.InvoicecurrencyLocalName + " " + strWithZeros;
@@ -2361,6 +2374,41 @@ namespace WebFreight.Web.ReportsWebServices
             return invoicedataprovider;
         }
 
+        private  string GetBillToSalesManUserName( Card billToCard)
+        {
+            User salesman = GetSalesManUser(billToCard);
+            var SalesManUserName = "";
+            if (salesman?.Contact != null)
+            {
+                SalesManUserName = GetLocalizedSalesManUserName(salesman,billToCard);
+            }
+
+            return SalesManUserName;
+        }
+
+        private static User GetSalesManUser(Card billToCard)
+        {
+            UserRepository userRepository = new UserRepository(billToCard.Tenant);
+            User salesman = userRepository.GetSingleUser(billToCard.SalesmanUserId, billToCard.Tenant, false);
+            return salesman;
+        }
+
+        private string GetLocalizedSalesManUserName(User salesman, Card billToCard)
+        {
+            bool showLocals = MustContactShowLocalLables(billToCard);
+            var englishName = salesman.Contact.EnglishName;
+            var localName = salesman.Contact.LocalName;
+            string SalesManUserName = showLocals ? (localName == null ? englishName : localName) : englishName;
+            return SalesManUserName;
+        }
+
+        private bool MustContactShowLocalLables(Card billToCard)
+        {
+            Contact loggedcontact = GetLoggedContact(billToCard.Tenant);
+            var showLocals = !loggedcontact.DontShowLocalLabels;
+            return showLocals;
+        }
+
         public static string FirstCharToUpper(string input)
         {
             if (String.IsNullOrEmpty(input))
@@ -2647,7 +2695,6 @@ namespace WebFreight.Web.ReportsWebServices
                 List<ChargesType> allChargesTypes = (from d in commonContext.ChargesTypes where d.Tenant == tenant select d).ToList();
                 invoiceDataProvider.AccountDisplayNumber = GetGLAccountDisplayNumberByBillToId(entityPOCO);
                 Contact loggedcontact = GetLoggedContact(entityPOCO.Tenant);
-
                 #region Tenant Properties
                 Tenant myTenant = (from a in commonContext.Tenants where a.Id == tenant select a).FirstOrDefault();
                 if (myTenant != null)
@@ -2832,6 +2879,7 @@ namespace WebFreight.Web.ReportsWebServices
                         invoiceDataProvider.BillTo = billToCard.EnglishName != null ? billToCard.EnglishName + Environment.NewLine : "";
                         invoiceDataProvider.BillTo_LocalName = billToCard.LocalName != null ? billToCard.LocalName : "";
                         invoiceDataProvider.BillToCustomerCode = billToCard.Code;
+                        invoiceDataProvider.BillToSalesMan = GetBillToSalesManUserName(billToCard);
 
                         if (!string.IsNullOrEmpty(entityPOCO.BillToAddressId))
                         {

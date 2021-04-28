@@ -10,7 +10,7 @@
                 <form [formGroup]="searchForm" (ngSubmit)="Search()">
 
                     <div class="search-text ">
-                        <input #input id="CargoTracking_Search" type="text " class="gray " [(ngModel)]="SearchText " placeholder="Type Customer/Booking/Reference No./Container No. " formControlName="SearchText" name="SearchText " />
+                        <input #input id="CargoTracking_Search" type="text " class="gray " [(ngModel)]="SearchText " placeholder="Search by Shipment References / Cargo Identifiers / Container No." formControlName="SearchText" name="SearchText " />
                         <!-- [(ngModel)]="SearchText " -->
 
                         <div class="icon ">
@@ -56,7 +56,7 @@
 
             </div>
 
-         <!-- 
+         <!--
             <div class="path-image hide-mobile " *ngIf="Shipments.length==0  && !noResult  && !hasError">
 
                 <svg class="path "  viewBox="0 0 469 236" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -111,8 +111,6 @@
                 <p style="font-size: 14px;">
                     An error occurred while searching, please try again.
                 </p>
-                <p *ngIf="!showErrorMessage" style="cursor: pointer;text-decoration: underline;">Show Error</p>
-
                 <p *ngIf="showErrorMessage">{{ServiceError.ErrorMessage}}</p>
 
             </div>
@@ -137,6 +135,7 @@
             </div> -->
 
             <!-- Map image -->
+             <!--
             <div class="path-image hide-mobile " *ngIf="noResult">
 
                 <svg class="path " viewBox="0 0 469 236" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -183,7 +182,7 @@
                 </svg>
 
 
-            </div>
+            </div>-->
 
             <!-- Row count -->
             <div class="result-count dark-gray" *ngIf="Shipments.length>0">
@@ -246,9 +245,12 @@
                         <div class="column col-md-2 reference" style="width: 14%;">
                             <div>
                               <div [attr.src]="SplitReference(shipment.CustomerReference)" class="subtitle">Reference NO.</div>
+                              <div *ngIf="shipment.House != null">{{shipment.House}}</div>
                                 <div class="truncateText" *ngFor="let item of references; let i = index">
-                                   <span [ngClass]="{'hide-mobile': i > 1}" >
-                                      {{item}}
+                                    <span [ngClass]="{'hide-mobile': i > 1}">
+                                        <div [ngClass]="{'hide-tablet': shipment.House != null && i >= 3 ||  i>= 4 && shipment.House == null}"
+                                            *ngIf="shipment.House != null && 4 > i ||  5 > i && shipment.House == null ">{{item}}</div>
+                                        <div *ngIf="shipment.House != null && i == 4 || i == 5 && shipment.House == null">...</div>
                                    </span>
                                 </div>
                             </div>
@@ -320,17 +322,17 @@
                         <div class="column col-md-1 status" style="width: 25%;">
                             <div>
                                 <div class="subtitle">Status</div>
-                                <div class="value">{{ shipment.CurrentMilestoneName != null? shipment.CurrentMilestoneName : shipment.FutureMilstoneName }} <span *ngIf="shipment.CurrentMilestoneName == null && shipment.FutureMilstoneName!=null"> on {{  shipment.CurrentMilestoneName != null? shipment.CurrentMilestoneDate : shipment.FutureMilstoneDate | date: "d-MMM-y, HH:MM" }}</span></div>
+                                <div class="value">
+                                    {{GetShipmentStatus(shipment)}}
+                                </div>
 
                                 <div class="subtitle">Last Updated</div>
-                                <div class="value">{{  shipment.CurrentMilestoneName != null? shipment.CurrentMilestoneDate : shipment.FutureMilstoneDate | date: "d-MMM-y, h:mm" }}</div>
+                                <div class="value">{{  (shipment.CurrentMilestoneName != null? shipment.CurrentMilestoneDate : shipment.FutureMilstoneDate) | date: 'dd/MM/yyyy, HH:mm' }}</div>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
-
         </div>
     </div>
 </div>

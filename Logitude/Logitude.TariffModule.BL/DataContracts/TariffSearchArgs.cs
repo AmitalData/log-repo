@@ -12,6 +12,7 @@ namespace Logitude.TariffModule.BL.DataContracts
         [Key]
         public string OriginPortId { get; set; }
         public string DestinationPortId { get; set; }
+        public string ViaPortId { get; set; }
         public string WeightCode { get; set; }
         public string GrossWeightCode { get; set; }
         public string VolumeUnitCode { get; set; }

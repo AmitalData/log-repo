@@ -36,12 +36,10 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;CargoTrackingShipmentSearch&quot;"
-
-  Code="&quot;2fe6&quot;"
-
+  Code="&quot;64ef&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
-  ClientModuleName="&quot;&quot;"
+  ClientModuleName="&quot;CargoTracking&quot;"
   NoViewController="false"
   NoPMController="false"
   NoTS="false"
@@ -509,6 +507,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ReferenceType&quot;"
     ListPropertyPath="&quot;ReferenceType&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"

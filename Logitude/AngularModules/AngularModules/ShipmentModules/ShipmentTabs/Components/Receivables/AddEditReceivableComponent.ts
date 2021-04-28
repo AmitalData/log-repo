@@ -89,29 +89,32 @@ export class AddEditReceivableComponent {
         this.CurrentSession.CloseCurrentWindow();
     }
 
+    private errors: string[] = [];
     OkButtonClicked() {
-        var errors: string[] = [];
-        Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
+        this.errors = [];
+        Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, this.errors);
 
         if (this.DataContext.IsByContainerType) {
             if (this.DataContext.ByContainersItemsSource.length == 0) {
-                errors.push(TextCodeTranslator.Translate("Shipment.M.Receivables.ShipmentDoesntContainContainers"));
+                this.errors.push(TextCodeTranslator.Translate("Shipment.M.Receivables.ShipmentDoesntContainContainers"));
             }
 
             else {
                 this.DataContext.ByContainersItemsSource.forEach(item => {
-                    Validator.TryValidateObject(item, this.ObjectTableName, errors);
+                    Validator.TryValidateObject(item, this.ObjectTableName, this.errors);
                 });
             }
         }
 
         if (this.EntityPM.TotalAmount != null && this.EntityPM.UnitPrice != null && this.EntityPM.Quantity != null) {
             if (this.EntityPM.Rate == null) {
-                errors.push(TextCodeTranslator.Translate("ShipmentReceivable.M.ExchangeRateIsRequired"));
+                this.errors.push(TextCodeTranslator.Translate("ShipmentReceivable.M.ExchangeRateIsRequired"));
             }
         }
 
-        this.ValidationErrorsList = errors;
+        this.ValidateAddingPFCLUOM();
+
+        this.ValidationErrorsList = this.errors;
 
         if (this.ValidationErrorsList.length == 0) {
 
@@ -137,8 +140,18 @@ export class AddEditReceivableComponent {
                 this.DataContext.fatherComponent.ComputeShipmentFields();
             }
 
+            this.DataContext.fatherComponent.OnPercentForeignAmountChanged();
+
             this.DataContext.IsNewEntity = false;
             this.CurrentSession.CloseCurrentWindowEmit("OK");
+        }
+    }
+
+    ValidateAddingPFCLUOM() {
+        if (this.EntityPM.MeasurementCode == "PFCL") {
+            if (this.DataContext.ShipmentPM.ShipmentReceivables.filter(d => d.MeasurementCode == "PFCL" && d.Id != this.EntityPM.Id).length > 0) {
+                this.errors.push("Charge with Percent of foreign charges local amounts UOM already added");
+            }
         }
     }
 

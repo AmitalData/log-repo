@@ -1538,6 +1538,535 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private string shipmentLevelCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ShipmentLevelCode  
+	   {
+	    
+	     get
+		{
+		   return shipmentLevelCode;
+		 }
+		 set
+		 {
+		   if(shipmentLevelCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentLevelCode",OldValue=shipmentLevelCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   shipmentLevelCode=value;
+		   }
+			
+		 }
+	   }
+	  private bool assignedTruckerDone ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool AssignedTruckerDone  
+	   {
+	    
+	     get
+		{
+		   return assignedTruckerDone;
+		 }
+		 set
+		 {
+		   if(assignedTruckerDone != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AssignedTruckerDone",OldValue=assignedTruckerDone,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   assignedTruckerDone=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? assignedTruckerDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? AssignedTruckerDate  
+	   {
+	    
+	     get
+		{
+		   return assignedTruckerDate;
+		 }
+		 set
+		 {
+		   if(assignedTruckerDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AssignedTruckerDate",OldValue=assignedTruckerDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   assignedTruckerDate=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? assignedTruckerEstimationDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? AssignedTruckerEstimationDate  
+	   {
+	    
+	     get
+		{
+		   return assignedTruckerEstimationDate;
+		 }
+		 set
+		 {
+		   if(assignedTruckerEstimationDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AssignedTruckerEstimationDate",OldValue=assignedTruckerEstimationDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   assignedTruckerEstimationDate=value;
+		   }
+			
+		 }
+	   }
+	  private string assignedTruckerNotes ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AssignedTruckerNotes  
+	   {
+	    
+	     get
+		{
+		   return assignedTruckerNotes;
+		 }
+		 set
+		 {
+		   if(assignedTruckerNotes != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AssignedTruckerNotes",OldValue=assignedTruckerNotes,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   assignedTruckerNotes=value;
+		   }
+			
+		 }
+	   }
+	  private bool? assignedCustomsAgentDone ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? AssignedCustomsAgentDone  
+	   {
+	    
+	     get
+		{
+		   return assignedCustomsAgentDone;
+		 }
+		 set
+		 {
+		   if(assignedCustomsAgentDone != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AssignedCustomsAgentDone",OldValue=assignedCustomsAgentDone,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   assignedCustomsAgentDone=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? assignedCustomsAgentDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? AssignedCustomsAgentDate  
+	   {
+	    
+	     get
+		{
+		   return assignedCustomsAgentDate;
+		 }
+		 set
+		 {
+		   if(assignedCustomsAgentDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AssignedCustomsAgentDate",OldValue=assignedCustomsAgentDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   assignedCustomsAgentDate=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? assignedCustomsAgentEstDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? AssignedCustomsAgentEstDate  
+	   {
+	    
+	     get
+		{
+		   return assignedCustomsAgentEstDate;
+		 }
+		 set
+		 {
+		   if(assignedCustomsAgentEstDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AssignedCustomsAgentEstDate",OldValue=assignedCustomsAgentEstDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   assignedCustomsAgentEstDate=value;
+		   }
+			
+		 }
+	   }
+	  private string assignedCustomsAgentNotes ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AssignedCustomsAgentNotes  
+	   {
+	    
+	     get
+		{
+		   return assignedCustomsAgentNotes;
+		 }
+		 set
+		 {
+		   if(assignedCustomsAgentNotes != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AssignedCustomsAgentNotes",OldValue=assignedCustomsAgentNotes,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   assignedCustomsAgentNotes=value;
+		   }
+			
+		 }
+	   }
+	  private string assignedCustomsAgentExcReason ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AssignedCustomsAgentExcReason  
+	   {
+	    
+	     get
+		{
+		   return assignedCustomsAgentExcReason;
+		 }
+		 set
+		 {
+		   if(assignedCustomsAgentExcReason != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AssignedCustomsAgentExcReason",OldValue=assignedCustomsAgentExcReason,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   assignedCustomsAgentExcReason=value;
+		   }
+			
+		 }
+	   }
+	  private bool deliveryDone ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool DeliveryDone  
+	   {
+	    
+	     get
+		{
+		   return deliveryDone;
+		 }
+		 set
+		 {
+		   if(deliveryDone != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeliveryDone",OldValue=deliveryDone,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   deliveryDone=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? deliveryDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? DeliveryDate  
+	   {
+	    
+	     get
+		{
+		   return deliveryDate;
+		 }
+		 set
+		 {
+		   if(deliveryDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeliveryDate",OldValue=deliveryDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   deliveryDate=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? deliveryEstimationDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? DeliveryEstimationDate  
+	   {
+	    
+	     get
+		{
+		   return deliveryEstimationDate;
+		 }
+		 set
+		 {
+		   if(deliveryEstimationDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeliveryEstimationDate",OldValue=deliveryEstimationDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   deliveryEstimationDate=value;
+		   }
+			
+		 }
+	   }
+	  private string deliveryNotes ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DeliveryNotes  
+	   {
+	    
+	     get
+		{
+		   return deliveryNotes;
+		 }
+		 set
+		 {
+		   if(deliveryNotes != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeliveryNotes",OldValue=deliveryNotes,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   deliveryNotes=value;
+		   }
+			
+		 }
+	   }
+	  private string deliveryExceptionReason ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DeliveryExceptionReason  
+	   {
+	    
+	     get
+		{
+		   return deliveryExceptionReason;
+		 }
+		 set
+		 {
+		   if(deliveryExceptionReason != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeliveryExceptionReason",OldValue=deliveryExceptionReason,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   deliveryExceptionReason=value;
+		   }
+			
+		 }
+	   }
+	  private string grossWeightUnitCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string GrossWeightUnitCode  
+	   {
+	    
+	     get
+		{
+		   return grossWeightUnitCode;
+		 }
+		 set
+		 {
+		   if(grossWeightUnitCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GrossWeightUnitCode",OldValue=grossWeightUnitCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   grossWeightUnitCode=value;
+		   }
+			
+		 }
+	   }
+	  private string forwardingShipmentNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ForwardingShipmentNumber  
+	   {
+	    
+	     get
+		{
+		   return forwardingShipmentNumber;
+		 }
+		 set
+		 {
+		   if(forwardingShipmentNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ForwardingShipmentNumber",OldValue=forwardingShipmentNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   forwardingShipmentNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string shipmentTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ShipmentTypeCode  
+	   {
+	    
+	     get
+		{
+		   return shipmentTypeCode;
+		 }
+		 set
+		 {
+		   if(shipmentTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentTypeCode",OldValue=shipmentTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   shipmentTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string customerEnglishName ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomerEnglishName  
+	   {
+	    
+	     get
+		{
+		   return customerEnglishName;
+		 }
+		 set
+		 {
+		   if(customerEnglishName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerEnglishName",OldValue=customerEnglishName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customerEnglishName=value;
+		   }
+			
+		 }
+	   }
+	  private string customerLocalName ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomerLocalName  
+	   {
+	    
+	     get
+		{
+		   return customerLocalName;
+		 }
+		 set
+		 {
+		   if(customerLocalName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerLocalName",OldValue=customerLocalName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customerLocalName=value;
+		   }
+			
+		 }
+	   }
+	  private string fromPortCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FromPortCode  
+	   {
+	    
+	     get
+		{
+		   return fromPortCode;
+		 }
+		 set
+		 {
+		   if(fromPortCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FromPortCode",OldValue=fromPortCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   fromPortCode=value;
+		   }
+			
+		 }
+	   }
+	  private string toPortCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ToPortCode  
+	   {
+	    
+	     get
+		{
+		   return toPortCode;
+		 }
+		 set
+		 {
+		   if(toPortCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToPortCode",OldValue=toPortCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   toPortCode=value;
+		   }
+			
+		 }
+	   }
+	  private int? numberOfPackages ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? NumberOfPackages  
+	   {
+	    
+	     get
+		{
+		   return numberOfPackages;
+		 }
+		 set
+		 {
+		   if(numberOfPackages != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NumberOfPackages",OldValue=numberOfPackages,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   numberOfPackages=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

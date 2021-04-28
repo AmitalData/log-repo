@@ -27,7 +27,7 @@ export class WarehouseGeneralTabComponent extends BaseComponent {
             this.IsWarehouseFirmCodeVisible = true;
         }
 
-        this.pricingFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "STR" && d.TenantNumber == SessionLocator.Tenant)[0];
+        this.pricingFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "STR")[0];
         if (this.pricingFeatureToggle && this.TypeCode == "CFS") {
             this.IsStoragePricingVisible = true;
         }

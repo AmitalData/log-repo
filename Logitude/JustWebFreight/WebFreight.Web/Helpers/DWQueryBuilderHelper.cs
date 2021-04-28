@@ -136,7 +136,7 @@ namespace WebFreight.Web.Helpers
                             PDim = "[" + filter.ParentDimTabelName + filter.DimensionTableDisplayName + "]";
                             OTBL = "[" + filter.DWObjectTableCode + filter.DimensionTableDisplayName + "]";
                         }
-                        if (filter.DataTypeCode != "Date" && filter.DataTypeCode != "DateTime")
+                        if (filter.DataTypeCode != "Date" && (filter.DataTypeCode != "DateTime" || filter.Code == "[Date Key]"))
                         {
                             if (filter.Operation.Code == "Equals")
                             {
@@ -449,14 +449,23 @@ namespace WebFreight.Web.Helpers
 
         private  void SQLSecurityTenantValidation(DWQueryData DWQueryParam, SqlCommandDefinition sqlCommandDefinition)
         {
-            string factName = DWQueryParam.FactTableName.ToLower();
+            string factCode = GetFactTableCode(DWQueryParam);
             string querySQL = sqlCommandDefinition.SQLString.ToLower().Replace(" ", "");
-            string whereByParenttenant = ("where" + factName + ".[parenttenant]=");
-            string whereBySourcettenant = ("where" + factName + ".[sourcetenant]=");
+            string whereByParenttenant = ("where" + factCode + ".[parenttenant]=");
+            string whereBySourcettenant = ("where" + factCode + ".[sourcetenant]=");
             if (!querySQL.Contains(whereByParenttenant) && !querySQL.Contains(whereBySourcettenant))
             {
                 throw new Exception("You are not authorized to view the content.");
             }
+        }
+
+        private string GetFactTableCode(DWQueryData DWQueryParam)
+        {
+            string factName = DWQueryParam.FactTableName;
+            DWObjectTableQuery dWObjectTableQuery = new DWObjectTableQuery(Tenant);
+            DWObjectTablePM dWObjectTablePM = dWObjectTableQuery.GetSinglePM(factName, Tenant);
+            string factCode = (dWObjectTablePM != null && !string.IsNullOrEmpty(dWObjectTablePM.ParentFactCode)) ? dWObjectTablePM.ParentFactCode : factName;
+            return factCode.ToLower();
         }
 
         private SqlStatmentDetails BuildSqlStatmentDetails(SqlStatmentDetails sqlStatmentDetails, int columnIndex = -1, bool isMainSelectStmt = false)
@@ -794,6 +803,7 @@ namespace WebFreight.Web.Helpers
             return result;
         }
 
+
         private string GetChargesTypeConditions(List<DWObjectFieldsDetails> columns,string pivotTableNickname, int columnIndex)
         {
             string codeString = pivotTableNickname + ".Code = ";
@@ -830,8 +840,8 @@ namespace WebFreight.Web.Helpers
                 fieldCode = "[" + field.DWObjectTableCode + field.DimensionTableDisplayName + "]." + field.Code;
 
             string datePartsSqlColum = field.DWObjectTableCode + "." + field.Code;
-            if (field.DataTypeCode == "Time") datePartsSqlColum = "convert(varchar(5)," + fieldCode + ", 8)";
-            else if (field.DataTypeCode == "Date") datePartsSqlColum = "convert(varchar(10)," + fieldCode + ", 120)";
+            if (field.DataTypeCode == "Time") datePartsSqlColum = "convert(varchar(5), CAST(" + fieldCode + " AS datetime), 8)";
+            else if (field.DataTypeCode == "Date") datePartsSqlColum = "convert(varchar(10), CAST(" + fieldCode + " AS datetime) , 120)";
 
             datePartsSqlColum += ((!string.IsNullOrEmpty(field.DisplayName) ? " as " + field.DisplayName + "," : ","));
             return datePartsSqlColum;

@@ -32,6 +32,7 @@ export class InvoicesRoutingsFilterComponent extends BaseComponent  {
     public InvoiceCurrencyId: string;
     public shipmentTypeRadio: string;
     public CustomerId: string = null;
+    public PartnerId: string = null;
 
     InitilizeIds() {
         this.InvoiceDateId = "InvoiceDateId_" + this.CurrentSession.GetNewId("InvoiceDateId");        
@@ -211,6 +212,13 @@ export class InvoicesRoutingsFilterComponent extends BaseComponent  {
             this.queryFilterItem.DisplayInList = false;
             this.queryFilterItem.FieldName = "CustomerId";
             this.queryFilterItem.FieldValue = this.CustomerId;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "PartnerId";
+            this.queryFilterItem.FieldValue = this.PartnerId;
             this.queryFilterItem.Operator = "Equals";
             this.queryFilterItems.push(this.queryFilterItem);
 

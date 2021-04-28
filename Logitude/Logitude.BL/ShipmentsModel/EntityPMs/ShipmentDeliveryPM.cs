@@ -166,6 +166,10 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         public bool IsCancelled { get; set; }
 
+        public string ParentPickUpDeliveryId { get; set; }
+        public int? ChildDeliveryIndex { get; set; }
+        public string BookingConfirmationNumber { get; set; }
+
         private List<ShipmentPickUpDeliveryPackagePM> shipmentPickUpDeliveryPackages;
         [Include]
         [Composition]

@@ -1,4 +1,4 @@
-﻿declare var System: any;
+declare var System: any;
 declare var window: any;
 import {Component, OnInit}  from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
@@ -67,8 +67,8 @@ export class ARInvoiceDocsInTabComponent implements OnInit {
             if (this.currentInvoiceEntity != null) {
                 invoiceEntityId = this.currentInvoiceEntity.EntityId;
             }
-            
-            this.EntityId = invoiceEntityId;
+
+            this.EntityId = AppTool.IsNullOrEmpty(invoiceEntityId) ? this.EntityPM.Id : invoiceEntityId;
             if (table) this.ChildObjectTableId = table.Id;
             this.ChildEntityId = this.EntityPM.Id;
             this.ChildEntityReference = this.EntityPM.InvoiceNumber;

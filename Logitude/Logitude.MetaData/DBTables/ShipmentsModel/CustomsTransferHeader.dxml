@@ -19,6 +19,20 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="CreatedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="TransferNumber"
     Type="varchar"
     Size="20">
@@ -39,25 +53,11 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="CreatedByUserId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="CustomsTransferTypeCode"
     Type="varchar"
     Size="4">
     <Constraints
       Nullable="false" />
-  </Column>
-  <Column
-    Name="SearchFields"
-    Type="nvarchar"
-    Size="1000">
-    <Constraints
-      Nullable="true" />
   </Column>
   <Column
     Name="Notes"

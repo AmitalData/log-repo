@@ -183,6 +183,7 @@ namespace WebFreight.Web.WebServices
                     if (currency != null)
                     {
                         myDataProvider.ValueOfGoodsCurrency = currency.EnglishName;
+                        myDataProvider.ValueOfGoodsCurrencyCode = currency.Code;
                     }
                 }
 
@@ -201,6 +202,7 @@ namespace WebFreight.Web.WebServices
                 Card notify2 = null;
                 Card myConsigneePartner = null;
                 Card consigneeNotImporter = null;
+                Contact salesmanData = null;
 
                 if (shipment.Notify1Id != null)
                 {
@@ -221,6 +223,13 @@ namespace WebFreight.Web.WebServices
                 {
                     consigneeNotImporter = (from a in commonContext.Cards where a.Id == shipment.ConsigneeNotImporterId select a).FirstOrDefault();
                 }
+
+                if (shipment.SalesmanUserId != null)
+                {
+                    salesmanData = (from a in commonContext.Contacts where a.Id == shipment.SalesmanUserId select a).FirstOrDefault();
+                }
+
+
                 #endregion
 
                 #region Ports
@@ -230,6 +239,10 @@ namespace WebFreight.Web.WebServices
                 Port mainCarriageToPort = null;
                 Port onCarriageToPort = null;
                 Port finalDestination = null;
+
+                Port preForwardingFromPort = null;
+                Port preForwardingToPort = null;
+                Port onForwardingToPort = null;
 
                 if (shipment.PreCarriageFromPortId != null)
                 {
@@ -260,12 +273,27 @@ namespace WebFreight.Web.WebServices
                 {
                     finalDestination = (from a in commonContext.Ports where a.Id == shipment.FinalDistenationPortId select a).FirstOrDefault();
                 }
+
+                if (shipment.PreForwardingFromPortId != null)
+                {
+                    preForwardingFromPort = (from a in commonContext.Ports where a.Id == shipment.PreForwardingFromPortId select a).FirstOrDefault();
+                }
+
+                if (shipment.PreForwardingToPortId != null)
+                {
+                    preForwardingToPort = (from a in commonContext.Ports where a.Id == shipment.PreForwardingToPortId select a).FirstOrDefault();
+                }
+
+                if (shipment.OnForwardingToPortId != null)
+                {
+                    onForwardingToPort = (from a in commonContext.Ports where a.Id == shipment.OnForwardingToPortId select a).FirstOrDefault();
+                }
                 #endregion
 
                 myDataProvider.CustomsDeclarationNumber = shipment.CustomsDeclarationNumber != null ? shipment.CustomsDeclarationNumber : "";
                 myDataProvider.InsidePackagesDetails = shipment.NumberOfInsidePackagesDetails;
                 myDataProvider.Incoterm = shipment.IncotermName;
-                myDataProvider.Salesman = shipment.SalesmanUserName;
+                myDataProvider.Salesman = shipment.SalesmanUserName;            
                 myDataProvider.TotalPayables = shipment.OpenPayablesInLocalCurrency + shipment.AccountedPayablesInLocalCurrency;
                 myDataProvider.ValueOfGoods = shipment.ValueOfGoods;
                 myDataProvider.ENSNumber = shipment.ENSNumber;
@@ -297,9 +325,16 @@ namespace WebFreight.Web.WebServices
                     if (currency != null)
                     {
                         myDataProvider.ValueOfGoodsCurrency = currency.EnglishName;
+                        myDataProvider.ValueOfGoodsCurrencyCode = currency.Code;
                     }
                 }
 
+                if (salesmanData != null)
+                {
+                    myDataProvider.SalesmanEmail = salesmanData.Email;
+
+                }
+                
                 #region Tenant
                 Tenant myTenant = (from a in commonContext.Tenants where a.Id == tenant select a).FirstOrDefault();
                 if (myTenant != null)
@@ -396,6 +431,7 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.GeneralDescriptionOfGoods = shipment.DescriptionOfGoods != null ? shipment.DescriptionOfGoods : "";
                 myDataProvider.Notes = shipment.Notes;
                 myDataProvider.PreCarriageCarrierName = shipment.PreCarriageCarrierName != null ? shipment.PreCarriageCarrierName : "";
+                myDataProvider.PreForwardingCarrierName = shipment.PreForwardingCarrierName;
                 myDataProvider.SwornDate = String.Format("{0:dd MMM yyyy}", DateTime.Now.Date);
                 myDataProvider.TodayDate = String.Format("{0:dd MMM yyyy}", DateTime.Now.Date);
                 myDataProvider.TodayDate_DateTime = todayDate;
@@ -405,10 +441,14 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.MainCarriageETD_DateTime = shipment.MainCarriageETD;
                 myDataProvider.PreCarriageETD = shipment.PreCarriageETD;
                 myDataProvider.PreCarriageETA = shipment.PreCarriageETA;
+                myDataProvider.PreForwardingETD = shipment.PreForwardingETD;
+                myDataProvider.PreForwardingETA = shipment.PreForwardingETA;
                 myDataProvider.MainCarriageATA = shipment.MainCarriageATA != null ? String.Format("{0:dd MMM yyyy}", shipment.MainCarriageATA) : "";
                 myDataProvider.MainCarriageATADateTime= shipment.MainCarriageATA;
                 myDataProvider.OnCarriageETA = shipment.OnCarriageETA != null ? String.Format("{0:dd MMM yyyy}", shipment.OnCarriageETA) : "";
                 myDataProvider.OnCarriageETA_DateTime = shipment.OnCarriageETA;
+                myDataProvider.OnForwardingETA = shipment.OnForwardingETA != null ? String.Format("{0:dd MMM yyyy}", shipment.OnForwardingETA) : "";
+                myDataProvider.OnForwardingETA_DateTime = shipment.OnForwardingETA;
                 myDataProvider.TenantCountryCode = shipment.House != null ? shipment.House : "";
                 myDataProvider.TransportationType = shipment.TransportModeName;
                 myDataProvider.Transshipment1ETA = shipment.Transshipment1ETA;
@@ -425,6 +465,7 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.Transshipment1ETD = shipment.Transshipment1ETD;
                 myDataProvider.Transshipment1ATD = shipment.Transshipment1ATD;
                 myDataProvider.Transshipment1ATA = shipment.Transshipment1ATA;
+                myDataProvider.AWBCommodityItemNumber = shipment.AWBCommodityItemNumber;
 
                 #region MasterAMSBL
                 var aMSBL_FromHouse = "";
@@ -435,16 +476,10 @@ namespace WebFreight.Web.WebServices
                                            select a).FirstOrDefault();
 
                     aMSBL_FromHouse = masterData != null ? masterData.AMSBL : null;
-                    myDataProvider.MasterPreCarriageCarrierNumber = masterData != null ? masterData.PreCarriageCarrierNumber : null;
-                    
-                    if(masterData != null && !string.IsNullOrEmpty(masterData.PreCarriageVesselId))
-                    {
-                        Vessel vessel = (from a in commonContext.Vessels
-                                         where a.Id == masterData.PreCarriageVesselId
-                                         select a).FirstOrDefault();
 
-                        myDataProvider.MasterPreCarriageVesselName = vessel != null ? vessel.EnglishName : null;
-                    }
+                    myDataProvider.MasterPreCarriageCarrierNumber = shipment.PreCarriageCarrierNumber;
+                    myDataProvider.MasterPreCarriageVesselName = shipment.PreCarriageVesselName;
+
                 }
                 else
                 {
@@ -463,7 +498,7 @@ namespace WebFreight.Web.WebServices
                         myDataProvider.ConnectedQuoteNumber = quote.QuoteNumber != null ? quote.QuoteNumber : "";
                     }
                 }
-                
+
                 int numberofpackages = shipment.NumberOfPackages != null ? shipment.NumberOfPackages.Value : 0;
                 int numberofcontainers = shipment.NumberOfContainers != null ? shipment.NumberOfContainers.Value : 0;
 
@@ -484,7 +519,7 @@ namespace WebFreight.Web.WebServices
                 }
 
 
-                
+
                 #endregion
 
                 #region Prepaid Collect
@@ -600,7 +635,7 @@ namespace WebFreight.Web.WebServices
                         Address shipperClientAddress = addressRepository.GetSingleAddress(shipment.ShipperAddressId, tenant);
 
                         if (shipperClientAddress != null)
-                       { 
+                        {
                             if (shipperClientAddress.IsLocalLanguage)
                             {
                                 if (shipperClient != null && !string.IsNullOrEmpty(shipperClient.LocalName))
@@ -623,7 +658,7 @@ namespace WebFreight.Web.WebServices
                             {
                                 myDataProvider.ShipperAddress_NoTel = myDataProvider.ShipperAddress_NoTel + Environment.NewLine + "Fax: " + shipperClientAddress.FaxNumber;
                             }
-                            
+
                             myDataProvider.ShipperAddress_WithName = DataProviders.General.GetAddressWithName(shipperClientAddress, true);
                         }
                     }
@@ -986,7 +1021,7 @@ namespace WebFreight.Web.WebServices
                                 myResult = myResult + Environment.NewLine + (consigneeNotImporterAddress.PhoneNumber != null ? "Tel: " + consigneeNotImporterAddress.PhoneNumber + " " : "") + (consigneeNotImporterAddress.FaxNumber != null ? "Fax: " + consigneeNotImporterAddress.FaxNumber + " " : "");
                             }
 
-                           
+
                         }
                     }
 
@@ -1091,8 +1126,11 @@ namespace WebFreight.Web.WebServices
                     {
                         myDataProvider.UserName = currentContact.EnglishName;
                         myDataProvider.UserEmail = currentContact.Email != null ? currentContact.Email : "";
+                        myDataProvider.UserPhoneNumber = currentContact.BusinessPhone;
+                        myDataProvider.UserMobileNumber = currentContact.Mobile;
                     }
                 }
+
                 #endregion
 
                 #region Agent
@@ -1264,6 +1302,8 @@ namespace WebFreight.Web.WebServices
                 {
                     myDataProvider.MainCarriageOBL = shipment.Master != null ? shipment.Master : "";
                 }
+
+                MapMainCarriageLoadNumber(myDataProvider, tenant);
                 #endregion
 
                 #region Notify1
@@ -1548,6 +1588,7 @@ namespace WebFreight.Web.WebServices
 
                     myDataProvider.FirstPickupETD = myFirstPickup.ETD;
                     myDataProvider.FirstPickupETA = myFirstPickup.ETA;
+                    myDataProvider.FirstPickupLoadNumber = getLoadNumberPrefix('P', tenant) + myFirstPickup.PickUpDeliveryNumber;
 
                     PlaceOfReceiptData data = myServicHelper.GetPlaceOfReceiptData(myFirstPickup);
 
@@ -1574,11 +1615,21 @@ namespace WebFreight.Web.WebServices
                             }
                         }
                     }
+                    myDataProvider.PickupTruckerNumber = myFirstPickup.CarrierNumber;
+
                 }
 
                 else
                 {
-                    if (preCarriageFromPort != null)
+                    if (preForwardingFromPort != null)
+                    {
+                        myDataProvider.PlaceOfReceipt = preForwardingFromPort.EnglishName;
+                        myDataProvider.PlaceOfReceiptCountryCode = preForwardingFromPort.CountryCode;
+                        myDataProvider.PlaceOfReceiptCountryName = preForwardingFromPort.CountryName;
+                        myDataProvider.PlaceOfReceiptStateCode = preForwardingFromPort.StateCode;
+                    }
+
+                    else if (preCarriageFromPort != null)
                     {
                         myDataProvider.PlaceOfReceipt = preCarriageFromPort.EnglishName;
 
@@ -1638,18 +1689,51 @@ namespace WebFreight.Web.WebServices
                 }
                 #endregion
 
+                #region PreForwarding
+                if (!string.IsNullOrEmpty(shipment.PreForwardingCarrierId))
+                {
+                    Card preForwardingCarrier = (from a in commonContext.Cards
+                                               where a.Id == shipment.PreForwardingCarrierId
+                                               select a).FirstOrDefault();
+
+                    if (preForwardingCarrier != null)
+                    {
+                        myDataProvider.PreForwardingCarrierAddress = preForwardingCarrier.EnglishName;
+
+                        Address preForwardingCarrierAddress = (from a in commonContext.Addresses
+                                                             where a.CardId == shipment.PreForwardingCarrierId && a.AddressTypeId == "M"
+                                                             select a).FirstOrDefault();
+
+                        if (preForwardingCarrierAddress != null)
+                        {
+                            if (preForwardingCarrierAddress.IsLocalLanguage && !string.IsNullOrEmpty(preForwardingCarrier.LocalName))
+                            {
+                                myDataProvider.PreForwardingCarrierAddress = preForwardingCarrier.LocalName;
+                            }
+
+                            myDataProvider.PreForwardingCarrierAddress = myDataProvider.PreForwardingCarrierAddress + Environment.NewLine + DataProviders.General.GetAddress(preForwardingCarrierAddress);
+
+                            if (preForwardingCarrierAddress.PhoneNumber != null || preForwardingCarrierAddress.FaxNumber != null)
+                            {
+                                myDataProvider.PreForwardingCarrierAddress = myDataProvider.PreForwardingCarrierAddress + Environment.NewLine + (preForwardingCarrierAddress.PhoneNumber != null ? "Tel: " + preForwardingCarrierAddress.PhoneNumber + " " : "") + (preForwardingCarrierAddress.FaxNumber != null ? "Fax: " + preForwardingCarrierAddress.FaxNumber + " " : "");
+                            }
+                        }
+                    }
+                }
+                #endregion
+
                 #region ConsigneeNotImporter
 
                 if (!string.IsNullOrEmpty(shipment.ConsigneeNotImporterId))
                 {
                     Card myCard = (from a in commonContext.Cards
-                                          where a.Id == shipment.ConsigneeNotImporterId
+                                   where a.Id == shipment.ConsigneeNotImporterId
                                    select a).FirstOrDefault();
 
                     if(myCard != null)
                     {
                         myDataProvider.ConsigneeNotImporter = myCard.EnglishName != null ? myCard.EnglishName + Environment.NewLine : "";
-                        
+
                         if (!string.IsNullOrEmpty(shipment.ConsigneeNotImporterAddressId))
                         {
                             Address myPartnerAddress = addressRepository.GetSingleAddress(shipment.ConsigneeNotImporterAddressId, tenant);
@@ -1754,6 +1838,7 @@ namespace WebFreight.Web.WebServices
                 if (delivery != null)
                 {
                     myDataProvider.DeliveryATA = delivery.ATA != null ? String.Format("{0:dd.MMM.yy}", delivery.ATA) : "";
+                    myDataProvider.LastDeliveryLoadNumber = getLoadNumberPrefix('D', tenant) + delivery.PickUpDeliveryNumber; ;
                 }
 
                 // First Delivert or Last ??
@@ -1918,6 +2003,7 @@ namespace WebFreight.Web.WebServices
                             }
                     }
                     #endregion
+
                     myDataProvider.DeliveryInstructions = myLastDelivery.Notes != null ? myLastDelivery.Notes : "";
                 }
 
@@ -1972,7 +2058,7 @@ namespace WebFreight.Web.WebServices
                                         myDataProvider.PlaceOfDelivery = myPartnerAddress.City;
                                         myDataProvider.PlaceOfDeliveryCountryCode = myPartnerAddress.Country == null ? "" : myPartnerAddress.Country.Code;
                                         myDataProvider.PlaceOfDeliveryCountryName = myPartnerAddress.Country == null ? "" : myPartnerAddress.Country.EnglishName;
-                                        myDataProvider.PlaceOfDeliveryStateCode = myPartnerAddress.State == null ? "" : myPartnerAddress.State.Code;                                        
+                                        myDataProvider.PlaceOfDeliveryStateCode = myPartnerAddress.State == null ? "" : myPartnerAddress.State.Code;
                                     }
 
                                     if (!string.IsNullOrEmpty(myDataProvider.DeliveryTo))
@@ -2029,6 +2115,26 @@ namespace WebFreight.Web.WebServices
                                 break;
                             }
                     }
+                }
+
+                else if (onForwardingToPort != null)
+                {
+                    myDataProvider.FinalDestinationETA = shipment.OnForwardingETA != null ? String.Format("{0:dd MMM yyyy}", shipment.OnForwardingETA) : "";
+                    myDataProvider.FinalDestinationETA_DateTime = shipment.OnForwardingETA != null ? shipment.OnForwardingETA : null;
+                    myDataProvider.FinalDestination = onForwardingToPort.EnglishName;
+                    myDataProvider.PlaceOfDelivery = onForwardingToPort.EnglishName;
+
+                    PortPM myPort = PortQuery.GetSinglePort(tenant, shipment.OnForwardingToPortId, true);
+                    if (myPort != null)
+                    {
+                        myDataProvider.PlaceOfDeliveryCountryCode = myPort.CountryCode;
+                        myDataProvider.PlaceOfDeliveryCountryName = myPort.CountryName;
+                        myDataProvider.PlaceOfDeliveryStateCode = myPort.StateCode;
+                    }
+
+                    myDataProvider.PlaceOfDeliveryCountryCode = onForwardingToPort.Country == null ? "" : onForwardingToPort.Country.Code;
+                    myDataProvider.PlaceOfDeliveryCountryName = onForwardingToPort.Country == null ? "" : onForwardingToPort.Country.EnglishName;
+                    myDataProvider.PlaceOfDeliveryStateCode = onForwardingToPort.State == null ? "" : onForwardingToPort.State.Code;
                 }
 
                 else if (onCarriageToPort != null)
@@ -2339,6 +2445,21 @@ namespace WebFreight.Web.WebServices
                     myDataProvider.ForeignPortOfUnloading = finalDestination.EnglishName + " " + finalDestination.Code;
                 }
 
+                if (preForwardingFromPort != null)
+                {
+                    myDataProvider.PreForwardingFromPort = preForwardingFromPort.EnglishName + " " + preForwardingFromPort.Code;
+                }
+
+                if (preForwardingToPort != null)
+                {
+                    myDataProvider.PreForwardingToPort = preForwardingToPort.EnglishName;
+                }
+
+                if (onForwardingToPort != null)
+                {
+                    myDataProvider.OnForwardingToPort = onForwardingToPort.EnglishName;
+                }
+
                 #region Vessel
                 if (shipment.MainCarriageVesselId != null)
                 {
@@ -2424,7 +2545,7 @@ namespace WebFreight.Web.WebServices
                 #region Pickup Details                
                 ShipmentPickUpPM myPickup = shipmentPickUpQuery.GetShipmentPickUpPMsByTenantAndShipment(shipmentId, tenant).Where(a => a.PickUpDeliveryNumber == shipment.ShipmentNumber + "/" + shipment.ShipmentPickUpIndex).FirstOrDefault();
                 myDataProvider.Instructions = this.GetInstructionsField(shipment, myPickup, cardQuery);
-                   
+
                 if (myPickup == null)
                 {
                     if (!string.IsNullOrEmpty(shipment.ShipperNotExporterAddressId))
@@ -2435,6 +2556,11 @@ namespace WebFreight.Web.WebServices
                             myDataProvider.PickUpAddress = myAddress.City != null ? myAddress.City : "";
                             myDataProvider.ShipperNotExporterAddress_WithName = DataProviders.General.GetAddressWithName(myAddress, true);
                         }
+                    }
+
+                    else if (preForwardingFromPort != null)
+                    {
+                        myDataProvider.PickUpAddress = preForwardingFromPort.EnglishName;
                     }
 
                     else if (preCarriageFromPort != null)
@@ -3163,7 +3289,7 @@ namespace WebFreight.Web.WebServices
                     packageline.Reference3 = package.Reference3;
                     packageline.Reference4 = package.Reference4;
                     packageline.CommodityNumber = package.CommodityNumber;
-                    packageline.ClassNumber = package.ClassNumber; 
+                    packageline.ClassNumber = package.ClassNumber;
 
                     if (!string.IsNullOrEmpty(package.HorseId))
                     {
@@ -3649,6 +3775,12 @@ namespace WebFreight.Web.WebServices
                     myDataProvider.FirstFromCityCountryZipCodeDetails = myServicHelper.GetPickUpDeliveryFromCityOrPortName(myFirstPickup, true);
                 }
 
+                else if (shipment.PreForwardingFromPortId != null)
+                {
+                    myDataProvider.FirstFrom = shipment.PreForwardingFromPortName + " - " + shipment.PreForwardingFromPortCountryName;
+                    myDataProvider.FirstFromCityCountryZipCodeDetails = myDataProvider.FirstFrom;
+                }
+
                 else if (shipment.PreCarriageFromPortId != null)
                 {
                     myDataProvider.FirstFrom = shipment.PreCarriageFromPortName + " - " + shipment.PreCarriageFromPortCountryName;
@@ -3661,36 +3793,7 @@ namespace WebFreight.Web.WebServices
                     myDataProvider.FirstFromCityCountryZipCodeDetails = myDataProvider.FirstFrom;
                 }
 
-                if (myLastDelivery != null)
-                {
-                    myDataProvider.LastTo = myServicHelper.GetToDeliveryName(shipment, myLastDelivery, false);
-                    myDataProvider.LastToCityCountryZipCodeDetails = myServicHelper.GetToDeliveryName(shipment, myLastDelivery, true);
-                }
-                else if (shipment.OnCarriageToPortId != null)
-                {
-                    myDataProvider.LastTo = shipment.OnCarriageToPortName + " - " + shipment.OnCarriageToPortCountryName;
-                    myDataProvider.LastToCityCountryZipCodeDetails = myDataProvider.LastTo;
-                }
-                else if (shipment.Transshipment3ToPortId != null)
-                {
-                    myDataProvider.LastTo = shipment.Transshipment3ToPortName + " - " + shipment.Transshipment3ToPortCountryName;
-                    myDataProvider.LastToCityCountryZipCodeDetails = myDataProvider.LastTo;
-                }
-                else if (shipment.Transshipment2ToPortId != null)
-                {
-                    myDataProvider.LastTo = shipment.Transshipment2ToPortName + " - " + shipment.Transshipment2ToPortCountryName;
-                    myDataProvider.LastToCityCountryZipCodeDetails = myDataProvider.LastTo;
-                }
-                else if (shipment.Transshipment1ToPortId != null)
-                {
-                    myDataProvider.LastTo = shipment.Transshipment1ToPortName + " - " + shipment.Transshipment1ToPortCountryName;
-                    myDataProvider.LastToCityCountryZipCodeDetails = myDataProvider.LastTo;
-                }
-                else if (shipment.MainCarriageToPortId != null)
-                {
-                    myDataProvider.LastTo = shipment.MainCarriageToPortName + " - " + shipment.MainCarriageToPortCountryName;
-                    myDataProvider.LastToCityCountryZipCodeDetails = myDataProvider.LastTo;
-                }
+                this.ComputeLastToField(myDataProvider, myLastDelivery);                
 
                 #region Warehouse Leg
                 myDataProvider.WarehouseLegExpectedEntryDate = shipment.WarehouseLegExpectedEntryDate;
@@ -3744,6 +3847,58 @@ namespace WebFreight.Web.WebServices
 
             return myDataProvider;
         }
+        private void ComputeLastToField(ShippingDeclarationDataProvider myDataProvider, ShipmentPickUpDelivery myLastDelivery)
+        {
+            if (myLastDelivery != null)
+            {
+                myDataProvider.LastTo = myServicHelper.GetToDeliveryName(shipment, myLastDelivery, false);
+                myDataProvider.LastToCityCountryZipCodeDetails = myServicHelper.GetToDeliveryName(shipment, myLastDelivery, true);
+            }
+            else if (shipment.OnForwardingToPortId != null)
+            {
+                myDataProvider.LastTo = shipment.OnForwardingToPortName + " - " + shipment.OnForwardingToPortCountryName;
+                myDataProvider.LastToCityCountryZipCodeDetails = myDataProvider.LastTo;
+            }
+            else if (shipment.OnCarriageToPortId != null)
+            {
+                myDataProvider.LastTo = shipment.OnCarriageToPortName + " - " + shipment.OnCarriageToPortCountryName;
+                myDataProvider.LastToCityCountryZipCodeDetails = myDataProvider.LastTo;
+            }
+            else if (shipment.Transshipment3ToPortId != null)
+            {
+                myDataProvider.LastTo = shipment.Transshipment3ToPortName + " - " + shipment.Transshipment3ToPortCountryName;
+                myDataProvider.LastToCityCountryZipCodeDetails = myDataProvider.LastTo;
+            }
+            else if (shipment.Transshipment2ToPortId != null)
+            {
+                myDataProvider.LastTo = shipment.Transshipment2ToPortName + " - " + shipment.Transshipment2ToPortCountryName;
+                myDataProvider.LastToCityCountryZipCodeDetails = myDataProvider.LastTo;
+            }
+            else if (shipment.Transshipment1ToPortId != null)
+            {
+                myDataProvider.LastTo = shipment.Transshipment1ToPortName + " - " + shipment.Transshipment1ToPortCountryName;
+                myDataProvider.LastToCityCountryZipCodeDetails = myDataProvider.LastTo;
+            }
+            else if (shipment.MainCarriageToPortId != null)
+            {
+                myDataProvider.LastTo = shipment.MainCarriageToPortName + " - " + shipment.MainCarriageToPortCountryName;
+                myDataProvider.LastToCityCountryZipCodeDetails = myDataProvider.LastTo;
+            }
+        }
+        private void MapMainCarriageLoadNumber(ShippingDeclarationDataProvider myDataProvider, int tenant)
+        {
+            if (shipment.FromPortId != null)
+            {
+                myDataProvider.MainCarriageLoadNumber = getLoadNumberPrefix('M', tenant) + shipment.ShipmentNumber;
+            }
+        }
+
+        private string getLoadNumberPrefix(char legType, int tenant)
+        {
+            string loadNumberPrefix = tenant.ToString() + (legType == 'M' ? '/' : '/' + legType);
+            return loadNumberPrefix;
+        }
+
         private void FillPickUpDeliveryAddresses(ShipmentPickUpDelivery myFirstPickup, ShipmentPickUpDelivery myLastDelivery, ShippingDeclarationDataProvider myDataProvider)
         {
             #region PickUp Address

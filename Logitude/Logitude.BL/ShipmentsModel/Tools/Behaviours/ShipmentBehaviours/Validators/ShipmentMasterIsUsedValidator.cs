@@ -19,6 +19,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours.Validat
 
     public class ShipmentMasterIsUsedValidator : IServiceValidator
     {
+        public DateTime? LastYearDate { get; private set; }
+
         public bool IsUsedInShipment { get; private set; }
 
         public bool IsUsedInBooking { get; private set; }
@@ -45,6 +47,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours.Validat
                 AirlinePrefix = serviceInitializer.EntityPM.AirlinePrefix,
                 IsHybrid = serviceInitializer.EntityPM.IsHybrid,
                 IsCancelled = serviceInitializer.EntityPM.IsCancelled,
+                OperationalDate= serviceInitializer.EntityPM.OperationalDate,
             };
 
             this.RunValidator();
@@ -59,12 +62,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours.Validat
 
         private void RunValidator()
         {
+            LastYearDate = TenantServerConfigration.GetCurrentDateTime(Args.Tenant).AddYears(-1);
+
             bool isValidating = IsValidating();
 
             if (isValidating)
             {
-                Args.LastYearDate = TenantServerConfigration.GetCurrentDateTime(Args.Tenant).AddYears(-1);
-
                 IsUsedInOtherShipment();
 
                 if (!IsUsedInShipment)
@@ -90,7 +93,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours.Validat
                         {
                             if (!string.IsNullOrEmpty(Args.Master) && !string.IsNullOrEmpty(Args.AirlinePrefix) && !Args.IsCancelled)
                             {
-                                output = true;
+                                if (Args.OperationalDate >= LastYearDate)
+                                {
+                                    output = true;
+                                }                                
                             }
                         }
                     }
@@ -116,7 +122,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours.Validat
                               && myShipment.TransportModeId == Args.TransportModeId
                               && myMasterData.Master == Args.Master
                               && myMasterData.AirlinePrefix == Args.AirlinePrefix
-                              && myShipment.OperationalDate >= Args.LastYearDate
+                              && myShipment.OperationalDate >= LastYearDate
                               select myShipment);
 
             if (!string.IsNullOrEmpty(Args.ShipmentId))
@@ -141,7 +147,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours.Validat
                                               && d.TransportModeCode == Args.TransportModeId
                                               && d.Master == Args.Master
                                               && d.AirlinePrefix == Args.AirlinePrefix
-                                              && d.CreateDate >= Args.LastYearDate
+                                              && d.CreateDate >= LastYearDate
                                               select d);
 
             if (!string.IsNullOrEmpty(Args.BookingId))
@@ -185,6 +191,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours.Validat
         public bool IsHybrid { get; set; }
         public bool IsCancelled { get; set; }
         public bool IsThrowingException { get; set; } = true;
-        public DateTime LastYearDate { get; internal set; }
+        public DateTime? OperationalDate { get; set; }
     }
 }

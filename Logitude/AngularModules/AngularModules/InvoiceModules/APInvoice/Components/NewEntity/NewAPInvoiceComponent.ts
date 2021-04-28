@@ -214,7 +214,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
 
             this.EntityPM.Description = myDescription;
             this.EntityPM.OperationalDate = InvoiceTool.GetOperationalDate(shipmentPM);
-            this.EntityPM.ConnectedEntityReferences = this.shipmentPM.ShipmentNumber;
+            this.EntityPM.ShipmentsNumbers = this.shipmentPM.ShipmentNumber;
             this.EntityPM.ShipmentConcurrencyGUID = this.shipmentPM.ConcurrencyGUID;
             this.EntityPM.ShipmentNewConcurrencyGUID = this.shipmentPM.NewConcurrencyGUID;
         }
@@ -700,7 +700,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
             errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.InvoiceDate")));
         }
 
-        else if (DateTool.GetDateParts(this.InvoiceDate).DateTicks > DateTool.GetCurrentDateAsUtc().valueOf()) {
+        else if (DateTool.GetDateParts(this.InvoiceDate).DateTicks > DateTool.GetCurrentDateAsUtcForAccountingValidation().valueOf()) {
             errors.push(TextCodeTranslator.Translate("APInvoice.M.CantReceiveFutureDateInvoice"));
         }
 

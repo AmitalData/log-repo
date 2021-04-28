@@ -4,8 +4,7 @@
   Name="usp_DeleteTicketsRecords"
   Schema="dbo"
   Module="Unknown">
-  <SqlScript>
-  <![CDATA[
+  <SqlScript><![CDATA[
 Create PROCEDURE [dbo].usp_DeleteTicketsRecords
 (
 	@Tenant int
@@ -14,10 +13,12 @@ AS
 
 BEGIN
 
-exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'InboundEmails'
-exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'TicketEscalations'
-exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'Correspondences'
-exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'Tickets'
+delete from InboundEmailLines where Tenant = @Tenant
+delete from InboundEmails where Tenant = @Tenant and ObjectTableId = (select Id from ObjectTables where Name = 'Ticket')
+
+delete from Correspondences where Tenant =  @Tenant
+delete from TicketEscalations where Tenant =  @Tenant
+delete from Tickets where Tenant =  @Tenant
 
 END
 ]]></SqlScript>

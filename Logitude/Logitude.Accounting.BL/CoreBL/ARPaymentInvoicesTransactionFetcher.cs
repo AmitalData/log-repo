@@ -235,16 +235,24 @@ namespace Logitude.Accounting.BL.CoreBL
         private LedgerTransaction GetPaymentTransaction()
         {
             JournalPM paymentJournal = GetPaymentJournal(paymentId);
-
-            LedgerTransaction paymentCreditTransaction = GetCreditTransactionByJournalId(paymentJournal.Id);
-
-            if (paymentCreditTransaction == null)
+            if(paymentJournal != null)
             {
-                paymentId = null;
-                //throw new ApplicationException("[ARPaymentInvoicesTransactionFetcher] Couldn't found payment transaction!");
+                LedgerTransaction paymentCreditTransaction = GetCreditTransactionByJournalId(paymentJournal.Id);
+
+                if (paymentCreditTransaction == null)
+                {
+                    paymentId = null;
+                    //throw new ApplicationException("[ARPaymentInvoicesTransactionFetcher] Couldn't found payment transaction!");
+                }
+                return paymentCreditTransaction;
+
+            }
+            else
+            {
+                return null;
             }
 
-            return paymentCreditTransaction;
+
         }
 
         private JournalPM GetPaymentJournal(string arpaymentId)

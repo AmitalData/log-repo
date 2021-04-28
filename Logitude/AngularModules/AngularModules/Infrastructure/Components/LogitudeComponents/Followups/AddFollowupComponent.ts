@@ -91,6 +91,11 @@ export class AddFollowupComponent extends BaseComponent {
                         break;
                     }
 
+                    case "preforwardingdeparture": {
+                        myResult = "PRFD";
+                        break;
+                    }
+
                     case "maincarriagedeparture":
                     case "transshipment1departure":
                     case "transshipment2departure":
@@ -102,6 +107,11 @@ export class AddFollowupComponent extends BaseComponent {
 
                     case "oncarriagedeparture": {
                         myResult = "ONCD";
+                        break;
+                    }
+
+                    case "onforwardingdeparture": {
+                        myResult = "ONFD";
                         break;
                     }
 
@@ -140,6 +150,11 @@ export class AddFollowupComponent extends BaseComponent {
                         break;
                     }
 
+                    case "preforwardingarrival": {
+                        myResult = "PRFA";
+                        break;
+                    }
+
                     case "maincarriagearrival":
                     case "transshipment1arrival":
                     case "transshipment2arrival":
@@ -151,6 +166,11 @@ export class AddFollowupComponent extends BaseComponent {
 
                     case "oncarriagearrival": {
                         myResult = "ONCA";
+                        break;
+                    }
+
+                    case "onforwardingarrival": {
+                        myResult = "ORFA";
                         break;
                     }
 

@@ -79,7 +79,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
         var loadPr = listservice.getMock("Port");
         loadPr.then((res: any) => {
             res.subscribe((resp: any) => {
-                this.SubTypeFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SUB" && d.TenantNumber == SessionLocator.Tenant)[0]; 
+                this.SubTypeFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SUB")[0]; 
                 this.ScreenIsReady = true;
 
                 this.BuildFiltersLists();
@@ -107,7 +107,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
 
                 var screenCode = "NewMaster";
                 cmpRef.instance.LabelWidth = 110;
-                cmpRef.instance.Run(this.EntityPM, this.ObjectTableName, screenCode);
+                cmpRef.instance.Run(this.EntityPM, "Shipment", screenCode, false, false, this.ObjectTableName);
             });
     }
 
@@ -1087,7 +1087,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
         }
 
         if (!AppTool.IsNullOrEmpty(this.Master)) {
-            this.myShipmentDomainService.ValidateShipmentMasterFieldExistance(this.EntityPM.Id, this.EntityPM.BookingId, this.EntityPM.Master, this.EntityPM.AirlinePrefix, this.EntityPM.DirectionId, this.EntityPM.TransportModeId, this.EntityPM.ShipmentLevelCode, this.EntityPM.IsCancelled)
+            this.myShipmentDomainService.ValidateShipmentMasterFieldExistance(this.EntityPM)
                 .subscribe((myResult: any) => {
 
                     if (AppTool.IsNullOrEmpty(myResult)) {
@@ -1614,6 +1614,138 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
         if (this.isCopyFlights != value) {
             this.isCopyFlights = value;
         }
+    }
+
+    private isCopyPreCarriage: boolean = false;
+    get IsCopyPreCarriage() { return this.isCopyPreCarriage; }
+    set IsCopyPreCarriage(value) {
+        if (this.isCopyPreCarriage != value) {
+            this.isCopyPreCarriage = value;
+
+            if (value == true) {
+                this.CopyPreCarriageValues();
+            }
+
+            else {
+                this.SetPreCarriageValuesToNull();
+
+            }
+        }
+    }
+
+    private isCopyOnCarriage: boolean = false;
+    get IsCopyOnCarriage() { return this.isCopyOnCarriage; }
+    set IsCopyOnCarriage(value) {
+        if (this.isCopyOnCarriage != value) {
+            this.isCopyOnCarriage = value;
+
+            if (value == true) {
+                this.CopyOnCarriageValues();
+            }
+
+            else {
+                this.SetOnCarriageValuesToNull();
+
+            }
+        }
+    }
+
+    private CopyPreCarriageValues() {
+        this.EntityPM.PreCarriageFromPortId = this.SourceEntityPM.PreCarriageFromPortId;
+        this.EntityPM.PreCarriageFromPortCode = this.SourceEntityPM.PreCarriageFromPortCode;
+        this.EntityPM.PreCarriageFromPortName = this.SourceEntityPM.PreCarriageFromPortName;
+        this.EntityPM.PreCarriageFromPortCountryCode = this.SourceEntityPM.PreCarriageFromPortCountryCode;
+        this.EntityPM.PreCarriageFromPortCountryName = this.SourceEntityPM.PreCarriageFromPortCountryName;
+        this.EntityPM.PreCarriageToPortId = this.SourceEntityPM.PreCarriageToPortId;
+        this.EntityPM.PreCarriageToPortCode = this.SourceEntityPM.PreCarriageToPortCode;
+        this.EntityPM.PreCarriageToPortName = this.SourceEntityPM.PreCarriageToPortName;
+        this.EntityPM.PreCarriageToPortCountryCode = this.SourceEntityPM.PreCarriageToPortCountryCode;
+        this.EntityPM.PreCarriageToPortCountryName = this.SourceEntityPM.PreCarriageToPortCountryName;
+        this.EntityPM.PreCarriageCarrierId = this.SourceEntityPM.PreCarriageCarrierId;
+        this.EntityPM.PreCarriageCarrierCode = this.SourceEntityPM.PreCarriageCarrierCode;
+        this.EntityPM.PreCarriageCarrierName = this.SourceEntityPM.PreCarriageCarrierName;
+        this.EntityPM.PreCarriageCarrierNumber = this.SourceEntityPM.PreCarriageCarrierNumber;
+        this.EntityPM.PreCarriageCarrierWebSite = this.SourceEntityPM.PreCarriageCarrierWebSite;
+        this.EntityPM.PreCarriageTransportModeId = this.SourceEntityPM.PreCarriageTransportModeId;
+        this.EntityPM.PreCarriageVesselId = this.SourceEntityPM.PreCarriageVesselId;
+        this.EntityPM.PreCarriageVesselName = this.SourceEntityPM.PreCarriageVesselName;
+        this.EntityPM.PreCarriageETD = this.SourceEntityPM.PreCarriageETD;
+        this.EntityPM.PreCarriageATD = this.SourceEntityPM.PreCarriageATD;
+        this.EntityPM.PreCarriageETA = this.SourceEntityPM.PreCarriageETA;
+        this.EntityPM.PreCarriageATA = this.SourceEntityPM.PreCarriageATA;
+    }
+    private CopyOnCarriageValues() {
+        this.EntityPM.OnCarriageFromPortId = this.SourceEntityPM.OnCarriageFromPortId;
+        this.EntityPM.OnCarriageFromPortCode = this.SourceEntityPM.OnCarriageFromPortCode;
+        this.EntityPM.OnCarriageFromPortName = this.SourceEntityPM.OnCarriageFromPortName;
+        this.EntityPM.OnCarriageFromPortCountryCode = this.SourceEntityPM.OnCarriageFromPortCountryCode;
+        this.EntityPM.OnCarriageFromPortCountryName = this.SourceEntityPM.OnCarriageFromPortCountryName;
+        this.EntityPM.OnCarriageToPortId = this.SourceEntityPM.OnCarriageToPortId;
+        this.EntityPM.OnCarriageToPortCode = this.SourceEntityPM.OnCarriageToPortCode;
+        this.EntityPM.OnCarriageToPortName = this.SourceEntityPM.OnCarriageToPortName;
+        this.EntityPM.OnCarriageToPortCountryCode = this.SourceEntityPM.OnCarriageToPortCountryCode;
+        this.EntityPM.OnCarriageToPortCountryName = this.SourceEntityPM.OnCarriageToPortCountryName;
+        this.EntityPM.OnCarriageCarrierId = this.SourceEntityPM.OnCarriageCarrierId;
+        this.EntityPM.OnCarriageCarrierCode = this.SourceEntityPM.OnCarriageCarrierCode;
+        this.EntityPM.OnCarriageCarrierName = this.SourceEntityPM.OnCarriageCarrierName;
+        this.EntityPM.OnCarriageCarrierNumber = this.SourceEntityPM.OnCarriageCarrierNumber;
+        this.EntityPM.OnCarriageCarrierWebSite = this.SourceEntityPM.OnCarriageCarrierWebSite;
+        this.EntityPM.OnCarriageTransportModeId = this.SourceEntityPM.OnCarriageTransportModeId;
+        this.EntityPM.OnCarriageVesselId = this.SourceEntityPM.OnCarriageVesselId;
+        this.EntityPM.OnCarriageVesselName = this.SourceEntityPM.OnCarriageVesselName;
+        this.EntityPM.OnCarriageETD = this.SourceEntityPM.OnCarriageETD;
+        this.EntityPM.OnCarriageATD = this.SourceEntityPM.OnCarriageATD;
+        this.EntityPM.OnCarriageETA = this.SourceEntityPM.OnCarriageETA;
+        this.EntityPM.OnCarriageATA = this.SourceEntityPM.OnCarriageATA;
+    }
+
+    private SetPreCarriageValuesToNull() {
+        this.EntityPM.PreCarriageFromPortId = null;
+        this.EntityPM.PreCarriageFromPortCode = null;
+        this.EntityPM.PreCarriageFromPortName = null;
+        this.EntityPM.PreCarriageFromPortCountryCode = null;
+        this.EntityPM.PreCarriageFromPortCountryName = null;
+        this.EntityPM.PreCarriageToPortId = null;
+        this.EntityPM.PreCarriageToPortCode = null;
+        this.EntityPM.PreCarriageToPortName = null;
+        this.EntityPM.PreCarriageToPortCountryCode = null;
+        this.EntityPM.PreCarriageToPortCountryName = null;
+        this.EntityPM.PreCarriageCarrierId = null;
+        this.EntityPM.PreCarriageCarrierCode = null;
+        this.EntityPM.PreCarriageCarrierName = null;
+        this.EntityPM.PreCarriageCarrierNumber = null;
+        this.EntityPM.PreCarriageCarrierWebSite = null;
+        this.EntityPM.PreCarriageTransportModeId = null;
+        this.EntityPM.PreCarriageVesselId = null;
+        this.EntityPM.PreCarriageVesselName = null;
+        this.EntityPM.PreCarriageETD = null;
+        this.EntityPM.PreCarriageATD = null;
+        this.EntityPM.PreCarriageETA = null;
+        this.EntityPM.PreCarriageATA = null;
+    }
+    private SetOnCarriageValuesToNull() {
+        this.EntityPM.OnCarriageFromPortId = null;
+        this.EntityPM.OnCarriageFromPortCode = null;
+        this.EntityPM.OnCarriageFromPortName = null;
+        this.EntityPM.OnCarriageFromPortCountryCode = null;
+        this.EntityPM.OnCarriageFromPortCountryName = null;
+        this.EntityPM.OnCarriageToPortId = null;
+        this.EntityPM.OnCarriageToPortCode = null;
+        this.EntityPM.OnCarriageToPortName = null;
+        this.EntityPM.OnCarriageToPortCountryCode = null;
+        this.EntityPM.OnCarriageToPortCountryName = null;
+        this.EntityPM.OnCarriageCarrierId = null;
+        this.EntityPM.OnCarriageCarrierCode = null;
+        this.EntityPM.OnCarriageCarrierName = null;
+        this.EntityPM.OnCarriageCarrierNumber = null;
+        this.EntityPM.OnCarriageCarrierWebSite = null;
+        this.EntityPM.OnCarriageTransportModeId = null;
+        this.EntityPM.OnCarriageVesselId = null;
+        this.EntityPM.OnCarriageVesselName = null;
+        this.EntityPM.OnCarriageETD = null;
+        this.EntityPM.OnCarriageATD = null;
+        this.EntityPM.OnCarriageETA = null;
+        this.EntityPM.OnCarriageATA = null;
     }
 
     public IsCopyDescriptionEnabled: boolean = false;

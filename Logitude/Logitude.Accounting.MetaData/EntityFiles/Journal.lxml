@@ -3719,6 +3719,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;CopiedFrom&quot;"
     ListPropertyPath="&quot;CopiedFrom&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -4320,6 +4321,19 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
+    <EventType
+      Code="&quot;JNUP&quot;"
+      ObjectTableName="&quot;Journal&quot;"
+      EnglishName="&quot;Journal Notes Updated&quot;"
+      LocalName="&quot;Journal Notes Updated&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
   <Records />
   <MenuButtons
@@ -4330,6 +4344,15 @@
       DefaultText="&quot;Save As Draft&quot;"
       MenuButtonType="&quot;button&quot;"
       IndexOrder="0"
+      LocalDefaultText="&quot;שמור כטיוטה&quot;"
+      IsPackagable="false" />
+    <MenuButton
+      EventCode="&quot;JournalSaveButton&quot;"
+      DefaultText="&quot;Save&quot;"
+      MenuButtonType="&quot;button&quot;"
+      Style="&quot;&quot;"
+      IndexOrder="0"
+      LocalDefaultText="&quot;שמור&quot;"
       IsPackagable="false" />
     <MenuButton
       EventCode="&quot;JournalSave&quot;"
@@ -4343,24 +4366,28 @@
       MenuButtonType="&quot;button&quot;"
       Style="&quot;ApproveButtonStyle&quot;"
       IndexOrder="2"
+      LocalDefaultText="&quot;אישור&quot;"
       IsPackagable="false" />
     <MenuButton
       EventCode="&quot;More&quot;"
       DefaultText="&quot;More&quot;"
       MenuButtonType="&quot;dropdownbutton&quot;"
       IndexOrder="3"
+      LocalDefaultText="&quot;נוספים&quot;"
       IsPackagable="false">
       <MenuItem
         EventCode="&quot;JournalVoid&quot;"
         DefaultText="&quot;Void&quot;"
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="0"
+        LocalDefaultText="&quot;ביטול&quot;"
         IsPackagable="false" />
       <MenuItem
         EventCode="&quot;JournalPrint&quot;"
         DefaultText="&quot;Print&quot;"
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="1"
+        LocalDefaultText="&quot;הדפסה&quot;"
         IsPackagable="false" />
       <MenuItem
         EventCode="&quot;CopyJournal&quot;"
@@ -4831,8 +4858,8 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Journal.M.JournalAmountNotMatched&quot;"
-      DefaultText="&quot;Journal credit amount does not match the debit amount&quot;"
-      LocalDefaultText="&quot;סכום חובה שונה מסכום זכות &quot;"
+      DefaultText="&quot;Total debit amount must be equal to total credit amount. There is a difference of: &quot;"
+      LocalDefaultText="&quot; :סכום חובה שונה מסכום זכות. קיים הפרש של  &quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -4984,6 +5011,36 @@
       DefaultText="&quot;References / Notes&quot;"
       LocalDefaultText="&quot;אסמכתאות \ הערות&quot;"
       TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.O.ExchangeRateValidation&quot;"
+      DefaultText="&quot;There is no exchange rate for the selected currency on the accounting date for line&quot;"
+      LocalDefaultText="&quot;לא הוגדר שער חליפין של המטבע שנבחר בתאריך החשבונאי שצויין בשורה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.O.haveFutureAccountingorReferenceDate&quot;"
+      DefaultText="&quot;Can't approve The Journal . Some Lines have Future Accounting or Reference Date.&quot;"
+      LocalDefaultText="&quot;לא ניתן לאשר את פקודת היומן , ישנם שורות עם תאריך חשבונאי/אסמכתא עתידי.&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.M.EditLineNote&quot;"
+      DefaultText="&quot;Edit Line Note&quot;"
+      LocalDefaultText="&quot;ערוך הערת שורה&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.M.Note&quot;"
+      DefaultText="&quot;Note&quot;"
+      LocalDefaultText="&quot;הערת&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.M.Line&quot;"
+      DefaultText="&quot;Line&quot;"
+      LocalDefaultText="&quot;שורה&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>

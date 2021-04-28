@@ -61,6 +61,7 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public double? AmountDueInLocalCurrency { get; set; }
         public double? AmountDueInProfitCurrency { get; set; }
         public string MainEntityId { get; set; }
+        public string MasterEntityId { get; set; }
         public string HouseNumber { get; set; }
         public string MasterNumber { get; set; }
         public string Description { get; set; }
@@ -186,6 +187,7 @@ namespace Logitude.BL.InvoiceModel.EntityLists
 
         public DateTime? PaidDate { get; set; }
         public string PartnerId { get; set; }
-
+        public string PartnerName { get; set; }
+        public string ShipmentsNumbers { get; set; }
     }
 }

@@ -87,6 +87,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="CurrencyId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="TariffId"
     ReferencedTable="Tariffs"
@@ -100,6 +107,11 @@
   <Relation
     ForeignKeyColumn="SurchargeId"
     ReferencedTable="ChargesTypes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CurrencyId"
+    ReferencedTable="Currencies"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <UniqueConstraint

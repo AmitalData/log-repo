@@ -321,6 +321,7 @@ export class AddressItemClass extends BaseComponent {
         this.IsInActiveVisible = isInActiveVisible;
         this.SetUIProperties_State();
         this.SetUIProperties_TelFax();
+        this.SetUIProperties_City();
     }
     private SetUIProperties_State() {
         this.SetUIProperties_StateEnabled();
@@ -385,7 +386,13 @@ export class AddressItemClass extends BaseComponent {
         this.UIProperties.SetRequired("PhoneNumber", this.ObjectTableName, isTelRequired);
         this.UIProperties.SetRequired("FaxNumber", this.ObjectTableName, isFaxRequired);
     }
-
+    SetUIProperties_City() {
+        var isRequired = false;
+        if (AppTool.IsNullOrEmpty(this.City) && this.fatherComponent.Customer.PartnerTypeId != "PO") {
+            isRequired = true;
+        }
+        this.UIProperties.SetRequired("City", this.ObjectTableName, isRequired);
+    }
     // Properties
 
     get AddressTypeId() { return this.EntityPM.AddressTypeId; }
@@ -428,6 +435,7 @@ export class AddressItemClass extends BaseComponent {
     set City(newValue: string) {
         if (this.EntityPM.City != newValue) {
             this.EntityPM.City = newValue;
+            this.SetUIProperties_City();
         }
     }
 
@@ -462,14 +470,18 @@ export class AddressItemClass extends BaseComponent {
     }
 
     get CityLineText() {
-        var myResult = this.City;
+        var myResult = "";
+
+        if (!AppTool.IsNullOrEmpty(this.City)) {
+            myResult = this.City;
+        }
 
         if (!AppTool.IsNullOrEmpty(this.StateEnglishName)) {
-            myResult += ", " + this.StateEnglishName;
+            myResult += !AppTool.IsNullOrEmpty(myResult) ? ", " + this.StateEnglishName : this.StateEnglishName;
         }
 
         if (!AppTool.IsNullOrEmpty(this.ZipCode)) {
-            myResult += ", " + this.ZipCode;
+            myResult += !AppTool.IsNullOrEmpty(myResult) ? ", " + this.ZipCode : this.ZipCode;
         }
 
         return myResult;

@@ -298,7 +298,7 @@ namespace MeatadataGeneratorTool.Helpers
             field.CanAutomateSetValue = GetAttributeBoolValue(fieldNode.Attributes["CanAutomateSetValue"]);
             field.DisplayInAutomationAsEnitity = GetAttributeBoolValue(fieldNode.Attributes["DisplayInAutomationAsEnitity"]);
             field.RecordType = GetAttributeStringValue(fieldNode.Attributes["RecordType"]);
-
+            field.AdditionalQuerySections = GetAttributeStringValue(fieldNode.Attributes["AdditionalQuerySections"]);
 
 
             if (fieldNode.Attributes["HtmlListComponentName"] != null)
@@ -571,6 +571,7 @@ namespace MeatadataGeneratorTool.Helpers
             Screen.IsReadOnly = GetAttributeBoolValue(fieldNode.Attributes["IsReadOnly"]);
             Screen.IsHeaderScreen = GetAttributeBoolValue(fieldNode.Attributes["IsHeaderScreen"]);
             Screen.Code = GetAttributeStringValue(fieldNode.Attributes["Code"]);
+
             if (fieldNode.Attributes["Code"] != null)
             {
                 Screen.Code = GetAttributeStringValue(fieldNode.Attributes["Code"]);
@@ -854,6 +855,7 @@ namespace MeatadataGeneratorTool.Helpers
             feature.IsOld = GetAttributeBoolValue(fieldNode.Attributes["IsOld"]);
             feature.IsCoreFeature = GetAttributeBoolValue(fieldNode.Attributes["IsCoreFeature"]);
             feature.IsBusinessUnitEnabled = GetAttributeBoolValue(fieldNode.Attributes["IsBusinessUnitEnabled"]);
+            feature.ToggleCode = GetAttributeStringValue(fieldNode.Attributes["ToggleCode"]);
 
             return feature;
         }

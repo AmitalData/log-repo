@@ -1,90 +1,16 @@
 {
-	"id": "963978bc-7c01-46ea-8113-1a2ec21cbb13",
-	"name": "PrepareFullAccountingVars",
-	"description": null,
-	"auth": null,
-	"events": null,
-	"variables": [],
-	"order": [
-		"02750a0e-a319-494a-891a-efb7c4aac820",
-		"bc622fb3-bfa3-4bd9-9707-6c5e6d09bb72",
-		"0db50779-5061-43df-ba9d-5db1c6b3abcf",
-		"c3e3ba03-ebbf-4e7d-a8b1-cfdeb46300db",
-		"95d41d1c-7778-4634-95b3-cdc31fccb7c9",
-		"69dab9b9-6aa8-4ff6-8991-1ae5e9886d05",
-		"3064aa91-c9dd-40f2-9859-bd54c915a98b",
-		"aac8d7f6-10d6-4026-8aa4-bccb81ad3783",
-		"206784a2-cfae-46e8-b24b-f69a58f649d0",
-		"0cd73e78-ade1-4264-9f94-5d263007c9b3",
-		"45196082-25a8-4a75-a698-fc100959f8b4",
-		"07c6e1e6-3d40-4481-bb6c-a7a873d04283",
-		"6f5ed027-9300-4fa7-a38f-63d51a550588",
-		"1262aadb-0d81-4af7-88fe-5b77f97bc209",
-		"86cf2ef0-e9ff-4eca-8ef7-e6f025738bc4",
-		"1f6b38cf-008a-425b-af24-8b4dee2047d3",
-		"ba829c89-75f7-47fe-96fe-318daf605c47",
-		"e7eda94c-b991-4858-a83b-5946712983a7",
-		"945e583d-ff56-4871-8d63-65c91d6c8fe0",
-		"c473182a-ffa0-49e2-9c8f-7c86b7317731",
-		"9bbadf74-74c9-43d1-aa34-35732219c21b",
-		"8e326685-1db8-42b5-a9a7-7d5a14f7bc15",
-		"5b0c2a5f-c4eb-4d91-8708-c4cf97d68b9f",
-		"b5791ce7-fb8d-41d7-93c9-3b5cdc47d7c0",
-		"15c24714-fb4b-4c13-9cd8-0b1acb7ee453",
-		"30429da4-0a14-43ab-bd4a-c6c572d2df0f",
-		"5f2863b7-c784-4856-943a-d45576094aa2",
-		"7a6f84ae-b8cc-4125-8e6b-30c70094162b",
-		"21936fa4-324e-4bc1-b4b1-cf9c81de0083",
-		"37891e81-65cf-4b9d-98f6-f5772c0f34fe",
-		"4a4e5166-d3e7-42aa-b618-465afe4d8812",
-		"1273b4cd-5d15-4439-8a22-832d9d7946f1",
-		"bbff976a-09dc-461d-86ec-d31566e03fa9",
-		"57a0fcfe-a8bf-4b57-90dc-bcfc909ef6ee",
-		"51bde722-8ce0-40d7-9e14-48205fc6f854",
-		"33c1f3ed-d373-4bd0-ac15-749c1c96b550",
-		"24508010-e95e-45e9-920c-f33d8892e926",
-		"4dac0447-365b-4ebb-b9ab-7c678ddea5ad",
-		"f3506062-0f7c-4327-86d1-90a7d9199a04",
-		"947374d5-cc21-4fe7-8753-dbcc64ae9463"
-	],
-	"folders_order": [],
-	"protocolProfileBehavior": {},
-	"folders": [],
-	"requests": [
+	"info": {
+		"_postman_id": "d7063d7d-1e6f-47c5-9e92-f8f0562b5f4d",
+		"name": "PrepareFullAccountingVars",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
 		{
-			"id": "02750a0e-a319-494a-891a-efb7c4aac820",
 			"name": "Authentication",
-			"url": "{{URL}}/api/authentication?tenant={{Tenant}}",
-			"description": null,
-			"data": [],
-			"dataOptions": {
-				"raw": {}
-			},
-			"dataMode": "raw",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"type": "text",
-					"value": "application/json"
-				}
-			],
-			"method": "POST",
-			"pathVariableData": [],
-			"queryParams": [
-				{
-					"key": "tenant",
-					"value": "{{Tenant}}",
-					"equals": true,
-					"description": "",
-					"enabled": true
-				}
-			],
-			"auth": null,
-			"events": [
+			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "d5b458b6-c5f8-434e-a0a2-2c500a599d5c",
 						"exec": [
 							"",
 							"",
@@ -112,13 +38,15 @@
 							"pm.test(\"AuthSuccessfullOnTenant1\", function () {",
 							"    pm.response.to.have.status(200);",
 							"    ",
-							"   ",
+							"          ",
+							"    var date = new Date();",
+							"    var CurrentYear = date.getFullYear();",
 							"    var idvalue1 = (pm.response.json().Token);",
 							"    var idvalue2 = (pm.response.json().CurrentTenant);",
 							"    var idvalue3 = (pm.response.json().UserId);",
 							"    var idvalue4 = (pm.response.json().DocumentDownloadToken);",
 							"    var idvalue5 = (pm.response.json().InvalidDocumentToken);",
-							"    ",
+							" var idvalue6=CurrentYear;",
 							"    var id1exist = idvalue1 !== null;",
 							"    var id2exist = idvalue2 !== null;",
 							"    var id3exist = idvalue3 !== null;",
@@ -135,7 +63,7 @@
 							"    pm.globals.set(\"LoggedUserId\",idvalue3);",
 							"    pm.globals.set(\"DocumentDownloadToken\",idvalue4);",
 							"    pm.globals.set(\"InvalidDocumentToken\",idvalue5);",
-							"    ",
+							"    pm.globals.set(\"CurrentYear\",idvalue6);",
 							"    pm.environment.set(\"RandomNum\", _.random(1,50));",
 							"      ",
 							"      ",
@@ -150,2584 +78,44 @@
 					}
 				}
 			],
-			"folder": null,
-			"rawModeData": "{\"Email\":\"{{Email}}\",\"Password\":\"{{Password}}\",\"IsUser\":true,\"GetToken\":true,\"ClientType\":\"Web\",\"Tenant\":\"{{Tenant}}\"}\n",
-			"headers": "Content-Type: application/json\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "07c6e1e6-3d40-4481-bb6c-a7a873d04283",
-			"name": "GetPaymentTermCash",
-			"url": "{{URL}}/api/paymenttermviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=cash&PageIndex=0&PageSize=23",
-			"description": null,
-			"data": null,
-			"dataOptions": null,
-			"dataMode": null,
-			"headerData": [
-				{
-					"key": "Token",
-					"value": "{{Token}}",
-					"type": "text"
-				}
-			],
-			"method": "GET",
-			"pathVariableData": [],
-			"queryParams": [
-				{
-					"key": "Filter1Name",
-					"value": "SearchFields"
-				},
-				{
-					"key": "Filter1Operator",
-					"value": "Contains"
-				},
-				{
-					"key": "Filter1Value",
-					"value": "cash"
-				},
-				{
-					"key": "PageIndex",
-					"value": "0"
-				},
-				{
-					"key": "PageSize",
-					"value": "23"
-				}
-			],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "d1209599-02d7-45b0-8b65-704bad72fbf8",
-						"exec": [
-							"pm.test(\"GetPaymentTermCash\", function () {",
-							"   pm.response.to.have.status(200);",
-							"   if(pm.response.json().Result.length < 1 ){",
-							"       ",
-							"     tests[\"PaymentTermExsits : \" + false] = (true);",
-							"     postman.setNextRequest(\"CreatePaymentTermCash\");  ",
-							"",
-							"     ",
-							"   }",
-							"   else {",
-							"    ",
-							"var idvalue=pm.response.json().Result[0].Id;",
-							"     pm.environment.set(\"PaymentTermId\",idvalue);",
-							"",
-							"     tests[\"PaymentTermExsits : \" + true ] = (true);",
-							"    postman.setNextRequest(\"GETPaymnetMethodCash\");  ",
-							"    }",
-							"   ",
-							"    ",
-							"});"
-						],
-						"type": "text/javascript"
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
 					}
-				}
-			],
-			"folder": null,
-			"headers": "Token: {{Token}}\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "0cd73e78-ade1-4264-9f94-5d263007c9b3",
-			"name": "GetVatTypeExempt",
-			"url": "{{URL}}/api/vattypeviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&GetCount=true&PageIndex=0&PageSize=23&SortBy=&SortDirection=&AdditionalFilters=[{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22EPT%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false}]\n&&&Filter1Value=EXMPT",
-			"description": null,
-			"data": null,
-			"dataOptions": null,
-			"dataMode": null,
-			"headerData": [
-				{
-					"key": "token",
-					"value": "{{Token}}",
-					"type": "text"
-				}
-			],
-			"method": "GET",
-			"pathVariableData": [],
-			"queryParams": [
-				{
-					"key": "ForceCacheRefresh",
-					"value": "false"
-				},
-				{
-					"key": "GetAll",
-					"value": "false"
-				},
-				{
-					"key": "Filter1Name",
-					"value": "SearchFields"
-				},
-				{
-					"key": "Filter1Operator",
-					"value": "Contains"
-				},
-				{
-					"key": "GetCount",
-					"value": "true"
-				},
-				{
-					"key": "PageIndex",
-					"value": "0"
-				},
-				{
-					"key": "PageSize",
-					"value": "23"
-				},
-				{
-					"key": "SortBy",
-					"value": ""
-				},
-				{
-					"key": "SortDirection",
-					"value": ""
-				},
-				{
-					"key": "AdditionalFilters",
-					"value": "[{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22EPT%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false}]\n"
-				},
-				{
-					"key": null,
-					"value": ""
-				},
-				{
-					"key": null,
-					"value": ""
-				},
-				{
-					"key": "Filter1Value",
-					"value": "EXMPT"
-				}
-			],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "602b7e9e-5816-4a6e-882f-37386b752096",
-						"exec": [
-							"pm.test(\"GetVatTypeExempt\", function () {",
-							"   pm.response.to.have.status(200);",
-							"   if(pm.response.json().Result.length < 1 ){",
-							"       var idvaluet = \"test\";",
-							"        var idexist2 = idvaluet !== null;",
-							"     tests[\"VatExsits : \" + false] = (true);",
-							"         postman.setNextRequest(\"CreatVatExempt\");  ",
-							"     ",
-							"   }",
-							"   else {",
-							"    ",
-							"var idvalue=pm.response.json().Result[0].Id;",
-							"     pm.environment.set(\"VatId\",idvalue);",
-							"",
-							"     tests[\"VatExsits : \" + true ] = (true);",
-							"    postman.setNextRequest(\"GetPaymentTermCash\");  ",
-							"    }",
-							"   ",
-							"    ",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"headers": "token: {{Token}}\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "0db50779-5061-43df-ba9d-5db1c6b3abcf",
-			"name": "Get Chreonological Settings ",
-			"url": "{{URL}}/api/accountingsettings/getsingle?id={{Tenant}}",
-			"description": null,
-			"data": null,
-			"dataOptions": null,
-			"dataMode": null,
-			"headerData": [
-				{
-					"key": "token",
-					"value": "{{Token}}",
-					"type": "text"
-				},
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"type": "text"
-				}
-			],
-			"method": "GET",
-			"pathVariableData": [],
-			"queryParams": [
-				{
-					"key": "id",
-					"value": "{{Tenant}}"
-				}
-			],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "956cc308-7d68-4b51-bba1-fcfe27fd90bc",
-						"exec": [
-							"",
-							"pm.test(\"Get Chreonological Settings\", function () {",
-							"  pm.response.to.have.status(200);",
-							"  var idvalue1 = pm.response.json().IsARInvoiceChronologicalDates;",
-							"  var idvalue2 = pm.response.json().IsARPaymentChronologicalDates;",
-							"",
-							" ",
-							"  var id1exist3= idvalue1 === true ;",
-							"  var id1exist4= idvalue2 === true ;",
-							"  ",
-							"  ",
-							"  pm.environment.set(\"AccountingActivated\",idvalue1);",
-							"  ",
-							" ",
-							"  if (!id1exist4 && !id1exist3 ){",
-							"       //throw new Error('NOt FUll Accounting Tenant');",
-							"         tests[\"Chronolical check activated  :\" + false] = ( true );",
-							"         postman.setNextRequest(\"GEtAccounntingPeriods\");",
-							"        ",
-							" ",
-							"         ",
-							"          ",
-							"",
-							"  }",
-							"  else{",
-							" // tests[\"Full Accounting Tenant : \" + true ] = ( true );",
-							"  tests[\"Chronolical check activated :\" +  true] = ( true );",
-							"   postman.setNextRequest(\"GEtAccounntingPeriods\");",
-							" ",
-							"}",
-							"});",
-							"",
-							"",
-							"",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"headers": "token: {{Token}}\nContent-Type: application/json\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "1262aadb-0d81-4af7-88fe-5b77f97bc209",
-			"name": "GETPaymnetMethodCash",
-			"url": "{{URL}}/api/accountingpaymentmethodviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=Cash&GetCount=true&PageIndex=0&PageSize=23\n&&",
-			"description": null,
-			"data": null,
-			"dataOptions": null,
-			"dataMode": null,
-			"headerData": [
-				{
-					"key": "token",
-					"value": "{{Token}}",
-					"type": "text"
-				}
-			],
-			"method": "GET",
-			"pathVariableData": [],
-			"queryParams": [
-				{
-					"key": "Filter1Name",
-					"value": "SearchFields"
-				},
-				{
-					"key": "Filter1Operator",
-					"value": "Contains"
-				},
-				{
-					"key": "Filter1Value",
-					"value": "Cash"
-				},
-				{
-					"key": "GetCount",
-					"value": "true"
-				},
-				{
-					"key": "PageIndex",
-					"value": "0"
-				},
-				{
-					"key": "PageSize",
-					"value": "23\n"
-				},
-				{
-					"key": null,
-					"value": ""
-				},
-				{
-					"key": null,
-					"value": ""
-				}
-			],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "52ce2929-4b00-461a-ac26-9ceea2bff0ed",
-						"exec": [
-							"pm.test(\"GetPaymentMethodCash\", function () {",
-							"   pm.response.to.have.status(200);",
-							"   if(pm.response.json().Result.length < 1 ){",
-							"       ",
-							"     tests[\"PaymentMethodExsits : \" + false] = (true);",
-							"     postman.setNextRequest(\"CreatePaymentMethodCash\");  ",
-							"     ",
-							"   }",
-							"   else {",
-							"    ",
-							"var idvalue=pm.response.json().Result[0].Id;",
-							"     pm.environment.set(\"PaymentMethodId\",idvalue);",
-							"",
-							"     tests[\"PaymentTermExsits : \" + true ] = (true);",
-							"    postman.setNextRequest(\"GetBranchMainOffice\");  ",
-							"    }",
-							"   ",
-							"    ",
-							"})"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"headers": "token: {{Token}}\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "1273b4cd-5d15-4439-8a22-832d9d7946f1",
-			"name": "CreateVendorGlAccountVendGL",
-			"url": "{{URL}}/api/glaccounts",
-			"description": null,
-			"data": [],
-			"dataOptions": {
-				"raw": {}
-			},
-			"dataMode": "raw",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"type": "text",
-					"value": "application/json"
-				},
-				{
-					"key": "token",
-					"type": "text",
-					"value": "{{Token}}"
-				}
-			],
-			"method": "POST",
-			"pathVariableData": [],
-			"queryParams": [],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "740c5c45-6e53-4fad-bbe0-310e8b1f9159",
-						"exec": [
-							"pm.test(\"CreateCustomerGlAccountCustGl \", function () {",
-							"    pm.response.to.have.status(200);",
-							"    var idvalue1 = (pm.response.json().Id);",
-							"    var idvalue2 =(pm.response.json().InternalNumber);",
-							"    var idvalue3 =(pm.response.json().ControlAccountId);",
-							"   var idvalue4 =(pm.response.json().DisplayNumber);",
-							"    var idvalue5 =(pm.response.json().ChartOfAccountsId);",
-							" ",
-							"    var id1exist = idvalue1 !== null;",
-							"   ",
-							"",
-							"    pm.expect(id1exist);",
-							"   ",
-							"",
-							"",
-							"if (id1exist)  {",
-							"   pm.environment.set(\"VendorGLAccountId\",idvalue1); ",
-							"    //pm.environment.set(\"VendorGLAccountId\",idvalue);",
-							"      pm.environment.set(\"InternalNumber\",idvalue2);",
-							"      pm.environment.set(\"ControlAccountId\",idvalue3);",
-							"      pm.environment.set(\"DisplayNumber\",idvalue4);",
-							"      pm.environment.set(\"ChartOfAccountsId\",idvalue5);",
-							"   tests[\"BodyContanisGlAccountId : \" + id1exist] =(id1exist);",
-							"      postman.setNextRequest(\"GetCustomerAddress\");",
-							"",
-							" ",
-							"}});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"rawModeData": "{  \r\n   \"$id\":\"1\",\r\n   \"Tenant\":{{Tenant}},\r\n   \"AccountTypeCode\":\"3\",\r\n   \"DisplayNumber\":\"458GLPML\",\r\n   \"LocalName\":\"458GLPML\",\r\n   \"EnglishName\":\"458GLPML\",\r\n   \"SearchFields\":\"458GLPML,458GLPML,458GLPML\",\r\n   \"IsMultiCurrency\":true,\r\n   \"RevenueExpenseType\":\"3\",\r\n   \"ChartOfAccountsId\":\"{{VendorChartOfAccountId}}\",\r\n   \"ChartOfAccountsTypeCode\":\"4\",\r\n   \"ReconcileMethodCode\":\"0\",\r\n   \"NewGLAccountCardId\":\"{{VendorId}}\"\r\n}",
-			"headers": "Content-Type: application/json\ntoken: {{Token}}\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "15c24714-fb4b-4c13-9cd8-0b1acb7ee453",
-			"name": "GetVendorTestGlVend",
-			"url": "{{URL}}/api/vendorviews/getbyfilters?GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&GetCount=true&PageIndex=0&PageSize=22\n&&&Filter1Value=1s5PMV2",
-			"description": null,
-			"data": null,
-			"dataOptions": null,
-			"dataMode": null,
-			"headerData": [
-				{
-					"key": "token",
-					"type": "text",
-					"value": "{{Token}}"
-				}
-			],
-			"method": "GET",
-			"pathVariableData": [],
-			"queryParams": [
-				{
-					"key": "GetAll",
-					"value": "false"
-				},
-				{
-					"key": "Filter1Name",
-					"value": "SearchFields"
-				},
-				{
-					"key": "Filter1Operator",
-					"value": "Contains"
-				},
-				{
-					"key": "GetCount",
-					"value": "true"
-				},
-				{
-					"key": "PageIndex",
-					"value": "0"
-				},
-				{
-					"key": "PageSize",
-					"value": "22\n"
-				},
-				{
-					"key": null,
-					"value": ""
-				},
-				{
-					"key": null,
-					"value": ""
-				},
-				{
-					"key": "Filter1Value",
-					"value": "1s5PMV2"
-				}
-			],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "2b0dcc29-f545-4ec5-bc60-973d42f8158c",
-						"exec": [
-							"pm.test(\"GetVendorTestGlVend\", function () {",
-							"   pm.response.to.have.status(200);",
-							"   if(pm.response.json().Result.length < 1 ){",
-							"    ",
-							"     tests[\"VendorrExsits : \" + false] = (true);",
-							"        postman.setNextRequest(\"CreateVendorTestGlVend\");   ",
-							"   }",
-							"   else {",
-							"    ",
-							"var idvalue=pm.response.json().Result.filter(a => a.EnglishName == '1s5PMV2')[0].Id;",
-							"     pm.environment.set(\"VendorId\",idvalue);",
-							"",
-							"     tests[\"VendorExsits : \" + true ] = (true);",
-							"     postman.setNextRequest(\"GetCustomerGlAccountCustGL\");",
-							"    }",
-							"   ",
-							"    ",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"headers": "token: {{Token}}\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "1f6b38cf-008a-425b-af24-8b4dee2047d3",
-			"name": "GetChronolgicalsettings",
-			"url": "",
-			"description": null,
-			"data": null,
-			"dataOptions": null,
-			"dataMode": null,
-			"headerData": [],
-			"method": "GET",
-			"pathVariableData": [],
-			"queryParams": [],
-			"auth": null,
-			"events": null,
-			"folder": null,
-			"headers": "",
-			"pathVariables": {}
-		},
-		{
-			"id": "206784a2-cfae-46e8-b24b-f69a58f649d0",
-			"name": "GetCountryAX",
-			"url": "{{URL}}/api/countryviews/getbyfilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=AX&PageSize=22\n\n",
-			"description": null,
-			"data": null,
-			"dataOptions": null,
-			"dataMode": null,
-			"headerData": [
-				{
-					"key": "token",
-					"type": "text",
-					"value": "{{Token}}"
-				}
-			],
-			"method": "GET",
-			"pathVariableData": [],
-			"queryParams": [
-				{
-					"key": "Filter1Name",
-					"value": "Code"
-				},
-				{
-					"key": "Filter1Operator",
-					"value": "equals"
-				},
-				{
-					"key": "Filter1Value",
-					"value": "AX"
-				},
-				{
-					"key": "PageSize",
-					"value": "22\n\n"
-				}
-			],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "ce94d39d-8f19-4dc1-af49-e91e7c29c7b9",
-						"exec": [
-							"pm.test(\"GetCountryAX\", function () {",
-							"   pm.response.to.have.status(200);",
-							"   if(pm.response.json().Result.length < 1 ){",
-							"       var idvaluet = \"test\";",
-							"        var idexist2 = idvaluet !== null;",
-							"     tests[\"CountryExsits : \" + false] = (true);",
-							"     ",
-							"   }",
-							"   else {",
-							"    ",
-							"var idvalue=pm.response.json().Result[0].Id;",
-							"     pm.environment.set(\"CountryId\",idvalue);",
-							"",
-							"     tests[\"CountryExsits : \" + true ] = (true);",
-							"    postman.setNextRequest(\"GetVatTypeExempt\");  ",
-							"    }",
-							"   ",
-							"    ",
-							"});",
-							"     ",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"headers": "token: {{Token}}\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "21936fa4-324e-4bc1-b4b1-cf9c81de0083",
-			"name": "CreateChartOfAccountCust1",
-			"url": "{{URL}}/api/chartofaccounts",
-			"description": null,
-			"data": [],
-			"dataOptions": {
-				"raw": {}
-			},
-			"dataMode": "raw",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"name": "Content-Type",
-					"type": "text",
-					"value": "application/json"
-				},
-				{
-					"key": "token",
-					"type": "text",
-					"value": "{{Token}}"
-				}
-			],
-			"method": "POST",
-			"pathVariableData": [],
-			"queryParams": [],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "c8f3e199-05f7-4c5b-b933-bcf86c50cb33",
-						"exec": [
-							"pm.test(\"CreateChartOfAccountCust1\", function () {\r",
-							" pm.response.to.have.status(200);\r",
-							"    var idvalue =(pm.response.json().Id);\r",
-							"     var idvalue2 =(pm.response.json().Code);\r",
-							"    var idvalue3 =(pm.response.json().LocalName);\r",
-							"    var idvalue4 =(pm.response.json().EnglishName);\r",
-							"    var idvalue5 =(pm.response.json().ParentId);\r",
-							"    var idvalue6 =(pm.response.json().TypeCode);\r",
-							"    var idvalue7 =(pm.response.json().Inactive);\r",
-							"    var idvalue8 =(pm.response.json().TypeName);\r",
-							"    var idvalue9 =(pm.response.json().ParentName);\r",
-							"    var idvalue10 =(pm.response.json().SearchFields);\r",
-							"    \r",
-							"    \r",
-							"    \r",
-							"    \r",
-							"    var idexist = idvalue !== null;\r",
-							"    pm.expect(idexist);\r",
-							"    if(idexist){\r",
-							"     pm.environment.set(\"ChartOfAccountId\",idvalue);\r",
-							"     pm.environment.set(\"ChartOfAccountCodev\",idvalue2);\r",
-							"     pm.environment.set(\"ChartOfAccountLocalName\",idvalue3);\r",
-							"     pm.environment.set(\"ChartOfAccountEnglishName\",idvalue4);\r",
-							"     pm.environment.set(\"ChartOfAccountParentId\",idvalue5);\r",
-							"     pm.environment.set(\"ChartOfAccountTypeCode\",idvalue6);\r",
-							"     pm.environment.set(\"ChartOfAccountInactive\",idvalue7);\r",
-							"     pm.environment.set(\"ChartOfAccountTypeName\",idvalue8);\r",
-							"     pm.environment.set(\"ChartOfAccountParentName\",idvalue9);\r",
-							"     pm.environment.set(\"ChartOfAccountSearchFields\",idvalue10);\r",
-							"     \r",
-							"     \r",
-							"     tests[\"BodyContanisChartOfAccountId : \" + true] =(true);\r",
-							"        postman.setNextRequest(\"CreateCustomerGlAccountCustGl\");   \r",
-							"    }\r",
-							"    \r",
-							"   \r",
-							"    \r",
-							"});\r",
-							"     \r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"rawModeData": "   {\r\n   \t\"$id\": \"1\",\r\n    \"Tenant\": {{Tenant}},\r\n    \"Code\": \"15CFC\",\r\n    \"LocalName\": \"לקוחות\",\r\n    \"Englishname\": \"PMCustomerChart\",\r\n    \"TypeCode\": \"3\",\r\n    \"Inactive\": true,\r\n    \"SearchFields\": \"15CFC,15CFC,15CFC\",\r\n    \"ChangeSetOp\": 1\r\n \r\n}\r\n",
-			"headers": "Content-Type: application/json\ntoken: {{Token}}\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "24508010-e95e-45e9-920c-f33d8892e926",
-			"name": "CreateBankGlAccount",
-			"url": "{{URL}}/api/glaccounts",
-			"description": null,
-			"data": [],
-			"dataOptions": {
-				"raw": {}
-			},
-			"dataMode": "raw",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"type": "text",
-					"value": "application/json"
-				},
-				{
-					"key": "token",
-					"type": "text",
-					"value": "{{Token}}"
-				}
-			],
-			"method": "POST",
-			"pathVariableData": [],
-			"queryParams": [],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "8b2ea3df-2204-4d9f-af78-7f7f4ecb4a23",
-						"exec": [
-							"pm.test(\"CreateCustomerGlAccountCustGl \", function () {",
-							"    pm.response.to.have.status(200);",
-							"    var idvalue1 = (pm.response.json().Id);",
-							"    var id1exist = idvalue1 !== null;",
-							"    pm.expect(id1exist);",
-							"if (id1exist)  {",
-							"   pm.environment.set(\"BankGLAccountId\",idvalue1); ",
-							"   tests[\"BodyContanisGlAccountId : \" + id1exist] =(id1exist);",
-							"   postman.setNextRequest(\"GetBankCode\");",
-							" ",
-							"}});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"rawModeData": "{  \r\n   \"$id\":\"1\",\r\n   \"Tenant\":{{Tenant}},\r\n   \"AccountTypeCode\":\"1\",\r\n   \"DisplayNumber\":\"1414BKPM\",\r\n   \"LocalName\":\"1414BKPM\",\r\n   \"EnglishName\":\"1414BKPM\",\r\n   \"SearchFields\":\"1414BKPM,1414BKPM,1414BKPM\",\r\n   \"RevenueExpenseType\":\"3\",\r\n   \"CurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"ChartOfAccountsId\":\"{{BankChartOfAccountId}}\",\r\n   \"ChartOfAccountsTypeCode\":\"5\",\r\n   \"ReconcileMethodCode\":\"0\",\r\n}",
-			"headers": "Content-Type: application/json\ntoken: {{Token}}\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "30429da4-0a14-43ab-bd4a-c6c572d2df0f",
-			"name": "CreateVendorTestGlVend",
-			"url": "{{URL}}/api/PartnersDomain",
-			"description": null,
-			"data": [],
-			"dataOptions": {
-				"raw": {}
-			},
-			"dataMode": "raw",
-			"headerData": [
-				{
-					"key": "tenant",
-					"type": "text",
-					"value": "{{CurrentTenant}}"
-				},
-				{
-					"key": "token",
-					"type": "text",
-					"value": "{{Token}}"
-				},
-				{
-					"key": "Content-Type",
-					"name": "Content-Type",
-					"type": "text",
-					"value": "application/json"
-				}
-			],
-			"method": "POST",
-			"pathVariableData": [],
-			"queryParams": [],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "81aed51c-bba0-4a45-87ae-71ae9c0b970c",
-						"exec": [
-							"pm.test(\"CreateVendorTest\", function () {\r",
-							" pm.response.to.have.status(200);\r",
-							"    var idvalue =(pm.response.json().Vendor.Id);\r",
-							"    var idvalue2= (pm.response.json().AddressId);\r",
-							"    var idexist = idvalue !== null;  \r",
-							"    pm.expect(idexist);\r",
-							"    if(idexist){\r",
-							"     pm.environment.set(\"VendorId\",idvalue);\r",
-							"      \r",
-							"     pm.environment.set(\"VendorAddressId\",idvalue2);\r",
-							"     \r",
-							"     tests[\"BodyContanisVendorId : \" + idexist] =(idexist);\r",
-							"      postman.setNextRequest(\"GetCustomerGlAccountCustGL\");\r",
-							"    }\r",
-							"    \r",
-							"    \r",
-							"   \r",
-							"    \r",
-							"});  \r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"rawModeData": "\r\n{\r\n  \"Tenant\":\"{{Tenant}}\",\r\n \r\n  \"PartnerTypeId\": \"VD\",\r\n\r\n  \"Address\": {\r\n  \r\n    \"Tenant\": \"{{Tenant}}\",\r\n    \"Description\": \"Main Address\",\r\n    \"City\": \"TEST\",\r\n    \r\n    \"AddressTypeId\": \"M\",\r\n    \r\n    \"Name\": \"PMVD\",\r\n    \"CountryId\": \"{{CountryId}}\",\r\n    \r\n    \r\n    \r\n    \"SearchFields\": \"1s5PMV2,1s5PMV2,1s5PMV2\"\r\n \r\n  \r\n  },\r\n \r\n  \"Vendor\": {\r\n   \r\n    \"Tenant\": \"{{Tenant}}\",\r\n    \"IsSecured\": false,\r\n  \r\n    \"EnglishName\": \"1s5PMV2\",\r\n    \"LocalName\": \"1s5PMV2\",\r\n     \"PartnerTypeId\": \"VD\",\r\n    \"CityName\": \"TEST\",\r\n    \"CountryId\": \"{{CountryId}}\",\r\n    \"CountryCode\": \"1 \",\r\n    \"CountryName\": \"palestine\"\r\n  }\r\n}\r\n",
-			"headers": "tenant: {{CurrentTenant}}\ntoken: {{Token}}\nContent-Type: application/json\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "3064aa91-c9dd-40f2-9859-bd54c915a98b",
-			"name": "GetAccountingCurriency",
-			"url": "{{URL}}/api/tenants/getsingle?id={{Tenant}}",
-			"description": null,
-			"data": null,
-			"dataOptions": null,
-			"dataMode": null,
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"type": "text"
-				},
-				{
-					"key": "token",
-					"value": "{{Token}}",
-					"type": "text"
-				}
-			],
-			"method": "GET",
-			"pathVariableData": [],
-			"queryParams": [
-				{
-					"key": "id",
-					"value": "{{Tenant}}"
-				}
-			],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "95a0e2c9-d5da-4a66-b7cf-6e7699579cc8",
-						"exec": [
-							"",
-							"pm.test(\"GetAccountingCurriency\", function () {",
-							"    pm.response.to.have.status(200);",
-							"    var idvalue1 = (pm.response.json().CurrencyId);",
-							"    ",
-							"    var id1exist = idvalue1 !== null;",
-							"    pm.expect(id1exist);",
-							"    pm.environment.set(\"AccountingCurrencyId\",idvalue1);",
-							" ",
-							"    ",
-							"    tests[\"BodyCointainsAccountingCurrincy : \" + id1exist] = responseBody.has(id1exist);",
-							"",
-							" postman.setNextRequest(\"GetTenantCurriences\");",
-							"}); "
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"headers": "Content-Type: application/json\ntoken: {{Token}}\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "33c1f3ed-d373-4bd0-ac15-749c1c96b550",
-			"name": "CreateBankChartOfAccount",
-			"url": "{{URL}}/api/chartofaccounts",
-			"description": null,
-			"data": [],
-			"dataOptions": {
-				"raw": {}
-			},
-			"dataMode": "raw",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"name": "Content-Type",
-					"value": "application/json",
-					"type": "text"
-				},
-				{
-					"key": "token",
-					"value": "{{Token}}",
-					"type": "text"
-				}
-			],
-			"method": "POST",
-			"pathVariableData": [],
-			"queryParams": [],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "1e6ca6a1-65ae-46cb-9a65-0d2de4d998d6",
-						"exec": [
-							"pm.test(\"CreateChartOfAccountCust1\", function () {\r",
-							" pm.response.to.have.status(200);\r",
-							"    var idvalue =(pm.response.json().Id);\r",
-							"    var idexist = idvalue !== null;\r",
-							"    pm.expect(idexist);\r",
-							"    if(idexist){\r",
-							"     pm.environment.set(\"GetBankGlAccount\",idvalue);\r",
-							"     tests[\"BodyContanisChartOfAccountId : \" + true] =(true);\r",
-							"     postman.setNextRequest(\"CreateBankGlAccount\");\r",
-							"    }\r",
-							"});\r",
-							"     "
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"rawModeData": "   {\r\n   \t\"$id\": \"1\",\r\n    \"Tenant\": {{Tenant}},\r\n    \"Code\": \"BK771\",\r\n    \"LocalName\": \"PMBankChart\",\r\n    \"Englishname\": \"PMBankChart\",\r\n    \"TypeCode\": \"5\",\r\n    \"Inactive\": true,\r\n    \"ChangeSetOp\": 1\r\n}\r\n",
-			"headers": "Content-Type: application/json\ntoken: {{Token}}\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "37891e81-65cf-4b9d-98f6-f5772c0f34fe",
-			"name": "CreateCustomerGlAccountCustGl",
-			"url": "{{URL}}/api/glaccounts",
-			"description": null,
-			"data": [],
-			"dataOptions": {
-				"raw": {}
-			},
-			"dataMode": "raw",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"type": "text",
-					"value": "application/json"
-				},
-				{
-					"key": "token",
-					"type": "text",
-					"value": "{{Token}}"
-				}
-			],
-			"method": "POST",
-			"pathVariableData": [],
-			"queryParams": [],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "44f6de2c-8ec2-408d-b0bd-7b7f0fcc39aa",
-						"exec": [
-							"pm.test(\"CreateCustomerGlAccountCustGl \", function () {",
-							"    pm.response.to.have.status(200);",
-							"    var idvalue1 = (pm.response.json().Id);",
-							" ",
-							"    var id1exist = idvalue1 !== null;",
-							"   ",
-							"",
-							"    pm.expect(id1exist);",
-							"   ",
-							"   // pm.environment.set(\"GLAccountId1\",idvalue1);",
-							" //  tests[\"BodyContanisGLAccountId : \" + id1exist] = responseBody.has(id1exist);",
-							" ",
-							"    ",
-							"",
-							"if (id1exist)  {",
-							"   pm.environment.set(\"CustomerGLAccountId\",idvalue1); ",
-							"   ",
-							"   ",
-							"   tests[\"BodyContanisGlAccountId : \" + id1exist] =(id1exist);",
-							"   postman.setNextRequest(\"GetVendorGlAccountVendGL\");",
-							" ",
-							"}});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"rawModeData": "{  \r\n   \"$id\":\"1\",\r\n   \"Tenant\":{{Tenant}},\r\n   \"AccountTypeCode\":\"2\",\r\n   \"DisplayNumber\":\"54l4CSPM\",\r\n   \"LocalName\":\"54l4CSPM\",\r\n   \"EnglishName\":\"54l4CSPM\",\r\n   \"SearchFields\":\"54l4CSPM,54l4CSPM,54l4CSPM\",\r\n   \"IsMultiCurrency\":true,\r\n   \"RevenueExpenseType\":\"3\",\r\n   \"ChartOfAccountsId\":\"{{ChartOfAccountId}}\",\r\n   \"ChartOfAccountsTypeCode\":\"3\",\r\n   \"ReconcileMethodCode\":\"0\",\r\n   \"NewGLAccountCardId\":\"{{CustomerId}}\"\r\n}",
-			"headers": "Content-Type: application/json\ntoken: {{Token}}\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "45196082-25a8-4a75-a698-fc100959f8b4",
-			"name": "CreatVatExempt",
-			"url": "{{URL}}/api/vattypes",
-			"description": null,
-			"data": [],
-			"dataOptions": {
-				"raw": {}
-			},
-			"dataMode": "raw",
-			"headerData": [
-				{
-					"key": "token",
-					"value": "{{Token}}",
-					"type": "text"
-				},
-				{
-					"key": "Content-Type",
-					"name": "Content-Type",
-					"value": "application/json",
-					"type": "text"
-				}
-			],
-			"method": "POST",
-			"pathVariableData": [],
-			"queryParams": [],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "2240ff2e-dd6e-4284-a055-6a927b1c47ff",
-						"exec": [
-							"pm.test(\"Create Vat Type Exempt\", function () {\r",
-							" pm.response.to.have.status(200);\r",
-							"    var idvalue =(pm.response.json().Id);\r",
-							"    var idexist = idvalue !== null;\r",
-							"    pm.expect(idexist);\r",
-							"    if(idexist){\r",
-							"     pm.environment.set(\"VatId\",idvalue);\r",
-							"     \r",
-							"     tests[\"BodyContanisVatId : \" + idexist] =(idexist);\r",
-							"      postman.setNextRequest(\"GetPaymentTermCash\");\r",
-							"    }\r",
-							"    \r",
-							"    \r",
-							"   \r",
-							"    \r",
-							"});  \r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"rawModeData": "{\r\n   \r\n   \"Tenant\":{{Tenant}},\r\n   \"IsSecured\":false,\r\n   \"Code\":\"EPT\",\r\n   \"EnglishName\":\"Exempt\",\r\n   \"LocalName\":\"f\",\r\n   \"SearchFields\":\"EPT\",\r\n   \"NewEntityPercentage\":0.0,\r\n   \"NewEntityPercentageDate\":\"2016-02-02T00:00:00Z\",\r\n  \r\n   \"VatTypePercentages\":[\r\n      {\r\n        \r\n         \"Tenant\":{{Tenant}},\r\n         \"VatTypeId\":\"1-3465\",\r\n         \"FromDate\":\"2012-02-02T00:00:00Z\",\r\n         \"Percentage\":0.0,\r\n         \"ChangeSetOp\":0\r\n      }\r\n   ]\r\n  \r\n}",
-			"headers": "token: {{Token}}\nContent-Type: application/json\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "4a4e5166-d3e7-42aa-b618-465afe4d8812",
-			"name": "GetVendorGlAccountVendGL",
-			"url": "{{URL}}/api/glaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=458GLPM&PageSize=23",
-			"description": null,
-			"data": null,
-			"dataOptions": null,
-			"dataMode": null,
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"type": "text",
-					"value": "application/json"
-				},
-				{
-					"key": "token",
-					"type": "text",
-					"value": "{{Token}}"
-				}
-			],
-			"method": "GET",
-			"pathVariableData": [],
-			"queryParams": [
-				{
-					"key": "Filter1Name",
-					"value": "SearchFields"
-				},
-				{
-					"key": "Filter1Operator",
-					"value": "Contains"
-				},
-				{
-					"key": "Filter1Value",
-					"value": "458GLPM"
-				},
-				{
-					"key": "PageSize",
-					"value": "23"
-				}
-			],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "d5446b92-0678-4f50-ac97-d440d4edca3b",
-						"exec": [
-							"pm.test(\"Get Vendor GlAccount VendorGL\", function () {",
-							"   pm.response.to.have.status(200);",
-							"   if(pm.response.json().Result.length < 1 ){",
-							"     tests[\"VendorGLAccountExists : \" + false] = (true);",
-							"        postman.setNextRequest(\"CreateVendorGlAccountVendGL\");   ",
-							"   }",
-							"   else {",
-							"    var idvalue =(pm.response.json().Result.filter(a => a.DisplayNumber== '458GLPM')[0].Id);",
-							"    var idvalue2 =(pm.response.json().Result[0].InternalNumber);",
-							"      var idvalue3 =(pm.response.json().Result[0].ControlAccountId);",
-							"   var idvalue4 =(pm.response.json().Result[0].DisplayNumber);",
-							"    var idvalue5 =(pm.response.json().Result[0].ChartOfAccountsId);",
-							"     // var idvalue6 =(pm.response.json().Result.filter(a => a.DisplayNumber== 'PMGLVend')[0].ControlAccountId);",
-							"    var idexist = idvalue !== null;",
-							"    pm.expect(idexist);",
-							"    ",
-							" if (idexist)  {",
-							"     pm.environment.set(\"VendorGLAccountId\",idvalue);",
-							"      pm.environment.set(\"InternalNumber\",idvalue2);",
-							"      pm.environment.set(\"ControlAccountId\",idvalue3);",
-							"      pm.environment.set(\"DisplayNumber\",idvalue4);",
-							"      pm.environment.set(\"ChartOfAccountsId\",idvalue5);",
-							"     tests[\"GlAccountExists : \" + true] = (true);",
-							"      postman.setNextRequest(\"GetCustomerAddress\"); ",
-							"    }",
-							"   }",
-							"    ",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"headers": "Content-Type: application/json\ntoken: {{Token}}\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "4dac0447-365b-4ebb-b9ab-7c678ddea5ad",
-			"name": "GetBankCode",
-			"url": "{{URL}}/api/bankcodeviews/getbyfilters?ForceCacheRefresh=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=BK14&PageIndex=0&PageSize=12",
-			"description": null,
-			"data": null,
-			"dataOptions": null,
-			"dataMode": null,
-			"headerData": [
-				{
-					"key": "authority",
-					"value": "staging.amital.co.il"
-				},
-				{
-					"key": "pragma",
-					"value": "no-cache"
-				},
-				{
-					"key": "cache-control",
-					"value": "no-cache"
-				},
-				{
-					"key": "accept",
-					"value": "application/json, text/plain, */*"
-				},
-				{
-					"key": "user-agent",
-					"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36"
-				},
-				{
-					"key": "token",
-					"value": "{{Token}}"
-				},
-				{
-					"key": "sec-fetch-site",
-					"value": "same-origin"
-				},
-				{
-					"key": "sec-fetch-mode",
-					"value": "cors"
-				},
-				{
-					"key": "referer",
-					"value": "https://staging.amital.co.il/Angular19171210/index.html"
-				},
-				{
-					"key": "accept-encoding",
-					"value": "gzip, deflate, br"
-				},
-				{
-					"key": "accept-language",
-					"value": "en-US,en;q=0.9"
-				},
-				{
-					"key": "cookie",
-					"value": "__utmz=22491179.1569324975.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); __utma=22491179.2130097536.1569324975.1571736495.1574855059.9; email_cookie=khawla@logitudeworld.com"
-				}
-			],
-			"method": "GET",
-			"pathVariableData": [],
-			"queryParams": [
-				{
-					"key": "ForceCacheRefresh",
-					"value": "false"
-				},
-				{
-					"key": "GetAll",
-					"value": "false",
-					"enabled": false
-				},
-				{
-					"key": "Filter1Name",
-					"value": "SearchFields"
-				},
-				{
-					"key": "Filter1Operator",
-					"value": "Contains"
-				},
-				{
-					"key": "Filter1Value",
-					"value": "BK14"
-				},
-				{
-					"key": "GetCount",
-					"value": "true",
-					"enabled": false
-				},
-				{
-					"key": "PageIndex",
-					"value": "0"
-				},
-				{
-					"key": "PageSize",
-					"value": "12"
-				},
-				{
-					"key": "SortBy",
-					"value": "Code",
-					"enabled": false
-				},
-				{
-					"key": "SortDirection",
-					"value": "Ascending",
-					"enabled": false
-				},
-				{
-					"key": "AdditionalFilters",
-					"value": "\\[\\{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22BK14%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false\\}\\]",
-					"enabled": false
-				}
-			],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "24b5d345-afd2-4114-9691-409fca49b505",
-						"exec": [
-							"",
-							"pm.test(\"GetBankCode\", function () {",
-							"   pm.response.to.have.status(200);",
-							"   if(pm.response.json().Result.length < 1 ){",
-							"     tests[\"CoderExsits : \" + false] = (true);",
-							"        postman.setNextRequest(\"CreateBankCode\");   ",
-							"   }",
-							"   else {",
-							"    ",
-							"var idvalue=pm.response.json().Result[0].Id;",
-							"     pm.environment.set(\"CodeId\",idvalue);",
-							"     tests[\"CoderExsits : \" + true ] = (true);",
-							"     postman.setNextRequest(\"CreateBranchCashBook\");",
-							"    }",
-							"   ",
-							"    ",
-							"});",
-							" ",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"headers": "authority: staging.amital.co.il\npragma: no-cache\ncache-control: no-cache\naccept: application/json, text/plain, */*\nuser-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36\ntoken: {{Token}}\nsec-fetch-site: same-origin\nsec-fetch-mode: cors\nreferer: https://staging.amital.co.il/Angular19171210/index.html\naccept-encoding: gzip, deflate, br\naccept-language: en-US,en;q=0.9\ncookie: __utmz=22491179.1569324975.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); __utma=22491179.2130097536.1569324975.1571736495.1574855059.9; email_cookie=khawla@logitudeworld.com\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "51bde722-8ce0-40d7-9e14-48205fc6f854",
-			"name": "GetBankChartOfAccount",
-			"url": "{{URL}}/api/chartofaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=BK771&PageSize=23 ",
-			"description": null,
-			"data": null,
-			"dataOptions": null,
-			"dataMode": null,
-			"headerData": [
-				{
-					"key": "token",
-					"value": "{{Token}}",
-					"type": "text"
-				}
-			],
-			"method": "GET",
-			"pathVariableData": [],
-			"queryParams": [
-				{
-					"key": "Filter1Name",
-					"value": "SearchFields"
-				},
-				{
-					"key": "Filter1Operator",
-					"value": "Contains"
-				},
-				{
-					"key": "Filter1Value",
-					"value": "BK771"
-				},
-				{
-					"key": "PageSize",
-					"value": "23 "
-				}
-			],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "f1706c7d-3647-4899-a344-9cf85925fdb1",
-						"exec": [
-							"pm.test(\"GetChartOfAccountBank BK771 Successfully Done\", function () {\r",
-							"   pm.response.to.have.status(200);\r",
-							"   if(pm.response.json().Result.length < 1 ){\r",
-							"       var idvaluet = \"test\";\r",
-							"        var idexist2 = idvaluet !== null;\r",
-							"        tests[\"ChartOfAccountExists : \" + false] = (true);\r",
-							"        postman.setNextRequest(\"CreateBankChartOfAccount\");   \r",
-							"   }\r",
-							"   else {\r",
-							"    var idvalue =(pm.response.json().Result.filter(a => a.Code == 'BK771')[0].Id);\r",
-							"    var idexist = idvalue !== null;\r",
-							"    pm.expect(idexist);\r",
-							"    \r",
-							" if (idexist)  {\r",
-							"     pm.environment.set(\"BankChartOfAccountId\",idvalue);\r",
-							"     tests[\"ChartOfAccountExists : \" + true ] = (true);\r",
-							"     postman.setNextRequest(\"CreateBankGlAccount\");\r",
-							"    }\r",
-							"   }\r",
-							"    \r",
-							"});\r",
-							"     \r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"headers": "token: {{Token}}\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "57a0fcfe-a8bf-4b57-90dc-bcfc909ef6ee",
-			"name": "GetVendorAddress",
-			"url": "{{URL}}/api/cardviews/getsingle/?id={{VendorId}}\n",
-			"description": null,
-			"data": null,
-			"dataOptions": null,
-			"dataMode": null,
-			"headerData": [
-				{
-					"key": "token",
-					"type": "text",
-					"value": "{{Token}}"
-				},
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"type": "text"
-				}
-			],
-			"method": "GET",
-			"pathVariableData": [],
-			"queryParams": [
-				{
-					"key": "id",
-					"value": "{{VendorId}}\n"
-				}
-			],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "1665c585-58ed-4b74-9cd7-2db82a8ba0e9",
-						"exec": [
-							"",
-							"",
-							"pm.test(\"Get Customer Address \", function () {",
-							" pm.response.to.have.status(200);",
-							"    var idvalue =(pm.response.json().MainAddressId );",
-							"    var idexist = idvalue !== null;",
-							"    pm.expect(idexist);",
-							"    if(idexist){",
-							"     pm.environment.set(\"VendorAddressId\",idvalue);",
-							"     tests[\"BodyContanisAddressId : \" + idexist] =(idexist);",
-							"     postman.setNextRequest(\"GetBankChartOfAccount\");",
-							"",
-							"    }",
-							"});  ",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"headers": "token: {{Token}}\nContent-Type: application/json\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "5b0c2a5f-c4eb-4d91-8708-c4cf97d68b9f",
-			"name": "GetCustomerTestGlCust",
-			"url": "{{URL}}/api/customerviews/getbyfilters?GetAll=true&Filter1Name=SearchFields&Filter1Operator=Contains&GetCount=true&PageIndex=0&PageSize=22\n&&Filter1Value=12PMCS",
-			"description": null,
-			"data": null,
-			"dataOptions": null,
-			"dataMode": null,
-			"headerData": [
-				{
-					"key": "token",
-					"value": "{{Token}}",
-					"type": "text"
-				}
-			],
-			"method": "GET",
-			"pathVariableData": [],
-			"queryParams": [
-				{
-					"key": "GetAll",
-					"value": "true"
-				},
-				{
-					"key": "Filter1Name",
-					"value": "SearchFields"
-				},
-				{
-					"key": "Filter1Operator",
-					"value": "Contains"
-				},
-				{
-					"key": "GetCount",
-					"value": "true"
-				},
-				{
-					"key": "PageIndex",
-					"value": "0"
-				},
-				{
-					"key": "PageSize",
-					"value": "22\n"
-				},
-				{
-					"key": null,
-					"value": ""
-				},
-				{
-					"key": "Filter1Value",
-					"value": "12PMCS"
-				}
-			],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "a00293e7-d3a8-4e26-89c8-a96da1ebcb62",
-						"exec": [
-							"pm.test(\"GetCustomerTestGlCust\", function () {",
-							"   pm.response.to.have.status(200);",
-							"   if(pm.response.json().Result.length < 1 ){",
-							"       var idvaluet = \"test\";",
-							"        var idexist2 = idvaluet !== null;",
-							"     tests[\"CustomerExsits : \" + false] = (true);",
-							"        postman.setNextRequest(\"CreateCustomerTestGlCust\");   ",
-							"   }",
-							"   else {",
-							"    ",
-							"var idvalue=pm.response.json().Result.filter(a => a.EnglishName == '12PMCS')[0].Id;",
-							"     pm.environment.set(\"CustomerId\",idvalue);",
-							"",
-							"     tests[\"CustomerExsits : \" + true ] = (true);",
-							"     postman.setNextRequest(\"GetVendorTestGlVend\");",
-							"    }",
-							"   ",
-							"    ",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"headers": "token: {{Token}}\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "5f2863b7-c784-4856-943a-d45576094aa2",
-			"name": "GetCustomerGlAccountCustGL",
-			"url": "{{URL}}/api/glaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=54l4CSPM&PageSize=23",
-			"description": null,
-			"data": null,
-			"dataOptions": null,
-			"dataMode": null,
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"type": "text",
-					"value": "application/json"
-				},
-				{
-					"key": "token",
-					"type": "text",
-					"value": "{{Token}}"
-				}
-			],
-			"method": "GET",
-			"pathVariableData": [],
-			"queryParams": [
-				{
-					"key": "Filter1Name",
-					"value": "SearchFields"
-				},
-				{
-					"key": "Filter1Operator",
-					"value": "Contains"
-				},
-				{
-					"key": "Filter1Value",
-					"value": "54l4CSPM"
-				},
-				{
-					"key": "PageSize",
-					"value": "23"
-				}
-			],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "0bceb14e-6edf-409a-82e8-500f1e232bad",
-						"exec": [
-							"pm.test(\"GetCustomerGlAccountIdCustGL\", function () {",
-							"   pm.response.to.have.status(200);",
-							"   if(pm.response.json().Result.length < 1 ){",
-							"     tests[\"CustomerGLAccountExists : \" + false] = (true);",
-							"        postman.setNextRequest(\"GetChartOfAccountCust1\");   ",
-							"   }",
-							"   else {",
-							"    var idvalue =(pm.response.json().Result.filter(a => a.DisplayNumber=='54l4CSPM')[0].Id);",
-							"    var idexist = idvalue !== null;",
-							"    pm.expect(idexist);",
-							"    ",
-							" if (idexist)  {",
-							"     pm.environment.set(\"CustomerGLAccountId\",idvalue);",
-							"     tests[\"GlAccountExists : \" + true] = (true);",
-							"      postman.setNextRequest(\"GetVendorGlAccountVendGL\"); ",
-							"    }",
-							"   }",
-							"    ",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"headers": "Content-Type: application/json\ntoken: {{Token}}\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "69dab9b9-6aa8-4ff6-8991-1ae5e9886d05",
-			"name": "OpenIvoiceMonth",
-			"url": "{{URL}}/api/accountingperiods",
-			"description": null,
-			"data": [],
-			"dataOptions": {
-				"raw": {
-					"language": "json"
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"Email\":\"{{Email}}\",\"Password\":\"{{Password}}\",\"IsUser\":true,\"GetToken\":true,\"ClientType\":\"Web\",\"Tenant\":\"{{Tenant}}\"}\n"
+				},
+				"url": {
+					"raw": "{{URL}}/api/authentication?tenant={{Tenant}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"authentication"
+					],
+					"query": [
+						{
+							"key": "tenant",
+							"value": "{{Tenant}}"
+						}
+					]
 				}
 			},
-			"dataMode": "raw",
-			"headerData": [
-				{
-					"key": "token",
-					"value": "{{Token}}",
-					"description": null,
-					"type": "text",
-					"enabled": true
-				}
-			],
-			"method": "PUT",
-			"pathVariableData": [],
-			"queryParams": [],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "b5128155-acfa-485d-82b8-6f7d87eb779e",
-						"exec": [
-							"pm.test(\"Current month opened \", function () {\r",
-							"    \r",
-							"    pm.response.to.have.status(200);\r",
-							"   \r",
-							"      var idvalue1 = (pm.response.json().Id);\r",
-							"   postman.setNextRequest(\"GetAccountingCurriency\");  \r",
-							"  \r",
-							" \r",
-							"});\r",
-							"\r",
-							"\r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"rawModeData": "{ \r\n\"ChangeSetOp\": 2,\r\n\"ClosedMonth\":{{AcocuntingPeriodsInvoiceClosedMonth}} ,\r\n\"EncodeBase64NVARCHARFieldsBy\": null,\r\n\"Id\": \"{{AcocuntingPeriodsInvoiceId}}\",\r\n\"OpenMonth\":{{CurrentMonth}},\r\n\"PeriodTypeCode\": \"2\",\r\n\"PeriodTypeName\": \"Invoice\",\r\n\"Tenant\": {{AcocuntingPeriodsTenant}},\r\n\"Year\": {{AcocuntingPeriodsInvoiceYear}}\r\n}\r\n",
-			"headers": "token: {{Token}}\n",
-			"pathVariables": {}
+			"response": []
 		},
 		{
-			"id": "6f5ed027-9300-4fa7-a38f-63d51a550588",
-			"name": "CreatePaymentTermCash",
-			"url": "{{URL}}/api/paymentterms",
-			"description": null,
-			"data": [],
-			"dataOptions": {
-				"raw": {}
-			},
-			"dataMode": "raw",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"type": "text"
-				},
-				{
-					"key": "token",
-					"value": "{{Token}}",
-					"type": "text"
-				}
-			],
-			"method": "POST",
-			"pathVariableData": [],
-			"queryParams": [],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "5f580692-a990-4846-8ee9-cf2c730c1882",
-						"exec": [
-							"pm.test(\"Create Payment Term Cash\", function () {\r",
-							" pm.response.to.have.status(200);\r",
-							"    var idvalue =(pm.response.json().Id);\r",
-							"    var idexist = idvalue !== null;\r",
-							"    pm.expect(idexist);\r",
-							"    if(idexist){\r",
-							"     pm.environment.set(\"PaymentTermId\",idvalue);\r",
-							"     \r",
-							"     tests[\"BodyContanisPaymentTermId : \" + idexist] =(idexist);\r",
-							"         postman.setNextRequest(\"GETPaymnetMethodCash\");  \r",
-							"\r",
-							"    }\r",
-							"    \r",
-							"    \r",
-							"   \r",
-							"    \r",
-							"});  \r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"rawModeData": "{\r\n\r\n   \"Tenant\":{{Tenant}},\r\n   \r\n   \"EnglishName\":\"cash\",\r\n   \"LocalName\":\"cash local\",\r\n   \"Days\":0,\r\n   \"InActive\":false,\r\n   \"DisplayInLOV\":true,\r\n   \"SearchFields\":null,\r\n   \"IsManuallySet\":false,\r\n   \"CurrentMonth\":false,\r\n   \"FromDateTypeCode\":\"INV\"\r\n}",
-			"headers": "Content-Type: application/json\ntoken: {{Token}}\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "7a6f84ae-b8cc-4125-8e6b-30c70094162b",
-			"name": "GetChartOfAccountCust1",
-			"url": "{{URL}}/api/chartofaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=15CFC&PageSize=23 ",
-			"description": null,
-			"data": null,
-			"dataOptions": null,
-			"dataMode": null,
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"type": "text",
-					"value": "application/json"
-				},
-				{
-					"key": "token",
-					"type": "text",
-					"value": "{{Token}}"
-				}
-			],
-			"method": "GET",
-			"pathVariableData": [],
-			"queryParams": [
-				{
-					"key": "Filter1Name",
-					"value": "SearchFields"
-				},
-				{
-					"key": "Filter1Operator",
-					"value": "Contains"
-				},
-				{
-					"key": "Filter1Value",
-					"value": "15CFC"
-				},
-				{
-					"key": "PageSize",
-					"value": "23 "
-				}
-			],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "084d28db-b497-4182-b1cd-4a72c0aa9005",
-						"exec": [
-							"pm.test(\"GetChartOfAccountCust1\", function () {\r",
-							"   pm.response.to.have.status(200);\r",
-							"   if(pm.response.json().Result.length < 1 ){\r",
-							"       var idvaluet = \"test\";\r",
-							"        var idexist2 = idvaluet !== null;\r",
-							"     tests[\"ChartOfAccountExists : \" + false] = (true);\r",
-							"        postman.setNextRequest(\"CreateChartOfAccountCust1\");   \r",
-							"   }\r",
-							"   else {\r",
-							"    var idvalue =(pm.response.json().Result[0].Id);\r",
-							"    var idvalue2 =(pm.response.json().Result.filter(a => a.Code == '15CFC')[0].Code);\r",
-							"    var idvalue3 =(pm.response.json().Result[0].LocalName);\r",
-							"    var idvalue4 =(pm.response.json().Result[0].EnglishName);\r",
-							"    var idvalue5 =(pm.response.json().Result[0].ParentId);\r",
-							"    var idvalue6 =(pm.response.json().Result[0].TypeCode);\r",
-							"    var idvalue7 =(pm.response.json().Result[0].Inactive);\r",
-							"    var idvalue8 =(pm.response.json().Result[0].TypeName);\r",
-							"    var idvalue9 =(pm.response.json().Result[0].ParentName);\r",
-							"    var idvalue10 =(pm.response.json().Result[0].SearchFields);\r",
-							"    var idexist = idvalue !== null;\r",
-							"    pm.expect(idexist);\r",
-							"    \r",
-							" if (idexist)  {\r",
-							"     pm.environment.set(\"ChartOfAccountId\",idvalue);\r",
-							"     pm.environment.set(\"ChartOfAccountCode\",idvalue2);\r",
-							"     pm.environment.set(\"ChartOfAccountLocalName\",idvalue3);\r",
-							"     pm.environment.set(\"ChartOfAccountEnglishName\",idvalue4);\r",
-							"     pm.environment.set(\"ChartOfAccountParentId\",idvalue5);\r",
-							"     pm.environment.set(\"ChartOfAccountTypeCode\",idvalue6);\r",
-							"     pm.environment.set(\"ChartOfAccountInactive\",idvalue7);\r",
-							"     pm.environment.set(\"ChartOfAccountTypeName\",idvalue8);\r",
-							"     pm.environment.set(\"ChartOfAccountParentName\",idvalue9);\r",
-							"     pm.environment.set(\"ChartOfAccountSearchFields\",idvalue10);\r",
-							"\r",
-							"\r",
-							"     \r",
-							"     tests[\"ChartOfAccountExists : \" + true ] = (true);\r",
-							"     postman.setNextRequest(\"CreateCustomerGlAccountCustGl\");\r",
-							"    }\r",
-							"   }\r",
-							"    \r",
-							"});\r",
-							"     \r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"headers": "Content-Type: application/json\ntoken: {{Token}}\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "86cf2ef0-e9ff-4eca-8ef7-e6f025738bc4",
-			"name": "CreatePaymentMethodCash",
-			"url": "{{URL}}/api/paymentterms",
-			"description": null,
-			"data": [],
-			"dataOptions": {
-				"raw": {}
-			},
-			"dataMode": "raw",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"name": "Content-Type",
-					"value": "application/json",
-					"type": "text"
-				},
-				{
-					"key": "token",
-					"value": "{{Token}}",
-					"type": "text"
-				}
-			],
-			"method": "POST",
-			"pathVariableData": [],
-			"queryParams": [],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "db65ec3b-1e22-44df-ba27-6f8e0b2ff7ab",
-						"exec": [
-							"pm.test(\"CreatePayment Method Cash \", function () {\r",
-							" pm.response.to.have.status(200);\r",
-							"    var idvalue =(pm.response.json().Id);\r",
-							"    var idexist = idvalue !== null;\r",
-							"    pm.expect(idexist);\r",
-							"    if(idexist){\r",
-							"     pm.environment.set(\"PaymentMethodId\",idvalue);\r",
-							"     \r",
-							"     tests[\"BodyContanisMethodId : \" + idexist] =(idexist);\r",
-							"      postman.setNextRequest(\"GetCustomerGlAccountCustGL\");\r",
-							"          postman.setNextRequest(\"GetBranchMainOffice\");  \r",
-							"\r",
-							"    }\r",
-							"    \r",
-							"    \r",
-							"   \r",
-							"    \r",
-							"});  \r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"rawModeData": "{\r\n   \"Tenant\":{{Tenant}},\r\n   \"IsSecured\":false,\r\n   \"EnglishName\":\"Cash\",\r\n   \"LocalName\":null,\r\n   \"FromDateTypeCode\":\"INV\"\r\n}",
-			"headers": "Content-Type: application/json\ntoken: {{Token}}\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "8e326685-1db8-42b5-a9a7-7d5a14f7bc15",
-			"name": "CreateChartOfAccountVend",
-			"url": "{{URL}}/api/chartofaccounts",
-			"description": null,
-			"data": [],
-			"dataOptions": {
-				"raw": {}
-			},
-			"dataMode": "raw",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"name": "Content-Type",
-					"type": "text",
-					"value": "application/json"
-				},
-				{
-					"key": "token",
-					"type": "text",
-					"value": "{{Token}}"
-				}
-			],
-			"method": "POST",
-			"pathVariableData": [],
-			"queryParams": [],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "6c350039-afb2-465b-879d-789907d2dc3a",
-						"exec": [
-							"pm.test(\"CreateChartOfAccountVend\", function () {\r",
-							" pm.response.to.have.status(200);\r",
-							"    var idvalue =(pm.response.json().Id);\r",
-							"     var idvalue2 =(pm.response.json().Code);\r",
-							"    var idvalue3 =(pm.response.json().LocalName);\r",
-							"    var idvalue4 =(pm.response.json().EnglishName);\r",
-							"    var idvalue5 =(pm.response.json().ParentId);\r",
-							"    var idvalue6 =(pm.response.json().TypeCode);\r",
-							"    var idvalue7 =(pm.response.json().Inactive);\r",
-							"    var idvalue8 =(pm.response.json().TypeName);\r",
-							"    var idvalue9 =(pm.response.json().ParentName);\r",
-							"    var idvalue10 =(pm.response.json().SearchFields);\r",
-							"    \r",
-							"    \r",
-							"    \r",
-							"    \r",
-							"    var idexist = idvalue !== null;\r",
-							"    pm.expect(idexist);\r",
-							"    if(idexist){\r",
-							"     pm.environment.set(\"VendorChartOfAccountId\",idvalue);\r",
-							"     pm.environment.set(\"ChartOfAccountCode\",idvalue2);\r",
-							"     pm.environment.set(\"ChartOfAccountLocalName\",idvalue3);\r",
-							"     pm.environment.set(\"ChartOfAccountEnglishName\",idvalue4);\r",
-							"     pm.environment.set(\"ChartOfAccountParentId\",idvalue5);\r",
-							"     pm.environment.set(\"ChartOfAccountTypeCode\",idvalue6);\r",
-							"     pm.environment.set(\"ChartOfAccountInactive\",idvalue7);\r",
-							"     pm.environment.set(\"ChartOfAccountTypeName\",idvalue8);\r",
-							"     pm.environment.set(\"ChartOfAccountParentName\",idvalue9);\r",
-							"     pm.environment.set(\"ChartOfAccountSearchFields\",idvalue10);\r",
-							"     \r",
-							"     \r",
-							"     tests[\"BodyContanisChartOfAccountId : \" + true] =(true);\r",
-							"        postman.setNextRequest(\"GetCustomerTestGlCust\");   \r",
-							"    }\r",
-							"    \r",
-							"   \r",
-							"    \r",
-							"});\r",
-							"     \r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"rawModeData": "   {\r\n   \t\"$id\": \"1\",\r\n    \"Tenant\": {{Tenant}},\r\n    \"Code\": \"1PMCF\",\r\n    \"LocalName\": \"ספקים\",\r\n    \"Englishname\": \"PMVendorChart\",\r\n    \"TypeCode\": \"4\",\r\n    \"Inactive\": true,\r\n    \"ChangeSetOp\": 1\r\n \r\n}\r\n",
-			"headers": "Content-Type: application/json\ntoken: {{Token}}\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "945e583d-ff56-4871-8d63-65c91d6c8fe0",
-			"name": "GetChargeTypesAirFreight",
-			"url": "{{URL}}/api/chargestypeviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=air%20freight&GetCount=true&PageIndex=0&PageSize=23&",
-			"description": null,
-			"data": null,
-			"dataOptions": null,
-			"dataMode": null,
-			"headerData": [
-				{
-					"key": "token",
-					"value": "{{Token}}",
-					"type": "text"
-				}
-			],
-			"method": "GET",
-			"pathVariableData": [],
-			"queryParams": [
-				{
-					"key": "Filter1Name",
-					"value": "SearchFields"
-				},
-				{
-					"key": "Filter1Operator",
-					"value": "Contains"
-				},
-				{
-					"key": "Filter1Value",
-					"value": "air%20freight"
-				},
-				{
-					"key": "GetCount",
-					"value": "true"
-				},
-				{
-					"key": "PageIndex",
-					"value": "0"
-				},
-				{
-					"key": "PageSize",
-					"value": "23"
-				},
-				{
-					"key": null,
-					"value": ""
-				}
-			],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "1fe7d208-f9f0-4561-ae3c-852eafb920a4",
-						"exec": [
-							"pm.test(\"Get Charge Type AirFreight\", function () {",
-							"   pm.response.to.have.status(200);",
-							"   if(pm.response.json().Result.length < 1 ){",
-							"       var idvaluet = \"test\";",
-							"        var idexist2 = idvaluet !== null;",
-							"     tests[\"Charge Exsits : \" + false] = (true);",
-							"         postman.setNextRequest(\"CreateChargeType\");  ",
-							"",
-							"   }",
-							"   else {",
-							"    ",
-							"var idvalue=pm.response.json().Result[0].Id;",
-							"     pm.environment.set(\"ChargeId\",idvalue);",
-							"",
-							"     tests[\"ChargeExsits : \" + true ] = (true);",
-							"    postman.setNextRequest(\"GetChartOfAccountVend1\");  ",
-							"    }",
-							"   ",
-							"    ",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"headers": "token: {{Token}}\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "947374d5-cc21-4fe7-8753-dbcc64ae9463",
-			"name": "CreateBranchCashBook",
-			"url": "{{URL}}/api/branches",
-			"description": null,
-			"data": [],
-			"dataOptions": {
-				"raw": {}
-			},
-			"dataMode": "raw",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"name": "Content-Type",
-					"type": "text",
-					"value": "application/json"
-				},
-				{
-					"key": "token",
-					"type": "text",
-					"value": "{{Token}}"
-				}
-			],
-			"method": "POST",
-			"pathVariableData": [],
-			"queryParams": [],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "3d6e1221-5737-489f-ac4e-32669c480b54",
-						"exec": [
-							"pm.test(\"Create Branch Main Office\", function () {\r",
-							" pm.response.to.have.status(200);\r",
-							"    var idvalue =(pm.response.json().Id);\r",
-							"    var idexist = idvalue !== null;\r",
-							"    pm.expect(idexist);\r",
-							"    if(idexist){\r",
-							"     pm.environment.set(\"BranchCashBookId\",idvalue);\r",
-							"     \r",
-							"     tests[\"BodyContanisBrnachId : \" + idexist] =(idexist);\r",
-							"     postman.setNextRequest(null); \r",
-							"    }\r",
-							" \r",
-							"\r",
-							"});  \r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"rawModeData": "{\r\n   \"Tenant\":\"{{Tenant}}\",\r\n   \"EnglishName\":\"Cash Book\",\r\n   \"LocalName\":\"מבחן התרסקות\",\r\n   \"SearchFields\":\"test\"\r\n}",
-			"headers": "Content-Type: application/json\ntoken: {{Token}}\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "95d41d1c-7778-4634-95b3-cdc31fccb7c9",
-			"name": "OpenCurrentMonth",
-			"url": "{{URL}}/api/accountingperiods",
-			"description": null,
-			"data": [],
-			"dataOptions": {
-				"raw": {
-					"language": "json"
-				}
-			},
-			"dataMode": "raw",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"name": "Content-Type",
-					"value": "application/json",
-					"type": "text"
-				},
-				{
-					"key": "token",
-					"value": "{{Token}}",
-					"type": "text"
-				}
-			],
-			"method": "PUT",
-			"pathVariableData": [],
-			"queryParams": [],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "544e36f2-31cf-460b-a47a-68eda2e9a39d",
-						"exec": [
-							"pm.test(\"Current month opened \", function () {",
-							"    ",
-							"    pm.response.to.have.status(200);",
-							"   ",
-							"      var idvalue1 = (pm.response.json().Id);",
-							"    postman.setNextRequest(\"OpenIvoiceMonth\");  ",
-							"  ",
-							" ",
-							"});",
-							"",
-							"",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"rawModeData": "{ \r\n\"ChangeSetOp\": 2,\r\n\"ClosedMonth\":{{AcocuntingPeriodsClosedMonth}} ,\r\n\"EncodeBase64NVARCHARFieldsBy\": null,\r\n\"Id\": \"{{AcocuntingPeriodsId}}\",\r\n\"OpenMonth\":{{CurrentMonth}},\r\n\"PeriodTypeCode\": \"1\",\r\n\"PeriodTypeName\": \"Accounting\",\r\n\"Tenant\": {{AcocuntingPeriodsTenant}},\r\n\"Year\": {{AcocuntingPeriodsYear}}\r\n}\r\n",
-			"headers": "Content-Type: application/json\ntoken: {{Token}}\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "9bbadf74-74c9-43d1-aa34-35732219c21b",
-			"name": "GetChartOfAccountVend1",
-			"url": "{{URL}}/api/chartofaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=1PMCF&PageSize=23 ",
-			"description": null,
-			"data": null,
-			"dataOptions": null,
-			"dataMode": null,
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"type": "text",
-					"value": "application/json"
-				},
-				{
-					"key": "token",
-					"type": "text",
-					"value": "{{Token}}"
-				}
-			],
-			"method": "GET",
-			"pathVariableData": [],
-			"queryParams": [
-				{
-					"key": "Filter1Name",
-					"value": "SearchFields"
-				},
-				{
-					"key": "Filter1Operator",
-					"value": "Contains"
-				},
-				{
-					"key": "Filter1Value",
-					"value": "1PMCF"
-				},
-				{
-					"key": "PageSize",
-					"value": "23 "
-				}
-			],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "81220867-f142-44ec-902a-adf28ae506a5",
-						"exec": [
-							"pm.test(\"GetChartOfAccountVend1\", function () {\r",
-							"   pm.response.to.have.status(200);\r",
-							"   if(pm.response.json().Result.length < 1 ){\r",
-							"       \r",
-							"     tests[\"ChartOfAccountExists : \" + false] = (true);\r",
-							"        postman.setNextRequest(\"CreateChartOfAccountVend\");   \r",
-							"   }\r",
-							"   else {\r",
-							"    var idvalue =(pm.response.json().Result[0].Id);\r",
-							"    var idvalue2 =(pm.response.json().Result.filter(a => a.Code == '1PMCF')[0].Code);\r",
-							"    var idvalue3 =(pm.response.json().Result[0].LocalName);\r",
-							"    var idvalue4 =(pm.response.json().Result[0].EnglishName);\r",
-							"    var idvalue5 =(pm.response.json().Result[0].ParentId);\r",
-							"    var idvalue6 =(pm.response.json().Result[0].TypeCode);\r",
-							"    var idvalue7 =(pm.response.json().Result[0].Inactive);\r",
-							"    var idvalue8 =(pm.response.json().Result[0].TypeName);\r",
-							"    var idvalue9 =(pm.response.json().Result[0].ParentName);\r",
-							"    var idvalue10 =(pm.response.json().Result[0].SearchFields);\r",
-							"    var idexist = idvalue !== null;\r",
-							"    pm.expect(idexist);\r",
-							"    \r",
-							" if (idexist)  {\r",
-							"     pm.environment.set(\"VendorChartOfAccountId\",idvalue);\r",
-							"     pm.environment.set(\"ChartOfAccountCodev\",idvalue2);\r",
-							"     pm.environment.set(\"ChartOfAccountLocalName\",idvalue3);\r",
-							"     pm.environment.set(\"ChartOfAccountEnglishName\",idvalue4);\r",
-							"     pm.environment.set(\"ChartOfAccountParentId\",idvalue5);\r",
-							"     pm.environment.set(\"ChartOfAccountTypeCode\",idvalue6);\r",
-							"     pm.environment.set(\"ChartOfAccountInactive\",idvalue7);\r",
-							"     pm.environment.set(\"ChartOfAccountTypeName\",idvalue8);\r",
-							"     pm.environment.set(\"ChartOfAccountParentName\",idvalue9);\r",
-							"     pm.environment.set(\"ChartOfAccountSearchFields\",idvalue10);\r",
-							"\r",
-							"\r",
-							"     \r",
-							"     tests[\"ChartOfAccountExists : \" + true ] = (true);\r",
-							"     postman.setNextRequest(\"GetCustomerTestGlCust\");\r",
-							"    }\r",
-							"   }\r",
-							"    \r",
-							"});\r",
-							"     \r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"headers": "Content-Type: application/json\ntoken: {{Token}}\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "aac8d7f6-10d6-4026-8aa4-bccb81ad3783",
-			"name": "GetTenantCurriences",
-			"url": "{{URL}}/api/currencyviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&GetCount=true&PageIndex=0&PageSize=23&&",
-			"description": null,
-			"data": null,
-			"dataOptions": null,
-			"dataMode": null,
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"type": "text"
-				},
-				{
-					"key": "token",
-					"value": "{{Token}}",
-					"type": "text"
-				}
-			],
-			"method": "GET",
-			"pathVariableData": [],
-			"queryParams": [
-				{
-					"key": "ForceCacheRefresh",
-					"value": "false"
-				},
-				{
-					"key": "GetAll",
-					"value": "false"
-				},
-				{
-					"key": "GetCount",
-					"value": "true"
-				},
-				{
-					"key": "PageIndex",
-					"value": "0"
-				},
-				{
-					"key": "PageSize",
-					"value": "23"
-				},
-				{
-					"key": null,
-					"value": ""
-				},
-				{
-					"key": null,
-					"value": ""
-				}
-			],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "f253c21c-7443-42f6-85d5-da1ee6c30977",
-						"exec": [
-							"pm.test(\"GetTenantCurriencies\", function () {",
-							"  pm.response.to.have.status(200);",
-							"  ",
-							"  ",
-							"  ",
-							"  ",
-							" postman.setNextRequest(\"GetCountryAX\");",
-							"",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"headers": "Content-Type: application/json\ntoken: {{Token}}\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "b5791ce7-fb8d-41d7-93c9-3b5cdc47d7c0",
-			"name": "CreateCustomerTestGlCust",
-			"url": "{{URL}}/api/PartnersDomain",
-			"description": null,
-			"data": [],
-			"dataOptions": {
-				"raw": {}
-			},
-			"dataMode": "raw",
-			"headerData": [
-				{
-					"key": "tenant",
-					"value": "{{CurrentTenant}}",
-					"type": "text"
-				},
-				{
-					"key": "token",
-					"value": "{{Token}}",
-					"type": "text"
-				},
-				{
-					"key": "Content-Type",
-					"name": "Content-Type",
-					"value": "application/json",
-					"type": "text"
-				}
-			],
-			"method": "POST",
-			"pathVariableData": [],
-			"queryParams": [],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "ca98516b-17ec-4d66-852b-3578e9fca44c",
-						"exec": [
-							"pm.test(\"CreateCustomerTest\", function () {\r",
-							" pm.response.to.have.status(200);\r",
-							"    var idvalue =(pm.response.json().Customer.Id);\r",
-							"    var idexist = idvalue !== null;\r",
-							"    pm.expect(idexist);\r",
-							"    if(idexist){\r",
-							"     pm.environment.set(\"CustomerId\",idvalue);\r",
-							"     \r",
-							"     tests[\"BodyContanisCustomerId : \" + idexist] =(idexist);\r",
-							"      postman.setNextRequest(\"GetVendorTestGlVend\");\r",
-							"    }\r",
-							"    \r",
-							"    \r",
-							"   \r",
-							"    \r",
-							"});  \r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"rawModeData": "\r\n{\r\n  \"Tenant\":\"{{Tenant}}\",\r\n \r\n  \"PartnerTypeId\": \"CS\",\r\n\r\n  \"Address\": {\r\n  \r\n    \"Tenant\": \"{{Tenant}}\",\r\n    \"Description\": \"Main Address\",\r\n    \"City\": \"TEST\",\r\n    \r\n    \"AddressTypeId\": \"M\",\r\n    \r\n    \"Name\": \"12PMCSadress\",\r\n    \"CountryId\": \"{{CountryId}}\"\r\n    \r\n    \r\n\r\n \r\n  \r\n  },\r\n \r\n  \"Customer\": {\r\n    \"$id\": \"3\",\r\n    \"Tenant\": \"{{Tenant}}\",\r\n    \"IsSecured\": false,\r\n  \r\n    \"EnglishName\": \"12PMCS\",\r\n    \"LocalName\": \"12PMCS\",\r\n    \r\n    \r\n\r\n   \r\n   \r\n   \r\n    \"PartnerTypeId\": \"CS\",\r\n   \r\n    \"CityName\": \"TEST\",\r\n    \"CountryId\": \"{{CountryId}}\",\r\n    \"CountryCode\": \"1 \",\r\n    \"CountryName\": \"palestine\",\r\n    \r\n\r\n    \r\n    \"IsCustomer\": true,\r\n    \"CustomerStatusCode\": \"ACT\",\r\n\r\n  \r\n    \"SetAsPotential\": false,\r\n    \r\n   \r\n    \"CustomerTenant\": 0\r\n  }\r\n\r\n}\r\n",
-			"headers": "tenant: {{CurrentTenant}}\ntoken: {{Token}}\nContent-Type: application/json\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "ba829c89-75f7-47fe-96fe-318daf605c47",
-			"name": "GetBranchMainOffice",
-			"url": "{{URL}}/api/branchviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=main&GetCount=true&PageIndex=0&PageSize=23&SortBy=&SortDirection=&AdditionalFilters=[{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22main%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false}]\n&&",
-			"description": null,
-			"data": [],
-			"dataOptions": {
-				"raw": {}
-			},
-			"dataMode": "raw",
-			"headerData": [
-				{
-					"key": "token",
-					"value": "{{Token}}",
-					"type": "text"
-				},
-				{
-					"key": "Content-Type",
-					"name": "Content-Type",
-					"value": "application/json",
-					"type": "text"
-				}
-			],
-			"method": "GET",
-			"pathVariableData": [],
-			"queryParams": [
-				{
-					"key": "ForceCacheRefresh",
-					"value": "false"
-				},
-				{
-					"key": "GetAll",
-					"value": "false"
-				},
-				{
-					"key": "Filter1Name",
-					"value": "SearchFields"
-				},
-				{
-					"key": "Filter1Operator",
-					"value": "Contains"
-				},
-				{
-					"key": "Filter1Value",
-					"value": "main"
-				},
-				{
-					"key": "GetCount",
-					"value": "true"
-				},
-				{
-					"key": "PageIndex",
-					"value": "0"
-				},
-				{
-					"key": "PageSize",
-					"value": "23"
-				},
-				{
-					"key": "SortBy",
-					"value": ""
-				},
-				{
-					"key": "SortDirection",
-					"value": ""
-				},
-				{
-					"key": "AdditionalFilters",
-					"value": "[{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22main%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false}]\n"
-				},
-				{
-					"key": null,
-					"value": ""
-				},
-				{
-					"key": null,
-					"value": ""
-				}
-			],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "d2025aa9-a999-49a1-8558-d08716b00079",
-						"exec": [
-							"pm.test(\"GetBranchMainOffice\", function () {",
-							"   pm.response.to.have.status(200);",
-							"   if(pm.response.json().Result.length < 1 ){",
-							"       ",
-							"     tests[\"BranchExsits : \" + false] = (true);",
-							"  postman.setNextRequest(\"CreateBranchMainOffice\"); ",
-							"     ",
-							"   }",
-							"   else {",
-							"    ",
-							"var idvalue=pm.response.json().Result[0].Id;",
-							"     pm.environment.set(\"BranchId\",idvalue);",
-							"",
-							"     tests[\"BranchExsits : \" + true ] = (true);",
-							"    postman.setNextRequest(\"GetChargeTypesAirFreight\");  ",
-							"    }",
-							"   ",
-							"    ",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"rawModeData": "",
-			"headers": "token: {{Token}}\nContent-Type: application/json\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "bbff976a-09dc-461d-86ec-d31566e03fa9",
-			"name": "GetCustomerAddress",
-			"url": "{{URL}}/api/cardviews/getsingle/?id={{CustomerId}}\n",
-			"description": null,
-			"data": null,
-			"dataOptions": null,
-			"dataMode": null,
-			"headerData": [
-				{
-					"key": "token",
-					"type": "text",
-					"value": "{{Token}}"
-				}
-			],
-			"method": "GET",
-			"pathVariableData": [],
-			"queryParams": [
-				{
-					"key": "id",
-					"value": "{{CustomerId}}\n"
-				}
-			],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "e1bad8b8-95f2-4fe5-9524-4b723f1fd4e9",
-						"exec": [
-							"",
-							"",
-							"pm.test(\"Get Customer Address \", function () {",
-							" pm.response.to.have.status(200);",
-							"    var idvalue =(pm.response.json().MainAddressId );",
-							"    var idexist = idvalue !== null;",
-							"    pm.expect(idexist);",
-							"    if(idexist){",
-							"     pm.environment.set(\"CustomerAddressId\",idvalue);",
-							"     ",
-							"     tests[\"BodyContanisAddressId : \" + idexist] =(idexist);",
-							"      postman.setNextRequest(\"GetVendorAddress\");",
-							"    }",
-							"    ",
-							"    ",
-							"   ",
-							"    ",
-							"});  ",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"headers": "token: {{Token}}\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "bc622fb3-bfa3-4bd9-9707-6c5e6d09bb72",
 			"name": "GetFullAccountingSettings",
-			"url": "{{URL}}/api/fullaccountingsettings/getsingle?id={{Tenant}}",
-			"description": null,
-			"data": null,
-			"dataOptions": null,
-			"dataMode": null,
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"type": "text",
-					"value": "application/json"
-				},
-				{
-					"key": "tenant",
-					"type": "text",
-					"value": "",
-					"enabled": false
-				},
-				{
-					"key": "token",
-					"type": "text",
-					"value": "{{Token}}"
-				}
-			],
-			"method": "GET",
-			"pathVariableData": [],
-			"queryParams": [
-				{
-					"key": "id",
-					"value": "{{Tenant}}"
-				}
-			],
-			"auth": null,
-			"events": [
+			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "07ba78e8-5462-45f9-bc08-858b7ef193db",
 						"exec": [
 							"pm.test(\"GetFullAccountingSettings\", function () {",
 							"  pm.response.to.have.status(200);",
@@ -2754,33 +142,50 @@
 					}
 				}
 			],
-			"folder": null,
-			"responses": [
-				{
-					"id": "41ecee18-7789-4e25-bbdf-41a5a49e11f5",
-					"name": "GetFullAccountingSettings",
-					"status": "OK",
-					"mime": "",
-					"language": "json",
-					"text": "{\n    \"$id\": \"1\",\n    \"Tenant\": 1071,\n    \"DeductionFileNumber\": \"925144388\",\n    \"ConsolidationVAT\": \"925144388\",\n    \"DefaultVATTypeId\": \"1-3289\",\n    \"VATInputsGLAccountId\": \"1-314648\",\n    \"AutomaticReconcileMethodId\": \"1-49\",\n    \"ExchangeRateDiffGLAccountId\": \"1-216624\",\n    \"RevenueExpenseGLAccountId\": \"1-216625\",\n    \"Id\": \"1071\",\n    \"VATOutputGLAccountId\": \"1-314717\",\n    \"CustomerControlAccountId\": \"1-216626\",\n    \"CustomerControlAccountName\": \"Customer Control\",\n    \"CustomerControlAccountNumber\": \"125899\",\n    \"VendorControlAccountId\": \"1-216627\",\n    \"VendorControlAccountName\": \"Vendors Control\",\n    \"VendorControlAccountNumber\": \"8552\",\n    \"FileControlAccountId\": \"1-216628\",\n    \"FileControlAccountName\": \"Files Control\",\n    \"FileControlAccountNumber\": \"107161000000007\",\n    \"OceanExportJobControlAccountId\": \"1-216629\",\n    \"OceanExportJobControlAccountName\": \"OE Control\",\n    \"OceanExportJobControlAccountNumber\": \"107161000000008\",\n    \"AirExportJobControlAccountId\": \"1-216630\",\n    \"AirExportJobControlAccountName\": \"AE Control\",\n    \"AirExportJobControlAccountNumber\": \"122\",\n    \"OceanImportJobControlAccountId\": \"1-216631\",\n    \"OceanImportJobControlAccountName\": \"OI Sped\",\n    \"OceanImportJobControlAccountNumber\": \"107161000000010\",\n    \"AirImportJobControlAccountId\": \"1-216632\",\n    \"AirImportJobControlAccountName\": \"AI Sped\",\n    \"AirImportJobControlAccountNumber\": \"107161000000011\",\n    \"TenantPaymentTermId\": \"1-5437\",\n    \"AccountingActivationDate\": \"2019-11-05T08:36:45.433\",\n    \"AccountingActivated\": true,\n    \"ExternalReconciliationDefault\": \"3\",\n    \"TaxWithholdingGLAccountId\": \"1-216669\",\n    \"DefaultTaxWithholdPercentage\": 20,\n    \"CustomsGLAccountId\": \"1-216730\",\n    \"DefaultDifferencesGLAccountId\": \"1-216674\",\n    \"DefaultExternalDiffGLAccountId\": \"1-267516\",\n    \"SoftwareVersion\": \"2019\",\n    \"IsPaymentChequesActivated\": true,\n    \"GLAccounterCounterLength\": 8,\n    \"PaymentChequesLogoId\": \"1-936\",\n    \"ChangeSetOp\": 0,\n    \"EncodeBase64NVARCHARFieldsBy\": null\n}",
-					"responseCode": {
-						"code": 200,
-						"name": "OK",
-						"detail": ""
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
 					},
-					"requestObject": {
-						"id": "949e5153-8ff0-483a-ab59-fedcf7d1f160",
+					{
+						"key": "tenant",
+						"type": "text",
+						"value": "",
+						"disabled": true
+					},
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{Token}}"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/fullaccountingsettings/getsingle?id={{Tenant}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"fullaccountingsettings",
+						"getsingle"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{Tenant}}"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "GetFullAccountingSettings",
+					"originalRequest": {
 						"method": "GET",
-						"headers": "Content-Type: application/json\n// tenant: \ntoken: {{Token}}",
-						"url": "{{URL}}/api/fullaccountingsettings/getsingle?id={{Tenant}}",
-						"pathVariableData": [],
-						"queryParams": [
-							{
-								"key": "id",
-								"value": "{{Tenant}}"
-							}
-						],
-						"headerData": [
+						"header": [
 							{
 								"key": "Content-Type",
 								"value": "application/json",
@@ -2790,7 +195,7 @@
 								"key": "tenant",
 								"value": "",
 								"type": "text",
-								"enabled": false
+								"disabled": true
 							},
 							{
 								"key": "token",
@@ -2798,10 +203,28 @@
 								"type": "text"
 							}
 						],
-						"dataMode": null,
-						"data": null
+						"url": {
+							"raw": "{{URL}}/api/fullaccountingsettings/getsingle?id={{Tenant}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"fullaccountingsettings",
+								"getsingle"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{Tenant}}"
+								}
+							]
+						}
 					},
-					"headers": [
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
 						{
 							"key": "Server",
 							"value": "nginx/1.12.2"
@@ -2875,66 +298,250 @@
 							"value": "gzip"
 						}
 					],
-					"cookies": [],
-					"request": "bc622fb3-bfa3-4bd9-9707-6c5e6d09bb72",
-					"collection": "963978bc-7c01-46ea-8113-1a2ec21cbb13"
+					"cookie": [],
+					"body": "{\n    \"$id\": \"1\",\n    \"Tenant\": 1071,\n    \"DeductionFileNumber\": \"925144388\",\n    \"ConsolidationVAT\": \"925144388\",\n    \"DefaultVATTypeId\": \"1-3289\",\n    \"VATInputsGLAccountId\": \"1-314648\",\n    \"AutomaticReconcileMethodId\": \"1-49\",\n    \"ExchangeRateDiffGLAccountId\": \"1-216624\",\n    \"RevenueExpenseGLAccountId\": \"1-216625\",\n    \"Id\": \"1071\",\n    \"VATOutputGLAccountId\": \"1-314717\",\n    \"CustomerControlAccountId\": \"1-216626\",\n    \"CustomerControlAccountName\": \"Customer Control\",\n    \"CustomerControlAccountNumber\": \"125899\",\n    \"VendorControlAccountId\": \"1-216627\",\n    \"VendorControlAccountName\": \"Vendors Control\",\n    \"VendorControlAccountNumber\": \"8552\",\n    \"FileControlAccountId\": \"1-216628\",\n    \"FileControlAccountName\": \"Files Control\",\n    \"FileControlAccountNumber\": \"107161000000007\",\n    \"OceanExportJobControlAccountId\": \"1-216629\",\n    \"OceanExportJobControlAccountName\": \"OE Control\",\n    \"OceanExportJobControlAccountNumber\": \"107161000000008\",\n    \"AirExportJobControlAccountId\": \"1-216630\",\n    \"AirExportJobControlAccountName\": \"AE Control\",\n    \"AirExportJobControlAccountNumber\": \"122\",\n    \"OceanImportJobControlAccountId\": \"1-216631\",\n    \"OceanImportJobControlAccountName\": \"OI Sped\",\n    \"OceanImportJobControlAccountNumber\": \"107161000000010\",\n    \"AirImportJobControlAccountId\": \"1-216632\",\n    \"AirImportJobControlAccountName\": \"AI Sped\",\n    \"AirImportJobControlAccountNumber\": \"107161000000011\",\n    \"TenantPaymentTermId\": \"1-5437\",\n    \"AccountingActivationDate\": \"2019-11-05T08:36:45.433\",\n    \"AccountingActivated\": true,\n    \"ExternalReconciliationDefault\": \"3\",\n    \"TaxWithholdingGLAccountId\": \"1-216669\",\n    \"DefaultTaxWithholdPercentage\": 20,\n    \"CustomsGLAccountId\": \"1-216730\",\n    \"DefaultDifferencesGLAccountId\": \"1-216674\",\n    \"DefaultExternalDiffGLAccountId\": \"1-267516\",\n    \"SoftwareVersion\": \"2019\",\n    \"IsPaymentChequesActivated\": true,\n    \"GLAccounterCounterLength\": 8,\n    \"PaymentChequesLogoId\": \"1-936\",\n    \"ChangeSetOp\": 0,\n    \"EncodeBase64NVARCHARFieldsBy\": null\n}"
 				}
-			],
-			"headers": "Content-Type: application/json\n//tenant: \ntoken: {{Token}}\n",
-			"pathVariables": {}
+			]
 		},
 		{
-			"id": "c3e3ba03-ebbf-4e7d-a8b1-cfdeb46300db",
-			"name": "GEtAccounntingPeriods",
-			"url": "{{URL}}/api/accountingperiodviews/getbyfilters?GetAll=true",
-			"description": null,
-			"data": null,
-			"dataOptions": null,
-			"dataMode": null,
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"type": "text"
-				},
-				{
-					"key": "token",
-					"value": "{{Token}}",
-					"type": "text"
-				}
-			],
-			"method": "GET",
-			"pathVariableData": [],
-			"queryParams": [
-				{
-					"key": "ForceCacheRefresh",
-					"value": "ture",
-					"enabled": false
-				},
-				{
-					"key": "GetAll",
-					"value": "true",
-					"equals": true,
-					"description": null,
-					"enabled": true
-				},
-				{
-					"key": null,
-					"value": "",
-					"enabled": false
-				},
-				{
-					"key": null,
-					"value": "",
-					"enabled": false
-				}
-			],
-			"auth": null,
-			"events": [
+			"name": "Get Chreonological Settings ",
+			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "c5a0f908-f52f-4603-84d2-7d9c1a6940f6",
+						"exec": [
+							"",
+							"pm.test(\"Get Chreonological Settings\", function () {",
+							"  pm.response.to.have.status(200);",
+							"  var idvalue1 = pm.response.json().IsARInvoiceChronologicalDates;",
+							"  var idvalue2 = pm.response.json().IsARPaymentChronologicalDates;",
+							"",
+							" ",
+							"  var id1exist3= idvalue1 === true ;",
+							"  var id1exist4= idvalue2 === true ;",
+							"  ",
+							"  ",
+							"  pm.environment.set(\"AccountingActivated\",idvalue1);",
+							"  ",
+							" ",
+							"  if (!id1exist4 && !id1exist3 ){",
+							"       //throw new Error('NOt FUll Accounting Tenant');",
+							"         tests[\"Chronolical check activated  :\" + false] = ( true );",
+							"         postman.setNextRequest(\"GetYearAccountingPeriods\");",
+							"        ",
+							" ",
+							"         ",
+							"          ",
+							"",
+							"  }",
+							"  else{",
+							" // tests[\"Full Accounting Tenant : \" + true ] = ( true );",
+							"  tests[\"Chronolical check activated :\" +  true] = ( true );",
+							"   postman.setNextRequest(\"GetYearAccountingPeriods\");",
+							" ",
+							"}",
+							"});",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/accountingsettings/getsingle?id={{Tenant}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"accountingsettings",
+						"getsingle"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{Tenant}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetYearAccountingPeriods",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							" pm.test(\"Current Year has Accounting Periods \", function () {\r",
+							"\r",
+							"\r",
+							" if(pm.response.json().Result.length < 1 ){\r",
+							"     \r",
+							" tests[\"Current Year has Accounting Periods   : \" + false ] = ( true );\r",
+							"           \r",
+							"            postman.setNextRequest(\"CreatAccountingPeriods\");}\r",
+							"      \r",
+							" else {\r",
+							"\r",
+							" tests[\"Current Year has Accounting Periods   : \" + true ] = ( true );\r",
+							"           postman.setNextRequest(\"GetCurrentMonth'sAccountingPeriods\");  \r",
+							" \r",
+							" }\r",
+							" \r",
+							"});\r",
+							"\r",
+							" \r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{URL}}/api/accountingperiodviews/getbyfilters?&&ForceCacheRefresh=false&DontApplyVirtualization=false&GetAll=true&AdditionalFilters=[{%22FieldName%22:%22Year%22,%22FieldValue%22:{{CurrentYear}},%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Equal%22,%22IsCustom%22:false,%22DisplayInList%22:false,%22IsCustomField%22:false,%22FieldDataType%22:%22number%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false,%22IsLookUpfilter%22:false}]",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"accountingperiodviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "DontApplyVirtualization",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "true"
+						},
+						{
+							"key": "AdditionalFilters",
+							"value": "[{%22FieldName%22:%22Year%22,%22FieldValue%22:{{CurrentYear}},%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Equal%22,%22IsCustom%22:false,%22DisplayInList%22:false,%22IsCustomField%22:false,%22FieldDataType%22:%22number%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false,%22IsLookUpfilter%22:false}]"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreatAccountingPeriods",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Current year accounting periods created  \", function () {\r",
+							"    \r",
+							"    pm.response.to.have.status(200);\r",
+							"     \r",
+							"    postman.setNextRequest(\"GetCurrentMonth'sAccountingPeriods\");  \r",
+							"  \r",
+							" \r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\"Tenant\":{{Tenant}},\"Year\":{{CurrentYear}},\"PeriodTypeCode\":\"1\",\"PeriodTypeName\":\"Accounting\",\"OpenMonth\":1,\"ClosedMonth\":null},{\"Tenant\":{{Tenant}},\"Year\":{{CurrentYear}},\"PeriodTypeCode\":\"2\",\"PeriodTypeName\":\"Invoice\",\"OpenMonth\":1,\"ClosedMonth\":null},{\"Tenant\":{{Tenant}},\"Year\":{{CurrentYear}},\"PeriodTypeCode\":\"3\",\"PeriodTypeName\":\"Interest Invoice\",\"OpenMonth\":1,\"ClosedMonth\":null}]"
+				},
+				"url": {
+					"raw": "{{URL}}/api/accountingPeriods/PostCreatePeriodsForYear?year={{CurrentYear}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"accountingPeriods",
+						"PostCreatePeriodsForYear"
+					],
+					"query": [
+						{
+							"key": "year",
+							"value": "{{CurrentYear}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetCurrentMonth'sAccountingPeriods",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
 						"exec": [
 							"pm.test(\"Get Accounting Periods\", function () {",
 							"    ",
@@ -2944,57 +551,38 @@
 							"    var month = date.getMonth()+1;",
 							"    pm.environment.set(\"CurrentMonth\",month);",
 							"",
-							"",
-							"    //get the accounting periods ",
-							"   ",
-							"    var idvalue7 = (pm.response.json().Result[pm.response.json().Result.length-2].OpenMonth);",
-							"    pm.environment.set(\"AcocuntingPeriodsOpenMonth\",idvalue7);",
-							"    var idvalue1 = (pm.response.json().Result[pm.response.json().Result.length-2].Id);",
-							"    var idvalue2 = (pm.response.json().Result[pm.response.json().Result.length-2].Tenant);",
-							"    var idvalue3 = (pm.response.json().Result[pm.response.json().Result.length-2].Year);",
-							"    var idvalue4 = (pm.response.json().Result[pm.response.json().Result.length-2].PeriodTypeCode);",
-							"    var idvalue5 = (pm.response.json().Result[pm.response.json().Result.length-2].PeriodTypeName);",
-							"    var idvalue6 = (pm.response.json().Result[pm.response.json().Result.length-2].ClosedMonth);",
-							"    ",
-							"    pm.environment.set(\"AcocuntingPeriodsId\",idvalue1);",
-							"    pm.environment.set(\"AcocuntingPeriodsTenant\",idvalue2);",
-							"    pm.environment.set(\"AcocuntingPeriodsYear\",idvalue3);",
-							"    pm.environment.set(\"AcocuntingPeriodsPeriodTypeCode\",idvalue4);",
-							"    pm.environment.set(\"AcocuntingPeriodsPeriodTypeName\",idvalue5);",
-							"    pm.environment.set(\"AcocuntingPeriodsClosedMonth\",idvalue6);",
-							"",
-							" // get the invoice periods ",
-							" var idvalue8 = (pm.response.json().Result[pm.response.json().Result.length-1].OpenMonth);",
-							"    pm.environment.set(\"AcocuntingPeriodsOpenMonth\",idvalue7);",
-							"    var idvalue9 = (pm.response.json().Result[pm.response.json().Result.length-1].Id);",
-							"    var idvalue10 = (pm.response.json().Result[pm.response.json().Result.length-1].Tenant);",
-							"    var idvalue11 = (pm.response.json().Result[pm.response.json().Result.length-1].Year);",
-							"    var idvalue12 = (pm.response.json().Result[pm.response.json().Result.length-1].PeriodTypeCode);",
-							"    var idvalue13 = (pm.response.json().Result[pm.response.json().Result.length-1].PeriodTypeName);",
-							"    var idvalue14 = (pm.response.json().Result[pm.response.json().Result.length-1].ClosedMonth);",
-							"    ",
-							"    pm.environment.set(\"AcocuntingPeriodsInvoiceId\",idvalue9);",
-							"    pm.environment.set(\"AcocuntingPeriodsTenant\",idvalue10);",
-							"    pm.environment.set(\"AcocuntingPeriodsInvoiceYear\",idvalue11);",
-							"    pm.environment.set(\"AcocuntingPeriodsPeriodIvoiceTypeCode\",idvalue12);",
-							"    pm.environment.set(\"AcocuntingPeriodsPeriodIvoiceTypeName\",idvalue13);",
-							"    pm.environment.set(\"AcocuntingPeriodsInvoiceClosedMonth\",idvalue14);",
-							"   ",
+							"  var idvalue1;",
 							"",
 							"",
 							"",
-							"      if (idvalue7 < month)",
+							" for (var i = 0; i< pm.response.json().Result.length ;i++){",
+							"     if ( pm.response.json().Result[i].PeriodTypeCode == '1' )",
+							"     {",
+							"        pm.globals.set(\"AcocuntingPeriodsId\",pm.response.json().Result[i].Id);  ",
+							"        idvalue1=pm.response.json().Result[i].OpenMonth; ",
+							"",
+							"     }",
+							"    else if ( pm.response.json().Result[i].PeriodTypeCode == '2' )",
+							"    {",
+							"        pm.globals.set(\"AcocuntingPeriodsInvoiceId\",pm.response.json().Result[i].Id);  ",
+							"      ",
+							"    }",
+							"",
+							" }",
+							"",
+							"      if (idvalue1 < month)",
 							"      {",
 							"           tests[\"Current Month Opened  : \" + false ] = ( true );",
 							"           ",
 							"            postman.setNextRequest(\"OpenCurrentMonth\");",
 							"      }",
 							"      ",
-							"        else {",
+							"     else",
+							"      {",
 							"  ",
-							"   tests[\"Current Month Opened  : \" + true ] = ( true );",
+							"             tests[\"Current Month Opened  : \" + true ] = ( true );",
 							"           postman.setNextRequest(\"GetAccountingCurriency\");  ",
-							"        }",
+							"      }",
 							"  ",
 							" ",
 							"});",
@@ -3006,42 +594,1128 @@
 					}
 				}
 			],
-			"folder": null,
-			"headers": "Content-Type: application/json\ntoken: {{Token}}\n",
-			"pathVariables": {}
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{Token}}"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/accountingperiodviews/getbyfilters?&&ForceCacheRefresh=false&DontApplyVirtualization=false&GetAll=true&AdditionalFilters=[{%22FieldName%22:%22Year%22,%22FieldValue%22:{{CurrentYear}},%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Equal%22,%22IsCustom%22:false,%22DisplayInList%22:false,%22IsCustomField%22:false,%22FieldDataType%22:%22number%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false,%22IsLookUpfilter%22:false}]",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"accountingperiodviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "DontApplyVirtualization",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "true"
+						},
+						{
+							"key": "AdditionalFilters",
+							"value": "[{%22FieldName%22:%22Year%22,%22FieldValue%22:{{CurrentYear}},%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Equal%22,%22IsCustom%22:false,%22DisplayInList%22:false,%22IsCustomField%22:false,%22FieldDataType%22:%22number%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false,%22IsLookUpfilter%22:false}]"
+						}
+					]
+				}
+			},
+			"response": []
 		},
 		{
-			"id": "c473182a-ffa0-49e2-9c8f-7c86b7317731",
-			"name": "CreateChargeType",
-			"url": "{{URL}}/api/chargestypes",
-			"description": null,
-			"data": [],
-			"dataOptions": {
-				"raw": {}
-			},
-			"dataMode": "raw",
-			"headerData": [
-				{
-					"key": "token",
-					"value": "{{Token}}",
-					"type": "text"
-				},
-				{
-					"key": "Content-Type",
-					"name": "Content-Type",
-					"value": "application/json",
-					"type": "text"
-				}
-			],
-			"method": "POST",
-			"pathVariableData": [],
-			"queryParams": [],
-			"auth": null,
-			"events": [
+			"name": "OpenCurrentMonth",
+			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "5ca81d65-fe7c-4c5a-8667-11663d913e7c",
+						"exec": [
+							"pm.test(\"Current month opened \", function () {",
+							"    ",
+							"    pm.response.to.have.status(200);",
+							"   ",
+							"      var idvalue1 = (pm.response.json().Id);",
+							"    postman.setNextRequest(\"OpenIvoiceMonth\");  ",
+							"  ",
+							" ",
+							"});",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n\"ChangeSetOp\": 2,\r\n\"ClosedMonth\":null,\r\n\"EncodeBase64NVARCHARFieldsBy\": null,\r\n\"Id\": \"{{AcocuntingPeriodsId}}\",\r\n\"OpenMonth\":{{CurrentMonth}},\r\n\"PeriodTypeCode\": \"1\",\r\n\"PeriodTypeName\": \"Accounting\",\r\n\"Tenant\": {{Tenant}},\r\n\"Year\": {{CurrentYear}}\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/accountingperiods",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"accountingperiods"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OpenIvoiceMonth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Current month opened \", function () {\r",
+							"    \r",
+							"    pm.response.to.have.status(200);\r",
+							"   \r",
+							"      var idvalue1 = (pm.response.json().Id);\r",
+							"   postman.setNextRequest(\"GetAccountingCurriency\");  \r",
+							"  \r",
+							" \r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n\"ChangeSetOp\": 2,\r\n\"ClosedMonth\":null ,\r\n\"EncodeBase64NVARCHARFieldsBy\": null,\r\n\"Id\": \"{{AcocuntingPeriodsInvoiceId}}\",\r\n\"OpenMonth\":{{CurrentMonth}},\r\n\"PeriodTypeCode\": \"2\",\r\n\"PeriodTypeName\": \"Invoice\",\r\n\"Tenant\": {{Tenant}},\r\n\"Year\": {{CurrentYear}}\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/accountingperiods",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"accountingperiods"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAccountingCurriency",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"pm.test(\"GetAccountingCurriency\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var idvalue1 = (pm.response.json().CurrencyId);",
+							"    ",
+							"    var id1exist = idvalue1 !== null;",
+							"    pm.expect(id1exist);",
+							"    pm.environment.set(\"AccountingCurrencyId\",idvalue1);",
+							" ",
+							"    ",
+							"    tests[\"BodyCointainsAccountingCurrincy : \" + id1exist] = responseBody.has(id1exist);",
+							"",
+							" postman.setNextRequest(\"GetTenantCurriences\");",
+							"}); "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/tenants/getsingle?id={{Tenant}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"tenants",
+						"getsingle"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{Tenant}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetTenantCurriences",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"GetTenantCurriencies\", function () {",
+							"  pm.response.to.have.status(200);",
+							"  ",
+							"  ",
+							"  ",
+							"  ",
+							" postman.setNextRequest(\"GetCountryAX\");",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/currencyviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&GetCount=true&PageIndex=0&PageSize=23&=&=",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"currencyviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						},
+						{
+							"key": null,
+							"value": ""
+						},
+						{
+							"key": null,
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetCountryAX",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"GetCountryAX\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   if(pm.response.json().Result.length < 1 ){",
+							"       var idvaluet = \"test\";",
+							"        var idexist2 = idvaluet !== null;",
+							"     tests[\"CountryExsits : \" + false] = (true);",
+							"     ",
+							"   }",
+							"   else {",
+							"    ",
+							"var idvalue=pm.response.json().Result[0].Id;",
+							"     pm.environment.set(\"CountryId\",idvalue);",
+							"",
+							"     tests[\"CountryExsits : \" + true ] = (true);",
+							"    postman.setNextRequest(\"GetVatTypeExempt\");  ",
+							"    }",
+							"   ",
+							"    ",
+							"});",
+							"     ",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{Token}}"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/countryviews/getbyfilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=AX&PageSize=22\n\n",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"countryviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "Code"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "equals"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "AX"
+						},
+						{
+							"key": "PageSize",
+							"value": "22\n\n"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetVatTypeExempt",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"GetVatTypeExempt\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   if(pm.response.json().Result.length < 1 ){",
+							"       var idvaluet = \"test\";",
+							"        var idexist2 = idvaluet !== null;",
+							"     tests[\"VatExsits : \" + false] = (true);",
+							"         postman.setNextRequest(\"CreatVatExempt\");  ",
+							"     ",
+							"   }",
+							"   else {",
+							"    ",
+							"var idvalue=pm.response.json().Result[0].Id;",
+							"     pm.environment.set(\"VatId\",idvalue);",
+							"",
+							"     tests[\"VatExsits : \" + true ] = (true);",
+							"    postman.setNextRequest(\"GetPaymentTermCash\");  ",
+							"    }",
+							"   ",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/vattypeviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&GetCount=true&PageIndex=0&PageSize=23&SortBy=&SortDirection=&AdditionalFilters=[{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22EPT%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false}]\n&=&=&Filter1Value=EXMPT",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"vattypeviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						},
+						{
+							"key": "SortBy",
+							"value": ""
+						},
+						{
+							"key": "SortDirection",
+							"value": ""
+						},
+						{
+							"key": "AdditionalFilters",
+							"value": "[{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22EPT%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false}]\n"
+						},
+						{
+							"key": null,
+							"value": ""
+						},
+						{
+							"key": null,
+							"value": ""
+						},
+						{
+							"key": "Filter1Value",
+							"value": "EXMPT"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreatVatExempt",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Create Vat Type Exempt\", function () {\r",
+							" pm.response.to.have.status(200);\r",
+							"    var idvalue =(pm.response.json().Id);\r",
+							"    var idexist = idvalue !== null;\r",
+							"    pm.expect(idexist);\r",
+							"    if(idexist){\r",
+							"     pm.environment.set(\"VatId\",idvalue);\r",
+							"     \r",
+							"     tests[\"BodyContanisVatId : \" + idexist] =(idexist);\r",
+							"      postman.setNextRequest(\"GetPaymentTermCash\");\r",
+							"    }\r",
+							"    \r",
+							"    \r",
+							"   \r",
+							"    \r",
+							"});  \r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \r\n   \"Tenant\":{{Tenant}},\r\n   \"IsSecured\":false,\r\n   \"Code\":\"EPT\",\r\n   \"EnglishName\":\"Exempt\",\r\n   \"LocalName\":\"f\",\r\n   \"SearchFields\":\"EPT\",\r\n   \"NewEntityPercentage\":0.0,\r\n   \"NewEntityPercentageDate\":\"2016-02-02T00:00:00Z\",\r\n  \r\n   \"VatTypePercentages\":[\r\n      {\r\n        \r\n         \"Tenant\":{{Tenant}},\r\n         \"VatTypeId\":\"1-3465\",\r\n         \"FromDate\":\"2012-02-02T00:00:00Z\",\r\n         \"Percentage\":0.0,\r\n         \"ChangeSetOp\":0\r\n      }\r\n   ]\r\n  \r\n}"
+				},
+				"url": {
+					"raw": "{{URL}}/api/vattypes",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"vattypes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPaymentTermCash",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"GetPaymentTermCash\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   if(pm.response.json().Result.length < 1 ){",
+							"       ",
+							"     tests[\"PaymentTermExsits : \" + false] = (true);",
+							"     postman.setNextRequest(\"CreatePaymentTermCash\");  ",
+							"",
+							"     ",
+							"   }",
+							"   else {",
+							"    ",
+							"var idvalue=pm.response.json().Result[0].Id;",
+							"     pm.environment.set(\"PaymentTermId\",idvalue);",
+							"",
+							"     tests[\"PaymentTermExsits : \" + true ] = (true);",
+							"    postman.setNextRequest(\"GETPaymnetMethodCash\");  ",
+							"    }",
+							"   ",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/paymenttermviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=cash&PageIndex=0&PageSize=23",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"paymenttermviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "cash"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreatePaymentTermCash",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Create Payment Term Cash\", function () {\r",
+							" pm.response.to.have.status(200);\r",
+							"    var idvalue =(pm.response.json().Id);\r",
+							"    var idexist = idvalue !== null;\r",
+							"    pm.expect(idexist);\r",
+							"    if(idexist){\r",
+							"     pm.environment.set(\"PaymentTermId\",idvalue);\r",
+							"     \r",
+							"     tests[\"BodyContanisPaymentTermId : \" + idexist] =(idexist);\r",
+							"         postman.setNextRequest(\"GETPaymnetMethodCash\");  \r",
+							"\r",
+							"    }\r",
+							"    \r",
+							"    \r",
+							"   \r",
+							"    \r",
+							"});  \r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\r\n   \"Tenant\":{{Tenant}},\r\n   \r\n   \"EnglishName\":\"cash\",\r\n   \"LocalName\":\"cash local\",\r\n   \"Days\":0,\r\n   \"InActive\":false,\r\n   \"DisplayInLOV\":true,\r\n   \"SearchFields\":null,\r\n   \"IsManuallySet\":false,\r\n   \"CurrentMonth\":false,\r\n   \"FromDateTypeCode\":\"INV\"\r\n}"
+				},
+				"url": {
+					"raw": "{{URL}}/api/paymentterms",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"paymentterms"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GETPaymnetMethodCash",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"GetPaymentMethodCash\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   if(pm.response.json().Result.length < 1 ){",
+							"       ",
+							"     tests[\"PaymentMethodExsits : \" + false] = (true);",
+							"     postman.setNextRequest(\"CreatePaymentMethodCash\");  ",
+							"     ",
+							"   }",
+							"   else {",
+							"    ",
+							"var idvalue=pm.response.json().Result[0].Id;",
+							"     pm.environment.set(\"PaymentMethodId\",idvalue);",
+							"",
+							"     tests[\"PaymentTermExsits : \" + true ] = (true);",
+							"    postman.setNextRequest(\"GetBranchMainOffice\");  ",
+							"    }",
+							"   ",
+							"    ",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/accountingpaymentmethodviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=Cash&GetCount=true&PageIndex=0&PageSize=23\n&=&=",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"accountingpaymentmethodviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "Cash"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "23\n"
+						},
+						{
+							"key": null,
+							"value": ""
+						},
+						{
+							"key": null,
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreatePaymentMethodCash",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"CreatePayment Method Cash \", function () {\r",
+							" pm.response.to.have.status(200);\r",
+							"    var idvalue =(pm.response.json().Id);\r",
+							"    var idexist = idvalue !== null;\r",
+							"    pm.expect(idexist);\r",
+							"    if(idexist){\r",
+							"     pm.environment.set(\"PaymentMethodId\",idvalue);\r",
+							"     \r",
+							"     tests[\"BodyContanisMethodId : \" + idexist] =(idexist);\r",
+							"      postman.setNextRequest(\"GetCustomerGlAccountCustGL\");\r",
+							"          postman.setNextRequest(\"GetBranchMainOffice\");  \r",
+							"\r",
+							"    }\r",
+							"    \r",
+							"    \r",
+							"   \r",
+							"    \r",
+							"});  \r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"Tenant\":{{Tenant}},\r\n   \"IsSecured\":false,\r\n   \"EnglishName\":\"Cash\",\r\n   \"LocalName\":null,\r\n   \"FromDateTypeCode\":\"INV\"\r\n}"
+				},
+				"url": {
+					"raw": "{{URL}}/api/paymentterms",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"paymentterms"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetChronolgicalsettings",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetBranchMainOffice",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"GetBranchMainOffice\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   if(pm.response.json().Result.length < 1 ){",
+							"       ",
+							"     tests[\"BranchExsits : \" + false] = (true);",
+							"  postman.setNextRequest(\"CreateBranchMainOffice\"); ",
+							"     ",
+							"   }",
+							"   else {",
+							"    ",
+							"var idvalue=pm.response.json().Result[0].Id;",
+							"     pm.environment.set(\"BranchId\",idvalue);",
+							"",
+							"     tests[\"BranchExsits : \" + true ] = (true);",
+							"    postman.setNextRequest(\"GetChargeTypesAirFreight\");  ",
+							"    }",
+							"   ",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{URL}}/api/branchviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=main&GetCount=true&PageIndex=0&PageSize=23&SortBy=&SortDirection=&AdditionalFilters=[{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22main%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false}]\n&=&=",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"branchviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "main"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						},
+						{
+							"key": "SortBy",
+							"value": ""
+						},
+						{
+							"key": "SortDirection",
+							"value": ""
+						},
+						{
+							"key": "AdditionalFilters",
+							"value": "[{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22main%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false}]\n"
+						},
+						{
+							"key": null,
+							"value": ""
+						},
+						{
+							"key": null,
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateBranchMainOffice",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Create Branch Main Office\", function () {\r",
+							" pm.response.to.have.status(200);\r",
+							"    var idvalue =(pm.response.json().Id);\r",
+							"    var idexist = idvalue !== null;\r",
+							"    pm.expect(idexist);\r",
+							"    if(idexist){\r",
+							"     pm.environment.set(\"BranchId\",idvalue);\r",
+							"     tests[\"BodyContanisBrnachId : \" + idexist] =(idexist);\r",
+							"     postman.setNextRequest(\"GetChargeTypesAirFreight\"); \r",
+							"    }\r",
+							"    \r",
+							"});  \r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\r\n\r\n   \"Tenant\":\"{{Tenant}}\",\r\n   \r\n   \"EnglishName\":\"Main Office\",\r\n   \"LocalName\":\"Main Office\",\r\n  \r\n   \"InActive\":false,\r\n   \r\n   \"SearchFields\":\"test\",\r\n \r\n   \"IsHybrid\":false,\r\n   \"ExternalId\":null,\r\n   \"AddressId\":null,\r\n   \"Signature\":null,\r\n   \r\n   \"INTTRAContactId\":null,\r\n   \"CounterCode\":null\r\n}"
+				},
+				"url": {
+					"raw": "{{URL}}/api/branches",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"branches"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetChargeTypesAirFreight",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get Charge Type AirFreight\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   if(pm.response.json().Result.length < 1 ){",
+							"       var idvaluet = \"test\";",
+							"        var idexist2 = idvaluet !== null;",
+							"     tests[\"Charge Exsits : \" + false] = (true);",
+							"         postman.setNextRequest(\"CreateChargeType\");  ",
+							"",
+							"   }",
+							"   else {",
+							"    ",
+							"var idvalue=pm.response.json().Result[0].Id;",
+							"     pm.environment.set(\"ChargeId\",idvalue);",
+							"",
+							"     tests[\"ChargeExsits : \" + true ] = (true);",
+							"    postman.setNextRequest(\"GetChartOfAccountVend1\");  ",
+							"    }",
+							"   ",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/chargestypeviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=air%20freight&GetCount=true&PageIndex=0&PageSize=23&=",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"chargestypeviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "air%20freight"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						},
+						{
+							"key": null,
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateChargeType",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
 						"exec": [
 							"pm.test(\"Create Branch Main Office\", function () {\r",
 							" pm.response.to.have.status(200);\r",
@@ -3065,54 +1739,332 @@
 					}
 				}
 			],
-			"folder": null,
-			"rawModeData": "{\r\n   \"Tenant\":{{Tenant}},\r\n  \r\n   \"Code\":\"AFT\",\r\n   \"EnglishName\":\"141\",\r\n   \"LocalName\":null,\r\n   \"ChargesGroupCode\":\"COMM\",\r\n   \"ChargesGroupId\":\"1-6036\",\r\n   \"MeasurementId\":\"1-29726\",\r\n   \"ContainerMeasurementId\":null,\r\n   \"Description\":null,\r\n   \"IsReceivable\":true,\r\n   \"IsPayable\":true,\r\n   \"IsAir\":true,\r\n   \"IsOcean\":true,\r\n   \"IsInland\":true,\r\n   \"IsAutoDisplayInShipment\":false,\r\n   \"IsAutoDisplayInConsolidation\":false,\r\n   \"IsAutoDisplayInQuote\":false,\r\n   \"DueTypeCode\":null,\r\n   \"IATACodeId\":null,\r\n   \"AWBPrintDescription\":true,\r\n   \"VatTypeId\":null,\r\n   \"ViewOrder\":100,\r\n  \r\n \r\n   \"IsCustoms\":false,\r\n   \"ComputedLocalName\":null,\r\n   \"AddedManually\":true,\r\n   \"InActive\":false,\r\n   \"MeasurementCode\":null,\r\n   \"MeasurementShortName\":null,\r\n   \"ContainerMeasurementCode\":null,\r\n   \"SearchFields\":\"11,11\",\r\n\r\n   \"PayableDebitGLAcountId\":null,\r\n   \"ReceivableCreditGLAccountId\":null,\r\n   \"IsExpense\":false\r\n ,\r\n  \r\n   \"IsExport\":true\r\n  \r\n}",
-			"headers": "token: {{Token}}\nContent-Type: application/json\n",
-			"pathVariables": {}
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"Tenant\":{{Tenant}},\r\n  \r\n   \"Code\":\"AFT\",\r\n   \"EnglishName\":\"141\",\r\n   \"LocalName\":null,\r\n   \"ChargesGroupCode\":\"COMM\",\r\n   \"ChargesGroupId\":\"1-6036\",\r\n   \"MeasurementId\":\"1-29726\",\r\n   \"ContainerMeasurementId\":null,\r\n   \"Description\":null,\r\n   \"IsReceivable\":true,\r\n   \"IsPayable\":true,\r\n   \"IsAir\":true,\r\n   \"IsOcean\":true,\r\n   \"IsInland\":true,\r\n   \"IsAutoDisplayInShipment\":false,\r\n   \"IsAutoDisplayInConsolidation\":false,\r\n   \"IsAutoDisplayInQuote\":false,\r\n   \"DueTypeCode\":null,\r\n   \"IATACodeId\":null,\r\n   \"AWBPrintDescription\":true,\r\n   \"VatTypeId\":null,\r\n   \"ViewOrder\":100,\r\n  \r\n \r\n   \"IsCustoms\":false,\r\n   \"ComputedLocalName\":null,\r\n   \"AddedManually\":true,\r\n   \"InActive\":false,\r\n   \"MeasurementCode\":null,\r\n   \"MeasurementShortName\":null,\r\n   \"ContainerMeasurementCode\":null,\r\n   \"SearchFields\":\"11,11\",\r\n\r\n   \"PayableDebitGLAcountId\":null,\r\n   \"ReceivableCreditGLAccountId\":null,\r\n   \"IsExpense\":false\r\n ,\r\n  \r\n   \"IsExport\":true\r\n  \r\n}"
+				},
+				"url": {
+					"raw": "{{URL}}/api/chargestypes",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"chargestypes"
+					]
+				}
+			},
+			"response": []
 		},
 		{
-			"id": "e7eda94c-b991-4858-a83b-5946712983a7",
-			"name": "CreateBranchMainOffice",
-			"url": "{{URL}}/api/branches",
-			"description": null,
-			"data": [],
-			"dataOptions": {
-				"raw": {}
-			},
-			"dataMode": "raw",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"name": "Content-Type",
-					"value": "application/json",
-					"type": "text"
-				},
-				{
-					"key": "token",
-					"value": "{{Token}}",
-					"type": "text"
-				}
-			],
-			"method": "POST",
-			"pathVariableData": [],
-			"queryParams": [],
-			"auth": null,
-			"events": [
+			"name": "GetChartOfAccountVend1",
+			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "74393aff-7642-45b2-b5de-d9ac6585be00",
 						"exec": [
-							"pm.test(\"Create Branch Main Office\", function () {\r",
+							"pm.test(\"GetChartOfAccountVend1\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"   if(pm.response.json().Result.length < 1 ){\r",
+							"       \r",
+							"     tests[\"ChartOfAccountExists : \" + false] = (true);\r",
+							"        postman.setNextRequest(\"CreateChartOfAccountVend\");   \r",
+							"   }\r",
+							"   else {\r",
+							"    var idvalue =(pm.response.json().Result[0].Id);\r",
+							"    var idvalue2 =(pm.response.json().Result.filter(a => a.Code == '1PMCF')[0].Code);\r",
+							"    var idvalue3 =(pm.response.json().Result[0].LocalName);\r",
+							"    var idvalue4 =(pm.response.json().Result[0].EnglishName);\r",
+							"    var idvalue5 =(pm.response.json().Result[0].ParentId);\r",
+							"    var idvalue6 =(pm.response.json().Result[0].TypeCode);\r",
+							"    var idvalue7 =(pm.response.json().Result[0].Inactive);\r",
+							"    var idvalue8 =(pm.response.json().Result[0].TypeName);\r",
+							"    var idvalue9 =(pm.response.json().Result[0].ParentName);\r",
+							"    var idvalue10 =(pm.response.json().Result[0].SearchFields);\r",
+							"    var idexist = idvalue !== null;\r",
+							"    pm.expect(idexist);\r",
+							"    \r",
+							" if (idexist)  {\r",
+							"     pm.environment.set(\"VendorChartOfAccountId\",idvalue);\r",
+							"     pm.environment.set(\"ChartOfAccountCodev\",idvalue2);\r",
+							"     pm.environment.set(\"ChartOfAccountLocalName\",idvalue3);\r",
+							"     pm.environment.set(\"ChartOfAccountEnglishName\",idvalue4);\r",
+							"     pm.environment.set(\"ChartOfAccountParentId\",idvalue5);\r",
+							"     pm.environment.set(\"ChartOfAccountTypeCode\",idvalue6);\r",
+							"     pm.environment.set(\"ChartOfAccountInactive\",idvalue7);\r",
+							"     pm.environment.set(\"ChartOfAccountTypeName\",idvalue8);\r",
+							"     pm.environment.set(\"ChartOfAccountParentName\",idvalue9);\r",
+							"     pm.environment.set(\"ChartOfAccountSearchFields\",idvalue10);\r",
+							"\r",
+							"\r",
+							"     \r",
+							"     tests[\"ChartOfAccountExists : \" + true ] = (true);\r",
+							"     postman.setNextRequest(\"GetCustomerTestGlCust\");\r",
+							"    }\r",
+							"   }\r",
+							"    \r",
+							"});\r",
+							"     \r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{Token}}"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/chartofaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=1PMCF&PageSize=23 ",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"chartofaccountviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "1PMCF"
+						},
+						{
+							"key": "PageSize",
+							"value": "23 "
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateChartOfAccountVend",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"CreateChartOfAccountVend\", function () {\r",
 							" pm.response.to.have.status(200);\r",
 							"    var idvalue =(pm.response.json().Id);\r",
+							"     var idvalue2 =(pm.response.json().Code);\r",
+							"    var idvalue3 =(pm.response.json().LocalName);\r",
+							"    var idvalue4 =(pm.response.json().EnglishName);\r",
+							"    var idvalue5 =(pm.response.json().ParentId);\r",
+							"    var idvalue6 =(pm.response.json().TypeCode);\r",
+							"    var idvalue7 =(pm.response.json().Inactive);\r",
+							"    var idvalue8 =(pm.response.json().TypeName);\r",
+							"    var idvalue9 =(pm.response.json().ParentName);\r",
+							"    var idvalue10 =(pm.response.json().SearchFields);\r",
+							"    \r",
+							"    \r",
+							"    \r",
+							"    \r",
 							"    var idexist = idvalue !== null;\r",
 							"    pm.expect(idexist);\r",
 							"    if(idexist){\r",
-							"     pm.environment.set(\"BranchId\",idvalue);\r",
-							"     tests[\"BodyContanisBrnachId : \" + idexist] =(idexist);\r",
-							"     postman.setNextRequest(\"GetChargeTypesAirFreight\"); \r",
+							"     pm.environment.set(\"VendorChartOfAccountId\",idvalue);\r",
+							"     pm.environment.set(\"ChartOfAccountCode\",idvalue2);\r",
+							"     pm.environment.set(\"ChartOfAccountLocalName\",idvalue3);\r",
+							"     pm.environment.set(\"ChartOfAccountEnglishName\",idvalue4);\r",
+							"     pm.environment.set(\"ChartOfAccountParentId\",idvalue5);\r",
+							"     pm.environment.set(\"ChartOfAccountTypeCode\",idvalue6);\r",
+							"     pm.environment.set(\"ChartOfAccountInactive\",idvalue7);\r",
+							"     pm.environment.set(\"ChartOfAccountTypeName\",idvalue8);\r",
+							"     pm.environment.set(\"ChartOfAccountParentName\",idvalue9);\r",
+							"     pm.environment.set(\"ChartOfAccountSearchFields\",idvalue10);\r",
+							"     \r",
+							"     \r",
+							"     tests[\"BodyContanisChartOfAccountId : \" + true] =(true);\r",
+							"        postman.setNextRequest(\"GetCustomerTestGlCust\");   \r",
 							"    }\r",
+							"    \r",
+							"   \r",
+							"    \r",
+							"});\r",
+							"     \r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{Token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "   {\r\n   \t\"$id\": \"1\",\r\n    \"Tenant\": {{Tenant}},\r\n    \"Code\": \"1PMCF\",\r\n    \"LocalName\": \"ספקים\",\r\n    \"Englishname\": \"PMVendorChart\",\r\n    \"TypeCode\": \"4\",\r\n    \"Inactive\": true,\r\n    \"ChangeSetOp\": 1\r\n \r\n}\r\n"
+				},
+				"url": {
+					"raw": "{{URL}}/api/chartofaccounts",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"chartofaccounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetCustomerTestGlCust",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"GetCustomerTestGlCust\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   if(pm.response.json().Result.length < 1 ){",
+							"       var idvaluet = \"test\";",
+							"        var idexist2 = idvaluet !== null;",
+							"     tests[\"CustomerExsits : \" + false] = (true);",
+							"        postman.setNextRequest(\"CreateCustomerTestGlCust\");   ",
+							"   }",
+							"   else {",
+							"    ",
+							"var idvalue=pm.response.json().Result.filter(a => a.EnglishName == '12PMCS')[0].Id;",
+							"     pm.environment.set(\"CustomerId\",idvalue);",
+							"",
+							"     tests[\"CustomerExsits : \" + true ] = (true);",
+							"     postman.setNextRequest(\"GetVendorTestGlVend\");",
+							"    }",
+							"   ",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/customerviews/getbyfilters?GetAll=true&Filter1Name=SearchFields&Filter1Operator=Contains&GetCount=true&PageIndex=0&PageSize=22\n&=&Filter1Value=12PMCS",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"customerviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "GetAll",
+							"value": "true"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "22\n"
+						},
+						{
+							"key": null,
+							"value": ""
+						},
+						{
+							"key": "Filter1Value",
+							"value": "12PMCS"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateCustomerTestGlCust",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"CreateCustomerTest\", function () {\r",
+							" pm.response.to.have.status(200);\r",
+							"    var idvalue =(pm.response.json().Customer.Id);\r",
+							"    var idexist = idvalue !== null;\r",
+							"    pm.expect(idexist);\r",
+							"    if(idexist){\r",
+							"     pm.environment.set(\"CustomerId\",idvalue);\r",
+							"     \r",
+							"     tests[\"BodyContanisCustomerId : \" + idexist] =(idexist);\r",
+							"      postman.setNextRequest(\"GetVendorTestGlVend\");\r",
+							"    }\r",
+							"    \r",
+							"    \r",
+							"   \r",
 							"    \r",
 							"});  \r",
 							""
@@ -3121,86 +2073,1150 @@
 					}
 				}
 			],
-			"folder": null,
-			"rawModeData": "{\r\n\r\n\r\n   \"Tenant\":\"{{Tenant}}\",\r\n   \r\n   \"EnglishName\":\"Main Office\",\r\n   \"LocalName\":\"Main Office\",\r\n  \r\n   \"InActive\":false,\r\n   \r\n   \"SearchFields\":\"test\",\r\n \r\n   \"IsHybrid\":false,\r\n   \"ExternalId\":null,\r\n   \"AddressId\":null,\r\n   \"Signature\":null,\r\n   \r\n   \"INTTRAContactId\":null,\r\n   \"CounterCode\":null\r\n}",
-			"headers": "Content-Type: application/json\ntoken: {{Token}}\n",
-			"pathVariables": {}
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tenant",
+						"value": "{{CurrentTenant}}",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n  \"Tenant\":\"{{Tenant}}\",\r\n \r\n  \"PartnerTypeId\": \"CS\",\r\n\r\n  \"Address\": {\r\n  \r\n    \"Tenant\": \"{{Tenant}}\",\r\n    \"Description\": \"Main Address\",\r\n    \"City\": \"TEST\",\r\n    \r\n    \"AddressTypeId\": \"M\",\r\n    \r\n    \"Name\": \"12PMCSadress\",\r\n    \"CountryId\": \"{{CountryId}}\"\r\n    \r\n    \r\n\r\n \r\n  \r\n  },\r\n \r\n  \"Customer\": {\r\n    \"$id\": \"3\",\r\n    \"Tenant\": \"{{Tenant}}\",\r\n    \"IsSecured\": false,\r\n  \r\n    \"EnglishName\": \"12PMCS\",\r\n    \"LocalName\": \"12PMCS\",\r\n    \r\n    \r\n\r\n   \r\n   \r\n   \r\n    \"PartnerTypeId\": \"CS\",\r\n   \r\n    \"CityName\": \"TEST\",\r\n    \"CountryId\": \"{{CountryId}}\",\r\n    \"CountryCode\": \"1 \",\r\n    \"CountryName\": \"palestine\",\r\n    \r\n\r\n    \r\n    \"IsCustomer\": true,\r\n    \"CustomerStatusCode\": \"ACT\",\r\n\r\n  \r\n    \"SetAsPotential\": false,\r\n    \r\n   \r\n    \"CustomerTenant\": 0\r\n  }\r\n\r\n}\r\n"
+				},
+				"url": {
+					"raw": "{{URL}}/api/PartnersDomain",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"PartnersDomain"
+					]
+				}
+			},
+			"response": []
 		},
 		{
-			"id": "f3506062-0f7c-4327-86d1-90a7d9199a04",
-			"name": "CreateBankCode",
-			"url": "{{URL}}/api/bankcodes",
-			"description": null,
-			"data": [],
-			"dataOptions": {
-				"raw": {}
-			},
-			"dataMode": "raw",
-			"headerData": [
-				{
-					"key": "authority",
-					"value": "test.logitudeworld.com"
-				},
-				{
-					"key": "accept",
-					"value": "application/json, text/plain, */*"
-				},
-				{
-					"key": "origin",
-					"value": "https://test.logitudeworld.com"
-				},
-				{
-					"key": "user-agent",
-					"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36"
-				},
-				{
-					"key": "token",
-					"value": "{{Token}}"
-				},
-				{
-					"key": "content-type",
-					"value": "application/json"
-				},
-				{
-					"key": "sec-fetch-site",
-					"value": "same-origin"
-				},
-				{
-					"key": "sec-fetch-mode",
-					"value": "cors"
-				},
-				{
-					"key": "referer",
-					"value": "https://test.logitudeworld.com/staging/Angular19061113/index.html"
-				},
-				{
-					"key": "accept-encoding",
-					"value": "gzip, deflate, br"
-				},
-				{
-					"key": "accept-language",
-					"value": "ar-JO,ar;q=0.9,en-US;q=0.8,en;q=0.7"
-				},
-				{
-					"key": "cookie",
-					"value": ""
-				},
-				{
-					"key": "token",
-					"value": "{{Token}}",
-					"type": "text",
-					"enabled": false
-				}
-			],
-			"method": "POST",
-			"pathVariableData": [],
-			"queryParams": [],
-			"auth": null,
-			"events": [
+			"name": "GetVendorTestGlVend",
+			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "ac349f65-921e-49b5-8842-c8547a19cc79",
+						"exec": [
+							"pm.test(\"GetVendorTestGlVend\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   if(pm.response.json().Result.length < 1 ){",
+							"    ",
+							"     tests[\"VendorrExsits : \" + false] = (true);",
+							"        postman.setNextRequest(\"CreateVendorTestGlVend\");   ",
+							"   }",
+							"   else {",
+							"    ",
+							"var idvalue=pm.response.json().Result.filter(a => a.EnglishName == '1s5PMV2')[0].Id;",
+							"     pm.environment.set(\"VendorId\",idvalue);",
+							"",
+							"     tests[\"VendorExsits : \" + true ] = (true);",
+							"     postman.setNextRequest(\"GetCustomerGlAccountCustGL\");",
+							"    }",
+							"   ",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{Token}}"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/vendorviews/getbyfilters?GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&GetCount=true&PageIndex=0&PageSize=22\n&=&=&Filter1Value=1s5PMV2",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"vendorviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "22\n"
+						},
+						{
+							"key": null,
+							"value": ""
+						},
+						{
+							"key": null,
+							"value": ""
+						},
+						{
+							"key": "Filter1Value",
+							"value": "1s5PMV2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateVendorTestGlVend",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"CreateVendorTest\", function () {\r",
+							" pm.response.to.have.status(200);\r",
+							"    var idvalue =(pm.response.json().Vendor.Id);\r",
+							"    var idvalue2= (pm.response.json().AddressId);\r",
+							"    var idexist = idvalue !== null;  \r",
+							"    pm.expect(idexist);\r",
+							"    if(idexist){\r",
+							"     pm.environment.set(\"VendorId\",idvalue);\r",
+							"      \r",
+							"     pm.environment.set(\"VendorAddressId\",idvalue2);\r",
+							"     \r",
+							"     tests[\"BodyContanisVendorId : \" + idexist] =(idexist);\r",
+							"      postman.setNextRequest(\"GetCustomerGlAccountCustGL\");\r",
+							"    }\r",
+							"    \r",
+							"    \r",
+							"   \r",
+							"    \r",
+							"});  \r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tenant",
+						"type": "text",
+						"value": "{{CurrentTenant}}"
+					},
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n  \"Tenant\":\"{{Tenant}}\",\r\n \r\n  \"PartnerTypeId\": \"VD\",\r\n\r\n  \"Address\": {\r\n  \r\n    \"Tenant\": \"{{Tenant}}\",\r\n    \"Description\": \"Main Address\",\r\n    \"City\": \"TEST\",\r\n    \r\n    \"AddressTypeId\": \"M\",\r\n    \r\n    \"Name\": \"PMVD\",\r\n    \"CountryId\": \"{{CountryId}}\",\r\n    \r\n    \r\n    \r\n    \"SearchFields\": \"1s5PMV2,1s5PMV2,1s5PMV2\"\r\n \r\n  \r\n  },\r\n \r\n  \"Vendor\": {\r\n   \r\n    \"Tenant\": \"{{Tenant}}\",\r\n    \"IsSecured\": false,\r\n  \r\n    \"EnglishName\": \"1s5PMV2\",\r\n    \"LocalName\": \"1s5PMV2\",\r\n     \"PartnerTypeId\": \"VD\",\r\n    \"CityName\": \"TEST\",\r\n    \"CountryId\": \"{{CountryId}}\",\r\n    \"CountryCode\": \"1 \",\r\n    \"CountryName\": \"palestine\"\r\n  }\r\n}\r\n"
+				},
+				"url": {
+					"raw": "{{URL}}/api/PartnersDomain",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"PartnersDomain"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetCustomerGlAccountCustGL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"GetCustomerGlAccountIdCustGL\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   if(pm.response.json().Result.length < 1 ){",
+							"     tests[\"CustomerGLAccountExists : \" + false] = (true);",
+							"        postman.setNextRequest(\"GetChartOfAccountCust1\");   ",
+							"   }",
+							"   else {",
+							"    var idvalue =(pm.response.json().Result.filter(a => a.DisplayNumber=='54l4CSPM')[0].Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    ",
+							" if (idexist)  {",
+							"     pm.environment.set(\"CustomerGLAccountId\",idvalue);",
+							"     tests[\"GlAccountExists : \" + true] = (true);",
+							"      postman.setNextRequest(\"GetVendorGlAccountVendGL\"); ",
+							"    }",
+							"   }",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{Token}}"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/glaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=54l4CSPM&PageSize=23",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"glaccountviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "54l4CSPM"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetChartOfAccountCust1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"GetChartOfAccountCust1\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"   if(pm.response.json().Result.length < 1 ){\r",
+							"       var idvaluet = \"test\";\r",
+							"        var idexist2 = idvaluet !== null;\r",
+							"     tests[\"ChartOfAccountExists : \" + false] = (true);\r",
+							"        postman.setNextRequest(\"CreateChartOfAccountCust1\");   \r",
+							"   }\r",
+							"   else {\r",
+							"    var idvalue =(pm.response.json().Result[0].Id);\r",
+							"    var idvalue2 =(pm.response.json().Result.filter(a => a.Code == '15CFC')[0].Code);\r",
+							"    var idvalue3 =(pm.response.json().Result[0].LocalName);\r",
+							"    var idvalue4 =(pm.response.json().Result[0].EnglishName);\r",
+							"    var idvalue5 =(pm.response.json().Result[0].ParentId);\r",
+							"    var idvalue6 =(pm.response.json().Result[0].TypeCode);\r",
+							"    var idvalue7 =(pm.response.json().Result[0].Inactive);\r",
+							"    var idvalue8 =(pm.response.json().Result[0].TypeName);\r",
+							"    var idvalue9 =(pm.response.json().Result[0].ParentName);\r",
+							"    var idvalue10 =(pm.response.json().Result[0].SearchFields);\r",
+							"    var idexist = idvalue !== null;\r",
+							"    pm.expect(idexist);\r",
+							"    \r",
+							" if (idexist)  {\r",
+							"     pm.environment.set(\"ChartOfAccountId\",idvalue);\r",
+							"     pm.environment.set(\"ChartOfAccountCode\",idvalue2);\r",
+							"     pm.environment.set(\"ChartOfAccountLocalName\",idvalue3);\r",
+							"     pm.environment.set(\"ChartOfAccountEnglishName\",idvalue4);\r",
+							"     pm.environment.set(\"ChartOfAccountParentId\",idvalue5);\r",
+							"     pm.environment.set(\"ChartOfAccountTypeCode\",idvalue6);\r",
+							"     pm.environment.set(\"ChartOfAccountInactive\",idvalue7);\r",
+							"     pm.environment.set(\"ChartOfAccountTypeName\",idvalue8);\r",
+							"     pm.environment.set(\"ChartOfAccountParentName\",idvalue9);\r",
+							"     pm.environment.set(\"ChartOfAccountSearchFields\",idvalue10);\r",
+							"\r",
+							"\r",
+							"     \r",
+							"     tests[\"ChartOfAccountExists : \" + true ] = (true);\r",
+							"     postman.setNextRequest(\"CreateCustomerGlAccountCustGl\");\r",
+							"    }\r",
+							"   }\r",
+							"    \r",
+							"});\r",
+							"     \r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{Token}}"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/chartofaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=15CFC&PageSize=23 ",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"chartofaccountviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "15CFC"
+						},
+						{
+							"key": "PageSize",
+							"value": "23 "
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateChartOfAccountCust1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"CreateChartOfAccountCust1\", function () {\r",
+							" pm.response.to.have.status(200);\r",
+							"    var idvalue =(pm.response.json().Id);\r",
+							"     var idvalue2 =(pm.response.json().Code);\r",
+							"    var idvalue3 =(pm.response.json().LocalName);\r",
+							"    var idvalue4 =(pm.response.json().EnglishName);\r",
+							"    var idvalue5 =(pm.response.json().ParentId);\r",
+							"    var idvalue6 =(pm.response.json().TypeCode);\r",
+							"    var idvalue7 =(pm.response.json().Inactive);\r",
+							"    var idvalue8 =(pm.response.json().TypeName);\r",
+							"    var idvalue9 =(pm.response.json().ParentName);\r",
+							"    var idvalue10 =(pm.response.json().SearchFields);\r",
+							"    \r",
+							"    \r",
+							"    \r",
+							"    \r",
+							"    var idexist = idvalue !== null;\r",
+							"    pm.expect(idexist);\r",
+							"    if(idexist){\r",
+							"     pm.environment.set(\"ChartOfAccountId\",idvalue);\r",
+							"     pm.environment.set(\"ChartOfAccountCodev\",idvalue2);\r",
+							"     pm.environment.set(\"ChartOfAccountLocalName\",idvalue3);\r",
+							"     pm.environment.set(\"ChartOfAccountEnglishName\",idvalue4);\r",
+							"     pm.environment.set(\"ChartOfAccountParentId\",idvalue5);\r",
+							"     pm.environment.set(\"ChartOfAccountTypeCode\",idvalue6);\r",
+							"     pm.environment.set(\"ChartOfAccountInactive\",idvalue7);\r",
+							"     pm.environment.set(\"ChartOfAccountTypeName\",idvalue8);\r",
+							"     pm.environment.set(\"ChartOfAccountParentName\",idvalue9);\r",
+							"     pm.environment.set(\"ChartOfAccountSearchFields\",idvalue10);\r",
+							"     \r",
+							"     \r",
+							"     tests[\"BodyContanisChartOfAccountId : \" + true] =(true);\r",
+							"        postman.setNextRequest(\"CreateCustomerGlAccountCustGl\");   \r",
+							"    }\r",
+							"    \r",
+							"   \r",
+							"    \r",
+							"});\r",
+							"     \r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{Token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "   {\r\n   \t\"$id\": \"1\",\r\n    \"Tenant\": {{Tenant}},\r\n    \"Code\": \"15CFC\",\r\n    \"LocalName\": \"לקוחות\",\r\n    \"Englishname\": \"PMCustomerChart\",\r\n    \"TypeCode\": \"3\",\r\n    \"Inactive\": true,\r\n    \"SearchFields\": \"15CFC,15CFC,15CFC\",\r\n    \"ChangeSetOp\": 1\r\n \r\n}\r\n"
+				},
+				"url": {
+					"raw": "{{URL}}/api/chartofaccounts",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"chartofaccounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateCustomerGlAccountCustGl",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"CreateCustomerGlAccountCustGl \", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var idvalue1 = (pm.response.json().Id);",
+							" ",
+							"    var id1exist = idvalue1 !== null;",
+							"   ",
+							"",
+							"    pm.expect(id1exist);",
+							"   ",
+							"   // pm.environment.set(\"GLAccountId1\",idvalue1);",
+							" //  tests[\"BodyContanisGLAccountId : \" + id1exist] = responseBody.has(id1exist);",
+							" ",
+							"    ",
+							"",
+							"if (id1exist)  {",
+							"   pm.environment.set(\"CustomerGLAccountId\",idvalue1); ",
+							"   ",
+							"   ",
+							"   tests[\"BodyContanisGlAccountId : \" + id1exist] =(id1exist);",
+							"   postman.setNextRequest(\"GetVendorGlAccountVendGL\");",
+							" ",
+							"}});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{Token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n   \"$id\":\"1\",\r\n   \"Tenant\":{{Tenant}},\r\n   \"AccountTypeCode\":\"2\",\r\n   \"DisplayNumber\":\"54l4CSPM\",\r\n   \"LocalName\":\"54l4CSPM\",\r\n   \"EnglishName\":\"54l4CSPM\",\r\n   \"SearchFields\":\"54l4CSPM,54l4CSPM,54l4CSPM\",\r\n   \"IsMultiCurrency\":true,\r\n   \"RevenueExpenseType\":\"3\",\r\n   \"ChartOfAccountsId\":\"{{ChartOfAccountId}}\",\r\n   \"ChartOfAccountsTypeCode\":\"3\",\r\n   \"ReconcileMethodCode\":\"0\",\r\n   \"NewGLAccountCardId\":\"{{CustomerId}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{URL}}/api/glaccounts",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"glaccounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetVendorGlAccountVendGL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get Vendor GlAccount VendorGL\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   if(pm.response.json().Result.length < 1 ){",
+							"     tests[\"VendorGLAccountExists : \" + false] = (true);",
+							"        postman.setNextRequest(\"CreateVendorGlAccountVendGL\");   ",
+							"   }",
+							"   else {",
+							"    var idvalue =(pm.response.json().Result.filter(a => a.DisplayNumber== '458GLPM')[0].Id);",
+							"    var idvalue2 =(pm.response.json().Result[0].InternalNumber);",
+							"      var idvalue3 =(pm.response.json().Result[0].ControlAccountId);",
+							"   var idvalue4 =(pm.response.json().Result[0].DisplayNumber);",
+							"    var idvalue5 =(pm.response.json().Result[0].ChartOfAccountsId);",
+							"     // var idvalue6 =(pm.response.json().Result.filter(a => a.DisplayNumber== 'PMGLVend')[0].ControlAccountId);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    ",
+							" if (idexist)  {",
+							"     pm.environment.set(\"VendorGLAccountId\",idvalue);",
+							"      pm.environment.set(\"InternalNumber\",idvalue2);",
+							"      pm.environment.set(\"ControlAccountId\",idvalue3);",
+							"      pm.environment.set(\"DisplayNumber\",idvalue4);",
+							"      pm.environment.set(\"ChartOfAccountsId\",idvalue5);",
+							"     tests[\"GlAccountExists : \" + true] = (true);",
+							"      postman.setNextRequest(\"GetCustomerAddress\"); ",
+							"    }",
+							"   }",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{Token}}"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/glaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=458GLPM&PageSize=23",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"glaccountviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "458GLPM"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateVendorGlAccountVendGL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"CreateCustomerGlAccountCustGl \", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var idvalue1 = (pm.response.json().Id);",
+							"    var idvalue2 =(pm.response.json().InternalNumber);",
+							"    var idvalue3 =(pm.response.json().ControlAccountId);",
+							"   var idvalue4 =(pm.response.json().DisplayNumber);",
+							"    var idvalue5 =(pm.response.json().ChartOfAccountsId);",
+							" ",
+							"    var id1exist = idvalue1 !== null;",
+							"   ",
+							"",
+							"    pm.expect(id1exist);",
+							"   ",
+							"",
+							"",
+							"if (id1exist)  {",
+							"   pm.environment.set(\"VendorGLAccountId\",idvalue1); ",
+							"    //pm.environment.set(\"VendorGLAccountId\",idvalue);",
+							"      pm.environment.set(\"InternalNumber\",idvalue2);",
+							"      pm.environment.set(\"ControlAccountId\",idvalue3);",
+							"      pm.environment.set(\"DisplayNumber\",idvalue4);",
+							"      pm.environment.set(\"ChartOfAccountsId\",idvalue5);",
+							"   tests[\"BodyContanisGlAccountId : \" + id1exist] =(id1exist);",
+							"      postman.setNextRequest(\"GetCustomerAddress\");",
+							"",
+							" ",
+							"}});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{Token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n   \"$id\":\"1\",\r\n   \"Tenant\":{{Tenant}},\r\n   \"AccountTypeCode\":\"3\",\r\n   \"DisplayNumber\":\"458GLPML\",\r\n   \"LocalName\":\"458GLPML\",\r\n   \"EnglishName\":\"458GLPML\",\r\n   \"SearchFields\":\"458GLPML,458GLPML,458GLPML\",\r\n   \"IsMultiCurrency\":true,\r\n   \"RevenueExpenseType\":\"3\",\r\n   \"ChartOfAccountsId\":\"{{VendorChartOfAccountId}}\",\r\n   \"ChartOfAccountsTypeCode\":\"4\",\r\n   \"ReconcileMethodCode\":\"0\",\r\n   \"NewGLAccountCardId\":\"{{VendorId}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{URL}}/api/glaccounts",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"glaccounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetCustomerAddress",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"",
+							"pm.test(\"Get Customer Address \", function () {",
+							" pm.response.to.have.status(200);",
+							"    var idvalue =(pm.response.json().MainAddressId );",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    if(idexist){",
+							"     pm.environment.set(\"CustomerAddressId\",idvalue);",
+							"     ",
+							"     tests[\"BodyContanisAddressId : \" + idexist] =(idexist);",
+							"      postman.setNextRequest(\"GetVendorAddress\");",
+							"    }",
+							"    ",
+							"    ",
+							"   ",
+							"    ",
+							"});  ",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{Token}}"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/cardviews/getsingle/?id={{CustomerId}}\n",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"cardviews",
+						"getsingle",
+						""
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{CustomerId}}\n"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetVendorAddress",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"",
+							"pm.test(\"Get Customer Address \", function () {",
+							" pm.response.to.have.status(200);",
+							"    var idvalue =(pm.response.json().MainAddressId );",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    if(idexist){",
+							"     pm.environment.set(\"VendorAddressId\",idvalue);",
+							"     tests[\"BodyContanisAddressId : \" + idexist] =(idexist);",
+							"     postman.setNextRequest(\"GetBankChartOfAccount\");",
+							"",
+							"    }",
+							"});  ",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/cardviews/getsingle/?id={{VendorId}}\n",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"cardviews",
+						"getsingle",
+						""
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{VendorId}}\n"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetBankChartOfAccount",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"GetChartOfAccountBank BK771 Successfully Done\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"   if(pm.response.json().Result.length < 1 ){\r",
+							"       var idvaluet = \"test\";\r",
+							"        var idexist2 = idvaluet !== null;\r",
+							"        tests[\"ChartOfAccountExists : \" + false] = (true);\r",
+							"        postman.setNextRequest(\"CreateBankChartOfAccount\");   \r",
+							"   }\r",
+							"   else {\r",
+							"    var idvalue =(pm.response.json().Result.filter(a => a.Code == 'BK771')[0].Id);\r",
+							"    var idexist = idvalue !== null;\r",
+							"    pm.expect(idexist);\r",
+							"    \r",
+							" if (idexist)  {\r",
+							"     pm.environment.set(\"BankChartOfAccountId\",idvalue);\r",
+							"     tests[\"ChartOfAccountExists : \" + true ] = (true);\r",
+							"     postman.setNextRequest(\"CreateBankGlAccount\");\r",
+							"    }\r",
+							"   }\r",
+							"    \r",
+							"});\r",
+							"     \r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/chartofaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=BK771&PageSize=23 ",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"chartofaccountviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "BK771"
+						},
+						{
+							"key": "PageSize",
+							"value": "23 "
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateBankChartOfAccount",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"CreateChartOfAccountCust1\", function () {\r",
+							" pm.response.to.have.status(200);\r",
+							"    var idvalue =(pm.response.json().Id);\r",
+							"    var idexist = idvalue !== null;\r",
+							"    pm.expect(idexist);\r",
+							"    if(idexist){\r",
+							"     pm.environment.set(\"GetBankGlAccount\",idvalue);\r",
+							"     tests[\"BodyContanisChartOfAccountId : \" + true] =(true);\r",
+							"     postman.setNextRequest(\"CreateBankGlAccount\");\r",
+							"    }\r",
+							"});\r",
+							"     "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "   {\r\n   \t\"$id\": \"1\",\r\n    \"Tenant\": {{Tenant}},\r\n    \"Code\": \"BK771\",\r\n    \"LocalName\": \"PMBankChart\",\r\n    \"Englishname\": \"PMBankChart\",\r\n    \"TypeCode\": \"5\",\r\n    \"Inactive\": true,\r\n    \"ChangeSetOp\": 1\r\n}\r\n"
+				},
+				"url": {
+					"raw": "{{URL}}/api/chartofaccounts",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"chartofaccounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateBankGlAccount",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"CreateCustomerGlAccountCustGl \", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var idvalue1 = (pm.response.json().Id);",
+							"    var id1exist = idvalue1 !== null;",
+							"    pm.expect(id1exist);",
+							"if (id1exist)  {",
+							"   pm.environment.set(\"BankGLAccountId\",idvalue1); ",
+							"   tests[\"BodyContanisGlAccountId : \" + id1exist] =(id1exist);",
+							"   postman.setNextRequest(\"GetBankCode\");",
+							" ",
+							"}});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{Token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n   \"$id\":\"1\",\r\n   \"Tenant\":{{Tenant}},\r\n   \"AccountTypeCode\":\"1\",\r\n   \"DisplayNumber\":\"1414BKPM\",\r\n   \"LocalName\":\"1414BKPM\",\r\n   \"EnglishName\":\"1414BKPM\",\r\n   \"SearchFields\":\"1414BKPM,1414BKPM,1414BKPM\",\r\n   \"RevenueExpenseType\":\"3\",\r\n   \"CurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"ChartOfAccountsId\":\"{{BankChartOfAccountId}}\",\r\n   \"ChartOfAccountsTypeCode\":\"5\",\r\n   \"ReconcileMethodCode\":\"0\",\r\n}"
+				},
+				"url": {
+					"raw": "{{URL}}/api/glaccounts",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"glaccounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetBankCode",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"pm.test(\"GetBankCode\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   if(pm.response.json().Result.length < 1 ){",
+							"     tests[\"CoderExsits : \" + false] = (true);",
+							"        postman.setNextRequest(\"CreateBankCode\");   ",
+							"   }",
+							"   else {",
+							"    ",
+							"var idvalue=pm.response.json().Result[0].Id;",
+							"     pm.environment.set(\"CodeId\",idvalue);",
+							"     tests[\"CoderExsits : \" + true ] = (true);",
+							"     postman.setNextRequest(\"CreateBranchCashBook\");",
+							"    }",
+							"   ",
+							"    ",
+							"});",
+							" ",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authority",
+						"value": "staging.amital.co.il"
+					},
+					{
+						"key": "pragma",
+						"value": "no-cache"
+					},
+					{
+						"key": "cache-control",
+						"value": "no-cache"
+					},
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-origin"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "referer",
+						"value": "https://staging.amital.co.il/Angular19171210/index.html"
+					},
+					{
+						"key": "accept-encoding",
+						"value": "gzip, deflate, br"
+					},
+					{
+						"key": "accept-language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "cookie",
+						"value": "__utmz=22491179.1569324975.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); __utma=22491179.2130097536.1569324975.1571736495.1574855059.9; email_cookie=khawla@logitudeworld.com"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/bankcodeviews/getbyfilters?ForceCacheRefresh=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=BK14&PageIndex=0&PageSize=12",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"bankcodeviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false",
+							"disabled": true
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "BK14"
+						},
+						{
+							"key": "GetCount",
+							"value": "true",
+							"disabled": true
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "12"
+						},
+						{
+							"key": "SortBy",
+							"value": "Code",
+							"disabled": true
+						},
+						{
+							"key": "SortDirection",
+							"value": "Ascending",
+							"disabled": true
+						},
+						{
+							"key": "AdditionalFilters",
+							"value": "\\[\\{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22BK14%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false\\}\\]",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateBankCode",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
 						"exec": [
 							"pm.test(\"CreateBankCode\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -3220,10 +3236,139 @@
 					}
 				}
 			],
-			"folder": null,
-			"rawModeData": "{   \"tenant\": {{Tenant}},\n    \"code\": \"BK14\",\n    \"englishName\": \"BKT\",\n    \"localName\": \"בקי\"\n}",
-			"headers": "authority: test.logitudeworld.com\naccept: application/json, text/plain, */*\norigin: https://test.logitudeworld.com\nuser-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36\ntoken: {{Token}}\ncontent-type: application/json\nsec-fetch-site: same-origin\nsec-fetch-mode: cors\nreferer: https://test.logitudeworld.com/staging/Angular19061113/index.html\naccept-encoding: gzip, deflate, br\naccept-language: ar-JO,ar;q=0.9,en-US;q=0.8,en;q=0.7\ncookie: \n//token: {{Token}}\n",
-			"pathVariables": {}
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authority",
+						"value": "test.logitudeworld.com"
+					},
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "origin",
+						"value": "https://test.logitudeworld.com"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-origin"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "referer",
+						"value": "https://test.logitudeworld.com/staging/Angular19061113/index.html"
+					},
+					{
+						"key": "accept-encoding",
+						"value": "gzip, deflate, br"
+					},
+					{
+						"key": "accept-language",
+						"value": "ar-JO,ar;q=0.9,en-US;q=0.8,en;q=0.7"
+					},
+					{
+						"key": "cookie",
+						"value": ""
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \"tenant\": {{Tenant}},\n    \"code\": \"BK14\",\n    \"englishName\": \"BKT\",\n    \"localName\": \"בקי\"\n}"
+				},
+				"url": {
+					"raw": "{{URL}}/api/bankcodes",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"bankcodes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateBranchCashBook",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Create Branch Main Office\", function () {\r",
+							" pm.response.to.have.status(200);\r",
+							"    var idvalue =(pm.response.json().Id);\r",
+							"    var idexist = idvalue !== null;\r",
+							"    pm.expect(idexist);\r",
+							"    if(idexist){\r",
+							"     pm.environment.set(\"BranchCashBookId\",idvalue);\r",
+							"     \r",
+							"     tests[\"BodyContanisBrnachId : \" + idexist] =(idexist);\r",
+							"     postman.setNextRequest(null); \r",
+							"    }\r",
+							" \r",
+							"\r",
+							"});  \r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{Token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"Tenant\":\"{{Tenant}}\",\r\n   \"EnglishName\":\"Cash Book\",\r\n   \"LocalName\":\"מבחן התרסקות\",\r\n   \"SearchFields\":\"test\"\r\n}"
+				},
+				"url": {
+					"raw": "{{URL}}/api/branches",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"branches"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

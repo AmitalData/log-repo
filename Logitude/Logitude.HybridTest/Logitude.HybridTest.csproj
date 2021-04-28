@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="RestAPIService.cs" />
+    <Compile Include="RetryTest.cs" />
     <Compile Include="ServicesTest\AutoSignUpTest.cs" />
     <Compile Include="ServicesTest\DocumentsMetaDataTypeTest.cs" />
     <Compile Include="ServicesTest\DepositionRequestTest.cs" />

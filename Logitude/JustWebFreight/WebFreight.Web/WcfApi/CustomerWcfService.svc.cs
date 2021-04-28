@@ -57,10 +57,10 @@ namespace WebFreight.Web.WcfApi
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
 
-                    if (string.IsNullOrEmpty(entityPM.PaymentTermId))
-                    {
-                        //entityPM.PaymentTermId = "--";
-                    }
+                    //if (string.IsNullOrEmpty(entityPM.PaymentTermId))
+                    //{
+                    //    entityPM.PaymentTermId = "--";
+                    //}
                    
                     ClassLevelValidator validationClass = new ClassLevelValidator("Customer", entityPM.Tenant) { IsHybrid = true };
                     if (!validationClass.IsValid(entityPM, entityPM, null))
@@ -504,20 +504,20 @@ namespace WebFreight.Web.WcfApi
                         if (salesManSettings != null && salesManSettings.UpdateDirection == "NOUP")
                         {
                             entityPM.SalesmanUserId = entity.SalesmanUserId;
-                            entityPM.CustomerSalesmanByProducts = new List<CustomerSalesmanByProductPM>();
+                            //entityPM.CustomerSalesmanByProducts = new List<CustomerSalesmanByProductPM>();
                         }
-                        else
+                        //else
+                        //{
+                        CustomerSalesmanByProductQuery customerSalesmanByProductQuery = new CustomerSalesmanByProductQuery(customerSalesmanByProductRepository);
+                        List<CustomerSalesmanByProductPM> CustomerSalesmanByProducts = customerSalesmanByProductQuery.GetCustomerSalesmanByProductPMs(entity.Tenant, entity.Id);
+                        foreach (CustomerSalesmanByProductPM salesman in CustomerSalesmanByProducts)
                         {
-                            CustomerSalesmanByProductQuery customerSalesmanByProductQuery = new CustomerSalesmanByProductQuery(customerSalesmanByProductRepository);
-                            List<CustomerSalesmanByProductPM> CustomerSalesmanByProducts = customerSalesmanByProductQuery.GetCustomerSalesmanByProductPMs(entity.Tenant, entity.Id);
-                            foreach (CustomerSalesmanByProductPM salesman in CustomerSalesmanByProducts)
-                            {
-                                salesman.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Delete;
-                                entityPM.CustomerSalesmanByProducts.Add(salesman);
+                            salesman.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Delete;
+                            entityPM.CustomerSalesmanByProducts.Add(salesman);
 
 
-                            }
                         }
+                        //}
 
 
 
@@ -758,7 +758,6 @@ namespace WebFreight.Web.WcfApi
                                                                  PayablesAccountingCard = card.PayablesAccountingCard,
                                                                  InActive = customer.Card.InActive,
                                                                  Notes = customer.Card.Notes,
-                                                                 BillToId = customer.BillToId,
                                                                  Website = customer.Card.Website,
                                                                  SalesmanUserId = customer.SalesmanUserId,
                                                                  Id = customer.Id,
@@ -776,7 +775,6 @@ namespace WebFreight.Web.WcfApi
                                                                  //SalesmanUserEnglishName = customer.SalesmanUser == null ? null : (customer.SalesmanUser.Contact == null ? null : customer.SalesmanUser.Contact.EnglishName),
                                                                  CityName = customer.Card.CityName,
                                                                  VatTypeId = customer.Card.VatTypeId,
-                                                                 BillToName = customer.BillToCard.EnglishName,
                                                                  Field1 = customer.Field1,
                                                                  Field2 = customer.Field2,
                                                                  Field3 = customer.Field3,

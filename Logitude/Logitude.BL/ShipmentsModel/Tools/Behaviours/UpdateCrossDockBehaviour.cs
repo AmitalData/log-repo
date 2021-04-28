@@ -35,7 +35,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
         private WarehouseReleaseRepository warehouseReleaseRepository;
         private IQueryable<WarehouseEntry> warehouseEntries;
         private IQueryable<WarehouseRelease> warehouseRelases;
-        private StorageCalculationManager storageCalculationManager;
+        private StorageCalculater storageCalculater;
         private int tenant;
 
         public bool ReceivablePricingUpdated { get; set; }
@@ -52,7 +52,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
             warehouseEntries = warehouseEntryRepository.GetWarehouseEntriesByshipmentId(shipmentPM.Id, tenant);
             warehouseRelases = warehouseReleaseRepository.GetWarehouseReleasesByshipmentId(shipmentPM.Id, tenant);
 
-            storageCalculationManager = new StorageCalculationManager(this.shipmentPM);
+            storageCalculater = new StorageCalculater(this.shipmentPM);
         }
 
         public void Handle()
@@ -129,8 +129,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
 
                 if (shipmentPM.IsCFSWarehouse)
                 {
-                    storageCalculationManager.CheckStorageProperties();
+                    storageCalculater.StartCalculations();
                     ReceivablePricingUpdated = true;
+                    shipmentPM.CalculateProfit = true;
                 }
             }
         }
@@ -179,8 +180,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
 
                 if (shipmentPM.IsCFSWarehouse)
                 {
-                    storageCalculationManager.CheckStorageProperties();
+                    storageCalculater.StartCalculations();
                     ReceivablePricingUpdated = true;
+                    shipmentPM.CalculateProfit = true;
                 }
             }
         }
@@ -288,17 +290,91 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
         }        
     }
 
-    public class StorageCalculationManager
+    public class StorageCalculater
     {
         private ShipmentPM shipmentPM;
+        private int tenant;
         private int? storageDays;
-        public StorageCalculationManager(ShipmentPM shipmentPM)
+        private ShipmentReceivablePM storageShipmentReceivable;
+        private bool readyToCalculateStorage = true;
+        private DateTime todayDate;
+        public StorageCalculater(ShipmentPM shipmentPM)
         {
             this.shipmentPM = shipmentPM;
+            this.tenant = shipmentPM.Tenant;
+            this.todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+            this.storageShipmentReceivable = shipmentPM.ShipmentReceivables.Where(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && string.IsNullOrEmpty(d.ARInvoiceId)).FirstOrDefault();
         }
 
-        private void ComputeStorageDaye()
+        public void StartCalculations()
         {
+            this.storageDays = this.ComputeStorageDaye();
+            this.readyToCalculateStorage = this.CheckIfReadyToCalculateStorage();
+
+            if (readyToCalculateStorage)
+            {
+                double? amount = this.ComputeReceivableAmount();
+
+                if (storageShipmentReceivable != null)
+                {
+                    this.UpdateStorageShipmentReceivable(amount);
+                }
+
+                else
+                {
+                    this.CreateStorageShipmentReceivable(amount);
+                }
+            }
+
+            else
+            {
+                this.DeleteStorageShipmentReceivable();                
+            }
+        }
+
+        private bool CheckIfReadyToCalculateStorage()
+        {
+            if (shipmentPM.WarehouseLegActualEntryDate == null)
+            {
+                return false;
+            }
+
+            if (shipmentPM.WarehouseLegActualReleaseDate == null)
+            {
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(shipmentPM.ChargeStorageCurrencyId))
+            {
+                return false;
+            }
+
+            if (!shipmentPM.ChargeStorage)
+            {
+                return false;
+            }
+
+            if (shipmentPM.ShipmentStoragePricings.Count == 0)
+            {
+                return false;
+            }
+
+            if (storageDays == null)
+            {
+                return false;
+            }
+
+            if (storageDays <= shipmentPM.WarehouseStorageFreeDays)
+            {
+                return false;
+            }
+
+            return true;
+        }
+        private int? ComputeStorageDaye()
+        {
+            int? storageDays = null;
+
             if (shipmentPM.WarehouseLegActualEntryDate != null && shipmentPM.WarehouseLegActualReleaseDate != null)
             {
                 if (shipmentPM.WarehouseLegActualReleaseDate >= shipmentPM.WarehouseLegActualEntryDate)
@@ -306,41 +382,173 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                     storageDays = (shipmentPM.WarehouseLegActualReleaseDate - shipmentPM.WarehouseLegActualEntryDate).Value.Days;
                 }
             }
+
+            return storageDays;
         }
-        public void CheckStorageProperties()
+
+        private void CreateStorageShipmentReceivable(double? amount)
         {
-            ShipmentReceivablePM storageReceivable = shipmentPM.ShipmentReceivables.Where(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && string.IsNullOrEmpty(d.ARInvoiceId)).FirstOrDefault();
-
-            this.ComputeStorageDaye();
-
-            if (shipmentPM.WarehouseLegActualEntryDate != null && shipmentPM.WarehouseLegActualReleaseDate != null && !string.IsNullOrEmpty(shipmentPM.ChargeStorageCurrencyId)
-                && shipmentPM.ChargeStorage && shipmentPM.ShipmentStoragePricings.Count > 0 && storageDays != null)
+            if (amount != null && amount != 0)
             {
-                if (storageReceivable != null)
-                {
-                    this.UpdateStorageReceivable(storageReceivable);
-                }
+                ChargesType importStorageChargesType = this.GetImportStorageChargesType();                
 
-                else
+                if (importStorageChargesType != null)
                 {
-                    this.CreateReceivable();
+                    this.InitiateStorageShipmentReceivable();
+                    this.SetReceivaleFieldsFromImportStorageCharge(importStorageChargesType);
+                    this.SetReceivableRates();
+                    this.SetPrepaidCollect(importStorageChargesType);
+                    this.SetAmountsFields(amount);
+
+                    shipmentPM.ShipmentReceivables.Add(storageShipmentReceivable);
                 }
+            }
+        }
+        private void UpdateStorageShipmentReceivable(double? amount)
+        {
+            if (storageShipmentReceivable.TotalAmount != amount)
+            {
+                storageShipmentReceivable.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                this.SetAmountsFields(amount);
+            }
+        }
+        private void DeleteStorageShipmentReceivable()
+        {
+            if (storageShipmentReceivable != null)
+            {
+                storageShipmentReceivable.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Delete;
+            }
+        }    
+        private ChargesType GetImportStorageChargesType()
+        {
+            string importStorageChargeCode = "ISTOR";
+            ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(tenant);
+            return chargesTypeRepository.GetSingleChargesTypeByCode(importStorageChargeCode, tenant);
+        }
+        private string GetLocalCurrencyId()
+        {
+            string localCurrencyId = null;
+
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+            Tenant myTenant = tenantRepository.GetSingleTenant(tenant);
+            if (myTenant != null)
+            {
+                localCurrencyId = myTenant.CurrencyId;
+            }
+
+            return localCurrencyId;
+        }
+        private string GetLoggedUserId()
+        {
+            string loggedUserId = null;
+            string email = HttpContext.Current.User.Identity.Name;
+            ContactRepository contactRepository = new ContactRepository(tenant);
+            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
+            if (loggedContact != null)
+            {
+                loggedUserId = loggedContact.Id;
+            }
+
+            return loggedUserId;
+        }
+        private void InitiateStorageShipmentReceivable()
+        {
+            string loggedUserId = this.GetLoggedUserId();
+
+            storageShipmentReceivable = new ShipmentReceivablePM();
+            storageShipmentReceivable.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+            storageShipmentReceivable.Tenant = shipmentPM.Tenant;
+            storageShipmentReceivable.ShipmentId = shipmentPM.Id;
+            storageShipmentReceivable.ShipmentNumber = shipmentPM.ShipmentNumber;
+            storageShipmentReceivable.CreateDate = todayDate;
+            storageShipmentReceivable.UpdateDate = todayDate;
+            storageShipmentReceivable.CreatedByUserId = loggedUserId;
+            storageShipmentReceivable.UpdateByUserId = loggedUserId;
+            storageShipmentReceivable.ShipmentReceivableLineStatusCode = "OAMT";
+            storageShipmentReceivable.CurrencyId = shipmentPM.ChargeStorageCurrencyId;
+        }
+        private void SetReceivaleFieldsFromImportStorageCharge(ChargesType importStorageChargesType)
+        {
+            storageShipmentReceivable.ChargesTypeId = importStorageChargesType.Id;
+            storageShipmentReceivable.ChargesTypeCode = importStorageChargesType.Code;
+            storageShipmentReceivable.ChargesTypeName = importStorageChargesType.EnglishName;
+            storageShipmentReceivable.MeasurementId = importStorageChargesType.MeasurementId;
+            storageShipmentReceivable.MeasurementCode = importStorageChargesType.Measurement == null ? null : importStorageChargesType.Measurement.Code;
+            storageShipmentReceivable.ChargesGroupCode = importStorageChargesType.ChargesGroupCode;
+            storageShipmentReceivable.DueTypeCode = importStorageChargesType.DueTypeCode;
+            storageShipmentReceivable.VatTypeId = importStorageChargesType.VatTypeId;
+            storageShipmentReceivable.IATACodeId = importStorageChargesType.IATACodeId;
+            storageShipmentReceivable.IsExpense = importStorageChargesType.IsExpense;
+        }
+        private void SetPrepaidCollect(ChargesType importStorageChargesType)
+        {
+            if (importStorageChargesType.ChargesGroupCode == "FRT")
+            {
+                storageShipmentReceivable.PrepaidCollectId = shipmentPM.FreightPrepaidCollectId;
             }
 
             else
             {
-                if (storageReceivable != null)
-                {
-                    storageReceivable.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Delete;
-                }
+                storageShipmentReceivable.PrepaidCollectId = shipmentPM.OtherPrepaidCollectId;
+            }
+        }
+        private void SetReceivableRates()
+        {
+            string localCurrencyId = this.GetLocalCurrencyId();
+            List<LastRate> allRates = this.GetAllRates(localCurrencyId, todayDate);
+            this.SetRate(allRates, localCurrencyId);
+            this.SetProfitRate(allRates, localCurrencyId); 
+        }
+        private void SetAmountsFields(double? amount)
+        {
+            storageShipmentReceivable.TotalAmount = amount;
+            storageShipmentReceivable.TotalAmountLocal = MethodHelper.Round(storageShipmentReceivable.TotalAmount * storageShipmentReceivable.Rate, 2);
+
+            if (storageShipmentReceivable.CurrencyId == shipmentPM.ProfitCurrencyId)
+            {
+                storageShipmentReceivable.AmountInProfitCurrency = storageShipmentReceivable.TotalAmount;
             }
 
-            //this.ComputeStorageFee();
+            else
+            {
+                storageShipmentReceivable.AmountInProfitCurrency = (storageShipmentReceivable.TotalAmountLocal / storageShipmentReceivable.ProfitCurrencyExchangeRate);
+            }
         }
+        private void SetProfitRate(List<LastRate> allRates, string localCurrencyId)
+        {
+            if (shipmentPM.ProfitCurrencyId == localCurrencyId)
+            {
+                storageShipmentReceivable.ProfitCurrencyExchangeRate = 1;
+            }
+
+            else
+            {
+                LastRate myLastRate = allRates.Where(d => d.ForeignCurrencyId == shipmentPM.ProfitCurrencyId).FirstOrDefault();
+                if (myLastRate != null)
+                {
+                    storageShipmentReceivable.ProfitCurrencyExchangeRate = myLastRate.Rate;
+                }
+            }
+        }
+        private void SetRate(List<LastRate> allRates, string localCurrencyId)
+        {
+            if (localCurrencyId == storageShipmentReceivable.CurrencyId)
+            {
+                storageShipmentReceivable.Rate = 1;
+            }
+            else
+            {
+                LastRate lastRate = allRates.Where(d => d.ForeignCurrencyId == storageShipmentReceivable.CurrencyId).FirstOrDefault();
+                if (lastRate != null)
+                {
+                    storageShipmentReceivable.Rate = lastRate.Rate;
+                }
+            }
+        }
+
         private double? ComputeReceivableAmount()
         {
-            double? amount = 0;
-            int? allChargeableDays = storageDays - shipmentPM.WarehouseStorageFreeDays;
+            double? amount = 0;            
             double? weight = this.ComputeStorageWeight();
 
             List<CalculatedPricingItem> myPricigs = new List<CalculatedPricingItem>();
@@ -348,216 +556,90 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
             {
                 foreach (ShipmentStoragePricingPM item in shipmentPM.ShipmentStoragePricings.OrderBy(d => d.LineNumber))
                 {
-                    CalculatedPricingItem newItem = new CalculatedPricingItem();
-                    newItem.LineNumber = item.LineNumber;
-                    newItem.Price = item.SalePrice;
-
-                    newItem.ChargeableDays = allChargeableDays - myPricigs.Sum(s => s.ChargeableDays);
-
-                    if (item.Days != null && item.Days != 0)
-                    {
-                        if (newItem.ChargeableDays > item.Days)
-                        {
-                            newItem.ChargeableDays = item.Days;
-                        }
-                    }
-
-                    newItem.Amount = MethodHelper.Round((item.SalePrice * Convert.ToDecimal(weight) * newItem.ChargeableDays), 2);
-                    myPricigs.Add(newItem);
+                    CalculatedPricingItem calculatedPricingItem = this.CreateCalculatedPricingItem(item, weight, myPricigs);
+                    myPricigs.Add(calculatedPricingItem);
                 }
 
                 this.UpdateShipmentStoragePricingLine(myPricigs);
                 amount = Convert.ToDouble(myPricigs.Sum(s => s.Amount));
             }
 
-            double? myResult = amount;
+            double? invoicedStorageReceivableAmount = this.GetInvoicedStorageReceivableAmount();
+            if (invoicedStorageReceivableAmount != null)
+            {
+                return (amount - invoicedStorageReceivableAmount);
+            }
+
+            else
+            {
+                return amount;
+            }
+        }
+        private double? GetInvoicedStorageReceivableAmount()
+        {
+            double? invoicedStorageReceivableAmount = null;
+
             ShipmentReceivablePM invoiceStorageReceivable = shipmentPM.ShipmentReceivables.Where(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && !string.IsNullOrEmpty(d.ARInvoiceId)).FirstOrDefault();
             if (invoiceStorageReceivable != null)
             {
-                myResult = amount - invoiceStorageReceivable.TotalAmount;
+                invoicedStorageReceivableAmount = invoiceStorageReceivable.TotalAmount;
             }
 
-            return myResult;
+            return invoicedStorageReceivableAmount;
         }
-        private void UpdateStorageReceivable(ShipmentReceivablePM storageReceivable)
+        private CalculatedPricingItem CreateCalculatedPricingItem(ShipmentStoragePricingPM shipmentStoragePricing, double? weight, List<CalculatedPricingItem> myPricigs)
         {
-            double? amount = this.ComputeReceivableAmount();
+            int? allChargeableDays = storageDays - shipmentPM.WarehouseStorageFreeDays;
 
-            storageReceivable.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-            storageReceivable.TotalAmount = amount;
-            storageReceivable.TotalAmountLocal = MethodHelper.Round(storageReceivable.TotalAmount * storageReceivable.Rate, 2);
+            CalculatedPricingItem calculatedPricingItem = new CalculatedPricingItem();
+            calculatedPricingItem.LineNumber = shipmentStoragePricing.LineNumber;
+            calculatedPricingItem.Price = shipmentStoragePricing.SalePrice;
+            calculatedPricingItem.ChargeableDays = allChargeableDays - myPricigs.Sum(s => s.ChargeableDays);
 
-            if (storageReceivable.CurrencyId == shipmentPM.ProfitCurrencyId)
+            if (shipmentStoragePricing.Days != null && shipmentStoragePricing.Days != 0)
             {
-                storageReceivable.AmountInProfitCurrency = storageReceivable.TotalAmount;
-            }
-
-            else
-            {
-                storageReceivable.AmountInProfitCurrency = (storageReceivable.TotalAmountLocal / storageReceivable.ProfitCurrencyExchangeRate);
-            }
-        }
-        private void CreateReceivable()
-        {
-            double? amount = this.ComputeReceivableAmount();
-
-            if (amount != null && amount != 0)
-            {
-                ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(shipmentPM.Tenant);
-                ChargesType chargesType = chargesTypeRepository.GetSingleChargesTypeByCode("ISTOR", shipmentPM.Tenant);
-
-                if (chargesType != null)
+                if (calculatedPricingItem.ChargeableDays > shipmentStoragePricing.Days)
                 {
-                    string localCurrencyId = null;
-                    string loggedUserId = null;
-
-                    TenantRepository tenantRepository = new TenantRepository(shipmentPM.Tenant);
-                    Tenant myTenant = tenantRepository.GetSingleTenant(shipmentPM.Tenant);
-                    if (myTenant != null)
-                    {
-                        localCurrencyId = myTenant.CurrencyId;
-                    }
-
-                    string email = HttpContext.Current.User.Identity.Name;
-                    ContactRepository contactRepository = new ContactRepository(shipmentPM.Tenant);
-                    Contact loggedContact = contactRepository.GetSingleContactByEmail(email, shipmentPM.Tenant);
-                    if (loggedContact != null)
-                    {
-                        loggedUserId = loggedContact.Id;
-                    }
-
-                    DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(shipmentPM.Tenant);
-
-                    List<LastRate> allRates = this.GetAllRates(localCurrencyId, todayDate);
-
-                    ShipmentReceivablePM storageReceivable = new ShipmentReceivablePM();
-                    storageReceivable.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
-                    storageReceivable.Tenant = shipmentPM.Tenant;
-                    storageReceivable.ShipmentId = shipmentPM.Id;
-                    storageReceivable.ChargesTypeId = chargesType.Id;
-                    storageReceivable.ChargesTypeCode = chargesType.Code;
-                    storageReceivable.ChargesTypeName = chargesType.EnglishName;
-                    storageReceivable.MeasurementId = chargesType.MeasurementId;
-                    storageReceivable.ChargesGroupCode = chargesType.ChargesGroupCode;
-                    storageReceivable.DueTypeCode = chargesType.DueTypeCode;
-                    storageReceivable.VatTypeId = chargesType.VatTypeId;
-                    storageReceivable.IATACodeId = chargesType.IATACodeId;
-                    storageReceivable.IsExpense = chargesType.IsExpense;
-                    storageReceivable.ShipmentNumber = shipmentPM.ShipmentNumber;
-                    storageReceivable.CreateDate = todayDate;
-                    storageReceivable.UpdateDate = todayDate;
-                    storageReceivable.CreatedByUserId = loggedUserId;
-                    storageReceivable.UpdateByUserId = loggedUserId;
-                    storageReceivable.ShipmentReceivableLineStatusCode = "OAMT";
-                    storageReceivable.CurrencyId = shipmentPM.ChargeStorageCurrencyId;
-
-                    if (localCurrencyId == storageReceivable.CurrencyId)
-                    {
-                        storageReceivable.Rate = 1;
-                    }
-                    else
-                    {
-                        LastRate lastRate = allRates.Where(d => d.ForeignCurrencyId == storageReceivable.CurrencyId).FirstOrDefault();
-                        if (lastRate != null)
-                        {
-                            storageReceivable.Rate = lastRate.Rate;
-                        }
-                    }
-
-                    if (shipmentPM.ProfitCurrencyId == localCurrencyId)
-                    {
-                        storageReceivable.ProfitCurrencyExchangeRate = 1;
-                    }
-
-                    else
-                    {
-                        LastRate myLastRate = allRates.Where(d => d.ForeignCurrencyId == shipmentPM.ProfitCurrencyId).FirstOrDefault();
-                        if (myLastRate != null)
-                        {
-                            storageReceivable.ProfitCurrencyExchangeRate = myLastRate.Rate;
-                        }
-                    }
-
-                    if (chargesType.ChargesGroupCode == "FRT")
-                    {
-                        storageReceivable.PrepaidCollectId = shipmentPM.FreightPrepaidCollectId;
-                    }
-
-                    else
-                    {
-                        storageReceivable.PrepaidCollectId = shipmentPM.OtherPrepaidCollectId;
-                    }
-
-                    storageReceivable.TotalAmount = amount;
-                    storageReceivable.TotalAmountLocal = MethodHelper.Round(storageReceivable.TotalAmount * storageReceivable.Rate, 2);
-
-                    if (storageReceivable.CurrencyId == shipmentPM.ProfitCurrencyId)
-                    {
-                        storageReceivable.AmountInProfitCurrency = storageReceivable.TotalAmount;
-                    }
-
-                    else
-                    {
-                        storageReceivable.AmountInProfitCurrency = (storageReceivable.TotalAmountLocal / storageReceivable.ProfitCurrencyExchangeRate);
-                    }
-
-                    shipmentPM.ShipmentReceivables.Add(storageReceivable);
+                    calculatedPricingItem.ChargeableDays = shipmentStoragePricing.Days;
                 }
             }
+
+            calculatedPricingItem.Amount = MethodHelper.Round((shipmentStoragePricing.SalePrice * Convert.ToDecimal(weight) * calculatedPricingItem.ChargeableDays), 2);
+
+            return calculatedPricingItem;
         }
         private double? ComputeStorageWeight()
         {
-            double? weightRounded = 0;
-            double? weight = 0;
-            double? rounding = 0;
-
-            if (shipmentPM.WeightMeasurementCode == "GRWT")
-            {
-                weight = shipmentPM.GrossWeight;
-            }
-
-            else
-            {
-                weight = shipmentPM.ChargeableWeight;
-            }
-
-            if (shipmentPM.WeightRoundingCode == "HAF")
-            {
-                rounding = 0.5;
-            }
-
-            else if (shipmentPM.WeightRoundingCode == "ONE")
-            {
-                rounding = 1;
-            }
+            double? weightRounded;
+            double? weight = this.GetWeight();
+            double? rounding = this.GetRounding();
 
             if (weight != null && weight != 0 && rounding != null && rounding != 0)
             {
-                string toString = weight.ToString();
-                string[] r = toString.Split('.');
+                string[] weightParts = weight.ToString().Split('.');
 
-                if (r.Count() > 1)
+                if (weightParts.Count() > 1)
                 {
-                    string strDigits = "0." + r[1];
-                    double digits = Convert.ToDouble(strDigits);
-                    int integer = Convert.ToInt32(r[0]);
+                    string stringFormattedDecimalDigits = "0." + weightParts[1];
+                    double decimalDigits = Convert.ToDouble(stringFormattedDecimalDigits);
+                    int integerDigits = Convert.ToInt32(weightParts[0]);
 
                     if (rounding == 0.5)
                     {
-                        if (digits <= 0.5)
+                        if (decimalDigits <= 0.5)
                         {
-                            weightRounded = integer + 0.5;
+                            weightRounded = integerDigits + 0.5;
                         }
 
                         else
                         {
-                            weightRounded = integer + 1;
+                            weightRounded = integerDigits + 1;
                         }
                     }
 
                     else
                     {
-                        weightRounded = integer + 1;
+                        weightRounded = integerDigits + 1;
                     }
                 }
 
@@ -574,6 +656,39 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
 
             return weightRounded;
         }
+        private double? GetRounding()
+        {
+            double? rounding = 0;
+
+            if (shipmentPM.WeightRoundingCode == "HAF")
+            {
+                rounding = 0.5;
+            }
+
+            else if (shipmentPM.WeightRoundingCode == "ONE")
+            {
+                rounding = 1;
+            }
+
+            return rounding;
+        }
+        private double? GetWeight()
+        {
+            double? weight = 0;
+
+            if (shipmentPM.WeightMeasurementCode == "GRWT")
+            {
+                weight = shipmentPM.GrossWeight;
+            }
+
+            else
+            {
+                weight = shipmentPM.ChargeableWeight;
+            }
+
+            return weight;
+        }
+
         private void UpdateShipmentStoragePricingLine(List<CalculatedPricingItem> myPricigs)
         {
             foreach (CalculatedPricingItem item in myPricigs)

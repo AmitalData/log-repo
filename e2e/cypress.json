@@ -1,14 +1,15 @@
 {
     "viewportWidth": 1440,
     "viewportHeight": 900,
-    "projectId": "b2kqc4",
+    "projectId": "cqpgfx",
     "integrationFolder": "cypress",
     "screenshotsFolder": "cypress/results/html/screenshots",
   "scripts": {
     "cypressopenlocal": "cypress run --env Env=local",
     "cypressRun": "cypress run",
     "runtests": "npm run cypressRun -- BuildShipmentDocsIn.ts",
-    "cypressopen": "node_modules\\.bin\\cypress open"
+    "cypressopen": "node_modules\\.bin\\cypress open",
+    "numTestsKeptInMemory":1
 
   },
   "env": {
@@ -58,6 +59,7 @@
 
     
     "chromeWebSecurity": false,
+    "pageLoadTimeout": 120000,
     "defaultCommandTimeout": 120000,
     "responseTimeout": 120000,
     "requestTimeout": 120000,

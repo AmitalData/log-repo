@@ -122,7 +122,7 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
             if (!string.IsNullOrEmpty(reportExecutionLogId) && tenant != null)
             {
                 reportExecutionLogRepository = new ReportExecutionLogRepository((int)tenant);
-                reportExecutionLog = reportExecutionLogRepository.GetSingleReportExecutionLog(reportExecutionLogId, (int)tenant);
+                reportExecutionLog = reportExecutionLogRepository.GetReportExecutionLog(reportExecutionLogId, (int)tenant);
             }
 
             return reportExecutionLog;

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace WebFreight.Web.DataProviders
 {
-    public class ShipmentPackingDataProvider
+    public class ShipmentPackingDataProvider:BaseDataProvider
     {
         public string FileNumber { get; set; }
         public string Shipper { get; set; }

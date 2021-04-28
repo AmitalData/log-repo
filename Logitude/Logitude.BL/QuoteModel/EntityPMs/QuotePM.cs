@@ -120,8 +120,9 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public double? GrossWeight { get; set; }
         public double? GrossWeightInKG { get; set; }
         public double? GrossWeightPerTon { get; set; }
-        public double? VolumeInCBM { get; set; }
-
+        public double? VolumeInCBM { get; set; } 
+        public bool IsRefreshQuoteFollowUps { get; set; } 
+        public bool IsRefreshFollowUp { get; set; }
         public byte[] LastModified { get; set; }
         public bool IsClosed { get; set; }
         public bool IsFixedPrice { get; set; }
@@ -319,6 +320,7 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public string ToCountryName { get; set; }
         public bool ConvertToFCL { get; set; }
         public bool ConvertToLCL { get; set; }
+        public bool ConvertTransportMode { get; set; }
 
         public bool IsQuoteDataExternal { get; set; }
         public bool IsQuoteDocumentExternal { get; set; }
@@ -698,5 +700,6 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public double? RegionalTaxPercentage { get; set; }
 
         public bool DescriptionRightToLeft { get; set; }
+
     }
 }

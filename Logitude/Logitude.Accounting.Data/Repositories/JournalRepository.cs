@@ -552,11 +552,21 @@ namespace Logitude.Accounting.Data.Repositories
                     select a).FirstOrDefault();
         }
 
-        public IQueryable<Journal> GetByJournalsAccountingIds(List<string> ids, int tenant)
+        public IQueryable<Journal> GetJournalsByIds(List<string> ids, int tenant)
         {
             var journals = (from a in context.Journals 
                             where a.Tenant == tenant
                             && ids.Contains(a.Id)
+                            select a);
+
+            return journals;
+        }
+        public IQueryable<Journal> GetByJournalsAccountingIds(List<string> accountingEntityIds,string accountingEntityCode, int tenant)
+        {
+            var journals = (from a in context.Journals
+                            where a.Tenant == tenant
+                            && a.AccountingEntityCode == accountingEntityCode
+                            && accountingEntityIds.Contains(a.AccountingEntityId)
                             select a);
 
             return journals;

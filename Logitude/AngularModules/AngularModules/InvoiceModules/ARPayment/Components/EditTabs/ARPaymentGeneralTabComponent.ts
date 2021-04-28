@@ -33,10 +33,9 @@ export class ARPaymentGeneralTabComponent extends BaseComponent implements OnIni
                 this.EntityPM.UIProperties.SetEnabled("MetodoPagoCode", this.ObjectTableName, false);
             }
 
-            //var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "FPG" && d.TenantNumber == SessionLocator.Tenant)[0];
-            //if (featureToggle) {
+            
                 this.DisplayFechaPago = true;
-            //}
+          
 
         }
 

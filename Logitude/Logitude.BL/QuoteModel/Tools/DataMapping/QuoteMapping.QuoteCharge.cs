@@ -47,8 +47,9 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             itemPoco.CostContainerType4UnitPrice = itemPM.CostContainerType4UnitPrice;
             itemPoco.CostContainerType5UnitPrice = itemPM.CostContainerType5UnitPrice;
             itemPoco.CostTotalAmount = itemPM.CostTotalAmount;
-            itemPoco.CostTotalAmountLocal = itemPM.CostTotalAmountLocal;                      
-            
+            itemPoco.CostTotalAmountLocal = itemPM.CostTotalAmountLocal;
+            itemPoco.CostAmountInSaleCurrency = itemPM.CostAmountInSaleCurrency;
+
             itemPoco.SaleCurrencyId = itemPM.SaleCurrencyId;            
             itemPoco.SaleExchangeRate = itemPM.SaleExchangeRate;
             itemPoco.SaleIsFixedRate = itemPM.SaleIsFixedRate;

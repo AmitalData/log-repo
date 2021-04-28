@@ -273,9 +273,10 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
                             this.VendorName = list.EnglishName;
                             this.VendorLocalName = list.LocalName || list.EnglishName;
                             this.EntityPM.VendorPartnerTypeId = list.PartnerTypeId;
-                            if (!AppTool.IsNullOrEmpty(list.InvoiceCurrencyId)) {
-                                this.InvoiceCurrencyId = list.InvoiceCurrencyId;
-                            }
+                            this.SetInvoiceCurrency(list);
+                            //if (!AppTool.IsNullOrEmpty(list.InvoiceCurrencyId)) {
+                            //    this.InvoiceCurrencyId = list.InvoiceCurrencyId;
+                            //}
 
                             if (!AppTool.IsNullOrEmpty(list.PaymentTermId)) {
                                 this.PaymentTermId = list.PaymentTermId;
@@ -301,7 +302,19 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
             }
         }
     }
+    SetInvoiceCurrency(card: CardList) {
+        if (!card.GLAccountCurrency) {
+            this.InvoiceCurrencyId = card.InvoiceCurrencyId;
+            this.UIProperties.SetEnabled("InvoiceCurrencyId", this.ObjectTableName, true);
+        }
+        else {
+            this.InvoiceCurrencyId = card.GLAccountCurrency;
+            this.UIProperties.SetEnabled("InvoiceCurrencyId", this.ObjectTableName, false);
 
+        }
+      
+
+    }
     get VendorName() { return this.EntityPM.VendorName; }
     set VendorName(value: string) {
         if (this.EntityPM.VendorName != value) {
@@ -650,11 +663,11 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
         }
 
 
-        else if (DateTool.GetDateParts(this.InvoiceDate).DateTicks > DateTool.GetCurrentDateAsUtc().valueOf()) {
+        else if (DateTool.GetDateParts(this.InvoiceDate).DateTicks > DateTool.GetCurrentDateAsUtcForAccountingValidation().valueOf()) {
             errors.push(TextCodeTranslator.Translate("APInvoice.M.CantReceiveFutureDateInvoice"));
         }
 
-        if (DateTool.GetDateParts(this.AccountingDate).DateTicks > DateTool.GetCurrentDateAsUtc().valueOf()) {
+        if (DateTool.GetDateParts(this.AccountingDate).DateTicks > DateTool.GetCurrentDateAsUtcForAccountingValidation().valueOf()) {
             errors.push("Cant issue Invoice with Future Accounting Date");
         }
 

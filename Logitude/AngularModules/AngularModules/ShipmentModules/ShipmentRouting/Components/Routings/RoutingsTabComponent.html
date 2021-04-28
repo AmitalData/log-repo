@@ -46,8 +46,10 @@
                     <img src="./Images/ToggleIcon.png" />
                     <div class="ToggleButtonMenu" style="width: 100px">
                         <button id="{{ 'Pick Up' | IdGeneratorPipe}}" (click)="AddLeg('Pick Up')">{{'Shipment.O.Routings.Pickup' | TextCodeTranslationPipe}}</button>
-                        <button id="{{ 'Pre Carriage' | IdGeneratorPipe}}" (click)="AddLeg('Pre Carriage')" [disabled]="IsAddPreCarriageDisabled">{{'Shipment.O.Routings.PreCarriage' | TextCodeTranslationPipe}}</button>
-                        <button id="{{ 'On Carriage' | IdGeneratorPipe}}" (click)="AddLeg('On Carriage')" [disabled]="IsAddOnCarriageDisabled">{{'Shipment.O.Routings.OnCarriage' | TextCodeTranslationPipe}}</button>
+                        <button *ngIf="IsAddingPreOnCarriageVisible" id="{{ 'Pre Carriage' | IdGeneratorPipe}}" (click)="AddLeg('Pre Carriage')" [disabled]="IsAddPreCarriageDisabled">{{'Shipment.O.Routings.PreCarriage' | TextCodeTranslationPipe}}</button>
+                        <button *ngIf="EntityPM.ShipmentLevelCode == 'H'" id="{{ 'Pre Forwarding' | IdGeneratorPipe}}" (click)="AddLeg('Pre Forwarding')" [disabled]="IsAddPreForwardingDisabled">{{'Shipment.O.Routings.PreForwarding' | TextCodeTranslationPipe}}</button>
+                        <button *ngIf="IsAddingPreOnCarriageVisible" id="{{ 'On Carriage' | IdGeneratorPipe}}" (click)="AddLeg('On Carriage')" [disabled]="IsAddOnCarriageDisabled">{{'Shipment.O.Routings.OnCarriage' | TextCodeTranslationPipe}}</button>
+                        <button *ngIf="EntityPM.ShipmentLevelCode == 'H'" id="{{ 'On Forwarding' | IdGeneratorPipe}}" (click)="AddLeg('On Forwarding')" [disabled]="IsAddOnForwardingDisabled">{{'Shipment.O.Routings.OnForwarding' | TextCodeTranslationPipe}}</button>
                         <button id="{{ 'Delivery' | IdGeneratorPipe}}" (click)="AddLeg('Delivery')">{{'Shipment.O.Routings.Delivery' | TextCodeTranslationPipe}}</button>
                     </div>
                 </div>
@@ -59,7 +61,7 @@
                 <div class="MediaFill">
                     <ScrollViewer>
                         <ul>
-                            <li class="BoxItem" *ngFor="let item of ItemsSource">
+                            <li class="BoxItem" *ngFor="let item of ItemsSource"  attr.data-cy="{{'Routing_' + item.LegName | IdGeneratorPipe}}">
                                 <table [style.height.px]="item.LegHeight">
                                     <tr style="height: 5px;">
                                         <td colspan="3">
@@ -85,21 +87,32 @@
                                                                 </td>
 
                                                                 <td style="width:18px; vertical-align:middle;" *ngIf="item.IsAddButtonVisible">
-                                                                    <IconButton [ExternalId]="'-'+item.LegType"  [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsEditingEnabled" *ngIf="item.LegType == 'Pick Up'" (click)="AddLeg('Pick Up')"></IconButton>
-                                                                    <IconButton [ExternalId]="'-'+item.LegType"  [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsEditingEnabled" *ngIf="item.LegType == 'Delivery'" (click)="AddLeg('Delivery')"></IconButton>
-                                                                    <IconButton [ExternalId]="'-'+item.LegType"  [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsEditingEnabled" *ngIf="item.LegType == 'WarehouseLeg_Pickups'" (click)="AddLeg('WarehouseLeg_Pickups')"></IconButton>
-                                                                    <IconButton [ExternalId]="'-'+item.LegType"  [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsEditingEnabled" *ngIf="item.LegType == 'WarehouseLeg'" (click)="AddLeg('WarehouseLeg')"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsEditingEnabled" *ngIf="item.LegType == 'Pick Up'" (click)="AddLeg('Pick Up')"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsEditingEnabled" *ngIf="item.LegType == 'Delivery'" (click)="AddLeg('Delivery')"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsEditingEnabled" *ngIf="item.LegType == 'WarehouseLeg_Pickups'" (click)="AddLeg('WarehouseLeg_Pickups')"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsEditingEnabled" *ngIf="item.LegType == 'WarehouseLeg'" (click)="AddLeg('WarehouseLeg')"></IconButton>
+                                                                </td>
+
+                                                                <td style="width:18px; vertical-align:middle;" *ngIf="item.IsEditButtonVisible && IsChildFeatureExists">
+                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Title]="'Add Consequent Pickup'" [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsEditingEnabled" *ngIf="item.IsAddChildPickUpVisible" (click)="AddChildLeg('Pick Up', item)"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Title]="'Add Consequent Delivery'" [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsEditingEnabled" *ngIf="item.IsAddChildDeliveryVisible" (click)="AddChildLeg('Delivery', item)"></IconButton>
+                                                                </td>
+
+                                                                <td style="width: 3px;" *ngIf="item.IsEditButtonVisible && IsChildFeatureExists">
+                                                                    <div></div>
                                                                 </td>
 
                                                                 <td style="width:18px; vertical-align:middle;" *ngIf="item.IsEditButtonVisible">
-                                                                    <IconButton [ExternalId]="'-'+item.LegType"  [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'Pick Up'" (click)="EditLeg(item)"></IconButton>
-                                                                    <IconButton [ExternalId]="'-'+item.LegType"  [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'WarehouseLeg_Pickups'" (click)="EditLeg(item)"></IconButton>
-                                                                    <IconButton [ExternalId]="'-'+item.LegType"  [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'Pre Carriage'" (click)="EditLeg(item)"></IconButton>
-                                                                    <IconButton [ExternalId]="'-'+item.LegType"  [Name]="'Edit'" [IsSmall]="true" *ngIf="item.IsMainLeg" (click)="EditLeg(item)"></IconButton>
-                                                                    <IconButton [ExternalId]="'-'+item.LegType"  [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'On Carriage'" (click)="EditLeg(item)"></IconButton>
-                                                                    <IconButton [ExternalId]="'-'+item.LegType"  [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'WarehouseLeg'" (click)="EditLeg(item)"></IconButton>
-                                                                    <IconButton [ExternalId]="'-'+item.LegType"  [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'Delivery'" (click)="EditLeg(item)"></IconButton>
-                                                                    <IconButton [ExternalId]="'-'+item.LegType"  [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'EmptyCR'" (click)="EditLeg(item)"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'Pick Up'" (click)="EditLeg(item)"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'WarehouseLeg_Pickups'" (click)="EditLeg(item)"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'Pre Carriage'" (click)="EditLeg(item)"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'Pre Forwarding'" (click)="EditLeg(item)"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Edit'" [IsSmall]="true" *ngIf="item.IsMainLeg" (click)="EditLeg(item)"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'On Carriage'" (click)="EditLeg(item)"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'On Forwarding'" (click)="EditLeg(item)"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'WarehouseLeg'" (click)="EditLeg(item)"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'Delivery'" (click)="EditLeg(item)"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'EmptyCR'" (click)="EditLeg(item)"></IconButton>
                                                                 </td>
 
                                                                 <td style="width: 3px;">
@@ -107,7 +120,7 @@
                                                                 </td>
 
                                                                 <td style="width: 1px; vertical-align: middle;" *ngIf="item.IsDeleteButtonVisible">
-                                                                    <IconButton [ExternalId]="'-'+item.LegType"  [Name]="'Delete'" [IsSmall]="true" [IsEnabled]="IsEditingEnabled" (click)="DeleteLeg(item)"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Delete'" [IsSmall]="true" [IsEnabled]="item.IsDeleteButtonEnabled" (click)="DeleteLeg(item)"></IconButton>
                                                                 </td>
                                                             </tr>
                                                         </table>

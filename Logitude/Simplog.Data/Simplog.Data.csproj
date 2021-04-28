@@ -183,6 +183,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\CheckDigitControlAlgorithm.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CreditLimitSetting.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CustomerOpenFilesAmount.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\DWHEnvironmentSetting.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\Horse.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\TariffCarrierTranslation.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\UserLastSettings.cs" />
@@ -426,6 +427,7 @@
     <Compile Include="CommonDataModel\Mapping\DocumentTypeCategoryMap.cs" />
     <Compile Include="CommonDataModel\Mapping\DocumentTypeMetaDataMap.cs" />
     <Compile Include="CommonDataModel\Mapping\DWHBuildStatusMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\DWHEnvironmentSettingMap.cs" />
     <Compile Include="CommonDataModel\Mapping\DWHSettingMap.cs" />
     <Compile Include="CommonDataModel\Mapping\EmailProviderMap.cs" />
     <Compile Include="CommonDataModel\Mapping\EntityCasualDataMap.cs" />
@@ -572,6 +574,7 @@
     <Compile Include="CommonDataModel\Repositories\UsoCFDIRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\WarehouseWeightMeasurementRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\WarehouseWeightRoundingRepository.cs" />
+    <Compile Include="Helpers\AutomationCreateTask.cs" />
     <Compile Include="Helpers\AutomationFollowUp.cs" />
     <Compile Include="Helpers\AutomationQueuedTask.cs" />
     <Compile Include="Helpers\AutomationSendDocument.cs" />
@@ -647,9 +650,11 @@
     <Compile Include="InvoiceModel\Repositories\SATPaymentMethodRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\SATInvoiceStatusRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\SATTransferStatusRepository.cs" />
+    <Compile Include="QuoteModel\EntityPOCOs\QuoteComputedField.cs" />
     <Compile Include="QuoteModel\EntityPOCOs\QuoteSetting.cs" />
     <Compile Include="QuoteModel\Mapping\QuoteSettingMap.cs" />
     <Compile Include="QuoteModel\Repositories\QuoteSettingRepository.cs" />
+    <Compile Include="QuoteModel\Repositories\QuoteComputedFieldRepository.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\CustomsTransferHeader.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\CustomsTransferLine.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\CustomsTransferType.cs" />
@@ -1687,6 +1692,9 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="InvoiceModel\EntityValues\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

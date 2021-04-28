@@ -18,6 +18,9 @@ import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { Output, EventEmitter } from '@angular/core';
+
 
 @Component({
     
@@ -25,6 +28,7 @@ import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator
 })
 
 export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implements OnDestroy {
+    @Output() SelectedValueChanged = new EventEmitter();
     public EntityPM: APInvoicePM = null;
     public ObjectTableName = "APInvoice";
     public DataContext = this;
@@ -33,7 +37,9 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
     public LocalCurrencyCode: string;
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
+    public apiQueryFilters: ApiQueryFilters = null;
     private CurrentSession = SessionLocator.SelectedSession;
+
     constructor(private entityArgs: EntityArgs) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
@@ -44,7 +50,6 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
         this.SetUIProperties();
         this.BuildScreenData();
         this.Listen();
-
         if (FeatureLocator.HasFeaturePermession("APInvoice", "APInvoiceEditExchangeRate")) {
             this.IsEditExchangeRateVisible = true;
         }
@@ -114,6 +119,7 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
 
         if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP) {
             if (AppTool.IsNullOrEmpty(this.VATNumber)) {
+                isFieldRequired = true;
                 isFieldRequired = true;
             }
 
@@ -634,6 +640,7 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
                     this.EntityPM.AddAPInvoiceMultipleShipmentPM(itemPM);
                     this.BuildItemsSource();
                     this.ComputeTotals();
+                    this.ComputeShipmentsNumbers();
                 }
             }
         }
@@ -677,6 +684,7 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
 
                 if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
                     this.BuildItemsSource();
+                    this.ComputeShipmentsNumbers();
                 }
 
                 else {
@@ -696,6 +704,54 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
         if (this.CurrentSession.CurrentEditComponent) {
             this.CurrentSession.CurrentEditComponent.SaveChanges();
         }
+    }
+
+    public LevelCodeSelectedValue: string = "All";
+    LevelCodeitemClicked(itemValue: string) {
+        if (this.LevelCodeSelectedValue != itemValue) {
+            this.LevelCodeSelectedValue = itemValue;
+
+            if (itemValue == "All") {
+                this.apiQueryFilters = null;
+            } else {
+                this.apiQueryFilters = new ApiQueryFilters();
+                this.apiQueryFilters.PageIndex = 0;
+                this.apiQueryFilters.PageSize = 10;
+
+                if (itemValue == "MasterAndDirect") {   
+                    this.apiQueryFilters.addAdditionalFilter("ShipmentLevelCode", "D,C", null, null, "InList", true, true, false, "string");
+                } else if (itemValue == "HouseAndDirect") {
+                        this.apiQueryFilters.addAdditionalFilter("ShipmentLevelCode", "D,H", null, null, "InList", true, true, false, "string");
+                } 
+            }
+            
+        }
+    }
+
+    LevelCodeMouseOver(itemValue: string) {
+        if (this.LevelCodeSelectedValue != itemValue) {          
+        }
+    }
+
+    LevelCodeMouseLeave(itemValue: string) {
+        if (this.LevelCodeSelectedValue != itemValue) {      
+        }
+    }
+
+    ComputeShipmentsNumbers() {
+        var shipmentsNumbers: string = "";
+
+        this.ItemsSource.forEach(item => {
+            if (AppTool.IsNullOrEmpty(shipmentsNumbers)) {
+                shipmentsNumbers = item.ShipmentNumber;
+            }
+
+            else {
+                shipmentsNumbers = shipmentsNumbers + ", " + item.ShipmentNumber;
+            }
+        });
+
+        this.EntityPM.ShipmentsNumbers = shipmentsNumbers;
     }
 }
 

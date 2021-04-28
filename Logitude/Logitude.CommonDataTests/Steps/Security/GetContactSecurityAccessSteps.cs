@@ -1,57 +1,70 @@
 ﻿using FluentAssertions;
-using Logitude.CommonDataTests.Models;
+using Logitude.CommonTests.Models;
 using Logitude.Test.Base.Services;
 using Logitude.Test.Base.Context;
-using Logitude.Test.Base.Models;
 using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow;
+using Logitude.Test.Base.Models.Shared;
+using Logitude.Test.Base.Models.Api;
+using Logitude.Test.Base.Models.UserTenantPreparation;
 
-namespace Logitude.CommonDataTests.Steps.Security
+namespace Logitude.CommonTests.Steps.Security
 {
     [Binding]
     public class GetContactSecurityAccessSteps
     {
         private SecurityAccessStepsContext<ContactPM> Context;
+
         public GetContactSecurityAccessSteps(SecurityAccessStepsContext<ContactPM> context)
         {
             Context = context;
         }
 
-        [When(@"First user get the first contact from contacts list")]
-        public void WhenFirstUserGetTheFirstContactFromContactsList()
+        #region Step Region
+
+        #region Get contact for user's tenant
+        [When(@"get contact for user's tenant")]
+        public void WhenGetContactForUsersTenant()
         {
-            IEnumerable<ContactPM> firstUserContactList = GetContactsListForFirstUser();
-            Context.FirstUserPMData.Id = firstUserContactList?.FirstOrDefault()?.Id;
+            ContactPM userTenantContact = GetUserTenantContact();
+            Context.FirstUserPMData.Id = userTenantContact?.Id;
         }
 
-        [Then(@"the Contact for first user should be exists")]
-        public void ThenTheContactForFirstUserShouldBeExists()
+        [Then(@"contact should available")]
+        public void ThenContactShouldAvailable()
         {
             Context.FirstUserPMData.Id.Should().NotBeNull();
         }
+        #endregion
 
-        [When(@"Second user get the contact that requested by first user")]
-        public void WhenSecondUserGetTheContactThatRequestedByFirstUser()
+        #region Get contact for other tenant
+        [When(@"get contact for other tenant")]
+        public void WhenGetContactForOtherTenant()
         {
-            GetContactForTheSecondUserBaseOnFirstUserContacts();
+            ContactPM otherTenantContact = GetUserTenantContactFromOtherUserTenant();
+            Context.SecondUserPMData.Id = otherTenantContact?.Id;
         }
 
-        [Then(@"the Contact for second user should not be exists")]
-        public void ThenTheContactForSecondUserShouldNotBeExists()
+        [Then(@"contact should not available")]
+        public void ThenContactShouldNotAvailable()
         {
             Context.SecondUserPMData.Id.Should().BeNull();
         }
+        #endregion
 
-        private void GetContactForTheSecondUserBaseOnFirstUserContacts()
+        #endregion
+
+        #region Private Function Region
+        private ContactPM GetUserTenantContactFromOtherUserTenant()
         {
-            IEnumerable<ContactPM> firstUserContactList = GetContactsListForFirstUser();
-            string contactsGetSingleUrl = Urls.ContactsGetSingle(firstUserContactList?.FirstOrDefault()?.Id);
-            ApiResponse<ContactPM> response = APICaller.CallGet<ContactPM>(contactsGetSingleUrl, UserOtherTenant.Token);
-            Context.SecondUserPMData.Id = response.Data?.Id;
+            ContactPM userTenantContact = GetUserTenantContact();
+            string contactsGetSingleUrl = Urls.ContactsGetSingle(userTenantContact?.Id);
+            ApiResponse<ContactPM> contactResponse = APICaller.CallGet<ContactPM>(contactsGetSingleUrl, UserOtherTenant.Token);
+            return contactResponse.Data;
         }
 
-        private IEnumerable<ContactPM> GetContactsListForFirstUser()
+        private ContactPM GetUserTenantContact()
         {
             ApiQueryFilters apiQueryFilters = new ApiQueryFilters
             {
@@ -60,7 +73,8 @@ namespace Logitude.CommonDataTests.Steps.Security
             };
 
             ApiResponse<IEnumerable<ContactPM>> response = APICaller.CallGetByFilters<IEnumerable<ContactPM>>(Urls.ContactViewsGetByFilters, UserTenant.Token, apiQueryFilters);
-            return response.Data;
+            return response.Data?.FirstOrDefault();
         }
+        #endregion
     }
 }

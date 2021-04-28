@@ -52,8 +52,8 @@ namespace Logitude.Accounting.BL.DataContract
 
             ReportYear = report.TaxYear;
            
-            startDate = report.ByMonth? new DateTime((int)report.TaxYear, (int) report.Month.Value.Month, 1) :   new DateTime((int)report.TaxYear, 1, 1);
-            endDate = report.ByMonth ? new DateTime((int)report.TaxYear, (int)report.Month.Value.Month, DateTime.DaysInMonth((int)report.TaxYear, report.Month.Value.Month)) : new DateTime((int)report.TaxYear , 12, 31);
+            startDate = report.ByMonth? new DateTime((int)report.TaxYear, (int) report.Month.Value.Month, 1,0,0,0) :   new DateTime((int)report.TaxYear, 1, 1,0,0,0);
+            endDate = report.ByMonth ? new DateTime((int)report.TaxYear, (int)report.Month.Value.Month, DateTime.DaysInMonth((int)report.TaxYear, report.Month.Value.Month),23,59,59) : new DateTime((int)report.TaxYear , 12, 31,23,59,59);
             this.taxDeductionReport = report;
             reportMonth = report.Month;
             taxDeductionReport.ErrorMessage = null;

@@ -40,8 +40,8 @@ namespace Logitude.ShipmentTests.Features.SecurityTests
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/SecurityTests", "Create and Update Shipment Security Access", "\tWith pre-prepared base and shipment data\r\n\tWe want to test Create and Update Shi" +
-                    "pment Security Access.", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/SecurityTests", "Create and update shipment security access", "\tWith pre-prepared base and shipment data\r\n\tWe want to test Create and update shi" +
+                    "pment security access.", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -81,14 +81,14 @@ namespace Logitude.ShipmentTests.Features.SecurityTests
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Create Shipment for User\'s Tenant")]
-        [Xunit.TraitAttribute("FeatureTitle", "Create and Update Shipment Security Access")]
-        [Xunit.TraitAttribute("Description", "Create Shipment for User\'s Tenant")]
+        [Xunit.SkippableFactAttribute(DisplayName="Create shipment for user\'s tenant")]
+        [Xunit.TraitAttribute("FeatureTitle", "Create and update shipment security access")]
+        [Xunit.TraitAttribute("Description", "Create shipment for user\'s tenant")]
         public virtual void CreateShipmentForUsersTenant()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create Shipment for User\'s Tenant", null, tagsOfScenario, argumentsOfScenario);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create shipment for user\'s tenant", null, tagsOfScenario, argumentsOfScenario);
 #line 5
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -110,23 +110,23 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 6
- testRunner.When("Create shipment request sent for User\'s Tenant", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("create a shipment for user\'s tenant", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 7
- testRunner.Then("Shipment should be added successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the shipment should create successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Create Shipment for other Tenant")]
-        [Xunit.TraitAttribute("FeatureTitle", "Create and Update Shipment Security Access")]
-        [Xunit.TraitAttribute("Description", "Create Shipment for other Tenant")]
+        [Xunit.SkippableFactAttribute(DisplayName="Create shipment for other tenant")]
+        [Xunit.TraitAttribute("FeatureTitle", "Create and update shipment security access")]
+        [Xunit.TraitAttribute("Description", "Create shipment for other tenant")]
         public virtual void CreateShipmentForOtherTenant()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create Shipment for other Tenant", null, tagsOfScenario, argumentsOfScenario);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create shipment for other tenant", null, tagsOfScenario, argumentsOfScenario);
 #line 9
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -148,23 +148,23 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 10
- testRunner.When("Create shipment request sent for other Tenant", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("create a shipment for other tenant", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 11
- testRunner.Then("Shipment should not be added", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the shipment should not create successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Update Shipment for User\'s Tenant")]
-        [Xunit.TraitAttribute("FeatureTitle", "Create and Update Shipment Security Access")]
-        [Xunit.TraitAttribute("Description", "Update Shipment for User\'s Tenant")]
+        [Xunit.SkippableFactAttribute(DisplayName="Update shipment for user\'s tenant")]
+        [Xunit.TraitAttribute("FeatureTitle", "Create and update shipment security access")]
+        [Xunit.TraitAttribute("Description", "Update shipment for user\'s tenant")]
         public virtual void UpdateShipmentForUsersTenant()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update Shipment for User\'s Tenant", null, tagsOfScenario, argumentsOfScenario);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update shipment for user\'s tenant", null, tagsOfScenario, argumentsOfScenario);
 #line 13
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -186,23 +186,23 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 14
- testRunner.When("Update shipment request sent for User\'s Tenant", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("update a shipment for user\'s tenant", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 15
- testRunner.Then("Shipment should be Updated successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the shipment should update successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Update Shipment for other Tenant")]
-        [Xunit.TraitAttribute("FeatureTitle", "Create and Update Shipment Security Access")]
-        [Xunit.TraitAttribute("Description", "Update Shipment for other Tenant")]
+        [Xunit.SkippableFactAttribute(DisplayName="Update shipment for other tenant")]
+        [Xunit.TraitAttribute("FeatureTitle", "Create and update shipment security access")]
+        [Xunit.TraitAttribute("Description", "Update shipment for other tenant")]
         public virtual void UpdateShipmentForOtherTenant()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update Shipment for other Tenant", null, tagsOfScenario, argumentsOfScenario);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update shipment for other tenant", null, tagsOfScenario, argumentsOfScenario);
 #line 17
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -224,10 +224,10 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 18
- testRunner.When("Update shipment request sent for other Tenant", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("update a shipment for other tenant", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 19
- testRunner.Then("Shipment should not be Updated", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the shipment should not update successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

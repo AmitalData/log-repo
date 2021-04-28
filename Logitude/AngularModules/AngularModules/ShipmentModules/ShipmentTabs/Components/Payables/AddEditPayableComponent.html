@@ -88,7 +88,7 @@
                                                                 <LogTextBox [HideLastColumn]="true" [ObjectFieldName]="'UnitPrice'" [Text]="DataContext.UnitPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                                             </td>
                                                             <td style="width:18px; font-size:14px;">
-                                                                <label *ngIf="DataContext.MeasurementCode == 'PRVL' || DataContext.MeasurementCode =='PRFR'">%</label>
+                                                                <label *ngIf="DataContext.MeasurementCode == 'PRVL' || DataContext.MeasurementCode =='PRFR'  || DataContext.MeasurementCode =='PFCL'">%</label>
                                                             </td>
                                                         </tr>
                                                     </table>

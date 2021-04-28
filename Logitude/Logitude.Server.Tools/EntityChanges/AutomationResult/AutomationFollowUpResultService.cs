@@ -38,6 +38,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                     string lastUpdate = GetLastAuomationUpdateDate(automationResultArgs.AutomationObjectTable, automationResultArgs.OtherAutomationObjectTable, automation);
 
                     ValidateAutomationResultClass validateResult = ValidateAutomation(automation, automationResultArgs.EntityChange, automationResultArgs.AutomationFieldLists, lastUpdate, "");
+                    entityChangesAutomation.ConditionsList = validateResult.ConditionsList;
 
                     if (validateResult.Type == "Delayed") automationResultArgs.MainEntityChangeService.IsDelayAutomation = true;
 
@@ -48,14 +49,14 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                         if (validateResult.Type == "Delayed")
                         {
                             DelaytimeDetails delaytimeDetails = new DelaytimeDetails() { Type = validateResult.Type, Delaytime = validateResult.Delaytime, DelaytimeIndicator = validateResult.DelaytimeIndicator, DelaytimeOp = validateResult.DelaytimeOp, SelectedDelaytimeFieldCode = validateResult.SelectedDelaytimeFieldCode };
-                            AddAutomationQueue(new AutomationQueueArgs() { EntityChangeId = automationResultArgs.EntityChange.Id, AutomationId = automation.Id, AutomationType = automationResultArgs.EntityChangeArgs.ProcessType, EntityId = automationResultArgs.EntityChangeArgs.EntityId, Tenant = automation.Tenant, AutomationDelayTime = GetAutomationDelayTime(delaytimeDetails, automationResultArgs.AutomationFieldLists) });
+                            AddAutomationQueue(new AutomationQueueArgs() { EntityChangeId = automationResultArgs.EntityChange.Id, AutomationId = automation.Id, AutomationType = automationResultArgs.EntityChangeArgs.ProcessType, EntityId = automationResultArgs.EntityChangeArgs.EntityId, Tenant = automation.Tenant, AutomationDelayTime = GetAutomationDelayTime(delaytimeDetails, automationResultArgs.AutomationFieldLists, automationResultArgs.EntityChange.Tenant) });
 
                         }
                         else AddAutomationFollowUp(automationResultArgs.EntityChangeArgs.EntityPM, automationResultArgs.EntityChange, automationResultArgs.AutomationFieldLists, lastUpdate, automationResultArgs.MainEntityChangeService.EntityChangesAutomationsSsucceedList, automation, entityChangesAutomation, dateBefore, true);
 
                     }
                     else
-                    {
+                    { 
                         entityChangesAutomation.DoneDate = TenantServerConfigration.GetCurrentDateTime(automationResultArgs.EntityChangeArgs.Tenant);
                         automationResultArgs.MainEntityChangeService.EntityChangesAutomationsFailedList.Add(entityChangesAutomation);
                         entityChangesAutomation.ExecutionTime = (int)((DateTime.Now.Ticks - dateBefore.Ticks) / TimeSpan.TicksPerMillisecond);
@@ -189,7 +190,16 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                             {
                                 propInfo.SetValue(entityPM, true, null);
                             }
+                            else
+                            {
+                                PropertyInfo QuotePropInfo = entityPM.GetType().GetProperty("IsRefreshQuoteFollowUps");
+                                if (QuotePropInfo != null)
+                                {
+                                    QuotePropInfo.SetValue(entityPM, true, null);
+                                }
+                            }
                         }
+                       
                     }
                 }
 
@@ -208,7 +218,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
             followUp.Id = IdCounter.GetNumber("FollowUp", tenant).ToString();
             followUp.EventTypeId = eventTypeId;
             if (automationFollowUp.ObjectTableName == "Shipment" || automationFollowUp.ObjectTableName == "Master") followUp.ShipmentId = entityChange.EntityId;
-
+            if (automationFollowUp.ObjectTableName == "Quote") followUp.QuoteId = entityChange.EntityId;
             followUp.OwnerUserId = ownerId;
             followUp.Notes = note;
             followUp.Date = date;
@@ -231,7 +241,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                 EventTypeCode = "SFCR",
                 UserId = userId,
                 EntityId = entityChange.EntityId,
-                ObjectTableName = "Shipment",
+                ObjectTableName = automationFollowUp.ObjectTableName == "Master" ? "Shipment" : automationFollowUp.ObjectTableName,
                 Notes = automationFollowUp.FollowUpEnglishName + "\n" + "Resulted from Automation",
 
             });

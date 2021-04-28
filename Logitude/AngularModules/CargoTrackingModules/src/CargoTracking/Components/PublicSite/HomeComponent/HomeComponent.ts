@@ -16,7 +16,7 @@ import { CargoTrackingBrandingDataRequest } from 'src/CargoTracking/DataContract
 })
 export class HomeComponent
 {
- 
+
     IsBrandingDataLoaded: boolean = false;
     displayMenu: boolean = false;
     showBackButton: boolean = false;
@@ -25,19 +25,19 @@ export class HomeComponent
     companyName: string = "Unifreight Cloud Services";
     Domain:string;
     public baseUrl:string;
-  
 
-    constructor(private cargoTrackingDataExtendedService: CargoTrackingBrandingDataExtendedService, @Inject('BASE_URL') baseUrl: string, private router: Router, 
+
+    constructor(private cargoTrackingDataExtendedService: CargoTrackingBrandingDataExtendedService, @Inject('BASE_URL') baseUrl: string, private router: Router,
         private location: Location)
     {
         this.baseUrl =baseUrl;
         this.getcargoTrackingData();
-        
+
     }
 
 
     private getcargoTrackingData()
-    {   
+    {
         this.cargoTrackingDataExtendedService.get(ServiceHelper.GetcargoTrackingDataRequest(this.baseUrl)).subscribe((response: ServiceResponse) =>
         { if(response.Result){
 
@@ -48,24 +48,27 @@ export class HomeComponent
         else{
             this.GoToError401();
         }
-         
+
         });
     }
 
- 
+
 
     get ComapnyLogo(){
         return CargoTrackingBrandingData.ComapnylogoURL;
-    } 
+    }
     get BrowserIcon(){
         return CargoTrackingBrandingData.BrowserIconURL;
-    } 
+    }
     get BackGroundImg(){
         return CargoTrackingBrandingData.BackgroundURL;
-    } 
-  
+    }
+    get ShipmentHeaderImage(){
+        return CargoTrackingBrandingData.ShipmentHeaderURL;
+    }
+
     public GoToPrivateSite(){
-        this.router.navigate(['Cargo-Tracking']);
+        this.router.navigate(['cargo-tracking']);
     }
     public GoToError401(){
         this.router.navigate(['Error401']);
@@ -107,7 +110,7 @@ export class HomeComponent
         AppHelper.AppBack(this.router,this.location,CargoTrackingBrandingData.Tenant);
 
     }
- 
+
     GetBackEnabled()
     {
         return AppHelper.GetBackEnabled(this.router);

@@ -81,7 +81,7 @@ export class ReportComponent {
                                 }
 
                                 else if (item.Code == "UNER") {
-                                    var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "URT" && d.TenantNumber == SessionLocator.Tenant)[0];
+                                    var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "URT")[0];
                                     if (FeatureToggle) {
                                         this.reportList.push(item);
                                     }

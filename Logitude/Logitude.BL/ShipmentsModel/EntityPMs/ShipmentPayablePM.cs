@@ -206,5 +206,11 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string TariffLineId { get; set; }
 
         public bool PayablesDisconnectedFromTariff { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public double? VatAmountLocal { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public double? VatAmountProfit { get; set; }
+
     }
 }

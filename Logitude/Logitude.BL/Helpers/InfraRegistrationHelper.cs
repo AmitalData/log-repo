@@ -17,6 +17,7 @@ namespace Logitude.BL.Helpers
         {
             InjectionContainer.Container.RegisterType<IObjectTablePropertyGetter, ObjectTablePropertyGetter>("ObjectTablePropertyGetter", new InjectionFactory(c => new ObjectTablePropertyGetter()));
             InjectionContainer.Container.RegisterType<FieldShortNameGetter, ObjectFieldsShortNamesGetter>("ObjectFieldsShortNamesGetter", new InjectionFactory(c => new ObjectFieldsShortNamesGetter()));
+            InjectionContainer.Container.RegisterType<IObjectFieldPropertyGetter, ObjectFieldPropertyGetter>("ObjectFieldPropertyGetter", new InjectionFactory(c => new ObjectFieldPropertyGetter()));
         }
     }
 }

@@ -1,29 +1,19 @@
-"use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var http_1 = require("@angular/http");
-var DynamicLoaderAOT_1 = require("./Utilities/DynamicLoaderAOT");
-var Tools_1 = require("./Utilities/Tools");
-var ExternalParams_1 = require("./Utilities/ExternalParams");
-var SessionInfo_1 = require("./SessionInfo");
-var RootComponentAOT = /** @class */ (function () {
+import { Component, ViewChild, ViewContainerRef, Compiler, ComponentFactoryResolver } from '@angular/core';
+import { Http } from '@angular/http';
+import { DynamicLoaderAOT } from './Utilities/DynamicLoaderAOT';
+import { Tools } from './Utilities/Tools';
+import { ExternalParams, ExternalParamsArg } from './Utilities/ExternalParams';
+import { SessionInfo } from './SessionInfo';
+export var RootComponentAOT = (function () {
     function RootComponentAOT(compiler, resolver, http) {
         this.resolver = resolver;
         this.http = http;
-        this.isDSV = true;
+        this.isPrivateLable = false;
+        this.isDSV = false;
         //ServiceHelper.Http = http;
-        DynamicLoaderAOT_1.DynamicLoaderAOT.Compiler = compiler;
-        DynamicLoaderAOT_1.DynamicLoaderAOT.Resolver = resolver;
-        Tools_1.Tools.DynamicLoader = DynamicLoaderAOT_1.DynamicLoaderAOT;
+        DynamicLoaderAOT.Compiler = compiler;
+        DynamicLoaderAOT.Resolver = resolver;
+        Tools.DynamicLoader = DynamicLoaderAOT;
         this.ResetPWD = window.sessionStorage.getItem("ResetPWD");
         //SessionLocator.DynamicLoader = DynamicLoaderAOT;
         //SessionLocator.IsProduction = true;
@@ -40,20 +30,20 @@ var RootComponentAOT = /** @class */ (function () {
             if (keys[1]) {
                 var vars = keys[1].split('&');
                 if (vars) {
-                    SessionInfo_1.SessionInfo.myExternalParams = new ExternalParams_1.ExternalParams();
-                    SessionInfo_1.SessionInfo.IsExternalParams = true;
+                    SessionInfo.myExternalParams = new ExternalParams();
+                    SessionInfo.IsExternalParams = true;
                     for (var i = 0; i < vars.length; i++) {
                         var pair = vars[i].split('=');
-                        SessionInfo_1.SessionInfo.myExternalParams[decodeURIComponent(pair[0])] = pair[1];
+                        SessionInfo.myExternalParams[decodeURIComponent(pair[0])] = pair[1];
                         if (decodeURIComponent(pair[0]) == "Parmters") {
                             var str1 = pair[1];
                             var str = decodeURIComponent(str1);
                             var jsonPMKeys = JSON.parse(str);
                             for (var key in jsonPMKeys) {
-                                var arg = new ExternalParams_1.ExternalParamsArg();
+                                var arg = new ExternalParamsArg();
                                 arg.FieldName = key;
                                 arg.FieldValue = jsonPMKeys[key];
-                                SessionInfo_1.SessionInfo.myExternalParams.Args.push(arg);
+                                SessionInfo.myExternalParams.Args.push(arg);
                             }
                         }
                     }
@@ -62,15 +52,15 @@ var RootComponentAOT = /** @class */ (function () {
         }
     };
     RootComponentAOT.prototype.ngOnInit = function () {
-        var url = window.location.href;
-        this.isDSV = url.toLowerCase().indexOf(".dsv.") > -1 ? true : false;
-        if (this.isDSV) {
-            SessionInfo_1.SessionInfo.PlShortName = "DSV";
-            //Temp Code, must changed to dynamic 
-            changeFavicon('data:image/JPEG;base64,/9j/4AAQSkZJRgABAAAAAQABAAD//gAgSnBlZyBDb2RlYyB8IGZsdXhjYXBhY2l0eS5uZXQg/9sAhAADAgIDAgIDAwMDBAMDBAUIBQUEBAUKBwcGCAwKDAwLCgsLDQ4SEA0OEQ4LCxAWEBETFBUVFQwPFxgWFBgSFBUUAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAAZABkDAREAAhEBAxEB/8QBogAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoLEAACAQMDAgQDBQUEBAAAAX0BAgMABBEFEiExQQYTUWEHInEUMoGRoQgjQrHBFVLR8CQzYnKCCQoWFxgZGiUmJygpKjQ1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4eLj5OXm5+jp6vHy8/T19vf4+foBAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKCxEAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD4pyK/SzwQyKADNAz6i8H/APIpaJ/14wf+i1r8kx3+9Vf8UvzYHs3wJ+FKT+CPg/cy+EvAfirwrrdvO3iO61KyjtrvTIVYBXMzT5kdgXxhP4MEDOR9tiK1p1FzSUlt2f4HbCOkdEz0YeCfhn4lguNR8G+FPCuj+FNNspZIr3XdCtri3vTCzBiLgXolAbbgExdATk5FcvtK0NKkm5N9G9L+VrfiaWi9YrQ8X+I/w8+FPww8C+Mfi5pkGkanpnjPS7a38KeH3xN9gu513XB2H7vl7GIJ+7yvBxXfSq16044d3Ti3zPult95jKMIpzXXY4TwfHHD4L0WTht2n24A9/LXNfG46MYYirLvJ/myeWMIc3c+WBPKI/LEr7MY27jjH0r9ROYQTSCPyxI/l/wB3ccflQAhdiioXYqvRSeBQI+n/AAf/AMilon/XjB/6LWvyTG/71V/xS/NjD/hD9B/6Amnf+Akf+FH13Ff8/Zf+BP8AzEH/AAh+g/8AQE07/wABI/8ACj67iv8An7L/AMCf+YB/wh+g/wDQE07/AMBI/wDCj67iv+fsv/An/mBqwwx28SRRIsUSKFREGFUDoAOwrklJyblJ3bAA/9k=');
-            changeTitle("DSV");
+        this.isPrivateLable = window.sessionStorage.getItem("IsPrivateLabel") == "true";
+        this.isDSV = window.sessionStorage.getItem("IsDSV") == "true";
+        if (this.isPrivateLable) {
+            var privateLableShortName = window.sessionStorage.getItem("PrivateLabelShortName");
+            SessionInfo.PlShortName = privateLableShortName;
+            changeFavicon(window.sessionStorage.getItem("SmallLogoURL"));
+            changeTitle(privateLableShortName);
         }
-        SessionInfo_1.SessionInfo.MainLocation = this.location;
+        SessionInfo.MainLocation = this.location;
         this.LoadLoginPage();
     };
     RootComponentAOT.prototype.ClearLocation = function () {
@@ -80,15 +70,15 @@ var RootComponentAOT = /** @class */ (function () {
     };
     RootComponentAOT.prototype.LoadLoginPage = function () {
         this.ClearLocation();
-        if (!this.isDSV) {
+        if (!this.isPrivateLable) {
             if (this.ResetPWD == "true") {
-                DynamicLoaderAOT_1.DynamicLoaderAOT.Load("./Login/Components/ChangePasswordComponent", this.location)
+                DynamicLoaderAOT.Load("./Login/Components/ChangePasswordComponent", this.location)
                     .then(function (cmpRef) {
                     window.sessionStorage.setItem("ResetPWD", "false");
                 });
             }
             else {
-                DynamicLoaderAOT_1.DynamicLoaderAOT.Load("./Login/Components/LoginComponent", this.location)
+                DynamicLoaderAOT.Load("./Login/Components/LoginComponent", this.location)
                     .then(function (cmpRef) {
                     //cmpRef.instance.Blocking.subscribe(s => {
                     //    SessionLocator.BlockType = s;
@@ -101,52 +91,61 @@ var RootComponentAOT = /** @class */ (function () {
             }
         }
         else {
-            if (this.ResetPWD == "true") {
-                DynamicLoaderAOT_1.DynamicLoaderAOT.Load("./Login/Components/DSVChangePasswordComponent", this.location)
-                    .then(function (cmpRef) {
-                    window.sessionStorage.setItem("ResetPWD", "false");
-                });
-            }
-            else {
-                if (SessionInfo_1.SessionInfo.IsExternalParams) {
-                    if (SessionInfo_1.SessionInfo.myExternalParams) {
-                        if (SessionInfo_1.SessionInfo.myExternalParams.Menu && SessionInfo_1.SessionInfo.myExternalParams.Menu.toLocaleLowerCase() == "dapp" && IsMobileDetected() == true) {
-                            this.LoadDSVMobileLoginPage();
-                        }
-                        else {
-                            this.LoadDSVLoginPage();
-                        }
+            this.LoadPrivateLableLoginPages();
+        }
+    };
+    RootComponentAOT.prototype.LoadPrivateLableLoginPages = function () {
+        if (this.ResetPWD == "true") {
+            this.LoadPrivateLableChangePasswordPage();
+        }
+        else {
+            if (SessionInfo.IsExternalParams) {
+                if (SessionInfo.myExternalParams) {
+                    if (SessionInfo.myExternalParams.Menu && SessionInfo.myExternalParams.Menu.toLocaleLowerCase() == "dapp" && IsMobileDetected() == true) {
+                        this.LoadDSVMobileLoginPage();
                     }
                     else {
-                        this.LoadDSVLoginPage();
+                        this.LoadPrivateLableLoginPage();
                     }
                 }
                 else {
-                    this.LoadDSVLoginPage();
+                    this.LoadPrivateLableLoginPage();
                 }
+            }
+            else {
+                this.LoadPrivateLableLoginPage();
             }
         }
     };
-    RootComponentAOT.prototype.LoadDSVLoginPage = function () {
-        DynamicLoaderAOT_1.DynamicLoaderAOT.Load("./Login/Components/DSVLoginComponent", this.location)
+    RootComponentAOT.prototype.LoadPrivateLableChangePasswordPage = function () {
+        DynamicLoaderAOT.Load("./Login/Components/DSVChangePasswordComponent", this.location)
+            .then(function (cmpRef) {
+            window.sessionStorage.setItem("ResetPWD", "false");
+        });
+    };
+    RootComponentAOT.prototype.LoadPrivateLableLoginPage = function () {
+        DynamicLoaderAOT.Load("./Login/PrivateLabels/LoginComponents/PrivateLoginComponent", this.location)
             .then(function (cmpRef) { });
     };
     RootComponentAOT.prototype.LoadDSVMobileLoginPage = function () {
-        DynamicLoaderAOT_1.DynamicLoaderAOT.Load("./Login/Components/DSVMobileLoginComponent", this.location)
+        DynamicLoaderAOT.Load("./Login/Components/DSVMobileLoginComponent", this.location)
             .then(function (cmpRef) { });
     };
-    __decorate([
-        core_1.ViewChild("Child", { read: core_1.ViewContainerRef }),
-        __metadata("design:type", core_1.ViewContainerRef)
-    ], RootComponentAOT.prototype, "location", void 0);
-    RootComponentAOT = __decorate([
-        core_1.Component({
-            selector: 'RootComponentAOT',
-            template: "\n        <div class=\"MediaFillRelative\">\n            <div #Child></div>\n        </div>\n    ",
-        }),
-        __metadata("design:paramtypes", [core_1.Compiler, core_1.ComponentFactoryResolver, http_1.Http])
-    ], RootComponentAOT);
+    RootComponentAOT.decorators = [
+        { type: Component, args: [{
+                    selector: 'RootComponentAOT',
+                    template: "\n        <div class=\"MediaFillRelative\">\n            <div #Child></div>\n        </div>\n    ",
+                },] },
+    ];
+    /** @nocollapse */
+    RootComponentAOT.ctorParameters = [
+        { type: Compiler, },
+        { type: ComponentFactoryResolver, },
+        { type: Http, },
+    ];
+    RootComponentAOT.propDecorators = {
+        'location': [{ type: ViewChild, args: ["Child", { read: ViewContainerRef },] },],
+    };
     return RootComponentAOT;
 }());
-exports.RootComponentAOT = RootComponentAOT;
 //# sourceMappingURL=RootComponentAOT.js.map

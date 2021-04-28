@@ -1985,5 +1985,17 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return id;
         }
 
+
+        public ContactPM GetSingleByEmailWithoutTenant(string email)
+        {
+            email = email.ToLower();
+            ContactPM contact = (from a in repository.context.Contacts
+                                 where a.Email == email
+                                 select new ContactPM()
+                                 {
+                                     Id = a.Id,
+                                 }).FirstOrDefault();
+            return contact;
+        }
     }
 }

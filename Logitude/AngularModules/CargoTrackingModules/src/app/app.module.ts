@@ -29,13 +29,15 @@ import { AuthService } from './auth.service';
 import { AuthGuardService } from 'src/Infrastructure/Services/auth-guard.service';
 import { Error401Component } from 'src/CargoTracking/Components/Errors/Error401Component';
 import { LoginServiceHelper } from 'src/Infrastructure/Utilities/LoginServiceHelper';
-
+import { CommonModule, DatePipe } from '@angular/common';
+import { CargoTrackingPortService } from '../CargoTracking/Services/Others/CargoTrackingPortService';
+import { CargoTrackingShipmentService } from '../CargoTracking/Services/Others/CargoTrackingShipmentService';
 
 
 export function getBaseUrl() {
     return document.getElementsByTagName('base')[0].href;
 }
-  
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -43,11 +45,11 @@ export function getBaseUrl() {
         SearchComponent,
         BusyIndicator,
         HomeComponent,
-        
+
         // Dashboard
         UserDashboardComponent,
         ShipmentsListComponent,
-        FavoritesPageComponent, 
+        FavoritesPageComponent,
         ShipmentDetailsComponent,
 
         // Infra
@@ -62,10 +64,11 @@ export function getBaseUrl() {
         //Erros
         Error401Component
 
-        
+
     ],
     imports: [
         BrowserModule,
+        CommonModule,
         HttpClientModule,
         AppRoutingModule,
         ReactiveFormsModule,
@@ -76,11 +79,14 @@ export function getBaseUrl() {
         CargoTrackingSearchService,
         CargoTrackingBrandingDataExtendedService,
         LoginExtendedService,
+        CargoTrackingPortService,
+        CargoTrackingShipmentService,
         CommonDataExtendedService,
         CargoTrackingMilestoneService,
         AuthGuardService,
         AuthService,
         LoginServiceHelper,
+        DatePipe,
         { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] }
     ],
     bootstrap: [AppComponent]

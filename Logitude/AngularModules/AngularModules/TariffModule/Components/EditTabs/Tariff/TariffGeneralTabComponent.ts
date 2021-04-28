@@ -9,6 +9,7 @@ import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQue
 import { TariffDomainService } from '../../../../TariffModule/Services/TariffDomainService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
+import { TariffVersionPM } from '../../../EntityPMs/TariffVersionPM';
 
 @Component({
     
@@ -30,11 +31,13 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
     public SellerDependancy: string = "AL";
     public TariffCurrencyTextCode: string = "Tariff.F.CurrencyId";
     public IsContainersAreaVisible: boolean = false;
+    private draftVersion: TariffVersionPM;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
         this.chargesTypePMService = new ChargesTypeListService();
-        
+        this.draftVersion = this.EntityPM.TariffVersions.filter(d => d.IsDraft)[0];
+
         this.BuildQueryFilters();
 
         if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
@@ -110,11 +113,13 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
 
     BuildQueryFilters() {
         var EntityType: string = "IsAir";
-        if (this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "OFC" || this.EntityPM.TypeCode == "OFS") {
+        if (this.EntityPM.TypeCode == "OFC" || this.EntityPM.TypeCode == "OFS") {
             EntityType = "IsOcean";
             this.SellerDependancy = "SL";
+        }else if (this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OLC") {
+            EntityType = "IsOcean";
+            this.SellerDependancy = "SL,AG,SG";
         }
-
         this.MeasurementsQueryFilters = new ApiQueryFilters();
 
         if (this.EntityPM.TypeCode == "OFS") {
@@ -143,7 +148,7 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
         }
     }
 
-      SetDefaultUOM(index: number) {
+    SetDefaultUOM(index: number) {
             this.chargesTypePMService.getSingleFromCache(this[this.IdProps[index]]).subscribe((res: any) => {
                 if (!res.HasError) {
                     if (res.Result) {
@@ -164,6 +169,33 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
             });
         }
 
+    private SetDefaultCurrency(index: number) {        
+        if (this.draftVersion != null) {
+            this.draftVersion.TariffLines.forEach(item => {
+                if (item.IsDifferentCurrenciesPerCharge) {
+                    if (AppTool.IsNullOrEmpty(this["Surcharge" + index + "Id"])) {
+                        item["Surcharge" + index + "CurrencyId"] = null;
+                    }
+
+                    else {
+                        item["Surcharge" + index + "CurrencyId"] = this.CurrencyId;
+                    }
+                }
+            });
+        }
+    }
+
+    private isSurcharges1Added: boolean = false;
+    private isSurcharges2Added: boolean = false;
+    private isSurcharges3Added: boolean = false;
+    private isSurcharges4Added: boolean = false;
+    private isSurcharges5Added: boolean = false;
+    private isSurcharges6Added: boolean = false;
+    private isSurcharges7Added: boolean = false;
+    private isSurcharges8Added: boolean = false;
+    private isSurcharges9Added: boolean = false;
+    private isSurcharges10Added: boolean = false;
+
     get Surcharge1Id() {
         return this.EntityPM.Surcharge1Id;
     }
@@ -173,7 +205,10 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
             this.Validate();
             if (value != null) {
                 this.SetDefaultUOM(0);
+                this.isSurcharges1Added = true;
             }
+
+            this.SetDefaultCurrency(1);
         }
     }
 
@@ -186,7 +221,10 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
             this.Validate();
             if (value != null) {
                 this.SetDefaultUOM(1);
+                this.isSurcharges2Added = true;
             }
+
+            this.SetDefaultCurrency(2);
         }
     }
 
@@ -199,7 +237,10 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
             this.Validate();
             if (value != null) {
                 this.SetDefaultUOM(2);
+                this.isSurcharges3Added = true;
             }
+
+            this.SetDefaultCurrency(3);
         }
     }
 
@@ -212,7 +253,10 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
             this.Validate();
             if (value != null) {
                 this.SetDefaultUOM(3);
+                this.isSurcharges4Added = true;
             }
+
+            this.SetDefaultCurrency(4);
         }
     }
 
@@ -225,7 +269,10 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
             this.Validate();
             if (value != null) {
                 this.SetDefaultUOM(4);
+                this.isSurcharges5Added = true;
             }
+
+            this.SetDefaultCurrency(5);
         }
     }
 
@@ -238,7 +285,10 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
             this.Validate();
             if (value != null) {
                 this.SetDefaultUOM(5);
+                this.isSurcharges6Added = true;
             }
+
+            this.SetDefaultCurrency(6);
         }
     }
 
@@ -251,7 +301,10 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
             this.Validate();
             if (value != null) {
                 this.SetDefaultUOM(6);
+                this.isSurcharges7Added = true;
             }
+
+            this.SetDefaultCurrency(7);
         }
     }
 
@@ -264,7 +317,10 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
             this.Validate();
             if (value != null) {
                 this.SetDefaultUOM(7);
+                this.isSurcharges8Added = true;
             }
+
+            this.SetDefaultCurrency(8);
         }
     }
 
@@ -277,7 +333,10 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
             this.Validate();
             if (value != null) {
                 this.SetDefaultUOM(8);
+                this.isSurcharges9Added = true;
             }
+
+            this.SetDefaultCurrency(9);
         }
     }
 
@@ -290,7 +349,10 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
             this.Validate();
             if (value != null) {
                 this.SetDefaultUOM(9);
+                this.isSurcharges10Added = true;
             }
+
+            this.SetDefaultCurrency(10);
         }
     }
 
@@ -660,6 +722,10 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
 
+                    for (var i = 1; i <= 10; i++) {
+                        this["isSurcharges" + i + "Added"] = false;
+                    }
+
                     if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
                         this.Validate(true);
                     }
@@ -695,6 +761,8 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
     set CurrencyId(value: string) {
         if (this.EntityPM.CurrencyId != value) {
             this.EntityPM.CurrencyId = value;
+
+            this.SetDifferentCurrencies();
         }
     }
 
@@ -709,6 +777,16 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
     set ContractNumber(value: string) {
         if (this.EntityPM.ContractNumber != value) {
             this.EntityPM.ContractNumber = value;
+        }
+    }
+
+    private SetDifferentCurrencies() {
+        for (var i = 1; i <= 10; i++) {
+            if (this["isSurcharges" + i + "Added"]) {
+                if (this["Surcharge" + i + "Id"]) {
+                    this.SetDefaultCurrency(i);
+                }
+            }
         }
     }
 }

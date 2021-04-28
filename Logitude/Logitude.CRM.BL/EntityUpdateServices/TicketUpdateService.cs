@@ -18,6 +18,7 @@ using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.QuoteModel;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Data.QuoteModel.Repositories;
 using Simplog.Server.Infrastructure;
@@ -48,14 +49,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
 
                 if (string.IsNullOrEmpty(entityPM.TicketNumber))
                 {
-                    if (FeatureToggleHelper.HasFeatureToggle("TJC", entityPM.Tenant))
-                    {
-                        entityPM.TicketNumber = CodeCounter.GetNumber_Ticket("Ticket", entityPM.Tenant).ToString();
-                    }
-                    else
-                    {
-                        entityPM.TicketNumber = CodeCounter.GetNumber("Ticket", entityPM.Tenant).ToString();
-                    }
+                    entityPM.TicketNumber = CodeCounter.GetNumber_Ticket("Ticket", entityPM.Tenant).ToString();
                 }
 
                 TenantRepository tenantRepository = new TenantRepository(entityPM.Tenant);
@@ -193,7 +187,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                 SLAHeaderQueryService sLAHeaderQuery = new SLAHeaderQueryService(context);
                 EmployeeGroupQueryService employeeGroupQuery = new EmployeeGroupQueryService(context);
                 TicketClassificationRepository repClassification = new TicketClassificationRepository(entityPM.Tenant);
-
+                this.quoteContext =  QuotesContext.GetContext(entityPM.Tenant); 
                 if (!string.IsNullOrEmpty(entityPM.SecondaryClassificationId))
                 {
                     classification = classificationQuery.GetSingle(entityPM.SecondaryClassificationId, true, false);
@@ -291,6 +285,8 @@ namespace Logitude.CRM.BL.EntityUpdateServices
 
                 this.UpdateDates(entityPM);
                 this.CheckQuoteRequestDateUpdate(entityPM, entityPOCO);
+                this.SetQuoteConnectedToTicketFlags(entityPM, entityPOCO);
+                this.UpdateQuoteConnectedToTicketComputedField(entityPM.Tenant);
                 this.UpdateLastCorrespondence(entityPM);
             }
         }
@@ -325,11 +321,61 @@ namespace Logitude.CRM.BL.EntityUpdateServices
 
         private void UpdateQuotesRequestDate(string quoteId, DateTime? requestDate, int tenant)
         {
-            QuoteRepository quoteRepository = new QuoteRepository(tenant);
+            QuoteRepository quoteRepository = new QuoteRepository(this.quoteContext);
             Quote quote = quoteRepository.GetSingleQuote(quoteId, tenant);
             quote.RequestDate = requestDate == null ? quote.OpenDate : requestDate;
             quoteRepository.Update(quote);
-            quoteRepository.SubmitChanges();
+            SubmitQuoteChanges();
+        }
+
+        private void SetQuoteConnectedToTicketFlags(TicketPM entityPM ,Ticket entityPOCO)
+        {
+            if (!string.IsNullOrEmpty(entityPM.QuoteNumber) && !string.IsNullOrEmpty(entityPOCO.QuoteNumber) && entityPOCO.QuoteNumber != entityPM.QuoteNumber )
+            {
+                quoteId = entityPM.QuoteId;
+                isConnectingQuote = true;
+            }
+            else if (string.IsNullOrEmpty(entityPM.QuoteNumber) && !string.IsNullOrEmpty(entityPOCO.QuoteNumber))
+            {
+                quoteId = entityPOCO.QuoteId;
+                isDisconnectingQuote = true;
+            }
+            else if (!string.IsNullOrEmpty(entityPM.QuoteNumber) && string.IsNullOrEmpty(entityPOCO.QuoteNumber))
+            {
+                quoteId = entityPM.QuoteId;
+                isConnectingQuote = true;
+            }
+            else if (!string.IsNullOrEmpty(entityPM.QuoteNumber) && !string.IsNullOrEmpty(entityPOCO.QuoteNumber)&&( entityPM.EntityType != entityPOCO.EntityType))
+            {
+                quoteId = entityPOCO.QuoteId;
+                isDisconnectingQuote = true;
+            }   
+        }
+
+        private void UpdateQuoteConnectedToTicketComputedField(int tenant)
+        {
+            if((isConnectingQuote || isDisconnectingQuote) && !string.IsNullOrEmpty(quoteId)) { 
+       
+                QuoteComputedFieldRepository quoteComputedFieldRepository = new QuoteComputedFieldRepository(this.quoteContext);
+                QuoteComputedField quoteComputedField = quoteComputedFieldRepository.GetSingleQuoteComputedField(quoteId, tenant);
+                if (quoteComputedField != null)
+                {
+                    if (isConnectingQuote) {
+                        quoteComputedField.ConnectedToTicket = true;
+                    }
+                    if (isDisconnectingQuote)
+                    {
+                        quoteComputedField.ConnectedToTicket = false;
+                    }
+                    quoteComputedFieldRepository.Update(quoteComputedField);
+                    SubmitQuoteChanges();
+                }
+            }
+        }
+
+        private void SubmitQuoteChanges()
+        {
+            this.quoteContext.SaveChanges();
         }
 
         protected override void UpdateComposition(TicketPM entityPM)
@@ -655,7 +701,10 @@ namespace Logitude.CRM.BL.EntityUpdateServices
         }
            
         BusinessHour businessHour { get; set; }
-
+        private IQuotesContext quoteContext;
+        private string quoteId = null;
+        private bool isConnectingQuote = false;
+        private bool isDisconnectingQuote = false;
         public void SetTimeIssues(TicketPM entityPM, Ticket entityPOCO, bool isChangeSLAViaAutomation = false)
         {
             bool isExecuting = false;

@@ -133,13 +133,13 @@
                                                         <table>
                                                             <tr style="height: 28px;">
                                                                 <td>
-                                                                    <button class="Button" (click)="item.SplitClicked()" [disabled]="item.IsPartialSplitParent">Split</button>
+                                                                    <button class="Button" attr.data-cy="{{'Split_' + item.ContainerNumber | IdGeneratorPipe}}" (click)="item.SplitClicked()" [disabled]="item.IsPartialSplitParent">Split</button>
                                                                 </td>
                                                             </tr>
 
                                                             <tr style="height: 28px;">
                                                                 <td>
-                                                                    <button class="Button" (click)="item.PartialSplitClicked()" [disabled]="item.Quantity <= 1">Partial Split</button>
+                                                                    <button class="Button" id="{{'PartialSplit' | IdGeneratorPipe}}" (click)="item.PartialSplitClicked()" [disabled]="item.Quantity <= 1">Partial Split</button>
                                                                 </td>
                                                             </tr>
 

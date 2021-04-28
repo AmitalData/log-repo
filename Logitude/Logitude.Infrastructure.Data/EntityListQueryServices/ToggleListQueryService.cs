@@ -27,6 +27,7 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
                                                 Code = a.Code,
                                                 Name = a.Name,
                                                 SearchFields = a.SearchFields,
+                                                Description = a.Description,
                                             });
             return query;
         }

@@ -18,7 +18,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
         public static List<string> PrivateRefrencesList = new List<string>() { "ConsigneeName", "ShipperName" };
 
 
-        public static void SearchService(DataRow tableRow, BulkDataPreperation bulkDataPreperation, string tableName)
+        public static void CreateSearchReferencesForShipment(DataRow tableRow, BulkDataPreperation bulkDataPreperation, string tableName)
         {
             if (tableName == "CargoTrackingShipmentSearches" || tableName == "CargoTrackingShipments")
             {
@@ -36,18 +36,66 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             if (isValidToCreateRefrences)
             {
                 AddShipmentNumberReference(tableRow, bulkDataPreperation.InnerDataTable);
-                AddSplittedData(tableRow, bulkDataPreperation.InnerDataTable, "CustomerReference1");
-                AddSplittedData(tableRow, bulkDataPreperation.InnerDataTable, "CustomerReference2");
+                AddSplittedData(new SplittedDataArguments
+                    .Builder()
+                    .TableRow(tableRow)
+                    .DataTable(bulkDataPreperation.InnerDataTable)
+                    .CoulmnName("CustomerReference1")
+                    .Delimiter(',')
+                    .Build());
+
+                AddSplittedData(new SplittedDataArguments
+                    .Builder()
+                    .TableRow(tableRow)
+                    .DataTable(bulkDataPreperation.InnerDataTable)
+                    .CoulmnName("CustomerReference2")
+                    .Delimiter(',')
+                    .Build());
+
+                AddSplittedData(new SplittedDataArguments
+                    .Builder()
+                    .TableRow(tableRow)
+                    .DataTable(bulkDataPreperation.InnerDataTable)
+                    .CoulmnName("ContainersNumbers")
+                    .Delimiter(',')
+                    .Build());
+
+                AddSplittedData(new SplittedDataArguments
+                    .Builder()
+                    .TableRow(tableRow)
+                    .DataTable(bulkDataPreperation.InnerDataTable)
+                    .CoulmnName("House")
+                    .Delimiter('-')
+                    .Build());
+                AddForwardingShipmentNumberReference(tableRow, bulkDataPreperation.InnerDataTable);
+
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "Master");
-                AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "House");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwarderShipmentNumber");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "CustomFileNumber");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "CustomsDeclarationNumber");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ShipperName");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ConsigneeName");
-                AddSplittedData(tableRow, bulkDataPreperation.InnerDataTable, "ContainersNumbers");
+                AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwarderShipmentNumber");
+                SaveTheWholeHouseReferenceinSearchTable(tableRow, bulkDataPreperation);
             }
 
+        }
+
+        private static void SaveTheWholeHouseReferenceinSearchTable(DataRow tableRow, BulkDataPreperation bulkDataPreperation)
+        {
+            if (tableRow["House"].ToString().Contains('-'))
+            {
+                AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "House");
+            }
+
+        }
+
+        private static void AddForwardingShipmentNumberReference(DataRow tableRow, DataTable innerDataTable)
+        {
+            if (tableRow["ShipmentLevelCode"].Equals("A"))
+            {
+                AddNewRecord(tableRow, innerDataTable, "ForwardingShipmentNumber");
+            }
         }
 
         private static bool IsShipmentValidToCreateRefrences(DataRow tableRow, BulkDataPreperation bulkDataPreperation)
@@ -106,21 +154,21 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
 
         }
 
-        private static void AddSplittedData(DataRow tableRow, DataTable dataTable, string coulmnName)
+        private static void AddSplittedData(SplittedDataArguments splittedDataArguments)
         {
-            if (!IsNullOrEmpty(tableRow, coulmnName))
+            if (!IsNullOrEmpty(splittedDataArguments.TableRow, splittedDataArguments.CoulmnName))
             {
-                var Value = tableRow[coulmnName];
+                var Value = splittedDataArguments.TableRow[splittedDataArguments.CoulmnName];
                 string SearchField = (string)Value;
-                string[] SearchArr = SearchField.Split(',');
+                string[] SearchArr = SearchField.Split(splittedDataArguments.Delimiter);
                 for (int i = 0; i < SearchArr.Length; i++)
                 {
                     ReferencecArgs ReferencecArgs = new ReferencecArgs()
                     {
-                        DataTable = dataTable,
-                        CoulmnName = coulmnName,
+                        DataTable = splittedDataArguments.DataTable,
+                        CoulmnName = splittedDataArguments.CoulmnName,
                         SearchField = SearchArr[i],
-                        TableRow = tableRow,
+                        TableRow = splittedDataArguments.TableRow,
 
                     };
                     AddNewReference(ReferencecArgs);
@@ -134,7 +182,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
         {
             if (!IsNullOrEmpty(tableRow, coulmnName))
             {
-                var Value = tableRow[coulmnName];
+                var Value = tableRow[coulmnName];         
                 string SearchField = (string)Value;
                 ReferencecArgs ReferencecArgs = new ReferencecArgs()
                 {
@@ -175,9 +223,37 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             bool IsPublic = true;
             if (PrivateRefrencesList.Contains(coulmnName))
                 IsPublic = false;
- 
-            TableRow.SetField("IsPublic", IsPublic);
+            if(coulmnName == "Master")
+            {
+                IsPublic = SetIsPublicForMasterColumn(TableRow);
+            }
 
+            if(coulmnName == "ContainersNumbers")
+            {
+                IsPublic = SetIsPublicForContainerColumn(TableRow);
+            }
+            TableRow.SetField("IsPublic", IsPublic);
+        }
+
+        private static bool SetIsPublicForMasterColumn(DataRow TableRow)
+        {
+            if (TableRow["ShipmentLevelCode"].Equals("H"))
+            {
+                return false;
+            }
+
+            if (TableRow["ForwardingShipmentLevelCode"].Equals("H"))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private static bool SetIsPublicForContainerColumn(DataRow tableRow)
+        {
+            if (tableRow["ShipmentTypeId"].Equals("LCLD")){ return false;}
+            return true;
         }
 
         private static string GetReferenceTypeFromCoulmnName(string CoulmnName)

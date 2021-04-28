@@ -392,7 +392,7 @@ namespace CargoTrackingWinFormService.Forms
                 catch (Exception e)
                 {
                     MessageBox.Show(e.Message + Environment.NewLine + e.StackTrace);
-                    Application.Exit();
+                    //Application.Exit();
                     break;
                 }
                 

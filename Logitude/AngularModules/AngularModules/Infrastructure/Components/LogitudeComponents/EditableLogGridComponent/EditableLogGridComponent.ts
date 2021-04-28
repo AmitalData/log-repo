@@ -1860,7 +1860,7 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
     resetHeaderCellBackGround() {
         var ColumnsElements = document.getElementsByClassName("ag-header-cell");
         for (var j = 0; j < ColumnsElements.length; j++) {
-            if (ColumnsElements[j].attributes['LogGridId'].value == this.LogGridId) {
+            if (ColumnsElements[j].attributes['LogGridId']?.value == this.LogGridId) {
                 //if ((<HTMLElement>ColumnsElements[j]).style.background == '#cfcbcb') { 
                     (<HTMLElement>ColumnsElements[j]).style.background = 'transparent';
                 //}

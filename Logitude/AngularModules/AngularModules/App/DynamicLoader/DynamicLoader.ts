@@ -40,8 +40,8 @@ export class DynamicLoader {
         });
       });
     }
-  }
-  public static GetInstance(myPath: string) {
+    }
+    public static GetInstance(myPath: string , dontShowErrorAlert: boolean = false) {
     if (!myPath) {
       alert("Invalid DynamicLoader GetInstance arguments");
     }
@@ -61,13 +61,15 @@ export class DynamicLoader {
         this.GetModuleProfile(iModuleName).then((Profile: ModuleProfile) => {
           if (Profile) {
             let instance = Profile.Module.GetInstance(instanceName);
+              resolve(instance);
 
             if (instance) {
               resolve(instance);
             }
 
             else {
-              alert(instanceName + " is not declared in " + iModuleName);
+                if (dontShowErrorAlert) resolve(null);
+                else alert(instanceName + " is not declared in " + iModuleName);
             }
           }
         });

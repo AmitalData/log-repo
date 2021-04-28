@@ -33,13 +33,10 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public DateTime? ARPaymentTransferStartDate { get; set; }
         public bool AllowPositiveAmountsInTheCreditNote { get; set; }
         public string QBOrealMeID { get; set; }
-        public string QBOAccessToken { get; set; }
-        public string QBOAccessTokenSecret { get; set; }
         public string VatNumber { get; set; }
         public string PaymentTermId { get; set; }
         public DateTime? AccountingActivationDate { get; set; }
         public bool AccountingActivated { get; set; }
-        //public bool RequestedPaymentMethodIsMandatory { get; set; }
         public bool TransferToDropboxActivated { get; set; }
         public bool EnableMultiPercentageVATTypes { get; set; }
         public bool NotifyPastDateOnInvoiceEdit { get; set; }

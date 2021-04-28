@@ -141,6 +141,42 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public int? PackagesQuantity { get; set; }
         [Column("DirectionId")]
 	    public string DirectionId { get; set; }
+        [Column("ShipmentLevelCode")]
+	    public string ShipmentLevelCode { get; set; }
+        [Column("AssignedTruckerDone")]
+	    public bool AssignedTruckerDone { get; set; }
+        [Column("AssignedTruckerDate")]
+	    public DateTime? AssignedTruckerDate { get; set; }
+        [Column("AssignedTruckerEstimationDate")]
+	    public DateTime? AssignedTruckerEstimationDate { get; set; }
+        [Column("AssignedTruckerNotes")]
+	    public string AssignedTruckerNotes { get; set; }
+        [Column("AssignedCustomsAgentDone")]
+	    public bool? AssignedCustomsAgentDone { get; set; }
+        [Column("AssignedCustomsAgentDate")]
+	    public DateTime? AssignedCustomsAgentDate { get; set; }
+        [Column("AssignedCustomsAgentEstDate")]
+	    public DateTime? AssignedCustomsAgentEstDate { get; set; }
+        [Column("AssignedCustomsAgentNotes")]
+	    public string AssignedCustomsAgentNotes { get; set; }
+        [Column("AssignedCustomsAgentExcReason")]
+	    public string AssignedCustomsAgentExcReason { get; set; }
+        [Column("DeliveryDone")]
+	    public bool DeliveryDone { get; set; }
+        [Column("DeliveryDate")]
+	    public DateTime? DeliveryDate { get; set; }
+        [Column("DeliveryEstimationDate")]
+	    public DateTime? DeliveryEstimationDate { get; set; }
+        [Column("DeliveryNotes")]
+	    public string DeliveryNotes { get; set; }
+        [Column("DeliveryExceptionReason")]
+	    public string DeliveryExceptionReason { get; set; }
+        [Column("GrossWeightUnitCode")]
+	    public string GrossWeightUnitCode { get; set; }
+        [Column("ForwardingShipmentNumber")]
+	    public string ForwardingShipmentNumber { get; set; }
+        [Column("ShipmentTypeCode")]
+	    public string ShipmentTypeCode { get; set; }
     }
 }
 	 

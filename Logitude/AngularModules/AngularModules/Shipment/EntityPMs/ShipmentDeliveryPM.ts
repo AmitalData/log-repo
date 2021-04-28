@@ -1,4 +1,4 @@
-﻿import {Output, EventEmitter} from '@angular/core';
+import {Output, EventEmitter} from '@angular/core';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
@@ -286,6 +286,14 @@ export class ShipmentDeliveryPM {
         return this.allConnectedPackagesId;
     }
     public set AllConnectedPackagesId(newValue: string[]) { this.allConnectedPackagesId = newValue; this.MarkAsDirty(); }   
+
+    private parentPickUpDeliveryId: string;
+    public get ParentPickUpDeliveryId() { return this.parentPickUpDeliveryId; }
+    public set ParentPickUpDeliveryId(newValue: string) { this.parentPickUpDeliveryId = newValue; this.MarkAsDirty(); }
+
+    private childDeliveryIndex: number;
+    public get ChildDeliveryIndex() { return this.childDeliveryIndex; }
+    public set ChildDeliveryIndex(newValue: number) { this.childDeliveryIndex = newValue; this.MarkAsDirty(); }
 
     private changeSetOp: string;
     public get ChangeSetOp() { return this.changeSetOp; }

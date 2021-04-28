@@ -1515,6 +1515,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string accountDisplayNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AccountDisplayNumber  
+	   {
+	    
+	     get
+		{
+		   return accountDisplayNumber;
+		 }
+		 set
+		 {
+		   if(accountDisplayNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AccountDisplayNumber",OldValue=accountDisplayNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   accountDisplayNumber=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

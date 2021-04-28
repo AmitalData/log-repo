@@ -134,6 +134,16 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                         .FirstOrDefault().BalanceForeign.GetValueOrDefault();
                     }
                     decimal CumulativeLocalAmount = this.Response.StartBalanceLocal.GetValueOrDefault();
+
+
+
+                    decimal CumulativeOpenAmount = 0; 
+                    if(_Param.ClacOpenReconciledAmount_OnlyWithout_IncludeRelatedCurrenciesAccount_IncludeChildAccounts)
+                    {
+                        CumulativeOpenAmount = this.Response.StartTotalOpenAmount;
+                    }
+                        
+                        ;
                     //if (!this.Response.SuppressCumulativeDueMultiCurrencyInPeriod)
                     //{
                     MyBlance myBlance = GetStartBalanceOfCurrPage(qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId);
@@ -146,6 +156,11 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                         decimal LocalAmountDebit = rec.LocalAmountDebit;
                         decimal LocalAmountCredit = rec.LocalAmountCredit;
 
+                        if (_Param.ClacOpenReconciledAmount_OnlyWithout_IncludeRelatedCurrenciesAccount_IncludeChildAccounts)
+                        {
+                            CumulativeOpenAmount += rec.OpenAmount;
+                            rec.CumulativeOpenAmount = CumulativeOpenAmount;
+                        }
                         CumulativeLocalAmount += (LocalAmountDebit - LocalAmountCredit);
                         rec.CumulativeLocalAmount = CumulativeLocalAmount;
                         if (!this.Response.SuppressCumulativeDueMultiCurrencyInPeriod.GetValueOrDefault())
@@ -442,8 +457,15 @@ AccountBalanceM endAccountBalanceService)
                 this.Response.StartBalanceLocal = startAccountBalanceService.GetBalanceOfLocalAmount().GetValueOrDefault();
                 this.Response.EndBalanceLocal = endAccountBalanceService.GetBalanceOfLocalAmount().GetValueOrDefault();
             }
-            
-            
+            if (_Param.ClacOpenReconciledAmount_OnlyWithout_IncludeRelatedCurrenciesAccount_IncludeChildAccounts)
+            {
+                this.Response.OpenAmountCurrencyId =
+                    startAccountBalanceService.OpenAmountCurrencyId;
+                this.Response.StartTotalOpenAmount =
+    startAccountBalanceService.StartTotalOpenAmount;
+
+            }
+
 
             this.Response.StartBalanceForeignList = this.Response.StartBalanceForeignList ?? new List<CallBackBalance>();
             this.Response.EndBalanceForeignList = this.Response.EndBalanceForeignList ?? new List<CallBackBalance>();
@@ -562,7 +584,8 @@ AccountBalanceM endAccountBalanceService)
                 openBalancePlease_ReCalcYearTransfer,
                 _Param.DateTypeCode,To,
                 _Param.CheckHaveAccountingQueued,
-                includeAccoutingDateLTransaction, false);
+                includeAccoutingDateLTransaction, false,
+                false);
             var endAccountBalance = endAccountBalanceService.AccountBalance;
             return endAccountBalance;
         }
@@ -581,7 +604,8 @@ AccountBalanceM endAccountBalanceService)
                 openBalancePlease_ReCalcYearTransfer,
                 _Param.DateTypeCode /*GLAccountTotalDateTypeValues.Accountingdate*/,_Param.From,
                 _Param.CheckHaveAccountingQueued,
-                includeAccoutingDateLTransaction, false);
+                includeAccoutingDateLTransaction, false,
+                _Param.ClacOpenReconciledAmount_OnlyWithout_IncludeRelatedCurrenciesAccount_IncludeChildAccounts);
             var startAccountBalance = startAccountBalanceService.AccountBalance;
             return startAccountBalance;
         }

@@ -1,4 +1,5 @@
 import { HttpHeaders } from '@angular/common/http';
+import { SessionInfo } from '../../Infrastructure/Utilities/SessionInfo';
 import { CargoTrackingBrandingData } from '../DataContracts/CargoTrackingBrandingData';
 import { CargoTrackingBrandingDataRequest } from '../DataContracts/CargoTrackingBrandingDataRequest';
 import { CargoTrackingImage } from '../DataContracts/CargoTrackingImage';
@@ -27,23 +28,29 @@ export  class ServiceHelper{
     public static GetcargoTrackingDataRequest(baseUrl:string)
     {   var BackgroundId:string = this.GetImageIdFromStorage("BackgroundImg");
         var CompanyLogoId:string = this.GetImageIdFromStorage("CompanyLogoImg");
+        var InvertedLogoId:string = this.GetImageIdFromStorage("InvertedLogoImg");
         var BrowserIconId:string = this.GetImageIdFromStorage("BrowserIconImg");
+        var ShipmentHeaderImageId:string = this.GetImageIdFromStorage("ShipmentHeaderImage");
+
         var BrandingDataRequest:CargoTrackingBrandingDataRequest = new CargoTrackingBrandingDataRequest();
         BrandingDataRequest.BackgroundId = BackgroundId;
         BrandingDataRequest.ComapnylogoId = CompanyLogoId;
+        BrandingDataRequest.InvertedLogoId = InvertedLogoId;
         BrandingDataRequest.BrowserIconId = BrowserIconId;
+        BrandingDataRequest.ShipmentHeaderImageId = ShipmentHeaderImageId;
+
         BrandingDataRequest.Domain = baseUrl;
         return BrandingDataRequest;
     }
 
-     
+
     public static SetCargoTrackingDate(brandingData:any,baseUrl:string){
 
         CargoTrackingBrandingData.Tenant = brandingData.Tenant;
         CargoTrackingBrandingData.MainColor = brandingData.MainColor || "#000000";
         CargoTrackingBrandingData.SecondaryColor = brandingData.SecondaryColor || "#002664";
 
-        document.documentElement.style.setProperty('--BGColor', CargoTrackingBrandingData.MainColor);
+        // document.documentElement.style.setProperty('--BGColor', CargoTrackingBrandingData.MainColor || 'RGB(250,251,252)');
         document.documentElement.style.setProperty('--MainColor', CargoTrackingBrandingData.MainColor);
         document.documentElement.style.setProperty('--busyIndicatorColor', CargoTrackingBrandingData.MainColor);
         document.documentElement.style.setProperty('--secondaryColor', CargoTrackingBrandingData.SecondaryColor);
@@ -60,11 +67,14 @@ export  class ServiceHelper{
     }
     private static SetCarogTrackingImages(BrandingData:any,baseUrl:string)
     {
-        this.SetBackGroundImg(BrandingData,baseUrl);
-        this.SetComapnyLogo(BrandingData,baseUrl);
+        this.SetBackgroundImg(BrandingData,baseUrl);
+        this.SetCompanyLogo(BrandingData,baseUrl);
         this.SetBrowserIcon(BrandingData);
+        this.SetShipmentHeaderImage(BrandingData);
+        this.SetInvertedLogo(BrandingData);
     }
-    private static SetBackGroundImg(BrandingData:any,baseUrl:string)
+
+    private static SetBackgroundImg(BrandingData:any,baseUrl:string)
     {
         if(BrandingData.BackgroundBytes){
             CargoTrackingBrandingData.BackgroundURL = "url("+ServiceHelper.GetImageFromBytes(BrandingData.BackgroundBytes)+")";
@@ -81,7 +91,7 @@ export  class ServiceHelper{
         }
     }
 
-    private static SetComapnyLogo(BrandingData:any,baseUrl:string)
+    private static SetCompanyLogo(BrandingData:any,baseUrl:string)
     {
         if(BrandingData.ComapnylogoBytes){
             CargoTrackingBrandingData.ComapnylogoURL = ServiceHelper.GetImageFromBytes(BrandingData.ComapnylogoBytes);
@@ -91,6 +101,34 @@ export  class ServiceHelper{
             var StorageCompanyLogo:CargoTrackingImage = ServiceHelper.GetImageFromStorage("CompanyLogoImg");
                 if(StorageCompanyLogo && StorageCompanyLogo.Id!=null && StorageCompanyLogo.Id == BrandingData.ComapnylogoId){
                     CargoTrackingBrandingData.ComapnylogoURL =ServiceHelper.GetImageFromBytes(StorageCompanyLogo.Data);
+                }
+        }
+    }
+
+    private static SetShipmentHeaderImage(BrandingData:any)
+    {
+        if(BrandingData.ShipmentHeaderBytes){
+            CargoTrackingBrandingData.ShipmentHeaderURL = ServiceHelper.GetImageFromBytes(BrandingData.ShipmentHeaderBytes);
+            this.StoreImageInStorage("ShipmentHeaderImage",BrandingData.ShipmentHeaderImageId,BrandingData.ShipmentHeaderBytes);
+        }
+        else{
+            var StorageShipmentHeaderImage:CargoTrackingImage = ServiceHelper.GetImageFromStorage("ShipmentHeaderImage");
+                if(StorageShipmentHeaderImage && StorageShipmentHeaderImage.Id!=null && StorageShipmentHeaderImage.Id == BrandingData.ShipmentHeaderImageId){
+                    CargoTrackingBrandingData.ShipmentHeaderURL =ServiceHelper.GetImageFromBytes(StorageShipmentHeaderImage.Data);
+                }
+        }
+    }
+
+    private static SetInvertedLogo(BrandingData:any)
+    {
+        if(BrandingData.InvertedLogoBytes){
+            CargoTrackingBrandingData.InvertedLogoURL = ServiceHelper.GetImageFromBytes(BrandingData.InvertedLogoBytes);
+            this.StoreImageInStorage("InvertedLogoImg",BrandingData.InvertedLogoId,BrandingData.InvertedLogoBytes);
+        }
+        else{
+            var StorageInvertedLogo:CargoTrackingImage = ServiceHelper.GetImageFromStorage("InvertedLogoImg");
+                if(StorageInvertedLogo && StorageInvertedLogo.Id!=null && StorageInvertedLogo.Id == BrandingData.InvertedLogoId){
+                    CargoTrackingBrandingData.InvertedLogoURL =ServiceHelper.GetImageFromBytes(StorageInvertedLogo.Data);
                 }
         }
     }
@@ -139,5 +177,17 @@ export  class ServiceHelper{
         authHeader.append('Access-Control-Allow-Origin', '*');
 
         return authHeader;
+    }
+
+    public static GetHeadersWithToken() {
+
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Token': SessionInfo.Token
+            })
+        };
+       
+        return httpOptions;
     }
 }

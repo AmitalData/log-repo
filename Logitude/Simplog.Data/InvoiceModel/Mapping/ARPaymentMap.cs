@@ -25,7 +25,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.DebitAccountId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.BillToAddressId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.BillToId).IsRequired().HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.SearchFields).IsUnicode(true);
+            this.Property(t => t.SearchFields).IsMaxLength().IsUnicode(true);
             this.Property(t => t.ChequeOrPaymentRef).HasMaxLength(30).IsUnicode(true);
             this.Property(t => t.Bank).HasMaxLength(30).IsUnicode(true);
             this.Property(t => t.BankBranch).HasMaxLength(30).IsUnicode(true);

@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool} from '../../Infrastructure/Tools';
 import {AddressList} from '../../Common/EntityLists/AddressList';
 
@@ -78,17 +78,20 @@ export class AddressTemplate {
 
     public CityLineText: string = null;
     GetCityLineText() {
-        var myResult = null;
+        var myResult = "";
 
         if (this.Address != null) {
-            myResult = this.Address.City;
+            if (!AppTool.IsNullOrEmpty(this.Address.City)) {
+                myResult = this.Address.City;
+            }
 
             if (!AppTool.IsNullOrEmpty(this.Address.StateName)) {
-                myResult += ", " + this.Address.StateName;
+
+                myResult += !AppTool.IsNullOrEmpty(myResult) ? ", " + this.Address.StateName : this.Address.StateName;
             }
 
             if (!AppTool.IsNullOrEmpty(this.Address.ZipCode)) {
-                myResult += ", " + this.Address.ZipCode;
+                myResult += !AppTool.IsNullOrEmpty(myResult) ? ", " + this.Address.ZipCode : this.Address.ZipCode ;
             }
         }
 

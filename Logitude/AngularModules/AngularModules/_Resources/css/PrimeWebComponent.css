@@ -1,0 +1,75 @@
+/*
+    .p-datatable-scrollable-header {
+    overflow: inherit !important;
+}
+
+*/
+
+.prime-web-component .cdk-virtual-scroll-content-wrapper, p-dynamicdialog .cdk-virtual-scroll-content-wrapper {
+    contain: unset !important;
+}
+
+.p-dropdown.p-component {
+    width: 100% !important;
+}
+
+p-autocomplete {
+    width: 100% !important;
+}
+
+p-dropdown {
+    width: 100% !important;
+}
+
+.p-field-checkbox label {
+    margin-bottom: 0 !important;
+}
+
+.prime-web-component .PrimaryButton, p-dynamicdialog .PrimaryButton {
+    max-width: 100px !important;
+}
+
+.prime-web-component .content-wrapper, p-dynamicdialog .content-wrapper {
+    padding-top: 1.2rem !important;
+}
+
+.prime-web-component .mb-0, p-dynamicdialog .mb-0 {
+    margin-bottom: 0 !important;
+}
+
+.p-datepicker-touch-ui {
+    min-width: 20vw !important;
+}
+
+.p-calendar .p-datepicker {
+    width: 400px !important;
+}
+
+.p-inputtext {
+    height: unset !important;
+    min-height: unset !important;
+    max-height: unset !important;
+    line-height: unset !important;
+    outline: unset !important;
+    text-indent: unset !important;
+    box-shadow: unset !important;
+    -webkit-box-shadow: unset !important;
+    -moz-box-shadow: unset !important;
+}
+
+.p-button {
+    display: inline-flex !important;
+    height: unset !important;
+}
+
+.p-button:not(.p-button-icon-only) {
+    width: unset;
+}
+
+.prime-web-component *, p-dynamicdialog * {
+    white-space: initial !important;
+}
+
+.p-button:not(.p-button-sm) {
+    padding: 0.5rem 1rem !important;
+}

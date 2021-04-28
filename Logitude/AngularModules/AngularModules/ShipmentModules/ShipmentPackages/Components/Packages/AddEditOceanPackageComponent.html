@@ -67,6 +67,23 @@
                                                         </td>
                                                     </tr>
 
+                                                    <!-- LCL PackageTypeId -->
+                                                    <tr *ngIf="DataContext.IsLCLEntity" class="FormFieldRow">
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'LCLContainerTypeId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td style="width: 185px;">
+                                                            <LogLov [ObjectFieldName]="'LCLContainerTypeId'"
+                                                                    [SelectedValue]="DataContext.LCLContainerTypeId"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'PackageType'"
+                                                                    [DependencyFilter2Value]="true">
+                                                            </LogLov>
+                                                        </td>
+                                                    </tr>
+
                                                     <!-- Quantity -->
                                                     <tr class="FormFieldRow" *ngIf="DataContext.IsLCLEntity">
                                                         <td>

@@ -109,7 +109,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             ValidateEntity(paymentChequePM);
             paymentChequePM.UpdateDate = DateTime.Now;
-            paymentChequePM.UpdatedByUserId = AuthenticationUtil.ResolveUserId(paymentChequePM.Tenant);
+            var contact = LoggedContactResolver.GetLoggedContact(paymentChequePM.Tenant);
+            if (contact != null)
+            {
+                paymentChequePM.UpdatedByUserId = contact.Id;
+            }
         }
         private static bool CheckIfPaymentChequeHasAjournal(PaymentChequePM paymentCheque)
         {

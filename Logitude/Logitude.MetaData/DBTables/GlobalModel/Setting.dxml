@@ -280,28 +280,7 @@
     Size="10">
     <Constraints
       Nullable="true" />
-  </Column>
-  <Column
-    Name="QBOConsumerKey"
-    Type="varchar"
-    Size="100">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="QBOAppToken"
-    Type="varchar"
-    Size="100">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="QBOConsumerSecretKey"
-    Type="varchar"
-    Size="100">
-    <Constraints
-      Nullable="true" />
-  </Column>
+  </Column>  
   <Column
     Name="AndroidAppLink"
     Type="varchar"

@@ -1,0 +1,79 @@
+﻿<Script DBType="Main" Module="Shipment" Pre="true">
+  <Sql Version="5">
+    <![CDATA[
+    
+    IF EXISTS (SELECT *
+               FROM   sys.objects
+               WHERE  object_id = OBJECT_ID(N'[dbo].[CalculatePayableVatOpenAmount]'))
+    
+    DROP FUNCTION [dbo].[CalculatePayableVatOpenAmount]
+      
+    DECLARE @Sql NVARCHAR(MAX)
+    SET @Sql = 
+    '
+    CREATE FUNCTION dbo.CalculatePayableVatOpenAmount (@CardId varchar(15),@VatTypeId varchar(15), @Tenant int, @CreateDate datetime, @amount float)
+    RETURNS float
+    WITH EXECUTE AS CALLER
+    AS
+    BEGIN
+        DECLARE @Result float;
+        DECLARE @PayableVatTypeId  as varchar(15);
+	    DECLARE @VatAmountLocal as float;
+	    DECLARE @VatAmountProfit as float;
+	    DECLARE @VatPercentage as float;
+		DECLARE @IsMultiPercentage as bit;
+		DECLARE @SingleVATTypeId as varchar(15);
+
+		set @Result = @amount;
+	    if (@CardId is not null)
+	    begin
+	      set @PayableVatTypeId = (select top 1 VatTypeId from cards where id = @CardId);
+	    end 
+
+	     if (@PayableVatTypeId is null) 
+	     begin
+           set @PayableVatTypeId = @VatTypeId;
+	     end
+
+	     if (@PayableVatTypeId is not null) 
+	     begin
+
+			   set @IsMultiPercentage = (select IsMultiPercentage from VatTypes where Tenant = @Tenant AND Id = @PayableVatTypeId)
+			   if(@IsMultiPercentage = ''0'')
+			   begin 
+					 set @VatPercentage = (select top 1 Percentage from VatTypePercentages where VatTypeId = @PayableVatTypeId AND Tenant = @Tenant and FromDate <= @CreateDate order by FromDate desc)
+	         if(@VatPercentage is not null)
+						 set @Result = Round(@amount + (@amount * @VatPercentage / 100), 2);
+				end
+
+				else 
+				begin 
+					set @Result = @amount;
+					DECLARE VatGroups_CURSOR CURSOR 
+					FOR 
+					SELECT SingleVATTypeId
+					FROM VATTypesGroups where GroupVATTypeId = @PayableVatTypeId
+					OPEN VatGroups_CURSOR
+					FETCH NEXT FROM VatGroups_CURSOR INTO @SingleVATTypeId
+					WHILE @@FETCH_STATUS = 0
+					BEGIN 
+						set @VatPercentage = (select top 1 Percentage from VatTypePercentages where VatTypeId = @SingleVATTypeId AND Tenant = @Tenant and FromDate <= GETDATE() order by FromDate desc)
+						if(@VatPercentage is not null)
+							set @Result =@Result + (@amount * @VatPercentage / 100);
+
+					FETCH NEXT FROM VatGroups_CURSOR INTO @SingleVATTypeId
+					END
+					CLOSE VatGroups_CURSOR
+					DEALLOCATE VatGroups_CURSOR
+				end
+
+	      End
+        RETURN(@Result);
+    END
+    ';
+
+    EXEC(@Sql);
+		  
+    ]]>
+  </Sql>
+</Script>

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using WebFreight.Web.App_Code.AngularJS_App_Code.Generated;
+using WebFreight.Web.DataProviders;
 
 namespace WebFreight.Web.AccountingModel.Reports.Interest
 {
-    public class InterestDataProvider 
+    public class InterestDataProvider: BaseDataProvider
     {
         public InterestDataProvider()
         {
@@ -20,6 +21,8 @@ namespace WebFreight.Web.AccountingModel.Reports.Interest
         public List<InterestReportLinesByDateProvider> InterestReportLinesByDateList { get; set; }
         public decimal? CreditAllotmentPercentage { get; set; }
         public decimal? CalCreditAllotmentCommission { get; set; }
+        public decimal? AllotmentCommession { get; set; }
+        public string AllotmentCalculation { get; set; }
     }
 
     public class InterestReportLinesByDateProvider

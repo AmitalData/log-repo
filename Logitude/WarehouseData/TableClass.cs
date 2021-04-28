@@ -27,21 +27,21 @@ namespace WarehouseData
         public string ObjectTableId { get; set; }
         public string DWObjectTableCode { get; set; }
         public bool HasCustomFields { get; set; }
-        public int CustomFieldsCount { get; set; }
-        public List<DWObjectFieldDB> DWObjectFieldDBLists { get; set; }
+        public int MaxNumberOfCustomFields { get; set; }
         public string DWTableKeyName { get; set; }
         public string FieldIndexes { get; set; }
         public string RefreshIds { get; set; }
-        public List<TableClass> RelatedEntities { get; set; }
         public string ParentKeyName { get; set; }
+        public string ObjectTableName { get; set; }
 
         public string AdditionalIndexes { get; set; }
-
+        
+        public List<DWObjectFieldDB> DWObjectFieldDBLists { get; set; }
         public List<DWObjectFieldDB> ObjectFieldDBLists { get; set; }
-
         public List<IndexItem> Indexes { get; set; }
-
+        public List<TableClass> RelatedEntities { get; set; }
         public List<string> FieldsDBNameLists { get; set; }
+        public List<string> RelatedFactTables { get; set; }
 
 
     }

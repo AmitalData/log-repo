@@ -115,6 +115,7 @@ namespace MeatadataGeneratorTool.ScreensModule
             }
         }
 
+
         public Visibility ButtonsVisibility { get; set; }
 
         private string errorMessages;

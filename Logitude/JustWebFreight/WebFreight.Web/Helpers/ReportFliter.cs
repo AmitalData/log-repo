@@ -30,7 +30,9 @@ namespace WebFreight.Web.Helpers
         public string ReportId { get; set; }
         public int NumberOfRequests { get; set; }
         public bool DisablePreview { get; set; }
+        public bool IsSchedulerReport { get; set; }
+        public bool SendIfEmpty{ get; set; }
 
-        
+
     }
 }

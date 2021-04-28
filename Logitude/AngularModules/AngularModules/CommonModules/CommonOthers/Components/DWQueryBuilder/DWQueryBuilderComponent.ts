@@ -134,7 +134,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
 
         this.InitializeService();
         this.LoadEntityResources();
-        this.KPIFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "KPI" && d.TenantNumber == SessionLocator.Tenant)[0];
+        this.KPIFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "KPI")[0];
     }
 
 
@@ -2144,10 +2144,10 @@ export class DWObjectFieldsDetails extends BaseComponent {
             dWObjectFieldPM.DimensionTableDisplayName = DWObjectField.DimensionTableDisplayName;
             dWObjectFieldPM.DWObjectTableCode = DWObjectField.DWObjectTableCode;
             var view = new DWObjectFieldsDetails(dWObjectFieldPM, this.MyParentClass);
-            view.displayname = DWObjectField.Name + " " + item;
+            view.displayname = DWObjectField.DisplayName + " " + item;
             view.ParentDataTypeCode = "DateParts";
             view.parentDimTabelName = DWObjectField.ParentDimTabelName;
-
+            dWObjectFieldPM.IsCustom = view.isCustom = DWObjectField.IsCustom;
             ObsList.push(view);
             this.Items = ObsList;
             this.IsViewTree = true;

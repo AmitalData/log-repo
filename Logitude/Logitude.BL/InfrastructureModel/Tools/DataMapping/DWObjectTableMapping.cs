@@ -31,6 +31,12 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             entityPOCO.ParentFactCode = entityPM.ParentFactCode;
             entityPOCO.DisplayName = entityPM.DisplayName;
 
+            entityPOCO.ObjectTableName = entityPM.ObjectTableName;
+            entityPOCO.MaxNumberOfCustomFields = entityPM.MaxNumberOfCustomFields;
+            entityPOCO.HasCustomFields = entityPM.HasCustomFields;
+
+
+
         }
     }
 }

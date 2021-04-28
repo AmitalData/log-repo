@@ -15,13 +15,22 @@ namespace Logitude.HybridTest.ServicesTest
     public class QuoteTest
     {
         private static EntityWcfCaller entityWcfCaller = new EntityWcfCaller();
+        public TestContext TestContext { get; set; }
         [TestMethod]
         public void Test_Quote_UPSERT()
         {
-            QuotePM quotePM = QuoteWcfFactory.GetQuotePM();
-            ServiceOutcome serviceOutcome = entityWcfCaller.CallEntityUpsert(quotePM);
-            Assert.IsFalse(serviceOutcome.Response.HasError, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
-            Assert.IsNotNull(serviceOutcome.Response.Result, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
+            try
+            {
+                RetryTest.InsertTestMethodToDictionary(TestContext.TestName);
+                QuotePM quotePM = QuoteWcfFactory.GetQuotePM();
+                ServiceOutcome serviceOutcome = entityWcfCaller.CallEntityUpsert(quotePM);
+                Assert.IsFalse(serviceOutcome.Response.HasError, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
+                Assert.IsNotNull(serviceOutcome.Response.Result, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
+            }
+            catch (Exception ex)
+            {
+                RetryTest.RetryFailTestRun(TestContext, this, ex.Message);
+            }
         }
 
         [TestMethod]
@@ -60,57 +69,81 @@ namespace Logitude.HybridTest.ServicesTest
         [TestMethod]
         public void Test_Quote_CreateEvent()
         {
-            QuotePM quotePM = QuoteWcfFactory.GetQuotePM();
-            ServiceOutcome upsertOutcome = entityWcfCaller.CallEntityUpsert(quotePM);
-            InvokedProperties serviceProperties = new InvokedProperties
+            try
             {
-                ServiceName = "Quote",
-                ServiceOperation = "CreateEvent",
-            };
+                RetryTest.InsertTestMethodToDictionary(TestContext.TestName);
+                QuotePM quotePM = QuoteWcfFactory.GetQuotePM();
+                ServiceOutcome upsertOutcome = entityWcfCaller.CallEntityUpsert(quotePM);
+                InvokedProperties serviceProperties = new InvokedProperties
+                {
+                    ServiceName = "Quote",
+                    ServiceOperation = "CreateEvent",
+                };
 
-            Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { EnvironmentGlobalParams.MainTenant, null, quotePM.QuoteNumber, HybridData.UserCodeHU, "QTCP", DateTime.Now, DateTime.Now, "Testing hybrid accepted" };
-            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
-            Assert.IsFalse(serviceOutcome.Response.HasError, "Create Event Failed! " + serviceOutcome.Response.ErrorMessage);
-            Assert.IsNull(serviceOutcome.Response.Result, "Create Event List Failed! " + serviceOutcome.Response.ErrorMessage);
+                Response serviceResponse = new Response();
+                object[] serviceParameters = new object[] { EnvironmentGlobalParams.MainTenant, null, quotePM.QuoteNumber, HybridData.UserCodeHU, "QTCP", DateTime.Now, DateTime.Now, "Testing hybrid accepted" };
+                ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+                Assert.IsFalse(serviceOutcome.Response.HasError, "Create Event Failed! " + serviceOutcome.Response.ErrorMessage);
+                Assert.IsNull(serviceOutcome.Response.Result, "Create Event List Failed! " + serviceOutcome.Response.ErrorMessage);
+            }
+            catch (Exception ex)
+            {
+                RetryTest.RetryFailTestRun(TestContext, this, ex.Message);
+            }
         }
 
         [TestMethod]
         public void Test_Quote_BuildEventsList()
         {
-            QuotePM quotePM = QuoteWcfFactory.GetQuotePM();
-            ServiceOutcome upsertOutcome = entityWcfCaller.CallEntityUpsert(quotePM);
-            List<TraceEventPM> events = new List<TraceEventPM>()
+            try
             {
-               // new TraceEventPM() { Tenant = EnvironmentGlobalParams.MainTenant, ExternalId = null, UserId = HybridData.UserCodeHU, EventTypeCode = "UPQT", EventDateTime = DateTime.Now.AddDays(-2), LogDateTime = DateTime.Now.AddDays(-2), Notes = "Testing hybrid updated" },
-                new TraceEventPM() { Tenant = EnvironmentGlobalParams.MainTenant, ExternalId = null, UserId = HybridData.UserCodeHU, EventTypeCode = "QTCP", EventDateTime = DateTime.Now, LogDateTime = DateTime.Now, Notes = "Testing hybrid accepted" },
-                new TraceEventPM() { Tenant = EnvironmentGlobalParams.MainTenant, ExternalId = null, UserId = HybridData.UserCodeHU, EventTypeCode = "RQTD", EventDateTime = DateTime.Now, LogDateTime = DateTime.Now, Notes = "Testing hybrid returned to draft" },
-            };
-            Quote_BuildEventsList(quotePM.QuoteNumber, events);
+                RetryTest.InsertTestMethodToDictionary(TestContext.TestName);
+                QuotePM quotePM = QuoteWcfFactory.GetQuotePM();
+                ServiceOutcome upsertOutcome = entityWcfCaller.CallEntityUpsert(quotePM);
+                List<TraceEventPM> events = new List<TraceEventPM>()
+                {
+                    // new TraceEventPM() { Tenant = EnvironmentGlobalParams.MainTenant, ExternalId = null, UserId = HybridData.UserCodeHU, EventTypeCode = "UPQT", EventDateTime = DateTime.Now.AddDays(-2), LogDateTime = DateTime.Now.AddDays(-2), Notes = "Testing hybrid updated" },
+                    new TraceEventPM() { Tenant = EnvironmentGlobalParams.MainTenant, ExternalId = null, UserId = HybridData.UserCodeHU, EventTypeCode = "QTCP", EventDateTime = DateTime.Now, LogDateTime = DateTime.Now, Notes = "Testing hybrid accepted" },
+                    new TraceEventPM() { Tenant = EnvironmentGlobalParams.MainTenant, ExternalId = null, UserId = HybridData.UserCodeHU, EventTypeCode = "RQTD", EventDateTime = DateTime.Now, LogDateTime = DateTime.Now, Notes = "Testing hybrid returned to draft" },
+                };
+                Quote_BuildEventsList(quotePM.QuoteNumber, events);
+            }
+            catch (Exception ex)
+            {
+                RetryTest.RetryFailTestRun(TestContext, this, ex.Message);
+            }
         }
 
         [TestMethod]
         public void Test_Quote_DeleteQuoteEvent()
         {
-            QuotePM quotePM = QuoteWcfFactory.GetQuotePM();
-            ServiceOutcome upsertOutcome = entityWcfCaller.CallEntityUpsert(quotePM);
-            string acceptedExternalId = Guid.NewGuid().ToString();
-            List<TraceEventPM> events = new List<TraceEventPM>()
+            try
             {
-                new TraceEventPM() { Tenant = EnvironmentGlobalParams.MainTenant, ExternalId = acceptedExternalId, UserId = HybridData.UserCodeHU, EventTypeCode = "QTCP", EventDateTime = DateTime.Now, LogDateTime = DateTime.Now, Notes = "Testing hybrid departed" },
-            };
-            Quote_BuildEventsList(quotePM.QuoteNumber, events);
+                RetryTest.InsertTestMethodToDictionary(TestContext.TestName);
+                QuotePM quotePM = QuoteWcfFactory.GetQuotePM();
+                ServiceOutcome upsertOutcome = entityWcfCaller.CallEntityUpsert(quotePM);
+                string acceptedExternalId = Guid.NewGuid().ToString();
+                List<TraceEventPM> events = new List<TraceEventPM>()
+                {
+                    new TraceEventPM() { Tenant = EnvironmentGlobalParams.MainTenant, ExternalId = acceptedExternalId, UserId = HybridData.UserCodeHU, EventTypeCode = "QTCP", EventDateTime = DateTime.Now, LogDateTime = DateTime.Now, Notes = "Testing hybrid departed" },
+                };
+                Quote_BuildEventsList(quotePM.QuoteNumber, events);
 
-            InvokedProperties serviceProperties = new InvokedProperties
+                InvokedProperties serviceProperties = new InvokedProperties
+                {
+                    ServiceName = "Quote",
+                    ServiceOperation = "DeleteQuoteEvent",
+                };
+
+                object[] serviceParameters = new object[] { quotePM.QuoteNumber, acceptedExternalId, EnvironmentGlobalParams.MainTenant };
+                ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+                Assert.IsFalse(serviceOutcome.Response.HasError, "Delete Event Failed! " + serviceOutcome.Response.ErrorMessage);
+                Assert.IsNotNull(serviceOutcome.Response.Result, "Delete Event Failed! " + serviceOutcome.Response.ErrorMessage);
+            }
+            catch (Exception ex)
             {
-                ServiceName = "Quote",
-                ServiceOperation = "DeleteQuoteEvent",
-            };
-            
-            object[] serviceParameters = new object[] { quotePM.QuoteNumber, acceptedExternalId, EnvironmentGlobalParams.MainTenant };
-            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
-            Assert.IsFalse(serviceOutcome.Response.HasError, "Delete Event Failed! " + serviceOutcome.Response.ErrorMessage);
-            Assert.IsNotNull(serviceOutcome.Response.Result, "Delete Event Failed! " + serviceOutcome.Response.ErrorMessage);
+                RetryTest.RetryFailTestRun(TestContext, this, ex.Message);
+            }
         }
 
         [TestMethod]

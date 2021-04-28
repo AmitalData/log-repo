@@ -18,6 +18,7 @@ export class ListComponentArgs {
     public SuppressOnRowSelectedField: boolean = false;
     public IsTasksMenuClicked: boolean;
     public BIReportFolderId: string;
+    public QuerySection: string;
 }
 
 export class NewEntityArgs {

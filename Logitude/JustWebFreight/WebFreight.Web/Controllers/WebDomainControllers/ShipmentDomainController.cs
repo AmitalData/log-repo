@@ -371,7 +371,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         ShipmentLevelCode = args.ShipmentLevelCode,
                         Master = args.Master,
                         AirlinePrefix = args.AirlinePrefix,
-                        IsCancelled = args.IsCancelled,                        
+                        IsCancelled = args.IsCancelled,
+                        OperationalDate = args.OperationalDate,
                     });
                 }
 
@@ -381,23 +382,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                
-                //bool isFieldExists = ShipmentValidating.IsMasterFieldUsedByAnotherShipment(args.ShipmentId, args.Master, args.AirlinePrefix, args.DirectionId, args.TransportModeId, args.ShipmentLevelCode, args.IsCancelled, myTenant);
-                //if (isFieldExists)
-                //{
-                //    myResult = "Master field already used in another Shipment";
-                //}
-
-                //else
-                //{
-                //    isFieldExists = ShipmentValidating.IsMasterFieldUsedByAnotherBooking(args.BookingId, args.Master, args.AirlinePrefix, args.DirectionId, args.TransportModeId, args.ShipmentLevelCode, args.IsCancelled, myTenant);
-                //    if (isFieldExists)
-                //    {
-                //        myResult = "Master field already used in another Booking";
-                //    }
-                //}
-
-                //return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
 
             catch (Exception ex)
@@ -606,20 +590,19 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetShipmentsQueriesCounts(int tenant, string transportModeId, string directionId, string SearchFilter, string serviceContextUser, string TypeCode = null)
+        public HttpResponseMessage GetShipmentsQueriesCounts([FromUri] ShipmentsQueriesCountsArgs shipmentsQueriesCountsArgs)
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-
                 string loggedUserEmail = authToken.Email;
 
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                SecurityUtility.CheckContactFeature("Shipment", "READ", tenant);
+                SecurityUtility.AuthenticationOnTenant(shipmentsQueriesCountsArgs.Tenant);
+                SecurityUtility.CheckContactFeature("Shipment", "READ", shipmentsQueriesCountsArgs.Tenant);
 
-                ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-                ImporterQueriesDataCounts myResult = shipmentQuery.GetShipmentsQueriesCounts(tenant, transportModeId, directionId, SearchFilter, serviceContextUser, TypeCode);
+                ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentsQueriesCountsArgs.Tenant);
+                ImporterQueriesDataCounts myResult = shipmentQuery.GetShipmentsQueriesCounts(shipmentsQueriesCountsArgs);
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
@@ -1643,13 +1626,22 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 Shipment myShipment = shipmentRepository.GetSingleShipment(shipmentId, tenant);
                 if (myShipment != null)
                 {
-                    QuoteRepository quoteRepository = new QuoteRepository(tenant);
+                    IQuotesContext quotesContext = QuotesContext.GetContext(tenant);
+                    QuoteRepository quoteRepository = new QuoteRepository(quotesContext);
+                    QuoteComputedFieldRepository quoteComputedFieldRepository = new QuoteComputedFieldRepository(quotesContext);
                     Quote myQuote = quoteRepository.GetSingleQuote(myShipment.QuoteId, tenant);
+                    QuoteComputedField quoteComputedField = quoteComputedFieldRepository.GetSingleQuoteComputedField(myShipment.QuoteId, tenant);
                     if (myQuote != null)
                     {
                         if (myQuote.UsageCount == 1)
                         {
                             myQuote.UsageCount = null;
+                            if (quoteComputedField != null)
+                            {
+                                quoteComputedField.ConnectedToShipment = false;
+                                quoteComputedFieldRepository.Update(quoteComputedField);
+                                quoteComputedFieldRepository.SubmitChanges();
+                            }
                         }
 
                         else
@@ -2660,13 +2652,35 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             if (type == "AMAS")
             {
-                if (string.IsNullOrEmpty(item.AirlinePrefix) && string.IsNullOrEmpty(item.Master))
+                if (!string.IsNullOrEmpty(item.AirlinePrefix) && !string.IsNullOrEmpty(item.Master))
                 {
-                    myResult = "Missing Master B/L";
+                    // nothing
                 }
                 else
                 {
-                    myResult = "Invalid Master B/L";
+                    if(string.IsNullOrEmpty(item.AirlinePrefix) && string.IsNullOrEmpty(item.Master))
+                    {
+                        if (string.IsNullOrEmpty(myResult))
+                        {
+                            myResult = "Missing Master B/L";
+                        }
+                        else
+                        {
+                            myResult = myResult + ", Missing Master B/L";
+                        }
+                    }
+
+                    else
+                    {
+                        if (string.IsNullOrEmpty(myResult))
+                        {
+                            myResult = "Invalid Master B/L";
+                        }
+                        else
+                        {
+                            myResult = myResult + ", Invalid Master B/L";
+                        }
+                    }
                 }
 
                 if (string.IsNullOrEmpty(item.MainCarriageFromPortCode))

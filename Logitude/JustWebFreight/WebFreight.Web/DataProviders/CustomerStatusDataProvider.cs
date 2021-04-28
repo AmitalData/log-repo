@@ -62,7 +62,6 @@ namespace WebFreight.Web.DataProviders
         public decimal TotalLocal { get; set; } = 0;
         public decimal TotalForeign { get; set; } = 0;
 
-
         public List<StatusPeriod> Periods { get; set; } = new List<StatusPeriod>();
 
 

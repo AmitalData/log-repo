@@ -222,6 +222,7 @@
       <xs:element minOccurs="0" name="INTTRAInstructions" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="INTTRAIsFreighted" type="xs:boolean" />
       <xs:element minOccurs="0" name="INTTRALastBookingResponse" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="INTTRALastEBbookingSendDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="INTTRALastStatusDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="INTTRASIError" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="INTTRASIStatusCode" nillable="true" type="xs:string" />
@@ -368,6 +369,7 @@
       <xs:element minOccurs="0" name="ProjectNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ProrateReceivables" type="xs:boolean" />
       <xs:element minOccurs="0" name="QuoteId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="QuoteNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="RegistryDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="RequestedDocumentsCount" type="xs:int" />
       <xs:element minOccurs="0" name="ResultFromDocument" type="xs:boolean" />

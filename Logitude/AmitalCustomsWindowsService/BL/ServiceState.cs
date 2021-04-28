@@ -22,7 +22,7 @@ namespace AmitalCustomsWindowsService.BL
         public static DateTime ServiceStartAt = DateTime.Now;
         public static DateTime CurrentDate = DateTime.Now.Date;
         static DateTime LastSuccessResponseAt = DateTime.MinValue;
-        static DateTime LastRequestAt = DateTime.MinValue;
+        static DateTime LastRequestAt =  DateTime.MinValue;
         static string LastError = "";
         static long Requested = 0;
         static long RequestedToday = 0;

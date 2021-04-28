@@ -249,9 +249,28 @@ export class TariffValidator {
             draftVersion.TariffLines.forEach(item => {
                 Validator.TryValidateObject(item, "TariffLine", this.Errors);
 
-                if (this.entityPM.TypeCode == "ASC" || this.entityPM.TypeCode =="OSC") {
-                    if (AppTool.IsNullOrEmpty(item.CurrencyId)) {
-                        this.Errors.push(msg.replace("%FieldName", "Currency"));
+                if (this.entityPM.TypeCode == "ASC" || this.entityPM.TypeCode == "OSC" || this.entityPM.TypeCode == "OFS") {
+                    if (item.IsDifferentCurrenciesPerCharge) {
+                        if (this.entityPM.TypeCode == "OFS") {
+                            if (item.ContainersPrices.filter(d => AppTool.IsNullOrEmpty(d.CurrencyId)).length > 0) {
+                                this.Errors.push("Some Containers Prices missing Currency");
+                            }
+                        }
+
+                        else {
+                            for (var i = 1; i <= 10; i++) {
+                                if (this.entityPM["Surcharge" + i + "Id"]) {
+                                    if (AppTool.IsNullOrEmpty(item["Surcharge" + i + "CurrencyId"])) {
+                                        this.Errors.push("Surcharge " + i + " Currency Field is Required");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else {
+                        if (AppTool.IsNullOrEmpty(item.CurrencyId)) {
+                            this.Errors.push("Currency Field is Required");
+                        }
                     }
 
                     if (AppTool.IsNullOrEmpty(item.DestinationPortId) && !item.IsToAllOtherPorts) {

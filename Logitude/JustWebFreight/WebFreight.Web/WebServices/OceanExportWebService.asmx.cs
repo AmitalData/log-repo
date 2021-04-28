@@ -821,6 +821,7 @@ namespace WebFreight.Web.WebServices
                 if (myFirstPickup == null)
                 {
                     PortPM preCarriageFromPort = PortQuery.GetSinglePort(tenant, shipment.PreCarriageFromPortId, true);
+                    PortPM preForwardingFromPort = PortQuery.GetSinglePort(tenant, shipment.PreForwardingFromPortId, true);
 
                     //FirstPickupAddress
                     if (!string.IsNullOrEmpty(shipment.ShipperNotExporterAddressId))
@@ -832,14 +833,23 @@ namespace WebFreight.Web.WebServices
                         }
                     }
 
+                    else if (preForwardingFromPort != null)
+                    {
+                        myDataProvider.FirstPickupAddress = preForwardingFromPort.EnglishName;
+                    }
+
                     else if (preCarriageFromPort != null)
                     {
                         myDataProvider.FirstPickupAddress = preCarriageFromPort.EnglishName;
                     }
 
-
                     //PlaceOfReceipt
-                    if (preCarriageFromPort != null)
+                    if (preForwardingFromPort != null)
+                    {
+                        myDataProvider.PlaceOfReceipt = preForwardingFromPort.EnglishName;
+                    }
+
+                    else if (preCarriageFromPort != null)
                     {
                         myDataProvider.PlaceOfReceipt = preCarriageFromPort.EnglishName;
                     }
@@ -1089,6 +1099,11 @@ namespace WebFreight.Web.WebServices
                     }
                 }
                 #endregion
+                                
+                myDataProvider.PreForwardingFromPort = shipment.PreForwardingFromPortName;
+                myDataProvider.PreForwardingBy = shipment.PreForwardingCarrierName;
+                myDataProvider.PreForwardingVesselName = shipment.PreForwardingVesselName;
+                myDataProvider.OnForwardingToPort = shipment.OnForwardingToPortName;
 
                 #region Pre Carriage
                 if (!string.IsNullOrEmpty(shipment.PreCarriageFromPortId) && !string.IsNullOrEmpty(shipment.PreCarriageToPortId))
@@ -1897,6 +1912,8 @@ namespace WebFreight.Web.WebServices
                                 packageline.PackageMarksAndNumbers_OneLine = package.MarksAndNumbers;
                             }
                         }
+
+                        packageline.IsDangerous = package.IsDangerous ? "Yes" : "No";
 
                         //InsidePackages
                         foreach (InsideShipmentPackage insideItem in insidePackages)

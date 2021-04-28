@@ -1489,14 +1489,16 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
     ClickOnSelectedItemReturnStatus(dropDownListId: string) {
         var input = document.getElementById(dropDownListId);
-        var lis = input.getElementsByTagName("li");
         var selectedItemFound: boolean = false;
-        for (var i = 0; i < lis.length; i++) {
+        if (input) {
+            var lis = input.getElementsByTagName("li");        
+            for (var i = 0; i < lis.length; i++) {
 
-            if (lis[i].className.search("liItemSelected") > -1) {
-                selectedItemFound = true;
-                lis[i].classList.remove("liItemSelected");
-                lis[i].click();
+                if (lis[i].className.search("liItemSelected") > -1) {
+                    selectedItemFound = true;
+                    lis[i].classList.remove("liItemSelected");
+                    lis[i].click();
+                }
             }
         }
         return selectedItemFound;

@@ -65,6 +65,11 @@ export class AddEditImporterDocumentComponent implements OnInit {
     TopTypes: any[];
     public IFrameURI: string = "";
     private CurrentSession = SessionLocator.SelectedSession;
+    public AgentLabelClass = {
+        "ShortName": true,
+        "LongName": false 
+    }
+
     constructor(Fb: FormBuilder) {
         this._documentExtendedService = new DocumentsFilingExtendedPMService();
         this._documentsFilingPMService = new DocumentsFilingPMService();
@@ -82,9 +87,12 @@ export class AddEditImporterDocumentComponent implements OnInit {
     IsPrivateLabel: boolean = false;
     ngOnInit() {
         if (SessionLocator.PrivateLableSettings) {
-            this.AgentLable = SessionLocator.PrivateLableSettings.PrivateLabelShortName;
+            this.AgentLable = SessionLocator.PrivateLableSettings.PrivateLabelShortName; 
             this.IsPrivateLabel = true;
+            this.setAgentLabelClass(this.AgentLable);
         }
+
+    
         this.ShareAsDefault = SessionLocator.TenantPM.DocumentShareAsDefault;
         this.OrigionalShareAsDefault = SessionLocator.TenantPM.DocumentShareAsDefault;
         this.UIProperties.SetEnabled("DocumentTypeId", "DocumentsFiling", true);
@@ -161,6 +169,14 @@ export class AddEditImporterDocumentComponent implements OnInit {
 
         });
     }
+    private setAgentLabelClass(agentName: string) {
+        if (agentName.length > 10) {
+            this.AgentLabelClass.ShortName = false;
+            this.AgentLabelClass.LongName = true;
+        }
+    }
+
+
     ShowTypes: boolean = false;
     SetWindowArgs(args: any) {
         this.ShipmentList = args.SelectedShipment;
@@ -533,7 +549,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
                         //}
                         this._documentExtendedService.update(this.EntityPm, true).subscribe((myResult:any) => {
                             this.CurrentSession.StopBusyIndicator();
-                            this.CurrentSession.CloseCurrentWindow();
+                            this.CurrentSession.CurrentWindow.Close(this.EntityPm.Id); 
                         });
                         //Context.SubmitChanges().Completed += new EventHandler(SaveOp_Completed);
                     }
@@ -563,7 +579,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
                     //}
                     this._documentExtendedService.update(this.EntityPm, true).subscribe((myResult:any) => {
                         this.CurrentSession.StopBusyIndicator();
-                        this.CurrentSession.CloseCurrentWindow();
+                        this.CurrentSession.CurrentWindow.Close(this.EntityPm.Id); 
                     });
                     //Context.SubmitChanges().Completed += new EventHandler(SaveOp_Completed);
                 }
@@ -573,7 +589,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
                     //}
                     this._documentExtendedService.update(this.EntityPm, true).subscribe((myResult:any) => {
                         this.CurrentSession.StopBusyIndicator();
-                        this.CurrentSession.CloseCurrentWindow();
+                        this.CurrentSession.CurrentWindow.Close(this.EntityPm.Id); 
                     });
                 }
             }

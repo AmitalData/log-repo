@@ -46,15 +46,15 @@ namespace Logitude.CargoTracking.Data.Repositories
             return shipments;
         }
 
-        public CargoTrackingShipment GetBySecurityKey(string SecurityKey, int tenant)
+        public IQueryable<CargoTrackingShipment> GetBySecurityKey(string SecurityKey, int tenant)
         {
-            CargoTrackingShipment shipment = (from _shipment in currentContext.CargoTrackingShipments
+            IQueryable<CargoTrackingShipment> shipments = (from _shipment in currentContext.CargoTrackingShipments
                                                            where
                                                                  _shipment.Tenant == tenant
                                                               && _shipment.SecurityKey == SecurityKey
-                                                           select _shipment).FirstOrDefault();
+                                                           select _shipment);
 
-            return shipment;
+            return shipments;
         }
 
         public List<string> GetPublicReferencesForShipment(string shipmentId, int tenant)
@@ -67,6 +67,14 @@ namespace Logitude.CargoTracking.Data.Repositories
                                               select _shipment.SearchFields).ToList();
 
             return shipment;
+        }
+
+        public CargoTrackingShipment GetCargoTrackingShipmentByEntityId(string entityId,int tenant)
+        {
+            return (from a in context.CargoTrackingShipments
+                    where a.Tenant == tenant
+                    && a.EntityId == entityId
+                    select a).FirstOrDefault();
         }
     }
 

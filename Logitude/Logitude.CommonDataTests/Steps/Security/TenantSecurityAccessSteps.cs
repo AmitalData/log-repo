@@ -1,11 +1,13 @@
 ﻿using FluentAssertions;
-using Logitude.CommonDataTests.Models;
+using Logitude.CommonTests.Models;
 using Logitude.Test.Base.Context;
-using Logitude.Test.Base.Models;
+using Logitude.Test.Base.Models.Shared;
+using Logitude.Test.Base.Models.UserTenantPreparation;
 using Logitude.Test.Base.Services;
+using System;
 using TechTalk.SpecFlow;
 
-namespace Logitude.CommonDataTests.Steps.Security
+namespace Logitude.CommonTests.Steps.Security
 {
     [Binding]
     public class TenantSecurityAccessSteps
@@ -17,37 +19,46 @@ namespace Logitude.CommonDataTests.Steps.Security
             Context = context;
         }
 
-        [When(@"Get Tenant request sent for User's Tenant")]
-        public void WhenGetTenantRequestSentForUserSTenant()
+        #region Step Region
+
+        #region Get information for user's tenant
+        [When(@"get information for user's tenant")]
+        public void WhenGetInformationForUsersTenant()
         {
-            Context.FirstUserPMData = GetTenant(UserTenant.Tenant, UserTenant.Token);
+            Context.FirstUserPMData = GetUserTenant(UserTenant.Token);
         }
 
-        [Then(@"Tenant should be exists")]
-        public void ThenTenantShouldBeExists()
+        [Then(@"tenant information should available")]
+        public void ThenTenantInformationShouldAvailable()
         {
             Context.FirstUserPMData.Should().NotBeNull();
-            Context.FirstUserPMData.Id.Should().Be(UserTenant.Tenant);
+        }
+        #endregion
+
+        #region Get information for other tenant
+        [When(@"get information for other tenant")]
+        public void WhenGetInformationForOtherTenant()
+        {
+            Context.act = () => GetUserTenant(UserOtherTenant.Token);
         }
 
-        [When(@"Get Tenant request sent for other Tenant")]
-        public void WhenGetTenantRequestSentForOtherTenant()
+        [Then(@"should receive error message say not authenticated to view company info")]
+        public void ThenShouldReceiveErrorMessageSayNotAuthenticatedToViewCompanyInfo()
         {
-            Context.SecondUserPMData = GetTenant(UserTenant.Tenant, UserOtherTenant.Token);
+            Context.act.Should().ThrowExactly<AggregateException>()
+                .And.InnerExceptions[0].Message.Contains("Sorry you’re not authenticated to view company info");
         }
+        #endregion
 
-        [Then(@"Tenant should not be exists")]
-        public void ThenTenantShouldNotBeExists()
-        {
-            Context.SecondUserPMData.Should().BeNull();
-        }
+        #endregion
 
-        private TenantPM GetTenant(int Tenant, string Token)
+        #region Private Function Region
+        private TenantPM GetUserTenant(string token)
         {
-            string TenantUrl = Urls.TenantsGetSingle(Tenant);
-            var tenant = APICaller.CallGet<TenantPM>(TenantUrl, Token);
+            string TenantUrl = Urls.TenantsGetSingle(UserTenant.Tenant);
+            var tenant = APICaller.CallGet<TenantPM>(TenantUrl, token);
             return tenant.Data;
         }
-
+        #endregion
     }
 }

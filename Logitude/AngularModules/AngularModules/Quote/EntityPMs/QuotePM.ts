@@ -383,6 +383,16 @@ export class QuotePM {
     public set VolumeInCBM(newValue: number) { if (this.volumeInCBM != newValue) { this.volumeInCBM = newValue; this.MarkAsDirty("VolumeInCBM"); } }
        
 	 
+    private isRefreshQuoteFollowUps: boolean;
+    public get IsRefreshQuoteFollowUps() { return this.isRefreshQuoteFollowUps; }
+    public set IsRefreshQuoteFollowUps(newValue: boolean) { if (this.isRefreshQuoteFollowUps != newValue) { this.isRefreshQuoteFollowUps = newValue; this.MarkAsDirty("IsRefreshQuoteFollowUps"); } }
+       
+	 
+    private isRefreshFollowUp: boolean;
+    public get IsRefreshFollowUp() { return this.isRefreshFollowUp; }
+    public set IsRefreshFollowUp(newValue: boolean) { if (this.isRefreshFollowUp != newValue) { this.isRefreshFollowUp = newValue; this.MarkAsDirty("IsRefreshFollowUp"); } }
+       
+	 
     private lastModified: string;
     public get LastModified() { return this.lastModified; }
     public set LastModified(newValue: string) { if (this.lastModified != newValue) { this.lastModified = newValue; this.MarkAsDirty("LastModified"); } }
@@ -1006,6 +1016,11 @@ export class QuotePM {
     private convertToLCL: boolean;
     public get ConvertToLCL() { return this.convertToLCL; }
     public set ConvertToLCL(newValue: boolean) { if (this.convertToLCL != newValue) { this.convertToLCL = newValue; this.MarkAsDirty("ConvertToLCL"); } }
+       
+	 
+    private convertTransportMode: boolean;
+    public get ConvertTransportMode() { return this.convertTransportMode; }
+    public set ConvertTransportMode(newValue: boolean) { if (this.convertTransportMode != newValue) { this.convertTransportMode = newValue; this.MarkAsDirty("ConvertTransportMode"); } }
        
 	 
     private isQuoteDataExternal: boolean;

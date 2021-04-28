@@ -19,9 +19,11 @@ import {CardListService} from '../../../../Common/Services/StandardLists/CardLis
 import {AddressListService} from '../../../../Common/Services/StandardLists/AddressListService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { ShipmentReceivablePM } from '../../../../Shipment/EntityPMs/ShipmentReceivablePM';
+import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+import { FeatureToggleList } from '../../../../Infrastructure/EntityLists/FeatureToggleList';
 
-@Component({
-    
+@Component({    
     templateUrl: './RoutingsTabComponent.html',
 })
 
@@ -37,6 +39,8 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
     public CardLOVDependencyProperty1: string = null;
     public ItemsSource: RoutingItem[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsChildFeatureExists: boolean = false;
+    public IsAddingPreOnCarriageVisible: boolean = false
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -45,6 +49,12 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         this.TransportModeId = this.EntityPM.TransportModeId;
         this.SetUIProperties();
         this.Listen();
+
+        if (FeatureLocator.HasFeaturePermession("Shipment", "CHILDPICKUPDELIVERY")) {
+            this.IsChildFeatureExists = true;
+        }
+
+        this.CheckPreOnCarriageVisibility();       
     }
 
     private SessionEvent: any = null;
@@ -68,6 +78,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.CheckPreOnCarriageVisibility();
                     this.UpdateScreen();
                 }
             });
@@ -121,7 +132,15 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         }
     }
 
-    public IsEditingEnabled: boolean = true;
+    CheckPreOnCarriageVisibility() {
+        this.IsAddingPreOnCarriageVisible = false;
+        var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "PRE")[0];
+        if (this.EntityPM.ShipmentLevelCode == "D" || (this.EntityPM.ShipmentLevelCode == "C" && featureToggle)) {
+            this.IsAddingPreOnCarriageVisible = true;
+        }
+    }
+
+    public IsEditingEnabled: boolean = true;    
     SetUIProperties() {
         this.IsEditingEnabled = ShipmentTool.IsEditingEnabled(this.EntityPM);
 
@@ -132,14 +151,35 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
 
     public IsAddPreCarriageDisabled: boolean = false;
     public IsAddOnCarriageDisabled: boolean = false;
+    public IsAddPreForwardingDisabled: boolean = false;
+    public IsAddOnForwardingDisabled: boolean = false;
     SetAddButtonsIsDisabled() {
-        if (this.EntityPM.ShipmentLevelCode == "C") {
+        if (this.EntityPM.ShipmentLevelCode == "H") {
             this.IsAddPreCarriageDisabled = true;
             this.IsAddOnCarriageDisabled = true;
+
+            if (AppTool.IsNullOrEmpty(this.EntityPM.PreForwardingFromPortId) && AppTool.IsNullOrEmpty(this.EntityPM.PreForwardingToPortId)) {
+                this.IsAddPreForwardingDisabled = false;
+            }
+
+            else {
+                this.IsAddPreForwardingDisabled = true;
+            }
+
+            if (AppTool.IsNullOrEmpty(this.EntityPM.OnForwardingFromPortId) && AppTool.IsNullOrEmpty(this.EntityPM.OnForwardingToPortId)) {
+                this.IsAddOnForwardingDisabled = false;
+            }
+
+            else {
+                this.IsAddOnForwardingDisabled = true;
+            }
         }
 
         else {
-            if (this.EntityPM.PreCarriageFromPortId == null && this.EntityPM.PreCarriageToPortId == null) {
+            this.IsAddPreForwardingDisabled = true;
+            this.IsAddOnForwardingDisabled = true;
+
+            if (AppTool.IsNullOrEmpty(this.EntityPM.PreCarriageFromPortId) && AppTool.IsNullOrEmpty(this.EntityPM.PreCarriageToPortId)) {
                 this.IsAddPreCarriageDisabled = false;
             }
 
@@ -147,7 +187,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                 this.IsAddPreCarriageDisabled = true;
             }
 
-            if (this.EntityPM.OnCarriageFromPortId == null && this.EntityPM.OnCarriageToPortId == null) {
+            if (AppTool.IsNullOrEmpty(this.EntityPM.OnCarriageFromPortId) && AppTool.IsNullOrEmpty(this.EntityPM.OnCarriageToPortId)) {
                 this.IsAddOnCarriageDisabled = false;
             }
 
@@ -188,6 +228,10 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             }
         }
 
+        if (this.EntityPM.ShipmentLevelCode == "H" && this.EntityPM.PreForwardingFromPortId != null && this.EntityPM.PreForwardingToPortId != null) {
+            this.ItemsSource.push(new RoutingItem(this.EntityPM, "Pre Forwarding", this));
+        }
+
         if (this.EntityPM.PreCarriageFromPortId != null && this.EntityPM.PreCarriageToPortId != null) {
             this.ItemsSource.push(new RoutingItem(this.EntityPM, "Pre Carriage", this));
         }
@@ -208,6 +252,10 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
 
         if (this.EntityPM.OnCarriageFromPortId != null && this.EntityPM.OnCarriageToPortId != null) {
             this.ItemsSource.push(new RoutingItem(this.EntityPM, "On Carriage", this));
+        }
+
+       if (this.EntityPM.ShipmentLevelCode == "H" && this.EntityPM.OnForwardingFromPortId != null && this.EntityPM.OnForwardingToPortId != null) {
+            this.ItemsSource.push(new RoutingItem(this.EntityPM, "On Forwarding", this));
         }
 
         // WarehouseLeg_Deliveries
@@ -260,7 +308,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                 newPickupPM.PickUpDeliveryTypeCode = "PICK";
                 newPickupPM.PickUpDeliveryFromTypeCode = "PART";
                 newPickupPM.PickUpDeliveryToTypeCode = "PORT";
-                newPickupPM.TransportModeCode = "BYTR";
+                newPickupPM.TransportModeCode = "BYTR";                
 
                 var logitudeWindow = new LogitudeWindow();
                 logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.AddPickup");
@@ -277,7 +325,6 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             }
 
             case "Delivery": {
-
                 var myDeliveryIndex = 1;
                 if (this.EntityPM.ShipmentDeliveryIndex) {
                     myDeliveryIndex = this.EntityPM.ShipmentDeliveryIndex + 1;
@@ -310,7 +357,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                 {
                     var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.AddPreCarriage");
-                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this }
+                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: myLegType }
                     logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditPreCarriageComponent');
                     break;
                 }
@@ -319,7 +366,26 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                 {
                     var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.AddOnCarriage");
-                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this }
+                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: myLegType }
+                    logitudeWindow.Height = 580;
+                    logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditOnCarriageComponent');
+                    break;
+                }
+
+            case "Pre Forwarding":
+                {
+                    var logitudeWindow = new LogitudeWindow();
+                    logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.AddPreForwarding");
+                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: myLegType }
+                    logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditPreCarriageComponent');
+                    break;
+                }
+
+            case "On Forwarding":
+                {
+                    var logitudeWindow = new LogitudeWindow();
+                    logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.AddOnForwarding");
+                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: myLegType }
                     logitudeWindow.Height = 580;
                     logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditOnCarriageComponent');
                     break;
@@ -440,7 +506,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                 {
                     var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.EditPreCarriage");
-                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this }
+                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: myLegType }
                     logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditPreCarriageComponent');
                     break;
                 }
@@ -449,7 +515,26 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                 {
                     var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.EditOnCarriage");
-                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this }
+                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: myLegType }
+                    logitudeWindow.Height = 580;
+                    logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditOnCarriageComponent');
+                    break;
+                }
+
+            case "Pre Forwarding":
+                {
+                    var logitudeWindow = new LogitudeWindow();
+                    logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.EditPreForwarding");
+                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: myLegType }
+                    logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditPreCarriageComponent');
+                    break;
+                }
+
+            case "On Forwarding":
+                {
+                    var logitudeWindow = new LogitudeWindow();
+                    logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.EditOnForwarding");
+                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: myLegType }
                     logitudeWindow.Height = 580;
                     logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditOnCarriageComponent');
                     break;
@@ -488,143 +573,278 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
     }
     DeleteLeg(myRoutingItem: RoutingItem) {
         if (myRoutingItem) {
+            var myLegType: string = myRoutingItem.LegType;
 
-            var message: string = null;
-            var myLegType: string = myRoutingItem.LegType;           
-
-            switch (myLegType) {
-                case "Pick Up": {
-                    message = TextCodeTranslator.Translate("Shipment.M.DeleteThisPickup");
-                    break;
+            if (myLegType == "Pick Up") {
+                if (this.EntityPM.ShipmentPickUps.filter(d => d.Id != myRoutingItem.Pickup.Id && d.PickUpDeliveryNumber.indexOf(myRoutingItem.Pickup.PickUpDeliveryNumber) > -1).length > 0) {
+                    var messageSindow: MessageWindow = new MessageWindow();
+                    messageSindow.Show("Please delete the consequent pickups before deleting this pickup");
                 }
 
-                case "Pre Carriage": {
-                    message = TextCodeTranslator.Translate("Shipment.M.DeleteThisPreCarriage");
-                    break;
-                }
-
-                case "On Carriage": {
-                    message = TextCodeTranslator.Translate("Shipment.M.DeleteThisOnCarriage");
-                    break;
-                }
-
-                case "Delivery": {
-                    message = TextCodeTranslator.Translate("Shipment.M.DeleteThisDelivery");
-                    break;
-                }
-
-                case "WarehouseLeg":
-                case "WarehouseLeg_Pickups": {
-                    message = "Delete Warehouse \ Terminal?";
-                    break;
+                else {
+                    this.ProceedToDelete(myRoutingItem, myLegType);
                 }
             }
 
-            var confirmWindow = new ConfirmWindow();
-            confirmWindow.Show(message);
-            confirmWindow.WindowClosed.subscribe((event: any) => {
-                if (confirmWindow.Yes) {
+            else if (myLegType == "Delivery") {
+                if (this.EntityPM.ShipmentDeliveries.filter(d => d.Id != myRoutingItem.Delivery.Id && d.PickUpDeliveryNumber.indexOf(myRoutingItem.Delivery.PickUpDeliveryNumber) > -1).length > 0) {
+                    var messageSindow: MessageWindow = new MessageWindow();
+                    messageSindow.Show("Please delete the consequent deliveries before deleting this delivery");
+                }
 
-                    switch (myLegType) {
-                        case "Pick Up": {
+                else {
+                    this.ProceedToDelete(myRoutingItem, myLegType);
+                }
+            }
 
-                            var followups = this.EntityPM.FollowUps.filter(f => f.LegType != null);
-                            followups = followups.filter(f => f.LegType.indexOf(myRoutingItem.Pickup.PickUpDeliveryNumber) > -1);
-                            if (followups.length > 0) {
-                                followups.forEach(item => {
-                                    this.EntityPM.RemoveShipmentFollowUp(item);
-                                });
+            else {
+                this.ProceedToDelete(myRoutingItem, myLegType);
+            }            
+        }       
+    }
+    private ProceedToDelete(myRoutingItem: RoutingItem, myLegType: string) {
+        var message: string = null;
 
-                                this.CurrentSession.FireEvent("FollowupsChanged");
-                            }
+        switch (myLegType) {
+            case "Pick Up": {
+                message = TextCodeTranslator.Translate("Shipment.M.DeleteThisPickup");
+                break;
+            }
 
-                            this.EntityPM.RemovePickUp(myRoutingItem.Pickup);
-                            break;
+            case "Pre Carriage": {
+                message = TextCodeTranslator.Translate("Shipment.M.DeleteThisPreCarriage");
+                break;
+            }
+
+            case "On Carriage": {
+                message = TextCodeTranslator.Translate("Shipment.M.DeleteThisOnCarriage");
+                break;
+            }
+
+            case "Pre Forwarding": {
+                message = TextCodeTranslator.Translate("Shipment.M.DeleteThisPreForwarding");
+                break;
+            }
+
+            case "On Forwarding": {
+                message = TextCodeTranslator.Translate("Shipment.M.DeleteThisOnForwarding");
+                break;
+            }
+
+            case "Delivery": {
+                message = TextCodeTranslator.Translate("Shipment.M.DeleteThisDelivery");
+                break;
+            }
+
+            case "WarehouseLeg":
+            case "WarehouseLeg_Pickups": {
+                message = "Delete Warehouse \ Terminal?";
+                break;
+            }
+        }
+
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Show(message);
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+
+                switch (myLegType) {
+                    case "Pick Up": {
+
+                        var followups = this.EntityPM.FollowUps.filter(f => f.LegType != null);
+                        followups = followups.filter(f => f.LegType.indexOf(myRoutingItem.Pickup.PickUpDeliveryNumber) > -1);
+                        if (followups.length > 0) {
+                            followups.forEach(item => {
+                                this.EntityPM.RemoveShipmentFollowUp(item);
+                            });
+
+                            this.CurrentSession.FireEvent("FollowupsChanged");
                         }
 
-                        case "Pre Carriage": {
-                            RoutingHelper.RemovePreCarriageLeg(this.EntityPM);
-                            this.SetAddButtonsIsDisabled();
-                            break;
-                        }
-
-                        case "On Carriage": {
-                            RoutingHelper.RemoveOnCarriageLeg(this.EntityPM);
-                            this.SetAddButtonsIsDisabled();
-                            break;
-                        }
-
-                        case "Delivery": {
-
-                            var followups = this.EntityPM.FollowUps.filter(f => f.LegType != null);
-                            followups = followups.filter(f => f.LegType.indexOf(myRoutingItem.Delivery.PickUpDeliveryNumber) > -1);
-                            if (followups.length > 0) {
-                                followups.forEach(item => {
-                                    this.EntityPM.RemoveShipmentFollowUp(item);
-                                });
-
-                                this.CurrentSession.FireEvent("FollowupsChanged");
-                            }
-
-                            this.EntityPM.RemoveDelivery(myRoutingItem.Delivery);
-                            break;
-                        }
-
-                        case "WarehouseLeg":
-                        case "WarehouseLeg_Pickups": {
-                            this.EntityPM.WarehouseLegWarehouseId = null;
-                            this.EntityPM.WarehouseLegAddressId = null;
-                            this.EntityPM.WarehouseLegReference = null;
-                            this.EntityPM.WarehouseLegTerminalCode = null;
-                            this.EntityPM.WarehouseLegLastFreeDate = null;
-                            this.EntityPM.TerminalAvailable = null;
-                            this.EntityPM.WarehouseLegCutOffDate = null;
-                            this.EntityPM.WarehouseLegRemarks = null;
-                            this.EntityPM.WarehouseLegExpectedEntryDate = null;
-                            this.EntityPM.WarehouseLegExpectedReleaseDate = null;
-                            this.EntityPM.WarehouseLegActualEntryDate = null;
-                            this.EntityPM.WarehouseLegActualReleaseDate = null;
-                            this.EntityPM.WarehouseLegVGMCutOffDate = null;
-                            this.EntityPM.WarehouseStorageFreeDays = null;
-                            this.EntityPM.GrossWeightPerStorageDays = null;
-                            this.EntityPM.IsCFSWarehouse = false;
-                            this.EntityPM.IsCFSWarehouseChanged = false
-
-                            ShipmentTool.OnWarehouseStorageFreeDaysChanged(this.EntityPM);
-
-                            var storageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
-                            if (storageReceivable) {
-                                this.EntityPM.RemoveReceivable(storageReceivable);
-                                this.CurrentSession.FireEvent("StorageReceivableRemoved");
-                            }
-
-                            if (this.EntityPM.ShipmentStoragePricings.length > 0) {
-                                this.EntityPM.ShipmentStoragePricings = [];
-                                //this.EntityPM.ShipmentStoragePricings.forEach(item => {
-                                //    this.EntityPM.RemoveShipmentStoragePricing(item);
-                                //});
-                            }
-
-                            var followups = this.EntityPM.FollowUps.filter(f => f.LegType != null);
-                            followups = followups.filter(f => f.LegType.indexOf("WarehouseLeg") > -1);
-
-                            if (followups.length > 0) {
-                                followups.forEach(item => {
-                                    this.EntityPM.RemoveShipmentFollowUp(item);
-                                });
-
-                                this.CurrentSession.FireEvent("FollowupsChanged");
-                            }
-
-                            break;
-                        }
+                        this.EntityPM.RemovePickUp(myRoutingItem.Pickup);
+                        break;
                     }
 
-                    this.BuildItemsCollection();           
+                    case "Pre Carriage": {
+                        RoutingHelper.RemovePreCarriageLeg(this.EntityPM);
+                        this.SetAddButtonsIsDisabled();
+                        break;
+                    }
+
+                    case "Pre Forwarding": {
+                        RoutingHelper.RemovePreForwardingLeg(this.EntityPM);
+                        this.SetAddButtonsIsDisabled();
+                        break;
+                    }
+
+                    case "On Carriage": {
+                        RoutingHelper.RemoveOnCarriageLeg(this.EntityPM);
+                        this.SetAddButtonsIsDisabled();
+                        break;
+                    }
+
+                    case "On Forwarding": {
+                        RoutingHelper.RemoveOnForwardingLeg(this.EntityPM);
+                        this.SetAddButtonsIsDisabled();
+                        break;
+                    }
+
+                    case "Delivery": {
+
+                        var followups = this.EntityPM.FollowUps.filter(f => f.LegType != null);
+                        followups = followups.filter(f => f.LegType.indexOf(myRoutingItem.Delivery.PickUpDeliveryNumber) > -1);
+                        if (followups.length > 0) {
+                            followups.forEach(item => {
+                                this.EntityPM.RemoveShipmentFollowUp(item);
+                            });
+
+                            this.CurrentSession.FireEvent("FollowupsChanged");
+                        }
+
+                        this.EntityPM.RemoveDelivery(myRoutingItem.Delivery);
+                        break;
+                    }
+
+                    case "WarehouseLeg":
+                    case "WarehouseLeg_Pickups": {
+                        this.EntityPM.WarehouseLegWarehouseId = null;
+                        this.EntityPM.WarehouseLegAddressId = null;
+                        this.EntityPM.WarehouseLegReference = null;
+                        this.EntityPM.WarehouseLegTerminalCode = null;
+                        this.EntityPM.WarehouseLegLastFreeDate = null;
+                        this.EntityPM.TerminalAvailable = null;
+                        this.EntityPM.WarehouseLegCutOffDate = null;
+                        this.EntityPM.WarehouseLegRemarks = null;
+                        this.EntityPM.WarehouseLegExpectedEntryDate = null;
+                        this.EntityPM.WarehouseLegExpectedReleaseDate = null;
+                        this.EntityPM.WarehouseLegActualEntryDate = null;
+                        this.EntityPM.WarehouseLegActualReleaseDate = null;
+                        this.EntityPM.WarehouseLegVGMCutOffDate = null;
+                        this.EntityPM.WarehouseStorageFreeDays = null;
+                        this.EntityPM.GrossWeightPerStorageDays = null;
+                        this.EntityPM.IsCFSWarehouse = false;
+                        this.EntityPM.IsCFSWarehouseChanged = false
+
+                        ShipmentTool.OnWarehouseStorageFreeDaysChanged(this.EntityPM);
+
+                        var storageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
+                        if (storageReceivable) {
+                            this.EntityPM.RemoveReceivable(storageReceivable);
+                                this.CurrentSession.FireEvent("StorageReceivableCalculationsChanged");
+                        }
+
+                        if (this.EntityPM.ShipmentStoragePricings.length > 0) {
+                            this.EntityPM.ShipmentStoragePricings = [];
+                        }
+
+                        var followups = this.EntityPM.FollowUps.filter(f => f.LegType != null);
+                        followups = followups.filter(f => f.LegType.indexOf("WarehouseLeg") > -1);
+
+                        if (followups.length > 0) {
+                            followups.forEach(item => {
+                                this.EntityPM.RemoveShipmentFollowUp(item);
+                            });
+
+                            this.CurrentSession.FireEvent("FollowupsChanged");
+                        }
+
+                        break;
+                    }
                 }
-            });
-        }       
+
+                this.BuildItemsCollection();
+            }
+        });
+    }
+    AddChildLeg(myLegType: string, myRoutingItem: RoutingItem) {
+        switch (myLegType) {
+            case "Pick Up": {
+                this.AddChildPickUp(myRoutingItem);
+                break;
+            }
+
+            case "Delivery": {
+                this.AddChildDelivery(myRoutingItem);
+                break;
+            }
+        }
+    }
+    AddChildPickUp(myRoutingItem: RoutingItem) {
+        var newPickupPM: ShipmentPickUpPM = this.CreateChildPickUp(myRoutingItem);
+        this.OpenChildPickUpDeliveryWindow(newPickupPM, null);        
     }    
+    AddChildDelivery(myRoutingItem: RoutingItem) {
+        var newDeliveryPM: ShipmentDeliveryPM = this.CreateChildDelivery(myRoutingItem);
+        this.OpenChildPickUpDeliveryWindow(null, newDeliveryPM);        
+    }
+
+    CreateChildPickUp(myRoutingItem: RoutingItem): ShipmentPickUpPM {
+        var myChildPickUpIndex = 2;
+        if (myRoutingItem.Pickup.ChildPickUpIndex) {
+            myChildPickUpIndex = myRoutingItem.Pickup.ChildPickUpIndex + 1;
+        }
+
+        var newPickupPM = new ShipmentPickUpPM(null);
+        newPickupPM.FullResponsibility = true;
+        newPickupPM.Tenant = this.EntityPM.Tenant;
+        newPickupPM.ShipmentId = this.EntityPM.Id;
+        newPickupPM.ShipmentNumber = this.EntityPM.ShipmentNumber;
+        newPickupPM.PickUpDeliveryNumber = myRoutingItem.PickUpDeliveryNumber + "/" + myChildPickUpIndex;
+        newPickupPM.PickUpDeliveryTypeCode = "PICK";
+        newPickupPM.PickUpDeliveryFromTypeCode = "PART";
+        newPickupPM.PickUpDeliveryToTypeCode = "PORT";
+        newPickupPM.TransportModeCode = "BYTR";
+        newPickupPM.ParentPickUpDeliveryId = myRoutingItem.Pickup.Id;
+
+        return newPickupPM;
+    }
+    CreateChildDelivery(myRoutingItem: RoutingItem): ShipmentDeliveryPM {
+        var myChildDeliveryIndex = 2;
+        if (myRoutingItem.Delivery.ChildDeliveryIndex) {
+            myChildDeliveryIndex = myRoutingItem.Delivery.ChildDeliveryIndex + 1;
+        }
+
+        var newDeliveryPM = new ShipmentDeliveryPM(null);
+        newDeliveryPM.FullResponsibility = true;
+        newDeliveryPM.Tenant = this.EntityPM.Tenant;
+        newDeliveryPM.ShipmentId = this.EntityPM.Id;
+        newDeliveryPM.ShipmentNumber = this.EntityPM.ShipmentNumber;
+        newDeliveryPM.PickUpDeliveryNumber = myRoutingItem.PickUpDeliveryNumber + "/" + myChildDeliveryIndex;
+        newDeliveryPM.PickUpDeliveryTypeCode = "DELV";
+        newDeliveryPM.TransportModeCode = "BYTR";
+        newDeliveryPM.ParentPickUpDeliveryId = myRoutingItem.Delivery.Id;
+
+        return newDeliveryPM;
+    }
+
+    OpenChildPickUpDeliveryWindow(newPickupPM: ShipmentPickUpPM, newDeliveryPM: ShipmentDeliveryPM) {
+        var title: string;
+        var componentPath: string;
+        var myEntity: any;
+
+        if (newPickupPM) {
+            title = TextCodeTranslator.Translate("Shipment.O.Routings.AddPickup");
+            componentPath = './ShipmentModules/ShipmentRouting/Components/Routings/AddEditPickupComponent';
+            myEntity = newPickupPM;
+        }
+
+        else if (newDeliveryPM) {
+            title = TextCodeTranslator.Translate("Shipment.O.Routings.AddDelivery");
+            componentPath = './ShipmentModules/ShipmentRouting/Components/Routings/AddEditDeliveryComponent';
+            myEntity = newDeliveryPM;
+        }
+
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Title = title;
+        logitudeWindow.WindowArgs = { ShipmentPM: this.EntityPM, EntityPM: myEntity, IsNewEntity: true };
+        logitudeWindow.Width = 950;
+        logitudeWindow.Height = 595;
+        logitudeWindow.Show(componentPath);
+
+        logitudeWindow.WindowClosed.subscribe(s => {
+            this.BuildItemsCollection();
+        });
+    }
 
     // Inland Domestic
     private myCardListService: CardListService;
@@ -950,6 +1170,7 @@ export class RoutingItem extends BaseComponent {
     public FollowupLegTypeDeparture: string;
     public FollowupLegTypeArrival: string;
     public IsWarehouseLeg: boolean = false;
+    public IsDeleteButtonEnabled: boolean = true;
     constructor(entity: any, type: string, private fatherComponent: RoutingsTabComponent) {
         super();
 
@@ -960,6 +1181,7 @@ export class RoutingItem extends BaseComponent {
             this.PickUpDeliveryNumber = this.Pickup.PickUpDeliveryNumber;
             this.FollowupLegTypeDeparture = type + 'Departure' + this.PickUpDeliveryNumber;
             this.FollowupLegTypeArrival = type + 'Arrival' + this.PickUpDeliveryNumber;
+            this.IsDeleteButtonEnabled = this.fatherComponent.IsEditingEnabled;
         }
 
         else if (entity instanceof ShipmentDeliveryPM) {
@@ -969,12 +1191,24 @@ export class RoutingItem extends BaseComponent {
             this.PickUpDeliveryNumber = this.Delivery.PickUpDeliveryNumber;
             this.FollowupLegTypeDeparture = type + 'Departure' + this.PickUpDeliveryNumber;
             this.FollowupLegTypeArrival = type + 'Arrival' + this.PickUpDeliveryNumber;
+            this.IsDeleteButtonEnabled = this.fatherComponent.IsEditingEnabled;
         }
 
         else {
             this.EntityPM = entity;
             this.ObjectTableName = fatherComponent.ObjectTableName;
-           
+
+            if (this.fatherComponent.IsEditingEnabled) {
+                this.IsDeleteButtonEnabled = true;
+
+                if (this.EntityPM.ShipmentLevelCode == "H" && !AppTool.IsNullOrEmpty(this.EntityPM.MasterShipmentDataId) && (type == "On Carriage" || type == "Pre Carriage")) {
+                    this.IsDeleteButtonEnabled = false;
+                }
+            }
+            else {
+                this.IsDeleteButtonEnabled = false;
+            }
+
             if (type == "WarehouseLeg" || type == "WarehouseLeg_Pickups") {
                 this.IsWarehouseLeg = true;
                 this.FollowupLegTypeDeparture = 'WarehouseLegEntry'
@@ -1005,6 +1239,8 @@ export class RoutingItem extends BaseComponent {
     public IsAddButtonVisible: boolean;
     public IsEditButtonVisible: boolean;
     public IsDeleteButtonVisible: boolean;
+    public IsAddChildPickUpVisible: boolean;
+    public IsAddChildDeliveryVisible: boolean;
     SetLegAppearance() {
         this.LegHeight = 100;
         this.IsMainLeg = false;
@@ -1013,6 +1249,8 @@ export class RoutingItem extends BaseComponent {
         this.IsAddButtonVisible = false;
         this.IsEditButtonVisible = false;
         this.IsDeleteButtonVisible = false;
+        this.IsAddChildPickUpVisible = false;
+        this.IsAddChildDeliveryVisible = false;
 
         switch (this.LegType) {
             case "Pick Up": {
@@ -1071,6 +1309,15 @@ export class RoutingItem extends BaseComponent {
         if (this.IsLegExists) {
             this.IsEditButtonVisible = true;
 
+            if (this.LegType == "Pick Up" && AppTool.IsNullOrEmpty(this.Pickup.ParentPickUpDeliveryId)) {
+                this.IsAddChildPickUpVisible = true;
+            }
+
+            if (this.LegType == "Delivery" && AppTool.IsNullOrEmpty(this.Delivery.ParentPickUpDeliveryId)
+                && (this.Delivery.AllConnectedPackagesId == null || (this.Delivery.AllConnectedPackagesId && this.Delivery.AllConnectedPackagesId.length == 0))) {
+                this.IsAddChildDeliveryVisible = true;
+            }
+
             switch (this.LegType) {
                 case "Main Carriage":
                 case "Transshipment1":
@@ -1104,6 +1351,8 @@ export class RoutingItem extends BaseComponent {
                 case "Pick Up":
                 case "On Carriage":
                 case "Pre Carriage":
+                case "On Forwarding":
+                case "Pre Forwarding":
                 case "WarehouseLeg":
                 case "WarehouseLeg_Pickups":
                     {
@@ -1146,6 +1395,12 @@ export class RoutingItem extends BaseComponent {
                 break;
             }
 
+            case "Pre Forwarding": {
+                myTextCode = "Shipment.O.Routings.PreForwarding";
+                myLegTransportModeId = this.EntityPM.PreForwardingTransportModeId;
+                break;
+            }
+
             case "Main Carriage": {
                 myTextCode = "Shipment.O.Routings.MainCarriageLeg1";
                 myLegTransportModeId = this.EntityPM.TransportModeId;
@@ -1173,6 +1428,12 @@ export class RoutingItem extends BaseComponent {
             case "On Carriage": {
                 myTextCode = "Shipment.O.Routings.OnCarriage";
                 myLegTransportModeId = this.EntityPM.OnCarriageTransportModeId;
+                break;
+            }
+
+            case "On Forwarding": {
+                myTextCode = "Shipment.O.Routings.OnForwarding";
+                myLegTransportModeId = this.EntityPM.OnForwardingTransportModeId;
                 break;
             }
 
@@ -1306,6 +1567,14 @@ export class RoutingItem extends BaseComponent {
                 break;
             }
 
+            case "Pre Forwarding": {
+                myCountryCode = this.EntityPM.PreForwardingFromPortCountryCode;
+                myCountryName = this.EntityPM.PreForwardingFromPortCountryName;
+                myTextPart1 = this.EntityPM.PreForwardingFromPortCode;
+                myTextPart2 = this.EntityPM.PreForwardingFromPortName;
+                break;
+            }
+
             case "Main Carriage": {
                 myCountryCode = this.EntityPM.MainCarriageFromPortCountryCode;
                 myCountryName = this.EntityPM.MainCarriageFromPortCountryName;
@@ -1343,6 +1612,14 @@ export class RoutingItem extends BaseComponent {
                 myCountryName = this.EntityPM.OnCarriageFromPortCountryName;
                 myTextPart1 = this.EntityPM.OnCarriageFromPortCode;
                 myTextPart2 = this.EntityPM.OnCarriageFromPortName;
+                break;
+            }
+
+            case "On Forwarding": {
+                myCountryCode = this.EntityPM.OnForwardingFromPortCountryCode;
+                myCountryName = this.EntityPM.OnForwardingFromPortCountryName;
+                myTextPart1 = this.EntityPM.OnForwardingFromPortCode;
+                myTextPart2 = this.EntityPM.OnForwardingFromPortName;
                 break;
             }
 
@@ -1489,6 +1766,14 @@ export class RoutingItem extends BaseComponent {
                 break;
             }
 
+            case "Pre Forwarding": {
+                myCountryCode = this.EntityPM.PreForwardingToPortCountryCode;
+                myCountryName = this.EntityPM.PreForwardingToPortCountryName;
+                myTextPart1 = this.EntityPM.PreForwardingToPortCode;
+                myTextPart2 = this.EntityPM.PreForwardingToPortName;
+                break;
+            }
+
             case "Main Carriage": {
                 myCountryCode = this.EntityPM.MainCarriageToPortCountryCode;
                 myCountryName = this.EntityPM.MainCarriageToPortCountryName;
@@ -1526,6 +1811,14 @@ export class RoutingItem extends BaseComponent {
                 myCountryName = this.EntityPM.OnCarriageToPortCountryName;
                 myTextPart1 = this.EntityPM.OnCarriageToPortCode;
                 myTextPart2 = this.EntityPM.OnCarriageToPortName;
+                break;
+            }
+
+            case "On Forwarding": {
+                myCountryCode = this.EntityPM.OnForwardingToPortCountryCode;
+                myCountryName = this.EntityPM.OnForwardingToPortCountryName;
+                myTextPart1 = this.EntityPM.OnForwardingToPortCode;
+                myTextPart2 = this.EntityPM.OnForwardingToPortName;
                 break;
             }
 
@@ -1640,6 +1933,20 @@ export class RoutingItem extends BaseComponent {
                 break;
             }
 
+            case "Pre Forwarding": {
+                myCarrierCode = this.EntityPM.PreForwardingCarrierCode;
+                myCarrierName = this.EntityPM.PreForwardingCarrierName;
+                myCarrierSite = this.EntityPM.PreForwardingCarrierWebSite;
+                myCarrierNumber = this.EntityPM.PreForwardingCarrierNumber;
+                myVesselName = this.EntityPM.PreForwardingVesselName;
+
+                if (this.EntityPM.PreForwardingTransportModeId == "O") {
+                    isVesselVisible = true;
+                }
+
+                break;
+            }
+
             case "Main Carriage": {
                 myCarrierCode = this.EntityPM.MainCarriageCarrierCode;
                 myCarrierName = this.EntityPM.MainCarriageCarrierName;
@@ -1708,6 +2015,20 @@ export class RoutingItem extends BaseComponent {
                 myVesselName = this.EntityPM.OnCarriageVesselName;
 
                 if (this.EntityPM.OnCarriageTransportModeId == "O") {
+                    isVesselVisible = true;
+                }
+
+                break;
+            }
+
+            case "On Forwarding": {
+                myCarrierCode = this.EntityPM.OnForwardingCarrierCode;
+                myCarrierName = this.EntityPM.OnForwardingCarrierName;
+                myCarrierSite = this.EntityPM.OnForwardingCarrierWebSite;
+                myCarrierNumber = this.EntityPM.OnForwardingCarrierNumber;
+                myVesselName = this.EntityPM.OnForwardingVesselName;
+
+                if (this.EntityPM.OnForwardingTransportModeId == "O") {
                     isVesselVisible = true;
                 }
 
@@ -1814,6 +2135,14 @@ export class RoutingItem extends BaseComponent {
                 break;
             }
 
+            case "Pre Forwarding": {
+                myETD = this.EntityPM.PreForwardingETD;
+                myATD = this.EntityPM.PreForwardingATD;
+                myETA = this.EntityPM.PreForwardingETA;
+                myATA = this.EntityPM.PreForwardingATA;
+                break;
+            }
+
             case "Main Carriage": {
                 myETD = this.EntityPM.MainCarriageETD;
                 myATD = this.EntityPM.MainCarriageATD;
@@ -1851,6 +2180,14 @@ export class RoutingItem extends BaseComponent {
                 myATD = this.EntityPM.OnCarriageATD;
                 myETA = this.EntityPM.OnCarriageETA;
                 myATA = this.EntityPM.OnCarriageATA;
+                break;
+            }
+
+            case "On Forwarding": {
+                myETD = this.EntityPM.OnForwardingETD;
+                myATD = this.EntityPM.OnForwardingATD;
+                myETA = this.EntityPM.OnForwardingETA;
+                myATA = this.EntityPM.OnForwardingATA;
                 break;
             }
 
@@ -1961,6 +2298,11 @@ export class RoutingItem extends BaseComponent {
                 break;
             }
 
+            case "Pre Forwarding": {
+                this.EntityPM.PreForwardingATD = this.EntityPM.PreForwardingETD;
+                break;
+            }
+
             case "Main Carriage": {
                 this.EntityPM.MainCarriageATD = this.EntityPM.MainCarriageETD;
                 break;
@@ -1983,6 +2325,11 @@ export class RoutingItem extends BaseComponent {
 
             case "On Carriage": {
                 this.EntityPM.OnCarriageATD = this.EntityPM.OnCarriageETD;
+                break;
+            }
+
+            case "On Forwarding": {
+                this.EntityPM.OnForwardingATD = this.EntityPM.OnForwardingETD;
                 break;
             }
 
@@ -2014,6 +2361,11 @@ export class RoutingItem extends BaseComponent {
                 break;
             }
 
+            case "Pre Forwarding": {
+                this.EntityPM.PreForwardingATA = this.EntityPM.PreForwardingETA;
+                break;
+            }
+
             case "Main Carriage": {
                 this.EntityPM.MainCarriageATA = this.EntityPM.MainCarriageETA;
                 break;
@@ -2036,6 +2388,11 @@ export class RoutingItem extends BaseComponent {
 
             case "On Carriage": {
                 this.EntityPM.OnCarriageATA = this.EntityPM.OnCarriageETA;
+                break;
+            }
+
+            case "On Forwarding": {
+                this.EntityPM.OnForwardingATA = this.EntityPM.OnForwardingETA;
                 break;
             }
 

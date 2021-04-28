@@ -49,11 +49,15 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     public IsNewDepositMode: boolean = false;
     searchText: string = "";
 
+
     CashBookPM: CashBookPM;
     // BankDepositLines: BankDepositLinePM[];
+    OriginalCashbookLines: ObservableCollection = new ObservableCollection([]);
     CashbookLines: ObservableCollection = new ObservableCollection([]);
-    BankDepositLines: ObservableCollection = new ObservableCollection([]);
+    SelectedCashbookLines: ObservableCollection = new ObservableCollection([]);
+    public IsOriginalCashbookLinesNeedeToFill: boolean = true;
 
+    BankDepositLines: ObservableCollection = new ObservableCollection([]);
     public isRTL: boolean = false;
     public IsReturnChequeEnabled: boolean = false;
     txt_NewDeposit: string = TextCodeTranslator.Translate("Accounting.General.O.NewDeposit");
@@ -189,6 +193,9 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
         this.GetDepositLines();
 
         this.CashbookLines = new ObservableCollection([]);
+        this.SelectedCashbookLines = new ObservableCollection([]);
+        this.OriginalCashbookLines = new ObservableCollection([]);
+
         // this.BankDepositLines = new ObservableCollection(this.EntityPM.BankDepositLines);
 
         this.CalculateTotals();
@@ -392,13 +399,23 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     }
 
     private GetCashbookLinesAccordingToFilter(newValue: string) {
-        if (this.SelectedTotal > 0) {
+        this.IsOriginalCashbookLinesNeedeToFill = true;
+        if (this.GetNumberOfSelectedLines() > 0) {
             this.ShowConfirmMessageToToggleBetweenCashAndPostdated(newValue);
         }
         else {
             this.FilterSelectedValue = newValue;
             this.GetCashbookLines();
         }
+    }
+
+    private GetNumberOfSelectedLines(): number {
+        var numberOfSelectedLines = 0;
+        for (let line of this.CashbookLines.Collection) {
+            if (line.IsSelected)
+                numberOfSelectedLines++;
+        }
+        return numberOfSelectedLines;
     }
 
     ShowConfirmMessageToToggleBetweenCashAndPostdated(newValue: string) {
@@ -410,6 +427,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
                 this.FilterSelectedValue = newValue;
                 this.GetCashbookLines();
                 this.IsAllSelected = false;
+                this.SelectedCashbookLines.Clear();
             }
      
         });
@@ -488,7 +506,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
                         else {  // Cheque
 
                             this.GetCashbookLines();
-
+                           
                             this.SetUIProperty();
                         }
 
@@ -508,26 +526,20 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     }
 
     tenantCurrencyCode: string = "";
-    public selectedRows: any[] = [];
     private GetCashbookLines()
     {
         
         this.BankDepositLines.Clear();
         this.EntityPM.BankDepositLines = [];
 
-        this.getSelectedCashbookLines();
 
         this.cashBookLineListService.getByFilters(this.GetCashbookLinesAPIFilters()).subscribe((response: ServiceResponse) => {
             var result = response.Result;
             console.log("CashBookLineListService", result);
+
+            this.CashbookLines = new ObservableCollection([]);
             this.CashbookLines.InsertCollection(result);
 
-            for (let row of this.selectedRows) {
-                var CashbookLine = this.CashbookLines.Collection.filter(d => d.ChequeNumber == row.ChequeNumber)[0];
-                if (CashbookLine) {
-                    this.CashbookLines.Collection.filter(a => a.ChequeNumber == CashbookLine.ChequeNumber)[0].IsSelected = true;
-                }
-            }
             // this.CashBookLines = result;
 
             // this.UpdateFiltersCounts();
@@ -538,21 +550,42 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
                 this.NoCashBookRows = true;
             }
 
-            this.CalculateTotals();
+            if (this.IsOriginalCashbookLinesNeedeToFill || this.OriginalCashbookLines.Length == 0) {
+                this.OriginalCashbookLines = this.CashbookLines;
+                this.IsOriginalCashbookLinesNeedeToFill = false;
+            }
 
+            this.SetSelectedCashbookLines();
+            this.CheckIfOneOfTheOriginalLineUnChecked();
+            this.CalculateTotals();
 
         });
     }
 
-    private getSelectedCashbookLines() {
-        this.selectedRows = [];
-        for (let line of this.CashbookLines.Collection) {
-            if (line.IsSelected) {
-                this.selectedRows.push(line);
+    private SetSelectedCashbookLines() {
+        for (let line of this.SelectedCashbookLines.Collection) {
+            var CashbookLine = this.CashbookLines.Collection.filter(a => a.CashBookId == line.CashBookId && a.ARPChequeId == line.ARPChequeId)[0];
+            if (CashbookLine != null) {
+                this.CashbookLines.Collection.filter(a => a.CashBookId == line.CashBookId && a.ARPChequeId == line.ARPChequeId)[0].IsSelected = true;
+                this.PushBankDeposit(CashbookLine);
             }
         }
     }
 
+    private CheckIfOneOfTheOriginalLineUnChecked() {
+        for (let line of this.CashbookLines.Collection) {
+            var CashbookLine = this.OriginalCashbookLines.Collection.filter(a => a.CashBookId == line.CashBookId && a.ARPChequeId == line.ARPChequeId)[0];
+            if (CashbookLine.IsSelected == false || CashbookLine.IsSelected == null)
+                this.isAllSelected = false;
+            if (CashbookLine.IsSelected != line.IsSelected && line.IsSelected != null ) {
+                line.IsSelected = CashbookLine.IsSelected;
+                if (CashbookLine.IsSelected == true)
+                    this.SelectedCashbookLines.Collection.push(line);
+            }
+        }
+    }
+
+ 
     private GetCashbookLinesAPIFilters()
     {
         var linesQueryFilters = new ApiQueryFilters();
@@ -690,8 +723,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
             if (this.IsLinesSelection) {
                 if (this.IsLinesSelection && !this.EntityPM.IsCashDeposit) {
-                    this.EntityPM.LocalDepositAmount = localSum;
-                    this.EntityPM.ForeignAmount = this.SelectedTotal;
+                    this.CalculateTotalsForNewChequeDeposite();
 
                 } else if (this.IsLinesSelection) {
                     this.EntityPM.ForeignAmount = this.SelectedTotal;
@@ -701,6 +733,17 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
                 }
             }
         }
+    }
+
+    private CalculateTotalsForNewChequeDeposite() {
+        this.SelectedTotal = 0;
+        var localSum = 0.0;
+        for (let CashbookLine of this.SelectedCashbookLines.Collection) {
+            localSum += CashbookLine.LocalAmount;
+            this.SelectedTotal += CashbookLine.ForeignAmount == null ? 0 : CashbookLine.ForeignAmount;
+        }
+        this.EntityPM.LocalDepositAmount = localSum;
+        this.EntityPM.ForeignAmount = this.SelectedTotal;
     }
 
     Abs(number: number) {
@@ -740,30 +783,45 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
         this.BankDepositLines.Clear();
         this.EntityPM.BankDepositLines = [];
+        this.SelectedCashbookLines = new ObservableCollection([]);
 
         // this.BankDepositLines = [];
         if (event == true) {
             for (let line of this.CashbookLines.Collection) {
+                this.OriginalCashbookLines.Collection.filter(a => a.CashBookId == line.CashBookId && a.ARPChequeId == line.ARPChequeId)[0].IsSelected = true;
+                this.SelectedCashbookLines.Collection.push(line);
                 this.PushBankDeposit(line);
                 line.IsSelected = true;
             }
-        }else{
-          for (let line of this.CashbookLines.Collection) {
-            line.IsSelected = false;
         }
+        else {
+            for (let line of this.CashbookLines.Collection) {
+                this.OriginalCashbookLines.Collection.filter(a => a.CashBookId == line.CashBookId && a.ARPChequeId == line.ARPChequeId)[0].IsSelected = false;
+                line.IsSelected = false;
+          }
         }
+
         this.CalculateTotals();
     }
 
     LineSelection(cashbookLine, event) {
         this.CashbookLines.Collection.filter(a => a.CashBookId == cashbookLine.CashBookId && a.ARPChequeId == cashbookLine.ARPChequeId)[0].IsSelected = event;
+        this.OriginalCashbookLines.Collection.filter(a => a.CashBookId == cashbookLine.CashBookId && a.ARPChequeId == cashbookLine.ARPChequeId)[0].IsSelected = event;
+
         if (event == true) {
             this.PushBankDeposit(cashbookLine);
+            this.SelectedCashbookLines.Collection.push(cashbookLine);
         } else if (event == false) {
-            this.IsAllSelected = false;
+            this.DeleteUnSelectedLine(cashbookLine);
             this.PopBankDeposit(cashbookLine);
+            this.IsAllSelected = false;
         }
         this.CalculateTotals();
+    }
+
+    private DeleteUnSelectedLine(line: any) {
+        var index = this.SelectedCashbookLines.Collection.findIndex(d => d.ChequeNumber === line.ChequeNumber);
+        this.SelectedCashbookLines.Collection.splice(index, 1);
     }
 
     PushBankDeposit(cashbookLine: CashBookLinePM) {

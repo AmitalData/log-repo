@@ -119,8 +119,23 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return documentTypeCopyLists;
         }
 
+        public List<DocumentTypeCopyPM> GetDocumentTypeCopiesWithoutLimitedOneForAutomations(string documentTypeId, string limitedPrintCopyId, int tenant)
+        {
+            List<DocumentTypeCopyPM> documentTypeCopies = GetDocumentTypeCopiesByDocumentType(documentTypeId, null, tenant);
+            if (!string.IsNullOrEmpty(limitedPrintCopyId) && documentTypeCopies != null && documentTypeCopies.Count()>1)
+                documentTypeCopies = RemoveLimitedDocumentCopyFromDocumentCopies(limitedPrintCopyId, documentTypeCopies);
 
+            return documentTypeCopies;
+        }
 
+        private List<DocumentTypeCopyPM> RemoveLimitedDocumentCopyFromDocumentCopies(string limitedPrintCopyId, List<DocumentTypeCopyPM> documentCopies)
+        {
+            List<DocumentTypeCopyPM> documentTypeCopies = documentCopies;
+            DocumentTypeCopyPM limitedDocumentCopy = documentTypeCopies.Where(documentCopy => documentCopy.Id == limitedPrintCopyId).FirstOrDefault();
+            if (limitedDocumentCopy != null)
+                documentTypeCopies = documentTypeCopies.Where(documentCopy => documentCopy.Id != limitedDocumentCopy.Id).ToList();
 
+            return documentTypeCopies;
+        }
     }
 }

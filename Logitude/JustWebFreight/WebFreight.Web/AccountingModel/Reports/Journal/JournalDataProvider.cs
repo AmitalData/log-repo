@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebFreight.Web.DataProviders;
 
 namespace WebFreight.Web.AccountingModel.Reports.Journal
 {
-    public class JournalDataProvider
+    public class JournalDataProvider:BaseDataProvider
     {
 
         public string JournalNumber { get; set; }

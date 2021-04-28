@@ -19,7 +19,7 @@
     <link href="HtmlHelpers/CSS/sunburst.css" rel="stylesheet" type="text/css" />
     <link href="HtmlHelpers/CSS/app.css" rel="stylesheet" type="text/css" />
     <link href="HtmlHelpers/CSS/LogitudeMainCss.css" rel="stylesheet" type="text/css" />
-    <script src="HtmlHelpers/JS/Logitude.Tools.js" type="text/javascript"></script>
+    <script src="HtmlHelpers/JS/LogitudeTools.js" type="text/javascript"></script>
     <script src="HtmlHelpers/JS/highlight.pack.js" type="text/javascript"></script>
 
     <style type="text/css">
@@ -443,10 +443,9 @@
            
          } else document.getElementById("BackToLogin").style.display = "none";
            var url = window.location.href;
-           var isDSV = url.toLowerCase().indexOf("system.dsv.co.il") > -1 ? true : false;
-           var myDomain = url.split('/')[2];
-           if (isDSV == true) {
-               window.sessionStorage.setItem("ResetPWD", "true");
+        //var isDSV = url.toLowerCase().indexOf("system.dsv.co.il") > -1 ? true : false;
+        var myDomain = url.split('/')[2].split(':')[0];
+           
                var myLogoMethodUrl = "api/PrivateLable/getisprivatelableurl/?url=" + myDomain;
                $.ajax({
                    url: myLogoMethodUrl,
@@ -456,30 +455,32 @@
                    success: function (result) {
                        if (result) IsPrivateLabel = result.EnablePrivateLable;
                        if (IsPrivateLabel == true) {
+                           window.sessionStorage.setItem("ResetPWD", "true");
                            window.sessionStorage.setItem("ContactEmail", result.ContactUsEmail);
                            window.sessionStorage.setItem("IsPrivateLabel", IsPrivateLabel);
                            window.sessionStorage.setItem("SmallLogoURL", result.SmallLogoURL);
                            window.sessionStorage.setItem("LogoURL", result.LogoURL);
                            window.sessionStorage.setItem("PrivateLabelUrl", result.PrivateLabelUrl);
                            window.sessionStorage.setItem("PrivateLabelShortName", result.PrivateLabelShortName);
+                           window.sessionStorage.setItem("IsDSV", result.PrivateLabelDomain.toLowerCase().indexOf("dsv") > -1);
 
                            //$("#BackToLogin").attr("href", "Login.aspx?tenant=" + BrandingTenant);
-
+                           document.location.href = "AngularLogin" + "/index.html";
                        }
-                       document.location.href = "AngularLogin" + "/index.html";
+                       else {
+                           var Containerelem = document.getElementById("Container");
+                           if (Containerelem) {
+                               Containerelem.style.display = 'block';
+                           }
+                       }
                    },
                });
 
                //var version = "";
                //if (userdata.HtmlVersion) version = userdata.HtmlVersion;
                //document.location.href = "Angular" + version + "/index.html";
-           }
-           else {
-               var Containerelem = document.getElementById("Container");
-               if (Containerelem) {
-                   Containerelem.style.display = 'block';
-               }
-           }
+           
+           
            document.onkeypress = capLock;
 
            function capLock(e) {

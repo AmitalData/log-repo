@@ -21,6 +21,8 @@ import { WebhookTesterComponent } from './Components/WebhookKeys/WebhookTesterCo
 import { CreateTenantComponent } from './Components/CreateTenant/CreateTenantComponent'; 
 import { PriceStepsGeneralTabComponent } from './Components/PriceSteps/PriceStepsGeneralTabComponent';
 import { CustomEventTypeComponent } from './Components/EventType/CustomEventTypeComponent';
+import { FeatureToggleGeneralTabComponent } from './Components/FeatureToggle/FeatureToggleGeneralTabComponent';
+import { NewFeatureToggleComponent } from './Components/FeatureToggle/NewFeatureToggleComponent';
 
 export const Components =
     [
@@ -47,6 +49,8 @@ export const Components =
         CreateTenantComponent,
         PriceStepsGeneralTabComponent,
         CustomEventTypeComponent,
+        FeatureToggleGeneralTabComponent,
+        NewFeatureToggleComponent,
     ];
 
 export class ModuleDeclarations {
@@ -78,9 +82,8 @@ export class ModuleDeclarations {
             case "CreateTenantComponent": { myResult = CreateTenantComponent; break; }
             case "PriceStepsGeneralTabComponent": { myResult = PriceStepsGeneralTabComponent; break; }
             case "CustomEventTypeComponent": { myResult = CustomEventTypeComponent; break; }
-
-                
-                
+            case "FeatureToggleGeneralTabComponent": { myResult = FeatureToggleGeneralTabComponent; break; }
+            case "NewFeatureToggleComponent": { myResult = NewFeatureToggleComponent; break; }
         }
 
         return myResult;

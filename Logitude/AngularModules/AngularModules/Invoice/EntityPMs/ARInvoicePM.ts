@@ -358,6 +358,11 @@ export class ARInvoicePM {
     public set MainEntityId(newValue: string) { if (this.mainEntityId != newValue) { this.mainEntityId = newValue; this.MarkAsDirty("MainEntityId"); } }
        
 	 
+    private masterEntityId: string;
+    public get MasterEntityId() { return this.masterEntityId; }
+    public set MasterEntityId(newValue: string) { if (this.masterEntityId != newValue) { this.masterEntityId = newValue; this.MarkAsDirty("MasterEntityId"); } }
+       
+	 
     private mainEntityReference: string;
     public get MainEntityReference() { return this.mainEntityReference; }
     public set MainEntityReference(newValue: string) { if (this.mainEntityReference != newValue) { this.mainEntityReference = newValue; this.MarkAsDirty("MainEntityReference"); } }
@@ -446,11 +451,6 @@ export class ARInvoicePM {
     private isPrinted: boolean;
     public get IsPrinted() { return this.isPrinted; }
     public set IsPrinted(newValue: boolean) { if (this.isPrinted != newValue) { this.isPrinted = newValue; this.MarkAsDirty("IsPrinted"); } }
-       
-	 
-    private connectedEntityReferences: string;
-    public get ConnectedEntityReferences() { return this.connectedEntityReferences; }
-    public set ConnectedEntityReferences(newValue: string) { if (this.connectedEntityReferences != newValue) { this.connectedEntityReferences = newValue; this.MarkAsDirty("ConnectedEntityReferences"); } }
        
 	 
     private field1: CustomFieldClass;
@@ -691,6 +691,11 @@ export class ARInvoicePM {
     private isShowAmountLocalCurrencyColumnInSharedLogistics: boolean;
     public get IsShowAmountLocalCurrencyColumnInSharedLogistics() { return this.isShowAmountLocalCurrencyColumnInSharedLogistics; }
     public set IsShowAmountLocalCurrencyColumnInSharedLogistics(newValue: boolean) { if (this.isShowAmountLocalCurrencyColumnInSharedLogistics != newValue) { this.isShowAmountLocalCurrencyColumnInSharedLogistics = newValue; this.MarkAsDirty("IsShowAmountLocalCurrencyColumnInSharedLogistics"); } }
+       
+	 
+    private shipmentsNumbers: string;
+    public get ShipmentsNumbers() { return this.shipmentsNumbers; }
+    public set ShipmentsNumbers(newValue: string) { if (this.shipmentsNumbers != newValue) { this.shipmentsNumbers = newValue; this.MarkAsDirty("ShipmentsNumbers"); } }
        
 	 
     private bankAccountLiteId: string;

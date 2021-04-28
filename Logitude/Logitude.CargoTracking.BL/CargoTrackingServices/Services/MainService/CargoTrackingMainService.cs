@@ -107,7 +107,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 foreach (DataRow drow in bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.DataTableSchema.Rows)
                 {
                     DataColumn column = GetCoulmnFromDataRow(drow);
+                    column.AllowDBNull = true;
                     dataColumnListCols.Add(column);
+
                     bulkDataPreperation.MainDataTable.Columns.Add(column);
                 }
 
@@ -179,7 +181,16 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 ServiceHelper.UpdateWaterMarkAfterFinishCheck(bulkDataPreperation.CargoTrackingTable, bulkDataPreperation.AutomaticLastUpdateDate, bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs);
 
             }
+
+            SyncShipmentMilstones(bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs);
         }
+
+        private static void SyncShipmentMilstones(CargoTrackingArgs buildCargoArgs)
+        {
+            ShipmentMilestonesSyncService syncService = new ShipmentMilestonesSyncService();
+            syncService.SyncShipmentMilstones(buildCargoArgs);
+        }
+
         private RecordUpdated UpdateCargoTrackingDatabase(CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs, 
                                                          bool isUpadteWaterMark = false)
         {
@@ -210,7 +221,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             {
                 foreach (string ColumnName in bulkDataPreperation.CargoTrackingTable.FieldsDummyName.Split(','))
                 {
-                    bulkDataPreperation.MainDataTable.Columns.Add(ColumnName);
+                    DataColumn dataColumn = new DataColumn(ColumnName);
+                    dataColumn.AllowDBNull = true;
+                    bulkDataPreperation.MainDataTable.Columns.Add(dataColumn);
                 }
             }
        
@@ -403,7 +416,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             {
                 dataRow[((DataColumn)listCols[i])] = bulkDataPreperation.SqlDataReader[i];
             }
-            CargoTrackingSearchService.SearchService(dataRow, bulkDataPreperation, tableName);
+            CargoTrackingSearchService.CreateSearchReferencesForShipment(dataRow, bulkDataPreperation, tableName);
             bulkDataPreperation.MainDataTable.Rows.Add(dataRow);
         }
 
@@ -723,12 +736,5 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             updateCargoTrackingRecords.NumberRecordUpdated += updateCargoTrackingRecords.RecordUpdated.NumberOfRecordUpdated;
             updateCargoTrackingRecords.NumberRecordUpdated2 += updateCargoTrackingRecords.RecordUpdated.NumberOfRecordUpdated2;
         }
-
-
     }
-
- 
-  
- 
-
 }

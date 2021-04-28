@@ -126,6 +126,8 @@ export class GLAccountList {
 	ChartOfAccountsTypeEnglishName: string;
 	ChartOfAccountsTypeLocalName: string;
 	ChartOfAccountsLocalName: string;
+	CardsDataId: string;
+	PaymentTermName: string;
 	
 }
  

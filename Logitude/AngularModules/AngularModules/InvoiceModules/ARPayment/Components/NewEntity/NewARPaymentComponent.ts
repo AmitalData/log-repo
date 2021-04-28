@@ -90,10 +90,9 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE") {
             this.DisplaySATSettings = true;
 
-            //var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "FPG" && d.TenantNumber == SessionLocator.Tenant)[0];
-            //if (featureToggle) {
+           
                 this.DisplayFechaPago = true;
-            //}
+          
         }
 
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
@@ -196,6 +195,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
 
         if (this.invoicePm != null) {
             this.IsCreatedFromInvoiceSide = true;
+            this.UIProperties.SetEnabled("PartnerId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("BillToId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("BillToAddressId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, false);
@@ -239,18 +239,16 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
 
     public RateIsEnabled = false;
     SetUIProperties() {
-        var isRateEnabled = false;
-
         if (FeatureLocator.HasFeaturePermession("ARPayment", "ARPaymentEditExchangeRate")) {
             if (this.PaymentCurrencyId) {
                 if (this.PaymentCurrencyId != this.TenantPM.CurrencyId) {
                     if (this.IsCreatedFromInvoiceSide == false) {
-                        isRateEnabled = true;
+                        this.RateIsEnabled = true;
                     }
                 }
             }
         }
-       else if (SessionLocator.TenantPM.AccountingActivated) {
+        else if (SessionLocator.TenantPM.AccountingActivated) {
             if (this.PaymentCurrencyId) {
                 if (this.PaymentCurrencyId != this.TenantPM.CurrencyId) {
 
@@ -260,10 +258,8 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
                     this.RateIsEnabled = false;
 
                 }
-                }
             }
-
-
+        }
 
         this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, this.RateIsEnabled);
         this.SetUIProperties_Payment();
@@ -302,6 +298,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         this.CreateARPayment();
 
         if (this.IsCreatedFromInvoiceSide) {
+            this.newARPaymentPM.PartnerId = this.invoicePm.PartnerId;
             this.newARPaymentPM.BillToId = this.invoicePm.BillToId;
             this.newARPaymentPM.BillToName = this.invoicePm.BillToName;
             this.newARPaymentPM.BillToAddressId = this.invoicePm.BillToAddressId;
@@ -321,7 +318,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
 
         else {
             if (!AppTool.IsNullOrEmpty(this.customerId)) {
-                this.BillToId = this.customerId;
+                this.PartnerId = this.customerId;
             }
 
             this.PaymentCurrencyId = SessionLocator.TenantPM.CurrencyId;
@@ -982,7 +979,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
             errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.F.RegisterDate")));
         }
 
-        else if (DateTool.GetDateParts(this.RegisterDate).DateTicks > DateTool.GetCurrentDateAsUtc().valueOf()) {
+        else if (DateTool.GetDateParts(this.RegisterDate).DateTicks > DateTool.GetCurrentDateAsUtcForAccountingValidation().valueOf()) {
             errors.push(TextCodeTranslator.Translate("ARPayment.M.CantSetFutureDatePayment"));
         }
 

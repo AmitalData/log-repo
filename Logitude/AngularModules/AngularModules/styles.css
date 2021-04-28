@@ -19,3 +19,11 @@
 @import url("_Resources/Froala/css/codemirror.min.css");
 @import "~ag-grid-community/dist/styles/ag-grid.css";
 @import "~ag-grid-community/dist/styles/ag-theme-balham.css";
+
+
+@import url("_Resources/css/PrimeWebComponent.css");
+@import "node_modules/primeng/resources/themes/saga-blue/theme.css";
+@import "node_modules/primeng/resources/primeng.min.css";
+@import "node_modules/primeflex/primeflex.css";
+@import "node_modules/primeicons/primeicons.css";
+@import "node_modules/quill/dist/quill.snow.css";

@@ -1,4 +1,6 @@
-﻿namespace Logitude.ShipmentTests.Models
+﻿using System;
+
+namespace Logitude.ShipmentTests.Models
 {
     public class ExternalAPIDirectContext
     {
@@ -9,5 +11,6 @@
 
         public Direct Direct { get; set; }
         public string ExceptionMessage { get; set; }
+        public Action act { get; set; }
     }
 }

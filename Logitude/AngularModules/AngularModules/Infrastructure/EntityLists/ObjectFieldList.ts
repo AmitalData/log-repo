@@ -80,6 +80,9 @@ export class ObjectFieldList {
 		FieldCode: string;
 		FullNameTextCodeCode: string;
 		ShortNameTextCodeCode: string;
-		HelpTextCodeCode: string;
-	
+        HelpTextCodeCode: string;
+        AdditionalQuerySections: string;
+
+
+
 }

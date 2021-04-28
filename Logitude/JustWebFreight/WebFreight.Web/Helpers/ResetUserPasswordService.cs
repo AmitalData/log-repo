@@ -232,15 +232,10 @@ namespace WebFreight.Web.Helpers
                 fromemail = emailCommunicationLogBuilderArgs.AppMobileEnvironment == "Unifreight" ? "no-replay@amital.co.il" : "no-reply@LogitudeWorld.com";
             }
 
-            if (LogitudeSettings.DeploymentStage != null && (LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1" || LogitudeSettings.DeploymentStage.ToLower() == "test2"))
+            if (IsLogboxEnvironment())
             {
-                string envir = "Logbox";
-                string Email = "no-replay@logbox.co.il";
-                if (privatelabel != null)
-                {
-                    Email = "no-reply@" + privatelabel.PrivateLabelUrl.Replace("www.", "");
-                    envir = privatelabel.PrivateLabelShortName;
-                }
+                string envir = privatelabel == null ? "Logbox" : privatelabel.PrivateLabelShortName;
+                string Email = privatelabel == null ? "no-replay@logbox.co.il" : "no-reply@" + privatelabel.PrivateLabelDomain;
                 subject = "Your " + envir + " Password";
                 fromemail = Email;
             }
@@ -258,7 +253,12 @@ namespace WebFreight.Web.Helpers
 
             return emailParameters;
         }
-        
+
+        private static bool IsLogboxEnvironment()
+        {
+            return LogitudeSettings.DeploymentStage != null && (LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1" || LogitudeSettings.DeploymentStage.ToLower() == "test2");
+        }
+
         private PasswordResetRequest GetPasswordResetRequestForMobile(string email, string reqNumber)
         {
             Random generator = new Random();

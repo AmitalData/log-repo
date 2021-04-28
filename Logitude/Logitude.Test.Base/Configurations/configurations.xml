@@ -1,11 +1,11 @@
 ﻿<Configurations>
 
-  <General>
-    <ServerUrl>https://test.logitudeworld.com/test/api</ServerUrl>
-  </General>
+  <ServerSettings>
+    <Url>https://test.logitudeworld.com/test/api</Url>
+  </ServerSettings>
 
   <Users>
-    <User Email="ahmadb123@mail.com" Password="ahmed13!A15" Default="true" />
+    <User Default="true" Email="specflowtest@logitudeworld.com" Password="Spec_Flow21" />
     <User Email="protractor@test.com" Password="!P123t456" />
   </Users>
 

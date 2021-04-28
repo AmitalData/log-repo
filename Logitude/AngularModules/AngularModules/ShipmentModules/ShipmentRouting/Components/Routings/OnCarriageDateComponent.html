@@ -1,5 +1,5 @@
-﻿
-<ToggleButton [DropDownHeight]="170" [DropDownWidth]="400" [Position]="'Left'" [IconPath]="'./Images/CalenderBlue.png'" [IsOpened]="IsOpened" (Opened)="IsOpened = $event">
+
+<ToggleButton [IsEnabled]="IsEnabled" [DropDownHeight]="170" [DropDownWidth]="400" [Position]="'Left'" [IconPath]="'./Images/CalenderBlue.png'" [IsOpened]="IsOpened" (Opened)="IsOpened = $event">
     <div class="MediaFillRelative">
         <div class="MediaFixedPadding5">
             <table>
@@ -98,7 +98,7 @@
                                 </td>
 
                                 <td style="width: 57px;">
-                                    <button class="RedButton CustomButton" id="{{ 'OnCarriageDateOKBtn' | IdGeneratorPipe}}"  (click)="OkButtonClicked()">Ok</button>
+                                    <button class="RedButton CustomButton" id="{{ 'OnCarriageDateOKBtn' | IdGeneratorPipe}}"  [disabled]="!IsEnabled" (click)="OkButtonClicked()">Ok</button>
                                 </td>
                             </tr>
                         </table>

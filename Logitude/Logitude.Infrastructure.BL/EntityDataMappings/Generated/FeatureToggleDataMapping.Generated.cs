@@ -31,7 +31,10 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         SearchFields, 
 	         TenantNumber, 
 	         Inactive, 
-	         ToggleCode,
+	         ToggleCode, 
+	         IsMultiTenant, 
+	         FromTenantNumber, 
+	         ToTenantNumber,
 	      }
 
 
@@ -49,7 +52,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         Inactive, 
 	         ToggleCode, 
 	         ToggleName, 
-	         CreatedByUser,
+	         CreatedByUser, 
+	         ToggleDescription, 
+	         IsMultiTenant, 
+	         FromTenantNumber, 
+	         ToTenantNumber,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -101,6 +108,21 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToggleCode))
             {
 				entityPOCO.ToggleCode = entityPM.ToggleCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsMultiTenant))
+            {
+				entityPOCO.IsMultiTenant = entityPM.IsMultiTenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromTenantNumber))
+            {
+				entityPOCO.FromTenantNumber = entityPM.FromTenantNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToTenantNumber))
+            {
+				entityPOCO.ToTenantNumber = entityPM.ToTenantNumber;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -159,6 +181,21 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 					entityPM.ToggleCode = entityPOCO.ToggleCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsMultiTenant))
+            {
+					entityPM.IsMultiTenant = entityPOCO.IsMultiTenant;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FromTenantNumber))
+            {
+					entityPM.FromTenantNumber = entityPOCO.FromTenantNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ToTenantNumber))
+            {
+					entityPM.ToTenantNumber = entityPOCO.ToTenantNumber;
+            }
+
 		}
 
 		public void PMToOldPM(FeatureTogglePM entityPM, FeatureTogglePM oldEntityPM)
@@ -208,6 +245,21 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToggleCode))
             {
                 oldEntityPM.ToggleCode = entityPM.ToggleCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsMultiTenant))
+            {
+                oldEntityPM.IsMultiTenant = entityPM.IsMultiTenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromTenantNumber))
+            {
+                oldEntityPM.FromTenantNumber = entityPM.FromTenantNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToTenantNumber))
+            {
+                oldEntityPM.ToTenantNumber = entityPM.ToTenantNumber;
             }
 			
 		}

@@ -196,10 +196,13 @@ namespace WebFreight.Web.ReportsWebServices
             dataProvider.FinalDestinationCode = shipment.MainCarriageFinalDestinationPortCode;
             dataProvider.AMSBL = shipment.AMSBL;
             dataProvider.DescriptionOfGoods = DataProviders.General.GetFieldString(shipment.DescriptionOfGoods);
+            dataProvider.ContainersNumbersArray = shipment.ContainersNumbers;
             dataProvider.IncotermName = shipment.IncotermName;
             dataProvider.DeclarationNumber = shipment.DeclarationNumber;
             dataProvider.CustomsClearancePointName = shipment.CustomClearancePointName;
             dataProvider.ValueOfGoods = shipment.ValueOfGoods;
+            dataProvider.MainCarriageCarrierNumber = shipment.MainCarriageCarrierNumber;
+            dataProvider.CarrierCode = shipment.MainCarriageCarrierCode;
 
             MapBranchData();
 
@@ -218,6 +221,7 @@ namespace WebFreight.Web.ReportsWebServices
             this.MapShipmentCutoffDate();
             this.MapShipmentFreightLocation();
             this.MapShipmentOnCarriage();
+            this.MapShipmentOnForwarding();
             this.MapShipmentShipper();
             this.MapShipmentConsignee();
             this.MapShipmentCustomer();
@@ -323,11 +327,21 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
         }
+        private void MapShipmentOnForwarding()
+        {
+            if (shipment.OnForwardingFromPortId != null && shipment.OnForwardingToPortId != null)
+            {
+                if (shipment.OnForwardingCarrierId != null)
+                {
+                    dataProvider.OnForwardingCarrier = shipment.OnForwardingCarrierName;
+                }
+            }
+        }
         private void MapShipmentShipper()
         {
             if (!string.IsNullOrEmpty(shipment.ShipperId))
             {
-                dataProvider.ClientReferenceNumber = shipment.ShipperReference1 != null ? shipment.ShipperReference1 : "";
+                dataProvider.ClientReferenceNumber = shipment.CustomerReference1 != null ? shipment.CustomerReference1 : "";
                 dataProvider.ShipperReference2 = shipment.ShipperReference2;
 
                 Card card = CardRepository.GetSingleCard(shipment.ShipperId, tenant, true);
@@ -587,6 +601,7 @@ namespace WebFreight.Web.ReportsWebServices
                 dataProvider.TruckNumber = childEntity.TruckNumber;
                 dataProvider.TruckerNumber = childEntity.CarrierNumber;
                 dataProvider.SpecialInstructions = childEntity.Notes != null ? childEntity.Notes : "";
+                dataProvider.PickupDeliveryNumber = childEntity.PickUpDeliveryNumber;
 
                 this.MapChildEntityFrom();
                 this.MapChildEntityTo();
@@ -854,6 +869,29 @@ namespace WebFreight.Web.ReportsWebServices
                 dataProvider.DeliveryTime = String.Format("{0:hh:mm}", childEntity.ETA);
                 dataProvider.DeliveryTime_DateTime_New = childEntity.ETA;
             }
+
+            dataProvider.PickupDeliveryDeparture = this.GetActualOrExpectedDeparture();
+            dataProvider.PickupDeliveryArrival = this.GetActualOrExpectedArrival();           
+        }
+        private DateTime? GetActualOrExpectedDeparture()
+        {
+            DateTime? myDate = childEntity.ATD;
+            if (myDate == null)
+            {
+                myDate = childEntity.ETD;
+            }
+
+            return myDate;
+        } 
+        private DateTime? GetActualOrExpectedArrival()
+        {
+            DateTime? myDate = childEntity.ATA;
+            if (myDate == null)
+            {
+                myDate = childEntity.ETA;
+            }
+
+            return myDate;
         }
         private void MapChildEntityCarrier()
         {

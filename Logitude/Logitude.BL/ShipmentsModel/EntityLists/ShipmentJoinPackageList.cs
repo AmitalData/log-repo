@@ -171,5 +171,11 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public double? PackageHeight { get; set; }
         public string ConsigneeId { get; set; }
         public string Routing { get; set; }
+        public string OnForwardingTo { get; set; }
+        public DateTime? OnForwardingATD { get; set; }
+        public DateTime? OnForwardingATA { get; set; }
+        public DateTime? OnForwardingETA { get; set; }
+        public string OnForwardingToPortCode { get; set; }
+        public string OnForwardingToPortId { get; set; }
     }
 }

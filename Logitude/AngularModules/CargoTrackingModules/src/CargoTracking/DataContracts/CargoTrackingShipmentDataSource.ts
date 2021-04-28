@@ -1,11 +1,11 @@
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
-import { ChangeDetectorRef } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { CargoTrackingSearchService } from 'src/CargoTracking/Services/Others/CargoTrackingSearchService';
 import { ShipmentsListComponent } from '../Components/UserDashboard/ShipmentsPage/ShipmentsList/ShipmentsListComponent';
 import { CargoTrackingShipmentFilters } from './CargoTrackingShipmentFilters';
 
-export class ShipmentDataSource extends DataSource<any | undefined> {
+export class ShipmentDataSource extends DataSource<any | undefined>  {
     private pageSize = 50;
     private cachedShipments = Array.from<any>({ length: this.ShipmentsCount });
     private fetchedPages = new Set<number>();
@@ -21,8 +21,8 @@ export class ShipmentDataSource extends DataSource<any | undefined> {
     )
     {
         super();
-
         this.InitComponent();
+
     }
 
     private InitComponent()
@@ -31,14 +31,16 @@ export class ShipmentDataSource extends DataSource<any | undefined> {
         this.parent.noResult = false;
         this.cachedShipments = Array.from<any>({ length: this.ShipmentsCount || 1 });
         this.fetchedPages = new Set<number>();
+        this.FetchPage(0);
+
 
         this.ChangeDetector.detectChanges();
     }
 
     ReloadData(filters)
     {
-        this.InitComponent();
         this.ShipmentsFilters = filters;
+        this.InitComponent();
         this.FetchPage(0);
 
         this.ChangeDetector.detectChanges();
@@ -106,7 +108,7 @@ export class ShipmentDataSource extends DataSource<any | undefined> {
     {
         if(this.parent.ShipmentsCount != shipmentsResponse.ShipmentsCount)
             this.parent.ShipmentsCount = shipmentsResponse.ShipmentsCount
-            
+
         if (shipmentsResponse.ShipmentsCount != this.ShipmentsCount) {
             this.SetShipmentsCount(shipmentsResponse.ShipmentsCount);
             this.ResetCachedShipmentsArray(shipmentsResponse.ShipmentsCount);

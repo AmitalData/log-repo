@@ -82,11 +82,11 @@ namespace WebFreight.Web.DataProviders
         public int? DeductionPercentage { get; set; }
         public double? DeductionAmount { get; set; }
         public double? TotalPaymentAfterDeduction { get; set; }
-
         public string BranchAddress { get; set; }
-        public string BranchName { get; set; }
-
+        public string BranchName { get; set; }        
         public DateTime? TodayLocal { get; set; }
+        public string TotalPaymentInWordFR { get; set; }
+        public string BankAccountEnglishName { get; set; }
 
         public List<ReportAPInvoicePayments> PaidAPInvoicesList { get; set; }
 

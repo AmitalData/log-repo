@@ -158,5 +158,10 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public ChangeSetOperation ChangeSetOp { get; set; }
         public ChangeSetOperation ChildChangeOp { get; set; }
         public List<ShipmentReceivablePM> ChildShipmentReceivablesChangeSet { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public double? VatAmountLocal { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public double? VatAmountProfit { get; set; }
     }
 }

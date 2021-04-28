@@ -136,6 +136,8 @@ import { CargoTrackingIncrementalStatListTemplate } from './Components/ListTempl
 
 import { InterestReportEditCalculationDateComponent } from './Components/EditTabs/InterestReport/GeneralTab/InterestReportEditCalculationDate/InterestReportEditCalculationDateComponent';
 import { UserDefinedReportGeneralTabComponent } from './Components/EditTabs/UserDefinedReport/UserDefinedReportGeneralTabComponent';
+import { AccountingMainTesterComponent } from './Components/Maintenance/Tester/AccountingMainTesterComponent';
+import { UpdateJournalLineNoteComponent } from './Components/EditTabs/Journal/UpdateJournalLineNoteComponent';
 
 
 //import { CashBookGeneralTabComponent } from './Components/EditTabs/CashBook/CashBookGeneralTabComponent';
@@ -188,6 +190,7 @@ export const Components =
         NewTaxWithholdingAssessingOfficeComponent,
         YearTransferComponent,
         AccountingLoadTestComponent,
+        AccountingMainTesterComponent,
         Generate1000Component,
         Receiving1000Component,
         AccountingFunctionalTestComponent,
@@ -199,6 +202,7 @@ export const Components =
         GLAccountTransactionsTabComponent,
         ManageReconciliationsTabComponent,
         JournalDetailsTabComponent,
+        UpdateJournalLineNoteComponent,
         CashBookDetailsTabComponent,
         CashBookManageDepoTabComponent,
         ChartOfAccountGeneralTabComponent,
@@ -346,6 +350,7 @@ export class ModuleDeclarations {
             case "AccountingPeriodEventComponent": { myResult = AccountingPeriodEventComponent; break; }
             case "NewTaxWithholdingAssessingOfficeComponent": { myResult = NewTaxWithholdingAssessingOfficeComponent; break; }
             case "AccountingLoadTestComponent": { myResult = AccountingLoadTestComponent; break; }
+            case "AccountingMainTesterComponent": { myResult = AccountingMainTesterComponent; break; }
             case "Generate1000Component": { myResult = Generate1000Component; break; }
             case "Receiving1000Component": { myResult = Receiving1000Component; break; }
             case "AccountingFunctionalTestComponent": { myResult = AccountingFunctionalTestComponent; break; }
@@ -357,6 +362,7 @@ export class ModuleDeclarations {
             case "GLAccountTransactionsTabComponent": { myResult = GLAccountTransactionsTabComponent; break; }
             case "ManageReconciliationsTabComponent": { myResult = ManageReconciliationsTabComponent; break; }
             case "JournalDetailsTabComponent": { myResult = JournalDetailsTabComponent; break; }
+            case "UpdateJournalLineNoteComponent": { myResult = UpdateJournalLineNoteComponent; break; }
             case "CashBookDetailsTabComponent": { myResult = CashBookDetailsTabComponent; break; }
             case "CashBookManageDepoTabComponent": { myResult = CashBookManageDepoTabComponent; break; }
             case "ChartOfAccountGeneralTabComponent": { myResult = ChartOfAccountGeneralTabComponent; break; }

@@ -31,6 +31,8 @@ using Logitude.Accounting.BL.CoreBL.ExternalReconcile;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Accounting.BL.CoreBL.ReverseEngineer;
 using Logitude.Server.Tools;
+using System.Web;
+using Logitude.Accounting.BL.CoreBL.Reports.Aging;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -45,18 +47,19 @@ namespace Logitude.Accounting.BL.CoreBL
         public const string QP_JournalId = "JournalId";
 
         private string _QMessageId;
-
+        private string _SelectedQueue;
         int _Tenant;
         string _SeedJournalId;
         private IAccountingContext _AccountingContext;
         private JournalPM _JournalPM;
         private JournalApproveParser _JournalApproveParser = null;
 
-        public JournalApproveService(int tenant, string seedJournalId, string MessageId)
+        public JournalApproveService(int tenant, string seedJournalId, string MessageId, string selectedQueue)
         {
             _Tenant = tenant;
             _SeedJournalId = seedJournalId;
             this._QMessageId = MessageId;
+            this._SelectedQueue = selectedQueue;
         }
 
 
@@ -78,15 +81,16 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (actions.HasFlag(MyActions.BuildLedgerTransaction) && actions.HasFlag(MyActions.FixLedgerTransaction)) return new ResultApproveJournalM() { Success = false, FailDue = "Or BuildLedgerTransaction Or FixLedgerTransaction" };
 
 
-
-                myResultApproveJournalM = CheckJournal(actions, ref myLedgerTransactionsWithCounters);
+                List<GLAccountAgingDataPM> gLAccountAgingDataPMs = null;
+                myResultApproveJournalM = CheckJournal(actions, ref myLedgerTransactionsWithCounters, out gLAccountAgingDataPMs);
                 if (myResultApproveJournalM != null)
                 {
                     return myResultApproveJournalM;
                 }
                 //
 
-                AccountingStreamingInNewSerializableTransaction(actions, myLedgerTransactionsWithCounters);
+
+                AccountingStreamingInNewSerializableTransaction(actions, myLedgerTransactionsWithCounters, gLAccountAgingDataPMs);
 
 
 
@@ -107,8 +111,9 @@ namespace Logitude.Accounting.BL.CoreBL
             throw new NotImplementedException();
         }
 
-        private ResultApproveJournalM CheckJournal(MyActions actions, ref List<LedgerTransactionPM> myLedgerTransactionsWithCounters)
+        private ResultApproveJournalM CheckJournal(MyActions actions, ref List<LedgerTransactionPM> myLedgerTransactionsWithCounters, out List<GLAccountAgingDataPM> gLAccountAgingDataPMs)
         {
+            gLAccountAgingDataPMs = new List<GLAccountAgingDataPM>();
             using (var scope = TransactionFactory.GetTransaction())
             {
                 _AccountingContext = AccountingContext.GetContext(_Tenant);
@@ -157,6 +162,11 @@ namespace Logitude.Accounting.BL.CoreBL
                     myLedgerTransactionsWithCounters = _JournalApproveParser.LedgerTransactions
                         .OrderBy(rec => rec.JournalId).ThenBy(rec => rec.JournalLineNumber)
                         .ToList();
+
+                    var ledgerTransactionsAgingBuilderService = new LedgerTransactionsAgingBuilderService(_AccountingContext);
+                    gLAccountAgingDataPMs = ledgerTransactionsAgingBuilderService.GetAgingPMs(myLedgerTransactionsWithCounters);
+
+
                     //if (!_ExecAsSP)
                     {
                         FillIdCountersUseNewDBTransaction(myLedgerTransactionsWithCounters);
@@ -168,7 +178,7 @@ namespace Logitude.Accounting.BL.CoreBL
         }
 
 
-        private void AccountingStreamingInNewSerializableTransaction(MyActions actions, List<LedgerTransactionPM> myLedgerTransactionsWithCounters)
+        private void AccountingStreamingInNewSerializableTransaction(MyActions actions, List<LedgerTransactionPM> myLedgerTransactionsWithCounters, List<GLAccountAgingDataPM> gLAccountAgingDataPMs)
         {
             /// orian 300000 trans in a month >> 1 journal 6 transaction no more then 6 GLAccountTotalByMonths >  in a secound 
 
@@ -193,8 +203,8 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             var inshureNoDuplicateKeys_MayBeCrash = allGLAccountTotalByMonths.ToDictionary(rec => string.Concat(rec.AccountId, rec.DateTypeCode, rec.Year, rec.Month, rec.CurrencyId));
             allGLAccountTotalByMonths = allGLAccountTotalByMonths.OrderBy(rec => rec.AccountId).ThenBy(rec => rec.DateTypeCode).ThenBy(rec => rec.Year).ThenBy(rec => rec.Month).ThenBy(rec => rec.CurrencyId);
-            
-            TimeSpan? timeOut=GetTimeout(myLedgerTransactionsWithCounters,_JournalPM.JournalReconciles.Count > 0);
+
+            TimeSpan? timeOut = GetTimeout(myLedgerTransactionsWithCounters, _JournalPM.JournalReconciles.Count > 0);
             timeOut = null;//ihab: no need to use timeout  - but have to be fast (statistic) !!!
 
             LogMessagingUtil.Instance.AppendLine("GetNewSerializableTransaction(timeOut):insec" + timeOut.GetValueOrDefault().TotalSeconds.ToString());
@@ -206,10 +216,12 @@ namespace Logitude.Accounting.BL.CoreBL
                     _AccountingContext = AccountingContext.GetContext(_Tenant);
                     logger = (_AccountingContext as DbContextBase).CreateLogger();
 
-                    
+                    bool supperssSaveOnUpdateMultiDueIsFaster = true;
                     //if (_ExecAsSP)
                     //{
-                    this.Exec_usp_AccountingStreaming(myLedgerTransactionsWithCounters, allGLAccountTotalByMonths.ToList());
+                    this.Exec_usp_AccountingStreaming(myLedgerTransactionsWithCounters, allGLAccountTotalByMonths.ToList(), gLAccountAgingDataPMs);
+
+                    Impersonate();
                     //CreateReconcileFromStorno(myLedgerTransactionsWithCounters);
                     ICreateAutoReconcileWhileStreamingService myCreateAutoReconcileWhileStreamingService = new CreateAutoReconcileWhileStreamingService();
                     myCreateAutoReconcileWhileStreamingService.MustInit(_AccountingContext, _JournalPM, myLedgerTransactionsWithCounters);
@@ -220,7 +232,12 @@ namespace Logitude.Accounting.BL.CoreBL
                         var myReconciliationUpdateService = new ReconciliationUpdateService(_AccountingContext, new Dictionary<string, IContext>(), _JournalPM.Tenant);
                         myReconciliationUpdateService.SuppressResetDraftOpenReconciliation = true;
 
-                        myReconciliationUpdateService.UpdateMulti(myCreateAutoReconcileWhileStreamingService.ReconciliationList, new List<ReconciliationPM>(), _JournalPM, true);
+                        myReconciliationUpdateService.UpdateMulti(myCreateAutoReconcileWhileStreamingService.ReconciliationList, new List<ReconciliationPM>(), _JournalPM, !supperssSaveOnUpdateMultiDueIsFaster);
+                        if (supperssSaveOnUpdateMultiDueIsFaster)
+                        {
+                            _AccountingContext.SaveChanges();
+                        }
+
                         var toUpdateInReconcileProgressToFalse = true;// i think its not happened - have to test b4 
                         if (toUpdateInReconcileProgressToFalse)
                         {
@@ -240,12 +257,15 @@ namespace Logitude.Accounting.BL.CoreBL
                         myCreateAutoExternalReconcileWhileStreamingService.MustInit(providor, _JournalPM, myLedgerTransactionsWithCounters);
                         myCreateAutoExternalReconcileWhileStreamingService.CreateAutoExternalReconcileWhileStreaming();
                         if (myCreateAutoExternalReconcileWhileStreamingService.ExternalReconciliationList != null &&
-                        myCreateAutoExternalReconcileWhileStreamingService.ExternalReconciliationList.Count> 0)
+                        myCreateAutoExternalReconcileWhileStreamingService.ExternalReconciliationList.Count > 0)
                         {
                             var myExternalReconciliationUpdateService = new ExternalReconciliationUpdateService(_AccountingContext, new Dictionary<string, IContext>(), _JournalPM.Tenant);
 
-                            myExternalReconciliationUpdateService.UpdateMulti(myCreateAutoExternalReconcileWhileStreamingService.ExternalReconciliationList, new List<ExternalReconciliationPM>(), _JournalPM, true);
-
+                            myExternalReconciliationUpdateService.UpdateMulti(myCreateAutoExternalReconcileWhileStreamingService.ExternalReconciliationList, new List<ExternalReconciliationPM>(), _JournalPM, !supperssSaveOnUpdateMultiDueIsFaster);
+                            if (supperssSaveOnUpdateMultiDueIsFaster)
+                            {
+                                _AccountingContext.SaveChanges();
+                            }
                             var toUpdateInReconcileProgressToFalse = true;// next sprint
                             if (toUpdateInReconcileProgressToFalse)
                             {
@@ -290,6 +310,50 @@ namespace Logitude.Accounting.BL.CoreBL
                     LogMessagingUtil.Instance.AppendLine("AccountingStreamingInNewSerializableTransaction:Took:" + sw.Elapsed.ToString());
                 }
             }
+        }
+
+        private void Impersonate()
+        {
+            try
+            {
+                var
+                userIdentityNameb4 = AuthenticationUtil.ResolveUserIdentityName(_JournalPM.Tenant);
+                if (HttpContext.Current != null)
+                {
+                    return;
+                }
+
+                if (string.IsNullOrEmpty(_JournalPM.CreatedByUserId))
+                {
+                    LogMessagingUtil.Instance.AppendLine("no Impersonate");
+                    return;
+                }
+                ContactRepository contactRep = new ContactRepository(_JournalPM.Tenant);
+                var contact = contactRep.GetSingleContact(_JournalPM.CreatedByUserId, _JournalPM.Tenant);
+                if (contact == null)
+                {
+                    LogMessagingUtil.Instance.AppendLine("no Impersonate contact == null");
+                    return;
+                }
+
+                if (string.IsNullOrEmpty(contact.Email))
+                {
+                    LogMessagingUtil.Instance.AppendLine("no Impersonate");
+                    return;
+                }
+                LogMessagingUtil.Instance.AppendLine($"Impersonate to {contact.Email}");
+                AuthenticationUtil.Impersonate(_JournalPM.Tenant, contact.Email, "");
+
+                var userIdentityNameafter = AuthenticationUtil.ResolveUserIdentityName(_JournalPM.Tenant);
+                LogMessagingUtil.Instance.AppendLine($"Impersonate to {contact.Email}");
+
+            }
+            catch (Exception ee)
+            {
+
+                LogMessagingUtil.Instance.AppendLine($"no Impersonate Exception ee{ee.Message}");
+            }
+
         }
 
         private void UpdateInExternalReconcileProgressToFalse()
@@ -372,7 +436,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 var myReconciliation = myCreateAutoReconcileWhileStreamingService.ReconciliationList.First();
 
-                var myJournalUpdateService = new JournalUpdateService(this._AccountingContext,new Dictionary<string, IContext>(), this._JournalPM.Tenant);
+                var myJournalUpdateService = new JournalUpdateService(this._AccountingContext, new Dictionary<string, IContext>(), this._JournalPM.Tenant);
 
                 //var myJournalRepository = //new JournalRepository(this._AccountingContext);
                 myJournalUpdateService.
@@ -391,7 +455,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
         }
 
-        private static TimeSpan? GetTimeout(List<LedgerTransactionPM> myLedgerTransactionsWithCounters,bool HaveJournalReconciles)
+        private static TimeSpan? GetTimeout(List<LedgerTransactionPM> myLedgerTransactionsWithCounters, bool HaveJournalReconciles)
         {
             //bool reduceDeadlock = false;
 
@@ -424,12 +488,12 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
             }
             TimeSpan? timeOut = null;
-            
+
             if (HaveJournalReconciles)
             {
-                iTimeOut = iTimeOut  + (5);
+                iTimeOut = iTimeOut + (5);
             }
-            return TimeSpan.FromSeconds (iTimeOut.Value);
+            return TimeSpan.FromSeconds(iTimeOut.Value);
         }
 
         private static void ThrowException(string mess)
@@ -536,7 +600,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 try
                 {
                     var guid = Guid.NewGuid().GetHashCode().ToString();
-                    var approveJournalService = new JournalApproveService(SeedTenant, journalId, guid);
+                    var approveJournalService = new JournalApproveService(SeedTenant, journalId, guid, K_AccountingJournalApproveWR);
                     approveJournalService.SubmitApprove(actions);
                 }
                 catch (Exception eee)
@@ -557,7 +621,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
         }
 
-        public static void WorkWithoutQueue(int SeedTenant, string SeedJournalId,  ref List<string> Last_journalBufferKeys)
+        public static void WorkWithoutQueue(int SeedTenant, string SeedJournalId, ref List<string> Last_journalBufferKeys)
         {
             var sw = new Stopwatch();
 
@@ -573,7 +637,7 @@ namespace Logitude.Accounting.BL.CoreBL
 #if true
                 journalBufferKeys = journalQS
                     .GetApprovedJournalWithoutLedgerTransaction
-                    (SeedTenant, SeedJournalId,Last_journalBufferKeys);
+                    (SeedTenant, SeedJournalId, Last_journalBufferKeys);
 #else
                     journalPm =journalQS.GetSinglePendingApproved(this.SeedTenant.Value, true);
 #endif
@@ -604,7 +668,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 try
                 {
                     var guid = Guid.NewGuid().GetHashCode().ToString();
-                    var approveJournalService = new JournalApproveService(SeedTenant, journalId, guid);
+                    var approveJournalService = new JournalApproveService(SeedTenant, journalId, guid, K_AccountingJournalApproveWR);
                     approveJournalService.SubmitApprove(actions);
                 }
                 catch (Exception eee)
@@ -693,7 +757,7 @@ namespace Logitude.Accounting.BL.CoreBL
         }
 
         //private static void ProcessMessage(BrokeredMessage message)
-        private static bool ProcessMessage_Db(DbQueueService myDbQueueService, QueueResponse message)
+        private static bool ProcessMessage_Db(DbQueueService myDbQueueService, QueueResponse message, string selectedQueue)
         {
             string MessageId = "";
             int tenant = -1;
@@ -719,9 +783,9 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 JournalApproveService.MyActions actions =
             JournalApproveService.MyActions.BuildLedgerTransaction | JournalApproveService.MyActions.BuildGLAccountTotalByMonths;
-                var myJournalApproveService = new JournalApproveService(tenant, qpJournalId, MessageId);
+                var myJournalApproveService = new JournalApproveService(tenant, qpJournalId, MessageId, selectedQueue);
                 var res = myJournalApproveService.SubmitApprove(actions);
-                
+
                 if (res.Success)
                 {
 
@@ -791,7 +855,7 @@ namespace Logitude.Accounting.BL.CoreBL
         /// </summary>
         /// <param name="myLedgerTransactionsWithCounters"></param>
         /// <param name="allGLAccountTotalByMonths"></param>
-        private void Exec_usp_AccountingStreaming(List<LedgerTransactionPM> myLedgerTransactionsWithCounters, List<GLAccountTotalByMonthPM> allGLAccountTotalByMonths)
+        private void Exec_usp_AccountingStreaming(List<LedgerTransactionPM> myLedgerTransactionsWithCounters, List<GLAccountTotalByMonthPM> allGLAccountTotalByMonths, List<GLAccountAgingDataPM> gLAccountAgingDataPMs)
         {
 
             //_JournalPM.Tenant, _JournalPM.Id, _QMessageId
@@ -875,11 +939,13 @@ namespace Logitude.Accounting.BL.CoreBL
                               AmountToReconcile = r.AmountToReconcile,
 
                               Mark = r.Mark,
+                              //IsReconciled = 
+                              //(this._SelectedQueue == K_AccountingJournalApproveWR && r.OpenAmount == 0) 
+                              //? true : r.IsReconciled,
                               IsReconciled = r.IsReconciled,
                               IsExternalReconcile = r.IsExternalReconcile
                           }
                     ).ToList();
-
 
                         var tableLTRans = DBTypeLedgerTransactionsWithCounters.ToDataTable();
 
@@ -910,12 +976,18 @@ namespace Logitude.Accounting.BL.CoreBL
                         tGLAccountTotalByMonthsTypePar.Value = tableGLAccountTotalByMonths;
                         //tLedgerTransactionsTypePar.
 
+
+
+
+                        SqlParameter tGLAccountAgingDataType = GettGLAccountAgingDataType(gLAccountAgingDataPMs);
+
                         cmd.Parameters.Add(journalIdPar);
                         cmd.Parameters.Add(pTenantPar);
 
                         cmd.Parameters.Add(messageIdPar);
                         cmd.Parameters.Add(tGLAccountTotalByMonthsTypePar);
                         cmd.Parameters.Add(tLedgerTransactionsTypePar);
+                        cmd.Parameters.Add(tGLAccountAgingDataType);
 
 
 
@@ -949,6 +1021,33 @@ namespace Logitude.Accounting.BL.CoreBL
 
         }
 
+        private static SqlParameter GettGLAccountAgingDataType(List<GLAccountAgingDataPM> gLAccountAgingDataPMs)
+        {
+            var listDBTypeGLAccountAgingData =
+                gLAccountAgingDataPMs.Select(r => new DBTypeGLAccountAgingData()
+                {
+                    AccountId = r.AccountId,
+                    Tenant = r.Tenant,
+                    PeriodPast= r.PeriodPast.GetValueOrDefault(),
+                    Period0 = r.Period0.GetValueOrDefault(),
+                    Period1 = r.Period1.GetValueOrDefault(),
+                    Period2 = r.Period2.GetValueOrDefault(),
+                    Period3 = r.Period3.GetValueOrDefault(),
+                    Period4 = r.Period4.GetValueOrDefault(),
+                    Period5 = r.Period5.GetValueOrDefault(),
+                    //Period6 = r.Period6,
+                    PeriodFuture = r.PeriodFuture.GetValueOrDefault(),
+                    TotalOpenTransactions = r.TotalOpenTransactions.GetValueOrDefault()
+
+
+
+                }).ToList();
+            var tablelistDBTypeGLAccountAgingData = listDBTypeGLAccountAgingData.ToDataTable();
+            SqlParameter tGLAccountAgingDataType = new SqlParameter("@tGLAccountAgingDataType", SqlDbType.Structured);
+            tGLAccountAgingDataType.Direction = ParameterDirection.Input;
+            tGLAccountAgingDataType.Value = tablelistDBTypeGLAccountAgingData;
+            return tGLAccountAgingDataType;
+        }
 
 
         public class JournalApproveWorker
@@ -959,24 +1058,24 @@ namespace Logitude.Accounting.BL.CoreBL
                 //_NextDueDoneAt = DateTime.UtcNow.Date.AddDays(1);//tomorrow at 00:00
                 _NextDueDoneAt = DateTime.UtcNow.Date;//today already done - do next day =tomorrow at 00:00 ///
             }
-            public Action LogDoneItemInMemoryAction { get; set; }
+            public Action<int> LogDoneItemInMemoryAction { get; set; }
             public Action SetLastActivate { get; set; }
 
-            public void WorkUntilQEmptyQueueDB(TimeSpan? timeSpan = null,string selectedQueue=null)
+            public void WorkUntilQEmptyQueueDB(TimeSpan? timeSpan = null, string selectedQueue = null)
             {
                 selectedQueue = selectedQueue ?? JournalApproveService.K_AccountingJournalApproveWR;
-                Stopwatch stopwatch = null; 
-                if (timeSpan!=null)
+                Stopwatch stopwatch = null;
+                if (timeSpan != null)
                 {
-                    stopwatch=Stopwatch.StartNew();
+                    stopwatch = Stopwatch.StartNew();
                 }
 
                 QueueResponse response = null;
                 while (true)
                 {
-                    if (stopwatch !=null && timeSpan!=null)
+                    if (stopwatch != null && timeSpan != null)
                     {
-                        if (stopwatch.Elapsed> timeSpan)
+                        if (stopwatch.Elapsed > timeSpan)
                         {
                             return;
                         }
@@ -1008,9 +1107,9 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
                     SetLastActivate?.Invoke();
-                    if (ProcessMessage_Db(queueservice, response))
+                    if (ProcessMessage_Db(queueservice, response, selectedQueue))
                     {
-                        LogDoneItemInMemoryAction?.Invoke();
+                        LogDoneItemInMemoryAction?.Invoke(1);
                     }
                     Thread.Sleep(10);//itzik - let other thread abilty to use GLAccout !!!
                 }
@@ -1023,13 +1122,17 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         if (DateTime.UtcNow.Date > _NextDueDoneAt.Date)// _NextDueDoneAt DateTime.UtcNow.TimeOfDay < TimeSpan.FromHours(6) ) 
                         {
-                            if (DateTime.Now < new DateTime(2021, 06, 01))
+                            if (DateTime.Now < new DateTime(2022, 06, 01))
                             {
                                 CreateBatchAccountingIntegrityCheck();
                             }
                             _NextDueDoneAt = DateTime.UtcNow.Date;
                             var myDueLocalBalanceService = new DueLocalBalanceService();
                             myDueLocalBalanceService.RunAllTenants();
+
+                            var dailyRebuildAgingService = new DailyRebuildAgingService();
+                            dailyRebuildAgingService.RunAllAgingTenants();
+
                         }
                     }
                     catch (Exception)
@@ -1048,13 +1151,13 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     int year = DateTime.Now.Year;
                     var repo = new GLAccountTotalByMonthRepository(0);
-                    var activeTenants =repo.GetActiveTenantPerYear(year);
+                    var activeTenants = repo.GetActiveTenantPerYear(year);
                     var myTenantRepository = new TenantRepository(0);
                     var prodTenant = myTenantRepository.GetTenants().Where(r => r.IsTestTenant == false).ToList();
                     int iCount = 0;
                     foreach (int tenant in activeTenants)
                     {
-                        if (prodTenant.FirstOrDefault(r=>r.Id == tenant) == null)
+                        if (prodTenant.FirstOrDefault(r => r.Id == tenant) == null)
                         {
                             continue;//IsTestTenant
                         }
@@ -1350,6 +1453,29 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 
+
+    }
+
+    internal class DBTypeGLAccountAgingData
+    {
+        public DBTypeGLAccountAgingData()
+        {
+
+        }
+
+        public string AccountId { get; set; }
+        public int Tenant { get; set; }
+        public decimal PeriodPast { get; set; }
+        public decimal Period0 { get; set; }
+        
+        public decimal Period1 { get; set; }
+        public decimal Period2 { get; set; }
+        public decimal Period3 { get; set; }
+        public decimal Period4 { get; set; }
+        public decimal Period5 { get; set; }
+        //public object Period6 { get; set; }
+        public decimal PeriodFuture { get; set; }
+        public int TotalOpenTransactions { get; set; }
 
     }
 

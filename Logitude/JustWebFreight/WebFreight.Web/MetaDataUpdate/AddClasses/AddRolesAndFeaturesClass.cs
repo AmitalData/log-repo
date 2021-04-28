@@ -237,6 +237,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 updatedFeature.Packagable = featureDetails.Packagable;
                 updatedFeature.IsBusinessUnitEnabled = featureDetails.IsBusinessUnitEnabled;
                 updatedFeature.FeatureUniqeCode = featureDetails.FeatureUniqeCode;
+                updatedFeature.ToggleCode = featureDetails.ToggleCode;
 
                 TextCode updatedTextCode = null;
                 if (textCodes.Keys.Contains(featureDetails.NameTextCodeCode + featureDetails.Tenant + featureDetails.ObjectTableId))
@@ -317,7 +318,9 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     IsBusinessUnitEnabled = featureDetails.IsBusinessUnitEnabled,
                     IsOld = false,
                     IsCoreFeature = featureDetails.IsCoreFeature,
-                    FeatureUniqeCode = featureDetails.FeatureUniqeCode
+                    FeatureUniqeCode = featureDetails.FeatureUniqeCode,
+                    ToggleCode = featureDetails.ToggleCode
+
                 };
 
                 featuresRepository.Add(newFeature);

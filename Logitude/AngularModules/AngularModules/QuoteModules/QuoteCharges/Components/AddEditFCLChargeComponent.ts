@@ -129,10 +129,10 @@ export class AddEditFCLChargeComponent implements OnDestroy {
             this.CheckChargeTypeDuplicationFlag = true;
         }
     }
-
+    private errors: string[] = [];
     OkButtonClicked() {
-        var errors: string[] = [];
-        Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
+        this.errors = [];
+        Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, this.errors);
 
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
@@ -140,12 +140,12 @@ export class AddEditFCLChargeComponent implements OnDestroy {
 
         if (this.IsHyprid && this.CheckChargeTypeDuplicationFlag) {
             var quoteValidator: QuoteValidator = new QuoteValidator();
-            quoteValidator.CheckDuplicateInCharges(this.QuotePM, this.EntityPM, errors);
+            quoteValidator.CheckDuplicateInCharges(this.QuotePM, this.EntityPM, this.errors);
         }
 
         if (this.EntityPM.ChargesGroupCode == "FRT") {
             if (this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT" && d != this.EntityPM).length > 0) {
-                errors.push("Freight Charge already added");
+                this.errors.push("Freight Charge already added");
             }
         }
 
@@ -154,14 +154,14 @@ export class AddEditFCLChargeComponent implements OnDestroy {
 
                 if (this.EntityPM.VatIsMultiPercentage) {
                     if (!SessionLocator.AccountingSettingPM.EnableMultiPercentageVATTypes) {
-                        errors.push(VatTypesValidator.GetError());
+                        this.errors.push(VatTypesValidator.GetError());
                     }
                 }
 
                 else {
                     if (AppTool.IsNullOrEmpty(this.EntityPM.VatPercentage)) {
                         var field = TextCodeTranslator.Translate("QuoteCharge.F.VatPercentage");
-                        errors.push(msg.replace("%FieldName", field));
+                        this.errors.push(msg.replace("%FieldName", field));
                     }
                 }
             }
@@ -181,7 +181,7 @@ export class AddEditFCLChargeComponent implements OnDestroy {
             if (this.EntityPM.CostMeasurementCode == "PRFR" && !AppTool.IsNullOrEmpty(this.EntityPM.CostCurrencyId) && !AppTool.IsNullOrEmpty(freightLineCostCurrencyId)) {
                 if (!AppTool.IsNullOrZero(this.EntityPM.CostTotalAmount)) {
                     if (this.EntityPM.CostCurrencyId != freightLineCostCurrencyId) {
-                        errors.push("Cost currency must be the same as the freight currency in the case of Percent of Freight");
+                        this.errors.push("Cost currency must be the same as the freight currency in the case of Percent of Freight");
                     }
                 }
             }
@@ -191,15 +191,17 @@ export class AddEditFCLChargeComponent implements OnDestroy {
             if (this.EntityPM.SaleMeasurementCode == "PRFR" && !AppTool.IsNullOrEmpty(this.EntityPM.SaleCurrencyId) && !AppTool.IsNullOrEmpty(freightLineSaleCurrencyId)) {
                 if (!AppTool.IsNullOrZero(this.EntityPM.SaleTotalAmount)) {
                     if (this.EntityPM.SaleCurrencyId != freightLineSaleCurrencyId) {
-                        errors.push("Sale currency must be the same as the freight currency in the case of Percent of Freight");
+                        this.errors.push("Sale currency must be the same as the freight currency in the case of Percent of Freight");
                     }
                 }
             }
         }
 
-        this.ValidationErrorsList = errors;
+        this.ValidationErrorsList = this.errors;
 
-        if (errors.length == 0) {
+        this.ValidateAddingPFCLUOM();
+
+        if (this.errors.length == 0) {
             if (this.DataContext.IsNew) {
                 this.DataContext.QuotePM.AddQuoteChargePM(this.EntityPM);
                 this.DataContext.fatherComponent.BuildItemsSource();
@@ -210,6 +212,8 @@ export class AddEditFCLChargeComponent implements OnDestroy {
                     this.EntityPM.QuoteChargePriceSteps = [];
                 }
             }
+
+            this.DataContext.fatherComponent.OnPercentForeignAmountChanged();
 
             if (!AppTool.IsNullOrEmpty(this.DataContext.TariffId) && this.EntityPM.IsDirty && !this.DataContext.IsNew) {
                 var property = this.propertiesChanges.filter(a => a == "CostUnitPrice" || a == "CostTotalAmount" || a == "CostCurrencyId"
@@ -227,6 +231,15 @@ export class AddEditFCLChargeComponent implements OnDestroy {
             else {
                 this.DataContext.fatherComponent.ComputeTotals();
                 this.CurrentSession.CloseCurrentWindowEmit("OK");
+            }
+
+        }
+    }
+
+    ValidateAddingPFCLUOM() {
+        if (this.EntityPM.CostMeasurementCode == "PFCL" || this.EntityPM.SaleMeasurementCode == "PFCL") {
+            if (this.QuotePM.QuoteCharges.filter(d => (d.CostMeasurementCode == "PFCL" || d.SaleMeasurementCode == "PFCL") && d.Id != this.EntityPM.Id).length > 0) {
+                this.errors.push("Charge with Percent of foreign charges local amounts UOM already added");
             }
         }
     }

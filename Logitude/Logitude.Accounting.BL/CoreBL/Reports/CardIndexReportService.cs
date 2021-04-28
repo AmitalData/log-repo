@@ -36,6 +36,9 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 myLedgerTransactionBalanceFilter.PageSize = constPageSize;
                 myLedgerTransactionBalanceFilter.PageStartAtRecordIndex = 0;
                 myLedgerTransactionBalanceFilter.CallBack = null;
+                myLedgerTransactionBalanceFilter
+                    .ClacOpenReconciledAmount_OnlyWithout_IncludeRelatedCurrenciesAccount_IncludeChildAccounts = 
+                    !(myLedgerTransactionBalanceFilter.IncludeChildAccounts && myLedgerTransactionBalanceFilter.IncludeRelatedCurrenciesAccount);
                 var myLedgerTransactionBalanceService = new LedgerTransactionBalanceService(_AccountingContext, myLedgerTransactionBalanceFilter);
                 myLedgerTransactionBalanceService.Run();
                 if (this._Param.IsReconciled.HasValue /*&& _Param.IsReconciled==false*/)

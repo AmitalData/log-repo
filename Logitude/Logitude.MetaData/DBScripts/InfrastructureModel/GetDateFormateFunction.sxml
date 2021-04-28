@@ -1,0 +1,23 @@
+﻿<Script DBType="Main" Module="Infrastructure" Pre="true">
+  <Sql Version="2">
+    <![CDATA[
+    
+DECLARE @Sql NVARCHAR(MAX)
+SET @Sql = 
+'
+CREATE FUNCTION dbo.GetDateFormate (@dateTime datetime)
+RETURNS date
+WITH EXECUTE AS CALLER
+AS
+BEGIN
+DECLARE @Result date;
+SET @Result = dateadd(dd, datediff(dd, 0, @dateTime), 0)
+RETURN(@Result);
+END
+';
+
+EXEC(@Sql);
+    ]]>
+  </Sql>
+  <Oracle Version="1"></Oracle>
+</Script>

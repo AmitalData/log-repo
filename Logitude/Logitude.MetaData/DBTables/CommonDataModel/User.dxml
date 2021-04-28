@@ -215,6 +215,14 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="SignatureImageId"
+    OldNames="SignatureId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="Contacts"

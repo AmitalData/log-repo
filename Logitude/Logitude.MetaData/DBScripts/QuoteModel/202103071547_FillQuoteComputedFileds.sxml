@@ -1,0 +1,235 @@
+﻿
+<Script DBType="Main" Module="Quote" AOT="true" TargetTableName="Quotes"  Pre="true">
+  <Sql Version="2">
+    <![CDATA[
+If(OBJECT_ID('tempdb..#temp ')  Is Not Null)
+Begin
+    Drop Table #temp
+End
+
+If(OBJECT_ID(' tempdb..#temp_QuoteComputedFields ') Is Not Null)
+Begin
+    Drop Table #temp_QuoteComputedFields
+End
+
+CREATE TABLE #temp_QuoteComputedFields
+(
+	Id varchar(15) not null,
+	Tenant int not null,
+	ConnectedToShipment bit not null,
+	ConnectedToTicket bit not null,
+	ToLocation varchar(500) NUll,
+	FromLocation varchar(500) NUll,
+	DeliveryTo varchar(500) NUll,
+	PickupFrom varchar(500) NUll
+
+)
+
+select  
+Quotes.Id as Id,
+Quotes.Tenant as Tenant,
+Quotes.IncludePickUp as IncludePickUp,
+Quotes.IncludeDelivery as IncludeDelivery,
+Quotes.DirectionId as DirectionId,
+Quotes.TransportModeId as TransportModeId,
+CAST(CASE WHEN shipments.Id IS NULL THEN 0 ELSE 1 END AS BIT) AS ConnectedToShipment,
+CAST(CASE WHEN tickets.Id IS NULL THEN 0 ELSE 1 END AS BIT) AS ConnectedToTicket,
+Quotes.FromPartnerAddressId as FromPartnerAddressId,
+FromLocationAddress.City as FromAddressCity,
+FromLocationAddress.CountryId as FromLocationAddressCountryId,
+FromCountry.Code as FromAddressCountryCode,
+Quotes.ToPartnerAddressId as ToPartnerAddressId,
+ToLocationAddress.City as ToAddressCity,
+ToLocationAddress.CountryId as ToLocationAddressCountryId,
+ToCountry.Code as ToAddressCountryCode,
+Quotes.ToAddressId as DeliveryAddressId,
+Quotes.FromAddressId as PickUpAddressId,
+PickUpAddress.City as PickUpAddressCity,
+PickUpAddress.CountryId as PickUpAddressCountryId,
+PickUpAddress.ZipCode as PickUpAddressZipCode,
+PickUpCountry.Code as PickUpCountryCode,
+DeliveryAddress.City as DeliveryAddressCity,
+DeliveryAddress.ZipCode as DeliveryAddressZipCode,
+DeliveryAddress.CountryId as DeliveryAddressCountryId,
+DeliveryCountry.Code as DeliveryCountryCode,
+Quotes.FromAddressCity as QuotesFromAddressCity,
+Quotes.ToAddressCity as QuotesToAddressCity,
+QuotesFromAddressCountry.Code as QuotesFromAddressCountryCode,
+QuotesToAddressCountry.Code as QuotesToAddressCountryCode,
+Quotes.FromAddressZipCode as FromAddressZipCode,
+Quotes.ToAddressZipCode as ToAddressZipCode
+
+into #temp
+
+from Quotes 
+left  join Shipments as shipments
+on shipments.Id =
+ (
+  select top 1 Id from shipments
+  where shipments.QuoteId = Quotes.id
+ )
+left  join Tickets as tickets on tickets.Id =
+ (
+   select top 1 Id from tickets
+   where tickets.QuoteId = Quotes.id
+ )
+left  join Addresses as FromLocationAddress on FromLocationAddress.Id = Quotes.FromPartnerAddressId
+left  join Addresses as ToLocationAddress on ToLocationAddress.Id = Quotes.ToPartnerAddressId
+left  join Addresses as PickUpAddress on PickUpAddress.Id = Quotes.FromAddressId
+left  join Addresses as DeliveryAddress on DeliveryAddress.Id = Quotes.ToAddressId
+left  join Countries as ToCountry on ToLocationAddress.CountryId = ToCountry.Id
+left  join Countries as FromCountry on FromLocationAddress.CountryId = FromCountry.Id
+left  join Countries as PickUpCountry on PickUpAddress.CountryId = PickUpCountry.Id
+left  join Countries as DeliveryCountry on DeliveryAddress.CountryId = DeliveryCountry.Id
+left  join Countries as QuotesFromAddressCountry on Quotes.FromAddressCountryId = QuotesFromAddressCountry.Id
+left  join Countries as QuotesToAddressCountry on Quotes.ToAddressCountryId = QuotesToAddressCountry.Id
+
+where $LastCounterWhere$
+
+	declare @Id as varchar(15)
+	declare @Tenant as int
+	declare @IncludePickUp as bit
+	declare @IncludeDelivery as bit
+	declare @PickUpAddressId as varchar(15)
+	declare @DeliveryAddressId as varchar(15)
+	declare @DirectionId as varchar(15)
+	declare @TransportModeId as varchar(15)
+	declare @FromPartnerAddressId as varchar(15)
+	declare @ToPartnerAddressId as varchar(15)
+	declare @ConnectedToShipment as bit
+	declare @ConnectedToTicket as bit
+	declare @FromAddressCity as nvarchar(25)
+	declare @FromAddressCountryCode as char(2)
+	declare @ToAddressCity as nvarchar(25)
+	declare @ToAddressCountryCode as char(2)
+	declare @PickUpAddressCity as nvarchar(25)
+	declare @DeliveryAddressCity as nvarchar(25)
+	declare @QuotesFromAddressCity as nvarchar(25)
+	declare @QuotesToAddressCity as nvarchar(25)
+	declare @PickUpAddressCountryId as varchar(15)
+	declare @DeliveryAddressCountryId as varchar(15)
+	declare @PickUpCountryCode as char(2)
+	declare @DeliveryCountryCode as char(2)
+	declare @QuotesFromAddressCountryCode as char(2)
+	declare @QuotesToAddressCountryCode as char(2)
+	declare @FromAddressZipCode as varchar(15)
+	declare @ToAddressZipCode as varchar(15)
+	declare @PickUpAddressZipCode as varchar(15)
+	declare @DeliveryAddressZipCode as varchar(15)
+	declare @ToLocation as varchar(500)
+	declare @FromLocation as varchar(500)
+	declare @DeliveryTo as varchar(500)
+	declare @PickupFrom as varchar(500)
+    
+	declare @Count as int
+	set @Count = 0;
+
+	DECLARE DataCursor CURSOR READ_ONLY
+	  FOR
+	   SELECT Id,Tenant, IncludePickUp, IncludeDelivery,DeliveryAddressId,PickUpAddressId,FromAddressCity,DirectionId,TransportModeId,ToAddressZipCode, FromAddressZipCode,
+	           ToPartnerAddressId,FromPartnerAddressId,FromAddressCountryCode,ConnectedToShipment,ConnectedToTicket,PickUpAddressCity,
+			   ToAddressCountryCode,ToAddressCity,PickUpAddressCountryId,PickUpCountryCode,QuotesFromAddressCity,QuotesFromAddressCountryCode,PickUpAddressZipCode,DeliveryAddressCity,
+			   DeliveryCountryCode,DeliveryAddressCountryId,DeliveryAddressZipCode,QuotesToAddressCity,QuotesToAddressCountryCode
+	FROM #temp	
+	OPEN DataCursor FETCH NEXT FROM DataCursor INTO @Id,@Tenant,@IncludePickUp,@IncludeDelivery,@DeliveryAddressId,@PickUpAddressId,@FromAddressCity,@DirectionId,@TransportModeId,@ToAddressZipCode,@FromAddressZipCode,
+	           @ToPartnerAddressId,@FromPartnerAddressId,@FromAddressCountryCode,@ConnectedToShipment,@ConnectedToTicket,@PickUpAddressCity,
+			   @ToAddressCountryCode,@ToAddressCity,@PickUpAddressCountryId,@PickUpCountryCode,@QuotesFromAddressCity,@QuotesFromAddressCountryCode,@PickUpAddressZipCode,@DeliveryAddressCity,
+			   @DeliveryCountryCode,@DeliveryAddressCountryId,@DeliveryAddressZipCode,@QuotesToAddressCity,@QuotesToAddressCountryCode
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+	 set @FromLocation = null 
+	 set @ToLocation = null
+	 set @PickupFrom = null 
+	 set @DeliveryTo = null 
+
+	 -- FromLocation -----------------------------------------
+		if ((@DirectionId = 'D') AND (@TransportModeId = 'I'))
+		begin
+           if(@FromPartnerAddressId is not null) 
+		   set @FromLocation =  CASE WHEN @FromLocation is null  THEN '' ELSE @FromAddressCity END
+		   set @FromLocation =  CASE WHEN @FromAddressCountryCode is null THEN @FromLocation ELSE @FromLocation +' '+@FromAddressCountryCode END
+        end 
+
+     -- ToLocation -----------------------------------------
+		if ((@DirectionId = 'D') AND (@TransportModeId = 'I'))
+		begin
+           if(@ToPartnerAddressId is not null) 
+		   set @ToLocation = CASE WHEN @ToAddressCity is nUll THEN '' ELSE @ToAddressCity END
+		   set @ToLocation =  CASE WHEN @ToAddressCountryCode is null THEN @ToLocation ELSE @ToLocation +' '+@ToAddressCountryCode	END   
+	   end 
+
+	 -- PickUpFrom ---------------------------------------
+	   if(@IncludePickUp = '1')
+	   begin 
+	     if(@PickUpAddressId is not null) 
+		   begin 
+		     set @PickupFrom = CASE WHEN @PickUpAddressCity IS NULL THEN '' ELSE @PickUpAddressCity END 
+		     if(@PickUpAddressCountryId is not null) 
+		     set @PickupFrom = CASE WHEN @PickUpCountryCode IS NULL THEN @PickupFrom ELSE @PickupFrom + ' ' +@PickUpCountryCode  END 
+			 set @PickupFrom = CASE WHEN @PickUpAddressZipCode IS NULL THEN @PickupFrom ELSE @PickupFrom + ' ' +@PickUpAddressZipCode  END 
+	        end 
+		 else 
+           begin 
+		     set @PickupFrom = CASE WHEN @QuotesFromAddressCity IS NULL THEN '' ELSE @QuotesFromAddressCity END 
+		     set @PickupFrom = CASE WHEN @QuotesFromAddressCountryCode IS NULL THEN @PickupFrom ELSE @PickupFrom + ' '+ @QuotesFromAddressCountryCode END 
+		     set @PickupFrom = CASE WHEN @FromAddressZipCode IS NULL THEN @PickupFrom ELSE @PickupFrom + ' ' +@FromAddressZipCode  END 
+	        end 
+        end 
+
+     -- DeliveryTo -----------------------------------------
+	   if(@IncludeDelivery = '1')
+	   begin 
+	     if(@DeliveryAddressId is not null) 
+		   begin 
+		     set @DeliveryTo = CASE WHEN @DeliveryAddressCity IS NULL THEN '' ELSE @DeliveryAddressCity END 
+		     if(@DeliveryAddressCountryId is not null) 
+		     set @DeliveryTo = CASE WHEN @DeliveryCountryCode IS NULL THEN @DeliveryTo ELSE @DeliveryTo + ' ' +@DeliveryCountryCode  END 
+			 set @DeliveryTo = CASE WHEN @DeliveryAddressZipCode IS NULL THEN @DeliveryTo ELSE @DeliveryTo + ' ' +@DeliveryAddressZipCode  END 
+	        end 
+		 else 
+           begin 
+		     set @DeliveryTo = CASE WHEN @QuotesToAddressCity IS NULL THEN '' ELSE @QuotesToAddressCity  END 
+		     set @DeliveryTo = CASE WHEN @QuotesToAddressCountryCode IS NULL THEN @DeliveryTo ELSE @DeliveryTo + ' '+ @QuotesToAddressCountryCode END 
+		     set @DeliveryTo = CASE WHEN @ToAddressZipCode IS NULL THEN @DeliveryTo ELSE @DeliveryTo + ' ' +@ToAddressZipCode  END 
+	        end 
+        end 
+
+		   insert into #temp_QuoteComputedFields (Id,Tenant,ConnectedToShipment,ConnectedToTicket,ToLocation,FromLocation,DeliveryTo,PickupFrom)
+		   values(@Id, @Tenant,@ConnectedToShipment,@ConnectedToTicket,@ToLocation,@FromLocation,@DeliveryTo,@PickupFrom)
+
+		set @Count = @Count + 1;
+		if(@Count = 1000)
+		begin		
+
+		   INSERT INTO QuoteComputedFields (Id,Tenant,ConnectedToShipment,ConnectedToTicket,ToLocation,FromLocation,DeliveryTo,PickupFrom)
+           SELECT Id,Tenant,ConnectedToShipment,ConnectedToTicket,ToLocation,FromLocation,DeliveryTo,PickupFrom
+           FROM #temp_QuoteComputedFields
+
+			truncate table #temp_QuoteComputedFields
+			set @Count = 0
+		end
+	FETCH NEXT FROM DataCursor INTO @Id,@Tenant,@IncludePickUp,@IncludeDelivery,@DeliveryAddressId,@PickUpAddressId,@FromAddressCity,@DirectionId,@TransportModeId,@ToAddressZipCode,@FromAddressZipCode,
+	           @ToPartnerAddressId,@FromPartnerAddressId,@FromAddressCountryCode,@ConnectedToShipment,@ConnectedToTicket,@PickUpAddressCity,
+			   @ToAddressCountryCode,@ToAddressCity,@PickUpAddressCountryId,@PickUpCountryCode,@QuotesFromAddressCity,@QuotesFromAddressCountryCode,@PickUpAddressZipCode,@DeliveryAddressCity,
+			   @DeliveryCountryCode,@DeliveryAddressCountryId,@DeliveryAddressZipCode,@QuotesToAddressCity,@QuotesToAddressCountryCode
+	END
+	CLOSE DataCursor
+	DEALLOCATE DataCursor
+		if (@Count > 0)
+	begin
+    	   INSERT INTO QuoteComputedFields (Id,Tenant,ConnectedToShipment,ConnectedToTicket,ToLocation,FromLocation,DeliveryTo,PickupFrom)
+           SELECT Id,Tenant,ConnectedToShipment,ConnectedToTicket,ToLocation,FromLocation,DeliveryTo,PickupFrom
+           FROM #temp_QuoteComputedFields
+
+	end
+
+drop table #temp
+drop table #temp_QuoteComputedFields
+
+    ]]>
+  </Sql>
+</Script>
+
+
+
+

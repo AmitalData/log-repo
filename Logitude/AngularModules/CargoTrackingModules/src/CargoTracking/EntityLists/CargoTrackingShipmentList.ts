@@ -76,6 +76,29 @@ export class CargoTrackingShipmentList {
 	ContainersNumbers: string;
 	PackagesQuantity: number;
 	DirectionId: string;
+	ShipmentLevelCode: string;
+	AssignedTruckerDone: boolean;
+	AssignedTruckerDate: Date;
+	AssignedTruckerEstimationDate: Date;
+	AssignedTruckerNotes: string;
+	AssignedCustomsAgentDone: boolean;
+	AssignedCustomsAgentDate: Date;
+	AssignedCustomsAgentEstDate: Date;
+	AssignedCustomsAgentNotes: string;
+	AssignedCustomsAgentExcReason: string;
+	DeliveryDone: boolean;
+	DeliveryDate: Date;
+	DeliveryEstimationDate: Date;
+	DeliveryNotes: string;
+	DeliveryExceptionReason: string;
+	GrossWeightUnitCode: string;
+	ForwardingShipmentNumber: string;
+	ShipmentTypeCode: string;
+	CustomerEnglishName: string;
+	CustomerLocalName: string;
+	FromPortCode: string;
+	ToPortCode: string;
+	NumberOfPackages: number;
 	
 }
  

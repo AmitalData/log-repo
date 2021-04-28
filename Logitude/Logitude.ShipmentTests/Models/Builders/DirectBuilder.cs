@@ -1,4 +1,5 @@
 ﻿using Logitude.Test.Base.Extensions;
+using Logitude.Test.Base.Models.PartnersPreparation;
 using System;
 using System.Collections.Generic;
 using TechTalk.SpecFlow;
@@ -174,6 +175,17 @@ namespace Logitude.ShipmentTests.Models.Builders
 
         public DirectBuilder WithDefualtValues()
         {
+            Direct = new Direct
+            {
+                Shipper = new Card
+                {
+                    Code = PartnersData.ShipperExportCode
+                },
+                Agent = new Card
+                {
+                    Code = PartnersData.AgentCode
+                }
+            };
             return this;
         }
 

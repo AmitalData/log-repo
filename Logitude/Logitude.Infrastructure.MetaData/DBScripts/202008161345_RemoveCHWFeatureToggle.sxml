@@ -5,4 +5,5 @@
       DELETE FROM Toggles WHERE Code = 'CWH'
     ]]>       
   </Sql>
+  <Oracle Version="1"></Oracle>
 </Script>

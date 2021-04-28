@@ -14,7 +14,7 @@
           "builder": "@angular-builders/custom-webpack:browser",
           "options": {
             "customWebpackConfig": {
-              "path": "./extra-webpack.config.js",
+              "path": "./extra-webpack.config.js"
             },
               "outputPath": "dist",
               "index": "index.html",
@@ -81,6 +81,8 @@
                 "_Resources/Froala/js/plugins/url.min.js",
                 "_Resources/Froala/js/plugins/video.min.js",
                 "_Resources/Froala/js/plugins/line_height.min.js"
+
+              
             ]
             },
             "configurations": {

@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.Tools.Initializers;
+using Simplog.Data.QuoteModel;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Data.QuoteModel.Repositories;
 using Simplog.Server.Infrastructure.Interfaces;
@@ -15,19 +16,22 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
     {
         private ShipmentPM entityPM;
         private ShipmentServiceInitializer initializer;
-
+        private IQuotesContext quoteContext;
+        private int? quoteUsageCount;
         public void Handle(IServiceInitializer initializer)
         {
             this.initializer = (ShipmentServiceInitializer)initializer;
             this.entityPM = this.initializer.EntityPM;
-
+            this.quoteContext = QuotesContext.GetContext(this.initializer.Tenant);
             this.HandleBehaviour();
         }
 
         private void HandleBehaviour()
         {
-            this.InitializeFlags();
-            this.UpdateQuoteUsage();
+            InitializeFlags();
+            UpdateQuoteUsage();
+            UpdateQuoteConnectedToShipmentComputedField();
+            SubmitQuoteChanges();            
         }
 
         string quoteId = null;
@@ -58,7 +62,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         {
             if (isUpdatingUsage || isDisconnectingQoute)
             {
-                QuoteRepository quoteRepository = new QuoteRepository(initializer.Tenant);
+                QuoteRepository quoteRepository = new QuoteRepository(quoteContext);
                 Quote quote = quoteRepository.GetSingleQuote(quoteId, initializer.Tenant);
 
                 if (quote != null)
@@ -88,12 +92,40 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                         else
                         {
                             quote.UsageCount -= 1;
-                        }
+                        } 
                     }
-
-                    quoteRepository.Update(quote);
-                    quoteRepository.SubmitChanges();
+                    quoteUsageCount = quote.UsageCount;
+                    quoteRepository.Update(quote);                    
                 }
+            }
+        }
+
+        private void UpdateQuoteConnectedToShipmentComputedField()
+        {
+            if (isUpdatingUsage || isDisconnectingQoute)
+            {
+                QuoteComputedFieldRepository quoteComputedFieldRepository = new QuoteComputedFieldRepository(quoteContext);
+                QuoteComputedField quoteComputedField = quoteComputedFieldRepository.GetSingleQuoteComputedField(quoteId, initializer.Tenant);
+                if (quoteComputedField != null)
+                {
+                    if (isUpdatingUsage)
+                    {
+                        quoteComputedField.ConnectedToShipment = true;
+                    }
+                    else if (isDisconnectingQoute && quoteUsageCount == null)
+                    {
+                        quoteComputedField.ConnectedToShipment = false;
+                    }
+                    quoteComputedFieldRepository.Update(quoteComputedField);                    
+                }
+            } 
+        }
+
+        private void SubmitQuoteChanges()
+        {
+            if (isUpdatingUsage || isDisconnectingQoute)
+            {
+            quoteContext.SaveChanges();
             }
         }
     }

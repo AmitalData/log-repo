@@ -19,7 +19,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
         List<PackageType> AllPackageTypes = new List<PackageType>();
         public void GenerateDefaultCharges()
         {
-            if (isNewEntity || entityPM.ConvertToFCL || entityPM.ConvertToLCL)
+            if (IsConvertingQuoteTypeOrTransportMode())
             {
                 if ((entityPM.QuoteCharges.Count() == 0 && !entityPM.IsHybrid))
                 {
@@ -249,7 +249,6 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                         case "CWKG": { quoteChargePM.SaleQuantity = entityPM.ChargeableWeightInKG; break; }
                                         case "GWKG": { quoteChargePM.SaleQuantity = entityPM.GrossWeightInKG; break; }
                                         case "PDCW": { quoteChargePM.SaleQuantity = entityPM.PickupDeliveryChargeableWeight; break; }
-
                                         default: { break; }
                                     }
 
@@ -440,7 +439,6 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                         case "CWKG": { itemPM.CostQuantity = entityPM.ChargeableWeightInKG; break; }
                                         case "GWKG": { itemPM.CostQuantity = entityPM.GrossWeightInKG; break; }
                                         case "PDCW": { itemPM.CostQuantity = entityPM.PickupDeliveryChargeableWeight; break; }
-
                                         default: { break; }
                                     }
 
@@ -498,6 +496,21 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 }
             }
         }
+
+        private bool IsConvertingQuoteTypeOrTransportMode()
+        {
+            if (entityPM.ConvertToLCL)
+                return true;
+
+            if (entityPM.ConvertToFCL)
+                return true;
+
+            if (entityPM.ConvertTransportMode)
+                return true;
+
+            return false;
+        }
+
         public void ComputeChargesAmounts()
         {
             if (isNewEntity)
@@ -610,6 +623,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     case "CWKG": { myResult = entityPM.ChargeableWeightInKG; break; }
                     case "GWKG": { myResult = entityPM.GrossWeightInKG; break; }
                     case "PDCW": { myResult = entityPM.PickupDeliveryChargeableWeight; break; }
+                    case "PFCL": { myResult = entityPM.QuoteCharges.Where(d => d.CostCurrencyId != loggedTenant.CurrencyId && d.CostMeasurementCode != "PFCL" && d.CostMeasurementCode != "PFCL").Sum(s => s.CostTotalAmountLocal); break; }
                     default:
                         {
                             if (this.isFCLQuote)
@@ -658,6 +672,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     case "CWKG": { myResult = entityPM.ChargeableWeightInKG; break; }
                     case "GWKG": { myResult = entityPM.GrossWeightInKG; break; }
                     case "PDCW": { myResult = entityPM.PickupDeliveryChargeableWeight; break; }
+                    case "PFCL": { myResult = entityPM.QuoteCharges.Where(d => d.SaleCurrencyId != loggedTenant.CurrencyId && d.SaleMeasurementCode != "PFCL" && d.SaleMeasurementCode != "PFCL").Sum(s => s.SaleTotalAmountLocal); break; }
                     default:
                         {
                             if (this.isFCLQuote)
@@ -827,7 +842,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             {
                 if (item.CostQuantity != null && item.CostUnitPrice != null)
                 {
-                    if (item.CostMeasurementCode == "PRVL" || item.CostMeasurementCode == "PRFR")
+                    if (item.CostMeasurementCode == "PRVL" || item.CostMeasurementCode == "PRFR" || item.CostMeasurementCode == "PFCL")
                     {
                         myTotalAmount = item.CostQuantity * item.CostUnitPrice / 100;
                     }
@@ -928,7 +943,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             {
                 if (item.SaleUnitPrice != null && item.SaleQuantity != null)
                 {
-                    if (item.SaleMeasurementCode == "PRVL" || item.SaleMeasurementCode == "PRFR")
+                    if (item.SaleMeasurementCode == "PRVL" || item.SaleMeasurementCode == "PRFR" || item.CostMeasurementCode == "PFCL")
                     {
                         myTotalAmount = item.SaleQuantity * item.SaleUnitPrice / 100;
                     }
