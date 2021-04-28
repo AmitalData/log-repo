@@ -39,7 +39,7 @@
             this.label1.Size = new System.Drawing.Size(156, 104);
             this.label1.TabIndex = 0;
             this.label1.Text = "This is a tester 4 OpenAccess\r\nUsing DEVART\r\n\r\n4 test Replace \r\n\r\n//OpenAccess pl" +
-    "ease define!!! \r\n//logitude please undefine!!!  \r\n//#define reserveword\r\n";
+    "ease define!!! \r\n//logitude please undefine!!!  \r\n#define reserveword\r\n";
             // 
             // Form1
             // 
