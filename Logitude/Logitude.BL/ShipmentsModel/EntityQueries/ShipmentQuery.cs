@@ -13512,7 +13512,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             Shipment shipment = repository.GetShipmentForCargoTracking(id, tenant);
 
-            ShipmentPM shipmentPM = new ShipmentPM()
+            ShipmentPM shipmentPM = CreateShipmentPMForCargoTracking(tenant, shipment);
+
+            shipmentPM = MapShipmentToShipmentPM(shipmentPM, shipment, null, null, true);
+
+            SetShipmentCloudDataFields(shipment, shipmentPM);
+
+            return shipmentPM;
+        }
+
+        private ShipmentPM CreateShipmentPMForCargoTracking(int tenant, Shipment shipment)
+        {
+            return new ShipmentPM()
             {
                 Id = shipment.Id,
                 CustomFileNumber = shipment.CustomFileNumber,
@@ -13523,12 +13534,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 PackagesTypesNames = GetShipmentPackagesTypeNames(tenant, shipment.Id),
                 NumberOfPackages = GetShipmentPackagesQuantity(tenant, shipment.Id),
                 Volume = GetShipmentPackagesVolume(tenant, shipment.Id),
-                ShipmentTypeName = shipment.ShipmentType?.Name,
+                ShipmentTypeName = shipment.ShipmentType?.Name
             };
+        }
 
-            SetShipmentCloudDataFields(shipment, shipmentPM);
-
-            return shipmentPM;
+        private static Address GetCardAddress(int tenant, string cardId)
+        {
+            AddressRepository addressRepository = new AddressRepository(tenant);
+            Address shipperAddress = addressRepository.GetSingleAddress(cardId, tenant);
+            return shipperAddress;
         }
 
         private static void SetShipmentCloudDataFields(Shipment shipment, ShipmentPM shipmentPM)

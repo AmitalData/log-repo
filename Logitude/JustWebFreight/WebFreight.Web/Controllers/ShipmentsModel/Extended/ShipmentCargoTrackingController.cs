@@ -1,6 +1,7 @@
 ﻿using ICSharpCode.SharpZipLib.BZip2;
 using ICSharpCode.SharpZipLib.Zip;
 using Logitude.BL.CommonDataModel.DataContracts;
+using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
@@ -60,6 +61,27 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                 return Request.CreateResponse(HttpStatusCode.OK, shipmentPM);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+        public HttpResponseMessage GetPartnersAddresses([FromUri] List<string> partnersIds)
+        {
+            try
+            {
+                string logKey = PerformanceLogger.LogCurrentTime();
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                AddressQuery addressQuery = new AddressQuery(authToken.Tenant);
+                List<AddressList> addresses = addressQuery.GetAddressesByCardIds(partnersIds, authToken.Tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, addresses);
             }
             catch (Exception ex)
             {
