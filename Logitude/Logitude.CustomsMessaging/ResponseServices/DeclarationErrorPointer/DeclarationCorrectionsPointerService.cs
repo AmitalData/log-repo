@@ -19,7 +19,7 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
     {
         General _DeclarationCorrection = null;
 
-        public string AnalyzeCorrectionsPointer(string currentCorrectionXml, Response response, List<error> systemMessagesList, int tenant)
+        public string AnalyzeCorrectionsPointer(string currentCorrectionXml, Response response, List<error> systemMessagesList, int tenant, ReferenceListMsg[] referenceListMsg=null)
         {
             DeclarationCorrection declarationCorrectionXml = new DeclarationCorrection();
             if (response == null)
@@ -58,6 +58,16 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
                 }
             }
 
+            if (referenceListMsg  != null)
+            {
+                _DeclarationCorrection.References = new List<Reference>();
+                foreach (var reference in referenceListMsg)
+                {
+                     GetCorrectionReferences(reference, tenant);
+                }
+            }
+
+
             if (response.Amendment != null)
             {
                 _DeclarationCorrection.Amendments = new List<Entity>();
@@ -95,6 +105,52 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
 
             additionalInfo.Content = GetInformationContent(additionalInformationItem.StatementTypeCode.Value, additionalInformationItem.Content.Value, tenant);
             _DeclarationCorrection.AdditionalInformation.Add(additionalInfo);
+        }
+
+
+        private void GetCorrectionReferences(ReferenceListMsg referenceListMsg, int tenant)
+        {
+            Reference reference = new Reference();
+            if (referenceListMsg.referenceType != null)
+            {
+                reference.ReferenceType = referenceListMsg.referenceType;
+                //DeclarationStatementTypeQueryService statementTypeQueryService = new DeclarationStatementTypeQueryService(tenant);
+                //DeclarationStatementTypePM statementTypePM = statementTypeQueryService.GetSingle(additionalInformationItem.StatementTypeCode.Value, false, true);
+                //if (statementTypePM != null)
+                //{
+                //    additionalInfo.StatementName = statementTypePM.LocalName;
+                //}
+            }
+
+
+            if (referenceListMsg.referenceStatus != null)
+            {
+                reference.RefernceStatus = referenceListMsg.referenceStatus;
+                //DeclarationStatementTypeQueryService statementTypeQueryService = new DeclarationStatementTypeQueryService(tenant);
+                //DeclarationStatementTypePM statementTypePM = statementTypeQueryService.GetSingle(additionalInformationItem.StatementTypeCode.Value, false, true);
+                //if (statementTypePM != null)
+                //{
+                //    additionalInfo.StatementName = statementTypePM.LocalName;
+                //}
+            }
+
+
+            if (referenceListMsg.referenceID != null) reference.RefernceID = referenceListMsg.referenceID.ToString();
+
+            if (referenceListMsg.remarks != null) reference.Remarks = referenceListMsg.remarks;
+
+            if (referenceListMsg.referenceInputType != null){
+                reference.RefernceInputType = referenceListMsg.referenceInputType;
+                //DeclarationStatementTypeQueryService statementTypeQueryService = new DeclarationStatementTypeQueryService(tenant);
+                //DeclarationStatementTypePM statementTypePM = statementTypeQueryService.GetSingle(additionalInformationItem.StatementTypeCode.Value, false, true);
+                //if (statementTypePM != null)
+                //{
+                //    additionalInfo.StatementName = statementTypePM.LocalName;
+                //}
+            }
+
+
+            _DeclarationCorrection.References.Add(reference);
         }
 
         private string GetInformationContent(string statementTypeCode, string content, int tenant)

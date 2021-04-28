@@ -1977,6 +1977,7 @@
     <Compile Include="Messaging\L2U\CustomFile\CustomsAGTService.cs" />
     <Compile Include="Messaging\LogitudeClient\ClaimException\ClaimCustomsExceptions.cs" />
     <Compile Include="Messaging\LogitudeClient\ClaimException\CustomsException.cs" />
+    <Compile Include="Messaging\LogitudeClient\DeclarationCorrectionPointer\Reference.cs" />
     <Compile Include="Messaging\LogitudeClient\DeclarationCorrectionPointer\Additional.cs" />
     <Compile Include="Messaging\LogitudeClient\DeclarationCorrectionPointer\Amendment.cs" />
     <Compile Include="Messaging\LogitudeClient\DeclarationCorrectionPointer\DeclarationCorrection.cs" />
@@ -1996,6 +1997,8 @@
     <Compile Include="Messaging\LogitudeClient\DeclarationCorrection\GeneralDataView.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Messaging\LogitudeClient\DeclarationCorrection\ReferenceView.cs" />
+    <Compile Include="Messaging\LogitudeClient\DeclarationCorrection\Reference.cs" />
     <Compile Include="Messaging\LogitudeClient\DeclarationErrorPointer\DBWCO\Class1.cs" />
     <Compile Include="Messaging\LogitudeClient\DeclarationErrorPointer\DBWCO\DBTester.cs" />
     <Compile Include="Messaging\LogitudeClient\DeclarationErrorPointer\DBWCO\LogitudePointerDB.cs" />

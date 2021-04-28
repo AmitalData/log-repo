@@ -79,8 +79,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "c1342589c7b1785940877c20f10f39bb";
-	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
+ 
+		public const string HashString = "579e94d3b148974625cbfed1d08caf81";
+ 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
@@ -15105,10 +15106,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature DeclarationFeature_EXPORTDECLARATIONPMENU = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXPORTDECLARATIONPMENU", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.EXPORTDECLARATIONPMENU", NameTextCodeDefaultText = @"Export Declaration Screens" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
 		   Feature DeclarationFeature_AddNewClientFromManifest = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AddNewClientFromManifest", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.AddNewClientFromManifest", NameTextCodeDefaultText = @"Add New Client " }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
-
+ 
 		   Feature DeclarationFeature_ICL = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ICL", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.ICL", NameTextCodeDefaultText = @"ICL Interface" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
-   
+ 
 	    
 		}
 
@@ -17654,6 +17655,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsDeclarationOAllCourierDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.AllCourierDeclarations", DefaultText = "All Courier Declarations ",LocalDefaultText = @"כל ההצהרות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOErrors = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Errors", DefaultText = "Errors",LocalDefaultText = @"שגיאות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOReferences = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.References", DefaultText = "References",LocalDefaultText = @"אסמכתאות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOReferenceType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ReferenceType", DefaultText = "Reference Type",LocalDefaultText = @"סוג אסמכתא", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationORefernceStatus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.RefernceStatus", DefaultText = "Refernce Status",LocalDefaultText = @"סטטוס אסמכתא", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationORefernceID = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.RefernceID", DefaultText = "RefernceID",LocalDefaultText = @"מזהה אסמכתא", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationORemarks = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Remarks", DefaultText = "Remarks",LocalDefaultText = @"הערות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationORefernceInputType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.RefernceInputType", DefaultText = "Refernce Input Type",LocalDefaultText = @"תהליך הזנת אסמכתא", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationsOUnSavedRemarks = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declarations.O.UnSavedRemarks", DefaultText = "Remarks wont be saved",LocalDefaultText = @"ביציאה מהמסך לא ישמרו הערות לחשבונית שהוזנו במסך", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
