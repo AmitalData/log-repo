@@ -863,7 +863,10 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             IShipmentsContext context = ShipmentsContext.GetContext(tenant);
             ShipmentsContext activeContext = context.GetActiveDbContext() as ShipmentsContext;
 
-            IQueryable<OutlookShipmentView> shipments = activeContext.Database.SqlQuery<OutlookShipmentView>("WITH OutlookShipmentView AS(SELECT top 10 Shipments.Id,Shipments.CreateDateTime, Shipments.SearchFields, Shipments.Tenant, Shipments.ShipmentNumber,Shipments.CustomerId,Shipments.Routing,ShipmentMasterDatas.AirlinePrefix, Shipments.AccountManagerUserId,Shipments.IsOperationalClosed,ShipmentMasterDatas.Master,Shipments.DirectionId, Shipments.TransportModeId ,CustomerCards.EnglishName AS CustomerName FROM Shipments LEFT OUTER JOIN ShipmentMasterDatas ON ShipmentMasterDatas.Id = Shipments.MasterShipmentDataId LEFT OUTER JOIN  Cards AS CustomerCards ON Shipments.CustomerId = CustomerCards.Id " + Where + " ) select * from OutlookShipmentView", parameters.ToArray()).AsQueryable();
+            IQueryable<OutlookShipmentView> shipments = activeContext.Database.SqlQuery<OutlookShipmentView>("WITH OutlookShipmentView AS(SELECT top 10 Shipments.Id,Shipments.CreateDateTime, Shipments.SearchFields, Shipments.Tenant, Shipments.ShipmentNumber,Shipments.CustomerId,Shipments.Routing,ShipmentMasterDatas.AirlinePrefix, " +
+                "Shipments.AccountManagerUserId,Shipments.IsOperationalClosed,ShipmentMasterDatas.Master,Shipments.DirectionId, Shipments.TransportModeId,Shipments.ShipmentLevelCode ,CustomerCards.EnglishName AS CustomerName , AgentCards.EnglishName AS AgentName FROM Shipments " +
+                " LEFT OUTER JOIN ShipmentMasterDatas ShipmentMasterDatas ON ShipmentMasterDatas.Id = Shipments.MasterShipmentDataId LEFT OUTER JOIN  Cards AS CustomerCards ON Shipments.CustomerId = CustomerCards.Id " +
+                " LEFT OUTER JOIN ShipmentMasterDatas ShipmentMasterData ON ShipmentMasterData.Id = Shipments.MasterShipmentDataId LEFT OUTER JOIN  Cards AS AgentCards ON Shipments.AgentId = AgentCards.Id " + Where + " ) select * from OutlookShipmentView", parameters.ToArray()).AsQueryable();
 
             myResult = (from f in shipments
                         select new ShipmentList()
@@ -874,12 +877,14 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                             DirectionName = f.DirectionId == "I" ? "Import" : "Export",
                             TransportModeName = f.TransportModeId == "I" ? "Inland" : f.TransportModeId == "A" ? "Air" : "Ocean",
                             ShipmentNumber = f.ShipmentNumber,
+                            ShipmentLevelCode = f.ShipmentLevelCode,
                             TransportModeId = f.TransportModeId,
                             Routing = f.Routing,
                             CustomerName = f.CustomerName,
                             LongMaster = f.TransportModeId == "A" ? (!string.IsNullOrEmpty(f.AirlinePrefix) && !string.IsNullOrEmpty(f.Master) ? f.AirlinePrefix + "-" + f.Master : "") : f.Master,
                             SearchFields = f.SearchFields,
                             CustomerId = f.CustomerId,
+                            AgentName = f.AgentName,
                         }).ToList();
 
             //if (!string.IsNullOrEmpty(mySearchFields))
