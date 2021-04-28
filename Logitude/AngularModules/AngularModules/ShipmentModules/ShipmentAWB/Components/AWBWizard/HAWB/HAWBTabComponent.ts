@@ -331,7 +331,7 @@ export class HAWBTabComponent implements OnDestroy {
         this.Wizard.ReloadEntity();
     }
 
-    public Save() {
+    public Save() {        
         this.isReloadRequested = true;
         this.Wizard.SaveClicked();
     }

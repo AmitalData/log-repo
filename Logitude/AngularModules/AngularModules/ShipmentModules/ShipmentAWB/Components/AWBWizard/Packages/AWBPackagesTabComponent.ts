@@ -16,7 +16,6 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 import { ShipmentCommodityPM } from '../../../../../Shipment/EntityPMs/ShipmentCommodityPM';
 import { CommodityPackagePM } from '../../../../../Shipment/EntityPMs/CommodityPackagePM';
 import { ObservableCollection } from '../../../../../Infrastructure/Utilities/ObservableCollection';
-import { forEach } from 'cypress/types/lodash';
 
 @Component({    
     selector: 'AWBPackagesTabComponent',
@@ -354,10 +353,16 @@ export class AWBPackagesTabComponent extends BaseComponent {
 
                     if (this.IsMultipleCommodities) {
                         this.ChangeShipmentToMultipleCommodities(null);
+                        this.ItemsSourceOfCommodities.Collection.forEach((item) => {
+                            item.ComputeTotals(); 
+                        });
                     }
 
-                    this.ComputeTotals();
-                    this.BuildData();                    
+                    else {
+                        this.BuildData();
+                    }                  
+
+                    this.ComputeTotals();                                        
                 }
             }
         }); 
@@ -1046,9 +1051,7 @@ export class AWBPackagesTabComponent extends BaseComponent {
             var itemsCollection: ShipmentCommodityItem[] = [];
 
             this.EntityPM.ShipmentCommodities.forEach((item) => {
-                var shipmentCommodityItem: ShipmentCommodityItem = new ShipmentCommodityItem(item, false, this);
-                itemsCollection.push(shipmentCommodityItem);
-                shipmentCommodityItem.ComputeTotals();
+                itemsCollection.push(new ShipmentCommodityItem(item, false, this));
             });
 
             this.ItemsSourceOfCommodities.InsertCollection(itemsCollection);
@@ -1586,6 +1589,11 @@ export class ShipmentCommodityItem extends BaseComponent {
             if (confirmWindow.Yes) {
 
                 this.EntityPM.RemoveCommodityPackagePM(itemComponent.EntityPM);
+
+                var shipmentpackage: ShipmentPackagePM = this.ShipmentPM.ShipmentPackages.filter(f => f.Id == itemComponent.EntityPM.Id && f.Height == itemComponent.EntityPM.Height && f.Width == itemComponent.EntityPM.Width && f.Length == itemComponent.EntityPM.Length && f.PackageTypeId == itemComponent.EntityPM.PackageTypeId)[0];
+                if (shipmentpackage) {
+                    this.ShipmentPM.RemovePackage(shipmentpackage);
+                }
 
                 this.BuildItemsSource();
                 this.ComputeTotals();
