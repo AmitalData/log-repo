@@ -993,7 +993,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                 }
   }
                                                 break;
-
                                             }
 
                                         case "11":
