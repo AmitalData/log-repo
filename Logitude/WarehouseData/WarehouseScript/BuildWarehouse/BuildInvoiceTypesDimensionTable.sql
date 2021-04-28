@@ -22,9 +22,9 @@
 		union all
   
 
-		select 'AP'+ Code, Name
+		select  Code, Name
 		from dw_APInvoiceTypes t2
-        where exists ( select Code from dw_ARInvoiceTypes t1 where t2.Code = t1.Code and t2.Name <> t1.Name )
+        where exists ( select Code from dw_ARInvoiceTypes t1 where  t2.Name <> t1.Name )
 
 	
 )tt
@@ -38,7 +38,7 @@ OPEN InvoiceTypesCursor FETCH NEXT FROM InvoiceTypesCursor INTO @Code, @Name
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 	
-    insert into #DIM_ARInvoiceTypesTemp (Code, Name) values (@Code, @Name)
+    insert into #DIM_InvoiceTypesTemp (Code, Name) values (@Code, @Name)
 
 	FETCH NEXT FROM InvoiceTypesCursor  INTO @Code, @Name
 		End
