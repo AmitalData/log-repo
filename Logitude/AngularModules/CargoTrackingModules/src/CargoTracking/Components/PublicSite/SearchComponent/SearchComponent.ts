@@ -6,6 +6,8 @@ import { RootContext } from 'src/CargoTracking/Utilities/RootContext';
 import { DatePipe, Location } from '@angular/common';
 import { CargoTrackingShipmentList } from '../../../EntityLists/CargoTrackingShipmentList';
 import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
+import { CaptchaParameters } from 'src/CargoTracking/DataContracts/CaptchaParameters';
+import { ServiceResponse } from 'src/CargoTracking/DataContracts/ServiceResponse';
 
 
 @Component({
@@ -21,13 +23,18 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
     showErrorMessage: boolean = false;
     hasError: boolean = false;
     noResult: boolean = false;
-    currentDate = new Date();
+    currentDate: any = new Date();
     FilteredItems: any[] = [];
     searchForm;
     ServiceError;
     Shipments: CargoTrackingShipmentList[] = [];
-
-
+    searchCounter: number = 0;
+    public CaptchaImageUrl: any;
+    public IsShowAreaCaptcha: boolean = false
+    public CaptchaKey: string;
+    public CaptchaTextValue: string;
+    private captchaParameters: CaptchaParameters;
+    public errorMessage: string;
     constructor(private router: Router,
         private route: ActivatedRoute,
         private formBuilder: FormBuilder,
@@ -55,7 +62,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
                 this.Shipments = SearchComponent.Last_Search_Shipments;
                }
                else{
-                 this.Search();
+                 this.Search("on init");
                }
            }
         // if(localStorage.getItem('SearchKey') == this.SearchText){
@@ -191,18 +198,84 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         this.Shipments = [];
         this.location.go( 'public-tracking/search/' );
     }
-    Search()
+  
+    ValidateUser() {
+        this.captchaParameters = new CaptchaParameters();
+        this.captchaParameters.CaptchaCode = this.CaptchaTextValue;
+        this.captchaParameters.CaptchaKey = this.CaptchaKey;
+        this.PostUserValidation(this.captchaParameters);
+    }
+    PostUserValidation(CaptchaParameters: CaptchaParameters) {
+        this.searchService.PostUserValidation(CaptchaParameters).subscribe(
+            (result: any) => {
+                if (result && result.HasError == true  ) {                  
+                    this.CaptchaKey = result ? result.CaptchaKey : "";
+                    this.errorMessage = "";
+                    if (result.InValidCaptcha) {
+                        if (this.IsShowAreaCaptcha) {
+                            this.CaptchaTextValue = "";
+                        }
+                        this.IsShowAreaCaptcha = true;
+                        this.CaptchaImageUrl = result.CaptchaImage;
+                    }
+                    if (result.InValidCaptcha && result.CaptchaImage) this.errorMessage = "Please re-enter the characters you see in the image above";
+
+                }
+
+                else {
+                    this.IsShowAreaCaptcha = false;
+                    this.ResetStorageData();
+                    this.LoadShipments();
+
+                }
+            });
+    }
+    Search(searchSource:any)
     {
-        if (this.tenant!=null && this.SearchText) {
-            // this.router.navigate(['public-tracking/search',  this.SearchText]);
-            // this.router.navigate(['public-tracking/search',  this.SearchText]);
-            //this.location.go( 'public-tracking/search?searchKey=' + this.SearchText);
-            this.router.navigate(['public-tracking/search'],{ queryParams: { searchKey: this.SearchText}});
-            this.LoadShipments();
+        if (this.IsShowAreaCaptcha) {
+            this.ValidateUser();
+        }
+        else {
+            this.CheckSearchTimes(searchSource);          
+            if (this.tenant != null && this.SearchText) {
+                // this.router.navigate(['public-tracking/search',  this.SearchText]);
+                // this.router.navigate(['public-tracking/search',  this.SearchText]);
+                //this.location.go( 'public-tracking/search?searchKey=' + this.SearchText);
+                this.router.navigate(['public-tracking/search'], { queryParams: { searchKey: this.SearchText } });
+                this.LoadShipments();
+            }
         }
 
     }
-
+    CheckSearchTimes(searchSource: any) {
+        this.currentDate = new Date();
+        if (this.searchCounter == 0) sessionStorage.setItem("FirstSearchDate", this.currentDate.getTime());
+        var FirstSearchDate: any = sessionStorage.getItem("FirstSearchDate");
+        if (searchSource==null)++this.searchCounter;
+        var difference: any = this.currentDate.getTime() - FirstSearchDate;
+        if (difference <= 100000) {
+            if (this.searchCounter == 20) {
+                this.ShowCaptchaImage();
+                this.ResetStorageData();              
+            }
+        }
+        else {
+            this.ResetStorageData();
+        }
+    }
+    ResetStorageData() {
+        sessionStorage.setItem("FirstSearchDate", this.currentDate);
+        this.searchCounter = 0;
+    }
+    ShowCaptchaImage() {
+        this.searchService.GetCaptchaData().subscribe(
+            (result: any) => {
+                this.CaptchaTextValue = "";
+                this.CaptchaImageUrl = result.CaptchaImage;
+                this.CaptchaKey = result.CaptchaKey;
+                this.IsShowAreaCaptcha = true;
+            });
+    }
     ItemClicked(item)
     {
         var selection = window.getSelection();
@@ -214,9 +287,6 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
     }
     LoadShipments()
     {
-
-
-
         this.noResult = false;
         var searchText = this._SearchText.trim().toLowerCase();
         if (searchText) {
