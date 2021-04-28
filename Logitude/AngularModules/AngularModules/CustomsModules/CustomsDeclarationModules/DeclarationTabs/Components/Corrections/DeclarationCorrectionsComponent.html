@@ -374,7 +374,7 @@
                                                                         [HideColumns]="true" [DataContext]="DataContext" [InputType]="'ntext'"></LogTextBox>
 
                                                             <!--<LogDatePicker [ObjectFieldName]="'AmendmentissueDate'" [ObjectTableName]="ObjectTableName"
-                                                [DataContext]="DataContext" [HideColumns]="true" [SelectedDateValue]="AmendmentissueDate"></LogDatePicker>-->
+                                [DataContext]="DataContext" [HideColumns]="true" [SelectedDateValue]="AmendmentissueDate"></LogDatePicker>-->
                                                         </td>
 
 
@@ -387,7 +387,7 @@
                                                             <LogTextBox [ObjectFieldName]="'VersionId'" [ObjectTableName]="ObjectTableName" [Text]="VersionId"
                                                                         [HideColumns]="true" [DataContext]="DataContext" [InputType]="'ntext'"></LogTextBox>
                                                             <!--<LogTextBox [ObjectFieldName]="'VersionId'" [ObjectTableName]="ObjectTableName" [Text]="VersionId"
-                                                [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>-->
+                                [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>-->
                                                         </td>
                                                         <td style="width:7px"></td>
 
@@ -462,21 +462,21 @@
                                                     </tr>
                                                     <!--rowspan="3"-->
                                                     <!--<tr style="height: 25px;">
-                                            <td style="width:75px"></td>
-                                            <td></td>
-                                            <td style="width:110px"></td>
-                                            <td></td>
-                                            <td style="width:110px"></td>
+                            <td style="width:75px"></td>
+                            <td></td>
+                            <td style="width:110px"></td>
+                            <td></td>
+                            <td style="width:110px"></td>
 
-                                        </tr>
-                                        <tr style="height: 25px;">
-                                            <td style="width:75px"></td>
-                                            <td></td>
-                                            <td style="width:110px"></td>
-                                            <td></td>
-                                            <td style="width:110px"></td>
+                        </tr>
+                        <tr style="height: 25px;">
+                            <td style="width:75px"></td>
+                            <td></td>
+                            <td style="width:110px"></td>
+                            <td></td>
+                            <td style="width:110px"></td>
 
-                                        </tr>-->
+                        </tr>-->
                                                 </table>
                                             </td>
                                         </tr>
@@ -700,9 +700,88 @@
 
                                     </table>
                                 </div>
+                                <div *ngSwitchCase="'References'" style="height: 100%;">
+                                    <logitude-edit-grid GridWidth="100%"
+                                                        GridHeight="100%"
+                                                        [ItemSource]="ReferenceList"
+                                                        [UseVirtuallization]="true"
+                                                        [IsDarkHeader]="true"
+                                                     >
+
+
+                                         <log-column [header]="'Customs.Declaration.O.ReferenceType' | TextCodeTranslationPipe"
+                                                    [width]="'200'" [Alignment]="'right'" [binding]="'ReferenceTypeName'">
+
+                                            <ng-template let-item>
+                                                <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                    <div style="text-align: right;" class="TextTrimming">
+                                                        <span>{{item.ReferenceTypeName | TextCodeTranslationPipe}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+
+                                        </log-column>
+
+                                         <log-column [header]="'Customs.Declaration.O.RefernceStatus' | TextCodeTranslationPipe"
+                                                    [width]="'120'" [Alignment]="'right'" [binding]="'RefernceStatusName'">
+
+                                            <ng-template let-item>
+                                                <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                    <div style="text-align: right;" class="TextTrimming">
+                                                        <span>{{item.RefernceStatusName | TextCodeTranslationPipe}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+
+                                        </log-column>
+
+                                         <log-column [header]="'Customs.Declaration.O.RefernceID' | TextCodeTranslationPipe"
+                                                    [width]="'80'" [Alignment]="'right'" [binding]="'RefernceID'">
+
+                                            <ng-template let-item>
+                                                <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                    <div style="text-align: right;" class="TextTrimming">
+                                                        <span>{{item.RefernceID}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+
+                                        </log-column>
+
+                                         <log-column [header]="'Customs.Declaration.O.Remarks' | TextCodeTranslationPipe"
+                                                    [width]="'80'" [Alignment]="'right'" [binding]="'Remarks'">
+
+                                            <ng-template let-item>
+                                                <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                    <div style="text-align: right;" class="TextTrimming">
+                                                        <span>{{item.Remarks}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+
+                                        </log-column>
+
+                                         <log-column [header]="'Customs.General.O.RefernceInputType' | TextCodeTranslationPipe"
+                                                    [width]="'300'" [Alignment]="'right'" [binding]="'RefernceInputTypeName'">
+
+                                            <ng-template let-item>
+                                                <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                    <div style="text-align: right;" class="TextTrimming">
+                                                        <span>{{item.RefernceInputTypeName}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+
+                                        </log-column>
+ 
+                                    </logitude-edit-grid>
+
+                                </div>
+
                                 <div *ngSwitchCase="'Errors'" style="height: 100%;">
                                     <CustomsAnswer [IsAmendmentErrors]="'true'"></CustomsAnswer>
                                 </div>
+
 
                             </div>
 
