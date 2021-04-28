@@ -1,5 +1,6 @@
 ﻿using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.Messaging.ILOVS;
+using Logitude.Customs.BL.Messaging.ILSWS;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools.Utils;
 using Simplog.Server.Infrastructure;
@@ -125,7 +126,38 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
                 }
 
+            
+              else if (listStorageDefault.Contains("ILSWS") && myStorageSiteCode == "ILSWS") 
+            {
+                var courierECSWSTHRMessageRequestService = new CourierECSWSTHRMessageRequestService();
+                drityMessage = courierECSWSTHRMessageRequestService.GetMessageUpdateHawbStatus(drityEntityPM.Id, drityEntityPM.Tenant, drityEntityPM, null);
+                if (!dataHaveChangeSendIt && dbPM != null)
+                {
+
+                    dbMessage = courierECSWSTHRMessageRequestService.GetMessageUpdateHawbStatus(dbPM.Id, dbPM.Tenant, dbPM, null);
+
+                    if (dbMessage != drityMessage)
+                    {
+                        dataHaveChangeSendIt = true;
+                    }
+                }
+                if (dataHaveChangeSendIt)
+                {
+
+                    List<string> requiredField = courierECSWSTHRMessageRequestService.GetRequiredField(drityMessage);
+                    if (requiredField.Count > 0)
+                    {
+                        Debug.WriteLine($"חסרים שדות חובה :{String.Join(",", requiredField)}");
+                        return;// $"חסרים שדות חובה :{String.Join(",", requiredField)}";
+                    }
+                    var XMLdrityMessage=courierECSWSTHRMessageRequestService.DeserializeXmlNode(drityMessage);
+                    var res = courierECSWSTHRMessageRequestService.BuildUpdateHawbStatus(drityEntityPM.Id, drityEntityPM.Tenant, XMLdrityMessage);
+                    Debug.WriteLine(res);
+                }
+
             }
+
+        }
             catch (Exception e)
             {
                 //e.SetMess
@@ -151,6 +183,10 @@ namespace Logitude.Customs.BL.Messaging.Maman
             if (def.DEFDATA.Contains("ILOVL")) // OVS
             {
                 listStorageDefault.Add("ILOVL");
+            }
+            if (def.DEFDATA.Contains("ILOVL")) // OVS
+            {
+                listStorageDefault.Add("ILSWS");
             }
 
             return listStorageDefault;
