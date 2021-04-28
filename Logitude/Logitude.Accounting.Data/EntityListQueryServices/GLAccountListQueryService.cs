@@ -32,9 +32,16 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             Contact loggedContact = GetLoggedContact(iQueryable.FirstOrDefault().Tenant);
             GLAccountRepository repository = new GLAccountRepository(context);
             IQueryable<GLAccountList> query = (from a in iQueryable.Include("ChartOfAccount").Include("ChartOfAccountsType")
-                                               join md in context.GLAccountMoreDatas on a.Id equals md.AccountId
-                                               join ad in context.GLAccountAgingDatas on a.Id equals ad.AccountId
-                                               join rd in context.GLAccountRecocileDatas on a.Id equals rd.AccountId
+                                               join MoreDatas in context.GLAccountMoreDatas on a.Id equals MoreDatas.AccountId
+                                               join AgingDatas in context.GLAccountAgingDatas on a.Id equals AgingDatas.AccountId
+                                               join RecocileDatas in context.GLAccountRecocileDatas on a.Id equals RecocileDatas.AccountId
+
+                                               join CardsDatas in context.GLAccountCardsDatas on a.CardsDataId equals CardsDatas.Id 
+                                               into CardsDatasjoin from CardsDatas in CardsDatasjoin.DefaultIfEmpty()
+                                             
+                                               join FollowUpDatas in context.GLAccountFollowUpDatas on a.Id equals FollowUpDatas.GlAccountId
+                                               into FollowUpDatasjoin from FollowUpDatas in FollowUpDatasjoin.DefaultIfEmpty()
+                                               
                                                select new GLAccountList()
                                                     {
                                                         Id = a.Id,
@@ -107,16 +114,16 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                         //ClientId = a.ClientId,
                                                         //VendorId = a.VendorId,
                                                         CustomerGLAccountId = a.CustomerGLAccountId,
-                                                        BalanceInLocalCurrency = md.BalanceInLocalCurrency,
+                                                        BalanceInLocalCurrency = MoreDatas.BalanceInLocalCurrency,
                                                         RevaluationEnabled = a.RevaluationEnabled,
                                                         //ClientCode = a.Client != null ? a.Client.Card.Code : null,
                                                         //VendorCode = a.Vendor != null ? a.Vendor.Card.Code : null,
                                                         ParentAccountId = a.ParentAccountId,
                                                         IsVATExempt = a.IsVATExempt,
-                                                        LocalBalanceInDue = md.LocalBalanceInDue,
-                                                        NextDueDate = md.NextDueDate,
-                                                        TotalOpenChequesInLocalCur = md.TotalOpenChequesInLocalCur,
-                                                        TotFutureOpenChequesInLocalCur = md.TotFutureOpenChequesInLocalCur,
+                                                        LocalBalanceInDue = MoreDatas.LocalBalanceInDue,
+                                                        NextDueDate = MoreDatas.NextDueDate,
+                                                        TotalOpenChequesInLocalCur = MoreDatas.TotalOpenChequesInLocalCur,
+                                                        TotFutureOpenChequesInLocalCur = MoreDatas.TotFutureOpenChequesInLocalCur,
                                                         DeductionFileNumber = a.DeductionFileNumber,
 
                                                         //categories
@@ -158,20 +165,32 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                    //ParentAccountNumber = a.ParentAccount.DisplayNumber,
 
                                                    // GLaccount Aging Datas
-                                                        Period0 = ad.Period0,
-                                                        Period1 = ad.Period1,
-                                                        Period2 = ad.Period2,
-                                                        Period3 = ad.Period3,
-                                                        Period4 = ad.Period4,
-                                                        Period5 = ad.Period5,
-                                                        PeriodPast = ad.PeriodPast,
-                                                        PeriodFuture = ad.PeriodFuture,
-                                                        TotalOpenTransactions = ad.TotalOpenTransactions,
+                                                        Period0 = AgingDatas.Period0,
+                                                        Period1 = AgingDatas.Period1,
+                                                        Period2 = AgingDatas.Period2,
+                                                        Period3 = AgingDatas.Period3,
+                                                        Period4 = AgingDatas.Period4,
+                                                        Period5 = AgingDatas.Period5,
+                                                        PeriodPast = AgingDatas.PeriodPast,
+                                                        PeriodFuture = AgingDatas.PeriodFuture,
+                                                        TotalOpenTransactions = AgingDatas.TotalOpenTransactions,
 
-                                                        // GLAccount Recocile Datas
-                                                        LastReconciledBy = loggedContact.DontShowLocalLabels ? rd.LastReconciledByUser.Contact.EnglishName : rd.LastReconciledByUser.Contact.LocalName == null ? rd.LastReconciledByUser.Contact.EnglishName: rd.LastReconciledByUser.Contact.LocalName,
-                                                        LastReconcileDate = rd.LastReconcileDateTime,
+                                                    // GLAccount Recocile Datas
+                                                        LastReconciledBy = loggedContact.DontShowLocalLabels ? RecocileDatas.LastReconciledByUser.Contact.EnglishName : RecocileDatas.LastReconciledByUser.Contact.LocalName == null ? RecocileDatas.LastReconciledByUser.Contact.EnglishName: RecocileDatas.LastReconciledByUser.Contact.LocalName,
+                                                        LastReconcileDate = RecocileDatas.LastReconcileDateTime,
 
+                                                   // GLAccount Cards Datas
+                                                        CreditLimit = CardsDatas != null ? CardsDatas.CreditLimit : null,
+                                                        VatNumber = CardsDatas != null ? CardsDatas.VatNumber : null,
+                                                        PaymentTerm = CardsDatas != null ? loggedContact.DontShowLocalLabels ? CardsDatas.PaymentTerm.EnglishName : CardsDatas.PaymentTerm.LocalName == null ? CardsDatas.PaymentTerm.EnglishName : CardsDatas.PaymentTerm.LocalName : null,
+                                                        TotalOpenShipments = CardsDatas != null ? CardsDatas.TotalOpenShipments: null,
+                                                        Phone = CardsDatas != null ? CardsDatas.Phone: null,
+                                                        Salesman = CardsDatas != null ? loggedContact.DontShowLocalLabels ? CardsDatas.SalesmanUser.Contact.EnglishName : CardsDatas.SalesmanUser.Contact.LocalName == null ? CardsDatas.SalesmanUser.Contact.EnglishName : CardsDatas.SalesmanUser.Contact.LocalName: null,
+                                                        Collector = CardsDatas != null ? loggedContact.DontShowLocalLabels ? CardsDatas.CollectorUser.Contact.EnglishName : CardsDatas.CollectorUser.Contact.LocalName == null ? CardsDatas.CollectorUser.Contact.EnglishName : CardsDatas.CollectorUser.Contact.LocalName: null,
+
+                                                   // GLAccount Follow Up Datas
+                                                        FollowupDate = FollowUpDatas != null? FollowUpDatas.FollowUpDate: null,
+                                                        FollowupNotes = FollowUpDatas != null ? FollowUpDatas.FollowUpRemarks: null
 
                                                });
             return query;
