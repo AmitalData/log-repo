@@ -3102,54 +3102,53 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-
-		private string lastReconciledBy;
-
-
-		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-		[DataMember]
-		public string LastReconciledBy
+	  private string lastReconciledBy ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LastReconciledBy  
+	   {
+	    
+	     get
 		{
-
-			get
-			{
-				return lastReconciledBy;
-			}
-			set
-			{
-				if (lastReconciledBy != value)
-				{
-					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "LastReconciledBy", OldValue = lastReconciledBy, NewValue = value, PropertyType = "string" };
-					NotifyPropertyChanged(values);
-					lastReconciledBy = value;
-				}
-
-			}
-		}
-		private DateTime? lastReconcileDate;
-
-
-		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-		[DataMember]
-		public DateTime? LastReconcileDate
+		   return lastReconciledBy;
+		 }
+		 set
+		 {
+		   if(lastReconciledBy != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastReconciledBy",OldValue=lastReconciledBy,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   lastReconciledBy=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? lastReconcileDate ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? LastReconcileDate  
+	   {
+	    
+	     get
 		{
-
-			get
-			{
-				return lastReconcileDate;
-			}
-			set
-			{
-				if (lastReconcileDate != value)
-				{
-					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "LastReconcileDate", OldValue = lastReconcileDate, NewValue = value, PropertyType = "DateTime?" };
-					NotifyPropertyChanged(values);
-					lastReconcileDate = value;
-				}
-
-			}
-		}
-	}
+		   return lastReconcileDate;
+		 }
+		 set
+		 {
+		   if(lastReconcileDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastReconcileDate",OldValue=lastReconcileDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   lastReconcileDate=value;
+		   }
+			
+		 }
+	   }
+   }
    
 }
 	 

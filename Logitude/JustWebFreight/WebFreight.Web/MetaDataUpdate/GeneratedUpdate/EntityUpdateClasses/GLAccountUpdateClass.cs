@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "506f0046cde22ab20d1825bd761e9fbd";
+		public const string HashString = "4bd8ce88ea6b01924ad457d47643352a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -8919,7 +8919,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "LastReconciledBy",
 					  						ObjectTableName =  "GLAccount",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "User",
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  false,
@@ -8938,6 +8939,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "LastReconciledBy",
 					  						ListPropertyPath =  "LastReconciledBy",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -8999,6 +9001,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "LastReconcileDate",
 					  						ListPropertyPath =  "LastReconcileDate",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
