@@ -342,8 +342,14 @@
     <Compile Include="CommonDataModel\CustomFilters\ChargesTypeCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\CommunicationLogCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\ReportExecutionLogCustomFilter.cs" />
+    <Compile Include="CommonDataModel\EntityLists\HTSCodeList.cs" />
+    <Compile Include="CommonDataModel\EntityLists\ProductItemList.cs" />
     <Compile Include="CommonDataModel\EntityLists\ReportExecutionLogList.cs" />
+    <Compile Include="CommonDataModel\EntityPMs\HTSCodePM.cs" />
+    <Compile Include="CommonDataModel\EntityPMs\ProductItemPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\ReportExecutionLogPM.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\HTSCodeQuery.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\ProductItemQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\ReportExecutionLogQuery.cs" />
     <Compile Include="CommonDataModel\ExternalService\CustomerDataSearchService.cs" />
     <Compile Include="CommonDataModel\CustomFilters\CustomsShipperCustomFilter.cs" />
@@ -407,6 +413,8 @@
     <Compile Include="CommonDataModel\Tools\DataMapping\DocumentsExecutionLogMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\HorseMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\PaymentGatewayPartnerMapping.cs" />
+    <Compile Include="CommonDataModel\Tools\DataMapping\HTSCodeMapping.cs" />
+    <Compile Include="CommonDataModel\Tools\DataMapping\ProductItemMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\TariffCarrierTranslationMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\TenantAdditionalDataMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\AccountingPartnerMapping.cs" />
@@ -419,6 +427,8 @@
     <Compile Include="CommonDataModel\Tools\EntityService\GLAccountCardDataService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\HorseService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\NumberOfUsersService.cs" />
+    <Compile Include="CommonDataModel\Tools\EntityService\HTSCodeService.cs" />
+    <Compile Include="CommonDataModel\Tools\EntityService\ProductItemService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\TariffCarrierTranslationService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\TenantAdditionalDataService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\AccountingPartnerService.cs" />
