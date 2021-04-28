@@ -33,6 +33,8 @@ export class ShipmentDetailsComponent implements AfterViewInit {
     SearchText: string = "";
     CustomsBrokerReference: string;
     ShipmentPM: any;
+    ShipmentPackages: any[];
+
     get tenant() {
         return CargoTrackingBrandingData.Tenant;
     }
@@ -106,6 +108,7 @@ export class ShipmentDetailsComponent implements AfterViewInit {
                 this.ShipmentReferences = result.ShipmentList.CustomerReference ? result.ShipmentList.CustomerReference.split(',') : null;
                 this.SetRoutingVariables();
                 this.GetShipmentPM();
+                this.GetShipmentPackages();
 
             }
 
@@ -140,10 +143,20 @@ export class ShipmentDetailsComponent implements AfterViewInit {
             if (result) {
                 this.ShipmentPM = result;
                 this.CustomsBrokerReference = result.CustomFileNumber;
+            }
+        });
+    }
+
+    GetShipmentPackages() {
+        this.cargoTrackingShipmentService.GetShipmentPackages(this.Shipment.ShipmentList.EntityId).subscribe((result: any) => {
+            if (result) {
+                this.ShipmentPackages = result;
+                console.log("GetShipmentPackages", this.ShipmentPackages);
                 this.isLoading = false;
             }
         });
     }
+
     private GetIdFromURI() {
 
         let _id = this.route.snapshot.paramMap.get('SecurityKey');

@@ -68,5 +68,28 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
 
         }
 
+        public HttpResponseMessage GetShipmentPackages(string id)
+        {
+            try
+            {
+                string logKey = PerformanceLogger.LogCurrentTime();
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                ShipmentQuery shipmentQuery = new ShipmentQuery(authToken.Tenant);
+                List<ShipmentPackagePM> shipmentPM = shipmentQuery.GetPackagesOfShipment(authToken.Tenant, id);
+
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                return Request.CreateResponse(HttpStatusCode.OK, shipmentPM);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
     }
 }

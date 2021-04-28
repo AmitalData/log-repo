@@ -282,38 +282,40 @@
 
         <div details>
             <br>
-            <table>
-                <tr>
-                    <th>Number</th>
-                    <th>Type</th>
-                    <th>Seal #</th>
-                </tr>
-                <tr>
-                    <td style="width: 400px;">MEDU3256411</td>
-                    <td style="width: 200px;">CONT 20</td>
-                    <td style="width: 200px;">2053366</td>
-                </tr>
-                <tr>
-                    <td>MEDU3256411</td>
-                    <td>CONT 20</td>
-                    <td>2053366</td>
-                </tr>
-                <tr>
-                    <td>MEDU3256411</td>
-                    <td>CONT 20</td>
-                    <td>2053366</td>
-                </tr>
-                <tr>
-                    <td>MEDU3256411</td>
-                    <td>CONT 20</td>
-                    <td>2053366</td>
-                </tr>
-                <tr>
-                    <td>MEDU3256411</td>
-                    <td>CONT 20</td>
-                    <td>2053366</td>
-                </tr>
-            </table>
+            <div *ngIf="Shipment && Shipment.ShipmentList">
+            
+                <table *ngIf="Shipment.ShipmentList.TransportModeId != 'A' ">
+                    <tr>
+                        <th style="width: 300px;">Number</th>
+                        <th style="width: 400px;">Type</th>
+                        <th style="width: 200px;">Seal #</th>
+                    </tr>
+
+                    <tr *ngFor="let package of ShipmentPackages">
+                        <td style="width: 300px;">{{package.ContainerNumber}}</td>
+                        <td style="width: 400px;">{{package.PackageTypeName}}</td>
+                        <td style="width: 200px;">{{package.ShipperSeal == null ? package.CarrierSeal : package.ShipperSeal }}</td>
+                    </tr>
+                </table>
+
+                <table *ngIf="Shipment.ShipmentList.TransportModeId == 'A' ">
+                    <tr>
+                        <th style="width: 400px;">Package Type</th>
+                        <th style="width: 250px;">Quantity</th>
+                        <th style="width: 250px;">Weight</th>
+                        <th style="width: 250px;">Volume</th>
+                        <th style="width: 200px;">Storage Site</th>
+                    </tr>
+
+                    <tr *ngFor="let package of ShipmentPackages">
+                        <td style="width: 400px;">{{package.PackageTypeName}}</td>
+                        <td style="width: 250px;">{{package.Quantity}}</td>
+                        <td style="width: 250px;">{{package.Weight}}</td>
+                        <td style="width: 250px;">{{package.Volume}}</td>
+                        <td style="width: 200px;">{{ShipmentPM?.WarehouseLegEnglishName}}</td>
+                    </tr>
+                </table>
+            </div>
         </div>
 
     </panel>
