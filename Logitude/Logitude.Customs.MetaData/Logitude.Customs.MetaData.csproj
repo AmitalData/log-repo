@@ -351,6 +351,7 @@
     <None Include="DBTables\LeadDocumentExceptionType.dxml" />
     <None Include="DBTables\LeadDocumentType.dxml" />
     <None Include="DBTables\LoadingSiteType.dxml" />
+    <None Include="DBTables\LogisticsReferenceType.dxml" />
     <None Include="DBTables\MamanSpecialAction.dxml" />
     <None Include="DBTables\MamanSpecialActionStatus.dxml" />
     <None Include="DBTables\MamanStatus.dxml" />
@@ -404,6 +405,8 @@
     <None Include="DBTables\PropertiesDetailsHistory.dxml" />
     <None Include="DBTables\RansomViolationType.dxml" />
     <None Include="DBTables\ReferantTeam.dxml" />
+    <None Include="DBTables\ReferenceInputType.dxml" />
+    <None Include="DBTables\ReferenceStatus.dxml" />
     <None Include="DBTables\RefundCustomerActivityType.dxml" />
     <None Include="DBTables\RegisteredWarehouseSiteType.dxml" />
     <None Include="DBTables\ReleaseMessageType.dxml" />
@@ -488,6 +491,9 @@
     <None Include="EntityFiles\ExporterRoleType.lxml" />
     <None Include="EntityFiles\FclLclCode.lxml" />
     <None Include="EntityFiles\LoadingSiteType.lxml" />
+    <None Include="EntityFiles\ReferenceStatus.lxml" />
+    <None Include="EntityFiles\ReferenceInputType.lxml" />
+    <None Include="EntityFiles\LogisticsReferenceType.lxml" />
     <None Include="EntityFiles\NbcDeclarationType.lxml" />
     <None Include="EntityFiles\CargoSeal.lxml" />
     <None Include="EntityFiles\CargoSealIdentifier.lxml" />
@@ -500,7 +506,6 @@
     <None Include="EntityFiles\SuppInvoiceItemsAbachStatement.lxml" />
     <None Include="EntityFiles\SupplierInvoicePayment.lxml" />
     <None Include="EntityFiles\SupplierInvoiceUCR.lxml" />
-    <None Include="EntityFiles\Team.lxml" />
     <None Include="EntityFiles\TransactionNatureType.lxml" />
     <None Include="EntityFiles\ClaimReasonType.lxml" />
     <None Include="EntityFiles\ContinuousRequestType.lxml" />
