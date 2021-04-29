@@ -301,7 +301,7 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 ------------------------------------------------------------------------------------
 declare @DIM_InvoiceTypesNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_InvoiceTypesNewId OUTPUT,'DWObjectTable' 
-insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn,HasCustomFields,MaxNumberOfCustomFields) Values(@DIM_InvoiceTypesNewId,0,'','DIM_InvoiceTypes','DIM_InvoiceTypes','Dimension','false','[Name]','false','false',0)  
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn,HasCustomFields,MaxNumberOfCustomFields) Values(@DIM_InvoiceTypesNewId,0,'','DIM_InvoiceTypes','DIM_InvoiceTypes','Dimension','true','[Name]','false','false',0)  
 --Fields --
 declare @DIM_InvoiceTypesId_NumberNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_InvoiceTypesId_NumberNewId OUTPUT,'DWObjectField' 
@@ -312,15 +312,9 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @DIM_InvoiceTypesCodeNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_InvoiceTypesCodeNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,LOVAdditionalColumns,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_InvoiceTypesCodeNewId,0,'DIM_InvoiceTypes','[Code]','Code','Text','true',0,2,'false','false','true','[Name]','false','false','false','false','false')  
-declare @DIM_InvoiceTypesSourceTenantNewId varchar(15)
-execute usp_GetNextTableIdValue @DIM_InvoiceTypesSourceTenantNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,ViewFieldDisplayName,DontDisplayInView,IsMultipleSelection) Values(@DIM_InvoiceTypesSourceTenantNewId,0,'DIM_InvoiceTypes','[Source Tenant]','Source Tenant','Integer','true',0,0,'false','false','true','false','false','false','Tenant','false','false')  
-declare @DIM_InvoiceTypesParentTenantNewId varchar(15)
-execute usp_GetNextTableIdValue @DIM_InvoiceTypesParentTenantNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_InvoiceTypesParentTenantNewId,0,'DIM_InvoiceTypes','[Parent Tenant]','Parent Tenant','Integer','true',0,0,'false','false','false','false','false','false','true','false')  
-declare @DIM_InvoiceTypesLastUpdateDateNewId varchar(15)
-execute usp_GetNextTableIdValue @DIM_InvoiceTypesLastUpdateDateNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_InvoiceTypesLastUpdateDateNewId,0,'DIM_InvoiceTypes','[Last Update Date]','Last Update Date','DateTime','false',0,0,'false','false','true','false','false','false','false','false')  
+declare @DIM_InvoiceTypesAutomaticLastUpdateDateNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_InvoiceTypesAutomaticLastUpdateDateNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_InvoiceTypesAutomaticLastUpdateDateNewId,0,'DIM_InvoiceTypes','[Automatic Last Update Date]','Last Update Date','DateTime','false',0,0,'false','false','true','false','false','false','false','false')  
 ------------------------------------------------------------------------------------
 declare @DIM_LevelsNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_LevelsNewId OUTPUT,'DWObjectTable' 
