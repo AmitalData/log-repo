@@ -188,7 +188,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
     {
         this._SearchText = v;
         if (!this.SearchText)
-            this.Search();
+            this.Search("searchText");
     }
 
     Clear()
