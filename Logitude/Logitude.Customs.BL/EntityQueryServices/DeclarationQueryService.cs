@@ -1210,6 +1210,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                     generalData.CorrectionDate = item.IssueDateTime;
                     generalData.Version = item.VersionId;
                     generalData.SystemMessageViews = new List<error>();
+                    generalData.ReferenceViews = new List<ReferenceView>();
 
                     foreach (Additional additional in item.AdditionalInformation)
                     {
@@ -1224,6 +1225,17 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         if(additional.StatementTypeCode != "27")
                         generalData.AdditionalInformation.Add(information);
 
+
+                    }
+
+
+                    foreach (Reference reference in item.References)
+                    {
+                        ReferenceView referenceView = new ReferenceView();
+                        referenceView.Remarks = reference.Remarks;
+                        referenceView.RefernceID = reference.RefernceID;
+                      
+                     
 
                     }
 

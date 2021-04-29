@@ -58,6 +58,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
     //Grids data
     AdditionalInformationlist: ObservableCollection = new ObservableCollection([]);
     AmendmentViewsList: ObservableCollection = new ObservableCollection([]);
+    ReferenceList: ObservableCollection = new ObservableCollection([]);
 
     //Services
     private declarationWebService: DeclarationWebService = new DeclarationWebService;
@@ -156,7 +157,9 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
     BuildTabs() {
         this.SelectedTab = "Details";
         this.TabsSource.push({ Name: "Details", isSelected: true, Header: TextCodeTranslator.Translate("Customs.Declaration.O.CorrectionStatement") });
+        this.TabsSource.push({ Name: "References", isSelected: false, Header: TextCodeTranslator.Translate("Customs.Declaration.O.References") });
         this.TabsSource.push({ Name: "Errors", isSelected: false, Header: TextCodeTranslator.Translate("Customs.Declaration.O.Errors") });
+
     }
 
 
@@ -261,6 +264,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
 
                     this.GeneralData = [];
                     var amendmentViewsList = [];
+                    var referenceList = [];
 
                     //sort data
                     var data = res.GeneralDataViews ? res.GeneralDataViews.sort((a, b) => { return (a.Version < b.Version) ? 1 : -1 }) : null
@@ -279,6 +283,18 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
                     this.AmendmentViewsList.InsertCollection(amendmentViewsList);
 
                     this.GetResources(this.AmendmentViewsList.Collection);
+
+
+
+
+                    this.ReferenceList = new ObservableCollection([]);
+                     general.References.forEach(el => {
+                        referenceList.push(el);
+                    });
+
+                    this.ReferenceList.InsertCollection(referenceList);
+
+
 
                     this.BuildSystemMessage(general.SystemMessageViews);
 
