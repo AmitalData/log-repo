@@ -413,7 +413,7 @@
 
 
                                     <!-- balance -->
-                                    <div class="content-no-header" style="height: 90px;">
+                                    <div class="content-no-header" style="height: 150px;">
                                         <table class="labels-table" style="table-layout: fixed;">
                                             <tr>
                                                 <td class="header-labels">{{ 'GLAccounts.O.AccountingBalance' |
@@ -441,6 +441,37 @@
                                                     DateTimePipe:'SD'}}</td>
                                                 <td><a style="font-size: 12px;" (click)="ReconcileLinkClicked()">{{
                                                         'GLAccounts.O.Reconcile' | TextCodeTranslationPipe }}</a></td>
+                                            </tr>
+                                            <tr style="height:10px"></tr>
+
+                                            <tr  *ngIf="IsFollowUpVisible">
+                                              <td colspan="3">
+                                                  <table>
+                                                      <tr>
+                                                          <td style="width:150px;font-size:12px;">
+                                                              {{ 'GLAccountFollowUpData.F.FollowUpDate' |  TextCodeTranslationPipe }}
+                                                          </td>
+                                                          <td style="width:150px">
+                                                              <LogDatePicker [ObjectFieldName]="'GLAccountFollowUpDate'" [ObjectTableName]="ObjectTableName"
+                                                                             [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                          </td>
+                                                          <td></td>
+                                                      </tr>
+                                                      <tr style="height:5px"></tr>
+                                                      <tr>
+                                                          <td style="width:150px;font-size:12px">
+                                                              {{ 'GLAccountFollowUpData.F.FollowUpRemarks' |  TextCodeTranslationPipe }}
+                                                          </td>
+                                                          <td>
+                                                              <LogTextBox style="width:240px;" [IsMultiline]="true" [ObjectFieldName]="'GLAccountFollowUpRemarks'"
+                                                                   [HideColumns]="true" [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"></LogTextBox>
+
+                                                          </td>
+                                                          <td></td>
+                                                      </tr>
+                                                  </table>
+                                              </td>
                                             </tr>
                                         </table>
                                     </div>
@@ -481,6 +512,8 @@
                                     </div>
 
                                 </div>
+
+                             
 
                                 <!-- Widget: Last 10 transactions -->
                                 <div float-start class="widget" style="">

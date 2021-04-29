@@ -36,7 +36,8 @@ import { GLAccountList } from '../../../EntityLists/GLAccountList';
 import { FullAccountingSettingList } from '../../../EntityLists/FullAccountingSettingList';
 import { AccountingNoteListService } from '../../../Services/StandardLists/AccountingNoteListService';
 import { GLAccountExtendedPMService } from 'Accounting/Services/ExtendedPMs/GLAccountExtendedPMService';
-declare var makeAmBarChart;
+import { GLAccountFollowUpDataPM } from '../../../EntityPMs/GLaccountFollowUpDataPM';
+import { GLaccountFollowUpDataExtendedPMService } from 'Accounting/Services/ExtendedPMs/GLaccountFollowUpDataExtendedPMService';
 
 @Component({
 
@@ -50,7 +51,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
     public ObjectTableName = "GLAccount";
     txtcode_Amount: string = TextCodeTranslator.Translate("Accounting.General.O.Amount");
     txtcode_AgingDetails: string = TextCodeTranslator.Translate("GLAccounts.O.AgingDetails");
-
+    public IsFollowUpVisible: boolean;
     // Variables
     public AccountPM: GLAccountPM = null;
     public GLAccountMoreData: GLAccountMoreDataList = null;
@@ -58,7 +59,9 @@ export class GLAccountOverviewComponent extends BaseComponent {
     public showLocal: boolean = false;
     public isUsedOutside: boolean = false; // when view tab inside customer ..
     public OpenShipments:number=0;
-    public CreditLimitAmount:number=0;
+    public CreditLimitAmount: number = 0;
+    public gLAccountFollowUpDataPM: GLAccountFollowUpDataPM;
+   
     //Services
     _EntityResourceService: EntityResourceService = new EntityResourceService();
     _GLAccountMoreDataListService: GLAccountMoreDataListService = new GLAccountMoreDataListService();
@@ -68,7 +71,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
     _AccountingNotePMService: AccountingNotePMService = new AccountingNotePMService();
     _CardListService: CardListService = new CardListService();
     _GLAccountExtendedPMService: GLAccountExtendedPMService = new GLAccountExtendedPMService();
-
+    private gLAccountFollowUpDataPMService: GLaccountFollowUpDataExtendedPMService = new GLaccountFollowUpDataExtendedPMService();
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
         super();
@@ -76,7 +79,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
         if (SessionLocator.LoggedUserPM) this.showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
 
         //Resources // Use Less
-        //this._EntityResourceService.getEntityResourceByTableName("AccountingNote").subscribe((response: any) => { });
+        this._EntityResourceService.getEntityResourceByTableName("GLAccountFollowUpData").subscribe((response: any) => { this.IsFollowUpVisible=true});
         //this._EntityResourceService.getEntityResourceByTableName("Reconciliation").subscribe((response: any) => { });
         //this._EntityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe((response: any) => { });
 
@@ -140,9 +143,21 @@ export class GLAccountOverviewComponent extends BaseComponent {
         this.LoadChartData();
         this.SetUIProperties();
         this.LoadCreditDetailsData();
+        //this.LoadGLAccountFollowUpData();
 
     }
+    //LoadGLAccountFollowUpData() {
+    //    this.gLAccountFollowUpDataPMService.getByAccountId(this.AccountPM.Id).subscribe((myResult: any) => {
+         
+    //        var mm: ServiceResponse = myResult;
+    //        if (!mm.HasError) {
+    //            this.gLAccountFollowUpDataPM = mm.Result;             
+    //        }
+    //        else {
+    //        }
+    //    });
 
+    //}
     //#region Properties
     //get DisplayNumber() { return this.AccountPM.DisplayNumber; }
     //set DisplayNumber(value: string) {
@@ -172,13 +187,13 @@ export class GLAccountOverviewComponent extends BaseComponent {
     }
 
     GetDefaultValues() {
-
+        if (this.AccountPM.GLAccountFollowUpDate == null) this.AccountPM.GLAccountFollowUpDate = new Date();
         // Get GLAccountMoreData
         this.CurrentSession.StartBusyIndicatorLoading();
         this._GLAccountMoreDataListService.getSingle(this.AccountPM.Id).subscribe((myResult:any) => {
             this.CurrentSession.StopBusyIndicator();
             console.log("_GLAccountMoreDataListService.getSingle", myResult);
-
+         
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
                 this.GLAccountMoreData = mm.Result;
@@ -443,6 +458,19 @@ export class GLAccountOverviewComponent extends BaseComponent {
         }
     }
     //#endregion
+
+    get GLAccountFollowUpRemarks() { return this.AccountPM.GLAccountFollowUpRemarks; }
+    set GLAccountFollowUpRemarks(value: string) {
+        if (this.AccountPM.GLAccountFollowUpRemarks != value) {         
+            this.AccountPM.GLAccountFollowUpRemarks = value;
+        }
+    }
+    get GLAccountFollowUpDate() { return this.AccountPM.GLAccountFollowUpDate; }
+    set GLAccountFollowUpDate(value: Date) {
+        if (this.AccountPM.GLAccountFollowUpDate != value) {
+            this.AccountPM.GLAccountFollowUpDate = value;
+        }
+    }
 
     //#region Accounting Notes
     accountingNotesList: AccountingNoteList[] = [];
@@ -892,7 +920,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
         var poisition = this.isRTL == true ? "right" : "left";
 
-        makeAmBarChart(this.chartId, Graphs, DataProvider, max, null, null, null, null, poisition);
+    //    makeAmBarChart(this.chartId, Graphs, DataProvider, max, null, null, null, null, poisition);
 
     }
     //

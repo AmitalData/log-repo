@@ -664,8 +664,24 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             FillForeignFields(entityPM);
             FillSearchFields(entityPM);
+            UpdateGLAccountFollowUpData(entityPM);
 
-
+        }
+        private void UpdateGLAccountFollowUpData(GLAccountPM entityPM)
+        {
+            GLAccountFollowUpDataPM gLAccountFollowUpData = GetGLAccountFollowUpDataPM(entityPM);
+            GLAccountFollowUpDataUpdateService gLAccountFollowUpDataUpdateService = new GLAccountFollowUpDataUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+            if (gLAccountFollowUpData != null) {
+                gLAccountFollowUpData.FollowUpDate = entityPM.GLAccountFollowUpDate;
+                gLAccountFollowUpData.FollowUpRemarks = entityPM.GLAccountFollowUpRemarks;
+                gLAccountFollowUpData.ChangeSetOp = ChangeSetOperation.Update;
+            }
+            gLAccountFollowUpDataUpdateService.Update(gLAccountFollowUpData,true);
+        }
+        private GLAccountFollowUpDataPM GetGLAccountFollowUpDataPM(GLAccountPM entityPM)
+        {
+            GLAccountFollowUpDataQueryService accountFollowUpDataQueryService = new GLAccountFollowUpDataQueryService(entityPM.Tenant);
+            return accountFollowUpDataQueryService.GetSinglePMByAccountId(entityPM.Id, entityPM.Tenant);
         }
         private TenantPM GetTenantPM(int tenantId)
         {

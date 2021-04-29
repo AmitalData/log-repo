@@ -27,6 +27,7 @@ using Logitude.BL.Interfaces;
 using Microsoft.Practices.Unity;
 using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
+using Logitude.Accounting.BL.EntityUpdateServices;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -617,11 +618,43 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 }
                 SetPaymentTermToMulti(CardLists, FirstPaymentTermId);
             }
-          
+            HandleGLaccountFollowUpData(entityPM);
             if (entityPM.ParentCurrencyId != null)
             {
                 SetVariblesFromParentCurrencyGLAccount(entityPM);
             }
+        }
+        private void HandleGLaccountFollowUpData(GLAccountPM accountPM)
+        {
+            GLAccountFollowUpDataPM gLAccountFollowUpData = GetGLAccountFollowUpDataPM(accountPM);
+            if(gLAccountFollowUpData == null)
+            {
+                CreateGLAccountFollowUpData(accountPM);
+            }
+            //else
+            //{
+            //    UpdateGLAccountFollowUpData(accountPM);
+            //}
+
+        }
+        private void CreateGLAccountFollowUpData(GLAccountPM account)
+        {
+            GLAccountFollowUpDataPM gLAccountFollowUpData = new GLAccountFollowUpDataPM()
+            {
+                GlAccountId = account.Id,
+                FollowUpDate = account.GLAccountFollowUpDate,
+                FollowUpRemarks = account.GLAccountFollowUpRemarks,
+                ChangeSetOp = ChangeSetOperation.Insert,
+            };
+            IAccountingContext context = AccountingContext.GetContext(account.Tenant);
+            GLAccountFollowUpDataUpdateService gLAccountFollowUpDataUpdateService = new GLAccountFollowUpDataUpdateService(context, new Dictionary<string, IContext>(), account.Tenant);
+            gLAccountFollowUpDataUpdateService.Update(gLAccountFollowUpData, true);
+            //return gLAccountFollowUpData;
+        }
+        private GLAccountFollowUpDataPM GetGLAccountFollowUpDataPM(GLAccountPM account)
+        {
+            GLAccountFollowUpDataQueryService accountFollowUpDataQueryService = new GLAccountFollowUpDataQueryService(account.Tenant);
+            return accountFollowUpDataQueryService.GetSinglePMByAccountId(account.Id, account.Tenant);
         }
         private  void SetPaymentTermToMulti(List<CardList> CardLists, string FirstPaymentTermId)
         {
