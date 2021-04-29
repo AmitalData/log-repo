@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.Resolvers;
 using Logitude.Server.Tools;
+using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
@@ -37,6 +38,7 @@ namespace CommunicationWorkerRole.Services
                 var tenant = int.Parse(queueResponse.MessageValues["Tenant"].ToString());
                 var fileName = queueResponse.MessageValues["FileName"].ToString();
                 var loggedUserEmail = queueResponse.MessageValues["LoggedUserEmail"].ToString();
+                AuthenticationUtil.AuthenticatedUserEmail = loggedUserEmail;
 
                 //var loggedContact = LoggedContactResolver.GetLoggedContact(tenant);
                 //HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(loggedContact?.Email), new string[0]);
