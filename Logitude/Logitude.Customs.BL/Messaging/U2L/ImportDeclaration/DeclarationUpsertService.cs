@@ -858,6 +858,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
         {
             int.TryParse(_AmitalCustomsFile.Tenant, out int Tenant);
             var loggedUserId = AuthenticationUtil.ResolveUserId(Tenant);
+            string importerId = _AmitalCustomsFile.ImporterId;
+            if (_AmitalCustomsFile.ImporterId.Length > 9)
+            {
+                importerId = _AmitalCustomsFile.ImporterId.Substring(0, 9);
+            }
             var newClientSearchRequestParams = new ClientSearchRequestParams()
             {
                 LoggingEnabled = true,
@@ -869,7 +874,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 LoggingUserId = loggedUserId,
                 RequestVIA = SendRequestVIA.WebServiceBatch,
                 SuppressSplitWR = true,
-                ExternalId = _AmitalCustomsFile.ImporterId.Substring(0, 9),
+                ExternalId = importerId,
             };
 
             try
