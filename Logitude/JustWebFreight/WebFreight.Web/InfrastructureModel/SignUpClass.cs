@@ -532,6 +532,8 @@ namespace WebFreight.Web.InfrastructureModel
 
                 AddReportFromTenantZero(tenant);
 
+                AddGeneralBIReportFolder(tenant);
+
                 AddTenantLoginPolicy(tenant);
 
                 AddAutomationFromTenantZero(tenant , tenantZeroDocumentTypes);
@@ -2752,6 +2754,38 @@ namespace WebFreight.Web.InfrastructureModel
         {
             ReportHelper reportHelper = new ReportHelper();
             reportHelper.UpdateReports(theTenant);
+        }
+
+        public static void AddGeneralBIReportFolder(int tenant)
+        {
+            User systemUser = GetTenantSystemUser(tenant);
+            BIReportFolderRepository bIReportFolderRepository = new BIReportFolderRepository(tenant);
+            BIReportFolder bIReportFolder = new BIReportFolder()
+            {
+                Id = IdCounter.GetNumber("BIReportFolder", tenant),
+                Tenant = tenant,
+                CreateDate = DateTime.Now,
+                CreatedByUserId = systemUser?.Id,
+                UpdateDate = DateTime.Now,
+                UpdatedByUserId = systemUser?.Id,
+                SearchFields = "General",
+                Name = "General",
+                Description = null,
+                Index = 0,
+                PermissionForAll = true,
+                PermittedByUserId = null,
+            };
+
+            bIReportFolderRepository.Add(bIReportFolder);
+            bIReportFolderRepository.SubmitChanges();
+        }
+
+        private static User GetTenantSystemUser(int tenant)
+        {
+            string systemUserEmail = "system@tenant" + tenant + ".com";
+            UserRepository userRepository = new UserRepository(tenant);
+            User systemUser = userRepository.GetSingleUserByEmail(systemUserEmail, tenant, false);
+            return systemUser;
         }
 
         public static void AddTenantLoginPolicy(int theTenant)
