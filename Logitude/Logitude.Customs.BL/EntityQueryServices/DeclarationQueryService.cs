@@ -1234,8 +1234,29 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         ReferenceView referenceView = new ReferenceView();
                         referenceView.Remarks = reference.Remarks;
                         referenceView.RefernceID = reference.RefernceID;
-                      
-                     
+
+                        LogisticsReferenceTypeQueryService logisticsReferenceTypeQueryService = new LogisticsReferenceTypeQueryService(tenant);
+                        LogisticsReferenceTypePM logisticsReferenceType = logisticsReferenceTypeQueryService.GetSingle(reference.ReferenceType, false, true);
+                        if (logisticsReferenceType != null)
+                        {
+                            referenceView.ReferenceTypeName  = logisticsReferenceType.LocalName;
+                        }
+
+                        ReferenceStatusQueryService referenceStatusQueryService = new ReferenceStatusQueryService(tenant);
+                        ReferenceStatusPM referenceStatus = referenceStatusQueryService.GetSingle(reference.RefernceStatus, false, true);
+                        if (referenceStatus != null)
+                        {
+                            referenceView.RefernceStatusName = referenceStatus.LocalName;
+                        }
+
+
+
+                        ReferenceInputTypeQueryService referenceInputTypeQueryService = new ReferenceInputTypeQueryService(tenant);
+                        ReferenceInputTypePM referenceInputType = referenceInputTypeQueryService.GetSingle(reference.RefernceInputType, false, true);
+                        if (referenceInputType != null)
+                        {
+                            referenceView.RefernceInputTypeName = referenceInputType.LocalName;
+                        }
 
                     }
 
