@@ -64,13 +64,10 @@ export var BrandingDataService = (function () {
     };
     BrandingDataService.GetColor = function (ColorStorageKey) {
         var color = JSON.parse(localStorage.getItem(ColorStorageKey));
-        console.log("color is " + color);
         if (color && color.Id != null) {
-            console.log("color is not null" + color.Data);
             return color.Data;
         }
         else {
-            console.log("color is " + color);
             return color;
         }
     };
