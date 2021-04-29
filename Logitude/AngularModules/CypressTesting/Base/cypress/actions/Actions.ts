@@ -145,7 +145,7 @@ function GetMonth(monthNum: string) {
 export function AssertDateOneOf(daySelector:string){
     cy.get(daySelector).then(($day) => {
         const day = $day.text()
-        expect(day).to.be.oneOf([FormatDate(GetTodayDate()),FormatDate(GetYesterdayDate()),FormatDate(GetYesterdayDate())] ) 
+        expect(day).to.be.oneOf([FormatDate(GetTodayDate()),FormatDate(GetYesterdayDate()),FormatDate(GetTomorrowDate())] ) 
 })
    
   }
