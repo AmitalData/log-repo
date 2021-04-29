@@ -701,80 +701,87 @@
                                     </table>
                                 </div>
                                 <div *ngSwitchCase="'References'" style="height: 100%;">
-                                    <logitude-edit-grid GridWidth="100%"
-                                                        GridHeight="100%"
-                                                        [ItemSource]="ReferenceList"
-                                                        [UseVirtuallization]="true"
-                                                        [IsDarkHeader]="true"
-                                                     >
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <logitude-edit-grid GridWidth="100%"
+                                                                    GridHeight="100%"
+                                                                    [ItemSource]="ReferenceList"
+                                                                    [UseVirtuallization]="true"
+                                                                    [IsDarkHeader]="true">
+
+                                                    <log-column [header]="'Customs.Declaration.O.ReferenceType' | TextCodeTranslationPipe"
+                                                                [width]="'120'" [Alignment]="'right'" [binding]="'ReferenceTypeName'">
+
+                                                        <ng-template let-item>
+                                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                                <div style="text-align: right;" class="TextTrimming">
+                                                                    <span>{{item.ReferenceTypeName}}</span>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </ng-template>
+
+                                                    </log-column>
 
 
-                                         <log-column [header]="'Customs.Declaration.O.ReferenceType' | TextCodeTranslationPipe"
-                                                    [width]="'200'" [Alignment]="'right'" [binding]="'ReferenceTypeName'">
+                                                    <log-column [header]="'Customs.Declaration.O.RefernceStatus' | TextCodeTranslationPipe"
+                                                                [width]="'120'" [Alignment]="'right'" [binding]="'RefernceStatusName'">
 
-                                            <ng-template let-item>
-                                                <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                    <div style="text-align: right;" class="TextTrimming">
-                                                        <span>{{item.ReferenceTypeName | TextCodeTranslationPipe}}</span>
-                                                    </div>
-                                                </log-cell-template>
-                                            </ng-template>
+                                                        <ng-template let-item>
+                                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                                <div style="text-align: right;" class="TextTrimming">
+                                                                    <span>{{item.RefernceStatusName}}</span>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </ng-template>
 
-                                        </log-column>
+                                                    </log-column>
 
-                                         <log-column [header]="'Customs.Declaration.O.RefernceStatus' | TextCodeTranslationPipe"
-                                                    [width]="'120'" [Alignment]="'right'" [binding]="'RefernceStatusName'">
+                                                    <log-column [header]="'Customs.Declaration.O.RefernceID' | TextCodeTranslationPipe"
+                                                                [width]="'120'" [Alignment]="'right'" [binding]="'RefernceID'">
 
-                                            <ng-template let-item>
-                                                <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                    <div style="text-align: right;" class="TextTrimming">
-                                                        <span>{{item.RefernceStatusName | TextCodeTranslationPipe}}</span>
-                                                    </div>
-                                                </log-cell-template>
-                                            </ng-template>
+                                                        <ng-template let-item>
+                                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                                <div style="text-align: right;" class="TextTrimming">
+                                                                    <span>{{item.RefernceID}}</span>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </ng-template>
 
-                                        </log-column>
+                                                    </log-column>
 
-                                         <log-column [header]="'Customs.Declaration.O.RefernceID' | TextCodeTranslationPipe"
-                                                    [width]="'80'" [Alignment]="'right'" [binding]="'RefernceID'">
+                                                 
+                                                    <log-column [header]="'Customs.Declaration.O.Remarks' | TextCodeTranslationPipe"
+                                                                [width]="'120'" [Alignment]="'right'" [binding]="'Remarks'">
 
-                                            <ng-template let-item>
-                                                <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                    <div style="text-align: right;" class="TextTrimming">
-                                                        <span>{{item.RefernceID}}</span>
-                                                    </div>
-                                                </log-cell-template>
-                                            </ng-template>
+                                                        <ng-template let-item>
+                                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                                <div style="text-align: right;" class="TextTrimming">
+                                                                    <span>{{item.Remarks}}</span>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </ng-template>
 
-                                        </log-column>
+                                                    </log-column>
 
-                                         <log-column [header]="'Customs.Declaration.O.Remarks' | TextCodeTranslationPipe"
-                                                    [width]="'80'" [Alignment]="'right'" [binding]="'Remarks'">
+                                                    <log-column [header]="'Customs.Declaration.O.RefernceInputType' | TextCodeTranslationPipe"
+                                                                [width]="'120'" [Alignment]="'right'" [binding]="'RefernceInputTypeName'">
 
-                                            <ng-template let-item>
-                                                <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                    <div style="text-align: right;" class="TextTrimming">
-                                                        <span>{{item.Remarks}}</span>
-                                                    </div>
-                                                </log-cell-template>
-                                            </ng-template>
+                                                        <ng-template let-item>
+                                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                                <div style="text-align: right;" class="TextTrimming">
+                                                                    <span>{{item.RefernceInputTypeName}}</span>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </ng-template>
 
-                                        </log-column>
+                                                    </log-column>
 
-                                         <log-column [header]="'Customs.General.O.RefernceInputType' | TextCodeTranslationPipe"
-                                                    [width]="'300'" [Alignment]="'right'" [binding]="'RefernceInputTypeName'">
+                                                </logitude-edit-grid>
 
-                                            <ng-template let-item>
-                                                <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                    <div style="text-align: right;" class="TextTrimming">
-                                                        <span>{{item.RefernceInputTypeName}}</span>
-                                                    </div>
-                                                </log-cell-template>
-                                            </ng-template>
-
-                                        </log-column>
- 
-                                    </logitude-edit-grid>
+                                            </td>
+                                        </tr>
+                                    </table>
 
                                 </div>
 

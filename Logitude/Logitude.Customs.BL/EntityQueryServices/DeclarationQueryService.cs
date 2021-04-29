@@ -1236,14 +1236,14 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         referenceView.RefernceID = reference.RefernceID;
 
                         LogisticsReferenceTypeQueryService logisticsReferenceTypeQueryService = new LogisticsReferenceTypeQueryService(tenant);
-                        LogisticsReferenceTypePM logisticsReferenceType = logisticsReferenceTypeQueryService.GetSingle(reference.ReferenceType, false, true);
+                        LogisticsReferenceTypePM logisticsReferenceType = logisticsReferenceTypeQueryService.GetSingle(reference.ReferenceType, false, false);
                         if (logisticsReferenceType != null)
                         {
                             referenceView.ReferenceTypeName  = logisticsReferenceType.LocalName;
                         }
 
                         ReferenceStatusQueryService referenceStatusQueryService = new ReferenceStatusQueryService(tenant);
-                        ReferenceStatusPM referenceStatus = referenceStatusQueryService.GetSingle(reference.RefernceStatus, false, true);
+                        ReferenceStatusPM referenceStatus = referenceStatusQueryService.GetSingle(reference.RefernceStatus, false, false);
                         if (referenceStatus != null)
                         {
                             referenceView.RefernceStatusName = referenceStatus.LocalName;
@@ -1252,11 +1252,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
 
                         ReferenceInputTypeQueryService referenceInputTypeQueryService = new ReferenceInputTypeQueryService(tenant);
-                        ReferenceInputTypePM referenceInputType = referenceInputTypeQueryService.GetSingle(reference.RefernceInputType, false, true);
+                        ReferenceInputTypePM referenceInputType = referenceInputTypeQueryService.GetSingle(reference.RefernceInputType, false, false);
                         if (referenceInputType != null)
                         {
                             referenceView.RefernceInputTypeName = referenceInputType.LocalName;
                         }
+
+                        generalData.ReferenceViews.Add(referenceView);
 
                     }
 
