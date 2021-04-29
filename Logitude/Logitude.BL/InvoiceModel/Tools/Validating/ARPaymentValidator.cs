@@ -541,7 +541,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
                 }
 
-                if(code == "CH" && aRPaymentChequeReplicas.Count > 1)
+                if(code == "CH" && aRPaymentChequeReplicas?.Count > 1)
                 {
                     errors = ValidateDuplicateChequeNumber(aRPaymentChequeReplicas, tenant, errors, useLocal);
                 }
