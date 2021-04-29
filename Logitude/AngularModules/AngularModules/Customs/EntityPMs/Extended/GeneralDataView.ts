@@ -5,7 +5,7 @@ export class GeneralDataView {
     AdditionalInformation: AdditionalInformationView[];
     AmendmentViews: AmendmentView[];
     SystemMessageViews: any;//error[];// AOT Compile error Cannot find name 'error'
-    References: ReferenceView[];
+    ReferenceViews: ReferenceView[];
 }
 export class AdditionalInformationView {
     StatmentName: string;
