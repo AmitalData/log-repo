@@ -61,6 +61,9 @@ namespace WebFreight.Web.Helpers.BIReport
                     dataTable.Columns.Remove(item);
                 }
             }
+
+            dataTable = RemoveTenantColumnFromDataTableColumns(dataTable);
+
             sheet.ImportDataTable(dataTable, true, 1, 1);
 
             // sheet Format - Width 
@@ -161,6 +164,15 @@ namespace WebFreight.Web.Helpers.BIReport
             return reportData;
         }
 
-    
+        private DataTable RemoveTenantColumnFromDataTableColumns(DataTable dataTable)
+        {
+            DataTable dataTableWithoutTenantColumn = dataTable;
+            if (dataTable.Columns.Contains("Tenant"))
+            {
+                dataTableWithoutTenantColumn.Columns.Remove("Tenant");
+            }
+
+            return dataTableWithoutTenantColumn;
+        }
     }
 }

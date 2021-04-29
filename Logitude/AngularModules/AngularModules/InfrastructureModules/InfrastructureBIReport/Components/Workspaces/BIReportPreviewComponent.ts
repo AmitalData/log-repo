@@ -26,6 +26,7 @@ import { LastRunDetailPM } from '../../../../Infrastructure/EntityPMs/LastRunDet
 import { LastRunDetailExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/LastRunDetailExtendedPMService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { BIReportExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/BIReportExtendedPMService';
+import { isNullOrUndefined } from 'util';
 @Component({
     
     templateUrl: 'BIReportPreviewComponent.html',
@@ -370,8 +371,15 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     public BuildRows(arg: BIReportXMLData) {
         this.rowData = [];
         this.CountText = "";
-        this.StartBusyIndicator();
-        this.RunReportCommand.emit({ MyData: arg.DWQueryData, FirstTime: true });
+        this.RunReportAutomatically(arg);
+    }
+
+    RunReportAutomatically(arg: BIReportXMLData) {
+        let dateFieldFilter = arg?.DWQueryData?.Filters?.FilterItems?.find(f => f.DataTypeCode == "Date" || f.DataTypeCode == "DateTime");
+        if (isNullOrUndefined(dateFieldFilter)) {
+            this.StartBusyIndicator();
+            this.RunReportCommand.emit({ MyData: arg.DWQueryData, FirstTime: true });
+        }
     }
 
     private DateCellRenderer(params: any) {
