@@ -41,6 +41,7 @@ using Unifreight.Data.AmitalModel.EntityKeys;
 using Unifreight.Data.AmitalModel.Repsitories;
 using Logitude.Customs.Def.Messaging.Customs;
 using Simplog.Data.CommonDataModel;
+using System.Globalization;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -105,6 +106,17 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         internal void Update(Boolean doTask)//eitan h 12/3/15 task 11788
         //internal void Update()
         {
+            DateTime stopLogAt = DateTime.MinValue;
+            string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20210427HD368109.LogUntilDateyyyyMMdd"];
+            if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+            {
+                stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd,
+                                                    "yyyyMMdd",
+                                                    CultureInfo.InvariantCulture,
+                                                    DateTimeStyles.None);
+            }
+            string logData = "";
+
             this._CreateCCUTAXFor105Feature = true; ///ConfigurationManager.AppSettings["20180121.CreateCCUTAXFor105"] == "1";///todo
             this._NoRaiseLD2ULogicFeature = true; ///ConfigurationManager.AppSettings["20180204.NoRaiseLD2ULogicFeature"] == "1";
             var cntxt = RequestSheetContext.Current.GetContextOrDefault();
@@ -128,11 +140,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 //if ((!Environment.MachineName.Equals("itzik-7-new", StringComparison.OrdinalIgnoreCase)) && (!Environment.MachineName.Equals("yuval-7-new", StringComparison.OrdinalIgnoreCase))) return;
                 if (String.IsNullOrWhiteSpace(_DirtyDeclarationPM.CustomFileNo) && !(_DirtyDeclarationPM.IsCancelled == true && !String.IsNullOrWhiteSpace(_DBOccDeclarationPM.CustomFileNo)))
                 {
+                    logData = $"_DirtyDeclarationPM.CustomFileNo={_DirtyDeclarationPM.CustomFileNo},_DirtyDeclarationPM.IsCancelled={_DirtyDeclarationPM.IsCancelled}"; 
+                    LogitudeSettings.HandleLogMe(logData, false, "UpdateUnifreight_" + _DirtyDeclarationPM.Id, stopLogAt);
                     return;
                 }
                 //<--- Yuval Chalup 19.11.2015 TASK-17450
                 if (_DirtyDeclarationPM.IsConvertedDeclaration)
                 {
+                    logData = $"_DirtyDeclarationPM.IsConvertedDeclaration={_DirtyDeclarationPM.IsConvertedDeclaration}";
+                    LogitudeSettings.HandleLogMe(logData, false, "UpdateUnifreight_" + _DirtyDeclarationPM.Id, stopLogAt);
                     return;
                 }
                 //Yuval Chalup 19.11.2015 TASK-17450 --->
@@ -246,8 +262,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             {
                                 if (_DirtyDeclarationPM.IsCancelled == true) // moran 5.1.16 - AMI-55274 -->
                                 {
+                                    logData = $"before delete ccufilem,_DirtyDeclarationPM.IsCancelled={_DirtyDeclarationPM.IsCancelled}";
+                                    LogitudeSettings.HandleLogMe(logData, false, "UpdateUnifreight_" + _DirtyDeclarationPM.Id, stopLogAt);
                                     myCCUFILEMUpdateService.FastTotalDeleteComposition(_CCUFILEMPM);
                                     _AmitalContext.SaveChanges();
+                                    logData = $"after delete ccufilem,_DirtyDeclarationPM.IsCancelled={_DirtyDeclarationPM.IsCancelled}";
+                                    LogitudeSettings.HandleLogMe(logData, false, "UpdateUnifreight_" + _DirtyDeclarationPM.Id, stopLogAt);
                                 }
                                 else // moran 5.1.16 - AMI-55274 <--
                                 {
