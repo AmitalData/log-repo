@@ -23,8 +23,7 @@ export class PrivateLoginComponent extends LoginComponent implements OnInit {
     public MainLogo: string = "";
     public SmallLogo: string = ""; 
     public showSpinner = true;
-    public IsDSV = false;
-    public SecondaryColor: string = null;
+    public IsDSV = false; 
 
     constructor(
         private ss: LoginService,
@@ -44,7 +43,7 @@ export class PrivateLoginComponent extends LoginComponent implements OnInit {
     this.BackgroundImage = BrandingDataService.GetImage("BackgroundImage"); 
     this.MainLogo = BrandingDataService.GetImage("MainLogo"); 
     this.LoginImage = BrandingDataService.GetImage("LoginImage");  
-    this.SecondaryColor = BrandingDataService.GetColor("SecondaryColor");  
+    this.MainColor = BrandingDataService.GetColor("MainColor");  
          
     if (this.checkImagesValues()) {
         this.showSpinner = false;

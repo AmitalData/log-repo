@@ -37,7 +37,7 @@ export var PrivateLoginComponent = (function (_super) {
         this.BackgroundImage = BrandingDataService.GetImage("BackgroundImage");
         this.MainLogo = BrandingDataService.GetImage("MainLogo");
         this.LoginImage = BrandingDataService.GetImage("LoginImage");
-        this.SecondaryColor = BrandingDataService.GetColor("SecondaryColor");
+        this.MainColor = BrandingDataService.GetColor("MainColor");
         if (this.checkImagesValues()) {
             this.showSpinner = false;
         }
