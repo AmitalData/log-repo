@@ -1,0 +1,26 @@
+<style>
+    .input-button {
+        width: 25px;
+        text-align: center;
+        height: 100%;
+        float: right;
+        position: relative;
+        top: -21px;
+        right: 1px;
+        background: #efefef;
+        border: 1px solid #cecece;
+        cursor: pointer;
+        user-select: none;
+    }
+    .input-button:active {
+        background: #e0e0e0;
+
+    }
+</style>
+<div>
+    <input type="number"
+    [value]="value"
+    [(ngModel)]="value" [ngModelOptions]="{standalone: true}" >
+    <div class="input-button" (click)="IncrementValue()">+</div>
+    <div class="input-button" (click)="DecrementValue()">-</div>
+</div>

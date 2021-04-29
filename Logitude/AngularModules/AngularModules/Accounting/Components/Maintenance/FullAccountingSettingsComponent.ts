@@ -31,7 +31,7 @@ import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { BookingWizardPackageItem } from 'Booking/Components/BookingWizard/Packages/PackagesTabComponent';
 
 @Component({
-    
+
     selector: 'FullAccountingSettingsComponent',
     templateUrl: './FullAccountingSettingsComponent.html',
     providers: [ServiceArgs]
@@ -58,14 +58,21 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
         this.CurrentSession.StartBusyIndicatorLoading();
 
-        this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((responseGLAccount: any) => {
-        this._entityResourceService.getEntityResourceByTableName("ChartOfAccount").subscribe((response1: any) => {
-        this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response => {
-            this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => { });
-            });
+        this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((responseGLAccount: any) =>
+        {
+            this._entityResourceService.getEntityResourceByTableName("ChartOfAccount").subscribe((response1: any) =>
+            {
+                this._entityResourceService.getEntityResourceByTableName("FullAccountingSetting").subscribe((response1: any) =>
+                {
+                    this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response =>
+                    {
+                        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => { });
+                    });
 
+                });
             });
         });
+
         this.fullAccountingSettingPMService.get(SessionLocator.Tenant.toString()).subscribe((myResult: any) => {
             this.CurrentSession.StopBusyIndicator();
 
@@ -563,6 +570,11 @@ SubmitChanges(ControlAccountId:string) {
         this.TabsSource.push({ Name: "ControlAccounts", isSelected: false, Header: TextCodeTranslator.Translate("Accounting.O.ControlGLAccounts") });
         this.TabsSource.push({ Name: "Logo", isSelected: false, Header: TextCodeTranslator.Translate("Accounting.General.O.Cheques") });
 
+
+        const isAgingDefinitionEnabled = FeatureLocator.HasFeaturePermession("FullAccountingSetting", "AgingDefenetionSettings");
+        if(isAgingDefinitionEnabled)
+            this.TabsSource.push({ Name: "AgingDefinition", isSelected: false, Header: TextCodeTranslator.Translate("FullAccountingSetting.O.AgingDefinition") });
+
     }
     SelectionChanged(tab: any) {
 
@@ -618,6 +630,9 @@ SubmitChanges(ControlAccountId:string) {
         logWindow.Show('./Accounting/Components/Maintenance/FullAccountingAddControlComponent');
 
     }
+
+
+    NumberOfPeriods: number = 1;
 
 
 }

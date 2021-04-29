@@ -57,7 +57,7 @@ import {DatesFilter} from './DatesFilter';
 import {ConfirmWindowTemplateComponent} from './Windows/ConfirmWindow';
 import {MessageWindowTemplateComponent} from './Windows/MessageWindow';
 import {LogitudeWindowTemplateComponent} from './Windows/LogitudeWindow';
-import {ShipmentArchiveFilter} from './ShipmentArchiveFilter'; 
+import {ShipmentArchiveFilter} from './ShipmentArchiveFilter';
 import {CurrencyFilter} from './CurrencyFilter';
 import {KeyControl} from './KeyControl';
 import {ComboBoxWithInCheckBox} from './ComboBoxWithInCheckBox';
@@ -70,6 +70,7 @@ import {ConnectToFilter} from './ConnectToFilter';
 import { ParticipatedFilter } from './ParticipatedFilter';
 import { InvitedFilter } from './InvitedFilter';
 import { LogitudeHotKeysComponent } from './LogitudeHotkeysComponent/LogitudeHotKeysComponent';
+import {  NumberInputComponent } from './All/NumberInput';
 
 export const Directives =
     [
@@ -85,7 +86,7 @@ export const Pipes =
         IdGeneratorPipe,
         DateToMonthPipe,
         MinutesToTimePipe,
-        
+
     ];
 
 export const Components =
@@ -116,13 +117,14 @@ export const Components =
         AddressTemplate,
         GoogleMapsButton,
        // TimeInput,
+        NumberInputComponent,
 
         ComboBox,
         HelpIcon,
         //SearchBox,
         IconButton,
         SearchTextBox,
-        
+
         ContactDatePicker,
         DirectionsFilter,
         TransportsFilter,
@@ -149,7 +151,7 @@ export const Components =
         ConnectToFilter,
         ParticipatedFilter,
         InvitedFilter,
-        LogitudeHotKeysComponent , 
+        LogitudeHotKeysComponent ,
     ];
 
 export class ModuleDeclarations {
@@ -164,5 +166,5 @@ export class ModuleDeclarations {
         }
 
         return myResult;
-    } 
+    }
 }
