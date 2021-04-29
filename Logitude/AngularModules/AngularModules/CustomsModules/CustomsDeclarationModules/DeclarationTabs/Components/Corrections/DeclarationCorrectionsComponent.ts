@@ -287,10 +287,13 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
 
 
 
-                    this.ReferenceList = new ObservableCollection([]);
-                     general.References.forEach(el => {
-                        referenceList.push(el);
-                    });
+                this.ReferenceList = new ObservableCollection([]);
+                    if (!AppTool.IsNullOrEmpty(general.References)) {
+                        general.References.forEach(el => {
+                            referenceList.push(el);
+                        });
+                    }
+                  
 
                     this.ReferenceList.InsertCollection(referenceList);
 
