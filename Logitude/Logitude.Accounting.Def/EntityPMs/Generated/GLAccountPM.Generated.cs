@@ -3148,12 +3148,12 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private DateTime gLAccountFollowUpDate ;
+	  private DateTime? gLAccountFollowUpDate ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public DateTime GLAccountFollowUpDate  
+       public DateTime? GLAccountFollowUpDate  
 	   {
 	    
 	     get
@@ -3164,7 +3164,7 @@ namespace Logitude.Accounting.Def.EntityPMs
 		 {
 		   if(gLAccountFollowUpDate != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GLAccountFollowUpDate",OldValue=gLAccountFollowUpDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GLAccountFollowUpDate",OldValue=gLAccountFollowUpDate,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   gLAccountFollowUpDate=value;
 		   }
