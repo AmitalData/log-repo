@@ -23,7 +23,7 @@ namespace AmitalOpenAccessTester
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            string myDESC = "Please change //#define reserveword >> #define reserveword in all solution";
+            string myDESC = "Please change //#define reserveword >> //#define reserveword in all solution";
             using (var cntxt = AmitalDbContextUtil.GetContext())
             {
                 var poco = cntxt.CCUCARLs.FirstOrDefault();
