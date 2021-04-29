@@ -7,6 +7,8 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
+
+import {HTSCodePM} from './HTSCodePM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -60,7 +62,48 @@ export class ProductItemPM {
     public set Description(newValue: string) { if (this.description != newValue) { this.description = newValue; this.MarkAsDirty("Description"); } }
        
 	 
+    private changeSetOp: string;
+    public get ChangeSetOp() { return this.changeSetOp; }
+    public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
+       
+	 
+     
+	private hTSCodes: HTSCodePM[];
+    get  HTSCodes() {
+        if (this.hTSCodes == null) {
+            this.hTSCodes = [];
+        }
 
+        return this.hTSCodes;
+    }
+    set  HTSCodes(newValue: HTSCodePM[]) {
+        if (this.hTSCodes != newValue) {
+            this.hTSCodes = newValue;
+        }
+    }
+    public AddHTSCodePM(item: HTSCodePM) {
+        if (item != null) {
+            var index = this.HTSCodes.indexOf(item);
+            if (index == -1) {
+
+                item.EntityParentPM = this;
+
+                this. HTSCodes.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveHTSCodePM(item: HTSCodePM) {
+        if (item != null) {
+            var index = this.HTSCodes.indexOf(item);
+            if (index > -1) {
+                this. HTSCodes.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+	    //public HTSCodes: Array<HTSCodePMPM>= [];
+ 
     public OldEntityPM: ProductItemPM;
 		
     public IsDirty: boolean;

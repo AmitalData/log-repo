@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
+using Simplog.Server.Infrastructure;
 
 namespace Logitude.BL.CommonDataModel.EntityPMs
 {
@@ -13,5 +13,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string Code { get; set; }
         public string ApprovedByCustomer { get; set; }
         public bool InActive { get; set; }
+        public ChangeSetOperation ChangeSetOp { get; set; }
     }
 }
