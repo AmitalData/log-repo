@@ -24,7 +24,7 @@ namespace WebFreight.Web.Helpers
             this.responseParameters = new ExternalAPIResponseParameters();
             this.responseParameters.Tenant = tenant;
             this.tenantQuery = new TenantQuery(tenant);
-            this.tenantPM = tenantQuery.GetSinglePM(tenant);
+            this.tenantPM = tenantQuery.GetTenantFromDB(tenant);
         }
 
         public ExternalAPIResponseParameters GetExternalAPIResponseParameters()
