@@ -10,24 +10,22 @@
 
 	with InvoiceStatus as(select Code,Name, AutomaticLastUpdateDate
 	from(
-		select Code, Name, AutomaticLastUpdateDate
-		from dw_ARInvoiceStatus
-         
-		union all
-
-		select Code, Name, AutomaticLastUpdateDate
-		from dw_APInvoiceStatus t2
-        
-		where not exists(select Code from dw_ARInvoiceStatus t1 where t2.Code = t1.Code )
+		select MIN(Code) AS Code,Name, Max(AutomaticLastUpdateDate) AS AutomaticLastUpdateDate
+         from dw_ARInvoiceStatus
+         group by Name
 
 		union all
+
+		select
+        Code,[Name], AutomaticLastUpdateDate from dw_APInvoiceStatus t2
+       where not exists (  select Code from dw_ARInvoiceStatus t1  where (t2.Code = t1.Code) )
+
+ 
+
+		union all
+		 select Code,[Name], AutomaticLastUpdateDate from dw_APInvoiceStatus t2
+         where  exists ( select  Code from dw_ARInvoiceStatus t1  where t2.Code = t1.Code  and t2.Name <> t1.Name )
   
-
-		select  Code, Name, AutomaticLastUpdateDate
-		from dw_APInvoiceStatus t2
-        where exists ( select Code from dw_ARInvoiceStatus t1 where t2.Code = t1.Code and t2.Name <> t1.Name )
-
-	
 )tt
 )
 
