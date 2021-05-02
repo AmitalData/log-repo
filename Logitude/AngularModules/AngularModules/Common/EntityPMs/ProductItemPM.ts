@@ -106,7 +106,17 @@ export class ProductItemPM {
         }
     }
 	    //public HTSCodes: Array<HTSCodePMPM>= [];
- 
+     private hTSCodeByCountry: string;
+    public get HTSCodeByCountry() { return this.hTSCodeByCountry; }
+    public set HTSCodeByCountry(newValue: string) { if (this.hTSCodeByCountry != newValue) { this.hTSCodeByCountry = newValue; this.MarkAsDirty("HTSCodeByCountry"); } }
+       
+	 
+    private itemCode: string;
+    public get ItemCode() { return this.itemCode; }
+    public set ItemCode(newValue: string) { if (this.itemCode != newValue) { this.itemCode = newValue; this.MarkAsDirty("ItemCode"); } }
+       
+	 
+
     public OldEntityPM: ProductItemPM;
 	    
 	private entityParentPM: any;
