@@ -17,9 +17,56 @@
 
         <tr>
             <td>
-                <div class="MediaFill">
-                    <ScrollViewer>
-                    </ScrollViewer>
+                <div class="MediaFill" style="overflow-x: hidden;">
+                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ProductItems" [Disabled]="!IsEditingEnabled" (RowEnded)="OnRowEnded($event)">
+
+                        <log-column [header]="'Item Code'" [width]="'100'" [Alignment]="'left'">
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate>
+                                    <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                        <span>{{item.ItemCode}}</span>
+                                    </div>
+                                    <div *ngIf="logcelltemplate.IsEditMode">
+                                        <ComboBox [ItemsSource]="ProductItemsFilterList"
+                                                  [Binding]="'Name'"
+                                                  [SelectedItem]="item.SelectedProductItem"
+                                                  (SelectedItemChanged)="item.SelectedProductItem = $event"></ComboBox>
+                                    </div>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+
+                        <log-column [header]="'HTSCode'" [width]="'100'" [Alignment]="'left'">
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate>
+                                    <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                        <span>{{item.HTSCode}}</span>
+                                    </div>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+
+                        <log-column [header]="'Description'" [width]="'120'" [Alignment]="'left'">
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate>
+                                    <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                        <span>{{item.Description}}</span>
+                                    </div>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+
+                        <!-- Buttons -->
+                        <log-column [width]="'30'" [Alignment]="'left'">
+                            <ng-template let-item>
+                                <log-cell-template [IgnoreMods]="true">
+                                    <IconButton [Name]="'Delete'" [IsSmall]="true"
+                                                style="display: block; float: left; margin-left:3px; margin-top:4px;" (click)="item.RemoveLine()"></IconButton>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+
+                    </logitude-edit-grid>
                 </div>
             </td>
         </tr>

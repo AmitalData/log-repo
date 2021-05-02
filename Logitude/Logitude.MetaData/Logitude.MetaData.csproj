@@ -1564,6 +1564,7 @@
     <None Include="EntityFiles\ShipmentsModel\ShipmentPickUpDeliveryPackage.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EntityFiles\ShipmentsModel\ShipmentProductItem.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentReceivable.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentReceivableStatus.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentStoragePricing.lxml" />

@@ -7453,6 +7453,7 @@
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentComputedFieldsPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentCustomsTransmissionPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentPackageHarmonizePM.ts" />
+    <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentProductItemPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentStoragePricingPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentSubTypePM.ts" />
     <TypeScriptCompile Include="Shipment\MetaDataServices\HeaderScreenServices\ShipmentHeaderScreenService.ts" />

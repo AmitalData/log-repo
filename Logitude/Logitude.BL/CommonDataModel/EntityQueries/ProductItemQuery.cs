@@ -66,5 +66,36 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                };
             return result;
         }
+
+        public List<ProductItemPM> GetProductItemPMsByCustomerAndPortIds(string customerId, string dischargePortCountryId, int tenant)
+        {
+            List <ProductItemPM> productItems = (from a in repository.context.ProductItems
+                                                where a.Tenant == tenant && a.CustomerId == customerId
+                                                select new ProductItemPM()
+                                                {
+                                                    Id = a.Id,
+                                                    Tenant = a.Tenant,
+                                                    CustomerId = a.CustomerId,
+                                                    SKU = a.SKU,
+                                                    Remarks = a.Remarks,
+                                                    InActive = a.InActive,
+                                                    Description = a.Description,
+                                                }).ToList();
+
+
+            foreach (ProductItemPM productItem in productItems)
+            {
+                HTSCode hTSCode = (from a in repository.context.HTSCodes
+                                          where a.Tenant == tenant && a.ItemId == productItem.Id && a.DestinationCountryId == dischargePortCountryId
+                                          select a).FirstOrDefault();
+
+                if(hTSCode != null)
+                {
+                    productItem.HTSCodeByCountry = hTSCode.Code;
+                }
+            }
+
+            return productItems;
+        }
     }
 }

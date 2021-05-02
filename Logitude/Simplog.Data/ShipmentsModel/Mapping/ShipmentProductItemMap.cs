@@ -25,7 +25,16 @@ namespace Simplog.Data.ShipmentsModel.Mapping
                 .IsUnicode(false);
 
             this.Property(t => t.ProductItemId)
+                .IsRequired()
                 .HasMaxLength(15)
+                .IsUnicode(false);
+
+            this.Property(t => t.Description)
+                .HasMaxLength(1000)
+                .IsUnicode(true);
+
+            this.Property(t => t.HTSCode)
+                .HasMaxLength(20)
                 .IsUnicode(false);
 
             // Table & Column Mappings
@@ -33,12 +42,14 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.ShipmentId).HasColumnName("ShipmentId");
-            this.Property(t => t.ProductItemId).HasColumnName("ProductItemId");            
+            this.Property(t => t.ProductItemId).HasColumnName("ProductItemId");
+            this.Property(t => t.Description).HasColumnName("Description");
+            this.Property(t => t.HTSCode).HasColumnName("HTSCode");
 
             // Relationships
-            //this.HasOptional(t => t.CustomerProductItem)
-            //    .WithMany()
-            //    .HasForeignKey(d => d.ProductItemId);
+            this.HasRequired(t => t.ProductItem)
+                .WithMany()
+                .HasForeignKey(d => d.ProductItemId);
 
             this.HasRequired(t => t.Shipment)
                 .WithMany()

@@ -83,8 +83,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
-
         public HttpResponseMessage GetCarrierUpdate(string entityId)
         {
             try
@@ -104,8 +102,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
-
         public HttpResponseMessage GetMessagingRulesForAirline(string myAirlineCode, string myMessageCode)
         {
             try
@@ -587,8 +583,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-        }
-        
+        }        
         public HttpResponseMessage GetAddressByCardAndType(string cardId, string type)
         {
             try
@@ -2579,6 +2574,29 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 args.Customer.PrimaryContactName = args.Contact.EnglishName;
                 args.IsPartnerDirty = true;
             }
+        }
+
+        public HttpResponseMessage GetCustomerProductItems(string customerId, string dischargePortCountryId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ProductItemQuery productItemQuery = new ProductItemQuery(tenant);
+                List<ProductItemPM> productItems = productItemQuery.GetProductItemPMsByCustomerAndPortIds(customerId, dischargePortCountryId, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, productItems);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+
         }
     }
 }
