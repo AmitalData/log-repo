@@ -42,5 +42,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
             }
         }
 
+        public string HTSCodeByCountry { get; set; }
     }
 }

@@ -26,7 +26,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public ShipmentProductItemPM GetSinglePM(string shipmentId, int tenant)
         {
             ShipmentProductItemPM myResult
-                = (from a in repository.context.ShipmentProductItems.Include("CustomerProductItem")
+                = (from a in repository.context.ShipmentProductItems
                    where a.ShipmentId == shipmentId && a.Tenant == tenant
                    select new ShipmentProductItemPM()
                    {
@@ -34,8 +34,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        Tenant = a.Tenant,
                        ShipmentId = a.ShipmentId,
                        ProductItemId = a.ProductItemId,
-                       //Description = a.ProductItemId,  
-                       //HTSCode = a.ProductItemId,  
+                       Description = a.Description,
+                       HTSCode = a.HTSCode,
                    }).FirstOrDefault();
 
             return myResult;
@@ -44,7 +44,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public List<ShipmentProductItemPM> GetShipmentProductItems(string shipmentId, int tenant)
         {
             List<ShipmentProductItemPM> shipmentAssembleies
-                = (from a in repository.context.ShipmentProductItems.Include("CustomerProductItem")
+                = (from a in repository.context.ShipmentProductItems
                    where a.ShipmentId == shipmentId && a.Tenant == tenant
                    select new ShipmentProductItemPM()
                    {
@@ -52,8 +52,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        Tenant = a.Tenant,
                        ShipmentId = a.ShipmentId,
                        ProductItemId = a.ProductItemId,
-                       //Description = a.ProductItemId,  
-                       //HTSCode = a.ProductItemId,  
+                       Description = a.Description,
+                       HTSCode = a.HTSCode,
                    }).ToList();
 
             return shipmentAssembleies;

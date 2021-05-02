@@ -33,6 +33,7 @@ import { ShipmentStoragePricingPM } from '../../EntityPMs/ShipmentStoragePricing
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { PickUpDeliveryPackageHarmonizePM } from '../../EntityPMs/PickUpDeliveryPackageHarmonizePM';
 import { CommodityPackagePM } from '../../EntityPMs/CommodityPackagePM';
+import { ShipmentProductItemPM } from '../../EntityPMs/ShipmentProductItemPM';
 
 @Injectable()
 
@@ -502,6 +503,7 @@ export class ShipmentPMService {
         this.MapShipmentFollowups(entityPM, jsonPM, mapParent);
         this.MapShipmentAssemblies(entityPM, jsonPM, mapParent);
         this.MapShipmentStoragePricings(entityPM, jsonPM, mapParent);
+        this.MapShipmentProductItems(entityPM, jsonPM, mapParent);
 
         entityPM.IsDirty = false;
         if (mapParent) {
@@ -647,6 +649,11 @@ export class ShipmentPMService {
             entityPM.OldEntityPM.ShipmentStoragePricings = [];
             for (var item in entityPM.ShipmentStoragePricings) {
                 entityPM.OldEntityPM.ShipmentStoragePricings.push(this.clone(entityPM.ShipmentStoragePricings[item]));
+            }
+
+            entityPM.OldEntityPM.ShipmentProductItems = [];
+            for (var item in entityPM.ShipmentProductItems) {
+                entityPM.OldEntityPM.ShipmentProductItems.push(this.clone(entityPM.ShipmentProductItems[item]));
             }
         }
 
@@ -2444,6 +2451,77 @@ export class ShipmentPMService {
                         oldCollection[pack].ChangeSetOp = "Delete";
                         oldCollection[pack].OldEntityPM = null;
                         entityPM.CommodityPackages.push(oldCollection[pack]);
+                    }
+                }
+            }
+        }
+    }
+    MapShipmentProductItems(entityPM: ShipmentPM, jsonPM: any, mapParent: boolean = true) {
+        var oldProductItems: ShipmentProductItemPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldProductItems = entityPM.OldEntityPM.ShipmentProductItems;
+        }
+
+        entityPM.ShipmentProductItems = new Array<ShipmentProductItemPM>();
+
+        for (var pack in jsonPM.ShipmentProductItems) {
+
+            var itemJson = jsonPM.ShipmentProductItems[pack];
+            if (mapParent && (itemJson.ChangeSetOp == "Delete" || itemJson.ChangeSetOp == 3)) {
+                continue;
+            }
+            var itemPM: ShipmentProductItemPM;
+            if (mapParent) { // get mapping
+                itemPM = new ShipmentProductItemPM(entityPM);
+
+            }
+            else {// update mapping
+
+                itemPM = new ShipmentProductItemPM(null);
+
+
+            }
+            var pmKeys = Object.keys(itemJson);
+            for (var key in pmKeys) {
+
+                if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties") {
+                    continue;
+                }
+                var property = pmKeys[key];
+                itemPM[property] = itemJson[property];
+            }
+
+            if (mapParent) {
+                itemPM.OldEntityPM = this.clone(itemPM);
+                itemPM.UniqueKey = Guid.newGuid();
+                itemPM.ChangeSetOp = "None";
+                itemJson.ChangeSetOp = "None";
+            }
+            else {
+
+                if (itemPM.UniqueKey) {
+
+                    if (itemJson.IsDirty)
+                        itemPM.ChangeSetOp = "Update";
+                }
+                else {
+                    itemPM.ChangeSetOp = "Insert";
+                }
+
+                itemPM.OldEntityPM = null;
+            }
+            itemPM.IsDirty = false;
+            entityPM.ShipmentProductItems.push(itemPM);
+
+        }
+
+        if (oldProductItems) {
+
+            for (var pack in oldProductItems) {
+                if (entityPM.ShipmentProductItems.filter(p => p.UniqueKey === oldProductItems[pack].UniqueKey).length === 0) {
+                    if (oldProductItems[pack]) {
+                        oldProductItems[pack].ChangeSetOp = "Delete";
+                        entityPM.ShipmentProductItems.push(oldProductItems[pack]);
                     }
                 }
             }

@@ -1945,7 +1945,21 @@ export class PartnersDomainService {
         return entityPM;
     }
 
+    GetCustomerProductItems(customerId: string, dischargePortCountryId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
+        var url = this._apiUrl + '/GetCustomerProductItems?customerId=' + customerId + "&dischargePortCountryId=" + dischargePortCountryId;
+
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = response;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 }
 export class AirlineMessagingRuleList {
     Id: string;
