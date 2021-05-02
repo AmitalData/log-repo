@@ -308,11 +308,11 @@
     <None Include="DBScripts\InvoiceModel\202012201448_SAT voided invoices and payments.sxml" />
     <None Include="DBScripts\InvoiceModel\202101231210_FillPartnerIdARInvoices.sxml" />
     <None Include="DBScripts\InvoiceModel\202101231212_FillPartnerIdARPayments.sxml" />
-    <None Include="DBScripts\InvoiceModel\2021137249_ UpdateAutomaticLastUpdateDateOnAPInvoiceStatus.sxml" />
-    <None Include="DBScripts\InvoiceModel\2021137249_ UpdateAutomaticLastUpdateDateOnAPInvoiceTypes.sxml" />
-    <None Include="DBScripts\InvoiceModel\2021137249_ UpdateAutomaticLastUpdateDateOnARInvoiceStatus.sxml" />
-    <None Include="DBScripts\InvoiceModel\2021137249_ UpdateAutomaticLastUpdateDateOnARInvoiceTypes.sxml" />
-    <None Include="DBScripts\InvoiceModel\2021137249_ UpdateAutomaticLastUpdateDateOnPaymentTerms.sxml" />
+    <None Include="DBScripts\InvoiceModel\2021137249_UpdateAutomaticLastUpdateDateOnAPInvoiceStatus.sxml" />
+    <None Include="DBScripts\InvoiceModel\2021137249_UpdateAutomaticLastUpdateDateOnAPInvoiceTypes.sxml" />
+    <None Include="DBScripts\InvoiceModel\2021137249_UpdateAutomaticLastUpdateDateOnARInvoiceStatus.sxml" />
+    <None Include="DBScripts\InvoiceModel\2021137249_UpdateAutomaticLastUpdateDateOnARInvoiceTypes.sxml" />
+    <None Include="DBScripts\InvoiceModel\2021137249_UpdateAutomaticLastUpdateDateOnPaymentTerms.sxml" />
     <None Include="DBScripts\QuoteModel\202103071310_RemoveQuoteComputedFileds.sxml">
       <SubType>Designer</SubType>
     </None>
