@@ -20,7 +20,7 @@
                 <div class="MediaFill" style="overflow-x: hidden;">
                     <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ProductItems" [Disabled]="!IsEditingEnabled" (RowEnded)="OnRowEnded($event)">
 
-                        <log-column [header]="'Item Code'" [width]="'100'" [Alignment]="'left'">
+                        <log-column [header]="'Item Code'" [width]="'150'" [Alignment]="'left'">
                             <ng-template let-item>
                                 <log-cell-template #logcelltemplate>
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
@@ -28,7 +28,7 @@
                                     </div>
                                     <div *ngIf="logcelltemplate.IsEditMode">
                                         <ComboBox [ItemsSource]="ProductItemsFilterList"
-                                                  [Binding]="'Name'"
+                                                  [Binding]="'Code'"
                                                   [SelectedItem]="item.SelectedProductItem"
                                                   (SelectedItemChanged)="item.SelectedProductItem = $event"></ComboBox>
                                     </div>
@@ -36,25 +36,22 @@
                             </ng-template>
                         </log-column>
 
-                        <log-column [header]="'HTSCode'" [width]="'100'" [Alignment]="'left'">
+                        <log-column [header]="'Description'" [width]="'150'" [Alignment]="'left'">
                             <ng-template let-item>
                                 <log-cell-template #logcelltemplate>
-                                    <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                                        <span>{{item.HTSCode}}</span>
-                                    </div>
+                                    <span>{{item.Description}}</span>                                    
                                 </log-cell-template>
                             </ng-template>
                         </log-column>
 
-                        <log-column [header]="'Description'" [width]="'120'" [Alignment]="'left'">
+                        <log-column [header]="'HTSCode'" [width]="'120'" [Alignment]="'left'">
                             <ng-template let-item>
                                 <log-cell-template #logcelltemplate>
-                                    <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                                        <span>{{item.Description}}</span>
-                                    </div>
+                                   <span>{{item.HTSCode}}</span>
                                 </log-cell-template>
                             </ng-template>
                         </log-column>
+
 
                         <!-- Buttons -->
                         <log-column [width]="'30'" [Alignment]="'left'">

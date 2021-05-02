@@ -12,7 +12,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string ItemId { get; set; }
         public string DestinationCountryId { get; set; }
         public string Code { get; set; }
-        public string ApprovedByCustomer { get; set; }
+        public bool ApprovedByCustomer { get; set; }
         public bool InActive { get; set; }
     }
 }

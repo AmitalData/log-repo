@@ -28,7 +28,7 @@ export class ProductItemsTabComponent extends BaseComponent implements OnDestroy
     public IsFCLEntity: boolean = false;   
     private CurrentSession = SessionLocator.SelectedSession;
     public ProductItems: ObservableCollection;
-    public ProductItemsFilterList: ProductItemPM[];
+    public ProductItemsFilterList: ProductItemPM[] = [];
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
@@ -37,9 +37,9 @@ export class ProductItemsTabComponent extends BaseComponent implements OnDestroy
         this.IsLCLEntity = AppTool.IsLCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
         this.IsFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
 
-        this.LoadConsigneeProductItems();
-        this.SetUIProperties();
-        this.BuildProductItems();
+        this.ProductItems = new ObservableCollection([]);
+
+        this.LoadConsigneeProductItems();        
         this.Listen();
     }
 
@@ -82,7 +82,10 @@ export class ProductItemsTabComponent extends BaseComponent implements OnDestroy
         var service: PartnersDomainService = new PartnersDomainService();
         service.GetCustomerProductItems(this.EntityPM.ConsigneeId, this.EntityPM.ToCountryId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
+                this.ProductItemsFilterList = myResponse.Result;
                 
+                this.SetUIProperties();
+                this.BuildProductItems();
             }
         });
     }
@@ -117,6 +120,7 @@ export class ProductItemsTabComponent extends BaseComponent implements OnDestroy
         item.ShipmentId = this.EntityPM.Id;
         
         this.ProductItems.Insert(new ProductItem(item, this, true));
+        this.EntityPM.AddProductItem(item);
     }
 
     OnRowEnded($event) {
@@ -137,6 +141,30 @@ export class ProductItem extends BaseComponent {
         super();
         this.EntityPM = entity;
         this.IsNewEntity = isNew;
+
+        if (!isNew) {
+            this.selectedProductItem = this.fatherComponent.ProductItemsFilterList.filter(d => d.Id == entity.Id)[0];
+        }
+    }
+
+    private selectedProductItem: ProductItemPM;
+    get SelectedProductItem() { return this.selectedProductItem; }
+    set SelectedProductItem(value: ProductItemPM) {
+        if (this.selectedProductItem != value) {
+            this.selectedProductItem = value;
+
+            if (value) {
+                this.ProductItemId = value.Id;
+                this.Description = value.Description;
+                this.HTSCode = value.HTSCodeByCountry;
+            }
+
+            else {
+                this.ProductItemId = null;
+                this.Description = null;
+                this.HTSCode = null;
+            }
+        }
     }
 
     get ProductItemId() {
