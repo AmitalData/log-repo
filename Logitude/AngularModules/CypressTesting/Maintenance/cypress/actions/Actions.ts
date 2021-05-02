@@ -944,20 +944,35 @@ export function AssertMockPostCountry() {
     BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow)
 }
 
-export function SearchCountry(CountryName: string) {
-    DefineCountryViewsGetByFiltersRequest(CountryName);
-    cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, CountryName);
+export function SearchCountryByCode(CountryCode:string){
+    cy.Click(MaintenanceSelectors.CountryFiltersOpen,null);
+    cy.Click(MaintenanceSelectors.CountryAddFilterBtn,null);
+
+    cy.get(MaintenanceSelectors.CountryCodeFilterCheckBox).then($InActiveStatesCheckBox => {
+        if ($InActiveStatesCheckBox.is(':checked')) {
+            FillCodeFilterValue(CountryCode);
+        }
+        else {
+            cy.get(MaintenanceSelectors.CountryCodeFilterCheckBox).check({ force: true });
+            FillCodeFilterValue(CountryCode);
+        }
+    })
+}
+
+function FillCodeFilterValue(CountryCode:string){
+    DefineCountryViewsGetByFiltersRequest(CountryCode);
+    cy.FillLogTextBox(MaintenanceSelectors.CountryCodeFilterTextValue,CountryCode);
     AssertCountryViewsGetByFilters();
 }
 
-export function AssertSearchCountry(CountryName: string) {
+export function AssertSearchCountry(CountryCode: string) {
     cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
-        expect(text).to.contain(CountryName);
+        expect(text).to.contain(CountryCode);
     });
 }
 
-export function DefineCountryViewsGetByFiltersRequest(CountryName: string) {
-    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(CountryName + "&GetCount=false"), RequestAliases.GetFilterSearch);
+export function DefineCountryViewsGetByFiltersRequest(CountryCode: string) {
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(CountryCode), RequestAliases.GetFilterSearch);
 }
 
 export function AssertCountryViewsGetByFilters() {
