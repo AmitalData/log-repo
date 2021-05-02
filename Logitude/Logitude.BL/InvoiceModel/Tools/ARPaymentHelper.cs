@@ -151,12 +151,12 @@ namespace Logitude.BL.InvoiceModel.Tools
                 else
                 {
                     commonContext = CommonContext;
-                    Tenant loggedTenant = (from a in commonContext.Tenants.Include("AccountingSetting") where a.Id == entityPM.Tenant select a).FirstOrDefault();
+                    loggedTenant = (from a in commonContext.Tenants.Include("AccountingSetting") where a.Id == entityPM.Tenant select a).FirstOrDefault();
                     tenant = loggedTenant.Id;
                     tenantName = loggedTenant.Company;
                     AccountingSystemCode = loggedTenant.AccountingSetting.AccountingSystemCode;
                     AccountingSystemQuery query = new AccountingSystemQuery(tenant);
-                    AccountingSystemPM AccountingSystemPM = query.GetSingleAccountingSystemPM(AccountingSystemCode);
+                    accountingSystem = query.GetSingleAccountingSystemPM(AccountingSystemCode);
 
                     if (loggedTenant.AccountingSetting != null)
                         if (IsQuickBooksAccoutingSystemTransfer(entityPM))
