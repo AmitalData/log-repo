@@ -720,15 +720,17 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
 
     OpenEditQuoteTemplateComponent(documentTemplate: any) {
-        var windowArgs: any = {};
-        var logWindow = new LogitudeWindow();
-        windowArgs.QuoteTemplateId = documentTemplate.Id;
-        logWindow.Title = documentTemplate.Name;
-        logWindow.WindowArgs = windowArgs;
-        logWindow.Width = window.innerWidth - 150;
-        logWindow.Height = window.innerHeight - 150;
-        logWindow.IsShowCloseButton = true;
-        logWindow.Show("./QuoteModules/QuoteTemplates/Components/EditQuoteTemplateComponent");
+
+            var windowArgs: any = {};
+            var logWindow = new LogitudeWindow();
+            windowArgs.QuoteTemplateId = documentTemplate.Id;
+            logWindow.Title = documentTemplate.Name;
+            logWindow.WindowArgs = windowArgs;
+            logWindow.Width = window.innerWidth - 150;
+            logWindow.Height = window.innerHeight - 150;
+            logWindow.IsShowCloseButton = true;
+            logWindow.Show("./QuoteModules/QuoteTemplates/Components/EditQuoteTemplateComponent");
+        
     }
 
 
@@ -738,7 +740,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         
         if (documentTemplate) {
 
-            if (this.IsQuotationDocument(this.DocumentTypeSelected)) {
+            if (this.IsQuotationDocument(this.DocumentTypeSelected) && !documentTemplate.EditorTool) {
                 this.OpenEditQuoteTemplateComponent(documentTemplate);
                 return;
             }
@@ -868,7 +870,10 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         logitudeWindow.Title = "New Print Template";
         logitudeWindow.WindowArgs = windowArgs;
        let addTemplateComponentPath: string = this.IsQuotationDocument(this.DocumentTypeSelected) ? "./QuoteModules/QuoteTemplates/Components/NewQuoteTemplateComponent" : "./InfrastructureModules/InfrastructureDocuments/Components/DocumentType/NewReportTemplateComponent";
-       logitudeWindow.Show(addTemplateComponentPath);
+
+
+
+        logitudeWindow.Show(addTemplateComponentPath);
         logitudeWindow.WindowClosed.subscribe(($event: any) => {
             if ($event) {
                 this.LoadDocumentReportTemplate(this.DocumentTypeSelected, $event);
