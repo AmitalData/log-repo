@@ -245,7 +245,7 @@ export class PublicShipmentDetailsComponent implements OnInit
     }
     SetMilestonesFields(result: CargoTrackingShipmentWithMilestones)
     {
-
+        
         this.AllMilestoneFields = result.Milestones;
         if (this.AllMilestoneFields) {
             this.AllMilestoneFields.forEach(S =>
