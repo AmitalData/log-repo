@@ -123,6 +123,8 @@ export class AutomationsSettingsComponent implements OnInit {
             if (table) tableId = table.Id;
         }
 
+        if (tableName == "Quote") entityObjectTable.push("QuoteTemplate");
+
         window.ObjectFields.filter(f => f.DisplayInAutomationAsEnitity == true && f.ObjectTableId == tableId && (!f.RecordType || (f.RecordType && f.RecordType.split(',').filter(d => d == tableName)[0]))).forEach((objectField) => {
             if (objectField.LookUpTableId) {
                 if (entityObjectTable.indexOf(objectField.ObjectTable_LookUpTableName) == -1) {
