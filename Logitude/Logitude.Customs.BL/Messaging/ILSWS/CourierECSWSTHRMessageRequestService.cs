@@ -80,7 +80,7 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
                 }
                 catch (MasofException ignoreif )
                 {
-                    haveDefinition = false;
+                    //haveDefinition = false;
                 }
                 if (haveDefinition)
                 {

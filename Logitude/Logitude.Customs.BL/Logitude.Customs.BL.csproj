@@ -1922,7 +1922,9 @@
     <Compile Include="Messaging\Amital\UnifreightTaskService.cs" />
     <Compile Include="Messaging\Amital\UServerCommunicationService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\AnalyzeQueueUtil.cs" />
+    <Compile Include="Messaging\CustomsAnalyzeQueue\CourierSWSStatusAvailabilityQService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\CourierOVSStatusAvailabilityQService.cs" />
+    <Compile Include="Messaging\CustomsAnalyzeQueue\CourierSWSStatusAvailabilitySplitterQService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\CourierOVSStatusAvailabilitySplitterQService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\CustomAnalyzerQueueBase.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\ILSWSQHAWBService.cs" />
