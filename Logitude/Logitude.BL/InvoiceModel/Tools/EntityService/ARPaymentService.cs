@@ -431,7 +431,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 if (string.IsNullOrEmpty(theEntityPm.GLAccountId))
                     throw new ApplicationException("Hey! no glaccount provided!!");
 
-                if (theEntityPm.StatusCode != "VD")
+                if (theEntityPm.StatusCode != "VD" && theEntityPm.ARPaymentChequeReplicas.Count ==0)
                     CreateReconciliationForARPayment(theEntityPm);
             }
 
@@ -1642,6 +1642,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         #region Full Accounting
         public void CreateReconciliationForARPayment(ARPaymentPM paymentPM)
         {
+          
             if (paymentPM.InvoicesLedgerTransactions.Count == 0)
                 return;
 
