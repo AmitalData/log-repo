@@ -186,10 +186,14 @@
     <None Include="DBOthers\InfrastructureModel\Procedures\usp_ChangeTenantLocalCurrency_Quotes.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\usp_ChangeTenantLocalCurrency_Shipments.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\usp_ChangeTenantProfitCurrency.dxml" />
+    <None Include="DBOthers\InvoiceModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateAPInvoiceStatus.dxml" />
     <None Include="DBOthers\InvoiceModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateAPInvoiceTypes.dxml" />
+    <None Include="DBOthers\InvoiceModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateARInvoiceStatus.dxml" />
     <None Include="DBOthers\InvoiceModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateARInvoiceTypes.dxml" />
     <None Include="DBOthers\InvoiceModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDatePaymentTerms.dxml" />
+    <None Include="DBOthers\InvoiceModel\Triggers\Trigger_AutomaticLastUpdateDateAPInvoiceStatus.dxml" />
     <None Include="DBOthers\InvoiceModel\Triggers\Trigger_AutomaticLastUpdateDateAPInvoiceTypes.dxml" />
+    <None Include="DBOthers\InvoiceModel\Triggers\Trigger_AutomaticLastUpdateDateARInvoiceStatus.dxml" />
     <None Include="DBOthers\InvoiceModel\Triggers\Trigger_AutomaticLastUpdateDateARInvoiceTypes.dxml" />
     <None Include="DBOthers\InvoiceModel\Triggers\Trigger_AutomaticLastUpdateDatePaymentTerms.dxml" />
     <None Include="DBOthers\QuoteModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateQuoteComputedFields.dxml" />
@@ -304,7 +308,9 @@
     <None Include="DBScripts\InvoiceModel\202012201448_SAT voided invoices and payments.sxml" />
     <None Include="DBScripts\InvoiceModel\202101231210_FillPartnerIdARInvoices.sxml" />
     <None Include="DBScripts\InvoiceModel\202101231212_FillPartnerIdARPayments.sxml" />
+    <None Include="DBScripts\InvoiceModel\2021137249_ UpdateAutomaticLastUpdateDateOnAPInvoiceStatus.sxml" />
     <None Include="DBScripts\InvoiceModel\2021137249_ UpdateAutomaticLastUpdateDateOnAPInvoiceTypes.sxml" />
+    <None Include="DBScripts\InvoiceModel\2021137249_ UpdateAutomaticLastUpdateDateOnARInvoiceStatus.sxml" />
     <None Include="DBScripts\InvoiceModel\2021137249_ UpdateAutomaticLastUpdateDateOnARInvoiceTypes.sxml" />
     <None Include="DBScripts\InvoiceModel\2021137249_ UpdateAutomaticLastUpdateDateOnPaymentTerms.sxml" />
     <None Include="DBScripts\QuoteModel\202103071310_RemoveQuoteComputedFileds.sxml">

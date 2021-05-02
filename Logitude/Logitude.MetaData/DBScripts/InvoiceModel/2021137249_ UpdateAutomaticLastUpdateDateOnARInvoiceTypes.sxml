@@ -1,9 +1,9 @@
-﻿<Script DBType="Main" Module="Invoice"  AOT="true" TargetTableName="ARInvoiceTypes">
+﻿<Script DBType="Main" Module="Invoice" TargetTableName="ARInvoiceTypes">
 
-	<Sql Version="2">
+	<Sql Version="3">
 		<![CDATA[
     
-update  ARInvoiceTypes set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null and $LastCounterWhere$
+update  ARInvoiceTypes set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
 
     ]]>
 	</Sql>

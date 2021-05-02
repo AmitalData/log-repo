@@ -25,13 +25,13 @@
 
 		select  Code, Name, AutomaticLastUpdateDate
 		from dw_APInvoiceStatus t2
-        where exists ( select Code from dw_ARInvoiceStatus t1 where  t2.Name <> t1.Name )
+        where exists ( select Code from dw_ARInvoiceStatus t1 where t2.Code = t1.Code and t2.Name <> t1.Name )
 
 	
 )tt
 )
 
-	SELECT   InvoiceStatus.Code , InvoiceStatus.Name, InvoiceStatus.AutomaticLastUpdateDate
+	SELECT   InvoiceStatus.Code, InvoiceStatus.Name, InvoiceStatus.AutomaticLastUpdateDate
  
      From InvoiceStatus
 

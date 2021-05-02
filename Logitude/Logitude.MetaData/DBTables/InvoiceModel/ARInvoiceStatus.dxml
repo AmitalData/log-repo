@@ -32,4 +32,6 @@
     <Constraints
       Nullable="true" />
   </Column>
+	<Index
+   Columns="AutomaticLastUpdateDate" />
 </Table>
