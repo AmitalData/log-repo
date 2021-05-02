@@ -21,7 +21,7 @@ namespace Logitude.Server.Tools.Utils
         }
         public static XmlDocument DeserializeXmlNode(string jsonString)
         {
-            return JsonConvert.DeserializeXmlNode(jsonString);
+            return JsonConvert.DeserializeXmlNode(jsonString,"root");
         }
         public static T JsonConvertDeserializeTyped<T>(string jsonString)
         {
