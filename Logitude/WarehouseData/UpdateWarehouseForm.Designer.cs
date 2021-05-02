@@ -1122,7 +1122,7 @@
             this.DWPaymentTermslabel.AutoSize = true;
             this.DWPaymentTermslabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.DWPaymentTermslabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DWPaymentTermslabel.Location = new System.Drawing.Point(1632, 153);
+            this.DWPaymentTermslabel.Location = new System.Drawing.Point(1738, 172);
             this.DWPaymentTermslabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.DWPaymentTermslabel.Name = "DWPaymentTermslabel";
             this.DWPaymentTermslabel.Size = new System.Drawing.Size(0, 25);
@@ -1134,7 +1134,7 @@
             this.label40.BackColor = System.Drawing.SystemColors.Control;
             this.label40.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label40.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label40.Location = new System.Drawing.Point(1348, 154);
+            this.label40.Location = new System.Drawing.Point(1454, 173);
             this.label40.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label40.Name = "label40";
             this.label40.Size = new System.Drawing.Size(184, 25);
@@ -1146,7 +1146,7 @@
             this.DimPaymentTermsLabel.AutoSize = true;
             this.DimPaymentTermsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.DimPaymentTermsLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DimPaymentTermsLabel.Location = new System.Drawing.Point(1632, 197);
+            this.DimPaymentTermsLabel.Location = new System.Drawing.Point(1738, 216);
             this.DimPaymentTermsLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.DimPaymentTermsLabel.Name = "DimPaymentTermsLabel";
             this.DimPaymentTermsLabel.Size = new System.Drawing.Size(0, 25);
@@ -1158,7 +1158,7 @@
             this.label41.BackColor = System.Drawing.SystemColors.Control;
             this.label41.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label41.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label41.Location = new System.Drawing.Point(1348, 197);
+            this.label41.Location = new System.Drawing.Point(1454, 216);
             this.label41.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label41.Name = "label41";
             this.label41.Size = new System.Drawing.Size(242, 25);
