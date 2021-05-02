@@ -46,11 +46,7 @@ End
  
  if(@MaxAutomaticLastUpdateDate > @LastUpdateDate)
 
- begin
-   declare @Key as varchar(15)
-   declare @Code as varchar(2)
-   declare @Name as varchar(20)
-   declare @AutomaticLastUpdateDate as datetime
+ begin 
 
 	DECLARE InvoiceTypesCursor CURSOR READ_ONLY
 	FOR
