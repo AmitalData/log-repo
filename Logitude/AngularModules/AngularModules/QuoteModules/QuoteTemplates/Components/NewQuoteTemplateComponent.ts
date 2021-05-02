@@ -260,6 +260,7 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
 
 
     CloseButtonClicked() {
-        this.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CurrentWindow.Close(this.EntityPM.Id);
+
     }
 }
