@@ -4497,6 +4497,8 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureComputingPartner\Components\QueryColumnsComponents\btnComponentComputingPartnerEdit.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\SharedDocument\SharedDocumentComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\SharedDocument\SharedDocumentsPermissionsComponent.ts" />
+    <TypeScriptCompile Include="QuoteModules\QuoteTemplates\Components\EditQuoteTemplateComponent - Copy.ts" />
+    <TypeScriptCompile Include="QuoteModules\QuoteTemplates\Components\QuoteTemplatePricingSettingComponent - Copy.ts" />
     <TypeScriptCompile Include="Quote\Components\Shared\QuoteSaleCurrencyTypeComponent.ts" />
     <TypeScriptCompile Include="Quote\DataContracts\QuoteDashboardArguments.ts" />
     <TypeScriptCompile Include="Quote\EntityLists\QuoteComputedFieldList.ts" />
