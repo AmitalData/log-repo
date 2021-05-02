@@ -294,7 +294,7 @@ namespace Logitude.BL.InvoiceModel.Tools
             if (!(AccountingSystemCode == "QBO" || AccountingSystemCode == "QBOG")) return false;
             if (!(loggedTenant.AccountingSetting.IsARPaymentsTransferEnabled)) return false;
             if (!(accountingSystem.AllowARPaymentsTransfer)) return false;
-            if (!(loggedTenant.AccountingSetting.APInvoiceTransferStartDate != null && arPaymentPM.RegisterDate >= loggedTenant.AccountingSetting.APInvoiceTransferStartDate)) return false;
+            if (!(loggedTenant.AccountingSetting.ARPaymentTransferStartDate != null && arPaymentPM.RegisterDate >= loggedTenant.AccountingSetting.ARPaymentTransferStartDate)) return false;
             return true;
         }
 
