@@ -23,7 +23,6 @@ export var PrivateLoginComponent = (function (_super) {
         this.SmallLogo = "";
         this.showSpinner = true;
         this.IsDSV = false;
-        this.SecondaryColor = null;
     }
     PrivateLoginComponent.prototype.ngOnInit = function () {
         this.get_cookie_data();
