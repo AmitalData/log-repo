@@ -2,39 +2,41 @@
 declare var window: any;
 
 import { ShipmentArchiveFilter } from '../../../../Controls/ShipmentArchiveFilter';
-import {TransportsFilter} from '../../../../Controls/TransportsFilter';
-import {Component, Output, EventEmitter, OnInit, AfterViewInit} from '@angular/core';
-import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import {SearchTextBox} from '../../../../Controls/SearchTextBox';
-import {IconButton} from '../../../../Controls/IconButton';
-import {LogGridComponent} from '../../../../Infrastructure/Components/LogitudeComponents/LogGridComponent/LogGridComponent'
+import { TransportsFilter } from '../../../../Controls/TransportsFilter';
+import { Component, Output, EventEmitter, OnInit, AfterViewInit } from '@angular/core';
+import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { SearchTextBox } from '../../../../Controls/SearchTextBox';
+import { IconButton } from '../../../../Controls/IconButton';
+import { LogGridComponent } from '../../../../Infrastructure/Components/LogitudeComponents/LogGridComponent/LogGridComponent'
 
-import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs';
-import {EntityListService} from '../../../../Infrastructure/Services/EntityListService';
-import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {LogBoxDocumentsComponent} from './LogBoxDocumentsComponent';
-import {ShipmentDomainService, ImporterQueriesDataCounts} from '../../../../Shipment/Services/ShipmentDomainService';
-import {AppTool, DateTool, FormatTool} from '../../../../Infrastructure/Tools';
-import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
-import {ShipmentPackagePM} from '../../../../Shipment/EntityPMs/ShipmentPackagePM';
-import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
-import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {EntityStatusListService} from '../../../../Infrastructure/Services/StandardLists/EntityStatusListService';
-import {BranchListService} from '../../../../Common/Services/StandardLists/BranchListService';
-import {PackageTypeListService} from '../../../../Common/Services/StandardLists/PackageTypeListService';
-import {DepartmentListService} from '../../../../Common/Services/StandardLists/DepartmentListService';
-import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import {Guid} from '../../../../Infrastructure/Utilities/Guid';
-import {ShipmentPMService} from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
-import {PortExtendedPMService} from '../../../../Common/Services/ExtendedPMs/PortExtendedPMService';
-import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
-import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
+import { ServiceArgs } from '../../../../Infrastructure/DataContracts/ServiceArgs';
+import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { LogBoxDocumentsComponent } from './LogBoxDocumentsComponent';
+import { ShipmentDomainService, ImporterQueriesDataCounts } from '../../../../Shipment/Services/ShipmentDomainService';
+import { AppTool, DateTool, FormatTool } from '../../../../Infrastructure/Tools';
+import { ShipmentPM } from '../../../../Shipment/EntityPMs/ShipmentPM';
+import { ShipmentPackagePM } from '../../../../Shipment/EntityPMs/ShipmentPackagePM';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { EntityStatusListService } from '../../../../Infrastructure/Services/StandardLists/EntityStatusListService';
+import { BranchListService } from '../../../../Common/Services/StandardLists/BranchListService';
+import { PackageTypeListService } from '../../../../Common/Services/StandardLists/PackageTypeListService';
+import { DepartmentListService } from '../../../../Common/Services/StandardLists/DepartmentListService';
+import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { Guid } from '../../../../Infrastructure/Utilities/Guid';
+import { ShipmentPMService } from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
+import { PortExtendedPMService } from '../../../../Common/Services/ExtendedPMs/PortExtendedPMService';
+import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
+import { ServiceLocator } from '../../../../Infrastructure/Locators/ServiceLocator';
 import { DocumentsFilingExtendedPMService } from '../../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
 import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 import { LogBoxSignatureClientService } from '../../../../Shipment/Services/Others/LogBoxSignatureClientService';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { EntityStatusExtendedListService } from '../../../../Infrastructure/Services/ExtendedLists/EntityStatusExtendedListService';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
 
@@ -74,7 +76,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
             this.PLShortName = SessionLocator.PrivateLableSettings.PrivateLabelShortName;
         }
 
-        this.IsDSVTenant =  SessionLocator.PrivateLableSettings.PrivateLabelDomain.toLowerCase().indexOf("dsv") > -1;
+        this.IsDSVTenant = SessionLocator.PrivateLableSettings.PrivateLabelDomain.toLowerCase().indexOf("dsv") > -1;
 
         if (this.CurrentSession == null) {
             this.FilterId_A = "TransportFilter_A_-1_-1";
@@ -133,37 +135,45 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
 
     }
 
-    UpdateDocumentsFilings(entityId:string) {
-        if (!this.IsDSVTenant && this.documentsFilings) {
-            this.documentsFilings.filter(d => !d.EntityId).forEach((documentsFiling) => {
-                documentsFiling.EntityId = entityId;
-                this._documentsFilingExtendedPMService.update(documentsFiling).subscribe((res: any) => {
-                });
+    ConnectDocumentsFilings(entityId: string) {
+
+        this.documentsFilings.filter(d => !d.EntityId).forEach((documentsFiling) => {
+            documentsFiling.EntityId = entityId;
+            this._documentsFilingExtendedPMService.update(documentsFiling).subscribe((res: any) => {
             });
-        }
+        });
     }
 
 
-    ConnectButtonClicked(entity: any) {
-        if (!this.IsDSVTenant) {
-            this.CurrentSession.StartBusyIndicator("Loading ...");
-            this._documentsFilingExtendedPMService.IsEntityHasSharedDocs(entity.Id, SessionLocator.Tenant).subscribe((res: any) => {
-                this.CurrentSession.StopBusyIndicator();
-                let hasSharedDocs: boolean = res.Result;
-                var newWindow = new LogitudeWindow();
-                newWindow.Width = 1050;
-                newWindow.Height = 700;
-                newWindow.Title = "Connect/Create new shipment in " + "abed"; //SessionLocator.PrivateLableSettings.PrivateLabelShortName;
-                var windowArgs: any = {};
-                windowArgs.SourceEntity = entity;
-                windowArgs.HasSharedDocs = hasSharedDocs;
-                newWindow.WindowArgs = windowArgs;
-                newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/ForwarderShipmentsComponent');
-                newWindow.WindowClosed.subscribe(($event: any) => {
-                    this.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
-                });
+
+
+    EntityProgressStatusId: string;
+    LoadEntityProgressStatus() {
+        new EntityStatusExtendedListService().getSingle("INPS").subscribe((Status: ServiceResponse) => {
+            this.EntityProgressStatusId = Status.Result.Id;
+           
+        });
+    }
+
+    ConnectShipment(entity: any) {
+
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
+
+        new EntityStatusExtendedListService().getSingle("INPS").subscribe((Status: ServiceResponse) => {
+            this.EntityPM.StatusId = Status.Result.Id;
+            this._ShipmentPMService.update(this.EntityPM).subscribe((myResult: any) => {
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
+
+                if (!myResult.HasError) {
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    this.CurrentSession.SessionEvent.emit({ Name: "ReloadShipments" });
+                    this.CurrentSession.CurrentWindow.Close("");
+                }
+                else {
+                    this.ValidationErrorsList = myResult.ErrorsArray;
+                }
             });
-        }
+        });
     }
 
     IsAddDocumentButtonClick: boolean = false;
@@ -184,13 +194,13 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                 logitudeWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditImporterDocumentComponent');
                 logitudeWindow.WindowClosed.subscribe(($event: any) => {
                     this.IsAddDocumentButtonClick = false;
-
-
-                    if (this.EntityPM && this.EntityPM.Id) {
-                        this.LoadDocumentsFilings();
-                    }
-                    else {
-                        this.LoadDocumentsFilingById($event);
+                    if ($event) {
+                        if (this.EntityPM && this.EntityPM.Id) {
+                            this.LoadDocumentsFilings();
+                        }
+                        else {
+                            this.LoadDocumentsFilingById($event);
+                        }
                     }
                 });
             });
@@ -253,7 +263,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                                     this.messageWindow.Message = "Please make sure that cloud sign app installed to your computer.";
                                     this.messageWindow.Show(this.messageWindow.Message);
                                 }
-     
+
 
                             });
                         }
@@ -429,8 +439,8 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
     UnAssignedPackageTypeId: string = '';
     SetWindowArgs(args: any) {
         //this.ShipmentList = args.SelectedShipment;
-        this.IsNew = args.IsNew; 
-        this._PackageTypeListService.getAll().subscribe((myResult:any) => {
+        this.IsNew = args.IsNew;
+        this._PackageTypeListService.getAll().subscribe((myResult: any) => {
             if (!myResult.HasError) {
                 this.UnAssignedPackageTypeId = myResult.Result.filter(a => a.Tenant == SessionLocator.Tenant && a.Code == '---')[0].Id;
             }
@@ -443,7 +453,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
             this.TransportationTypes = [new TransportationTypes("Ashdod", "O", "ASH", "IL"), new TransportationTypes("Haifa", "O", "HFA", "IL"), new TransportationTypes("Eilat", "O", "ETH", "IL")];
             this.SelectedTransportationTypes = this.TransportationTypes[1];
 
-            this._EntityStatusListService.getAll().subscribe((myResult:any) => {
+            this._EntityStatusListService.getAll().subscribe((myResult: any) => {
                 if (!myResult.HasError) {
                     this.StatusId = myResult.Result.filter(a => a.Code == "OPOP")[0].Id;
                 }
@@ -451,7 +461,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                     this.ValidationErrorsList = myResult.ErrorsArray;
                 }
             });
-            this._DepartmentListService.getAll().subscribe((myResult:any) => {
+            this._DepartmentListService.getAll().subscribe((myResult: any) => {
                 if (!myResult.HasError) {
                     this.DepartmentId = myResult.Result.filter(a => a.Tenant == SessionLocator.Tenant)[0].Id;
                 }
@@ -459,14 +469,14 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                     this.ValidationErrorsList = myResult.ErrorsArray;
                 }
             });
-            this._BranchListService.getAll().subscribe((myResult:any) => {
+            this._BranchListService.getAll().subscribe((myResult: any) => {
                 if (!myResult.HasError) {
                     this.BranchId = myResult.Result.filter(a => a.Tenant == SessionLocator.Tenant)[0].Id;
                 }
                 else {
                     this.ValidationErrorsList = myResult.ErrorsArray;
                 }
-            }); 
+            });
 
         }
         if (args.EntityPM) {
@@ -652,16 +662,16 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
             MyPackage.Quantity = this.PackagesQuantity;
             this.EntityPM.ShipmentPackages.push(MyPackage);
         }
-        else if (this.EntityPM.ShipmentPackages.length > 0) { 
-                this.EntityPM.ShipmentPackages[0].ContainerNumber = newValue;
-                this.EntityPM.ShipmentPackages[0].Weight = this.GrossWeight;
-                this.EntityPM.ShipmentPackages[0].PackageTypeId = this.UnAssignedPackageTypeId;
-                this.EntityPM.ShipmentPackages[0].Quantity = this.PackagesQuantity;  
+        else if (this.EntityPM.ShipmentPackages.length > 0) {
+            this.EntityPM.ShipmentPackages[0].ContainerNumber = newValue;
+            this.EntityPM.ShipmentPackages[0].Weight = this.GrossWeight;
+            this.EntityPM.ShipmentPackages[0].PackageTypeId = this.UnAssignedPackageTypeId;
+            this.EntityPM.ShipmentPackages[0].Quantity = this.PackagesQuantity;
         }
         //this.ValidateContainerNumber(newValue);
     }
 
-     
+
 
     ValidateContainerNumber(input: string) {
         //this.ValidationErrorsList = [];
@@ -672,8 +682,8 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
             this.ValidationErrorsList.push(error);
         }
     }
-    
-    
+
+
 
     SaveChanges() {
         if (this.isSaveClicked == true) {
@@ -681,7 +691,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
         }
         this.isSaveClicked = true;
         this.ValidationErrorsList = [];
-       
+
 
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
         if (!AppTool.IsNullOrEmpty(this.ContainerNumber)) {
@@ -730,19 +740,23 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
 
         else {
             if (this.ShipperName && this.ShipperName.length > 50) {
-                this.ValidationErrorsList.push("Supplier Name can't be more than 5 characters");
+                this.ValidationErrorsList.push("Supplier Name can't be more than 50 characters");
+            }
+
+            if (this.documentsFilings.filter(d => d.IsSharedWithForwarder == true).length == 0) {
+                this.ValidationErrorsList.push("You should have at least one document shared with agent");
             }
         }
 
         if (this.ValidationErrorsList.length == 0) {
-            this._PortExtendedPMService.getSinglePort(this.SelectedTransportationTypes.ToPortCode, this.SelectedTransportationTypes.CountryCode, SessionLocator.Tenant).subscribe((myResult:any) => {
+            this._PortExtendedPMService.getSinglePort(this.SelectedTransportationTypes.ToPortCode, this.SelectedTransportationTypes.CountryCode, SessionLocator.Tenant).subscribe((myResult: any) => {
                 if (myResult.Result) {
                     this.ToPortId = myResult.Result.Id;
                     if (AppTool.IsNullOrEmpty(this.EntityPM.FromPortId)) {
-                        this._PortExtendedPMService.getSinglePort("---", "IL", SessionLocator.Tenant).subscribe((Result:any) => {
+                        this._PortExtendedPMService.getSinglePort("---", "IL", SessionLocator.Tenant).subscribe((Result: any) => {
                             this.FromPortId = Result.Result.Id;
                             if (this.IsNew) {
-                                this._ShipmentPMService.GetByCustomerReference1(this.CustomerReference1, false).subscribe((myResult:any) => {
+                                this._ShipmentPMService.GetByCustomerReference1(this.CustomerReference1, false).subscribe((myResult: any) => {
                                     if (myResult.Result) {
                                         var confirmWindow = new ConfirmWindow();
                                         confirmWindow.Title = "Warning !";
@@ -767,7 +781,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                                 });
                             }
                             else {
-                                this._ShipmentPMService.GetByCustomerReference1ForUpdate(this.CustomerReference1, this.EntityPM.Id, false).subscribe((myResult:any) => {
+                                this._ShipmentPMService.GetByCustomerReference1ForUpdate(this.CustomerReference1, this.EntityPM.Id, false).subscribe((myResult: any) => {
                                     if (myResult.Result) {
                                         var confirmWindow = new ConfirmWindow();
                                         confirmWindow.Title = "Warning !";
@@ -796,7 +810,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                     }
                     else {
                         if (this.IsNew == true) {
-                            this._ShipmentPMService.GetByCustomerReference1(this.CustomerReference1, false).subscribe((myResult:any) => {
+                            this._ShipmentPMService.GetByCustomerReference1(this.CustomerReference1, false).subscribe((myResult: any) => {
                                 if (myResult.Result) {
                                     var confirmWindow = new ConfirmWindow();
                                     confirmWindow.Title = "Warning !";
@@ -821,7 +835,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                             });
                         }
                         else {
-                            this._ShipmentPMService.GetByCustomerReference1ForUpdate(this.CustomerReference1, this.EntityPM.Id, false).subscribe((myResult:any) => {
+                            this._ShipmentPMService.GetByCustomerReference1ForUpdate(this.CustomerReference1, this.EntityPM.Id, false).subscribe((myResult: any) => {
                                 if (myResult.Result) {
                                     var confirmWindow = new ConfirmWindow();
                                     confirmWindow.Title = "Warning !";
@@ -870,7 +884,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
         return n % 1 === 0;
     }
     isSaveClicked: boolean = false;
-    SaveData() { 
+    SaveData() {
         this.ValidationErrorsList = [];
 
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
@@ -928,16 +942,16 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                 this.EntityPM.ShipmentCustomerTypeCode = "SHI";
                 this.EntityPM.OtherPrepaidCollectId = "C";
                 this.EntityPM.DirectionId = "C";
-                this.EntityPM.ShipmentLevelCode = "A"; 
+                this.EntityPM.ShipmentLevelCode = "A";
                 this.EntityPM.OrderIsDangerouseGoods = false;
                 this.EntityPM.StatusDate = DateTool.GetCurrentDateTimeAsUtc();
-                this.EntityPM.CustomerId = SessionLocator.TenantPM.CustomerId;
+                this.EntityPM.CustomerId =SessionLocator.TenantPM.CustomerId;
                 this.EntityPM.CustomerName = SessionLocator.TenantPM.CustomerId;
-                this.EntityPM.ConsigneeId =SessionLocator.TenantPM.CustomerId;
+                this.EntityPM.ConsigneeId = SessionLocator.TenantPM.CustomerId;
                 this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
                 this.EntityPM.NewConcurrencyGUID = Guid.newGuid();
                 this.EntityPM.Tenant = SessionLocator.Tenant;
-    
+
                 this.EntityPM.NumberOfContainers = this.PackagesQuantity;
                 //}
                 //else {
@@ -953,13 +967,19 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                 else {
                     this.EntityPM.ShipmentAddtionalDataXML = "<PLForwarding>false</PLForwarding>";
                 }
-                this._ShipmentPMService.insert(this.EntityPM).subscribe((myResult:any) => {
+
+                this.EntityPM.StatusId = !this.IsDSVTenant ? this.EntityProgressStatusId : this.EntityPM.StatusId;
+
+                this._ShipmentPMService.insert(this.EntityPM).subscribe((myResult: any) => {
                     if (!myResult.HasError) {
                         ServiceLocator.SendTotangoUserActivity("LogBox", "New Shipment");
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
-                        this.CurrentSession.CloseCurrentWindowEmit("MyShipmentAdded");
-                        this.UpdateDocumentsFilings(myResult.Result.Id);
-                        this.ConnectButtonClicked(myResult.Result);
+                        if (!this.IsDSVTenant) {
+                            this.ConnectDocumentsFilings(myResult.Result.Id);
+                            this.CurrentSession.SessionEvent.emit({ Name: "ReloadShipments" });
+                            this.CurrentSession.CurrentWindow.Close("");
+
+                        } else this.CurrentSession.CloseCurrentWindowEmit("MyShipmentAdded");
 
                     }
                     else {
@@ -981,7 +1001,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                 else {
                     this.EntityPM.ShipmentAddtionalDataXML = "<PLForwarding>false</PLForwarding>";
                 }
-                this._ShipmentPMService.update(this.EntityPM).subscribe((myResult:any) => {
+                this._ShipmentPMService.update(this.EntityPM).subscribe((myResult: any) => {
                     if (!myResult.HasError) {
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         this.CurrentSession.CloseCurrentWindowEmit("MyShipmentAdded");
