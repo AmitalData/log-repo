@@ -76,7 +76,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
             this.PLShortName = SessionLocator.PrivateLableSettings.PrivateLabelShortName;
         }
 
-        this.IsDSVTenant =SessionLocator.PrivateLableSettings.PrivateLabelDomain.toLowerCase().indexOf("dsv") > -1;
+        this.IsDSVTenant = SessionLocator.PrivateLableSettings.PrivateLabelDomain.toLowerCase().indexOf("dsv") > -1;
 
         if (this.CurrentSession == null) {
             this.FilterId_A = "TransportFilter_A_-1_-1";
@@ -194,13 +194,13 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                 logitudeWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditImporterDocumentComponent');
                 logitudeWindow.WindowClosed.subscribe(($event: any) => {
                     this.IsAddDocumentButtonClick = false;
-
-
-                    if (this.EntityPM && this.EntityPM.Id) {
-                        this.LoadDocumentsFilings();
-                    }
-                    else {
-                        this.LoadDocumentsFilingById($event);
+                    if ($event) {
+                        if (this.EntityPM && this.EntityPM.Id) {
+                            this.LoadDocumentsFilings();
+                        }
+                        else {
+                            this.LoadDocumentsFilingById($event);
+                        }
                     }
                 });
             });
@@ -740,7 +740,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
 
         else {
             if (this.ShipperName && this.ShipperName.length > 50) {
-                this.ValidationErrorsList.push("Supplier Name can't be more than 5 characters");
+                this.ValidationErrorsList.push("Supplier Name can't be more than 50 characters");
             }
 
             if (this.documentsFilings.filter(d => d.IsSharedWithForwarder == true).length == 0) {
