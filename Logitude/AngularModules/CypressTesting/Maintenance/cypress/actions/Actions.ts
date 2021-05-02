@@ -622,13 +622,24 @@ export function DragAndDropFields(fieldDetails: QuoteTemplateDetails[]) {
         cy.get(MaintenanceSelectors.AvaliableColumnsFields(fieldDetails[i].Field)).drag(MaintenanceSelectors.ColumnDropArea(fieldDetails[i].Column))
     }
 }
-
-export function EditLabelField(labelToEdit: string, newFieldValue: string) {
+export function EditLabelField(labelToEdit:string,newFieldValue:string){
+if (labelToEdit=="Shipper Name"){
+    EditShipperNameLabelField(labelToEdit,newFieldValue)
+}
+else if(labelToEdit=="Customer"){
+    EditCustomerLabelField(labelToEdit,newFieldValue) 
+}
+}
+export function EditCustomerLabelField(labelToEdit: string, newFieldValue: string) {
     cy.Navigate(MaintenanceSelectors.QuoteSettingsLabel);
     cy.Click(MaintenanceSelectors.LabelDiv(labelToEdit), null);
     cy.get(MaintenanceSelectors.LabelTextBox(labelToEdit)).type(newFieldValue);
 }
 
+export function EditShipperNameLabelField(labelToEdit: string, newFieldValue: string) {
+    cy.Navigate(MaintenanceSelectors.QuoteSettingsLabel);
+       cy.get(BaseSelectors.TextTrimming).contains(labelToEdit).type(newFieldValue);
+}
 export function AddDataFieldToIntroduction(fieldToBeAdd: string) {
     cy.Click(MaintenanceSelectors.AddDataField, null)
     cy.Click(MaintenanceSelectors.IntroductionDataField(fieldToBeAdd), null)
@@ -644,7 +655,7 @@ export function AddColumnsToPricingTable(coulmnsList: QuoteTemplateDetails[]) {
 export function OpenQuoteTemplate() {
     SearchQuoteTemplate()
     DefineQuoteTemplatetGetSingleRequest()
-    cy.get(BaseSelectors.RowClass).last().click();
+    cy.get(BaseSelectors.RowClass).last().click({force:true});
     AssertOpenQuoteTemplate();
 }
 
@@ -663,6 +674,8 @@ export function UpdateQuoteHeaderTemplate() {
     DefineQuoteTemplatetPutTextDesignRequest();
     DefineQuoteTemplatetPutHeaderFieldsRequest();
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+    cy.Click(BaseSelectors.RedButton+BaseSelectors.LastElement,null)
+
 }
 
 export function UpdateQuotePricingTemplate() {
@@ -673,6 +686,7 @@ export function UpdateQuotePricingTemplate() {
 export function UpdateQuoteIntroductionTemplate() {
     DefineQuoteTemplatetPutSectionsRequest();
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+
 }
 
 export function AssertCreateQuoteTemplate() {
