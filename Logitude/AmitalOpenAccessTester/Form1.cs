@@ -31,7 +31,15 @@ namespace AmitalOpenAccessTester
                 var pocoGGGQ = cntxt.GGGQs.FirstOrDefault();
                 myDESC = pocoGGGQ.DESC;
 #endif
+
+                var pocoGAQDATA = cntxt.GAQDATAs.FirstOrDefault();
+                
                 MessageBox.Show(myDESC);
+
+
+                String statusShort = pocoGAQDATA.STATUS;
+
+                String PRIORITY = pocoGAQDATA.PRIORITY;
             }
         }
     }
