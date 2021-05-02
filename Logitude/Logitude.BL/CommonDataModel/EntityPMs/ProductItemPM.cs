@@ -21,7 +21,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         private List<HTSCodePM> HTScodes;
         [Include]
-        [Association("ProductItemPM", "Id", "CustomerId")]
+        [Association("ProductItemHTScodesProduct", "Id", "ItemId")]
         [Composition]
         [DataMember]
         public virtual List<HTSCodePM> HTSCodes

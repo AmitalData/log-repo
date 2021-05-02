@@ -1,11 +1,10 @@
-
 <div class="TabHolder">
     <table>
         <tr class="TabTitleRow">
             <td>
                 <table>
                     <tr>
-                        <td>{{'Shipment.TH.ProductItems' | TextCodeTranslationPipe}}</td>
+                        <td>{{'Customer.TH.ProductItems' | TextCodeTranslationPipe}}</td>
 
                         <td style="width: 21px">
                             <IconButton [Name]="'Add'" [IsEnabled]="IsEditingEnabled" (click)="AddProductItem()"></IconButton>
@@ -15,11 +14,30 @@
             </td>
         </tr>
 
+        <tr style="height: 5px;">
+            <td>
+                <div></div>
+            </td>
+        </tr>
+
         <tr>
             <td>
                 <div class="MediaFill">
-                    <ScrollViewer>
-                    </ScrollViewer>
+                    <div class="SimpleGridView">
+                        <div class="SimpleGridViewHeader">
+                            <table>
+                                <tr>
+                                    <td style="width: 150px; min-width: 150px; max-width: 150px;">Product Item Code</td>
+                                    <td style="width: 120px; min-width: 120px; max-width: 120px;">Description</td>
+                                    <td style="width: 120px; min-width: 120px; max-width: 120px;">Inactive</td>
+                                    <td class="LastChild">
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                    </div>
                 </div>
             </td>
         </tr>

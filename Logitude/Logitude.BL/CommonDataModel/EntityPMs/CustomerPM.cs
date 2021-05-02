@@ -928,7 +928,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         private List<ProductItemPM> customerProductItems;
         [Include]
-        [Association("ProductItemPM", "Id", "CustomerId")]
+        [Association("CustomerProductItemCustomer", "Id", "CustomerId")]
         [Composition]
         [DataMember]
         public virtual List<ProductItemPM> CustomerProductItems

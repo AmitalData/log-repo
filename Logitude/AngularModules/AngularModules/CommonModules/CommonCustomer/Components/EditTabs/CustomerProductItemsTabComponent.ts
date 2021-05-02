@@ -11,18 +11,19 @@ import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeCom
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { CustomerPM } from '../../../../Common/EntityPMs/CustomerPM';
+import { ProductItemPM } from '../../../../Common/EntityPMs/ProductItemPM';
 
 @Component({
     templateUrl: './CustomerProductItemsTabComponent.html',
 })
 
-export class ProductItemsTabComponent extends BaseComponent implements OnDestroy {
+export class CustomerProductItemsTabComponent extends BaseComponent implements OnDestroy {
     public EntityPM: CustomerPM;
     public ObjectTableName: string;
     public TransportModeId: string = null;
     public DataContext = this;
     public IsLCLEntity: boolean = false;
-    public IsFCLEntity: boolean = false;   
+    public IsFCLEntity: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     public ProductItems: ObservableCollection;
     constructor(public entityArgs: EntityArgs) {
@@ -70,7 +71,7 @@ export class ProductItemsTabComponent extends BaseComponent implements OnDestroy
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
 
-    public IsEditingEnabled: boolean = false;
+    public IsEditingEnabled: boolean = true;
     SetUIProperties() {
 
     }
@@ -107,12 +108,13 @@ export class ProductItem extends BaseComponent {
     //public EntityPM: ShipmentProductItemPM;
     public ObjectTableName: string = "ProductItem";
     public IsNewEntity: boolean = false;
+   
 
 
     constructor() {
         super();
         //    this.EntityPM = entity;
         //    this.IsNewEntity = isNew;
-
+        
     }
 }
