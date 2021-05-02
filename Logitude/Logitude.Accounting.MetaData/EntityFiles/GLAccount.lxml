@@ -13353,6 +13353,32 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
+    <EventType
+      Code="&quot;EVFD&quot;"
+      ObjectTableName="&quot;GLAccount&quot;"
+      EnglishName="&quot; Follow-up Date Changed&quot;"
+      LocalName="&quot; Follow-up Date Changed&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;EVFR&quot;"
+      ObjectTableName="&quot;GLAccount&quot;"
+      EnglishName="&quot; Follow-up Remarks Changed&quot;"
+      LocalName="&quot; Follow-up Remarks Changed&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
   <Records />
   <MenuButtons

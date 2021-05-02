@@ -664,6 +664,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             FillForeignFields(entityPM);
             FillSearchFields(entityPM);
+            AddEventForGlAccountFollowUpData(entityPM);
             HandleGLAccountFollowUpData(entityPM);
 
         }
@@ -1712,8 +1713,50 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                     }
                 }
+               
             }
             base.Trace(entityPM, entityPOCO, changesXml);
+        }
+        GLAccountFollowUpDataPM gLAccountFollowUp;
+        private void AddEventForGlAccountFollowUpData(GLAccountPM accountPM)
+        {
+            ContactPM contact = GetLoggedContact(accountPM.Tenant);
+            showLocals = !contact.DontShowLocal;
+            gLAccountFollowUp = GetGLAccountFollowUpDataPM(accountPM);
+            if(gLAccountFollowUp != null)
+            {
+                if(gLAccountFollowUp.FollowUpDate != accountPM.GLAccountFollowUpDate )
+                {
+                    string oldValue = gLAccountFollowUp.FollowUpDate.ToString();
+                    string newValue = accountPM.GLAccountFollowUpDate.ToString();                  
+                    CreateEvent("EVFD", oldValue , newValue);                  
+                }
+              
+                if (gLAccountFollowUp.FollowUpRemarks != accountPM.GLAccountFollowUpRemarks)
+                {
+                    string oldValue = gLAccountFollowUp.FollowUpRemarks;
+                    string newValue = accountPM.GLAccountFollowUpRemarks;                  
+                    CreateEvent( "EVFR",oldValue,newValue);
+                    
+                }
+            }
+        }
+        
+        private void CreateEvent(string eventCode, string oldValue, string newValue)
+        {
+            String notes = TranslateTextsClass.Translate("Accounting.General.O.OldValue", EntityPM.Tenant, showLocals) +
+                           oldValue+TranslateTextsClass.Translate("Accounting.General.O.NewValue", EntityPM.Tenant, showLocals) + newValue;
+            EventTracer.CreateTraceEvent(new EventTracerArgs()
+            {
+                EntityId = EntityPM.Id,
+                Tenant = EntityPM.Tenant,
+                UserId = GetLoggedContact(EntityPM.Tenant).Id,
+                ObjectTableName = "GLAccount",
+                IsAddedManually = false,
+                EventTypeCode = eventCode,
+                Notes = notes,
+
+            });
         }
         protected override void AfterUpdating(GLAccountPM entityPM, EntityPM entityParentPM)
         {
