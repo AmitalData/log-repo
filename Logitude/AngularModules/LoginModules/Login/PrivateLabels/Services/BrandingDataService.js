@@ -34,13 +34,41 @@ export var BrandingDataService = (function () {
     BrandingDataService.SetPrivateLabelsDataRequest = function (brandingData, baseUrl) {
         PrivateLabelsBrandingData.Tenant = brandingData.Tenant;
         PrivateLabelsBrandingData.MainColor = brandingData.MainColor || "#000000";
+        PrivateLabelsBrandingData.SecondaryColor = brandingData.SecondaryColor || "#000000";
         document.documentElement.style.setProperty('--MainColor', PrivateLabelsBrandingData.MainColor);
+        document.documentElement.style.setProperty('--SecondaryColor', PrivateLabelsBrandingData.SecondaryColor);
+        this.MainColor = PrivateLabelsBrandingData.MainColor;
+        this.SecondaryColor = PrivateLabelsBrandingData.SecondaryColor;
         BrandingDataService.SetPrivateLabelsImages(brandingData, baseUrl);
+        BrandingDataService.SetPrivateLabelsColors(brandingData);
     };
     BrandingDataService.ConvertHexaToRGBA = function (color) {
         if (color) {
             var alpha = parseInt(color.slice(1, 3), 16) / 255;
             return 'rgba(' + parseInt(color.slice(-6, -4), 16) + ',' + parseInt(color.slice(-4, -2), 16) + ',' + parseInt(color.slice(-2), 16) + ',' + alpha + ')';
+        }
+    };
+    BrandingDataService.SetPrivateLabelsColors = function (BrandingData) {
+        this.SetMainColor(BrandingData);
+        this.SetSecondaryColor(BrandingData);
+    };
+    BrandingDataService.SetMainColor = function (BrandingData) {
+        if (BrandingData.MainColor) {
+            this.StoreImageInStorage("MainColor", "MainColor", BrandingData.MainColor);
+        }
+    };
+    BrandingDataService.SetSecondaryColor = function (BrandingData) {
+        if (BrandingData.SecondaryColor) {
+            this.StoreImageInStorage("SecondaryColor", "SecondaryColor", BrandingData.SecondaryColor);
+        }
+    };
+    BrandingDataService.GetColor = function (ColorStorageKey) {
+        var color = JSON.parse(localStorage.getItem(ColorStorageKey));
+        if (color && color.Id != null) {
+            return color.Data;
+        }
+        else {
+            return color;
         }
     };
     BrandingDataService.SetPrivateLabelsImages = function (BrandingData, baseUrl) {
@@ -175,6 +203,7 @@ export var BrandingDataService = (function () {
         { id: "SmallLogo", image: "./Images/PrivateLabel/LogBoxLogo.png" },
     ];
     BrandingDataService.MainColor = null;
+    BrandingDataService.SecondaryColor = null;
     return BrandingDataService;
 }());
 //# sourceMappingURL=BrandingDataService.js.map
