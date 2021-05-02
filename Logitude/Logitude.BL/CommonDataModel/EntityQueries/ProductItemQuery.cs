@@ -45,6 +45,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     Remarks = entityPoco.Remarks,
                     InActive = entityPoco.InActive,
                     Description = entityPoco.Description,
+                    ItemCode = entityPoco.ItemCode,
                 };
             }
 
@@ -63,6 +64,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    Remarks = entity.Remarks,
                                                    InActive = entity.InActive,
                                                    Description = entity.Description,
+                                                   ItemCode = entity.ItemCode,
                                                };
             return result;
         }
@@ -80,6 +82,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     Remarks = a.Remarks,
                                                     InActive = a.InActive,
                                                     Description = a.Description,
+                                                    ItemCode = a.ItemCode,
                                                 }).ToList();
 
 

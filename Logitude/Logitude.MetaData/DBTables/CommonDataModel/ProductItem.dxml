@@ -52,6 +52,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ItemCode"
+    Type="varchar"
+    Size="10">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CustomerId"
     ReferencedTable="Customers"
