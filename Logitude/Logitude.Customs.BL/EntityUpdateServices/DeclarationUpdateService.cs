@@ -730,7 +730,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             if (entityPM.CasualImporterTel!=null)
             {
-                entityPM.CasualImporterTel = Regex.Replace(entityPM.CasualImporterTel, "[^.0-9]", "");///- יש להוריד את כל התווים הלא נומריים 
+                entityPM.CasualImporterTel = Regex.Replace(entityPM.CasualImporterTel, "[^0-9]", "");///- יש להוריד את כל התווים הלא נומריים 
                 entityPM.CasualImporterTel = Regex.Replace(entityPM.CasualImporterTel, @"\s+", "");///שיהייה
             }
             if (entityPM.CasualImporterTel!= entityPOCO.CasualImporterTel)
