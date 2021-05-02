@@ -172,7 +172,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         private string _UPDATEBY;
 
         [System.Runtime.Serialization.DataMember]
-        public virtual bool? STATUS
+        public virtual String STATUS
         {
             get
             {
@@ -187,7 +187,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private bool? _STATUS;
+        private String _STATUS;
 
         [System.Runtime.Serialization.DataMember]
         public virtual string ENTNAME
@@ -352,7 +352,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         private global::System.DateTime? _GDATE1;
 
         [System.Runtime.Serialization.DataMember]
-        public virtual bool? PRIORITY
+        public virtual string PRIORITY
         {
             get
             {
@@ -367,7 +367,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private bool? _PRIORITY;
+        private string _PRIORITY;
 
         [System.Runtime.Serialization.DataMember]
         public virtual global::System.DateTime? PENDINGDATE
