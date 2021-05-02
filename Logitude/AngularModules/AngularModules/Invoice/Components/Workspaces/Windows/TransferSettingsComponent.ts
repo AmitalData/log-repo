@@ -206,6 +206,8 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
 
         this.UIProperties.SetEnabled("ARInvoiceTransferStartDate", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("APInvoiceTransferStartDate", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("ARPaymentTransferStartDate", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("APPaymentTransferStartDate", this.ObjectTableName, false);
         //this.UIProperties.SetEnabled("TransferToDropboxActivated", this.ObjectTableName, this.IsDropBoxConnected);
         
         var isReceivableVATableTempCardRequired = false;
@@ -383,6 +385,20 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
     public set APInvoiceTransferStartDate(value: Date) {
         if (this.EntityPM.APInvoiceTransferStartDate != value) {
             this.EntityPM.APInvoiceTransferStartDate = value;
+        }
+    }
+
+    public get ARPaymentTransferStartDate() { return this.EntityPM.ARPaymentTransferStartDate; }
+    public set ARPaymentTransferStartDate(value: Date) {
+        if (this.EntityPM.ARPaymentTransferStartDate != value) {
+            this.EntityPM.ARPaymentTransferStartDate = value;
+        }
+    }
+
+    public get APPaymentTransferStartDate() { return this.EntityPM.APPaymentTransferStartDate; }
+    public set APPaymentTransferStartDate(value: Date) {
+        if (this.EntityPM.APPaymentTransferStartDate != value) {
+            this.EntityPM.APPaymentTransferStartDate = value;
         }
     }
 
