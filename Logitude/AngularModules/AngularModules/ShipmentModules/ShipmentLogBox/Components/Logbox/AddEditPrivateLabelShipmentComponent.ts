@@ -107,7 +107,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
     //
     RefreshTimer: any;
 
-    documentsFilings: any[];
+    documentsFilings: any[] = [];
     LoadDocumentsFilings() {
         if (this.EntityPM && this.EntityPM.Id) {
             this.documentsFilings = [];
@@ -148,13 +148,6 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
 
 
     EntityProgressStatusId: string;
-    LoadEntityProgressStatus() {
-        new EntityStatusExtendedListService().getSingle("INPS").subscribe((Status: ServiceResponse) => {
-            this.EntityProgressStatusId = Status.Result.Id;
-           
-        });
-    }
-
     ConnectShipment(entity: any) {
 
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
@@ -455,7 +448,9 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
 
             this._EntityStatusListService.getAll().subscribe((myResult: any) => {
                 if (!myResult.HasError) {
-                    this.StatusId = myResult.Result.filter(a => a.Code == "OPOP")[0].Id;
+
+                    this.StatusId = myResult.Result.filter(a => a.Code == "OPOP")[0]?.Id;
+                    this.EntityProgressStatusId = myResult.Result.filter(a => a.Code == "INPS")[0]?.Id;
                 }
                 else {
                     this.ValidationErrorsList = myResult.ErrorsArray;
@@ -743,7 +738,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                 this.ValidationErrorsList.push("Supplier Name can't be more than 50 characters");
             }
 
-            if (this.documentsFilings.filter(d => d.IsSharedWithForwarder == true).length == 0) {
+            if (!this.documentsFilings || this.documentsFilings.filter(d => d.IsSharedWithForwarder == true).length == 0) {
                 this.ValidationErrorsList.push("You should have at least one document shared with agent");
             }
         }
