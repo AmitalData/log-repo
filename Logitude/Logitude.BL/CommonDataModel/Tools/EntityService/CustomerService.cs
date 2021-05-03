@@ -68,7 +68,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private CustomerMediatorByProductRepository customerMediatorByProductRepository;
         private CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository;
         private ProductItemRepository productItemRepository;
-        private ProductItemService productItemService;
         private HTSCodeRepository hTSCodeRepository;
         private CardService cardService;
         ContactService contactService;
@@ -108,8 +107,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.customerForwarderByProductRepository = new CustomerForwarderByProductRepository(objectContext);
             this.customerMediatorByProductRepository = new CustomerMediatorByProductRepository(objectContext);
             this.cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(objectContext);
-            this.productItemRepository = new ProductItemRepository(objectContext);
-            this.productItemService = new ProductItemService(objectContext, tenant);
+            this.productItemRepository = new ProductItemRepository(objectContext);            
             this.hTSCodeRepository = new HTSCodeRepository(objectContext);
             this.contactService = new ContactService(objectContext, tenant);
             cardService = new CardService(objectContext, tenant);
@@ -1734,6 +1732,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private void CreateCustomerProductItem(ProductItemPM itemPM)
         {
+            itemPM.Id = IdCounter.GetNumber("ProductItem", tenant);
             itemPM.CustomerId = this.entityPM.Id;
             itemPM.Tenant = tenant;
 
@@ -1746,7 +1745,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             ProductItemMapping.MapEntity(itemPM, itemPoco, true);
             productItemRepository.Add(itemPoco);
 
-
             if (itemPM.HTSCodes != null)
             {
                 foreach (HTSCodePM hTSCodePM in itemPM.HTSCodes)
@@ -1754,7 +1752,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     this.CreateCustomerProductItemHTSCode(hTSCodePM);
                 }
             }
-
         }
         private void UpdateCustomerProductItem(ProductItemPM itemPM)
         {

@@ -146,6 +146,7 @@
     <Content Include="CommonModules\CommonAirline\Components\EditTabs\AirlineGeneralTabComponent.html" />
     <Content Include="CommonModules\CommonCustomer\Components\AddEdit\AddEditCustomerProductItemComponent.html" />
     <Content Include="CommonModules\CommonCustomer\Components\EditTabs\CustomerOccasionsTabComponent.html" />
+    <Content Include="CommonModules\CommonCustomer\Components\EditTabs\CustomerProductItemsTabComponent.html" />
     <Content Include="CommonModules\CommonCustomer\Components\EditTabs\MoreButtons\CustomerCustomsAgentByProductSplitComponent.html" />
     <Content Include="CommonModules\CommonCustomer\Components\EditTabs\MoreButtons\CustomerForwarderByProductSplitComponent.html" />
     <Content Include="CommonModules\CommonCustomer\Components\EditTabs\MoreButtons\CustomerMediatorByProductSplitComponent.html" />

@@ -41,7 +41,6 @@ import {CustomerMediatorByProductPM} from '../../EntityPMs/CustomerMediatorByPro
 import {CardExternalCodeByCurrencyPM} from '../../EntityPMs/CardExternalCodeByCurrencyPM';
 import { ProductItemPM } from '../../EntityPMs/ProductItemPM';
 import { HTSCodePM } from '../../EntityPMs/HTSCodePM';
-import { ProductItem } from '../../../ShipmentModules/ShipmentTabs/Components/ProductItems/ProductItemsTabComponent';
 
 @Injectable()
 
@@ -204,8 +203,6 @@ export class CustomerPMService {
 
     }
 
-
-
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: CustomerPM = null) {
 
 
@@ -253,7 +250,8 @@ export class CustomerPMService {
         this.MapCustomerForwarderByProducts(entityPM, jsonPM, mapParent); // Call composition tables map methods
         this.MapCustomerMediatorByProducts(entityPM, jsonPM, mapParent); // Call composition tables map methods
         this.MapCardExternalCodeByCurrencies(entityPM, jsonPM, mapParent); // Call composition tables map methods
-        this.MapCustomerProductItems(entityPM, jsonPM, mapParent)
+        this.MapProductItems(entityPM, jsonPM, mapParent);
+
         entityPM.IsDirty = false;
 
         if (mapParent) {
@@ -369,8 +367,6 @@ export class CustomerPMService {
             for (var item in entityPM.CustomerForwarderByProducts) {
                 var myCustomerForwarderByProductPM = entityPM.CustomerForwarderByProducts[item];
                 var newCustomerForwarderByProductPM: CustomerForwarderByProductPM = this.clone(myCustomerForwarderByProductPM);
-
-
                 entityPM.OldEntityPM.CustomerForwarderByProducts.push(newCustomerForwarderByProductPM);
             }
 
@@ -378,8 +374,6 @@ export class CustomerPMService {
             for (var item in entityPM.CustomerMediatorByProducts) {
                 var myCustomerMediatorByProductPM = entityPM.CustomerMediatorByProducts[item];
                 var newCustomerMediatorByProductPM: CustomerMediatorByProductPM = this.clone(myCustomerMediatorByProductPM);
-
-
                 entityPM.OldEntityPM.CustomerMediatorByProducts.push(newCustomerMediatorByProductPM);
             }
 
@@ -387,19 +381,23 @@ export class CustomerPMService {
             for (var item in entityPM.CardExternalCodeByCurrencies) {
                 var myCardExternalCodeByCurrencyPM = entityPM.CardExternalCodeByCurrencies[item];
                 var newCardExternalCodeByCurrencyPM: CardExternalCodeByCurrencyPM = this.clone(myCardExternalCodeByCurrencyPM);
-
-
                 entityPM.OldEntityPM.CardExternalCodeByCurrencies.push(newCardExternalCodeByCurrencyPM);
             }
 
             entityPM.OldEntityPM.CustomerProductItems = [];
             for (var item in entityPM.CustomerProductItems) {
-                var CustomerProductItemPM = entityPM.CustomerProductItems[item];
-                var newCustomerProductItemPM: ProductItemPM = this.clone(CustomerProductItemPM);
+                var myProductItemPM = entityPM.CustomerProductItems[item];
+                var newProductItemPM: ProductItemPM = this.clone(myProductItemPM);
 
+                newProductItemPM.HTSCodes = [];
+                for (var k in myProductItemPM.HTSCodes) {
+                    var newHTSCodePM = this.clone(myProductItemPM.HTSCodes[k]);
+                    newProductItemPM.HTSCodes.push(newHTSCodePM);
+                }
 
-                entityPM.OldEntityPM.CustomerProductItems.push(newCustomerProductItemPM);
+                entityPM.OldEntityPM.CustomerProductItems.push(newProductItemPM);
             }
+
         }
         else {
 
@@ -1609,11 +1607,11 @@ export class CustomerPMService {
         }
     }
 
-    MapCustomerProductItems(entityPM: CustomerPM, jsonPM: any, mapParent: boolean = true) {
+    MapProductItems(entityPM: CustomerPM, jsonPM: any, mapParent: boolean = true) {
 
-        var oldCustomerProductItems: ProductItemPM[] = [];
+        var oldProductItems: ProductItemPM[] = [];
         if (entityPM.OldEntityPM && !mapParent) {
-            oldCustomerProductItems = entityPM.OldEntityPM.CustomerProductItems;
+            oldProductItems = entityPM.OldEntityPM.CustomerProductItems;
         }
 
         entityPM.CustomerProductItems = new Array<ProductItemPM>();
@@ -1647,16 +1645,14 @@ export class CustomerPMService {
                 jItem.ChangeSetOp = "None";
                 newCustomerProductItemPM.OldEntityPM = this.clone(newCustomerProductItemPM);
 
-
-                this.MapProductItemHTSCodes(newCustomerProductItemPM, jItem, mapParent);
+                this.MapHTSCodes(newCustomerProductItemPM, jItem, mapParent);
                 newCustomerProductItemPM.OldEntityPM.HTSCodes = [];
                 for (var k in newCustomerProductItemPM.HTSCodes) {
                     var clonedInside = this.clone(newCustomerProductItemPM.HTSCodes[k]);
-                    newCustomerProductItemPM.OldEntityPM.HTSCodes.push(clonedInside); // clone old ProductLocations//
+                    newCustomerProductItemPM.OldEntityPM.HTSCodes.push(clonedInside);
                 }
-
-
             }
+
             else {
                 if (newCustomerProductItemPM.UniqueKey) {
 
@@ -1667,8 +1663,7 @@ export class CustomerPMService {
                     newCustomerProductItemPM.ChangeSetOp = "Insert";
                 }
 
-
-                this.MapProductItemHTSCodes(newCustomerProductItemPM, jItem, mapParent);
+                this.MapHTSCodes(newCustomerProductItemPM, jItem, mapParent);
 
                 newCustomerProductItemPM.OldEntityPM = null;
                 newCustomerProductItemPM.EntityParentPM = null;
@@ -1677,15 +1672,13 @@ export class CustomerPMService {
             newCustomerProductItemPM.IsDirty = false;
             entityPM.CustomerProductItems.push(newCustomerProductItemPM);
         }
-        if (oldCustomerProductItems) {
+        if (oldProductItems) {
 
-            for (var itemKey in oldCustomerProductItems) {
-                if (entityPM.CustomerProductItems.filter(p => p.UniqueKey === oldCustomerProductItems[itemKey].UniqueKey).length === 0) {
+            for (var itemKey in oldProductItems) {
+                if (entityPM.CustomerProductItems.filter(p => p.UniqueKey === oldProductItems[itemKey].UniqueKey).length === 0) {
 
-                    if (oldCustomerProductItems[itemKey]) {
-                        //oldCustomerProducts[itemKey].ChangeSetOp = "Delete";
-                        //entityPM.CustomerProducts.push(oldCustomerProducts[itemKey]);
-                        var oldItemJson = oldCustomerProductItems[itemKey];
+                    if (oldProductItems[itemKey]) {
+                        var oldItemJson = oldProductItems[itemKey];
                         var deletedPM: ProductItemPM = new ProductItemPM(null);
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
@@ -1698,13 +1691,10 @@ export class CustomerPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
 
-
-
-                        this.MapProductItemHTSCodes(deletedPM, oldItemJson, mapParent);
+                        this.MapHTSCodes(deletedPM, oldItemJson, mapParent);
                         deletedPM.OldEntityPM = null;
                         entityPM.CustomerProductItems.push(deletedPM);
                     }
@@ -1712,12 +1702,11 @@ export class CustomerPMService {
             }
         }
     }
+    MapHTSCodes(entityPM: ProductItemPM, jsonPM: any, mapParent: boolean = true) {
 
-    MapProductItemHTSCodes(entityPM: ProductItemPM, jsonPM: any, mapParent: boolean = true) {
-
-        var oldProductHTSCodes: HTSCodePM[] = [];
+        var oldHTSCodes: HTSCodePM[] = [];
         if (entityPM.OldEntityPM && !mapParent) {
-            oldProductHTSCodes = entityPM.OldEntityPM.HTSCodes;
+            oldHTSCodes = entityPM.OldEntityPM.HTSCodes;
         }
 
         entityPM.HTSCodes = new Array<HTSCodePM>();
@@ -1726,13 +1715,13 @@ export class CustomerPMService {
             if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
                 continue;
             }
-            var newCustomerProductItemHTSCodesPM: HTSCodePM;
+            var newHTSCodePM: HTSCodePM;
 
             if (mapParent) {
-                newCustomerProductItemHTSCodesPM = new HTSCodePM(entityPM);
+                newHTSCodePM = new HTSCodePM(entityPM);
             }
             else {
-                newCustomerProductItemHTSCodesPM = new HTSCodePM(null);
+                newHTSCodePM = new HTSCodePM(null);
             }
 
             var pmKeysArray = Object.keys(jItem);
@@ -1741,51 +1730,46 @@ export class CustomerPMService {
                     continue;
                 }
                 var pmProperty = pmKeysArray[pmKey];
-                newCustomerProductItemHTSCodesPM[pmProperty] = jItem[pmProperty];
+                newHTSCodePM[pmProperty] = jItem[pmProperty];
             }
-            newCustomerProductItemHTSCodesPM.IsDirty = false;
+            newHTSCodePM.IsDirty = false;
 
             if (mapParent) {
-                newCustomerProductItemHTSCodesPM.UniqueKey = Guid.newGuid();
-                newCustomerProductItemHTSCodesPM.ChangeSetOp = "None";
+                newHTSCodePM.UniqueKey = Guid.newGuid();
+                newHTSCodePM.ChangeSetOp = "None";
                 jItem.ChangeSetOp = "None";
-                newCustomerProductItemHTSCodesPM.OldEntityPM = this.clone(newCustomerProductItemHTSCodesPM);
-                //file not found! child composition CustomerProductLocation
-
-
+                newHTSCodePM.OldEntityPM = this.clone(newHTSCodePM);
             }
+
             else {
                 if (entityPM.ChangeSetOp === "Delete") {
-                    newCustomerProductItemHTSCodesPM.ChangeSetOp = "Delete";
+                    newHTSCodePM.ChangeSetOp = "Delete";
                 }
                 else {
-                    if (newCustomerProductItemHTSCodesPM.UniqueKey) {
+                    if (newHTSCodePM.UniqueKey) {
 
                         if (jItem.IsDirty)
-                            newCustomerProductItemHTSCodesPM.ChangeSetOp = "Update";
+                            newHTSCodePM.ChangeSetOp = "Update";
                     }
                     else {
-                        newCustomerProductItemHTSCodesPM.ChangeSetOp = "Insert";
+                        newHTSCodePM.ChangeSetOp = "Insert";
                     }
                 }
-                //file not found! child composition CustomerProductLocation
 
-                newCustomerProductItemHTSCodesPM.OldEntityPM = null;
-                newCustomerProductItemHTSCodesPM.EntityParentPM = null;
+                newHTSCodePM.OldEntityPM = null;
+                newHTSCodePM.EntityParentPM = null;
             }
 
-            newCustomerProductItemHTSCodesPM.IsDirty = false;
-            entityPM.HTSCodes.push(newCustomerProductItemHTSCodesPM);
+            newHTSCodePM.IsDirty = false;
+            entityPM.HTSCodes.push(newHTSCodePM);
         }
-        if (oldProductHTSCodes) {
+        if (oldHTSCodes) {
 
-            for (var itemKey in oldProductHTSCodes) {
-                if (entityPM.HTSCodes.filter(p => p.UniqueKey === oldProductHTSCodes[itemKey].UniqueKey).length === 0) {
+            for (var itemKey in oldHTSCodes) {
+                if (entityPM.HTSCodes.filter(p => p.UniqueKey === oldHTSCodes[itemKey].UniqueKey).length === 0) {
 
-                    if (oldProductHTSCodes[itemKey]) {
-                        //oldProductLocations[itemKey].ChangeSetOp = "Delete";
-                        //entityPM.ProductLocations.push(oldProductLocations[itemKey]);
-                        var oldItemJson = oldProductHTSCodes[itemKey];
+                    if (oldHTSCodes[itemKey]) {
+                        var oldItemJson = oldHTSCodes[itemKey];
                         var deletedPM: HTSCodePM = new HTSCodePM(null);
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
@@ -1802,7 +1786,6 @@ export class CustomerPMService {
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
 
-                        //file not found! child composition CustomerProductLocation
                         deletedPM.OldEntityPM = null;
                         entityPM.HTSCodes.push(deletedPM);
                     }
@@ -1835,6 +1818,4 @@ export class CustomerPMService {
         entityPM.Tenant = InfraSettings.TenantPM.Id;
         return entityPM;
     }
-
-
 }

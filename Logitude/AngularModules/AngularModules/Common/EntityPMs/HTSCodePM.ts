@@ -53,14 +53,19 @@ export class HTSCodePM {
     public set Code(newValue: string) { if (this.code != newValue) { this.code = newValue; this.MarkAsDirty("Code"); } }
        
 	 
-    private approvedByCustomer: string;
+    private approvedByCustomer: boolean;
     public get ApprovedByCustomer() { return this.approvedByCustomer; }
-    public set ApprovedByCustomer(newValue: string) { if (this.approvedByCustomer != newValue) { this.approvedByCustomer = newValue; this.MarkAsDirty("ApprovedByCustomer"); } }
+    public set ApprovedByCustomer(newValue: boolean) { if (this.approvedByCustomer != newValue) { this.approvedByCustomer = newValue; this.MarkAsDirty("ApprovedByCustomer"); } }
        
 	 
     private inActive: boolean;
     public get InActive() { return this.inActive; }
     public set InActive(newValue: boolean) { if (this.inActive != newValue) { this.inActive = newValue; this.MarkAsDirty("InActive"); } }
+       
+	 
+    private changeSetOp: string;
+    public get ChangeSetOp() { return this.changeSetOp; }
+    public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
        
 	 
 

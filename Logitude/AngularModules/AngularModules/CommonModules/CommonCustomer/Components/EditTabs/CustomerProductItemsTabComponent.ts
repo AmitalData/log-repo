@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ShipmentPM } from '../../../../Shipment/EntityPMs/ShipmentPM';
@@ -13,12 +13,13 @@ import { ObservableCollection } from '../../../../Infrastructure/Utilities/Obser
 import { CustomerPM } from '../../../../Common/EntityPMs/CustomerPM';
 import { ProductItemPM } from '../../../../Common/EntityPMs/ProductItemPM';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { HTSCodePM } from '../../../../Common/EntityPMs/HTSCodePM';
 
 @Component({
     templateUrl: './CustomerProductItemsTabComponent.html',
 })
 
-export class CustomerProductItemsTabComponent extends BaseComponent implements OnDestroy {
+export class CustomerProductItemsTabComponent extends BaseComponent implements OnInit, OnDestroy {
     public EntityPM: CustomerPM;
     public ObjectTableName: string;
     public TransportModeId: string = null;
@@ -27,13 +28,11 @@ export class CustomerProductItemsTabComponent extends BaseComponent implements O
     public IsFCLEntity: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     public ProductItems: ObservableCollection;
-    constructor(public entityArgs: EntityArgs) {
+    constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
         this.ObjectTableName = this.entityArgs.ObjectTableName;
-
-        this.SetUIProperties();
-        this.BuildProductItems();
+        
         this.Listen();
     }
 
@@ -63,6 +62,13 @@ export class CustomerProductItemsTabComponent extends BaseComponent implements O
         });
     }
 
+    ngOnInit() {
+        this.entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((res3: any) => {
+            this.SetUIProperties();
+            this.BuildProductItems();
+        });
+    }
+
     private SessionEvent: any = null;
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
@@ -77,17 +83,6 @@ export class CustomerProductItemsTabComponent extends BaseComponent implements O
 
     }
 
-    private OpenEditWindow(myWindowTitle: string, itemPM: any, objectTableName: string) {
-        var service: EntityResourceService = new EntityResourceService();
-        service.getEntityResourceByTableName(objectTableName).subscribe((response: any) => {
-            var logitudeWindow = new LogitudeWindow();
-            logitudeWindow.Title = myWindowTitle;
-            logitudeWindow.WindowArgs = { ProductItemPM: null, CustomerPM: itemPM, IsNew: false, };
-            logitudeWindow.WindowClosed.subscribe(($event: any) => this.CurrentSession.CloseCurrentWindow());
-            logitudeWindow.Show('./CommonModules/CommonCustomer/Components/AddEdit/AddEditCustomerProductItemComponent');
-        });
-    }
-
     BuildProductItems() {
         if (this.ProductItems == null) {
             this.ProductItems = new ObservableCollection([]);
@@ -98,37 +93,102 @@ export class CustomerProductItemsTabComponent extends BaseComponent implements O
             });
         }
 
-        var itemsCollection: ProductItem[] = [];
+        var itemsCollection: CustomerProductItem[] = [];
 
-        //this.EntityPM.ShipmentProductItems.forEach(item => {
-        //    itemsCollection.push(new ProductItem(item, this, false));
-        //});
+        this.EntityPM.CustomerProductItems.forEach(item => {
+            itemsCollection.push(new CustomerProductItem(item, this, false));
+        });
 
         this.ProductItems.InsertCollection(itemsCollection);
     }
 
     AddProductItem() {
+        var productItem: ProductItemPM = new ProductItemPM(this.EntityPM);
+        productItem.Tenant = SessionLocator.Tenant;
 
-        this.OpenEditWindow("Add Product Item", this.EntityPM , "ProductItem");
-        //var item: ShipmentPackageItemPM = new ShipmentPackageItemPM(null);
-        //item.Tenant = SessionLocator.Tenant;
-        //item.PackageId = this.EntityPM.Id;
-        
-        //this.ProductItems.Insert(new ProductItem(item, this, true));
+        var newProductItem: CustomerProductItem = new CustomerProductItem(productItem, this, true);
+        this.OpenEditWindow("Add Product Item", newProductItem);
+    }
+
+    private OpenEditWindow(myWindowTitle: string, itemPM: CustomerProductItem) {
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Title = myWindowTitle;
+        logitudeWindow.WindowArgs = { CustomerProductItem: itemPM, CustomerPM: this.EntityPM, };
+        logitudeWindow.Show('./CommonModules/CommonCustomer/Components/AddEdit/AddEditCustomerProductItemComponent');
     }
 }
 
-export class ProductItem extends BaseComponent {
-    //public EntityPM: ShipmentProductItemPM;
+export class CustomerProductItem extends BaseComponent {
+    public EntityPM: ProductItemPM;
     public ObjectTableName: string = "ProductItem";
     public IsNewEntity: boolean = false;
-   
 
-
-    constructor() {
+    constructor(entity: ProductItemPM, public fatherComponent: CustomerProductItemsTabComponent, isNew: boolean) {
         super();
-        //    this.EntityPM = entity;
-        //    this.IsNewEntity = isNew;
-        
+        this.EntityPM = entity;
+        this.IsNewEntity = isNew;
+
+        //this.SetUIProperties();
     }
+
+    SetUIProperties() {
+        //this.UIProperties.SetRequired("ItemCode", this.ObjectTableName, AppTool.IsNullOrEmpty(this.ItemCode));
+    }
+
+
+    get InActive() { return this.EntityPM.InActive; }
+    set InActive(value: boolean) {
+        if (this.EntityPM.InActive != value) {
+            this.EntityPM.InActive = value;
+        }
+    }
+
+    get Description() { return this.EntityPM.Description; }
+    set Description(value: string) {
+        if (this.EntityPM.Description != value) {
+            this.EntityPM.Description = value;
+        }
+    }
+
+    get ItemCode() { return this.EntityPM.ItemCode }
+    set ItemCode(value: string) {
+        if (this.EntityPM.ItemCode != value) {
+            this.EntityPM.ItemCode = value;
+        }
+    }
+
+    get SKU() { return this.EntityPM.SKU }
+    set SKU(value: string) {
+        if (this.EntityPM.SKU != value) {
+            this.EntityPM.SKU = value;
+        }
+    }
+
+    get Remarks() { return this.EntityPM.Remarks }
+    set Remarks(value: string) {
+        if (this.EntityPM.Remarks != value) {
+            this.EntityPM.Remarks = value;
+        }
+    }
+}
+
+export class CustomerHTSCode extends BaseComponent {
+    public EntityPM: HTSCodePM;
+    public ObjectTableName: string = "HTSCode";
+    public IsNewEntity: boolean = false;
+
+    constructor(entity: HTSCodePM, public fatherComponent: CustomerProductItem, isNew: boolean) {
+        super();
+        this.EntityPM = entity;
+        this.IsNewEntity = isNew;
+
+        //this.SetUIProperties();
+    }
+
+    SetUIProperties() {
+        //this.UIProperties.SetRequired("ItemCode", this.ObjectTableName, AppTool.IsNullOrEmpty(this.ItemCode));
+    }
+
+
+    
 }
