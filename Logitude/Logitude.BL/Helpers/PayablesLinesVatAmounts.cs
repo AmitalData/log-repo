@@ -103,7 +103,7 @@ namespace Logitude.BL.Helpers
         private double? CalculatePayableVatOpenAmount(ShipmentPayable shipmentPayable, double? amount)
         {
             string payableVatTypeId = this.GetPayableVatTypeId(shipmentPayable);
-            double? vatAmount = null;
+            double? vatAmount = amount;
             if (!string.IsNullOrEmpty(payableVatTypeId))
             {
                 VatType lineVatType = AllVatTypes.Where(d => d.Id == payableVatTypeId).FirstOrDefault();
