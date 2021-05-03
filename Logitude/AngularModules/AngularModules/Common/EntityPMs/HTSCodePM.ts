@@ -63,11 +63,6 @@ export class HTSCodePM {
     public set InActive(newValue: boolean) { if (this.inActive != newValue) { this.inActive = newValue; this.MarkAsDirty("InActive"); } }
        
 	 
-    private changeSetOp: string;
-    public get ChangeSetOp() { return this.changeSetOp; }
-    public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
-       
-	 
 
     public OldEntityPM: HTSCodePM;
 	    

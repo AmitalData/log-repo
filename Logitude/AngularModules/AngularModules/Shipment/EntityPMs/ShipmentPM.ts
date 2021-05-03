@@ -5365,6 +5365,39 @@ export class ShipmentPM {
         }
     }
 
+    private shipmentProductItems: ShipmentProductItemPM[];
+    get ShipmentProductItems() {
+        if (this.shipmentProductItems == null) {
+            this.shipmentProductItems = [];
+        }
+
+        return this.shipmentProductItems;
+    }
+    set ShipmentProductItems(newValue: ShipmentProductItemPM[]) {
+        if (this.shipmentProductItems != newValue) {
+            this.shipmentProductItems = newValue;
+        }
+    }
+    public AddProductItem(item: ShipmentProductItemPM) {
+        if (item != null) {
+            var index = this.ShipmentProductItems.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this.ShipmentProductItems.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveProductItem(item: ShipmentProductItemPM) {
+        if (item != null) {
+            var index = this.ShipmentProductItems.indexOf(item);
+            if (index > -1) {
+                this.ShipmentProductItems.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+
     private connectedMasterPackages: ShipmentPackagePM[];
     get ConnectedMasterPackages() {
         if (this.connectedMasterPackages == null) {

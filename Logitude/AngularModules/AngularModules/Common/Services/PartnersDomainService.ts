@@ -48,6 +48,7 @@ import { AccountingPartnerPMService } from './StandardPMs/AccountingPartnerPMSer
 import { TariffCarrierTranslationPM } from '../EntityPMs/TariffCarrierTranslationPM';
 import { WarehouseStoragePricingPM } from '../EntityPMs/WarehouseStoragePricingPM';
 import { CustomFieldClass } from '../../Infrastructure/DataContracts/CustomFieldClass'
+import { ProductItemPM } from '../EntityPMs/ProductItemPM';
 
 @Injectable()
 
@@ -1952,13 +1953,52 @@ export class PartnersDomainService {
         var url = this._apiUrl + '/GetCustomerProductItems?customerId=' + customerId + "&dischargePortCountryId=" + dischargePortCountryId;
 
         return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                var listJason = response;
+                var listMapped: Array<ProductItemPM> = [];
+
+                for (var itemJeson in listJason) {
+                    var itemMapped: ProductItemPM = this.MapProductItemPM(listJason[itemJeson]);
+                    listMapped.push(itemMapped);
+                }
+
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
-                serviceResponse.Result = response;
+                serviceResponse.Result = listMapped;
                 return serviceResponse;
             }), catchError(ServiceHelper.HandleServiceError));
         });
+    }
+    MapProductItemPM(jsonList: any, mapParent: boolean = true){
+        var entityPM: ProductItemPM = null;
+
+        if (jsonList) {
+            entityPM = new ProductItemPM(null);
+
+            var jsonListKeys = Object.keys(jsonList);
+
+            for (var key in jsonListKeys) {
+                var property = jsonListKeys[key];
+
+                if (property === "UIProperties" || property === "entityParentPM") {
+                    continue;
+                }
+
+                entityPM[property] = jsonList[property];
+            }
+
+            entityPM.IsDirty = false;
+
+            if (mapParent) {
+                entityPM.OldEntityPM = this.clone(entityPM);
+            }
+            else {
+                entityPM.OldEntityPM = null;
+            }
+        }
+
+        return entityPM;
     }
 }
 export class AirlineMessagingRuleList {
