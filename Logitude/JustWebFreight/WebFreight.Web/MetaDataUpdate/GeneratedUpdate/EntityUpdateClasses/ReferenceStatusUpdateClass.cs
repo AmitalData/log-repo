@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ReferenceStatusUpdateClass
    {  		
-		public const string HashString = "443cd45b524533c1e595d88aa6cd7e79";
+		public const string HashString = "39938c54349f030ab6f1ec7b7c9d69dd";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -472,7 +472,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode ReferenceStatusTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ReferenceStatus.Q.ReferenceStatus", DefaultText = @"Reference Status",LocalDefaultText = "Reference Status", ObjectTableId = ReferenceStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode ReferenceStatusTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ReferenceStatus.Q.ReferenceStatus", DefaultText = @"Reference Status",LocalDefaultText = " סטאטוס אסמכתא ", ObjectTableId = ReferenceStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature ReferenceStatusFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ReferenceStatus.Q.ReferenceStatus", ObjectTableId = ReferenceStatusObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReferenceStatusFeatures.ReferenceStatus", NameTextCodeDefaultText = "ReferenceStatus", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ReferenceStatusObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();

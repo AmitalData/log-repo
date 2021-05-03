@@ -437,7 +437,7 @@
   <Query
     Code="&quot;ReferenceStatus&quot;"
     TextCode="&quot;Reference Status&quot;"
-    LocalTextCode="&quot;Reference Status&quot;"
+    LocalTextCode="&quot; סטאטוס אסמכתא &quot;"
     QueryGroupCode="&quot;c924&quot;"
     IndexOrder="0"
     ObjectTableName="&quot;Customs.ReferenceStatus&quot;"

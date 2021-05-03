@@ -521,10 +521,11 @@
     <None Include="EntityFiles\ExporterRoleType.lxml" />
     <None Include="EntityFiles\FclLclCode.lxml" />
     <None Include="EntityFiles\LoadingSiteType.lxml" />
+
+    <None Include="EntityFiles\CancelRequestRejectReasonType.lxml" />
     <None Include="EntityFiles\ReferenceStatus.lxml" />
     <None Include="EntityFiles\ReferenceInputType.lxml" />
     <None Include="EntityFiles\LogisticsReferenceType.lxml" />
-    <None Include="EntityFiles\CancelRequestRejectReasonType.lxml" />
     <None Include="EntityFiles\NbcDeclarationType.lxml" />
     <None Include="EntityFiles\CargoSeal.lxml" />
     <None Include="EntityFiles\CargoSealIdentifier.lxml" />

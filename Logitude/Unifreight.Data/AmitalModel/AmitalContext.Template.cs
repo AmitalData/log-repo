@@ -6905,7 +6905,7 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnType("varchar2");
             modelBuilder.Entity<GAQDATA>()
                 .Property(p => p.STATUS)
-                    .HasColumnType("bool");
+                    .HasColumnType("varchar2");
             modelBuilder.Entity<GAQDATA>()
                 .Property(p => p.ENTNAME)
                     .HasMaxLength(32)
@@ -6947,7 +6947,7 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnType("date");
             modelBuilder.Entity<GAQDATA>()
                 .Property(p => p.PRIORITY)
-                    .HasColumnType("bool");
+                    .HasColumnType("varchar2");
             modelBuilder.Entity<GAQDATA>()
                 .Property(p => p.PENDINGDATE)
                     .HasColumnName(@"PENDING_DATE")
@@ -7554,11 +7554,215 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnName(@"PAGE_COUNT")
                     .HasColumnType("int");
 
-#endregion
-#region Disabled conventions
+            #endregion
 
 
-#endregion
+
+            #region GTBDPTM
+
+            modelBuilder.Entity<GTBDPTM>()
+                .HasKey(p => p.DEPARTID)
+                .ToTable("GTBDPTM", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<GTBDPTM>()
+                .Property(p => p.DEPARTID)
+                    .HasColumnName(@"DEPART_ID")
+                    .IsRequired()
+                    .HasMaxLength(5)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GTBDPTM>()
+                .Property(p => p.NAMEENG)
+                    .HasColumnName(@"NAME_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GTBDPTM>()
+                .Property(p => p.NAMEHEB)
+                    .HasColumnName(@"NAME_HEB")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GTBDPTM>()
+                .Property(p => p.SEARCHENG)
+                    .HasColumnName(@"SEARCH_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GTBDPTM>()
+                .Property(p => p.BLOCKRECORD)
+                    .HasColumnName(@"BLOCK_RECORD")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GTBDPTM>()
+                .Property(p => p.TELEPHONE)
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GTBDPTM>()
+                .Property(p => p.FAX)
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GTBDPTM>()
+                .Property(p => p.SYSTEM)
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+
+            #endregion
+
+            #region GSCUSR
+
+            modelBuilder.Entity<GSCUSR>()
+                .HasKey(p => p.USRCODE)
+                .ToTable("GSCUSR", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<GSCUSR>()
+                .Property(p => p.USRCODE)
+                    .HasColumnName(@"USR_CODE")
+                    .IsRequired()
+                    .HasMaxLength(15)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GSCUSR>()
+                .Property(p => p.USRPASS)
+                    .HasColumnName(@"USR_PASS")
+                    .HasMaxLength(32)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GSCUSR>()
+                .Property(p => p.USRNAMEE)
+                    .HasColumnName(@"USR_NAME_E")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GSCUSR>()
+                .Property(p => p.USRNAMEH)
+                    .HasColumnName(@"USR_NAME_H")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GSCUSR>()
+                .Property(p => p.USRGRP)
+                    .HasColumnName(@"USR_GRP")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GSCUSR>()
+                .Property(p => p.USRSUPER)
+                    .HasColumnName(@"USR_SUPER")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GSCUSR>()
+                .Property(p => p.USRBRANCH)
+                    .HasColumnName(@"USR_BRANCH")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GSCUSR>()
+                .Property(p => p.DEPARTMENT)
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GSCUSR>()
+                .Property(p => p.BLOCKRECORD)
+                    .HasColumnName(@"BLOCK_RECORD")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GSCUSR>()
+                .Property(p => p.SEARCHENG)
+                    .HasColumnName(@"SEARCH_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GSCUSR>()
+                .Property(p => p.USERTYPE)
+                    .HasColumnName(@"USER_TYPE")
+                    .HasColumnType("bool");
+            modelBuilder.Entity<GSCUSR>()
+                .Property(p => p.ACCESSTYPE)
+                    .HasColumnName(@"ACCESS_TYPE")
+                    .HasColumnType("bool");
+            modelBuilder.Entity<GSCUSR>()
+                .Property(p => p.UPDATEPASS)
+                    .HasColumnName(@"UPDATE_PASS")
+                    .HasColumnType("date");
+            modelBuilder.Entity<GSCUSR>()
+                .Property(p => p.USETOKEN)
+                    .HasColumnName(@"USE_TOKEN")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GSCUSR>()
+                .Property(p => p.ACCOUNTLOCK)
+                    .HasColumnName(@"ACCOUNT_LOCK")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GSCUSR>()
+                .Property(p => p.USERID)
+                    .HasColumnName(@"USER_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+
+            #endregion
+
+            #region GCBSCRNVWU
+
+            modelBuilder.Entity<GCBSCRNVWU>()
+                .HasKey(p => new { p.SCREENID, p.SCREENVIEWID, p.USRCODE })
+                .ToTable("GCBSCRNVWU", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<GCBSCRNVWU>()
+                .Property(p => p.SCREENID)
+                    .HasColumnName(@"SCREEN_ID")
+                    .IsRequired()
+                    .HasMaxLength(9)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GCBSCRNVWU>()
+                .Property(p => p.SCREENVIEWID)
+                    .HasColumnName(@"SCREEN_VIEW_ID")
+                    .IsRequired()
+                    .HasMaxLength(9)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GCBSCRNVWU>()
+                .Property(p => p.USRCODE)
+                    .HasColumnName(@"USR_CODE")
+                    .IsRequired()
+                    .HasMaxLength(15)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GCBSCRNVWU>()
+                .Property(p => p.DEFAULTLAYOUT)
+                    .HasColumnName(@"DEFAULT_LAYOUT")
+                    .HasColumnType("clob");
+
+            #endregion
+
+            #region GAQUSER
+
+            modelBuilder.Entity<GAQUSER>()
+                .HasKey(p => new { p.USERCODE, p.ENTNAME })
+                .ToTable("GAQUSERS", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<GAQUSER>()
+                .Property(p => p.USERCODE)
+                    .HasColumnName(@"USER_CODE")
+                    .IsRequired()
+                    .HasMaxLength(15)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQUSER>()
+                .Property(p => p.ENTNAME)
+                    .IsRequired()
+                    .HasMaxLength(2)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQUSER>()
+                .Property(p => p.USERLIST)
+                    .HasColumnName(@"USER_LIST")
+                    .HasMaxLength(1024)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQUSER>()
+                .Property(p => p.BLOCKRECORD)
+                    .HasColumnName(@"BLOCK_RECORD")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+
+            #endregion
+
+            #region Disabled conventions
+
+
+            #endregion
             return modelBuilder;///base.OnModelCreating(modelBuilder);
         }
 
@@ -7658,5 +7862,9 @@ namespace Unifreight.Data.AmitalModel
         public virtual DbSet<GITITEMCR> GITITEMCRs { get; set; }
         public virtual DbSet<GDMLOCK> GDMLOCKs { get; set; }
 
+        public virtual DbSet<GTBDPTM> GTBDPTMs { get; set; }
+        public virtual DbSet<GSCUSR> GSCUSRs { get; set; }
+        public virtual DbSet<GCBSCRNVWU> GCBSCRNVWUs { get; set; }
+        public virtual DbSet<GAQUSER> GAQUSERs { get; set; }
     }
 }

@@ -1218,6 +1218,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                     generalData.CorrectionDate = item.IssueDateTime;
                     generalData.Version = item.VersionId;
                     generalData.SystemMessageViews = new List<error>();
+                    generalData.ReferenceViews = new List<ReferenceView>();
 
                     foreach (Additional additional in item.AdditionalInformation)
                     {
@@ -1232,6 +1233,40 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         if(additional.StatementTypeCode != "27")
                         generalData.AdditionalInformation.Add(information);
 
+
+                    }
+
+
+                    foreach (Reference reference in item.References)
+                    {
+                        ReferenceView referenceView = new ReferenceView();
+                        referenceView.Remarks = reference.Remarks;
+                        referenceView.RefernceID = reference.RefernceID;
+
+                        LogisticsReferenceTypeQueryService logisticsReferenceTypeQueryService = new LogisticsReferenceTypeQueryService(tenant);
+                        LogisticsReferenceTypePM logisticsReferenceType = logisticsReferenceTypeQueryService.GetSingle(reference.ReferenceType, false, false);
+                        if (logisticsReferenceType != null)
+                        {
+                            referenceView.ReferenceTypeName  = logisticsReferenceType.LocalName;
+                        }
+
+                        ReferenceStatusQueryService referenceStatusQueryService = new ReferenceStatusQueryService(tenant);
+                        ReferenceStatusPM referenceStatus = referenceStatusQueryService.GetSingle(reference.RefernceStatus, false, false);
+                        if (referenceStatus != null)
+                        {
+                            referenceView.RefernceStatusName = referenceStatus.LocalName;
+                        }
+
+
+
+                        ReferenceInputTypeQueryService referenceInputTypeQueryService = new ReferenceInputTypeQueryService(tenant);
+                        ReferenceInputTypePM referenceInputType = referenceInputTypeQueryService.GetSingle(reference.RefernceInputType, false, false);
+                        if (referenceInputType != null)
+                        {
+                            referenceView.RefernceInputTypeName = referenceInputType.LocalName;
+                        }
+
+                        generalData.ReferenceViews.Add(referenceView);
 
                     }
 
