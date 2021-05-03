@@ -25,6 +25,18 @@ export class CargoTrackingShipmentService {
             catchError(null));
     }
 
+    GetShipmentPackages(id: string) {
+        var authHeaders = ServiceHelper.GetHeadersWithToken();
+
+        return this._http.get(this._apiUrl + '/GetShipmentPackages?' + 'id=' + id, authHeaders).pipe(
+            map((response: ServiceResponse) => {
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse = response;
+                return serviceResponse;
+            }),
+            catchError(null));
+    }
+
     GetPartnersAddresses(partnersIds: string[]) {
         var authHeaders = ServiceHelper.GetHeadersWithToken();
 
