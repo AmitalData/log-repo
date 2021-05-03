@@ -2031,7 +2031,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.Declaration",
+					  						ValidForQuerySection1 =  "Customs.DeclarationReferantData",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,

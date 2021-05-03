@@ -512,6 +512,27 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     {
                         UpdateDeclarationPending("901");
                     }
+                    if(currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.CrateNumber != _LogitudeCommDecFile.CrateNumber)
+ 	
+                  {
+ 	
+                  // UpdateNoIdUnder150();
+ 	
+                      currentDeclarationCourierStatusPM.CrateNumber = _LogitudeCommDecFile.CrateNumber;
+ 	
+                      if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+ 	
+                  }
+ 	
+                  if (currentDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
+ 	
+                  {
+ 	
+                      DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+ 	
+                      declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+ 	
+                    }
                     // UpdateNoIdUnder150();
                 }
             }

@@ -167,6 +167,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
                 // moran 31.5.15 - Task 13325 <--
             }
+            if(entityPM.IsAmendment!=true)
             entityPM.TaxationDateTime = DateTime.Now.Date;
             
         if (entityPM.IsAmendment==true)
@@ -730,7 +731,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             if (entityPM.CasualImporterTel!=null)
             {
-                entityPM.CasualImporterTel = Regex.Replace(entityPM.CasualImporterTel, "[^.0-9]", "");///- יש להוריד את כל התווים הלא נומריים 
+                entityPM.CasualImporterTel = Regex.Replace(entityPM.CasualImporterTel, "[^0-9]", "");///- יש להוריד את כל התווים הלא נומריים 
                 entityPM.CasualImporterTel = Regex.Replace(entityPM.CasualImporterTel, @"\s+", "");///שיהייה
             }
             if (entityPM.CasualImporterTel!= entityPOCO.CasualImporterTel)
@@ -759,8 +760,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(MainContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
             DeclarationCourierStatusPM myDeclarationCourierStatusPM = myDeclarationCourierStatusQueryService.GetSingle(declarationPM.Id, true, false);
             var updateDeclarationPending903InvalidPhoneNumberService = new UpdateDeclarationPending903InvalidPhoneNumberService(declarationPM);
+            if (myDeclarationCourierStatusPM==null)
+            {
+                return;// not courier !!
+            }
             updateDeclarationPending903InvalidPhoneNumberService.Calc(myDeclarationCourierStatusPM);
-            if (myDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
+            if (myDeclarationCourierStatusPM != null && myDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
             {
                 
                 declarationCourierStatusUpdateService.Update(myDeclarationCourierStatusPM, true);

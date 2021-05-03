@@ -369,7 +369,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                 
                                                     List<error> systemMessagesList = new List<error>();
                                                 
-                                                    this._MyDeclarationPM.CorrectionsXml = myDeclarationCorrectionsPointerService.AnalyzeCorrectionsPointer(this._MyDeclarationPM.CorrectionsXml, importDeclarationServiceReferenceResponse, systemMessagesList, requestParams.Tenant);
+                                                    this._MyDeclarationPM.CorrectionsXml = myDeclarationCorrectionsPointerService.AnalyzeCorrectionsPointer(this._MyDeclarationPM.CorrectionsXml, importDeclarationServiceReferenceResponse, systemMessagesList, requestParams.Tenant,customResponse.ReferenceListMsg);
                                             
 
                                                 break;
@@ -549,7 +549,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     systemMessagesList.Add(myError);
                                 }
                             }
-                            this._MyDeclarationPM.CorrectionsXml = myDeclarationCorrectionsPointerService.AnalyzeCorrectionsPointer(this._MyDeclarationPM.CorrectionsXml, importDeclarationServiceReferenceResponse, systemMessagesList, requestParams.Tenant);
+                            this._MyDeclarationPM.CorrectionsXml = myDeclarationCorrectionsPointerService.AnalyzeCorrectionsPointer(this._MyDeclarationPM.CorrectionsXml, importDeclarationServiceReferenceResponse, systemMessagesList, requestParams.Tenant, customResponse.ReferenceListMsg);
                         }
                         if (_MyDeclarationPM.UserNotes == "LoadTestOnProgress")
                         {
