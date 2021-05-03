@@ -44,6 +44,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         public string HTSCodeByCountry { get; set; }        
         public string ItemCode { get; set; }
+        public List<HTSCodePM> HTSCodeChangeSet { get; set; }
 
     }
 }

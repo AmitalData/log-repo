@@ -145,7 +145,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                     }
 
 
-                    service.SetChangeSet(entityPM.SalesNotes.ToList(), productsChangeSet, entityPM.CustomerCompetitors.ToList(), entityPM.CustomerAdditionalServices.ToList(), entityPM.CustomerSalesmanByProducts.ToList(), entityPM.CustomerAccountManagerByProducts.ToList(), entityPM.CustomerCustomsAgentByProducts.ToList(), entityPM.CustomerForwarderByProducts.ToList(), entityPM.CustomerMediatorByProducts.ToList(), entityPM.CardExternalCodeByCurrencies.ToList());
+                    service.SetChangeSet(entityPM.SalesNotes.ToList(), productsChangeSet, entityPM.CustomerCompetitors.ToList(), entityPM.CustomerAdditionalServices.ToList(), entityPM.CustomerSalesmanByProducts.ToList(), entityPM.CustomerAccountManagerByProducts.ToList(), entityPM.CustomerCustomsAgentByProducts.ToList(), entityPM.CustomerForwarderByProducts.ToList(), entityPM.CustomerMediatorByProducts.ToList(), entityPM.CardExternalCodeByCurrencies.ToList(), entityPM.CustomerProductItems.ToList());
                     service.Update();
 
                     //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);

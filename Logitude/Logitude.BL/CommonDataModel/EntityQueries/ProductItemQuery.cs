@@ -12,19 +12,19 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 {
     public class ProductItemQuery
     {
-        ProductItemRepsitory repository;
+        ProductItemRepository repository;
 
         public ProductItemQuery()
         {
-            this.repository = new ProductItemRepsitory();
+            this.repository = new ProductItemRepository();
         }
 
         public ProductItemQuery(int tenant)
         {
-            this.repository = new ProductItemRepsitory(tenant);
+            this.repository = new ProductItemRepository(tenant);
         }
 
-        public ProductItemQuery(ProductItemRepsitory repository)
+        public ProductItemQuery(ProductItemRepository repository)
         {
             this.repository = repository;
         }

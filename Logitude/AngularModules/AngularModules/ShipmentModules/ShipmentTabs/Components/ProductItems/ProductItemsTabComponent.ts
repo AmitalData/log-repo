@@ -233,7 +233,7 @@ export class ProductItem extends BaseComponent {
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
                 if (this.fatherComponent.EntityPM.ShipmentProductItems.indexOf(this.EntityPM) != -1) {
-                    this.fatherComponent.EntityPM.RemoveProductItem(this.EntityPM);
+                   
                 }
 
                 if (this.fatherComponent.ProductItems.Collection.indexOf(this) != -1) {

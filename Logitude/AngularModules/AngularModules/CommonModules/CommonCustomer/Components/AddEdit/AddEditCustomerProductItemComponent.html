@@ -1,0 +1,136 @@
+<table >
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+    <tr style="height:10px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table>
+                
+                <tr class="FormFieldRow">
+                    <!-- ItemCode -->
+                    <td style="width: 150px;">
+                        <LogLabel [ObjectFieldName]="'ItemCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:350px;">
+                        <LogTextBox [ObjectFieldName]="'ItemCode'" [Text]="ItemCode" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <!-- Remarks -->
+                    <td>
+                        <LogLabel [ObjectFieldName]="'Remarks'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <table>
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <div></div>
+                                </td>
+                                <td style="width:350px;height:85px;">
+                                    <div class="MediaFill">
+                                        <LogTextBox [ObjectFieldName]="'Remarks'" [Text]="Remarks" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true" [HideColumns]="true"></LogTextBox>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+
+                </tr>
+
+             
+                <tr class="FormFieldRow">
+                    <!-- Description -->
+                    <td>
+                        <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <table>
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <div></div>
+                                </td>
+                                <td style="width:350px;height:85px;">
+                                    <div class="MediaFill">
+                                        <LogTextBox [ObjectFieldName]="'Description'" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true" [HideColumns]="true"></LogTextBox>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <!-- SKU -->
+                    <td style="width: 150px;">
+                        <LogLabel [ObjectFieldName]="'SKU'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:350px;">
+                        <LogTextBox [ObjectFieldName]="'SKU'" [Text]="SKU" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <!-- InActive -->
+                    <td style="width: 150px;">
+                        <LogLabel [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:350px;">
+                        <CheckBox [IsChecked]="InActive" (Checked) ="InActive = $event"></CheckBox>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>
+

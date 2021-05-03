@@ -8,27 +8,27 @@ using System.Threading.Tasks;
 
 namespace Simplog.Data.CommonDataModel.Repositories
 {
-    public  class ProductItemRepsitory
+    public  class ProductItemRepository
     {
 
         ICommonDataContext commonDataContext;
 
-        public ProductItemRepsitory(ICommonDataContext context)
+        public ProductItemRepository(ICommonDataContext context)
         {
             commonDataContext = context;
         }
 
-        public ProductItemRepsitory(int tenant)
+        public ProductItemRepository(int tenant)
         {
             commonDataContext = CommonDataContext.GetContext(tenant);
         }
 
-        public ProductItemRepsitory()
+        public ProductItemRepository()
         {
             commonDataContext = new CommonDataContext();
         }
 
-        public IQueryable<ProductItem> GetProductItems()
+        public IQueryable<ProductItem> GetProductItems(int tenant)
         {
             return context.ProductItems;
         }

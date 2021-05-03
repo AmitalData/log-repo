@@ -26,12 +26,12 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private ProductItemPM entityPm;
         private ICommonDataContext objectContext;
-        private ProductItemRepsitory entityRepository;
+        private ProductItemRepository entityRepository;
         public ProductItemService(ICommonDataContext objectContext, int tenant)
         {
             this.tenant = tenant;
             this.ObjectContext = objectContext;
-            this.entityRepository = new ProductItemRepsitory(objectContext);
+            this.entityRepository = new ProductItemRepository(objectContext);
         }
 
         public void Create(ProductItemPM entityPM)

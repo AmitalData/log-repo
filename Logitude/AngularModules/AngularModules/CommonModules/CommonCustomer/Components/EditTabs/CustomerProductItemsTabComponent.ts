@@ -12,6 +12,7 @@ import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { CustomerPM } from '../../../../Common/EntityPMs/CustomerPM';
 import { ProductItemPM } from '../../../../Common/EntityPMs/ProductItemPM';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
     templateUrl: './CustomerProductItemsTabComponent.html',
@@ -76,6 +77,17 @@ export class CustomerProductItemsTabComponent extends BaseComponent implements O
 
     }
 
+    private OpenEditWindow(myWindowTitle: string, itemPM: any, objectTableName: string) {
+        var service: EntityResourceService = new EntityResourceService();
+        service.getEntityResourceByTableName(objectTableName).subscribe((response: any) => {
+            var logitudeWindow = new LogitudeWindow();
+            logitudeWindow.Title = myWindowTitle;
+            logitudeWindow.WindowArgs = { ProductItemPM: null, CustomerPM: itemPM, IsNew: false, };
+            logitudeWindow.WindowClosed.subscribe(($event: any) => this.CurrentSession.CloseCurrentWindow());
+            logitudeWindow.Show('./CommonModules/CommonCustomer/Components/AddEdit/AddEditCustomerProductItemComponent');
+        });
+    }
+
     BuildProductItems() {
         if (this.ProductItems == null) {
             this.ProductItems = new ObservableCollection([]);
@@ -96,6 +108,8 @@ export class CustomerProductItemsTabComponent extends BaseComponent implements O
     }
 
     AddProductItem() {
+
+        this.OpenEditWindow("Add Product Item", this.EntityPM , "ProductItem");
         //var item: ShipmentPackageItemPM = new ShipmentPackageItemPM(null);
         //item.Tenant = SessionLocator.Tenant;
         //item.PackageId = this.EntityPM.Id;
