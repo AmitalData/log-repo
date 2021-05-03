@@ -30,7 +30,9 @@ namespace Logitude.Customs.BL.CloseTables
         public const string InterfaceName_ECOVSSPCL_RESPONE = "ECOVSSPCL+RS";//EC = E-Commerce
         public const string InterfaceName_ECSTB = "ECSTB";//EC = E-Commerce
         public const string InterfaceName_ECOVSTB = "ECOVSSTB";//EC = E-Commerce
+        public const string InterfaceName_ECSWSSTB = "ECSWSSTB";//EC = E-Commerce
         public const string InterfaceName_ECSTB_Splited = "ECSTB+P";//EC = E-Commerce
+        public const string InterfaceName_ECSWSSTB_Splited = "ECSWSSTB+P";//EC = E-Commerce
         public const string InterfaceName_ECOVSTB_Splited = "ECOVSSTB+P";//EC = E-Commerce
         public const string InterfaceName_Ftp2Maman2470 = "ECM2470";//EC = E-Commerce 2 maman 2470
         public const string PartnerCode_Mamam = "MAMAN";
@@ -217,6 +219,30 @@ namespace Logitude.Customs.BL.CloseTables
                 Subject="Status/Availability ILOVS",
                 ServerInternalDef= true
             },
+             new InterfaceDetails()
+            {
+                Code = InterfaceName_ECOVSTB,
+                Name = "סטטוס/זמינות מסוויספורט",
+                TypeCode = TypeCode_In,
+                Partner = PartnerCode_ILSWS,
+                ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
+
+                AnalyzeQueueService= AnalyzeQueueServiceEnum.SWSStatusAvailabilitySpliterService,
+                Subject="Status/Availability ILSWS Raw"
+            },
+            new InterfaceDetails()
+            {
+                Code = InterfaceName_ECOVSTB_Splited,
+                Name = "סטטוס/זמינות מסוויספורט",
+                TypeCode = TypeCode_In,
+                Partner = PartnerCode_ILSWS,
+                ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
+
+                AnalyzeQueueService= AnalyzeQueueServiceEnum.SWSStatusAvailabilityService,
+                Subject="Status/Availability ILSWS",
+                ServerInternalDef= true
+            },
+
               new InterfaceDetails()
             {
                 Code = InterfaceName_ECSWSTHR_REQUEST,
@@ -300,13 +326,18 @@ namespace Logitude.Customs.BL.CloseTables
                     break;
                 case AnalyzeQueueServiceEnum.OVSHAWBService:
                     return new CourierOVSHAWBQService(@interface);
+                case AnalyzeQueueServiceEnum.SwissPortQHAWBService:
+                    return new ILSWSQHAWBService(@interface);
                 case AnalyzeQueueServiceEnum.OVSSpecialActionService:
                     return new CourierOVSSpecialActionQService(@interface);
                 case AnalyzeQueueServiceEnum.OVSStatusAvailabilitySpliterService:
                     return new CourierOVSStatusAvailabilitySplitterQService(@interface);
-
                 case AnalyzeQueueServiceEnum.OVSStatusAvailabilityService:
                     return new CourierOVSStatusAvailabilityQService(@interface);
+                case AnalyzeQueueServiceEnum.SWSStatusAvailabilitySpliterService:
+                    return new CourierSWSStatusAvailabilitySplitterQService(@interface);
+                case AnalyzeQueueServiceEnum.SWSStatusAvailabilityService:
+                    return new CourierSWSStatusAvailabilityQService(@interface);
                 case AnalyzeQueueServiceEnum.MamanQHAWBService:
                     return new MamanQHAWBService(@interface);
                 case AnalyzeQueueServiceEnum.MamanQSPCLService:
@@ -358,6 +389,8 @@ namespace Logitude.Customs.BL.CloseTables
         OVSSpecialActionService,
         OVSStatusAvailabilitySpliterService,
         OVSStatusAvailabilityService,
+        SWSStatusAvailabilityService,
+        SWSStatusAvailabilitySpliterService,
         MamanQHAWBService,
         MamanQSPCLService,
         SwissPortQHAWBService,
