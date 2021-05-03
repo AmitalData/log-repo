@@ -557,7 +557,11 @@ namespace Logitude.Customs.BL.BL
                     //UPDATE to solve
                     declarationPending903PM.Status = "S";
                     declarationPending903PM.ChangeSetOp = ChangeSetOperation.Update;
-                    myDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                    if (myDeclarationCourierStatusPM.ChangeSetOp== ChangeSetOperation.None)
+                    {
+                        myDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                    }
+                    
                 }
 
             }
@@ -576,7 +580,11 @@ namespace Logitude.Customs.BL.BL
                     };
 
                     myDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPending903PM);
-                    myDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                    if (myDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.None)
+                    {
+                        myDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                    }
+
 
                 }
                 else
@@ -585,7 +593,11 @@ namespace Logitude.Customs.BL.BL
                     {
                         declarationPending903PM.Status = "A";
                         declarationPending903PM.ChangeSetOp = ChangeSetOperation.Update;
-                        myDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                        if (myDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.None)
+                        {
+                            myDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                        }
+
 
                     }
                 }

@@ -280,7 +280,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
                         amendmentViewsList.push(el);
                     });
 
-                    this.AmendmentViewsList.InsertCollection(amendmentViewsList);
+                     this.AmendmentViewsList.InsertCollection(amendmentViewsList);
 
                     this.GetResources(this.AmendmentViewsList.Collection);
 
@@ -288,8 +288,8 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
 
 
                 this.ReferenceList = new ObservableCollection([]);
-                    if (!AppTool.IsNullOrEmpty(general.References)) {
-                        general.References.forEach(el => {
+                    if (!AppTool.IsNullOrEmpty(general.ReferenceViews)) {
+                        general.ReferenceViews.forEach(el => {
                             referenceList.push(el);
                         });
                     }
@@ -297,7 +297,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
 
                     this.ReferenceList.InsertCollection(referenceList);
 
-
+ 
 
                     this.BuildSystemMessage(general.SystemMessageViews);
 
