@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountFollowUpDataUpdateClass
    {  		
-		public const string HashString = "244e57817617c6b9cdaecaea3f7763ab";
+		public const string HashString = "835708177649ac5bad96d17f89c9052a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "GLAccountFollowUpData",
-			      				    Code =  "587c",
+			      				    Code =  "b7c9",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -413,7 +413,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FollowUpDate",
-					  						DefaultText =  "Follow-Up Date",
+					  						DefaultText =  "Follow Up Date",
 					  						ListFieldLable =  "FollowUpDateListLable",
 					  						ListLableDefaultText =  "FollowUpDate",
 					  						IsMaxLength =  false,
