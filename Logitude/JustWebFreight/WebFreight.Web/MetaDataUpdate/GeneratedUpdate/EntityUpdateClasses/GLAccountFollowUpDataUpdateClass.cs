@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountFollowUpDataUpdateClass
    {  		
-		public const string HashString = "835708177649ac5bad96d17f89c9052a";
+		public const string HashString = "884f78cbf1f6ba2d31809ce1c8e9ffc7";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "GLAccountFollowUpData",
-			      				    Code =  "b7c9",
+			      				    Code =  "e6db",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -414,8 +414,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FollowUpDate",
 					  						DefaultText =  "Follow Up Date",
+					  						FullLocalDefaultText =  "תאריך למעקב",
 					  						ListFieldLable =  "FollowUpDateListLable",
 					  						ListLableDefaultText =  "FollowUpDate",
+					  						ListLocalDefaultText =  "תאריך למעקב",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -473,8 +475,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FollowUpRemarks",
 					  						DefaultText =  "Follow Up Remarks ",
+					  						FullLocalDefaultText =  "הערות למעקב",
 					  						ListFieldLable =  "FollowUpRemarksListLable",
 					  						ListLableDefaultText =  "FollowUpRemarks",
+					  						ListLocalDefaultText =  "הערות למעקב",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
