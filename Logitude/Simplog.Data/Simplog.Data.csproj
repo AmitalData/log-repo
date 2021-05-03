@@ -513,7 +513,7 @@
     <Compile Include="CommonDataModel\Repositories\CustomerOpenFilesAmountRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\HorseRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\HTSCodeRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\ProductItemRepsitory.cs" />
+    <Compile Include="CommonDataModel\Repositories\ProductItemRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\TariffCarrierTranslationRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\UserLastSettingsRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\DocumentsExecutionLogRepository.cs" />

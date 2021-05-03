@@ -144,7 +144,7 @@
     <Content Include="CommonModules\CommonAgent\Components\NewEntity\NewAgentComponent.html" />
     <Content Include="CommonModules\CommonAirline\Components\EditTabs\AirlineDocsInTabComponent.html" />
     <Content Include="CommonModules\CommonAirline\Components\EditTabs\AirlineGeneralTabComponent.html" />
-    <Content Include="CommonModules\CommonCustomer\Components\AddEdit\AddEdiCustomerProductItemComponent.html" />
+    <Content Include="CommonModules\CommonCustomer\Components\AddEdit\AddEditCustomerProductItemComponent.html" />
     <Content Include="CommonModules\CommonCustomer\Components\EditTabs\CustomerOccasionsTabComponent.html" />
     <Content Include="CommonModules\CommonCustomer\Components\EditTabs\CustomerProductItemsTabComponent.html" />
     <Content Include="CommonModules\CommonCustomer\Components\EditTabs\MoreButtons\CustomerCustomsAgentByProductSplitComponent.html" />
@@ -324,7 +324,7 @@
     <TypeScriptCompile Include="Accounting\Components\Maintenance\Tester\AccountingMainTesterComponent.ts" />
     <TypeScriptCompile Include="App\DynamicLoader\LazyWidgetsLogitude.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\CopyJournalComponent.ts" />
-    <TypeScriptCompile Include="CommonModules\CommonCustomer\Components\AddEdit\AddEdiCustomerProductItemComponent.ts" />
+    <TypeScriptCompile Include="CommonModules\CommonCustomer\Components\AddEdit\AddEditCustomerProductItemComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonCustomer\Components\EditTabs\CustomerProductItemsTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\ShippingAgent\ShippingAgentGeneralTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\ShippingLine\ShippinglineGeneralTabComponent.ts" />
@@ -343,8 +343,6 @@
     <TypeScriptCompile Include="Common\Services\StandardLists\HTSCodeListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\ProductItemListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\ReportExecutionLogListService.ts" />
-    <TypeScriptCompile Include="Common\Services\StandardPMs\HTSCodePMService.ts" />
-    <TypeScriptCompile Include="Common\Services\StandardPMs\ProductItemPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\ReportExecutionLogPMService.ts" />
     <TypeScriptCompile Include="Common\Tools.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\GetUnloadPortCodeComponent.ts" />

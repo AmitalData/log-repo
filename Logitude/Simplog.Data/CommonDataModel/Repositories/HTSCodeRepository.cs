@@ -28,9 +28,16 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = new CommonDataContext();
         }
 
-        public IQueryable<HTSCode> GetHTSCodes()
+        public IQueryable<HTSCode> GetHTSCodes(int tenant)
         {
             return context.HTSCodes;
+        }
+        public IQueryable<HTSCode> GetHTSCodes(string id, int tenant)
+        {
+              return (from d in context.HTSCodes
+                      where d.Tenant == tenant
+                         && d.ItemId == id
+                         select d);
         }
         public IQueryable<HTSCode> GetAll()
         {

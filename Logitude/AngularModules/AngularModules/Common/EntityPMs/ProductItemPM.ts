@@ -117,6 +117,8 @@ export class ProductItemPM {
        
 	 
 
+    public HTSCodeChangeSet: Array<HTSCodePM>= [];
+		 
     public OldEntityPM: ProductItemPM;
 	    
 	private entityParentPM: any;

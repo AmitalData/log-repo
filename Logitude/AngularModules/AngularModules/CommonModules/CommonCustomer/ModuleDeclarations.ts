@@ -23,6 +23,7 @@ import {CustomerCustomsAgentByProductSplitComponent} from './Components/EditTabs
 import {CustomerMediatorByProductSplitComponent} from './Components/EditTabs/MoreButtons/CustomerMediatorByProductSplitComponent';
 import { CustomerOccasionsTabComponent } from './Components/EditTabs/CustomerOccasionsTabComponent';
 import { CustomerProductItemsTabComponent } from './Components/EditTabs/CustomerProductItemsTabComponent';
+import { AddEditCustomerProductItemComponent } from './Components/AddEdit/AddEditCustomerProductItemComponent';
 
 export const Components =
     [
@@ -51,6 +52,7 @@ export const Components =
         CustomerMediatorByProductSplitComponent,
         CustomerOccasionsTabComponent,
         CustomerProductItemsTabComponent,
+        AddEditCustomerProductItemComponent,
     ];
 
 export class ModuleDeclarations {
@@ -83,7 +85,8 @@ export class ModuleDeclarations {
             case "CustomerCustomsAgentByProductSplitComponent": { myResult = CustomerCustomsAgentByProductSplitComponent; break }
             case "CustomerMediatorByProductSplitComponent": { myResult = CustomerMediatorByProductSplitComponent; break }
             case "CustomerOccasionsTabComponent": { myResult = CustomerOccasionsTabComponent; break }
-            case "CustomerProductItemsTabComponent": { myResult = CustomerProductItemsTabComponent; break }   
+            case "CustomerProductItemsTabComponent": { myResult = CustomerProductItemsTabComponent; break }
+            case "AddEditCustomerProductItemComponent": { myResult = AddEditCustomerProductItemComponent; break }   
         }
 
         return myResult;
