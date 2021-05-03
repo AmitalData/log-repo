@@ -27,6 +27,7 @@ using Logitude.BL.Interfaces;
 using Microsoft.Practices.Unity;
 using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
+using Logitude.Accounting.BL.EntityUpdateServices;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -617,11 +618,27 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 }
                 SetPaymentTermToMulti(CardLists, FirstPaymentTermId);
             }
-          
+           GetGLaccountFollowUpDataFields(entityPM);
             if (entityPM.ParentCurrencyId != null)
             {
                 SetVariblesFromParentCurrencyGLAccount(entityPM);
             }
+        }
+        private void GetGLaccountFollowUpDataFields(GLAccountPM accountPM)
+        {
+            GLAccountFollowUpDataPM gLAccountFollowUpData = GetGLAccountFollowUpDataPM(accountPM);
+            if(gLAccountFollowUpData != null)
+            {
+                accountPM.GLAccountFollowUpDate = gLAccountFollowUpData.FollowUpDate;
+                accountPM.GLAccountFollowUpRemarks = gLAccountFollowUpData.FollowUpRemarks;
+            }
+           
+        }
+       
+        private GLAccountFollowUpDataPM GetGLAccountFollowUpDataPM(GLAccountPM account)
+        {
+            GLAccountFollowUpDataQueryService accountFollowUpDataQueryService = new GLAccountFollowUpDataQueryService(account.Tenant);
+            return accountFollowUpDataQueryService.GetSinglePMByAccountId(account.Id, account.Tenant);
         }
         private  void SetPaymentTermToMulti(List<CardList> CardLists, string FirstPaymentTermId)
         {
