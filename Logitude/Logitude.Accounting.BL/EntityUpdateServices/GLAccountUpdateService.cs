@@ -664,7 +664,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             FillForeignFields(entityPM);
             FillSearchFields(entityPM);
-            AddEventForGlAccountFollowUpData(entityPM);
+            AddEventForGlAccountFollowUpData(entityPM);        
             HandleGLAccountFollowUpData(entityPM);
 
         }
@@ -679,9 +679,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             else
             {
+                if(entityPM.GLAccountFollowUpRemarks != null || entityPM.GLAccountFollowUpDate!= null)
                 gLAccountFollowUpData= CreateGLAccountFollowUpData(entityPM, loggedUser);
             }
-            gLAccountFollowUpDataUpdateService.Update(gLAccountFollowUpData,true);
+          if( gLAccountFollowUpData != null)
+                gLAccountFollowUpDataUpdateService.Update(gLAccountFollowUpData,true);
         }
         private GLAccountFollowUpDataPM CreateGLAccountFollowUpData(GLAccountPM accountPM,ContactPM loggedUser)
         {         
