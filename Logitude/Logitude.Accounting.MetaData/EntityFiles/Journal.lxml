@@ -4347,14 +4347,6 @@
       LocalDefaultText="&quot;שמור כטיוטה&quot;"
       IsPackagable="false" />
     <MenuButton
-      EventCode="&quot;JournalSaveButton&quot;"
-      DefaultText="&quot;Save&quot;"
-      MenuButtonType="&quot;button&quot;"
-      Style="&quot;&quot;"
-      IndexOrder="0"
-      LocalDefaultText="&quot;שמור&quot;"
-      IsPackagable="false" />
-    <MenuButton
       EventCode="&quot;JournalSave&quot;"
       DefaultText="&quot;Waiting For Approval&quot;"
       MenuButtonType="&quot;button&quot;"
