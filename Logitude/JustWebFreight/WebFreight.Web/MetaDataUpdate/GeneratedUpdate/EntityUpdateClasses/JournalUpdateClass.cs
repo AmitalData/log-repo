@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class JournalUpdateClass
    {  		
-		public const string HashString = "e2ddf34e3b00bb6adc04c927d9eb996a";
+		public const string HashString = "462f9d5c1bedc9c491e4153aecccad87";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3569,7 +3569,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						ObjectTableId = JournalObjectTable.Id,
 						MenuButtonType = "button",
 						FeatureId = JournalFeature_MB1.Id,
-						Style = null,
+						Style = "",
 						LocalDefaultText = "שמור",
 						FeatureUniqeCode = JournalFeature_MB1.FeatureUniqeCode,
 						HtmlComponentPath = null,
