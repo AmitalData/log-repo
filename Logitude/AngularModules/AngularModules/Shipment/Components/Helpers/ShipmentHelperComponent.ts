@@ -300,9 +300,11 @@ export class ShipmentHelperComponent implements OnDestroy {
         this.EntityPM.AWBChargeRate = airFreightCharge.UnitPrice;
         this.EntityPM.AWBCurrencyId = airFreightCharge.CurrencyId;
         this.EntityPM.AWBChargeAmount = ShipmentTool.ComputeAWBChargeAmount(this.EntityPM);
-        this.EntityPM.FreightPrepaidCollectId = airFreightCharge.PrepaidCollectId;
-        ShipmentTool.BuildAWBChargesCodeCode(this.EntityPM);
-        ShipmentTool.ComputeAWBFrieghtAmountCollectAndPrepaid(this.EntityPM);
+        if (!AppTool.IsNullOrEmpty(airFreightCharge.PrepaidCollectId)) {
+            this.EntityPM.FreightPrepaidCollectId = airFreightCharge.PrepaidCollectId;
+            ShipmentTool.BuildAWBChargesCodeCode(this.EntityPM);
+            ShipmentTool.ComputeAWBFrieghtAmountCollectAndPrepaid(this.EntityPM);
+        }
     }
 
     private ValidateCurrencyOfShipmentAWBPrintOnlies(airFreightCharge) {

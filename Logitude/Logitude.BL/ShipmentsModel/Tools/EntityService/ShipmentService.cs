@@ -3322,9 +3322,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             entityPM.AWBChargeRate = airFreightCharge.UnitPrice;
             entityPM.AWBCurrencyId = airFreightCharge.CurrencyId;
             entityPM.AWBChargeAmount = this.SetAWBChargeAmount();
-            entityPM.FreightPrepaidCollectId = airFreightCharge.PrepaidCollectId;
-            entityPM.AWBChargesCodeCode = this.SetAWBChargesCodeCode();
-            SetAWBFrieghtAmountCollectAndPrepaid();
+            if (!string.IsNullOrEmpty (airFreightCharge.PrepaidCollectId))
+            {
+                entityPM.FreightPrepaidCollectId = airFreightCharge.PrepaidCollectId;
+                entityPM.AWBChargesCodeCode = this.SetAWBChargesCodeCode();
+                SetAWBFrieghtAmountCollectAndPrepaid();
+            }
         }
 
         public string SetAWBChargesCodeCode()
