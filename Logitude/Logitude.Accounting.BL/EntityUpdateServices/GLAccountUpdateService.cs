@@ -679,9 +679,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             else
             {
-                gLAccountFollowUpData= CreateGLAccountFollowUpData(entityPM, loggedUser);
+                if (entityPM.GLAccountFollowUpRemarks != null || entityPM.GLAccountFollowUpDate != null)
+                    gLAccountFollowUpData = CreateGLAccountFollowUpData(entityPM, loggedUser);
             }
-            gLAccountFollowUpDataUpdateService.Update(gLAccountFollowUpData,true);
+          if(gLAccountFollowUpData!= null)
+                gLAccountFollowUpDataUpdateService.Update(gLAccountFollowUpData,true);
         }
         private GLAccountFollowUpDataPM CreateGLAccountFollowUpData(GLAccountPM accountPM,ContactPM loggedUser)
         {         
