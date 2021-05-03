@@ -235,6 +235,11 @@ export class CachedDataManagerServices {
             case "Customs.CancellationReasonRequestTypeListService ": { myResult = new CancellationReasonRequestTypeListService(); break; }
             case "Customs.CancellationRequestStatusListService ": { myResult = new CancellationRequestStatusListService(); break; }
             case "Customs.ReferantTeamListService": { myResult = new ReferantTeamListService(); break; }
+            case "Customs.CancelRequestRejectReasonTypeListService ": { myResult = new ReferantTeamListService(); break; }
+            case "Customs.LogisticsReferenceTypeListService ": { myResult = new ReferantTeamListService(); break; }
+            case "Customs.ReferenceInputTypeListService ": { myResult = new ReferantTeamListService(); break; }
+            case "Customs.ReferenceStatusListService  ": { myResult = new ReferantTeamListService(); break; }
+
 
             case "AWBAdditionalHandlingInfoListService": { myResult = new AWBAdditionalHandlingInfoListService(); break; }
  
