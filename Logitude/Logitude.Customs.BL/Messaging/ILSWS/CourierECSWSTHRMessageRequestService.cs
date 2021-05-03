@@ -70,21 +70,13 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
 
 
                 bool haveDefinition = true;
-                var webAPISendMessage2MamanService = new WebAPISendMessage2MasofService();
+                FTPOutMawbSWSService fTPOutMawbSWSServie = new FTPOutMawbSWSService();
                 var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
                 var defDefaultJSON = customsPartnerFtpDetails.GetAllInterfaceName().First(r => r.Key == CustomsPartnerFtpDetails.InterfaceName_ECSWSTHR_REQUEST).Value;
                 var defDefault = ProxyUtil.JsonConvertDeserializeTyped<InterfaceDetails>(defDefaultJSON);
-                try
-                {
-                    webAPISendMessage2MamanService.GetCustomsPartnerFtpPM(tenant, CustomsPartnerFtpDetails.InterfaceName_ECSWSTHR_REQUEST, CustomsPartnerFtpDetails.PartnerCode_ILSWS, defDefault);
-                }
-                catch (MasofException ignoreif )
-                {
-                    //haveDefinition = false;
-                }
                 if (haveDefinition)
                 {
-                    webAPISendMessage2MamanService.BuildCommunicationLog(bytearray, tenant, declarationId, CustomsPartnerFtpDetails.InterfaceName_ECSWSTHR_REQUEST, CustomsPartnerFtpDetails.PartnerCode_ILSWS);
+                    fTPOutMawbSWSServie.BuildCommunicationLog(bytearray, tenant, declarationId);
                 }
                 ///scop.Complete();
                 //output  ftp://192.168.10.88/FTP_MAMAN/  

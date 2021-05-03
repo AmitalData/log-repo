@@ -2002,6 +2002,7 @@
     <Compile Include="Messaging\Maman\CourierGWMessageECSpclMamanRequestService.cs" />
     <Compile Include="Messaging\Maman\CourierGWMessageECTHRDataMamanRequestService.cs" />
     <Compile Include="Messaging\Maman\CourierMasterMamanService.cs" />
+    <Compile Include="Messaging\ILSWS\FTPOutMawbSWSService.cs" />
     <Compile Include="Messaging\Maman\FTPOutMaman2470ReleaseGoodService.cs" />
     <Compile Include="Messaging\Maman\FTPOutMamanSubManifestService.cs" />
     <Compile Include="Messaging\Maman\ICourierGWMessageECSpcRequestService.cs" />
