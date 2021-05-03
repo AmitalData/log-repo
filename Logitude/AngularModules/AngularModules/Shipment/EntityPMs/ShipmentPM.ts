@@ -5331,20 +5331,7 @@ export class ShipmentPM {
             this.shipmentStoragePricings = newValue;
         }
     }
-    private shipmentProductItems: ShipmentProductItemPM[];
-    get ShipmentProductItems() {
-        if (this.shipmentProductItems == null) {
-            this.shipmentProductItems = [];
-        }
-
-        return this.ShipmentProductItems;
-    }
-    set ShipmentProductItems(newValue: ShipmentProductItemPM[]) {
-        if (this.shipmentProductItems != newValue) {
-            this.shipmentProductItems = newValue;
-        }
-    }
-
+    
     public AddShipmentStoragePricing(item: ShipmentStoragePricingPM) {
         if (item != null) {
             var index = this.ShipmentStoragePricings.indexOf(item);
