@@ -506,6 +506,7 @@
     <None Include="DBScripts\ShipmentModel\202102241906_UpdateCustomerContactAndAddress.sxml" />
     <None Include="DBScripts\ShipmentModel\202103211413_UpdateOnForwardingDepartedEventStatusWeight.sxml" />
     <None Include="DBScripts\ShipmentModel\202104051350_UpdatePreForwardingArrivedStatusWeight.sxml" />
+    <None Include="DBScripts\ShipmentModel\202104251340_UpdateCustomClearanceStatusWeight.sxml" />
     <None Include="DBScripts\ShipmentModel\202122031108_UpdateFollowUpForwardingEvents.sxml" />
     <None Include="DBScripts\ShipmentModel\UpdateshipmentsCalculateDocumentsKPIFields.sxml" />
     <None Include="DBScripts\ShipmentModel\UpdateShipmentsCalculateSendDocumentField.sxml" />
