@@ -224,6 +224,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         Collector, 
 	         FollowupDate, 
 	         FollowupNotes,
+	         GLAccountFollowUpDate, 
+	         GLAccountFollowUpRemarks,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

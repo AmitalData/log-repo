@@ -3332,6 +3332,52 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private DateTime? gLAccountFollowUpDate ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? GLAccountFollowUpDate  
+	   {
+	    
+	     get
+		{
+		   return gLAccountFollowUpDate;
+		 }
+		 set
+		 {
+		   if(gLAccountFollowUpDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GLAccountFollowUpDate",OldValue=gLAccountFollowUpDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   gLAccountFollowUpDate=value;
+		   }
+			
+		 }
+	   }
+	  private string gLAccountFollowUpRemarks ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string GLAccountFollowUpRemarks  
+	   {
+	    
+	     get
+		{
+		   return gLAccountFollowUpRemarks;
+		 }
+		 set
+		 {
+		   if(gLAccountFollowUpRemarks != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GLAccountFollowUpRemarks",OldValue=gLAccountFollowUpRemarks,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   gLAccountFollowUpRemarks=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
