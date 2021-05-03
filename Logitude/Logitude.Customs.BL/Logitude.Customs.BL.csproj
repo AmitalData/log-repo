@@ -2015,7 +2015,9 @@
     <Compile Include="Messaging\Amital\UnifreightTaskService.cs" />
     <Compile Include="Messaging\Amital\UServerCommunicationService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\AnalyzeQueueUtil.cs" />
+    <Compile Include="Messaging\CustomsAnalyzeQueue\CourierSWSStatusAvailabilityQService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\CourierOVSStatusAvailabilityQService.cs" />
+    <Compile Include="Messaging\CustomsAnalyzeQueue\CourierSWSStatusAvailabilitySplitterQService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\CourierOVSStatusAvailabilitySplitterQService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\CustomAnalyzerQueueBase.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\ILSWSQHAWBService.cs" />
@@ -2096,6 +2098,7 @@
     <Compile Include="Messaging\Maman\CourierGWMessageECSpclMamanRequestService.cs" />
     <Compile Include="Messaging\Maman\CourierGWMessageECTHRDataMamanRequestService.cs" />
     <Compile Include="Messaging\Maman\CourierMasterMamanService.cs" />
+    <Compile Include="Messaging\ILSWS\FTPOutMawbSWSService.cs" />
     <Compile Include="Messaging\Maman\FTPOutMaman2470ReleaseGoodService.cs" />
     <Compile Include="Messaging\Maman\FTPOutMamanSubManifestService.cs" />
     <Compile Include="Messaging\Maman\ICourierGWMessageECSpcRequestService.cs" />
