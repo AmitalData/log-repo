@@ -17,6 +17,7 @@ export var PrivateChangePasswordComponent = (function (_super) {
         this.BackgroundImage = "";
         this.ForgetPasswordImage = "";
         this.MainLogo = "";
+        this.MainColor = null;
     }
     PrivateChangePasswordComponent.prototype.ngOnInit = function () {
         this.GetPrivateLabelsData();
@@ -25,6 +26,7 @@ export var PrivateChangePasswordComponent = (function (_super) {
         this.BackgroundImage = BrandingDataService.GetImage("BackgroundImage");
         this.MainLogo = BrandingDataService.GetImage("MainLogo");
         this.ForgetPasswordImage = BrandingDataService.GetImage("ForgetPasswordImage");
+        this.MainColor = BrandingDataService.GetColor("MainColor");
     };
     PrivateChangePasswordComponent.decorators = [
         { type: Component, args: [{

@@ -285,6 +285,7 @@
     <Compile Include="CoreBL\InterestTrans\RegularJournalInterestTransactionMapping.cs" />
     <Compile Include="CoreBL\ISystem1000Service.cs" />
     <Compile Include="CoreBL\JournalsCSVFlatFileAnalyser.cs" />
+    <Compile Include="CoreBL\JournalsCSVFlatFileAnalyser_ISL.cs" />
     <Compile Include="CoreBL\JournalsReapproveService.cs" />
     <Compile Include="CoreBL\Mapping\InterestReportInvoiceMapping.cs" />
     <Compile Include="CoreBL\OpenFormatReportService.cs" />

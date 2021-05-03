@@ -327,38 +327,40 @@
            [DetailsTitle]="'Tax Details'">
 
         <div body>
-            <div class="data-cards">
+            <div *ngIf="loadingCustomsData">Loading customs data ...</div>
+            <div *ngIf="!loadingCustomsData && !ShipmentCustomsData">Customs data is not available yet</div>
+            <div *ngIf="!loadingCustomsData && ShipmentCustomsData" class="data-cards">
                 <div>
                     <div class="title">Declaration #</div>
-                    <div class="description">454565751</div>
+                    <div class="description">{{ShipmentCustomsData.DeclarationNumber}}</div>
                 </div>
                 <div>
                     <div class="title">Declaration Status</div>
-                    <div class="description">parcel departed</div>
+                    <div class="description">-</div>
                 </div>
                 <div>
                     <div class="title">Import VAT</div>
-                    <div class="description">3,547</div>
+                    <div class="description">{{ShipmentCustomsData.ImporterVatAmount | number}}</div>
                 </div>
                 <div>
                     <div class="title">total value nis</div>
-                    <div class="description">45,245 ₪</div>
+                    <div class="description">{{ShipmentCustomsData.TotalValueInNIS||0 | number}} ₪</div>
                 </div>
                 <div>
-                    <div class="title">total value usd</div>
-                    <div class="description">15,456 $</div>
+                    <div class="title">total value {{ShipmentCustomsData.CurrencyCode }}</div>
+                    <div class="description">{{ShipmentCustomsData.TotalValueInForeignCurrency||0 | number}} {{ShipmentCustomsData.CurrencySign }}</div>
                 </div>
                 <div>
                     <div class="title">consignment #</div>
-                    <div class="description">89754358887</div>
+                    <div class="description">-</div>
                 </div>
                 <div>
                     <div class="title">goods description</div>
-                    <div class="description">parcel damaged</div>
+                    <div class="description">{{ShipmentCustomsData.GoodsDescription }}</div>
                 </div>
                 <div>
                     <div class="title">total taxes</div>
-                    <div class="description">585,100 ₪</div>
+                    <div class="description">{{ShipmentCustomsData.TotalTax||0 | number}}</div>
                 </div>
 
 
@@ -368,42 +370,22 @@
         <div details>
             <br>
 
-            <table class="row-hover">
+            <div *ngIf="!loadingCustomsData && !ShipmentCustomsData">Customs data is not available yet</div>
+
+            <table class="row-hover" *ngIf="!loadingCustomsData && ShipmentCustomsData">
                 <tr class="header">
                     <th style="width: 400px;">type</th>
-                    <th style="width: 200px;" class="hide-mobile">calculation base</th>
-                    <th style="width: 200px;">tax amount</th>
-                    <th style="width: 200px;" class="hide-mobile">pay amount</th>
-                    <th style="width: 200px;" class="hide-mobile">rejected amount</th>
+                    <th style="width: 200px;">calculation base</th>
+                    <th style="width: 150px;text-align: right;">tax amount</th>
+                    <!-- <th style="width: 200px;">pay amount</th>
+                    <th style="width: 200px;">rejected amount</th> -->
                 </tr>
-                <tr>
-                    <td>Sed luctus dui dapibus diam suscipit.</td>
-                    <td class="hide-mobile">1,255</td>
-                    <td>11,255</td>
-                    <td class="hide-mobile">800,000 $</td>
-                    <td class="hide-mobile">0.00</td>
+                <tr *ngFor="let detail of ShipmentCustomsData.TaxDetails">
+                    <td>{{detail.TaxTypeName}}</td>
+                    <td>{{detail.TaxBasis}}</td>
+                    <td style="text-align: right;">{{detail.TaxAmount | number}}</td>
                 </tr>
-                <tr>
-                    <td>Sed luctus dui dapibus diam suscipit.</td>
-                    <td class="hide-mobile">1,255</td>
-                    <td>11,255</td>
-                    <td class="hide-mobile">800,000 $</td>
-                    <td class="hide-mobile">0.00</td>
-                </tr>
-                <tr>
-                    <td>Sed luctus dui dapibus diam suscipit.</td>
-                    <td class="hide-mobile">1,255</td>
-                    <td>11,255</td>
-                    <td class="hide-mobile">800,000 $</td>
-                    <td class="hide-mobile">0.00</td>
-                </tr>
-                <tr class="footer">
-                    <td>Total</td>
-                    <td class="hide-mobile">0.00</td>
-                    <td>0.10</td>
-                    <td class="hide-mobile">7,450 $</td>
-                    <td class="hide-mobile">0.00</td>
-                </tr>
+
             </table>
 
         </div>
@@ -587,8 +569,16 @@
                 <div class="card partner-card" *ngFor="let partnerCard of PartnerCards">
                     <div class="header">
                         <div class="partners-buttons hide-mobile">
-                            <div class="circle-icon">#</div>
-                            <div class="circle-icon">&</div>
+                            <div class="circle-icon">
+                                <a [href]="'tel:'+partnerCard.PhoneNumber">
+                                    <img src="./assets/images/icons/call-white.svg" alt="">
+                                </a>
+                            </div>
+                            <div class="circle-icon">
+                                <a [href]="'sms:'+partnerCard.PhoneNumber">
+                                    <img src="./assets/images/icons/chat-white.svg" alt="">
+                                </a>
+                            </div>
                         </div>
                         <div>
                             <div class="partner-type-label">{{partnerCard.Type}}</div>
@@ -600,13 +590,22 @@
 
                     </div>
                     <div class="body bordered" [class.show]="partnerCard.ShowDetails">
-                        <div class="partner-address">
-                            {{partnerCard.Address}}
+                        <div class="partner-address" [innerHTML]="partnerCard.Address||'No address'">
+                            <!-- {{partnerCard.Address}} -->
                         </div>
                         <div class="partner-mobile">{{partnerCard.PhoneNumber}}</div>
+                        <!-- <div class="partner-mobile">{{partnerCard.FaxNumber}}</div> -->
                         <div class="partners-footer-buttons mobile-only">
-                            <div class="circle-icon-x2">#</div>
-                            <div class="circle-icon-x2">&</div>
+                            <div class="circle-icon-x2">
+                                <a [href]="'tel:'+partnerCard.PhoneNumber">
+                                    <img src="./assets/images/icons/call-white.svg" alt="">
+                                </a>
+                            </div>
+                            <div class="circle-icon-x2">
+                                <a [href]="'sms:'+partnerCard.PhoneNumber">
+                                    <img src="./assets/images/icons/chat-white.svg" alt="">
+                                </a>
+                            </div>
                         </div>
                     </div>
                     <div></div>

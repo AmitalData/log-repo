@@ -180,27 +180,6 @@
                                 </td>
                             </tr>
 
-                            <tr *ngIf="!IsDSVTenant"  style="height: 33px;">
-                                <td style="height: 22px;">
-                                    <table>
-                                        <tr>
-                                            <td style="width:7px;">
-                                                <div style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
-
-                                            </td>
-                                            <td>
-                                                <button id="{{'AddLogboxDocument' | IdGeneratorPipe}}" class="IconButton" style="width:114px;height:26px;margin-right:5px;margin-left:10px" (click)="AddDocumentClick()">
-                                                    <img src="./Images/LogBox/Add.png" style="visibility:inherit;left:-2px;vertical-align:middle;position:relative;" />
-                                                    <span style="vertical-align:middle;">Add Document</span>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </table>
-
-                                </td>
-                            </tr>
-
-
                             <tr>
                                 <td></td>
                             </tr>
@@ -223,7 +202,7 @@
                                                     <li (click)="transportItemClicked('O')" (mouseover)="transportItemMouseOver('O')" (mouseleave)="transportItemMouseLeave('O')" [class.SelectedFilter]="TransportModeId === 'O'" title="Ocean">
                                                         <img [attr.id]="FilterId_O" class="CenterCenter" src="./_Resources/Images/Icons/TransportModes/Filters/O_g.png" style="top: 1px;" />
                                                     </li>
-                                                    <li (click)="transportItemClicked('I')" (mouseover)="transportItemMouseOver('I')" (mouseleave)="transportItemMouseLeave('I')" [class.SelectedFilter]="TransportModeId === 'I'" title="Inland">
+                                                    <li *ngIf="IsDSVTenant" (click)="transportItemClicked('I')" (mouseover)="transportItemMouseOver('I')" (mouseleave)="transportItemMouseLeave('I')" [class.SelectedFilter]="TransportModeId === 'I'" title="Inland">
                                                         <img [attr.id]="FilterId_I" class="CenterCenter" src="./_Resources/Images/Icons/TransportModes/Filters/I_g.png" style="top: 1px;" />
                                                     </li>
                                                 </ul>
@@ -482,6 +461,70 @@
     </tr>
 
 
+    <tr style="height:33px;" *ngIf="!IsDSVTenant">
+
+        <td>
+            <table style="height:33px">
+                <tr style="height:33px">
+
+
+                    <td style="width:7px;">
+                        <div style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
+
+                    </td>
+                    <td>
+                        <button id="{{'AddLogboxDocument' | IdGeneratorPipe}}" class="IconButton" style="width:114px;height:26px;margin-right:5px;margin-left:10px" (click)="AddDocumentClick()">
+                            <img src="./Images/LogBox/Add.png" style="visibility:inherit;left:-2px;vertical-align:middle;position:relative;" />
+                            <span style="vertical-align:middle;">Add Document</span>
+                        </button>
+                    </td>
+
+
+                    <td style="width:100px"></td>
+                    <td *ngIf="TransportModeId === 'O'" [class.Disabled]="!TransportModeId || TransportModeId != 'O'">
+                        <table>
+                            <tr>
+
+                                <td style="width:7px;">
+                                    <div style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
+
+                                </td>
+
+                                <td style="height: 22px;width:100px;">
+                                    <label style="padding-left:5px;color: rgb(110, 113, 114);">
+                                        Package Type
+                                    </label>
+                                </td>
+                                <td style="height: 22px;">
+                                    <ul class="FiltersMenu" [class.Disabled]="SelectedTransportationTypes.TransporationType == 'A'">
+                                        <li style="width:50px;" (click)="PackageTypeClicked('FCL')" (mouseover)="itemMouseOver('FCL')" (mouseleave)="itemMouseLeave('FCL')" [class.SelectedFilter]="PackageType === 'FCL' && SelectedTransportationTypes.TransporationType != 'A'">
+                                            FCL
+                                        </li>
+                                        <li style="width:50px;" (click)="PackageTypeClicked('LCL')" (mouseover)="itemMouseOver('LCL')" (mouseleave)="itemMouseLeave('LCL')" [class.SelectedFilter]="PackageType === 'LCL' && SelectedTransportationTypes.TransporationType != 'A'">
+                                            LCL
+                                        </li>
+                                        <li style="width:50px;" (click)="PackageTypeClicked('OTHER')" (mouseover)="itemMouseOver('OTHER')" (mouseleave)="itemMouseLeave('OTHER')" [class.SelectedFilter]="(PackageType != 'LCL' && PackageType != 'FCL') || SelectedTransportationTypes.TransporationType == 'A'">
+                                            Other
+                                        </li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+
+                </tr>
+            </table>
+
+
+        </td>
+     
+    </tr>
+
+
     <tr style="height:100px" *ngIf="!IsDSVTenant">
 
         <td class="CellStretch">
@@ -529,7 +572,7 @@
 
                                                     <td class="CellStretched" style="width: 32px; min-width: 32px; max-width: 32px; position: relative;">
 
-                                                        <img style="margin-left:5px" *ngIf="item.IsDigitallySigned" src="./Images/DigitallySigned.png" [title]="item.SignersList" />
+                                                        <img  style="margin-left:5px" *ngIf="item.IsDigitallySigned" src="./Images/DigitallySigned.png" [title]="item.SignersList" />
                                                         <img style="margin-left:5px"  *ngIf="!item.IsDigitallySigned" src="./Images/DigitallySignedG.png" (click)="SetDigitallySigned(item)" />
 
                                                     </td>

@@ -164,7 +164,9 @@ input:not(.DSVLoginButton) {
     font-style: normal;
     /*box-shadow: inset 0px 1px 0px 0px #f29c93;
     -moz-box-shadow: inset 0px 1px 0px 0px #f29c93;
-    -webkit-box-shadow: inset 0px 1px 0px 0px #f29c93;*/
+    -webkit-box-shadow: inset 0px 1px 0px 0px #f29c93;
+     background: #212E63;
+    */
     background: #212E63;
 }
 

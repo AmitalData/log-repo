@@ -2613,6 +2613,7 @@
     <Compile Include="Helpers\BluesnapAnalyzer.cs" />
     <Compile Include="Helpers\BluesnapExecutionService.cs" />
     <Compile Include="Helpers\BluesnapHelper.cs" />
+    <Compile Include="Helpers\CaptchaParameters.cs" />
     <Compile Include="Helpers\CargoTrackingHelper.cs" />
     <Compile Include="Helpers\DataProviderHelpers\AutomationTestReportDataProvider.cs" />
     <Compile Include="Helpers\DataProviderHelpers\CrossDockEntryLabelDataProviderHelper.cs" />

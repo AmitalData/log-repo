@@ -53,6 +53,12 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
     
     Listen() {
         if (this.entityArgs.EditComponent) {
+            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
+                if (s == "RefreshShipmentsTabFromAWBWizard") {
+                    this.LoadAllHouses();
+                }
+            });
+
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;

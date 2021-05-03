@@ -276,6 +276,22 @@ namespace Logitude.Accounting.Data.EntityLists
        public string LastReconciledBy  { get; set; }
        [DataMember]
        public DateTime? LastReconcileDate  { get; set; }
+       [DataMember]
+       public double? CreditLimit  { get; set; }
+       [DataMember]
+       public string PaymentTerm  { get; set; }
+       [DataMember]
+       public decimal? TotalOpenShipments  { get; set; }
+       [DataMember]
+       public string Phone  { get; set; }
+       [DataMember]
+       public string Salesman  { get; set; }
+       [DataMember]
+       public string Collector  { get; set; }
+       [DataMember]
+       public DateTime? FollowupDate  { get; set; }
+       [DataMember]
+       public string FollowupNotes  { get; set; }
    }
 
 }

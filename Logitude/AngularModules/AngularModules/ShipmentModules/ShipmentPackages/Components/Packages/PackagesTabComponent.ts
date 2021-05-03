@@ -994,7 +994,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     }
 
     SetGenerateData() {
-        this.IsGenerateControlVisible = this.EntityPM.ShipmentPackages.length == 0 ? true : false;
+        this.IsGenerateControlVisible = !this.EntityPM.IsMultipleCommodities && this.EntityPM.ShipmentPackages.length == 0 ? true : false;
         if (this.IsGenerateControlVisible) {
 
             var count = 0;

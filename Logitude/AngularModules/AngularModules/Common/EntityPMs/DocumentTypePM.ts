@@ -362,6 +362,11 @@ export class DocumentTypePM {
     public set AddedManually(newValue: boolean) { if (this.addedManually != newValue) { this.addedManually = newValue; this.MarkAsDirty("AddedManually"); } }
        
 	 
+    private copyName: string;
+    public get CopyName() { return this.copyName; }
+    public set CopyName(newValue: string) { if (this.copyName != newValue) { this.copyName = newValue; this.MarkAsDirty("CopyName"); } }
+       
+	 
 
     public OldEntityPM: DocumentTypePM;
 		

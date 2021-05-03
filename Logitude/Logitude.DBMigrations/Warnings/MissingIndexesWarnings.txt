@@ -1,0 +1,8 @@
+Warning: Missing Index In DXML File MenusTable.dxml, The Found Index On DB Is IX_FK_MenusTableFeature, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File MenusTable.dxml, The Found Index On DB Is IX_FeatureId, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File ObjectField.dxml, The Found Index On DB Is IX_FK_ListFieldLableObjectFieldTextCode, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File ObjectField.dxml, The Found Index On DB Is IX_FK_ObjectFieldTextCode, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File ObjectField.dxml, The Found Index On DB Is IX_FK_TextCodeObjectField1, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File ObjectField.dxml, The Found Index On DB Is IX_FK_TextCodeObjectField, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File ObjectField.dxml, The Found Index On DB Is IX_ObjectFields_AutomaticLastUpdateDate, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File ShipmentComputedFields.dxml, The Found Index On DB Is IX_ShipmentComputedFields_AutomaticLastUpdateDate, The Index Should Added To The DXML File

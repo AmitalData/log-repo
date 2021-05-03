@@ -51,6 +51,10 @@ export class FullAccountingSettingList {
 	PaymentChequesLogoId: string;
 	NumberOfAgingMonths: number;
 	AllowMultiRatesInInvoiceLines: boolean;
+	NumberofPeriods: number;
+	FirstPeriodsMonths: string;
+	SecondPeriodsMonths: string;
+	ThirdsPeriodsMonths: string;
 	
 }
  
