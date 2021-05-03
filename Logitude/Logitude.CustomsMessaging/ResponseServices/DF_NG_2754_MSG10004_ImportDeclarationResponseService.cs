@@ -521,6 +521,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //_MyDeclarationPM.CIFValue = customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.CifValueNIS.Value;
             _MyDeclarationPM.CIFValue = Math.Round(customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.CifValueNIS.Value, 2);
             //_MyDeclarationPM.TotalTax = customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TaxAssessedAmount.Value;
+            var prev_TotalTax = _MyDeclarationPM.TotalTax;
+            bool isSendVPE = false;
             _MyDeclarationPM.TotalTax = Math.Round(customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TaxAssessedAmount.Value, 2);
             _MyDeclarationPM.DealValueWithFactor = Math.Round(customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TotalMADDealValueAmountNIS.Value, 2);
             _MyDeclarationPM.TaxationDateTime = Convert.ToDateTime(customResponse.Response.Declaration.DMExtensions.TaxationDateTime);
@@ -896,6 +898,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 isCollectActive = false;
                             }
                         }
+                        if (isCollectActive && _MyDeclarationPM.TotalTax > 0 && _MyDeclarationPM.TotalTax != prev_TotalTax)
+                        {
+                            if (declarationPendingPM_900 != null && declarationPendingPM_900.Status != "S")
+                            {
+                                if (_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.FirstOrDefault().IncotermCode != "DDP")
+                                {
+                                    isSendVPE = true;
+                                }
+                            }
+                        }
 
                         if (isCollectActive)
                         {
@@ -1118,6 +1130,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (requestParams.InterfaceTypeCode == "8373")
             {
                 myDeclarationUpdateService.SendDelayedDeclarationStatusRequest(_MyDeclarationPM);
+            }
+            if (isSendVPE)
+            {
+                string xml_status = "new";
+                RaiseStatus(_MyDeclarationPM, "", "VPE", xml_status);
             }
         }
 
@@ -2264,5 +2281,47 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
+        public static void RaiseStatus(DeclarationPM dirtyDeclarationPM, string loggingUserId, string statusId, string xmlStatus)
+        {
+
+            try
+            {
+                if (string.IsNullOrWhiteSpace(loggingUserId)) loggingUserId = AuthenticationUtil.ResolveUserId(dirtyDeclarationPM.Tenant);
+                var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                {
+                    Tenant = dirtyDeclarationPM.Tenant,
+                    objectTableName = "Customs.Declaration",
+                    EventCode = statusId,
+                    notes = "DO_NOT_RAISE_EVENT",
+                    CommunicationLoggingEntityReference = dirtyDeclarationPM.DeclarationNumber,
+                    EntityId = dirtyDeclarationPM.Id,
+                    UserId = loggingUserId,
+
+                    CommunicationSubject = "FU Status " + statusId + " from Logitude",
+                    MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                    {
+                        entname = "CFIFILEM",
+                        primary_number = dirtyDeclarationPM.CustomFileNo,
+                        status = "new",
+                        xml_status = xmlStatus,
+                        status_id = statusId,
+                        status_DateTime = DateTime.Now,
+                        //status_place = "",
+                        //status_save = "no_fail",
+                        comments = "",
+                    }
+                };
+                if (!dirtyDeclarationPM.IsConnectedToUnifreight) myAmitalEventTracerModel.NotConnectedToUniface = true;
+
+                LogMessagingUtil.Instance.AppendLine("AmitalEventTracer.CreateTraceEvent Status " + statusId + "  CustomFileNo = " + dirtyDeclarationPM.CustomFileNo + "   ");
+                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
+
+            }
+            catch (System.Exception)
+            {
+                // TODO: BL Stop Execute or Cuntinue - Ask IHAB
+                throw;
+            }
+        }
     }
 }
