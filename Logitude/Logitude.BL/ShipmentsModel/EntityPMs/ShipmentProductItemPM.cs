@@ -17,6 +17,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ProductItemId { get; set; }
         public string Description { get; set; }
         public string HTSCode { get; set; }
+        public string ProductItemCode { get; set; }
         public ChangeSetOperation ChangeSetOp { get; set; }
     }
 }

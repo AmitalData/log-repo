@@ -58,6 +58,11 @@ export class ShipmentProductItemPM {
     public set HTSCode(newValue: string) { if (this.hTSCode != newValue) { this.hTSCode = newValue; this.MarkAsDirty("HTSCode"); } }
        
 	 
+    private productItemCode: string;
+    public get ProductItemCode() { return this.productItemCode; }
+    public set ProductItemCode(newValue: string) { if (this.productItemCode != newValue) { this.productItemCode = newValue; this.MarkAsDirty("ProductItemCode"); } }
+       
+	 
     private changeSetOp: string;
     public get ChangeSetOp() { return this.changeSetOp; }
     public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }

@@ -24,11 +24,11 @@
                             <ng-template let-item>
                                 <log-cell-template #logcelltemplate>
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                                        <span>{{item.ItemCode}}</span>
+                                        <span>{{item.ProductItemCode}}</span>
                                     </div>
                                     <div *ngIf="logcelltemplate.IsEditMode">
                                         <ComboBox [ItemsSource]="ProductItemsFilterList"
-                                                  [Binding]="'Code'"
+                                                  [Binding]="'ItemCode'"
                                                   [SelectedItem]="item.SelectedProductItem"
                                                   (SelectedItemChanged)="item.SelectedProductItem = $event"></ComboBox>
                                     </div>

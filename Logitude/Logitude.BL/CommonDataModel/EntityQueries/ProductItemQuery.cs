@@ -85,7 +85,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     ItemCode = a.ItemCode,
                                                 }).ToList();
 
-
             foreach (ProductItemPM productItem in productItems)
             {
                 HTSCode hTSCode = (from a in repository.context.HTSCodes

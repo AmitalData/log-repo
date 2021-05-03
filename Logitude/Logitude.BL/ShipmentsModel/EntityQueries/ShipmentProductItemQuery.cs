@@ -36,6 +36,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        ProductItemId = a.ProductItemId,
                        Description = a.Description,
                        HTSCode = a.HTSCode,
+                       ProductItemCode = a.ProductItemCode
                    }).FirstOrDefault();
 
             return myResult;
@@ -54,6 +55,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        ProductItemId = a.ProductItemId,
                        Description = a.Description,
                        HTSCode = a.HTSCode,
+                       ProductItemCode = a.ProductItemCode
                    }).ToList();
 
             return shipmentAssembleies;

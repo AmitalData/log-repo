@@ -48,23 +48,21 @@ export class ProductItemsTabComponent extends BaseComponent implements OnDestroy
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-
-                    this.SetUIProperties();
+                    this.LoadConsigneeProductItems();
                 }                
             });
 
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-
-                    this.SetUIProperties();
+                    this.LoadConsigneeProductItems();
                 }
             });
         }
 
         this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
-            if (s == "") {
-                
+            if (s == "ShipmentProductItemsDeleted") {
+                this.LoadConsigneeProductItems();
             }
         });
     }
@@ -157,12 +155,14 @@ export class ProductItem extends BaseComponent {
                 this.ProductItemId = value.Id;
                 this.Description = value.Description;
                 this.HTSCode = value.HTSCodeByCountry;
+                this.ProductItemCode = value.ItemCode;
             }
 
             else {
                 this.ProductItemId = null;
                 this.Description = null;
                 this.HTSCode = null;
+                this.ProductItemCode = null;
             }
         }
     }
@@ -209,6 +209,21 @@ export class ProductItem extends BaseComponent {
     set Description(newValue: string) {
         if (this.EntityPM.Description != newValue) {
             this.EntityPM.Description = newValue;
+        }
+    }
+
+    get ProductItemCode() {
+        var myResult = null;
+
+        if (this.EntityPM != null) {
+            myResult = this.EntityPM.ProductItemCode;
+        }
+
+        return myResult;
+    }
+    set ProductItemCode(newValue: string) {
+        if (this.EntityPM.ProductItemCode != newValue) {
+            this.EntityPM.ProductItemCode = newValue;
         }
     }
 

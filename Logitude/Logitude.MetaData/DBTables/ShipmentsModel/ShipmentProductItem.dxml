@@ -46,6 +46,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ProductItemCode"
+    Type="varchar"
+    Size="10">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ShipmentId"
     ReferencedTable="Shipments"
