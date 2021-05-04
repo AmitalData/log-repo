@@ -65,7 +65,7 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
             {
                 AuthenticationUtil.AuthenticatedUserEmail = GetContactEmailByContactId(reportFliter.UserId, reportFliter.tenant);
                 ReportHelper reportHelper = new ReportHelper();
-                if (FeatureToggleHelper.HasFeatureToggle("RRS", reportExecutionLog.Tenant)) DatabaseInitializer.RunOnSeconderyDB = true;
+                DatabaseInitializer.RunOnSeconderyDB = true;
                 reportHelper.BuildStimulReport(reportFliter);
                 UpdateReportExecutionLog(new ReportExecutionLogArgs() { StatusCode = "D", DoneDate = DateTime.Now });
                 queueService.Complete();
