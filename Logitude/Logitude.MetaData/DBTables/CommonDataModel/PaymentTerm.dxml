@@ -19,6 +19,13 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="ExternalId"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="EnglishName"
     Type="varchar"
     Size="40">
@@ -31,30 +38,6 @@
     Size="40">
     <Constraints
       Nullable="true" />
-  </Column>
-  <Column
-    Name="InActive"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="AddedManually"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="Days"
-    Type="int">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="DisplayInLOV"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
   </Column>
   <Column
     Name="Description"
@@ -71,24 +54,41 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="SearchFields"
-    Type="nvarchar"
-    Size="1000">
+    Name="Days"
+    Type="int">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
-    Name="ExternalId"
-    Type="varchar"
-    Size="25">
+    Name="AddedManually"
+    Type="bit">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="InActive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="DisplayInLOV"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Column
     Name="IsManuallySet"
     Type="bit">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Column
     Name="CurrentMonth"
@@ -110,9 +110,17 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="AutomaticLastUpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="FromDateTypeCode"
     ReferencedTable="PaymentTermDateTypes"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
+	<Index
+    Columns="AutomaticLastUpdateDate" />
 </Table>
