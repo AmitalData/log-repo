@@ -1026,7 +1026,6 @@
     <Compile Include="Controllers\AccountingModel\InterestReportController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\WorkerRoleNameExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\BIReportFolderExtendedController.cs" />
-    <Compile Include="Controllers\InfrastructureModel\TestController.cs" />
     <Compile Include="Controllers\Integration\Factories\IntegrationPartnerFactory.cs" />
     <Compile Include="Controllers\Integration\ModelIntegrationController.cs" />
     <Compile Include="Controllers\Integration\Quote\QuoteIntegrationBuilder.cs" />
