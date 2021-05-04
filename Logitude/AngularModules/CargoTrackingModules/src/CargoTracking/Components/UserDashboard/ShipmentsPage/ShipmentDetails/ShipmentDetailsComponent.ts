@@ -165,6 +165,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
         {
             if (result) {
                 this.ShipmentPM = result;
+                this.FillCustomsBrokerReferenceFromShipmentPM();
             }
         });
     }
@@ -176,7 +177,6 @@ export class ShipmentDetailsComponent implements AfterViewInit
                 console.log("GetShipmentPackages", this.ShipmentPackages);
                 this.isLoading = false;
 
-                this.FillCustomsBrokerReferenceFromShipmentPM();
                 this.GetPartnersAddresses();
             }
         });
