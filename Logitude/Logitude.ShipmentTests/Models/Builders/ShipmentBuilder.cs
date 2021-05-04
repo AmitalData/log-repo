@@ -178,6 +178,18 @@ namespace Logitude.ShipmentTests.Models.Builders
             return this;
         }
 
+        public ShipmentBuilder ShipmentReceivable(List<ReceivablePM> shipmentReceivable)
+        {
+            _shipmentPM.ShipmentReceivable.AddRange(shipmentReceivable);
+            return this;
+        }
+
+        public ShipmentBuilder ShipmentReceivable(ReceivablePM shipmentReceivable)
+        {
+            _shipmentPM.ShipmentReceivable.Add(shipmentReceivable);
+            return this;
+        }
+
         public ShipmentPM Build()
         {
             ShipmentPM result = _shipmentPM;
@@ -216,7 +228,7 @@ namespace Logitude.ShipmentTests.Models.Builders
 
         private string PortCodeMapping(string portCode)
         {
-            switch(portCode)
+            switch (portCode)
             {
                 case "LHR":
                     return LocationsData.PortLHRId;

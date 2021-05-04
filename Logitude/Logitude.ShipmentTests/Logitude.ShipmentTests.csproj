@@ -107,6 +107,7 @@
     <Compile Include="Models\Builders\PayableBuilder.cs" />
     <Compile Include="Models\Builders\MainCarriageLegBuilder.cs" />
     <Compile Include="Models\Builders\DirectBuilder.cs" />
+    <Compile Include="Models\Builders\ReceivableBuilder.cs" />
     <Compile Include="Models\Builders\ShipmentBuilder.cs" />
     <Compile Include="Hooks\BeforeTestRun.cs" />
     <Compile Include="Models\Card.cs" />
@@ -125,6 +126,7 @@
     <Compile Include="Models\Port.cs" />
     <Compile Include="Models\PreparationShortClass.cs" />
     <Compile Include="Models\QuoteStage.cs" />
+    <Compile Include="Models\ReceivablePM.cs" />
     <Compile Include="Models\ShipmentContext.cs" />
     <Compile Include="Models\PackagePM.cs" />
     <Compile Include="Models\PayablesPM.cs" />
@@ -140,6 +142,9 @@
     <Compile Include="Services\DataPreparation.cs" />
     <Compile Include="Steps\ExternalAPIDirectSteps.cs" />
     <Compile Include="Steps\CreateShipmentSteps.cs" />
+    <Compile Include="Steps\GETShipmentDirectExportAirSteps.cs" />
+    <Compile Include="Steps\POSTShipmentDirectExportAirSteps.cs" />
+    <Compile Include="Steps\PUTShipmentDirectExportAirSteps.cs" />
     <Compile Include="Steps\SecurityTests\CreateAndUpdateShipmentSecurityAccessSteps.cs" />
     <Compile Include="Steps\SecurityTests\GetShipmentSecurityAccessSteps.cs" />
     <Compile Include="Steps\SharedShipmentSteps.cs" />
@@ -148,6 +153,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Features\APIGETShipmentDirectExportAir.feature" />
+    <None Include="Features\APIPOSTShipmentDirectExportAir.feature" />
+    <None Include="Features\APIPUTShipmentDirectExportAir.feature" />
     <None Include="Features\ExternalAPIDirect.feature" />
     <None Include="Features\CreateShipments.feature" />
     <None Include="Features\SecurityTests\CreateAndUpdateShipmentSecurityAccess.feature" />
