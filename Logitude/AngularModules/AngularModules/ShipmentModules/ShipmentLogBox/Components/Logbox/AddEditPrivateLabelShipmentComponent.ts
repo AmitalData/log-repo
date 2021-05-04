@@ -76,7 +76,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
             this.PLShortName = SessionLocator.PrivateLableSettings.PrivateLabelShortName;
         }
 
-        this.IsDSVTenant =false; // SessionLocator.PrivateLableSettings.PrivateLabelDomain.toLowerCase().indexOf("dsv") > -1;
+        this.IsDSVTenant = SessionLocator.PrivateLableSettings.PrivateLabelDomain.toLowerCase().indexOf("dsv") > -1;
 
         if (this.CurrentSession == null) {
             this.FilterId_A = "TransportFilter_A_-1_-1";
@@ -210,7 +210,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
         this.TimerStartDate = DateTool.GetCurrentDateTimeAsUtc();
         this.RefreshTimer = setInterval(() => this.LoadDocumentsFilings(), 5000);
 
-        if (FeatureLocator.HasFeaturePermession("General", "LBDS")) {
+        if (!FeatureLocator.HasFeaturePermession("General", "LBDS")) {
             var window = new ConfirmWindow();
             window.Width = 450;
             window.Height = 190;
@@ -940,9 +940,9 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                 this.EntityPM.ShipmentLevelCode = "A";
                 this.EntityPM.OrderIsDangerouseGoods = false;
                 this.EntityPM.StatusDate = DateTool.GetCurrentDateTimeAsUtc();
-                this.EntityPM.CustomerId = "1-1000";//SessionLocator.TenantPM.CustomerId;
-                this.EntityPM.CustomerName = "1-1000";//SessionLocator.TenantPM.CustomerId;
-                this.EntityPM.ConsigneeId = "1-1000"; //SessionLocator.TenantPM.CustomerId;
+                this.EntityPM.CustomerId =SessionLocator.TenantPM.CustomerId;
+                this.EntityPM.CustomerName = SessionLocator.TenantPM.CustomerId;
+                this.EntityPM.ConsigneeId = SessionLocator.TenantPM.CustomerId;
                 this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
                 this.EntityPM.NewConcurrencyGUID = Guid.newGuid();
                 this.EntityPM.Tenant = SessionLocator.Tenant;
