@@ -13446,6 +13446,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          To = s.To,
                                                          Origin = s.Origin,
                                                          CreatedByPartner = s.CreatedByPartner,
+                                                         PreForwardingFromPortId = s.PreForwardingFromPortId,
+                                                         OnForwardingToPortId = s.OnForwardingToPortId,
                                                      };
 
             return shipmentsList;

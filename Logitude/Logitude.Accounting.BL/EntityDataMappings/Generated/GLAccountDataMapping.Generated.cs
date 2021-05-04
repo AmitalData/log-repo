@@ -224,7 +224,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         Collector, 
 	         FollowupDate, 
 	         FollowupNotes,
-	         LastReconcileDate, 
+	       
 	         GLAccountFollowUpDate, 
 	         GLAccountFollowUpRemarks,
 	      }
