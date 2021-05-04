@@ -42,6 +42,7 @@ using HypredTest.ShippingAgentProxy;
 using HypredTest.ShippingLineProxy;
 using HypredTest.AccountingPartnerProxy;
 using HypredTest.PaymentTermProxy;
+using HypredTest.HybridTenantStateProxy;
 
 namespace HypredTest
 {
@@ -3315,6 +3316,9 @@ namespace HypredTest
                 case "AccountingPartner":
                     response = SetAccountingPartnerTests(Token);
                     break;
+                case "Hybrid Tenant State":
+                    response = TestHybridTenantStateService();
+                    break; 
                 default:
                     MessageBox.Show("select a service to test");
                     break;
@@ -3662,6 +3666,30 @@ namespace HypredTest
                     response = shipmentservice.Upsert(consolepm, false);
                 }
 
+                return response;
+            }
+        }
+         
+         private Response TestHybridTenantStateService()
+        {
+            HybridTenantStateProxy.HybridTenantStatePM consolepm = new HybridTenantStatePM()
+            { 
+                Tenant = 2,
+                WaitingQueue = 0,
+                FailedQueue = 0,
+                LastQueueDateTime = DateTime.Today,
+                LastUpdateDateTime = DateTime.Today, 
+                VersionDate = DateTime.Today,
+                VersionNumber = "10.10"
+            };
+
+
+            HybridTenantStateProxy.HybridTenantStateWcfServiceClient hybridTenantStateServiceservice = new HybridTenantStateProxy.HybridTenantStateWcfServiceClient();
+            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)hybridTenantStateServiceservice.InnerChannel))
+            {
+                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
+                Response response = new Response();
+                response = hybridTenantStateServiceservice.Upsert(consolepm, false); 
                 return response;
             }
         }
