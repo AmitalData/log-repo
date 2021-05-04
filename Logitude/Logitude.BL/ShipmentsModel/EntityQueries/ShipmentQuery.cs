@@ -13511,10 +13511,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public ShipmentPM GetShipmentPMForCargoTrackingByEntityId(string id, int tenant)
         {
             Shipment shipment = repository.GetShipmentForCargoTracking(id, tenant);
+            var newShipment = new ShipmentPM();
 
-            ShipmentPM shipmentPM = CreateShipmentPMForCargoTracking(tenant, shipment);
+            ShipmentPM shipmentPM = MapShipmentToShipmentPM(newShipment, shipment, null, null, false);
+            CreateShipmentPMForCargoTracking(tenant, shipment);
 
-            shipmentPM = MapShipmentToShipmentPM(shipmentPM, shipment,null,null,false);
+            shipmentPM = CreateShipmentPMForCargoTracking(tenant, shipment);
 
             SetShipmentCloudDataFields(shipment, shipmentPM);
 
