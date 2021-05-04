@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="Containerizations"
+  Schema="Customs"
+  DBType="Main"
+  Module="Customs">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AgentDeclaration"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ContainerizationDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ContainerizationNumber"
+    Type="varchar"
+    Size="35">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ContainerizationStatus"
+    Type="decimal"
+    Precision="4"
+    Scale="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="HataraStatus"
+    Type="decimal"
+    Precision="4"
+    Scale="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="OperationMode"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="OperationMode"
+    ReferencedTable="NDMessageActionCodes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+</Table>

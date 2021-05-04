@@ -166,7 +166,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         PalestinianCode, 
 	         RequestedCustomsDocId, 
 	         ExportDeclarationOfficeCode, 
-	         PhysicalCheck,
+	         PhysicalCheck, 
+	         ExportContainerizationID,
 	      }
 
 
@@ -396,7 +397,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         PhysicalCheck, 
 	         FinalLoadingSiteName, 
 	         ShipCodeName, 
-	         CancelRejectionReasonName,
+	         CancelRejectionReasonName, 
+	         ExportContainerizationID,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -1123,6 +1125,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PhysicalCheck))
             {
 				entityPOCO.PhysicalCheck = entityPM.PhysicalCheck;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportContainerizationID))
+            {
+				entityPOCO.ExportContainerizationID = entityPM.ExportContainerizationID;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -1856,6 +1863,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.PhysicalCheck = entityPOCO.PhysicalCheck;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExportContainerizationID))
+            {
+					entityPM.ExportContainerizationID = entityPOCO.ExportContainerizationID;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationPM entityPM, DeclarationPM oldEntityPM)
@@ -2580,6 +2592,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PhysicalCheck))
             {
                 oldEntityPM.PhysicalCheck = entityPM.PhysicalCheck;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportContainerizationID))
+            {
+                oldEntityPM.ExportContainerizationID = entityPM.ExportContainerizationID;
             }
 			
 		}
