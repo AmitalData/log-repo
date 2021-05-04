@@ -856,6 +856,8 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     }
 
     AddNewEntity() {
+
+        this.isPrivateLabel = true;
         let NewShip = new ShipmentPM();
         NewShip.Tenant = SessionLocator.Tenant;
         let windowArgs: any = {};
