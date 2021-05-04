@@ -178,7 +178,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                 var windowArgs: any = {};
                 windowArgs.SelectedShipment = this.EntityPM;
                 windowArgs.IsNewDocument = true;
-
+                windowArgs.ShareAsDefault = true;
                 var logitudeWindow = new LogitudeWindow();
                 logitudeWindow.WindowArgs = windowArgs;
                 logitudeWindow.Width = 960;
