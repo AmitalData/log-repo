@@ -1,3 +1,5 @@
+import { RequestAliases } from "../../cypress/constants/RequestAliases";
+import { BaseSelectors } from "../../cypress/selectors/BaseSelectors";
 import { Interception } from "cypress/types/net-stubbing";
 
 export function AssertStatusCode(requestAlias: string, expectedStatusCode: number): Cypress.Chainable<Interception> {
@@ -56,4 +58,17 @@ export function AssertElementTextEqual(elementSelector :string ,expectedValue:st
         })
     }
     
+}
+export function AssertInformationMessage(message:string){
+    AssertMessageWindow(message)
+}
+
+export function AssertMessageWindow(message:string){
+    AssertElementExist(BaseSelectors.MessageWindow)
+    AssertElementContain(BaseSelectors.MessageWindow,message)
+    CloseWindow(BaseSelectors.MessageWindow,BaseSelectors.ContainsOK)
+}
+
+export function CloseWindow(windowSelector:string,contain:string){
+    cy.get(windowSelector).last().contains(contain).click({force:true});
 }

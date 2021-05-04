@@ -310,3 +310,8 @@ export function ValidateEventsTab(expectedEventDetailsList: EventTypeDetails[] ,
         }
     });
 }
+export function FillLoggedInUserEmail(InputEmailSelector:string){
+    cy.GetLoggedInUser().then(email => {
+        cy.get(InputEmailSelector).type(email + '{downarrow}{enter}')
+    });
+}
