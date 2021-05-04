@@ -54,6 +54,7 @@ namespace WebFreight.Web.WcfApi
 
                     CurrencyRepository currencyRepository = new CurrencyRepository(commoncontext);
                     VatTypeRepository vatTypeRepository = new VatTypeRepository(commoncontext);
+                    PaymentTermRepository paymentTermRepository = new PaymentTermRepository(entityPM.Tenant);
 
                     if (entityPM.InvoiceCurrencyId != null)
                     {
@@ -84,6 +85,22 @@ namespace WebFreight.Web.WcfApi
                             return response;
                         }
                     }
+
+                    if (entityPM.PaymentTermId != null)
+                    {
+                        var paymentTerm = paymentTermRepository.GetSinglePaymentTermByCode(entityPM.PaymentTermId, entityPM.Tenant);
+                        if (paymentTerm != null)
+                        {
+                            entityPM.PaymentTermId = paymentTerm.Id;
+                        }
+                        else
+                        {
+                            response.HasError = true;
+                            response.ErrorMessage = "PaymentTermId field doesn't exist in the database,Upsert this entity before using it.";
+                            return response;
+                        }
+                    }
+
                     if (entityPM.PrimaryContactId != null)
                     {
                         ContactRepository contactRepository = new ContactRepository(commoncontext);
