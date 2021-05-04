@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<entity Id="&quot;389ed6e0-6cb3-4a3f-9b8f-3d1803d9b7af&quot;" Code="&quot;Fact_Invoices&quot;" Name="&quot;Fact_Invoices&quot;" TypeCode="&quot;Fact&quot;" IsClosed="false" DataViewName="&quot;factInvoice&quot;" HasPivotColumn="false" RecordType="&quot;ARInvoices&quot;" DisplayName="&quot;Invoices&quot;" ObjectTableName="&quot;ARInvoice&quot;" HasCustomFields="false" MaxNumberOfCustomFields="0">
+  <fields>
+    <field Id="&quot;ed0d49ed-b18c-4a99-8695-097af22c352a&quot;" Code="&quot;[Id_Number]&quot;" Name="&quot;Id_Number&quot;" DataTypeCode="&quot;Integer&quot;" IsRequired="true" MinLength="0" MaxLength="0" IsPrimaryKey="true" IsMeasurement="false" DisplayInQueryBuilder="true" HideTree="false" CannotFilter="false" IsCustom="false" DontDisplayInView="false" IsMultipleSelection="false" />
+  </fields>
+</entity>
