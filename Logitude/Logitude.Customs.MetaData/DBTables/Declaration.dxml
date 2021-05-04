@@ -1219,4 +1219,6 @@
     Columns="HatraDate" />
   <Index
     Columns="IsClose" />
+  <Index
+  Columns="ExternalDeclarationNumber" />
 </Table>
