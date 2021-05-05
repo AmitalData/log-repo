@@ -1,4 +1,4 @@
-@release @stable @all
+@release @dev @all
 Feature: Change Time Zone and Date Time Format from Maintenance
     The user changes time zone and date time format from the Maintenance Module.
 
