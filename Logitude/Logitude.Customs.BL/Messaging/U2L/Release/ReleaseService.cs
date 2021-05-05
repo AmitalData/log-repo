@@ -95,6 +95,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
             string xmlLOGICUSTFILE = xmlLOGIBONDREL;
             xmlLOGICUSTFILE = xmlLOGICUSTFILE.Replace("LOGIBONDREL", "LOGICUSTFILE");
             xmlLOGICUSTFILE = xmlLOGICUSTFILE.Replace("LogitudeReleaseFile", "LogitudeCustomsFile");
+            Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.Clear();
             DeclarationUpsertService myDeclarationUpsertService = new DeclarationUpsertService();
             try
             {
@@ -103,13 +104,20 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
             catch (DbEntityValidationException ex)
             {
                 var FormatedException = ExceptionFormatUtil.GetFormated(ex);
+                AppendLogLine("Declaration Upsert Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(2000));
                 AppendLogLine("ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
+                MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
+                return;
             }
             catch (Exception e)
             {
+                AppendLogLine("Declaration Upsert Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(2000));
                 AppendLogLine("ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
+                MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
+                return;
             }
             //Delete Supplier Invoice
+            AppendLogLine("Declaration Upsert Log " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(2000));
 
             if (String.IsNullOrWhiteSpace(_LogitudeReleaseFile.Id))
             {
@@ -121,6 +129,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
             this._MyDeclarationPM = myQueryService.GetSingle(this._LogitudeReleaseFile.Id, true, false);
             if (this._MyDeclarationPM == null)
             {
+                AppendLogLine("Declaration Get Single Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(2000));
+                MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
                 throw new BusinessErrorException("LOGITUDE FILE is " + this._LogitudeReleaseFile.Id + " but not found");
             }
             AppendLogLine("GetSingle:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
