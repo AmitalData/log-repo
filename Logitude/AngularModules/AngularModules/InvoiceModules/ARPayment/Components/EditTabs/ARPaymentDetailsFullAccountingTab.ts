@@ -1769,16 +1769,17 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 			if (this.EntityPM.ValueDate != value) {
 				this.EntityPM.ValueDate = value;
 
-              this.SetUIProperties_ValueDate();
+                this.SetUIProperties_ValueDate();
+                if (this.EntityPM.AccountingPaymentMethodCode == "CH") {
+                    this.UpdatePaymentChequeFields();
+                }
             }
 		}
 	}
 	
   SetUIProperties_ValueDate() {
       this.UIProperties.SetRequired("ValueDate", this.ObjectTableName, this.ValueDate != null ? false : true);
-      if (this.EntityPM.AccountingPaymentMethodCode == "CH") {
-          this.UpdatePaymentChequeFields();
-      }
+    
   }
 
 	get ChequeOrPaymentRef()
