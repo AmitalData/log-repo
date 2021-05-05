@@ -33,7 +33,7 @@ Then("the report should run successfully", () => {
 });
 
 Then("the information messagee with {string} message should appear", (informationMessagee) => {
-    BaseAssertion.AssertInformationMessage(informationMessagee)
+    BaseAssertion.AssertMessageWindow(informationMessagee)
 });
 
 Then("the report should appear", () => {

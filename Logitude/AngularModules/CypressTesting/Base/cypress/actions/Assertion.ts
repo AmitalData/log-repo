@@ -59,9 +59,6 @@ export function AssertElementTextEqual(elementSelector :string ,expectedValue:st
     }
     
 }
-export function AssertInformationMessage(message:string){
-    AssertMessageWindow(message)
-}
 
 export function AssertMessageWindow(message:string){
     AssertElementExist(BaseSelectors.MessageWindow)
