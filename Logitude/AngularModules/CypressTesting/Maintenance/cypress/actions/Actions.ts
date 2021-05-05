@@ -35,6 +35,8 @@ import { QuoteSelectors } from "../../../Quote/cypress/selectors/Selectors";
 import { ShipmentSelectors } from "../../../Shipment/cypress/selectors/Selectors";
 import { ReceivableDetails } from "../../../Shipment/cypress/models/ReceivableDetails";
 import { RegionDetails } from "../models/RegionDetails";
+import {ChangePasswordsDetails} from '../models/ChangePasswordsDetails'
+import { PasswordValidationMessagesDetails } from '../models/PasswordValidationMessagesDetails'
 
 //#region variables
 let CityCode = null;
@@ -65,22 +67,40 @@ export function OpenMaintenanceItemFromMaintenanceMenu(maintenanceItemNameToSear
     cy.Click(maintenanceItemSelector, null);
 }
 
-export function FillChangePasswordWindow(NewPassword: string, RetypePassword: string) {
-    cy.GetCurrentPassword().then(CurrentPassword => {
-        cy.FillLogTextBox(MaintenanceSelectors.CurrentPassword, CurrentPassword.toString())
-    })
-    cy.FillLogTextBox(MaintenanceSelectors.NewPassword, NewPassword)
-    if (RetypePassword != null) {
-        cy.FillLogTextBox(MaintenanceSelectors.RetypePassword, RetypePassword)
+export function FillChangePasswordWindow(changePasswordsDetails:ChangePasswordsDetails) {
+    if (changePasswordsDetails.CurrentPassword == "LoggedInUserPassword"){
+        cy.GetCurrentPassword().then(CurrentPassword => {
+            cy.FillLogTextBox(MaintenanceSelectors.CurrentPassword, CurrentPassword.toString())
+        })
     }
+    else{
+        cy.FillLogTextBox(MaintenanceSelectors.CurrentPassword, changePasswordsDetails.CurrentPassword)
+    }
+    cy.FillLogTextBox(MaintenanceSelectors.NewPassword, changePasswordsDetails.NewPassword)
+        cy.FillLogTextBox(MaintenanceSelectors.RetypePassword, changePasswordsDetails.RetypePassword)
+    
 }
 
 export function ChangePasswordMockChange() {
     cy.intercept(Urls.PostChangePassword, [true])
-
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
 }
-
+export function ChangePassword() {
+    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
+}
+export function ValidatePasswordValidationMessagesColors(passwordValidationMessagesDetails:PasswordValidationMessagesDetails){
+    ValidateMessageColor(MaintenanceSelectors.PasswordLenghtDiv,passwordValidationMessagesDetails.PasswordLengh)
+    ValidateMessageColor(MaintenanceSelectors.PasswordContainsCharactersDiv,passwordValidationMessagesDetails.PasswordContainsUpperLowercase)
+    ValidateMessageColor(MaintenanceSelectors.PasswordContainsNumberDiv,passwordValidationMessagesDetails.PasswordContainsNumber)
+}
+export function ValidateMessageColor(ValidationMessageSelector:string,ValidationMessage:string){
+    if(ValidationMessage.toLowerCase()==constants.green){
+        cy.ValidateElementColor(ValidationMessageSelector,"rgb(0, 128, 0)"); 
+    }
+    else if(ValidationMessage.toLowerCase()==constants.gray){
+        cy.ValidateElementColor(ValidationMessageSelector,"rgb(128, 128, 128)"); 
+    }
+}
 export function OpenTabInMaintenanceMenu(maintenanceItemNameToSearch: string, maintenanceItemSelector: string) {
     cy.Click(BaseSelectors.MaintenanceMenu, null);
     cy.FillLogTextBox(BaseSelectors.NullSearch, maintenanceItemNameToSearch);

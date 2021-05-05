@@ -84,6 +84,9 @@ export class MaintenanceSelectors extends RegexSelectors {
     public static readonly CurrentPassword = "#CurrentPassword";
     public static readonly NewPassword = "#NewPassword";
     public static readonly RetypePassword = "#RetypePassword"
+   public static readonly PasswordLenghtDiv = "#PasswordLenghtDiv"
+   public static readonly PasswordContainsCharactersDiv = "#PasswordContainsCharactersDiv"
+   public static readonly PasswordContainsNumberDiv = "#PasswordContainsNumberDiv"
     //#endregion
 
     //#region Customer settings

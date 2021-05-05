@@ -162,6 +162,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly LocalCustomsInterfaceCode = "#CustomsInterfaceSetting_LocalCustomsInterfaceCode";
 
     //#endregion
+    public static readonly SingleError = ".SingleError"
     public static readonly HeaderScreen= ".HeaderScreen"
     public static readonly HeaderScreenLable=".HeaderScreenLable"
     public static readonly tr="tr"
@@ -180,6 +181,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly CurvedEditArea=".CurvedEditArea"
     public static readonly ListDataLoaded='div[id=ListDataLoaded]'
     public static readonly ErrorPopUp = ".ErrorPopUp";
+    public static readonly WindowHeader=".WindowHeader"
    
 
     public static readonly ShortTitleDiv = ".ShortTitleDiv";
