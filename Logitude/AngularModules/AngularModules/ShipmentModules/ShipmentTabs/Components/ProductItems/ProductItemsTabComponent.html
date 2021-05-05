@@ -22,7 +22,7 @@
 
                         <log-column [header]="'Item Code'" [width]="'150'" [Alignment]="'left'">
                             <ng-template let-item>
-                                <log-cell-template #logcelltemplate>
+                                <log-cell-template #logcelltemplate [IsEnabled]="IsEditingEnabled">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
                                         <span>{{item.ProductItemCode}}</span>
                                     </div>
