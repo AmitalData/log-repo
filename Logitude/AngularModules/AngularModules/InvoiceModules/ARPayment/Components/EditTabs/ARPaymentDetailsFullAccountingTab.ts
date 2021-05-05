@@ -756,7 +756,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 	}
 	SetUIProperties_Cheque()
 	{
-		if (this.isFullAccounting && this.AccountingPaymentMethodCode == "CH") {
+        if (this.isFullAccounting && this.AccountingPaymentMethodCode == "CH") {        
+            this.UpdatePaymentChequeFields();          
 			this.UIProperties.SetRequired("BankBranch", this.ObjectTableName, AppTool.IsNullOrEmpty(this.BankBranch));
 			this.UIProperties.SetRequired("Account", this.ObjectTableName, AppTool.IsNullOrEmpty(this.Account));
 			var service: InvoiceDomainService = new InvoiceDomainService();
@@ -1585,7 +1586,31 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 		this.SetUIProperties_Cheque();
 		this.SetUIProperties_CreditCard();
 		this.SetUIProperties_BankTransfer();
-	}
+    }
+    UpdatePaymentChequeFields() {
+        if (this.EntityPM.ARPaymentChequeReplicas.length > 0) {
+            this.EntityPM.ARPaymentChequeReplicas.filter(d => d.LineNumber==1).forEach((cheque: ARPaymentChequeReplicaPM) => {
+                if (cheque) {
+                    cheque.BankId = this.Bank;
+                    cheque.BankBranch = this.BankBranch;
+                    cheque.BankAccount = this.Account;
+                    cheque.ValueDate = this.ValueDate;
+                    cheque.ForeignAmount = this.ChequeAmount;
+                    cheque.ChequeNumber = this.ChequeOrPaymentRef
+                }
+            });
+        }
+    }
+    UpdatePaymentChequeBankBranchField() {
+        if (this.EntityPM.ARPaymentChequeReplicas.length > 0) {
+            this.EntityPM.ARPaymentChequeReplicas.forEach((cheque: ARPaymentChequeReplicaPM) => {
+                if (cheque) {
+                    cheque.BankBranch = this.BankBranch;
+
+                }
+            });
+        }
+    }
 	get PaymentMethodDetailsLabel()
 	{
 		var result = "";
@@ -1664,8 +1689,10 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 	{
 		if (this.EntityPM != null) {
 			if (this.EntityPM.Bank != value) {
-				this.EntityPM.Bank = value;
-
+                this.EntityPM.Bank = value;
+                if (this.EntityPM.AccountingPaymentMethodCode == "CH") {
+                    this.UpdatePaymentChequeFields();
+                }
 				if (!AppTool.IsNullOrEmpty(value)) {
 					this.UIProperties.SetRequired("Bank", this.ObjectTableName, false);
 
@@ -1697,7 +1724,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 					}
 					else {
 						this.UIProperties.SetRequired("BankBranch", this.ObjectTableName, true);
-					}
+                    }
+                    this.UpdatePaymentChequeFields();
 				}
 			}
 		}
@@ -1721,7 +1749,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 					}
 					else {
 						this.UIProperties.SetRequired("Account", this.ObjectTableName, true);
-					}
+                    }
+                    this.UpdatePaymentChequeFields();
 				}
 			}
 		}
@@ -1746,7 +1775,10 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 	}
 	
   SetUIProperties_ValueDate() {
-    this.UIProperties.SetRequired("ValueDate", this.ObjectTableName, this.ValueDate != null ? false : true);
+      this.UIProperties.SetRequired("ValueDate", this.ObjectTableName, this.ValueDate != null ? false : true);
+      if (this.EntityPM.AccountingPaymentMethodCode == "CH") {
+          this.UpdatePaymentChequeFields();
+      }
   }
 
 	get ChequeOrPaymentRef()
@@ -1891,7 +1923,9 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 			this.paymentAmountTotal = this.EntityPM.AmountInPaymentCurrency;
 
 			this.CalculateTotals();
-
+            if (this.EntityPM.AccountingPaymentMethodCode == "CH") {
+                this.UpdatePaymentChequeFields();
+            }
 
 			this.ItemsSource.Collection.forEach(item =>
 			{
