@@ -235,6 +235,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     break;
             }
 
+            if (customResponse.MessageToAgent.msgCode == 19)
+            {
+                AgentTalkBackTypeQueryService agentTalkBackTypeQueryService = new AgentTalkBackTypeQueryService(requestParams.Tenant);
+                AgentTalkBackTypePM agentTalkBackTypePM = agentTalkBackTypeQueryService.GetSingle(customResponse.MessageToAgent.msgCode.ToString(), false, true);
+                if (agentTalkBackTypePM != null)
+                {
+                    notificationDescription = agentTalkBackTypePM.LocalName + "\n" + notificationDescription;
+                }
+            }
+
             if (customResponse.MessageToAgent.msgCode == 29 || customResponse.MessageToAgent.msgCode == 30 || customResponse.MessageToAgent.msgCode == 31)
             {
                 try
