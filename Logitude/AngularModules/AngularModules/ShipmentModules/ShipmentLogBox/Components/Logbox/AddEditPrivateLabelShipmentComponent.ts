@@ -963,7 +963,8 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                     this.EntityPM.ShipmentAddtionalDataXML = "<PLForwarding>false</PLForwarding>";
                 }
 
-                 this.EntityPM.StatusId = !this.IsDSVTenant ? this.EntityProgressStatusId : this.EntityPM.StatusId;
+                this.EntityPM.StatusId = !this.IsDSVTenant ? this.EntityProgressStatusId : this.EntityPM.StatusId;
+                this.EntityPM.DocumentFilingIds = "";
                 this.documentsFilings.forEach((item) => {
                     this.EntityPM.DocumentFilingIds += (item.Id + ",");
                 });
