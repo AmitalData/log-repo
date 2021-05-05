@@ -1749,7 +1749,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 foreach (HTSCodePM hTSCodePM in itemPM.HTSCodes)
                 {
-                    this.CreateCustomerProductItemHTSCode(hTSCodePM);
+                    this.CreateCustomerProductItemHTSCode(hTSCodePM, itemPM.Id);
                 }
             }
         }
@@ -1766,7 +1766,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     {
                         case ChangeSetOperation.Insert:
                             {
-                                this.CreateCustomerProductItemHTSCode(hTSCodePM);
+                                this.CreateCustomerProductItemHTSCode(hTSCodePM, itemPM.Id);
                                 break;
                             }
 
@@ -1806,9 +1806,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
         }
 
-        private void CreateCustomerProductItemHTSCode(HTSCodePM itemPM)
+        private void CreateCustomerProductItemHTSCode(HTSCodePM itemPM,string itemId)
         {
-            itemPM.ItemId = this.entityPM.Id;//AbdBeitello
+            itemPM.Id = IdCounter.GetNumber("HTSCode", tenant);
+            itemPM.ItemId = itemId;
             itemPM.Tenant = tenant;
 
             HTSCode itemPoco = new HTSCode()

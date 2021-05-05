@@ -1,19 +1,19 @@
-<table >
+<table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
             <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
         </td>
     </tr>
-    <tr style="height:10px;">
+    <tr style="height:20px;">
         <td>
             <div></div>
         </td>
     </tr>
-    <tr>
+    <tr style="height:50%;">
         <td>
             <table>
-                
-                <tr class="FormFieldRow">
+
+                <tr class="FormFieldRow" style="height:30px;">
                     <!-- ItemCode -->
                     <td style="width: 150px;">
                         <LogLabel [ObjectFieldName]="'ItemCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -35,7 +35,7 @@
                                 <td>
                                     <div></div>
                                 </td>
-                                <td style="width:350px;height:85px;">
+                                <td style="width:350px;height:20px;">
                                     <div class="MediaFill">
                                         <LogTextBox [ObjectFieldName]="'Remarks'" [Text]="Remarks" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true" [HideColumns]="true"></LogTextBox>
                                     </div>
@@ -52,8 +52,8 @@
 
                 </tr>
 
-             
-                <tr class="FormFieldRow">
+
+                <tr class="FormFieldRow" style="height:30px;">
                     <!-- Description -->
                     <td>
                         <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -65,7 +65,7 @@
                                 <td>
                                     <div></div>
                                 </td>
-                                <td style="width:350px;height:85px;">
+                                <td style="width:350px;height:20px;">
                                     <div class="MediaFill">
                                         <LogTextBox [ObjectFieldName]="'Description'" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true" [HideColumns]="true"></LogTextBox>
                                     </div>
@@ -96,7 +96,7 @@
                         <LogLabel [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td style="width:350px;">
-                        <CheckBox [IsChecked]="InActive" (Checked) ="InActive = $event"></CheckBox>
+                        <LogCheckBox [ObjectFieldName]="'InActive'" [Checked]="InActive" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                     </td>
                     <td>
                         <div></div>
@@ -105,6 +105,123 @@
                 </tr>
 
             </table>
+        </td>
+    </tr>
+    <!-- HTSCodes -->
+    <tr>
+        <td>
+            <div class="TabHolder">
+                <table>
+                    <tr class="TabTitleRow">
+                        <td>
+                            <table>
+                                <tr >
+                                    <td>
+                                        <div >
+                                            <label>  HTS Codes</label>
+                                            <IconButton [Name]="'Add'" (click)="FatherComponent.AddHTSCode()"></IconButton>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr style="height: 5px;">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="MediaFill">
+                                <div class="SimpleGridView">
+                                    <div class="MediaFill" style="overflow-x: hidden;">
+                                        <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="FatherComponent.HTSCodes" [Disabled]="!IsEditingEnabled" (RowEnded)="FatherComponent.OnRowEnded($event)">
+
+                                            <log-column [header]="'Line'" [width]="'80'" [Alignment]="'left'">
+                                                <ng-template let-item>
+                                                    <log-cell-template #logcelltemplate>
+                                                        <span>{{item.InActive}}</span>
+                                                    </log-cell-template>
+                                                </ng-template>
+                                            </log-column>
+
+                                            <log-column [header]="'HTS Code'" [width]="'150'" [Alignment]="'left'">
+                                                <ng-template let-item>
+                                                    <log-cell-template #logcelltemplate>
+                                                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                            <span>{{item.Code}}</span>
+                                                        </div>
+                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                            <LogTextBox [FocusOnMe]="'true'"
+                                                                        [ObjectFieldName]="'Code'"
+                                                                        [DataContext]="item"
+                                                                        [Text]="item.Code"
+                                                                        [ObjectTableName]="'HTSCode'"
+                                                                        [HideColumns]="true">
+                                                            </LogTextBox>
+                                                        </div>
+                                                    </log-cell-template>
+                                                </ng-template>
+                                            </log-column>
+
+                                            <log-column [header]="'Destination Country'" [width]="'150'" [Alignment]="'left'">
+                                                <ng-template let-item>
+                                                    <log-cell-template #logcelltemplate>
+                                                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                            <span>{{item.CountryId}}</span>
+                                                        </div>
+                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                            <LogLov [FocusOnMe]="'true'"
+                                                                    [ObjectFieldName]="'CountryId'"
+                                                                    [SelectedValue]="item.CountryId"
+                                                                    [ObjectTableName]="'HTSCode'"
+                                                                    [DataContext]="item"
+                                                                    [LookUpTableName]="'Country'">
+                                                            </LogLov>
+                                                        </div>
+                                                    </log-cell-template>
+                                                </ng-template>
+                                            </log-column>
+
+                                            <log-column [header]="'Inactive'" [width]="'120'" [Alignment]="'left'">
+                                                <ng-template let-item>
+                                                    <log-cell-template #logcelltemplate>
+                                                        <span>{{item.InActive}}</span>
+                                                    </log-cell-template>
+                                                </ng-template>
+                                            </log-column>
+
+
+                                            <!-- Buttons -->
+                                            <log-column [width]="'30'" [Alignment]="'left'">
+                                                <ng-template let-item>
+                                                    <log-cell-template [IgnoreMods]="true">
+                                                        <IconButton [Name]="'Delete'" [IsSmall]="true"
+                                                                    style="display: block; float: left; margin-left:3px; margin-top:4px;" (click)="item.RemoveLine()"></IconButton>
+                                                    </log-cell-template>
+                                                </ng-template>
+                                            </log-column>
+
+                                        </logitude-edit-grid>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+
+                </table>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height:20px;">
+        <td>
+            <div></div>
         </td>
     </tr>
 

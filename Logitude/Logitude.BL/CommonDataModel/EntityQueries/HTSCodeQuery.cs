@@ -66,5 +66,23 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                };
             return result;
         }
+
+        public List<HTSCodePM> GetHTSCodePMsByProductItemIds(string itemId, int tenant)
+        {
+            List<HTSCodePM> hTSCodes = (from entity in repository.context.HTSCodes
+                                            where entity.Tenant == tenant && entity.ItemId == itemId
+                                        select new HTSCodePM()
+                                        {
+                                            Id = entity.Id,
+                                            Tenant = entity.Tenant,
+                                            Code = entity.Code,
+                                            ItemId = entity.ItemId,
+                                            DestinationCountryId = entity.DestinationCountryId,
+                                            ApprovedByCustomer = entity.ApprovedByCustomer,
+                                            InActive = entity.InActive,
+                                        }).ToList();
+
+            return hTSCodes;
+        }
     }
 }
