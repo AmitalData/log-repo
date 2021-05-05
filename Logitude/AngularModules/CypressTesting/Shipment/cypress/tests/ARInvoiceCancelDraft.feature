@@ -1,4 +1,4 @@
-@release @dev @all
+@release @stable @all
 Feature: AR Invoice Cancel Draft
     The user creates a Direct Export Air shipment, creates receivable, creates AR Invoice draft and cancels it.
     Scenario: Update Accounting System
