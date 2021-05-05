@@ -76,7 +76,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
             this.PLShortName = SessionLocator.PrivateLableSettings.PrivateLabelShortName;
         }
 
-        this.IsDSVTenant = SessionLocator.PrivateLableSettings.PrivateLabelDomain.toLowerCase().indexOf("dsv") > -1;
+        this.IsDSVTenant =  SessionLocator.PrivateLableSettings.PrivateLabelDomain.toLowerCase().indexOf("dsv") > -1;
 
         if (this.CurrentSession == null) {
             this.FilterId_A = "TransportFilter_A_-1_-1";
@@ -963,14 +963,17 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                     this.EntityPM.ShipmentAddtionalDataXML = "<PLForwarding>false</PLForwarding>";
                 }
 
-                this.EntityPM.StatusId = !this.IsDSVTenant ? this.EntityProgressStatusId : this.EntityPM.StatusId;
+                 this.EntityPM.StatusId = !this.IsDSVTenant ? this.EntityProgressStatusId : this.EntityPM.StatusId;
+                this.documentsFilings.forEach((item) => {
+                    this.EntityPM.DocumentFilingIds += (item.Id + ",");
+                });
 
                 this._ShipmentPMService.insert(this.EntityPM).subscribe((myResult: any) => {
                     if (!myResult.HasError) {
                         ServiceLocator.SendTotangoUserActivity("LogBox", "New Shipment");
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         if (!this.IsDSVTenant) {
-                            this.ConnectDocumentsFilings(myResult.Result.Id);
+                          //  this.ConnectDocumentsFilings(myResult.Result.Id);
                             this.CurrentSession.SessionEvent.emit({ Name: "ReloadShipments" });
                             this.CurrentSession.CurrentWindow.Close("");
 
