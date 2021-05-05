@@ -178,6 +178,10 @@ namespace WarehouseData
                             {
                                 Stopwatch stopWatchDimensionsTable = null;
 
+                               //if (table.Dw_TableName == "dw_ARInvoiceTypes")
+                               // { 
+                               // }
+
                                 if (table.DispayInScreen)
                                 {
                                     stopWatchDimensionsTable = new Stopwatch();

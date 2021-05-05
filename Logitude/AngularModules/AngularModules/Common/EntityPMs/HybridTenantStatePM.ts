@@ -50,6 +50,16 @@ export class HybridTenantStatePM {
     public set LastQueueDateTime(newValue: Date) { if (this.lastQueueDateTime != newValue) { this.lastQueueDateTime = newValue; this.MarkAsDirty("LastQueueDateTime"); } }
        
 	 
+    private versionNumber: string;
+    public get VersionNumber() { return this.versionNumber; }
+    public set VersionNumber(newValue: string) { if (this.versionNumber != newValue) { this.versionNumber = newValue; this.MarkAsDirty("VersionNumber"); } }
+       
+	 
+    private versionDate: Date;
+    public get VersionDate() { return this.versionDate; }
+    public set VersionDate(newValue: Date) { if (this.versionDate != newValue) { this.versionDate = newValue; this.MarkAsDirty("VersionDate"); } }
+       
+	 
 
     public OldEntityPM: HybridTenantStatePM;
 		

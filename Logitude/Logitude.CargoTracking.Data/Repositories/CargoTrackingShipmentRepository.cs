@@ -43,7 +43,7 @@ namespace Logitude.CargoTracking.Data.Repositories
             return shipments;
         }
 
-        private IQueryable<CargoTrackingShipment> GetFilteredShipmentsByIds(List<string> ShipmentIds, int tenant)
+        public IQueryable<CargoTrackingShipment> GetFilteredShipmentsByIds(List<string> ShipmentIds, int tenant)
         {
             List<string> notMainShipments = (from shipment in currentContext.CargoTrackingShipments
                                              where shipment.Tenant == tenant && shipment.IsMainRecord == false

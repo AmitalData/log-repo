@@ -35,6 +35,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
     SearchText: string = "";
     CustomsBrokerReference: string;
     ShipmentPM: any;
+    ShipmentPackages: any[];
     PartnerCards: PartnerCard[] = [];
 
     ShipmentCustomsData: CargoTrackingShipmentCustomsData;
@@ -122,6 +123,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
                 this.SetRoutingVariables();
                 this.GetShipmentPM();
                 this.GetShipmentCustomsData();
+                this.GetShipmentPackages();
 
             }
 
@@ -163,10 +165,19 @@ export class ShipmentDetailsComponent implements AfterViewInit
         {
             if (result) {
                 this.ShipmentPM = result;
+                this.GetPartnersAddresses();
+                this.FillCustomsBrokerReferenceFromShipmentPM();
+            }
+        });
+    }
+
+    GetShipmentPackages() {
+        this.cargoTrackingShipmentService.GetShipmentPackages(this.Shipment.ShipmentList.EntityId).subscribe((result: any) => {
+            if (result) {
+                this.ShipmentPackages = result;
+                console.log("GetShipmentPackages", this.ShipmentPackages);
                 this.isLoading = false;
 
-                this.FillCustomsBrokerReferenceFromShipmentPM();
-                this.GetPartnersAddresses();
             }
         });
     }

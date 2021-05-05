@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiCredential.cs" />
+    <Compile Include="APIResponseParameters.cs" />
     <Compile Include="APICredentialsParameters.cs" />
     <Compile Include="ARInvoiceLinePM.cs" />
     <Compile Include="ARInvoicePM.cs" />

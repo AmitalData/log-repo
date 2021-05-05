@@ -2123,6 +2123,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             this.isMultipleCheques = false;
             if (this.EntityPM.ARPaymentChequeReplicas.length > 1) {
                 this.isMultipleCheques = true;
+                this.GetData();
             }
             if (this.EntityPM.ARPaymentChequeReplicas.length >= 0) {
                 this.SetDefaultChequeFields();
@@ -2200,8 +2201,8 @@ export class TransactionLineModel extends BaseComponent
 
 		this.CalculateFields();
 
-		this.UIProperties.SetEnabled("AmountToReconcile", "LedgerTransaction", this.Status != TextStore.Closed && !this.parent.IsGridReadOnly);
-
+        this.UIProperties.SetEnabled("AmountToReconcile", "LedgerTransaction", this.Status != TextStore.Closed && !this.parent.IsGridReadOnly );
+        this.UIProperties.SetEnabled("AmountToReconcile", "LedgerTransaction",  !this.parent.isMultipleCheques);
 	}
 
 	CalculateFields()

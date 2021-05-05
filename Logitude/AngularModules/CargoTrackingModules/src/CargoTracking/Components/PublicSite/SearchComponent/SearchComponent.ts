@@ -28,7 +28,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
     searchForm;
     ServiceError;
     Shipments: CargoTrackingShipmentList[] = [];
-    searchCounter: number = 0;
+    searchCounter: number =+ sessionStorage.getItem("searchCounter");
     public CaptchaImageUrl: any;
     public IsShowAreaCaptcha: boolean = false
     public CaptchaKey: string;
@@ -251,7 +251,8 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         this.currentDate = new Date();
         if (this.searchCounter == 0) sessionStorage.setItem("FirstSearchDate", this.currentDate.getTime());
         var FirstSearchDate: any = sessionStorage.getItem("FirstSearchDate");
-        if (searchSource==null)++this.searchCounter;
+        if (searchSource == null) ++this.searchCounter;
+        sessionStorage.setItem("searchCounter", this.searchCounter.toString());
         var difference: any = this.currentDate.getTime() - FirstSearchDate;
         if (difference <= 100000) {
             if (this.searchCounter == 20) {
@@ -265,6 +266,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
     }
     ResetStorageData() {
         sessionStorage.setItem("FirstSearchDate", this.currentDate);
+        sessionStorage.setItem("searchCounter", "0");
         this.searchCounter = 0;
     }
     ShowCaptchaImage() {

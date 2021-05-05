@@ -26,6 +26,7 @@ export class RequestAliases {
     public static readonly QuoteGetsingle = 'QuoteGetsingle';
     public static readonly UpdateQuotation = 'UpdateQuotation';
     public static readonly SentToCustomer = 'SentToCustomer';
+    public static readonly SendReport = 'SendReport';
 
 
     public static readonly PrintQuotationWindowOpen = 'PrintQuotationWindowOpen';
@@ -145,5 +146,10 @@ export class RequestAliases {
     //Reset Password
     public static readonly ResetPassword="ResetPassword"
 
+    //Reports
+    public static readonly ReportsTemplate="ReportsTemplate"
+    public static readonly Report="Report"
+    public static readonly InfoIconImage="InfoIconImage"
+    public static readonly PrintReportWindowOpen = 'PrintReportWindowOpen';
 
 }

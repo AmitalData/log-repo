@@ -541,6 +541,11 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
                 }
 
+                if(code == "CH" && aRPaymentChequeReplicas?.Count > 1)
+                {
+                    errors = ValidateDuplicateChequeNumber(aRPaymentChequeReplicas, tenant, errors, useLocal);
+                }
+
                 if (!string.IsNullOrEmpty(errors))
                 {
                     errors = errors.TrimEnd(';');
@@ -548,6 +553,22 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 }
             }
         }
+
+        private static string ValidateDuplicateChequeNumber(List<ARPaymentChequeReplicaPM> aRPaymentChequeReplicas, int tenant, string errors, bool useLocal)
+        {
+            foreach (ARPaymentChequeReplicaPM aRPaymentCheque in aRPaymentChequeReplicas)
+            {
+                bool isDuplicateChequeNumber = aRPaymentChequeReplicas.FindAll(c => c.ChequeNumber == aRPaymentCheque.ChequeNumber).Count > 1;
+                if (isDuplicateChequeNumber)
+                {
+                    errors += TranslateTextsClass.Translate("Accounting.M.MoreThanChequeWithTheSameChequeNumber", tenant, useLocal);
+                    break;
+                }
+            }
+
+            return errors;
+        }
+
         public static void ValidateValueDate(DateTime? valueDate, DateTime? registerDate, int tenant)
         {
             DateTime date = registerDate.Value.AddDays(-180);

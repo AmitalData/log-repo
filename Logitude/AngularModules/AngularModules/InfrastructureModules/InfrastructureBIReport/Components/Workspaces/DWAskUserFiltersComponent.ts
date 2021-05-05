@@ -303,6 +303,8 @@ export class DWAskUserFiltersComponent extends BaseComponent implements OnInit {
 
             if (field.FilterItems.length == 0) {
 
+                this.ValidateDateField(field);
+
                 if (field.OperationCode != "Between") {
                     if (field.IsMandatoryFilter == true && AppTool.IsNullOrEmpty(field.TextValue)) {
                         this.ValidationErrorsList.push(field.DisplayName.replace('[', '').replace(']', '') + " filter is required");
@@ -340,6 +342,12 @@ export class DWAskUserFiltersComponent extends BaseComponent implements OnInit {
         return MyFilter;
 
 
+    }
+
+    ValidateDateField(field: DWObjectFieldsDetails) {
+        if ((field.DataTypeCode == "Date" || field.DataTypeCode == "DateTime") && AppTool.IsNullOrEmpty(field.TextValue)) {
+            this.ValidationErrorsList.push(field.DisplayName.replace('[', '').replace(']', '') + " filter is required");
+        }
     }
 
     private operators: ObjectFieldOperator[];

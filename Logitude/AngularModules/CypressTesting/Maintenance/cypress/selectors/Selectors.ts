@@ -84,6 +84,9 @@ export class MaintenanceSelectors extends RegexSelectors {
     public static readonly CurrentPassword = "#CurrentPassword";
     public static readonly NewPassword = "#NewPassword";
     public static readonly RetypePassword = "#RetypePassword"
+   public static readonly PasswordLenghtDiv = "#PasswordLenghtDiv"
+   public static readonly PasswordContainsCharactersDiv = "#PasswordContainsCharactersDiv"
+   public static readonly PasswordContainsNumberDiv = "#PasswordContainsNumberDiv"
     //#endregion
 
     //#region Customer settings
@@ -139,6 +142,10 @@ export class MaintenanceSelectors extends RegexSelectors {
     public static readonly CountryNotes="#Country_Notes";
     public static readonly CountrySaveButton="#Country-Save"
     public static readonly CountryEventsTab = "#CountryTHEvents"
+    public static readonly CountryFiltersOpen = "[src='./Images/FiltersOpen.png']";
+    public static readonly CountryAddFilterBtn = "div[data-cy='AddFilterBtn']";
+    public static readonly CountryCodeFilterCheckBox = "input[data-cy='CheckBox_Country.F.Code']"
+    public static readonly CountryCodeFilterTextValue = "#TextValue"
     //#endregion
 
     //#region State

@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class HybridTenantStateUpdateClass
    {  		
-		public const string HashString = "4b81e9243c72a9a7b19dc386c06854c4";
+		public const string HashString = "92485d7b171e1c00c9e01a66a5be4fb2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -89,7 +89,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "HybridTenantState",
 			      				    IsNew =  false,
 			      				    DBTableName =  "HybridTenantStates",
-			      				    OldDBTableName =  "HybridTenantState",
 			      				    ObjectTableSingular =  "Hybrid Tenant State",
 			      				    ObjectTablePlural =  "Hybrid Tenant State",
 			      				    HasCustomFilter =  false,
@@ -118,9 +117,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Hybrid Tenant State",
-			      				    Code =  "bab3",
+			      				    Code =  "435f",
 			      				    Name =  "HybridTenantState",
 			      				    GenerateDomainService =  false,
+			      				    ClientModuleName =  "Common",
+			      				    ServerModuleName =  "",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,

@@ -65,6 +65,8 @@ namespace Logitude.BL.InvoiceModel.Tools
         private  Boolean IsSameHomeCurrency = false;
         private  string AccountingSystemCode;
         private ARInvoicePaymentRepository invoicePaymentRepository;
+        private Tenant loggedTenant;
+        private AccountingSystemPM accountingSystem;
 
         private void GetObjectTableData()
         {
@@ -99,14 +101,14 @@ namespace Logitude.BL.InvoiceModel.Tools
                 if (isTransferingVoiding)
                 {
                     commonContext = CommonContext;
-                    Tenant loggedTenant = (from a in commonContext.Tenants.Include("AccountingSetting") where a.Id == entityPM.Tenant select a).FirstOrDefault();
+                    loggedTenant = (from a in commonContext.Tenants.Include("AccountingSetting") where a.Id == entityPM.Tenant select a).FirstOrDefault();
                     tenant = loggedTenant.Id;
                     tenantName = loggedTenant.Company;
                     AccountingSystemCode = loggedTenant.AccountingSetting.AccountingSystemCode;
                     AccountingSystemQuery query = new AccountingSystemQuery(tenant);
-                    AccountingSystemPM AccountingSystemPM = query.GetSingleAccountingSystemPM(AccountingSystemCode);
+                    accountingSystem = query.GetSingleAccountingSystemPM(AccountingSystemCode);
                     if (loggedTenant.AccountingSetting != null)
-                        if ((AccountingSystemCode == "QBO" || AccountingSystemCode == "QBOG") && loggedTenant.AccountingSetting.IsARPaymentsTransferEnabled && AccountingSystemPM.AllowARPaymentsTransfer)
+                        if (IsQuickBooksAccoutingSystemTransfer(entityPM))
                         {
                             if (entityPM.ExternalAccountingEntityId != null)
                             {
@@ -149,15 +151,15 @@ namespace Logitude.BL.InvoiceModel.Tools
                 else
                 {
                     commonContext = CommonContext;
-                    Tenant loggedTenant = (from a in commonContext.Tenants.Include("AccountingSetting") where a.Id == entityPM.Tenant select a).FirstOrDefault();
+                    loggedTenant = (from a in commonContext.Tenants.Include("AccountingSetting") where a.Id == entityPM.Tenant select a).FirstOrDefault();
                     tenant = loggedTenant.Id;
                     tenantName = loggedTenant.Company;
                     AccountingSystemCode = loggedTenant.AccountingSetting.AccountingSystemCode;
                     AccountingSystemQuery query = new AccountingSystemQuery(tenant);
-                    AccountingSystemPM AccountingSystemPM = query.GetSingleAccountingSystemPM(AccountingSystemCode);
+                    accountingSystem = query.GetSingleAccountingSystemPM(AccountingSystemCode);
 
                     if (loggedTenant.AccountingSetting != null)
-                        if ((AccountingSystemCode == "QBO" || AccountingSystemCode == "QBOG") && loggedTenant.AccountingSetting.IsARPaymentsTransferEnabled && AccountingSystemPM.AllowARPaymentsTransfer)
+                        if (IsQuickBooksAccoutingSystemTransfer(entityPM))
                         {
                             entityPM.ExternalAccountingEntityId = entityPOCO.ExternalAccountingEntityId;
                             ARPayment = entityPM;
@@ -286,6 +288,16 @@ namespace Logitude.BL.InvoiceModel.Tools
                 }
             }
         }
+
+        private bool IsQuickBooksAccoutingSystemTransfer(ARPaymentPM arPaymentPM)
+        {
+            if (!(AccountingSystemCode == "QBO" || AccountingSystemCode == "QBOG")) return false;
+            if (!(loggedTenant.AccountingSetting.IsARPaymentsTransferEnabled)) return false;
+            if (!(accountingSystem.AllowARPaymentsTransfer)) return false;
+            if ((loggedTenant.AccountingSetting.ARPaymentTransferStartDate != null && arPaymentPM.RegisterDate < loggedTenant.AccountingSetting.ARPaymentTransferStartDate)) return false;
+            return true;
+        }
+
         private void SendXMLFileInvoiceVoid(string ARInvoiceExternalId, string queueName)
         {
 

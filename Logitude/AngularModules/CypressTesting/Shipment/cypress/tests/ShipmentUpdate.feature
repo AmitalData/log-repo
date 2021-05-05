@@ -1,4 +1,4 @@
-@smoke @dev @all
+@smoke @stable @all
 Feature: Shipment Update
  The user creates a Direct Export Air shipment and updates it.
 

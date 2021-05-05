@@ -51,7 +51,19 @@ export class UpdateJournalLineNoteComponent extends BaseComponent{
 
     OkButtonClicked() {
         this.EntityPM.Notes = this.Notes;
+        var SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            SaveCompletedEvent.unsubscribe();
+               if (isSaveSuccess) {
+                   
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    this.CurrentSession.StopBusyIndicator();
+
+                }
+        });
+
+        this.CurrentSession.CurrentEditComponent.SaveChanges();
         this.CurrentSession.CloseCurrentWindow();
+
     }
 
 
