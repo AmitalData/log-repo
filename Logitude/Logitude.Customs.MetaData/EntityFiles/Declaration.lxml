@@ -19370,6 +19370,22 @@
     FeatureDefaultText="&quot;DocsIn&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
+  <Tab
+    TabName="&quot;Corrections&quot;"
+    TabLocalName="&quot;תיקון הצהרה(ישן)&quot;"
+    ObjectTableName="&quot;Customs.Declaration&quot;"
+    Code="&quot;DCCO&quot;"
+    ControlPath="&quot; &quot;"
+    TextCode="&quot;Customs.Declaration.TH.Corrections&quot;"
+    IsPackagable="true"
+    IndexOrder="23"
+    HtmlComponentURL="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Corrections/DeclarationCorrectionsComponent&quot;"
+    HtmlComponentName="&quot;DeclarationCorrectionsComponent&quot;"
+    FeatureCode="&quot;CORRECTIONS&quot;"
+    FeatureTextCodeCode="&quot;Customs.Declaration.Features.Correction&quot;"
+    FeatureDefaultText="&quot;Correction&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
   <EventTypes>
     <EventType
       Code="&quot;UPDT&quot;"
