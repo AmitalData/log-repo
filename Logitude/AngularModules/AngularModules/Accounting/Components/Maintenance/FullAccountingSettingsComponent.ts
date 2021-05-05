@@ -632,7 +632,22 @@ SubmitChanges(ControlAccountId:string) {
     }
 
 
-    NumberOfPeriods: number = 1;
+    public ShowLocals: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
+    isRTL = ObjectsLocator.GlobalSetting ? (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl") : false;
 
+    NumberOfPeriods: number = 1;
+    Periods: any[] = [
+        {EnglishName: 'Period 1', LocalName: 'תקופה גיול 1', Code: 'period1'},
+        {EnglishName: 'Period 2', LocalName: 'תקופה גיול 2', Code: 'period2'},
+        {EnglishName: 'Period 3', LocalName: 'תקופה גיול 3', Code: 'period3'},
+        {EnglishName: 'Period 4', LocalName: 'תקופה גיול 4', Code: 'period4'},
+        {EnglishName: 'Period 5', LocalName: 'תקופה גיול 5', Code: 'period5'},
+        {EnglishName: 'Period Past', LocalName: 'לפני התקופה', Code: 'period-past'}
+    ];
+
+    // fill these arrays from database
+    SelectedPeriods1: any[] = [];
+    SelectedPeriods2: any[] = [];
+    SelectedPeriods3: any[] = [];
 
 }

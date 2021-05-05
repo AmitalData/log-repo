@@ -3,6 +3,7 @@ import { Component, OnInit, Input, forwardRef,ChangeDetectorRef } from '@angular
 import { AppTool } from '../../Infrastructure/Tools';
 import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ObjectsLocator } from '../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     selector: "NumberInput",
@@ -18,6 +19,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 export class NumberInputComponent implements ControlValueAccessor
 {
+    isRTL = ObjectsLocator.GlobalSetting ? (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl") : false;
 
     constructor(private changeDetector: ChangeDetectorRef){
 

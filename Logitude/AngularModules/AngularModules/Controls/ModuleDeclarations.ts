@@ -71,6 +71,7 @@ import { ParticipatedFilter } from './ParticipatedFilter';
 import { InvitedFilter } from './InvitedFilter';
 import { LogitudeHotKeysComponent } from './LogitudeHotkeysComponent/LogitudeHotKeysComponent';
 import {  NumberInputComponent } from './All/NumberInput';
+import {  LogChipsComponent } from './All/LogChips';
 
 export const Directives =
     [
@@ -118,6 +119,7 @@ export const Components =
         GoogleMapsButton,
        // TimeInput,
         NumberInputComponent,
+        LogChipsComponent,
 
         ComboBox,
         HelpIcon,

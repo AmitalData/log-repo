@@ -139,6 +139,9 @@
         height: 100%;
         position: relative;
     }
+    .FormFieldRow td{
+        text-align: start !important;
+    }
 </style>
 
 <table>
@@ -733,31 +736,38 @@
                                 <table class="FixedTable">
                                     <tr class="FormFieldRow">
                                         <td style="width:150px;">Numbers of periods:</td>
-                                        <td style="width:150px;">
-                                            <NumberInput [(ngModel)]="NumberOfPeriods" name="no" [min]="1" [max]="3"></NumberInput>
+                                        <td >
+                                            <div style="width:150px;">
+                                                <NumberInput [(ngModel)]="NumberOfPeriods" name="no" [min]="1" [max]="3"></NumberInput>
+                                            </div>
                                         </td>
-                                        <td></td>
                                     </tr>
                                     <tr *ngIf="NumberOfPeriods > 0" class="FormFieldRow">
                                         <td>Period 1</td>
                                         <td>
-                                            [chips]
+                                            <LogChips
+                                                [Options]="Periods"
+                                                [DisplayFieldName]="ShowLocals?'LocalName':'EnglishName'"
+                                                [(ngModel)]="SelectedPeriods1"></LogChips>
                                         </td>
-                                        <td></td>
                                     </tr>
                                     <tr *ngIf="NumberOfPeriods > 1" class="FormFieldRow">
                                         <td>Period 2</td>
                                         <td>
-                                            [chips]
+                                            <LogChips
+                                                [Options]="Periods"
+                                                [DisplayFieldName]="ShowLocals?'LocalName':'EnglishName'"
+                                                [(ngModel)]="SelectedPeriods2"></LogChips>
                                         </td>
-                                        <td></td>
                                     </tr>
                                     <tr *ngIf="NumberOfPeriods > 2" class="FormFieldRow">
                                         <td>Period 3</td>
                                         <td>
-                                            [chips]
+                                            <LogChips
+                                                [Options]="Periods"
+                                                [DisplayFieldName]="ShowLocals?'LocalName':'EnglishName'"
+                                                [(ngModel)]="SelectedPeriods3"></LogChips>
                                         </td>
-                                        <td></td>
                                     </tr>
                                     <tr><td></td></tr>
                                 </table>
