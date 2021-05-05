@@ -29,6 +29,11 @@ namespace Logitude.ShipmentTests.Models
         public string StatusId { get; set; }
         public int ShipmentPickUpIndex { get; set; }
         public int ShipmentDeliveryIndex { get; set; }
+        public string AgentAddressCountryCode { get; set; }
+        public string AgentAddressId { get; set; }
+        public string AgentName { get; set; }
+        public string AgentId { get; set; }
+        public string AgentComputed { get; set; }
         public List<PackagePM> ShipmentPackages { get; set; }
         public List<PayablesPM> ShipmentPayables { get; set; }
         public List<ReceivablePM> ShipmentReceivable { get; set; }

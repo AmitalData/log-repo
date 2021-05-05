@@ -28,7 +28,7 @@ namespace Logitude.ShipmentTests.Features
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "APIGetShipmentDirectExportAir.feature"
+#line 1 "APIGETShipmentDirectExportAir.feature"
 #line hidden
         
         public GETShipmentDirectExportAirFeature(GETShipmentDirectExportAirFeature.FixtureData fixtureData, Logitude_ShipmentTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)

@@ -5,6 +5,7 @@ using Logitude.Test.Base.Models.Api;
 using Logitude.Test.Base.Models.Shared;
 using Logitude.Test.Base.Models.UserTenantPreparation;
 using Logitude.Test.Base.Services;
+using System;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 
@@ -17,6 +18,7 @@ namespace Logitude.ShipmentTests.Steps
         private PackagePM directPackages;
         private PayablesPM PayablesPM;
         private ReceivablePM receivablePM;
+        private ShipmentPM Partners;
 
         public PUTShipmentDirectExportAirSteps(ShipmentContext shipmentContext)
         {
@@ -41,16 +43,21 @@ namespace Logitude.ShipmentTests.Steps
             receivablePM = CreateReceivableInstance(table);
         }
 
+        [Given(@"a partners with the following properties")]
+        public void GivenAPartnersWithTheFollowingProperties(Table table)
+        {
+            Partners = AddAgentPartner(table);
+        }
 
-        [When(@"add a direct package")]
-        public void WhenAddADirectPackage()
+        [When(@"update a direct shipment")]
+        public void WhenUpdateADirectShipment()
         {
             ApiResponse<ShipmentPM> response = UpdateShipmentByAddingPackages(ShipmentContext.DirectShipment, directPackages, PayablesPM, receivablePM);
             ShipmentContext.DirectShipment.Id = response.Data?.Id;
         }
 
-        [Then(@"the direct should add package successfully")]
-        public void ThenTheDirectShouldAddPackageSuccessfully()
+        [Then(@"the direct should update successfully")]
+        public void ThenTheDirectShouldUpdateSuccessfully()
         {
             ShipmentContext.DirectShipment.Id.Should().NotBeNull();
         }
@@ -60,6 +67,7 @@ namespace Logitude.ShipmentTests.Steps
             shipment = AddPackagesToShipment(shipment, package);
             shipment = AddPayablesToShipment(shipment, payable);
             shipment = AddReceivableToShipment(shipment, receivable);
+            shipment = AddPartnerToShipment(shipment, Partners);
             return APICaller.CallPut<ShipmentPM>(shipment, Urls.ShipmentController, UserTenant.Token);
         }
 
@@ -94,6 +102,15 @@ namespace Logitude.ShipmentTests.Steps
 
             return new ShipmentBuilder().WithModel(shipment)
                 .ShipmentReceivable(receivable)
+                .Build();
+        }
+
+        private ShipmentPM AddPartnerToShipment(ShipmentPM shipment, ShipmentPM partners)
+        {
+            return new ShipmentBuilder().WithModel(shipment)
+                .AgentAddressCountryCode((string)partners.AgentAddressCountryCode)
+                .AgentName((string)partners.AgentName)
+                .AgentId((string)partners.AgentId)
                 .Build();
         }
 
@@ -141,6 +158,17 @@ namespace Logitude.ShipmentTests.Steps
                 .CurrencyCode((string)dataTable.Currency)
                 .CurrencyIdByCode((string)dataTable.Currency)
                 .ShipmentReceivableLineStatusCode((string)dataTable.ShipmentReceivableLineStatusCode)
+                .Build();
+        }
+
+        private ShipmentPM AddAgentPartner(Table DataTable)
+        {
+            dynamic dataTable = DataTable.CreateDynamicInstance();
+
+            return new ShipmentBuilder().WithDefualtValues()
+                .AgentAddressCountryCode((string)dataTable.Country)
+                .AgentName((string)dataTable.EnglishName)
+                .AgentId((string)dataTable.PartnerType)
                 .Build();
         }
         #endregion

@@ -109,32 +109,32 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
                             "property",
                             "Value"});
-                table5.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "Direction",
                             "Export"});
-                table5.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "TransportMode",
                             "Air"});
-                table5.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "ShipmentLevel",
                             "Master"});
-                table5.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "FreightPrepaidCollect",
                             "Prepaid"});
-                table5.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "OtherPrepaidCollect",
                             "Collect"});
-                table5.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "MainCarriageToPort",
                             "LHR"});
-                table5.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "MainCarriageFromPort",
                             "MIA"});
 #line 6
- testRunner.Given("a master shipment with the following properties", ((string)(null)), table5, "Given ");
+ testRunner.Given("a master shipment with the following properties", ((string)(null)), table6, "Given ");
 #line hidden
 #line 15
  testRunner.When("create master shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -174,32 +174,32 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
                             "property",
                             "Value"});
-                table6.AddRow(new string[] {
+                table7.AddRow(new string[] {
                             "Direction",
                             "Export"});
-                table6.AddRow(new string[] {
+                table7.AddRow(new string[] {
                             "TransportMode",
                             "Air"});
-                table6.AddRow(new string[] {
+                table7.AddRow(new string[] {
                             "ShipmentLevel",
                             "House"});
-                table6.AddRow(new string[] {
+                table7.AddRow(new string[] {
                             "FreightPrepaidCollect",
                             "Prepaid"});
-                table6.AddRow(new string[] {
+                table7.AddRow(new string[] {
                             "OtherPrepaidCollect",
                             "Collect"});
-                table6.AddRow(new string[] {
+                table7.AddRow(new string[] {
                             "MainCarriageToPort",
                             "LHR"});
-                table6.AddRow(new string[] {
+                table7.AddRow(new string[] {
                             "MainCarriageFromPort",
                             "MIA"});
 #line 19
- testRunner.Given("a house shipment with the following properties", ((string)(null)), table6, "Given ");
+ testRunner.Given("a house shipment with the following properties", ((string)(null)), table7, "Given ");
 #line hidden
 #line 28
  testRunner.And("a master shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");

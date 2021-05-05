@@ -25,6 +25,11 @@ Scenario: PUT Shipment Direct Export Air
 		| Measurement                      | GRWT        |
 		| Currency                         | EUR         |
 		| ShipmentReceivableLineStatusCode | OAMT        |
+	And a partners with the following properties
+		| property    | Value     |
+		| PartnerType | AG        |
+		| EnglishName | TestAgent |
+		| Country     | US        |
 	And a direct shipment
-	When add a direct package
-	Then the direct should add package successfully
+	When update a direct shipment
+	Then the direct should update successfully

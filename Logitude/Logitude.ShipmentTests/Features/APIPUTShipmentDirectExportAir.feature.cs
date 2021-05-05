@@ -175,14 +175,29 @@ this.ScenarioInitialize(scenarioInfo);
 #line 21
  testRunner.And("a direct receivable with the following properties", ((string)(null)), table4, "And ");
 #line hidden
+                TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+                            "property",
+                            "Value"});
+                table5.AddRow(new string[] {
+                            "PartnerType",
+                            "AG"});
+                table5.AddRow(new string[] {
+                            "EnglishName",
+                            "TestAgent"});
+                table5.AddRow(new string[] {
+                            "Country",
+                            "US"});
 #line 28
+ testRunner.And("a partners with the following properties", ((string)(null)), table5, "And ");
+#line hidden
+#line 33
  testRunner.And("a direct shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 29
- testRunner.When("add a direct package", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 34
+ testRunner.When("update a direct shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 30
- testRunner.Then("the direct should add package successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 35
+ testRunner.Then("the direct should update successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
