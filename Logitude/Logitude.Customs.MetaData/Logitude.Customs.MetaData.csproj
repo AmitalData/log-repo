@@ -224,6 +224,7 @@
     <None Include="DBTables\ConstraintStatus.dxml" />
     <None Include="DBTables\ConstraintType.dxml" />
     <None Include="DBTables\ContactRoleType.dxml" />
+    <None Include="DBTables\Containerization.dxml" />
     <None Include="DBTables\ContainerType.dxml" />
     <None Include="DBTables\ContinuousMessagesTypeCode.dxml" />
     <None Include="DBTables\ContinuousRequestType.dxml" />
@@ -500,6 +501,7 @@
     <None Include="EntityFiles\AmendmentStatus.lxml" />
     <None Include="EntityFiles\AmendmentType.lxml" />
     <None Include="EntityFiles\AutonomyRegionType.lxml" />
+    <None Include="EntityFiles\Containerization.lxml" />
     <None Include="EntityFiles\ExportReference.lxml" />
     <None Include="EntityFiles\ExportStorge.lxml" />
     <None Include="EntityFiles\StuffingSiteType.lxml" />
@@ -521,7 +523,6 @@
     <None Include="EntityFiles\ExporterRoleType.lxml" />
     <None Include="EntityFiles\FclLclCode.lxml" />
     <None Include="EntityFiles\LoadingSiteType.lxml" />
-
     <None Include="EntityFiles\CancelRequestRejectReasonType.lxml" />
     <None Include="EntityFiles\ReferenceStatus.lxml" />
     <None Include="EntityFiles\ReferenceInputType.lxml" />
