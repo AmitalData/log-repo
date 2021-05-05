@@ -15222,8 +15222,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 		   Feature DeclarationFeature_AddNewClientFromManifest = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AddNewClientFromManifest", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.AddNewClientFromManifest", NameTextCodeDefaultText = @"Add New Client " }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
- 		   Feature DeclarationFeature_AddNewClientFromManifest = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AddNewClientFromManifest", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.AddNewClientFromManifest", NameTextCodeDefaultText = @"Add New Client " }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
- 
+  
 		   Feature DeclarationFeature_ICL = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ICL", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.ICL", NameTextCodeDefaultText = @"ICL Interface" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
  
  
