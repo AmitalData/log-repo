@@ -342,7 +342,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     foreach (JournalLinePM journalLinePM in entityPM.JournalLines)
                     {
                         JournalLinePM oldJournalLine = GetOldJournalLineFromDB(journalLinePM);
-                        if(oldJournalLine.Notes != journalLinePM.Notes)
+                        if (oldJournalLine != null && oldJournalLine.Notes != journalLinePM.Notes)
                         {
                             isJournalLineNotesUpdated = true;
                             string journalNotes = SetJournalLineEventNotes(entityPM, showLocals, journalLinePM, oldJournalLine);
