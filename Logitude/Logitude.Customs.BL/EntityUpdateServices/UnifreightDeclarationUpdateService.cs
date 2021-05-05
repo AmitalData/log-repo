@@ -211,6 +211,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         int? FILENO = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO);
                         if (FILENO.HasValue)
                         {
+                            LogMessagingUtil.Instance.AppendLine("Update3: GetFILENOByCUSTOMFILENO, file: " + lCUSTOMFILENO);
                             int? FILENO1 = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO_forUpdateNOWAIT(lCUSTOMFILENO);
 
                             //if(file!=null) file.WriteLine("UnifrightDeclarationUpdateService - Updating " + FILENO + ": " + DateTime.Now.ToString());
@@ -218,6 +219,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                             //do not need the composite due we delete all down entities !!!_CCUFILEMPM = myCCUFILEMQueryService.GetSingle(FILENO.Value, true, false);
                             _CCUFILEMPM = myCCUFILEMQueryService.GetSingle(FILENO.Value, false, false);
+                            if(_CCUFILEMPM == null)
+                            {
+                                LogMessagingUtil.Instance.AppendLine("Update4: _CCUFILEMPM GetSingle failed, file no: " + FILENO.Value);
+                            }
+                            else
+                            {
+                                LogMessagingUtil.Instance.AppendLine("Update5: _CCUFILEMPM GetSingle, file: " + _CCUFILEMPM.CUSTOMFILENO);
+                            }
+                            
                             _CCUFILEMPMwithCCUMSHGRP = myCCUFILEMQueryService.GetSingle(FILENO.Value, false, false);
 
                             //CCUFILEMKeys cCUFILEMKeys = new CCUFILEMKeys { FILENO = FILENO.GetValueOrDefault() };
@@ -250,8 +260,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                         // Update for the Delete
                                         myCCUFILEMUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
                                         myCCUFILEMUpdateService.Update(_CCUFILEMPM, true);
+                                        LogMessagingUtil.Instance.AppendLine("Update6: _CCUFILEMPM Update, file: " + _CCUFILEMPM.CUSTOMFILENO);
                                         _AmitalContext.SaveChanges();
-
+                                        LogMessagingUtil.Instance.AppendLine("Update7: _CCUFILEMPM SaveChanges, file: " + _CCUFILEMPM.CUSTOMFILENO);
                                         //Clean up the Supplier Invoices
                                         _CCUFILEMPM.CCUTRANSPVALs = null;
                                         _CCUFILEMPM.DeletedCCUTRANSPVALs = null;
@@ -398,6 +409,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             {
                                 try
                                 {
+                                    LogMessagingUtil.Instance.AppendLine("Update1: _CCUFILEMPM Update, file: " + _CCUFILEMPM.CUSTOMFILENO);
                                     myCCUFILEMUpdateService.Update(_CCUFILEMPM, true);
                                 }
                                 catch (Exception eUpdate)
@@ -436,6 +448,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
 
                 ex.ChangeExceptionMessage("UnifrightDeclarationUpdateService Exception");
+                LogMessagingUtil.Instance.AppendLine("Update2: Exception, file: " + _CCUFILEMPM.CUSTOMFILENO + "\n" + ex.Message); 
                 throw;
                 //throw new BusinessErrorException("") ;
             }
@@ -1172,6 +1185,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             _loanAmount = 0; // moran 17.1.16 - Task 19798
             if (_CCUFILEMPM == null)
             {
+                LogMessagingUtil.Instance.AppendLine("DoCustomFile1: _CCUFILEMPM new record");
                 userCode = GetUserCodeByID(_DirtyDeclarationPM.CreatedByUserId);
                 _CCUFILEMPM = new CCUFILEMPM()
                 {
@@ -1183,9 +1197,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     OPENBYUSER = userCode,
                     FROMIIG = "T",
                 };
+                LogMessagingUtil.Instance.AppendLine("DoCustomFile2: _CCUFILEMPM new record created, OPENBYUSER: " + userCode);
             }
             else
             {
+                LogMessagingUtil.Instance.AppendLine("DoCustomFile3: _CCUFILEMPM record exist, file: " + _CCUFILEMPM.CUSTOMFILENO);
                 _CCUFILEMPM.ChangeSetOp = ChangeSetOperation.Update;
             }
 
