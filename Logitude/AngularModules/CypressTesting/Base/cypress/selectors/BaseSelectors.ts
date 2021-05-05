@@ -70,6 +70,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly ContainsExport = 'Export'
     public static readonly ContainsSendtoCustoms = "Send to Customs"
     public static readonly  ContainSave="Save"
+    public static readonly  ContainSend="Send"
     public static readonly  ContainPrint="Print"
     public static readonly ContainSelected= "Selected:"
 
@@ -173,6 +174,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly EditPng='[src="./Images/Buttons/Edit.png"]'
     public static readonly GridViewCell='.GridViewCell'
     public static readonly HyperlinkButtonControl='.HyperlinkButtonControl'
+    public static readonly HyperlinkQueryButtonControl=".HyperlinkQueryButtonControl"
     public static readonly ColorGreenClass=".ColorGreen"
     public static readonly buttonspan= "button span"
     public static readonly FillParentClass=".FillParent"

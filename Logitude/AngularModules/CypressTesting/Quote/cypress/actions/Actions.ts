@@ -10,6 +10,7 @@ import { PackagesDetails } from "../../../Shipment/cypress/models/PackagesDetail
 import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
 import * as BaseAssertion from '../../../Base/cypress/actions/Assertion';
 import { EventTypeDetails } from "../../../Base/cypress/models/EventTypeDetails";
+import { BaseURLs } from "../../../Base/cypress/constants/URLs";
 
 //#region Navigate and open
 export function NavigatesToSQuotesWorkspace() {
@@ -201,12 +202,12 @@ export function SendQuotationToLoggedInUser() {
 function FillCustomerEmail(email: string) {
     cy.Click(QuoteSelectors.SendOption, null)
     cy.Click(QuoteSelectors.SendToCustomer, null, true)
-    cy.get(QuoteSelectors.EmailSearchTextBox).type(email + '{downarrow}{enter}')
+    cy.get(BaseSelectors.EmailSearchTextBox).type(email + '{downarrow}{enter}')
 }
 
 function SentToCustomer() {
-    cy.DefineRequestWait(RestAPI.POST, QuoteURLs.PostSendhtmlDocument, RequestAliases.SentToCustomer)
-    cy.Click(QuoteSelectors.SendMessageButton, null)
+    cy.DefineRequestWait(RestAPI.POST, BaseURLs.PostSendhtmlDocument, RequestAliases.SentToCustomer)
+    cy.Click(QuoteSelectors.SendMessageButton, null,true)
 }
 //#endregion
 

@@ -42,7 +42,6 @@ export class QuoteSelectors {
      public static readonly SaveQuotation = '#Savee';
      public static readonly SendOption = '#SendOption';
      public static readonly SendToCustomer = '#SendToCustomer';
-     public static readonly EmailSearchTextBox = 'input[id^=EmailSearchTextBox_TextArea]';
      public static readonly SendMessageButton = '#SendMessagebtn';
      public static readonly QuoteEventNote = '#Quote_EventNote';
      //#endregion
