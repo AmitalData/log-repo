@@ -15,11 +15,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
 {
     public class UpdateDocumentFilingBehaviour : IServiceBehaviour
     {
-        
 
         private ShipmentPM entityPM;
         private ShipmentServiceInitializer initializer;
-        private int tenant;
 
         public void Handle(IServiceInitializer initializer)
         {
@@ -46,8 +44,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
                 List<string> documentFilingIdLists = entityPM.DocumentFilingIds.Split(',').ToList();
                 if (documentFilingIdLists.Count > 0)
                 {
-                    DocumentsFilingRepository documentsFilingRepository = new DocumentsFilingRepository(tenant); 
-                    List<DocumentsFiling> documentsFilingLists = documentsFilingRepository.GetAll(tenant).Where(d => documentFilingIdLists.Contains(d.Id)).ToList();
+                    DocumentsFilingRepository documentsFilingRepository = new DocumentsFilingRepository(this.entityPM.Tenant); 
+                    List<DocumentsFiling> documentsFilingLists = documentsFilingRepository.GetAll(this.entityPM.Tenant).Where(d => documentFilingIdLists.Contains(d.Id)).ToList();
                     foreach (DocumentsFiling item in documentsFilingLists)
                     {
                         item.EntityId = entityPM.Id;
