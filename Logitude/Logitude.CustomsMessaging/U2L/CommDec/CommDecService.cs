@@ -60,7 +60,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
         //private DeclarationPM _MyEntryDeclarationPM;
         private Stopwatch _Stopwatch;
         private bool _IsBuildItemsUnit = false;
-
+        private bool _IsNewDeclaration = false;
         public bool IsAutonomy = false;
         private decimal _SupplierInvoiceAmount;
 
@@ -173,6 +173,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     }
                 }
             }
+            if (this._MyDeclarationPM == null) _IsNewDeclaration = true;
 
             MyGenericResponseObj.Stage = "DeclarationUpsert";
             string xmlLOGICUSTFILE = xmlLOGICOMMDEC;
@@ -1178,7 +1179,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
                         DeclarationCourierStatus decCourier = rep.GetDeclarationsById(_CourierDeclarationPM.DeclarationId, _CourierDeclarationPM.Tenant);
 
-                        if (decCourier != null && !decCourier.IsClosedForFollowUp && _CourierDeclarationPM.ChangeSetOp == ChangeSetOperation.Insert)
+                        if ((decCourier != null && !decCourier.IsClosedForFollowUp && _CourierDeclarationPM.ChangeSetOp == ChangeSetOperation.Insert) || (_IsNewDeclaration == true && courierMaster.IsOpen == false))
 
                         {
 
@@ -1192,7 +1193,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
                             LogitudeSettings.HandleLogMe("OpenDeclarations " + logData, false, "time", stopLogAt);
 
-
+                            if (_IsNewDeclaration == true && courierMaster.IsOpen == false) courierMaster.IsOpen = true;
                             courierMaster.OpenDeclarations += 1;
 
                             courierMasterRepository.Update(courierMaster);
