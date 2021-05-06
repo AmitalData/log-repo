@@ -2021,11 +2021,10 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     get ChequeAmount() { return this.chequeAmount }
     set ChequeAmount(value: number) {
         if (this.chequeAmount != value) {
+            this.chequeAmount = value;
             if (this.EntityPM.ARPaymentChequeReplicas.length == 1 || this.EntityPM.ARPaymentChequeReplicas.length == 0) {
                 this.AmountInPaymentCurrency = value;
             }
-            this.chequeAmount = value;
-
         }
     }
 	ComputeOpenAmount()
