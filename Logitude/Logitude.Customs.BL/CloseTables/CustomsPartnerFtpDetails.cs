@@ -221,7 +221,7 @@ namespace Logitude.Customs.BL.CloseTables
             },
              new InterfaceDetails()
             {
-                Code = InterfaceName_ECOVSTB,
+                Code = InterfaceName_ECSWSSTB,
                 Name = "סטטוס/זמינות מסוויספורט",
                 TypeCode = TypeCode_In,
                 Partner = PartnerCode_ILSWS,
@@ -232,7 +232,7 @@ namespace Logitude.Customs.BL.CloseTables
             },
             new InterfaceDetails()
             {
-                Code = InterfaceName_ECOVSTB_Splited,
+                Code = InterfaceName_ECSWSSTB_Splited,
                 Name = "סטטוס/זמינות מסוויספורט",
                 TypeCode = TypeCode_In,
                 Partner = PartnerCode_ILSWS,
