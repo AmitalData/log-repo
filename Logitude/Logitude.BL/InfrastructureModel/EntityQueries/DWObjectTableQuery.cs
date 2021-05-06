@@ -6,6 +6,8 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using System.Collections.Generic;
+using System;
+using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
@@ -56,6 +58,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                     }).FirstOrDefault();
         }
 
+  
 
         public IQueryable<DWObjectTablePM> GetDWObjectTablePMsByTenant(int tenant)
         {
@@ -185,7 +188,12 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Code = a.Code
                     }).ToList();
         }
+
+        
+
     }
+
+
 
     public class ShortFactTableDetails
     { 

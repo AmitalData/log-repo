@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;b6e9&quot;"
+  Code="&quot;aa50&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -517,7 +517,6 @@
       Name="&quot;Documents Send Result in AP Invoices Automation&quot;"
       Description="&quot;Documents Send Result in AP Invoices Automation&quot;"
       SearchFields="&quot;DSR,Documents Send Result in AP Invoices Automation&quot;" />
-
     <Record
       Name="&quot;AWB Multiple Commodities&quot;"
       Code="&quot;AMC&quot;"
@@ -538,6 +537,11 @@
       Name="&quot;Master Pre/On Carriage&quot;"
       SearchFields="&quot;PRE,Master Pre/On Carriage&quot;"
       Description="&quot;Master Pre/On Carriage&quot;" />
+    <Record
+      Code="&quot;BIF&quot;"
+      Name="&quot;Invoices DWH&quot;"
+      SearchFields="&quot;BIF,Invoices DWH,Allow Tenants to Show Invoice Fact on the BI Report Screen&quot;"
+      Description="&quot;Allow Tenants to Show Invoice Fact on the BI Report Screen&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
