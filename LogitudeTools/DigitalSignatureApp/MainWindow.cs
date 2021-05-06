@@ -774,7 +774,7 @@ namespace Cloud.Sign.App
                             }
                             else
                             {
-                                MyResult.CompanyLogins = MyResult.CompanyLogins.Where(a => a.PrivateLabelId == null).ToList();
+                                MyResult.CompanyLogins = MyResult.CompanyLogins.Where(a => a.PrivateLabelId == null || a.HasLogboxAccess).ToList();
                             }
                         }
                         if (MyResult.IsLocked)
