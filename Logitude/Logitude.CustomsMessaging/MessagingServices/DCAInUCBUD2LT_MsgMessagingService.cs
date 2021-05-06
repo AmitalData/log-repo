@@ -14,6 +14,7 @@ using Logitude.CustomsMessaging.ResponseServices;
 using Logitude.CustomsMessaging.Testers.Messages;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Utils;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
@@ -282,6 +283,13 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     return;
                 }
                 logData = $"DocumentsFilingPM.Id={_DocumentsFilingPM.Id},Code={_DocumentsFilingPM.Code}"; //Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertSerialize(_DocumentsFilingPM);
+
+                if (String.IsNullOrWhiteSpace(_DocumentsFilingPM.DocumentTypeCode))
+                {
+                    FixDocumentTypeCodeEmpty(logData);//hd367591
+                }
+                
+
                 if (String.IsNullOrWhiteSpace(_DocumentsFilingPM.DocumentTypeCode))
                 {
                     LogitudeSettings.HandleLogMe("_DocumentsFilingPM.DocumentTypeCode" + logData, false, "CreateUD2LTService.DOC_ID", stopLogAt);
@@ -418,6 +426,40 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             }
 
+        }
+
+        private void FixDocumentTypeCodeEmpty(string logData)
+        {
+            var code = _DocumentsFilingPM.DocumentTypeCode;
+            try
+            {
+
+                _DocumentsFilingPM.DocumentTypeCode = code ?? _DocumentsFilingPM.DocumentTypeId;
+                if (String.IsNullOrWhiteSpace(_DocumentsFilingPM.DocumentTypeCode))
+                {
+                    var documentsFilingRepository = new DocumentsFilingRepository();
+                    var pm = documentsFilingRepository.GetSingleDocumentsFiling(_DocumentsFilingPM.Id);
+                    if (pm != null)
+                    {
+                        _DocumentsFilingPM.DocumentTypeCode = pm.DocumentType?.Code;
+                    }
+                     
+                }
+            }
+            catch (Exception ee)
+            {
+                logData += $"FixDocumentTypeCodeEmpty:error:{ee.Message}";
+                ///throw;logData
+            }
+            finally
+            {
+                if(code!= _DocumentsFilingPM.DocumentTypeCode)
+                {
+                    logData += $"FixDocumentTypeCodeEmpty:Change:{_DocumentsFilingPM.DocumentTypeCode}";
+                }
+            } 
+
+            ////
         }
 
         private string GetCustomsFileImportType(DeclarationPM entityPM)

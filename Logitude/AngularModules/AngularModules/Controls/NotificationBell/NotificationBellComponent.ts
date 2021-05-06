@@ -555,19 +555,20 @@ export class NotificationBellLine {
 
         }
 
+       
+        if (!AppTool.IsNullOrEmpty(this.entity.DueDate)) {
+            var valueDate = new Date(this.entity.DueDate.valueOf()).valueOf();
+            var today = DateTool.GetCurrentDateAsUtc().valueOf();
+            if (valueDate != null && valueDate < today) {
+                this.datecolor = "#ff6a00";
+                this.fontcolor = "#ffffff";
+            }
 
-        var valueDate = new Date(this.entity.DueDate.valueOf()).valueOf();
-        var today = DateTool.GetCurrentDateAsUtc().valueOf();
-        if (valueDate != null && valueDate < today) {
-            this.datecolor = "#ff6a00";
-            this.fontcolor = "#ffffff";
+            else {
+                this.datecolor = "#E2E2E2";
+                this.fontcolor = "#6E7172";
+            }
         }
-
-        else {
-            this.datecolor = "#E2E2E2";
-            this.fontcolor = "#6E7172";
-        }
-
 
         if (!AppTool.IsNullOrEmpty(this.entity.CustomerName) && !AppTool.IsNullOrEmpty(this.entity.Reference1Number)) {
             this.Reference1NumberWithCustomer = entityPM.Reference1Number + " * " + entityPM.CustomerName;
