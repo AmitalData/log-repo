@@ -474,6 +474,16 @@ export class SupplierInvoicePM {
     public set InsruanceCurrencyTypeCodeName(newValue: string) { if (this.insruanceCurrencyTypeCodeName != newValue) { this.insruanceCurrencyTypeCodeName = newValue; this.MarkAsDirty("InsruanceCurrencyTypeCodeName"); } }
        
 	 
+    private exportFreightAmount: string;
+    public get ExportFreightAmount() { return this.exportFreightAmount; }
+    public set ExportFreightAmount(newValue: string) { if (this.exportFreightAmount != newValue) { this.exportFreightAmount = newValue; this.MarkAsDirty("ExportFreightAmount"); } }
+       
+	 
+    private exportInsuranceAmount: string;
+    public get ExportInsuranceAmount() { return this.exportInsuranceAmount; }
+    public set ExportInsuranceAmount(newValue: string) { if (this.exportInsuranceAmount != newValue) { this.exportInsuranceAmount = newValue; this.MarkAsDirty("ExportInsuranceAmount"); } }
+       
+	 
 
     public OldEntityPM: SupplierInvoicePM;
 		
