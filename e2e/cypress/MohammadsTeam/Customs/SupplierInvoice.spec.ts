@@ -19,8 +19,8 @@ describe('New  SupplierInvoice', () => {
       const CustomFileNo= win.sessionStorage.getItem('CustomFileNo')
        cy.get('li[id=GeneralMHDeclarations]').click({force: true} );
    //    LogHelper.QuerySearchAndSelectFirst('91340214');
-cy.get('input[id=SearchFieldsId_0_1]').should('be.visible').then( a=> {
-    cy.get('input[id=SearchFieldsId_0_1]').type(CustomFileNo,{ force: true });
+cy.get('input[id=SearchFieldsId_0_0]').should('be.visible').then( a=> {
+    cy.get('input[id=SearchFieldsId_0_0]').type(CustomFileNo,{ force: true });
     cy.get('div[id=ListDataLoaded]').then( a=> {
           cy.get('div[id=LogGrid_0_1row0]').click({ force: true });
       })});
