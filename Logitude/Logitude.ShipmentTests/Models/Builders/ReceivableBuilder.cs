@@ -1,4 +1,5 @@
-﻿using Logitude.Test.Base.Models.UserTenantPreparation;
+﻿using Logitude.Test.Base.Models.BillingsPreparation;
+using Logitude.Test.Base.Models.UserTenantPreparation;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 
@@ -44,7 +45,7 @@ namespace Logitude.ShipmentTests.Models.Builders
 
         public ReceivableBuilder ChargesTypeIdByCode(string chargesTypeCode)
         {
-            _receivablePM.ChargesTypeId = chargesTypeCode == "AFT" ? ShipmentData.ChargeTypeAFTId : null;
+            _receivablePM.ChargesTypeId = chargesTypeCode == "AFT" ? BillingData.ChargeTypeAFTId : null;
             return this;
         }
 
@@ -80,7 +81,7 @@ namespace Logitude.ShipmentTests.Models.Builders
 
         public ReceivableBuilder CurrencyIdByCode(string currencyCode)
         {
-            _receivablePM.CurrencyId = currencyCode == "EUR" ? ShipmentData.CurrencyEURId : null;
+            _receivablePM.CurrencyId = currencyCode == "EUR" ? BillingData.CurrencyEURId : null;
             return this;
         }
 
@@ -98,7 +99,7 @@ namespace Logitude.ShipmentTests.Models.Builders
 
         public ReceivableBuilder MeasurementIdByCode(string measurementCode)
         {
-            _receivablePM.MeasurementId = measurementCode == "GRWT" ? ShipmentData.MeasurementGRWTId : null;
+            _receivablePM.MeasurementId = measurementCode == "GRWT" ? BillingData.MeasurementGRWTId : null;
             return this;
         }
 
