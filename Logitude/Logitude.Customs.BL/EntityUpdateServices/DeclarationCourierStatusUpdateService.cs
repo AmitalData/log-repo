@@ -80,7 +80,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     courierMasterPM.OpenDeclarations += 1;
                 }
                 courierMasterPM.ChangeSetOp = ChangeSetOperation.Update;
-                if (!entityPM.IsClosedForFollowUp && !courierMasterPM.IsOpen)courierMasterPM.IsOpen = true;
+                //if (!entityPM.IsClosedForFollowUp && !courierMasterPM.IsOpen)courierMasterPM.IsOpen = true;
                 CourierMasterUpdateService.Update(courierMasterPM, true);
             }
 
