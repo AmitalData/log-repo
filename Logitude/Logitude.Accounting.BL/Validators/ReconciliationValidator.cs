@@ -44,6 +44,7 @@ namespace Logitude.Accounting.BL.Validators
         public const string M_AfterConversion_no_Journal_Line = "CreatedByReconciliationAfterConversion : no Journal Line";
         public const string M_AfterConversion_noallJournalLinehaveExternalReconcileNumber = "CreatedByReconciliationAfterConversion : no all Journal Line have ExternalReconcileNumber";
         public const string M_AfterConversion_JournalLinehavenotthesameExternalReconcileNumber = "CreatedByReconciliationAfterConversion : Journal Line have not the same ExternalReconcileNumber";
+        public const string M_InReconcileProgress = "Ledger Transaction was found InReconcileProgress";
 
         private static ReconciliationPM reconciliation;
         public static ValidationResult IsReconciliationValid(ReconciliationPM myReconciliationPM, ValidationContext context)
@@ -127,6 +128,15 @@ namespace Logitude.Accounting.BL.Validators
             if (myReconciliationPM.CreatedByReconciliationStageB)
             {
                 ///not neeed - ohad+ alex
+            }
+            if (!myReconciliationPM.CreateAutoReconcileWhileStreamingService)
+            {
+                var inReconcileProgressIDs = transactionsPMList.Where(r => r.InReconcileProgress).Select(r => r.Id).ToList();
+                if (inReconcileProgressIDs.Count > 0)
+                {
+                    AddError(errorsList, M_InReconcileProgress);
+                    AddError(errorsList, string.Join(",", inReconcileProgressIDs));
+                }
             }
             decimal sum = 0;
             foreach (var reconciliationLine in myReconciliationPM.ReconciliationLines)
