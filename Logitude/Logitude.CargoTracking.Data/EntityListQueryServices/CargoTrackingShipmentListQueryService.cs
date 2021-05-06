@@ -107,7 +107,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                // card
                                                                CustomerEnglishName = customer.EnglishName,
                                                                CustomerLocalName = customer.LocalName,
-                                                               ShipperName = shipper.EnglishName,
+                                                               ShipperName = shipper == null ? null : shipper.EnglishName,
 
 
                                                            });
