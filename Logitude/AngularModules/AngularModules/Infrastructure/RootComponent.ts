@@ -336,25 +336,20 @@ export class RootComponent implements AfterViewInit {
     });
   }
     LoadPrivateLableTermsOfUseComponent(myResult: TermsofUseArgs) {
-        if (!this.isDSV) this.ViewHomeComponent();
-        else {
-            let privateLableTermOfUsePage = "./InfrastructureModules/InfrastructureOthers/Components/TermsOfUse/CustomTermsOfUse/";
-            privateLableTermOfUsePage += this.isDSV ? "DSVTermsOfUseStartupComponent" : "HybridTermsOfUseStartupComponent";
-            SessionLocator.DynamicLoader.Load(privateLableTermOfUsePage, this.Child.Location)
-                .then(cmpRef => {
-                    cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Load(myResult.Version);
-                    cmpRef.instance.TermsOfUseCompleted.subscribe(($event: any) => {
+        SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureOthers/Components/TermsOfUse/CustomTermsOfUse/DSVTermsOfUseStartupComponent", this.Child.Location)
+            .then(cmpRef => {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Load(myResult.Version);
+                cmpRef.instance.TermsOfUseCompleted.subscribe(($event: any) => {
 
-                        if ($event == "Accept") {
-                            this.ViewHomeComponent();
-                        }
-                        else if ($event == "Decline") {
-                            this.SignOutCompleted();
-                        }
-                    });
+                    if ($event == "Accept") {
+                        this.ViewHomeComponent();
+                    }
+                    else if ($event == "Decline") {
+                        this.SignOutCompleted();
+                    }
                 });
-        }
+            });
     }
 
   SignOutCompleted() {
