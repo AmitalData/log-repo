@@ -22,7 +22,7 @@ describe('New  SupplierInvoice', () => {
 cy.get('input[id=SearchFieldsId_0_0]').should('be.visible').then( a=> {
     cy.get('input[id=SearchFieldsId_0_0]').type(CustomFileNo,{ force: true });
     cy.get('div[id=ListDataLoaded]').then( a=> {
-          cy.get('div[id=LogGrid_0_1row0]').click({ force: true });
+          cy.get('div[id=LogGrid_0_0row0]').click({ force: true });
       })});
        cy.get('#CustomsDeclarationTHGeneral').click({force: true} );
        cy.get('#Add_1').should('be.visible').then(a => {         
