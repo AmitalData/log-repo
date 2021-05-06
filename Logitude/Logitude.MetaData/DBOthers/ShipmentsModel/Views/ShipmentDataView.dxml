@@ -1,15 +1,7 @@
 <View DBType="Main" Name="ShipmentDataView" Schema="dbo" Module="Shipment">
   <SqlScript>
     <![CDATA[
-/****** Object:  View [dbo].[ShipmentDataView]    Script Date: 5/6/2021 3:07:45 PM ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
-
-ALTER VIEW [dbo].[ShipmentDataView]
+CREATE VIEW [dbo].[ShipmentDataView]
 
 AS
 SELECT        dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumber,dbo.Shipments.DeclarationNumber,dbo.Shipments.IncludesCustoms,dbo.Shipments.CustomsClearanceDate,dbo.Shipments.DeclarationDate, dbo.Shipments.ShipperReference1, dbo.Shipments.ARInvoiceIssued, dbo.Shipments.CreditNoteIssued,dbo.Shipments.ValueOfGoods,
