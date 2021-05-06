@@ -1,5 +1,5 @@
 @release @all @dev @daily 
-Feature: Shipping Agent Create and Edit it in Maintenance Module
+Feature: Shipping Agent Create and Edit in Maintenance Module
     The user creates a shipping agent and edit another one from the Maintenance Module.
 
     Scenario: Create a new shipping agent
