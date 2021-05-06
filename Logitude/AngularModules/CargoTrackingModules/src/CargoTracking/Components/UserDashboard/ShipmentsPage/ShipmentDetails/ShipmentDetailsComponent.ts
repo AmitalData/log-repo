@@ -36,6 +36,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
     CustomsBrokerReference: string;
     ShipmentPM: any;
     ShipmentPackages: any[];
+    DocumentsFilings: any[];
     PartnerCards: PartnerCard[] = [];
 
     ShipmentCustomsData: CargoTrackingShipmentCustomsData;
@@ -124,6 +125,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
                 this.GetShipmentPM();
                 this.GetShipmentCustomsData();
                 this.GetShipmentPackages();
+                this.GetDocumentsFilingsConnectedToShipment();
 
             }
 
@@ -176,6 +178,15 @@ export class ShipmentDetailsComponent implements AfterViewInit
             if (result) {
                 this.ShipmentPackages = result;
                 console.log("GetShipmentPackages", this.ShipmentPackages);
+            }
+        });
+    }
+
+    GetDocumentsFilingsConnectedToShipment() {
+        this.cargoTrackingShipmentService.GetDocumentsFilingsConnectedToShipment(this.Shipment.ShipmentList.EntityId).subscribe((result: any) => {
+            if (result) {
+                this.DocumentsFilings = result;
+                console.log("DocumentsFilings", this.DocumentsFilings);
                 this.isLoading = false;
 
             }
