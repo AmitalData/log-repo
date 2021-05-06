@@ -1646,7 +1646,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         if (this.EntityPM.ARPaymentChequeReplicas.length > 0) {
             this.EntityPM.ARPaymentChequeReplicas.filter(d => d.LineNumber == 1).forEach((cheque: ARPaymentChequeReplicaPM) => {
                 if (cheque) {
-                    cheque.ForeignAmount = this.ChequeAmount;
+                    cheque.ForeignAmount = this.EntityPM.AmountInPaymentCurrency;
                 }
             });
         }
