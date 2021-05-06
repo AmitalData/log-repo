@@ -1658,7 +1658,7 @@ export function UpdateShippingAgent() {
     cy.Click(MaintenanceSelectors.ShippingAgentSaveButton, null)
 }
 function DefinePutShippingAgentRequest() {
-    cy.DefineRequestWait(RestAPI.PUT, Urls.shippingagents, RequestAliases.PutShippingAgent);
+    cy.DefineRequestWait(RestAPI.PUT, Urls.Shippingagents, RequestAliases.PutShippingAgent);
 }
 export function AssertCreateShippingAgent() {
     AssertPostShippingAgent()

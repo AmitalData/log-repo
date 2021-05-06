@@ -43,7 +43,7 @@ export class Urls {
     public static readonly CommoditiesGetSingle = "**/commodities/getsingle?**"
 
     public static readonly Regions= "**/regions"
-    public static readonly shippingagents="**/shippingagents"
+    public static readonly Shippingagents="**/shippingagents"
     public static readonly ShippingAgentGetSingle= "**/shippingagents/getsingle?**"
     public static readonly RegionsGetSingle="**/regions/getsingle?**"
     public static GetFilterSearch(filterBy: string) {

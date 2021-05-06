@@ -1,0 +1,163 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 4,
+    "passes": 4,
+    "pending": 0,
+    "failures": 0,
+    "start": "2021-05-06T09:42:46.128Z",
+    "end": "2021-05-06T09:45:11.580Z",
+    "duration": 145452,
+    "testsRegistered": 4,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "5d3dd6a6-a8a0-4171-add1-bed196573efb",
+      "title": "",
+      "fullFile": "cypress\\tests\\MaintenanceShippingAgentsWeeklyScenarios.feature",
+      "file": "cypress\\tests\\MaintenanceShippingAgentsWeeklyScenarios.feature",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "193a36c3-75fb-4f3c-ac51-24838e74d7aa",
+          "title": "Shipping Agent Create and Edit it in Maintenance Module",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Create a new shipping agent",
+              "fullTitle": "Shipping Agent Create and Edit it in Maintenance Module Create a new shipping agent",
+              "timedOut": null,
+              "duration": 107563,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "53627ad3-6e4b-4ab6-91cf-b193f34f168d",
+              "parentUUID": "193a36c3-75fb-4f3c-ac51-24838e74d7aa",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Search for the shipping agent by code",
+              "fullTitle": "Shipping Agent Create and Edit it in Maintenance Module Search for the shipping agent by code",
+              "timedOut": null,
+              "duration": 3278,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "c77abb30-b8d8-4980-9936-33aae967a1fe",
+              "parentUUID": "193a36c3-75fb-4f3c-ac51-24838e74d7aa",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Open the shipping agent",
+              "fullTitle": "Shipping Agent Create and Edit it in Maintenance Module Open the shipping agent",
+              "timedOut": null,
+              "duration": 6528,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "98146772-9d6c-4946-b965-e23a7ba5e7a9",
+              "parentUUID": "193a36c3-75fb-4f3c-ac51-24838e74d7aa",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Edit the shipping agent",
+              "fullTitle": "Shipping Agent Create and Edit it in Maintenance Module Edit the shipping agent",
+              "timedOut": null,
+              "duration": 18843,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "0da10faa-421a-415f-a35c-f773c0141dfd",
+              "parentUUID": "193a36c3-75fb-4f3c-ac51-24838e74d7aa",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "53627ad3-6e4b-4ab6-91cf-b193f34f168d",
+            "c77abb30-b8d8-4980-9936-33aae967a1fe",
+            "98146772-9d6c-4946-b965-e23a7ba5e7a9",
+            "0da10faa-421a-415f-a35c-f773c0141dfd"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 136212,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false
+      },
+      "version": "4.1.0"
+    },
+    "marge": {
+      "options": {
+        "id": "default",
+        "reportDir": "./mochawesome-report",
+        "quite": true,
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "4.0.1"
+    }
+  }
+}

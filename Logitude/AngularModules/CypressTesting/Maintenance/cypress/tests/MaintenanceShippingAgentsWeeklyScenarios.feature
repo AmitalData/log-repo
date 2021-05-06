@@ -1,4 +1,4 @@
-@release @all @dev @weekly
+@release @all @dev @weekly @l
 Feature: Shipping Agent Create and Edit it in Maintenance Module
     The user creates a shipping agent and edits it from the Maintenance Module.
 

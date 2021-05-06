@@ -40,7 +40,6 @@ Then("the shipping agent should create successfully", () => {
 });
 
 //#endregion
-
 //#region Search for the shipping agent by code
 When("search for {string} shipping agent", (shippingAgent) => {
     MaintenanceActions.SearchShippingAgentByValue(shippingAgent)
@@ -51,7 +50,6 @@ Then("the {string} shipping agent should appear successfully", (shippingAgent) =
 });
 
 //#endregion
-
 //#region Open the shipping agent
 When("open shipping agent", () => {
     MaintenanceActions.OpenShippingAgent()

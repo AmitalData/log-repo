@@ -1,5 +1,5 @@
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
-import { MaintenanceSelectors } from "../../../cypress/selectors/Selectors";
+import { MaintenanceSelectors } from "../../selectors/Selectors";
 import * as MaintenanceActions from "../../actions/Actions";
 import { ShippingAgentDetails } from "../../models/ShippingAgentDetails";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
@@ -8,7 +8,7 @@ import {ShippingAgentGeneralTabDetails} from "../../models/ShippingAgentGeneralT
 import { ShippingAgentBillingTabDetails } from "../../models/ShippingAgentBillingTabDetails";
 import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetails";
 import * as BaseActions from "../../../../Base/cypress/actions/Actions"
-import { Constants } from '../../../cypress/constants/Constants'
+import { Constants } from '../../constants/Constants'
 
 let shippingAgentDetails: ShippingAgentDetails
 let contactDetails: ContactDetails
@@ -40,7 +40,6 @@ Then("the shipping agent should create successfully", () => {
 });
 
 //#endregion
-
 //#region Search for the shipping agent by code
 When("search shipping agent", () => {
     MaintenanceActions.SearchShippingAgent()
@@ -51,7 +50,6 @@ Then("the shipping agent should appear successfully", () => {
 });
 
 //#endregion
-
 //#region Open the shipping agent
 When("open shipping agent", () => {
     MaintenanceActions.OpenShippingAgent()
