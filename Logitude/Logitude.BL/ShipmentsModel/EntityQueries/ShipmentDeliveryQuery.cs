@@ -83,6 +83,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     TransportModeCode = entityPOCO.TransportModeCode,
                     ParentPickUpDeliveryId = entityPOCO.ParentPickUpDeliveryId,
                     ChildDeliveryIndex = entityPOCO.ChildDeliveryIndex,
+                    StandaloneShipmentId = entityPOCO.StandaloneShipmentId,
                 };
 
                 ShipmentPickUpDeliveryPackageQuery packagesQuery = new ShipmentPickUpDeliveryPackageQuery(tenant);
@@ -356,6 +357,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                      TransportModeName = entityPOCO.TransportMode == null ? null : entityPOCO.TransportMode.Name,
                                                      ParentPickUpDeliveryId = entityPOCO.ParentPickUpDeliveryId,
                                                      ChildDeliveryIndex = entityPOCO.ChildDeliveryIndex,
+                                                     StandaloneShipmentId = entityPOCO.StandaloneShipmentId,
                                                  }).ToList();
 
             if (dataList.Count > 0)
@@ -630,6 +632,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                            TransportModeCode = entity.TransportModeCode,
                                                            ParentPickUpDeliveryId = entity.ParentPickUpDeliveryId,
                                                            ChildDeliveryIndex = entity.ChildDeliveryIndex,
+                                                           StandaloneShipmentId = entity.StandaloneShipmentId,
                                                        }).ToList();            
 
             if (dataList.Count() > 0)
@@ -895,6 +898,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          TransportModeName = entityPOCO.TransportMode == null ? null : entityPOCO.TransportMode.Name,
                                                          ParentPickUpDeliveryId = entityPOCO.ParentPickUpDeliveryId,
                                                          ChildDeliveryIndex = entityPOCO.ChildDeliveryIndex,
+                                                         StandaloneShipmentId = entityPOCO.StandaloneShipmentId,
                                                      }).FirstOrDefault();
 
             if (shipmentDeliveryPM!=null)

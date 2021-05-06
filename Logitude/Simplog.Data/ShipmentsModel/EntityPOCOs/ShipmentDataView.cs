@@ -790,5 +790,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? OnForwardingATA { get; set; }
         public string OnForwardingVesselId { get; set; }
         public string OnForwardingCarrierWebSite { get; set; }
+        public bool IsStandalonePickupDelivery { get; set; }
     }
 }

@@ -278,6 +278,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="StandaloneShipmentId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ToAddressId"
     ReferencedTable="Addresses"
@@ -361,6 +368,11 @@
   <Relation
     ForeignKeyColumn="ParentPickUpDeliveryId"
     ReferencedTable="ShipmentPickUpDeliveries"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="StandaloneShipmentId"
+    ReferencedTable="Shipments"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

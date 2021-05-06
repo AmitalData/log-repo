@@ -964,6 +964,8 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.OnForwardingToPortCountryName).HasColumnName("OnForwardingToPortCountryName");
             this.Property(t => t.OnForwardingCarrierName).HasColumnName("OnForwardingCarrierName");
             this.Property(t => t.OnForwardingCarrierCode).HasColumnName("OnForwardingCarrierCode");
+
+            this.Property(t => t.IsStandalonePickupDelivery).HasColumnName("IsStandalonePickupDelivery");
         }
     }
 }

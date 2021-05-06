@@ -457,5 +457,6 @@ export class ShipmentList {
 		MainHarmonize: string;
 		PreForwardingFromPortId: string;
 		OnForwardingToPortId: string;
+		IsStandalonePickupDelivery: boolean;
 	
 }

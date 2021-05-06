@@ -289,6 +289,10 @@ export class ShipmentPickUpPM {
     public get ChildPickUpIndex() { return this.childPickUpIndex; }
     public set ChildPickUpIndex(newValue: number) { this.childPickUpIndex = newValue; this.MarkAsDirty(); }
 
+    private standaloneShipmentId: string;
+    public get StandaloneShipmentId() { return this.standaloneShipmentId; }
+    public set StandaloneShipmentId(newValue: string) { this.standaloneShipmentId = newValue; this.MarkAsDirty(); }
+
     private changeSetOp: string;
     public get ChangeSetOp() { return this.changeSetOp; }
     public set ChangeSetOp(newValue: string) { this.changeSetOp = newValue; this.MarkAsDirty(); }

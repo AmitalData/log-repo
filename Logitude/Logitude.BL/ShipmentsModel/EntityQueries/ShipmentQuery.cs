@@ -1945,6 +1945,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
             #endregion
 
+            shipmentPM.IsStandalonePickupDelivery = shipment.IsStandalonePickupDelivery;
             shipmentPM.ProductCode = shipment.ProductCode;
             shipmentPM.LastStatusLogDate = shipment.LastStatusLogDate;
             shipmentPM.ComputedStatusId = shipment.ComputedStatusId;
@@ -3660,6 +3661,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 }
             }
 
+            shipmentPM.IsStandalonePickupDelivery = shipment.IsStandalonePickupDelivery;
             shipmentPM.RegistryDate = shipment.RegistryDate;
             shipmentPM.IsAssembly = shipment.IsAssembly;
             shipmentPM.MasterShipmentDataId = shipment.MasterShipmentDataId;
@@ -3788,8 +3790,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 #region ShipmentAdditionalCloudDatas
                 shipmentPM.IsImporterApprovalRequired = GetIsImporterApprovalRequried(shipment.Id, shipment.Tenant);
                 #endregion
-            }            
+            }
 
+            shipmentPM.IsStandalonePickupDelivery = shipment.IsStandalonePickupDelivery;
             shipmentPM.CreatedByPartner = shipment.CreatedByPartner;
             shipmentPM.Tenant = shipment.Tenant;
             shipmentPM.Id = shipment.Id;
@@ -11107,6 +11110,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         DeclarationDate = view.DeclarationDate,
                         IsDangerous = view.IsDangerous,
                         DangerousUnNumber = view.DangerousUnNumber,
+                        IsStandalonePickupDelivery = view.IsStandalonePickupDelivery,
                     };
 
                     list.LongMaster = EntityFieldsHelper.GetLongMasterField(view);
@@ -11751,6 +11755,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          IsDangerous = s.IsDangerous,
                                                          DangerousUnNumber = s.DangerousUnNumber,
                                                          BookingConfirmationNumber = m.BookingConfirmationNumber,
+                                                         IsStandalonePickupDelivery = s.IsStandalonePickupDelivery,
                                                      };
 
             return shipmentsList;
@@ -12308,6 +12313,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                StatusName = !string.IsNullOrEmpty(f.StatusLocation) ? f.StatusName + " (" + f.StatusLocation + ")" : f.StatusName,
                                ExactStatusName = f.StatusName,
                                PreForwardingETD = f.PreForwardingETD,
+                               IsStandalonePickupDelivery = f.IsStandalonePickupDelivery,
                            };
             return myResult;
         }
@@ -12669,6 +12675,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     StatusName = !string.IsNullOrEmpty(f.StatusLocation) ? f.StatusName + "(" + f.StatusLocation + ")" : f.StatusName,
                     ExactStatusName = f.StatusName,
                     PreForwardingETD = f.PreForwardingETD,
+                    IsStandalonePickupDelivery = f.IsStandalonePickupDelivery,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
@@ -12931,6 +12938,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     DangerousUnNumber = f.DangerousUnNumber,
                     MainCarriageVesselName = f.MainCarriageVesselName,
                     BookingConfirmationNumber = f.BookingConfirmationNumber,
+                    IsStandalonePickupDelivery = f.IsStandalonePickupDelivery,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
@@ -13448,6 +13456,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          CreatedByPartner = s.CreatedByPartner,
                                                          PreForwardingFromPortId = s.PreForwardingFromPortId,
                                                          OnForwardingToPortId = s.OnForwardingToPortId,
+                                                         IsStandalonePickupDelivery = f.IsStandalonePickupDelivery,
                                                      };
 
             return shipmentsList;

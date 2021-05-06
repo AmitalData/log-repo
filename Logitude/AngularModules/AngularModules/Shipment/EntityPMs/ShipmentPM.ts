@@ -4917,11 +4917,13 @@ export class ShipmentPM {
         }
     }
 
-
     private documentFilingIds: string;
     public get DocumentFilingIds() { return this.documentFilingIds; }
     public set DocumentFilingIds(newValue: string) { if (this.documentFilingIds != newValue) { this.documentFilingIds = newValue; this.MarkAsDirty("DocumentFilingIds"); } }
 
+    private isStandalonePickupDelivery: boolean;
+    public get IsStandalonePickupDelivery() { return this.isStandalonePickupDelivery; }
+    public set IsStandalonePickupDelivery(newValue: boolean) { if (this.isStandalonePickupDelivery != newValue) { this.isStandalonePickupDelivery = newValue; this.MarkAsDirty("IsStandalonePickupDelivery"); } }      
 
 
     public OldEntityPM: ShipmentPM;

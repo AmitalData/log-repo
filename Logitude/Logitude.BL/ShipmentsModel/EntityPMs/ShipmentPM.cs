@@ -2654,7 +2654,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string TotalTax { get; set; }
         public string WarehouseLegLocalName { get; set; }
         public string WarehouseLegEnglishName { get; set; }
-
+        public bool IsStandalonePickupDelivery { get; set; }
     }
 
     public class TransshipmentLeg
