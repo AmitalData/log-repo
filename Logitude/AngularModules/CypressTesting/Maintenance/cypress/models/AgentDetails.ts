@@ -1,4 +1,4 @@
-export interface ShippingAgentDetails {
+export interface AgentDetails {
     CompanyName :string ,
     LocalName : string,
     Address1 : string,
@@ -8,8 +8,4 @@ export interface ShippingAgentDetails {
     State:string,
     Phone : string ,
     Fax :string ,
-    Website:string,
-    Notes: string,
-    VatNumber :string,
-    BankName : string ;
 }

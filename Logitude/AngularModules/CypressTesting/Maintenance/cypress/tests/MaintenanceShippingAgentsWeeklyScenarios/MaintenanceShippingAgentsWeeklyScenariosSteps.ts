@@ -1,19 +1,19 @@
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { MaintenanceSelectors } from "../../selectors/Selectors";
 import * as MaintenanceActions from "../../actions/Actions";
-import { ShippingAgentDetails } from "../../models/ShippingAgentDetails";
+import { AgentDetails } from "../../models/AgentDetails";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { ContactDetails } from "../../models/ContactDetails";
-import {ShippingAgentGeneralTabDetails} from "../../models/ShippingAgentGeneralTabDetails";
-import { ShippingAgentBillingTabDetails } from "../../models/ShippingAgentBillingTabDetails";
+import {AgentGeneralTabDetails} from "../../models/AgentGeneralTabDetails";
+import { AgentBillingTabDetails } from "../../models/AgentBillingTabDetails";
 import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetails";
 import * as BaseActions from "../../../../Base/cypress/actions/Actions"
 import { Constants } from '../../constants/Constants'
 
-let shippingAgentDetails: ShippingAgentDetails
+let shippingAgentDetails: AgentDetails
 let contactDetails: ContactDetails
-let shippingAgentGeneralTabDetails:ShippingAgentGeneralTabDetails
-let shippingAgentBillingTabDetails:ShippingAgentBillingTabDetails
+let shippingAgentGeneralTabDetails:AgentGeneralTabDetails
+let shippingAgentBillingTabDetails:AgentBillingTabDetails
 //#region Create new shipping agent
 Given("the user logged in and navigate to {string} in maintenance menu", (maintenanceItemName) => {
     cy.Login();
@@ -21,7 +21,7 @@ Given("the user logged in and navigate to {string} in maintenance menu", (mainte
 });
 
 Given("a shipping agent with the following details", (dataTable) => {
-    shippingAgentDetails = Assists.CreateInstance<ShippingAgentDetails>(dataTable, true);
+    shippingAgentDetails = Assists.CreateInstance<AgentDetails>(dataTable, true);
     MaintenanceActions.OpenNewWizard(Constants.ShippingAgent);
     MaintenanceActions.FillShippingAgentsDetails(shippingAgentDetails)
 });
@@ -52,7 +52,7 @@ Then("the shipping agent should appear successfully", () => {
 //#endregion
 //#region Open the shipping agent
 When("open shipping agent", () => {
-    MaintenanceActions.OpenShippingAgent()
+    MaintenanceActions.OpenAgent(Constants.ShippingAgent)
 });
 
 Then("the shipping agent should open successfully", () => {
@@ -60,7 +60,7 @@ Then("the shipping agent should open successfully", () => {
 });
 
 Then("the shipping agent address should have the following details", (dataTable) => {
-    shippingAgentDetails = Assists.CreateInstance<ShippingAgentDetails>(dataTable, true);
+    shippingAgentDetails = Assists.CreateInstance<AgentDetails>(dataTable, true);
     MaintenanceActions.AssertShippingAgentAddress(shippingAgentDetails)
 });
 
@@ -71,12 +71,12 @@ Then("the shipping agent contact should have the following details", (dataTable)
 //#endregion
 //#region Edit the shipping agent
 Given("the user fill the following shipping agent details", (dataTable) => {
-    shippingAgentGeneralTabDetails = Assists.CreateInstance<ShippingAgentGeneralTabDetails>(dataTable, true);
+    shippingAgentGeneralTabDetails = Assists.CreateInstance<AgentGeneralTabDetails>(dataTable, true);
     MaintenanceActions.EditShippingAgentGeneralTab(shippingAgentGeneralTabDetails)
 });
  
 Given("fill the following shipping agent Billing details", (dataTable) => {
-    shippingAgentBillingTabDetails = Assists.CreateInstance<ShippingAgentBillingTabDetails>(dataTable, true);
+    shippingAgentBillingTabDetails = Assists.CreateInstance<AgentBillingTabDetails>(dataTable, true);
     MaintenanceActions.EditShippingAgentBillingTab(shippingAgentBillingTabDetails)
 });
  

@@ -126,8 +126,13 @@ export class RequestAliases {
     public static readonly PostCurrencyRate = "PostCurrencyRate";
     public static readonly GetCurrencyRate = "GetCurrencyRate";
 
+    public static readonly PostAgent = "PostAgent";
+
     public static readonly PostShippingAgent = "PostShippingAgent";
     public static readonly PutShippingAgent = "PutShippingAgent";
+
+    public static readonly PostCustomAgent = "PostCustomAgent";
+    public static readonly PutCustomAgent = "PutCustomAgent";
 
     public static readonly GetSignle = "GetSignle"
     public static readonly GetByFilter = "GetByFilter"

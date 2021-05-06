@@ -37,15 +37,14 @@ import { ReceivableDetails } from "../../../Shipment/cypress/models/ReceivableDe
 import { RegionDetails } from "../models/RegionDetails";
 import {ChangePasswordsDetails} from '../models/ChangePasswordsDetails'
 import { PasswordValidationMessagesDetails } from '../models/PasswordValidationMessagesDetails'
-
-import { ShippingAgentDetails } from "../models/ShippingAgentDetails";
-import {ShippingAgentGeneralTabDetails} from "../models/ShippingAgentGeneralTabDetails";
-import { ShippingAgentBillingTabDetails } from "../models/ShippingAgentBillingTabDetails";
+import { AgentDetails } from "../models/AgentDetails";
+import {AgentGeneralTabDetails} from "../models/AgentGeneralTabDetails";
+import { AgentBillingTabDetails } from "../models/AgentBillingTabDetails";
 //#region variables
 let CityCode = null;
 let StateCode = null;
 let GlobalZoneCode = null;
-let ShippingAgentCode=null;
+let AgentCode=null;
 let CommodityName = null;
 let RegionName = null;
 let inActiveCountry = false;
@@ -1626,54 +1625,143 @@ export function AssertPutRegion() {
         });
 }
 //#endregion
-//#region shipping agents ShippingAgents
-export function FillShippingAgentsDetails(shippingAgentDetails: ShippingAgentDetails) {
-    cy.FillLogTextBox(MaintenanceSelectors.ShippingAgentCompanyName, shippingAgentDetails.CompanyName);
-    cy.FillLogTextBox(MaintenanceSelectors.ShippingAgentPhone, shippingAgentDetails.Phone);
-    cy.FillLogTextBox(MaintenanceSelectors.ShippingAgentLocalName, shippingAgentDetails.LocalName);
-    cy.FillLogTextBox(MaintenanceSelectors.ShippingAgentFax, shippingAgentDetails.Fax);
-    cy.FillLogTextBox(MaintenanceSelectors.ShippingAgentAddress1, shippingAgentDetails.Address1);
-    cy.FillLogTextBox(MaintenanceSelectors.ShippingAgentZipCode, shippingAgentDetails.Zip);
-    cy.FillLogTextBox(MaintenanceSelectors.ShippingAgentCity, shippingAgentDetails.City);
-    cy.FillLogLov(MaintenanceSelectors.ShippingAgentCountry, shippingAgentDetails.Country, true);
-    cy.FillLogLov(MaintenanceSelectors.ShippingAgentState, shippingAgentDetails.State, true);
+//#region agent
+function FillAgentDetails(agentDetails: AgentDetails){
+    cy.FillLogTextBox(MaintenanceSelectors.AgentCompanyName, agentDetails.CompanyName);
+    cy.FillLogTextBox(MaintenanceSelectors.AgentPhone, agentDetails.Phone);
+    cy.FillLogTextBox(MaintenanceSelectors.AgentLocalName, agentDetails.LocalName);
+    cy.FillLogTextBox(MaintenanceSelectors.AgentFax, agentDetails.Fax);
+    cy.FillLogTextBox(MaintenanceSelectors.AgentAddress1, agentDetails.Address1);
+    cy.FillLogTextBox(MaintenanceSelectors.AgentZipCode, agentDetails.Zip);
+    cy.FillLogTextBox(MaintenanceSelectors.AgentCity, agentDetails.City);
+    cy.FillLogLov(MaintenanceSelectors.AgentCountry, agentDetails.Country, true);
+    cy.FillLogLov(MaintenanceSelectors.AgentState, agentDetails.State, true);
+}
+function FillAgentContactDetails(AgentConatactDetails: ContactDetails){
+    FillCheckBoxProcess(MaintenanceSelectors.AgentContactCheckBox, AgentConatactDetails.AddContact)
+    cy.FillLogTextBox(MaintenanceSelectors.AgentContactEnglishName, AgentConatactDetails.EnglishName);
+    cy.FillLogTextBox(MaintenanceSelectors.AgentContactPosition, AgentConatactDetails.Position);
+    cy.FillLogTextBox(MaintenanceSelectors.AgentContactBusinessPhone, AgentConatactDetails.BusinessPhone);
+    cy.FillLogTextBox(MaintenanceSelectors.AgentContactMobile, AgentConatactDetails.Mobile);
+    cy.FillLogTextBox(MaintenanceSelectors.AgentContactFax, AgentConatactDetails.Fax);
+}
+function CreateAgent(){
+    DefinePostAgentRequest()
+    DefineGetByFilterRequest()
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+}
+function DefinePostAgentRequest() {
+    cy.DefineRequestWait(RestAPI.POST, Urls.PartnersDomain, RequestAliases.PostAgent);
+}
+export function AssertCreateAgent(AgentType:string) {
+    AssertPostAgent(AgentType)
+    AssertGetByFilters()
+}
+function AssertPostAgent(AgentType:string) {
+    BaseAssertion.AssertStatusCode(RequestAliases.PostAgent, 200).then((interception) => {
+        let responseBody = interception.response.body;
+        if(AgentType==Constants.ShippingAgent){
+            AgentCode = responseBody.ShippingAgent.Code;
+        }
+        else if(AgentType==Constants.CustomAgent){
+            AgentCode = responseBody.CustomAgent.Code;
+
+        }
+    });
+}
+export function CreateAgentMockCreate() {
+    DefinePostAgentMockRequest()
+    DefineGetByFilterRequest()
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
 }
 
-export function FillShippingAgentsContactDetails(conatactDetails: ContactDetails) {
-    FillCheckBoxProcess(MaintenanceSelectors.ShippingAgentContactCheckBox, conatactDetails.AddContact)
-    cy.FillLogTextBox(MaintenanceSelectors.ShippingAgentEmail, conatactDetails.Email)
-    cy.FillLogTextBox(MaintenanceSelectors.ShippingAgentContactEnglishName, conatactDetails.EnglishName);
-    cy.FillLogTextBox(MaintenanceSelectors.ShippingAgentContactPosition, conatactDetails.Position);
-    cy.FillLogTextBox(MaintenanceSelectors.ShippingAgentContactBusinessPhone, conatactDetails.BusinessPhone);
-    cy.FillLogTextBox(MaintenanceSelectors.ShippingAgentContactMobile, conatactDetails.Mobile);
-    cy.FillLogTextBox(MaintenanceSelectors.ShippingAgentContactFax, conatactDetails.Fax);
+function DefinePostAgentMockRequest() {
+    cy.intercept(RestAPI.POST, Urls.PartnersDomain, [true])
+}
+export function AssertCreateAgentMockCreate() {
+    AssertMockPostAgent();
+    AssertGetByFilters();
+}
+export function AssertMockPostAgent() {
+    BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow)
+}
+export function SearchgAgent() {
+    let agentCode = AgentCode
+    SearchAgentByValue(agentCode)
+}
+export function SearchAgentByValue(Agent:string) {
+    DefineAgentViewsGetByFiltersRequest(Agent);
+    cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, Agent);
+    AssertAgentViewsGetByFilters();
+}
+function DefineAgentViewsGetByFiltersRequest(AgentCode: string) {
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(AgentCode), RequestAliases.GetFilterSearch);
+}
+function AssertAgentViewsGetByFilters() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
+}
+export function AssertSearchAgent(companyName: string) {
+    cy.get(BaseSelectors.ListDataLoaded)
+    cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
+        expect(text).to.contain(companyName);
+    });
+}
+export function OpenAgent(AgentType:string) {
+    if(AgentType==Constants.ShippingAgent){
+        DefineShippingAgentsGetSingleRequest();
+    }
+    else if(AgentType==Constants.CustomAgent){
+        DefineCustomAgentsGetSingleRequest()
+    }
+    DefineGetMenuButtonGroupsRequest();
+    cy.get(BaseSelectors.RowClass).eq(0).click();
+}
+export function AssertOpenAgent() {
+    AssertAgentGetSingle();
+    AssertGetMenuButtonGroups();
+    BaseAssertion.AssertElementExist(MaintenanceSelectors.GeneralEditScreen)
+}
+function AssertAgentGetSingle() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetSignle, 200);
+}
+export function AssertAgentAddress(agentDetails: AgentDetails) {
+    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem, agentDetails.Address1)
+    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem, agentDetails.City)
+    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem, agentDetails.State)
+    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem, agentDetails.Zip)
+    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem, agentDetails.Country)
+    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem, agentDetails.Phone)
+    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem, agentDetails.Fax)
+}
+export function AssertAgentContact(conatactDetails: ContactDetails) {
+    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem, conatactDetails.EnglishName)
+    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem, conatactDetails.BusinessPhone)
+    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem, conatactDetails.Mobile)
+    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem, conatactDetails.Fax)
+    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem, conatactDetails.Position)
+}
+//#endregion
+//#region  ShippingAgents
+export function FillShippingAgentsDetails(shippingAgentDetails: AgentDetails) {
+    FillAgentDetails(shippingAgentDetails) 
+}
+export function FillShippingAgentsContactDetails(shippingAgentConatactDetails: ContactDetails) {
+    FillAgentContactDetails(shippingAgentConatactDetails)
 }
 export function CreateShippingAgent() {
-    DefinePostShippingAgentRequest()
-    DefineGetByFilterRequest()
-    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+    CreateAgent()
+}
+export function AssertCreateShippingAgent() {
+    AssertCreateAgent(Constants.ShippingAgent)
 }
 export function CreateShippingAgentMockCreate() {
-    DefinePostShippingAgentMockRequest()
-    DefineGetByFilterRequest()
-    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
-}
-
-function DefinePostShippingAgentMockRequest() {
-    cy.intercept(RestAPI.POST, Urls.PartnersDomain, [true])
+    CreateAgentMockCreate()
 }
 
 export function AssertCreateShippingAgentMockCreate() {
-    AssertMockPostShippingAgent();
-    AssertGetByFilters();
+    AssertCreateAgentMockCreate()
 }
 
-export function AssertMockPostShippingAgent() {
-    BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow)
-}
-function DefinePostShippingAgentRequest() {
-    cy.DefineRequestWait(RestAPI.POST, Urls.PartnersDomain, RequestAliases.PostShippingAgent);
-}
 export function UpdateShippingAgent() {
     DefinePutShippingAgentRequest()
     cy.Click(MaintenanceSelectors.ShippingAgentSaveButton, null)
@@ -1681,77 +1769,35 @@ export function UpdateShippingAgent() {
 function DefinePutShippingAgentRequest() {
     cy.DefineRequestWait(RestAPI.PUT, Urls.Shippingagents, RequestAliases.PutShippingAgent);
 }
-export function AssertCreateShippingAgent() {
-    AssertPostShippingAgent()
-    AssertGetByFilters()
-}
-function AssertPostShippingAgent() {
-    BaseAssertion.AssertStatusCode(RequestAliases.PostShippingAgent, 200).then((interception) => {
-        let responseBody = interception.response.body;
-        ShippingAgentCode = responseBody.ShippingAgent.Code;
-    });
-}
+
 export function SearchShippingAgent() {
-    let shippingAgentCode = ShippingAgentCode
-    SearchShippingAgentByValue(shippingAgentCode)
-}
-export function SearchShippingAgentByValue(shippingAgent:string) {
-    DefineShippingAgentViewsGetByFiltersRequest(shippingAgent);
-    cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, shippingAgent);
-    AssertShippingAgentViewsGetByFilters();
-}
-function AssertShippingAgentViewsGetByFilters() {
-    BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
-}
-function DefineShippingAgentViewsGetByFiltersRequest(shippingAgentCode: string) {
-    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(shippingAgentCode), RequestAliases.GetFilterSearch);
-}
-export function AssertSearchShippingAgent(companyName: string) {
-    cy.get(BaseSelectors.ListDataLoaded)
-    cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
-        expect(text).to.contain(companyName);
-    });
+    SearchgAgent()
 }
 
-export function OpenShippingAgent() {
-    DefineShippingAgentsGetSingleRequest();
-    DefineGetMenuButtonGroupsRequest();
-    cy.get(BaseSelectors.RowClass).eq(0).click();
+export function AssertSearchShippingAgent(companyName: string) {
+    AssertSearchAgent(companyName)
 }
+
 function DefineShippingAgentsGetSingleRequest() {
     cy.DefineRequestWait(RestAPI.GET, Urls.ShippingAgentGetSingle, RequestAliases.GetSignle);
 }
 export function AssertOpenShippingAgent() {
-    AssertShippingAgentGetSingle();
-    AssertGetMenuButtonGroups();
-    BaseAssertion.AssertElementExist(MaintenanceSelectors.GeneralEditScreen)
+    AssertOpenAgent()
 }
-function AssertShippingAgentGetSingle() {
-    BaseAssertion.AssertStatusCode(RequestAliases.GetSignle, 200);
-}
-export function AssertShippingAgentAddress(shippingAgentDetails: ShippingAgentDetails) {
+
+export function AssertShippingAgentAddress(shippingAgentDetails: AgentDetails) {
     cy.Click(MaintenanceSelectors.ShippingAgentAddressesTab, null, true)
-    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem, shippingAgentDetails.Address1)
-    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem, shippingAgentDetails.City)
-    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem, shippingAgentDetails.State)
-    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem, shippingAgentDetails.Zip)
-    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem, shippingAgentDetails.Country)
-    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem, shippingAgentDetails.Phone)
-    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem, shippingAgentDetails.Fax)
+    AssertAgentAddress(shippingAgentDetails)
 }
 export function AssertShippingAgentContact(conatactDetails: ContactDetails) {
     cy.Click(MaintenanceSelectors.ShippingAgentContactsTab, null, true)
-    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem, conatactDetails.EnglishName)
-    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem, conatactDetails.BusinessPhone)
-    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem, conatactDetails.Mobile)
-    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem, conatactDetails.Fax)
-    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem, conatactDetails.Position)
+    AssertAgentContact(conatactDetails)
 }
-export function EditShippingAgentGeneralTab(shippingAgentGeneralTabDetails: ShippingAgentGeneralTabDetails) {
+export function EditShippingAgentGeneralTab(shippingAgentGeneralTabDetails: AgentGeneralTabDetails) {
     cy.Click(MaintenanceSelectors.ShippingAgentGeneralTab, null, true)
     cy.FillLogTextBox(MaintenanceSelectors.ShippingAgentNotes, shippingAgentGeneralTabDetails.Notes)
 }
-export function EditShippingAgentBillingTab(shippingAgentBillingTabDetails: ShippingAgentBillingTabDetails) {
+export function EditShippingAgentBillingTab(shippingAgentBillingTabDetails: AgentBillingTabDetails) {
     cy.Click(MaintenanceSelectors.ShippingAgentBillingTab, null, true)
     cy.FillLogTextBox(MaintenanceSelectors.ShippingAgentBankName, shippingAgentBillingTabDetails.BankName)
     cy.FillLogTextBox(MaintenanceSelectors.ShippingAgentIBANNumber, shippingAgentBillingTabDetails.IBANNo)
@@ -1762,6 +1808,72 @@ export function AssertUpdateShippingAgent() {
 function AssertPutShippingAgent() {
     BaseAssertion.AssertStatusCode(RequestAliases.PutShippingAgent, 200);
 }
+//#endregion
+//#region CustomAgents 
+export function FillCustomAgentsDetails(customAgentDetails: AgentDetails) {
+    FillAgentDetails(customAgentDetails) 
+}
+export function FillCustomAgentsContactDetails(customAgentConatactDetails: ContactDetails) {
+    FillAgentContactDetails(customAgentConatactDetails)
+}
+export function CreateCustomAgent() {
+    CreateAgent()
+}
+export function AssertCreateCustomAgent() {
+    AssertCreateAgent(Constants.CustomAgent)
+}
+export function CreateCustomAgentMockCreate() {
+    CreateAgentMockCreate()
+}
 
+export function AssertCreateCustomAgentMockCreate() {
+    AssertCreateAgentMockCreate()
+}
 
+export function UpdateCustomAgent() {
+    DefinePutCustomAgentRequest()
+    cy.Click(MaintenanceSelectors.CustomAgentSaveButton, null)
+}
+function DefinePutCustomAgentRequest() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.CustomAgents, RequestAliases.PutCustomAgent);
+}
+
+export function SearchCustomAgent() {
+    SearchgAgent()
+}
+
+export function AssertSearchCustomAgent(companyName: string) {
+    AssertSearchAgent(companyName)
+}
+
+function DefineCustomAgentsGetSingleRequest() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.CustomAgentsGetSingle, RequestAliases.GetSignle);
+}
+export function AssertOpenCustomAgent() {
+    AssertOpenAgent()
+}
+
+export function AssertCustomAgentAddress(customAgentDetails: AgentDetails) {
+    cy.Click(MaintenanceSelectors.CustomAgentAddressesTab, null, true)
+    AssertAgentAddress(customAgentDetails)
+}
+export function AssertCustomAgentContact(conatactDetails: ContactDetails) {
+    cy.Click(MaintenanceSelectors.CustomAgentContactsTab, null, true)
+    AssertAgentContact(conatactDetails)
+}
+export function EditCustomAgentGeneralTab(customAgentGeneralTabDetails: AgentGeneralTabDetails) {
+    cy.Click(MaintenanceSelectors.CustomAgentGeneralTab, null, true)
+    cy.FillLogTextBox(MaintenanceSelectors.CustomAgentNotes, customAgentGeneralTabDetails.Notes)
+}
+export function EditCustomAgentBillingTab(customAgentBillingTabDetails: AgentBillingTabDetails) {
+    cy.Click(MaintenanceSelectors.CustomAgentBillingTab, null, true)
+    cy.FillLogTextBox(MaintenanceSelectors.CustomAgentBankName, customAgentBillingTabDetails.BankName)
+    cy.FillLogTextBox(MaintenanceSelectors.CustomAgentIBANNumber, customAgentBillingTabDetails.IBANNo)
+}
+export function AssertUpdateCustomAgent() {
+    AssertPutCustomAgent()
+}
+function AssertPutCustomAgent() {
+    BaseAssertion.AssertStatusCode(RequestAliases.PutCustomAgent, 200);
+}
 //#endregion
