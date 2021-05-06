@@ -1255,7 +1255,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             }
                         }
                     }
-
+                    /*
                     if(newDeclarationCourierStatusPM != null && !newDeclarationCourierStatusPM.IsClosedForFollowUp)
                     {
                         if (this._CourierMasterPM == null)
@@ -1276,6 +1276,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             myCourierMasterUpdateService.Update(this._CourierMasterPM, true);
                         }
                     }
+                    */
                 }
                 
             }
