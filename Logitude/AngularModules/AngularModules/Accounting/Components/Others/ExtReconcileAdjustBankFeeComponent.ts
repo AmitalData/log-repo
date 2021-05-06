@@ -285,6 +285,9 @@ export class ExtReconcileAdjustBankFeeComponent extends BaseComponent implements
             //this.Year = new Date().getFullYear();
             this.ValidationErrorsList.push("GLAccount is Required");
         }
+        else if (this._BankAccountPMId == this.glAccount.Id) {
+            this.ValidationErrorsList.push("החשבון להפרשים חייב להיות שונה מהבנק");
+        }
         else if (AppTool.IsNullOrEmpty(this.AccountingDate)) {
 
             this.ValidationErrorsList.push("Accounting Date is Required");

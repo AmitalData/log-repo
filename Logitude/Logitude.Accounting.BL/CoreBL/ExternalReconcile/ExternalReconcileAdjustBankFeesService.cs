@@ -60,6 +60,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
         public const string M_WhileStreaming_All_InProgressExternalReconcile = "אחת השורות לא מסומנת -בתהליך התאמה חצונית";
         public const string M_AccountShouldBeTheSameToBank = "הכרטיס בדף אמור להיות זהה ";
         public const string M_AdjustLadgerOnly1ExternalPageLineId = "בהתאמת תנועות יש לספק רק שורת דף בנק אחת";
+        public const string M_AdjustAccoutMustBeDiffFromBank = "החשבון להפרשים חייב להיות שונה מהבנק";
         public JournalPM TheNewJournal { get; private set; }
         public ChangeSetOperation ChangeSetOp { get; private set; }
 
@@ -580,14 +581,17 @@ new JournalLinePM()
         {
             AllLineAreExistAndSameBankAccount(tenant, reconcileExternalPageLineIdList, listOfpageLineList, listOfpageList);
             AllPageLineCheckInProgressByWhileStreaming(listOfpageLineList, CheckWhileStreaming);
-
+            if (adjustGLAccountId== bankAccountFromReconcileExternalPageLine.GLAccountId)
+            {
+                _ErrorList.Add(M_AdjustAccoutMustBeDiffFromBank);//"החשבון להפרשים חייב להיות שונה מהבנק";
+            }
             if (ledgerTransactionIds.Count() > 0)
             {
                 if (reconcileExternalPageLineIdList.Count()!=1)
                 {
                     _ErrorList.Add(M_AdjustLadgerOnly1ExternalPageLineId);
                 }
-                AllLedgerAreExistAndSameBankAccount(tenant, ledgerTransactionIds, ledgerTransactionList);
+                AllLedgerAreExistAndSameBankAccount(tenant, ledgerTransactionIds, ledgerTransactionList, adjustGLAccountId);
                 AllLedgerCheckInProgressByWhileStreaming(ledgerTransactionList, CheckWhileStreaming);
                 if (ledgerTransactionList.First().AccountId != listOfpageList.First().GLAccountId)
                 {
@@ -628,7 +632,8 @@ new JournalLinePM()
 
         }
 
-        private void AllLedgerAreExistAndSameBankAccount(int tenant, List<string> ledgerTransactionIds, List<LedgerTransactionPM> ledgerTransactionList)
+        private void AllLedgerAreExistAndSameBankAccount(int tenant, List<string> ledgerTransactionIds, List<LedgerTransactionPM> ledgerTransactionList, 
+            string adjustGLAccountId)
         {
               if (ledgerTransactionList.Count() != ledgerTransactionIds.Count())
             {
@@ -641,6 +646,11 @@ new JournalLinePM()
             if (ledgerTransactionList.Select(r => r.AccountId).Distinct().Count() != 1)
             {
                 _ErrorList.Add(M_NotAllLedgerInTheSameBankAccount);
+            }
+            if( ledgerTransactionList.Select(r => r.AccountId).First() == adjustGLAccountId)
+            {
+                _ErrorList.Add(M_AdjustAccoutMustBeDiffFromBank);
+                // = "החשבון להפרשים חייב להיות שונה מהבנק";
             }
         }
 
