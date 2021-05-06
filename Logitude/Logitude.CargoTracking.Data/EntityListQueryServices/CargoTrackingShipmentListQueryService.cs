@@ -384,15 +384,19 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
         public List<CargoTrackingShipmentList> GetShipments(int pageIndex, int pageSize, List<string> ShipmentIds, CargoTrackingShipmentFilters shipmentFilters)
         {
-            IQueryable<CargoTrackingShipmentList> shipments = GetShipmentsQuerableByIds(ShipmentIds, shipmentFilters.Tenant);
+            if (string.IsNullOrWhiteSpace(shipmentFilters.SearchText) || ShipmentIds.Count != 0)
+            {
+                IQueryable<CargoTrackingShipmentList> shipments = GetShipmentsQuerableByIds(ShipmentIds, shipmentFilters.Tenant);
 
-            shipments = FilterShipments(shipmentFilters, shipments);
-            shipments = SortShipments(shipmentFilters, shipments);
-            List<CargoTrackingShipmentList> shipmentsLists = GetPageOfShipmentsLists(pageIndex, pageSize, shipments);
+                shipments = FilterShipments(shipmentFilters, shipments);
+                shipments = SortShipments(shipmentFilters, shipments);
+                List<CargoTrackingShipmentList> shipmentsLists = GetPageOfShipmentsLists(pageIndex, pageSize, shipments);
 
-            shipmentsLists = AddMilstonesToShipments(shipmentsLists);
+                shipmentsLists = AddMilstonesToShipments(shipmentsLists);
 
-            return shipmentsLists;
+                return shipmentsLists;
+            }
+            return new List<CargoTrackingShipmentList>();
         }
         public IQueryable<CargoTrackingShipmentList> GetShipments(List<string> ShipmentIds, CargoTrackingShipmentFilters shipmentFilters)
         {

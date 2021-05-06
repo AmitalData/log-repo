@@ -128,10 +128,10 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         {
             List<string> shipmentsIds = GetTenantShipmentsIdsBySearchKey(shipmentFilters.SearchText, shipmentFilters.Tenant);
 
+            if (string.IsNullOrWhiteSpace(shipmentFilters.SearchText) || shipmentsIds.Count != 0)
+                return GetFilteredShipmentsCount(shipmentFilters, shipmentsIds);
 
-            int shipmentsCount = GetFilteredShipmentsCount(shipmentFilters, shipmentsIds);
-
-            return shipmentsCount;
+            return 0;
         }
 
         private int GetFilteredShipmentsCount(CargoTrackingShipmentFilters shipmentFilters, List<string> shipmentsIds)
