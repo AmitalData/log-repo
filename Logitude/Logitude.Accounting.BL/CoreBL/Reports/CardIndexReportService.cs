@@ -123,7 +123,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         public string ChartOfAccountsTypeCode { get;  set; }
         public string SalesmanId { get; set; }
 
-        public bool IncludeRelatedCurrenciesAccount { get; set; }
+        //public bool IncludeRelatedCurrenciesAccount { get; set; }
         
     }
 }
