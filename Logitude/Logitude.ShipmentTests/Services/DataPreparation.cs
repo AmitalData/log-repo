@@ -14,10 +14,7 @@ namespace Logitude.ShipmentTests.Services
         {
             return new ShipmentVariables
             {
-                CurrencyEURId = GetCurrencyId("EUR"),
                 IncotermLDEId = GetIncotermId("LDE"),
-                MeasurementGRWTId = GetMeasurementId("GRWT"),
-                ChargeTypeAFTId = GetChargeTypeId("AFT"),
                 PackageTypePC1Id = GetPackageTypeId("PC1", "O", true),
                 PackageTypePC2Id = GetPackageTypeId("PC2", "O", true),
                 PackageTypePP1Id = GetPackageTypeId("PP1", "A", false),
@@ -30,39 +27,6 @@ namespace Logitude.ShipmentTests.Services
                 MoveTypeMTOId = GetMoveTypeId("MTO", "O"),
         };
         }
-
-        #region Currency
-        private static string GetCurrencyId(string code)
-        {
-            ApiQueryFilters apiQueryFilters = BuildApiQueryFilters(code,null);  
-
-            string UserTenantCurrencyId = GetCurrencyIdFromUserTenant(apiQueryFilters);
-            if (string.IsNullOrEmpty(UserTenantCurrencyId))
-            {
-                string ZeroTenantCurrencyId = GetCurrencyIdFromZeroTenant(apiQueryFilters);
-                UserTenantCurrencyId = GetCopiedCurrencyFromTenantZero(ZeroTenantCurrencyId);
-            }
-            return UserTenantCurrencyId;
-        }
-
-        private static string GetCurrencyIdFromUserTenant(ApiQueryFilters apiQueryFilters)
-        {
-            ApiResponse<IEnumerable<Currency>> response = APICaller.CallGetByFilters<IEnumerable<Currency>>(Urls.CurrencyViewsGetByFilters, UserTenant.Token, apiQueryFilters);
-            return response.Data?.FirstOrDefault()?.Id;
-        }
-        private static string GetCurrencyIdFromZeroTenant(ApiQueryFilters apiQueryFilters)
-        {
-            apiQueryFilters.Tenant = 0;
-            ApiResponse<IEnumerable<Currency>> response = APICaller.CallGetByFilters<IEnumerable<Currency>>(Urls.CurrencyViewsGetByFilters, UserTenant.Token, apiQueryFilters);
-            return response.Data?.FirstOrDefault()?.Id;
-        }
-
-        private static string GetCopiedCurrencyFromTenantZero(string currencyId)
-        {
-            ApiResponse<Currency> response = APICaller.CallGet<Currency>(Urls.CommonDomainGetCopyCurrencyToTenant(currencyId), UserTenant.Token);
-            return response.Data?.Id;
-        }
-        #endregion
 
         #region Incoterm
         private static string GetIncotermId(string code)
@@ -100,53 +64,6 @@ namespace Logitude.ShipmentTests.Services
             incoterm.Freight = "P";
             incoterm.OtherCharges = "P";
             return incoterm;
-        }
-
-        #endregion
-
-        #region Measurement
-
-        private static string GetMeasurementId(string code)
-        {
-            ApiQueryFilters apiQueryFilters = BuildApiQueryFilters(code,null);
-
-            string UserTenantMeasurementId = GetMeasurementIdFromUserTenant(apiQueryFilters);
-            return UserTenantMeasurementId;
-        }
-
-        private static string GetMeasurementIdFromUserTenant(ApiQueryFilters apiQueryFilters)
-        {
-            ApiResponse<IEnumerable<Measurement>> response = APICaller.CallGetByFilters<IEnumerable<Measurement>>(Urls.MeasurementViewsGetByFilters, UserTenant.Token, apiQueryFilters);
-            return response.Data?.FirstOrDefault()?.Id;
-        }
-
-        #endregion
-
-        #region ChargeType
-
-        private static string GetChargeTypeId(string code)
-        {
-            ApiQueryFilters apiQueryFilters = BuildApiQueryFilters(code,null);
-
-            string UserTenantChargeTypeId = GetChargeTypeIdFromUserTenant(apiQueryFilters);
-            return UserTenantChargeTypeId;
-        }
-
-        private static string GetChargeTypeIdFromUserTenant(ApiQueryFilters apiQueryFilters)
-        {
-            ApiResponse<IEnumerable<ChargeType>> response = APICaller.CallGetByFilters<IEnumerable<ChargeType>>(Urls.ChargeTypeViewsGetByFilters, UserTenant.Token, apiQueryFilters);
-            ChargeType chargeType = response.Data?.FirstOrDefault();
-            if (chargeType != null && !chargeType.IsCustoms)
-            {
-                UpdateChargeType(chargeType);
-            }
-            return chargeType?.Id;
-        }
-
-        private static void UpdateChargeType(ChargeType chargeType)
-        {
-            chargeType.IsCustoms = true;
-            APICaller.CallPut<ChargeType>(chargeType, Urls.ChargesTypes, UserTenant.Token);
         }
 
         #endregion

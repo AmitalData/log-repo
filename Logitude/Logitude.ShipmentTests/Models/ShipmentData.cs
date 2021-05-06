@@ -2,10 +2,7 @@
 {
     public static class ShipmentData
     {
-        public static string CurrencyEURId { get; set; } 
         public static string IncotermLDEId { get; set; } 
-        public static string MeasurementGRWTId { get; set; } 
-        public static string ChargeTypeAFTId { get; set; } 
         public static string PackageTypePC1Id { get; set; } 
         public static string PackageTypePC2Id { get; set; }
         public static string PackageTypePP1Id { get; set; }
