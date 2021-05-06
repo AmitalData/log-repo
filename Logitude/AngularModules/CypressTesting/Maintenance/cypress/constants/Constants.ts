@@ -9,4 +9,5 @@ export class Constants {
     public static readonly GlobalZone = "GlobalZone"
     public static readonly Commodity="Commodity"
     public static readonly Region="Region"
+    public static readonly ShippingAgent="ShippingAgent"
 }
