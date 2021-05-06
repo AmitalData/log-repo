@@ -1,6 +1,6 @@
-@release @all @dev @weekly
+@release @all @dev @daily 
 Feature: Shipping Agent Create, Edit and Inactivate in Maintenance Module
-    The user creates a shipping agent and edits it from the Maintenance Module.
+    The user creates a shipping agent and edit another one from the Maintenance Module.
 
     Scenario: Create a new shipping agent
         Given the user logged in and navigate to "Shipping Agent" in maintenance menu
@@ -24,28 +24,14 @@ Feature: Shipping Agent Create, Edit and Inactivate in Maintenance Module
         When create shipping agent
         Then the shipping agent should create successfully
 
-    Scenario: Search for the shipping agent by code
-        When search shipping agent
-        Then the shipping agent should appear successfully
+     Scenario: Search for the shipping agent 
+        When search for "TestShippingAgent" shipping agent 
+        Then the "TestShippingAgent" shipping agent should appear successfully
 
     Scenario: Open the shipping agent
         When open shipping agent
         Then the shipping agent should open successfully
-        And the shipping agent address should have the following details
-            | Address1 | 15 Shipping Agent Street |
-            | City     | Anchorage                |
-            | Country  | United States            |
-            | State    | Alaska                   |
-            | Zip      | 0000                     |
-            | Phone    | 0590000000               |
-            | Fax      | 0590000000               |
-        And the shipping agent contact should have the following details
-            | EnglishName   | TestContact |
-            | BusinessPhone | 0590000000  |
-            | Mobile        | 0590000000  |
-            | Fax           | 0590000000  |
-            | Position      | Developer   |
-
+            
     Scenario: Edit the shipping agent
         Given the user fill the following shipping agent details
             | Notes | Test edit shipping agent |

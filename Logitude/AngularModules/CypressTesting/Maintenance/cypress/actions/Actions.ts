@@ -1632,6 +1632,24 @@ export function CreateShippingAgent() {
     DefineGetByFilterRequest()
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
 }
+export function CreateShippingAgentMockCreate() {
+    DefinePostShippingAgentMockRequest()
+    DefineGetByFilterRequest()
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+}
+
+function DefinePostShippingAgentMockRequest() {
+    cy.intercept(RestAPI.POST, Urls.PartnersDomain, [true])
+}
+
+export function AssertCreateShippingAgentMockCreate() {
+    AssertMockPostShippingAgent();
+    AssertGetByFilters();
+}
+
+export function AssertMockPostShippingAgent() {
+    BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow)
+}
 function DefinePostShippingAgentRequest() {
     cy.DefineRequestWait(RestAPI.POST, Urls.PartnersDomain, RequestAliases.PostShippingAgent);
 }
@@ -1652,14 +1670,21 @@ function AssertPostShippingAgent() {
         ShippingAgentCode = responseBody.ShippingAgent.Code;
     });
 }
-
 export function SearchShippingAgent() {
     let shippingAgentCode = ShippingAgentCode
-    DefineVendorViewsGetByFiltersRequest(shippingAgentCode);
-    cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, shippingAgentCode);
-    AssertVendorViewsGetByFilters();
+    SearchShippingAgentByValue(shippingAgentCode)
 }
-
+export function SearchShippingAgentByValue(shippingAgent:string) {
+    DefineShippingAgentViewsGetByFiltersRequest(shippingAgent);
+    cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, shippingAgent);
+    AssertShippingAgentViewsGetByFilters();
+}
+function AssertShippingAgentViewsGetByFilters() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
+}
+function DefineShippingAgentViewsGetByFiltersRequest(shippingAgentCode: string) {
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(shippingAgentCode), RequestAliases.GetFilterSearch);
+}
 export function AssertSearchShippingAgent(companyName: string) {
     cy.get(BaseSelectors.ListDataLoaded)
     cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
@@ -1683,31 +1708,32 @@ export function AssertOpenShippingAgent() {
 function AssertShippingAgentGetSingle() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetSignle, 200);
 }
-export function AssertShippingAgentAddress(shippingAgentDetails: ShippingAgentDetails){
-    cy.Click(MaintenanceSelectors.ShippingAgentAddresses,null,true)
-    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem,shippingAgentDetails.Address1)
-    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem,shippingAgentDetails.City)
-    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem,shippingAgentDetails.State)
-    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem,shippingAgentDetails.Zip)
-    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem,shippingAgentDetails.Country)
-    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem,shippingAgentDetails.Phone)
-    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem,shippingAgentDetails.Fax)
+export function AssertShippingAgentAddress(shippingAgentDetails: ShippingAgentDetails) {
+    cy.Click(MaintenanceSelectors.ShippingAgentAddressesTab, null, true)
+    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem, shippingAgentDetails.Address1)
+    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem, shippingAgentDetails.City)
+    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem, shippingAgentDetails.State)
+    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem, shippingAgentDetails.Zip)
+    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem, shippingAgentDetails.Country)
+    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem, shippingAgentDetails.Phone)
+    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem, shippingAgentDetails.Fax)
 }
-export function AssertShippingAgentContact(conatactDetails: ContactDetails){
-    cy.Click(MaintenanceSelectors.ShippingAgentContacts,null,true)
-    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem,conatactDetails.EnglishName)
-    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem,conatactDetails.Position)
-    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem,conatactDetails.BusinessPhone)
-    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem,conatactDetails.Mobile)
-    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem,conatactDetails.Fax)
+export function AssertShippingAgentContact(conatactDetails: ContactDetails) {
+    cy.Click(MaintenanceSelectors.ShippingAgentContactsTab, null, true)
+    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem, conatactDetails.EnglishName)
+    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem, conatactDetails.BusinessPhone)
+    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem, conatactDetails.Mobile)
+    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem, conatactDetails.Fax)
+    BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem, conatactDetails.Position)
 }
-export function EditShippingAgentGeneralTab(shippingAgentGeneralTabDetails:ShippingAgentGeneralTabDetails){
-cy.FillLogTextBox(MaintenanceSelectors.ShippingAgentNotes,shippingAgentGeneralTabDetails.Notes)
+export function EditShippingAgentGeneralTab(shippingAgentGeneralTabDetails: ShippingAgentGeneralTabDetails) {
+    cy.Click(MaintenanceSelectors.ShippingAgentGeneralTab, null, true)
+    cy.FillLogTextBox(MaintenanceSelectors.ShippingAgentNotes, shippingAgentGeneralTabDetails.Notes)
 }
-export function EditShippingAgentBillingTab(shippingAgentBillingTabDetails:ShippingAgentBillingTabDetails){
-    cy.FillLogTextBox(MaintenanceSelectors.ShippingAgentNotes,shippingAgentBillingTabDetails.BankName)
-    cy.FillLogTextBox(MaintenanceSelectors.ShippingAgentNotes,shippingAgentBillingTabDetails.IBANNo)
-
+export function EditShippingAgentBillingTab(shippingAgentBillingTabDetails: ShippingAgentBillingTabDetails) {
+    cy.Click(MaintenanceSelectors.ShippingAgentBillingTab, null, true)
+    cy.FillLogTextBox(MaintenanceSelectors.ShippingAgentBankName, shippingAgentBillingTabDetails.BankName)
+    cy.FillLogTextBox(MaintenanceSelectors.ShippingAgentIBANNumber, shippingAgentBillingTabDetails.IBANNo)
 }
 export function AssertUpdateShippingAgent() {
     AssertPutShippingAgent()

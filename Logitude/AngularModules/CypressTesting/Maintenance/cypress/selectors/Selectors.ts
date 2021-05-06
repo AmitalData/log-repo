@@ -211,10 +211,12 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly ShippingAgentContactMobile = "#Address_ContactMobile";
    public static readonly ShippingAgentContactFax = "#Address_ContactFax"
    public static readonly ShippingAgentNotes = "#ShippingAgent_Notes"
-   public static readonly ShippingAgentBilling = "#ShippingAgentTHBilling"
+   public static readonly ShippingAgentBillingTab= "#ShippingAgentTHBilling"
    public static readonly ShippingAgentBankName = "#ShippingAgent_BankName"
    public static readonly ShippingAgentIBANNumber = "#ShippingAgent_IBANNumber"
-   public static readonly ShippingAgentAddresses = "#ShippingAgentTHAddresses"
-   public static readonly ShippingAgentContacts = "#ShippingAgentTHContacts"
+   public static readonly ShippingAgentAddressesTab = "#ShippingAgentTHAddresses"
+   public static readonly ShippingAgentContactsTab = "#ShippingAgentTHContacts"
+   public static readonly ShippingAgentGeneralTab="#ShippingAgentTHGeneral"
+   public static readonly ShippingAgentEventsTab = "#ShippingAgentTHEvents"
    //#endregion
 }

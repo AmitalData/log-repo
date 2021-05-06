@@ -1,5 +1,5 @@
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
-import { MaintenanceSelectors } from "../../../cypress/selectors/Selectors";
+import { MaintenanceSelectors } from "../../selectors/Selectors";
 import * as MaintenanceActions from "../../actions/Actions";
 import { ShippingAgentDetails } from "../../models/ShippingAgentDetails";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
@@ -8,7 +8,7 @@ import {ShippingAgentGeneralTabDetails} from "../../models/ShippingAgentGeneralT
 import { ShippingAgentBillingTabDetails } from "../../models/ShippingAgentBillingTabDetails";
 import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetails";
 import * as BaseActions from "../../../../Base/cypress/actions/Actions"
-import { Constants } from '../../../cypress/constants/Constants'
+import { Constants } from '../../constants/Constants'
 
 let shippingAgentDetails: ShippingAgentDetails
 let contactDetails: ContactDetails
@@ -32,22 +32,22 @@ Given("a shipping agent contact with the following details", (dataTable) => {
 });
 
 When("create shipping agent", () => {
-    MaintenanceActions.CreateShippingAgent()
+    MaintenanceActions.CreateShippingAgentMockCreate()
 });
 
 Then("the shipping agent should create successfully", () => {
-    MaintenanceActions.AssertCreateShippingAgent()
+    MaintenanceActions.AssertCreateShippingAgentMockCreate()
 });
 
 //#endregion
 
 //#region Search for the shipping agent by code
-When("search shipping agent", () => {
-    MaintenanceActions.SearchShippingAgent()
+When("search for {string} shipping agent", (shippingAgent) => {
+    MaintenanceActions.SearchShippingAgentByValue(shippingAgent)
 });
 
-Then("the shipping agent should appear successfully", () => {
-    MaintenanceActions.AssertSearchShippingAgent(shippingAgentDetails.CompanyName)
+Then("the {string} shipping agent should appear successfully", (shippingAgent) => {
+    MaintenanceActions.AssertSearchShippingAgent(shippingAgent)
 });
 
 //#endregion
@@ -59,16 +59,6 @@ When("open shipping agent", () => {
 
 Then("the shipping agent should open successfully", () => {
     MaintenanceActions.AssertOpenShippingAgent()
-});
-
-Then("the shipping agent address should have the following details", (dataTable) => {
-    shippingAgentDetails = Assists.CreateInstance<ShippingAgentDetails>(dataTable, true);
-    MaintenanceActions.AssertShippingAgentAddress(shippingAgentDetails)
-});
-
-Then("the shipping agent contact should have the following details", (dataTable) => {
-    contactDetails = Assists.CreateInstance<ContactDetails>(dataTable, true);
-    MaintenanceActions.AssertShippingAgentContact(contactDetails)
 });
 //#endregion
 //#region Edit the shipping agent
