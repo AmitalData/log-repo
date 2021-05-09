@@ -2242,13 +2242,16 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
     }
     CalculatePaymentTotalAmount() {
-        this.AmountInPaymentCurrency = 0;
+           
+        var total = 0;
         for (let cheque of this.EntityPM.ARPaymentChequeReplicas) {
             if (!AppTool.IsNullOrEmpty(cheque.ForeignAmount)) {
-                this.AmountInPaymentCurrency += cheque.ForeignAmount;
+                total += cheque.ForeignAmount;
 
             }
         }
+        if (this.EntityPM.ARPaymentChequeReplicas.length >0)
+        this.AmountInPaymentCurrency = total;
         this.ComputeLocalAmount();
         this.SetPaymentAmount();
     }
