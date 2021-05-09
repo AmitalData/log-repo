@@ -1755,7 +1755,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         }
         private void UpdateCustomerProductItem(ProductItemPM itemPM)
         {
-            ProductItem itemPoco = productItemRepository.GetSingleProductItem(itemPM.CustomerId, tenant);
+            ProductItem itemPoco = productItemRepository.GetSingleProductItem(itemPM.Id, tenant);
             ProductItemMapping.MapEntity(itemPM, itemPoco, false);
 
             if (itemPM.HTSCodeChangeSet != null)

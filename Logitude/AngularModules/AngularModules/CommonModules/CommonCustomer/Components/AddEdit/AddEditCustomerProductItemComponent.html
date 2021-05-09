@@ -87,9 +87,6 @@
                     <td style="width:350px;">
                         <LogTextBox [ObjectFieldName]="'SKU'" [Text]="SKU" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                     </td>
-                    <td>
-                        <div></div>
-                    </td>
 
                     <!-- InActive -->
                     <td style="width: 150px;">
@@ -139,15 +136,15 @@
                                 <div class="SimpleGridView">
                                     <div class="MediaFill" style="overflow-x: hidden;">
                                         <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="FatherComponent.HTSCodes" [Disabled]="!IsEditingEnabled" (RowEnded)="FatherComponent.OnRowEnded($event)">
-
+                                            <!-- Line -->
                                             <log-column [header]="'Line'" [width]="'80'" [Alignment]="'left'">
                                                 <ng-template let-item>
                                                     <log-cell-template #logcelltemplate>
-                                                        <span>{{item.InActive}}</span>
+                                                        <span>{{FatherComponent.GetIndexOfHTSCode(item)}}</span>
                                                     </log-cell-template>
                                                 </ng-template>
                                             </log-column>
-
+                                            <!-- HTSCode -->
                                             <log-column [header]="'HTS Code'" [width]="'150'" [Alignment]="'left'">
                                                 <ng-template let-item>
                                                     <log-cell-template #logcelltemplate>
@@ -166,41 +163,35 @@
                                                     </log-cell-template>
                                                 </ng-template>
                                             </log-column>
-
+                                            <!-- DestinationCountry -->
                                             <log-column [header]="'Destination Country'" [width]="'150'" [Alignment]="'left'">
                                                 <ng-template let-item>
                                                     <log-cell-template #logcelltemplate>
                                                         <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                                                            <span>{{item.CountryId}}</span>
+                                                            <span>{{item.CountryEnglishName}}</span>
                                                         </div>
                                                         <div *ngIf="logcelltemplate.IsEditMode">
                                                             <LogLov [FocusOnMe]="'true'"
-                                                                    [ObjectFieldName]="'CountryId'"
-                                                                    [SelectedValue]="item.CountryId"
+                                                                    [ObjectFieldName]="'DestinationCountryId'"
+                                                                    [SelectedValue]="item.DestinationCountryId"
                                                                     [ObjectTableName]="'HTSCode'"
                                                                     [DataContext]="item"
+                                                                    [DisplayMemberPath]="EnglishName"
                                                                     [LookUpTableName]="'Country'">
                                                             </LogLov>
                                                         </div>
                                                     </log-cell-template>
                                                 </ng-template>
                                             </log-column>
-
-                                            <log-column [header]="'Inactive'" [width]="'120'" [Alignment]="'left'">
+                                            <!-- InActive -->
+                                            <log-column [header]="'Inactive'" [width]="'80'" [Alignment]="'left'">
                                                 <ng-template let-item>
                                                     <log-cell-template #logcelltemplate>
-                                                        <span>{{item.InActive}}</span>
-                                                    </log-cell-template>
-                                                </ng-template>
-                                            </log-column>
-
-
-                                            <!-- Buttons -->
-                                            <log-column [width]="'30'" [Alignment]="'left'">
-                                                <ng-template let-item>
-                                                    <log-cell-template [IgnoreMods]="true">
-                                                        <IconButton [Name]="'Delete'" [IsSmall]="true"
-                                                                    style="display: block; float: left; margin-left:3px; margin-top:4px;" (click)="item.RemoveLine()"></IconButton>
+                                                        <div style="height: 100%; width: 100%; position:relative;">
+                                                            <div class="CenterCenter" style="width: 16px;">
+                                                                <CheckBox (Checked)="item.InActive=$event" [IsChecked]="item.InActive"></CheckBox>
+                                                            </div>
+                                                        </div>
                                                     </log-cell-template>
                                                 </ng-template>
                                             </log-column>

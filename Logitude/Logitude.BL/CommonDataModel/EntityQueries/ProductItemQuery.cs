@@ -99,5 +99,50 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return productItems;
         }
+
+        public List<ProductItemPM> GetProductItemPMsByCustomerId(string customerId,int tenant)
+        {
+            List<ProductItemPM> productItems = (from a in repository.context.ProductItems
+                                                where a.Tenant == tenant && a.CustomerId == customerId
+                                                select new ProductItemPM()
+                                                {
+                                                    Id = a.Id,
+                                                    Tenant = a.Tenant,
+                                                    CustomerId = a.CustomerId,
+                                                    SKU = a.SKU,
+                                                    Remarks = a.Remarks,
+                                                    InActive = a.InActive,
+                                                    Description = a.Description,
+                                                    ItemCode = a.ItemCode,
+                                            }).ToList();
+            if (productItems != null)
+            { 
+                foreach (ProductItemPM productItem in productItems)
+                {
+                  List<HTSCodePM> hTSCodes = (from a in repository.context.HTSCodes
+                                   where a.Tenant == tenant && a.ItemId == productItem.Id
+                                                select new HTSCodePM()
+                                                {
+                                                    Id = a.Id,
+                                                    Tenant = a.Tenant,
+                                                    ItemId = a.ItemId,
+                                                    DestinationCountryId = a.DestinationCountryId,
+                                                    Code = a.Code,
+                                                    ApprovedByCustomer = a.ApprovedByCustomer,
+                                                    InActive = a.InActive,
+                                                }).ToList();
+
+            
+                    if (productItem!= null)
+                    {
+                        productItem.HTSCodes = hTSCodes;
+                    }
+                }
+
+            
+            }
+
+            return productItems;
+        }
     }
 }

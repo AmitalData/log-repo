@@ -4,15 +4,11 @@ import { AppTool } from '../../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { CustomerPM } from '../../../../Common/EntityPMs/CustomerPM';
 import { ProductItemPM } from '../../../../Common/EntityPMs/ProductItemPM';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { HTSCodePM } from '../../../../Common/EntityPMs/HTSCodePM';
-import { AddEditCustomerProductItemComponent } from '../AddEdit/AddEditCustomerProductItemComponent';
-import { PartnersDomainService } from '../../../../Common/Services/PartnersDomainService';
-import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { Validator } from '../../../../Infrastructure/Validators/Validator';
 
 @Component({
@@ -24,10 +20,9 @@ export class CustomerProductItemsTabComponent extends BaseComponent implements O
     public ProductItemEntityPM: ProductItemPM;
     public ObjectTableName: string = "ProductItem";
     public DataContext = this;
-    private CurrentSession = SessionLocator.SelectedSession;
     public ProductItems: ObservableCollection;
-    public ProductItemHTSCodesFilterList: HTSCodePM[] = [];
     public HTSCodes: ObservableCollection;
+    public IsEditingEnabled: boolean = true;
 
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
@@ -52,7 +47,6 @@ export class CustomerProductItemsTabComponent extends BaseComponent implements O
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
 
-    public IsEditingEnabled: boolean = true;
     SetUIProperties() {
 
     }
@@ -68,27 +62,14 @@ export class CustomerProductItemsTabComponent extends BaseComponent implements O
         }
 
         var itemsCollection: CustomerProductItem[] = [];
-
         this.EntityPM.CustomerProductItems.forEach(item => {
-            itemsCollection.push(new CustomerProductItem(item, this, false));
+            itemsCollection.push(new CustomerProductItem(item, this, false));          
         });
 
-        this.ProductItems.InsertCollection(itemsCollection);
+        this.ProductItems.InsertCollection(itemsCollection);       
     }
 
-
-    /*private LoadCustomerProductItemHTSCodes() {
-        var service: PartnersDomainService = new PartnersDomainService();
-        service.GetCustomerProductItemHTSCodes(this.EntityPM.Id, " ").subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                this.ProductItemHTSCodesFilterList = myResponse.Result;
-                this.SetUIProperties();
-                this.BuildProductItemHTSCodes();
-            }
-        });
-    }*/
-
-    BuildProductItemHTSCodes() {
+    BuildProductItemHTSCodes(item:ProductItemPM) {
         if (this.HTSCodes == null) {
             this.HTSCodes = new ObservableCollection([]);
         }
@@ -100,7 +81,7 @@ export class CustomerProductItemsTabComponent extends BaseComponent implements O
 
         var itemsCollection: CustomerHTSCode[] = [];
 
-        this.ProductItemEntityPM.HTSCodes.forEach(item => {
+        item.HTSCodes.forEach(item => {
             itemsCollection.push(new CustomerHTSCode(item, this, false));
         });
         this.HTSCodes.InsertCollection(itemsCollection);
@@ -111,7 +92,7 @@ export class CustomerProductItemsTabComponent extends BaseComponent implements O
         productItem.Tenant = SessionLocator.Tenant;
 
         var htsCode: HTSCodePM = new HTSCodePM(this.EntityPM);
-        productItem.Tenant = SessionLocator.Tenant;
+        htsCode.Tenant = SessionLocator.Tenant;
 
         var newProductItem: CustomerProductItem = new CustomerProductItem(productItem, this, true);
         var newHTSCode: CustomerHTSCode = new CustomerHTSCode(htsCode, this, true);
@@ -130,11 +111,9 @@ export class CustomerProductItemsTabComponent extends BaseComponent implements O
 
     AddHTSCode() {
         var hTSCodeItem: HTSCodePM = new HTSCodePM(null);
+        this.HTSCodes.Insert(new CustomerHTSCode(hTSCodeItem, this, true));
         hTSCodeItem.Tenant = SessionLocator.Tenant;
         hTSCodeItem.ItemId = this.EntityPM.Id;
-
-        this.HTSCodes.Insert(new CustomerHTSCode(hTSCodeItem, this, true));
-        this.ProductItemEntityPM.AddHTSCodePM(hTSCodeItem);
     }
 
     OnRowEnded($event) {
@@ -145,6 +124,17 @@ export class CustomerProductItemsTabComponent extends BaseComponent implements O
         }
     }
 
+    GetIndexOfHTSCode(hTSCode: CustomerHTSCode) {
+        return this.HTSCodes.GetIndex(hTSCode)+1;
+    } 
+
+    EditLineClicked(item: CustomerProductItem) {       
+        this.ProductItemEntityPM = item.EntityPM;
+        var htsCode: HTSCodePM = new HTSCodePM(item);
+        var currentHTSCode: CustomerHTSCode = new CustomerHTSCode(htsCode, this, true);
+        this.BuildProductItemHTSCodes(item.EntityPM);
+        this.OpenEditWindow("Edit Product Item", item, currentHTSCode);
+    }
 }
 
 export class CustomerProductItem extends BaseComponent {
@@ -156,14 +146,11 @@ export class CustomerProductItem extends BaseComponent {
         super();
         this.EntityPM = entity;
         this.IsNewEntity = isNew;
-
-        //this.SetUIProperties();
     }
 
     SetUIProperties() {
-        //this.UIProperties.SetRequired("ItemCode", this.ObjectTableName, AppTool.IsNullOrEmpty(this.ItemCode));
-    }
 
+    }
 
     get InActive() { return this.EntityPM.InActive; }
     set InActive(value: boolean) {
@@ -210,10 +197,6 @@ export class CustomerHTSCode extends BaseComponent {
         super();
         this.EntityPM = entity;
         this.IsNewEntity = isNew;
-
-        if (!isNew) {
-            this.selectedProductItemHTSCode = this.fatherComponent.ProductItemHTSCodesFilterList.filter(d => d.Id == entity.Id)[0];
-        }
     }
 
     SetUIProperties() {
@@ -317,20 +300,4 @@ export class CustomerHTSCode extends BaseComponent {
             this.EntityPM.ApprovedByCustomer = newValue;
         }
     }
-
-    RemoveLine() {
-        var confirmWindow = new ConfirmWindow();
-        confirmWindow.Show("Delete this item ?");
-        confirmWindow.WindowClosed.subscribe((event: any) => {
-            if (confirmWindow.Yes) {
-                if (this.fatherComponent.ProductItemEntityPM.HTSCodes.indexOf(this.EntityPM) != -1) {
-
-                }
-
-                if (this.fatherComponent.HTSCodes.Collection.indexOf(this) != -1) {
-                    this.fatherComponent.HTSCodes.Remove(this);
-                }
-            }
-        });
-    } 
 }

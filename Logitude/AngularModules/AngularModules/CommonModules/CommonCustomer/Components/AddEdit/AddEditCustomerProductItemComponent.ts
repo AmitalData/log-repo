@@ -10,7 +10,7 @@ import { CustomerPM } from '../../../../Common/EntityPMs/CustomerPM';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { CustomerHTSCode, CustomerProductItem, CustomerProductItemsTabComponent } from '../EditTabs/CustomerProductItemsTabComponent';
 import { HTSCodePM } from '../../../../Common/EntityPMs/HTSCodePM';
-import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
+
 
 
 @Component({    
@@ -33,8 +33,6 @@ export class AddEditCustomerProductItemComponent extends BaseComponent {
 
     constructor(public entityArgs: EntityArgs) {
         super();
-
-      //  this.LoadCustomerProductItemHTSCodes();
     }
 
     public IsResourcesReady: boolean = false;
@@ -64,10 +62,15 @@ export class AddEditCustomerProductItemComponent extends BaseComponent {
 
             if (this.CustomerProductItem.IsNewEntity) {
                 this.CustomerPM.AddProductItemPM(this.EntityPM);
+                if (this.FatherComponent.HTSCodes != null) {
+                    this.FatherComponent.HTSCodes.Collection.forEach(item => {
+                        this.FatherComponent.ProductItemEntityPM.AddHTSCodePM(item);
+                    });
+                }
             }
 
             this.CustomerProductItem.fatherComponent.BuildProductItems();
-
+            this.CustomerProductItem.fatherComponent.BuildProductItemHTSCodes(this.CustomerProductItem.EntityPM);
             this.CurrentSession.CloseCurrentWindow();
         }
     }

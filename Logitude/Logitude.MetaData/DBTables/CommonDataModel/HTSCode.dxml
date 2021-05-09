@@ -31,7 +31,7 @@
     Type="varchar"
     Size="20">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="ApprovedByCustomer"
@@ -50,7 +50,7 @@
     Type="varchar"
     Size="15">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="ItemId"

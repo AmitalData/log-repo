@@ -14,5 +14,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool ApprovedByCustomer { get; set; }
         public bool InActive { get; set; }
         public ChangeSetOperation ChangeSetOp { get; set; }
+		public string CountryEnglishName { get; set; }
     }
 }

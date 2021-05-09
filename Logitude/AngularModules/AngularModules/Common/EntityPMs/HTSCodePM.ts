@@ -68,6 +68,11 @@ export class HTSCodePM {
     public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
        
 	 
+    private countryEnglishName: string;
+    public get CountryEnglishName() { return this.countryEnglishName; }
+    public set CountryEnglishName(newValue: string) { if (this.countryEnglishName != newValue) { this.countryEnglishName = newValue; this.MarkAsDirty("CountryEnglishName"); } }
+       
+	 
 
     public OldEntityPM: HTSCodePM;
 	    
