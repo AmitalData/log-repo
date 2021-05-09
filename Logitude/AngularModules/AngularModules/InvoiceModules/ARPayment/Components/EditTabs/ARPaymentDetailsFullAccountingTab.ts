@@ -1646,7 +1646,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         if (this.EntityPM.ARPaymentChequeReplicas.length > 0) {
             this.EntityPM.ARPaymentChequeReplicas.filter(d => d.LineNumber == 1).forEach((cheque: ARPaymentChequeReplicaPM) => {
                 if (cheque) {
-                    cheque.ForeignAmount = this.EntityPM.AmountInPaymentCurrency;
+                    cheque.ForeignAmount = this.ChequeAmount;
                 }
             });
         }
@@ -2021,10 +2021,11 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     get ChequeAmount() { return this.chequeAmount }
     set ChequeAmount(value: number) {
         if (this.chequeAmount != value) {
-            this.chequeAmount = value;
             if (this.EntityPM.ARPaymentChequeReplicas.length == 1 || this.EntityPM.ARPaymentChequeReplicas.length == 0) {
+                this.chequeAmount = value;
                 this.AmountInPaymentCurrency = value;
             }
+            this.chequeAmount = value;
         }
     }
 	ComputeOpenAmount()
