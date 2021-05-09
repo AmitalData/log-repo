@@ -90,6 +90,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                AssignedTruckerEstimationDate = shipment.AssignedTruckerEstimationDate,
                                                                AssignedTruckerNotes = shipment.AssignedTruckerNotes,
                                                                NumberOfPackages = shipment.PackagesQuantity,
+                                                               PackagesQuantity = shipment.PackagesQuantity,
 
                                                                // port fields
                                                                ToPortCountryCode = toPort.CountryCode,
