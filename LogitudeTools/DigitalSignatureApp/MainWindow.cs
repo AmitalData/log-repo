@@ -29,7 +29,7 @@ namespace Cloud.Sign.App
 {
     public partial class MainWindow : Form
     {
-        public string Version = "2.34";
+        public string Version = "2.38";
         //RegistryKey reg = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
         object _Obj = new object();
         public string Token = "";
