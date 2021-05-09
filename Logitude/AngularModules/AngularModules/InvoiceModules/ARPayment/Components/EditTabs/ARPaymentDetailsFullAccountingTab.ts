@@ -2036,7 +2036,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             }
             this.chequeAmount = value;
             if (this.EntityPM.AccountingPaymentMethodCode == "CH") {
-                this.UpdatePaymentChequeFields();
+                this.UpdateChequeAmountFieldForPaymentCheque();
             }
             this.CalculatePaymentTotalAmount();
         }
