@@ -1846,15 +1846,18 @@ export function AssertCreateTrucker() {
     let intercept = cy.wait("@" + RequestAliases.PostCard);
     intercept.then((interception) => {
         if (interception.response.statusCode === 400) {
-            ReCreatTrucker();
+            ReCreateTrucker();
         }
         else {
             AssertPostTrucker(interception.response.statusCode, 200, interception.response.body.Trucker.Code)
         }
     })
 }
-function ReCreatTrucker() {
-CreateTrucker()
+function ReCreateTrucker() {
+    var RandomCardCode = GenerateRandomNumber(6);
+    cy.FillLogTextBox(MaintenanceSelectors.CardCode, RandomCardCode)
+    CreateTrucker()
+    AssertCreateTrucker()
 }
 export function AssertPostTrucker(truckerStatusCode: number, expectedStatusCode: number, truckerCode: string) {
     assert.equal(truckerStatusCode, expectedStatusCode)
