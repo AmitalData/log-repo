@@ -14,59 +14,16 @@ namespace Logitude.ShipmentTests.Services
         {
             return new ShipmentVariables
             {
-                IncotermLDEId = GetIncotermId("LDE"),
                 PackageTypePC1Id = GetPackageTypeId("PC1", "O", true),
                 PackageTypePC2Id = GetPackageTypeId("PC2", "O", true),
                 PackageTypePP1Id = GetPackageTypeId("PP1", "A", false),
                 PackageTypePP2Id = GetPackageTypeId("PP2", "A", false),
-                PaymentTermCashId = GetPaymentTermId("Cash"),
-                VATTypeZeroId = GetVATTypeId("ZERO"),
                 QuoteStageQTDRId = GetQuoteStageId("QTDR"),
                 VesselPTId = GetVesselId("PT"),
                 MoveTypeMTAId = GetMoveTypeId("MTA", "A" ),
                 MoveTypeMTOId = GetMoveTypeId("MTO", "O"),
         };
         }
-
-        #region Incoterm
-        private static string GetIncotermId(string code)
-        {
-            ApiQueryFilters apiQueryFilters = BuildApiQueryFilters(code,null);
-
-            string UserTenantIncotermId = GetIncotermIdFromUserTenant(apiQueryFilters);
-            if (string.IsNullOrEmpty(UserTenantIncotermId))
-            {
-                UserTenantIncotermId = GetCreatedIncotermFromTenantZero(code);
-            }
-
-            return UserTenantIncotermId;
-        }
-
-        private static string GetIncotermIdFromUserTenant(ApiQueryFilters apiQueryFilters)
-        {
-            ApiResponse<IEnumerable<Incoterm>> response = APICaller.CallGetByFilters<IEnumerable<Incoterm>>(Urls.IncotermViewsGetByFilters, UserTenant.Token, apiQueryFilters);
-            return response.Data?.FirstOrDefault()?.Id;
-        }
-
-        private static string GetCreatedIncotermFromTenantZero(string code)
-        {
-            Incoterm incoterm = CreateIncotermPM(code);
-            ApiResponse<Incoterm> response = APICaller.CallPost<Incoterm>(incoterm, Urls.IncotermsController, UserTenant.Token);
-            return response.Data?.Id;
-        }
-
-        private static Incoterm CreateIncotermPM(string code)
-        {
-            Incoterm incoterm = new Incoterm();
-            incoterm.Tenant = UserTenant.Tenant;
-            incoterm.Code = code;
-            incoterm.Name = code + " Incoterm";
-            incoterm.Freight = "P";
-            incoterm.OtherCharges = "P";
-            return incoterm;
-        }
-
-        #endregion
 
         #region PackageType
 
@@ -107,44 +64,6 @@ namespace Logitude.ShipmentTests.Services
             PackageType.IsInland = transportModeCode == "I" ? true : false;
             PackageType.IsContainer = isContainer;
             return PackageType;
-        }
-
-        #endregion
-
-        #region PaymentTerm
-
-        private static string GetPaymentTermId(string code)
-        {
-            ApiQueryFilters apiQueryFilters = BuildApiQueryFilters(null,code);
-
-            string UserTenantPaymentTermId = GetPaymentTermIdFromUserTenant(apiQueryFilters);
-            return UserTenantPaymentTermId;
-        }
-
-        private static string GetPaymentTermIdFromUserTenant(ApiQueryFilters apiQueryFilters)
-        {
-            ApiResponse<IEnumerable<PaymentTerm>> response = APICaller.CallGetByFilters<IEnumerable<PaymentTerm>>(Urls.PaymentTermViewsGetByFilters, UserTenant.Token, apiQueryFilters);
-            return response.Data?.FirstOrDefault()?.Id;
-        }
-
-        #endregion
-
-        #region VATType
-
-        private static string GetVATTypeId(string code)
-        {
-            ApiQueryFilters apiQueryFilters = BuildApiQueryFilters(null,code);
-            apiQueryFilters.GetAll = false;
-            apiQueryFilters.ForceCacheRefresh = false;
-            apiQueryFilters.GetCount = true;
-            string UserTenantVATTypeId = GetVATTypeIdFromUserTenant(apiQueryFilters);
-            return UserTenantVATTypeId;
-        }
-
-        private static string GetVATTypeIdFromUserTenant(ApiQueryFilters apiQueryFilters)
-        {
-            ApiResponse<IEnumerable<VATType>> response = APICaller.CallGetByFilters<IEnumerable<VATType>>(Urls.VatTypeViewsGetByFilters, UserTenant.Token, apiQueryFilters);
-            return response.Data?.FirstOrDefault()?.Id;
         }
 
         #endregion

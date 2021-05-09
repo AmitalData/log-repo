@@ -35,8 +35,8 @@ namespace Logitude.QuoteTests.Steps
             Charge = CreateChargeInstance(table);
         }
 
-        [Given(@"a export air quote")]
-        public void GivenAExportAirQuote()
+        [Given(@"an export air quote")]
+        public void GivenAnExportAirQuote()
         {
             QuoteContext.ExportAirQuote = CreateAndGetQuote(GetValidaQuotePM());
         }

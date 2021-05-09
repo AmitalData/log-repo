@@ -122,7 +122,6 @@
     <Compile Include="Models\MoveType.cs" />
     <Compile Include="Models\OceanOrInlandPackage.cs" />
     <Compile Include="Models\PackageType.cs" />
-    <Compile Include="Models\PaymentTerm.cs" />
     <Compile Include="Models\Port.cs" />
     <Compile Include="Models\PreparationShortClass.cs" />
     <Compile Include="Models\QuoteStage.cs" />
@@ -134,7 +133,6 @@
     <Compile Include="Models\ShipmentType.cs" />
     <Compile Include="Models\ShipmentVariables.cs" />
     <Compile Include="Models\TransportMode.cs" />
-    <Compile Include="Models\VATType.cs" />
     <Compile Include="Models\Vessel.cs" />
     <Compile Include="Models\VolumeUnit.cs" />
     <Compile Include="Models\WeightUnit.cs" />

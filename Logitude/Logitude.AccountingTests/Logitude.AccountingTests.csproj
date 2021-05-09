@@ -109,18 +109,26 @@
     <Compile Include="Models\Builders\APInvoiceBuilder.cs" />
     <Compile Include="Models\Builders\APInvoiceLineBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\DateHelper.cs" />
+    <Compile Include="Steps\GETAPInvoiceSteps.cs" />
+    <Compile Include="Steps\POSTAPInvoiceSteps.cs" />
+    <Compile Include="Steps\PUTAPInvoiceSteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Features\APIGETAPInvoice.feature" />
+    <None Include="Features\APIPOSTAPInvoice.feature" />
+    <None Include="Features\APIPUTAPInvoice.feature" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Features\" />
     <Folder Include="Hooks\" />
-    <Folder Include="Services\" />
-    <Folder Include="Steps\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Logitude.ShipmentTests\Logitude.ShipmentTests.csproj">
+      <Project>{81e2985e-f90a-49b1-9d8c-6a28589e7aaf}</Project>
+      <Name>Logitude.ShipmentTests</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Logitude.Test.Base\Logitude.Test.Base.csproj">
       <Project>{74fbc07e-5cbf-44c5-85c8-f86facaa06b6}</Project>
       <Name>Logitude.Test.Base</Name>

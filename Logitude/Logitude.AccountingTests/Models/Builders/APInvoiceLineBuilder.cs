@@ -1,9 +1,5 @@
-﻿using Logitude.Test.Base.Models.UserTenantPreparation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Logitude.Test.Base.Models.BillingsPreparation;
+using Logitude.Test.Base.Models.UserTenantPreparation;
 
 namespace Logitude.AccountingTests.Models.Builders
 {
@@ -33,7 +29,12 @@ namespace Logitude.AccountingTests.Models.Builders
         }
         public APInvoiceLineBuilder ChargesTypeId(string ChargesTypeId)
         {
-            _APInvoiceLinePM.ChargesTypeId = ChargesTypeId;
+            _APInvoiceLinePM.ChargesTypeId = ChargesTypeId == "AFT" ? BillingData.ChargeTypeAFTId : null;
+            return this;
+        }
+        public APInvoiceLineBuilder ChargesTypeName(string ChargesTypeName)
+        {
+            _APInvoiceLinePM.ChargesTypeName = ChargesTypeName;
             return this;
         }
         public APInvoiceLineBuilder Description(string Description)
@@ -52,10 +53,20 @@ namespace Logitude.AccountingTests.Models.Builders
             _APInvoiceLinePM.ForiegnCurrencyAmount = ForiegnCurrencyAmount;
             return this;
         }
- 
+        public APInvoiceLineBuilder LocalCurrencyAmount(double LocalCurrencyAmount)
+        {
+            _APInvoiceLinePM.LocalCurrencyAmount = LocalCurrencyAmount;
+            return this;
+        }
+        public APInvoiceLineBuilder ProfitCurrencyAmount(double ProfitCurrencyAmount)
+        {
+            _APInvoiceLinePM.ProfitCurrencyAmount = ProfitCurrencyAmount;
+            return this;
+        }
+
         public APInvoiceLineBuilder VatTypeId(string VatTypeId)
         {
-            _APInvoiceLinePM.VatTypeId = VatTypeId;
+            _APInvoiceLinePM.VatTypeId = VatTypeId == "Zero" ? BillingData.VATTypeZeroId : null;
             return this;
         }
         public APInvoiceLineBuilder VatTypeName(string VatTypeName)

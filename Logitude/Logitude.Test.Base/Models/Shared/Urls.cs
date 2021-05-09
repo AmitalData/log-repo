@@ -26,6 +26,11 @@
         public static string QuoteController = "Quotes";
         public static string QuoteViewsGetByFilters = "Quoteviews/Getbyfilters";
 
+        public static string APInvoicesController = "APInvoices";
+        //public static string APInvoiceViewsGetByFilters = "APInvoiceViews/getbyfilters";
+
+
+
 
         #region Shipment Prepare Data URls
         //locations

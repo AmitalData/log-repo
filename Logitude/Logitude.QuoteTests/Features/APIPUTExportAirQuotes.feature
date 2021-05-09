@@ -16,6 +16,6 @@ Scenario: PUT Shipment Direct Export Air
 		| Measurement     | GRWT        |
 		| Currency        | EUR         |
 		| ExchangeRate    | 1           |
-	And a export air quote
+	And an export air quote
 	When update a quote
 	Then the quote should update successfully

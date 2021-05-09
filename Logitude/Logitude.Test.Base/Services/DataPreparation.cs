@@ -80,6 +80,9 @@ namespace Logitude.Test.Base.Services
                 CurrencyEURId = GetCurrencyId("EUR"),
                 MeasurementGRWTId = GetMeasurementId("GRWT"),
                 ChargeTypeAFTId = GetChargeTypeId("AFT"),
+                IncotermLDEId = GetIncotermId("LDE"),
+                PaymentTermCashId = GetPaymentTermId("Cash"),
+                VATTypeZeroId = GetVATTypeId("ZERO"),
             };
         }
         #endregion
@@ -266,6 +269,21 @@ namespace Logitude.Test.Base.Services
                 Filter2Name = "CountryCode",
                 Filter2Operator = "contains",
                 Filter2Value = countryCode
+            };
+        }
+
+        private static ApiQueryFilters BuildApiQueryFiltersForBillings(string code, string SearchFieldsCode)
+        {
+            return new ApiQueryFilters
+            {
+                PageIndex = 0,
+                PageSize = 1,
+                Filter1Name = "Code",
+                Filter1Operator = "equals",
+                Filter1Value = code,
+                Filter2Name = "SearchFields",
+                Filter2Operator = "Contains",
+                Filter2Value = SearchFieldsCode
             };
         }
         #endregion
@@ -484,7 +502,7 @@ namespace Logitude.Test.Base.Services
         #region Currency
         private static string GetCurrencyId(string code)
         {
-            ApiQueryFilters apiQueryFilters = BuildApiQueryFilters(code, null);
+            ApiQueryFilters apiQueryFilters = BuildApiQueryFiltersForBillings(code, null);
 
             string UserTenantCurrencyId = GetCurrencyIdFromUserTenant(apiQueryFilters);
             if (string.IsNullOrEmpty(UserTenantCurrencyId))
@@ -518,7 +536,7 @@ namespace Logitude.Test.Base.Services
 
         private static string GetMeasurementId(string code)
         {
-            ApiQueryFilters apiQueryFilters = BuildApiQueryFilters(code, null);
+            ApiQueryFilters apiQueryFilters = BuildApiQueryFiltersForBillings(code, null);
 
             string UserTenantMeasurementId = GetMeasurementIdFromUserTenant(apiQueryFilters);
             return UserTenantMeasurementId;
@@ -536,7 +554,7 @@ namespace Logitude.Test.Base.Services
 
         private static string GetChargeTypeId(string code)
         {
-            ApiQueryFilters apiQueryFilters = BuildApiQueryFilters(code, null);
+            ApiQueryFilters apiQueryFilters = BuildApiQueryFiltersForBillings(code, null);
 
             string UserTenantChargeTypeId = GetChargeTypeIdFromUserTenant(apiQueryFilters);
             return UserTenantChargeTypeId;
@@ -557,6 +575,84 @@ namespace Logitude.Test.Base.Services
         {
             chargeType.IsCustoms = true;
             APICaller.CallPut<ChargeType>(chargeType, Urls.ChargesTypes, UserTenant.Token);
+        }
+
+        #endregion
+
+        #region Incoterm
+        private static string GetIncotermId(string code)
+        {
+            ApiQueryFilters apiQueryFilters = BuildApiQueryFiltersForBillings(code, null);
+
+            string UserTenantIncotermId = GetIncotermIdFromUserTenant(apiQueryFilters);
+            if (string.IsNullOrEmpty(UserTenantIncotermId))
+            {
+                UserTenantIncotermId = GetCreatedIncotermFromTenantZero(code);
+            }
+
+            return UserTenantIncotermId;
+        }
+
+        private static string GetIncotermIdFromUserTenant(ApiQueryFilters apiQueryFilters)
+        {
+            ApiResponse<IEnumerable<Incoterm>> response = APICaller.CallGetByFilters<IEnumerable<Incoterm>>(Urls.IncotermViewsGetByFilters, UserTenant.Token, apiQueryFilters);
+            return response.Data?.FirstOrDefault()?.Id;
+        }
+
+        private static string GetCreatedIncotermFromTenantZero(string code)
+        {
+            Incoterm incoterm = CreateIncotermPM(code);
+            ApiResponse<Incoterm> response = APICaller.CallPost<Incoterm>(incoterm, Urls.IncotermsController, UserTenant.Token);
+            return response.Data?.Id;
+        }
+
+        private static Incoterm CreateIncotermPM(string code)
+        {
+            Incoterm incoterm = new Incoterm();
+            incoterm.Tenant = UserTenant.Tenant;
+            incoterm.Code = code;
+            incoterm.Name = code + " Incoterm";
+            incoterm.Freight = "P";
+            incoterm.OtherCharges = "P";
+            return incoterm;
+        }
+
+        #endregion
+
+        #region PaymentTerm
+
+        private static string GetPaymentTermId(string code)
+        {
+            ApiQueryFilters apiQueryFilters = BuildApiQueryFiltersForBillings(null, code);
+
+            string UserTenantPaymentTermId = GetPaymentTermIdFromUserTenant(apiQueryFilters);
+            return UserTenantPaymentTermId;
+        }
+
+        private static string GetPaymentTermIdFromUserTenant(ApiQueryFilters apiQueryFilters)
+        {
+            ApiResponse<IEnumerable<PaymentTerm>> response = APICaller.CallGetByFilters<IEnumerable<PaymentTerm>>(Urls.PaymentTermViewsGetByFilters, UserTenant.Token, apiQueryFilters);
+            return response.Data?.FirstOrDefault()?.Id;
+        }
+
+        #endregion
+
+        #region VATType
+
+        private static string GetVATTypeId(string code)
+        {
+            ApiQueryFilters apiQueryFilters = BuildApiQueryFiltersForBillings(null, code);
+            apiQueryFilters.GetAll = false;
+            apiQueryFilters.ForceCacheRefresh = false;
+            apiQueryFilters.GetCount = true;
+            string UserTenantVATTypeId = GetVATTypeIdFromUserTenant(apiQueryFilters);
+            return UserTenantVATTypeId;
+        }
+
+        private static string GetVATTypeIdFromUserTenant(ApiQueryFilters apiQueryFilters)
+        {
+            ApiResponse<IEnumerable<VATType>> response = APICaller.CallGetByFilters<IEnumerable<VATType>>(Urls.VatTypeViewsGetByFilters, UserTenant.Token, apiQueryFilters);
+            return response.Data?.FirstOrDefault()?.Id;
         }
 
         #endregion
