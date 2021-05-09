@@ -189,7 +189,25 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                     }).ToList();
         }
 
-        
+        public List<ShortFactTableDetails> CheckFactTablesToggle(List<ShortFactTableDetails> dwFactTablesNames, int tenant)
+        {
+            // Check if Tenant have Invoice Feature Toggle
+            if (FeatureToggleHelper.HasFeatureToggle("BIF", tenant))
+            {
+                return dwFactTablesNames;
+            }
+            else
+            {
+                var invoiceFact = dwFactTablesNames.SingleOrDefault(s => s.DisplayName == "Invoices");
+                if (invoiceFact != null)
+                {
+                    dwFactTablesNames.Remove(invoiceFact);
+                }
+
+                return dwFactTablesNames;
+            }
+        }
+
 
     }
 
