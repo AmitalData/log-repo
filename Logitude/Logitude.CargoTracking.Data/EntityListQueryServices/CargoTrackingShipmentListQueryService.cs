@@ -718,10 +718,10 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                 //IsEstimation = !Shipment.DeliveredDone
             });
 
-            milestones = milestones
-                            .OrderByDescending(s => s.IsEstimation == true ? s.EstimationDate : s.Date)
-                            .ThenByDescending(s => s.Id)
-                            .ToList();
+            milestones = milestones.OrderByDescending(d => d.Id).ToList();
+                            //.OrderByDescending(s => s.IsEstimation == true ? s.EstimationDate : s.Date)
+                            //.ThenByDescending(s => s.Id)
+                            //.ToList();
 
 
             return milestones;
