@@ -15,6 +15,7 @@ namespace Logitude.QuoteTests.Steps
     {
 
         protected readonly QuoteContext QuoteContext;
+        private QuotePM quote;
         private QuotePackagePM Packages;
         private QuoteChargePM Charge;
 
@@ -38,7 +39,8 @@ namespace Logitude.QuoteTests.Steps
         [Given(@"an export air quote")]
         public void GivenAnExportAirQuote()
         {
-            QuoteContext.ExportAirQuote = CreateAndGetQuote(GetValidaQuotePM());
+            CreateQuote(GetValidaQuotePM());
+            QuoteContext.ExportAirQuote = GetCreatedQuote();
         }
 
         [When(@"update a quote")]
@@ -84,11 +86,14 @@ namespace Logitude.QuoteTests.Steps
                 .Build();
         }
 
-        private QuotePM CreateAndGetQuote(QuotePM quotePM)
+        private void CreateQuote(QuotePM quotePM)
         {
             ApiResponse<QuotePM> PostResponse = APICaller.CallPost<QuotePM>(quotePM, Urls.QuoteController, UserTenant.Token);
-            QuotePM quote = PostResponse.Data;
+            quote = PostResponse.Data;
+        }
 
+        private QuotePM GetCreatedQuote()
+        {
             string singleQuoteUrl = Urls.QuoteGetSingle(quote?.Id);
 
             ApiResponse<QuotePM> GetResponse = APICaller.CallGet<QuotePM>(singleQuoteUrl, UserTenant.Token);
