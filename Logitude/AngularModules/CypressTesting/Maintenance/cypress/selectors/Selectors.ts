@@ -46,27 +46,10 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly VendorBillingTab = "#VendorTHBilling";
    public static readonly VendorSaveButton = "#Vendor-Save";
    public static readonly VendorSaveCloseButton = "#Vendor-SaveClose";
-
-   public static readonly VendorCompanyName = "#Address_Name";
-   public static readonly VendorLocalName = "#Address_LocalName";
-   public static readonly VendorAddress1 = "#Address_Address1";
-   public static readonly VendorZipCode = "#Address_ZipCode";
-   public static readonly VendorCity = "#Address_City";
-   public static readonly VendorCountry = "#Address_CountryId";
-   public static readonly VendorState = "#Address_StateId";
-   public static readonly VendorPhone = "#Address_PhoneNumber";
-   public static readonly VendorFax = "#Address_FaxNumber";
    public static readonly VendorWebsite = "#Vendor_Website";
    public static readonly VendorNotes = "#Vendor_Notes";
    public static readonly VendorVatNumber = "#Vendor_VatNumber";
    public static readonly VendorBankName = "#Vendor_BankName";
-
-   public static readonly VendorContactCheckBox = "input[id^='CheckBox_']"
-   public static readonly VendorContactEnglishName = "#Address_ContactName";
-   public static readonly VendorContactPosition = "#Address_ContactPosition";
-   public static readonly VendorContactBusinessPhone = "#Address_ContactBusinessPhone";
-   public static readonly VendorContactMobile = "#Address_ContactMobile";
-   public static readonly VendorContactFax = "#Address_ContactFax";
    //#endregion
 
    //#region Vessel
@@ -196,23 +179,24 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly RegionSaveButton = "#Region-Save"
    public static readonly RegionEventsTab = "#RegionTHEvents"
    //#endregion
-   //#region agent details  
-   public static readonly AgentCompanyName = "#Address_Name";
-   public static readonly AgentLocalName = "#Address_LocalName";
-   public static readonly AgentAddress1 = "#Address_Address1";
-   public static readonly AgentZipCode = "#Address_ZipCode";
-   public static readonly AgentCity = "#Address_City";
-   public static readonly AgentCountry = "#Address_CountryId";
-   public static readonly AgentState = "#Address_StateId";
-   public static readonly AgentPhone = "#Address_PhoneNumber";
-   public static readonly AgentFax = "#Address_FaxNumber";
-   public static readonly AgentContactCheckBox = "input[id^='CheckBox_']"
-   public static readonly AgentEmail = "#Address_ContactEmail"
-   public static readonly AgentContactEnglishName = "#Address_ContactName";
-   public static readonly AgentContactPosition = "#Address_ContactPosition";
-   public static readonly AgentContactBusinessPhone = "#Address_ContactBusinessPhone";
-   public static readonly AgentContactMobile = "#Address_ContactMobile";
-   public static readonly AgentContactFax = "#Address_ContactFax"
+   //#region card details  
+   public static readonly CardCode= "#Address_CardCode"
+   public static readonly CardCompanyName = "#Address_Name";
+   public static readonly CardLocalName = "#Address_LocalName";
+   public static readonly CardAddress1 = "#Address_Address1";
+   public static readonly CardZipCode = "#Address_ZipCode";
+   public static readonly CardCity = "#Address_City";
+   public static readonly CardCountry = "#Address_CountryId";
+   public static readonly CardState = "#Address_StateId";
+   public static readonly CardPhone = "#Address_PhoneNumber";
+   public static readonly CardFax = "#Address_FaxNumber";
+   public static readonly CardContactCheckBox = "input[id^='CheckBox_']"
+   public static readonly CardEmail = "#Address_ContactEmail"
+   public static readonly CardContactEnglishName = "#Address_ContactName";
+   public static readonly CardContactPosition = "#Address_ContactPosition";
+   public static readonly CardContactBusinessPhone = "#Address_ContactBusinessPhone";
+   public static readonly CardContactMobile = "#Address_ContactMobile";
+   public static readonly CardContactFax = "#Address_ContactFax"
    //#endregion
    //#region shipping agent
    public static readonly ShippingAgentNotes = "#ShippingAgent_Notes"

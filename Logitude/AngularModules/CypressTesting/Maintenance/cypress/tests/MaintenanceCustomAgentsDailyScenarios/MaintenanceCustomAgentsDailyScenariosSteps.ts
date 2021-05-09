@@ -1,19 +1,19 @@
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { MaintenanceSelectors } from "../../selectors/Selectors";
 import * as MaintenanceActions from "../../actions/Actions";
-import { AgentDetails } from "../../models/AgentDetails";
+import { CardDetails } from "../../models/CardDetails";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { ContactDetails } from "../../models/ContactDetails";
-import {AgentGeneralTabDetails} from "../../models/AgentGeneralTabDetails";
-import { AgentBillingTabDetails } from "../../models/AgentBillingTabDetails";
+import {CardGeneralTabDetails} from "../../models/CardGeneralTabDetails";
+import { CardBillingTabDetails } from "../../models/CardBillingTabDetails";
 import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetails";
 import * as BaseActions from "../../../../Base/cypress/actions/Actions"
 import { Constants } from '../../constants/Constants'
 
-let customAgentDetails: AgentDetails
+let customAgentDetails: CardDetails
 let contactDetails: ContactDetails
-let customAgentGeneralTabDetails:AgentGeneralTabDetails
-let customAgentBillingTabDetails:AgentBillingTabDetails
+let customAgentGeneralTabDetails:CardGeneralTabDetails
+let customAgentBillingTabDetails:CardBillingTabDetails
 //#region Create new custom agent
 Given("the user logged in and navigate to {string} in maintenance menu", (maintenanceItemName) => {
     cy.Login();
@@ -21,7 +21,7 @@ Given("the user logged in and navigate to {string} in maintenance menu", (mainte
 });
 
 Given("a custom agent with the following details", (dataTable) => {
-    customAgentDetails = Assists.CreateInstance<AgentDetails>(dataTable, true);
+    customAgentDetails = Assists.CreateInstance<CardDetails>(dataTable, true);
     MaintenanceActions.OpenNewWizard(Constants.CustomAgent);
     MaintenanceActions.FillCustomAgentsDetails(customAgentDetails)
 });
@@ -42,7 +42,7 @@ Then("the custom agent should create successfully", () => {
 //#endregion
 //#region Search for the custom agent
 When("search for {string} custom agent", (customAgent) => {
-    MaintenanceActions.SearchAgentByValue(customAgent)
+    MaintenanceActions.SearchCardByValue(customAgent)
 });
 
 Then("the {string} custom agent should appear successfully", (customAgent) => {
@@ -52,7 +52,7 @@ Then("the {string} custom agent should appear successfully", (customAgent) => {
 //#endregion
 //#region Open the custom agent
 When("open custom agent", () => {
-    MaintenanceActions.OpenAgent(Constants.CustomAgent)
+    MaintenanceActions.OpenCard(Constants.CustomAgent)
 });
 
 Then("the custom agent should open successfully", () => {
@@ -61,13 +61,13 @@ Then("the custom agent should open successfully", () => {
 //#endregion
 //#region Edit the custom agent
 Given("the user fill the following custom agent details", (dataTable) => {
-    customAgentGeneralTabDetails = Assists.CreateInstance<AgentGeneralTabDetails>(dataTable, true);
-    MaintenanceActions.EditCustomAgentGeneralTab(customAgentGeneralTabDetails)
+    customAgentGeneralTabDetails = Assists.CreateInstance<CardGeneralTabDetails>(dataTable, true);
+    MaintenanceActions.FillCustomAgentGeneralTab(customAgentGeneralTabDetails)
 });
  
 Given("fill the following custom agent Billing details", (dataTable) => {
-    customAgentBillingTabDetails = Assists.CreateInstance<AgentBillingTabDetails>(dataTable, true);
-    MaintenanceActions.EditCustomAgentBillingTab(customAgentBillingTabDetails)
+    customAgentBillingTabDetails = Assists.CreateInstance<CardBillingTabDetails>(dataTable, true);
+    MaintenanceActions.FillCustomAgentBillingTab(customAgentBillingTabDetails)
 });
  
 When("update custom agent", () => {

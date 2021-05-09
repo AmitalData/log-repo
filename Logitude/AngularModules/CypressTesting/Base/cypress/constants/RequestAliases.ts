@@ -126,7 +126,7 @@ export class RequestAliases {
     public static readonly PostCurrencyRate = "PostCurrencyRate";
     public static readonly GetCurrencyRate = "GetCurrencyRate";
 
-    public static readonly PostAgent = "PostAgent";
+    public static readonly PostCard = "PostCard";
 
     public static readonly PostShippingAgent = "PostShippingAgent";
     public static readonly PutShippingAgent = "PutShippingAgent";

@@ -1,4 +1,4 @@
-export interface AgentDetails {
+export interface CardDetails {
     CompanyName :string ,
     LocalName : string,
     Address1 : string,
@@ -8,4 +8,5 @@ export interface AgentDetails {
     State:string,
     Phone : string ,
     Fax :string ,
+    Website:string,
 }
