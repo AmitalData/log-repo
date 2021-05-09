@@ -88,11 +88,11 @@
             this.label1.Size = new System.Drawing.Size(138, 18);
             this.label1.TabIndex = 2;
             if (Environment == "DSV")
-            { 
+            {
                 this.label1.Text = "DSV Sign Client - Beta";
             }
             else
-            { 
+            {
                 this.label1.Text = "LogBox Sign Client - Beta";
             }
             // 
