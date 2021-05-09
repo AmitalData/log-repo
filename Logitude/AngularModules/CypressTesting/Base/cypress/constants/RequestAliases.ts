@@ -134,6 +134,9 @@ export class RequestAliases {
     public static readonly PostCustomAgent = "PostCustomAgent";
     public static readonly PutCustomAgent = "PutCustomAgent";
 
+    public static readonly PutTrucker="PostTrucker"
+    public static readonly PostTrucker="PostTrucker"
+
     public static readonly GetSignle = "GetSignle"
     public static readonly GetByFilter = "GetByFilter"
     public static readonly GetFilterSearch = "GetFilterSearch"

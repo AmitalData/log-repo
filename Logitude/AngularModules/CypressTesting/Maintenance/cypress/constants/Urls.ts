@@ -50,6 +50,9 @@ export class Urls {
     public static readonly CustomAgents="**/customagents"
     public static readonly CustomAgentsGetSingle= "**/customagents/getsingle?**"
 
+    public static readonly Truckers ="**/truckers"
+    public static readonly TruckersGetSingle="**/truckers/getsingle?**"
+
     public static readonly RegionsGetSingle="**/regions/getsingle?**"
     public static GetFilterSearch(filterBy: string) {
         return '**/getbyfilters?**' + filterBy + '**'

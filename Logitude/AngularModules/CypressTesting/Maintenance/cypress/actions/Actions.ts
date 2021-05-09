@@ -43,6 +43,7 @@ let CityCode = null;
 let StateCode = null;
 let GlobalZoneCode = null;
 let CardCode=null;
+let TruckerCode=null;
 let CommodityName = null;
 let RegionName = null;
 let inActiveCountry = false;
@@ -119,7 +120,7 @@ function GenerateRandomNumber(NumberLength: number) {
 
 //#region Vendor
 export function FillVendorDetails(vendorDetails: CardDetails) {
-    FillCardDetails(vendorDetails)
+    FillCardDetails(vendorDetails,null)
 }
 
 export function FillVendorContactDetails(conatactDetails: ContactDetails) {
@@ -1565,7 +1566,11 @@ export function AssertPutRegion() {
 }
 //#endregion
 //#region card
-function FillCardDetails(cardDetails: CardDetails){
+function FillCardDetails(cardDetails: CardDetails,codeDigits:number){
+    var RandomCardCode = GenerateRandomNumber(codeDigits);
+    if(cardDetails.Code){
+    cy.FillLogTextBox(MaintenanceSelectors.CardCode, cardDetails.Code.toLowerCase() == "random" ? RandomCardCode : cardDetails.Code)
+    }
     cy.FillLogTextBox(MaintenanceSelectors.CardCompanyName, cardDetails.CompanyName);
     cy.FillLogTextBox(MaintenanceSelectors.CardPhone, cardDetails.Phone);
     cy.FillLogTextBox(MaintenanceSelectors.CardLocalName, cardDetails.LocalName);
@@ -1577,7 +1582,7 @@ function FillCardDetails(cardDetails: CardDetails){
     cy.FillLogLov(MaintenanceSelectors.CardState, cardDetails.State, true);
 }
 function FillCardContactDetails(cardConatactDetails: ContactDetails){
-    FillCheckBoxProcess(MaintenanceSelectors.CardContactCheckBox, cardConatactDetails.AddContact)
+    FillCheckBoxProcess(MaintenanceSelectors.CardContactCheckBox+BaseSelectors.LastElement, cardConatactDetails.AddContact)
     cy.FillLogTextBox(MaintenanceSelectors.CardContactEnglishName, cardConatactDetails.EnglishName);
     cy.FillLogTextBox(MaintenanceSelectors.CardContactPosition, cardConatactDetails.Position);
     cy.FillLogTextBox(MaintenanceSelectors.CardContactBusinessPhone, cardConatactDetails.BusinessPhone);
@@ -1659,6 +1664,9 @@ export function OpenCard(CardType:string) {
     else if(CardType==Constants.Vendor){
         DefineVendorsGetSingleRequest();
     }
+    else if(CardType==Constants.Trucker){
+        DefineTruckersGetSingleRequest();
+    }
     DefineGetMenuButtonGroupsRequest();
     cy.get(BaseSelectors.RowClass).eq(0).click();
 }
@@ -1689,7 +1697,7 @@ export function AssertCardContact(conatactDetails: ContactDetails) {
 //#endregion
 //#region  ShippingAgents
 export function FillShippingAgentsDetails(shippingAgentDetails: CardDetails) {
-    FillCardDetails(shippingAgentDetails) 
+    FillCardDetails(shippingAgentDetails,null) 
 }
 export function FillShippingAgentsContactDetails(shippingAgentConatactDetails: ContactDetails) {
     FillCardContactDetails(shippingAgentConatactDetails)
@@ -1757,7 +1765,7 @@ function AssertPutShippingAgent() {
 //#endregion
 //#region CustomAgents 
 export function FillCustomAgentsDetails(customAgentDetails: CardDetails) {
-    FillCardDetails(customAgentDetails) 
+    FillCardDetails(customAgentDetails,null) 
 }
 export function FillCustomAgentsContactDetails(customAgentConatactDetails: ContactDetails) {
     FillCardContactDetails(customAgentConatactDetails)
@@ -1821,5 +1829,89 @@ export function AssertUpdateCustomAgent() {
 }
 function AssertPutCustomAgent() {
     BaseAssertion.AssertStatusCode(RequestAliases.PutCustomAgent, 200);
+}
+//#endregion
+//#region  trucker
+export function FillTruckerDetails(truckerDetails: CardDetails) {
+    FillCardDetails(truckerDetails,6) 
+}
+export function FillTruckerContactDetails(truckerConatactDetails: ContactDetails) {
+    FillCardContactDetails(truckerConatactDetails)
+}
+export function CreateTrucker() {
+    CreateCard()
+}
+
+export function AssertCreateTrucker() {
+    let intercept = cy.wait("@" + RequestAliases.PostCard);
+    intercept.then((interception) => {
+        if (interception.response.statusCode === 400) {
+            ReCreatTrucker();
+        }
+        else {
+            AssertPostTrucker(interception.response.statusCode, 200, interception.response.body.Trucker.Code)
+        }
+    })
+}
+function ReCreatTrucker() {
+CreateTrucker()
+}
+export function AssertPostTrucker(truckerStatusCode: number, expectedStatusCode: number, truckerCode: string) {
+    assert.equal(truckerStatusCode, expectedStatusCode)
+    TruckerCode = truckerCode
+}
+export function CreateTruckerMockCreate() {
+    CreateCardMockCreate()
+}
+
+export function AssertCreateTruckerMockCreate() {
+    AssertCreateCardMockCreate()
+}
+
+export function UpdateTrucker() {
+    DefinePutTruckerRequest()
+    cy.Click(MaintenanceSelectors.TruckerSaveButton, null)
+}
+function DefinePutTruckerRequest() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.Truckers, RequestAliases.PutTrucker);
+}
+
+export function SearchTrucker() {
+    SearchCardByValue(TruckerCode)
+}
+
+export function AssertSearchTrucker(companyName: string) {
+    AssertSearchCard(companyName)
+}
+
+function DefineTruckersGetSingleRequest() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.TruckersGetSingle, RequestAliases.GetSignle);
+}
+export function AssertOpenTrucker() {
+    AssertOpenCard()
+}
+
+export function AssertTruckerAddress(truckerDetails: CardDetails) {
+    cy.Click(MaintenanceSelectors.TruckerAddressesTab, null, true)
+    AssertCardAddress(truckerDetails)
+}
+export function AssertTruckerContact(conatactDetails: ContactDetails) {
+    cy.Click(MaintenanceSelectors.TruckerContactsTab, null, true)
+    AssertCardContact(conatactDetails)
+}
+export function FillTruckerGeneralTab(truckerGeneralTabDetails: CardGeneralTabDetails) {
+    cy.Click(MaintenanceSelectors.TruckerGeneralTab, null, true)
+    cy.FillLogTextBox(MaintenanceSelectors.TruckerNotes, truckerGeneralTabDetails.Notes)
+}
+export function FillTruckerBillingTab(truckerBillingTabDetails: CardBillingTabDetails) {
+    cy.Click(MaintenanceSelectors.TruckerBillingTab, null, true)
+    cy.FillLogTextBox(MaintenanceSelectors.TruckerBankName, truckerBillingTabDetails.BankName)
+    cy.FillLogTextBox(MaintenanceSelectors.TruckerIBANNumber, truckerBillingTabDetails.IBANNo)
+}
+export function AssertUpdateTrucker() {
+    AssertPutTrucker()
+}
+function AssertPutTrucker() {
+    BaseAssertion.AssertStatusCode(RequestAliases.PutTrucker, 200);
 }
 //#endregion

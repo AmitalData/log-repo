@@ -1,4 +1,5 @@
 export interface CardDetails {
+    Code: string,
     CompanyName :string ,
     LocalName : string,
     Address1 : string,

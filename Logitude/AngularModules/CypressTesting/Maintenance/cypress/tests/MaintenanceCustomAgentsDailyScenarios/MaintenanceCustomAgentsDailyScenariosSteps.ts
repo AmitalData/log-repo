@@ -60,7 +60,7 @@ Then("the custom agent should open successfully", () => {
 });
 //#endregion
 //#region Edit the custom agent
-Given("the user fill the following custom agent details", (dataTable) => {
+Given("the user fill the following custom agent general details", (dataTable) => {
     customAgentGeneralTabDetails = Assists.CreateInstance<CardGeneralTabDetails>(dataTable, true);
     MaintenanceActions.FillCustomAgentGeneralTab(customAgentGeneralTabDetails)
 });

@@ -12,5 +12,6 @@ export class Constants {
     public static readonly ShippingAgent="ShippingAgent"
     public static readonly CustomAgent="CustomAgent"
     public static readonly Vendor="Vendor"
+    public static readonly Trucker="Trucker"
 
 }

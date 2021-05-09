@@ -18,6 +18,7 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly MaintenanceItemRegions = "#MaintenanceItemMTRG"
    public static readonly MaintenanceItemShippingAgents = "#MaintenanceItemMTSA"
    public static readonly MaintenanceItemCustomAgents = "#MaintenanceItemMTCU"
+   public static readonly MaintenanceItemTrucker = "#MaintenanceItemMTTR"
    //#endregion
 
    public static readonly GeneralEditScreen = ".MediaFillAbsolute .CurvedEditArea";
@@ -222,4 +223,16 @@ export class MaintenanceSelectors extends RegexSelectors {
     public static readonly CustomAgentSaveButton="#CustomAgent-Save"
  
     //#endregion
+     //#region Trucker
+     public static readonly TruckerNotes = "#Trucker_Remark"
+     public static readonly TruckerGeneralTab="#TruckerTHGeneral"
+     public static readonly TruckerBillingTab= "#TruckerTHBilling"
+     public static readonly TruckerAddressesTab = "#TruckerTHAddresses"
+     public static readonly TruckerContactsTab = "#TruckerTHContacts"
+     public static readonly TruckerEventsTab = "#TruckerTHEvents"
+     public static readonly TruckerBankName = "#Trucker_BankName"
+     public static readonly TruckerIBANNumber = "#Trucker_IBANNumber"
+     public static readonly TruckerSaveButton="#Trucker-Save"
+  
+     //#endregion
 }

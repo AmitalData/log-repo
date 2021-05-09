@@ -1,6 +1,6 @@
 @release @all @dev @daily 
-Feature: Custom Agent Create and Edit in Maintenance Module
-    The user creates a custom agent and edit another one from the Maintenance Module.
+Feature: Custom Agent Mock Create and Edit in Maintenance Module
+    The user creates a custom agent mock create and edit another one from the Maintenance Module.
 
     Scenario: Create a new custom agent
         Given the user logged in and navigate to "Custom Agent" in maintenance menu
@@ -33,7 +33,7 @@ Feature: Custom Agent Create and Edit in Maintenance Module
         Then the custom agent should open successfully
 
     Scenario: Edit the custom agent
-        Given the user fill the following custom agent details
+        Given the user fill the following custom agent general details
             | Notes | Test edit custom agent |
         And fill the following custom agent Billing details
             | BankName | Custom Agent Bank |
