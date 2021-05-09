@@ -20,12 +20,33 @@ namespace RestClientApplication
     {
         //string uri = "http://localhost:9996/api/";
         string Token;
-        APIResponseParameters responseParameters = null;
+        private int ratesUpdateIndex = 17;
         public Form1()
         {
             InitializeComponent();
             Application.EnableVisualStyles();
-           
+
+
+            this.apiCombo.Items.Add("House");
+            this.apiCombo.Items.Add("Direct");
+            this.apiCombo.Items.Add("Customs");
+            this.apiCombo.Items.Add("Quote");
+            this.apiCombo.Items.Add("ARInvoice");
+            this.apiCombo.Items.Add("GLAccount");
+            this.apiCombo.Items.Add("Journal");
+            this.apiCombo.Items.Add("Master");
+            this.apiCombo.Items.Add("Customer");
+            this.apiCombo.Items.Add("Vendor");
+
+            this.apiCombo.Items.Add("ARPayment");
+            this.apiCombo.Items.Add("Cancel ARPayment");
+            this.apiCombo.Items.Add("APInvoice");
+            this.apiCombo.Items.Add("ARInvoiceAdditionalData");
+            this.apiCombo.Items.Add("CustomerOpenFilesAmount");
+            apiCombo.Items.Add("APInvoiceCancellation");
+            apiCombo.Items.Add("GLAccountMoreData");
+            apiCombo.Items.Add("Rates Update");
+            apiCombo.Items.Add("CargoTrackingShipmentDetails");
             this.BuildOperationComboBox();
             this.actionCombo.Items.Add("Accept");
             this.actionCombo.Items.Add("Decline");
@@ -35,33 +56,19 @@ namespace RestClientApplication
 
         private void BuildOperationComboBox()
         {
-            if (apiCombo.SelectedItem != null)
+            if (apiCombo.SelectedIndex == ratesUpdateIndex)
             {
-                if (apiCombo.SelectedItem.Equals("Rates Update"))
-                {                 
-                    this.operationCombo.SelectedItem = null;
-                    this.operationCombo.Items.Clear();
-                    this.operationCombo.Items.Add("Create (POST)");
-                }
-                else
-                {
-                    AddGeneralOperationsToComboBox();
-                }
+                this.operationCombo.Items.Clear();
+                this.operationCombo.Items.Add("Create (POST)");
             }
             else
             {
-                AddGeneralOperationsToComboBox();
+                this.operationCombo.Items.Clear();
+                this.operationCombo.Items.Add("Create (POST)");
+                this.operationCombo.Items.Add("Update (PUT)");
+                this.operationCombo.Items.Add("Get");
+                this.operationCombo.Items.Add("Cancel");
             }
-        }
-
-        private void AddGeneralOperationsToComboBox()
-        {
-            this.operationCombo.SelectedItem = null;
-            this.operationCombo.Items.Clear();
-            this.operationCombo.Items.Add("Create (POST)");
-            this.operationCombo.Items.Add("Update (PUT)");
-            this.operationCombo.Items.Add("Get");
-            this.operationCombo.Items.Add("Cancel");
         }
 
         private bool isConnected;
@@ -69,7 +76,6 @@ namespace RestClientApplication
         {
             try
             {
-                this.apiCombo.Items.Clear();
                 isConnected = false;
 
                 if (!isConnected)
@@ -97,7 +103,6 @@ namespace RestClientApplication
 
                         else
                         {
-                            GetUserTenantAPIsParameters(User.Token, AuthURI);
                             lblMessage.Text = "Connected!";
                             lblMessage.ForeColor = Color.Green;
                             isConnected = true;
@@ -115,35 +120,6 @@ namespace RestClientApplication
             }
         }
 
-        private async void GetUserTenantAPIsParameters(string token, string AuthURL)
-        {
-            try
-            {
-                using (var client = new HttpClient())
-                {
-                    AuthURL +=  "/" + "?token=" + token;
-                    var result = await client.GetAsync(AuthURL);
-                    var responseBody = result.Content.ReadAsStringAsync().Result;
-                    responseParameters = JsonConvert.DeserializeObject<APIResponseParameters>(responseBody);
-                    BuildApisNamesList(responseParameters.APIsNames);
-                }
-            }
-            catch
-            {
-                throw new Exception();
-            }
-
-        }
-        private void BuildApisNamesList(List<string> names)
-        {
-            if (names != null)
-            {
-                foreach (string name in names)
-                {
-                    this.apiCombo.Items.Add(name);
-                }
-            }
-        }
         private void apiCombo_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.CheckAPI();
@@ -220,10 +196,10 @@ namespace RestClientApplication
             label16.Visible = false;
 
             panel1.Visible = false;
-            switch (apiCombo.SelectedItem)
+            switch (apiCombo.SelectedIndex)
             {
                 #region House
-                case "House":
+                case 0:
                     {
                         apiName = "house";
 
@@ -231,13 +207,103 @@ namespace RestClientApplication
                         {
                             case 0:
                                 {
-                                    requestText = responseParameters.XMLRequestText["PostHouse"] ;
+                                    requestText = @"<House>
+                                                       <Direction Code='E' />
+                                                       <TransportMode Code='A' />
+                                                       <Shipper Code='70002' />
+                                                       <ShipperReference1>SR1</ShipperReference1>
+                                                       <ShipperReference2>SR2</ShipperReference2>
+                                                       <Consignee Code='70003' />
+                                                       <ConsigneeReference1>CR1</ConsigneeReference1>
+                                                       <ConsigneeReference2>CR2</ConsigneeReference2>
+                                           <Customer Code='70002' />
+<FromPort Code='DE222' />
+                                                         <FromPort Code='PFAAA' />
+                                                       <ToPort Code='DZAAE' />
+                                                       <GrossWeightUnit Code='KG'/>
+                                                       <ChargeableWeightUnit Code='KG'/>
+                                                       <VolumeUnit  Code='CBM' />
+                                                       <Commodity>653</Commodity>
+                                                       <Incoterm Code='CIF' />
+                                                       <HouseNo>00001146</HouseNo>
+                                                       <HouseDate>2017-10-24T00:00:00</HouseDate>
+        
+
+                                                            <Receivable>
+                                                                <ChargesType Code='AFT'/>
+                                                                <Measurement Code='GRWT'/>
+                                                                <Currency Code='USD'/>
+                                                                <Quantity>10</Quantity>
+                                                                <UnitPrice>10</UnitPrice>
+                                                            </Receivable>
+                                                        </Receivables>
+
+                                                        <Payables>
+                                                            <Payable>
+                                                                <ChargesType Code='AFT'/>
+                                                                <Measurement Code='GRWT'/>
+                                                                <Currency Code='USD'/>
+                                                                <Quantity>10</Quantity>
+                                                                <UnitPrice>10</UnitPrice>
+                                                            </Payable>
+                                                        </Payables>
+<AirPackages>
+                                                         
+                                                       
+                                                    </House>
+                                                     ";
                                     break;
                                 }
 
                             case 1:
                                 {
-                                    requestText = responseParameters.XMLRequestText["PutHouse"];
+                                    requestText = @"<House ShipmentNumber='EXP9115'>
+               <Direction Code='E' />
+               <TransportMode Code='A' />
+               <Shipper Code='70002' />
+               <ShipperReference1>SR1</ShipperReference1>
+               <ShipperReference2>SR2</ShipperReference2>
+               <Consignee Code='70003' />
+               <ConsigneeReference1>CR1</ConsigneeReference1>
+               <ConsigneeReference2>CR2</ConsigneeReference2>
+               <Customer Code='70002' />
+               <FromPort Code='DE222' />
+               <ToPort Code='DE223' />
+               <GrossWeightUnit Code='KG'/>
+               <ChargeableWeightUnit Code='KG'/>
+               <VolumeUnit  Code='CBM' />
+               <Commodity>653</Commodity>
+               <Incoterm Code='CIF' />
+               <HouseNo>00001146</HouseNo>               
+               <HouseDate>2017-10-24T00:00:00</HouseDate>
+               <AirPackages>
+                  <AirPackage>
+                     <Length>25</Length>
+                     <Width>50</Width>
+                     <Height>70</Height>
+                     <Pieces>100</Pieces>
+                     <Volume>8.75</Volume>
+                     <GrossWeight>220</GrossWeight>
+                                            <Reference1>Ref1</Reference1>
+                                            <Reference2>Ref2</Reference2>
+                                            <Reference3>Ref3</Reference3>
+                                            <Commodity>653</Commodity>
+                  </AirPackage>
+                  <AirPackage>
+                     <Length>200</Length>
+                     <Width>100</Width>
+                     <Height>150</Height>
+                     <Pieces>50</Pieces>
+                     <Volume>150</Volume>
+                     <GrossWeight>200</GrossWeight>
+                                              <Reference1>Ref1</Reference1>
+                                            <Reference2>Ref2</Reference2>
+                                            <Reference3>Ref3</Reference3>
+                                            <Commodity>653</Commodity>
+                  </AirPackage>
+               </AirPackages>              
+            </House>
+             ";
                                     break;
                                 }
 
@@ -257,7 +323,7 @@ namespace RestClientApplication
                 #endregion
 
                 #region Direct
-                case "Direct":
+                case 1:
                     {
 
                         if (operationCombo.SelectedIndex == 2)
@@ -274,13 +340,58 @@ namespace RestClientApplication
 
                         apiName = "direct";
 
-                        requestText = responseParameters.XMLRequestText["PostDirect"];
+                        requestText = @"<Direct xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
+               <Direction Code='E' /><!-- E - Export , I - Import , D - Domistic , R - Drop -->
+               <TransportMode Code='A' /><!-- A - Air , I - Inland , O - Ocean -->
+               <Shipper Code='70002' /><!-- Code or ParnerCode only one Field is requiered-->
+               <ShipperReference1>SR1</ShipperReference1>
+               <ShipperReference2>SR2</ShipperReference2>
+               <Consignee Code='70003' /><!-- Code or ParnerCode only one Field is requiered-->
+               <ConsigneeReference1>CR1</ConsigneeReference1>
+               <ConsigneeReference2>CR2</ConsigneeReference2>
+               <Customer Code='70002' /><!-- Code or ParnerCode only one Field is requiered-->
+               <FromPort Code='USJFK' /><!-- Code or ParnerCode only one Field is requiered-->
+               <ToPort Code='AUAAB' /><!-- Code or ParnerCode only one Field is requiered-->
+               <GrossWeightUnit Code='KG'/>
+               <ChargeableWeightUnit Code='KG'/>
+               <VolumeUnit  Code='CBM' />
+               <Commodity>653</Commodity>
+               <Incoterm Code='CIF' /> <!-- Code or ParnerCode only one Field is requiered-->
+               <Master>00001146</Master>
+               <AirPackages>
+                  <AirPackage>
+                     <Length>25</Length>
+                     <Width>50</Width>
+                     <Height>70</Height>
+                     <Pieces>100</Pieces>
+                     <Volume>8.75</Volume>
+                     <GrossWeight>220</GrossWeight>
+                                            <Reference1>Ref1</Reference1>
+                                            <Reference2>Ref2</Reference2>
+                                            <Reference3>Ref3</Reference3>
+                                            <Commodity>653</Commodity>
+                  </AirPackage>
+                  <AirPackage>
+                     <Length>200</Length>
+                     <Width>100</Width>
+                     <Height>150</Height>
+                     <Pieces>50</Pieces>
+                     <Volume>150</Volume>
+                     <GrossWeight>200</GrossWeight>
+                                              <Reference1>Ref1</Reference1>
+                                            <Reference2>Ref2</Reference2>
+                                            <Reference3>Ref3</Reference3>
+                                            <Commodity>653</Commodity>
+                  </AirPackage>
+               </AirPackages>
+            </Direct>
+             ";
                         break;
                     }
                 #endregion
 
                 #region Customs
-                case "Customs":
+                case 2:
                     {
                         if (operationCombo.SelectedIndex == 2)
                         {
@@ -295,13 +406,59 @@ namespace RestClientApplication
                         }
 
                         apiName = "customs";
-                        requestText =  responseParameters.XMLRequestText["Customs"];
+                        requestText = @"<Customs>
+                                            <ShipmentNumber>123456</ShipmentNumber>      
+                                            <TransportMode Code='I'/>
+                                            <ShipperReference1>SR1</ShipperReference1>              
+                                            <ShipperReference2> SR2</ShipperReference2>              
+                                            <Consignee Code='70000'/>               
+                                            <ConsigneeReference1>CR1</ConsigneeReference1>                 
+                                            <ConsigneeReference2>CR2</ConsigneeReference2>                 
+                                            <Customer Code='70000'/>                 
+                                            <FromPort Code='USJFK'/>                    
+                                            <ToPort Code='AUAAB'/>
+                                            <ChargeableWeightUnit Code='KG'/>                             
+                                            <VolumeUnit Code='CBM'/>                              
+                                            <Commodity>653</Commodity>                              
+                                            <MainCarriageCarrier>AA</MainCarriageCarrier>
+                                            <HouseNo>00001146</HouseNo>                              
+                                            <HouseDate>2017-10-24T00:00:00</HouseDate>
+                                            <CustomsClearanceDate>2017-10-25T00:00:00</CustomsClearanceDate>
+                                            <DeclarationNumber>3334</DeclarationNumber>                                              
+                                            <Incoterm Code='CIF'/>                                                 
+                                            <AirPackages>                                                 
+                                                <AirPackage>                                                 
+                                                    <Length>25</Length>                                                 
+                                                    <Width>50</Width>                                                 
+                                                    <Height>70</Height>                                                 
+                                                    <Pieces>100</Pieces>                                                 
+                                                    <Volume>8.75</Volume>                                                 
+                                                    <GrossWeight>220</GrossWeight>                                                 
+                                                    <Reference1>Ref1</Reference1>                                                 
+                                                    <Reference2>Ref2</Reference2>                                                 
+                                                    <Reference3>Ref3</Reference3>                                                 
+                                                    <Commodity>653</Commodity>                                                 
+                                                </AirPackage>                                                 
+                                                <AirPackage>                                                 
+                                                    <Length>200</Length>                                                 
+                                                    <Width>100</Width>                                                 
+                                                    <Height>150</Height>                                                 
+                                                    <Pieces>50</Pieces>                                                 
+                                                    <Volume>150</Volume>                                                 
+                                                    <GrossWeight>200</GrossWeight>                                                 
+                                                    <Reference1>Ref1</Reference1>                                                 
+                                                    <Reference2>Ref2</Reference2>                                                 
+                                                    <Reference3>Ref3</Reference3>                                                 
+                                                    <Commodity>653</Commodity>                                                 
+                                                </AirPackage>                                                 
+                                            </AirPackages>
+                                        </Customs>";
                         break;
                     }
                 #endregion
 
                 #region Quote
-                case "Quote":
+                case 3:
                     {
                         actionCombo.Visible = true;
                         ActionLabel.Visible = true;
@@ -311,19 +468,46 @@ namespace RestClientApplication
                         {
                             case 0:
                                 {
-                                    requestText = responseParameters.XMLRequestText["AcceptQuote"];
+                                    requestText = @"<QuoteStatus xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
+	                                        <QuoteNumber>1289</QuoteNumber>
+	                                        <QuoteAcceptNote>This quote accepted manually by Samar</QuoteAcceptNote>
+	                                        <QuoteAcceptDate>2017-12-31T00:00:00Z</QuoteAcceptDate>
+                                            <DueDate>2017-12-31T00:00:00Z</DueDate>
+	                                        <Stage Id='1-439' Code='QTAC'>
+		                                        <Name>Accepted</Name>		                                        
+	                                        </Stage>
+                                        </QuoteStatus>                
+                                        ";
                                     break;
                                 }
 
                             case 1:
                                 {
-                                    requestText = responseParameters.XMLRequestText["DeclineQuote"];
+                                    requestText = @"<QuoteStatus xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
+	                                        <QuoteNumber>1289</QuoteNumber>	                                        
+	                                        <QuoteDeclineDate>2017-12-31T00:00:00Z</QuoteDeclineDate>
+                                            <QuoteDeclineNote>This quote declined manually by Samar</QuoteDeclineNote>
+                                            <DueDate>2017-12-31T00:00:00Z</DueDate>
+	                                        <QuoteDeclineReason Code='XQ'>
+                                                <Name>Expired Quote</Name>
+                                            </QuoteDeclineReason>
+	                                        <Stage Code='QTDC'>
+		                                        <Name>Declined</Name>		                                        
+	                                        </Stage>
+                                        </QuoteStatus>                
+                                        ";
                                     break;
                                 }
 
                             case 2:
                                 {
-                                    requestText = responseParameters.XMLRequestText["CancleQuote"];
+                                    requestText = @"<QuoteStatus xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
+	                                        <QuoteNumber>1289</QuoteNumber>
+	                                        <IsQuoteCancel xsi:nil='true' />
+	                                        <QuoteCancelNote>This quote cancelled by Samar</QuoteCancelNote>
+	                                        <QuoteCancelDate>2017-12-31T00:00:00Z</QuoteCancelDate>
+                                        </QuoteStatus>                
+                                        ";
                                     break;
                                 }
 
@@ -331,7 +515,16 @@ namespace RestClientApplication
 
                             default:
                                 {
-                                    requestText = responseParameters.XMLRequestText["DefultQuoteStatus"];
+                                    requestText = @"<QuoteStatus xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
+	                                        <QuoteNumber>1288</QuoteNumber>	                                        <
+	                                        <QuoteAcceptNote>This quote accepted manually by Samar</QuoteAcceptNote>
+	                                        <QuoteAcceptDate>2017-12-31T00:00:00Z</QuoteAcceptDate>	  
+                                            <DueDate>2017-12-31T00:00:00Z</DueDate>                                      
+	                                        <Stage Id='1-439' Code='QTAC'>
+		                                        <Name>Accepted</Name>		                                        
+	                                        </Stage>
+                                        </QuoteStatus>                
+                                        ";
                                     break;
                                 }
 
@@ -342,7 +535,7 @@ namespace RestClientApplication
                 #endregion
 
                 #region ARInvoice
-                case "ARInvoice":
+                case 4:
                     {
                         textBox4.Visible = true;
                         lblParameter.Visible = true;
@@ -352,14 +545,265 @@ namespace RestClientApplication
                         lblParameter2.Visible = true;
                         lblParameter2.Text = "Number:";
                         apiName = "ARInvoice";
-                        requestText = responseParameters.XMLRequestText["ARInvoice"];
+                        requestText = @"<ARInvoice xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
+  <InvoiceType Code='IN'>
+
+< Name > Invoice </ Name >
+</ InvoiceType >
+< BillTo  Code = '10009065' >
+ 
+
+ < EnglishName > Ayman </ EnglishName >
+ 
+
+ < LocalName > أيمن </ LocalName >
+
+
+ -< MainAddress Id = '1-132527' >
+  
+
+  < Name > Ayman </ Name >
+  
+
+  < Address1 > adrr1 </ Address1 >
+
+
+  < Country  Code = 'HK' >
+   
+
+   < EnglishName > Hong Kong </ EnglishName >
+      
+
+      < LocalName > Hong Kong </ LocalName >
+         
+
+         </ Country >
+         
+
+         < City > hong </ City >
+         
+
+         < ZipCode > 3333 </ ZipCode >
+         
+
+         < PhoneNumber > 23132132131 </ PhoneNumber >
+         
+
+         < FaxNumber > 5645646545646 </ FaxNumber >
+         
+
+         </ MainAddress >
+         
+
+         </ BillTo >
+         
+
+
+
+         < InvoiceDate > 2018 - 02 - 04T00: 00:00 </ InvoiceDate >
+                 
+
+                 < PrintDate xsi: nil = 'true' />
+                   
+
+                   < IsPrinted > false </ IsPrinted >
+                   
+
+                   < MainEntityReference > 1 </ MainEntityReference >
+                   
+
+                   < IsConstituentInvoice > false </ IsConstituentInvoice >
+                   
+
+                   < IsConsolidationInvoice > false </ IsConsolidationInvoice >
+
+
+                   -< InvoiceCurrency  Code = 'USD' >
+                    
+
+                    </ InvoiceCurrency >
+                    
+
+
+                    < CancelledByARInvoice > 1 - 96 </ CancelledByARInvoice >
+
+
+                    -< CreatedByUser  ExternalCode = 'BASEL' >
+                     
+
+                     < EnglishName > System </ EnglishName >
+                     
+
+                     < LocalName > System </ LocalName >
+                     
+
+                     </ CreatedByUser >
+
+
+                     -< BillToAddress ExternalId = '2002395010' >
+                      
+
+                      < Name > Ayman </ Name >
+                      
+
+                      < Address1 > adrr1 </ Address1 >
+
+
+                      -< Country  Code = 'HK' >
+                       
+
+
+                       </ Country >
+                       
+
+                       < City > hong </ City >
+                       
+
+                       < ZipCode > 3333 </ ZipCode >
+                       
+
+                       < PhoneNumber > 23132132131 </ PhoneNumber >
+                       
+
+                       < FaxNumber > 5645646545646 </ FaxNumber >
+                       
+
+                       </ BillToAddress >
+                       
+
+                       < IssuedByUser ExternalCode = 'BASEL' >
+                        </ IssuedByUser >
+                        
+
+                        < InvoiceCurrencyExchangeRate > 4 </ InvoiceCurrencyExchangeRate >
+
+
+                        -< ARInvoiceLines >
+
+
+                        -< ARInvoiceLine >
+                        
+
+
+
+                        < LineNumber > 1 </ LineNumber >
+
+
+                        -< ChargesType  Code = 'AFT' >
+                         
+
+
+
+                         </ ChargesType >
+                         
+                          < Quantity > 1 </ Quantity >
+                         < UnitPriceInForeignCurrency > 1 </ UnitPriceInForeignCurrency >
+
+                         -< ForeignCurrency  Code = 'EUR' >
+                          
+
+
+
+                          </ ForeignCurrency >
+                          
+
+
+                          < ForeignExchangeRate > 5 </ ForeignExchangeRate >
+                          
+
+                          < LocalCurrencyAmount > 5 </ LocalCurrencyAmount >
+                          
+
+                          < ForeignCurrencyAmount > 1 </ ForeignCurrencyAmount >
+                          
+
+                          < VatPercentage > 0 </ VatPercentage >
+                          
+
+                          < ValueDate xsi: nil = 'true' />
+                            
+
+                            < DateForInterest xsi: nil = 'true' />
+
+
+                              -< VatType Code = 'STD' >
+                               
+
+
+
+                               </ VatType >
+                               
+
+
+
+                               < InvoiceCurrencyAmount > 1.25 </ InvoiceCurrencyAmount >
+                               
+
+                               < ProfitCurrencyAmount > 4000 </ ProfitCurrencyAmount >
+                               
+
+                               </ ARInvoiceLine >
+                               
+
+                               </ ARInvoiceLines >
+                               
+
+                               < DueDate > 2012 - 07 - 04T00: 00:00 </ DueDate >
+                                       
+
+                                       < SubTotalInInvoiceCurrency > 1.25 </ SubTotalInInvoiceCurrency >
+                                       
+
+                                       < SubTotalInLocalCurrency > 5 </ SubTotalInLocalCurrency >
+                                       
+
+                                       < AmountInInvoiceCurrency > 1.25 </ AmountInInvoiceCurrency >
+                                       
+                                        < AmountInLocalCurrency > 5 </ AmountInLocalCurrency >
+                                       
+
+
+
+
+                                       < ProfitCurrencyExchangeRate > 5 </ ProfitCurrencyExchangeRate >
+                                       
+
+                                       < AmountInProfitCurrency > 4000 </ AmountInProfitCurrency >
+
+
+                                       -< TransferStatus Code = 'NR' >
+                                        
+
+
+
+                                        </ TransferStatus >
+
+
+                                        -< Branch Code = 'TLV' >
+                                         
+
+
+                                         </ Branch >
+
+
+                                         -< LocalCurrency  Code = 'NIS' >
+                                          
+
+                                          </ LocalCurrency >
+                                          
+                                           < IsDraft > true </ IsDraft >
+                                          < Tenant > 989 </ Tenant >
+                                          </ ARInvoice >
+
+
+                                          ";
                         break;
                     }
                 #endregion
 
 
 
-                case "GLAccount":
+                case 5:
                     {
                         textBox1.Visible = true;
                         label10.Visible = true;
@@ -378,7 +822,7 @@ namespace RestClientApplication
                         break;
                     }
 
-                case "Journal":
+                case 6:
                     {
                         textBox4.Visible = true;
                         lblParameter.Visible = true;
@@ -398,38 +842,127 @@ namespace RestClientApplication
 
 
                 #region Master
-                case "Master":
+                case 7:
                     {
                         apiName = "master";
 
-                        requestText  = responseParameters.XMLRequestText["PostMaster"];
+                        requestText = @"<Master xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
+               <Direction Code='E' />
+               <TransportMode Code='A' />
+               <Shipper Code='10009' />
+               <ShipperReference1>SR1</ShipperReference1>
+               <ShipperReference2>SR2</ShipperReference2>               
+               <Agent Code='10009' />
+               <FromPort Code='PFAAA' />
+               <ToPort Code='DZAAE' />
+               <GrossWeightUnit Code='KG'/>
+               <ChargeableWeightUnit Code='KG'/>
+               <VolumeUnit  Code='CBM' />
+               <Commodity>653</Commodity>
+               <Incoterm Code='CIF' />
+               <MasterNumber>00001146</MasterNumber>
+               <MainCarriageCarrier Code='ACLU'/>
+               <MainCarriageCarrierNumber>CC</MainCarriageCarrierNumber>
+               <Vessel Code='VD'/>
+               <MainCarriageATD>2018-12-31T00:00:00Z</MainCarriageATD> 
+               <Houses>
+                  <House ShipmentNumber='EXP9207'>                   
+                  </House>
+               </Houses>
+ <Receivables>
+                    <Receivable>
+                        <ChargesType Code='AFT'/>
+                        <Measurement Code='GRWT'/>
+                        <Currency Code='USD'/>
+                        <Quantity>10</Quantity>
+                        <UnitPrice>10</UnitPrice>
+                    </Receivable>
+                </Receivables>
+
+                 <Payables>
+                    <Payable>
+                        <ChargesType Code='AFT'/>
+                        <Measurement Code='GRWT'/>
+                        <Currency Code='USD'/>
+                        <Quantity>10</Quantity>
+                        <UnitPrice>10</UnitPrice>
+                    </Payable>
+                  </Payables>
+            </Master>
+             ";
                         break;
                     }
                 #endregion
 
                 #region Customer
-                case "Customer":
+                case 8:
                     {
                         apiName = "customer";
 
-                        requestText = responseParameters.XMLRequestText["Customer"];
+                        requestText = @"<Customer>
+                       <EnglishName>API Customer with GLAccount</EnglishName>
+                       <LocalName>API Customer Local</LocalName>
+                       <VatNumber>11001</VatNumber>
+                       <Code>AASS88</Code>
+                       <MainAddress>
+                            <Name>API Adderss</Name>
+                            <Address1>adrr1</Address1>
+                            <Country Code='AF'/>
+                            <City>
+                                <Name>My City</Name>
+                            </City> 
+                            <ZipCode>3333</ZipCode>
+                            <PhoneNumber>23132132131</PhoneNumber>
+                       </MainAddress>
+                       <BillingAddress>
+                            <Name>API Billing Adderss</Name>
+                            <Address1>Bill adrr1</Address1>
+                            <Country Code='PS'/>
+                            <City Code='NAB'></City> 
+                            <ZipCode>3333</ZipCode>
+                            <PhoneNumber>23132132131</PhoneNumber>
+                            <ExternalId>55</ExternalId>
+                       </BillingAddress>
+                       <GLAccount>
+                            <IsMultiCurrency>true</IsMultiCurrency>
+                            <ChartOfAccount Code='TST'></ChartOfAccount>
+                       </GLAccount>
+                    </Customer>
+                    ";
                         break;
                     }
                 #endregion
 
                 #region Vendor
-                case "Vendor":
+                case 9:
                     {
                         txtParameter2.Visible = true;
                         apiName = "vendorpartner";
 
-                        requestText = responseParameters.XMLRequestText["Vendor"];
+                        requestText = @"<Vendor xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
+                       <EnglishName>API Vendor</EnglishName>
+                       <LocalName>API Vendor Local</LocalName>
+                       <VatNumber>1100110011</VatNumber>
+                       <MainAddress>
+                            <Name>API Adderss</Name>
+                            <Address1>adrr1</Address1>
+                            <Country Code='PS'/>
+                            <City Code='NAB'></City> 
+                            <ZipCode>3333</ZipCode>
+                            <PhoneNumber>23132132131</PhoneNumber>
+                       </MainAddress>
+                        <GLAccount>
+                            <IsMultiCurrency>true</IsMultiCurrency>
+                            <ChartOfAccount Code='TST'></ChartOfAccount>
+                       </GLAccount>
+                    </Vendor>
+                    ";
                         break;
                     }
                 #endregion
 
                 #region ARPayment
-                case "ARPayment":
+                case 10:
                     {
                         textBox4.Visible = true;
                         lblParameter.Visible = true;
@@ -445,7 +978,7 @@ namespace RestClientApplication
                 #endregion
 
                 #region cancel ARPayment
-                case "Cancel ARPayment":
+                case 11:
                     {
                         apiName = "ARPaymentCancellation";
                         this.operationCombo.SelectedIndex = 1;
@@ -455,7 +988,7 @@ namespace RestClientApplication
                 #endregion
 
                 #region APInvoice
-                case "APInvoice":
+                case 12:
                     {
                         textBox4.Visible = true;
                         lblParameter.Visible = true;
@@ -475,7 +1008,7 @@ namespace RestClientApplication
 
 
                 #region ARInvoiceAdditionalData
-                case "ARInvoice Additional Data":
+                case 13:
                     {
 
                         apiName = "ARInvoiceAdditionalData";
@@ -486,7 +1019,7 @@ namespace RestClientApplication
 
 
                 #region CustomerOpenFilesAmount
-                case "CustomerOpenFilesAmount":
+                case 14:
                     {
 
                         apiName = "CustomerOpenFilesAmount";
@@ -496,7 +1029,7 @@ namespace RestClientApplication
                 #endregion
 
                 #region APInvoiceCancellation
-                case "APInvoice Cancellation":
+                case 15:
                     {
 
                         lblParameter.Text = "External ID:";
@@ -510,7 +1043,7 @@ namespace RestClientApplication
 
                 #region GLAccountMoreData
 
-                case "GL Account More Data":
+                case 16:
                     {
 
                         lblParameter.Text = "Internal NO.:";
@@ -523,18 +1056,25 @@ namespace RestClientApplication
                 #endregion
 
                 #region Rates Update
-                case "Rates Update":
+                case 17:
                     {
                         lblParameter.Visible = false;
                         txtParameter.Visible = false;
-                        requestText  = responseParameters.XMLRequestText["RatesUpdate"];
+                        requestText = @"<RatesUpdate xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
+	                                        <ComputingPartnerCode>AMS</ComputingPartnerCode>
+	                                        <RateUpdate>
+		                                        <Currency Code='USD' PartnerCode='USD'></Currency>
+                                                < RateDate>2021 - 11 - 29</ RateDate >
+                                                < Rate> 5 </Rate>
+                                            </RateUpdate>
+                                            </RatesUpdate>";
                         apiName = "RatesUpdate";
                         break;
                     }
                 #endregion
 
                 #region CargoTrackingShipmentDetails
-                case "CargoTrackingShipmentDetails":
+                case 18:
                     {
                         lblParameter.Text = "House:";
                         lblParameter.Visible = true;
@@ -600,14 +1140,14 @@ namespace RestClientApplication
                             {
                                 response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?id=" + textBox1.Text + "&DisplayNumber=" + textBox2.Text + "&InternalNumber=" + textBox3.Text);
                             }
-                            else if (apiName == "ARInvoice" || apiName == "ARPayment" )
-                            { 
+                            else if (apiName == "ARInvoice" || apiName == "ARPayment")
+                            {
                                 response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?id=" + textBox4.Text + "&number=" + txtParameter2.Text);
                             }
-                            else if ( apiName == "APInvoice")
+                            else if (apiName == "APInvoice")
                             {
-                               
-                                   response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?id=" + textBox4.Text + "&number=" + txtParameter2.Text + "&externalId=" + textBox7.Text + "&internalNumber=" + null);
+
+                                response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?id=" + textBox4.Text + "&number=" + txtParameter2.Text + "&externalId=" + textBox7.Text + "&internalNumber=" + null);
                             }
                             else if (apiName == "Journal")
                             {
@@ -626,7 +1166,7 @@ namespace RestClientApplication
                         if (apiName == "APInvoiceCancellation")
                         {
                             client.DefaultRequestHeaders.Add("Accept", "application/xml");
-                            response = await client.GetAsync(txtServerUrl.Text + "/" + api +  "?externalId=" + textBox4.Text);
+                            response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?externalId=" + textBox4.Text);
 
                         }
                         else
@@ -893,7 +1433,7 @@ namespace RestClientApplication
 
         private void btnConnect_Click(object sender, EventArgs e)
         {
-          
+
             this.LoginWithCredentials();
         }
         private void groupBox2_Enter(object sender, EventArgs e)
