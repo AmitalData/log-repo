@@ -1,4 +1,4 @@
-﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="Shipments">
+﻿<Script DBType="Main" Module="Shipment" TargetTableName="Shipments">
   <Sql Version="2">
     <![CDATA[ 
     
