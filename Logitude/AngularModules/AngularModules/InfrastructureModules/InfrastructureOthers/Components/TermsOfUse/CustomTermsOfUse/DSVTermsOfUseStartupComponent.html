@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     label {
         font-size: 13px;
@@ -22,7 +22,7 @@
         text-decoration: none;
         display: inline-block;
         font-size: 15px;
-       font-weight:bold;
+        font-weight: bold;
         cursor: pointer;
     }
 
@@ -38,7 +38,7 @@
         background-color: #F1315A;
         border: 1px solid #83A5D2;
         color: #ffffff;
-        font-weight:bold;
+        font-weight: bold;
         padding: 3px;
         border-radius: 5px;
         text-align: center;
@@ -47,9 +47,33 @@
         font-size: 15px;
         cursor: pointer;
     }
+
+    .backgroundImage {
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        background-position: center center;
+        position: absolute;
+    }
+
+    .loginImage {
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        background-position: center center;
+    }
+
+    .image-container {
+        display: flex;
+        height: 100vh;
+        justify-content: center;
+        align-items: center;
+    }
 </style>
 
-<table class="PreventSelect" style="background: url(Images/LoginScreen/screen_bg.jpg) center center;background-size: 100% 100%;position: absolute;">
+<div *ngIf="showSpinner" class="image-container">
+    <img src="./Images/LoginScreen/indicator.gif" width="100">
+</div>
+
+<table *ngIf="!showSpinner" class="PreventSelect backgroundImage" [style.background-image]="this.BackgroundImage">
     <tr>
         <td style="width:30%;">
             <div></div>
@@ -66,7 +90,7 @@
                 <tr style="height: 114px;">
                     <td style="text-align: center;">
                         <a>
-                            <img src="./Images/LoginScreen/HeaderLogo.jpg" id="loginlogo" style="width:290px; height:114px;float:left;" />
+                            <img [src]="MainLogo" id="loginlogo" style="width:290px; height:114px;float:left;" />
                         </a>
                     </td>
                 </tr>
@@ -131,7 +155,7 @@
 
                                                         </td>
 
-                                                        <td style="background:url(./Images/LoginScreen/screen_boy.jpg) center center no-repeat; background-size: 100% 100%;">
+                                                        <td class="loginImage" [style.background-image]="this.LoginImage">
                                                             <div></div>
                                                         </td>
                                                     </tr>
