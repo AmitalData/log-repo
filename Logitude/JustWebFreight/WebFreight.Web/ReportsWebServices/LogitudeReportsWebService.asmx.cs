@@ -1642,13 +1642,13 @@ namespace WebFreight.Web.ReportsWebServices
             List<ARInvoiceTotalVAT> totalVats = aRInvoiceToatalVatRepository.GetInvoiceTotalVATsByTenant(tenant).ToList();
             int counter = 1;
 
-            foreach (ARInvoiceList a in iQueryable)
+            foreach (ARInvoiceList arInvoice in iQueryable)
             {
                 InvoiceDataProvider.InvoicesReport invoicesRecored = new InvoiceDataProvider.InvoicesReport();
-                List<ARInvoiceTotalVAT> myTotalVats = totalVats.Where(d => d.ARInvoiceId == a.Id).ToList();
+                List<ARInvoiceTotalVAT> myTotalVats = totalVats.Where(d => d.ARInvoiceId == arInvoice.Id).ToList();
                 List<VATClass> myVATS = new List<VATClass>();
-                List<ARInvoiceLine> ARInvoiceLines = tenantARInvoiceLines.Where(l => (l.ARInvoiceId == a.Id) && (l.IsExpense == true)).ToList();
-                customFieldResolver.SetDataProviderCustomFieldsValues("ARInvoice", tenant, a, invoicesRecored);
+                List<ARInvoiceLine> ARInvoiceLines = tenantARInvoiceLines.Where(l => (l.ARInvoiceId == arInvoice.Id) && (l.IsExpense == true)).ToList();
+                customFieldResolver.SetDataProviderCustomFieldsValues("ARInvoice", tenant, arInvoice, invoicesRecored);
 
                 //ARInvoicePM invoicePM = invoiceQuery.GetSinglePM(currentInvoice.Id, currentInvoice.Tenant);
                 foreach (ARInvoiceTotalVAT vat in myTotalVats)
@@ -1751,31 +1751,33 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                 }
 
-                invoicesRecored.InvoiceType = a.ARInvoiceTypeName;
-                invoicesRecored.InvoiceDate = a.InvoiceDate.Value;
-                invoicesRecored.InvoiceNumber = a.InvoiceNumber;
-                invoicesRecored.BillTo = a.BillToName;
-                invoicesRecored.PartnerName = a.PartnerName;
-                invoicesRecored.OurRefNumber = a.MainEntityReference;
-                invoicesRecored.InvoiceStatus = a.StatusName;
-                invoicesRecored.Currency = a.InvoiceCurrencyCode;
-                invoicesRecored.CreateDate = a.CreateDate;
-                invoicesRecored.DueDate = a.DueDate;
-                invoicesRecored.Salesman = a.SalesmanUserName;
-                invoicesRecored.SubTotalInLocalCurrency = a.SubTotalInLocalCurrency;
+                invoicesRecored.InvoiceType = arInvoice.ARInvoiceTypeName;
+                invoicesRecored.InvoiceDate = arInvoice.InvoiceDate.Value;
+                invoicesRecored.InvoiceNumber = arInvoice.InvoiceNumber;
+                invoicesRecored.BillTo = arInvoice.BillToName;
+                invoicesRecored.PartnerName = arInvoice.PartnerName;
+                invoicesRecored.OurRefNumber = arInvoice.MainEntityReference;
+                invoicesRecored.InvoiceStatus = arInvoice.StatusName;
+                invoicesRecored.Currency = arInvoice.InvoiceCurrencyCode;
+                invoicesRecored.CreateDate = arInvoice.CreateDate;
+                invoicesRecored.DueDate = arInvoice.DueDate;
+                invoicesRecored.Salesman = arInvoice.SalesmanUserName;
+                invoicesRecored.SubTotalInLocalCurrency = arInvoice.SubTotalInLocalCurrency;
                 invoicesRecored.VATInLocalCurrency = myTotalVats.Sum(d => d.LocalVATAmount);
                 invoicesRecored.GrandTotalInLocalCurrency = invoicesRecored.SubTotalInLocalCurrency + invoicesRecored.VATInLocalCurrency;
                 invoicesRecored.ExpenseChargesInLocalCurrency = ARInvoiceLines.Sum(s => s.LocalCurrencyAmount);
-                invoicesRecored.BillToCode = a.BillToCode;
+                invoicesRecored.BillToCode = arInvoice.BillToCode;
+                invoicesRecored.AmountDueInInvoiceCurrency = arInvoice.AmountDue;
+                invoicesRecored.AmountDueInLocalCurrency = arInvoice.AmountDueInLocalCurrency;
 
                 if (localCurrency)
                 {
                     totalVat = totalVat + myTotalVats.Sum(d => d.LocalVATAmount);
-                    subTotals = subTotals + a.SubTotalInLocalCurrency;
+                    subTotals = subTotals + arInvoice.SubTotalInLocalCurrency;
                     totalGrands = totalGrands + totalVat + subTotals;
 
-                    invoicesRecored.Currency = a.LocalCurrencyCode;
-                    invoicesRecored.SubTotallocal = a.SubTotalInLocalCurrency;
+                    invoicesRecored.Currency = arInvoice.LocalCurrencyCode;
+                    invoicesRecored.SubTotallocal = arInvoice.SubTotalInLocalCurrency;
                     invoicesRecored.VATlocal = myTotalVats.Sum(d => d.LocalVATAmount);
                     invoicesRecored.GrandTotallocal = invoicesRecored.SubTotallocal + invoicesRecored.VATlocal;
                     invoicesRecored.ExpenseCharges = ARInvoiceLines.Sum(s => s.LocalCurrencyAmount);
@@ -1783,20 +1785,20 @@ namespace WebFreight.Web.ReportsWebServices
 
                 else
                 {
-                    invoicesRecored.Currency = a.InvoiceCurrencyCode;
-                    invoicesRecored.SubTotallocal = a.SubTotalInInvoiceCurrency;
+                    invoicesRecored.Currency = arInvoice.InvoiceCurrencyCode;
+                    invoicesRecored.SubTotallocal = arInvoice.SubTotalInInvoiceCurrency;
                     invoicesRecored.VATlocal = myTotalVats.Sum(d => d.InvoiceCurrencyVATAmount);
                     invoicesRecored.GrandTotallocal = invoicesRecored.SubTotallocal + invoicesRecored.VATlocal;
 
                     invoicesRecored.vatInLocal = myTotalVats.Sum(d => d.LocalVATAmount);
-                    invoicesRecored.subInLocal = a.SubTotalInLocalCurrency;
-                    invoicesRecored.LocalCurrency = a.LocalCurrencyCode;
+                    invoicesRecored.subInLocal = arInvoice.SubTotalInLocalCurrency;
+                    invoicesRecored.LocalCurrency = arInvoice.LocalCurrencyCode;
                     invoicesRecored.ExpenseCharges = ARInvoiceLines.Sum(s => s.InvoiceCurrencyAmount);
                 }
 
-                if (a.SATXML != null)
+                if (arInvoice.SATXML != null)
                 {
-                    Profact.TimbraCFDI.Comprobante comprobante = LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.Comprobante>(a.SATXML);
+                    Profact.TimbraCFDI.Comprobante comprobante = LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.Comprobante>(arInvoice.SATXML);
                     List<System.Xml.XmlElement> myLXmlComplementos = comprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
                     var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
                     if (timbreFiscalDigitalElement != null)
@@ -3339,10 +3341,10 @@ namespace WebFreight.Web.ReportsWebServices
             List<APInvoiceTotalVAT> totalVats = aPInvoiceToatalVatRepository.GetAPInvoiceTotalVats(tenant).ToList();
             int counter = 1;
 
-            foreach (APInvoiceList a in iQueryable.OrderBy(d => d.InvoiceDate))
+            foreach (APInvoiceList apInvoice in iQueryable.OrderBy(d => d.InvoiceDate))
             {
                 InvoiceDataProvider.InvoicesReport invoicesRecored = new InvoiceDataProvider.InvoicesReport();
-                List<APInvoiceTotalVAT> myTotalVats = totalVats.Where(d => d.APInvoiceId == a.Id).ToList();
+                List<APInvoiceTotalVAT> myTotalVats = totalVats.Where(d => d.APInvoiceId == apInvoice.Id).ToList();
                 List<VATClass> myVATS = new List<VATClass>();
 
                 foreach (APInvoiceTotalVAT vat in myTotalVats)
@@ -3445,36 +3447,38 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                 }
 
-                invoicesRecored.InvoiceType = a.APInvoiceTypeName;
-                invoicesRecored.InvoiceDate = a.InvoiceDate.Value;
-                invoicesRecored.InvoiceNumber = a.InvoiceNumber;
-                invoicesRecored.BillTo = a.VendorName;
-                invoicesRecored.BillToVatNumber = a.VATNumber;
-                invoicesRecored.OurRefNumber = a.MainEntityReference;
-                invoicesRecored.InvoiceStatus = a.StatusName;
-                invoicesRecored.Currency = a.InvoiceCurrencyCode;
-                invoicesRecored.CreateDate = a.CreateDate;
-                invoicesRecored.BillToCode = a.VendorCode;
-
+                invoicesRecored.InvoiceType = apInvoice.APInvoiceTypeName;
+                invoicesRecored.InvoiceDate = apInvoice.InvoiceDate.Value;
+                invoicesRecored.InvoiceNumber = apInvoice.InvoiceNumber;
+                invoicesRecored.BillTo = apInvoice.VendorName;
+                invoicesRecored.BillToVatNumber = apInvoice.VATNumber;
+                invoicesRecored.OurRefNumber = apInvoice.MainEntityReference;
+                invoicesRecored.InvoiceStatus = apInvoice.StatusName;
+                invoicesRecored.Currency = apInvoice.InvoiceCurrencyCode;
+                invoicesRecored.CreateDate = apInvoice.CreateDate;
+                invoicesRecored.BillToCode = apInvoice.VendorCode;
+                invoicesRecored.AmountDueInInvoiceCurrency = apInvoice.AmountDue;
+                invoicesRecored.AmountDueInLocalCurrency = apInvoice.AmountDueInLocalCurrency;
+               
                 if (localCurrency)
                 {
                     totalVat = totalVat + myTotalVats.Sum(d => d.LocalVATAmount);
-                    subTotals = subTotals + a.SubTotalInLocalCurrency;
+                    subTotals = subTotals + apInvoice.SubTotalInLocalCurrency;
                     totalGrands = totalGrands + totalVat + subTotals;
-                    invoicesRecored.SubTotallocal = a.SubTotalInLocalCurrency;
+                    invoicesRecored.SubTotallocal = apInvoice.SubTotalInLocalCurrency;
                     invoicesRecored.VATlocal = myTotalVats.Sum(d => d.LocalVATAmount);
-                    invoicesRecored.Currency = a.LocalCurrencyCode;
+                    invoicesRecored.Currency = apInvoice.LocalCurrencyCode;
                     invoicesRecored.GrandTotallocal = invoicesRecored.SubTotallocal + invoicesRecored.VATlocal;
                 }
                 else
                 {
-                    invoicesRecored.SubTotallocal = a.SubTotalInInvoiceCurrency;
+                    invoicesRecored.SubTotallocal = apInvoice.SubTotalInInvoiceCurrency;
                     invoicesRecored.VATlocal = myTotalVats.Sum(d => d.InvoiceCurrencyVATAmount);
                     invoicesRecored.GrandTotallocal = invoicesRecored.SubTotallocal + invoicesRecored.VATlocal;
-                    invoicesRecored.Currency = a.InvoiceCurrencyCode;
+                    invoicesRecored.Currency = apInvoice.InvoiceCurrencyCode;
                     invoicesRecored.vatInLocal = myTotalVats.Sum(d => d.LocalVATAmount);
-                    invoicesRecored.subInLocal = a.SubTotalInLocalCurrency;
-                    invoicesRecored.LocalCurrency = a.LocalCurrencyCode;
+                    invoicesRecored.subInLocal = apInvoice.SubTotalInLocalCurrency;
+                    invoicesRecored.LocalCurrency = apInvoice.LocalCurrencyCode;
                 }
 
                 dataProvider.InvoicesReportList.Add(invoicesRecored);
