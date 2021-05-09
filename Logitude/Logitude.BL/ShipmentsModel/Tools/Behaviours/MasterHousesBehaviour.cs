@@ -63,7 +63,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
         {
             if (initializer.ShipmentConsoleShipmentsChangeSet != null && (initializer.IsUpdatingHouses || initializer.IsUpdatingHousesFinalArrivalDate))
             {
-                List<string> ids = initializer.ShipmentConsoleShipmentsChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Select(s => s.Id).ToList();
+                List<string> ids = initializer.ShipmentConsoleShipmentsChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert).Select(s => s.Id).ToList();
                 if (ids.Count > 0)
                 {
                     ShipmentQuery iShipmentQuery = new ShipmentQuery(initializer.Repository);
