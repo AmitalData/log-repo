@@ -80,6 +80,7 @@ namespace Cloud.Sign.App.Helpers
         public string Extension { get; set; }
         public string Id { get; set; }
         public string PrivateLabelId { get; set; }
+        public bool HasLogboxAccess { get; set; }
     }
 
     public class ApiCredential
