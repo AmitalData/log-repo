@@ -34,8 +34,48 @@ namespace Logitude.Test.Base.Services
                 CountryGBId = GetCountryId("GB"),
                 CountryTSId = GetCountryId("TS"),
                 CityAnchorageId = GetCityId("Anchorage", "US", "AK"),
-                CityManchesterId = GetCityId("Manchester", "GB")
+                CityManchesterId = GetCityId("Manchester", "GB"),
+                SpecialServicesTypeTSId = GetSpecialServicesTypeTSId("TS")
             };
+        }
+
+        #endregion
+
+        #region SpecialServicesType
+        private static string GetSpecialServicesTypeTSId(string code)
+        {
+            ApiQueryFilters apiQueryFilters = BuildApiQueryFilters(code, null);
+            string UserTenantSSTypeId = GetSpecialServicesTypeIdFromUserTenant(apiQueryFilters);
+            if (string.IsNullOrEmpty(UserTenantSSTypeId))
+            {
+                UserTenantSSTypeId = CreateSpecialServicesTypeForUserTenant(code);
+            }
+
+            return UserTenantSSTypeId;
+        }
+
+        private static string GetSpecialServicesTypeIdFromUserTenant(ApiQueryFilters apiQueryFilters)
+        {
+            ApiResponse<IEnumerable<SpecialServicesTypePM>> response = APICaller.CallGetByFilters<IEnumerable<SpecialServicesTypePM>>(Urls.SpecialServicesTypeViewsGetByFilters, UserTenant.Token, apiQueryFilters);
+            return response.Data?.FirstOrDefault()?.Id;
+        }
+
+        private static string CreateSpecialServicesTypeForUserTenant(string code)
+        {
+            SpecialServicesTypePM type = new SpecialServicesTypePM
+            {
+                Tenant = UserTenant.Tenant,
+                Code = code,
+                EnglishName = "Test Special Services Types",
+                InActive = false,
+                IsHybrid=false,
+                IsSecured=false,
+                LocalName= null,
+                SearchFields=null
+            };
+
+            ApiResponse<SpecialServicesTypePM> response = APICaller.CallPost<SpecialServicesTypePM>(type, Urls.SpecialServicesTypesController, UserTenant.Token);
+            return response.Data?.Id;
         }
 
         #endregion

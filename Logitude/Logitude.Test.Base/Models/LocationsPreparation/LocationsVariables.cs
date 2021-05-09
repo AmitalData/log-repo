@@ -17,5 +17,6 @@
         public string CountryTSId { get; set; }
         public string CityAnchorageId { get; set; }
         public string CityManchesterId { get; set; }
+        public string SpecialServicesTypeTSId { get; set; }
     }
 }
