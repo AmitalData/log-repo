@@ -120,7 +120,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 foreach (ProductItemPM productItem in productItems)
                 {
                   List<HTSCodePM> hTSCodes = (from a in repository.context.HTSCodes
-                                   where a.Tenant == tenant && a.ItemId == productItem.Id
+                                              join country in repository.context.Countries on a.DestinationCountryId equals country.Id
+                                              where a.Tenant == tenant && a.ItemId == productItem.Id
                                                 select new HTSCodePM()
                                                 {
                                                     Id = a.Id,
@@ -129,6 +130,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     DestinationCountryId = a.DestinationCountryId,
                                                     Code = a.Code,
                                                     ApprovedByCustomer = a.ApprovedByCustomer,
+                                                    CountryEnglishName = country!=null ? country.EnglishName :"",
                                                     InActive = a.InActive,
                                                 }).ToList();
 

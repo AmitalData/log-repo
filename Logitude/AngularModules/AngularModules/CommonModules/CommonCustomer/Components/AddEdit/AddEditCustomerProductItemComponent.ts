@@ -27,8 +27,8 @@ export class AddEditCustomerProductItemComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     public CustomerPM: CustomerPM = null;
     public CustomerProductItem: CustomerProductItem;
-    public CustomerHTSCode: CustomerHTSCode;
-    public HTSCodePM: HTSCodePM = null;
+    public htsCodes: HTSCodePM[] = [];
+
     public IsEditingEnabled: boolean = true;
 
     constructor(public entityArgs: EntityArgs) {
@@ -40,15 +40,15 @@ export class AddEditCustomerProductItemComponent extends BaseComponent {
         this.CustomerProductItem = windowArgs['CustomerProductItem'];
         this.EntityPM = this.CustomerProductItem.EntityPM;
         this.CustomerPM = windowArgs['CustomerPM'];
-        this.CustomerHTSCode = windowArgs['CustomerHTSCode'];
         this.FatherComponent = windowArgs['CustomerProductItemsTabComponent'];
-        this.HTSCodePM = this.CustomerHTSCode.EntityPM;
         this.DataContext = this.CustomerProductItem;
     }
+
 
     SetUIProperties() {
 
     }
+
 
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
@@ -56,21 +56,25 @@ export class AddEditCustomerProductItemComponent extends BaseComponent {
 
     OkButtonClicked() {
         var errors: string[] = [];
-        Validator.TryValidateObject(this.EntityPM, this.DataContext.ObjectTableName, errors);
+        Validator.TryValidateObject(this.CustomerProductItem.EntityPM, this.DataContext.ObjectTableName, errors);
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
 
             if (this.CustomerProductItem.IsNewEntity) {
-                this.CustomerPM.AddProductItemPM(this.EntityPM);
+                this.CustomerPM.AddProductItemPM(this.CustomerProductItem.EntityPM);
                 if (this.FatherComponent.HTSCodes != null) {
                     this.FatherComponent.HTSCodes.Collection.forEach(item => {
-                        this.FatherComponent.ProductItemEntityPM.AddHTSCodePM(item);
+                        this.CustomerProductItem.EntityPM.AddHTSCodePM(item.EntityPM);
                     });
+                } else {
+                    if (this.FatherComponent.HTSCodes != null) {
+
+                        this.CustomerProductItem.EntityPM.HTSCodes = this.FatherComponent.HTSCodes.Collection;
+                    }
                 }
             }
-
             this.CustomerProductItem.fatherComponent.BuildProductItems();
-            this.CustomerProductItem.fatherComponent.BuildProductItemHTSCodes(this.CustomerProductItem.EntityPM);
+            this.FatherComponent.BuildProductItemHTSCodes(this.CustomerProductItem.EntityPM);
             this.CurrentSession.CloseCurrentWindow();
         }
     }

@@ -14,7 +14,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public virtual ProductItem  Item { get; set; }
         public string DestinationCountryId { get; set; }
         [ForeignKey("DestinationCountryId")]
-        public virtual Country DestinationCountry { get; set; }
+        public virtual Country Country { get; set; }
         public string Code { get; set; }
         public bool ApprovedByCustomer { get; set; }
         public bool InActive { get; set; }

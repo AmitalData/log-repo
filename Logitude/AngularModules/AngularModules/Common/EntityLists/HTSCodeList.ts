@@ -14,6 +14,5 @@ export class HTSCodeList {
 		Code: string;
 		ApprovedByCustomer: boolean;
 		InActive: boolean;
-		CountryEnglishName: string;
 	
 }

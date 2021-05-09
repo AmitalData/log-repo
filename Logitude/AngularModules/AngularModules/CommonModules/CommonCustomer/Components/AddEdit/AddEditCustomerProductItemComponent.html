@@ -4,7 +4,7 @@
             <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
         </td>
     </tr>
-    <tr style="height:20px;">
+    <tr style="height:30px;">
         <td>
             <div></div>
         </td>
@@ -15,36 +15,23 @@
 
                 <tr class="FormFieldRow" style="height:30px;">
                     <!-- ItemCode -->
-                    <td style="width: 150px;">
+                    <td style="width:100px;">
                         <LogLabel [ObjectFieldName]="'ItemCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
-                    <td style="width:350px;">
+                    <td style="width:150px;">
                         <LogTextBox [ObjectFieldName]="'ItemCode'" [Text]="ItemCode" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-                    </td>
-                    <td>
-                        <div></div>
                     </td>
 
                     <!-- Remarks -->
-                    <td>
+                    <td style="width:100px;">
                         <LogLabel [ObjectFieldName]="'Remarks'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
+                    <td style="width: 150px;height: 15px;">
+                        <LogTextBox [ObjectFieldName]="'Remarks'" [Text]="Remarks" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true" [HideColumns]="true"></LogTextBox>
+                    </td>
+
                     <td>
-                        <table>
-                            <tr class="FormFieldRow">
-                                <td>
-                                    <div></div>
-                                </td>
-                                <td style="width:350px;height:20px;">
-                                    <div class="MediaFill">
-                                        <LogTextBox [ObjectFieldName]="'Remarks'" [Text]="Remarks" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true" [HideColumns]="true"></LogTextBox>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div></div>
-                                </td>
-                            </tr>
-                        </table>
+                        <div></div>
                     </td>
                     <td>
                         <div></div>
@@ -55,50 +42,46 @@
 
                 <tr class="FormFieldRow" style="height:30px;">
                     <!-- Description -->
-                    <td>
+                    <td style="width:100px;">
                         <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
 
+                    <td style="width:150px; height: 15px; ">
+                        <LogTextBox [ObjectFieldName]="'Description'" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true" [HideColumns]="true"></LogTextBox>
+                    </td>
+
+
+                    <!-- SKU -->
+                    <td style="width:100px;">
+                        <LogLabel [ObjectFieldName]="'SKU'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:150px;">
+                        <LogTextBox [ObjectFieldName]="'SKU'" [Text]="SKU" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                    </td>
+
                     <td>
-                        <table>
-                            <tr class="FormFieldRow">
-                                <td>
-                                    <div></div>
-                                </td>
-                                <td style="width:350px;height:20px;">
-                                    <div class="MediaFill">
-                                        <LogTextBox [ObjectFieldName]="'Description'" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true" [HideColumns]="true"></LogTextBox>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div></div>
-                                </td>
-                            </tr>
-                        </table>
+                        <div></div>
                     </td>
                     <td>
                         <div></div>
                     </td>
+                </tr>
 
-                    <!-- SKU -->
-                    <td style="width: 150px;">
-                        <LogLabel [ObjectFieldName]="'SKU'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                    </td>
-                    <td style="width:350px;">
-                        <LogTextBox [ObjectFieldName]="'SKU'" [Text]="SKU" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-                    </td>
+                <tr class="FormFieldRow" style="height:30px;">
 
                     <!-- InActive -->
-                    <td style="width: 150px;">
+                    <td style="width:150px;">
                         <LogLabel [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
-                    <td style="width:350px;">
+                    <td >
                         <LogCheckBox [ObjectFieldName]="'InActive'" [Checked]="InActive" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                     </td>
                     <td>
                         <div></div>
                     </td>
-
+                    <td>
+                        <div></div>
+                    </td>
                 </tr>
 
             </table>
@@ -113,11 +96,11 @@
                         <td>
                             <table>
                                 <tr >
+                                    <td style="width: 70px;">
+                                        <label>  HTS Codes</label>
+                                    </td>
                                     <td>
-                                        <div >
-                                            <label>  HTS Codes</label>
-                                            <IconButton [Name]="'Add'" (click)="FatherComponent.AddHTSCode()"></IconButton>
-                                        </div>
+                                        <IconButton [Name]="'Add'" (click)="FatherComponent.AddHTSCode()"></IconButton>
                                     </td>
                                 </tr>
                             </table>
@@ -171,13 +154,13 @@
                                                             <span>{{item.CountryEnglishName}}</span>
                                                         </div>
                                                         <div *ngIf="logcelltemplate.IsEditMode">
-                                                            <LogLov [FocusOnMe]="'true'"
-                                                                    [ObjectFieldName]="'DestinationCountryId'"
-                                                                    [SelectedValue]="item.DestinationCountryId"
+                                                            <LogLov [ObjectFieldName]="'DestinationCountryId'"
                                                                     [ObjectTableName]="'HTSCode'"
                                                                     [DataContext]="item"
-                                                                    [DisplayMemberPath]="EnglishName"
-                                                                    [LookUpTableName]="'Country'">
+                                                                    [LookUpTableName]="'Country'"
+                                                                    [SelectedValue]="item.DestinationCountryId"
+                                                                     (SelectedItemChanged)="item.DestinationCountry = $event"
+                                                                    [FocusOnMe]="'true'">
                                                             </LogLov>
                                                         </div>
                                                     </log-cell-template>

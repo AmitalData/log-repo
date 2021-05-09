@@ -46,7 +46,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public HTSCode GetSingleHTSCode(string id,int tenant)
         {
-            return (from a in context.HTSCodes.Include("Card").Include("Country")
+            return (from a in context.HTSCodes.Include("Country")
                     where a.Id == id && a.Tenant == tenant
                     select a).FirstOrDefault();
         }

@@ -36,6 +36,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             if (entityPoco != null)
             {
+                CountryQuery countryQuery = new CountryQuery(tenant);
+                CountryPM destinationCountry = countryQuery.GetSinglePM(entityPoco.DestinationCountryId,tenant);
                 result = new HTSCodePM()
                 {
                     Id = entityPoco.Id,
@@ -43,6 +45,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     Code = entityPoco.Code,
                     ItemId = entityPoco.ItemId,
                     DestinationCountryId = entityPoco.DestinationCountryId,
+                    CountryEnglishName = destinationCountry != null?destinationCountry.EnglishName:"",
                     ApprovedByCustomer = entityPoco.ApprovedByCustomer,
                     InActive = entityPoco.InActive,
                 };
