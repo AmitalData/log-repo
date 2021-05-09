@@ -472,6 +472,8 @@ export class SupplierInvoiceLine {
     public get InvoiceCounterKey() { return this.entity.InvoiceCounterKey; }
     public get InvoiceCurrencyTypeCode() { return this.entity.InvoiceCurrencyTypeCode; }
     public get TotalFreightInInvoiceCurrencyText() { return this.entity.TotalFreightInFreightCurrency; }
+    public get ExportFreightAmount() { return this.entity.ExportFreightAmount; }
+    public get ExportInsuranceAmount() {  return this.entity.ExportInsuranceAmount; }
     public get DeclarationId() { return this.entity.DeclarationId; }
     public get IsAccumalated() { return this.entity.IsAccumalated; }
     private isSelected: boolean;
