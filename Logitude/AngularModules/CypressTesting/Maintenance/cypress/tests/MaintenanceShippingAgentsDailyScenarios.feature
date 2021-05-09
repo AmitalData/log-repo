@@ -1,9 +1,9 @@
-@release @all @dev @daily
-Feature: Shipping Agent Create and Edit in Maintenance Module
-    The user creates a shipping agent and edit another one from the Maintenance Module.
+@release @all @dev @daily 
+Feature: Shipping Agent Mock Create and Edit in Maintenance Module
+    The user creates a shipping agent mock create and edit another one from the Maintenance Module.
 
     Scenario: Create a new shipping agent
-        Given the user logged in and navigate to "Shipping Agent" in maintenance menu
+        Given the user logged in and navigate to "Shipping Agents" in maintenance menu
         And a shipping agent with the following details
             | CompanyName | Testing Shipping Agent Daily Scenario |
             | LocalName   | Testing Shipping Agent Daily Scenario |
@@ -33,7 +33,7 @@ Feature: Shipping Agent Create and Edit in Maintenance Module
         Then the shipping agent should open successfully
 
     Scenario: Edit the shipping agent
-        Given the user fill the following shipping agent details
+        Given the user fill the following shipping agent general details
             | Notes | Test edit shipping agent |
         And fill the following shipping agent Billing details
             | BankName | Shipping Agent Bank |

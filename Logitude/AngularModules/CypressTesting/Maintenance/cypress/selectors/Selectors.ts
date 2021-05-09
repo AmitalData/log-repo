@@ -17,6 +17,8 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly MaintenanceItemCommodities = "#MaintenanceItemMTCM"
    public static readonly MaintenanceItemRegions = "#MaintenanceItemMTRG"
    public static readonly MaintenanceItemShippingAgents = "#MaintenanceItemMTSA"
+   public static readonly MaintenanceItemCustomAgents = "#MaintenanceItemMTCU"
+   public static readonly MaintenanceItemTrucker = "#MaintenanceItemMTTR"
    //#endregion
 
    public static readonly GeneralEditScreen = ".MediaFillAbsolute .CurvedEditArea";
@@ -45,27 +47,10 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly VendorBillingTab = "#VendorTHBilling";
    public static readonly VendorSaveButton = "#Vendor-Save";
    public static readonly VendorSaveCloseButton = "#Vendor-SaveClose";
-
-   public static readonly VendorCompanyName = "#Address_Name";
-   public static readonly VendorLocalName = "#Address_LocalName";
-   public static readonly VendorAddress1 = "#Address_Address1";
-   public static readonly VendorZipCode = "#Address_ZipCode";
-   public static readonly VendorCity = "#Address_City";
-   public static readonly VendorCountry = "#Address_CountryId";
-   public static readonly VendorState = "#Address_StateId";
-   public static readonly VendorPhone = "#Address_PhoneNumber";
-   public static readonly VendorFax = "#Address_FaxNumber";
    public static readonly VendorWebsite = "#Vendor_Website";
    public static readonly VendorNotes = "#Vendor_Notes";
    public static readonly VendorVatNumber = "#Vendor_VatNumber";
    public static readonly VendorBankName = "#Vendor_BankName";
-
-   public static readonly VendorContactCheckBox = "input[id^='CheckBox_']"
-   public static readonly VendorContactEnglishName = "#Address_ContactName";
-   public static readonly VendorContactPosition = "#Address_ContactPosition";
-   public static readonly VendorContactBusinessPhone = "#Address_ContactBusinessPhone";
-   public static readonly VendorContactMobile = "#Address_ContactMobile";
-   public static readonly VendorContactFax = "#Address_ContactFax";
    //#endregion
 
    //#region Vessel
@@ -195,24 +180,26 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly RegionSaveButton = "#Region-Save"
    public static readonly RegionEventsTab = "#RegionTHEvents"
    //#endregion
-   //#region Shipping agent    
-   public static readonly ShippingAgentCompanyName = "#Address_Name";
-   public static readonly ShippingAgentLocalName = "#Address_LocalName";
-   public static readonly ShippingAgentAddress1 = "#Address_Address1";
-   public static readonly ShippingAgentZipCode = "#Address_ZipCode";
-   public static readonly ShippingAgentCity = "#Address_City";
-   public static readonly ShippingAgentCountry = "#Address_CountryId";
-   public static readonly ShippingAgentState = "#Address_StateId";
-   public static readonly ShippingAgentPhone = "#Address_PhoneNumber";
-   public static readonly ShippingAgentFax = "#Address_FaxNumber";
-   public static readonly ShippingAgentSaveButton="#ShippingAgent-Save"
-   public static readonly ShippingAgentContactCheckBox = "input[id^='CheckBox_']"
-   public static readonly ShippingAgentEmail = "#Address_ContactEmail"
-   public static readonly ShippingAgentContactEnglishName = "#Address_ContactName";
-   public static readonly ShippingAgentContactPosition = "#Address_ContactPosition";
-   public static readonly ShippingAgentContactBusinessPhone = "#Address_ContactBusinessPhone";
-   public static readonly ShippingAgentContactMobile = "#Address_ContactMobile";
-   public static readonly ShippingAgentContactFax = "#Address_ContactFax"
+   //#region card details  
+   public static readonly CardCode= "#Address_CardCode"
+   public static readonly CardCompanyName = "#Address_Name";
+   public static readonly CardLocalName = "#Address_LocalName";
+   public static readonly CardAddress1 = "#Address_Address1";
+   public static readonly CardZipCode = "#Address_ZipCode";
+   public static readonly CardCity = "#Address_City";
+   public static readonly CardCountry = "#Address_CountryId";
+   public static readonly CardState = "#Address_StateId";
+   public static readonly CardPhone = "#Address_PhoneNumber";
+   public static readonly CardFax = "#Address_FaxNumber";
+   public static readonly CardContactCheckBox = "input[id^='CheckBox_']"
+   public static readonly CardEmail = "#Address_ContactEmail"
+   public static readonly CardContactEnglishName = "#Address_ContactName";
+   public static readonly CardContactPosition = "#Address_ContactPosition";
+   public static readonly CardContactBusinessPhone = "#Address_ContactBusinessPhone";
+   public static readonly CardContactMobile = "#Address_ContactMobile";
+   public static readonly CardContactFax = "#Address_ContactFax"
+   //#endregion
+   //#region shipping agent
    public static readonly ShippingAgentNotes = "#ShippingAgent_Notes"
    public static readonly ShippingAgentBillingTab= "#ShippingAgentTHBilling"
    public static readonly ShippingAgentBankName = "#ShippingAgent_BankName"
@@ -221,5 +208,31 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly ShippingAgentContactsTab = "#ShippingAgentTHContacts"
    public static readonly ShippingAgentGeneralTab="#ShippingAgentTHGeneral"
    public static readonly ShippingAgentEventsTab = "#ShippingAgentTHEvents"
+   public static readonly ShippingAgentSaveButton="#ShippingAgent-Save"
+
    //#endregion
+    //#region custom agent
+    public static readonly CustomAgentNotes = "#CustomAgent_Notes"
+    public static readonly CustomAgentGeneralTab="#CustomAgentTHGeneral"
+    public static readonly CustomAgentBillingTab= "#CustomAgentTHBilling"
+    public static readonly CustomAgentAddressesTab = "#CustomAgentTHAddresses"
+    public static readonly CustomAgentContactsTab = "#CustomAgentTHContacts"
+    public static readonly CustomAgentEventsTab = "#CustomAgentTHEvents"
+    public static readonly CustomAgentBankName = "#CustomAgent_BankName"
+    public static readonly CustomAgentIBANNumber = "#CustomAgent_IBANNumber"
+    public static readonly CustomAgentSaveButton="#CustomAgent-Save"
+ 
+    //#endregion
+     //#region Trucker
+     public static readonly TruckerNotes = "#Trucker_Remark"
+     public static readonly TruckerGeneralTab="#TruckerTHGeneral"
+     public static readonly TruckerBillingTab= "#TruckerTHBilling"
+     public static readonly TruckerAddressesTab = "#TruckerTHAddresses"
+     public static readonly TruckerContactsTab = "#TruckerTHContacts"
+     public static readonly TruckerEventsTab = "#TruckerTHEvents"
+     public static readonly TruckerBankName = "#Trucker_BankName"
+     public static readonly TruckerIBANNumber = "#Trucker_IBANNumber"
+     public static readonly TruckerSaveButton="#Trucker-Save"
+  
+     //#endregion
 }

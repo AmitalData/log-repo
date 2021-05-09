@@ -1,4 +1,5 @@
-export interface ShippingAgentDetails {
+export interface CardDetails {
+    Code: string,
     CompanyName :string ,
     LocalName : string,
     Address1 : string,
@@ -9,7 +10,4 @@ export interface ShippingAgentDetails {
     Phone : string ,
     Fax :string ,
     Website:string,
-    Notes: string,
-    VatNumber :string,
-    BankName : string ;
 }

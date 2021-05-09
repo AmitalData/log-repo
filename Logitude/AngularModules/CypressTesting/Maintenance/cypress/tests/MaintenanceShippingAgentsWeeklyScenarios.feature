@@ -1,9 +1,9 @@
-@release @all @dev @weekly @l
+@release @all @dev @weekly 
 Feature: Shipping Agent Create and Edit it in Maintenance Module
     The user creates a shipping agent and edits it from the Maintenance Module.
 
     Scenario: Create a new shipping agent
-        Given the user logged in and navigate to "Shipping Agent" in maintenance menu
+        Given the user logged in and navigate to "Shipping Agents" in maintenance menu
         And a shipping agent with the following details
             | CompanyName | Testing Shipping Agent Scenario |
             | LocalName   | Testing Shipping Agent Scenario |
@@ -47,7 +47,7 @@ Feature: Shipping Agent Create and Edit it in Maintenance Module
             | Position      | Developer   |
 
     Scenario: Edit the shipping agent
-        Given the user fill the following shipping agent details
+        Given the user fill the following shipping agent general details
             | Notes | Test edit shipping agent |
         And fill the following shipping agent Billing details
             | BankName | Shipping Agent Bank |
