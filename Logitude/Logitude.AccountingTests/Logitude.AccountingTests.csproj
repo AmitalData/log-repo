@@ -8,11 +8,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{81E2985E-F90A-49B1-9D8C-6A28589E7AAF}</ProjectGuid>
+    <ProjectGuid>{0509F921-E0A7-4490-AB60-2ADF33B1FE7C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Logitude.ShipmentTests</RootNamespace>
-    <AssemblyName>Logitude.ShipmentTests</AssemblyName>
+    <RootNamespace>Logitude.AccountingTests</RootNamespace>
+    <AssemblyName>Logitude.AccountingTests</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -103,68 +103,39 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Builders\PackageBuilder.cs" />
-    <Compile Include="Models\Builders\PayableBuilder.cs" />
-    <Compile Include="Models\Builders\MainCarriageLegBuilder.cs" />
-    <Compile Include="Models\Builders\DirectBuilder.cs" />
-    <Compile Include="Models\Builders\ReceivableBuilder.cs" />
-    <Compile Include="Models\Builders\ShipmentBuilder.cs" />
-    <Compile Include="Hooks\BeforeTestRun.cs" />
-    <Compile Include="Models\Card.cs" />
-    <Compile Include="Models\ChargeType.cs" />
-    <Compile Include="Models\Currency.cs" />
-    <Compile Include="Models\Direct.cs" />
-    <Compile Include="Models\Direction.cs" />
-    <Compile Include="Models\ExternalAPIDirectContext.cs" />
-    <Compile Include="Models\Incoterm.cs" />
-    <Compile Include="Models\MainCarriageLeg.cs" />
-    <Compile Include="Models\Measurement.cs" />
-    <Compile Include="Models\MoveType.cs" />
-    <Compile Include="Models\OceanOrInlandPackage.cs" />
-    <Compile Include="Models\PackageType.cs" />
-    <Compile Include="Models\Port.cs" />
-    <Compile Include="Models\PreparationShortClass.cs" />
-    <Compile Include="Models\QuoteStage.cs" />
-    <Compile Include="Models\ReceivablePM.cs" />
-    <Compile Include="Models\ShipmentContext.cs" />
-    <Compile Include="Models\PackagePM.cs" />
-    <Compile Include="Models\PayablesPM.cs" />
-    <Compile Include="Models\ShipmentPM.cs" />
-    <Compile Include="Models\ShipmentType.cs" />
-    <Compile Include="Models\ShipmentVariables.cs" />
-    <Compile Include="Models\TransportMode.cs" />
-    <Compile Include="Models\Vessel.cs" />
-    <Compile Include="Models\VolumeUnit.cs" />
-    <Compile Include="Models\WeightUnit.cs" />
+    <Compile Include="Models\AccountingContext.cs" />
+    <Compile Include="Models\APInvoiceLinePM.cs" />
+    <Compile Include="Models\APInvoicePM.cs" />
+    <Compile Include="Models\Builders\APInvoiceBuilder.cs" />
+    <Compile Include="Models\Builders\APInvoiceLineBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\DataPreparation.cs" />
-    <Compile Include="Steps\ExternalAPIDirectSteps.cs" />
-    <Compile Include="Steps\CreateShipmentSteps.cs" />
-    <Compile Include="Steps\GETShipmentDirectExportAirSteps.cs" />
-    <Compile Include="Steps\POSTShipmentDirectExportAirSteps.cs" />
-    <Compile Include="Steps\PUTShipmentDirectExportAirSteps.cs" />
-    <Compile Include="Steps\SecurityTests\CreateAndUpdateShipmentSecurityAccessSteps.cs" />
-    <Compile Include="Steps\SecurityTests\GetShipmentSecurityAccessSteps.cs" />
-    <Compile Include="Steps\SharedShipmentSteps.cs" />
-    <Compile Include="Steps\UpdateShipmentSteps.cs" />
-    <Compile Include="Models\ShipmentData.cs" />
+    <Compile Include="Services\DateHelper.cs" />
+    <Compile Include="Steps\GETAPInvoiceSteps.cs" />
+    <Compile Include="Steps\POSTAPInvoiceSteps.cs" />
+    <Compile Include="Steps\PUTAPInvoiceSteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Features\APIGETShipmentDirectExportAir.feature" />
-    <None Include="Features\APIPOSTShipmentDirectExportAir.feature" />
-    <None Include="Features\APIPUTShipmentDirectExportAir.feature" />
-    <None Include="Features\ExternalAPIDirect.feature" />
-    <None Include="Features\CreateShipments.feature" />
-    <None Include="Features\SecurityTests\CreateAndUpdateShipmentSecurityAccess.feature" />
-    <None Include="Features\SecurityTests\GetShipmentSecurityAccess.feature" />
-    <None Include="Features\UpdateShipments.feature" />
+    <None Include="Features\APIGETAPInvoice.feature" />
+    <None Include="Features\APIPOSTAPInvoice.feature" />
+    <None Include="Features\APIPUTAPInvoice.feature" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Hooks\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Logitude.ShipmentTests\Logitude.ShipmentTests.csproj">
+      <Project>{81e2985e-f90a-49b1-9d8c-6a28589e7aaf}</Project>
+      <Name>Logitude.ShipmentTests</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Logitude.Test.Base\Logitude.Test.Base.csproj">
       <Project>{74fbc07e-5cbf-44c5-85c8-f86facaa06b6}</Project>
       <Name>Logitude.Test.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
+      <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
+      <Name>Simplog.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

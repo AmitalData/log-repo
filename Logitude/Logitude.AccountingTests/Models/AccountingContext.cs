@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logitude.ShipmentTests.Models
+namespace Logitude.AccountingTests.Models
 {
-    class PaymentTerm
+    public class AccountingContext
     {
-        public string Id { get; set; }
+        public APInvoicePM ShipmentAPInvoice { get; set; }
     }
 }
