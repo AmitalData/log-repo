@@ -23,6 +23,9 @@
         public static string GlobalZoneViewsGetByFilters = "GlobalZoneViews/GetByFilters";
         public static string StateViewsGetByFilters = "StateViews/GetByFilters";
 
+        public static string SpecialServicesTypesController = "SpecialServicesTypes";
+        public static string SpecialServicesTypeViewsGetByFilters = "SpecialServicesTypeViews/GetByFilters";
+
         public static string QuoteController = "Quotes";
         public static string QuoteViewsGetByFilters = "Quoteviews/Getbyfilters";
 

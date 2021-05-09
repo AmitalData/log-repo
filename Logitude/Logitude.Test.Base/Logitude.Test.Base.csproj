@@ -94,6 +94,7 @@
     <Compile Include="Models\LocationsPreparation\City.cs" />
     <Compile Include="Models\LocationsPreparation\GlobalZone.cs" />
     <Compile Include="Models\LocationsPreparation\Country.cs" />
+    <Compile Include="Models\LocationsPreparation\SpecialServicesTypePM.cs" />
     <Compile Include="Models\PartnersPreparation\Address.cs" />
     <Compile Include="Models\PartnersPreparation\Contact.cs" />
     <Compile Include="Models\PartnersPreparation\PartnerParameters.cs" />
