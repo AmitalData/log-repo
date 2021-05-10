@@ -82,6 +82,18 @@
                         <div></div>
                     </td>
 
+                    <td style="width: 1px;" *ngIf="IsAddingStandaloneShipmentVisible && EntityPM.StandaloneShipmentId">
+                        <Hyperlink (click)="ViewShipmentClicked(item)">{{EntityPM.StandaloneShipmentNumber}}</Hyperlink>
+                    </td>
+
+                    <td style="width: 1px;" *ngIf="IsAddingStandaloneShipmentVisible && !EntityPM.StandaloneShipmentId">
+                        <button class="Button" (click)="CreateStandaloneShipmentClicked()" [disabled]="!EntityPM.FullResponsibility">Create Standalone Shipment</button>
+                    </td>
+
+                    <td style="width: 5px;" *ngIf="IsAddingStandaloneShipmentVisible">
+                        <div></div>
+                    </td>
+
                     <td style="width: 57px;">
                         <button id="{{ 'CloseBtn' | IdGeneratorPipe}}" class="Button" (click)="CloseClicked()">Close</button>
                     </td>

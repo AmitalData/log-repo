@@ -91,7 +91,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             res.subscribe((resp: any) => {
                 this.BuildFiltersLists();
 
-                if (this.IsCopyFromShipment == false && this.IsBuildFromQuote == false) {
+                if (!this.IsShipmentCreatedFromOtherEntity()) {
                     this.OnFiltersChanged();
                 }
 
@@ -102,6 +102,24 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
                 this.ListenToPropertyChanged();
             });
         });
+    }
+
+    private IsShipmentCreatedFromOtherEntity(): boolean {
+        if (this.IsCopyFromShipment) {
+            return true;
+        }
+
+        else if (this.IsBuildFromQuote) {
+            return true;
+        }
+
+        else if (this.IsStandalone) {
+            return true;
+        }
+
+        else {
+            return false;
+        }
     }
 
     private GeneratedComponent: any;
@@ -174,7 +192,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
                 if (AppTool.IsNullOrEmpty(this.EntityPM.MainCarriageCarrierId)) {
                     if (this.EntityPM.TransportModeId == "A") {
                         if (this.EntityPM.ShipmentLevelCode != "H") {
-                            if (!this.IsBuildFromQuote && !this.IsCopyFromShipment) {
+                            if (!this.IsShipmentCreatedFromOtherEntity()) {
                                 this.myPartnersDomainService.GetAllowedAirlineId().subscribe((myResponse: ServiceResponse) => {
                                     if (myResponse != null) {
                                         if (myResponse.HasError) {
@@ -217,12 +235,14 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
     public IsCreatedFromMasterHouses: boolean = false;
     public IsCreatedFromCustomerOverview: boolean = false;
     public ShowShipmentLevels: boolean = true;
+    public IsStandalone: boolean = false;
     SetWindowArgs(args: any) {
         if (args.IsNew == null) {
             this.SourceEntityPM = args.Shipment;
             this.EntityPM.ShipmentLevelCode = args.ShipmentLevelCode;
             this.IsShipmentLevelFixed = args.IsShipmentLevelFixed;
             this.IsBuildFromQuote = args.IsBuildFromQuote;
+            this.IsStandalone = args.IsStandalone;
             this.IsCopyFromShipment = args.IsCopyFromShipment;
             this.IsCreatedFromMasterHouses = args.IsCreatedFromMasterHouses;
             this.IsCreatedFromCustomerOverview = args.IsCreatedFromCustomerOverview;
@@ -467,7 +487,14 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
     public IsFCLEntity: boolean = false;
     public IsInlandDomestic: boolean = false;
     OnFiltersChanged() {
-        if (!this.IsCreatedFromMasterHouses) {
+        if (this.EntityPM.IsStandalonePickupDelivery) {
+            this.IsDirectionListEnabled = false;
+            this.IsTransportModesListEnabled = false;
+            this.IsShipmentTypesListEnabled = false;
+            this.IsShipmentSubTypesListEnabled = true;
+        }
+
+       else if (!this.IsCreatedFromMasterHouses) {
             this.IsDirectionListEnabled = true;
             this.IsTransportModesListEnabled = AppTool.IsNullOrEmpty(this.DirectionId) ? false : true;
             this.IsShipmentTypesListEnabled = true;
@@ -717,7 +744,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             }
         }
 
-        if (this.EntityPM.IsCopyFromShipment || this.EntityPM.IsBuildFromQuote) {
+        if (this.IsShipmentCreatedFromOtherEntity()) {
             if (AppTool.IsNullOrEmpty(this.EntityPM.DimensionsUnitCode)) {
                 this.EntityPM.DimensionsUnitCode = myDimensionsUnitCode;
             }
@@ -799,7 +826,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             }
         }
 
-        if (this.IsCopyFromShipment || this.IsBuildFromQuote) {
+        if (this.IsShipmentCreatedFromOtherEntity()) {
             if (AppTool.IsNullOrEmpty(this.FreightPrepaidCollectId)) {
                 this.FreightPrepaidCollectId = myFreightPrepaidCollectId;
             }
@@ -815,7 +842,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         }
     }
     DelOrderDetails() {
-        if (!this.IsCopyFromShipment && !this.IsBuildFromQuote) {
+        if (!this.IsShipmentCreatedFromOtherEntity()) {
             this.Quantity1 = null;
             this.Quantity2 = null;
             this.Quantity3 = null;
@@ -2876,7 +2903,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
     public CopyCheckBoxTop: number = 5;
     public IsCopyOtherPartnersVisible: boolean = false;
     CopyEntityData() {
-        if (this.IsBuildFromQuote || this.IsCopyFromShipment) {
+        if (this.IsShipmentCreatedFromOtherEntity()) {
             this.EntityPM.IsBuildFromQuote = this.IsBuildFromQuote;
             this.EntityPM.IsCopyFromShipment = this.IsCopyFromShipment;
 
@@ -4012,7 +4039,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
 
                 this.CurrentSession.CloseCurrentWindowEmit('OK');
 
-                if (this.IsBuildFromQuote || this.IsCopyFromShipment) {
+                if (this.IsShipmentCreatedFromOtherEntity()) {
 
                     var myBackButtonLabel: string = null;
                     var myBackSessionTextCode: string = null;

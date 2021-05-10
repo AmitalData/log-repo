@@ -244,7 +244,7 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "CPH,Consequent Pickup/Delivery", 
                 Description = "Consequent Pickup/Delivery", 
 			});
-
+			 
             all.Add(new ToggleDetails()
             {    
                 Code = "PRE", 
@@ -252,7 +252,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "PRE,Master Pre/On Carriage", 
                 Description = "Master Pre/On Carriage", 
 			});
-
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "SAS", 
+                Name = "Standalone Shipment", 
+                SearchFields = "SAS,Standalone Shipment", 
+                Description = "Standalone Shipment", 
+			});
 			
             return all;
        }

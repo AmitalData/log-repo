@@ -20,6 +20,9 @@ import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {WarehouseHelper} from '../../../../Warehouse/Helpers/WarehouseHelper';
 import { ShipmentPickupValidator } from '../../../../Shipment/Validators/ShipmentPickupValidator';
+import { ShipmentTool } from '../../../../Shipment/Tools';
+import { NewShipmentComponentArgs } from '../../../../Shipment/Args';
+import { FeatureToggleList } from '../../../../Infrastructure/EntityLists/FeatureToggleList';
 
 @Component({
     
@@ -39,6 +42,7 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
     private myCardListService: CardListService;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsAddingStandaloneShipmentVisible: boolean = false;
     constructor(private entityResourceService: EntityResourceService) {
         this.myCardListService = new CardListService();        
     }
@@ -60,6 +64,11 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
         this.Clone();
 
         if (this.ShipmentPM) {
+            var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SAS")[0];
+            if (featureToggle) {
+                this.IsAddingStandaloneShipmentVisible = true;
+            }
+
             if (this.ShipmentPM.ShipmentLevelCode == "D" || this.ShipmentPM.ShipmentLevelCode == "H") {
                 if (FeatureLocator.HasFeaturePermession("WarehouseEntry", "Module")) {
                     this.IsShowNewWarehouseEntryButton = this.ShipmentPM.DirectionId != "I" ? true : false;
@@ -301,6 +310,11 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
 
             if (isClosingWindow) {
                 this.CurrentSession.CloseCurrentWindow();
+            }
+
+            else if (this.isCreateStandaloneShipmentClicked) {
+                this.isCreateStandaloneShipmentClicked = false;
+                this.CreateStandaloneShipment();
             }
 
             else {
@@ -623,6 +637,43 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
 
         this.oldPackages.forEach((item: ShipmentPickUpDeliveryPackagePM) => {
             this.EntityPM.ShipmentPickUpDeliveryPackages.push(item);
+        });
+    }
+
+    private isCreateStandaloneShipmentClicked: boolean = false;
+    CreateStandaloneShipmentClicked() {
+        if (this.EntityPM.IsDirty) {
+            this.isCreateStandaloneShipmentClicked = true;
+            this.Save(false);
+        }
+
+        else {
+            this.CreateStandaloneShipment();
+        }
+    }
+    private CreateStandaloneShipment() {
+        var shipmentPM: ShipmentPM = ShipmentTool.BuildStansaloneShipment(null, this.EntityPM, this.ShipmentPM);
+
+        var args = new NewShipmentComponentArgs();
+        args.Shipment = shipmentPM;
+        args.IsStandalone = true;
+
+        var str: string = TextCodeTranslator.Translate("General.O.NewEntity");
+        str = str.replace("%Entity", TextCodeTranslator.TranslateTable("Shipment"));
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 960;
+        logWindow.Height = 570;
+        logWindow.WindowArgs = args;
+        logWindow.Title = str;
+        logWindow.Show('./Shipment/Components/NewShipment/NewShipmentComponent');
+
+        logWindow.ComponentLoaded.subscribe(cmp => {
+            //cmp.ShowShipmentLevels = true;            
+        });
+
+        logWindow.WindowClosed.subscribe((event: any) => {
+            //this.ReloadData();
         });
     }
 }

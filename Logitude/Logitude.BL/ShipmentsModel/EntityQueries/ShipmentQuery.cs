@@ -13456,7 +13456,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          CreatedByPartner = s.CreatedByPartner,
                                                          PreForwardingFromPortId = s.PreForwardingFromPortId,
                                                          OnForwardingToPortId = s.OnForwardingToPortId,
-                                                         IsStandalonePickupDelivery = f.IsStandalonePickupDelivery,
+                                                         IsStandalonePickupDelivery = s.IsStandalonePickupDelivery,
                                                      };
 
             return shipmentsList;

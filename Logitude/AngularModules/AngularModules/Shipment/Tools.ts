@@ -312,6 +312,7 @@ export class ShipmentTool {
         shipmentPM.OtherPrepaidCollectId = oldShipment.OtherPrepaidCollectId;
         shipmentPM.MoveTypeId = oldShipment.MoveTypeId;
         shipmentPM.ShipmentSubTypeId = oldShipment.ShipmentSubTypeId;
+        shipmentPM.IsStandalonePickupDelivery = oldShipment.IsStandalonePickupDelivery;
 
         // FWB CCS Dummy fields
         shipmentPM.TenantZeroAirlineId = oldShipment.TenantZeroAirlineId;
@@ -452,6 +453,20 @@ export class ShipmentTool {
         shipmentPM.MainCarriageFinalDestinationPortId = oldShipment.MainCarriageFinalDestinationPortId;
         shipmentPM.ValueOfGoods = oldShipment.ValueOfGoods;
         shipmentPM.ValueOfGoodsCurrencyId = oldShipment.ValueOfGoodsCurrencyId;
+
+        if (shipmentPM.IsStandalonePickupDelivery) {
+            shipmentPM.ShipperId = oldShipment.ShipperId;
+            shipmentPM.ConsigneeId = oldShipment.ConsigneeId;
+            shipmentPM.ShipperAddressId = oldShipment.ShipperAddressId;
+            shipmentPM.ConsigneeAddressId = oldShipment.ConsigneeAddressId;
+            shipmentPM.CustomerId = oldShipment.ShipperId;
+            shipmentPM.CustomerAddressId = oldShipment.ShipperAddressId;
+            shipmentPM.MainCarriageETD = oldShipment.MainCarriageETD;
+            shipmentPM.MainCarriageETA = oldShipment.MainCarriageETA;
+            shipmentPM.MainCarriageATD = oldShipment.MainCarriageATD;
+            shipmentPM.MainCarriageATA = oldShipment.MainCarriageATA;
+            shipmentPM.StandalonePickupDeliveryId = oldShipment.StandalonePickupDeliveryId;
+        }
     }
     public static CopyShipmentPackages(shipmentPM: ShipmentPM, oldShipment: ShipmentPM, copyOtherProperties: boolean) {
         if (copyOtherProperties) {
@@ -2245,6 +2260,88 @@ export class ShipmentTool {
         }
 
         return output;
+    }
+
+    public static BuildStansaloneShipment(delivery: ShipmentDeliveryPM, pickup: ShipmentPickUpPM, shipment: ShipmentPM) {
+        var shipmentPM: ShipmentPM = new ShipmentPM();
+        var isLCLShipment = this.IsLCL(shipment);
+
+        shipmentPM.IsStandalonePickupDelivery = true;
+        shipmentPM.Tenant = SessionLocator.Tenant;
+        shipmentPM.TransportModeId = "I";
+        shipmentPM.DirectionId = "D";
+        shipmentPM.DepartmentId = shipment.DepartmentId;
+        shipmentPM.BranchId = shipment.BranchId;
+        shipmentPM.IncotermId = shipment.IncotermId;       
+        shipmentPM.ProfitCurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
+        shipmentPM.AWBCurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
+        shipmentPM.FreightPrepaidCollectId = SessionLocator.TenantPM.ExportFreightPrepaidCollectId;
+        shipmentPM.OtherPrepaidCollectId = SessionLocator.TenantPM.ExportOtherPrepaidCollectId;
+        shipmentPM.ShipmentLevelCode = shipment.ShipmentLevelCode;
+        shipmentPM.ShipmentTypeId = isLCLShipment ? "LTL" : "FTL";        
+        shipmentPM.FHLStatusCode = "NSEN";
+        shipmentPM.FWBStatusCode = "NSEN";
+        shipmentPM.FHLStatusName = "Not Sent";
+        shipmentPM.FWBStatusName = "Not Sent";
+        shipmentPM.ManifestStatusCode = "NSEN";
+        shipmentPM.LocalCustomsTransmissionsStatusCode = "NSEN";
+        shipmentPM.IsOperationalClosed = false;
+        shipmentPM.CreateDateTime = DateTool.GetCurrentDateTimeAsUtc();
+        shipmentPM.LastUpdateDate = DateTool.GetCurrentDateTimeAsUtc();
+        shipmentPM.StatusDate = DateTool.GetCurrentDateTimeAsUtc();
+        shipmentPM.Tenant = SessionLocator.Tenant;
+        shipmentPM.AWBCurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
+        shipmentPM.ProfitCurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
+        shipmentPM.VolumeUnitCode = SessionLocator.TenantPM.VolumeUnitCode;
+        shipmentPM.DimensionsUnitCode = SessionLocator.TenantPM.DimensionsUnitCode;
+        shipmentPM.GrossWeightUnitCode = SessionLocator.TenantPM.GrossWeightUnitCode;
+        shipmentPM.CreatedByUserId = SessionLocator.LoggedUserId;        
+        shipmentPM.NewConcurrencyGUID = AppTool.GetNewGuid();
+        shipmentPM.ValueOfGoodsCurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
+        shipmentPM.OnCarriageAdditionalTransportModeCode = "BYTR";
+        shipmentPM.OnForwardingAdditionalTransportModeCode = "BYTR";
+
+        if (delivery) {
+            shipmentPM.StandalonePickupDeliveryId = delivery.Id;
+            shipmentPM.StandalonePickupDeliveryNumber = delivery.PickUpDeliveryNumber;
+            shipmentPM.ShipperId = delivery.FromPartnerCardId;
+            shipmentPM.ShipperAddressId = delivery.FromAddressId;
+            shipmentPM.ConsigneeId = delivery.ToPartnerCardId;
+            shipmentPM.ConsigneeAddressId = delivery.ToAddressId;
+            shipmentPM.CustomerId = delivery.FromPartnerCardId;
+            shipmentPM.CustomerAddressId = delivery.FromAddressId;
+            shipmentPM.MainCarriageCarrierId = delivery.CarrierId;
+            shipmentPM.MainCarriageCarrierNumber = delivery.CarrierNumber;
+            shipmentPM.Driver = delivery.Driver;
+            shipmentPM.TruckNumber = delivery.TruckNumber;
+            shipmentPM.TrailerNumber = delivery.TrailerNumber;
+            shipmentPM.MainCarriageETD = delivery.ETD;
+            shipmentPM.MainCarriageETA = delivery.ETA;
+            shipmentPM.MainCarriageATD = delivery.ATD;
+            shipmentPM.MainCarriageATA = delivery.ATA;
+        }
+
+        else if (pickup) {
+            shipmentPM.StandalonePickupDeliveryId = pickup.Id;
+            shipmentPM.StandalonePickupDeliveryNumber = pickup.PickUpDeliveryNumber;
+            shipmentPM.ShipperId = pickup.FromPartnerCardId;
+            shipmentPM.ShipperAddressId = pickup.FromAddressId;
+            shipmentPM.ConsigneeId = pickup.ToPartnerCardId;
+            shipmentPM.ConsigneeAddressId = pickup.ToAddressId;
+            shipmentPM.CustomerId = pickup.FromPartnerCardId;
+            shipmentPM.CustomerAddressId = pickup.FromAddressId;
+            shipmentPM.MainCarriageCarrierId = pickup.CarrierId;
+            shipmentPM.MainCarriageCarrierNumber = pickup.CarrierNumber;
+            shipmentPM.Driver = pickup.Driver;
+            shipmentPM.TruckNumber = pickup.TruckNumber;
+            shipmentPM.TrailerNumber = pickup.TrailerNumber;
+            shipmentPM.MainCarriageETD = pickup.ETD;
+            shipmentPM.MainCarriageETA = pickup.ETA;
+            shipmentPM.MainCarriageATD = pickup.ATD;
+            shipmentPM.MainCarriageATA = pickup.ATA;
+        }
+
+        return shipmentPM;
     }
 }
 export class ByPckageType {

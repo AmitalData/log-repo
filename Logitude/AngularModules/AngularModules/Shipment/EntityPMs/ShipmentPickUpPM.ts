@@ -293,6 +293,10 @@ export class ShipmentPickUpPM {
     public get StandaloneShipmentId() { return this.standaloneShipmentId; }
     public set StandaloneShipmentId(newValue: string) { this.standaloneShipmentId = newValue; this.MarkAsDirty(); }
 
+    private standaloneShipmentNumber: string;
+    public get StandaloneShipmentNumber() { return this.standaloneShipmentNumber; }
+    public set StandaloneShipmentNumber(newValue: string) { this.standaloneShipmentNumber = newValue; this.MarkAsDirty(); }
+
     private changeSetOp: string;
     public get ChangeSetOp() { return this.changeSetOp; }
     public set ChangeSetOp(newValue: string) { this.changeSetOp = newValue; this.MarkAsDirty(); }

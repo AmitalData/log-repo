@@ -304,6 +304,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 shipmentBehaviourFacade.Save(); // Abed to make automation change to condation work fine
                 //shipmentBehaviourFacade.Trace(shipmentTracing);
 
+                if(entityPM.IsStandalonePickupDelivery)
+                {
+                    this.UpdatePickUpDeliveryPackageHarmonize();
+                }
+
                 if (!string.IsNullOrEmpty(entityPM.MasterCreatedFromHouseId))
                 {
                     if (houseShipment != null)
@@ -357,6 +362,19 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
+        private void UpdatePickUpDeliveryPackageHarmonize()
+        {
+            if (!string.IsNullOrEmpty(entityPM.StandalonePickupDeliveryId))
+            {
+                ShipmentPickUpDelivery shipmentPickUpDelivery = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDelivery(tenant, entityPM.StandalonePickupDeliveryId);
+                if (shipmentPickUpDelivery != null)
+                {
+                    shipmentPickUpDelivery.StandaloneShipmentId = entityPM.Id;
+                    shipmentPickUpDeliveryRepository.Update(shipmentPickUpDelivery);
+                    shipmentPickUpDeliveryRepository.SubmitChanges();
+                }
+            }
+        }
         private void AddVIRExternalTaskQueue()
         {
             if (entityPM.IsHybrid && entityPM.ExternalStatuses == "VIR")

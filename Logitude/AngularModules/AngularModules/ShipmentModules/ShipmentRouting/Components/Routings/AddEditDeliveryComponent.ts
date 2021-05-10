@@ -21,6 +21,9 @@ import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import { ShipmentDeliveryValidator } from '../../../../Shipment/Validators/ShipmentDeliveryValidator';
 import { WarehouseReleaseListExtendedService } from '../../../../Warehouse/Services/ExtendedLists/WarehouseReleaseListExtendedService';
+import { FeatureToggleList } from '../../../../Infrastructure/EntityLists/FeatureToggleList';
+import { NewShipmentComponentArgs } from '../../../../Shipment/Args';
+import { ShipmentTool } from '../../../../Shipment/Tools';
 
 @Component({
     
@@ -29,7 +32,6 @@ import { WarehouseReleaseListExtendedService } from '../../../../Warehouse/Servi
 
 export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
   public SelectedTab: any;
-
     public EntityPM: ShipmentDeliveryPM;
     myCardListService: CardListService;
     warehouseReleaseListExtendedService: WarehouseReleaseListExtendedService;
@@ -48,6 +50,7 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
     WareHouseRelaseCustomerId: string;
     WareHouseRelaseWareHouseId: string;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsAddingStandaloneShipmentVisible: boolean = false;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     constructor(private entityResourceService: EntityResourceService) {
         this.myCardListService = new CardListService();
@@ -97,6 +100,11 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
         this.ReloadData();
 
         if (this.ShipmentPM) {
+            var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SAS")[0];
+            if (featureToggle) {
+                this.IsAddingStandaloneShipmentVisible = true;
+            }
+
             if (this.ShipmentPM.ShipmentLevelCode == "D" || this.ShipmentPM.ShipmentLevelCode == "H") {
                 if (FeatureLocator.HasFeaturePermession("WarehouseRelease", "Module")) {
                     this.IsShowNewWarehouseReleaseButton = this.ShipmentPM.DirectionId == "I" ? true : false;
@@ -543,6 +551,11 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
                 this.CurrentSession.CloseCurrentWindow();
             }
 
+            else if (this.isCreateStandaloneShipmentClicked) {
+                this.isCreateStandaloneShipmentClicked = false;
+                this.CreateStandaloneShipment();
+            }
+
             else {
                 this.ResetEntityPM();
             }
@@ -788,6 +801,43 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
 
         this.oldPackages.forEach((item: ShipmentPickUpDeliveryPackagePM) => {
             this.EntityPM.ShipmentPickUpDeliveryPackages.push(item);
+        });
+    }
+
+    private isCreateStandaloneShipmentClicked: boolean = false;
+    CreateStandaloneShipmentClicked() {
+        if (this.EntityPM.IsDirty) {
+            this.isCreateStandaloneShipmentClicked = true;
+            this.Save(false);
+        }
+
+        else {
+            this.CreateStandaloneShipment();
+        }
+    }
+    private CreateStandaloneShipment() {
+        var shipmentPM: ShipmentPM = ShipmentTool.BuildStansaloneShipment(this.EntityPM, null, this.ShipmentPM);
+
+        var args = new NewShipmentComponentArgs();
+        args.Shipment = shipmentPM;
+        args.IsStandalone = true;
+
+        var str: string = TextCodeTranslator.Translate("General.O.NewEntity");
+        str = str.replace("%Entity", TextCodeTranslator.TranslateTable("Shipment"));
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 960;
+        logWindow.Height = 570;
+        logWindow.WindowArgs = args;
+        logWindow.Title = str;
+        logWindow.Show('./Shipment/Components/NewShipment/NewShipmentComponent');
+
+        logWindow.ComponentLoaded.subscribe(cmp => {
+            //cmp.ShowShipmentLevels = true;            
+        });
+
+        logWindow.WindowClosed.subscribe((event: any) => {
+            //this.ReloadData();
         });
     }
 }

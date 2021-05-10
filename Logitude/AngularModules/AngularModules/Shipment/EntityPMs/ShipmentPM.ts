@@ -4925,6 +4925,13 @@ export class ShipmentPM {
     public get IsStandalonePickupDelivery() { return this.isStandalonePickupDelivery; }
     public set IsStandalonePickupDelivery(newValue: boolean) { if (this.isStandalonePickupDelivery != newValue) { this.isStandalonePickupDelivery = newValue; this.MarkAsDirty("IsStandalonePickupDelivery"); } }      
 
+    private standalonePickupDeliveryId: string;
+    public get StandalonePickupDeliveryId() { return this.standalonePickupDeliveryId; }
+    public set StandalonePickupDeliveryId(newValue: string) { if (this.standalonePickupDeliveryId != newValue) { this.standalonePickupDeliveryId = newValue; this.MarkAsDirty("StandalonePickupDeliveryId"); } }      
+
+    private standalonePickupDeliveryNumber: string;
+    public get StandalonePickupDeliveryNumber() { return this.standalonePickupDeliveryNumber; }
+    public set StandalonePickupDeliveryNumber(newValue: string) { if (this.standalonePickupDeliveryNumber != newValue) { this.standalonePickupDeliveryNumber = newValue; this.MarkAsDirty("StandalonePickupDeliveryNumber"); } }      
 
     public OldEntityPM: ShipmentPM;
 
