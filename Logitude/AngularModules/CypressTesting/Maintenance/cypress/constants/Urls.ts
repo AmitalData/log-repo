@@ -40,12 +40,14 @@ export class Urls {
     public static readonly GlobalZonesGetSingle = "**/globalzones/getsingle?**"
     
     public static readonly SpecialServicesTypes = "**/specialservicestypes"
+    public static readonly SpecialServicesTypesGetSingle="**/specialservicestypes/getsingle?**"
 
     public static readonly Commodities="**/commodities"
     public static readonly CommoditiesGetSingle = "**/commodities/getsingle?**"
 
     public static readonly Regions= "**/regions"
-    
+    public static readonly RegionsGetSingle="**/regions/getsingle?**"
+
     public static readonly Shippingagents="**/shippingagents"
     public static readonly ShippingAgentGetSingle= "**/shippingagents/getsingle?**"
 
@@ -55,8 +57,9 @@ export class Urls {
     public static readonly Truckers ="**/truckers"
     public static readonly TruckersGetSingle="**/truckers/getsingle?**"
 
-    public static readonly RegionsGetSingle="**/regions/getsingle?**"
-    public static readonly SpecialServicesTypesGetSingle="**/specialservicestypes/getsingle?**"
+    public static readonly MoveTypes ="**/movetypes"
+    public static readonly MoveTypeGetSingle = "**/movetypes/getsingle?**"
+
     public static GetFilterSearch(filterBy: string) {
         return '**/getbyfilters?**' + filterBy + '**'
     }

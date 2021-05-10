@@ -39,6 +39,7 @@ import { CardDetails } from "../models/CardDetails";
 import {CardGeneralTabDetails} from "../models/CardGeneralTabDetails";
 import { CardBillingTabDetails } from "../models/CardBillingTabDetails";
 import { SpecialServicesTypeDetails } from "../models/SpecialServicesTypeDetails";
+import { MoveTypeDetails } from "../models/MoveTypeDetails";
 
 //#region variables
 let CityCode = null;
@@ -47,6 +48,7 @@ let GlobalZoneCode = null;
 let SpecialServicesTypeCode=null;
 let CardCode=null;
 let TruckerCode=null;
+let MoveTypeCode=null;
 let CommodityName = null;
 let RegionName = null;
 let inActiveCountry = false;
@@ -925,8 +927,8 @@ export function AssertMockPostCountry() {
 }
 
 export function SearchCountryByCode(CountryCode:string){
-    cy.Click(MaintenanceSelectors.CountryFiltersOpen,null);
-    cy.Click(MaintenanceSelectors.CountryAddFilterBtn,null);
+    cy.Click(MaintenanceSelectors.CardFiltersOpen,null);
+    cy.Click(MaintenanceSelectors.CardAddFilterBtn,null);
 
     cy.get(MaintenanceSelectors.CountryCodeFilterCheckBox).then($InActiveStatesCheckBox => {
         if ($InActiveStatesCheckBox.is(':checked')) {
@@ -937,12 +939,6 @@ export function SearchCountryByCode(CountryCode:string){
             FillCodeFilterValue(CountryCode);
         }
     })
-}
-
-function FillCodeFilterValue(CountryCode:string){
-    DefineCountryViewsGetByFiltersRequest(CountryCode);
-    cy.FillLogTextBox(MaintenanceSelectors.CountryCodeFilterTextValue,CountryCode);
-    AssertCountryViewsGetByFilters();
 }
 
 export function AssertSearchCountry(CountryCode: string) {
@@ -1154,6 +1150,11 @@ function DefineGetByFilterRequest() {
 
 function AssertGetByFilters() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetByFilter, 200);
+}
+function FillCodeFilterValue(CountryCode:string){
+    DefineCountryViewsGetByFiltersRequest(CountryCode);
+    cy.FillLogTextBox(MaintenanceSelectors.CardCodeFilterTextValue,CountryCode);
+    AssertCountryViewsGetByFilters();
 }
 //#endregion
 
@@ -2011,5 +2012,130 @@ export function AssertUpdateSpecialServicesType() {
 }
 function AssertPutSpecialServicesType() {
     BaseAssertion.AssertStatusCode(RequestAliases.PutSpecialServicesType, 200);
+}
+//#endregion
+//#region move types
+export function FillMoveTypeCode(MoveTypeTypeCode: string) {
+    cy.FillLogTextBox(MaintenanceSelectors.MoveTypeCode, MoveTypeTypeCode)
+}
+export function FillMoveTypeDetails(moveTypeDetails: MoveTypeDetails) {
+    var RandomMoveTypeCode = gr.GenerateRandomNumberAndString(3);
+    cy.FillLogTextBox(MaintenanceSelectors.MoveTypeCode, moveTypeDetails.Code.toLowerCase() == "random" ? RandomMoveTypeCode : moveTypeDetails.Code)
+    cy.FillLogTextBox(MaintenanceSelectors.MoveTypeEnglishName, moveTypeDetails.EnglishName)
+    FillMoveTypeLocalName(moveTypeDetails.LocalName)
+    FillMoveTypeTransportMode(moveTypeDetails.TransportMode)
+}
+export function FillMoveTypeLocalName(localName:string){
+    cy.FillLogTextBox(MaintenanceSelectors.MoveTypeLocalName, localName)
+}
+function FillMoveTypeTransportMode(TransportMode:string){
+    if(TransportMode.toLocaleUpperCase()==constants.Air){
+        cy.get(BaseSelectors.IsAir).click({force:true})
+    }
+    if(TransportMode.toLocaleUpperCase()==constants.Ocean){
+        cy.get(BaseSelectors.IsOcean).click({force:true})
+    }
+    if(TransportMode.toLocaleUpperCase()==constants.Inland){
+        cy.get(BaseSelectors.IsInland).click({force:true})
+    }
+}
+export function CreateMoveType() {
+    DefinePostMoveTypeRequest()
+    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
+}
+function DefinePostMoveTypeRequest() {
+    cy.DefineRequestWait(RestAPI.POST, Urls.MoveTypes, RequestAliases.PostMoveType)
+}
+export function CreateMoveTypeMockCreate() {
+    cy.intercept(RestAPI.POST, Urls.MoveTypes, [true])
+    DefineGetByFilterRequest()
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)  
+}
+
+export function AssertCreateMoveTypeMockCreate() {
+    BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow)
+    AssertGetByFilters();
+}
+
+export function AssertCreateMoveType() {
+    let intercept = cy.wait("@" + RequestAliases.PostMoveType);
+    intercept.then((interception) => {
+        if (interception.response.statusCode === 400) {
+            ReCreateMoveType();
+        }
+        else {
+            AssertPostMoveType(interception.response.statusCode, 200, interception.response.body.Code)
+        }
+    })
+}
+
+function ReCreateMoveType() {
+    var RandomMoveTypeCode = gr.GenerateRandomNumberAndString(3);
+    cy.FillLogTextBox(MaintenanceSelectors.MoveTypeCode,  RandomMoveTypeCode)
+    CreateMoveType();
+    AssertCreateMoveType();
+}
+
+export function AssertPostMoveType(responseStatusCode: number, expectedStatusCode: number, moveTypeCode: string) {
+    assert.equal(responseStatusCode, expectedStatusCode)
+    MoveTypeCode = moveTypeCode
+}
+export function SearchMoveTypeByCode(MoveTypeCode:string){
+    DefineMoveTypeCodeGetByFiltersRequest(MoveTypeCode);
+    cy.Click(MaintenanceSelectors.CardFiltersOpen,null);
+    cy.Click(MaintenanceSelectors.CardAddFilterBtn,null);
+
+    cy.get(MaintenanceSelectors.MoveTypeCodeFilterCheckBox).then($InActiveStatesCheckBox => {
+        if ($InActiveStatesCheckBox.is(':checked')) {
+            FillCodeFilterValue(MoveTypeCode);
+        }
+        else {
+            cy.get(MaintenanceSelectors.MoveTypeCodeFilterCheckBox).check({ force: true });
+            FillCodeFilterValue(MoveTypeCode);
+        }
+    })
+    AssertMoveTypeViewsGetByFilters();
+}
+export function SearchMoveType(){
+    SearchMoveTypeByCode(MoveTypeCode)
+}
+export function DefineMoveTypeCodeGetByFiltersRequest(MoveTypeCode: string) {
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(MoveTypeCode), RequestAliases.GetFilterSearch);
+}
+export function AssertMoveTypeViewsGetByFilters() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
+}
+export function AssertSearchMoveTypeByCode(code: string) {
+    cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
+        expect(text).to.contain(code);
+    });
+}
+export function AssertSearchMoveType() {
+    AssertSearchMoveTypeByCode(MoveTypeCode)
+}
+export function OpenMoveType() {
+    DefineMoveTypesGetSingleRequest();
+    cy.get(BaseSelectors.RowClass).eq(0).click();
+}
+function DefineMoveTypesGetSingleRequest() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.MoveTypeGetSingle, RequestAliases.GetSignle);
+}
+export function AssertOpenMoveType() {
+    AssertCardGetSingle();
+    BaseAssertion.AssertElementExist(MaintenanceSelectors.GeneralEditScreen)
+}
+
+export function UpdateMoveType() {
+    DefinePutMoveTypeRequest()
+    cy.Click(MaintenanceSelectors.MoveTypeSaveButton, null)
+}
+function DefinePutMoveTypeRequest() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.MoveTypes, RequestAliases.PutMoveType);
+}
+export function AssertUpdateMoveType() {
+    AssertPutMoveType()
+}
+function AssertPutMoveType() {
+    BaseAssertion.AssertStatusCode(RequestAliases.PutMoveType, 200);
 }
 //#endregion
