@@ -26,7 +26,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         EnglishName, 
 	         LocalName, 
 	         SearchFields, 
-	         Inactive,
+	         Inactive, 
+	         IsImportDeclaration, 
+	         IsExportDeclaration,
 	      }
 
 
@@ -37,7 +39,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         EnglishName, 
 	         LocalName, 
 	         SearchFields, 
-	         Inactive,
+	         Inactive, 
+	         IsImportDeclaration, 
+	         IsExportDeclaration,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -64,6 +68,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Inactive))
             {
 				entityPOCO.Inactive = entityPM.Inactive;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsImportDeclaration))
+            {
+				entityPOCO.IsImportDeclaration = entityPM.IsImportDeclaration;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsExportDeclaration))
+            {
+				entityPOCO.IsExportDeclaration = entityPM.IsExportDeclaration;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -97,6 +111,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.Inactive = entityPOCO.Inactive;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsImportDeclaration))
+            {
+					entityPM.IsImportDeclaration = entityPOCO.IsImportDeclaration;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsExportDeclaration))
+            {
+					entityPM.IsExportDeclaration = entityPOCO.IsExportDeclaration;
+            }
+
 		}
 
 		public void PMToOldPM(CertificateExemptionTypePM entityPM, CertificateExemptionTypePM oldEntityPM)
@@ -121,6 +145,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Inactive))
             {
                 oldEntityPM.Inactive = entityPM.Inactive;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsImportDeclaration))
+            {
+                oldEntityPM.IsImportDeclaration = entityPM.IsImportDeclaration;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsExportDeclaration))
+            {
+                oldEntityPM.IsExportDeclaration = entityPM.IsExportDeclaration;
             }
 			
 		}

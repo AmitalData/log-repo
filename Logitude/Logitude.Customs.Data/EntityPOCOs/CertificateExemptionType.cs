@@ -29,6 +29,10 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string SearchFields { get; set; }
         [Column("Inactive")]
 	    public bool Inactive { get; set; }
+        [Column("IsImportDeclaration")]
+	    public bool IsImportDeclaration { get; set; }
+        [Column("IsExportDeclaration")]
+	    public bool IsExportDeclaration { get; set; }
     }
 }
 	 

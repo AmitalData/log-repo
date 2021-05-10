@@ -135,6 +135,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isImportDeclaration ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsImportDeclaration  
+	   {
+	    
+	     get
+		{
+		   return isImportDeclaration;
+		 }
+		 set
+		 {
+		   if(isImportDeclaration != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsImportDeclaration",OldValue=isImportDeclaration,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isImportDeclaration=value;
+		   }
+			
+		 }
+	   }
+	  private bool isExportDeclaration ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsExportDeclaration  
+	   {
+	    
+	     get
+		{
+		   return isExportDeclaration;
+		 }
+		 set
+		 {
+		   if(isExportDeclaration != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsExportDeclaration",OldValue=isExportDeclaration,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isExportDeclaration=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
