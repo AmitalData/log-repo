@@ -931,7 +931,7 @@ namespace WebFreight.Web
                         }
                         else
                         {
-                            if (privatelabel == null && !companyAccess.HasLogboxAccess)
+                            if (privatelabel == null && (!string.IsNullOrEmpty(companyAccess.PrivateLabelId) && !companyAccess.HasLogboxAccess))
                             {
                                 data = new UserData()
                                 {

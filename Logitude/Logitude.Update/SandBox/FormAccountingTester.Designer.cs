@@ -38,10 +38,11 @@
             this.mupsOpenReconcileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tESTADHOKToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.adHookToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.agingFixRepoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.miscToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadBigJournalFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.adHookToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.agingFixRepoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fixJourbalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -152,6 +153,22 @@
             this.tESTADHOKToolStripMenuItem.Text = "TESTADHOK";
             this.tESTADHOKToolStripMenuItem.Click += new System.EventHandler(this.tESTADHOKToolStripMenuItem_Click);
             // 
+            // miscToolStripMenuItem
+            // 
+            this.miscToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loadBigJournalFileToolStripMenuItem,
+            this.fixJourbalToolStripMenuItem});
+            this.miscToolStripMenuItem.Name = "miscToolStripMenuItem";
+            this.miscToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.miscToolStripMenuItem.Text = "Misc";
+            // 
+            // loadBigJournalFileToolStripMenuItem
+            // 
+            this.loadBigJournalFileToolStripMenuItem.Name = "loadBigJournalFileToolStripMenuItem";
+            this.loadBigJournalFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadBigJournalFileToolStripMenuItem.Text = "LoadBigJournalFile";
+            this.loadBigJournalFileToolStripMenuItem.Click += new System.EventHandler(this.loadBigJournalFileToolStripMenuItem_Click);
+            // 
             // adHookToolStripMenuItem
             // 
             this.adHookToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -163,24 +180,16 @@
             // agingFixRepoToolStripMenuItem
             // 
             this.agingFixRepoToolStripMenuItem.Name = "agingFixRepoToolStripMenuItem";
-            this.agingFixRepoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.agingFixRepoToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.agingFixRepoToolStripMenuItem.Text = "AgingFixRepo";
             this.agingFixRepoToolStripMenuItem.Click += new System.EventHandler(this.agingFixRepoToolStripMenuItem_Click);
             // 
-            // miscToolStripMenuItem
+            // fixJourbalToolStripMenuItem
             // 
-            this.miscToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.loadBigJournalFileToolStripMenuItem});
-            this.miscToolStripMenuItem.Name = "miscToolStripMenuItem";
-            this.miscToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.miscToolStripMenuItem.Text = "Misc";
-            // 
-            // loadBigJournalFileToolStripMenuItem
-            // 
-            this.loadBigJournalFileToolStripMenuItem.Name = "loadBigJournalFileToolStripMenuItem";
-            this.loadBigJournalFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.loadBigJournalFileToolStripMenuItem.Text = "LoadBigJournalFile";
-            this.loadBigJournalFileToolStripMenuItem.Click += new System.EventHandler(this.loadBigJournalFileToolStripMenuItem_Click);
+            this.fixJourbalToolStripMenuItem.Name = "fixJourbalToolStripMenuItem";
+            this.fixJourbalToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.fixJourbalToolStripMenuItem.Text = "FixJournal";
+            this.fixJourbalToolStripMenuItem.Click += new System.EventHandler(this.fixJournalToolStripMenuItem_Click);
             // 
             // FormAccountingTester
             // 
@@ -219,5 +228,6 @@
         private System.Windows.Forms.ToolStripMenuItem tESTADHOKToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem miscToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadBigJournalFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem fixJourbalToolStripMenuItem;
     }
 }

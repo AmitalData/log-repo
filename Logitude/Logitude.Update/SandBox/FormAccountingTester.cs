@@ -1,5 +1,6 @@
 ﻿using Logitude.Accounting.BL.CoreBL;
 using Logitude.Accounting.BL.CoreBL.BuildTenant.MumpsOpenReconcile;
+using Logitude.Accounting.BL.CoreBL.Fix;
 using Logitude.Accounting.BL.CoreBL.Reports;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
@@ -172,6 +173,12 @@ namespace Logitude.Update.SandBox
                 service.Update(entityPM, true);
                 scope.Complete();
             }
+        }
+
+        private void fixJournalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var fixJournaRecolService = new FixJournaRecolService();
+            fixJournaRecolService.FixByJournalNumber("2285458", 3);
         }
     }
 }
