@@ -104,5 +104,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 
         [ForeignKey("StandaloneShipmentId")]
         public virtual Shipment StandaloneShipment { get; set; }
+        public string StandaloneShipmentNumber { get; set; }
     }
 }

@@ -667,13 +667,8 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
         logWindow.WindowArgs = args;
         logWindow.Title = str;
         logWindow.Show('./Shipment/Components/NewShipment/NewShipmentComponent');
-
-        logWindow.ComponentLoaded.subscribe(cmp => {
-            //cmp.ShowShipmentLevels = true;            
-        });
-
         logWindow.WindowClosed.subscribe((event: any) => {
-            //this.ReloadData();
+            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         });
     }
 }

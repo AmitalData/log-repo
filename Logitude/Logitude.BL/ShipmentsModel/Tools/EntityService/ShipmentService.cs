@@ -370,6 +370,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 if (shipmentPickUpDelivery != null)
                 {
                     shipmentPickUpDelivery.StandaloneShipmentId = entityPM.Id;
+                    shipmentPickUpDelivery.StandaloneShipmentNumber = entityPM.ShipmentNumber;
                     shipmentPickUpDeliveryRepository.Update(shipmentPickUpDelivery);
                     shipmentPickUpDeliveryRepository.SubmitChanges();
                 }

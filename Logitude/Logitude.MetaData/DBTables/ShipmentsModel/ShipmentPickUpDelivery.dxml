@@ -285,6 +285,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="StandaloneShipmentNumber"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ToAddressId"
     ReferencedTable="Addresses"

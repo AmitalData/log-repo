@@ -42,6 +42,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.TransportModeCode).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.ParentPickUpDeliveryId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.StandaloneShipmentId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.StandaloneShipmentNumber).HasMaxLength(20).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("ShipmentPickUpDeliveries");
@@ -85,6 +86,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ChildPickUpIndex).HasColumnName("ChildPickUpIndex");
             this.Property(t => t.ChildDeliveryIndex).HasColumnName("ChildDeliveryIndex");
             this.Property(t => t.StandaloneShipmentId).HasColumnName("StandaloneShipmentId");
+            this.Property(t => t.StandaloneShipmentNumber).HasColumnName("StandaloneShipmentNumber");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
