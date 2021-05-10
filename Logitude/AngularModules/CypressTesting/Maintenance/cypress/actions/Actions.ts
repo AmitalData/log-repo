@@ -1151,9 +1151,9 @@ function DefineGetByFilterRequest() {
 function AssertGetByFilters() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetByFilter, 200);
 }
-function FillCodeFilterValue(CountryCode:string){
-    DefineCountryViewsGetByFiltersRequest(CountryCode);
-    cy.FillLogTextBox(MaintenanceSelectors.CardCodeFilterTextValue,CountryCode);
+function FillCodeFilterValue(Code:string){
+    DefineCountryViewsGetByFiltersRequest(Code);
+    cy.FillLogTextBox(MaintenanceSelectors.CardCodeFilterTextValue,Code);
     AssertCountryViewsGetByFilters();
 }
 //#endregion

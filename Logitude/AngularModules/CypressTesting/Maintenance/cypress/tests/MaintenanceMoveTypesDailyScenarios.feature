@@ -1,4 +1,4 @@
-@release @all @dev @daily @l
+@release @all @dev @daily 
 Feature: Move Type Mock Create and Edit in Maintenance Module
     The user creates a Move Type mock create and edit another one from the Maintenance Module.
 
