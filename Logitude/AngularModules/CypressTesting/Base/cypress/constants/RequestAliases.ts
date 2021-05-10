@@ -140,6 +140,9 @@ export class RequestAliases {
     public static readonly PutTrucker="PostTrucker"
     public static readonly PostTrucker="PostTrucker"
 
+    public static readonly PutMoveType="PutMoveType"
+    public static readonly PostMoveType="PostMoveType"
+
     public static readonly GetSignle = "GetSignle"
     public static readonly GetByFilter = "GetByFilter"
     public static readonly GetFilterSearch = "GetFilterSearch"

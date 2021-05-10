@@ -20,6 +20,7 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly MaintenanceItemCustomAgents = "#MaintenanceItemMTCU"
    public static readonly MaintenanceItemTrucker = "#MaintenanceItemMTTR"
    public static readonly MaintenanceItemSpecialServicesType = "#MaintenanceItemMTSS"
+   public static readonly MaintenanceItemMoveTypes="#MaintenanceItemMTMT"
    //#endregion
 
    public static readonly GeneralEditScreen = ".MediaFillAbsolute .CurvedEditArea";
@@ -129,10 +130,11 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly CountryNotes = "#Country_Notes";
    public static readonly CountrySaveButton = "#Country-Save"
    public static readonly CountryEventsTab = "#CountryTHEvents"
-   public static readonly CountryFiltersOpen = "[src='./Images/FiltersOpen.png']";
-   public static readonly CountryAddFilterBtn = "div[data-cy='AddFilterBtn']";
+   public static readonly CardFiltersOpen = "[src='./Images/FiltersOpen.png']";
+   public static readonly CardAddFilterBtn = "div[data-cy='AddFilterBtn']";
    public static readonly CountryCodeFilterCheckBox = "input[data-cy='CheckBox_Country.F.Code']"
-   public static readonly CountryCodeFilterTextValue = "#TextValue"
+   public static readonly CardCodeFilterTextValue = "#TextValue"
+   public static readonly MoveTypeCodeFilterCheckBox ="input[data-cy='CheckBox_MoveType.F.Code']"
    //#endregion
 
    //#region State
@@ -243,6 +245,14 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly SpecialServicesTypeGeneralTab = "#SpecialServicesTypeTHGeneral"
    public static readonly SpecialServicesTypeEventsTab = "#SpecialServicesTypeTHEvents"
    public static readonly SpecialServicesTypeSaveButton = "#SpecialServicesType-Save"
+        //#endregion
+              //#region SpecialServicesType
+   public static readonly MoveTypeCode = "#MoveType_Code"
+   public static readonly MoveTypeEnglishName = "#MoveType_MoveTypeEnglishName"
+   public static readonly MoveTypeLocalName = "#MoveType_MoveTypeLocalName"
+   public static readonly MoveTypeGeneralTab = "#MoveTypeTHGeneral"
+   public static readonly MoveTypeEventsTab = "#MoveTypeTHEvents"
+   public static readonly MoveTypeSaveButton = "#MoveType-Save"
      
         //#endregion
 }
