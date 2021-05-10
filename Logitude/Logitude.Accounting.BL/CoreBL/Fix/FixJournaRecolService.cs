@@ -15,6 +15,9 @@ namespace Logitude.Accounting.BL.CoreBL.Fix
     {
         public void Fix(string journalId ,int tenant)
         {
+#if false
+
+
             using (var scope= TransactionFactory.GetTransaction())
             {
                 
@@ -64,7 +67,7 @@ namespace Logitude.Accounting.BL.CoreBL.Fix
 
 
             }
-            
+#endif
         }
     }
 }
