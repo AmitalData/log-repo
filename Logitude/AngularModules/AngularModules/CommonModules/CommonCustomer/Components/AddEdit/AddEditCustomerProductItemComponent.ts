@@ -10,6 +10,7 @@ import { CustomerPM } from '../../../../Common/EntityPMs/CustomerPM';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { CustomerHTSCode, CustomerProductItem, CustomerProductItemsTabComponent } from '../EditTabs/CustomerProductItemsTabComponent';
 import { HTSCodePM } from '../../../../Common/EntityPMs/HTSCodePM';
+import { CustomerValidator } from '../../../../Common/Validators/CustomerValidator';
 
 
 
@@ -20,15 +21,12 @@ import { HTSCodePM } from '../../../../Common/EntityPMs/HTSCodePM';
 export class AddEditCustomerProductItemComponent extends BaseComponent {
     public EntityPM: ProductItemPM;
     public ObjectTableName: string = "ProductItem";
-    public TenantPM: TenantPM;
     public FatherComponent: CustomerProductItemsTabComponent;
     public DataContext: CustomerProductItem;
     public ValidationErrorsList: string[];
     private CurrentSession = SessionLocator.SelectedSession;
     public CustomerPM: CustomerPM = null;
     public CustomerProductItem: CustomerProductItem;
-    public htsCodes: HTSCodePM[] = [];
-
     public IsEditingEnabled: boolean = true;
 
     constructor(public entityArgs: EntityArgs) {
@@ -44,38 +42,67 @@ export class AddEditCustomerProductItemComponent extends BaseComponent {
         this.DataContext = this.CustomerProductItem;
     }
 
-
     SetUIProperties() {
 
     }
 
-
     CancelButtonClicked() {
+        this.Clone();
+        this.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
         var errors: string[] = [];
         Validator.TryValidateObject(this.CustomerProductItem.EntityPM, this.DataContext.ObjectTableName, errors);
+        var entityValidator: CustomerValidator = new CustomerValidator();
+        var entityErrors = entityValidator.Validate(this.FatherComponent.EntityPM);
+
+        if (entityErrors) {
+            errors = errors.concat(entityErrors);
+        }
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
 
             if (this.CustomerProductItem.IsNewEntity) {
                 this.CustomerPM.AddProductItemPM(this.CustomerProductItem.EntityPM);
-                if (this.FatherComponent.HTSCodes != null) {
-                    this.FatherComponent.HTSCodes.Collection.forEach(item => {
-                        this.CustomerProductItem.EntityPM.AddHTSCodePM(item.EntityPM);
-                    });
-                } else {
-                    if (this.FatherComponent.HTSCodes != null) {
-
-                        this.CustomerProductItem.EntityPM.HTSCodes = this.FatherComponent.HTSCodes.Collection;
-                    }
-                }
             }
-            this.CustomerProductItem.fatherComponent.BuildProductItems();
-            this.FatherComponent.BuildProductItemHTSCodes(this.CustomerProductItem.EntityPM);
+
+            if (this.FatherComponent.HTSCodes != null) {
+                this.FatherComponent.HTSCodes.Collection.forEach(item => {
+                    if (item.IsNewEntity) {
+
+                        this.CustomerPM.CustomerProductItems.forEach(product => {
+                            if (product.Id == this.CustomerProductItem.EntityPM.Id) {
+                                product.AddHTSCodePM(item.EntityPM);
+                            }
+                        });
+                    }
+                });               
+            }
             this.CurrentSession.CloseCurrentWindow();
         }
     }
+
+
+    private myCloner: Cloner;
+    private Clone() {
+        this.myCloner = new Cloner(this.DataContext);
+        this.myCloner.AddField('InActive');
+        this.myCloner.AddField('Description');
+        this.myCloner.AddField('ItemCode');
+        this.myCloner.AddField('SKU');
+        this.myCloner.AddField('Remarks');
+
+        this.myCloner.AddEntity(this.EntityPM);
+        this.myCloner.AddEntity(this.CustomerPM);
+    }
+    private RejectChanges() {
+        this.myCloner.RejectChanges();
+        if (this.FatherComponent.ProductItems != null) {
+            this.FatherComponent.ProductItems = null;
+        }
+        this.FatherComponent.BuildProductItems();
+    }
+
 }

@@ -11,6 +11,7 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { HTSCodePM } from '../../../../Common/EntityPMs/HTSCodePM';
 import { Validator } from '../../../../Infrastructure/Validators/Validator';
 import { CountryList } from '../../../../Common/EntityLists/CountryList';
+import { ProductItem } from '../../../../ShipmentModules/ShipmentTabs/Components/ProductItems/ProductItemsTabComponent';
 
 @Component({
     templateUrl: './CustomerProductItemsTabComponent.html',
@@ -115,15 +116,16 @@ export class CustomerProductItemsTabComponent extends BaseComponent implements O
 
 
     AddHTSCode() {
-        var hTSCodeItem: HTSCodePM = new HTSCodePM(null);
-        this.HTSCodes.Insert(new CustomerHTSCode(hTSCodeItem, this, true));
+        var hTSCodeItem: HTSCodePM = new HTSCodePM(null);        
         hTSCodeItem.Tenant = SessionLocator.Tenant;
         hTSCodeItem.ItemId = this.EntityPM.Id;
+        this.HTSCodes.Insert(new CustomerHTSCode(hTSCodeItem, this, true));
     }
 
     OnRowEnded($event) {
-        var errors = [];
+        var errors  = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
+
         if (($event) == this.HTSCodes.Length) {
             this.AddHTSCode();
         }
@@ -143,15 +145,32 @@ export class CustomerProductItem extends BaseComponent {
     public EntityPM: ProductItemPM;
     public ObjectTableName: string = "ProductItem";
     public IsNewEntity: boolean = false;
+    public FatherComponent: CustomerProductItemsTabComponent;
 
     constructor(entity: ProductItemPM, public fatherComponent: CustomerProductItemsTabComponent, isNew: boolean) {
         super();
         this.EntityPM = entity;
         this.IsNewEntity = isNew;
+        this.FatherComponent = fatherComponent;
     }
 
     SetUIProperties() {
 
+    }
+
+    public ResetPackageItems() {
+        if (this.FatherComponent.ProductItems != null) {
+            var items: ProductItemPM[] = this.FatherComponent.EntityPM.CustomerProductItems;
+            items.forEach(item => {
+                var savedItem: ProductItemPM = this.FatherComponent.ProductItems.Collection[this.FatherComponent.ProductItems.Length - 1];
+                if (savedItem == null) {
+                    if (this.FatherComponent.EntityPM.CustomerProductItems.indexOf(item) != -1) {
+                        this.FatherComponent.EntityPM.RemoveProductItemPM(item);
+                    }
+                }
+
+            });
+        }
     }
 
     get InActive() { return this.EntityPM.InActive; }
@@ -202,8 +221,8 @@ export class CustomerHTSCode extends BaseComponent {
     }
 
     SetUIProperties() {
-        this.UIProperties.SetRequired("Code", "HTSCode", false);
-        this.UIProperties.SetRequired("DestinationCountryId", "HTSCode", false);
+        this.UIProperties.SetRequired("Code", "HTSCode", AppTool.IsNullOrEmpty(this.Code));
+        this.UIProperties.SetRequired("DestinationCountryId", "HTSCode", AppTool.IsNullOrEmpty(this.DestinationCountryId));
     }
 
     get Id() {
@@ -308,4 +327,12 @@ export class CustomerHTSCode extends BaseComponent {
             this.EntityPM.CountryEnglishName = newValue;
         }
     }
+
+    get InActive() { return this.EntityPM.InActive; }
+    set InActive(value: boolean) {
+        if (this.EntityPM.InActive != value) {
+            this.EntityPM.InActive = value;
+        }
+    }
+
 }

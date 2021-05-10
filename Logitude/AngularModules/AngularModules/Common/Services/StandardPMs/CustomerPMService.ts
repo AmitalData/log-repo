@@ -41,6 +41,7 @@ import {CustomerMediatorByProductPM} from '../../EntityPMs/CustomerMediatorByPro
 import {CardExternalCodeByCurrencyPM} from '../../EntityPMs/CardExternalCodeByCurrencyPM';
 import { ProductItemPM } from '../../EntityPMs/ProductItemPM';
 import { HTSCodePM } from '../../EntityPMs/HTSCodePM';
+import { CustomerValidator } from '../../Validators/CustomerValidator';
 
 @Injectable()
 
@@ -149,9 +150,14 @@ export class CustomerPMService {
             var validator: ClassLevelValidator;
 
             validator = new ClassLevelValidator();
+            var entityValidator: CustomerValidator = new CustomerValidator();
 
             var errorsArray = validator.Validate("Customer", entityPM);
+            var entityErrors = entityValidator.Validate(entityPM);
 
+            if (entityErrors) {
+                errorsArray = errorsArray.concat(entityErrors);
+            }
 
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
