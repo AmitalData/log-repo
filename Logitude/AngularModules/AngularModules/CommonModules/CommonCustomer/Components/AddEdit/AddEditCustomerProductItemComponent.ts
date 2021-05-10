@@ -54,6 +54,32 @@ export class AddEditCustomerProductItemComponent extends BaseComponent {
 
     OkButtonClicked() {
         var errors: string[] = [];
+
+
+        if (this.CustomerProductItem.IsNewEntity) {
+            this.CustomerPM.AddProductItemPM(this.CustomerProductItem.EntityPM);
+            if (this.FatherComponent.HTSCodes != null) {
+
+                var currentProductItem = this.CustomerPM.CustomerProductItems.filter(a => a.Id == this.CustomerProductItem.EntityPM.Id)[0];
+                this.FatherComponent.HTSCodes.Collection.forEach(item => {
+                    if (item.IsNewEntity) {
+                        currentProductItem.AddHTSCodePM(item.EntityPM);
+                    }
+                });
+            }
+        } else {
+           if (this.FatherComponent.HTSCodes != null) {
+
+             var currentProductItem = this.CustomerPM.CustomerProductItems.filter(a => a.Id == this.CustomerProductItem.EntityPM.Id)[0];
+             this.FatherComponent.HTSCodes.Collection.forEach(item => {
+                if (item.IsNewEntity) {
+                    currentProductItem.AddHTSCodePM(item.EntityPM);
+                }
+             });
+           }
+        }
+    
+
         Validator.TryValidateObject(this.CustomerProductItem.EntityPM, this.DataContext.ObjectTableName, errors);
         var entityValidator: CustomerValidator = new CustomerValidator();
         var entityErrors = entityValidator.Validate(this.FatherComponent.EntityPM);
@@ -63,23 +89,6 @@ export class AddEditCustomerProductItemComponent extends BaseComponent {
         }
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
-
-            if (this.CustomerProductItem.IsNewEntity) {
-                this.CustomerPM.AddProductItemPM(this.CustomerProductItem.EntityPM);
-            }
-
-            if (this.FatherComponent.HTSCodes != null) {
-                this.FatherComponent.HTSCodes.Collection.forEach(item => {
-                    if (item.IsNewEntity) {
-
-                        this.CustomerPM.CustomerProductItems.forEach(product => {
-                            if (product.Id == this.CustomerProductItem.EntityPM.Id) {
-                                product.AddHTSCodePM(item.EntityPM);
-                            }
-                        });
-                    }
-                });               
-            }
             this.CurrentSession.CloseCurrentWindow();
         }
     }
