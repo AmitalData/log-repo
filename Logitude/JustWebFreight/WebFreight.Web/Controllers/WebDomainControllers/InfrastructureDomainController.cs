@@ -614,6 +614,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
                     ParticipantRepository participantRepository = new ParticipantRepository(myCommonContext);
+                    PortRepository portRepository = new PortRepository(myCommonContext);
 
                     IQueryable<Participant> allParticipants = participantRepository.GetParticipants(myAirlineTenantManagement.Id);
                     Participant myParticipant = allParticipants.Where(d => d.ForwarderTenant == tenant).FirstOrDefault();
@@ -664,9 +665,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 statistics.Flight2Date = shipment.Transshipment1ATD != null ? shipment.Transshipment1ATD : shipment.Transshipment1ETD;
                                 statistics.Flight3 = shipment.Transshipment2CarrierCode + shipment.Transshipment2CarrierNumber;
                                 statistics.Flight3Date = shipment.Transshipment2ATD != null ? shipment.Transshipment2ATD : shipment.Transshipment2ETD;
-                                statistics.OnCarriageTo = shipment.OnCarriageToPortCode;
+                                statistics.OnCarriageTo = this.GetPortCodeById(shipment.OnCarriageToPortId, statistics.Tenant, portRepository);
                                 statistics.OnCarriageDate = shipment.OnCarriageATD != null ? shipment.OnCarriageATD : shipment.OnCarriageETD;
-                                statistics.PreCarriageFrom = shipment.PreCarriageFromPortCode;
+                                statistics.PreCarriageFrom = this.GetPortCodeById(shipment.PreCarriageFromPortId, statistics.Tenant, portRepository);
                                 statistics.PreCarriageDate = shipment.PreCarriageATD != null ? shipment.PreCarriageATD : shipment.PreCarriageETD;
                                 statistics.IsCancelled = shipment.IsCancelled;
                                 statistics.AirlinePrefix = shipment.AirlinePrefix;
@@ -722,9 +723,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 newRecord.Flight2Date = shipment.Transshipment1ATD != null ? shipment.Transshipment1ATD : shipment.Transshipment1ETD;
                                 newRecord.Flight3 = shipment.Transshipment2CarrierCode + shipment.Transshipment2CarrierNumber;
                                 newRecord.Flight3Date = shipment.Transshipment2ATD != null ? shipment.Transshipment2ATD : shipment.Transshipment2ETD;
-                                newRecord.OnCarriageTo = shipment.OnCarriageToPortCode;
+                                newRecord.OnCarriageTo = this.GetPortCodeById(shipment.OnCarriageToPortId, myAirlineTenantManagement.Id, portRepository);
                                 newRecord.OnCarriageDate = shipment.OnCarriageATD != null ? shipment.OnCarriageATD : shipment.OnCarriageETD;
-                                newRecord.PreCarriageFrom = shipment.PreCarriageFromPortCode;
+                                newRecord.PreCarriageFrom = this.GetPortCodeById(shipment.PreCarriageFromPortId, myAirlineTenantManagement.Id, portRepository);
                                 newRecord.PreCarriageDate = shipment.PreCarriageATD != null ? shipment.PreCarriageATD : shipment.PreCarriageETD;
                                 newRecord.IsCancelled = shipment.IsCancelled;
                                 newRecord.AirlinePrefix = shipment.AirlinePrefix;
@@ -859,6 +860,23 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        private string GetPortCodeById(string portId, int tenant, PortRepository portRepository)
+        {
+            string portCode = null;
+
+            if (!string.IsNullOrEmpty(portId))
+            {
+                Port myPort = portRepository.GetSinglePort(portId, tenant);
+                if (myPort != null)
+                {
+                    portCode = myPort.Code;
+                }
+            }
+
+            return portCode;
+        }
+
         private string BuildSearchFields(AirlineStatistics entity)
         {
             string mySearchFields = "";
