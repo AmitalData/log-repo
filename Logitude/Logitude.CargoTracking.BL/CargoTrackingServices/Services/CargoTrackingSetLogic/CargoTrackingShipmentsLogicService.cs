@@ -27,7 +27,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             SetGrossWeightUnit(tableRow);
             SetCurrentMilestone(tableRow);
             SetShipmentTypeCode(tableRow);
-            SetPackagesQuantity(tableRow);
         }
 
        
@@ -488,9 +487,5 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             tableRow.SetField("ShipmentTypeCode", tableRow["ShipmentTypeId"]);
         }
 
-        private static void SetPackagesQuantity(DataRow tableRow)
-        {
-            tableRow.SetField("PackagesQuantity", tableRow["NumberOfPackages"]);
-        }
     }
 }
