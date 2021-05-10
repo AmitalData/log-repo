@@ -80,54 +80,54 @@ namespace Logitude.ShipmentTests.Features
         {
 #line 6
 #line hidden
-            TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table20 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
                         "Value"});
-            table8.AddRow(new string[] {
+            table20.AddRow(new string[] {
                         "Direction",
                         "Export"});
-            table8.AddRow(new string[] {
+            table20.AddRow(new string[] {
                         "TransportMode",
                         "Ocean"});
-            table8.AddRow(new string[] {
+            table20.AddRow(new string[] {
                         "ShipmentType",
                         "FCLD"});
-            table8.AddRow(new string[] {
+            table20.AddRow(new string[] {
                         "ShipperReference1",
                         "SR1"});
-            table8.AddRow(new string[] {
+            table20.AddRow(new string[] {
                         "ShipperReference2",
                         "SR2"});
-            table8.AddRow(new string[] {
+            table20.AddRow(new string[] {
                         "GrossWeightUnit",
                         "KG"});
-            table8.AddRow(new string[] {
+            table20.AddRow(new string[] {
                         "ChargeableWeightUnit",
                         "KG"});
-            table8.AddRow(new string[] {
+            table20.AddRow(new string[] {
                         "VolumeUnit",
                         "TES"});
-            table8.AddRow(new string[] {
+            table20.AddRow(new string[] {
                         "Incoterm",
                         "LDE"});
-            table8.AddRow(new string[] {
+            table20.AddRow(new string[] {
                         "MainCarriageCarrier",
                         "MSCU"});
 #line 7
- testRunner.Given("a direct shipment with the following fields", ((string)(null)), table8, "Given ");
+ testRunner.Given("a direct shipment with the following fields", ((string)(null)), table20, "Given ");
 #line hidden
-            TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table21 = new TechTalk.SpecFlow.Table(new string[] {
                         "LegIndex",
                         "Carrier",
                         "FromPort",
                         "ToPort"});
-            table9.AddRow(new string[] {
+            table21.AddRow(new string[] {
                         "1",
                         "MSCU",
                         "USNYC",
                         "USSOU"});
 #line 19
- testRunner.And("a main carriage leg", ((string)(null)), table9, "And ");
+ testRunner.And("a main carriage leg", ((string)(null)), table21, "And ");
 #line hidden
 #line 22
  testRunner.When("create shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");

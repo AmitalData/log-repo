@@ -1,4 +1,5 @@
-﻿using Logitude.Test.Base.Models.BillingsPreparation;
+﻿using Logitude.ShipmentTests.Models.Accounting;
+using Logitude.Test.Base.Models.BillingsPreparation;
 using Logitude.Test.Base.Models.UserTenantPreparation;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
@@ -34,6 +35,11 @@ namespace Logitude.ShipmentTests.Models.Builders
         public ReceivableBuilder ShipmentId(string shipmentId)
         {
             _receivablePM.ShipmentId = shipmentId;
+            return this;
+        }
+        public ReceivableBuilder ShipmentNumber(string ShipmentNumber)
+        {
+            _receivablePM.ShipmentNumber = ShipmentNumber;
             return this;
         }
 
@@ -73,6 +79,30 @@ namespace Logitude.ShipmentTests.Models.Builders
             return this;
         }
 
+        public ReceivableBuilder Quantity(double? Quantity)
+        {
+            _receivablePM.Quantity = Quantity;
+            return this;
+        }
+
+        public ReceivableBuilder Rate(double? Rate)
+        {
+            _receivablePM.Rate = Rate;
+            return this;
+        }
+
+        public ReceivableBuilder TotalAmount(double? TotalAmount)
+        {
+            _receivablePM.TotalAmount = TotalAmount;
+            return this;
+        }
+
+        public ReceivableBuilder TotalAmountLocal(double? TotalAmountLocal)
+        {
+            _receivablePM.TotalAmountLocal = TotalAmountLocal;
+            return this;
+        }
+
         public ReceivableBuilder CurrencyId(string currencyId)
         {
             _receivablePM.CurrencyId = currencyId;
@@ -106,6 +136,11 @@ namespace Logitude.ShipmentTests.Models.Builders
         public ReceivableBuilder MeasurementCode(string measurementCode)
         {
             _receivablePM.MeasurementCode = measurementCode;
+            return this;
+        }
+        public ReceivableBuilder ChangeSetOp(ChangeSetOperation ChangeSetOp)
+        {
+            _receivablePM.ChangeSetOp = ChangeSetOp;
             return this;
         }
 

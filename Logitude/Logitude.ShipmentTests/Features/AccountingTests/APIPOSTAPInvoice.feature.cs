@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Logitude.ShipmentTests.Features
+namespace Logitude.ShipmentTests.Features.AccountingTests
 {
     using TechTalk.SpecFlow;
     using System;
@@ -19,7 +19,7 @@ namespace Logitude.ShipmentTests.Features
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class POSTShipmentDirectExportAirFeature : object, Xunit.IClassFixture<POSTShipmentDirectExportAirFeature.FixtureData>, System.IDisposable
+    public partial class POSTAPInvoiceFeature : object, Xunit.IClassFixture<POSTAPInvoiceFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -28,10 +28,10 @@ namespace Logitude.ShipmentTests.Features
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "APIPOSTShipmentDirectExportAir.feature"
+#line 1 "APIPOSTAPInvoice.feature"
 #line hidden
         
-        public POSTShipmentDirectExportAirFeature(POSTShipmentDirectExportAirFeature.FixtureData fixtureData, Logitude_ShipmentTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public POSTAPInvoiceFeature(POSTAPInvoiceFeature.FixtureData fixtureData, Logitude_ShipmentTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -40,7 +40,7 @@ namespace Logitude.ShipmentTests.Features
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "POST Shipment Direct Export Air", "\tThe API creates a Direct Export Air shipment.", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/AccountingTests", "POST AP Invoice", "\tThe API creates AP Invoice for a vendor.", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -80,14 +80,14 @@ namespace Logitude.ShipmentTests.Features
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="POST Shipment Direct Export Air")]
-        [Xunit.TraitAttribute("FeatureTitle", "POST Shipment Direct Export Air")]
-        [Xunit.TraitAttribute("Description", "POST Shipment Direct Export Air")]
-        public virtual void POSTShipmentDirectExportAir()
+        [Xunit.SkippableFactAttribute(DisplayName="POST AP invoice")]
+        [Xunit.TraitAttribute("FeatureTitle", "POST AP Invoice")]
+        [Xunit.TraitAttribute("Description", "POST AP invoice")]
+        public virtual void POSTAPInvoice()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("POST Shipment Direct Export Air", null, tagsOfScenario, argumentsOfScenario);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("POST AP invoice", null, tagsOfScenario, argumentsOfScenario);
 #line 4
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -108,38 +108,71 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table13 = new TechTalk.SpecFlow.Table(new string[] {
+#line 5
+ testRunner.Given("a direct shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+                TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                             "property",
                             "Value"});
-                table13.AddRow(new string[] {
-                            "Direction",
-                            "Export"});
-                table13.AddRow(new string[] {
-                            "TransportMode",
-                            "Air"});
-                table13.AddRow(new string[] {
-                            "ShipmentLevel",
-                            "Direct"});
-                table13.AddRow(new string[] {
-                            "FreightPrepaidCollect",
-                            "Collect"});
-                table13.AddRow(new string[] {
-                            "OtherPrepaidCollect",
-                            "Collect"});
-                table13.AddRow(new string[] {
-                            "MainCarriageToPort",
-                            "JFK"});
-                table13.AddRow(new string[] {
-                            "MainCarriageFromPort",
-                            "MIA"});
-#line 5
- testRunner.Given("a direct shipment with the following properties", ((string)(null)), table13, "Given ");
+                table1.AddRow(new string[] {
+                            "Vendor",
+                            "TestVendor"});
+                table1.AddRow(new string[] {
+                            "InvoiceNumber",
+                            "98675625870"});
+                table1.AddRow(new string[] {
+                            "InvoiceAmount",
+                            "100"});
+                table1.AddRow(new string[] {
+                            "InvoiceCurrency",
+                            "EUR"});
+                table1.AddRow(new string[] {
+                            "ExchangeRate",
+                            "3.8"});
+                table1.AddRow(new string[] {
+                            "InvoiceDate",
+                            "Today"});
+                table1.AddRow(new string[] {
+                            "PaymentTerms",
+                            "Cash"});
+                table1.AddRow(new string[] {
+                            "DueDate",
+                            "Today"});
+                table1.AddRow(new string[] {
+                            "VatNumber",
+                            "zero"});
+#line 6
+ testRunner.And("a payable receive invoice with the following properties", ((string)(null)), table1, "And ");
 #line hidden
-#line 14
- testRunner.When("create direct shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+                TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                            "property",
+                            "Value"});
+                table2.AddRow(new string[] {
+                            "ChargesTypeName",
+                            "Air Freight"});
+                table2.AddRow(new string[] {
+                            "ChargesType",
+                            "AFT"});
+                table2.AddRow(new string[] {
+                            "VatType",
+                            "Zero"});
+                table2.AddRow(new string[] {
+                            "VatPrecentage",
+                            "0"});
+                table2.AddRow(new string[] {
+                            "Amount",
+                            "100"});
+                table2.AddRow(new string[] {
+                            "Description",
+                            "API POST AP Invoice"});
+#line 17
+ testRunner.And("an invoice line with the following properties", ((string)(null)), table2, "And ");
 #line hidden
-#line 15
- testRunner.Then("the direct should create successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 25
+ testRunner.When("create APInvoice", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 26
+ testRunner.Then("the APInvoice should create successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -152,12 +185,12 @@ this.ScenarioInitialize(scenarioInfo);
             
             public FixtureData()
             {
-                POSTShipmentDirectExportAirFeature.FeatureSetup();
+                POSTAPInvoiceFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                POSTShipmentDirectExportAirFeature.FeatureTearDown();
+                POSTAPInvoiceFeature.FeatureTearDown();
             }
         }
     }

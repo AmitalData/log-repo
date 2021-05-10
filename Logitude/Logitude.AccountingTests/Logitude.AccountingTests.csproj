@@ -118,6 +118,7 @@
     <None Include="app.config" />
     <None Include="Features\APIGETAPInvoice.feature" />
     <None Include="Features\APIPOSTAPInvoice.feature" />
+    <None Include="Features\APIPOSTARInvoice.feature" />
     <None Include="Features\APIPUTAPInvoice.feature" />
     <None Include="packages.config" />
   </ItemGroup>

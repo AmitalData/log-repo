@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Logitude.ShipmentTests.Features
+namespace Logitude.ShipmentTests.Features.AccountingTests
 {
     using TechTalk.SpecFlow;
     using System;
@@ -19,7 +19,7 @@ namespace Logitude.ShipmentTests.Features
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class POSTShipmentDirectExportAirFeature : object, Xunit.IClassFixture<POSTShipmentDirectExportAirFeature.FixtureData>, System.IDisposable
+    public partial class GETAPInvoiceFeature : object, Xunit.IClassFixture<GETAPInvoiceFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -28,10 +28,10 @@ namespace Logitude.ShipmentTests.Features
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "APIPOSTShipmentDirectExportAir.feature"
+#line 1 "APIGETAPInvoice.feature"
 #line hidden
         
-        public POSTShipmentDirectExportAirFeature(POSTShipmentDirectExportAirFeature.FixtureData fixtureData, Logitude_ShipmentTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public GETAPInvoiceFeature(GETAPInvoiceFeature.FixtureData fixtureData, Logitude_ShipmentTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -40,7 +40,7 @@ namespace Logitude.ShipmentTests.Features
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "POST Shipment Direct Export Air", "\tThe API creates a Direct Export Air shipment.", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/AccountingTests", "GET AP Invoice", "\tThe API retrieves AP Invoice.", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -80,14 +80,14 @@ namespace Logitude.ShipmentTests.Features
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="POST Shipment Direct Export Air")]
-        [Xunit.TraitAttribute("FeatureTitle", "POST Shipment Direct Export Air")]
-        [Xunit.TraitAttribute("Description", "POST Shipment Direct Export Air")]
-        public virtual void POSTShipmentDirectExportAir()
+        [Xunit.SkippableFactAttribute(DisplayName="GET AP Invoice")]
+        [Xunit.TraitAttribute("FeatureTitle", "GET AP Invoice")]
+        [Xunit.TraitAttribute("Description", "GET AP Invoice")]
+        public virtual void GETAPInvoice()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("POST Shipment Direct Export Air", null, tagsOfScenario, argumentsOfScenario);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("GET AP Invoice", null, tagsOfScenario, argumentsOfScenario);
 #line 4
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -108,38 +108,11 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table13 = new TechTalk.SpecFlow.Table(new string[] {
-                            "property",
-                            "Value"});
-                table13.AddRow(new string[] {
-                            "Direction",
-                            "Export"});
-                table13.AddRow(new string[] {
-                            "TransportMode",
-                            "Air"});
-                table13.AddRow(new string[] {
-                            "ShipmentLevel",
-                            "Direct"});
-                table13.AddRow(new string[] {
-                            "FreightPrepaidCollect",
-                            "Collect"});
-                table13.AddRow(new string[] {
-                            "OtherPrepaidCollect",
-                            "Collect"});
-                table13.AddRow(new string[] {
-                            "MainCarriageToPort",
-                            "JFK"});
-                table13.AddRow(new string[] {
-                            "MainCarriageFromPort",
-                            "MIA"});
 #line 5
- testRunner.Given("a direct shipment with the following properties", ((string)(null)), table13, "Given ");
+ testRunner.When("get APInvoice with APInvoiceNumber", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 14
- testRunner.When("create direct shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 15
- testRunner.Then("the direct should create successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 6
+ testRunner.Then("APInvoice should be avaliable", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -152,12 +125,12 @@ this.ScenarioInitialize(scenarioInfo);
             
             public FixtureData()
             {
-                POSTShipmentDirectExportAirFeature.FeatureSetup();
+                GETAPInvoiceFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                POSTShipmentDirectExportAirFeature.FeatureTearDown();
+                GETAPInvoiceFeature.FeatureTearDown();
             }
         }
     }
