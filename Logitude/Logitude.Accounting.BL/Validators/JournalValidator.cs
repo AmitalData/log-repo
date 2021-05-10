@@ -585,7 +585,7 @@ namespace Logitude.Accounting.BL.Validators
 
         private void ValidateJournalLinesForFutureDate(JournalPM myJournalPM)
         {
-            if (myJournalPM.ConversionJournal)
+            if (myJournalPM.ExternalSystem=="AMITAL")
             {
                 return;//Task 139496: נטרול ולידציה בפק יומן מהסבות - תאריך אסמכתא
             }
