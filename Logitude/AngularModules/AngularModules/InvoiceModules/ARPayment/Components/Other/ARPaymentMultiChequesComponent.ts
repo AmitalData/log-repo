@@ -42,6 +42,7 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
         this.ItemsSource = new ObservableCollection([]);
         this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
         this.isLTR = (ObjectsLocator.GlobalSetting.LayoutDirection == "ltr");
+        this.CalculateTotal();
     }
    
     SetWindowArgs(args: any) {

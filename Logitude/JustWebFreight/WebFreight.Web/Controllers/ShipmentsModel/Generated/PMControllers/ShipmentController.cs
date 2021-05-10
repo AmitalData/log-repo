@@ -631,11 +631,11 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                         CustomData.RequestPaymentData = MyPaymentData;
                         //var MyPaymentData = LogitudeXmlSerializer.DeserializeObject<RequestPayment>(data.PaymentRequestXML);
                         var myId = Path.GetRandomFileName().Replace("&", "").Replace(".", "").Replace("=", "");
-                        var ShipmentNumber = CustomData.ShipmentNumber;
+                        var entityNumber =!string.IsNullOrEmpty(MyPaymentData.ProformaInvoiceNumber)? MyPaymentData.ProformaInvoiceNumber : CustomData.ShipmentNumber;
                         //"sum=199.9&supplier=amitaltest&TranzilaPW=4Jwdsb&currency=1&op=1&DCdisable="
                         var MyConString = MyAdditionalData.PaymentGatewayConnectionString;
                         MyConString = MyConString.Replace("*sum*", MyPaymentData.TotalChargesInNIS);
-                        MyConString = MyConString.Replace("*DCdisable*", ShipmentNumber);
+                        MyConString = MyConString.Replace("*DCdisable*", entityNumber);
                         MyConString = MyConString.Replace("*DclickTK*", myId);
                         string myParams = MyConString;// "sum=" + MyPaymentData.TotalChargesInNIS + "&supplier=amitaltest&TranzilaPW=4Jwdsb&currency=1&op=1&DCdisable=" + myId + "&DclickTK=" + myId;
                         Dictionary<string, string> dict = GetParamsAsDict(myParams);

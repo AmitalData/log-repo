@@ -187,8 +187,13 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
         private static void SyncShipmentMilstones(CargoTrackingArgs buildCargoArgs)
         {
-            ShipmentMilestonesSyncService syncService = new ShipmentMilestonesSyncService();
-            syncService.SyncShipmentMilstones(buildCargoArgs);
+            var tableName = buildCargoArgs.Table.Main_CargoTracking_TableName;
+            if(tableName == "CargoTrackingShipments")
+            {
+                ShipmentMilestonesSyncService syncService = new ShipmentMilestonesSyncService();
+                syncService.SyncShipmentMilstones(buildCargoArgs);
+            }
+
         }
 
         private RecordUpdated UpdateCargoTrackingDatabase(CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs, 

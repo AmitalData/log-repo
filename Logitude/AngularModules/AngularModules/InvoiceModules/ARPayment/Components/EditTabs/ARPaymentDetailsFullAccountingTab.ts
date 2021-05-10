@@ -1631,7 +1631,16 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             });
         }
     }
+    UpdatePaymentAmountFieldForPaymentCheque() {
+        if (this.EntityPM.ARPaymentChequeReplicas.length > 0) {
+            this.EntityPM.ARPaymentChequeReplicas.filter(d => d.LineNumber == 1).forEach((cheque: ARPaymentChequeReplicaPM) => {
+                if (cheque) {
+                    cheque.ForeignAmount = this.ChequeAmount;
+                }
+            });
+        }
 
+    }
     UpdateValueDateFieldForPaymentCheque() {
         if (this.EntityPM.ARPaymentChequeReplicas.length > 0) {
             this.EntityPM.ARPaymentChequeReplicas.filter(d => d.LineNumber == 1).forEach((cheque: ARPaymentChequeReplicaPM) => {
@@ -2026,6 +2035,10 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 this.AmountInPaymentCurrency = value;
             }
             this.chequeAmount = value;
+            if (this.EntityPM.AccountingPaymentMethodCode == "CH") {
+                this.UpdateChequeAmountFieldForPaymentCheque();
+            }
+            this.CalculatePaymentTotalAmount();
         }
     }
 	ComputeOpenAmount()
@@ -2229,13 +2242,16 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
     }
     CalculatePaymentTotalAmount() {
-        this.AmountInPaymentCurrency = 0;
+           
+        var total = 0;
         for (let cheque of this.EntityPM.ARPaymentChequeReplicas) {
             if (!AppTool.IsNullOrEmpty(cheque.ForeignAmount)) {
-                this.AmountInPaymentCurrency += cheque.ForeignAmount;
+                total += cheque.ForeignAmount;
 
             }
         }
+        if (this.EntityPM.ARPaymentChequeReplicas.length >0)
+        this.AmountInPaymentCurrency = total;
         this.ComputeLocalAmount();
         this.SetPaymentAmount();
     }
