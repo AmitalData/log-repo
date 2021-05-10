@@ -4584,7 +4584,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
-    ValidForQuerySection1="&quot;Customs.CourierMaster&quot;"
+    ValidForQuerySection1="&quot;&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -4688,11 +4688,6 @@
         QueryCode="&quot;OPENCOURIERMASTERS&quot;"
         IndexOrder="8"
         ObjectFieldName="&quot;IsCancelled&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;OPENCOURIERMASTERS&quot;"
-        IndexOrder="9"
-        ObjectFieldName="&quot;OpenDeclarations&quot;"
         ColumnWidth="100" />
     </QueryColumns>
     <QueryFilters>
