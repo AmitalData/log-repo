@@ -274,6 +274,26 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
                          );
                     }
                     break;
+                case "1423":
+                case "CertificateExemptionType":
+                    {
+
+                        closedTableService = new Update1423CertificateExemptionType(customContext, entitySystemTables,
+                         (mycustomContext) =>
+                         {
+                             return new
+                                 CertificateExemptionTypeUpdateService(mycustomContext, new Dictionary<string, IContext>(), tenant);
+                         },
+                         (mycustomContext) =>
+                         {
+                             var qs = new CertificateExemptionTypeQueryService(mycustomContext);
+                             return qs as ICanGetAllClosedTable<CertificateExemptionTypePM>;
+                         }
+                         , tenant
+                         , false
+                         );
+                    }
+                    break;
                 case "1998":
                 case "NDMessageActionCode":
                     {
