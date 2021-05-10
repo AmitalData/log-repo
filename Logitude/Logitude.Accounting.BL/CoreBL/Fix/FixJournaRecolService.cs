@@ -1,7 +1,9 @@
 ﻿
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
+using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.Repositories;
+using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -13,12 +15,20 @@ namespace Logitude.Accounting.BL.CoreBL.Fix
 {
     public class FixJournaRecolService
     {
+        public void FixByJournalNumber(string journalNumber, int tenant)
+        {
+            var repo = new JournalRepository(tenant);
+            var poco=repo.GetSingleJournalByNumber(journalNumber, tenant);
+            Fix(poco.Id, tenant);
+        }
         public void Fix(string journalId ,int tenant)
         {
+#if true
+
             using (var scope= TransactionFactory.GetTransaction())
             {
-                
-                var qs = new JournalQueryService(tenant);
+                var accountingContext = AccountingContext.GetContext(tenant);
+                var qs = new JournalQueryService(accountingContext);
                 var journalPM = qs.GetSingle(journalId, true,false);
                 if(journalPM.IsLedgerCreated)
                 {
@@ -40,7 +50,7 @@ namespace Logitude.Accounting.BL.CoreBL.Fix
                 {
                     throw new Exception("no line :pm.JournalReconciles.Count + pm.JournalExternalReconciles.Count()");
                 }
-                var legderRepo = new LedgerTransactionRepository(tenant);
+                var legderRepo = new LedgerTransactionRepository(accountingContext);
                 string ledgerTransactionId = legderRepo.GetAnyLedgerTransactionByJournalId(journalId, tenant);
                 if (!string.IsNullOrWhiteSpace(ledgerTransactionId))
                 {
@@ -49,22 +59,45 @@ namespace Logitude.Accounting.BL.CoreBL.Fix
                 if (journalPM.JournalReconciles.Count>0)
                 {
                     var listIds= journalPM.JournalReconciles.Select(jr => jr.LedgerTransactionId).ToList();
-                    var myLedgerTransactionUpdateService = new LedgerTransactionUpdateService(_AccountingContext, new Dictionary<string, IContext>(), _JournalPM.Tenant);
+                    var myLedgerTransactionUpdateService = new LedgerTransactionUpdateService(accountingContext, new Dictionary<string, IContext>(), journalPM.Tenant);
 
-                    var listTransactionId = _JournalPM.JournalReconciles.Select(r => r.LedgerTransactionId).ToList();
+                    var listTransactionId = journalPM.JournalReconciles.Select(r => r.LedgerTransactionId).ToList();
                     if (listTransactionId.Count > 0)
                     {
-                        myLedgerTransactionUpdateService.UpdateInReconcileProgress(listTransactionId, _JournalPM.Tenant, false);
+                        myLedgerTransactionUpdateService.UpdateInReconcileProgress(listTransactionId, journalPM.Tenant, false);
                     }
 
                 }
+                if (journalPM.JournalExternalReconciles.Count > 0)
+                {
+                    var myLedgerTransactionUpdateService = new LedgerTransactionUpdateService(accountingContext, new Dictionary<string, IContext>(), journalPM.Tenant);
 
+                    var listTransactionId = journalPM.JournalExternalReconciles.Select(r => r.LedgerTransactionId).ToList();
+                    if (listTransactionId.Count > 0)
+                    {
+                        myLedgerTransactionUpdateService.Update_InProgressExternalReconcile(listTransactionId, journalPM.Tenant, false);
+                    }
 
+                    var listReconcileExternalPageLineId = journalPM.JournalExternalReconciles.Select(r => r.ReconcileExternalPageLineId).ToList();
+                    if (listReconcileExternalPageLineId.Count > 0)
+                    {
+                        var reconcileExternalPageLineUpdateService = new ReconcileExternalPageLineUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), journalPM.Tenant);
+                        reconcileExternalPageLineUpdateService.Update_InProgressExternalReconcile(listReconcileExternalPageLineId, journalPM.Tenant, false);
+                    }
+                }
 
-
+                journalPM.JournalReconciles.ForEach(r => r.ChangeSetOp = ChangeSetOperation.Delete);
+                journalPM.JournalExternalReconciles.ForEach(r => r.ChangeSetOp = ChangeSetOperation.Delete);
+                journalPM.ChangeSetOp = ChangeSetOperation.Update;
+                journalPM.StatusCode = "0";
+                journalPM.AccountingEntityCode = "1";
+                var journalUpdateService= new JournalUpdateService(accountingContext);
+                journalUpdateService.Update(journalPM,true);
+                //accountingContext.SaveChanges;
+                scope.Complete();
 
             }
-            
+#endif
         }
     }
 }
