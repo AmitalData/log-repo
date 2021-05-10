@@ -771,7 +771,8 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
             filters.addAdditionalFilter("InvoiceNumber", this.SelectedInvoiceNumber, null, null, "Equals", false, false, false, "string");
         }
         if (!AppTool.IsNullOrEmpty(this.SearchText)){
-            filters.addAdditionalFilter("ClassificationCode", this.SearchText, null, null, "Contains", false, false, false, "string");            
+            //filters.addAdditionalFilter("ClassificationCode", this.SearchText, null, null, "Contains", false, false, false, "string");
+            filters.addAdditionalFilter("SearchFields", this.SearchText, null, null, "Contains", false, false, false, "string");
         }
         if (this.selecteCertificate) {
             if (this.ConfirmationType) {
