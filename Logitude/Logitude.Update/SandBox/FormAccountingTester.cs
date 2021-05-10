@@ -178,7 +178,7 @@ namespace Logitude.Update.SandBox
         private void fixJournalToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var fixJournaRecolService = new FixJournaRecolService();
-            fixJournaRecolService.FixByNumber("2285458", 3);
+            fixJournaRecolService.FixByJournalNumber("2285458", 3);
         }
     }
 }
