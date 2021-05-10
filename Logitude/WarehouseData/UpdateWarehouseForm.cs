@@ -103,10 +103,10 @@ namespace WarehouseData
                             }
 
 
-                            foreach (TableClass table in tableNameLists.Where(d=>!d.HasFactTable))
+                            Parallel.ForEach(tableNameLists.Where(d => !d.HasFactTable).ToList(), (table) =>
                             {
-                               
-                               
+                             
+                                
                                 Stopwatch stopWatchDWTable = null;
                                 if (table.DispayInScreen)
                                 {
@@ -118,13 +118,8 @@ namespace WarehouseData
                                 stepName = table.DBTableName;
                                 if (table.DBTableName != "WaterMarks")
                                 {
-                                    if(table.TableName == "Shipment")
-                                    {
-
-                                    }
-
                                     mainDataWarehouseService.UpdateDWDataBase(table, sourceConnectionString, destinationConnectionString);
-                
+
                                     if (table.DispayInScreen)
                                     {
                                         string message = !table.IsUpdated ? "  No update available" : ("  Updated (" + table.UpdatedCount.ToString() + "Records )");
@@ -136,7 +131,7 @@ namespace WarehouseData
 
                                     }
                                 }
-                            }
+                            });
 
                             #endregion
 
@@ -144,7 +139,7 @@ namespace WarehouseData
 
 
                             #region Update Dimensions Table
-                            foreach (TableClass table in tableNameLists.Where(d => d.HasDimensionTable).ToList())
+                            Parallel.ForEach(tableNameLists.Where(d => d.HasDimensionTable).ToList(), (table) =>
                             {
                                 Stopwatch stopWatchDimensionsTable = null;
                                 stepName = table.IncrementalScriptName;
@@ -161,13 +156,13 @@ namespace WarehouseData
                                 SetControlPropertyValue("Text", "Done in ( " + stopWatchDimensionsTableTs.ToString(@"hh\:mm\:ss") + " )", table, "Dim");
                                 SetControlPropertyValue("ForeColor", Color.Green, table, "Dim");
 
-                            }
+                            });
                             #endregion
 
                             #region Update Fact Table
 
 
-                            foreach (TableClass table in tableNameLists.Where(d => d.HasFactTable).ToList())
+                            Parallel.ForEach(tableNameLists.Where(d => d.HasFactTable).ToList(), (table) =>
                             {
                                 stepName = table.IncrementalScriptName;
 
@@ -180,7 +175,7 @@ namespace WarehouseData
                                 TimeSpan stopWatchDFactTableTs = stopWatchDFactTable.Elapsed;
                                 SetControlPropertyValue("ForeColor", Color.Green, table, "Fact");
                                 SetControlPropertyValue("Text", "Done in ( " + stopWatchDFactTableTs.ToString(@"hh\:mm\:ss") + " )", table, "Fact");
-                            }
+                            });
 
 
                             #endregion
