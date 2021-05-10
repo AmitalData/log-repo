@@ -14,6 +14,7 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
         public ModificationAndDiscountType MyModificationAndDiscountType { get; set; }
         public NDMessageActionCode MyNDMessageActionCode { get; set; }
         public ContainerType MyContainerType { get; set; }
+        public CertificateExemptionType MyCertificateExemptionType { get; set; }
 
 
         internal static SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt CreateNew(SYSTBL_NG_9001_MSG_SystemTablesResponseTableData item)
@@ -59,6 +60,13 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
         public Boolean IsIsoTankContainer { get; set; }
         public Boolean IsNeedSeal { get; set; }
         public Boolean IsAerial { get; set; }
+
+    }
+    public class CertificateExemptionType
+    {
+        public Boolean IsImportDeclaration { get; set; }
+        public Boolean IsExportDeclaration { get; set; }
+
 
     }
 }

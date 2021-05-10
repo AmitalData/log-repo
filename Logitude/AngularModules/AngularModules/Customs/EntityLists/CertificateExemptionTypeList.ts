@@ -13,6 +13,8 @@ export class CertificateExemptionTypeList {
 	LocalName: string;
 	SearchFields: string;
 	Inactive: boolean;
+	IsImportDeclaration: boolean;
+	IsExportDeclaration: boolean;
 	
 }
  

@@ -38,7 +38,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             string courierMasterId = null, objectTableID = null, entityReference = null;
             var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
             var defInterfaceName_ECOVSTB_Splited = customsPartnerFtpDetails.GetAllInterfaceDetails()
-                    .Where(r => r.Code == CustomsPartnerFtpDetails.InterfaceName_ECOVSTB_Splited).First();
+                    .Where(r => r.Code == CustomsPartnerFtpDetails.InterfaceName_ECSWSSTB_Splited).First();
 
 
             var defInterfaceName_ECSTS_real = customsPartnerFtpDetails.GetAllInterfaceDetails()

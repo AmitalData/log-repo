@@ -374,7 +374,7 @@ export class CourierWorksheetListTemplate {
     get WebAPICourierGWMessageECTHRDataMaman() { return this._CourierWorksheetSharedDataService.WebAPICourierGWMessageECTHRDataMaman }
     //get CourierPendingReasonListToolTip() { return this.CourierPendingReasonListToolTip ; }
     get CourierPendingReasonListToolTip() {
-
+        debugger;
         if (AppTool.IsNullOrEmpty(this._CourierWorksheet.CourierPendingReasonList)) {
             return "";
         }
@@ -387,7 +387,7 @@ export class CourierWorksheetListTemplate {
         let listString: string =this._CourierWorksheet.CourierPendingReasonList;
         let arry = listString.split(',');
         arry.forEach(itemReason => {
-            let rec = mycache.filter(r => r.Id == itemReason)[0];
+            let rec = mycache.filter(r => r.Code == itemReason)[0];
             if (rec != null) {
                 if (!AppTool.IsNullOrEmpty(myToolTip)) {
                     myToolTip += '\n'

@@ -404,9 +404,8 @@
                                     <log-column [header]="'Customs.Declaration.O.FreightAmount' | TextCodeTranslationPipe" [binding]="'TotalFreightInFreightCurrency'" [width]="'90'" [Alignment]="'right'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                <div style="text-align:right">
-                                                    <span style="padding-right:5px">{{item.TotalFreightInFreightCurrency | NumbersPipe:'n2'}}</span>
-                                                    <span style="float: right; ">{{item.FreightCurrencyTypeCode}}</span>
+                                                <div style="text-align:right; direction:ltr;">
+                                                    <span style="float: right; ">{{item.ExportFreightAmount}}</span>
                                                 </div>
 
                                             </log-cell-template>
@@ -416,10 +415,8 @@
                                     <log-column [width]="'90'" [visibility]="'visibile'" [Alignment]="'right'" [header]="'Customs.Declaration.O.Insurance' | TextCodeTranslationPipe">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                <div style="text-align:right">
-                                                    <span style="padding-right:5px">{{item.InsuranceAmount | NumbersPipe:'n2'}}</span>
-                                                    <span style="float: right; ">{{item.InsruanceCurrencyTypeCode}}</span>
-
+                                                <div style="text-align:right;direction:ltr;">
+                                                    <span style="padding-right:5px">{{item.ExportInsuranceAmount}}</span>
                                                 </div>
 
 

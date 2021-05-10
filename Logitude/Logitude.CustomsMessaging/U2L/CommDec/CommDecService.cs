@@ -1178,7 +1178,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 {
 
 
-
+                    if (false) {
                     CourierMaster courierMaster = courierMasterRepository.GetSingle(new CourierMasterKeys() { Id = _CourierMasterPM.Id });
 
                     if (courierMaster != null)
@@ -1212,6 +1212,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
                         }
 
+                        }
                     }
 
                 }

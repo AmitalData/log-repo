@@ -15,7 +15,7 @@
   <Column
     Name="EnglishName"
     Type="varchar"
-    Size="40">
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>
@@ -35,6 +35,18 @@
   </Column>
   <Column
     Name="Inactive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsImportDeclaration"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsExportDeclaration"
     Type="bit">
     <Constraints
       Nullable="false" />

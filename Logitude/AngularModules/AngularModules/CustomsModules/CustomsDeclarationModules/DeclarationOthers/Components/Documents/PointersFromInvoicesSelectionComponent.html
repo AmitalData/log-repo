@@ -1,4 +1,4 @@
-﻿
+
 <style>
     
     .subTitle {
@@ -139,24 +139,29 @@
 
                     <log-column [header]="'Customs.Declaration.O.FreightAmount' | TextCodeTranslationPipe" [width]="'90'" [Alignment]="'right'" [binding]="'PayerActivityTypeCode'">
                         <ng-template let-item>
-<log-cell-template  #logcelltemplate>
-                            <div style="text-align: right;" class="TextTrimming">
-                                <span>{{item.TotalFreightInInvoiceCurrencyText}}</span>
-                            </div>
-
-                        </log-cell-template>
+                            <log-cell-template #logcelltemplate>
+                                <div *ngIf=" DeclarationPM != null && DeclarationPM.Direction != 'E'" style="text-align: right;" class="TextTrimming">
+                                    <span>{{item.TotalFreightInInvoiceCurrencyText}}</span>
+                                </div>
+                                <div *ngIf=" DeclarationPM != null && DeclarationPM.Direction == 'E'" style="text-align: right;" class="TextTrimming">
+                                    <span>{{item.ExportFreightAmount}}</span>
+                                </div>
+                            </log-cell-template>
 </ng-template>
                     </log-column>
 
                     <log-column [header]="'Customs.Declaration.O.Insurance' | TextCodeTranslationPipe" [width]="'90'" [Alignment]="'right'" [binding]="'PayerActivityTypeCode'">
                         <ng-template let-item>
-<log-cell-template  #logcelltemplate>
-                            <div style="text-align: right;" class="TextTrimming">
-                                <span style="padding-right:5px;">{{item.InsuranceAmount}}</span>
-                                <span style="float: right;">{{item.InsruanceCurrencyTypeCode}}</span>
-                            </div>
+                            <log-cell-template #logcelltemplate>
+                                <div *ngIf=" DeclarationPM != null && DeclarationPM.Direction != 'E'" style="text-align: right;" class="TextTrimming">
+                                    <span style="padding-right:5px;">{{item.InsuranceAmount}}</span>
+                                    <span style="float: right;">{{item.InsruanceCurrencyTypeCode}}</span>
+                                </div>
+                                <div *ngIf=" DeclarationPM != null && DeclarationPM.Direction == 'E'" style="text-align: right;" class="TextTrimming">
+                                    <span>{{item.ExportInsuranceAmount}}</span>
+                                </div>
 
-                        </log-cell-template>
+                            </log-cell-template>
 </ng-template>
                     </log-column>
                    

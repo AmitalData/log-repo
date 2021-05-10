@@ -89,6 +89,25 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPOCO.Tenant);
             entityPM.IsValueForCustomsOnly = declarationQueryService.GetIsValueForCustomsOnlyFromDeclaration(entityPOCO.DeclarationId, entityPOCO.Tenant);
+            DeclarationPM declarationPM = declarationQueryService.GetSingleDeclarationById(entityPOCO.DeclarationId, entityPOCO.Tenant);
+
+
+            if (declarationPM != null && declarationPM.Direction == "E")
+            {
+                SupplierInvoiceModificationQueryService supplierInvoiceModificationQueryService = new SupplierInvoiceModificationQueryService(entityPOCO.Tenant);
+                List<SupplierInvoiceModificationPM> listSupplierInvoiceModificationPMs = supplierInvoiceModificationQueryService.GetSupplierInvoiceModificationsForInvoice(entityPOCO.DeclarationId, entityPOCO.InvoiceCounterKey);
+                foreach (SupplierInvoiceModificationPM item in listSupplierInvoiceModificationPMs)
+                {
+                    if (item.TypeCode == "67")
+                    {
+                        entityPM.ExportInsuranceAmount = String.Format("{0:0.00}", item.Amount) + " " + item.CurrencyTypeCode;
+                    }
+                    if(item.TypeCode == "144")
+                    {
+                        entityPM.ExportFreightAmount = String.Format("{0:0.00}", item.Amount) + " " + item.CurrencyTypeCode;
+                    }
+                }
+            }
 
             if (!string.IsNullOrWhiteSpace(entityPOCO.InvoiceCurrencyTypeCode))
             {
@@ -102,6 +121,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 CurrencyTypePM currencyTypePM = currencyTypeQueryService.GetSingle(entityPOCO.InsruanceCurrencyTypeCode, false, true);
                 entityPM.InsruanceCurrencyTypeCodeName = currencyTypePM.LocalName;
             }
+
+
+
         }
     }
 }
