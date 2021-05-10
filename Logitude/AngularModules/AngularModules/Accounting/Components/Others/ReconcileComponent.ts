@@ -346,7 +346,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
     SetWindowArgs(args: any) {
         if (args != null) {
-            this.GLAccountPM = args.GLEntityPM;
+            this.GLAccountPM = args.GLAccountPM;
 
             ReconcileEventManager.GLAccountReconcileMethodCode = this.GLAccountPM.ReconcileMethodCode;
 

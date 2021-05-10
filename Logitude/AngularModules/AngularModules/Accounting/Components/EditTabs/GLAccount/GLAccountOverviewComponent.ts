@@ -391,7 +391,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
 
                 var windowArgs: any = {};
-                windowArgs.GLEntityPM = this.EntityPM;
+                windowArgs.GLAccountPM = this.EntityPM;
                 windowArgs.openAmountCurrency = openAmountCurrency;
                 windowArgs.originalAmountCurrency = originalAmountCurrency;
                 var logitudeWindow = new LogitudeWindow();
