@@ -279,7 +279,7 @@
                         </td>
                     </tr>
                 </table>
-                <div style="position: absolute; top: 0;" class="LogTabControl" *ngIf="EntityPM.IsAmendment">
+                <div style="position: absolute; top: 0;" class="LogTabControl" *ngIf="EntityPM.IsAmendment && !IsOldAmendment">
 
                     <div class="TabControlHead">
                         <ul>
@@ -711,7 +711,7 @@
                     </div>
                 </div>
 
-                <div style="position: absolute; top: 0;" class="LogTabControl" *ngIf="!EntityPM.IsAmendment">
+                <div style="position: absolute; top: 0;" class="LogTabControl" *ngIf="!EntityPM.IsAmendment && IsOldAmendment">
                     <table *ngIf="EntityPM && !IsNoAmendmentsMsgVisible">
 
                         <!--Disble Alert-->
