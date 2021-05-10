@@ -296,6 +296,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.ComputeAgentComputed(entityPM, entityPoco);
                 this.ComputeETAAndETDHouseFields();
 
+                if (entityPM.IsStandalonePickupDelivery)
+                {
+                    this.UpdatePickUpDeliveryStandaloneFields();
+                }
+
                 entityRepository.Add(entityPoco);
                 entityRepository.SubmitChanges();
 
@@ -303,11 +308,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 shipmentBehaviourFacade.Handle();
                 shipmentBehaviourFacade.Save(); // Abed to make automation change to condation work fine
                 //shipmentBehaviourFacade.Trace(shipmentTracing);
-
-                if(entityPM.IsStandalonePickupDelivery)
-                {
-                    this.UpdatePickUpDeliveryPackageHarmonize();
-                }
 
                 if (!string.IsNullOrEmpty(entityPM.MasterCreatedFromHouseId))
                 {
@@ -362,7 +362,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
-        private void UpdatePickUpDeliveryPackageHarmonize()
+        private void UpdatePickUpDeliveryStandaloneFields()
         {
             if (!string.IsNullOrEmpty(entityPM.StandalonePickupDeliveryId))
             {
@@ -371,8 +371,21 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 {
                     shipmentPickUpDelivery.StandaloneShipmentId = entityPM.Id;
                     shipmentPickUpDelivery.StandaloneShipmentNumber = entityPM.ShipmentNumber;
-                    shipmentPickUpDeliveryRepository.Update(shipmentPickUpDelivery);
-                    shipmentPickUpDeliveryRepository.SubmitChanges();
+                    shipmentPickUpDelivery.FromPartnerCardId = entityPM.ShipperId;
+                    shipmentPickUpDelivery.FromAddressId = entityPM.ShipperAddressId;
+                    shipmentPickUpDelivery.ToPartnerCardId = entityPM.ConsigneeId;
+                    shipmentPickUpDelivery.ToAddressId = entityPM.ConsigneeAddressId;
+                    shipmentPickUpDelivery.CarrierId = entityPM.MainCarriageCarrierId;
+                    shipmentPickUpDelivery.CarrierNumber = entityPM.MainCarriageCarrierNumber;
+                    shipmentPickUpDelivery.Driver = entityPM.Driver;
+                    shipmentPickUpDelivery.TruckNumber = entityPM.TruckNumber;
+                    shipmentPickUpDelivery.TrailerNumber = entityPM.TrailerNumber;
+                    shipmentPickUpDelivery.ETD = entityPM.MainCarriageETD;
+                    shipmentPickUpDelivery.ETA = entityPM.MainCarriageETA;
+                    shipmentPickUpDelivery.ATD = entityPM.MainCarriageATD;
+                    shipmentPickUpDelivery.ATA = entityPM.MainCarriageATA;
+
+                    shipmentPickUpDeliveryRepository.Update(shipmentPickUpDelivery);                    
                 }
             }
         }
@@ -524,6 +537,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     shipmentBehaviourFacade.Save(); // Abed to make automation change to condation work fine
                     this.UpdateShipmentFollowUpsCollection();
+
+                    if (entityPM.IsStandalonePickupDelivery)
+                    {
+                        this.UpdatePickUpDeliveryStandaloneFields();
+                    }
 
                     ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, myPackagesList, objectContext);
 

@@ -2277,7 +2277,7 @@ export class ShipmentTool {
         shipmentPM.AWBCurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
         shipmentPM.FreightPrepaidCollectId = SessionLocator.TenantPM.ExportFreightPrepaidCollectId;
         shipmentPM.OtherPrepaidCollectId = SessionLocator.TenantPM.ExportOtherPrepaidCollectId;
-        shipmentPM.ShipmentLevelCode = shipment.ShipmentLevelCode;
+        shipmentPM.ShipmentLevelCode = "D";
         shipmentPM.ShipmentTypeId = isLCLShipment ? "LTL" : "FTL";        
         shipmentPM.FHLStatusCode = "NSEN";
         shipmentPM.FWBStatusCode = "NSEN";

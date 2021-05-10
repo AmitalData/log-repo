@@ -61,9 +61,29 @@ export class PickupMainTabComponent extends BaseComponent {
     public IsEmptyContainerVisible: boolean = false;
     public IsFirstPickup: boolean = false;
     SetUIProperties() {
-        this.IsEditingEnabled = ShipmentTool.IsEditingEnabled(this.ShipmentPM);
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.StandaloneShipmentId)) {
+            this.IsEditingEnabled = false;
+        }
+
+        else {
+            this.IsEditingEnabled = ShipmentTool.IsEditingEnabled(this.ShipmentPM);
+        }
+
         this.UIProperties.SetEnabled("FromAddress", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("ToAddress", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("FullResponsibility", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("CarrierId", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("CarrierNumber", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("Driver", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("TruckNumber", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("TrailerNumber", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("TransportModeCode", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("Notes", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("ETD", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("ETA", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("ATD", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("ATA", this.ObjectTableName, this.IsEditingEnabled);
+
         this.SetUIProperties_From();
         this.SetUIProperties_To();        
         this.SetUIProperties_EmptyContainer();
@@ -73,6 +93,7 @@ export class PickupMainTabComponent extends BaseComponent {
         switch (this.FromTypeCode) {
             case "PART": {               
                 this.UIProperties.SetRequired("FromPartnerCardId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.FromPartnerCardId) ? true : false);
+                this.UIProperties.SetEnabled("FromPartnerCardId", this.ObjectTableName, this.IsEditingEnabled);
 
                 var isAddressIdEnabled = false;
                 if (this.IsEditingEnabled) {
@@ -82,15 +103,18 @@ export class PickupMainTabComponent extends BaseComponent {
                 }
 
                 this.UIProperties.SetEnabled("FromAddressId", this.ObjectTableName, isAddressIdEnabled);
+                break;
             }
 
             case "PORT": {
                 this.UIProperties.SetRequired("FromPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.FromPortId) ? true : false);
+                break;
             }
 
             case "CASL": {
                 this.UIProperties.SetRequired("FromAddressCity", this.ObjectTableName, AppTool.IsNullOrEmpty(this.FromAddressCity) && AppTool.IsNullOrEmpty(this.FromAddressZipCode) ? true : false);
                 this.UIProperties.SetRequired("FromAddressCountryId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.FromAddressCountryId) ? true : false);
+                break;
             }
         }
     }
@@ -98,6 +122,7 @@ export class PickupMainTabComponent extends BaseComponent {
         switch (this.ToTypeCode) {
             case "PART": {
                 this.UIProperties.SetRequired("ToPartnerCardId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.ToPartnerCardId) ? true : false);
+                this.UIProperties.SetEnabled("ToPartnerCardId", this.ObjectTableName, this.IsEditingEnabled);
 
                 var isAddressIdEnabled = false;
                 if (this.IsEditingEnabled) {
@@ -107,15 +132,18 @@ export class PickupMainTabComponent extends BaseComponent {
                 }
 
                 this.UIProperties.SetEnabled("ToAddressId", this.ObjectTableName, isAddressIdEnabled);
+                break;
             }
 
             case "PORT": {
                 this.UIProperties.SetRequired("ToPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.ToPortId) ? true : false);
+                break;
             }
 
             case "CASL": {
                 this.UIProperties.SetRequired("ToAddressCity", this.ObjectTableName, AppTool.IsNullOrEmpty(this.ToAddressCity) && AppTool.IsNullOrEmpty(this.ToAddressZipCode) ? true : false);
                 this.UIProperties.SetRequired("ToAddressCountryId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.ToAddressCountryId) ? true : false);
+                break;
             }
         }
     }

@@ -51,6 +51,7 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
     WareHouseRelaseWareHouseId: string;
     private CurrentSession = SessionLocator.SelectedSession;
     public IsAddingStandaloneShipmentVisible: boolean = false;
+    public IsEditingEnabled: boolean = true;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     constructor(private entityResourceService: EntityResourceService) {
         this.myCardListService = new CardListService();
@@ -99,12 +100,20 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
         this.Clone();
         this.ReloadData();
 
-        if (this.ShipmentPM) {
-            var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SAS")[0];
-            if (featureToggle) {
-                this.IsAddingStandaloneShipmentVisible = true;
-            }
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.StandaloneShipmentId)) {
+            this.IsEditingEnabled = false;
+        }
 
+        else {
+            this.IsEditingEnabled = ShipmentTool.IsEditingEnabled(this.ShipmentPM);
+        }
+
+        var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SAS")[0];
+        if (featureToggle) {
+            this.IsAddingStandaloneShipmentVisible = true;
+        }
+
+        if (this.ShipmentPM) { 
             if (this.ShipmentPM.ShipmentLevelCode == "D" || this.ShipmentPM.ShipmentLevelCode == "H") {
                 if (FeatureLocator.HasFeaturePermession("WarehouseRelease", "Module")) {
                     this.IsShowNewWarehouseReleaseButton = this.ShipmentPM.DirectionId == "I" ? true : false;
@@ -119,6 +128,16 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
                 this.Listen();
             });
         });
+    }
+
+    get IsCreateStandaloneShipmentEnabled() {
+        var isEnabled: boolean = false;
+
+        if (this.EntityPM.FullResponsibility && this.EntityPM.PickUpDeliveryFromTypeCode == "PART" && this.EntityPM.PickUpDeliveryToTypeCode == "PART") {
+            isEnabled = true;
+        }
+
+        return isEnabled;
     }
 
     private isViewInited: boolean = false;
@@ -834,6 +853,34 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
         logWindow.WindowClosed.subscribe((event: any) => {
             this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         });
+    }
+
+    ViewStandaloneShipmentClicked() {
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({ EntityId: this.EntityPM.StandaloneShipmentId, ObjectTableName: 'Shipment', BackButtonLabel: "Shipment" + ": " + this.ShipmentPM.ShipmentNumber });
+
+                let isEditComponentSaved = false;
+
+                cmpRef.instance.BackCompleted.subscribe(bk => {
+                    if (isEditComponentSaved) {
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    }
+                });
+
+                cmpRef.instance.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        isEditComponentSaved = true;
+                    }
+                });
+
+                cmpRef.instance.SaveAndCloseCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        isEditComponentSaved = true;
+                    }
+                });
+            });
     }
 }
 class TabItem {
