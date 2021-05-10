@@ -308,6 +308,7 @@
     <None Include="DBScripts\InvoiceModel\202012201448_SAT voided invoices and payments.sxml" />
     <None Include="DBScripts\InvoiceModel\202101231210_FillPartnerIdARInvoices.sxml" />
     <None Include="DBScripts\InvoiceModel\202101231212_FillPartnerIdARPayments.sxml" />
+    <None Include="DBScripts\InvoiceModel\2021137249_UpdateAutomaticLastUpdateDateOnAPInvoices.sxml" />
     <None Include="DBScripts\InvoiceModel\2021137249_UpdateAutomaticLastUpdateDateOnAPInvoiceStatus.sxml" />
     <None Include="DBScripts\InvoiceModel\2021137249_UpdateAutomaticLastUpdateDateOnAPInvoiceTypes.sxml" />
     <None Include="DBScripts\InvoiceModel\2021137249_UpdateAutomaticLastUpdateDateOnARInvoiceStatus.sxml" />
