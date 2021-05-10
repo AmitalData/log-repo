@@ -920,41 +920,48 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     }
     //#endregion
 
-
+    private _SendCustomsDocumentAfter = true;
     PerformSubmitChanges() {
-        if (this.CustomsDocument) {
-            if (this.CustomsDocument.IsDirty) {
-                var customsDocumentPMService: CustomsDocumentPMService = new CustomsDocumentPMService();
-                customsDocumentPMService.update(this.CustomsDocument).subscribe((docRes: ServiceResponse) => {
-                    if (!docRes.HasError) {
-                        this.SubmitTicketChanges();
-
-                    }
-                    else {
-                        this.CurrentSession.StopBusyIndicator();
-                        if (docRes.ErrorsArray && docRes.ErrorsArray.length > 0) {
-                            this.ValidationErrorsList = docRes.ErrorsArray;
-                        }
-                        //let jDoit = false;
-                        //if (jDoit && !AppTool.IsNullOrEmpty(docRes.ErrorsArray[0])) {//in customsDocumentPMService.update there is message : לם נמצם כרטיס חתימה חברתי (מסר 2715)
-                        //    this.CurrentSession.StopBusyIndicator();
-                        //    var messageWindow = new MessageWindow();
-                        //    messageWindow.Width = 400;
-                        //    messageWindow.Height = 200;
-                        //    messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-                        //    messageWindow.Show(docRes.ErrorsArray[0]);
-                        //    messageWindow.WindowClosed.subscribe((event: any) => {
-
-                        //        messageWindow.Close();
-
-                        //    });
-                        //}
-                    }
-                });
-            }
+        if (!this._SendCustomsDocumentAfter &&  this.CustomsDocument) {
+            this.SendCustomsDocumentMethod();
         }
         else {
             this.SubmitTicketChanges();
+        }
+    }
+
+    private SendCustomsDocumentMethod() {
+        if (this.CustomsDocument.IsDirty) {
+            var customsDocumentPMService: CustomsDocumentPMService = new CustomsDocumentPMService();
+            customsDocumentPMService.update(this.CustomsDocument).subscribe((docRes: ServiceResponse) => {
+                if (!docRes.HasError) {
+                    if (!this._SendCustomsDocumentAfter) {
+                        this.SubmitTicketChanges();
+                    } else {
+                        this.CurrentSession.CloseCurrentWindowEmit("ok");
+                    }
+                    
+
+                }
+                else {
+                    this.CurrentSession.StopBusyIndicator();
+                    if (docRes.ErrorsArray && docRes.ErrorsArray.length > 0) {
+                        this.ValidationErrorsList = docRes.ErrorsArray;
+                    }
+                    //let jDoit = false;
+                    //if (jDoit && !AppTool.IsNullOrEmpty(docRes.ErrorsArray[0])) {//in customsDocumentPMService.update there is message : לם נמצם כרטיס חתימה חברתי (מסר 2715)
+                    //    this.CurrentSession.StopBusyIndicator();
+                    //    var messageWindow = new MessageWindow();
+                    //    messageWindow.Width = 400;
+                    //    messageWindow.Height = 200;
+                    //    messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                    //    messageWindow.Show(docRes.ErrorsArray[0]);
+                    //    messageWindow.WindowClosed.subscribe((event: any) => {
+                    //        messageWindow.Close();
+                    //    });
+                    //}
+                }
+            });
         }
     }
 
@@ -966,7 +973,11 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                 customsDocumentsTicketPMService.update(this.CustomsDocumentsTicket).subscribe((ticketRes: ServiceResponse) => {
                     this.CurrentSession.StopBusyIndicator();
                     if (!ticketRes.HasError) {
-                        this.CurrentSession.CloseCurrentWindowEmit("ok");
+                        if (!this._SendCustomsDocumentAfter) {
+                            this.CurrentSession.CloseCurrentWindowEmit("ok");
+                        } else {
+                            this.SendCustomsDocumentMethod();
+                        }
                     }
                     else {
                         var messageWindow = new MessageWindow();
