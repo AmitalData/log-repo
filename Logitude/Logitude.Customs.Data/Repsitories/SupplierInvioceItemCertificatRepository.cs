@@ -75,7 +75,7 @@ namespace Logitude.Customs.Data.Repsitories
             return certificates;
         }
 
-        public IQueryable<CertificateConnectedItems> GetCertificateConnectedItems(string declarationId, string attachmentTypeCode, string reqConfirmationTypeCode, string CertificateExemptionTypeCode, string CertificateNumber, string ResConfirmationTypeCode, int tenant, string invoiceNumber, string ClassificationCode, int skip, int take, bool getAll)
+        public IQueryable<CertificateConnectedItems> GetCertificateConnectedItems(string declarationId, string attachmentTypeCode, string reqConfirmationTypeCode, string CertificateExemptionTypeCode, string CertificateNumber, string ResConfirmationTypeCode, int tenant, string invoiceNumber, string ClassificationCode, string SearchFields, int skip, int take, bool getAll)
         {
             IQueryable<SupplierInvoiceItemsProdIdent> prodIdents = context.SupplierInvoiceItemsProdIdents.Where(d => d.TypeCode == "MN");
             IQueryable<SupplierInvoice> supplierInvoices = null;
@@ -134,8 +134,12 @@ namespace Logitude.Customs.Data.Repsitories
                 {
                     wherestring += " and SupplierInvoices.InvoiceNumber = '" + invoiceNumber + "'";
                 }
+                if (!string.IsNullOrEmpty(SearchFields) && SearchFields != "null")
+                {
+                    wherestring += " and SupplierInvoiceItems.SearchFields Like '%" + SearchFields + "%'";
+                }
 
-                cmd = (@"select SYS_GUID() as Id, SupplierInvoices.InvoiceNumber,SupplierInvoiceItems.ItemCode,SupplierInvoiceItems.ClassificationCode,
+                cmd = (@"select SYS_GUID() as Id, SupplierInvoices.InvoiceNumber,SupplierInvoiceItems.ItemCode,SupplierInvoiceItems.ClassificationCode,SupplierInvoiceItems.SearchFields,
 SupplierInvoiceItems.TradeAgreementCode,SupplierInvoiceItems.OriginCountryCode,
 TradeAgreements.LocalName AS TradeAgreementName,
 CustomsCountries.LocalName AS OriginCountryName,
@@ -231,7 +235,7 @@ INNER JOIN Customs.SupplierInvoices ON Customs.SupplierInvoiceItems.DeclarationI
 
         }
 
-        public int GetCertificateConnectedItemsCount(string declarationId, string attachmentTypeCode, string reqConfirmationTypeCode, string CertificateExemptionTypeCode, string CertificateNumber, string ResConfirmationTypeCode, int tenant, string invoiceNumber, string ClassificationCode)
+        public int GetCertificateConnectedItemsCount(string declarationId, string attachmentTypeCode, string reqConfirmationTypeCode, string CertificateExemptionTypeCode, string CertificateNumber, string ResConfirmationTypeCode, int tenant, string invoiceNumber, string ClassificationCode, string SearchFields)
         {
 
 
@@ -293,8 +297,11 @@ INNER JOIN Customs.SupplierInvoices ON Customs.SupplierInvoiceItems.DeclarationI
                 {
                     wherestring += " and SupplierInvoices.InvoiceNumber = '" + invoiceNumber + "'";
                 }
-
-                cmd = (@"select SYS_GUID() as Id, SupplierInvoices.InvoiceNumber,SupplierInvoiceItems.ItemCode,SupplierInvoiceItems.ClassificationCode,SupplierInvoiceItems.TradeAgreementCode,SupplierInvoiceItems.OriginCountryCode,
+                if (!string.IsNullOrEmpty(SearchFields) && SearchFields != "null")
+                {
+                    wherestring += " and SupplierInvoiceItems.SearchFields Like '%" + SearchFields + "%'";
+                }
+                cmd = (@"select SYS_GUID() as Id, SupplierInvoices.InvoiceNumber,SupplierInvoiceItems.ItemCode,SupplierInvoiceItems.ClassificationCode,SupplierInvoiceItems.SearchFields,SupplierInvoiceItems.TradeAgreementCode,SupplierInvoiceItems.OriginCountryCode,
 SupplierInvioceItemCertificats.ItemCertificateCounterKey,SupplierInvoices.InvoiceCounterKey,SupplierInvoices.DeclarationId,SupplierInvoiceItems.LineNumber,SupplierInvoiceItems.SequenceNumeric
 ,SupplierInvoiceItemsProdIdents.Identification,SupplierInvioceItemCertificats.ReqConfirmationTypeCode,SupplierInvioceItemCertificats.AttachmentTypeCode,
 SupplierInvioceItemCertificats.CertificateExemptionTypeCode,SupplierInvioceItemCertificats.CertificateNumber,SupplierInvioceItemCertificats.ResConfirmationTypeCode
@@ -338,7 +345,11 @@ INNER JOIN SupplierInvoices ON SupplierInvoiceItems.DeclarationId = SupplierInvo
                 {
                     wherestring += " and Customs.SupplierInvoices.InvoiceNumber = '" + invoiceNumber + "'";
                 }
-                cmd = (@"select NEWID() as Id , Customs.SupplierInvoices.InvoiceNumber,Customs.SupplierInvoiceItems.ItemCode,Customs.SupplierInvoiceItems.ClassificationCode,
+                if (!string.IsNullOrEmpty(SearchFields) && SearchFields != "null")
+                {
+                    wherestring += " and SupplierInvoiceItems.SearchFields Like '%" + SearchFields + "%'";
+                }
+                cmd = (@"select NEWID() as Id , Customs.SupplierInvoices.InvoiceNumber,Customs.SupplierInvoiceItems.ItemCode,Customs.SupplierInvoiceItems.ClassificationCode,Customs.SupplierInvoiceItems.SearchFields,
 Customs.SupplierInvoiceItems.TradeAgreementCode,SupplierInvoiceItems.OriginCountryCode, Customs.CustomsCountries.LocalName AS OriginCountryName,
 Customs.TradeAgreements.LocalName AS TradeAgreementName,
 Customs.SupplierInvioceItemCertificats.ItemCertificateCounterKey,Customs.SupplierInvoices.InvoiceCounterKey,Customs.SupplierInvoices.DeclarationId,
@@ -402,7 +413,8 @@ INNER JOIN Customs.SupplierInvoices ON Customs.SupplierInvoiceItems.DeclarationI
                               AttachmentTypeCode = c.AttachmentTypeCode,
                               CertificateExemptionTypeCode = c.CertificateExemptionTypeCode,
                               CertificateNumber = c.CertificateNumber,
-                              ResConfirmationTypeCode = c.ResConfirmationTypeCode
+                              ResConfirmationTypeCode = c.ResConfirmationTypeCode,
+                              SearchFields = a.SearchFields
                           });
 
 
