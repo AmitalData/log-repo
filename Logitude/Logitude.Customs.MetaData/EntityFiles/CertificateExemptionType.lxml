@@ -145,12 +145,12 @@
     FieldName="&quot;EnglishName&quot;"
     OldNames="EnglishName"
     IsNew="false"
-    IsChecked="false"
+    IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;Customs.CertificateExemptionType&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="40"
+    MaxLength="100"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -159,7 +159,7 @@
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
-    SystemMaxLength="40"
+    SystemMaxLength="100"
     DisplayInList="true"
     IsCustomFilter="false"
     Operator="&quot;StartsWith&quot;"
@@ -537,6 +537,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;IsExportDeclaration&quot;"
     ListPropertyPath="&quot;IsExportDeclaration&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -624,6 +625,11 @@
         QueryCode="&quot;CertificateExemptionType&quot;"
         IndexOrder="4"
         ObjectFieldName="&quot;IsImportDeclaration&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;CertificateExemptionType&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;IsExportDeclaration&quot;"
         ColumnWidth="100" />
     </QueryColumns>
     <QueryFilters />

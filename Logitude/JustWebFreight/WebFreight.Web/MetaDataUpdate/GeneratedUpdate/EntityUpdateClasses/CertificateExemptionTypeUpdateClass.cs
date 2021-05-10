@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CertificateExemptionTypeUpdateClass
    {  		
-		public const string HashString = "c9c70d50508295e17cdfe800442e17a7";
+		public const string HashString = "21da27a060fe86a0853496046a14cf23";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -213,7 +213,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ObjectTableName =  "Customs.CertificateExemptionType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  40,
+					  						MaxLength =  100,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -221,7 +221,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  40,
+					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						Operator =  "StartsWith",
@@ -534,6 +534,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "IsExportDeclaration",
 					  						ListPropertyPath =  "IsExportDeclaration",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -612,6 +613,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 QueryColumn CertificateExemptionTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateExemptionTypeQuery.Id,QueryCode = CertificateExemptionTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CertificateExemptionType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 
 			 QueryColumn CertificateExemptionTypeQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateExemptionTypeQuery.Id,QueryCode = CertificateExemptionTypeQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.CertificateExemptionType.IsImportDeclaration" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CertificateExemptionTypeQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateExemptionTypeQuery.Id,QueryCode = CertificateExemptionTypeQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.CertificateExemptionType.IsExportDeclaration" , ColumnWidth = 100 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
