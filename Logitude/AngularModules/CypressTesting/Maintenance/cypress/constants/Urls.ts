@@ -39,6 +39,8 @@ export class Urls {
     public static readonly GlobalZones = "**/globalzones"
     public static readonly GlobalZonesGetSingle = "**/globalzones/getsingle?**"
     
+    public static readonly SpecialServicesTypes = "**/specialservicestypes"
+
     public static readonly Commodities="**/commodities"
     public static readonly CommoditiesGetSingle = "**/commodities/getsingle?**"
 
@@ -54,6 +56,7 @@ export class Urls {
     public static readonly TruckersGetSingle="**/truckers/getsingle?**"
 
     public static readonly RegionsGetSingle="**/regions/getsingle?**"
+    public static readonly SpecialServicesTypesGetSingle="**/specialservicestypes/getsingle?**"
     public static GetFilterSearch(filterBy: string) {
         return '**/getbyfilters?**' + filterBy + '**'
     }

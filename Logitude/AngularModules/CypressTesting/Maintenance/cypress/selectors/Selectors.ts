@@ -19,6 +19,7 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly MaintenanceItemShippingAgents = "#MaintenanceItemMTSA"
    public static readonly MaintenanceItemCustomAgents = "#MaintenanceItemMTCU"
    public static readonly MaintenanceItemTrucker = "#MaintenanceItemMTTR"
+   public static readonly MaintenanceItemSpecialServicesType = "#MaintenanceItemMTSS"
    //#endregion
 
    public static readonly GeneralEditScreen = ".MediaFillAbsolute .CurvedEditArea";
@@ -235,4 +236,13 @@ export class MaintenanceSelectors extends RegexSelectors {
      public static readonly TruckerSaveButton="#Trucker-Save"
   
      //#endregion
+        //#region SpecialServicesType
+   public static readonly SpecialServicesTypeCode = "#SpecialServicesType_Code"
+   public static readonly SpecialServicesTypeEnglishName = "#SpecialServicesType_EnglishName"
+   public static readonly SpecialServicesTypeLocalName = "#SpecialServicesType_LocalName"
+   public static readonly SpecialServicesTypeGeneralTab = "#SpecialServicesTypeTHGeneral"
+   public static readonly SpecialServicesTypeEventsTab = "#SpecialServicesTypeTHEvents"
+   public static readonly SpecialServicesTypeSaveButton = "#SpecialServicesType-Save"
+     
+        //#endregion
 }
