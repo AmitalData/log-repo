@@ -38,10 +38,13 @@ import { PasswordValidationMessagesDetails } from '../models/PasswordValidationM
 import { CardDetails } from "../models/CardDetails";
 import {CardGeneralTabDetails} from "../models/CardGeneralTabDetails";
 import { CardBillingTabDetails } from "../models/CardBillingTabDetails";
+import { SpecialServicesTypeDetails } from "../models/SpecialServicesTypeDetails";
+
 //#region variables
 let CityCode = null;
 let StateCode = null;
 let GlobalZoneCode = null;
+let SpecialServicesTypeCode=null;
 let CardCode=null;
 let TruckerCode=null;
 let CommodityName = null;
@@ -1916,5 +1919,97 @@ export function AssertUpdateTrucker() {
 }
 function AssertPutTrucker() {
     BaseAssertion.AssertStatusCode(RequestAliases.PutTrucker, 200);
+}
+//#endregion
+//#region special services type
+export function FillSpecialServicesTypeCode(SpecialServicesTypeCode: string) {
+    cy.FillLogTextBox(MaintenanceSelectors.SpecialServicesTypeCode, SpecialServicesTypeCode)
+}
+export function FillSpecialServicesTypeDetails(specialServicesTypeDetails: SpecialServicesTypeDetails) {
+    var RandomSpecialServicesTypeCode = gr.GenerateRandomNumberAndString(8);
+    cy.FillLogTextBox(MaintenanceSelectors.SpecialServicesTypeCode, specialServicesTypeDetails.Code.toLowerCase() == "random" ? RandomSpecialServicesTypeCode : specialServicesTypeDetails.Code)
+    cy.FillLogTextBox(MaintenanceSelectors.SpecialServicesTypeEnglishName, specialServicesTypeDetails.EnglishName)
+    FillSpecialServicesTypeLocalName(specialServicesTypeDetails.LocalName)
+}
+export function CreateSpecialServicesType() {
+    DefinePostSpecialServicesTypeRequest()
+    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
+}
+export function CreateSpecialServicesTypeMockCreate() {
+    cy.intercept(RestAPI.POST, Urls.SpecialServicesTypes, [true])
+    DefineGetByFilterRequest()
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)  
+}
+
+export function AssertCreateSpecialServicesTypeMockCreate() {
+    BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow)
+    AssertGetByFilters();
+}
+function DefinePostSpecialServicesTypeRequest() {
+    cy.DefineRequestWait(RestAPI.POST, Urls.SpecialServicesTypes, RequestAliases.PostSpecialServicesType)
+}
+export function AssertCreateSpecialServicesType() {
+    let intercept = cy.wait("@" + RequestAliases.PostSpecialServicesType);
+    intercept.then((interception) => {
+        if (interception.response.statusCode === 400) {
+            ReCreateSpecialServicesType();
+        }
+        else {
+            AssertPostSpecialServicesType(interception.response.statusCode, 200, interception.response.body.Code)
+        }
+    })
+}
+
+function ReCreateSpecialServicesType() {
+    var RandomSpecialServicesTypeCode = gr.GenerateRandomNumberAndString(8);
+    cy.FillLogTextBox(MaintenanceSelectors.SpecialServicesTypeCode,  RandomSpecialServicesTypeCode)
+    CreateSpecialServicesType();
+    AssertCreateSpecialServicesType();
+}
+
+export function AssertPostSpecialServicesType(responseStatusCode: number, expectedStatusCode: number, specialServicesTypeCode: string) {
+    assert.equal(responseStatusCode, expectedStatusCode)
+    SpecialServicesTypeCode = specialServicesTypeCode
+}
+export function SearchSpecialServicesType(){
+    DefineSpecialServicesTypeGetByFiltersRequest(SpecialServicesTypeCode);
+    cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, SpecialServicesTypeCode);
+    AsserSpecialServicesTypeViewsGetByFilters();
+}
+export function DefineSpecialServicesTypeGetByFiltersRequest(SpecialServicesTypeCode: string) {
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(SpecialServicesTypeCode + "&GetCount=false"), RequestAliases.GetFilterSearch);
+}
+export function AsserSpecialServicesTypeViewsGetByFilters() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
+}
+export function AssertSearchSpecialServicesType(companyName: string) {
+    AssertSearchCard(companyName)
+}
+export function OpenSpecialServicesType() {
+    DefineSpecialServicesTypesGetSingleRequest();
+    cy.get(BaseSelectors.RowClass).eq(0).click();
+}
+export function AssertOpenSpecialServicesType() {
+    AssertCardGetSingle();
+    BaseAssertion.AssertElementExist(MaintenanceSelectors.GeneralEditScreen)
+}
+function DefineSpecialServicesTypesGetSingleRequest() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.SpecialServicesTypesGetSingle, RequestAliases.GetSignle);
+}
+export function FillSpecialServicesTypeLocalName(localName:string){
+    cy.FillLogTextBox(MaintenanceSelectors.SpecialServicesTypeLocalName, localName)
+}
+export function UpdateSpecialServicesType() {
+    DefinePutSpecialServicesTypeRequest()
+    cy.Click(MaintenanceSelectors.SpecialServicesTypeSaveButton, null)
+}
+function DefinePutSpecialServicesTypeRequest() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.SpecialServicesTypes, RequestAliases.PutSpecialServicesType);
+}
+export function AssertUpdateSpecialServicesType() {
+    AssertPutSpecialServicesType()
+}
+function AssertPutSpecialServicesType() {
+    BaseAssertion.AssertStatusCode(RequestAliases.PutSpecialServicesType, 200);
 }
 //#endregion

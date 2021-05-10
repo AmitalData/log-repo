@@ -13,5 +13,6 @@ export class Constants {
     public static readonly CustomAgent="CustomAgent"
     public static readonly Vendor="Vendor"
     public static readonly Trucker="Trucker"
+    public static readonly SpecialServicesType = "SpecialServicesType"
 
 }

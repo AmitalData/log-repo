@@ -103,6 +103,9 @@ export class RequestAliases {
     public static readonly PostGlobalZone="PostGlobalZone"
     public static readonly PutGlobalZone="PutGlobalZone"
    
+    public static readonly PostSpecialServicesType="PostSpecialServicesType"
+    public static readonly PutSpecialServicesType="PutSpecialServicesType"
+
     public static readonly PostCity="PostCity"
     public static readonly PutCity="PutCity"
 
