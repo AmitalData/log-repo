@@ -29,11 +29,6 @@ export class CustomerValidator implements ICustomerValidator {
         if (this.entityPM.CustomerProductItems != null) {
             this.entityPM.CustomerProductItems.forEach(item => {
                 Validator.TryValidateObject(item, "ProductItem", this.Errors);
-
-                if (AppTool.IsNullOrEmpty(item.ItemCode)) {
-                    this.Errors.push("Product Item Code is required");
-                }
-
                 this.ValidateProductItemHTSCodes(item);
 
             });
@@ -51,7 +46,7 @@ export class CustomerValidator implements ICustomerValidator {
                 }
 
                 if (AppTool.IsNullOrEmpty(item.DestinationCountryId)) {
-                    this.Errors.push("HTSCode DestinationCountry is required");
+                    this.Errors.push("HTSCode Country is required");
                 }
 
             });

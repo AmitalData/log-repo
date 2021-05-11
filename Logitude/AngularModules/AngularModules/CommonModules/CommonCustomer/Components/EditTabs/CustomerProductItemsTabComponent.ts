@@ -12,6 +12,7 @@ import { HTSCodePM } from '../../../../Common/EntityPMs/HTSCodePM';
 import { Validator } from '../../../../Infrastructure/Validators/Validator';
 import { CountryList } from '../../../../Common/EntityLists/CountryList';
 import { ProductItem } from '../../../../ShipmentModules/ShipmentTabs/Components/ProductItems/ProductItemsTabComponent';
+import { Cloner } from '../../../../Infrastructure/Utilities/Cloner';
 
 @Component({
     templateUrl: './CustomerProductItemsTabComponent.html',
@@ -23,6 +24,7 @@ export class CustomerProductItemsTabComponent extends BaseComponent implements O
     public DataContext = this;
     public ProductItems: ObservableCollection;
     public HTSCodes: ObservableCollection;
+    public ValidationErrorsList: string[];
     public IsEditingEnabled: boolean = true;
 
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
@@ -30,7 +32,6 @@ export class CustomerProductItemsTabComponent extends BaseComponent implements O
         this.EntityPM = this.entityArgs.EntityPM;
         this.HTSCodes = new ObservableCollection([]);
     }
-
 
     ngOnInit() {
         this.entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((res3: any) => {
@@ -95,7 +96,6 @@ export class CustomerProductItemsTabComponent extends BaseComponent implements O
     }
 
     AddProductItem() {
-        
         var productItem: ProductItemPM = new ProductItemPM(this.EntityPM);
         productItem.Tenant = SessionLocator.Tenant;
         this.HTSCodes = new ObservableCollection([]);
@@ -116,10 +116,16 @@ export class CustomerProductItemsTabComponent extends BaseComponent implements O
 
 
     AddHTSCode() {
-        var hTSCodeItem: HTSCodePM = new HTSCodePM(null);        
-        hTSCodeItem.Tenant = SessionLocator.Tenant;
-        hTSCodeItem.ItemId = this.EntityPM.Id;
-        this.HTSCodes.Insert(new CustomerHTSCode(hTSCodeItem, this, true));
+        
+        this.ValidationErrorsList = this.ValidiateLastHTSCode();
+        if (this.ValidationErrorsList.length == 0) {
+
+
+            var hTSCodeItem: HTSCodePM = new HTSCodePM(null);
+            hTSCodeItem.Tenant = SessionLocator.Tenant;
+            hTSCodeItem.ItemId = this.EntityPM.Id;
+            this.HTSCodes.Insert(new CustomerHTSCode(hTSCodeItem, this, true));
+        }
     }
 
     OnRowEnded($event) {
@@ -139,6 +145,23 @@ export class CustomerProductItemsTabComponent extends BaseComponent implements O
         this.BuildProductItemHTSCodes(item.EntityPM);
         this.OpenEditWindow("Edit Product Item", item);
     }
+
+    ValidiateLastHTSCode() {
+        var errors: string[] = [];
+        if (this.HTSCodes.Length != 0) {
+            var lastHTSCode = this.HTSCodes.Collection[this.HTSCodes.Length - 1];
+            if (lastHTSCode.EntityPM.Code == null && lastHTSCode.EntityPM.DestinationCountryId == null) {
+                errors.push("Can't Add New HTSCode Line While HTSCode Code And Country are required");
+            }
+            else if (lastHTSCode.EntityPM.DestinationCountryId == null) {
+                errors.push("Can't Add New HTSCode While HTSCode Country is required");
+            }
+            else if (lastHTSCode.EntityPM.Code == null) {
+                errors.push("Can't Add New HTSCode While HTSCode Code is required");
+            }
+        }
+        return errors;
+    }
 }
 
 export class CustomerProductItem extends BaseComponent {
@@ -156,21 +179,6 @@ export class CustomerProductItem extends BaseComponent {
 
     SetUIProperties() {
 
-    }
-
-    public ResetPackageItems() {
-        if (this.FatherComponent.ProductItems != null) {
-            var items: ProductItemPM[] = this.FatherComponent.EntityPM.CustomerProductItems;
-            items.forEach(item => {
-                var savedItem: ProductItemPM = this.FatherComponent.ProductItems.Collection[this.FatherComponent.ProductItems.Length - 1];
-                if (savedItem == null) {
-                    if (this.FatherComponent.EntityPM.CustomerProductItems.indexOf(item) != -1) {
-                        this.FatherComponent.EntityPM.RemoveProductItemPM(item);
-                    }
-                }
-
-            });
-        }
     }
 
     get InActive() { return this.EntityPM.InActive; }
