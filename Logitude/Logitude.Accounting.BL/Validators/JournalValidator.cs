@@ -623,7 +623,9 @@ namespace Logitude.Accounting.BL.Validators
         private void ValidateJournalReconciles(JournalPM myJournalPM, ValidationContext accountingValidationContextServiceProvider, List<string> errorsList, IExternalReconcileDataProvider myIExternalReconcileDataProvider)
 
         {
-            if (myJournalPM.JournalReconciles.Count == 0)
+            if (myJournalPM.JournalReconciles
+                .Where(r => r.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
+                .Count() == 0)
             {
                 return;
             }
@@ -671,7 +673,9 @@ accountingValidationContextServiceProvider
 
         private  void ValidateJournalExternalReconciles(JournalPM myJournalPM, MyList<string> errorsList, IExternalReconcileDataProvider myIExternalReconcileDataProvider)
         {
-            if (myJournalPM.JournalExternalReconciles.Count() == 0)
+            if (myJournalPM.JournalExternalReconciles
+                .Where(r => r.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
+                .Count() == 0)
             {
                 return;
             }

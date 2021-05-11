@@ -91,9 +91,9 @@ namespace Logitude.Accounting.BL.CoreBL.Fix
                 journalPM.ChangeSetOp = ChangeSetOperation.Update;
                 journalPM.StatusCode = "0";
                 journalPM.AccountingEntityCode = "1";
-                var journalUpdateService= new JournalUpdateService(accountingContext);
-                journalUpdateService.Update(journalPM,true);
-                //accountingContext.SaveChanges;
+                var journalUpdateService= new JournalUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), journalPM.Tenant);
+                journalUpdateService.Update(journalPM,false);
+                accountingContext.SaveChanges();
                 scope.Complete();
 
             }
