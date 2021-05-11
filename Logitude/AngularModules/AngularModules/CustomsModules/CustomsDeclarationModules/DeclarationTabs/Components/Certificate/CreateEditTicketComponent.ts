@@ -63,8 +63,6 @@ export class CreateEditTicketComponent extends BaseComponent {
         this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
         this.TypeCodeFilterItems = new ApiQueryFilters();
         this.TypeCodeFilterItems.addAdditionalFilter("IsImportDeclaration", true, null, null, "Equals", false, false, false, "boolean");
-        this.ExportTypeCodeFilterItems = new ApiQueryFilters();
-        this.ExportTypeCodeFilterItems.addAdditionalFilter("IsExportDeclaration", true, null, null, "Equals", false, false, false, "boolean");
     }
     public ExemptRowHeight: number;
     public FilterSelectedValue: string;

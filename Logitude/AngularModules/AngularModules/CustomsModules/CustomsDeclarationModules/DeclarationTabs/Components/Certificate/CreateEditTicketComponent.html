@@ -189,26 +189,14 @@
         <td style="width:160px">
         </td>
         <td style="width:200px">
-            <div *ngIf="Parent.DeclarationPM.Direction != E">
-                <LogLov [ObjectFieldName]="'CertificateExemptionTypeCode'"
-                        [ObjectTableName]="ObjectTableName"
-                        [DataContext]="DataContext"
-                        [LookUpTableName]="'Customs.CertificateExemptionType'"
-                        [SelectedValue]="CertificateExemptionTypeCode"
-                        [HideColumns]="true"
-                        [QueryFilterItems]="TypeCodeFilterItems">
-                </LogLov>
-            </div>
-            <div *ngIf="Parent.DeclarationPM.Direction == E">
-                <LogLov [ObjectFieldName]="'CertificateExemptionTypeCode'"
-                        [ObjectTableName]="ObjectTableName"
-                        [DataContext]="DataContext"
-                        [LookUpTableName]="'Customs.CertificateExemptionType'"
-                        [SelectedValue]="CertificateExemptionTypeCode"
-                        [HideColumns]="true"
-                        [QueryFilterItems]="ExportTypeCodeFilterItems">
-                </LogLov>
-            </div>
+            <LogLov [ObjectFieldName]="'CertificateExemptionTypeCode'"
+                    [ObjectTableName]="ObjectTableName"
+                    [DataContext]="DataContext"
+                    [LookUpTableName]="'Customs.CertificateExemptionType'"
+                    [SelectedValue]="CertificateExemptionTypeCode"
+                    [HideColumns]="true"
+                    [QueryFilterItems]="TypeCodeFilterItems">
+            </LogLov>
         </td>
         <td></td>
     </tr>
