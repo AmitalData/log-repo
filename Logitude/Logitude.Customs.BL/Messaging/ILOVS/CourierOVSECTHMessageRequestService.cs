@@ -159,6 +159,8 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
             }
 
 
+            var pm = CustomsSettingQueryService.GetSettingByTenant(myDeclarationPM.Tenant);
+
             var courierHawbMamanModel = new CourierOVSHAWBRequest()
             {
 
@@ -190,9 +192,9 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
                 CustomsSuspention = myDeclarationPM.CourierSuspentionCode??"",
                 Preclearence = myDeclarationPM.CourierCustomStatusCode== "1"  /*released*/,
 
-                ImporterVat = importerVat,
+                ImporterVat = pm.CustomsAgentId,
                 BoxBarcode = crateNumber,
-
+               
 
             };
 

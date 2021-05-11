@@ -167,6 +167,14 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 }
                 myDeclarationMamanSpecialAction.Update(pmDeclarationMamanSpecialAction, true);
 
+
+                if(cfifilmFUStatus == "CDE" && mamanResponseSuccesed)
+                {
+                    var mySend2MasofIfNeededService = new Send2MasofIfNeededService();
+                    mySend2MasofIfNeededService.Send2Masof(declarationPM, false, declarationPM);
+
+                }
+
                 //scope.Complete();
             }
         }
