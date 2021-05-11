@@ -1149,48 +1149,26 @@ namespace Logitude.CustomsMessaging.RequestServices
         }
 
 
-        //private List<DeclarationGoodsShipmentCustomsValuation> GetcustomsValuation(SupplierInvoicePM supplierInvoicePM)
-        //{
-        //    var customsValuationlist = new List<DeclarationGoodsShipmentCustomsValuation>();
-        //    int supplierInvoiceFreightCounter = supplierInvoicePM.SupplierInvoiceFreightAmounts.Count();
+        private List<DeclarationGoodsShipmentInvoiceDMExtensionsCustomsValuation> GetcustomsValuation(SupplierInvoicePM supplierInvoicePM)
+        {
+            var customsValuationlist = new List<DeclarationGoodsShipmentInvoiceDMExtensionsCustomsValuation>();
 
-        //    for (int modificationsSeq = 0; modificationsSeq < supplierInvoicePM.SupplierInvoiceModifications.Count(); modificationsSeq++)
-        //    {
-        //        var supplierInvoiceModificationPM = supplierInvoicePM.SupplierInvoiceModifications[modificationsSeq];
-        //        if (supplierInvoiceModificationPM.TypeCode != "67" && supplierInvoiceModificationPM.TypeCode != "144" && supplierInvoiceModificationPM.TypeCode != "I02") // Mirit 25/06/15 Task 14255 - add "I02"
-        //        {
-        //            var customsValuation = new DeclarationGoodsShipmentCustomsValuation();
+            for (int modificationsSeq = 0; modificationsSeq < supplierInvoicePM.SupplierInvoiceModifications.Count(); modificationsSeq++)
+            {
+                var supplierInvoiceModificationPM = supplierInvoicePM.SupplierInvoiceModifications[modificationsSeq];
+                if (supplierInvoiceModificationPM.TypeCode != "I02")
+                {
+                    var customsValuation = new DeclarationGoodsShipmentInvoiceDMExtensionsCustomsValuation();
 
-        //            customsValuation.ChargesTypeCode = new CustomsValuationChargesTypeCodeType();
-        //            customsValuation.ChargesTypeCode = SetCodeTypeValue<CustomsValuationChargesTypeCodeType>(supplierInvoiceModificationPM.TypeCode);
-        //            customsValuation.OtherChargeDeductionAmount = new CustomsValuationOtherChargeDeductionAmountType();
-        //            customsValuation.OtherChargeDeductionAmount = SetAmountTypeValue<CustomsValuationOtherChargeDeductionAmountType>(supplierInvoiceModificationPM.CurrencyTypeCode, supplierInvoiceModificationPM.Amount.GetValueOrDefault());
-        //            customsValuationlist.Add(customsValuation);
-        //        }
-        //    }
-
-        //    if (supplierInvoicePM.InsruanceCurrencyTypeCode != null && supplierInvoicePM.InsuranceAmount != null) // Insert insurance Details (WCO: 559 = ExitToEntryChargeAmount)
-        //    {
-        //        var customsValuation = new DeclarationGoodsShipmentCustomsValuation();
-        //        customsValuation.ChargesTypeCode = new CustomsValuationChargesTypeCodeType();
-        //        customsValuation.ChargesTypeCode = SetCodeTypeValue<CustomsValuationChargesTypeCodeType>("67");
-        //        customsValuation.ExitToEntryChargeAmount = new CustomsValuationExitToEntryChargeAmountType();
-        //        customsValuation.ExitToEntryChargeAmount = SetAmountTypeValue<CustomsValuationExitToEntryChargeAmountType>(supplierInvoicePM.InsruanceCurrencyTypeCode, (decimal)supplierInvoicePM.InsuranceAmount);
-        //        customsValuationlist.Add(customsValuation);
-        //    }
-        //    // moran 29.10.15 - call 254783 - change from InvoiceCurrencyTypeCode to FreightCurrencyTypeCode -->
-        //    if (supplierInvoicePM.FreightCurrencyTypeCode != null && supplierInvoicePM.TotalFreightInFreightCurrency != null) // Insert Freight Details (WCO: 560 = FreightChargeAmount)
-        //    {
-        //        var customsValuation = new DeclarationGoodsShipmentCustomsValuation();
-        //        customsValuation.ChargesTypeCode = new CustomsValuationChargesTypeCodeType();
-        //        customsValuation.ChargesTypeCode = SetCodeTypeValue<CustomsValuationChargesTypeCodeType>("144");
-        //        customsValuation.FreightChargeAmount = new CustomsValuationFreightChargeAmountType();
-        //        customsValuation.FreightChargeAmount = SetAmountTypeValue<CustomsValuationFreightChargeAmountType>(supplierInvoicePM.FreightCurrencyTypeCode, (decimal)supplierInvoicePM.TotalFreightInFreightCurrency);
-        //        customsValuationlist.Add(customsValuation);
-        //    }
-
-        //    return customsValuationlist;
-        //}
+                    customsValuation.ChargesTypeCode = new DeclarationGoodsShipmentInvoiceDMExtensionsCustomsValuationChargesTypeCode();
+                    customsValuation.ChargesTypeCode = SetCodeTypeValue<DeclarationGoodsShipmentInvoiceDMExtensionsCustomsValuationChargesTypeCode>(supplierInvoiceModificationPM.TypeCode);
+                    customsValuation.OtherChargeDeductionAmount = new DeclarationGoodsShipmentInvoiceDMExtensionsCustomsValuationOtherChargeDeductionAmount();
+                    customsValuation.OtherChargeDeductionAmount = SetAmountTypeValue<DeclarationGoodsShipmentInvoiceDMExtensionsCustomsValuationOtherChargeDeductionAmount>(supplierInvoiceModificationPM.CurrencyTypeCode, supplierInvoiceModificationPM.Amount.GetValueOrDefault());
+                    customsValuationlist.Add(customsValuation);
+                }
+            }
+            return customsValuationlist;
+        }
 
 
         private DeclarationGoodsShipmentInvoice GetDeclarationGoodsShipmentInvoice(SupplierInvoicePM supplierInvoicePM)
@@ -1270,7 +1248,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             DMExtensions.BuyerDetails.Address = supplierInvoicePM.BuyerAddress;
             DMExtensions.BuyerDetails.IssueLocation = SetCodeTypeValue<DeclarationGoodsShipmentInvoiceDMExtensionsBuyerDetailsIssueLocation>(supplierInvoicePM.BuyerCountryCode);
             DMExtensions.BuyerDetails.RoleCode = SetCodeTypeValue<DeclarationGoodsShipmentInvoiceDMExtensionsBuyerDetailsRoleCode>(supplierInvoicePM.BuyerRoleCode);
-
+            DMExtensions.CustomsValuation= GetcustomsValuation(supplierInvoicePM).ToArray();
             return DMExtensions;
         }
 
