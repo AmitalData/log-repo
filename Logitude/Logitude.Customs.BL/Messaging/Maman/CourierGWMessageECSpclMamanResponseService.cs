@@ -171,7 +171,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 if(cfifilmFUStatus == "CDE" && mamanResponseSuccesed)
                 {
                     var mySend2MasofIfNeededService = new Send2MasofIfNeededService();
-                    mySend2MasofIfNeededService.Send2Masof(declarationPM, false, declarationPM);
+                    mySend2MasofIfNeededService.Send2Masof(declarationPM, false, declarationPM,true);
 
                 }
 
