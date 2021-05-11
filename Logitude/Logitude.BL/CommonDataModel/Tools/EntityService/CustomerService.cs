@@ -67,6 +67,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private CustomerForwarderByProductRepository customerForwarderByProductRepository;
         private CustomerMediatorByProductRepository customerMediatorByProductRepository;
         private CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository;
+        private ProductItemRepository productItemRepository;
+        private HTSCodeRepository hTSCodeRepository;
         private CardService cardService;
         ContactService contactService;
         HybridPartnerPM CurrentHybridPartner;
@@ -105,6 +107,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.customerForwarderByProductRepository = new CustomerForwarderByProductRepository(objectContext);
             this.customerMediatorByProductRepository = new CustomerMediatorByProductRepository(objectContext);
             this.cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(objectContext);
+            this.productItemRepository = new ProductItemRepository(objectContext);            
+            this.hTSCodeRepository = new HTSCodeRepository(objectContext);
             this.contactService = new ContactService(objectContext, tenant);
             cardService = new CardService(objectContext, tenant);
         }
@@ -143,8 +147,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private List<CustomerForwarderByProductPM> customerForwarderByProductChangeSet;
         private List<CustomerMediatorByProductPM> customerMediatorByProductChangeSet;
         private List<CardExternalCodeByCurrencyPM> cardExternalCodeByCurrencyChangeSet;
+        private List<ProductItemPM> productItemsChangeSet;
 
-        public void SetChangeSet(List<CustomerSalesNotePM> salesNotesChangeSet, List<CustomerProductPM> productsChangeSet, List<CustomerCompetitorPM> competitorsChangeSet, List<CustomerAdditionalServicePM> servicesChangeSet, List<CustomerSalesmanByProductPM> customerSalesmanByProductsChangeSet, List<CustomerAccountManagerByProductPM> customerAccountManagerByProductChangeSet, List<CustomerCustomsAgentByProductPM> customerCustomsAgentByProductChangeSet, List<CustomerForwarderByProductPM> customerForwarderByProductChangeSet, List<CustomerMediatorByProductPM> customerMediatorByProductChangeSet, List<CardExternalCodeByCurrencyPM> cardExternalCodeByCurrencyChangeSet)
+        public void SetChangeSet(List<CustomerSalesNotePM> salesNotesChangeSet, List<CustomerProductPM> productsChangeSet, List<CustomerCompetitorPM> competitorsChangeSet, List<CustomerAdditionalServicePM> servicesChangeSet, List<CustomerSalesmanByProductPM> customerSalesmanByProductsChangeSet, List<CustomerAccountManagerByProductPM> customerAccountManagerByProductChangeSet, List<CustomerCustomsAgentByProductPM> customerCustomsAgentByProductChangeSet, List<CustomerForwarderByProductPM> customerForwarderByProductChangeSet, List<CustomerMediatorByProductPM> customerMediatorByProductChangeSet, List<CardExternalCodeByCurrencyPM> cardExternalCodeByCurrencyChangeSet, List<ProductItemPM> productItemsChangeSet)
         {
             this.salesNotesChangeSet = salesNotesChangeSet;
             this.productsChangeSet = productsChangeSet;
@@ -156,6 +161,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.customerForwarderByProductChangeSet = customerForwarderByProductChangeSet;
             this.customerMediatorByProductChangeSet = customerMediatorByProductChangeSet;
             this.cardExternalCodeByCurrencyChangeSet = cardExternalCodeByCurrencyChangeSet;
+            this.productItemsChangeSet = productItemsChangeSet;
         }
 
         public void Create()
@@ -374,6 +380,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.UpdateForwarderCollection();
             this.UpdateCustomerMediatorByProductCollection();
             this.UpdateCardExternalCodeByCurrencyCollection();
+            this.UpdateProductItemsCollection();
 
             this.UpdateGLAccount(entityPM, entityPOCO);
            
@@ -1178,8 +1185,38 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
             }
         }
+        private void UpdateProductItemsCollection()
+        {
+            if (productItemsChangeSet != null)
+            {
+                foreach (ProductItemPM itemPM in productItemsChangeSet)
+                {
+                    switch (itemPM.ChangeSetOp)
+                    {
+                        case ChangeSetOperation.Insert:
+                            {
+                                this.CreateCustomerProductItem(itemPM);
+                                break;
+                            }
 
-       
+                        case ChangeSetOperation.Update:
+                            {
+                                this.UpdateCustomerProductItem(itemPM);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Delete:
+                            {
+                                this.DeleteCustomerProductItem(itemPM);
+                                break;
+                            }
+
+                        default: { break; }
+                    }
+                }
+            }
+        }
+
         private void CreateCustomerProduct(CustomerProductPM itemPM)
         {
             itemPM.CustomerId = this.entityPM.Id;
@@ -1693,6 +1730,117 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
         }
 
+        private void CreateCustomerProductItem(ProductItemPM itemPM)
+        {
+            itemPM.Id = IdCounter.GetNumber("ProductItem", tenant);
+            itemPM.CustomerId = this.entityPM.Id;
+            itemPM.Tenant = tenant;
+
+            ProductItem itemPoco = new ProductItem()
+            {
+                CustomerId = itemPM.CustomerId,
+                Tenant = tenant
+            };
+
+            ProductItemMapping.MapEntity(itemPM, itemPoco, true);
+            productItemRepository.Add(itemPoco);
+
+            if (itemPM.HTSCodes != null)
+            {
+                foreach (HTSCodePM hTSCodePM in itemPM.HTSCodes)
+                {
+                    this.CreateCustomerProductItemHTSCode(hTSCodePM, itemPM.Id);
+                }
+            }
+        }
+        private void UpdateCustomerProductItem(ProductItemPM itemPM)
+        {
+            ProductItem itemPoco = productItemRepository.GetSingleProductItem(itemPM.Id, tenant);
+            ProductItemMapping.MapEntity(itemPM, itemPoco, false);
+
+            if (itemPM.HTSCodeChangeSet != null)
+            {
+                foreach (HTSCodePM hTSCodePM in itemPM.HTSCodeChangeSet)
+                {
+                    switch (hTSCodePM.ChangeSetOp)
+                    {
+                        case ChangeSetOperation.Insert:
+                            {
+                                this.CreateCustomerProductItemHTSCode(hTSCodePM, itemPM.Id);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Update:
+                            {
+                                this.UpdateCustomerProductItemHTSCode(hTSCodePM);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Delete:
+                            {
+                                this.DeleteCustomerProductItemHTSCode(hTSCodePM);
+                                break;
+                            }
+
+                        default: { break; }
+                    }
+                }
+            }
+
+            productItemRepository.Update(itemPoco);
+        }
+        private void DeleteCustomerProductItem(ProductItemPM itemPM)
+        {
+            ProductItem itemPoco = productItemRepository.GetSingleProductItem(itemPM.Id, tenant);
+
+            if (itemPoco != null)
+            {
+                List<HTSCode> hTSCodes = hTSCodeRepository.GetHTSCodes(itemPM.Id,tenant).ToList();
+
+                foreach (HTSCode hTSCode in hTSCodes)
+                {
+                    hTSCodeRepository.Remove(hTSCode);
+                }
+
+                productItemRepository.Remove(itemPoco);
+            }
+        }
+
+        private void CreateCustomerProductItemHTSCode(HTSCodePM itemPM,string itemId)
+        {
+            itemPM.Id = IdCounter.GetNumber("HTSCode", tenant);
+            itemPM.ItemId = itemId;
+            itemPM.Tenant = tenant;
+
+            HTSCode itemPoco = new HTSCode()
+            {
+                ItemId = itemPM.ItemId,
+                Tenant = tenant
+            };
+
+            HTSCodeMapping.MapEntity(itemPM, itemPoco, true);
+            hTSCodeRepository.Add(itemPoco);
+        }
+        private void UpdateCustomerProductItemHTSCode(HTSCodePM itemPM)
+        {
+            HTSCode itemPoco = hTSCodeRepository.GetSingleHTSCode(itemPM.Id,tenant);
+
+            if (itemPoco != null)
+            {
+                HTSCodeMapping.MapEntity(itemPM, itemPoco, false);
+                hTSCodeRepository.Update(itemPoco);
+            }
+        }
+        private void DeleteCustomerProductItemHTSCode(HTSCodePM itemPM)
+        {
+            HTSCode itemPoco = hTSCodeRepository.GetSingleHTSCode(itemPM.Id, tenant);
+
+            if (itemPoco != null)
+            {
+                hTSCodeRepository.Remove(itemPoco);
+            }
+        }
+
         private void CreateAddress(AddressPM itemPM)
         {
             itemPM.Id = IdCounter.GetNumber("Address", tenant).ToString();
@@ -1923,7 +2071,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             CustomerService service = new CustomerService(objectContext, entityPM);
-            service.SetChangeSet(new List<CustomerSalesNotePM>(), new List<CustomerProductPM>(), new List<CustomerCompetitorPM>(), new List<CustomerAdditionalServicePM>(), new List<CustomerSalesmanByProductPM>(), new List<CustomerAccountManagerByProductPM>(), new List<CustomerCustomsAgentByProductPM>(), new List<CustomerForwarderByProductPM>(), new List<CustomerMediatorByProductPM>(), new List<CardExternalCodeByCurrencyPM>());
+            service.SetChangeSet(new List<CustomerSalesNotePM>(), new List<CustomerProductPM>(), new List<CustomerCompetitorPM>(), new List<CustomerAdditionalServicePM>(), new List<CustomerSalesmanByProductPM>(), new List<CustomerAccountManagerByProductPM>(), new List<CustomerCustomsAgentByProductPM>(), new List<CustomerForwarderByProductPM>(), new List<CustomerMediatorByProductPM>(), new List<CardExternalCodeByCurrencyPM>(), new List<ProductItemPM>());
             service.OverrideLoggingUserId = LoggingUserId;
             service.Update();
 

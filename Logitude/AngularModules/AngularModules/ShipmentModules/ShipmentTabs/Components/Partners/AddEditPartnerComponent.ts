@@ -4,6 +4,7 @@ import {PartnerItem} from './PartnersTabComponent';
 import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
+import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 
 @Component({
     
@@ -17,6 +18,7 @@ export class AddEditPartnerComponent implements OnInit {
     public ObjectTableName: string = "Shipment";
     private isMyCustomer: boolean = false;
     private oldCustomerPartnerId: string = null;
+    private oldConsigneeId: string = null;
     public ValidationErrorsList: string[];
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
@@ -32,6 +34,7 @@ export class AddEditPartnerComponent implements OnInit {
         this.EntityPM = dataContext.EntityPM;
         this.isMyCustomer = dataContext.IsCustomer;
         this.oldCustomerPartnerId = this.EntityPM.CustomerId;
+        this.oldConsigneeId = this.EntityPM.ConsigneeId;
         this.Clone();
     }
 
@@ -40,7 +43,6 @@ export class AddEditPartnerComponent implements OnInit {
         this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
-
         this.ValidationErrorsList = [];
 
         var msg: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
@@ -124,9 +126,25 @@ export class AddEditPartnerComponent implements OnInit {
                 }
             }
 
+            if (this.oldConsigneeId != this.EntityPM.ConsigneeId) {
+                if (this.DataContext.Code == "CONSI" && this.EntityPM.ShipmentProductItems.length > 0) {
+                    this.ShowDeleteProductItemsConfirmation();
+                }
+            }
+
             this.CurrentSession.CloseCurrentWindowEmit("OK");
             this.CurrentSession.FireEvent("ShipmentPartnersChanged");
         }
+    }
+    ShowDeleteProductItemsConfirmation() {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Show("All product items in this shipment will be deleted");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {                
+                this.EntityPM.ShipmentProductItems = [];            
+                this.CurrentSession.FireEvent("ShipmentProductItemsDeleted");
+            }
+        });
     }
 
     private myCloner: Cloner;

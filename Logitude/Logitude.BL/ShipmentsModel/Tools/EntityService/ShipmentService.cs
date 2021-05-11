@@ -102,6 +102,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private ContactPM loggedContact;
         private ShipmentAssemblyRepository shipmentAssemblyRepository;
         private ShipmentStoragePricingRepository shipmentStoragePricingRepository;
+        private ShipmentProductItemRepository shipmentProductItemRepository;
 
         List<ShipmentPM> housesList = new List<ShipmentPM>();
         private ShipmentBehaviourFacade shipmentBehaviourFacade;
@@ -150,6 +151,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.shipmentAdditionalCloudDataRepository = new ShipmentAdditionalCloudDataRepository(objectContext);
             this.shipmentAssemblyRepository = new ShipmentAssemblyRepository(objectContext);
             this.shipmentStoragePricingRepository = new ShipmentStoragePricingRepository(objectContext);
+            this.shipmentProductItemRepository = new ShipmentProductItemRepository(objectContext);
 
             this.SetHybridPartner(this.tenant);
         }
@@ -161,7 +163,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
 
 
-        public void SetChangeSet(List<ShipmentPackagePM> shipmentPackagesChangeSet, List<ShipmentOrderPackagePM> shipmentOrderPackagesChangeSet, List<ShipmentPickUpPM> shipmentPickUpsChangeSet, List<ShipmentDeliveryPM> shipmentDeliveriesChangeSet, List<ShipmentReceivablePM> shipmentReceivablesChangeSet, List<ShipmentPayablePM> shipmentPayablesChangeSet, List<ShipmentFollowUpPM> shipmentFollowUpsChangeSet, List<ShipmentAWBPrintOnlyPM> shipmentAWBPrintOnliesChangeSet, List<ConsoleShipmentPM> shipmentConsoleShipmentsChangeSet, List<ShipmentCarrierStatusPM> shipmentCarrierStatusesChangeSet, List<AWBOCIPM> aWBOCIPMChangeSet, List<ShipmentCommodityPM> shipmentCommoditiesChangeSet, List<ShipmentAssemblyPM> shipmentAssembliesChangeSet, List<ShipmentStoragePricingPM> shipmentStoragePricingsChangeSet)
+        public void SetChangeSet(List<ShipmentPackagePM> shipmentPackagesChangeSet, List<ShipmentOrderPackagePM> shipmentOrderPackagesChangeSet, List<ShipmentPickUpPM> shipmentPickUpsChangeSet, List<ShipmentDeliveryPM> shipmentDeliveriesChangeSet, List<ShipmentReceivablePM> shipmentReceivablesChangeSet, List<ShipmentPayablePM> shipmentPayablesChangeSet, List<ShipmentFollowUpPM> shipmentFollowUpsChangeSet, List<ShipmentAWBPrintOnlyPM> shipmentAWBPrintOnliesChangeSet, List<ConsoleShipmentPM> shipmentConsoleShipmentsChangeSet, List<ShipmentCarrierStatusPM> shipmentCarrierStatusesChangeSet, List<AWBOCIPM> aWBOCIPMChangeSet, List<ShipmentCommodityPM> shipmentCommoditiesChangeSet, List<ShipmentAssemblyPM> shipmentAssembliesChangeSet, List<ShipmentStoragePricingPM> shipmentStoragePricingsChangeSet, List<ShipmentProductItemPM> shipmentProductItemsChangeSet)
         {
             // this was for the old silverlight system
             this.initializer.ShipmentPackagesChangeSet = shipmentPackagesChangeSet;
@@ -178,6 +180,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.initializer.ShipmentCommoditiesChangeSet = shipmentCommoditiesChangeSet;
             this.initializer.ShipmentAssembliesChangeSet = shipmentAssembliesChangeSet;
             this.initializer.ShipmentStoragePricingsChangeSet = shipmentStoragePricingsChangeSet;
+            this.initializer.ShipmentProductItemsChangeSet = shipmentProductItemsChangeSet;
         }
 
         public void Create()
@@ -274,6 +277,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 foreach (ShipmentStoragePricingPM itemPM in entityPM.ShipmentStoragePricings)
                 {
                     this.CreateShipmentStoragePricing(itemPM);
+                }
+
+                foreach (ShipmentProductItemPM itemPM in entityPM.ShipmentProductItems)
+                {
+                    this.CreateShipmentProductItem(itemPM);
                 }
 
                 entityPM.CalculateProfit = calculateProfit;
@@ -420,8 +428,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.UpdateShipmentCommoditiesCollection();
                     this.UpdateShipmentAssembliesCollection();
                     this.UpdateShipmentStoragePricingsCollection();
-                    this.InitializeBookingData();
+                    this.UpdateShipmentProductItemsCollection();
 
+                    this.InitializeBookingData();
                     this.RemoveDeletedItemsFromEntityPM();
 
                     if (entityPM.WarehouseStorageFreeDays != entityPoco.WarehouseStorageFreeDays)
@@ -914,6 +923,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             foreach (ShipmentStoragePricingPM pm in entityPM.ShipmentStoragePricings)
             {
                 this.DeleteShipmentStoragePricing(pm);
+            }
+
+            foreach (ShipmentProductItemPM pm in entityPM.ShipmentProductItems)
+            {
+                this.DeleteShipmentProductItem(pm);
             }
 
             entityRepository.Remove(this.entityPoco);
@@ -1930,6 +1944,37 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         case ChangeSetOperation.Delete:
                             {
                                 this.DeleteShipmentStoragePricing(itemPM);
+                                break;
+                            }
+
+                        default: { break; }
+                    }
+                }
+            }
+        }
+        private void UpdateShipmentProductItemsCollection()
+        {
+            if (initializer.ShipmentProductItemsChangeSet != null)
+            {
+                foreach (ShipmentProductItemPM itemPM in initializer.ShipmentProductItemsChangeSet)
+                {
+                    switch (itemPM.ChangeSetOp)
+                    {
+                        case ChangeSetOperation.Insert:
+                            {
+                                this.CreateShipmentProductItem(itemPM);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Update:
+                            {
+                                this.UpdateShipmentProductItem(itemPM);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Delete:
+                            {
+                                this.DeleteShipmentProductItem(itemPM);
                                 break;
                             }
 
@@ -6137,6 +6182,37 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
+        private void CreateShipmentProductItem(ShipmentProductItemPM itemPM)
+        {
+            itemPM.Id = IdCounter.GetNumber("ShipmentProductItem", tenant).ToString();
+            itemPM.ShipmentId = entityPM.Id;
+            itemPM.Tenant = tenant;
+
+            ShipmentProductItem itemPoco = new ShipmentProductItem()
+            {
+                Id = itemPM.Id,
+            };
+
+            ShipmentMapping.MapProductItem(itemPM, itemPoco, true);
+            shipmentProductItemRepository.Add(itemPoco);
+        }
+        private void UpdateShipmentProductItem(ShipmentProductItemPM itemPM)
+        {
+            ShipmentProductItem itemPoco = shipmentProductItemRepository.GetSingleShipmentProductItem(itemPM.Id, itemPM.Tenant);
+            if (itemPoco != null)
+            {
+                ShipmentMapping.MapProductItem(itemPM, itemPoco, false);
+                shipmentProductItemRepository.Update(itemPoco);
+            }
+        }
+        private void DeleteShipmentProductItem(ShipmentProductItemPM itemPM)
+        {
+            ShipmentProductItem itemPoco = shipmentProductItemRepository.GetSingleShipmentProductItem(itemPM.Id, itemPM.Tenant);
+            if (itemPoco != null)
+            {
+                shipmentProductItemRepository.Remove(itemPoco);
+            }
+        }
         private void ComputeShipmentStatus()
         {
             if (isNewEntity)

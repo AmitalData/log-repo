@@ -1,0 +1,96 @@
+<div class="TabHolder">
+    <table>
+        <tr class="TabTitleRow">
+            <td>
+                <table>
+                    <tr>
+                        <td>{{'Customer.TH.ProductItems' | TextCodeTranslationPipe}}</td>
+
+                        <td style="width: 21px">
+                            <IconButton [Name]="'Add'" [IsEnabled]="IsEditingEnabled" (click)="AddProductItem()"></IconButton>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr style="height: 5px;">
+            <td>
+                <div></div>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <div class="MediaFill">
+                    <div class="SimpleGridView">                        
+                        <div class="MediaFill" style="overflow-x: hidden;">
+                            <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ProductItems" [Disabled]="!IsEditingEnabled" (RowEnded)="OnRowEnded($event)">
+
+                                <!-- ItemCode -->
+                                <log-column [header]="'Item Code'" [width]="'150'" [Alignment]="'left'">
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate>
+                                            <div class="TextTrimming">
+                                                <span>{{item.ItemCode}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
+                                </log-column>
+
+                                <!-- Description -->
+                                <log-column [header]="'Description'" [width]="'200'" [Alignment]="'left'">
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate>
+                                            <div class="TextTrimming">
+                                                <span>{{item.Description}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
+                                </log-column>
+
+                                <!-- SKU -->
+                                <log-column [header]="'SKU'" [width]="'150'" [Alignment]="'left'">
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate>
+                                            <div class="TextTrimming">
+                                                <span>{{item.SKU}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
+                                </log-column>
+
+                                <!-- Inactive -->
+                                <log-column [header]="'Inactive'" [width]="'80'" [Alignment]="'left'">
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate>
+                                            <div style="height: 100%; width: 100%; position:relative;">
+                                                <div class="CenterCenter" style="width: 16px;">
+                                                    <CheckBox (Checked)="item.InActive=$event" [IsChecked]="item.InActive" [IsEnabled]="false"></CheckBox>
+                                                </div>
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
+                                </log-column>
+
+                                <!-- Buttons -->
+                                <log-column [width]="'50'" [Alignment]="'left'">
+                                    <ng-template let-item>
+                                        <log-cell-template [IgnoreMods]="true">
+                                            <div>
+                                                <div style="width: 18px; height: 18px;">
+                                                    <IconButton [Title]="'Edit'" [Name]="'Edit'" [IsSmall]="true" (click)="EditLineClicked(item)"></IconButton>
+                                                </div>
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
+                                </log-column>
+                            </logitude-edit-grid>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+
+    </table>
+</div>

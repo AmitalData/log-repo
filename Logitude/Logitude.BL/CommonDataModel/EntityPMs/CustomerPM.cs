@@ -926,6 +926,29 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
             }
         }
 
+        private List<ProductItemPM> customerProductItems;
+        [Include]
+        [Association("CustomerProductItemCustomer", "Id", "CustomerId")]
+        [Composition]
+        [DataMember]
+        public virtual List<ProductItemPM> CustomerProductItems
+        {
+            get
+            {
+                if (customerProductItems == null)
+                {
+                    customerProductItems = new List<ProductItemPM>();
+                }
+
+                return customerProductItems;
+            }
+
+            set
+            {
+                customerProductItems = value;
+            }
+        }
+
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public bool IsLogBox { get; set; }

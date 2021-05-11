@@ -1,0 +1,72 @@
+
+<div class="TabHolder">
+    <table>
+        <tr class="TabTitleRow">
+            <td>
+                <table>
+                    <tr>
+                        <td>{{'Shipment.TH.ProductItems' | TextCodeTranslationPipe}}</td>
+
+                        <td style="width: 21px">
+                            <IconButton [Name]="'Add'" [IsEnabled]="IsEditingEnabled" (click)="AddProductItem()"></IconButton>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <div class="MediaFill" style="overflow-x: hidden;">
+                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ProductItems" [Disabled]="!IsEditingEnabled" (RowEnded)="OnRowEnded($event)">
+
+                        <log-column [header]="'Item Code'" [width]="'150'" [Alignment]="'left'">
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate [IsEnabled]="IsEditingEnabled">
+                                    <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                        <span>{{item.ProductItemCode}}</span>
+                                    </div>
+                                    <div *ngIf="logcelltemplate.IsEditMode">
+                                        <ComboBox [ItemsSource]="ProductItemsFilterList"
+                                                  [Binding]="'ItemCode'"
+                                                  [SelectedItem]="item.SelectedProductItem"
+                                                  (SelectedItemChanged)="item.SelectedProductItem = $event"></ComboBox>
+                                    </div>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+
+                        <log-column [header]="'Description'" [width]="'150'" [Alignment]="'left'">
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate>
+                                    <span>{{item.Description}}</span>                                    
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+
+                        <log-column [header]="'HTSCode'" [width]="'120'" [Alignment]="'left'">
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate>
+                                   <span>{{item.HTSCode}}</span>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+
+
+                        <!-- Buttons -->
+                        <log-column [width]="'30'" [Alignment]="'left'">
+                            <ng-template let-item>
+                                <log-cell-template [IgnoreMods]="true">
+                                    <IconButton [Name]="'Delete'" [IsSmall]="true"
+                                                style="display: block; float: left; margin-left:3px; margin-top:4px;" (click)="item.RemoveLine()"></IconButton>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+
+                    </logitude-edit-grid>
+                </div>
+            </td>
+        </tr>
+
+    </table>
+</div>

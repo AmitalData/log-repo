@@ -1027,7 +1027,9 @@
     </None>
     <None Include="EntityFiles\CommonDataModel\CardSearch.lxml" />
     <None Include="EntityFiles\CommonDataModel\Horse.lxml" />
+    <None Include="EntityFiles\CommonDataModel\HTSCode.lxml" />
     <None Include="EntityFiles\CommonDataModel\HybridTenantState.lxml" />
+    <None Include="EntityFiles\CommonDataModel\ProductItem.lxml" />
     <None Include="EntityFiles\CommonDataModel\ReportExecutionLog.lxml" />
     <None Include="EntityFiles\CommonDataModel\TariffCarrierTranslation.lxml">
       <SubType>Designer</SubType>
@@ -1578,6 +1580,7 @@
     <None Include="EntityFiles\ShipmentsModel\ShipmentPickUpDeliveryPackage.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EntityFiles\ShipmentsModel\ShipmentProductItem.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentReceivable.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentReceivableStatus.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentStoragePricing.lxml" />
