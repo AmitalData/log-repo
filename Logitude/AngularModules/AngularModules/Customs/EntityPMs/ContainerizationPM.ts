@@ -69,6 +69,26 @@ export class ContainerizationPM {
     public set OperationMode(newValue: string) { if (this.operationMode != newValue) { this.operationMode = newValue; this.MarkAsDirty("OperationMode"); } }
        
 	 
+    private exportFile: string;
+    public get ExportFile() { return this.exportFile; }
+    public set ExportFile(newValue: string) { if (this.exportFile != newValue) { this.exportFile = newValue; this.MarkAsDirty("ExportFile"); } }
+       
+	 
+    private importerName: string;
+    public get ImporterName() { return this.importerName; }
+    public set ImporterName(newValue: string) { if (this.importerName != newValue) { this.importerName = newValue; this.MarkAsDirty("ImporterName"); } }
+       
+	 
+    private containerizationStatusName: string;
+    public get ContainerizationStatusName() { return this.containerizationStatusName; }
+    public set ContainerizationStatusName(newValue: string) { if (this.containerizationStatusName != newValue) { this.containerizationStatusName = newValue; this.MarkAsDirty("ContainerizationStatusName"); } }
+       
+	 
+    private hataraStatusName: string;
+    public get HataraStatusName() { return this.hataraStatusName; }
+    public set HataraStatusName(newValue: string) { if (this.hataraStatusName != newValue) { this.hataraStatusName = newValue; this.MarkAsDirty("HataraStatusName"); } }
+       
+	 
 
     public OldEntityPM: ContainerizationPM;
 		

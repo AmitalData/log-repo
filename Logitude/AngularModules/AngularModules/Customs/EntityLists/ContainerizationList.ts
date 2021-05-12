@@ -17,6 +17,11 @@ export class ContainerizationList {
 	ContainerizationStatus: number;
 	HataraStatus: number;
 	OperationMode: string;
+	ExportFile: string;
+	TransportModeForExport: string;
+	ImporterName: string;
+	ContainerizationStatusName: string;
+	HataraStatusName: string;
 	
 }
  

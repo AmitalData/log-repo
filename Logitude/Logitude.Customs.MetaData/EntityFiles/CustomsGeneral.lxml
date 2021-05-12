@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;CustomsGeneral&quot;"
-  Code="&quot;c964&quot;"
+  Code="&quot;1736&quot;"
   Name="&quot;CustomsGeneral&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -52,6 +52,7 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
   Code1="&quot;6f7b&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -5220,6 +5221,12 @@
       Code="&quot;General.MH.ExportStorage&quot;"
       DefaultText="&quot;Storages&quot;"
       LocalDefaultText="&quot;Storages&quot;"
+      TextCodeTypeCode="&quot;MH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MH.Containerization&quot;"
+      DefaultText="&quot;Containerization&quot;"
+      LocalDefaultText="&quot;המכלות&quot;"
       TextCodeTypeCode="&quot;MH&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

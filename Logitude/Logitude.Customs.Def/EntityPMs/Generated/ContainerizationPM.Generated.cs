@@ -227,6 +227,98 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string exportFile ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExportFile  
+	   {
+	    
+	     get
+		{
+		   return exportFile;
+		 }
+		 set
+		 {
+		   if(exportFile != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportFile",OldValue=exportFile,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   exportFile=value;
+		   }
+			
+		 }
+	   }
+	  private string importerName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ImporterName  
+	   {
+	    
+	     get
+		{
+		   return importerName;
+		 }
+		 set
+		 {
+		   if(importerName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ImporterName",OldValue=importerName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   importerName=value;
+		   }
+			
+		 }
+	   }
+	  private string containerizationStatusName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContainerizationStatusName  
+	   {
+	    
+	     get
+		{
+		   return containerizationStatusName;
+		 }
+		 set
+		 {
+		   if(containerizationStatusName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContainerizationStatusName",OldValue=containerizationStatusName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   containerizationStatusName=value;
+		   }
+			
+		 }
+	   }
+	  private string hataraStatusName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string HataraStatusName  
+	   {
+	    
+	     get
+		{
+		   return hataraStatusName;
+		 }
+		 set
+		 {
+		   if(hataraStatusName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HataraStatusName",OldValue=hataraStatusName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   hataraStatusName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

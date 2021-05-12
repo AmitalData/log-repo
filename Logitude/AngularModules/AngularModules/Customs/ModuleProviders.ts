@@ -246,6 +246,7 @@ import { CancelRequestRejectReasonTypeListService } from './Services/StandardLis
 import { SecurityClearenceTypeCodeListService } from './Services/StandardLists/SecurityClearenceTypeCodeListService';
 import { CargoTypeListService } from './Services/StandardLists/CargoTypeListService';
 
+import { ContainerizationListService } from './Services/StandardLists/ContainerizationListService';
 
 //#endregion
 
@@ -678,7 +679,9 @@ export class ModuleProviders {
             case "AmendCancellRequestInitiatorListService": { myResult = new AmendCancellRequestInitiatorListService(); break; }
             case "FclLclCodeListService": { myResult = new FclLclCodeListService(); break; }
             case "CancelRequestRejectReasonTypeListService": { myResult = new CancelRequestRejectReasonTypeListService(); break; }
+            case "ContainerizationListService": { myResult = new ContainerizationListService(); break; }
 
+                
              //#endregion                
 
             //#region StandardPMs

@@ -22,7 +22,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 	    private IQueryable<ContainerizationList> GetIqueryableList(IQueryable<Containerization> iQueryable)
         {
 		IQueryable<ContainerizationList> query = (from a in iQueryable
-                                            select new ContainerizationList()
+												//  join d in context.Declarations
+					  // on a.Id equals de.DeclarationId
+					 //  into DeclarationCourierStatusesJoin
+					   //.Include("Declaration")
+												  select new ContainerizationList()
 											{
                      
 					                          Id = a.Id,
@@ -42,6 +46,12 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 					                          HataraStatus = a.HataraStatus,
 					
 					                          OperationMode = a.OperationMode,
+
+											  ContainerizationStatusName= "אין טבלה מקושרת",
+											  ExportFile = "123",
+											  HataraStatusName="אין טבלה", 
+											  ImporterName= "יבואן",
+											  TransportModeForExport="O"
 					
 		                    	            });
             return query;
