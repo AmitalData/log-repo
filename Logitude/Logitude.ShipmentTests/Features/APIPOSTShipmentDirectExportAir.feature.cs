@@ -108,32 +108,32 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table13 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table15 = new TechTalk.SpecFlow.Table(new string[] {
                             "property",
                             "Value"});
-                table13.AddRow(new string[] {
+                table15.AddRow(new string[] {
                             "Direction",
                             "Export"});
-                table13.AddRow(new string[] {
+                table15.AddRow(new string[] {
                             "TransportMode",
                             "Air"});
-                table13.AddRow(new string[] {
+                table15.AddRow(new string[] {
                             "ShipmentLevel",
                             "Direct"});
-                table13.AddRow(new string[] {
+                table15.AddRow(new string[] {
                             "FreightPrepaidCollect",
                             "Collect"});
-                table13.AddRow(new string[] {
+                table15.AddRow(new string[] {
                             "OtherPrepaidCollect",
                             "Collect"});
-                table13.AddRow(new string[] {
+                table15.AddRow(new string[] {
                             "MainCarriageToPort",
                             "JFK"});
-                table13.AddRow(new string[] {
+                table15.AddRow(new string[] {
                             "MainCarriageFromPort",
                             "MIA"});
 #line 5
- testRunner.Given("a direct shipment with the following properties", ((string)(null)), table13, "Given ");
+ testRunner.Given("a direct shipment with the following properties", ((string)(null)), table15, "Given ");
 #line hidden
 #line 14
  testRunner.When("create direct shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");

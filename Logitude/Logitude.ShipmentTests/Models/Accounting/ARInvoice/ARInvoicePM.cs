@@ -32,6 +32,7 @@ namespace Logitude.ShipmentTests.Models.Accounting.ARInvoice
         public string UpdatedByUserId { get; set; }
         public double? SubTotalInInvoiceCurrency { get; set; }
         public double? SubTotalInLocalCurrency { get; set; }
+        public bool IsInvoiceNumberManuallySet { get; set; }
         public List<ARInvoiceLinePM> InvoiceLines { get; set; }
     }
 }

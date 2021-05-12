@@ -10,12 +10,21 @@ namespace Logitude.ShipmentTests.Models.Accounting
 {
     public class AccountingContext
     {
-        public APInvoicePM ShipmentAPInvoice { get; set; }
-        public ARInvoicePM ShipmentARInvoice { get; set; }
+        public ShipmentAPInvoice ShipmentAPInvoice { get; set; }
+        public ShipmentARInvoice ShipmentARInvoice { get; set; }
     }
 
     public class ShipmentAPInvoice
     {
+        public ShipmentReceivablePM receivablePM;
+        public APInvoicePM APInvoicePM;
+        public APInvoiceLinePM APInvoiceLinePM;
+    }
 
+    public class ShipmentARInvoice
+    {
+        public ShipmentReceivablePM receivablePM;
+        public ARInvoicePM ARInvoicePM;
+        public ARInvoiceLinePM ARInvoiceLinePM;
     }
 }

@@ -3,6 +3,16 @@
 
 Scenario: POST AP invoice
 	Given a direct shipment
+	And a payable with the following properties
+		| property                         | Value       |
+		| ChargesTypeName                  | Air Freight |
+		| ChargesType                      | AFT         |
+		| Measurement                      | GRWT        |
+		| Currency                         | EUR         |
+		| Rate                             | 3.8         |
+		| Quantity                         | 20          |
+		| UnitPrice                        | 5           |
+		| ShipmentReceivableLineStatusCode | OAMT        |
 	And a payable receive invoice with the following properties
 		| property        | Value       |
 		| Vendor          | TestVendor  |

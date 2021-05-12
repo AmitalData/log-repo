@@ -26,6 +26,7 @@ namespace Logitude.ShipmentTests.Models.Accounting.ARInvoice
         public double? UnitPrice { get; set; } 
         public double? Quantity { get; set; }
         public double? ForiegnExchangeRate { get; set; }
+        public ChangeSetOperation ChangeSetOp { get; set; }
 
 
     }

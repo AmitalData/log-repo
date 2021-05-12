@@ -109,86 +109,86 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table14 = new TechTalk.SpecFlow.Table(new string[] {
-                            "property",
-                            "Value"});
-                table14.AddRow(new string[] {
-                            "Quantity",
-                            "200"});
-                table14.AddRow(new string[] {
-                            "Length",
-                            "100"});
-                table14.AddRow(new string[] {
-                            "Width",
-                            "100"});
-                table14.AddRow(new string[] {
-                            "Weight",
-                            "200"});
-                table14.AddRow(new string[] {
-                            "Height",
-                            "100"});
-#line 6
- testRunner.Given("a direct package with the following properties", ((string)(null)), table14, "Given ");
-#line hidden
-                TechTalk.SpecFlow.Table table15 = new TechTalk.SpecFlow.Table(new string[] {
-                            "property",
-                            "Value"});
-                table15.AddRow(new string[] {
-                            "ChargesTypeName",
-                            "Air Freight"});
-                table15.AddRow(new string[] {
-                            "ChargesType",
-                            "AFT"});
-                table15.AddRow(new string[] {
-                            "Measurement",
-                            "GRWT"});
-                table15.AddRow(new string[] {
-                            "UnitPrice",
-                            "60"});
-                table15.AddRow(new string[] {
-                            "Currency",
-                            "EUR"});
-                table15.AddRow(new string[] {
-                            "ShipmentPayableLineStatus",
-                            "OAMT"});
-#line 13
- testRunner.And("a direct payable with the following properties", ((string)(null)), table15, "And ");
-#line hidden
                 TechTalk.SpecFlow.Table table16 = new TechTalk.SpecFlow.Table(new string[] {
                             "property",
                             "Value"});
                 table16.AddRow(new string[] {
-                            "ChargesTypeName",
-                            "Air Freight"});
+                            "Quantity",
+                            "200"});
                 table16.AddRow(new string[] {
-                            "ChargesType",
-                            "AFT"});
+                            "Length",
+                            "100"});
                 table16.AddRow(new string[] {
-                            "Measurement",
-                            "GRWT"});
+                            "Width",
+                            "100"});
                 table16.AddRow(new string[] {
-                            "Currency",
-                            "EUR"});
+                            "Weight",
+                            "200"});
                 table16.AddRow(new string[] {
-                            "ShipmentReceivableLineStatusCode",
-                            "OAMT"});
-#line 21
- testRunner.And("a direct receivable with the following properties", ((string)(null)), table16, "And ");
+                            "Height",
+                            "100"});
+#line 6
+ testRunner.Given("a direct package with the following properties", ((string)(null)), table16, "Given ");
 #line hidden
                 TechTalk.SpecFlow.Table table17 = new TechTalk.SpecFlow.Table(new string[] {
                             "property",
                             "Value"});
                 table17.AddRow(new string[] {
+                            "ChargesTypeName",
+                            "Air Freight"});
+                table17.AddRow(new string[] {
+                            "ChargesType",
+                            "AFT"});
+                table17.AddRow(new string[] {
+                            "Measurement",
+                            "GRWT"});
+                table17.AddRow(new string[] {
+                            "UnitPrice",
+                            "60"});
+                table17.AddRow(new string[] {
+                            "Currency",
+                            "EUR"});
+                table17.AddRow(new string[] {
+                            "ShipmentPayableLineStatus",
+                            "OAMT"});
+#line 13
+ testRunner.And("a direct payable with the following properties", ((string)(null)), table17, "And ");
+#line hidden
+                TechTalk.SpecFlow.Table table18 = new TechTalk.SpecFlow.Table(new string[] {
+                            "property",
+                            "Value"});
+                table18.AddRow(new string[] {
+                            "ChargesTypeName",
+                            "Air Freight"});
+                table18.AddRow(new string[] {
+                            "ChargesType",
+                            "AFT"});
+                table18.AddRow(new string[] {
+                            "Measurement",
+                            "GRWT"});
+                table18.AddRow(new string[] {
+                            "Currency",
+                            "EUR"});
+                table18.AddRow(new string[] {
+                            "ShipmentReceivableLineStatusCode",
+                            "OAMT"});
+#line 21
+ testRunner.And("a direct receivable with the following properties", ((string)(null)), table18, "And ");
+#line hidden
+                TechTalk.SpecFlow.Table table19 = new TechTalk.SpecFlow.Table(new string[] {
+                            "property",
+                            "Value"});
+                table19.AddRow(new string[] {
                             "PartnerType",
                             "AG"});
-                table17.AddRow(new string[] {
+                table19.AddRow(new string[] {
                             "EnglishName",
                             "TestAgent"});
-                table17.AddRow(new string[] {
+                table19.AddRow(new string[] {
                             "Country",
                             "US"});
 #line 28
- testRunner.And("a partners with the following properties", ((string)(null)), table17, "And ");
+ testRunner.And("a partners with the following properties", ((string)(null)), table19, "And ");
 #line hidden
 #line 33
  testRunner.And("a direct shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");

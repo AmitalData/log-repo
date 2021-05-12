@@ -196,19 +196,29 @@ namespace Logitude.ShipmentTests.Models.Builders
             return this;
         }
 
-        public ShipmentBuilder ShipmentReceivable(List<ReceivablePM> shipmentReceivable)
+        public ShipmentBuilder ShipmentReceivable(List<ShipmentReceivablePM> shipmentReceivable)
         {
             _shipmentPM.ShipmentReceivable.AddRange(shipmentReceivable);
             return this;
         }
 
-        public ShipmentBuilder ShipmentReceivable(ReceivablePM shipmentReceivable)
+        public ShipmentBuilder ShipmentReceivable(ShipmentReceivablePM shipmentReceivable)
         {
             if (_shipmentPM.ShipmentReceivable == null)
             {
-                _shipmentPM.ShipmentReceivable = new List<ReceivablePM>();
+                _shipmentPM.ShipmentReceivable = new List<ShipmentReceivablePM>();
             }
             _shipmentPM.ShipmentReceivable.Add(shipmentReceivable);
+            return this;
+        }
+        public ShipmentBuilder ShipmentReceivableStatusCode(string ShipmentReceivableStatusCode)
+        {
+            _shipmentPM.ShipmentReceivableStatusCode = ShipmentReceivableStatusCode ;
+            return this;
+        }
+        public ShipmentBuilder ShipmentReceivableStatusName(string ShipmentReceivableStatusName)
+        {
+            _shipmentPM.ShipmentReceivableStatusName = ShipmentReceivableStatusName;
             return this;
         }
 

@@ -17,7 +17,7 @@ namespace Logitude.ShipmentTests.Steps.AccountingTests
         protected readonly AccountingContext AccountingContext;
         protected readonly ShipmentContext ShipmentContext;
         private APInvoicePM PutResponse;
-        private APInvoiceLinePM FirstAPInvoiceLinePM , SecondAPInvoiceLinePM;
+        private APInvoiceLinePM  SecondAPInvoiceLinePM;
 
         public PUTAPInvoiceSteps(AccountingContext accountingContext, ShipmentContext shipmentContext)
         {
@@ -25,18 +25,12 @@ namespace Logitude.ShipmentTests.Steps.AccountingTests
             ShipmentContext = shipmentContext;
         }
 
-        [Given(@"an first invoice line with the following properties")]
-        public void GivenAnFirstInvoiceLineWithTheFollowingProperties(Table table)
-        {
-            FirstAPInvoiceLinePM = CreateAPInvoiceLineInstance(table);
-        }
-
         [When(@"update APInvoice by adding invoice line with the following properties")]
         public void WhenUpdateAPInvoiceByAddingInvoiceLineWithTheFollowingProperties(Table table)
         {
-            AccountingContext.ShipmentAPInvoice = CreateAPInvoice(AccountingContext.ShipmentAPInvoice, FirstAPInvoiceLinePM);
+            AccountingContext.ShipmentAPInvoice.APInvoicePM = CreateAPInvoice(AccountingContext.ShipmentAPInvoice.APInvoicePM, AccountingContext.ShipmentAPInvoice.APInvoiceLinePM);
             SecondAPInvoiceLinePM = CreateAPInvoiceLineInstance(table);
-            ApiResponse<APInvoicePM> response = UpdateAPInvoice(AccountingContext.ShipmentAPInvoice, SecondAPInvoiceLinePM);
+            ApiResponse<APInvoicePM> response = UpdateAPInvoice(AccountingContext.ShipmentAPInvoice.APInvoicePM, SecondAPInvoiceLinePM);
             PutResponse = response.Data;
         }
 
@@ -84,7 +78,7 @@ namespace Logitude.ShipmentTests.Steps.AccountingTests
 
         private APInvoicePM AddNewAPInvoiceLine(APInvoicePM shipmentAPInvoice, APInvoiceLinePM APInvoiceLinePM)
         {
-            double totalAmount = (double)(FirstAPInvoiceLinePM.InvoiceCurrencyAmount + SecondAPInvoiceLinePM.InvoiceCurrencyAmount);
+            double totalAmount = (double)(100 + SecondAPInvoiceLinePM.InvoiceCurrencyAmount);
 
             APInvoiceLinePM = new APInvoiceLineBuilder().WithModel(APInvoiceLinePM)
                 .EntityId(ShipmentContext.DirectShipment.Id)

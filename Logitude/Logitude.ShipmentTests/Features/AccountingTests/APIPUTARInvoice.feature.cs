@@ -111,66 +111,6 @@ this.ScenarioInitialize(scenarioInfo);
 #line 5
  testRunner.Given("a direct shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-                TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
-                            "property",
-                            "Value"});
-                table9.AddRow(new string[] {
-                            "ChargesTypeName",
-                            "Air Freight"});
-                table9.AddRow(new string[] {
-                            "ChargesType",
-                            "AFT"});
-                table9.AddRow(new string[] {
-                            "Measurement",
-                            "GRWT"});
-                table9.AddRow(new string[] {
-                            "Currency",
-                            "EUR"});
-                table9.AddRow(new string[] {
-                            "Rate",
-                            "3.8"});
-                table9.AddRow(new string[] {
-                            "Quantity",
-                            "20"});
-                table9.AddRow(new string[] {
-                            "UnitPrice",
-                            "5"});
-                table9.AddRow(new string[] {
-                            "ShipmentReceivableLineStatusCode",
-                            "OAMT"});
-#line 6
- testRunner.And("a ARInvoice receivable with the following properties", ((string)(null)), table9, "And ");
-#line hidden
-                TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
-                            "property",
-                            "Value"});
-                table10.AddRow(new string[] {
-                            "Customer",
-                            "TestCustomer"});
-                table10.AddRow(new string[] {
-                            "InvoiceAmount",
-                            "100"});
-                table10.AddRow(new string[] {
-                            "InvoiceCurrency",
-                            "EUR"});
-                table10.AddRow(new string[] {
-                            "ExchangeRate",
-                            "3.8"});
-                table10.AddRow(new string[] {
-                            "InvoiceDate",
-                            "Today"});
-                table10.AddRow(new string[] {
-                            "PaymentTerms",
-                            "Cash"});
-                table10.AddRow(new string[] {
-                            "DueDate",
-                            "Today"});
-                table10.AddRow(new string[] {
-                            "VatNumber",
-                            "zero"});
-#line 16
- testRunner.And("a ARInvoice receivable receive invoice with the following properties", ((string)(null)), table10, "And ");
-#line hidden
                 TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
                             "property",
                             "Value"});
@@ -181,22 +121,13 @@ this.ScenarioInitialize(scenarioInfo);
                             "ChargesType",
                             "AFT"});
                 table11.AddRow(new string[] {
-                            "VatType",
-                            "Zero"});
-                table11.AddRow(new string[] {
-                            "VatPrecentage",
-                            "0"});
-                table11.AddRow(new string[] {
-                            "Amount",
-                            "100"});
-                table11.AddRow(new string[] {
-                            "Description",
-                            "ARI POST AR Invoice"});
+                            "Measurement",
+                            "GRWT"});
                 table11.AddRow(new string[] {
                             "Currency",
                             "EUR"});
                 table11.AddRow(new string[] {
-                            "ExchangeRate",
+                            "Rate",
                             "3.8"});
                 table11.AddRow(new string[] {
                             "Quantity",
@@ -204,25 +135,115 @@ this.ScenarioInitialize(scenarioInfo);
                 table11.AddRow(new string[] {
                             "UnitPrice",
                             "5"});
-#line 26
- testRunner.And("an ARInvoice receivable invoice line with the following properties", ((string)(null)), table11, "And ");
+                table11.AddRow(new string[] {
+                            "ShipmentReceivableLineStatusCode",
+                            "OAMT"});
+#line 6
+ testRunner.And("a receivable with the following properties", ((string)(null)), table11, "And ");
 #line hidden
                 TechTalk.SpecFlow.Table table12 = new TechTalk.SpecFlow.Table(new string[] {
                             "property",
                             "Value"});
                 table12.AddRow(new string[] {
+                            "Customer",
+                            "TestCustomer"});
+                table12.AddRow(new string[] {
+                            "InvoiceAmount",
+                            "100"});
+                table12.AddRow(new string[] {
+                            "InvoiceCurrency",
+                            "EUR"});
+                table12.AddRow(new string[] {
+                            "ExchangeRate",
+                            "3.8"});
+                table12.AddRow(new string[] {
+                            "InvoiceDate",
+                            "Today"});
+                table12.AddRow(new string[] {
+                            "PaymentTerms",
+                            "Cash"});
+                table12.AddRow(new string[] {
+                            "DueDate",
+                            "Today"});
+                table12.AddRow(new string[] {
+                            "VatNumber",
+                            "zero"});
+#line 16
+ testRunner.And("a receivable receive invoice with the following properties", ((string)(null)), table12, "And ");
+#line hidden
+                TechTalk.SpecFlow.Table table13 = new TechTalk.SpecFlow.Table(new string[] {
+                            "property",
+                            "Value"});
+                table13.AddRow(new string[] {
                             "ChargesTypeName",
                             "Air Freight"});
-                table12.AddRow(new string[] {
-                            "Quantity",
-                            "40"});
-                table12.AddRow(new string[] {
+                table13.AddRow(new string[] {
+                            "ChargesType",
+                            "AFT"});
+                table13.AddRow(new string[] {
+                            "VatType",
+                            "Zero"});
+                table13.AddRow(new string[] {
+                            "VatPrecentage",
+                            "0"});
+                table13.AddRow(new string[] {
+                            "Amount",
+                            "100"});
+                table13.AddRow(new string[] {
                             "Description",
-                            "ARI POST AR Invoice"});
-#line 38
- testRunner.When("update ARInvoice by edit invoice line with the following properties", ((string)(null)), table12, "When ");
+                            "API POST AP Invoice"});
+                table13.AddRow(new string[] {
+                            "Currency",
+                            "EUR"});
+                table13.AddRow(new string[] {
+                            "ExchangeRate",
+                            "3.8"});
+                table13.AddRow(new string[] {
+                            "Quantity",
+                            "20"});
+                table13.AddRow(new string[] {
+                            "UnitPrice",
+                            "5"});
+#line 26
+ testRunner.And("an receivable invoice line with the following properties", ((string)(null)), table13, "And ");
 #line hidden
-#line 43
+                TechTalk.SpecFlow.Table table14 = new TechTalk.SpecFlow.Table(new string[] {
+                            "property",
+                            "Value"});
+                table14.AddRow(new string[] {
+                            "ChargesTypeName",
+                            "Air Freight"});
+                table14.AddRow(new string[] {
+                            "ChargesType",
+                            "AFT"});
+                table14.AddRow(new string[] {
+                            "VatType",
+                            "Zero"});
+                table14.AddRow(new string[] {
+                            "VatPrecentage",
+                            "0"});
+                table14.AddRow(new string[] {
+                            "Amount",
+                            "50"});
+                table14.AddRow(new string[] {
+                            "Description",
+                            "API POST AP Invoice"});
+                table14.AddRow(new string[] {
+                            "Currency",
+                            "EUR"});
+                table14.AddRow(new string[] {
+                            "ExchangeRate",
+                            "3.8"});
+                table14.AddRow(new string[] {
+                            "Quantity",
+                            "10"});
+                table14.AddRow(new string[] {
+                            "UnitPrice",
+                            "5"});
+#line 38
+ testRunner.When("update ARInvoice by edit invoice line with the following properties", ((string)(null)), table14, "When ");
+#line hidden
+#line 50
  testRunner.Then("the ARInvoice should update successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

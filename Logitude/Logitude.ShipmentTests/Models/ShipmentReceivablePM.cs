@@ -1,8 +1,9 @@
 ﻿using Logitude.ShipmentTests.Models.Accounting;
+using System;
 
 namespace Logitude.ShipmentTests.Models
 {
-    public class ReceivablePM
+    public class ShipmentReceivablePM
     {
         public string Id { get; set; }
         public int Tenant { get; set; }
@@ -22,6 +23,16 @@ namespace Logitude.ShipmentTests.Models
         public string MeasurementId { get; set; }
         public string MeasurementCode { get; set; }
         public ChangeSetOperation ChangeSetOp { get; set; }
+        public DateTime? UpdateDate { get; set; }
+        public DateTime? CreateDate { get; set; }
+        public string CreatedByUserId { get; set; }
+        public string UpdateByUserId { get; set; }
+        public string PrepaidCollectId { get; set; }
+        public string IATACodeId { get; set; }
+        public string DueTypeCode { get; set; }
+        public string VatTypeId { get; set; }
+        public double? VatAmountLocal { get; set; }
+        public double? VatAmountProfit { get; set; }
 
     }
 }

@@ -3,7 +3,7 @@
 
 Scenario: PUT AR Invoice
 	Given a direct shipment
-	And a ARInvoice receivable with the following properties
+	And a receivable with the following properties
 		| property                         | Value       |
 		| ChargesTypeName                  | Air Freight |
 		| ChargesType                      | AFT         |
@@ -13,7 +13,7 @@ Scenario: PUT AR Invoice
 		| Quantity                         | 20          |
 		| UnitPrice                        | 5           |
 		| ShipmentReceivableLineStatusCode | OAMT        |
-	And a ARInvoice receivable receive invoice with the following properties
+	And a receivable receive invoice with the following properties
 		| property        | Value        |
 		| Customer        | TestCustomer |
 		| InvoiceAmount   | 100          |
@@ -23,14 +23,14 @@ Scenario: PUT AR Invoice
 		| PaymentTerms    | Cash         |
 		| DueDate         | Today        |
 		| VatNumber       | zero         |
-	And an ARInvoice receivable invoice line with the following properties
+	And an receivable invoice line with the following properties
 		| property        | Value               |
 		| ChargesTypeName | Air Freight         |
 		| ChargesType     | AFT                 |
 		| VatType         | Zero                |
 		| VatPrecentage   | 0                   |
 		| Amount          | 100                 |
-		| Description     | ARI POST AR Invoice |
+		| Description     | API POST AP Invoice |
 		| Currency        | EUR                 |
 		| ExchangeRate    | 3.8                 |
 		| Quantity        | 20                  |
@@ -38,6 +38,13 @@ Scenario: PUT AR Invoice
 	When update ARInvoice by edit invoice line with the following properties
 		| property        | Value               |
 		| ChargesTypeName | Air Freight         |
-		| Quantity        | 40                  |
-		| Description     | ARI POST AR Invoice |
+		| ChargesType     | AFT                 |
+		| VatType         | Zero                |
+		| VatPrecentage   | 0                   |
+		| Amount          | 50                  |
+		| Description     | API POST AP Invoice |
+		| Currency        | EUR                 |
+		| ExchangeRate    | 3.8                 |
+		| Quantity        | 10                  |
+		| UnitPrice       | 5                   |
 	Then the ARInvoice should update successfully

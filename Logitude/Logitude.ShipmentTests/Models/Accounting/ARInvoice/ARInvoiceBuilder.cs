@@ -155,6 +155,12 @@ namespace Logitude.ShipmentTests.Models.Accounting.ARInvoice
             return this;
         }
 
+        public ARInvoiceBuilder InvoiceLinesReplace(ARInvoiceLinePM InvoiceLines)
+        {         
+            _ARInvoicePM.InvoiceLines[0] = InvoiceLines;
+            return this;
+        }
+
 
         public ARInvoicePM Build()
         {

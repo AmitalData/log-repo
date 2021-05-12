@@ -21,13 +21,14 @@ namespace Logitude.ShipmentTests.Steps.AccountingTests
         public GETARInvoiceSteps(AccountingContext accountingContext)
         {
             AccountingContext = accountingContext;
+            AccountingContext.ShipmentARInvoice = new ShipmentARInvoice();
         }
 
         [When(@"get ARInvoice with ARInvoiceNumber")]
         public void WhenGetARInvoiceWithARInvoiceNumber()
         {
-            AccountingContext.ShipmentARInvoice = GetDirectARInvoice();
-            ApiQueryFilters apiQueryFilters = BuildApiQueryFilters(AccountingContext.ShipmentARInvoice.InvoiceNumber);
+            AccountingContext.ShipmentARInvoice.ARInvoicePM = GetDirectARInvoice();
+            ApiQueryFilters apiQueryFilters = BuildApiQueryFilters(AccountingContext.ShipmentARInvoice.ARInvoicePM.InvoiceNumber);
             ApiResponse<IEnumerable<ARInvoicePM>> response = APICaller.CallGetByFilters<IEnumerable<ARInvoicePM>>(Urls.ARInvoiceViewsGetByFilters, UserTenant.Token, apiQueryFilters);
             Response = response.Data?.FirstOrDefault();
         }

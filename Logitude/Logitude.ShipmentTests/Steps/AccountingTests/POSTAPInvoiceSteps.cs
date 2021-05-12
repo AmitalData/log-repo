@@ -17,7 +17,6 @@ namespace Logitude.ShipmentTests.Steps.AccountingTests
     {
         protected readonly AccountingContext AccountingContext;
         protected readonly ShipmentContext ShipmentContext;
-        private APInvoiceLinePM APInvoiceLinePM;
 
         public POSTAPInvoiceSteps(AccountingContext accountingContext , ShipmentContext shipmentContext)
         {
@@ -25,29 +24,17 @@ namespace Logitude.ShipmentTests.Steps.AccountingTests
             ShipmentContext = shipmentContext;
         }
 
-        [Given(@"a payable receive invoice with the following properties")]
-        public void GivenAPayableReceiveInvoiceWithTheFollowingProperties(Table table)
-        {
-            AccountingContext.ShipmentAPInvoice = CreateAPInvoiceInstance(table);
-        }
-
-        [Given(@"an invoice line with the following properties")]
-        public void GivenAnInvoiceLineWithTheFollowingProperties(Table table)
-        {
-            APInvoiceLinePM = CreateAPInvoiceLineInstance(table);
-        }
-
         [When(@"create APInvoice")]
         public void WhenCreateAPInvoice()
         {
-            ApiResponse<APInvoicePM> response = CreateAPInvoice(AccountingContext.ShipmentAPInvoice, APInvoiceLinePM);
-            AccountingContext.ShipmentAPInvoice.Id = response.Data?.Id;
+            ApiResponse<APInvoicePM> response = CreateAPInvoice(AccountingContext.ShipmentAPInvoice.APInvoicePM, AccountingContext.ShipmentAPInvoice.APInvoiceLinePM);
+            AccountingContext.ShipmentAPInvoice.APInvoicePM.Id = response.Data?.Id;
         }
 
         [Then(@"the APInvoice should create successfully")]
         public void ThenTheAPInvoiceShouldCreateSuccessfully()
         {
-            AccountingContext.ShipmentAPInvoice.Id.Should().NotBeNull();
+            AccountingContext.ShipmentAPInvoice.APInvoicePM.Id.Should().NotBeNull();
         }
 
         private ApiResponse<APInvoicePM> CreateAPInvoice(APInvoicePM shipmentAPInvoice, APInvoiceLinePM aPInvoiceLinePM)
@@ -64,49 +51,6 @@ namespace Logitude.ShipmentTests.Steps.AccountingTests
 
             return new APInvoiceBuilder().WithModel(shipmentAPInvoice)
                 .InvoiceLines(APInvoiceLinePM)
-                .Build();
-        }
-
-        private APInvoicePM CreateAPInvoiceInstance(Table DataTable)
-        {
-            dynamic dataTable = DataTable.CreateDynamicInstance();
-
-            return new APInvoiceBuilder().WithDefualtValues()
-                .VendorId((string)dataTable.Vendor)
-                .InvoiceNumber((int)dataTable.InvoiceNumber)
-                .AmountDue((double)dataTable.InvoiceAmount)
-                .AmountInInvoiceCurrency((double)dataTable.InvoiceAmount)
-                .InvoiceExpectedAmount((double)dataTable.InvoiceAmount)
-                .AmountInLocalCurrency((double)dataTable.InvoiceAmount)
-                .AmountInProfitCurrency((double)dataTable.InvoiceAmount)
-                .InvoiceCurrencyId((string)dataTable.InvoiceCurrency)
-                .LocalCurrencyId((string)dataTable.InvoiceCurrency)
-                .ProfitCurrencyId((string)dataTable.InvoiceCurrency)
-                .InvoiceCurrencyExchangeRate((double)dataTable.ExchangeRate)
-                .ProfitCurrencyExchangeRate((double)dataTable.ExchangeRate)
-                .InvoiceDate((string)dataTable.InvoiceDate)
-                .PaymentTermId((string)dataTable.PaymentTerms)
-                .DueDate((string)dataTable.DueDate)
-                .VATNumber((string)dataTable.VatNumber)
-                .Build();
-        }
-
-        private APInvoiceLinePM CreateAPInvoiceLineInstance(Table DataTable)
-        {
-            dynamic dataTable = DataTable.CreateDynamicInstance();
-
-            return new APInvoiceLineBuilder().WithDefualtValues()
-                .ChargesTypeName((string)dataTable.ChargesTypeName)
-                .ChargesTypeCode((string)dataTable.ChargesType)
-                .ChargesTypeId((string)dataTable.ChargesType)
-                .VatTypeId((string)dataTable.VatType)
-                .VatTypeName((string)dataTable.VatType)
-                .VatPercentage((double)dataTable.VatPrecentage)
-                .ForiegnCurrencyAmount((double)dataTable.Amount)
-                .InvoiceCurrencyAmount((double)dataTable.Amount)
-                .LocalCurrencyAmount((double)dataTable.Amount)
-                .ProfitCurrencyAmount((double)dataTable.Amount)
-                .Description((string)dataTable.Description)
                 .Build();
         }
 

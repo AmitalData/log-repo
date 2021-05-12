@@ -111,6 +111,11 @@ namespace Logitude.ShipmentTests.Models.Accounting.ARInvoice
             _ARInvoiceLinePM.ForiegnExchangeRate = ForiegnExchangeRate;
             return this;
         }
+        public ARInvoiceLineBuilder ChangeSetOp(ChangeSetOperation ChangeSetOp)
+        {
+            _ARInvoiceLinePM.ChangeSetOp = ChangeSetOp;
+            return this;
+        }
 
         public ARInvoiceLinePM Build()
         {
