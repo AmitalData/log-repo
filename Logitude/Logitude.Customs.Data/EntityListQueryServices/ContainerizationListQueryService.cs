@@ -21,12 +21,23 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
 	    private IQueryable<ContainerizationList> GetIqueryableList(IQueryable<Containerization> iQueryable)
         {
-		IQueryable<ContainerizationList> query = (from a in iQueryable
+
+
+			var declarations =
+	   from dec in context.Declarations
+	   group dec by new { dec.ExportFile, dec.ImporterName, dec.ExportContainerizationID , dec.TransferImporterId}
+			into newgroup
+	   select newgroup;// new Declaration {ExportFile = newgroup.Key.ExportFile };
+
+
+			IQueryable<ContainerizationList> query = (from a in iQueryable
+													  join d in declarations
+													  on a.Id equals d.Key.ExportContainerizationID
 												//  join d in context.Declarations
-					  // on a.Id equals de.DeclarationId
-					 //  into DeclarationCourierStatusesJoin
-					   //.Include("Declaration")
-												  select new ContainerizationList()
+												// on a.Id equals de.DeclarationId
+												//  into DeclarationCourierStatusesJoin
+												//.Include("Declaration")
+													  select new ContainerizationList()
 											{
                      
 					                          Id = a.Id,
@@ -48,18 +59,18 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 					                          OperationMode = a.OperationMode,
 
 											  ContainerizationStatusName= "אין טבלה מקושרת",
-											  ExportFile = "123",
-											  HataraStatusName="אין טבלה", 
-											  ImporterName= "יבואן",
-											  TransportModeForExport="O"
-					
-		                    	            });
+											  ExportFile = d.Key.ExportFile,
+											  HataraStatusName ="אין טבלה", 
+											  ImporterName= d.Key.ImporterName,
+											  TransportModeForExport = d.Key.TransferImporterId
+
+													  });
             return query;
 		}
 
 		private IQueryable<Containerization> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<Containerization> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
+			return iQueryable;
 		}
 			}
 
