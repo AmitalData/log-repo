@@ -994,8 +994,12 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                 });
             }
             else {
-                this.CurrentSession.StopBusyIndicator();
-                this.CurrentSession.CloseCurrentWindowEmit("ok");
+                if (!this._SendCustomsDocumentAfter) {
+                    this.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.CloseCurrentWindowEmit("ok");
+                } else {
+                    this.SendCustomsDocumentMethod();
+                }
             }
         }
         else {
