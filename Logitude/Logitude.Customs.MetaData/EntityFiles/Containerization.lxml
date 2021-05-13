@@ -256,6 +256,9 @@
     FullLocalDefaultText="&quot;תיק יצוא / מזהה מטען&quot;"
     ListFieldLable="&quot;SearchFieldsListLable&quot;"
     ListLableDefaultText="&quot;Search ...&quot;"
+    ShortFieldLable="&quot;SearchFields&quot;"
+    ShortFieldLableDefaultText="&quot;תיק יצוא / מזהה מטען&quot;"
+    ShortLocalDefaultText="&quot;תיק יצוא / מזהה מטען&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -1109,6 +1112,78 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;3b2da25c-5a6d-4152-88ca-517411031ab8&quot;"
+    FieldName="&quot;HataraStatusIsNull&quot;"
+    OldNames="HataraStatusIsNull"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;Customs.Containerization&quot;"
+    FieldsDataType="&quot;Boolean&quot;"
+    MinLength="0"
+    MaxLength="0"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="0"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;HataraStatusIsNull&quot;"
+    ListPropertyPath="&quot;HataraStatusIsNull&quot;"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;Customs.Containerization&quot;"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;HataraStatusIsNull&quot;"
+    DefaultText="&quot;HataraStatusIsNull&quot;"
+    ListFieldLable="&quot;HataraStatusIsNullListLable&quot;"
+    ListLableDefaultText="&quot;HataraStatusIsNull&quot;"
+    ListLocalDefaultText="&quot;HataraStatusIsNull&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="false"
+    HasPMField="false"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <Query
     Code="&quot;OpenContainerization&quot;"
     TextCode="&quot;Open Containerization&quot;"
@@ -1153,7 +1228,7 @@
         QueryCode="&quot;OpenContainerization&quot;"
         IndexOrder="5"
         ObjectFieldName="&quot;ContainerizationStatusName&quot;"
-        ColumnWidth="100" />
+        ColumnWidth="200" />
       <QueryColumn
         QueryCode="&quot;OpenContainerization&quot;"
         IndexOrder="6"
@@ -1170,10 +1245,10 @@
         IndexOrder="0" />
       <QueryFilter
         QueryCode="&quot;OpenContainerization&quot;"
-        PredefinedValue="&quot;1&quot;"
-        ObjectFieldName="&quot;HataraStatus&quot;"
+        PredefinedValue="&quot;true&quot;"
+        ObjectFieldName="&quot;HataraStatusIsNull&quot;"
         IsPredefined="true"
-        Operator="&quot;LessThan&quot;"
+        Operator="&quot;Equal&quot;"
         IndexOrder="0" />
     </QueryFilters>
   </Query>
@@ -1221,7 +1296,7 @@
         QueryCode="&quot;ContainerizationWithRelease&quot;"
         IndexOrder="5"
         ObjectFieldName="&quot;ContainerizationStatusName&quot;"
-        ColumnWidth="100" />
+        ColumnWidth="200" />
       <QueryColumn
         QueryCode="&quot;ContainerizationWithRelease&quot;"
         IndexOrder="6"
@@ -1282,7 +1357,7 @@
         QueryCode="&quot;CancelledContainerization&quot;"
         IndexOrder="5"
         ObjectFieldName="&quot;ContainerizationStatusName&quot;"
-        ColumnWidth="100" />
+        ColumnWidth="200" />
       <QueryColumn
         QueryCode="&quot;CancelledContainerization&quot;"
         IndexOrder="6"
@@ -1343,7 +1418,7 @@
         QueryCode="&quot;AllContainerization&quot;"
         IndexOrder="5"
         ObjectFieldName="&quot;ContainerizationStatusName&quot;"
-        ColumnWidth="100" />
+        ColumnWidth="200" />
       <QueryColumn
         QueryCode="&quot;AllContainerization&quot;"
         IndexOrder="6"

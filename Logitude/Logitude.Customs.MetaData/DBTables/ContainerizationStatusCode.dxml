@@ -15,7 +15,7 @@
   <Column
     Name="Name"
     Type="varchar"
-    Size="3">
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>

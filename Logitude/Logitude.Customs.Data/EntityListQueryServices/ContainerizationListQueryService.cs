@@ -24,8 +24,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 
 			var declarations =
-	   from dec in context.Declarations
-	   group dec by new { dec.ExportFile, dec.ImporterName, dec.ExportContainerizationID , dec.TransferImporterId}
+	   from dec in context.Declarations.Include("Card")
+	   group dec by new { dec.ExportFile, dec.ExportContainerizationID , dec.TransportModeId , ImporterName = dec.CustomerCard.LocalName}
 			into newgroup
 	   select newgroup;// new Declaration {ExportFile = newgroup.Key.ExportFile };
 
@@ -60,8 +60,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 											              ExportFile = d.Key.ExportFile,
 														  HataraStatusName = a.DeclarationStatusType != null? a.DeclarationStatusType.LocalName:null,
 														  ImporterName = d.Key.ImporterName,
-														  TransportModeForExport = d.Key.TransferImporterId
-
+														  TransportModeForExport = d.Key.TransportModeId ,
+														  HataraStatusIsNull = a.HataraStatus != null ? false :true
 													  }); ;
             return query;
 		}

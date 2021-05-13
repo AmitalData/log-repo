@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ContainerizationUpdateClass
    {  		
-		public const string HashString = "065c349c69738d0c1f9e55f76d0453b4";
+		public const string HashString = "92a87eeaf2cb80e952509b7158c0616d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -183,8 +183,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
 					  						DefaultText =  "Search ...",
+					  						FullLocalDefaultText =  "תיק יצוא / מזהה מטען",
 					  						ListFieldLable =  "SearchFieldsListLable",
 					  						ListLableDefaultText =  "Search ...",
+					  						ShortFieldLable =  "SearchFields",
+					  						ShortFieldLableDefaultText =  "תיק יצוא / מזהה מטען",
+					  						ShortLocalDefaultText =  "תיק יצוא / מזהה מטען",
 					  						IsMaxLength =  true,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -878,6 +882,65 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "HataraStatusIsNull",
+					  						ObjectTableName =  "Customs.Containerization",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "HataraStatusIsNull",
+					  						ListPropertyPath =  "HataraStatusIsNull",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.Containerization",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "HataraStatusIsNull",
+					  						DefaultText =  "HataraStatusIsNull",
+					  						ListFieldLable =  "HataraStatusIsNullListLable",
+					  						ListLableDefaultText =  "HataraStatusIsNull",
+					  						ListLocalDefaultText =  "HataraStatusIsNull",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -934,14 +997,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn OpenContainerizationQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenContainerizationQuery.Id,QueryCode = OpenContainerizationQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Containerization.ImporterName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn OpenContainerizationQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenContainerizationQuery.Id,QueryCode = OpenContainerizationQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Containerization.ContainerizationStatusName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OpenContainerizationQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenContainerizationQuery.Id,QueryCode = OpenContainerizationQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Containerization.ContainerizationStatusName" , ColumnWidth = 200 }, addedQueryColumns);
 
 			 QueryColumn OpenContainerizationQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenContainerizationQuery.Id,QueryCode = OpenContainerizationQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Containerization.HataraStatusName" , ColumnWidth = 100 }, addedQueryColumns);
 
              AdvancedQueryFilter OpenContainerizationQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Containerization.ContainerizationStatus", PredefinedValue = "3",PredefinedValue2 = null, QueryId = OpenContainerizationQuery.Id,QueryCode = OpenContainerizationQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
 
 
-             AdvancedQueryFilter OpenContainerizationQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Containerization.HataraStatus", PredefinedValue = "1",PredefinedValue2 = null, QueryId = OpenContainerizationQuery.Id,QueryCode = OpenContainerizationQuery.UniqueCode, Tenant = 0,Operator = "LessThan"}, addedQueryFilters);
+             AdvancedQueryFilter OpenContainerizationQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Containerization.HataraStatusIsNull", PredefinedValue = "true",PredefinedValue2 = null, QueryId = OpenContainerizationQuery.Id,QueryCode = OpenContainerizationQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
   
 	      
@@ -958,7 +1021,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn ContainerizationWithReleaseQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerizationWithReleaseQuery.Id,QueryCode = ContainerizationWithReleaseQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Containerization.ImporterName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn ContainerizationWithReleaseQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerizationWithReleaseQuery.Id,QueryCode = ContainerizationWithReleaseQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Containerization.ContainerizationStatusName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ContainerizationWithReleaseQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerizationWithReleaseQuery.Id,QueryCode = ContainerizationWithReleaseQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Containerization.ContainerizationStatusName" , ColumnWidth = 200 }, addedQueryColumns);
 
 			 QueryColumn ContainerizationWithReleaseQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerizationWithReleaseQuery.Id,QueryCode = ContainerizationWithReleaseQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Containerization.HataraStatusName" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -979,7 +1042,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn CancelledContainerizationQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainerizationQuery.Id,QueryCode = CancelledContainerizationQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Containerization.ImporterName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn CancelledContainerizationQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainerizationQuery.Id,QueryCode = CancelledContainerizationQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Containerization.ContainerizationStatusName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn CancelledContainerizationQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainerizationQuery.Id,QueryCode = CancelledContainerizationQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Containerization.ContainerizationStatusName" , ColumnWidth = 200 }, addedQueryColumns);
 
 			 QueryColumn CancelledContainerizationQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainerizationQuery.Id,QueryCode = CancelledContainerizationQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Containerization.HataraStatusName" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -1000,7 +1063,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn AllContainerizationQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainerizationQuery.Id,QueryCode = AllContainerizationQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Containerization.ImporterName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllContainerizationQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainerizationQuery.Id,QueryCode = AllContainerizationQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Containerization.ContainerizationStatusName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllContainerizationQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainerizationQuery.Id,QueryCode = AllContainerizationQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Containerization.ContainerizationStatusName" , ColumnWidth = 200 }, addedQueryColumns);
 
 			 QueryColumn AllContainerizationQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainerizationQuery.Id,QueryCode = AllContainerizationQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Containerization.HataraStatusName" , ColumnWidth = 100 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
