@@ -430,19 +430,29 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         private void FixDocumentTypeCodeEmpty(string logData)
         {
-            var code = _DocumentsFilingPM.DocumentTypeCode;
+            var codeStart = _DocumentsFilingPM.DocumentTypeCode;
             try
             {
-
-                _DocumentsFilingPM.DocumentTypeCode = code ?? _DocumentsFilingPM.DocumentTypeId;
+                //_DocumentsFilingPM.DocumentTypeCode = codeStart ?? _DocumentsFilingPM.DocumentTypeId;
                 if (String.IsNullOrWhiteSpace(_DocumentsFilingPM.DocumentTypeCode))
                 {
-                    var documentsFilingRepository = new DocumentsFilingRepository();
-                    var pm = documentsFilingRepository.GetSingleDocumentsFiling(_DocumentsFilingPM.Id);
-                    if (pm != null)
+                    if (!String.IsNullOrEmpty(_DocumentsFilingPM.DocumentTypeId))
                     {
-                        _DocumentsFilingPM.DocumentTypeCode = pm.DocumentType?.Code;
+                        var documentTypeRepository = new DocumentTypeRepository(_DocumentsFilingPM.Tenant);
+                        var poco = documentTypeRepository.GetSingleDocumentType(_DocumentsFilingPM.DocumentTypeId, _DocumentsFilingPM.Tenant);
+                        if (poco != null)
+                        {
+                            _DocumentsFilingPM.DocumentTypeCode = poco.Code;
+                        }
+
                     }
+
+                    //var documentsFilingRepository = new DocumentsFilingRepository();
+                    //var pm = documentsFilingRepository.GetSingleDocumentsFiling(_DocumentsFilingPM.Id);
+                    //if (pm != null)
+                    //{
+                    //    _DocumentsFilingPM.DocumentTypeCode = pm.DocumentType?.Code;
+                    //}
                      
                 }
             }
@@ -453,7 +463,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             }
             finally
             {
-                if(code!= _DocumentsFilingPM.DocumentTypeCode)
+                if(codeStart!= _DocumentsFilingPM.DocumentTypeCode)
                 {
                     logData += $"FixDocumentTypeCodeEmpty:Change:{_DocumentsFilingPM.DocumentTypeCode}";
                 }
