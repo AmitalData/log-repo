@@ -30,41 +30,39 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 	   select newgroup;// new Declaration {ExportFile = newgroup.Key.ExportFile };
 
 
-			IQueryable<ContainerizationList> query = (from a in iQueryable
+			IQueryable<ContainerizationList> query = (from a in iQueryable.Include("ContainerizationStatusCode").Include("DeclarationStatusType")
 													  join d in declarations
 													  on a.Id equals d.Key.ExportContainerizationID
-												//  join d in context.Declarations
-												// on a.Id equals de.DeclarationId
-												//  into DeclarationCourierStatusesJoin
-												//.Include("Declaration")
+
+
 													  select new ContainerizationList()
-											{
-                     
-					                          Id = a.Id,
-					
-					                          Tenant = a.Tenant,
-					
-					                          SearchFields = a.SearchFields,
-					
-					                          AgentDeclaration = a.AgentDeclaration,
-					
-					                          ContainerizationDate = a.ContainerizationDate,
-					
-					                          ContainerizationNumber = a.ContainerizationNumber,
-					
-					                          ContainerizationStatus = a.ContainerizationStatus,
-					
-					                          HataraStatus = a.HataraStatus,
-					
-					                          OperationMode = a.OperationMode,
+													  {
 
-											  ContainerizationStatusName= "אין טבלה מקושרת",
-											  ExportFile = d.Key.ExportFile,
-											  HataraStatusName ="אין טבלה", 
-											  ImporterName= d.Key.ImporterName,
-											  TransportModeForExport = d.Key.TransferImporterId
+														  Id = a.Id,
 
-													  });
+														  Tenant = a.Tenant,
+
+														  SearchFields = a.SearchFields,
+
+														  AgentDeclaration = a.AgentDeclaration,
+
+														  ContainerizationDate = a.ContainerizationDate,
+
+														  ContainerizationNumber = a.ContainerizationNumber,
+
+														  ContainerizationStatus = a.ContainerizationStatus,
+
+														  HataraStatus = a.HataraStatus,
+
+														  OperationMode = a.OperationMode,
+
+														  ContainerizationStatusName = a.ContainerizationStatusCode != null ? a.ContainerizationStatusCode.Name :null,
+											              ExportFile = d.Key.ExportFile,
+														  HataraStatusName = a.DeclarationStatusType != null? a.DeclarationStatusType.LocalName:null,
+														  ImporterName = d.Key.ImporterName,
+														  TransportModeForExport = d.Key.TransferImporterId
+
+													  }); ;
             return query;
 		}
 

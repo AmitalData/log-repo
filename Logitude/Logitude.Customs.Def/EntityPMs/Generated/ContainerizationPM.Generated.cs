@@ -158,12 +158,12 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private decimal containerizationStatus ;
+	  private string containerizationStatus ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public decimal ContainerizationStatus  
+       public string ContainerizationStatus  
 	   {
 	    
 	     get
@@ -174,19 +174,19 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(containerizationStatus != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContainerizationStatus",OldValue=containerizationStatus,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContainerizationStatus",OldValue=containerizationStatus,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   containerizationStatus=value;
 		   }
 			
 		 }
 	   }
-	  private decimal hataraStatus ;
+	  private string hataraStatus ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public decimal HataraStatus  
+       public string HataraStatus  
 	   {
 	    
 	     get
@@ -197,7 +197,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(hataraStatus != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HataraStatus",OldValue=hataraStatus,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HataraStatus",OldValue=hataraStatus,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   hataraStatus=value;
 		   }

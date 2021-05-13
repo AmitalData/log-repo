@@ -6,22 +6,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class ContainerizationList {
+export class ContainerizationStatusCodeList {
    
-	Id: string;
-	Tenant: number;
+	Code: string;
+	Name: string;
 	SearchFields: string;
-	AgentDeclaration: boolean;
-	ContainerizationDate: Date;
-	ContainerizationNumber: string;
-	ContainerizationStatus: string;
-	HataraStatus: string;
-	OperationMode: string;
-	ExportFile: string;
-	TransportModeForExport: string;
-	ImporterName: string;
-	ContainerizationStatusName: string;
-	HataraStatusName: string;
 	
 }
  

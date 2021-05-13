@@ -27,9 +27,9 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string ContainerizationNumber  { get; set; }
        [DataMember]
-       public decimal ContainerizationStatus  { get; set; }
+       public string ContainerizationStatus  { get; set; }
        [DataMember]
-       public decimal HataraStatus  { get; set; }
+       public string HataraStatus  { get; set; }
        [DataMember]
        public string OperationMode  { get; set; }
        [DataMember]

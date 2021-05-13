@@ -54,14 +54,14 @@ export class ContainerizationPM {
     public set ContainerizationNumber(newValue: string) { if (this.containerizationNumber != newValue) { this.containerizationNumber = newValue; this.MarkAsDirty("ContainerizationNumber"); } }
        
 	 
-    private containerizationStatus: number;
+    private containerizationStatus: string;
     public get ContainerizationStatus() { return this.containerizationStatus; }
-    public set ContainerizationStatus(newValue: number) { if (this.containerizationStatus != newValue) { this.containerizationStatus = newValue; this.MarkAsDirty("ContainerizationStatus"); } }
+    public set ContainerizationStatus(newValue: string) { if (this.containerizationStatus != newValue) { this.containerizationStatus = newValue; this.MarkAsDirty("ContainerizationStatus"); } }
        
 	 
-    private hataraStatus: number;
+    private hataraStatus: string;
     public get HataraStatus() { return this.hataraStatus; }
-    public set HataraStatus(newValue: number) { if (this.hataraStatus != newValue) { this.hataraStatus = newValue; this.MarkAsDirty("HataraStatus"); } }
+    public set HataraStatus(newValue: string) { if (this.hataraStatus != newValue) { this.hataraStatus = newValue; this.MarkAsDirty("HataraStatus"); } }
        
 	 
     private operationMode: string;

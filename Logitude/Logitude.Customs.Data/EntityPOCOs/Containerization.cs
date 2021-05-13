@@ -31,10 +31,16 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public DateTime ContainerizationDate { get; set; }
         [Column("ContainerizationNumber")]
 	    public string ContainerizationNumber { get; set; }
+        [ForeignKey("ContainerizationStatusCode")]
         [Column("ContainerizationStatus")]
-	    public decimal ContainerizationStatus { get; set; }
+	    public string ContainerizationStatus { get; set; }
+	      
+        public virtual ContainerizationStatusCode ContainerizationStatusCode { get; set; }
+        [ForeignKey("DeclarationStatusType")]
         [Column("HataraStatus")]
-	    public decimal HataraStatus { get; set; }
+	    public string HataraStatus { get; set; }
+	      
+        public virtual DeclarationStatusType DeclarationStatusType { get; set; }
         [ForeignKey("NDMessageActionCode")]
         [Column("OperationMode")]
 	    public string OperationMode { get; set; }
