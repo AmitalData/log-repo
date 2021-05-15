@@ -188,6 +188,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                                                        AccountNumber = d.BankAccountLite != null ? d.BankAccountLite.AccountNumber : null,
                                                                        BranchNumber = d.BankAccountLite != null ? d.BankAccountLite.BranchNumber : null,
                                                                        PaymentStatus = d.Status != null ? d.Status.Name : null,
+                                                                       PaymentBankName = d.Bank,
                                                                    }).OrderBy(o => o.PaymentCurrencyCode).ToList();
 
         }
