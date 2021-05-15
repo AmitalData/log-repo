@@ -298,7 +298,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 if (entityPM.IsStandalonePickupDelivery)
                 {
-                    this.UpdatePickUpDeliveryStandaloneFields();
+                    this.UpdatePickUpDeliveryStandaloneFieldsOnShipmentCreation();
                 }
 
                 entityRepository.Add(entityPoco);
@@ -362,33 +362,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
-        private void UpdatePickUpDeliveryStandaloneFields()
-        {
-            if (!string.IsNullOrEmpty(entityPM.StandalonePickupDeliveryId))
-            {
-                ShipmentPickUpDelivery shipmentPickUpDelivery = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDelivery(tenant, entityPM.StandalonePickupDeliveryId);
-                if (shipmentPickUpDelivery != null)
-                {
-                    shipmentPickUpDelivery.StandaloneShipmentId = entityPM.Id;
-                    shipmentPickUpDelivery.StandaloneShipmentNumber = entityPM.ShipmentNumber;
-                    shipmentPickUpDelivery.FromPartnerCardId = entityPM.ShipperId;
-                    shipmentPickUpDelivery.FromAddressId = entityPM.ShipperAddressId;
-                    shipmentPickUpDelivery.ToPartnerCardId = entityPM.ConsigneeId;
-                    shipmentPickUpDelivery.ToAddressId = entityPM.ConsigneeAddressId;
-                    shipmentPickUpDelivery.CarrierId = entityPM.MainCarriageCarrierId;
-                    shipmentPickUpDelivery.CarrierNumber = entityPM.MainCarriageCarrierNumber;
-                    shipmentPickUpDelivery.Driver = entityPM.Driver;
-                    shipmentPickUpDelivery.TruckNumber = entityPM.TruckNumber;
-                    shipmentPickUpDelivery.TrailerNumber = entityPM.TrailerNumber;
-                    shipmentPickUpDelivery.ETD = entityPM.MainCarriageETD;
-                    shipmentPickUpDelivery.ETA = entityPM.MainCarriageETA;
-                    shipmentPickUpDelivery.ATD = entityPM.MainCarriageATD;
-                    shipmentPickUpDelivery.ATA = entityPM.MainCarriageATA;
-
-                    shipmentPickUpDeliveryRepository.Update(shipmentPickUpDelivery);                    
-                }
-            }
-        }
         private void AddVIRExternalTaskQueue()
         {
             if (entityPM.IsHybrid && entityPM.ExternalStatuses == "VIR")
@@ -540,7 +513,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     if (entityPM.IsStandalonePickupDelivery)
                     {
-                        this.UpdatePickUpDeliveryStandaloneFields();
+                        this.UpdatePickUpDeliveryStandaloneFieldsOnShipmentUpdate();
                     }
 
                     ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, myPackagesList, objectContext);
@@ -1541,7 +1514,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                         default: { break; }
                     }
-                }                             
+                }
             }
         }
         private void UpdateShipmentDeliveriesCollection()
@@ -1572,7 +1545,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                         default: { break; }
                     }
-                }                         
+                }
             }
         }
         private void UpdateShipmentPayablesCollection()
@@ -1603,7 +1576,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                         default: { break; }
                     }
-                }                             
+                }
             }
         }
         private void UpdateShipmentReceivablesCollection()
@@ -1636,7 +1609,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                         default: { break; }
                     }
-                }                
+                }
             }
         }
         private void UpdateShipmentAWBPrintOnliesCollection()
@@ -3244,7 +3217,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 if (entityPM.TransportModeId == "A")
                 {
                     this.ComputeFreightChargesFromFreightPayableLine();
-                  
+
                     if (string.IsNullOrEmpty(entityPM.RateClassCode))
                     {
                         entityPM.RateClassCode = "Q";
@@ -3354,7 +3327,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             if (entityPM.AWBChargeRate == null)
             {
                 var airFreightCode = "AFT";
-                var airFreightCharge =entityPM.ShipmentPayables.Where(a => a.ChargesTypeCode == airFreightCode).FirstOrDefault();
+                var airFreightCharge = entityPM.ShipmentPayables.Where(a => a.ChargesTypeCode == airFreightCode).FirstOrDefault();
                 if (airFreightCharge != null && ValidateCurrencyOfShipmentAWBPrintOnlies(airFreightCharge))
                 {
                     this.SetAWBFreightChargeFields(airFreightCharge);
@@ -3383,7 +3356,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             entityPM.AWBChargeRate = airFreightCharge.UnitPrice;
             entityPM.AWBCurrencyId = airFreightCharge.CurrencyId;
             entityPM.AWBChargeAmount = this.SetAWBChargeAmount();
-            if (!string.IsNullOrEmpty (airFreightCharge.PrepaidCollectId))
+            if (!string.IsNullOrEmpty(airFreightCharge.PrepaidCollectId))
             {
                 entityPM.FreightPrepaidCollectId = airFreightCharge.PrepaidCollectId;
                 entityPM.AWBChargesCodeCode = this.SetAWBChargesCodeCode();
@@ -3450,14 +3423,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         {
             double? myResult = null;
             var myRateClassCode = entityPM.RateClassCode;
-            var myChargeRate =  entityPM.AWBChargeRate;
+            var myChargeRate = entityPM.AWBChargeRate;
             var chargeAmount = entityPM.ChargeableWeight;
             var groupCode = this.GetRateClassGroupCode(myRateClassCode);
             if (entityPM.RateClassCode == "K")
             {
                 chargeAmount = entityPM.ChargeableWeightInKG;
             }
-           
+
             if (groupCode == "M")
             {
                 myResult = myChargeRate;
@@ -4915,7 +4888,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             if (!string.IsNullOrEmpty(itemPM.ParentPickUpDeliveryId))
             {
                 ShipmentPickUpDelivery parent = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDelivery(tenant, itemPM.ParentPickUpDeliveryId);
-                if(parent != null)
+                if (parent != null)
                 {
                     if (parent.ChildPickUpIndex == null)
                     {
@@ -4936,7 +4909,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 entityPM.ShipmentPickUpIndex += 1;
                 itemPM.PickUpDeliveryNumber = entityPM.ShipmentNumber + "/" + entityPM.ShipmentPickUpIndex;
-            }            
+            }
 
             ShipmentPickUpDelivery itemPoco = new ShipmentPickUpDelivery()
             {
@@ -5591,7 +5564,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 shipmentPayableRepository.Remove(itemPoco);
                 calculateProfit = true;
-                calculatePayables = true;                
+                calculatePayables = true;
             }
         }
         private void CreateChildPayable(ShipmentPayablePM childPayablePM, string parentId)
@@ -5829,7 +5802,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
-        
+
         private void CreateConsoleShipment(ConsoleShipmentPM itemPM)
         {
             Shipment houseShipment = entityRepository.GetSingleShipment(itemPM.Id, tenant);
@@ -6771,6 +6744,42 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 tariffRepository.Update(tariff);
                 tariffRepository.SubmitChanges();
 
+            }
+        }
+
+        private void UpdatePickUpDeliveryStandaloneFieldsOnShipmentCreation()
+        {
+            if (!string.IsNullOrEmpty(entityPM.StandalonePickupDeliveryId))
+            {
+                ShipmentPickUpDelivery shipmentPickUpDelivery = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDelivery(tenant, entityPM.StandalonePickupDeliveryId);
+                if (shipmentPickUpDelivery != null)
+                {
+                    shipmentPickUpDelivery.StandaloneShipmentId = entityPM.Id;
+                    shipmentPickUpDelivery.StandaloneShipmentNumber = entityPM.ShipmentNumber;
+
+                    shipmentPickUpDeliveryRepository.Update(shipmentPickUpDelivery);
+                }
+            }
+        }
+        private void UpdatePickUpDeliveryStandaloneFieldsOnShipmentUpdate()
+        {
+            ShipmentPickUpDelivery shipmentPickUpDelivery = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDeliveryByStandaloneShipmentId(entityPM.Id, tenant);
+            if (shipmentPickUpDelivery != null)
+            {
+                shipmentPickUpDelivery.FromPartnerCardId = entityPM.ShipperId;
+                shipmentPickUpDelivery.FromAddressId = entityPM.ShipperAddressId;
+                shipmentPickUpDelivery.ToPartnerCardId = entityPM.ConsigneeId;
+                shipmentPickUpDelivery.ToAddressId = entityPM.ConsigneeAddressId;
+                shipmentPickUpDelivery.CarrierId = entityPM.MainCarriageCarrierId;
+                shipmentPickUpDelivery.CarrierNumber = entityPM.MainCarriageCarrierNumber;
+                shipmentPickUpDelivery.Driver = entityPM.Driver;
+                shipmentPickUpDelivery.TruckNumber = entityPM.TruckNumber;
+                shipmentPickUpDelivery.TrailerNumber = entityPM.TrailerNumber;
+                shipmentPickUpDelivery.ETD = entityPM.MainCarriageETD;
+                shipmentPickUpDelivery.ETA = entityPM.MainCarriageETA;
+                shipmentPickUpDelivery.ATD = entityPM.MainCarriageATD;
+                shipmentPickUpDelivery.ATA = entityPM.MainCarriageATA;
+                shipmentPickUpDeliveryRepository.Update(shipmentPickUpDelivery);
             }
         }
     }

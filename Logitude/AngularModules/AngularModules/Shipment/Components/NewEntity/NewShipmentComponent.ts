@@ -890,6 +890,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         this.SetUIProperties_MasterField();
         this.SetUIProperties_HouseField();
         this.SetUIProperties_VesselField();
+        this.SetUIProperties_Carrier();
 
         if (this.IsLCLEntity) {
             this.SetUIProperties_OrderDetails();
@@ -925,6 +926,11 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         }
 
         this.UIProperties.SetRequired("ShipperId", this.ObjectTableName, isFieldRequired);
+
+        if (this.IsStandalone) {
+            this.UIProperties.SetEnabled("ShipperId", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("ShipperAddressId", this.ObjectTableName, false);
+        }
     }
     SetUIProperties_Consignee() {
         var isFieldRequired: boolean = false;
@@ -936,6 +942,11 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         }
 
         this.UIProperties.SetRequired("ConsigneeId", this.ObjectTableName, isFieldRequired);
+
+        if (this.IsStandalone) {
+            this.UIProperties.SetEnabled("ConsigneeId", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("ConsigneeAddressId", this.ObjectTableName, false);
+        }
     }
 
     SetUIProperties_Ports() {
@@ -1079,6 +1090,12 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
 
         if (AppTool.IsNullOrZero(this.Quantity5)) {
             this.PackageTypeId5 = null;
+        }
+    }
+    SetUIProperties_Carrier() {
+        if (this.IsStandalone) {
+            this.UIProperties.SetEnabled("MainCarriageCarrierId", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("MainCarriageCarrierNumber", this.ObjectTableName, false);
         }
     }
 
@@ -3024,7 +3041,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             }
         }
 
-        else if (this.IsBuildFromQuote) {
+        else if (this.IsBuildFromQuote || this.IsStandalone) {
             this.IsCopyShipper = true;
             this.IsCopyConsignee = true;
             this.IsCopyAgent = true;
@@ -4066,6 +4083,10 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
 
                                 if (this.IsBuildFromQuote) {
                                     this.CurrentSession.FireEvent("LoadConnectedShipments");
+                                }
+
+                                else if (this.IsStandalone) {
+                                    this.CurrentSession.FireEvent("ReloadPickUpDelivery");
                                 }
                             });
                         });

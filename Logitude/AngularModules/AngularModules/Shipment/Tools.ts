@@ -2270,15 +2270,12 @@ export class ShipmentTool {
         shipmentPM.Tenant = SessionLocator.Tenant;
         shipmentPM.TransportModeId = "I";
         shipmentPM.DirectionId = "D";
-        shipmentPM.DepartmentId = shipment.DepartmentId;
-        shipmentPM.BranchId = shipment.BranchId;
-        shipmentPM.IncotermId = shipment.IncotermId;       
         shipmentPM.ProfitCurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
         shipmentPM.AWBCurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
         shipmentPM.FreightPrepaidCollectId = SessionLocator.TenantPM.ExportFreightPrepaidCollectId;
         shipmentPM.OtherPrepaidCollectId = SessionLocator.TenantPM.ExportOtherPrepaidCollectId;
         shipmentPM.ShipmentLevelCode = "D";
-        shipmentPM.ShipmentTypeId = isLCLShipment ? "LTL" : "FTL";        
+        shipmentPM.ShipmentTypeId = isLCLShipment ? "LTL" : "FTL";
         shipmentPM.FHLStatusCode = "NSEN";
         shipmentPM.FWBStatusCode = "NSEN";
         shipmentPM.FHLStatusName = "Not Sent";
@@ -2295,21 +2292,21 @@ export class ShipmentTool {
         shipmentPM.VolumeUnitCode = SessionLocator.TenantPM.VolumeUnitCode;
         shipmentPM.DimensionsUnitCode = SessionLocator.TenantPM.DimensionsUnitCode;
         shipmentPM.GrossWeightUnitCode = SessionLocator.TenantPM.GrossWeightUnitCode;
-        shipmentPM.CreatedByUserId = SessionLocator.LoggedUserId;        
+        shipmentPM.CreatedByUserId = SessionLocator.LoggedUserId;
         shipmentPM.NewConcurrencyGUID = AppTool.GetNewGuid();
         shipmentPM.ValueOfGoodsCurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
         shipmentPM.OnCarriageAdditionalTransportModeCode = "BYTR";
         shipmentPM.OnForwardingAdditionalTransportModeCode = "BYTR";
-
+        shipmentPM.ShipmentNumber = shipment.ShipmentNumber;
+        shipmentPM.DepartmentId = shipment.DepartmentId;
+        shipmentPM.BranchId = shipment.BranchId;
+        shipmentPM.IncotermId = shipment.IncotermId;      
+        
         if (delivery) {
             shipmentPM.StandalonePickupDeliveryId = delivery.Id;
-            shipmentPM.StandalonePickupDeliveryNumber = delivery.PickUpDeliveryNumber;
+            shipmentPM.StandalonePickupDeliveryNumber = delivery.PickUpDeliveryNumber;            
             shipmentPM.ShipperId = delivery.FromPartnerCardId;
-            shipmentPM.ShipperAddressId = delivery.FromAddressId;
-            shipmentPM.ConsigneeId = delivery.ToPartnerCardId;
-            shipmentPM.ConsigneeAddressId = delivery.ToAddressId;
-            shipmentPM.CustomerId = delivery.FromPartnerCardId;
-            shipmentPM.CustomerAddressId = delivery.FromAddressId;
+            shipmentPM.ConsigneeId = delivery.ToPartnerCardId;           
             shipmentPM.MainCarriageCarrierId = delivery.CarrierId;
             shipmentPM.MainCarriageCarrierNumber = delivery.CarrierNumber;
             shipmentPM.Driver = delivery.Driver;
@@ -2323,13 +2320,9 @@ export class ShipmentTool {
 
         else if (pickup) {
             shipmentPM.StandalonePickupDeliveryId = pickup.Id;
-            shipmentPM.StandalonePickupDeliveryNumber = pickup.PickUpDeliveryNumber;
+            shipmentPM.StandalonePickupDeliveryNumber = pickup.PickUpDeliveryNumber;            
             shipmentPM.ShipperId = pickup.FromPartnerCardId;
-            shipmentPM.ShipperAddressId = pickup.FromAddressId;
-            shipmentPM.ConsigneeId = pickup.ToPartnerCardId;
-            shipmentPM.ConsigneeAddressId = pickup.ToAddressId;
-            shipmentPM.CustomerId = pickup.FromPartnerCardId;
-            shipmentPM.CustomerAddressId = pickup.FromAddressId;
+            shipmentPM.ConsigneeId = pickup.ToPartnerCardId;           
             shipmentPM.MainCarriageCarrierId = pickup.CarrierId;
             shipmentPM.MainCarriageCarrierNumber = pickup.CarrierNumber;
             shipmentPM.Driver = pickup.Driver;

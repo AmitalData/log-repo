@@ -154,15 +154,24 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
 
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
+    private SessionEvent: any = null;
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
+        AppTool.KillEventEmitter(this.SessionEvent);
         this.SaveCompletedEvent = null;
         this.LoadCompletedEvent = null;
+        this.SessionEvent = null;
     }
 
     Listen() {
         if (this.CurrentSession.CurrentEditComponent) {
+            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
+                if (s == "ReloadPickUpDelivery") {
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                }
+            });
+
             if (this.LoadCompletedEvent == null) {
                 this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
@@ -570,11 +579,6 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
                 this.CurrentSession.CloseCurrentWindow();
             }
 
-            else if (this.isCreateStandaloneShipmentClicked) {
-                this.isCreateStandaloneShipmentClicked = false;
-                this.CreateStandaloneShipment();
-            }
-
             else {
                 this.ResetEntityPM();
             }
@@ -618,6 +622,11 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
 
             if (this.PageChild_DCSI) {
                 this.PageChild_DCSI.InitTab(this.EntityPM, this.ShipmentPM);
+            }
+
+            if (this.isCreateStandaloneShipmentClicked) {
+                this.isCreateStandaloneShipmentClicked = false;
+                this.CreateStandaloneShipment();
             }
 
             this.Clone();
@@ -850,9 +859,6 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
         logWindow.WindowArgs = args;
         logWindow.Title = str;
         logWindow.Show('./Shipment/Components/NewShipment/NewShipmentComponent');
-        logWindow.WindowClosed.subscribe((event: any) => {
-            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-        });
     }
 
     ViewStandaloneShipmentClicked() {

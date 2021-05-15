@@ -49,6 +49,13 @@ namespace Simplog.Data.ShipmentsModel.Repositories
                     select a).ToList();
         }
 
+        public ShipmentPickUpDelivery GetSingleShipmentPickUpDeliveryByStandaloneShipmentId(string standaloneShipmentId, int tenant)
+        {
+            return (from record in context.ShipmentPickUpDeliveries 
+                    where record.StandaloneShipmentId == standaloneShipmentId && record.Tenant == tenant 
+                    select record).FirstOrDefault();
+        }
+
         public void Add(ShipmentPickUpDelivery entity)
         {
             context.ShipmentPickUpDeliveries.Add(entity);
