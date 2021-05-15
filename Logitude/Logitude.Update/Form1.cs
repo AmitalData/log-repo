@@ -93,6 +93,7 @@ using Logitude.Update.Helper;
 using Simplog.Server.Infrastructure.Interfaces;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Update.SandBox;
+using Logitude.BL.InfrastructureModel.APIDataContract.Messages;
 
 namespace Logitude.Update
 {
@@ -449,65 +450,10 @@ User/Pass",
 
         private void button6_Click(object sender, EventArgs e)
         {
-        //    LoggedContactResolver.RegisterLoggedContactUtil();
-        //    DateTimeUtilResolver.RegisterDateTimeUtil();
-        //    TranslateTextsClassUtilResolver.RegisterTranslateTextsClassUtil();
-        //    IdCounterUtilResolver.RegisterIdCounterUtil();
-        //    AccountingRegistrations.Register();
-
-            TaxDeductionReportQueryService taxDeductionReportQueryService = new TaxDeductionReportQueryService(1);
-            TaxDeductionReportPM taxDeductionReportPM = taxDeductionReportQueryService.GetSingle("1-12", false, false);
-            //TenantQuery tenantQuery = new TenantQuery(tenant);
-            //TenantPM tenantPM = TenantQuery.GetSingleTenantPM(tenant, false);
-           
-            string TaxYear = taxDeductionReportPM.ByMonth ? taxDeductionReportPM.Month + "/" + taxDeductionReportPM.TaxYear : taxDeductionReportPM.TaxYear.ToString();
-
-
-
-            //CommunicationWorkerRole.BatchTaskExecutionWR btwr = new CommunicationWorkerRole.BatchTaskExecutionWR();
-            //btwr.ExecuteQueue(null);
-
-            ////DateTime date = DateTime.Now.AddDays(-180);
-            ////DateTime last180days = new DateTime(date.Year, date.Month, 1);
-            ////DateTime referenceDate = new DateTime(2019, 3, 1);
-            ////if (referenceDate <= last180days)
-            ////{
-
-            //string Reference = "BB4CL888";
-            //string referenceGroup = null;
-            //string reference = null;
-            //Regex isMatche = new Regex("([A-Za-z])");
-            //bool letters = isMatche.IsMatch(Reference);
-            //if (letters)
-            //{
-            //    for (int i= 0; i < Reference.Length; i++)
-            //    {
-            //        string d = Reference.Substring(i , 1);
-            //        MatchCollection match = Regex.Matches(d, @"^[a-zA-Z]*$");
-            //        if (match.Count != 0)
-            //        {
-            //            referenceGroup =referenceGroup+d;// Reference.Substring(0, i);
-
-            //        }
-            //        else
-            //        {
-            //            reference = Reference.Substring(i, Reference.Length -i);
-            //            break;
-            //        }
-            //        //var array = Regex.Matches("12s4rt", @"\D+|\d+")
-            //        //.Cast<Match>()
-            //        //.Select(m => m.Value)
-            //        //.ToArray();
-            //    }
-            //}
-            //else
-            //{
-            //    reference = Reference;
-            //    referenceGroup = "0000";
-            //}
-
-       
-
+            RatesUpdateService ratesUpdateService = new RatesUpdateService(null, 1);
+            ratesUpdateService.ReadXML();
+            ratesUpdateService.ValidateRatesDataMapping();
+            ratesUpdateService.UpdateRatesData();
         }
 
         private void button7_Click(object sender, EventArgs e)
