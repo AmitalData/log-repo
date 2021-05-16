@@ -1971,7 +1971,34 @@ export class PartnersDomainService {
             }), catchError(ServiceHelper.HandleServiceError));
         });
     }
+    GetSingleCustomerProductItem(productItemId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
+        var url = this._apiUrl + '/GetSingleCustomerProductItem?productItemId=' + productItemId;
+
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myJsonResult = response;
+                var mappedResult: ProductItemPM;
+
+                if (myJsonResult) {
+                    mappedResult = new ProductItemPM(null);
+
+                    var jsonListKeys = Object.keys(myJsonResult);
+                    for (var key in jsonListKeys) {
+                        var property = jsonListKeys[key];
+                        mappedResult[property] = myJsonResult[property];
+                    }
+                }
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = mappedResult;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
     MapProductItemPM(jsonList: any, mapParent: boolean = true){
         var entityPM: ProductItemPM = null;
 
