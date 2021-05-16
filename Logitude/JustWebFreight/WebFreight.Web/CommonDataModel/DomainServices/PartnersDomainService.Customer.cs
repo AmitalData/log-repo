@@ -1058,7 +1058,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 customers = myBusinessUnitFilter.RunFilter(customers);
             }
 
-            if (!string.IsNullOrEmpty(mySearchText))
+            if (!string.IsNullOrEmpty(mySearchText) && !LogitudeSettings.IsCostomsDeploy)
             {
                 myResult = GetCustomerListsByApplyCardSearchMechanizm(tenant, mySearchText, customers);
             }

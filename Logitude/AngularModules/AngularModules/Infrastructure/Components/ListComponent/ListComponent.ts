@@ -3542,7 +3542,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
     IsUseCardSearchMechanism() {
         var result: boolean = false;
-        if (this.ObjectTableName == "Customer") {
+        if (this.ObjectTableName == "Customer" && ObjectsLocator.GlobalSetting.WorkEnvironment != "customs") {
             result = true;
         }
         return result;
