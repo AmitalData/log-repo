@@ -110,6 +110,18 @@
             this.label37 = new System.Windows.Forms.Label();
             this.DWQuoteComputedFieldslabel = new System.Windows.Forms.Label();
             this.label39 = new System.Windows.Forms.Label();
+            this.DWAPInvoiceTypeslabel = new System.Windows.Forms.Label();
+            this.label44 = new System.Windows.Forms.Label();
+            this.DWARInvoiceTypeslabel = new System.Windows.Forms.Label();
+            this.label47 = new System.Windows.Forms.Label();
+            this.DWAPInvoiceStatuslabel = new System.Windows.Forms.Label();
+            this.label45 = new System.Windows.Forms.Label();
+            this.DWARInvoiceStatuslabel = new System.Windows.Forms.Label();
+            this.label43 = new System.Windows.Forms.Label();
+            this.DimPaymentTermsLabel = new System.Windows.Forms.Label();
+            this.label42 = new System.Windows.Forms.Label();
+            this.DWPaymentTermslabel = new System.Windows.Forms.Label();
+            this.label41 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // DestinationConnectionlTextBox
@@ -1113,11 +1125,167 @@
             this.label39.TabIndex = 242;
             this.label39.Text = "DW QuoteComputedFields";
             // 
+            // DWAPInvoiceTypeslabel
+            // 
+            this.DWAPInvoiceTypeslabel.AutoSize = true;
+            this.DWAPInvoiceTypeslabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.DWAPInvoiceTypeslabel.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.DWAPInvoiceTypeslabel.Location = new System.Drawing.Point(1695, 307);
+            this.DWAPInvoiceTypeslabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DWAPInvoiceTypeslabel.Name = "DWAPInvoiceTypeslabel";
+            this.DWAPInvoiceTypeslabel.Size = new System.Drawing.Size(0, 25);
+            this.DWAPInvoiceTypeslabel.TabIndex = 255;
+            // 
+            // label44
+            // 
+            this.label44.AutoSize = true;
+            this.label44.BackColor = System.Drawing.SystemColors.Control;
+            this.label44.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label44.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.label44.Location = new System.Drawing.Point(1411, 308);
+            this.label44.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label44.Name = "label44";
+            this.label44.Size = new System.Drawing.Size(195, 25);
+            this.label44.TabIndex = 254;
+            this.label44.Text = "DW APInvoiceTypes";
+            // 
+            // DWARInvoiceTypeslabel
+            // 
+            this.DWARInvoiceTypeslabel.AutoSize = true;
+            this.DWARInvoiceTypeslabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.DWARInvoiceTypeslabel.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.DWARInvoiceTypeslabel.Location = new System.Drawing.Point(1695, 274);
+            this.DWARInvoiceTypeslabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DWARInvoiceTypeslabel.Name = "DWARInvoiceTypeslabel";
+            this.DWARInvoiceTypeslabel.Size = new System.Drawing.Size(0, 25);
+            this.DWARInvoiceTypeslabel.TabIndex = 253;
+            // 
+            // label47
+            // 
+            this.label47.AutoSize = true;
+            this.label47.BackColor = System.Drawing.SystemColors.Control;
+            this.label47.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label47.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.label47.Location = new System.Drawing.Point(1411, 275);
+            this.label47.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label47.Name = "label47";
+            this.label47.Size = new System.Drawing.Size(195, 25);
+            this.label47.TabIndex = 252;
+            this.label47.Text = "DW ARInvoiceTypes";
+            // 
+            // DWAPInvoiceStatuslabel
+            // 
+            this.DWAPInvoiceStatuslabel.AutoSize = true;
+            this.DWAPInvoiceStatuslabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.DWAPInvoiceStatuslabel.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.DWAPInvoiceStatuslabel.Location = new System.Drawing.Point(1695, 239);
+            this.DWAPInvoiceStatuslabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DWAPInvoiceStatuslabel.Name = "DWAPInvoiceStatuslabel";
+            this.DWAPInvoiceStatuslabel.Size = new System.Drawing.Size(0, 25);
+            this.DWAPInvoiceStatuslabel.TabIndex = 251;
+            // 
+            // label45
+            // 
+            this.label45.AutoSize = true;
+            this.label45.BackColor = System.Drawing.SystemColors.Control;
+            this.label45.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label45.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.label45.Location = new System.Drawing.Point(1411, 240);
+            this.label45.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label45.Name = "label45";
+            this.label45.Size = new System.Drawing.Size(196, 25);
+            this.label45.TabIndex = 250;
+            this.label45.Text = "DW APInvoiceStatus";
+            // 
+            // DWARInvoiceStatuslabel
+            // 
+            this.DWARInvoiceStatuslabel.AutoSize = true;
+            this.DWARInvoiceStatuslabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.DWARInvoiceStatuslabel.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.DWARInvoiceStatuslabel.Location = new System.Drawing.Point(1695, 206);
+            this.DWARInvoiceStatuslabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DWARInvoiceStatuslabel.Name = "DWARInvoiceStatuslabel";
+            this.DWARInvoiceStatuslabel.Size = new System.Drawing.Size(0, 25);
+            this.DWARInvoiceStatuslabel.TabIndex = 249;
+            // 
+            // label43
+            // 
+            this.label43.AutoSize = true;
+            this.label43.BackColor = System.Drawing.SystemColors.Control;
+            this.label43.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label43.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.label43.Location = new System.Drawing.Point(1411, 207);
+            this.label43.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label43.Name = "label43";
+            this.label43.Size = new System.Drawing.Size(196, 25);
+            this.label43.TabIndex = 248;
+            this.label43.Text = "DW ARInvoiceStatus";
+            // 
+            // DimPaymentTermsLabel
+            // 
+            this.DimPaymentTermsLabel.AutoSize = true;
+            this.DimPaymentTermsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.DimPaymentTermsLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.DimPaymentTermsLabel.Location = new System.Drawing.Point(1695, 178);
+            this.DimPaymentTermsLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DimPaymentTermsLabel.Name = "DimPaymentTermsLabel";
+            this.DimPaymentTermsLabel.Size = new System.Drawing.Size(0, 25);
+            this.DimPaymentTermsLabel.TabIndex = 247;
+            // 
+            // label42
+            // 
+            this.label42.AutoSize = true;
+            this.label42.BackColor = System.Drawing.SystemColors.Control;
+            this.label42.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label42.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.label42.Location = new System.Drawing.Point(1411, 179);
+            this.label42.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label42.Name = "label42";
+            this.label42.Size = new System.Drawing.Size(242, 25);
+            this.label42.TabIndex = 246;
+            this.label42.Text = "Dimension PaymentTerms";
+            // 
+            // DWPaymentTermslabel
+            // 
+            this.DWPaymentTermslabel.AutoSize = true;
+            this.DWPaymentTermslabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.DWPaymentTermslabel.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.DWPaymentTermslabel.Location = new System.Drawing.Point(1694, 153);
+            this.DWPaymentTermslabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DWPaymentTermslabel.Name = "DWPaymentTermslabel";
+            this.DWPaymentTermslabel.Size = new System.Drawing.Size(0, 25);
+            this.DWPaymentTermslabel.TabIndex = 245;
+            // 
+            // label41
+            // 
+            this.label41.AutoSize = true;
+            this.label41.BackColor = System.Drawing.SystemColors.Control;
+            this.label41.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label41.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.label41.Location = new System.Drawing.Point(1410, 154);
+            this.label41.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(189, 25);
+            this.label41.TabIndex = 244;
+            this.label41.Text = "DW  PaymentTerms";
+            // 
             // UpdateWarehouseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1799, 830);
+            this.Controls.Add(this.DWAPInvoiceTypeslabel);
+            this.Controls.Add(this.label44);
+            this.Controls.Add(this.DWARInvoiceTypeslabel);
+            this.Controls.Add(this.label47);
+            this.Controls.Add(this.DWAPInvoiceStatuslabel);
+            this.Controls.Add(this.label45);
+            this.Controls.Add(this.DWARInvoiceStatuslabel);
+            this.Controls.Add(this.label43);
+            this.Controls.Add(this.DimPaymentTermsLabel);
+            this.Controls.Add(this.label42);
+            this.Controls.Add(this.DWPaymentTermslabel);
+            this.Controls.Add(this.label41);
             this.Controls.Add(this.DWQuoteComputedFieldslabel);
             this.Controls.Add(this.label39);
             this.Controls.Add(this.DWQuoteslabel);
@@ -1292,5 +1460,17 @@
         private System.Windows.Forms.Label label37;
         private System.Windows.Forms.Label DWQuoteComputedFieldslabel;
         private System.Windows.Forms.Label label39;
+        private System.Windows.Forms.Label DWAPInvoiceTypeslabel;
+        private System.Windows.Forms.Label label44;
+        private System.Windows.Forms.Label DWARInvoiceTypeslabel;
+        private System.Windows.Forms.Label label47;
+        private System.Windows.Forms.Label DWAPInvoiceStatuslabel;
+        private System.Windows.Forms.Label label45;
+        private System.Windows.Forms.Label DWARInvoiceStatuslabel;
+        private System.Windows.Forms.Label label43;
+        private System.Windows.Forms.Label DimPaymentTermsLabel;
+        private System.Windows.Forms.Label label42;
+        private System.Windows.Forms.Label DWPaymentTermslabel;
+        private System.Windows.Forms.Label label41;
     }
 }
