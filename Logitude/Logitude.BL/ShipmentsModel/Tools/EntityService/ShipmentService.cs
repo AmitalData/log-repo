@@ -296,6 +296,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 this.ComputeIsAssemblyField();
                 this.ComputeFinalDestination();
+                this.ComputeIsHTSMissingField();
 
                 ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, entityPM.ShipmentPackages, objectContext);
                 this.ComputeAgentComputed(entityPM, entityPoco);
@@ -470,6 +471,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.ComputeIsAssemblyField();
                     this.ComputeFinalDestination();
                     this.CheckUpdatingMasterHouses();
+                    this.ComputeIsHTSMissingField();
 
                     shipmentBehaviourFacade = new ShipmentBehaviourFacade(entityPM, objectContext, UpdatedShipmentComputedFields, isNewEntity);
                     shipmentBehaviourFacade.Handle();
@@ -6781,6 +6783,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 tariffRepository.Update(tariff);
                 tariffRepository.SubmitChanges();
 
+            }
+        }
+        private void ComputeIsHTSMissingField()
+        {
+            List<ShipmentProductItemPM> shipmentProductItem = this.entityPM.ShipmentProductItems.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+
+            entityPM.IsHTSMissing = false;
+            
+            if (shipmentProductItem.Count > 0 && shipmentProductItem.Where(d => string.IsNullOrEmpty(d.HTSCode)).Any())
+            {
+                entityPM.IsHTSMissing = true;
             }
         }
     }

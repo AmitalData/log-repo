@@ -182,10 +182,13 @@ export class CustomerProductItem extends BaseComponent {
         this.EntityPM = entity;
         this.IsNewEntity = isNew;
         this.FatherComponent = fatherComponent;
+        this.SetUIProperties();
     }
 
     SetUIProperties() {
-
+        if (this.IsNewEntity) {
+            this.UIProperties.SetVisibility("InActive", this.ObjectTableName, false);
+        }
     }
 
     get InActive() { return this.EntityPM.InActive; }

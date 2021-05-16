@@ -7,7 +7,14 @@ import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import { ProductItemPM } from '../../../../Common/EntityPMs/ProductItemPM';
 import { CustomerPM } from '../../../../Common/EntityPMs/CustomerPM';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
+import { CustomerHTSCode, CustomerProductItem, CustomerProductItemsTabComponent } from '../EditTabs/CustomerProductItemsTabComponent';
+import { HTSCodePM } from '../../../../Common/EntityPMs/HTSCodePM';
+import { CustomerValidator } from '../../../../Common/Validators/CustomerValidator';
+
 import {  CustomerProductItem, CustomerProductItemsTabComponent } from '../EditTabs/CustomerProductItemsTabComponent';
+
+
+
 
 @Component({    
     templateUrl: './AddEditCustomerProductItemComponent.html',
@@ -38,9 +45,6 @@ export class AddEditCustomerProductItemComponent extends BaseComponent {
         this.Clone();
     }
 
-    SetUIProperties() {
-
-    }
 
     CancelButtonClicked() {
         this.RejectChanges();

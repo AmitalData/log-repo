@@ -4,7 +4,7 @@ import {PartnerItem} from './PartnersTabComponent';
 import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
-import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 
 @Component({
     
@@ -137,13 +137,11 @@ export class AddEditPartnerComponent implements OnInit {
         }
     }
     ShowDeleteProductItemsConfirmation() {
-        var confirmWindow = new ConfirmWindow();
-        confirmWindow.Show("All product items in this shipment will be deleted");
-        confirmWindow.WindowClosed.subscribe((event: any) => {
-            if (confirmWindow.Yes) {                
-                this.EntityPM.ShipmentProductItems = [];            
-                this.CurrentSession.FireEvent("ShipmentProductItemsDeleted");
-            }
+        var messageWindow = new MessageWindow();
+        messageWindow.Show("All product items in this shipment will be deleted");
+        messageWindow.WindowClosed.subscribe((event: any) => {
+            this.EntityPM.ShipmentProductItems = [];
+            this.CurrentSession.FireEvent("ShipmentProductItemsDeleted");
         });
     }
 
