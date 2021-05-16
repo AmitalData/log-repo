@@ -21,6 +21,7 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly MaintenanceItemTrucker = "#MaintenanceItemMTTR"
    public static readonly MaintenanceItemSpecialServicesType = "#MaintenanceItemMTSS"
    public static readonly MaintenanceItemMoveTypes="#MaintenanceItemMTMT"
+   public static readonly MaintenanceItemCreditCardTypes = "#MaintenanceItemMTCC"
    //#endregion
 
    public static readonly GeneralEditScreen = ".MediaFillAbsolute .CurvedEditArea";
@@ -255,4 +256,11 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly MoveTypeSaveButton = "#MoveType-Save"
      
         //#endregion
+   //#region credit card type 
+   public static readonly CreditCardTypeCode = "#CreditCardType_Code"
+   public static readonly CreditCardTypeName = "#CreditCardType_Name"
+   public static readonly CreditCardTypeSaveButton = "#CreditCardType-Save"
+   public static readonly CreditCardTypeEventTab = "#CreditCardTypeTHEvents"
+   public static readonly InActiveCreditCardTypeCheckBox="#CreditCardType_InActive"
+   //#endregion
 }
