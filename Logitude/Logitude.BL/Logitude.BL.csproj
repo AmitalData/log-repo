@@ -267,6 +267,7 @@
     <Compile Include="CommonDataModel\APIDataContract\QueryService\VesselQueryService.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Vendor.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Vessel.Generated.cs" />
+    <Compile Include="CommonDataModel\Args\CustomReferenceDocumentsMetaDataType.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\AccountingSystemDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\AddressTypeDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\CheckDigitControlAlgorithmDetails.Generated.cs" />

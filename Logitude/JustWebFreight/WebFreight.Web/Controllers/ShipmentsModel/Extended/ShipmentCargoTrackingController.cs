@@ -108,7 +108,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
             {
                 int tenant = GetAuthinticatedTenant();
                 DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery();
-                List<DocumentsFilingPM> documentsFilingPM = documentsFilingQuery.GetDocumentsFilingPMsByEntityId(id, tenant);
+                List<DocumentsFilingPM> documentsFilingPM = documentsFilingQuery.GetInputDocumentsFilingPMsByEntityId(id, tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, documentsFilingPM);
             }

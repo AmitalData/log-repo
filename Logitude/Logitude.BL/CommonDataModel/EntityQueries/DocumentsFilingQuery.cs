@@ -28,6 +28,7 @@ using Simplog.Server.Infrastructure.DataContracts;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Text.RegularExpressions;
+using Logitude.BL.CommonDataModel.Args;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -2773,6 +2774,140 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return externalDocumentPMs;
         }
 
+        public List<DocumentsFilingPM> GetInputDocumentsFilingPMsByEntityId(string entityId, int tenant)
+        {
+            List<DocumentsFilingPM> result = GetDocumentFilingPMs(entityId, tenant);
+            CustomReferenceDocumentsMetaDataType customReferenceDocumentsMeta = SetCustomReferenceDocumentsMetaDataType(tenant);
+          
+            if (customReferenceDocumentsMeta.DREL != null && customReferenceDocumentsMeta.CREF != null)
+            {
+                MapCusomReferenceForDocumentFilings(tenant, result, customReferenceDocumentsMeta);
+            }
+            return result.ToList();
+        }
+
+        private static CustomReferenceDocumentsMetaDataType SetCustomReferenceDocumentsMetaDataType(int tenant)
+        {
+            DocumentsMetaDataTypeRepository TypesRepo = new DocumentsMetaDataTypeRepository(tenant);
+            CustomReferenceDocumentsMetaDataType customReferenceDocumentsMeta = new CustomReferenceDocumentsMetaDataType();
+            customReferenceDocumentsMeta.DREL = TypesRepo.GetSingleDocumentsMetaDataTypeByCode("DREL", tenant);
+            customReferenceDocumentsMeta.CREF = TypesRepo.GetSingleDocumentsMetaDataTypeByCode("CREF", tenant);
+            return customReferenceDocumentsMeta;
+        }
+
+        private static void MapCusomReferenceForDocumentFilings(int tenant, List<DocumentsFilingPM> result, CustomReferenceDocumentsMetaDataType customReferenceDocumentsMeta)
+        {
+            
+
+            foreach (DocumentsFilingPM extDocPm in result)
+            {
+                List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValuesList = GetdocumentsFilingMetaDataValuesList(tenant, extDocPm);
+
+                MapSingleDocumentFilingCustomsReference(customReferenceDocumentsMeta, extDocPm, documentsFilingMetaDataValuesList);
+            }
+        }
+
+        private static void MapSingleDocumentFilingCustomsReference(CustomReferenceDocumentsMetaDataType customReferenceDocumentsMeta, DocumentsFilingPM extDocPm, List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValuesList)
+        {
+            var MyDRELData = documentsFilingMetaDataValuesList.Where(a => a.DocumentsMetaDataTypeId == customReferenceDocumentsMeta.DREL.Id).FirstOrDefault();
+            if (MyDRELData != null)
+            {
+                var MyCREFData = documentsFilingMetaDataValuesList.Where(a => a.DocumentsMetaDataTypeId == customReferenceDocumentsMeta.CREF.Id).FirstOrDefault();
+                if (MyCREFData != null && !string.IsNullOrEmpty(MyCREFData.MetaDataValue) && MyDRELData.MetaDataValue.ToLower() == "true")
+                {
+                    extDocPm.IsCustomReference = true;
+                    extDocPm.CustomReference = MyCREFData.MetaDataValue;
+                }
+            }
+        }
+
+        private static List<DocumentsFilingMetaDataValuePM> GetdocumentsFilingMetaDataValuesList(int tenant, DocumentsFilingPM extDocPm)
+        {
+            DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
+            List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValuesList = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(extDocPm.Id, tenant).ToList(); //documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByTenant(tenant).ToList();
+            return documentsFilingMetaDataValuesList;
+        }
+
+        private List<DocumentsFilingPM> GetDocumentFilingPMs(string entityId, int tenant)
+        {
+            return (from a in repository.context.DocumentsFilings.Include("DocumentType")
+                    where a.Tenant == tenant && a.EntityId == entityId && a.IsDeleted == false && a.DirectionCode == "I" && a.DocumentId != null
+                    select new DocumentsFilingPM()
+                    {
+                        Id = a.Id,
+                        DocumentId = a.DocumentId,
+                        Code = a.Code,
+                        DirectionCode = a.DirectionCode,
+                        Description = a.Description,
+                        CreatedByUserId = a.CreatedByUserId,
+                        CreateDate = a.CreateDate,
+                        ObjectTableId = a.ObjectTableId,
+                        ChildEntityId = a.ChildEntityId,
+                        ChildObjectTableId = a.ChildObjectTableId,
+                        ChildEntityReference = a.ChildEntityReference,
+                        DocumentTypeId = a.DocumentTypeId,
+                        DocumentTypeCode = a.DocumentType != null ? a.DocumentType.Code : null,
+                        DocumentTypeName = a.DocumentType != null ? a.DocumentType.Name : null,
+                        DoucmentTypeTemplateFormatCode = a.DocumentType != null ? a.DocumentType.TemplateFormatCode : null,
+                        EntityId = a.EntityId,
+                        HasCopies = a.HasCopies,
+                        Notes = a.Notes,
+                        OwnerId = a.OwnerId,
+                        OwnerName = a.Owner != null ? a.Owner.Contact.EnglishName : null,
+                        SearchFields = a.SearchFields,
+                        Tenant = a.Tenant,
+                        FileExtension = a.Document != null ? a.Document.Extension : null,
+                        HasFile = a.Document != null ? a.Document.HasFile : false,
+                        FileName = a.Document != null ? a.Document.FileName : null,
+                        FileSize = a.Document != null ? a.Document.FileSize : null,
+                        Folder = a.Document != null ? a.Document.Folder : null,
+
+                        IsAgentView = a.DocumentType != null ? a.DocumentType.IsAgentView : false,
+                        IsCustomerView = a.DocumentType != null ? a.DocumentType.IsCustomerView : false,
+                        CreatedByUserName = a.CreatedByUser != null ? a.CreatedByUser.Contact.EnglishName : null,
+                        Received = a.Received,
+                        ReceivedDate = a.ReceivedDate,
+                        ReceivedByUserId = a.ReceivedByUserId,
+                        Name = a.DocumentType != null ? a.DocumentType.Name : null,
+                        StatusCode = a.StatusCode,
+                        UpdateDate = a.UpdateDate,
+                        UpdatedByUserId = a.UpdatedByUserId,
+                        CustomsDocumentTypeCode = a.DocumentType != null ? a.DocumentType.Code : null,
+                        CustomsDocumentTypeName = a.DocumentType != null ? a.DocumentType.Name : null,
+                        ReceivedByUserName = a.ReceivedByUser != null ? a.ReceivedByUser.Contact.EnglishName : null,
+
+                        EntityReference = a.EntityReference,
+                        ExternalEntityName = a.ExternalEntityName,
+                        ExternalEntityReference = a.ExternalEntityReference,
+                        DepartmentId = a.DepartmentId,
+                        BranchId = a.BranchId,
+                        FolderId = a.FolderId,
+                        IsDeleted = a.IsDeleted,
+                        DeleteDateTime = a.DeleteDateTime,
+                        DeletedByUserId = a.DeletedByUserId,
+                        IsDigitallySigned = a.IsDigitallySigned,
+                        SignersList = a.SignersList,
+                        IsSharedWithCustomer = a.IsSharedWithCustomer,
+                        IsSharedWithForwarder = a.IsSharedWithForwarder,
+                        CustomerDocumentId = a.CustomerDocumentId,
+                        ForwarderDocumentId = a.ForwarderDocumentId,
+                        SecurityId = a.SecurityId,
+                        CustomerTenantNumber = a.CustomerTenantNumber,
+                        IsRequested = a.IsRequested,
+                        SignRequestByUserEmail = a.SignRequestByUserEmail,
+                        CancellSignRequest = a.CancellSignRequest,
+                        OrigionalDocumentId = a.OrigionalDocumentId,
+                        CalculatedFileName = a.Document != null ? !string.IsNullOrEmpty(a.Document.CalculatedFileName) ? a.Document.CalculatedFileName : a.Document.FileName : "",
+                        LastShareDate = a.LastShareDate,
+                        IsSharedIn = a.IsSharedIn,
+                        IsSharedOut = a.IsSharedOut,
+                        SignDueDate = a.SignDueDate,
+                        IsDigitalSignRequired = a.IsDigitalSignRequired,
+                        BackedupExternally = a.BackedupExternally,
+
+                    }).ToList();
+        }
+
         public List<DocumentsFilingPM> GetDocumentsFilingPMsByEntityId(string entityId, int tenant)
         {
             IQueryable<DocumentsFilingPM> result = from a in repository.context.DocumentsFilings.Include("CreatedByUser.Contact").Include("ReceivedByUser.Contact").Include("Document").Include("DocumentType").Include("Owner.Contact")
@@ -2850,7 +2985,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                        IsDigitalSignRequired = a.IsDigitalSignRequired,
                                                        BackedupExternally = a.BackedupExternally,
                                                    };
-            return result.ToList();
+                return result.ToList();
         }
 
         public List<DocumentsFilingPM> GetDocumentsFilingPMsByEntityId(int tenant, string entityId, string objectTableId)
