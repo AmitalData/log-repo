@@ -40,18 +40,21 @@ import {CardGeneralTabDetails} from "../models/CardGeneralTabDetails";
 import { CardBillingTabDetails } from "../models/CardBillingTabDetails";
 import { SpecialServicesTypeDetails } from "../models/SpecialServicesTypeDetails";
 import { MoveTypeDetails } from "../models/MoveTypeDetails";
+import { CreditCardTypeDetails } from "../models/CreditCardTypeDetails";
 
 //#region variables
 let CityCode = null;
 let StateCode = null;
 let GlobalZoneCode = null;
 let SpecialServicesTypeCode=null;
+let CreditCardTypeCode = null;
 let CardCode=null;
 let TruckerCode=null;
 let MoveTypeCode=null;
 let CommodityName = null;
 let RegionName = null;
 let inActiveCountry = false;
+let inActiveCreditCardType = false;
 let inActiveState = false;
 let inActiveCity = false;
 let inActiveGlobalZone = false;
@@ -927,6 +930,8 @@ export function AssertMockPostCountry() {
 }
 
 export function SearchCountryByCode(CountryCode:string){
+    DefineCountryCodeGetByFiltersRequest(CountryCode);
+       
     cy.Click(MaintenanceSelectors.CardFiltersOpen,null);
     cy.Click(MaintenanceSelectors.CardAddFilterBtn,null);
 
@@ -939,6 +944,10 @@ export function SearchCountryByCode(CountryCode:string){
             FillCodeFilterValue(CountryCode);
         }
     })
+    AssertCountryViewsGetByFilters()
+}
+export function DefineCountryCodeGetByFiltersRequest(CountryCode:string){
+cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(CountryCode), RequestAliases.GetFilterSearch);
 }
 
 export function AssertSearchCountry(CountryCode: string) {
@@ -2137,5 +2146,96 @@ export function AssertUpdateMoveType() {
 }
 function AssertPutMoveType() {
     BaseAssertion.AssertStatusCode(RequestAliases.PutMoveType, 200);
+}
+//#endregion
+////#region Credit CardT ype 
+export function FillCreditCardTypeCode(CreditCardTypeCode: string) {
+    cy.FillLogTextBox(MaintenanceSelectors.CreditCardTypeCode, CreditCardTypeCode)
+}
+export function FillCreditCardTypeDetails(creditCardTypeDetails: CreditCardTypeDetails) {
+    var RandomCreditCardTypeCode = gr.GenerateRandomNumberAndString(2);
+    cy.FillLogTextBox(MaintenanceSelectors.CreditCardTypeCode, creditCardTypeDetails.Code.toLowerCase() == "random" ? RandomCreditCardTypeCode : creditCardTypeDetails.Code)
+    FilllCreditCardTypeName(creditCardTypeDetails.EnglishName)
+}
+export function FilllCreditCardTypeName(Name:string){
+    cy.FillLogTextBox(MaintenanceSelectors.CreditCardTypeName, Name)
+}
+export function CreateCreditCardType() {
+    DefinePostCreditCardTypeRequest()
+    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
+}
+function DefinePostCreditCardTypeRequest() {
+    cy.DefineRequestWait(RestAPI.POST, Urls.CreditCardTypes, RequestAliases.PostCreditCardType)
+}
+export function CreateCreditCardTypeMockCreate() {
+    cy.intercept(RestAPI.POST, Urls.CreditCardTypes, [true])
+    DefineGetByFilterRequest()
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)  
+}
+
+export function AssertCreateCreditCardTypeMockCreate() {
+    BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow)
+    AssertGetByFilters();
+}
+
+export function AssertCreateCreditCardType() {
+    let intercept = cy.wait("@" + RequestAliases.PostCreditCardType);
+    intercept.then((interception) => {
+        if (interception.response.statusCode === 400) {
+            ReCreateCreditCardType();
+        }
+        else {
+            AssertPostCreditCardType(interception.response.statusCode, 200, interception.response.body.Code)
+        }
+    })
+}
+
+function ReCreateCreditCardType() {
+    var RandomCreditCardTypeCode = gr.GenerateRandomNumberAndString(2);
+    cy.FillLogTextBox(MaintenanceSelectors.CreditCardTypeCode,  RandomCreditCardTypeCode)
+    CreateCreditCardType();
+    AssertCreateCreditCardType();
+}
+
+export function AssertPostCreditCardType(responseStatusCode: number, expectedStatusCode: number, creditCardTypeCode: string) {
+    assert.equal(responseStatusCode, expectedStatusCode)
+    CreditCardTypeCode = creditCardTypeCode
+}
+export function SearchCreditCardType(){
+   SearchCardByValue(CreditCardTypeCode)
+}
+export function AssertSearchCreditCardType(companyName: string) {
+    AssertSearchCard(companyName)
+}
+export function OpenCreditCardType() {
+    DefineCreditCardTypeGetSingleRequest();
+    cy.get(BaseSelectors.RowClass).eq(0).click();
+}
+function DefineCreditCardTypeGetSingleRequest() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.CreditCardTypesGetSingle, RequestAliases.GetSignle);
+}
+export function AssertOpenCreditCardType() {
+    AssertCardGetSingle();
+    BaseAssertion.AssertElementExist(MaintenanceSelectors.GeneralEditScreen)
+}
+export function UpdateCreditCardType() {
+    DefinePutCreditCardTypeRequest()
+    cy.Click(MaintenanceSelectors.CreditCardTypeSaveButton, null)
+}
+function DefinePutCreditCardTypeRequest() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.CreditCardTypes, RequestAliases.PutCreditCardType);
+}
+export function AssertUpdateCreditCardType() {
+    AssertPutCreditCardType()
+}
+function AssertPutCreditCardType() {
+    BaseAssertion.AssertStatusCode(RequestAliases.PutCreditCardType, 200).
+    then((interception) => {
+        inActiveCreditCardType = interception.response.body.InActive;
+    });
+}
+export function CreditCardTypeConversionEventsMapping(eventDetailsList: EventTypeDetails[]): EventTypeDetails[] {
+    ConversionEventsMapping(eventDetailsList, inActiveCreditCardType)
+    return eventDetailsList;
 }
 //#endregion

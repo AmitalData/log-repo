@@ -60,6 +60,9 @@ export class Urls {
     public static readonly MoveTypes ="**/movetypes"
     public static readonly MoveTypeGetSingle = "**/movetypes/getsingle?**"
 
+    public static readonly CreditCardTypes = "**/creditcardtypes"
+    public static readonly CreditCardTypesGetSingle = "**/creditcardtypes/getsingle?**"
+
     public static GetFilterSearch(filterBy: string) {
         return '**/getbyfilters?**' + filterBy + '**'
     }

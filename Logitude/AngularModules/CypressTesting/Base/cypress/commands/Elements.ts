@@ -124,7 +124,7 @@ function FillLogLovProcess(selector: any, value: string, fromCache: boolean, get
         }).as(requestAlias);
     }
 
-    cy.get(selector).clear().type(value).then($input => {
+    cy.get(selector).clear({ force: true }).type(value).then($input => {
         if($input[0].value == value || ($input[0].value == "" && value == "{downarrow}")){
             if (!fromCache) {
                 cy.wait("@" + requestAlias);
