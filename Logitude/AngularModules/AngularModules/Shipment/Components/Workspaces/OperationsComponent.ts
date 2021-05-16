@@ -133,22 +133,24 @@ export class OperationsComponent implements AfterViewInit {
                     }
 
                     case "CNFU": {
-
-                        SessionLocator.DynamicLoader.Load('./Shipment/Components/Workspaces/ContainersFUsComponent', myLocation.viewContainerRef)
-                            .then(cmpRef => {
-                                this.Page_CNFU = cmpRef.instance;
-                            });
+                        if (this.Page_CNFU == null) {
+                            SessionLocator.DynamicLoader.Load('./Shipment/Components/Workspaces/ContainersFUsComponent', myLocation.viewContainerRef)
+                                .then(cmpRef => {
+                                    this.Page_CNFU = cmpRef.instance;
+                                });
+                        }
 
                         break;
                     }
 
 
                     case "AMANAC": {
-
-                        SessionLocator.DynamicLoader.Load('./Shipment/Components/Workspaces/AMANACComponent', myLocation.viewContainerRef)
-                            .then(cmpRef => {
-                                this.Page_AMANAC = cmpRef.instance;
-                            });
+                        if (this.Page_AMANAC == null) {
+                            SessionLocator.DynamicLoader.Load('./Shipment/Components/Workspaces/AMANACComponent', myLocation.viewContainerRef)
+                                .then(cmpRef => {
+                                    this.Page_AMANAC = cmpRef.instance;
+                                });
+                        }
 
                         break;
                     }
