@@ -143,14 +143,6 @@ namespace Logitude.Infrastructure.BL
 			 
             all.Add(new ToggleDetails()
             {    
-                Name = "CRM Customer Quick Search", 
-                Code = "CQS", 
-                SearchFields = "CQS,CRM Customer Quick Search,CRM Customer Quick Search", 
-                Description = "CRM Customer Quick Search", 
-			});
-			 
-            all.Add(new ToggleDetails()
-            {    
                 Name = "Charges Types Direction Restrictions", 
                 Code = "CTR", 
                 SearchFields = "CTR,Charges Types Direction Restrictions,Charges Types Direction Restrictions", 
@@ -179,14 +171,6 @@ namespace Logitude.Infrastructure.BL
                 Name = "Export Query Data Via WorkerRole", 
                 Description = "Export Query Data to Excel Via WorkerRole", 
                 SearchFields = "EQW,Export Query Data Via WorkerRole,Export Query Data to Excel Via WorkerRole", 
-			});
-			 
-            all.Add(new ToggleDetails()
-            {    
-                Name = " Improved Search in Customers Views", 
-                Code = "SCV", 
-                SearchFields = "SCV, Improved Search in Customers Views, Improved Search in Customers Views", 
-                Description = "Improved Search in Customers Views", 
 			});
 			 
             all.Add(new ToggleDetails()
@@ -244,7 +228,7 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "CPH,Consequent Pickup/Delivery", 
                 Description = "Consequent Pickup/Delivery", 
 			});
-
+			 
             all.Add(new ToggleDetails()
             {    
                 Code = "PRE", 
@@ -252,7 +236,6 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "PRE,Master Pre/On Carriage", 
                 Description = "Master Pre/On Carriage", 
 			});
-
 			
             return all;
        }
