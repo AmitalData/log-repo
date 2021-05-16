@@ -202,6 +202,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 myTracingClass.TraceProducts(entityPM.CustomerProducts, isNewEntity);
                 myTracingClass.TraceCompetitors(entityPM.CustomerCompetitors, isNewEntity);
                 myTracingClass.TraceAdditionalServices(entityPM.CustomerAdditionalServices, isNewEntity);
+                myTracingClass.TraceProductItems(entityPM.CustomerProductItems, isNewEntity);
             }
 
             foreach (CustomerProductPM item in entityPM.CustomerProducts)
@@ -404,6 +405,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 if (servicesChangeSet != null)
                 {
                     myTracingClass.TraceAdditionalServices(servicesChangeSet, isNewEntity);
+                }
+
+                if (productItemsChangeSet != null)
+                {
+                    myTracingClass.TraceProductItems(productItemsChangeSet, isNewEntity);
                 }
             }
 

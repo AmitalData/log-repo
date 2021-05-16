@@ -192,6 +192,7 @@
     <None Include="DBOthers\QuoteModel\Triggers\Trigger_AutomaticLastUpdateDateQuotes.dxml" />
     <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdateShipmentPayablesVatAmounts.dxml" />
     <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdateShipmentReceivablesVatAmounts.dxml" />
+    <None Include="DBScripts\CommonModel\202105161305_AddCustomerProductItemEventTypesToTenants.sxml" />
     <None Include="DBScripts\CommonModel\202103161606_AddNewUOMPercentOForeignChargesLocalAmounts.sxml" />
     <None Include="DBScripts\CommonModel\202104161424_UpdateTenantRatios.sxml" />
     <None Include="DBScripts\CommonModel\202104161425_UpdateTenantRatiosOnCloud.sxml" />
