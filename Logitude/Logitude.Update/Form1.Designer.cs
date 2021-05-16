@@ -387,7 +387,7 @@
             this.batchTaskExecutionToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1144, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1144, 30);
             this.menuStrip1.TabIndex = 13;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -1549,11 +1549,11 @@
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 28);
+            this.tabControl1.Location = new System.Drawing.Point(0, 30);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1144, 801);
+            this.tabControl1.Size = new System.Drawing.Size(1144, 799);
             this.tabControl1.TabIndex = 84;
             // 
             // tabPage1
@@ -1896,7 +1896,7 @@
             this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tabPage2.Size = new System.Drawing.Size(1136, 772);
+            this.tabPage2.Size = new System.Drawing.Size(1136, 770);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Other";
             // 

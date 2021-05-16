@@ -450,10 +450,14 @@ User/Pass",
 
         private void button6_Click(object sender, EventArgs e)
         {
-            RatesUpdateService ratesUpdateService = new RatesUpdateService(null, 1);
-            ratesUpdateService.ReadXML();
-            ratesUpdateService.ValidateRatesDataMapping();
-            ratesUpdateService.UpdateRatesData();
+          List<GlobalTenant>  globalTenants = GlobalTenantRepository.GetGlobalTenants();
+            foreach (GlobalTenant tenant in globalTenants.Where(d => d.IsActive == true))
+            {
+                RatesUpdateService ratesUpdateService = new RatesUpdateService(null, tenant.Id);
+                ratesUpdateService.ReadXML();
+                ratesUpdateService.ValidateRatesDataMapping();
+                ratesUpdateService.UpdateRatesData();
+            }
         }
 
         private void button7_Click(object sender, EventArgs e)
