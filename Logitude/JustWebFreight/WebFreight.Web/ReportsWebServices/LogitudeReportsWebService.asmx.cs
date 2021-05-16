@@ -1503,7 +1503,9 @@ namespace WebFreight.Web.ReportsWebServices
             IQueryable<ARInvoiceList> iQueryable = arInvoiceQuery.GetInvoiceListByTenant(tenant);
             List<VatType> tenantVatTypes = vatTypeRepository.GetVatTypes(tenant).ToList();
             IQueryable<ARInvoiceLine> tenantARInvoiceLines = aRInvoiceLineRepository.GetInvoiceLinesByTenant(tenant);
-       
+
+            List<Shipment> shipments = this.GetShipmentsByARInvoicesMainEntityId(iQueryable, tenant);
+           
             #region Report Filters
             MemoryStream memorystream = new MemoryStream(xmlFilters);
             XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
@@ -1649,6 +1651,9 @@ namespace WebFreight.Web.ReportsWebServices
                 List<VATClass> myVATS = new List<VATClass>();
                 List<ARInvoiceLine> ARInvoiceLines = tenantARInvoiceLines.Where(l => (l.ARInvoiceId == arInvoice.Id) && (l.IsExpense == true)).ToList();
                 customFieldResolver.SetDataProviderCustomFieldsValues("ARInvoice", tenant, arInvoice, invoicesRecored);
+
+                Shipment shipment = shipments.Where(d => d.Id == arInvoice.MainEntityId).FirstOrDefault();
+                customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipment, invoicesRecored);
 
                 //ARInvoicePM invoicePM = invoiceQuery.GetSinglePM(currentInvoice.Id, currentInvoice.Tenant);
                 foreach (ARInvoiceTotalVAT vat in myTotalVats)
@@ -1842,6 +1847,18 @@ namespace WebFreight.Web.ReportsWebServices
             #endregion
 
             return dataProvider;
+        }
+
+        private List<Shipment>  GetShipmentsByARInvoicesMainEntityId(IQueryable<ARInvoiceList> aRInvoices, int tenant)
+        {
+            List<string> shipmentsIds = aRInvoices.Where(d => d.MainEntityId != null).Select(s => s.MainEntityId).ToList();
+            List<Shipment> shipments = new List<Shipment>();
+            if (shipmentsIds.Count > 0)
+            {
+                ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+                shipments = shipmentRepository.GetShipmentsListFromIdList(shipmentsIds, tenant);
+            }
+            return shipments;
         }
         #endregion
 
@@ -3203,6 +3220,9 @@ namespace WebFreight.Web.ReportsWebServices
             IQueryable<APInvoiceList> iQueryable = aPInvoiceQuery.GetInvoiceListByTenant(tenant);
             List<VatType> tenantVatTypes = vatTypeRepository.GetVatTypes(tenant).ToList();
 
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            List<Shipment> shipments = this.GetShipmentsByAPInvoicesMainEntityId(iQueryable, tenant);
+
             #region Report Filters
             MemoryStream memorystream = new MemoryStream(xmlFilters);
             XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
@@ -3346,6 +3366,9 @@ namespace WebFreight.Web.ReportsWebServices
                 InvoiceDataProvider.InvoicesReport invoicesRecored = new InvoiceDataProvider.InvoicesReport();
                 List<APInvoiceTotalVAT> myTotalVats = totalVats.Where(d => d.APInvoiceId == apInvoice.Id).ToList();
                 List<VATClass> myVATS = new List<VATClass>();
+
+                Shipment shipment = shipments.Where(d => d.Id == apInvoice.MainEntityId).FirstOrDefault();
+                customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipment, invoicesRecored);
 
                 foreach (APInvoiceTotalVAT vat in myTotalVats)
                 {
@@ -3511,6 +3534,18 @@ namespace WebFreight.Web.ReportsWebServices
             #endregion
 
             return dataProvider;
+        }
+
+        private List<Shipment> GetShipmentsByAPInvoicesMainEntityId(IQueryable<APInvoiceList> aPInvoices, int tenant)
+        {
+            List<string> shipmentsIds = aPInvoices.Where(d => d.MainEntityId != null).Select(s => s.MainEntityId).ToList();
+            List<Shipment> shipments = new List<Shipment>();
+            if (shipmentsIds.Count > 0)
+            {
+                ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+                shipments = shipmentRepository.GetShipmentsListFromIdList(shipmentsIds, tenant);
+            }
+            return shipments;
         }
 
         #endregion
