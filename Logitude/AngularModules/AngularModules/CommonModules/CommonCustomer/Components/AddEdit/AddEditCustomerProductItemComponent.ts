@@ -11,9 +11,6 @@ import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs'
 import { CustomerHTSCode, CustomerProductItem, CustomerProductItemsTabComponent } from '../EditTabs/CustomerProductItemsTabComponent';
 import { HTSCodePM } from '../../../../Common/EntityPMs/HTSCodePM';
 import { CustomerValidator } from '../../../../Common/Validators/CustomerValidator';
-import { release } from 'process';
-
-
 
 @Component({    
     templateUrl: './AddEditCustomerProductItemComponent.html',
@@ -44,9 +41,6 @@ export class AddEditCustomerProductItemComponent extends BaseComponent {
         this.Clone();
     }
 
-    SetUIProperties() {
-
-    }
 
     CancelButtonClicked() {
         this.RejectChanges();
