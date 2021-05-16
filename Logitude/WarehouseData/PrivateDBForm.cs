@@ -95,7 +95,8 @@ namespace WarehouseData
                         var dWHSettingsTable = mainDataWarehouseService.privateTenantDataWarehouse.GetPrivateTenant(sourceConnectionString);
 
                         FeatureDataWarehouseService featureDataWarehouseService = new FeatureDataWarehouseService(sourceConnectionString.Replace("Main", "Global"), sourceConnectionString);
-                        foreach (DataRow row in dWHSettingsTable.Rows)
+
+                        Parallel.ForEach(dWHSettingsTable.Rows.Cast<DataRow>().ToList(), (row) =>
                         {
                             int tenant = Int32.Parse(row["Tenant"].ToString());
                             string catalog = row["Catalog"].ToString();
@@ -145,7 +146,7 @@ namespace WarehouseData
                                 allMessage = allMessage.Replace(message, replaceMessage);
                                 SetControlPropertyValue(PrivateDblabel, "Text", allMessage);
                             }
-                        }
+                        });
                         SetControlPropertyValue(PrivateDblabel, "ForeColor", Color.Green);
                         IsBuildDataRunning = false;
 
