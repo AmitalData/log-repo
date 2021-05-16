@@ -9,8 +9,8 @@ Feature:Credit Card Type Create and Edit it in Maintenance Module
 
     Scenario: Create a new credit card type
         Given a credit card type with the following details
-            | Code        | Random                                  |
-            | EnglishName | Testing Credit Card Type Daily Scenario |
+            | Code        | Random                                   |
+            | EnglishName | Testing Credit Card Type Weekly Scenario |
         When create credit card type
         Then the credit card type should create successfully
 
