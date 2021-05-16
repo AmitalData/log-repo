@@ -11,8 +11,6 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { HTSCodePM } from '../../../../Common/EntityPMs/HTSCodePM';
 import { Validator } from '../../../../Infrastructure/Validators/Validator';
 import { CountryList } from '../../../../Common/EntityLists/CountryList';
-import { ProductItem } from '../../../../ShipmentModules/ShipmentTabs/Components/ProductItems/ProductItemsTabComponent';
-import { Cloner } from '../../../../Infrastructure/Utilities/Cloner';
 
 @Component({
     templateUrl: './CustomerProductItemsTabComponent.html',
@@ -31,6 +29,7 @@ export class CustomerProductItemsTabComponent extends BaseComponent implements O
         super();
         this.EntityPM = this.entityArgs.EntityPM;
         this.HTSCodes = new ObservableCollection([]);
+        this.ProductItems = new ObservableCollection([]);
     }
 
     ngOnInit() {
@@ -56,25 +55,33 @@ export class CustomerProductItemsTabComponent extends BaseComponent implements O
     BuildProductItems() {
         if (this.ProductItems == null) {
             this.ProductItems = new ObservableCollection([]);
+            this.GetProductItems()
+        }
+        else if (this.ProductItems != null && this.EntityPM.CustomerProductItems == null) {
+            this.ProductItems.Collection.forEach(item => {
+                this.ProductItems.Clear();
+            });
+        }
+        else {
+            this.GetProductItems()
+        }
+    }
+
+    GetProductItems() {
+        if (this.EntityPM.CustomerProductItems != null) {
             var htsCodeCollection: CustomerHTSCode[] = [];
             var itemsCollection: CustomerProductItem[] = [];
             this.EntityPM.CustomerProductItems.forEach(item => {
-             itemsCollection.push(new CustomerProductItem(item, this, false));
-              if (item.HTSCodes != null) {
-                item.HTSCodes.forEach(htsCodeItem => {
-                    htsCodeCollection.push(new CustomerHTSCode(htsCodeItem, this, false));
-                });
-                this.HTSCodes.InsertCollection(htsCodeCollection);
-              }
-           });
-
-          this.ProductItems.InsertCollection(itemsCollection);     
-        }
-        else if (this.ProductItems != null && this.EntityPM.CustomerProductItems == null) {
-             this.ProductItems.Collection.forEach(item => {
-               this.ProductItems.Clear();
+                itemsCollection.push(new CustomerProductItem(item, this, false));
+                if (item.HTSCodes != null) {
+                    item.HTSCodes.forEach(htsCodeItem => {
+                        htsCodeCollection.push(new CustomerHTSCode(htsCodeItem, this, false));
+                    });
+                    this.HTSCodes.InsertCollection(htsCodeCollection);
+                }
             });
-        } 
+            this.ProductItems.InsertCollection(itemsCollection);
+        }
     }
 
     BuildProductItemHTSCodes(item:ProductItemPM) {
@@ -96,7 +103,7 @@ export class CustomerProductItemsTabComponent extends BaseComponent implements O
     }
 
     AddProductItem() {
-        var productItem: ProductItemPM = new ProductItemPM(this.EntityPM);
+        var productItem: ProductItemPM = new ProductItemPM(null);
         productItem.Tenant = SessionLocator.Tenant;
         this.HTSCodes = new ObservableCollection([]);
 
@@ -154,10 +161,10 @@ export class CustomerProductItemsTabComponent extends BaseComponent implements O
                 errors.push("Can't Add New HTSCode Line While HTSCode Code And Country are required");
             }
             else if (lastHTSCode.EntityPM.DestinationCountryId == null) {
-                errors.push("Can't Add New HTSCode While HTSCode Country is required");
+                errors.push("Can't Add New HTSCode Line While HTSCode Country is required");
             }
             else if (lastHTSCode.EntityPM.Code == null) {
-                errors.push("Can't Add New HTSCode While HTSCode Code is required");
+                errors.push("Can't Add New HTSCode Line While HTSCode Code is required");
             }
         }
         return errors;

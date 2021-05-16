@@ -5,15 +5,9 @@ import {AppTool} from '../../../../Infrastructure/Tools';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import { ProductItemPM } from '../../../../Common/EntityPMs/ProductItemPM';
-import { TenantPM } from '../../../../Common/EntityPMs/TenantPM';
 import { CustomerPM } from '../../../../Common/EntityPMs/CustomerPM';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
-import { CustomerHTSCode, CustomerProductItem, CustomerProductItemsTabComponent } from '../EditTabs/CustomerProductItemsTabComponent';
-import { HTSCodePM } from '../../../../Common/EntityPMs/HTSCodePM';
-import { CustomerValidator } from '../../../../Common/Validators/CustomerValidator';
-import { release } from 'process';
-
-
+import {  CustomerProductItem, CustomerProductItemsTabComponent } from '../EditTabs/CustomerProductItemsTabComponent';
 
 @Component({    
     templateUrl: './AddEditCustomerProductItemComponent.html',
@@ -59,45 +53,47 @@ export class AddEditCustomerProductItemComponent extends BaseComponent {
 
     OkButtonClicked() {
         var errors: string[] = [];
-
-
-        if (this.CustomerProductItem.IsNewEntity) {
-        
-            if (this.FatherComponent.HTSCodes != null) {
-                this.FatherComponent.HTSCodes.Collection.forEach(item => {
-                    if (item.IsNewEntity) {
-                        this.CustomerProductItem.EntityPM.AddHTSCodePM(item.EntityPM);
-                    }
-                });
-            }
-            this.CustomerPM.AddProductItemPM(this.CustomerProductItem.EntityPM);
-        } else {
-           if (this.FatherComponent.HTSCodes != null) {
-
-             var currentProductItem = this.CustomerPM.CustomerProductItems.filter(a => a.Id == this.CustomerProductItem.EntityPM.Id)[0];
-             this.FatherComponent.HTSCodes.Collection.forEach(item => {
-                if (item.IsNewEntity) {
-                    currentProductItem.AddHTSCodePM(item.EntityPM);
-                }
-             });
-           }
-        }
-
+        this.ClearValidationErrorsLists();
         errors = this.ValidateProductItemAndHTsCode();
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
+            if (this.CustomerProductItem.IsNewEntity) {
+                if (this.FatherComponent.HTSCodes != null) {
+                    this.FatherComponent.HTSCodes.Collection.forEach(item => {
+                        if (item.IsNewEntity) {
+                            this.CustomerProductItem.EntityPM.AddHTSCodePM(item.EntityPM);
+                        }
+                    });
+                }
+                this.CustomerPM.AddProductItemPM(this.CustomerProductItem.EntityPM);
+            } else {
+                if (this.FatherComponent.HTSCodes != null) {
+                    var currentProductItem = this.CustomerPM.CustomerProductItems.filter(a => a.Id == this.CustomerProductItem.EntityPM.Id)[0];
+                    this.FatherComponent.HTSCodes.Collection.forEach(item => {
+                        if (item.IsNewEntity) {
+                            currentProductItem.AddHTSCodePM(item.EntityPM);
+                        }
+                    });
+                }
+            }
             this.CurrentSession.CloseCurrentWindow();
-        }
+        } 
+    }
+
+    ClearValidationErrorsLists() {
+        this.ValidationErrorsList = [];
         this.FatherComponent.ValidationErrorsList = [];
     }
 
     private ValidateProductItemAndHTsCode() {
         var errors: string[] = [];
-        var entityValidator: CustomerValidator = new CustomerValidator();
-        var entityErrors = entityValidator.Validate(this.FatherComponent.EntityPM);
+        
+        Validator.TryValidateObject(this.EntityPM, this.DataContext.ObjectTableName, errors);
+        this.ValidationErrorsList = errors;
 
-        if (entityErrors) {
-            errors = errors.concat(entityErrors);
+        var htsCodeErrors = this.ValidateHTSCodes();
+        if (htsCodeErrors) {
+            errors = errors.concat(htsCodeErrors);
         }
         var countryError = this.ValidateCountry();
         if (countryError) {
@@ -106,6 +102,22 @@ export class AddEditCustomerProductItemComponent extends BaseComponent {
         var itemCodeError = this.ValidateItemCode();
         if (itemCodeError) {
             errors = errors.concat(itemCodeError);
+        }
+        return errors;
+    }
+
+    private ValidateHTSCodes() {
+        var errors: string[] = [];
+        if (this.FatherComponent.HTSCodes != null) {
+            this.FatherComponent.HTSCodes.Collection.forEach(item => {
+                Validator.TryValidateObject(item, "HTSCode", errors);
+                if (AppTool.IsNullOrEmpty(item.Code)) {
+                    errors.push("HTSCode Code is required");
+                }
+                if (AppTool.IsNullOrEmpty(item.DestinationCountryId)) {
+                    errors.push("HTSCode Country is required");
+                }
+            });
         }
         return errors;
     }
@@ -165,8 +177,8 @@ export class AddEditCustomerProductItemComponent extends BaseComponent {
         this.myCloner.AddEntity(this.DataContext.EntityPM);
         this.myCloner.AddEntity(this.CustomerPM);
     }
+
     private RejectChanges() {
-        this.FatherComponent.ValidationErrorsList = [];
         this.myCloner.RejectChanges();
     }
 
