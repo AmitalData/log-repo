@@ -54,7 +54,7 @@ let MoveTypeCode=null;
 let CommodityName = null;
 let RegionName = null;
 let inActiveCountry = false;
-let InActiveCreditCardType = false;
+let inActiveCreditCardType = false;
 let inActiveState = false;
 let inActiveCity = false;
 let inActiveGlobalZone = false;
@@ -2231,11 +2231,11 @@ export function AssertUpdateCreditCardType() {
 function AssertPutCreditCardType() {
     BaseAssertion.AssertStatusCode(RequestAliases.PutCreditCardType, 200).
     then((interception) => {
-        InActiveCreditCardType = interception.response.body.InActive;
+        inActiveCreditCardType = interception.response.body.InActive;
     });
 }
 export function CreditCardTypeConversionEventsMapping(eventDetailsList: EventTypeDetails[]): EventTypeDetails[] {
-    ConversionEventsMapping(eventDetailsList, InActiveCreditCardType)
+    ConversionEventsMapping(eventDetailsList, inActiveCreditCardType)
     return eventDetailsList;
 }
 //#endregion
