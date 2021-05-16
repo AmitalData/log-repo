@@ -3541,7 +3541,11 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
 
     IsUseCardSearchMechanism() {
-        return true;
+        var result: boolean = false;
+        if (this.ObjectTableName == "Customer") {
+            result = true;
+        }
+        return result;
     }
 
     private currentFilters: ApiQueryFilters;
