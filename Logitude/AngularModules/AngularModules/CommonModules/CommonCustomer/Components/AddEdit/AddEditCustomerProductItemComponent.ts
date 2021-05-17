@@ -60,7 +60,7 @@ export class AddEditCustomerProductItemComponent extends BaseComponent {
                     this.DataContext.FatherComponent.ProductItems.Insert(this.DataContext);
                 }
 
-                this.CurrentSession.CloseCurrentWindow();
+                this.CurrentSession.CloseCurrentWindowEmit("ok");
             }
         } 
     }
@@ -98,17 +98,17 @@ export class AddEditCustomerProductItemComponent extends BaseComponent {
         if (this.DataContext.HTSCodes != null) {
             this.DataContext.HTSCodes.Collection.forEach(item => {
 
-                if (!AppTool.IsNullOrEmpty(item.Code)) {
-                    var filteredHTSCodes: CustomerHTSCode[] = this.DataContext.HTSCodes.Collection.filter(d => !AppTool.IsNullOrEmpty(d.Code));
-                    if (filteredHTSCodes.filter(d => d.Code == item.Code && d.LineNumber != item.LineNumber).length > 0) {
-                        errors.push("An HTSCode with this code already exists");
-                    }
-                }
+                //if (!AppTool.IsNullOrEmpty(item.Code)) {
+                //    var filteredHTSCodes: CustomerHTSCode[] = this.DataContext.HTSCodes.Collection.filter(d => !AppTool.IsNullOrEmpty(d.Code));
+                //    if (filteredHTSCodes.filter(d => d.Code == item.Code && d.LineNumber != item.LineNumber).length > 0) {
+                //        errors.push("An HTSCode with " + item.Code + " code already exists");
+                //    }
+                //}
 
                 if (!AppTool.IsNullOrEmpty(item.DestinationCountryId)) {
                     var filteredHTSCodes: CustomerHTSCode[] = this.DataContext.HTSCodes.Collection.filter(d => !AppTool.IsNullOrEmpty(d.DestinationCountryId));
                     if (filteredHTSCodes.filter(d => d.DestinationCountryId == item.DestinationCountryId && d.LineNumber != item.LineNumber).length > 0) {
-                        errors.push("An HTSCode with this country already exists");
+                        errors.push("An HTSCode with " + item.CountryEnglishName + " country already exists");
                     }
                 }               
             });

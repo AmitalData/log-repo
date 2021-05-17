@@ -80,6 +80,7 @@ export class CustomerProductItemsTabComponent extends BaseComponent implements O
         logitudeWindow.Title = myWindowTitle;
         logitudeWindow.DataContext = itemPM;
         logitudeWindow.Show('./CommonModules/CommonCustomer/Components/AddEdit/AddEditCustomerProductItemComponent');
+        logitudeWindow.WindowClosed.subscribe(($event: any) => this.BuildProductItems());
     }
 }
 
@@ -168,6 +169,10 @@ export class CustomerProductItem extends BaseComponent {
     SetUIProperties() {
         if (this.IsNewEntity) {
             this.UIProperties.SetVisibility("InActive", this.ObjectTableName, false);
+        }
+
+        else {
+            this.UIProperties.SetVisibility("InActive", this.ObjectTableName, true);
         }
     }
 
