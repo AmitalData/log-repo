@@ -1,6 +1,6 @@
 @release @all @dev @daily 
-Feature: Shipping Agent Mock Create and Edit in Maintenance Module
-    The user creates a shipping agent mock create and edit another one from the Maintenance Module.
+Feature: Shipping Agent fake Create and Edit in Maintenance Module
+    The user creates a shipping agent fake create and edit another one from the Maintenance Module.
 
     Scenario: Create a new shipping agent
         Given the user logged in and navigate to "Shipping Agents" in maintenance menu
@@ -33,8 +33,7 @@ Feature: Shipping Agent Mock Create and Edit in Maintenance Module
         Then the shipping agent should open successfully
 
     Scenario: Edit the shipping agent
-        Given the user fill the following shipping agent general details
-            | Notes | Test edit shipping agent |
+        Given "Test edit shipping agent" as shipping agent notes
         And fill the following shipping agent Billing details
             | BankName | Shipping Agent Bank |
             | IBANNo   | zero Bank           |

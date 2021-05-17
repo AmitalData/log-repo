@@ -4,15 +4,13 @@ Feature:  Run, Print, Save and Send Automation Test Report in Reports Module
 
     Scenario:Run Report with exception
         Given the user logged in and navigates to "Automation Test Report" in reports menu
-        And a report settings with the following details
-            | IsException | Yes |
+        Given a report settings with "Yes" as is exception
         When run report
         Then the report should run successfully
         And the information messagee with "Exception Test" message should appear
 
     Scenario:Run Report without exception
-        Given a report settings with the following details
-            | IsException | No |
+        Given a report settings with "No" as is exception
         When run report
         Then the report should run successfully
         And the report should appear

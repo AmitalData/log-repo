@@ -1,4 +1,4 @@
-@release @all @dev @weekly 
+@release @all @dev @weekly @l
 Feature: Trucker Create and Edit in Maintenance Module
     The user creates a trucker and edits it from the Maintenance Module.
 
@@ -52,8 +52,7 @@ Feature: Trucker Create and Edit in Maintenance Module
             | Position      | Developer   |
 
     Scenario: Edit the trucker
-        Given the user fill the following trucker general details
-            | Notes | Test edit trucker |
+        Given "Test edit trucker" as trucker notes
         And fill the following trucker Billing details
             | BankName | trucker Bank |
             | IBANNo   | zero Bank    |

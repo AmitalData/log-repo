@@ -1,6 +1,6 @@
 @release @all @dev @daily 
-Feature: Shipment Sub Type Mock Create and Edit in Maintenance Module
-    The user creates a Shipment Sub Type mock create and edit another one from the Maintenance Module.
+Feature: Shipment Sub Type fake Create and Edit in Maintenance Module
+    The user creates a Shipment Sub Type fake create and edit another one from the Maintenance Module.
 
     Scenario:Add Shipment Sub Type Code with lenght more than 6
         Given the user logged in and navigate to "Shipment Sub Types" in maintenance menu
@@ -33,8 +33,7 @@ Feature: Shipment Sub Type Mock Create and Edit in Maintenance Module
         Then the shipment sub type should open successfully
 
     Scenario: Edit the shipment sub type
-        Given the user fill the following shipment sub type general details
-            | Name | Testing Edit Shipment Sub Type Daily Scenario |
+        Given "Testing Edit Shipment Sub Type Daily Scenario" as shipment sub type name
         When update shipment sub type
         Then the shipment sub type should update successfully
         And the following event should appear in events tab

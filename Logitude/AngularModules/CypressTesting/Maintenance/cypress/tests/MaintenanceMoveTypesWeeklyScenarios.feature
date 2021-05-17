@@ -1,4 +1,4 @@
-@release @all @dev @weekly 
+@release @all @dev @weekly @l
 Feature: Move Type Create and Edit it in Maintenance Module
     The user creates a Move Type and edits it from the Maintenance Module.
 
@@ -25,8 +25,7 @@ Feature: Move Type Create and Edit it in Maintenance Module
         Then the move type should open successfully
 
     Scenario: Edit the move type
-        Given the user fill the following move type general details
-            | LocalName | Test edit LocalName move type |
+        Given "Test edit LocalName move type" as move type local name
         When update move type
         Then the move type should update successfully
         And the following event should appear in events tab

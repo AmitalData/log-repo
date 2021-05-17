@@ -50,8 +50,7 @@ Feature: Custom Agent Create and Edit in Maintenance Module
             | Position      | Developer   |
 
     Scenario: Edit the custom agent
-        Given the user fill the following custom agent general details
-            | Notes | Test edit custom agent |
+        Given "Test edit custom agent" as custom agent notes
         And fill the following custom agent Billing details
             | BankName | Custom Agent Bank |
             | IBANNo   | zero Bank         |

@@ -47,8 +47,7 @@ Feature: Shipping Agent Create and Edit it in Maintenance Module
             | Position      | Developer   |
 
     Scenario: Edit the shipping agent
-        Given the user fill the following shipping agent general details
-            | Notes | Test edit shipping agent |
+        Given "Test edit shipping agent" as shipping agent notes
         And fill the following shipping agent Billing details
             | BankName | Shipping Agent Bank |
             | IBANNo   | zero Bank           |

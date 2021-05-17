@@ -70,9 +70,8 @@ Then("the custom agent contact should have the following details", (dataTable) =
 });
 //#endregion
 //#region Edit the custom agent
-Given("the user fill the following custom agent general details", (dataTable) => {
-    customAgentGeneralTabDetails = Assists.CreateInstance<CardGeneralTabDetails>(dataTable, true);
-    MaintenanceActions.FillCustomAgentGeneralTab(customAgentGeneralTabDetails)
+Given("{string} as custom agent notes", (notes) => {
+    MaintenanceActions.FillCustomAgentGeneralTabNotes(notes)
 });
  
 Given("fill the following custom agent Billing details", (dataTable) => {

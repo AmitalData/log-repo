@@ -79,9 +79,8 @@ Then("the trucker contact should have the following details", (dataTable) => {
 });
 //#endregion
 //#region Edit the trucker
-Given("the user fill the following trucker general details", (dataTable) => {
-    truckeGeneralTabDetails = Assists.CreateInstance<CardGeneralTabDetails>(dataTable, true);
-    MaintenanceActions.FillTruckerGeneralTab(truckeGeneralTabDetails)
+Given("{string} as trucker notes", (notes) => {
+    MaintenanceActions.FillTruckerGenaralTabNotes(notes)
 });
  
 Given("fill the following trucker Billing details", (dataTable) => {

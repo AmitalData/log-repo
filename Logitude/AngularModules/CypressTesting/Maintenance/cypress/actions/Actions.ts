@@ -1768,9 +1768,9 @@ export function AssertShippingAgentContact(conatactDetails: ContactDetails) {
     cy.Click(MaintenanceSelectors.ShippingAgentContactsTab, null, true)
     AssertCardContact(conatactDetails)
 }
-export function FillShippingAgentGeneralTab(shippingAgentGeneralTabDetails: CardGeneralTabDetails) {
+export function FillShippingAgentGenaralTabNotes(Notes:string) {
     cy.Click(MaintenanceSelectors.ShippingAgentGeneralTab, null, true)
-    cy.FillLogTextBox(MaintenanceSelectors.ShippingAgentNotes, shippingAgentGeneralTabDetails.Notes)
+    cy.FillLogTextBox(MaintenanceSelectors.ShippingAgentNotes, Notes)
 }
 export function FillShippingAgentBillingTab(shippingAgentBillingTabDetails: CardBillingTabDetails) {
     cy.Click(MaintenanceSelectors.ShippingAgentBillingTab, null, true)
@@ -1836,9 +1836,9 @@ export function AssertCustomAgentContact(conatactDetails: ContactDetails) {
     cy.Click(MaintenanceSelectors.CustomAgentContactsTab, null, true)
     AssertCardContact(conatactDetails)
 }
-export function FillCustomAgentGeneralTab(customAgentGeneralTabDetails: CardGeneralTabDetails) {
+export function FillCustomAgentGeneralTabNotes(Notes:string) {
     cy.Click(MaintenanceSelectors.CustomAgentGeneralTab, null, true)
-    cy.FillLogTextBox(MaintenanceSelectors.CustomAgentNotes, customAgentGeneralTabDetails.Notes)
+    cy.FillLogTextBox(MaintenanceSelectors.CustomAgentNotes, Notes)
 }
 export function FillCustomAgentBillingTab(customAgentBillingTabDetails: CardBillingTabDetails) {
     cy.Click(MaintenanceSelectors.CustomAgentBillingTab, null, true)
@@ -1926,9 +1926,9 @@ export function AssertTruckerContact(conatactDetails: ContactDetails) {
     cy.Click(MaintenanceSelectors.TruckerContactsTab, null, true)
     AssertCardContact(conatactDetails)
 }
-export function FillTruckerGeneralTab(truckerGeneralTabDetails: CardGeneralTabDetails) {
+export function FillTruckerGenaralTabNotes(Notes:string) {
     cy.Click(MaintenanceSelectors.TruckerGeneralTab, null, true)
-    cy.FillLogTextBox(MaintenanceSelectors.TruckerNotes, truckerGeneralTabDetails.Notes)
+    cy.FillLogTextBox(MaintenanceSelectors.TruckerNotes, Notes)
 }
 export function FillTruckerBillingTab(truckerBillingTabDetails: CardBillingTabDetails) {
     cy.Click(MaintenanceSelectors.TruckerBillingTab, null, true)

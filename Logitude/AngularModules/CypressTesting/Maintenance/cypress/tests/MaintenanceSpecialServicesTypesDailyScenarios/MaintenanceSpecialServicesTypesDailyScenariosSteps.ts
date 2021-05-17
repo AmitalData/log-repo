@@ -61,11 +61,9 @@ Then("the special services type should open successfully", () => {
 });
 //#endregion
 //#region  Edit the special services type
-Given("the user fill the following special services type general details", (dataTable) => {
-    specialServicesTypeDetails = Assists.CreateInstance<SpecialServicesTypeDetails>(dataTable, true);
-    MaintenanceActions.FillSpecialServicesTypeLocalName(specialServicesTypeDetails.LocalName)
+Given("{string} as special services type local name", (localName) => {
+    MaintenanceActions.FillSpecialServicesTypeLocalName(localName)
 });
- 
  
 When("update special services type", () => {
     MaintenanceActions.UpdateSpecialServicesType()

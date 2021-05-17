@@ -60,9 +60,8 @@ Then("the shipping agent should open successfully", () => {
 });
 //#endregion
 //#region Edit the shipping agent
-Given("the user fill the following shipping agent general details", (dataTable) => {
-    shippingAgentGeneralTabDetails = Assists.CreateInstance<CardGeneralTabDetails>(dataTable, true);
-    MaintenanceActions.FillShippingAgentGeneralTab(shippingAgentGeneralTabDetails)
+Given("{string} as shipping agent notes", (notes) => {
+    MaintenanceActions.FillShippingAgentGenaralTabNotes(notes)
 });
  
 Given("fill the following shipping agent Billing details", (dataTable) => {

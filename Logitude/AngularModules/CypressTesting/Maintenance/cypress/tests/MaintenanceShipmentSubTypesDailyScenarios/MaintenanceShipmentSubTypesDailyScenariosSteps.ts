@@ -71,9 +71,8 @@ Then("the shipment sub type should open successfully", () => {
 });
 //#endregion
 //#region  Edit the shipment sub type
-Given("the user fill the following shipment sub type general details", (dataTable) => {
-    shipmentSubTypesDetails = Assists.CreateInstance<ShipmentSubTypeDetails>(dataTable, true);
-    MaintenanceActions.FillShipmentSubTypeName(shipmentSubTypesDetails.Name)
+Given("{string} as shipment sub type name", (name) => {
+    MaintenanceActions.FillShipmentSubTypeName(name)
 });
  
 When("update shipment sub type", () => {

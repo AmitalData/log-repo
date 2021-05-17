@@ -1,4 +1,4 @@
-@release @all @dev @weekly 
+@release @all @dev @weekly @l
 Feature: Special Services Type Create and Edit it in Maintenance Module
     The user creates a Special Services Type and edits it from the Maintenance Module.
 
@@ -24,8 +24,7 @@ Feature: Special Services Type Create and Edit it in Maintenance Module
         Then the special services type should open successfully
 
     Scenario: Edit the special services type
-        Given the user fill the following special services type general details
-            | LocalName | Test edit LocalName special services type |
+        Given "Test edit LocalName special services type" as special services type local name
         When update special services type
         Then the special services type should update successfully
         And the following event should appear in events tab

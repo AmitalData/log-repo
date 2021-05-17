@@ -1,4 +1,4 @@
-@release @all @dev @weekly
+@release @all @dev @weekly 
 Feature:Credit Card Type Create and Edit it in Maintenance Module
     The user creates a credit card type and edits it from the Maintenance Module.
 
@@ -23,8 +23,7 @@ Feature:Credit Card Type Create and Edit it in Maintenance Module
         Then the credit card type should open successfully
 
     Scenario: Edit the credit card type
-        Given the user fill the following credit card type general details
-            | EnglishName | Test edit Name credit card type |
+        Given "Test edit Name credit card type" as credit card type name
         When update credit card type
         Then the credit card type should update successfully
         And the following event should appear in events tab

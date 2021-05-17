@@ -1,6 +1,6 @@
-@release @all @dev @daily 
-Feature: Trucker Mock Create and Edit in Maintenance Module
-    The user creates a trucker mock create and edit another one from the Maintenance Module.
+@release @all @dev @daily @l
+Feature: Trucker fake Create and Edit in Maintenance Module
+    The user creates a trucker fake create and edit another one from the Maintenance Module.
 
     Scenario:Add Trucker Code with lenght more than 7
         Given the user logged in and navigate to "Truckers" in maintenance menu
@@ -38,8 +38,7 @@ Feature: Trucker Mock Create and Edit in Maintenance Module
         Then the trucker should open successfully
 
     Scenario: Edit the trucker
-        Given the user fill the following trucker general details
-            | Notes | Test edit trucker |
+        Given "Test edit trucker" as trucker notes
         And fill the following trucker Billing details
             | BankName | Trucker Bank |
             | IBANNo   | zero Bank    |

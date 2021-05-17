@@ -33,12 +33,12 @@ function OpenReport(reportName: string) {
   BaseAssertion.AssertStatusCode(RequestAliases.ReportsTemplate, 200)
 }
 
-export function ChangeReportsSettings(reportSettingsDetails: ReportSettingsDetails) {
-  IsException = reportSettingsDetails.IsException;
-  if (reportSettingsDetails.IsException.toUpperCase() == constants.YES) {
+export function ChangeReportsSettings(isException:string) {
+  IsException = isException;
+  if (isException.toUpperCase() == constants.YES) {
     cy.get(BaseSelectors.CheckboxInput).check({ force: true })
   }
-  else if (reportSettingsDetails.IsException.toUpperCase() == constants.NO) {
+  else if (isException.toUpperCase() == constants.NO) {
     cy.get(BaseSelectors.CheckboxInput).uncheck({ force: true })
   }
 }

@@ -1,4 +1,4 @@
-@release @all @dev @weekly 
+@release @all @dev @weekly
 Feature: Shipment Sub Type Create and Edit it in Maintenance Module
     The user creates a Shipment Sub Type and edits it from the Maintenance Module.
 
@@ -33,8 +33,7 @@ Feature: Shipment Sub Type Create and Edit it in Maintenance Module
         Then the shipment sub type should open successfully
 
     Scenario: Edit the shipment sub type
-        Given the user fill the following shipment sub type general details
-            | Name | Testing Edit Shipment Sub Type Daily Scenario |
+        Given "Testing Edit Shipment Sub Type Daily Scenario" as shipment sub type name
         When update shipment sub type
         Then the shipment sub type should update successfully
         And the following event should appear in events tab
