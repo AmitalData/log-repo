@@ -236,6 +236,7 @@
     <Compile Include="CoreBL\BuildTenant\FullAccountingProvider.cs" />
     <Compile Include="CoreBL\BuildTenant\IFullAccountingGenerator.cs" />
     <Compile Include="CoreBL\ConsolidatedTaxReportFlatFileAnalyser.cs" />
+    <Compile Include="CoreBL\ExchangeRatesFromExternalLinkUpdateService.cs" />
     <Compile Include="CoreBL\ExternalPagesBalanceService.cs" />
     <Compile Include="CoreBL\ExternalPages\DateAfterAllPagesClosedBalanceCalculator.cs" />
     <Compile Include="CoreBL\ExternalPages\DateBeforeAllPagesClosedBalanceCalculator.cs" />
