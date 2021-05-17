@@ -47,49 +47,7 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.Messages
             ratesUpdate.ComputingPartnerCode = !string.IsNullOrEmpty(ratesUpdate.ComputingPartnerCode) ?
                                                 Regex.Replace(ratesUpdate.ComputingPartnerCode, @"\s+", "") : ratesUpdate.ComputingPartnerCode;
         }
-        private XmlDocument GetXML()
-        {
-            XmlDocument document = new XmlDocument();
-            document.Load("https://forex.boi.org.il/currency.xml");
-            return document;
-        }
-        public void ReadXML()
-        {
-            XmlDocument document = GetXML();
-            XmlNodeList idNodes = document.GetElementsByTagName("CURRENCY");
-            XmlNodeList dateNode = document.GetElementsByTagName("LAST_UPDATE");
-            List<RateUpdate> rates = new List<RateUpdate>();
-            List<string> TenantCurrencies = (from a in objectContext.Currencies select a.Code).ToList();
-            foreach (XmlNode node1 in idNodes)
-            {
-                var currencyCode = node1.SelectNodes("CURRENCYCODE")[0].InnerText;
-                var rate = node1.SelectNodes("RATE")[0].InnerText;
-                if (TenantCurrencies.Contains(currencyCode))
-                {
-                    RateUpdate rateUpdate = CreateRateUpdate(currencyCode, rate, dateNode);
-                    rates.Add(rateUpdate);
-                }
-             
-            }
-            RatesUpdate ratesUpdate = new RatesUpdate();
-            ratesUpdate.RateUpdateList = rates;
-            this.ratesUpdate = ratesUpdate;
-        }
-
-        private RateUpdate CreateRateUpdate(string currencyCode, string rate, XmlNodeList dateNode)
-        {
-            Logitude.BL.InfrastructureModel.APIDataContract.Currency currency = new Logitude.BL.InfrastructureModel.APIDataContract.Currency()
-            {
-                Code = currencyCode,
-            };
-
-            return new RateUpdate()
-            {
-                Currency = currency,
-                Rate = Double.Parse(rate),
-                RateDate = DateTime.Parse(dateNode[0].InnerText),
-            };
-        }
+       
         public void ValidateRatesDataMapping()
         {
             this.ValidateMandatoryFields();

@@ -452,13 +452,13 @@ User/Pass",
         {
 
 
-            LoggedContactResolver.RegisterLoggedContactUtil();
+            //LoggedContactResolver.RegisterLoggedContactUtil();
            
-            RatesUpdateService ratesUpdateService = new RatesUpdateService(null, 1);
-                ratesUpdateService.ReadXML();
-                ratesUpdateService.ValidateRatesDataMapping();
+            //RatesUpdateService ratesUpdateService = new RatesUpdateService(null, 1);
+            //    ratesUpdateService.ReadXML();
+            //    ratesUpdateService.ValidateRatesDataMapping();
            
-            ratesUpdateService.UpdateRatesData();
+            //ratesUpdateService.UpdateRatesData();
             
         }
 
@@ -4693,15 +4693,11 @@ User/Pass",
         }
 
         private void button6_Click_1(object sender, EventArgs e)
-        {
-            
+        {            
             LoggedContactResolver.RegisterLoggedContactUtil();
+            ExchangeRatesFromExternalLinkUpdateService ratesUpdateService = new ExchangeRatesFromExternalLinkUpdateService(Convert.ToInt16( textBox2.Text));
+            ratesUpdateService.UpdateRatesByExternalXML();
 
-            RatesUpdateService ratesUpdateService = new RatesUpdateService(null, Convert.ToInt16( textBox2.Text));
-            ratesUpdateService.ReadXML();
-            ratesUpdateService.ValidateRatesDataMapping();
-
-            ratesUpdateService.UpdateRatesData();
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
