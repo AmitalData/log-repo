@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class ProductItemUpdateClass
    {  		
-		public const string HashString = "0811bdc4d0175b04b78bf7a72f33f8cb";
+		public const string HashString = "132c2d677ae0e5fbbf919f28cd51dfe7";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Product Item",
-			      				    Code =  "b700",
+			      				    Code =  "d32d",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -448,7 +448,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
 					  						IsMulti =  true,
-					  						MultiTableName =  "HTSCodes",
+					  						MultiTableName =  "HTSCode",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,

@@ -17131,7 +17131,7 @@
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
     IsMulti="true"
-    MultiTableName="&quot;CustomerProductItems&quot;"
+    MultiTableName="&quot;ProductItem&quot;"
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
