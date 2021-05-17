@@ -1,4 +1,4 @@
-@release @all @dev @daily @l
+@release @all @dev @daily 
 Feature: Trucker fake Create and Edit in Maintenance Module
     The user creates a trucker fake create and edit another one from the Maintenance Module.
 
