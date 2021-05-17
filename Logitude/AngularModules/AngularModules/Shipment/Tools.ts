@@ -312,7 +312,6 @@ export class ShipmentTool {
         shipmentPM.OtherPrepaidCollectId = oldShipment.OtherPrepaidCollectId;
         shipmentPM.MoveTypeId = oldShipment.MoveTypeId;
         shipmentPM.ShipmentSubTypeId = oldShipment.ShipmentSubTypeId;
-        shipmentPM.IsStandalonePickupDelivery = oldShipment.IsStandalonePickupDelivery;
 
         // FWB CCS Dummy fields
         shipmentPM.TenantZeroAirlineId = oldShipment.TenantZeroAirlineId;
@@ -452,21 +451,7 @@ export class ShipmentTool {
         shipmentPM.FinalDistenationPortId = oldShipment.FinalDistenationPortId;
         shipmentPM.MainCarriageFinalDestinationPortId = oldShipment.MainCarriageFinalDestinationPortId;
         shipmentPM.ValueOfGoods = oldShipment.ValueOfGoods;
-        shipmentPM.ValueOfGoodsCurrencyId = oldShipment.ValueOfGoodsCurrencyId;
-
-        if (shipmentPM.IsStandalonePickupDelivery) {
-            shipmentPM.ShipperId = oldShipment.ShipperId;
-            shipmentPM.ConsigneeId = oldShipment.ConsigneeId;
-            shipmentPM.ShipperAddressId = oldShipment.ShipperAddressId;
-            shipmentPM.ConsigneeAddressId = oldShipment.ConsigneeAddressId;
-            shipmentPM.CustomerId = oldShipment.ShipperId;
-            shipmentPM.CustomerAddressId = oldShipment.ShipperAddressId;
-            shipmentPM.MainCarriageETD = oldShipment.MainCarriageETD;
-            shipmentPM.MainCarriageETA = oldShipment.MainCarriageETA;
-            shipmentPM.MainCarriageATD = oldShipment.MainCarriageATD;
-            shipmentPM.MainCarriageATA = oldShipment.MainCarriageATA;
-            shipmentPM.StandalonePickupDeliveryId = oldShipment.StandalonePickupDeliveryId;
-        }
+        shipmentPM.ValueOfGoodsCurrencyId = oldShipment.ValueOfGoodsCurrencyId;        
     }
     public static CopyShipmentPackages(shipmentPM: ShipmentPM, oldShipment: ShipmentPM, copyOtherProperties: boolean) {
         if (copyOtherProperties) {
@@ -2306,7 +2291,13 @@ export class ShipmentTool {
             shipmentPM.StandalonePickupDeliveryId = delivery.Id;
             shipmentPM.StandalonePickupDeliveryNumber = delivery.PickUpDeliveryNumber;            
             shipmentPM.ShipperId = delivery.FromPartnerCardId;
-            shipmentPM.ConsigneeId = delivery.ToPartnerCardId;           
+            shipmentPM.ConsigneeId = delivery.ToPartnerCardId;
+            shipmentPM.ShipperAddressId = delivery.FromAddressId;
+            shipmentPM.ConsigneeAddressId = delivery.ToAddressId;
+            shipmentPM.MainCarriageFromPartnerId = delivery.FromPartnerCardId;
+            shipmentPM.MainCarriageFromAddressId = delivery.FromAddressId;
+            shipmentPM.MainCarriageToPartnerId = delivery.ToPartnerCardId;
+            shipmentPM.MainCarriageToAddressId = delivery.ToAddressId;
             shipmentPM.MainCarriageCarrierId = delivery.CarrierId;
             shipmentPM.MainCarriageCarrierNumber = delivery.CarrierNumber;
             shipmentPM.Driver = delivery.Driver;
@@ -2322,7 +2313,13 @@ export class ShipmentTool {
             shipmentPM.StandalonePickupDeliveryId = pickup.Id;
             shipmentPM.StandalonePickupDeliveryNumber = pickup.PickUpDeliveryNumber;            
             shipmentPM.ShipperId = pickup.FromPartnerCardId;
-            shipmentPM.ConsigneeId = pickup.ToPartnerCardId;           
+            shipmentPM.ConsigneeId = pickup.ToPartnerCardId;
+            shipmentPM.ShipperAddressId = pickup.FromAddressId;
+            shipmentPM.ConsigneeAddressId = pickup.ToAddressId;
+            shipmentPM.MainCarriageFromPartnerId = pickup.FromPartnerCardId;
+            shipmentPM.MainCarriageFromAddressId = pickup.FromAddressId;
+            shipmentPM.MainCarriageToPartnerId = pickup.ToPartnerCardId;
+            shipmentPM.MainCarriageToAddressId = pickup.ToAddressId;
             shipmentPM.MainCarriageCarrierId = pickup.CarrierId;
             shipmentPM.MainCarriageCarrierNumber = pickup.CarrierNumber;
             shipmentPM.Driver = pickup.Driver;

@@ -6766,11 +6766,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             ShipmentPickUpDelivery shipmentPickUpDelivery = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDeliveryByStandaloneShipmentId(entityPM.Id, tenant);
             if (shipmentPickUpDelivery != null)
             {
-                shipmentPickUpDelivery.FromPartnerCardId = entityPM.ShipperId;
-                shipmentPickUpDelivery.FromAddressId = entityPM.ShipperAddressId;
+                shipmentPickUpDelivery.FromPartnerCardId = entityPM.MainCarriageFromPartnerId;
+                shipmentPickUpDelivery.FromAddressId = entityPM.MainCarriageFromAddressId;
                 shipmentPickUpDelivery.ToPartnerCardId = entityPM.ConsigneeId;
-                shipmentPickUpDelivery.ToAddressId = entityPM.ConsigneeAddressId;
-                shipmentPickUpDelivery.CarrierId = entityPM.MainCarriageCarrierId;
+                shipmentPickUpDelivery.ToAddressId = entityPM.MainCarriageToPartnerId;
+                shipmentPickUpDelivery.CarrierId = entityPM.MainCarriageToAddressId;
                 shipmentPickUpDelivery.CarrierNumber = entityPM.MainCarriageCarrierNumber;
                 shipmentPickUpDelivery.Driver = entityPM.Driver;
                 shipmentPickUpDelivery.TruckNumber = entityPM.TruckNumber;

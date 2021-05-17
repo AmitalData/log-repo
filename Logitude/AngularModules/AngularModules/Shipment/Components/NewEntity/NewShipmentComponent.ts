@@ -891,6 +891,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         this.SetUIProperties_HouseField();
         this.SetUIProperties_VesselField();
         this.SetUIProperties_Carrier();
+        this.SetUIProperties_Customer();
 
         if (this.IsLCLEntity) {
             this.SetUIProperties_OrderDetails();
@@ -948,7 +949,12 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             this.UIProperties.SetEnabled("ConsigneeAddressId", this.ObjectTableName, false);
         }
     }
-
+    SetUIProperties_Customer() {
+        if (this.IsStandalone) {
+            this.UIProperties.SetEnabled("CustomerId", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("ShipmentCustomerTypeCode", this.ObjectTableName, false);
+        }
+    }
     SetUIProperties_Ports() {
         var isFromRequired: boolean = false;
         var isToRequired: boolean = false;
@@ -2987,6 +2993,26 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
                 this.EntityPM.QuoteId = this.SourceEntityPM.QuoteId;
                 this.EntityPM.QuoteNumber = this.SourceEntityPM.QuoteNumber;
             }
+
+            else if (this.IsStandalone) {
+                this.EntityPM.IsStandalonePickupDelivery = this.SourceEntityPM.IsStandalonePickupDelivery;
+                this.EntityPM.ShipperId = this.SourceEntityPM.ShipperId;
+                this.EntityPM.ConsigneeId = this.SourceEntityPM.ConsigneeId;
+                this.EntityPM.ShipperAddressId = this.SourceEntityPM.ShipperAddressId;
+                this.EntityPM.ConsigneeAddressId = this.SourceEntityPM.ConsigneeAddressId;
+                this.EntityPM.MainCarriageFromPartnerId = this.SourceEntityPM.MainCarriageFromPartnerId;
+                this.EntityPM.MainCarriageToPartnerId = this.SourceEntityPM.MainCarriageToPartnerId;
+                this.EntityPM.MainCarriageFromAddressId = this.SourceEntityPM.MainCarriageFromAddressId;
+                this.EntityPM.MainCarriageToAddressId = this.SourceEntityPM.MainCarriageToAddressId;
+                this.EntityPM.CustomerId = this.SourceEntityPM.ShipperId;
+                this.EntityPM.CustomerAddressId = this.SourceEntityPM.ShipperAddressId;
+                this.EntityPM.MainCarriageETD = this.SourceEntityPM.MainCarriageETD;
+                this.EntityPM.MainCarriageETA = this.SourceEntityPM.MainCarriageETA;
+                this.EntityPM.MainCarriageATD = this.SourceEntityPM.MainCarriageATD;
+                this.EntityPM.MainCarriageATA = this.SourceEntityPM.MainCarriageATA;
+                this.EntityPM.StandalonePickupDeliveryId = this.SourceEntityPM.StandalonePickupDeliveryId;
+
+            }
         }
     }
     CopyRoutings() {
@@ -3041,7 +3067,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             }
         }
 
-        else if (this.IsBuildFromQuote || this.IsStandalone) {
+        else if (this.IsBuildFromQuote) {
             this.IsCopyShipper = true;
             this.IsCopyConsignee = true;
             this.IsCopyAgent = true;
@@ -3053,6 +3079,11 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             this.IsCopyConsigneeNotImporter = true;
             this.IsCopyFreightForwarder = true;
             this.IsCopyConsolidator = true;
+        }
+
+        else if (this.IsStandalone) {
+            this.IsCopyShipper = true;
+            this.IsCopyConsignee = true;
         }
     }
 
@@ -3066,8 +3097,6 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             this.isCopyShipper = value;
 
             this.EntityPM.ShipperId = !value ? null : this.SourceEntityPM.ShipperId;
-            //this.EntityPM.ShipperReference1 = !value ? null : this.SourceEntityPM.ShipperReference1;
-            //this.EntityPM.ShipperReference2 = !value ? null : this.SourceEntityPM.ShipperReference2;
             this.ShipperAddressId = !value ? null : this.SourceEntityPM.ShipperAddressId;
             this.ShipperContactId = !value ? null : this.SourceEntityPM.ShipperContactId;
 
