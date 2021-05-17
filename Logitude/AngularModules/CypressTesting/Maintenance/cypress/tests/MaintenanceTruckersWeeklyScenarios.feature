@@ -1,4 +1,4 @@
-@release @all @dev @weekly @l
+@release @all @dev @weekly 
 Feature: Trucker Create and Edit in Maintenance Module
     The user creates a trucker and edits it from the Maintenance Module.
 
