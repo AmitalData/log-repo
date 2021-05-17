@@ -32,6 +32,48 @@ declare @RegionalTaxPercentage  as float
 declare @ChargeTypeId as varchar(15)
 
 BEGIN
+
+If(OBJECT_ID('tempdb..#VatTypes') Is Not Null)
+	Begin
+		Drop Table #VatTypes
+	End
+
+	CREATE TABLE #VatTypes(
+	Id varchar(15) not null,
+	IsMultiPercentage bit,
+	Tenant int not null
+
+	)
+
+	insert into #VatTypes select Id, IsMultiPercentage, Tenant from VatTypes
+
+	If(OBJECT_ID('tempdb..#SingleVATs') Is Not Null)
+	Begin
+		Drop Table #SingleVATs
+	End
+
+	CREATE TABLE #SingleVATs(
+	GroupVATTypeId varchar(15) not null,
+	SingleVATTypeId varchar(15) not null,
+	Tenant int not null
+
+	)
+
+	insert into #SingleVATs select GroupVATTypeId, SingleVATTypeId, Tenant from VATTypesGroups
+
+	If(OBJECT_ID('tempdb..#VatTypePercentages') Is Not Null)
+	Begin
+		Drop Table #VatTypePercentages
+	End
+
+	CREATE TABLE #VatTypePercentages(
+	VatTypeId varchar(15) not null,
+	Percentage float,
+	Tenant int not null,
+	FromDate Datetime
+	)
+	insert into #VatTypePercentages select VatTypeId, Percentage, Tenant, FromDate from VatTypePercentages
+
 	-- Loop Houses
 	declare @HouseId as varchar(15)
 	DECLARE ReceivableHousesCursor CURSOR READ_ONLY
@@ -69,7 +111,7 @@ BEGIN
          	set @IsMultiPercentage = (select IsMultiPercentage from VatTypes where Tenant = @Tenant AND Id = @ReceivableVatTypeId)
          	if(@IsMultiPercentage = '0')
          	begin 
-         		set @VatPercentage = (select top 1 Percentage from VatTypePercentages where VatTypeId = @ReceivableVatTypeId AND Tenant = @Tenant and FromDate <= @CreateDate order by FromDate desc)
+         		set @VatPercentage = (select top 1 Percentage from #VatTypePercentages where VatTypeId = @ReceivableVatTypeId AND Tenant = @Tenant and FromDate <= @CreateDate order by FromDate desc)
          		if(@VatPercentage is not null)
             begin
               set @VatAmountLocal = Round(@VatAmountLocal + (@TotalAmountLocal * @VatPercentage / 100), 2);
@@ -84,12 +126,12 @@ BEGIN
          		DECLARE VatGroups_CURSOR CURSOR 
          		FOR 
          		SELECT SingleVATTypeId
-         		FROM VATTypesGroups where GroupVATTypeId =  @ReceivableVatTypeId
+         		FROM #SingleVATs where GroupVATTypeId =  @ReceivableVatTypeId
          		OPEN VatGroups_CURSOR
          		FETCH NEXT FROM VatGroups_CURSOR INTO @SingleVATTypeId
          		WHILE @@FETCH_STATUS = 0
          		BEGIN 
-         			set @VatPercentage = (select top 1 Percentage from VatTypePercentages where VatTypeId = @SingleVATTypeId AND Tenant = @Tenant and FromDate <= @CreateDate order by FromDate desc)
+         			set @VatPercentage = (select top 1 Percentage from #VatTypePercentages where VatTypeId = @SingleVATTypeId AND Tenant = @Tenant and FromDate <= @CreateDate order by FromDate desc)
          			if(@VatPercentage is not null)
               begin
                 set @VatAmountLocal = @VatAmountLocal + (@TotalAmountLocal * @VatPercentage / 100);
@@ -148,12 +190,12 @@ BEGIN
      		DECLARE VatGroups_CURSOR CURSOR 
      		FOR 
      		SELECT SingleVATTypeId
-     		FROM VATTypesGroups where GroupVATTypeId = @VatTypeId
+     		FROM #SingleVATs where GroupVATTypeId = @VatTypeId
      		OPEN VatGroups_CURSOR
      		FETCH NEXT FROM VatGroups_CURSOR INTO @SingleVATTypeId
      		WHILE @@FETCH_STATUS = 0
      		BEGIN 
-     			set @VatPercentage = (select top 1 Percentage from VatTypePercentages where VatTypeId = @SingleVATTypeId AND Tenant = @Tenant and FromDate <= @CreateDate order by FromDate desc)
+     			set @VatPercentage = (select top 1 Percentage from #VatTypePercentages where VatTypeId = @SingleVATTypeId AND Tenant = @Tenant and FromDate <= @CreateDate order by FromDate desc)
      			if(@VatPercentage is not null)
           begin
             set @VatAmountLocal = @VatAmountLocal + (@LocalCurrencyAmount * @VatPercentage / 100);
