@@ -848,6 +848,8 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.OnCarriageTransportModeId).HasColumnName("OnCarriageTransportModeId");
             this.Property(t => t.OnForwardingTransportModeId).HasColumnName("OnForwardingTransportModeId");
             this.Property(t => t.PreForwardingFromPortId).HasColumnName("PreForwardingFromPortId");
+
+            this.Property(t => t.IsStandalonePickupDelivery).HasColumnName("IsStandalonePickupDelivery");
         }
     }
 }

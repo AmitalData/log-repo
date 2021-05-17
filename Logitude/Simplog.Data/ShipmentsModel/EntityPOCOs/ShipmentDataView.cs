@@ -728,5 +728,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string OnCarriageTransportModeId { get; set; }
         public string OnForwardingTransportModeId { get; set; }
         public string PreForwardingFromPortId { get; set; }
+
+        public bool IsStandalonePickupDelivery { get; set; }
     }
 }

@@ -244,8 +244,15 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "BIF,Invoices DWH,Allow Tenants to Show Invoice Fact on the BI Report Screen", 
                 Description = "Allow Tenants to Show Invoice Fact on the BI Report Screen", 
 			});
-			
-			
+						 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "SAS", 
+                Name = "Standalone Shipment", 
+                SearchFields = "SAS,Standalone Shipment", 
+                Description = "Standalone Shipment", 
+			});
+					
 			
             return all;
        }
