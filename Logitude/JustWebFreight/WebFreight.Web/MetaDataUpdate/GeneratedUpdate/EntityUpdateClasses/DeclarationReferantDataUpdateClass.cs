@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationReferantDataUpdateClass
    {  		
-		public const string HashString = "87228b1ea40a44fd7f2c7ee723fce9fb";
+		public const string HashString = "c912f28206a1d35537a217f5c695c461";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -932,10 +932,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsClosedForFollowUp",
 					  						DefaultText =  "Is Closed For FollowUp",
-					  						FullLocalDefaultText =  "סגור /פתוח",
+					  						FullLocalDefaultText =  "סגור/פתוח",
 					  						ListFieldLable =  "IsClosedForFollowUpListLable",
 					  						ListLableDefaultText =  "Is Closed For FollowUp",
-					  						ListLocalDefaultText =  "סגור /פתוח",
+					  						ListLocalDefaultText =  "סגור/פתוח",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2042,6 +2042,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AvailabilityDate",
 					  						DefaultText =  "Availability Date",
+					  						FullLocalDefaultText =  "תאריך זמינות",
 					  						ListFieldLable =  "AvailabilityDateListLable",
 					  						ListLableDefaultText =  "Availability Date",
 					  						ListLocalDefaultText =  "תאריך זמינות",
