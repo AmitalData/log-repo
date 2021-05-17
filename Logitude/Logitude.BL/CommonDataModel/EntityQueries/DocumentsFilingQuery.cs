@@ -2776,17 +2776,17 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public List<DocumentsFilingPM> GetInputDocumentsFilingPMsByEntityId(string entityId, int tenant)
         {
-            List<DocumentsFilingPM> result = GetDocumentFilingPMs(entityId, tenant);
-            CustomReferenceDocumentsMetaDataType customReferenceDocumentsMeta = SetCustomReferenceDocumentsMetaDataType(tenant);
+            List<DocumentsFilingPM> documentsFilingPMs = GetDocumentFilingPMs(entityId, tenant);
+
+            CustomReferenceDocumentsMetaDataType customReferenceDocumentsMeta = BuildCustomerReferenceDocumentsMetaDataType(tenant);
           
             if (customReferenceDocumentsMeta.DREL != null && customReferenceDocumentsMeta.CREF != null)
-            {
-                MapCusomReferenceForDocumentFilings(tenant, result, customReferenceDocumentsMeta);
-            }
-            return result.ToList();
+                MapCustomReferenceForDocumentFilings(tenant, documentsFilingPMs, customReferenceDocumentsMeta);
+            
+            return documentsFilingPMs;
         }
 
-        private static CustomReferenceDocumentsMetaDataType SetCustomReferenceDocumentsMetaDataType(int tenant)
+        private static CustomReferenceDocumentsMetaDataType BuildCustomerReferenceDocumentsMetaDataType(int tenant)
         {
             DocumentsMetaDataTypeRepository TypesRepo = new DocumentsMetaDataTypeRepository(tenant);
             CustomReferenceDocumentsMetaDataType customReferenceDocumentsMeta = new CustomReferenceDocumentsMetaDataType();
@@ -2795,33 +2795,41 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return customReferenceDocumentsMeta;
         }
 
-        private static void MapCusomReferenceForDocumentFilings(int tenant, List<DocumentsFilingPM> result, CustomReferenceDocumentsMetaDataType customReferenceDocumentsMeta)
+        private static void MapCustomReferenceForDocumentFilings(int tenant, List<DocumentsFilingPM> DocumentsFilingPMs, CustomReferenceDocumentsMetaDataType customReferenceDocumentsMeta)
         {
-            
-
-            foreach (DocumentsFilingPM extDocPm in result)
-            {
-                List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValuesList = GetdocumentsFilingMetaDataValuesList(tenant, extDocPm);
-
-                MapSingleDocumentFilingCustomsReference(customReferenceDocumentsMeta, extDocPm, documentsFilingMetaDataValuesList);
-            }
+            foreach (DocumentsFilingPM documentsFilingPM in DocumentsFilingPMs)
+                MapSingleDocumentFilingCustomsReference(tenant, customReferenceDocumentsMeta, documentsFilingPM);
         }
 
-        private static void MapSingleDocumentFilingCustomsReference(CustomReferenceDocumentsMetaDataType customReferenceDocumentsMeta, DocumentsFilingPM extDocPm, List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValuesList)
+        private static void MapSingleDocumentFilingCustomsReference(int tenant, CustomReferenceDocumentsMetaDataType metaDataType, DocumentsFilingPM documentsFilingPM)
         {
-            var MyDRELData = documentsFilingMetaDataValuesList.Where(a => a.DocumentsMetaDataTypeId == customReferenceDocumentsMeta.DREL.Id).FirstOrDefault();
-            if (MyDRELData != null)
+            DocumentsFilingMetaDataValuePM drelMetaDataValue = GetDRELMetaDataValueOfDocumentFiling(tenant, metaDataType, documentsFilingPM);
+            if (drelMetaDataValue != null)
             {
-                var MyCREFData = documentsFilingMetaDataValuesList.Where(a => a.DocumentsMetaDataTypeId == customReferenceDocumentsMeta.CREF.Id).FirstOrDefault();
-                if (MyCREFData != null && !string.IsNullOrEmpty(MyCREFData.MetaDataValue) && MyDRELData.MetaDataValue.ToLower() == "true")
+                DocumentsFilingMetaDataValuePM crefMetaDataValue = GetCREFMetaDataValueOfDocumentFiling(tenant, metaDataType, documentsFilingPM);
+                if (crefMetaDataValue != null && !string.IsNullOrEmpty(crefMetaDataValue.MetaDataValue) && drelMetaDataValue.MetaDataValue.ToLower() == "true")
                 {
-                    extDocPm.IsCustomReference = true;
-                    extDocPm.CustomReference = MyCREFData.MetaDataValue;
+                    documentsFilingPM.IsCustomReference = true;
+                    documentsFilingPM.CustomReference = crefMetaDataValue.MetaDataValue;
                 }
             }
         }
 
-        private static List<DocumentsFilingMetaDataValuePM> GetdocumentsFilingMetaDataValuesList(int tenant, DocumentsFilingPM extDocPm)
+        private static DocumentsFilingMetaDataValuePM GetCREFMetaDataValueOfDocumentFiling(int tenant, CustomReferenceDocumentsMetaDataType metaDataType, DocumentsFilingPM documentsFilingPM)
+        {
+            List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValuesList = GetDocumentsFilingMetaDataValuesList(tenant, documentsFilingPM);
+            var crefMetaDataValue = documentsFilingMetaDataValuesList.Where(a => a.DocumentsMetaDataTypeId == metaDataType.CREF.Id).FirstOrDefault();
+            return crefMetaDataValue;
+        }
+
+        private static DocumentsFilingMetaDataValuePM GetDRELMetaDataValueOfDocumentFiling(int tenant, CustomReferenceDocumentsMetaDataType metaDataType, DocumentsFilingPM documentsFilingPM)
+        {
+            List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValuesList = GetDocumentsFilingMetaDataValuesList(tenant, documentsFilingPM);
+            var drelMetaDataValue = documentsFilingMetaDataValuesList.Where(a => a.DocumentsMetaDataTypeId == metaDataType.DREL.Id).FirstOrDefault();
+            return drelMetaDataValue;
+        }
+
+        private static List<DocumentsFilingMetaDataValuePM> GetDocumentsFilingMetaDataValuesList(int tenant, DocumentsFilingPM extDocPm)
         {
             DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
             List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValuesList = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(extDocPm.Id, tenant).ToList(); //documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByTenant(tenant).ToList();
