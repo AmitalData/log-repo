@@ -5,6 +5,7 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
@@ -58,12 +59,17 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.Messages
             XmlNodeList idNodes = document.GetElementsByTagName("CURRENCY");
             XmlNodeList dateNode = document.GetElementsByTagName("LAST_UPDATE");
             List<RateUpdate> rates = new List<RateUpdate>();
+            List<string> TenantCurrencies = (from a in objectContext.Currencies select a.Code).ToList();
             foreach (XmlNode node1 in idNodes)
             {
                 var currencyCode = node1.SelectNodes("CURRENCYCODE")[0].InnerText;
                 var rate = node1.SelectNodes("RATE")[0].InnerText;
-                RateUpdate rateUpdate=   CreateRateUpdate(currencyCode, rate,dateNode);               
-                rates.Add(rateUpdate);
+                if (TenantCurrencies.Contains(currencyCode))
+                {
+                    RateUpdate rateUpdate = CreateRateUpdate(currencyCode, rate, dateNode);
+                    rates.Add(rateUpdate);
+                }
+             
             }
             RatesUpdate ratesUpdate = new RatesUpdate();
             ratesUpdate.RateUpdateList = rates;
