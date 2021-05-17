@@ -13,52 +13,58 @@ namespace Logitude.Accounting.BL.CoreBL
    public class ExchangeRatesFromExternalLinkUpdateService
     {
         int tenant;
+        private const string XmlLinkedNode = "https://forex.boi.org.il/currency.xml";
+        List<string> TenantCurrencies;
         public ExchangeRatesFromExternalLinkUpdateService(int Tenant)
         {
             tenant = Tenant;
 
         }
-        private const string XmlLinkedNode = "https://forex.boi.org.il/currency.xml";
+        public void UpdateRatesByExternalXML()
+        {
+            XmlDocument document = GetExchangRatesXmlFromExternalLink();
+            List<RateUpdate> rates = GetRatesFromXML(document);
+            RatesUpdate ratesUpdate = GetRatesUpdate(rates);
+            UpdateRatesByService(ratesUpdate);
+
+        }
         private XmlDocument GetExchangRatesXmlFromExternalLink()
         {
             XmlDocument document = new XmlDocument();
             document.Load(XmlLinkedNode);
             return document;
-        }
-        public void UpdateRatesByExternalXML()
-        {
-            XmlDocument document = GetExchangRatesXmlFromExternalLink();
-            List<RateUpdate> rates = GetRatesFromXML(document);
-           RatesUpdate ratesUpdate=   GetRatesUpdate(rates);
-            UpdateRatesByService(ratesUpdate);
-           
-        }
+        }     
         private void UpdateRatesByService(RatesUpdate ratesUpdate)
         {
             RatesUpdateService ratesUpdateService = new RatesUpdateService(ratesUpdate, tenant);
             ratesUpdateService.ValidateRatesDataMapping();
             ratesUpdateService.UpdateRatesData();
         }
-
         private List<RateUpdate> GetRatesFromXML(XmlDocument document)
         {
             XmlNodeList currencyNodes = document.GetElementsByTagName("CURRENCY");
             XmlNodeList lastUpdateDateNode = document.GetElementsByTagName("LAST_UPDATE");
             List<RateUpdate> rates = new List<RateUpdate>();
-            List<string> TenantCurrencies = GetTenantCurrenciesCodes();
+            TenantCurrencies = GetTenantCurrenciesCodes();
             foreach (XmlNode currencyNode in currencyNodes)
             {
-                var currencyCode = currencyNode.SelectNodes("CURRENCYCODE")[0].InnerText;
-                var rate = currencyNode.SelectNodes("RATE")[0].InnerText;
-                if (TenantCurrencies.Contains(currencyCode))
-                {
-                    RateUpdate rateUpdate = CreateRateUpdateInstance(currencyCode, rate, lastUpdateDateNode);
-                    rates.Add(rateUpdate);
-                }
-
+                rates = AddCurrencyRateToRatesList(currencyNode, rates, lastUpdateDateNode);
+             
             }
             return rates;
         }
+        private List<RateUpdate> AddCurrencyRateToRatesList(XmlNode currencyNode, List<RateUpdate> rates, XmlNodeList lastUpdateDateNode)
+        {
+            var currencyCode = currencyNode.SelectNodes("CURRENCYCODE")[0].InnerText;
+            var rate = currencyNode.SelectNodes("RATE")[0].InnerText;
+            if (TenantCurrencies.Contains(currencyCode))
+            {
+                RateUpdate rateUpdate = CreateRateUpdateInstance(currencyCode, rate, lastUpdateDateNode);
+                rates.Add(rateUpdate);
+            }
+            return rates;
+        }
+
         private RatesUpdate GetRatesUpdate(List<RateUpdate> rates)
         {
             RatesUpdate ratesUpdate = new RatesUpdate();
