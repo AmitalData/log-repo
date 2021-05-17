@@ -12,6 +12,7 @@ import { CargoTrackingShipmentWithMilestones, Milestone } from 'src/CargoTrackin
 import { CargoTrackingPortService } from '../../../../Services/Others/CargoTrackingPortService';
 import { CargoTrackingShipmentService } from '../../../../Services/Others/CargoTrackingShipmentService';
 import { CargoTrackingShipmentCustomsData } from "../../../../DataContracts/CargoTrackingShipmentCustomsData";
+import { DocumentDownloadService } from '../../../../Services/Others/DocumentDownloadService';
 @Component({
     selector: 'ShipmentDetailsComponent',
     templateUrl: './ShipmentDetailsComponent.html',
@@ -36,6 +37,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
     CustomsBrokerReference: string;
     ShipmentPM: any;
     ShipmentPackages: any[];
+    DocumentsFilings: any[];
     PartnerCards: PartnerCard[] = [];
 
     ShipmentCustomsData: CargoTrackingShipmentCustomsData;
@@ -47,7 +49,8 @@ export class ShipmentDetailsComponent implements AfterViewInit
         private route: ActivatedRoute,
         private searchService: CargoTrackingSearchService,
         private cargoTrackingPortService: CargoTrackingPortService,
-        private cargoTrackingShipmentService: CargoTrackingShipmentService)
+        private cargoTrackingShipmentService: CargoTrackingShipmentService,
+        private documentDownloadService: DocumentDownloadService)
     {
 
         this.GetIdFromURI();
@@ -124,6 +127,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
                 this.GetShipmentPM();
                 this.GetShipmentCustomsData();
                 this.GetShipmentPackages();
+                this.GetDocumentsFilingsConnectedToShipment();
 
             }
 
@@ -176,6 +180,15 @@ export class ShipmentDetailsComponent implements AfterViewInit
             if (result) {
                 this.ShipmentPackages = result;
                 console.log("GetShipmentPackages", this.ShipmentPackages);
+            }
+        });
+    }
+
+    GetDocumentsFilingsConnectedToShipment() {
+        this.cargoTrackingShipmentService.GetDocumentsFilingsConnectedToShipment(this.Shipment.ShipmentList.EntityId).subscribe((result: any) => {
+            if (result) {
+                this.DocumentsFilings = result;
+                console.log("DocumentsFilings", this.DocumentsFilings);
                 this.isLoading = false;
 
             }
@@ -689,6 +702,14 @@ export class ShipmentDetailsComponent implements AfterViewInit
         ];
 
         this.ShipmentRouteSteps = [step1, step2, step3];
+    }
+
+    DownloadDocument(document: string) {
+        this.documentDownloadService.DownloadPage(document);
+    }
+
+    DownloadAllClick(entityId: string) {
+        this.documentDownloadService.DownloadAllPages(entityId);
     }
 }
 
