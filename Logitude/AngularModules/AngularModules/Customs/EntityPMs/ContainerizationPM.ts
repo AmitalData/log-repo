@@ -54,19 +54,39 @@ export class ContainerizationPM {
     public set ContainerizationNumber(newValue: string) { if (this.containerizationNumber != newValue) { this.containerizationNumber = newValue; this.MarkAsDirty("ContainerizationNumber"); } }
        
 	 
-    private containerizationStatus: number;
+    private containerizationStatus: string;
     public get ContainerizationStatus() { return this.containerizationStatus; }
-    public set ContainerizationStatus(newValue: number) { if (this.containerizationStatus != newValue) { this.containerizationStatus = newValue; this.MarkAsDirty("ContainerizationStatus"); } }
+    public set ContainerizationStatus(newValue: string) { if (this.containerizationStatus != newValue) { this.containerizationStatus = newValue; this.MarkAsDirty("ContainerizationStatus"); } }
        
 	 
-    private hataraStatus: number;
+    private hataraStatus: string;
     public get HataraStatus() { return this.hataraStatus; }
-    public set HataraStatus(newValue: number) { if (this.hataraStatus != newValue) { this.hataraStatus = newValue; this.MarkAsDirty("HataraStatus"); } }
+    public set HataraStatus(newValue: string) { if (this.hataraStatus != newValue) { this.hataraStatus = newValue; this.MarkAsDirty("HataraStatus"); } }
        
 	 
     private operationMode: string;
     public get OperationMode() { return this.operationMode; }
     public set OperationMode(newValue: string) { if (this.operationMode != newValue) { this.operationMode = newValue; this.MarkAsDirty("OperationMode"); } }
+       
+	 
+    private exportFile: string;
+    public get ExportFile() { return this.exportFile; }
+    public set ExportFile(newValue: string) { if (this.exportFile != newValue) { this.exportFile = newValue; this.MarkAsDirty("ExportFile"); } }
+       
+	 
+    private importerName: string;
+    public get ImporterName() { return this.importerName; }
+    public set ImporterName(newValue: string) { if (this.importerName != newValue) { this.importerName = newValue; this.MarkAsDirty("ImporterName"); } }
+       
+	 
+    private containerizationStatusName: string;
+    public get ContainerizationStatusName() { return this.containerizationStatusName; }
+    public set ContainerizationStatusName(newValue: string) { if (this.containerizationStatusName != newValue) { this.containerizationStatusName = newValue; this.MarkAsDirty("ContainerizationStatusName"); } }
+       
+	 
+    private hataraStatusName: string;
+    public get HataraStatusName() { return this.hataraStatusName; }
+    public set HataraStatusName(newValue: string) { if (this.hataraStatusName != newValue) { this.hataraStatusName = newValue; this.MarkAsDirty("HataraStatusName"); } }
        
 	 
 

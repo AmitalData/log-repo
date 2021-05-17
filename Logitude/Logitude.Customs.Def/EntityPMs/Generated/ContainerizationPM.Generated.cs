@@ -158,12 +158,12 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private decimal containerizationStatus ;
+	  private string containerizationStatus ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public decimal ContainerizationStatus  
+       public string ContainerizationStatus  
 	   {
 	    
 	     get
@@ -174,19 +174,19 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(containerizationStatus != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContainerizationStatus",OldValue=containerizationStatus,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContainerizationStatus",OldValue=containerizationStatus,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   containerizationStatus=value;
 		   }
 			
 		 }
 	   }
-	  private decimal hataraStatus ;
+	  private string hataraStatus ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public decimal HataraStatus  
+       public string HataraStatus  
 	   {
 	    
 	     get
@@ -197,7 +197,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(hataraStatus != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HataraStatus",OldValue=hataraStatus,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HataraStatus",OldValue=hataraStatus,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   hataraStatus=value;
 		   }
@@ -223,6 +223,98 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OperationMode",OldValue=operationMode,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   operationMode=value;
+		   }
+			
+		 }
+	   }
+	  private string exportFile ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExportFile  
+	   {
+	    
+	     get
+		{
+		   return exportFile;
+		 }
+		 set
+		 {
+		   if(exportFile != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportFile",OldValue=exportFile,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   exportFile=value;
+		   }
+			
+		 }
+	   }
+	  private string importerName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ImporterName  
+	   {
+	    
+	     get
+		{
+		   return importerName;
+		 }
+		 set
+		 {
+		   if(importerName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ImporterName",OldValue=importerName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   importerName=value;
+		   }
+			
+		 }
+	   }
+	  private string containerizationStatusName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContainerizationStatusName  
+	   {
+	    
+	     get
+		{
+		   return containerizationStatusName;
+		 }
+		 set
+		 {
+		   if(containerizationStatusName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContainerizationStatusName",OldValue=containerizationStatusName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   containerizationStatusName=value;
+		   }
+			
+		 }
+	   }
+	  private string hataraStatusName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string HataraStatusName  
+	   {
+	    
+	     get
+		{
+		   return hataraStatusName;
+		 }
+		 set
+		 {
+		   if(hataraStatusName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HataraStatusName",OldValue=hataraStatusName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   hataraStatusName=value;
 		   }
 			
 		 }

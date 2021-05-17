@@ -46,19 +46,17 @@
   </Column>
   <Column
     Name="ContainerizationStatus"
-    Type="decimal"
-    Precision="4"
-    Scale="0">
+    Type="varchar"
+    Size="3">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="HataraStatus"
-    Type="decimal"
-    Precision="4"
-    Scale="0">
+    Type="varchar"
+    Size="2">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="OperationMode"
@@ -67,6 +65,16 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Relation
+    ForeignKeyColumn="ContainerizationStatus"
+    ReferencedTable="ContainerizationStatusCodes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="HataraStatus"
+    ReferencedTable="DeclarationStatusTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
   <Relation
     ForeignKeyColumn="OperationMode"
     ReferencedTable="NDMessageActionCodes"

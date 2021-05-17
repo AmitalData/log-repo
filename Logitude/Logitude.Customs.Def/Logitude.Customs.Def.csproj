@@ -77,6 +77,7 @@
     <Compile Include="EntityPMs\Generated\ClassificationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\CustomsShipPM.cs" />
     <Compile Include="EntityPMs\Generated\ContainerizationPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ContainerizationStatusCodePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ContainerTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CoolingReportingMethodPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomerIdentificationTypePM.Generated.cs" />

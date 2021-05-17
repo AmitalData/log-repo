@@ -27,11 +27,23 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string ContainerizationNumber  { get; set; }
        [DataMember]
-       public decimal ContainerizationStatus  { get; set; }
+       public string ContainerizationStatus  { get; set; }
        [DataMember]
-       public decimal HataraStatus  { get; set; }
+       public string HataraStatus  { get; set; }
        [DataMember]
        public string OperationMode  { get; set; }
+       [DataMember]
+       public string ExportFile  { get; set; }
+       [DataMember]
+       public string TransportModeForExport  { get; set; }
+       [DataMember]
+       public string ImporterName  { get; set; }
+       [DataMember]
+       public string ContainerizationStatusName  { get; set; }
+       [DataMember]
+       public string HataraStatusName  { get; set; }
+       [DataMember]
+       public bool HataraStatusIsNull  { get; set; }
    }
 
 }

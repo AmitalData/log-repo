@@ -224,6 +224,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new ContainerizationMap());
 	
+            modelBuilder.Configurations.Add(new ContainerizationStatusCodeMap());
+	
             modelBuilder.Configurations.Add(new ContainerTypeMap());
 	
             modelBuilder.Configurations.Add(new ContinuousMessagesTypeCodeMap());
@@ -812,10 +814,6 @@ namespace Logitude.Customs.Data
 			modelBuilder.Entity<CollateralsRequestFileCond>().Property(x => x.RequestedAmount).HasPrecision(18, 2);
 				
 			modelBuilder.Entity<ConsignmentPackage>().Property(x => x.GrossMassMeasure).HasPrecision(18, 2);
-				
-			modelBuilder.Entity<Containerization>().Property(x => x.ContainerizationStatus).HasPrecision(4, 0);
-				
-			modelBuilder.Entity<Containerization>().Property(x => x.HataraStatus).HasPrecision(4, 0);
 				
 			modelBuilder.Entity<CourierMaster>().Property(x => x.GrossMassMeasure).HasPrecision(18, 2);
 				
@@ -1798,6 +1796,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<Containerization> Containerizations 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ContainerizationStatusCode> ContainerizationStatusCodes 
 	 {
 	      get; set;
 	 

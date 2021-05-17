@@ -14,9 +14,15 @@ export class ContainerizationList {
 	AgentDeclaration: boolean;
 	ContainerizationDate: Date;
 	ContainerizationNumber: string;
-	ContainerizationStatus: number;
-	HataraStatus: number;
+	ContainerizationStatus: string;
+	HataraStatus: string;
 	OperationMode: string;
+	ExportFile: string;
+	TransportModeForExport: string;
+	ImporterName: string;
+	ContainerizationStatusName: string;
+	HataraStatusName: string;
+	HataraStatusIsNull: boolean;
 	
 }
  

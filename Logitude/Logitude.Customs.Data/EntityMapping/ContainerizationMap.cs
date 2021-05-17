@@ -35,9 +35,9 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.ContainerizationNumber).HasColumnName("ContainerizationNumber").HasMaxLength(35).IsUnicode(false);
 
-            this.Property(t => t.ContainerizationStatus).HasColumnName("ContainerizationStatus").HasPrecision(4, 0);
+            this.Property(t => t.ContainerizationStatus).HasColumnName("ContainerizationStatus").HasMaxLength(3).IsUnicode(false);
 
-            this.Property(t => t.HataraStatus).HasColumnName("HataraStatus").HasPrecision(4, 0);
+            this.Property(t => t.HataraStatus).HasColumnName("HataraStatus").HasMaxLength(2).IsUnicode(false);
 
             this.Property(t => t.OperationMode).HasColumnName("OperationMode").HasMaxLength(2).IsUnicode(false);
         }

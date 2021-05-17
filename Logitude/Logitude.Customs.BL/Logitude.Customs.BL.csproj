@@ -151,6 +151,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\CargoTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ClaimReasonTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ClassificationTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ContainerizationStatusCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ContainerTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CoolingReportingMethodDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CustomerIdentificationTypeDetails.Generated.cs" />
@@ -375,6 +376,7 @@
     <Compile Include="EntityDataMappings\ConstraintTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ContactRoleTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ContainerizationDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ContainerizationStatusCodeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ContainerTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ContinuousMessagesTypeCodeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ContinuousRequestTypeDataMapping.cs" />
@@ -574,6 +576,7 @@
     <Compile Include="EntityDataMappings\Generated\ConstraintTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ContactRoleTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ContainerizationDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ContainerizationStatusCodeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ContainerTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ContinuousMessagesTypeCodeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ContinuousRequestTypeDataMapping.Generated.cs" />
@@ -1033,6 +1036,7 @@
     <Compile Include="EntityQueryServices\Generated\CancellationRequestStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CargoTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ContainerizationQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ContainerizationStatusCodeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ContainerTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CoolingReportingMethodQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CustomerIdentificationTypeQueryService.Generated.cs" />
@@ -1561,6 +1565,7 @@
     <Compile Include="EntityUpdateServices\Generated\CargoTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ClaimReasonTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ClassificationTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ContainerizationStatusCodeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ContainerizationUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ContainerTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CoolingReportingMethodUpdateService.Generated.cs" />
