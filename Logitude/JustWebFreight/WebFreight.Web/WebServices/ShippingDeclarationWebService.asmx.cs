@@ -452,13 +452,15 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.TenantCountryCode = shipment.House != null ? shipment.House : "";
                 myDataProvider.TransportationType = shipment.TransportModeName;
                 myDataProvider.Transshipment1ETA = shipment.Transshipment1ETA;
-                myDataProvider.TrailerNumber = shipment.TrailerNumber;
-                myDataProvider.OriginCountryName = shipment.FromCountryId;
+                myDataProvider.TrailerNumber = shipment.TrailerNumber;             
                 myDataProvider.MasterPreCarriageCarrierNumber = shipment.MasterPreCarriageCarrierNumber;
                 myDataProvider.MasterPreCarriageVesselName = shipment.MasterPreCarriageVesselName;
                 myDataProvider.MasterPreCarriageFromPortName = shipment.MasterPreCarriageFromPortName;
                 myDataProvider.MasterProjectNumber = shipment.MasterProjectNumber;
                 myDataProvider.StorageFreeDays = shipment.WarehouseStorageFreeDays;
+
+                Country OriginCountry = CountryRepository.GetSingleCountry(shipment.FromCountryId, tenant, false);
+                myDataProvider.OriginCountryName = OriginCountry != null ? OriginCountry.EnglishName : "" ;
 
                 myDataProvider.Transshipment1ETA_String = shipment.Transshipment1ETA != null ? String.Format("{0:dd MMM yyyy}", shipment.Transshipment1ETA) : "";
                 myDataProvider.Transshipment1ETD_String = shipment.Transshipment1ETD != null ? String.Format("{0:dd MMM yyyy}", shipment.Transshipment1ETD) : "";
