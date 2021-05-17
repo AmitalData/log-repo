@@ -1,10 +1,14 @@
-@release @all @dev @daily 
+@release @all @dev @daily @l
 Feature: Trucker Mock Create and Edit in Maintenance Module
     The user creates a trucker mock create and edit another one from the Maintenance Module.
 
-    Scenario: Create a new trucker
+    Scenario:Add Trucker Code with lenght more than 7
         Given the user logged in and navigate to "Truckers" in maintenance menu
-        And a trucker with the following details
+        When add "12345678" as trucker code
+        Then a validation message with "Code field must be less than 7 and more than 0" error should appear
+
+    Scenario: Create a new trucker
+        Given a trucker with the following details
             | Code        | TSCode                         |
             | CompanyName | Testing Trucker Daily Scenario |
             | LocalName   | Testing Trucker Daily Scenario |

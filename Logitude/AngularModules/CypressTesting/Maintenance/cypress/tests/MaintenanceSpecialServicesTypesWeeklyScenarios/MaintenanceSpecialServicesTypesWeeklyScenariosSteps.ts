@@ -41,7 +41,7 @@ Then("the special services type should create successfully", () => {
 });
  
 //#endregion
-//#region Search for the special services type
+//#region Search for the special services type by code
 When("search for special services type", () => {
     MaintenanceActions.SearchSpecialServicesType()
 });

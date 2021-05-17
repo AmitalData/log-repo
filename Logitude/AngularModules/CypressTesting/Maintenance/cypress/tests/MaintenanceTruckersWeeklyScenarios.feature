@@ -1,10 +1,14 @@
-@release @all @dev @weekly 
+@release @all @dev @weekly @l
 Feature: Trucker Create and Edit in Maintenance Module
     The user creates a trucker and edits it from the Maintenance Module.
 
-    Scenario: Create a new trucker
+    Scenario:Add Trucker Code with lenght more than 7
         Given the user logged in and navigate to "Truckers" in maintenance menu
-        And a trucker with the following details
+        When add "12345678" as trucker code
+        Then a validation message with "Code field must be less than 7 and more than 0" error should appear
+
+    Scenario: Create a new trucker
+        Given a trucker with the following details
             | Code        | Random                          |
             | CompanyName | Testing trucker weekly Scenario |
             | LocalName   | Testing trucker weekly Scenario |

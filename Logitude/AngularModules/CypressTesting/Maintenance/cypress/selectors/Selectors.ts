@@ -262,5 +262,6 @@ export class MaintenanceSelectors extends RegexSelectors {
      public static readonly LogLovShipmentSubType = "#LogLov_ShipmentSubType_ShipmentTypeCode"
      public static readonly ShipmentSubTypeSaveButton = "#ShipmentSubType-Save"
      public static readonly ShipmentSubTypeEventsTab = "#ShipmentSubTypeTHEvents"
+     public static readonly ShipmentSubTypeCodeFilterCheckBox = '[data-cy="CheckBox_ShipmentSubType.F.Code"]'
         //#endregion
 }

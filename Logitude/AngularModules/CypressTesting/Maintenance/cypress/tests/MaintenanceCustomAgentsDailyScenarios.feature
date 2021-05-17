@@ -3,7 +3,7 @@ Feature: Custom Agent Mock Create and Edit in Maintenance Module
     The user creates a custom agent mock create and edit another one from the Maintenance Module.
 
     Scenario: Create a new custom agent
-        Given the user logged in and navigate to "Custom Agent" in maintenance menu
+        Given the user logged in and navigate to "Custom Agents" in maintenance menu
         And a custom agent with the following details
             | CompanyName | Testing Custom Agent Daily Scenario |
             | LocalName   | Testing Custom Agent Daily Scenario |

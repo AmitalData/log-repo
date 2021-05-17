@@ -5,15 +5,15 @@ Feature: Shipping Agent Create and Edit it in Maintenance Module
     Scenario: Create a new shipping agent
         Given the user logged in and navigate to "Shipping Agents" in maintenance menu
         And a shipping agent with the following details
-            | CompanyName | Testing Shipping Agent Scenario |
-            | LocalName   | Testing Shipping Agent Scenario |
-            | Address1    | 15 Shipping Agent Street        |
-            | City        | Anchorage                       |
-            | Country     | United States                   |
-            | State       | Alaska                          |
-            | Zip         | 0000                            |
-            | Phone       | 0590000000                      |
-            | Fax         | 0590000000                      |
+            | CompanyName | Testing Shipping Agent Weekly Scenario |
+            | LocalName   | Testing Shipping Agent Weekly Scenario |
+            | Address1    | 15 Shipping Agent Street               |
+            | City        | Anchorage                              |
+            | Country     | United States                          |
+            | State       | Alaska                                 |
+            | Zip         | 0000                                   |
+            | Phone       | 0590000000                             |
+            | Fax         | 0590000000                             |
         And a shipping agent contact with the following details
             | AddContact    | Yes         |
             | EnglishName   | TestContact |

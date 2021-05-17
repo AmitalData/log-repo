@@ -1,4 +1,4 @@
-@release @all @dev @weekly
+@release @all @dev @weekly 
 Feature: Special Services Type Create and Edit it in Maintenance Module
     The user creates a Special Services Type and edits it from the Maintenance Module.
 
@@ -9,13 +9,13 @@ Feature: Special Services Type Create and Edit it in Maintenance Module
 
     Scenario: Create a new special services type
         Given a special services type with the following details
-            | Code        | Random                                       |
-            | EnglishName | Testing Special Services Type Daily Scenario |
-            | LocalName   | Testing Special Services Type Daily Scenario |
+            | Code        | Random                                        |
+            | EnglishName | Testing Special Services Type Weekly Scenario |
+            | LocalName   | Testing Special Services Type Weekly Scenario |
         When create special services type
         Then the special services type should create successfully
 
-    Scenario: Search for the special services type
+    Scenario: Search for the special services type by code
         When search for special services type
         Then the special services type should appear successfully
 

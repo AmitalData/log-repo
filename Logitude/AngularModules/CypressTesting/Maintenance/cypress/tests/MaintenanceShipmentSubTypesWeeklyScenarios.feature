@@ -4,15 +4,23 @@ Feature: Shipment Sub Type Create and Edit it in Maintenance Module
 
     Scenario:Add Shipment Sub Type Code with lenght more than 6
         Given the user logged in and navigate to "Shipment Sub Types" in maintenance menu
-        When add "23456" as shipment sub type code
+        When add "123456" as shipment sub type code
         Then a validation message with "Code Field must be less than 5" error should appear
+
+    Scenario: Create a new shipment with already exists code
+        Given a shipment sub type with the following details
+            | Code         | Air                                      |
+            | Name         | Testing Shipment Sub Type Daily Scenario |
+            | ShipmentType | Air                                      |
+        When create shipment sub type
+        Then the shipment sub type should not create successfully
+        And a validation error with "Code already exists" message should appear
 
     Scenario: Create a new shipment sub type
         Given a shipment sub type with the following details
-            | Code          | Random                           |
-            | EnglishName   | Testing Shipment Sub Type Daily Scenario |
-            | LocalName     | Testing Shipment Sub Type Daily Scenario |
-            | TransportMode | Air                              |
+            | Code         | Random                                   |
+            | Name         | Testing Shipment Sub Type Daily Scenario |
+            | ShipmentType | Air                                      |
         When create shipment sub type
         Then the shipment sub type should create successfully
 
@@ -26,9 +34,9 @@ Feature: Shipment Sub Type Create and Edit it in Maintenance Module
 
     Scenario: Edit the shipment sub type
         Given the user fill the following shipment sub type general details
-            | LocalName | Test edit LocalName shipment sub type |
+            | Name | Testing Edit Shipment Sub Type Daily Scenario |
         When update shipment sub type
         Then the shipment sub type should update successfully
         And the following event should appear in events tab
-            | Event             |
+            | Event   |
             | Updated |

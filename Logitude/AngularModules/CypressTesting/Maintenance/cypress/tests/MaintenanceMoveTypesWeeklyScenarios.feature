@@ -9,14 +9,14 @@ Feature: Move Type Create and Edit it in Maintenance Module
 
     Scenario: Create a new move type
         Given a move type with the following details
-            | Code          | Random                           |
-            | EnglishName   | Testing Move Type Daily Scenario |
-            | LocalName     | Testing Move Type Daily Scenario |
-            | TransportMode | Air                              |
+            | Code          | Random                            |
+            | EnglishName   | Testing Move Type Weekly Scenario |
+            | LocalName     | Testing Move Type Weekly Scenario |
+            | TransportMode | Air                               |
         When create move type
         Then the move type should create successfully
 
-    Scenario: Search for the move type
+    Scenario: Search for the move type by code
         When search for move type
         Then the move type should appear successfully
 
