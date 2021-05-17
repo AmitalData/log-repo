@@ -94,7 +94,7 @@ using Simplog.Server.Infrastructure.Interfaces;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Update.SandBox;
 using Logitude.BL.InfrastructureModel.APIDataContract.Messages;
-
+using WebFreight.Web.Security;
 namespace Logitude.Update
 {
     public partial class Form1 : Form
@@ -450,14 +450,16 @@ User/Pass",
 
         private void button6_Click(object sender, EventArgs e)
         {
-          List<GlobalTenant>  globalTenants = GlobalTenantRepository.GetGlobalTenants();
-            foreach (GlobalTenant tenant in globalTenants.Where(d => d.IsActive == true))
-            {
-                RatesUpdateService ratesUpdateService = new RatesUpdateService(null, tenant.Id);
+
+
+            LoggedContactResolver.RegisterLoggedContactUtil();
+           
+            RatesUpdateService ratesUpdateService = new RatesUpdateService(null, 1);
                 ratesUpdateService.ReadXML();
                 ratesUpdateService.ValidateRatesDataMapping();
-                ratesUpdateService.UpdateRatesData();
-            }
+           
+            ratesUpdateService.UpdateRatesData();
+            
         }
 
         private void button7_Click(object sender, EventArgs e)
