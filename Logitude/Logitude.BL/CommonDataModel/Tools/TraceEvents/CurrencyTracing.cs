@@ -9,13 +9,16 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.BL.Helpers;
 using Logitude.Server.Tools.Helpers;
+using Logitude.BL.Resolvers;
+
 namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
 {
     public class CurrencyTracing
     {
         public static void Trace(CurrencyPM entityPM, Currency poco, bool isNewEntity)
         {
-            ContactPM loggedContact = new ContactQuery(entityPM.Tenant).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), entityPM.Tenant);
+            ContactPM loggedContact = LoggedContactResolver.GetLoggedContact(entityPM.Tenant);
+         //    loggedContact =  new ContactQuery(entityPM.Tenant).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), entityPM.Tenant);
 
             if (isNewEntity)
             {
