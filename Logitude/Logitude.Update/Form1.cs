@@ -4686,6 +4686,28 @@ User/Pass",
                 }
             }
         }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button6_Click_1(object sender, EventArgs e)
+        {
+            
+            LoggedContactResolver.RegisterLoggedContactUtil();
+
+            RatesUpdateService ratesUpdateService = new RatesUpdateService(null, Convert.ToInt16( textBox2.Text));
+            ratesUpdateService.ReadXML();
+            ratesUpdateService.ValidateRatesDataMapping();
+
+            ratesUpdateService.UpdateRatesData();
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 
     public class TenantMailBox
