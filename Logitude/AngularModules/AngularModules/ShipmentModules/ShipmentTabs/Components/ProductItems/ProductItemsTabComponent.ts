@@ -29,6 +29,7 @@ export class ProductItemsTabComponent extends BaseComponent implements OnDestroy
     private CurrentSession = SessionLocator.SelectedSession;
     public ProductItems: ObservableCollection;
     public ProductItemsFilterList: ProductItemPM[] = [];
+    private partnersDomainService: PartnersDomainService;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
@@ -37,6 +38,7 @@ export class ProductItemsTabComponent extends BaseComponent implements OnDestroy
         this.IsLCLEntity = AppTool.IsLCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
         this.IsFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
 
+        this.partnersDomainService = new PartnersDomainService();
         this.ProductItems = new ObservableCollection([]);
 
         this.LoadConsigneeProductItems();        
@@ -76,9 +78,8 @@ export class ProductItemsTabComponent extends BaseComponent implements OnDestroy
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
 
-    private LoadConsigneeProductItems() {
-        var service: PartnersDomainService = new PartnersDomainService();
-        service.GetCustomerProductItems(this.EntityPM.ConsigneeId, this.EntityPM.ToCountryId).subscribe((myResponse: ServiceResponse) => {
+    private LoadConsigneeProductItems() {        
+        this.partnersDomainService.GetCustomerProductItems(this.EntityPM.ConsigneeId, this.EntityPM.ToCountryId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.ProductItemsFilterList = myResponse.Result;
                 
@@ -120,6 +121,19 @@ export class ProductItemsTabComponent extends BaseComponent implements OnDestroy
         this.ProductItems.Insert(new ProductItem(item, this, true));
         this.EntityPM.AddProductItem(item);
     }
+    EditCustomerProductItem(item: ProductItem) {
+        if (!AppTool.IsNullOrEmpty(item.ProductItemId)) {
+            this.partnersDomainService.GetSingleCustomerProductItem(item.ProductItemId).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    var customerProductItem: ProductItemPM = myResponse.Result;
+                    if (customerProductItem) {
+
+                    }
+                }
+            });
+        }
+    }
+
 
     OnRowEnded($event) {
         var errors = [];
