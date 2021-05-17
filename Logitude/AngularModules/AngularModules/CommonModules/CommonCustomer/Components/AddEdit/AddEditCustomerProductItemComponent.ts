@@ -5,10 +5,7 @@ import {AppTool} from '../../../../Infrastructure/Tools';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import { ProductItemPM } from '../../../../Common/EntityPMs/ProductItemPM';
-import { CustomerPM } from '../../../../Common/EntityPMs/CustomerPM';
-import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
-import {  CustomerProductItem, CustomerProductItemsTabComponent } from '../EditTabs/CustomerProductItemsTabComponent';
-
+import {  CustomerProductItem } from '../EditTabs/CustomerProductItemsTabComponent';
 
 @Component({    
     templateUrl: './AddEditCustomerProductItemComponent.html',
@@ -17,70 +14,52 @@ import {  CustomerProductItem, CustomerProductItemsTabComponent } from '../EditT
 export class AddEditCustomerProductItemComponent extends BaseComponent {
     public EntityPM: ProductItemPM;
     public ObjectTableName: string = "ProductItem";
-    public FatherComponent: CustomerProductItemsTabComponent;
     public DataContext: CustomerProductItem;
     public ValidationErrorsList: string[];
     private CurrentSession = SessionLocator.SelectedSession;
-    public CustomerPM: CustomerPM = null;
-    public CustomerProductItem: CustomerProductItem;
     public IsEditingEnabled: boolean = true;
-
-    constructor(public entityArgs: EntityArgs) {
+    constructor() {
         super();
     }
 
     public IsResourcesReady: boolean = false;
-    SetWindowArgs(windowArgs: any) {
-        this.CustomerProductItem = windowArgs['CustomerProductItem'];
-        this.EntityPM = this.CustomerProductItem.EntityPM;
-        this.CustomerPM = windowArgs['CustomerPM'];
-        this.FatherComponent = windowArgs['CustomerProductItemsTabComponent'];
-        this.DataContext = this.CustomerProductItem;
+    SetDataContext(dataContext: CustomerProductItem) {
+        this.DataContext = dataContext;
+        this.EntityPM = dataContext.EntityPM;
+        this.IsEditingEnabled = dataContext.FatherComponent.IsEditingEnabled;
         this.Clone();
     }
-
 
     CancelButtonClicked() {
         this.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
-        this.FatherComponent.ProductItems.Collection.forEach(item => {
-            if (item.EntityPM.ItemCode == null)
-                this.FatherComponent.ProductItems.Remove(item);
-        });
     }
 
     OkButtonClicked() {
         var errors: string[] = [];
-        this.ClearValidationErrorsLists();
         errors = this.ValidateProductItemAndHTsCode();
         this.ValidationErrorsList = errors;
+
         if (this.ValidationErrorsList.length == 0) {
-            if (this.CustomerProductItem.IsNewEntity) {
-                if (this.FatherComponent.HTSCodes != null) {
-                    this.FatherComponent.HTSCodes.Collection.forEach(item => {
-                        if (item.IsNewEntity) {
-                            this.CustomerProductItem.EntityPM.AddHTSCodePM(item.EntityPM);
+            this.DataContext.HTSCodes.Collection.forEach(item => {
+                if (item != null) {
+                    if (item.IsNewEntity) {
+                        if (this.DataContext.EntityPM.HTSCodes.indexOf(item.EntityPM) == -1) {
+                            item.IsNewEntity = false;
+                            this.DataContext.EntityPM.AddHTSCodePM(item.EntityPM);
                         }
-                    });
+                    }
                 }
-                this.CustomerPM.AddProductItemPM(this.CustomerProductItem.EntityPM);
-            } else {
-                if (this.FatherComponent.HTSCodes != null) {
-                    var currentProductItem = this.CustomerPM.CustomerProductItems.filter(a => a.Id == this.CustomerProductItem.EntityPM.Id)[0];
-                    this.FatherComponent.HTSCodes.Collection.forEach(item => {
-                        if (item.IsNewEntity) {
-                            currentProductItem.AddHTSCodePM(item.EntityPM);
-                        }
-                    });
-                }
+            });
+
+            if (this.DataContext.IsNewEntity) {
+                this.DataContext.IsNewEntity = false;
+                this.DataContext.CustomerPM.AddProductItemPM(this.EntityPM);
+                this.DataContext.FatherComponent.ProductItems.Insert(this.DataContext);                
             }
+
             this.CurrentSession.CloseCurrentWindow();
         } 
-    }
-
-    ClearValidationErrorsLists() {
-        this.ValidationErrorsList = [];
-        this.FatherComponent.ValidationErrorsList = [];
     }
 
     private ValidateProductItemAndHTsCode() {
@@ -106,8 +85,8 @@ export class AddEditCustomerProductItemComponent extends BaseComponent {
 
     private ValidateHTSCodes() {
         var errors: string[] = [];
-        if (this.FatherComponent.HTSCodes != null) {
-            this.FatherComponent.HTSCodes.Collection.forEach(item => {
+        if (this.DataContext.HTSCodes != null) {
+            this.DataContext.HTSCodes.Collection.forEach(item => {
                 Validator.TryValidateObject(item, "HTSCode", errors);
                 if (AppTool.IsNullOrEmpty(item.Code)) {
                     errors.push("HTSCode Code is required");
@@ -122,8 +101,8 @@ export class AddEditCustomerProductItemComponent extends BaseComponent {
 
     private ValidateCountry() {
         var errorMassage;
-        if (this.FatherComponent.HTSCodes != null) {
-            var HTSCodes = this.FatherComponent.HTSCodes.Collection;
+        if (this.DataContext.HTSCodes != null) {
+            var HTSCodes = this.DataContext.HTSCodes.Collection;
 
             var destinationCountryAndItsCount = HTSCodes.reduce((a, e) => {
                 a[e.DestinationCountryId] = ++a[e.DestinationCountryId] || 0;
@@ -140,8 +119,8 @@ export class AddEditCustomerProductItemComponent extends BaseComponent {
 
     private ValidateItemCode() {
         var errorMassage;
-        if (this.FatherComponent.ProductItems != null) {
-            var ProductItems = this.FatherComponent.ProductItems.Collection;
+        if (this.DataContext.FatherComponent.ProductItems != null) {
+            var ProductItems = this.DataContext.FatherComponent.ProductItems.Collection;
 
             var itemCodeAndItsCount = ProductItems.reduce((a, e) => {
                 a[e.ItemCode] = ++a[e.ItemCode] || 0;
@@ -168,16 +147,12 @@ export class AddEditCustomerProductItemComponent extends BaseComponent {
         this.myCloner.AddField('DestinationCountryId');
         this.myCloner.AddField('CountryEnglishName');
         this.myCloner.AddField('ItemId');
-        this.myCloner.AddEntity(this.FatherComponent);
-        this.myCloner.AddEntity(this.FatherComponent.ProductItems);
-        this.myCloner.AddEntity(this.FatherComponent.HTSCodes);
-        this.myCloner.AddEntity(this.FatherComponent.EntityPM);
-        this.myCloner.AddEntity(this.DataContext.EntityPM);
-        this.myCloner.AddEntity(this.CustomerPM);
+        this.myCloner.AddEntity(this.EntityPM);
+        this.myCloner.AddEntity(this.DataContext.CustomerPM);
     }
 
     private RejectChanges() {
+        this.DataContext.ResetHTSCodes();
         this.myCloner.RejectChanges();
     }
-
 }
