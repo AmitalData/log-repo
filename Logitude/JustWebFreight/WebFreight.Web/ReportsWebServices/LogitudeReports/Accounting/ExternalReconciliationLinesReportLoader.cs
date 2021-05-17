@@ -191,6 +191,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                         })
                                         .Where(s => s.ExternalReconciliationPeriods.Count > 0)
                                         .ToList();
+
+            ExternalPagesBalanceService externalPagesBalanceService = new ExternalPagesBalanceService(tenant);
+
+            foreach (var bankDetail in dataProvider.BankDetails)
+            {
+                var closedBalance = dataProvider.BankPagesClosingBalance = externalPagesBalanceService.GetClosingBalanceByDate("BankAccount", bankDetail.BankAccountId, RefDateTo.Value);
+                bankDetail.BankPagesClosingBalance = closedBalance;
+            }
         }
 
         private List<BankAccountPM> GetBankAccounts()
