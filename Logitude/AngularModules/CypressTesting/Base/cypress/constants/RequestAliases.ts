@@ -146,6 +146,9 @@ export class RequestAliases {
     public static readonly PutShipmentSubType = "PutShipmentSubType"
     public static readonly PostShipmentSubType = "PostShipmentSubType"
 
+    public static readonly PostCreditCardType = "PostCreditCardType"
+    public static readonly PutCreditCardType = "PutCreditCardType"
+
     public static readonly GetSignle = "GetSignle"
     public static readonly GetByFilter = "GetByFilter"
     public static readonly GetFilterSearch = "GetFilterSearch"

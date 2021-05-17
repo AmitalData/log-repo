@@ -63,6 +63,9 @@ export class Urls {
     public static readonly ShipmentSubTypes = "**/shipmentsubtypes"
     public static readonly ShipmentSubTypesGetSingle = "**/shipmentsubtypes/getsingle?**"
 
+    public static readonly CreditCardTypes = "**/creditcardtypes"
+    public static readonly CreditCardTypesGetSingle = "**/creditcardtypes/getsingle?**"
+
     public static GetFilterSearch(filterBy: string) {
         return '**/getbyfilters?**' + filterBy + '**'
     }

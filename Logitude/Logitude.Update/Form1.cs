@@ -4366,7 +4366,7 @@ User/Pass",
                 }
             }
             AllDataLines.Remove(AllDataLines[0]);
-            List<CityDataItem> distinctItems = AllDataLines.GroupBy(p => new { p.CityCode }).Select(g => g.First()).ToList();
+            List<CityDataItem> distinctItems = AllDataLines.GroupBy(p => new { p.CityCode, p.CountryCode }).Select(g => g.First()).ToList();
             Thread thread = new Thread(() => this.RunUploadCities(distinctItems, tenant));
             thread.IsBackground = true;
             thread.Start();

@@ -41,6 +41,7 @@ import { CardBillingTabDetails } from "../models/CardBillingTabDetails";
 import { SpecialServicesTypeDetails } from "../models/SpecialServicesTypeDetails";
 import { MoveTypeDetails } from "../models/MoveTypeDetails";
 import { ShipmentSubTypeDetails } from "../models/ShipmentSubTypeDetails";
+import { CreditCardTypeDetails } from "../models/CreditCardTypeDetails";
 
 //#region variables
 let CityCode = null;
@@ -51,9 +52,11 @@ let CardCode = null;
 let TruckerCode = null;
 let MoveTypeCode = null;
 let ShipmentSubTypeCode = null;
+let CreditCardTypeCode = null;
 let CommodityName = null;
 let RegionName = null;
 let inActiveCountry = false;
+let inActiveCreditCardType = false;
 let inActiveState = false;
 let inActiveCity = false;
 let inActiveGlobalZone = false;
