@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class HTSCodeUpdateClass
    {  		
-		public const string HashString = "7ca3771659d49783e1c5bcf97e7cff38";
+		public const string HashString = "3dfd5929b3991c5f1c0fd49b9cd204e1";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "HTSCode",
-			      				    Code =  "938f",
+			      				    Code =  "62da",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -227,7 +227,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
+					  						DisplayInEntityVariables =  true,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -283,7 +283,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
+					  						DisplayInEntityVariables =  true,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -396,7 +396,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
+					  						DisplayInEntityVariables =  true,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
