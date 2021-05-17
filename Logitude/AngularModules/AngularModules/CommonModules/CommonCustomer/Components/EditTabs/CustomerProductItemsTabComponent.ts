@@ -171,6 +171,8 @@ export class CustomerProductItem extends BaseComponent {
         }
     }
 
+    get Id() { return this.EntityPM.Id; }
+
     get InActive() { return this.EntityPM.InActive; }
     set InActive(value: boolean) {
         if (this.EntityPM.InActive != value) {
@@ -262,6 +264,10 @@ export class CustomerHTSCode extends BaseComponent {
     SetUIProperties() {
         this.UIProperties.SetRequired("Code", "HTSCode", AppTool.IsNullOrEmpty(this.Code));
         this.UIProperties.SetRequired("DestinationCountryId", "HTSCode", AppTool.IsNullOrEmpty(this.DestinationCountryId));
+    }
+
+    get LineNumber() {
+        return this.FatherComponent.GetIndexOfHTSCode(this);
     }
 
     get Id() {

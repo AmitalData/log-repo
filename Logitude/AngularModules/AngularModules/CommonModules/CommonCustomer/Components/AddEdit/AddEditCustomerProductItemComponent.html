@@ -142,7 +142,7 @@
                                             <log-column [header]="'Line'" [width]="'80'" [Alignment]="'left'">
                                                 <ng-template let-item>
                                                     <log-cell-template #logcelltemplate>
-                                                        <span>{{DataContext.GetIndexOfHTSCode(item)}}</span>
+                                                        <span>{{item.LineNumber}}</span>
                                                     </log-cell-template>
                                                 </ng-template>
                                             </log-column>
