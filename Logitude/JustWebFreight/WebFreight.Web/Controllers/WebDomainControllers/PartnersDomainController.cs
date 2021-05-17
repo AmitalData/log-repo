@@ -2598,28 +2598,5 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
 
         }
-
-        public HttpResponseMessage GetCustomerProductItemHTSCodes(string customerId, string itemId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
-              //  ProductItemQuery productItemQuery = new ProductItemQuery(tenant);
-                HTSCodeQuery hTSCodeQuery = new HTSCodeQuery(tenant);
-               // ProductItemPM productItems = productItemQuery.GetSinglePM(customerId, tenant);
-                List<HTSCodePM> HTSCodes = hTSCodeQuery.GetHTSCodePMsByProductItemIds(itemId, tenant);
-
-                return Request.CreateResponse(HttpStatusCode.OK, HTSCodes);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
     }
 }

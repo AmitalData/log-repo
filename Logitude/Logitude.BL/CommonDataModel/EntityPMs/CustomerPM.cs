@@ -129,7 +129,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string RankId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        [DataMember]
+        [DataMember] 
         public string VatTypeId { get; set; }
 
         [DataMember]

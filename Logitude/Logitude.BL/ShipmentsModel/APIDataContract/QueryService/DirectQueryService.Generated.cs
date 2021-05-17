@@ -432,7 +432,8 @@ using Simplog.Data.ShipmentsModel;
 				   temp.BookingConfirmationNumber = MyEntityPM.BookingConfirmationNumber;
 				   temp.EstimatedFinalArrivalDate = MyEntityPM.EstimatedFinalArrivalDate;
 				   temp.ActualFinalArrivalDate = MyEntityPM.ActualFinalArrivalDate;
-				   temp.HouseNo = MyEntityPM.House;					
+				   temp.HouseNo = MyEntityPM.House;
+				   temp.IsHTSMissing = MyEntityPM.IsHTSMissing;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -1392,6 +1393,12 @@ using Simplog.Data.ShipmentsModel;
 					
                     							//throw new ApplicationException("HouseNo Can't be update"); 
 							temp.House = MyEntity.HouseNo;
+
+					 
+
+					
+                    							//throw new ApplicationException("IsHTSMissing Can't be update"); 
+							temp.IsHTSMissing = MyEntity.IsHTSMissing;
 
 					 
 

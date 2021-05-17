@@ -1971,69 +1971,39 @@ export class PartnersDomainService {
             }), catchError(ServiceHelper.HandleServiceError));
         });
     }
+    GetSingleCustomerProductItem(productItemId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
+        var url = this._apiUrl + '/GetSingleCustomerProductItem?productItemId=' + productItemId;
+
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myJsonResult = response;
+                var mappedResult: ProductItemPM;
+
+                if (myJsonResult) {
+                    mappedResult = new ProductItemPM(null);
+
+                    var jsonListKeys = Object.keys(myJsonResult);
+                    for (var key in jsonListKeys) {
+                        var property = jsonListKeys[key];
+                        mappedResult[property] = myJsonResult[property];
+                    }
+                }
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = mappedResult;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
     MapProductItemPM(jsonList: any, mapParent: boolean = true){
         var entityPM: ProductItemPM = null;
 
         if (jsonList) {
             entityPM = new ProductItemPM(null);
-
-            var jsonListKeys = Object.keys(jsonList);
-
-            for (var key in jsonListKeys) {
-                var property = jsonListKeys[key];
-
-                if (property === "UIProperties" || property === "entityParentPM") {
-                    continue;
-                }
-
-                entityPM[property] = jsonList[property];
-            }
-
-            entityPM.IsDirty = false;
-
-            if (mapParent) {
-                entityPM.OldEntityPM = this.clone(entityPM);
-            }
-            else {
-                entityPM.OldEntityPM = null;
-            }
-        }
-
-        return entityPM;
-    }
-
-
-    GetCustomerProductItemHTSCodes(customerId: string, itemId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
-        var url = this._apiUrl + '/GetCustomerProductItemHTSCodes?customerId=' + customerId + "&itemId=" + itemId;
-
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-                var listJason = response;
-                var listMapped: Array<HTSCodePM> = [];
-
-                for (var itemJeson in listJason) {
-                    var itemMapped: HTSCodePM = this.MapProductItemHTSCodePM(listJason[itemJeson]);
-                    listMapped.push(itemMapped);
-                }
-
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = listMapped;
-                return serviceResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-
-    MapProductItemHTSCodePM(jsonList: any, mapParent: boolean = true) {
-        var entityPM: HTSCodePM = null;
-
-        if (jsonList) {
-            entityPM = new HTSCodePM(null);
 
             var jsonListKeys = Object.keys(jsonList);
 
