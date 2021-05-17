@@ -177,6 +177,8 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
 
                     case "MAIN": {
                         if (this.PageChild_MAIN == null) {
+                            myLocation.viewContainerRef.clear();
+
                             SessionLocator.DynamicLoader.Load('./ShipmentModules/ShipmentRouting/Components/Routings/PickupTabs/PickupMainTabComponent', myLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     this.PageChild_MAIN = cmpRef.instance;
@@ -370,7 +372,14 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
             }
 
             if (this.PageChild_MAIN) {
-                this.PageChild_MAIN.InitTab(this.EntityPM, this.ShipmentPM);
+                // code modified due to refresh dates issue
+                //this.PageChild_MAIN.InitTab(this.EntityPM, this.ShipmentPM);
+
+                this.PageChild_MAIN = null;
+
+                if (this.SelectedTabCode == "MAIN") {
+                    this.SelectionChanged();
+                }
             }
 
             if (this.PageChild_PACG) {

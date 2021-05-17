@@ -325,6 +325,8 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
 
                     case "MAIN": {
                         if (this.PageChild_MAIN == null) {
+                            myLocation.viewContainerRef.clear();
+
                             SessionLocator.DynamicLoader.Load('./ShipmentModules/ShipmentRouting/Components/Routings/DeliveryTabs/DeliveryMainTabComponent', myLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     this.PageChild_MAIN = cmpRef.instance;
@@ -609,7 +611,14 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
             }
 
             if (this.PageChild_MAIN) {
-                this.PageChild_MAIN.InitTab(this.EntityPM, this.ShipmentPM);
+                // code modified due to refresh dates issue
+                //this.PageChild_MAIN.InitTab(this.EntityPM, this.ShipmentPM);
+
+                this.PageChild_MAIN = null;
+
+                if (this.SelectedTabCode == "MAIN") {
+                    this.SelectionChanged();
+                }
             }
 
             if (this.PageChild_PACG) {

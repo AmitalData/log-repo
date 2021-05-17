@@ -2939,8 +2939,6 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
 
             ShipmentTool.CopyShipment(this.EntityPM, this.SourceEntityPM);
 
-            this.OnFiltersChanged();
-
             this.CopyRoutings();
             this.CopyPartners();
 
@@ -3013,6 +3011,8 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
                 this.EntityPM.StandalonePickupDeliveryId = this.SourceEntityPM.StandalonePickupDeliveryId;
 
             }
+
+            this.OnFiltersChanged();
         }
     }
     CopyRoutings() {
