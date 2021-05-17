@@ -7,7 +7,7 @@ Feature: Shipment Sub Type Mock Create and Edit in Maintenance Module
         When add "123456" as shipment sub type code
         Then a validation message with "Code Field must be less than 5" error should appear
 
-    Scenario: Create a new shipment with already exists code
+    Scenario: Create a new shipment sub type with already exists code
         Given a shipment sub type with the following details
             | Code         | Air                                      |
             | Name         | Testing Shipment Sub Type Daily Scenario |
