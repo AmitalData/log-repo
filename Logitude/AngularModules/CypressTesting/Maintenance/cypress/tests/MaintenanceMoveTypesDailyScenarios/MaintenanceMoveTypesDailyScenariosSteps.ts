@@ -61,9 +61,8 @@ Then("the move type should open successfully", () => {
 });
 //#endregion
 //#region  Edit the move type
-Given("the user fill the following move type general details", (dataTable) => {
-    moveTypeDetails = Assists.CreateInstance<MoveTypeDetails>(dataTable, true);
-    MaintenanceActions.FillMoveTypeLocalName(moveTypeDetails.LocalName)
+Given("{string} as move type local name", (localName) => {
+    MaintenanceActions.FillMoveTypeLocalName(localName)
 });
  
 When("update move type", () => {

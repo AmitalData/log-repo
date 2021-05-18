@@ -14,15 +14,24 @@ let truckerDetails: CardDetails
 let contactDetails: ContactDetails
 let truckerGeneralTabDetails:CardGeneralTabDetails
 let truckerBillingTabDetails:CardBillingTabDetails
-//#region Create new trucker
+//#region Add Trucker Code with lenght more than 7
 Given("the user logged in and navigate to {string} in maintenance menu", (maintenanceItemName) => {
     cy.Login();
     MaintenanceActions.OpenMaintenanceItemFromMaintenanceMenu(maintenanceItemName, MaintenanceSelectors.MaintenanceItemTrucker)
 });
 
+When("add {string} as trucker code", (TruckerCode) => {
+    MaintenanceActions.OpenNewWizard(Constants.Trucker);
+    MaintenanceActions.FillTruckerCode(TruckerCode);
+});
+
+Then("a validation message with {string} error should appear", (ValidationMessage) => {
+    MaintenanceActions.ValidateErrorPopUpMessage(ValidationMessage)
+});
+//#endregion
+//#region Create new trucker
 Given("a trucker with the following details", (dataTable) => {
     truckerDetails = Assists.CreateInstance<CardDetails>(dataTable, true);
-    MaintenanceActions.OpenNewWizard(Constants.Trucker);
     MaintenanceActions.FillTruckerDetails(truckerDetails)
 });
 
@@ -60,9 +69,8 @@ Then("the trucker should open successfully", () => {
 });
 //#endregion
 //#region Edit the trucker
-Given("the user fill the following trucker general details", (dataTable) => {
-    truckerGeneralTabDetails = Assists.CreateInstance<CardGeneralTabDetails>(dataTable, true);
-    MaintenanceActions.FillTruckerGeneralTab(truckerGeneralTabDetails)
+Given("{string} as trucker notes", (notes) => {
+    MaintenanceActions.FillTruckerGenaralTabNotes(notes)
 });
  
 Given("fill the following trucker Billing details", (dataTable) => {

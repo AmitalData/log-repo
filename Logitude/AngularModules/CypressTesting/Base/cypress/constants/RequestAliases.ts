@@ -143,6 +143,9 @@ export class RequestAliases {
     public static readonly PutMoveType="PutMoveType"
     public static readonly PostMoveType="PostMoveType"
 
+    public static readonly PutShipmentSubType = "PutShipmentSubType"
+    public static readonly PostShipmentSubType = "PostShipmentSubType"
+
     public static readonly PostCreditCardType = "PostCreditCardType"
     public static readonly PutCreditCardType = "PutCreditCardType"
 

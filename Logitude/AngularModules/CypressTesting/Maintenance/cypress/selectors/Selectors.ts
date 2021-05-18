@@ -21,6 +21,7 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly MaintenanceItemTrucker = "#MaintenanceItemMTTR"
    public static readonly MaintenanceItemSpecialServicesType = "#MaintenanceItemMTSS"
    public static readonly MaintenanceItemMoveTypes="#MaintenanceItemMTMT"
+     public static readonly MaintenanceItemShipmentSubType = "#MaintenanceItemMTSB"
    public static readonly MaintenanceItemCreditCardTypes = "#MaintenanceItemMTCC"
    //#endregion
 
@@ -255,6 +256,14 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly MoveTypeEventsTab = "#MoveTypeTHEvents"
    public static readonly MoveTypeSaveButton = "#MoveType-Save"
      
+        //#endregion
+     //#region Shipment sub type
+     public static readonly ShipmentSubTypeCode = "#ShipmentSubType_Code"
+     public static readonly ShipmentSubTypeName = "#ShipmentSubType_Name"
+     public static readonly LogLovShipmentSubType = "#LogLov_ShipmentSubType_ShipmentTypeCode"
+     public static readonly ShipmentSubTypeSaveButton = "#ShipmentSubType-Save"
+     public static readonly ShipmentSubTypeEventsTab = "#ShipmentSubTypeTHEvents"
+     public static readonly ShipmentSubTypeCodeFilterCheckBox = '[data-cy="CheckBox_ShipmentSubType.F.Code"]'
         //#endregion
    //#region credit card type 
    public static readonly CreditCardTypeCode = "#CreditCardType_Code"

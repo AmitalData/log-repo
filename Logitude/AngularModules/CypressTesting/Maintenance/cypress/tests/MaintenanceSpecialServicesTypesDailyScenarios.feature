@@ -1,8 +1,8 @@
-@release @all @dev @daily
-Feature: Special Services Type Mock Create and Edit in Maintenance Module
-    The user creates a Special Services Type mock create and edit another one from the Maintenance Module.
-    
-    Scenario:Add SpecialServicesTypeCode with lenght more than 8
+@release @all @dev @daily 
+Feature: Special Services Type fake Create and Edit in Maintenance Module
+    The user creates a Special Services Type fake create and edit another one from the Maintenance Module.
+
+    Scenario:Add Special Services Type Code with lenght more than 8
         Given the user logged in and navigate to "Special Services Types" in maintenance menu
         When add "123456789" as special services type code
         Then a validation message with "Code Field must be less than 8" error should appear
@@ -24,8 +24,7 @@ Feature: Special Services Type Mock Create and Edit in Maintenance Module
         Then the special services type should open successfully
 
     Scenario: Edit the special services type
-        Given the user fill the following special services type general details
-            | LocalName | Test edit LocalName special services type |
+        Given "Test edit LocalName special services type" as special services type local name
         When update special services type
         Then the special services type should update successfully
         And the following event should appear in events tab

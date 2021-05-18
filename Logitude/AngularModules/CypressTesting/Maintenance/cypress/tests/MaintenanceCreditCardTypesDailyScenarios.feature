@@ -1,6 +1,6 @@
 @release @all @dev @daily
-Feature: Credit Card Type Mock Create and Edit in Maintenance Module
-    The user creates a Credit Card Type mock create, then selects a different credit card type,
+Feature: Credit Card Type fake Create and Edit in Maintenance Module
+    The user creates a Credit Card Type fake create, then selects a different credit card type,
     edits it and activates or inactivates it from the Maintenance module.
     
     Scenario:Add Credit Card Type Code with lenght more than 2

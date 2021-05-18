@@ -33,24 +33,26 @@ import { QuoteSelectors } from "../../../Quote/cypress/selectors/Selectors";
 import { ShipmentSelectors } from "../../../Shipment/cypress/selectors/Selectors";
 import { ReceivableDetails } from "../../../Shipment/cypress/models/ReceivableDetails";
 import { RegionDetails } from "../models/RegionDetails";
-import {ChangePasswordsDetails} from '../models/ChangePasswordsDetails'
+import { ChangePasswordsDetails } from '../models/ChangePasswordsDetails'
 import { PasswordValidationMessagesDetails } from '../models/PasswordValidationMessagesDetails'
 import { CardDetails } from "../models/CardDetails";
-import {CardGeneralTabDetails} from "../models/CardGeneralTabDetails";
+import { CardGeneralTabDetails } from "../models/CardGeneralTabDetails";
 import { CardBillingTabDetails } from "../models/CardBillingTabDetails";
 import { SpecialServicesTypeDetails } from "../models/SpecialServicesTypeDetails";
 import { MoveTypeDetails } from "../models/MoveTypeDetails";
+import { ShipmentSubTypeDetails } from "../models/ShipmentSubTypeDetails";
 import { CreditCardTypeDetails } from "../models/CreditCardTypeDetails";
 
 //#region variables
 let CityCode = null;
 let StateCode = null;
 let GlobalZoneCode = null;
-let SpecialServicesTypeCode=null;
+let SpecialServicesTypeCode = null;
+let CardCode = null;
+let TruckerCode = null;
+let MoveTypeCode = null;
+let ShipmentSubTypeCode = null;
 let CreditCardTypeCode = null;
-let CardCode=null;
-let TruckerCode=null;
-let MoveTypeCode=null;
 let CommodityName = null;
 let RegionName = null;
 let inActiveCountry = false;
@@ -77,18 +79,18 @@ export function OpenMaintenanceItemFromMaintenanceMenu(maintenanceItemNameToSear
     cy.Click(maintenanceItemSelector, null);
 }
 
-export function FillChangePasswordWindow(changePasswordsDetails:ChangePasswordsDetails) {
-    if (changePasswordsDetails.CurrentPassword == "LoggedInUserPassword"){
+export function FillChangePasswordWindow(changePasswordsDetails: ChangePasswordsDetails) {
+    if (changePasswordsDetails.CurrentPassword == "LoggedInUserPassword") {
         cy.GetCurrentPassword().then(CurrentPassword => {
             cy.FillLogTextBox(MaintenanceSelectors.CurrentPassword, CurrentPassword.toString())
         })
     }
-    else{
+    else {
         cy.FillLogTextBox(MaintenanceSelectors.CurrentPassword, changePasswordsDetails.CurrentPassword)
     }
     cy.FillLogTextBox(MaintenanceSelectors.NewPassword, changePasswordsDetails.NewPassword)
-        cy.FillLogTextBox(MaintenanceSelectors.RetypePassword, changePasswordsDetails.RetypePassword)
-    
+    cy.FillLogTextBox(MaintenanceSelectors.RetypePassword, changePasswordsDetails.RetypePassword)
+
 }
 
 export function ChangePasswordMockChange() {
@@ -98,17 +100,17 @@ export function ChangePasswordMockChange() {
 export function ChangePassword() {
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
 }
-export function ValidatePasswordValidationMessagesColors(passwordValidationMessagesDetails:PasswordValidationMessagesDetails){
-    ValidateMessageColor(MaintenanceSelectors.PasswordLenghtDiv,passwordValidationMessagesDetails.PasswordLengh)
-    ValidateMessageColor(MaintenanceSelectors.PasswordContainsCharactersDiv,passwordValidationMessagesDetails.PasswordContainsUpperLowercase)
-    ValidateMessageColor(MaintenanceSelectors.PasswordContainsNumberDiv,passwordValidationMessagesDetails.PasswordContainsNumber)
+export function ValidatePasswordValidationMessagesColors(passwordValidationMessagesDetails: PasswordValidationMessagesDetails) {
+    ValidateMessageColor(MaintenanceSelectors.PasswordLenghtDiv, passwordValidationMessagesDetails.PasswordLengh)
+    ValidateMessageColor(MaintenanceSelectors.PasswordContainsCharactersDiv, passwordValidationMessagesDetails.PasswordContainsUpperLowercase)
+    ValidateMessageColor(MaintenanceSelectors.PasswordContainsNumberDiv, passwordValidationMessagesDetails.PasswordContainsNumber)
 }
-export function ValidateMessageColor(ValidationMessageSelector:string,ValidationMessage:string){
-    if(ValidationMessage.toLowerCase()==constants.green){
-        cy.ValidateElementColor(ValidationMessageSelector,"rgb(0, 128, 0)"); 
+export function ValidateMessageColor(ValidationMessageSelector: string, ValidationMessage: string) {
+    if (ValidationMessage.toLowerCase() == constants.green) {
+        cy.ValidateElementColor(ValidationMessageSelector, "rgb(0, 128, 0)");
     }
-    else if(ValidationMessage.toLowerCase()==constants.gray){
-        cy.ValidateElementColor(ValidationMessageSelector,"rgb(128, 128, 128)"); 
+    else if (ValidationMessage.toLowerCase() == constants.gray) {
+        cy.ValidateElementColor(ValidationMessageSelector, "rgb(128, 128, 128)");
     }
 }
 export function OpenTabInMaintenanceMenu(maintenanceItemNameToSearch: string, maintenanceItemSelector: string) {
@@ -128,7 +130,7 @@ function GenerateRandomNumber(NumberLength: number) {
 
 //#region Vendor
 export function FillVendorDetails(vendorDetails: CardDetails) {
-    FillCardDetails(vendorDetails,null)
+    FillCardDetails(vendorDetails, null)
 }
 
 export function FillVendorContactDetails(conatactDetails: ContactDetails) {
@@ -136,13 +138,13 @@ export function FillVendorContactDetails(conatactDetails: ContactDetails) {
 }
 
 export function FillVendorGeneralTab(vendorGeneralTabDetails: CardGeneralTabDetails) {
-        cy.FillLogTextBox(MaintenanceSelectors.VendorWebsite, vendorGeneralTabDetails.Website)
-        cy.FillLogTextBox(MaintenanceSelectors.VendorNotes, vendorGeneralTabDetails.Notes)
+    cy.FillLogTextBox(MaintenanceSelectors.VendorWebsite, vendorGeneralTabDetails.Website)
+    cy.FillLogTextBox(MaintenanceSelectors.VendorNotes, vendorGeneralTabDetails.Notes)
 }
 
 export function FillVendorBillingTab(vendorBillingTabDetails: CardBillingTabDetails) {
-        cy.FillLogTextBox(MaintenanceSelectors.VendorVatNumber, vendorBillingTabDetails.VatNumber.toString())
-        cy.FillLogTextBox(MaintenanceSelectors.VendorBankName, vendorBillingTabDetails.BankName)
+    cy.FillLogTextBox(MaintenanceSelectors.VendorVatNumber, vendorBillingTabDetails.VatNumber.toString())
+    cy.FillLogTextBox(MaintenanceSelectors.VendorBankName, vendorBillingTabDetails.BankName)
 }
 
 export function CreateVendor() {
@@ -155,7 +157,7 @@ export function UpdateVendor() {
 }
 
 export function AssertCreateVendor() {
-   AssertCreateCard(Constants.Vendor)
+    AssertCreateCard(Constants.Vendor)
 }
 
 export function AssertUpdateVendor() {
@@ -163,7 +165,7 @@ export function AssertUpdateVendor() {
 }
 
 export function SearchVendor() {
-    SearchCard() 
+    SearchCard()
 }
 
 export function AssertSearchVendor(companyName: string) {
@@ -593,13 +595,13 @@ export function DragAndDropFields(fieldDetails: QuoteTemplateDetails[]) {
         cy.get(MaintenanceSelectors.AvaliableColumnsFields(fieldDetails[i].Field)).drag(MaintenanceSelectors.ColumnDropArea(fieldDetails[i].Column))
     }
 }
-export function EditLabelField(labelToEdit:string,newFieldValue:string){
-if (labelToEdit=="Shipper Name"){
-    EditShipperNameLabelField(labelToEdit,newFieldValue)
-}
-else if(labelToEdit=="Customer"){
-    EditCustomerLabelField(labelToEdit,newFieldValue) 
-}
+export function EditLabelField(labelToEdit: string, newFieldValue: string) {
+    if (labelToEdit == "Shipper Name") {
+        EditShipperNameLabelField(labelToEdit, newFieldValue)
+    }
+    else if (labelToEdit == "Customer") {
+        EditCustomerLabelField(labelToEdit, newFieldValue)
+    }
 }
 export function EditCustomerLabelField(labelToEdit: string, newFieldValue: string) {
     cy.Navigate(MaintenanceSelectors.QuoteSettingsLabel);
@@ -609,7 +611,7 @@ export function EditCustomerLabelField(labelToEdit: string, newFieldValue: strin
 
 export function EditShipperNameLabelField(labelToEdit: string, newFieldValue: string) {
     cy.Navigate(MaintenanceSelectors.QuoteSettingsLabel);
-       cy.get(BaseSelectors.TextTrimming).contains(labelToEdit).type(newFieldValue);
+    cy.get(BaseSelectors.TextTrimming).contains(labelToEdit).type(newFieldValue);
 }
 export function AddDataFieldToIntroduction(fieldToBeAdd: string) {
     cy.Click(MaintenanceSelectors.AddDataField, null)
@@ -626,7 +628,7 @@ export function AddColumnsToPricingTable(coulmnsList: QuoteTemplateDetails[]) {
 export function OpenQuoteTemplate() {
     SearchQuoteTemplate()
     DefineQuoteTemplatetGetSingleRequest()
-    cy.get(BaseSelectors.RowClass).last().click({force:true});
+    cy.get(BaseSelectors.RowClass).last().click({ force: true });
     AssertOpenQuoteTemplate();
 }
 
@@ -645,7 +647,7 @@ export function UpdateQuoteHeaderTemplate() {
     DefineQuoteTemplatetPutTextDesignRequest();
     DefineQuoteTemplatetPutHeaderFieldsRequest();
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
-    cy.Click(BaseSelectors.RedButton+BaseSelectors.LastElement,null)
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
 
 }
 
@@ -929,27 +931,9 @@ export function AssertMockPostCountry() {
     BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow)
 }
 
-export function SearchCountryByCode(CountryCode:string){
-    DefineCountryCodeGetByFiltersRequest(CountryCode);
-       
-    cy.Click(MaintenanceSelectors.CardFiltersOpen,null);
-    cy.Click(MaintenanceSelectors.CardAddFilterBtn,null);
-
-    cy.get(MaintenanceSelectors.CountryCodeFilterCheckBox).then($InActiveStatesCheckBox => {
-        if ($InActiveStatesCheckBox.is(':checked')) {
-            FillCodeFilterValue(CountryCode);
-        }
-        else {
-            cy.get(MaintenanceSelectors.CountryCodeFilterCheckBox).check({ force: true });
-            FillCodeFilterValue(CountryCode);
-        }
-    })
-    AssertCountryViewsGetByFilters()
+export function SearchCountryByCode(CountryCode: string) {
+    SearchCardByFilter(CountryCode, MaintenanceSelectors.CountryCodeFilterCheckBox)
 }
-export function DefineCountryCodeGetByFiltersRequest(CountryCode:string){
-cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(CountryCode), RequestAliases.GetFilterSearch);
-}
-
 export function AssertSearchCountry(CountryCode: string) {
     cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
         expect(text).to.contain(CountryCode);
@@ -1132,7 +1116,31 @@ export function ChangeInactiveCheckBoxValue(InActivateSelector: string) {
         }
     })
 }
-
+export function SearchCardByFilter(FilterValue: string, FilterTypeSelector: string) {
+    cy.Click(MaintenanceSelectors.CardFiltersOpen, null);
+    cy.Click(MaintenanceSelectors.CardAddFilterBtn, null);
+    cy.get(FilterTypeSelector).then($InActiveStatesCheckBox => {
+        if ($InActiveStatesCheckBox.is(':checked')) {
+            FillFilterValue(FilterValue);
+        }
+        else {
+            cy.get(FilterTypeSelector).check({ force: true });
+            FillFilterValue(FilterValue);
+        }
+    })
+    AssertListViewsGetByFilters();
+}
+export function DefineCardGetByFiltersRequest(ShipmentSubTypeCode: string) {
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(ShipmentSubTypeCode), RequestAliases.GetFilterSearch);
+}
+function FillFilterValue(FilterValue: string) {
+    DefineCountryViewsGetByFiltersRequest(FilterValue);
+    cy.FillLogTextBox(MaintenanceSelectors.CardCodeFilterTextValue, FilterValue);
+    AssertListViewsGetByFilters();
+}
+export function AssertListViewsGetByFilters() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
+}
 export function FillCheckBoxProcess(CheckBoxSelector: string, IsCheck: string) {
     if (IsCheck) {
         if (IsCheck.toUpperCase() == constants.YES) {
@@ -1160,9 +1168,9 @@ function DefineGetByFilterRequest() {
 function AssertGetByFilters() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetByFilter, 200);
 }
-function FillCodeFilterValue(Code:string){
+function FillCodeFilterValue(Code: string) {
     DefineCountryViewsGetByFiltersRequest(Code);
-    cy.FillLogTextBox(MaintenanceSelectors.CardCodeFilterTextValue,Code);
+    cy.FillLogTextBox(MaintenanceSelectors.CardCodeFilterTextValue, Code);
     AssertCountryViewsGetByFilters();
 }
 //#endregion
@@ -1579,10 +1587,10 @@ export function AssertPutRegion() {
 }
 //#endregion
 //#region card
-function FillCardDetails(cardDetails: CardDetails,codeDigits:number){
+function FillCardDetails(cardDetails: CardDetails, codeDigits: number) {
     var RandomCardCode = GenerateRandomNumber(codeDigits);
-    if(cardDetails.Code){
-    cy.FillLogTextBox(MaintenanceSelectors.CardCode, cardDetails.Code.toLowerCase() == "random" ? RandomCardCode : cardDetails.Code)
+    if (cardDetails.Code) {
+        cy.FillLogTextBox(MaintenanceSelectors.CardCode, cardDetails.Code.toLowerCase() == "random" ? RandomCardCode : cardDetails.Code)
     }
     cy.FillLogTextBox(MaintenanceSelectors.CardCompanyName, cardDetails.CompanyName);
     cy.FillLogTextBox(MaintenanceSelectors.CardPhone, cardDetails.Phone);
@@ -1594,15 +1602,15 @@ function FillCardDetails(cardDetails: CardDetails,codeDigits:number){
     cy.FillLogLov(MaintenanceSelectors.CardCountry, cardDetails.Country, true);
     cy.FillLogLov(MaintenanceSelectors.CardState, cardDetails.State, true);
 }
-function FillCardContactDetails(cardConatactDetails: ContactDetails){
-    FillCheckBoxProcess(MaintenanceSelectors.CardContactCheckBox+BaseSelectors.LastElement, cardConatactDetails.AddContact)
+function FillCardContactDetails(cardConatactDetails: ContactDetails) {
+    FillCheckBoxProcess(MaintenanceSelectors.CardContactCheckBox + BaseSelectors.LastElement, cardConatactDetails.AddContact)
     cy.FillLogTextBox(MaintenanceSelectors.CardContactEnglishName, cardConatactDetails.EnglishName);
     cy.FillLogTextBox(MaintenanceSelectors.CardContactPosition, cardConatactDetails.Position);
     cy.FillLogTextBox(MaintenanceSelectors.CardContactBusinessPhone, cardConatactDetails.BusinessPhone);
     cy.FillLogTextBox(MaintenanceSelectors.CardContactMobile, cardConatactDetails.Mobile);
     cy.FillLogTextBox(MaintenanceSelectors.CardContactFax, cardConatactDetails.Fax);
 }
-function CreateCard(){
+function CreateCard() {
     DefinePostCardRequest()
     DefineGetByFilterRequest()
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
@@ -1610,21 +1618,21 @@ function CreateCard(){
 function DefinePostCardRequest() {
     cy.DefineRequestWait(RestAPI.POST, Urls.PartnersDomain, RequestAliases.PostCard);
 }
-export function AssertCreateCard(CardType:string) {
+export function AssertCreateCard(CardType: string) {
     AssertPostCard(CardType)
     AssertGetByFilters()
 }
-function AssertPostCard(CardType:string) {
+function AssertPostCard(CardType: string) {
     BaseAssertion.AssertStatusCode(RequestAliases.PostCard, 200).then((interception) => {
         let responseBody = interception.response.body;
-        if(CardType==Constants.ShippingAgent){
+        if (CardType == Constants.ShippingAgent) {
             CardCode = responseBody.ShippingAgent.Code;
         }
-        else if(CardType==Constants.CustomAgent){
+        else if (CardType == Constants.CustomAgent) {
             CardCode = responseBody.CustomAgent.Code;
 
         }
-        else if(CardType==Constants.Vendor){
+        else if (CardType == Constants.Vendor) {
             CardCode = responseBody.Vendor.Code;
 
         }
@@ -1650,7 +1658,7 @@ export function SearchCard() {
     let cardCode = CardCode
     SearchCardByValue(cardCode)
 }
-export function SearchCardByValue(Card:string) {
+export function SearchCardByValue(Card: string) {
     DefineCardViewsGetByFiltersRequest(Card);
     cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, Card);
     AssertCardViewsGetByFilters();
@@ -1667,17 +1675,17 @@ export function AssertSearchCard(companyName: string) {
         expect(text).to.contain(companyName);
     });
 }
-export function OpenCard(CardType:string) {
-    if(CardType==Constants.ShippingAgent){
+export function OpenCard(CardType: string) {
+    if (CardType == Constants.ShippingAgent) {
         DefineShippingAgentsGetSingleRequest();
     }
-    else if(CardType==Constants.CustomAgent){
+    else if (CardType == Constants.CustomAgent) {
         DefineCustomAgentsGetSingleRequest()
     }
-    else if(CardType==Constants.Vendor){
+    else if (CardType == Constants.Vendor) {
         DefineVendorsGetSingleRequest();
     }
-    else if(CardType==Constants.Trucker){
+    else if (CardType == Constants.Trucker) {
         DefineTruckersGetSingleRequest();
     }
     DefineGetMenuButtonGroupsRequest();
@@ -1710,7 +1718,7 @@ export function AssertCardContact(conatactDetails: ContactDetails) {
 //#endregion
 //#region  ShippingAgents
 export function FillShippingAgentsDetails(shippingAgentDetails: CardDetails) {
-    FillCardDetails(shippingAgentDetails,null) 
+    FillCardDetails(shippingAgentDetails, null)
 }
 export function FillShippingAgentsContactDetails(shippingAgentConatactDetails: ContactDetails) {
     FillCardContactDetails(shippingAgentConatactDetails)
@@ -1760,9 +1768,9 @@ export function AssertShippingAgentContact(conatactDetails: ContactDetails) {
     cy.Click(MaintenanceSelectors.ShippingAgentContactsTab, null, true)
     AssertCardContact(conatactDetails)
 }
-export function FillShippingAgentGeneralTab(shippingAgentGeneralTabDetails: CardGeneralTabDetails) {
+export function FillShippingAgentGenaralTabNotes(Notes:string) {
     cy.Click(MaintenanceSelectors.ShippingAgentGeneralTab, null, true)
-    cy.FillLogTextBox(MaintenanceSelectors.ShippingAgentNotes, shippingAgentGeneralTabDetails.Notes)
+    cy.FillLogTextBox(MaintenanceSelectors.ShippingAgentNotes, Notes)
 }
 export function FillShippingAgentBillingTab(shippingAgentBillingTabDetails: CardBillingTabDetails) {
     cy.Click(MaintenanceSelectors.ShippingAgentBillingTab, null, true)
@@ -1778,7 +1786,7 @@ function AssertPutShippingAgent() {
 //#endregion
 //#region CustomAgents 
 export function FillCustomAgentsDetails(customAgentDetails: CardDetails) {
-    FillCardDetails(customAgentDetails,null) 
+    FillCardDetails(customAgentDetails, null)
 }
 export function FillCustomAgentsContactDetails(customAgentConatactDetails: ContactDetails) {
     FillCardContactDetails(customAgentConatactDetails)
@@ -1828,9 +1836,9 @@ export function AssertCustomAgentContact(conatactDetails: ContactDetails) {
     cy.Click(MaintenanceSelectors.CustomAgentContactsTab, null, true)
     AssertCardContact(conatactDetails)
 }
-export function FillCustomAgentGeneralTab(customAgentGeneralTabDetails: CardGeneralTabDetails) {
+export function FillCustomAgentGeneralTabNotes(Notes:string) {
     cy.Click(MaintenanceSelectors.CustomAgentGeneralTab, null, true)
-    cy.FillLogTextBox(MaintenanceSelectors.CustomAgentNotes, customAgentGeneralTabDetails.Notes)
+    cy.FillLogTextBox(MaintenanceSelectors.CustomAgentNotes, Notes)
 }
 export function FillCustomAgentBillingTab(customAgentBillingTabDetails: CardBillingTabDetails) {
     cy.Click(MaintenanceSelectors.CustomAgentBillingTab, null, true)
@@ -1846,7 +1854,10 @@ function AssertPutCustomAgent() {
 //#endregion
 //#region  trucker
 export function FillTruckerDetails(truckerDetails: CardDetails) {
-    FillCardDetails(truckerDetails,6) 
+    FillCardDetails(truckerDetails, 6)
+}
+export function FillTruckerCode(TruckerCode: string) {
+    cy.FillLogTextBox(MaintenanceSelectors.CardCode, TruckerCode)
 }
 export function FillTruckerContactDetails(truckerConatactDetails: ContactDetails) {
     FillCardContactDetails(truckerConatactDetails)
@@ -1915,9 +1926,9 @@ export function AssertTruckerContact(conatactDetails: ContactDetails) {
     cy.Click(MaintenanceSelectors.TruckerContactsTab, null, true)
     AssertCardContact(conatactDetails)
 }
-export function FillTruckerGeneralTab(truckerGeneralTabDetails: CardGeneralTabDetails) {
+export function FillTruckerGenaralTabNotes(Notes:string) {
     cy.Click(MaintenanceSelectors.TruckerGeneralTab, null, true)
-    cy.FillLogTextBox(MaintenanceSelectors.TruckerNotes, truckerGeneralTabDetails.Notes)
+    cy.FillLogTextBox(MaintenanceSelectors.TruckerNotes, Notes)
 }
 export function FillTruckerBillingTab(truckerBillingTabDetails: CardBillingTabDetails) {
     cy.Click(MaintenanceSelectors.TruckerBillingTab, null, true)
@@ -1948,7 +1959,7 @@ export function CreateSpecialServicesType() {
 export function CreateSpecialServicesTypeMockCreate() {
     cy.intercept(RestAPI.POST, Urls.SpecialServicesTypes, [true])
     DefineGetByFilterRequest()
-    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)  
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
 }
 
 export function AssertCreateSpecialServicesTypeMockCreate() {
@@ -1972,7 +1983,7 @@ export function AssertCreateSpecialServicesType() {
 
 function ReCreateSpecialServicesType() {
     var RandomSpecialServicesTypeCode = gr.GenerateRandomNumberAndString(8);
-    cy.FillLogTextBox(MaintenanceSelectors.SpecialServicesTypeCode,  RandomSpecialServicesTypeCode)
+    cy.FillLogTextBox(MaintenanceSelectors.SpecialServicesTypeCode, RandomSpecialServicesTypeCode)
     CreateSpecialServicesType();
     AssertCreateSpecialServicesType();
 }
@@ -1981,7 +1992,7 @@ export function AssertPostSpecialServicesType(responseStatusCode: number, expect
     assert.equal(responseStatusCode, expectedStatusCode)
     SpecialServicesTypeCode = specialServicesTypeCode
 }
-export function SearchSpecialServicesType(){
+export function SearchSpecialServicesType() {
     DefineSpecialServicesTypeGetByFiltersRequest(SpecialServicesTypeCode);
     cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, SpecialServicesTypeCode);
     AsserSpecialServicesTypeViewsGetByFilters();
@@ -2006,7 +2017,7 @@ export function AssertOpenSpecialServicesType() {
 function DefineSpecialServicesTypesGetSingleRequest() {
     cy.DefineRequestWait(RestAPI.GET, Urls.SpecialServicesTypesGetSingle, RequestAliases.GetSignle);
 }
-export function FillSpecialServicesTypeLocalName(localName:string){
+export function FillSpecialServicesTypeLocalName(localName: string) {
     cy.FillLogTextBox(MaintenanceSelectors.SpecialServicesTypeLocalName, localName)
 }
 export function UpdateSpecialServicesType() {
@@ -2034,18 +2045,18 @@ export function FillMoveTypeDetails(moveTypeDetails: MoveTypeDetails) {
     FillMoveTypeLocalName(moveTypeDetails.LocalName)
     FillMoveTypeTransportMode(moveTypeDetails.TransportMode)
 }
-export function FillMoveTypeLocalName(localName:string){
+export function FillMoveTypeLocalName(localName: string) {
     cy.FillLogTextBox(MaintenanceSelectors.MoveTypeLocalName, localName)
 }
-function FillMoveTypeTransportMode(TransportMode:string){
-    if(TransportMode.toLocaleUpperCase()==constants.Air){
-        cy.get(BaseSelectors.IsAir).click({force:true})
+function FillMoveTypeTransportMode(TransportMode: string) {
+    if (TransportMode.toLocaleUpperCase() == constants.Air) {
+        cy.get(BaseSelectors.IsAir).click({ force: true })
     }
-    if(TransportMode.toLocaleUpperCase()==constants.Ocean){
-        cy.get(BaseSelectors.IsOcean).click({force:true})
+    if (TransportMode.toLocaleUpperCase() == constants.Ocean) {
+        cy.get(BaseSelectors.IsOcean).click({ force: true })
     }
-    if(TransportMode.toLocaleUpperCase()==constants.Inland){
-        cy.get(BaseSelectors.IsInland).click({force:true})
+    if (TransportMode.toLocaleUpperCase() == constants.Inland) {
+        cy.get(BaseSelectors.IsInland).click({ force: true })
     }
 }
 export function CreateMoveType() {
@@ -2058,7 +2069,7 @@ function DefinePostMoveTypeRequest() {
 export function CreateMoveTypeMockCreate() {
     cy.intercept(RestAPI.POST, Urls.MoveTypes, [true])
     DefineGetByFilterRequest()
-    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)  
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
 }
 
 export function AssertCreateMoveTypeMockCreate() {
@@ -2080,7 +2091,7 @@ export function AssertCreateMoveType() {
 
 function ReCreateMoveType() {
     var RandomMoveTypeCode = gr.GenerateRandomNumberAndString(3);
-    cy.FillLogTextBox(MaintenanceSelectors.MoveTypeCode,  RandomMoveTypeCode)
+    cy.FillLogTextBox(MaintenanceSelectors.MoveTypeCode, RandomMoveTypeCode)
     CreateMoveType();
     AssertCreateMoveType();
 }
@@ -2089,23 +2100,10 @@ export function AssertPostMoveType(responseStatusCode: number, expectedStatusCod
     assert.equal(responseStatusCode, expectedStatusCode)
     MoveTypeCode = moveTypeCode
 }
-export function SearchMoveTypeByCode(MoveTypeCode:string){
-    DefineMoveTypeCodeGetByFiltersRequest(MoveTypeCode);
-    cy.Click(MaintenanceSelectors.CardFiltersOpen,null);
-    cy.Click(MaintenanceSelectors.CardAddFilterBtn,null);
-
-    cy.get(MaintenanceSelectors.MoveTypeCodeFilterCheckBox).then($InActiveStatesCheckBox => {
-        if ($InActiveStatesCheckBox.is(':checked')) {
-            FillCodeFilterValue(MoveTypeCode);
-        }
-        else {
-            cy.get(MaintenanceSelectors.MoveTypeCodeFilterCheckBox).check({ force: true });
-            FillCodeFilterValue(MoveTypeCode);
-        }
-    })
-    AssertMoveTypeViewsGetByFilters();
+export function SearchMoveTypeByCode(MoveTypeCode: string) {
+    SearchCardByFilter(MoveTypeCode, MaintenanceSelectors.MoveTypeCodeFilterCheckBox)
 }
-export function SearchMoveType(){
+export function SearchMoveType() {
     SearchMoveTypeByCode(MoveTypeCode)
 }
 export function DefineMoveTypeCodeGetByFiltersRequest(MoveTypeCode: string) {
@@ -2146,6 +2144,106 @@ export function AssertUpdateMoveType() {
 }
 function AssertPutMoveType() {
     BaseAssertion.AssertStatusCode(RequestAliases.PutMoveType, 200);
+}
+//#endregion
+//#region Shipment Sub Type
+export function FillShipmentSubTypeCode(ShipmentSubTypeCode: string) {
+    cy.FillLogTextBox(MaintenanceSelectors.ShipmentSubTypeCode, ShipmentSubTypeCode)
+}
+export function FillShipmentSubTypeDetails(shipmentSubTypeDetails: ShipmentSubTypeDetails) {
+    var RandomShipmentSubTypeCode = gr.GenerateRandomNumberAndString(5);
+    cy.FillLogTextBox(MaintenanceSelectors.ShipmentSubTypeCode, shipmentSubTypeDetails.Code.toLowerCase() == "random" ? RandomShipmentSubTypeCode : shipmentSubTypeDetails.Code)
+    FillShipmentSubTypeName(shipmentSubTypeDetails.Name)
+    FillShipmentType(shipmentSubTypeDetails.ShipmentType)
+}
+export function FillShipmentSubTypeName(ShipmentSubTypeName: string) {
+    cy.FillLogTextBox(MaintenanceSelectors.ShipmentSubTypeName, ShipmentSubTypeName)
+}
+export function FillShipmentType(ShipmentType: string) {
+    cy.SelectDropDownListItem(MaintenanceSelectors.LogLovShipmentSubType, ShipmentType)
+}
+export function SelectShipmentType() {
+    cy.SelectDropDownListItemNumber(MaintenanceSelectors.LogLovShipmentSubType, 3)
+}
+export function CreateShipmentSubType() {
+    DefinePostShipmentSubTypeRequest()
+    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
+}
+function DefinePostShipmentSubTypeRequest() {
+    cy.DefineRequestWait(RestAPI.POST, Urls.ShipmentSubTypes, RequestAliases.PostShipmentSubType)
+}
+export function CreateShipmentSubTypeMockCreate() {
+    cy.intercept(RestAPI.POST, Urls.ShipmentSubTypes, [true])
+    DefineGetByFilterRequest()
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
+}
+
+export function AssertCreateShipmentSubTypeMockCreate() {
+    BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow)
+    AssertGetByFilters();
+}
+
+export function AssertCreateShipmentSubType() {
+    let intercept = cy.wait("@" + RequestAliases.PostShipmentSubType);
+    intercept.then((interception) => {
+        if (interception.response.statusCode === 400) {
+            ReCreateShipmentSubType();
+        }
+        else {
+            AssertPostShipmentSubType(interception.response.statusCode, 200, interception.response.body.Code)
+        }
+    })
+}
+
+function ReCreateShipmentSubType() {
+    var RandomShipmentSubTypeCode = gr.GenerateRandomNumberAndString(3);
+    cy.FillLogTextBox(MaintenanceSelectors.MoveTypeCode, RandomShipmentSubTypeCode)
+    CreateShipmentSubType();
+    AssertCreateShipmentSubType();
+}
+
+export function AssertPostShipmentSubType(responseStatusCode: number, expectedStatusCode: number, shipmentSubTypeCode: string) {
+    assert.equal(responseStatusCode, expectedStatusCode)
+    ShipmentSubTypeCode = shipmentSubTypeCode
+}
+export function SearchShipmentSubTypeByCode(ShipmentSubTypeCode: string) {
+    SearchCardByFilter(ShipmentSubTypeCode, MaintenanceSelectors.ShipmentSubTypeCodeFilterCheckBox)
+}
+export function SearchShipmentSubType() {
+    SearchCardByValue(ShipmentSubTypeCode)
+}
+export function AssertSearchShipmentSubType() {
+    AssertSearchCard(ShipmentSubTypeCode)
+}
+export function AssertSearchShipmentSubTypeByCode(code: string) {
+    cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
+        expect(text).to.contain(code);
+    });
+}
+export function OpenShipmentSubType() {
+    DefineShipmentSubTypeGetSingleRequest();
+    cy.get(BaseSelectors.RowClass).eq(0).click();
+}
+function DefineShipmentSubTypeGetSingleRequest() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.ShipmentSubTypesGetSingle, RequestAliases.GetSignle);
+}
+export function AssertOpenShipmentSubType() {
+    AssertCardGetSingle();
+    BaseAssertion.AssertElementExist(MaintenanceSelectors.GeneralEditScreen)
+}
+
+export function UpdateShipmentSubType() {
+    DefinePutShipmentSubTypeRequest()
+    cy.Click(MaintenanceSelectors.ShipmentSubTypeSaveButton, null)
+}
+function DefinePutShipmentSubTypeRequest() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.ShipmentSubTypes, RequestAliases.PutShipmentSubType);
+}
+export function AssertUpdateShipmentSubType() {
+    AssertPutShipmentSubType()
+}
+function AssertPutShipmentSubType() {
+    BaseAssertion.AssertStatusCode(RequestAliases.PutShipmentSubType, 200);
 }
 //#endregion
 ////#region Credit CardT ype 

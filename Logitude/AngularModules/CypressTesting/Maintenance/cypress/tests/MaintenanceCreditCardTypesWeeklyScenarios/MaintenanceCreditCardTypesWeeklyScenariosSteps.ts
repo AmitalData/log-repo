@@ -61,9 +61,8 @@ Then("the credit card type should open successfully", () => {
 });
 //#endregion
 //#region  Edit the credit card type
-Given("the user fill the following credit card type general details", (dataTable) => {
-    creditCardTypeDetails = Assists.CreateInstance<CreditCardTypeDetails>(dataTable, true);
-    MaintenanceActions.FilllCreditCardTypeName(creditCardTypeDetails.EnglishName)
+Given("{string} as credit card type name", (name) => {
+    MaintenanceActions.FilllCreditCardTypeName(name)
 });
  
  
