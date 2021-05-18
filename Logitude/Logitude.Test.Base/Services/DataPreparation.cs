@@ -253,17 +253,14 @@ namespace Logitude.Test.Base.Services
             string countryId = GetCountryId(countryCode);
             string stateId = stateCode == null ? null : GetStateId(stateCode);
 
-            ApiQueryFilters apiQueryFilters = new ApiQueryFilters
-            {
-                PageIndex = 0,
-                PageSize = 1,
-                Filter1Name = "Code",
-                Filter1Operator = "equals",
-                Filter1Value = cityCode,
-                Filter2Name = "CountryId",
-                Filter2Operator = "equals",
-                Filter2Value = countryId
-            };
+            ApiQueryFilters apiQueryFilters = new ApiQueryFiltersBuilder().WithDefualtValues()
+                .Filter1Name("Code")
+                .Filter1Operator("equals")
+                .Filter1Value(cityCode)
+                .Filter2Name("CountryId")
+                .Filter2Operator("equals")
+                .Filter2Value(countryId)
+                .Build(); 
 
             string userTenantCityId = GetCityIdFromUserTenant(apiQueryFilters);
             if (string.IsNullOrEmpty(userTenantCityId))
@@ -299,32 +296,26 @@ namespace Logitude.Test.Base.Services
         #region Build ApiQueryFilters
         private static ApiQueryFilters BuildApiQueryFilters(string code, string countryCode)
         {
-            return new ApiQueryFilters
-            {
-                PageIndex = 0,
-                PageSize = 1,
-                Filter1Name = "Code",
-                Filter1Operator = "equals",
-                Filter1Value = code,
-                Filter2Name = "CountryCode",
-                Filter2Operator = "contains",
-                Filter2Value = countryCode
-            };
+            return new ApiQueryFiltersBuilder().WithDefualtValues()
+                .Filter1Name("Code")
+                .Filter1Operator("equals")
+                .Filter1Value(code)
+                .Filter2Name("CountryCode")
+                .Filter2Operator("contains")
+                .Filter2Value(countryCode)
+                .Build(); 
         }
 
         private static ApiQueryFilters BuildApiQueryFiltersForBillings(string code, string SearchFieldsCode)
         {
-            return new ApiQueryFilters
-            {
-                PageIndex = 0,
-                PageSize = 1,
-                Filter1Name = "Code",
-                Filter1Operator = "equals",
-                Filter1Value = code,
-                Filter2Name = "SearchFields",
-                Filter2Operator = "Contains",
-                Filter2Value = SearchFieldsCode
-            };
+            return new ApiQueryFiltersBuilder().WithDefualtValues()
+                .Filter1Name("Code")
+                .Filter1Operator("equals")
+                .Filter1Value(code)
+                .Filter2Name("SearchFields")
+                .Filter2Operator("Contains")
+                .Filter2Value(SearchFieldsCode)
+                .Build();
         }
         #endregion
 
@@ -360,14 +351,11 @@ namespace Logitude.Test.Base.Services
             string userTenantPartnerId = GetPartnerId(partnerParameters);
             string requestUrl = GetUrlForUserTenantPartnerRequest(partnerParameters.TypeCode);
 
-            ApiQueryFilters apiQueryFilters = new ApiQueryFilters
-            {
-                PageIndex = 0,
-                PageSize = 1,
-                Filter1Name = "Id",
-                Filter1Operator = "equals",
-                Filter1Value = userTenantPartnerId
-            };
+            ApiQueryFilters apiQueryFilters = new ApiQueryFiltersBuilder().WithDefualtValues()
+                .Filter1Name("Id")
+                .Filter1Operator("equals")
+                .Filter1Value(userTenantPartnerId)
+                .Build(); 
 
             ApiResponse<IEnumerable<dynamic>> response = APICaller.CallGetByFilters<IEnumerable<dynamic>>(requestUrl, UserTenant.Token, apiQueryFilters);
             return response.Data?.FirstOrDefault()?["Code"];
@@ -377,14 +365,11 @@ namespace Logitude.Test.Base.Services
         {
             string requestUrl = getFromTenantZero ? Urls.CarrierViewsGetTenantImportByFilters : GetUrlForUserTenantPartnerRequest(partnerParameters.TypeCode);
 
-            ApiQueryFilters apiQueryFilters = new ApiQueryFilters
-            {
-                PageIndex = 0,
-                PageSize = 1,
-                Filter1Name = string.IsNullOrEmpty(partnerParameters.Code) ? "EnglishName" : "Code",
-                Filter1Operator = "equals",
-                Filter1Value = string.IsNullOrEmpty(partnerParameters.Code) ? partnerParameters.Name : partnerParameters.Code
-            };
+            ApiQueryFilters apiQueryFilters = new ApiQueryFiltersBuilder().WithDefualtValues()
+                .Filter1Name(string.IsNullOrEmpty(partnerParameters.Code) ? "EnglishName" : "Code")
+                .Filter1Operator("equals")
+                .Filter1Value(string.IsNullOrEmpty(partnerParameters.Code) ? partnerParameters.Name : partnerParameters.Code)
+                .Build(); 
 
             ApiResponse<IEnumerable<dynamic>> response = APICaller.CallGetByFilters<IEnumerable<dynamic>>(requestUrl, UserTenant.Token, apiQueryFilters);
             return response.Data?.FirstOrDefault()?["Id"];

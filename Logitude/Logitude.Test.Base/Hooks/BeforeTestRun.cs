@@ -158,14 +158,11 @@ namespace Logitude.Test.Base.Hooks
 
         private static void SetupDefaultUser()
         {
-            ApiQueryFilters apiQueryFilters = new ApiQueryFilters
-            {
-                PageIndex = 0,
-                PageSize = 1,
-                Filter1Name = "SearchFields",
-                Filter1Operator = "Contains",
-                Filter1Value = Settings.DefaultUserCredentials.Email
-            };
+            ApiQueryFilters apiQueryFilters = new ApiQueryFiltersBuilder().WithDefualtValues()
+                .Filter1Name("SearchFields")
+                .Filter1Operator("Contains")
+                .Filter1Value(Settings.DefaultUserCredentials.Email)
+                .Build(); 
 
             ApiResponse<IEnumerable<User>> usersResponse = APICaller.CallGetByFilters<IEnumerable<User>>(Urls.UserViewsGetByFilters, UserTenant.Token, apiQueryFilters);
 

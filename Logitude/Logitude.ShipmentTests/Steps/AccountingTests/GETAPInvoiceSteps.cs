@@ -40,29 +40,23 @@ namespace Logitude.ShipmentTests.Steps.AccountingTests
 
         private APInvoicePM GetDirectAPInvoice()
         {
-            ApiQueryFilters apiQueryFilters = new ApiQueryFilters
-            {
-                PageIndex = 0,
-                PageSize = 1,
-                Filter1Name = "VendorId",
-                Filter1Operator = "equals",
-                Filter1Value = PartnersData.VendorId,
-            };
-
+            ApiQueryFilters apiQueryFilters = new ApiQueryFiltersBuilder().WithDefualtValues()
+                .Filter1Name("VendorId")
+                .Filter1Operator("equals")
+                .Filter1Value(PartnersData.VendorId)
+                .Build();
+           
             ApiResponse<IEnumerable<APInvoicePM>> response = APICaller.CallGetByFilters<IEnumerable<APInvoicePM>>(Urls.APInvoiceViewsGetByFilters, UserTenant.Token, apiQueryFilters);
             return response.Data?.FirstOrDefault();
         }
 
         private ApiQueryFilters BuildApiQueryFilters(string invoiceNumber)
         {
-            return new ApiQueryFilters
-            {
-                PageIndex = 0,
-                PageSize = 1,
-                Filter1Name = "InvoiceNumber",
-                Filter1Operator = "equals",
-                Filter1Value = invoiceNumber,
-            };
+            return new ApiQueryFiltersBuilder().WithDefualtValues()
+                .Filter1Name("InvoiceNumber")
+                .Filter1Operator("equals")
+                .Filter1Value(invoiceNumber)
+                .Build();
         }
     }
 }
