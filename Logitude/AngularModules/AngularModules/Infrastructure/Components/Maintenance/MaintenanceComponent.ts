@@ -131,6 +131,12 @@ export class MaintenanceComponent {
                     }
                 }
 
+                else if (item.Code == "MTRP") {
+                    if (SessionLocator.LoggedUserPM.IsCustomerCare || SessionLocator.LoggedUserPM.IsDistributor) {
+                        this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+                    }
+                }
+
                 else {
                     if (item.Code != "MTHT") {
                         this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
