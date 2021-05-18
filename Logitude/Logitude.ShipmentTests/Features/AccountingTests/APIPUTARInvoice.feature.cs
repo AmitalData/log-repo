@@ -19,12 +19,14 @@ namespace Logitude.ShipmentTests.Features.AccountingTests
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    [Xunit.TraitAttribute("Category", "Need-Debug")]
     public partial class PUTARInvoiceFeature : object, Xunit.IClassFixture<PUTARInvoiceFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-        private string[] _featureTags = ((string[])(null));
+        private string[] _featureTags = new string[] {
+                "Need-Debug"};
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
@@ -40,7 +42,8 @@ namespace Logitude.ShipmentTests.Features.AccountingTests
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/AccountingTests", "PUT AR Invoice", "\tThe API updates AR Invoice.", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/AccountingTests", "PUT AR Invoice", "\tThe API updates AR Invoice.", ProgrammingLanguage.CSharp, new string[] {
+                        "Need-Debug"});
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -88,7 +91,7 @@ namespace Logitude.ShipmentTests.Features.AccountingTests
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("PUT AR Invoice", null, tagsOfScenario, argumentsOfScenario);
-#line 4
+#line 5
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -108,7 +111,7 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 5
+#line 6
  testRunner.Given("a direct shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
                 TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
@@ -138,7 +141,7 @@ this.ScenarioInitialize(scenarioInfo);
                 table11.AddRow(new string[] {
                             "ShipmentReceivableLineStatusCode",
                             "OAMT"});
-#line 6
+#line 7
  testRunner.And("a receivable with the following properties", ((string)(null)), table11, "And ");
 #line hidden
                 TechTalk.SpecFlow.Table table12 = new TechTalk.SpecFlow.Table(new string[] {
@@ -168,7 +171,7 @@ this.ScenarioInitialize(scenarioInfo);
                 table12.AddRow(new string[] {
                             "VatNumber",
                             "zero"});
-#line 16
+#line 17
  testRunner.And("a receivable receive invoice with the following properties", ((string)(null)), table12, "And ");
 #line hidden
                 TechTalk.SpecFlow.Table table13 = new TechTalk.SpecFlow.Table(new string[] {
@@ -204,7 +207,7 @@ this.ScenarioInitialize(scenarioInfo);
                 table13.AddRow(new string[] {
                             "UnitPrice",
                             "5"});
-#line 26
+#line 27
  testRunner.And("an receivable invoice line with the following properties", ((string)(null)), table13, "And ");
 #line hidden
                 TechTalk.SpecFlow.Table table14 = new TechTalk.SpecFlow.Table(new string[] {
@@ -240,10 +243,10 @@ this.ScenarioInitialize(scenarioInfo);
                 table14.AddRow(new string[] {
                             "UnitPrice",
                             "5"});
-#line 38
+#line 39
  testRunner.When("update ARInvoice by edit invoice line with the following properties", ((string)(null)), table14, "When ");
 #line hidden
-#line 50
+#line 51
  testRunner.Then("the ARInvoice should update successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
