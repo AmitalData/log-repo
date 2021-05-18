@@ -390,7 +390,6 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
     public ScreenOpacity: number = 0.7;
     public IsScreenEnabled: boolean = false;
     SetScreenEnabled() {
-
         var isScreenEnabled = false;
 
         if (!AppTool.IsNullOrEmpty(this.DirectionId) && !AppTool.IsNullOrEmpty(this.TransportModeId) && !AppTool.IsNullOrEmpty(this.ShipmentLevelCode)) {

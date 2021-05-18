@@ -6846,9 +6846,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 shipmentPickUpDelivery.FromPartnerCardId = entityPM.MainCarriageFromPartnerId;
                 shipmentPickUpDelivery.FromAddressId = entityPM.MainCarriageFromAddressId;
-                shipmentPickUpDelivery.ToPartnerCardId = entityPM.ConsigneeId;
-                shipmentPickUpDelivery.ToAddressId = entityPM.MainCarriageToPartnerId;
-                shipmentPickUpDelivery.CarrierId = entityPM.MainCarriageToAddressId;
+                shipmentPickUpDelivery.ToPartnerCardId = entityPM.MainCarriageToPartnerId;
+                shipmentPickUpDelivery.ToAddressId = entityPM.MainCarriageToAddressId;
+                shipmentPickUpDelivery.CarrierId = entityPM.MainCarriageCarrierId;
                 shipmentPickUpDelivery.CarrierNumber = entityPM.MainCarriageCarrierNumber;
                 shipmentPickUpDelivery.Driver = entityPM.Driver;
                 shipmentPickUpDelivery.TruckNumber = entityPM.TruckNumber;
