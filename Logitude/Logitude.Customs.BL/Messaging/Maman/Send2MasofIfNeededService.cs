@@ -17,7 +17,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
 {
     public class Send2MasofIfNeededService
     {
-        public void Send2Masof(DeclarationPM drityEntityPM,bool pHaveChange, DeclarationPM dbPM)
+        public void Send2Masof(DeclarationPM drityEntityPM,bool pHaveChange, DeclarationPM dbPM,bool forceSend=false)
         {
             try
             {
@@ -79,6 +79,12 @@ namespace Logitude.Customs.BL.Messaging.Maman
                             }))
                         {
                             dataHaveChangeSendIt = true;
+                        }
+
+                        if(forceSend)
+                        {
+                            dataHaveChangeSendIt = true;
+
                         }
                     }
                     if (dataHaveChangeSendIt)
