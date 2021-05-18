@@ -29,6 +29,11 @@
         public static string QuoteController = "Quotes";
         public static string QuoteViewsGetByFilters = "Quoteviews/Getbyfilters";
 
+        //public static string QuotesGetSingle(string id)
+        //{
+        //    return "Quotes/GetSingle?id=" + id;
+        //}
+
         public static string APInvoicesController = "APInvoices";
         public static string ARInvoicesController = "ARInvoices";
         //public static string APInvoiceViewsGetByFilters = "APInvoiceViews/getbyfilters";
@@ -139,6 +144,10 @@
         public static string QuoteGetSingle(string id)
         {
             return "Quotes/GetSingle?id=" + id;
+        }
+        public static string QuoteGetSingleList(string id)
+        {
+            return "Quoteviews/getsingle/?id=" + id;
         }
     }
 }

@@ -120,6 +120,7 @@
     <None Include="Features\APIGETQuoteIdExportAir.feature" />
     <None Include="Features\APIPOSTExportAirQuotes.feature" />
     <None Include="Features\APIPUTExportAirQuotes.feature" />
+    <None Include="Features\QuoteControllerAPI.feature" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

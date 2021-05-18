@@ -25,11 +25,20 @@ namespace Logitude.QuoteTests.Steps
         public void WhenGetQuoteWithQuoteId()
         {
             QuoteContext.ExportAirQuote = GetExportAirQuote();
-            ApiQueryFilters apiQueryFilters = BuildApiQueryFilters(QuoteContext.ExportAirQuote.Id);
-            ApiResponse<IEnumerable<QuotePM>> response = APICaller.CallGetByFilters<IEnumerable<QuotePM>>(Urls.QuoteViewsGetByFilters, UserTenant.Token, apiQueryFilters);
-            Response = response.Data?.FirstOrDefault();
-
+            string quotesGetSingleUrl = Urls.QuoteGetSingle(QuoteContext.ExportAirQuote.Id);
+            ApiResponse<QuotePM> quoteResponse = APICaller.CallGet<QuotePM>(quotesGetSingleUrl, UserTenant.Token);
+            Response = quoteResponse.Data;
         }
+
+        [When(@"get single list quote with QuoteId")]
+        public void WhenGetSingleListQuoteWithQuoteId()
+        {
+            QuoteContext.ExportAirQuote = GetExportAirQuote();
+            string quotesGetSingleUrl = Urls.QuoteGetSingleList(QuoteContext.ExportAirQuote.Id);
+            ApiResponse<QuotePM> quoteResponse = APICaller.CallGet<QuotePM>(quotesGetSingleUrl, UserTenant.Token);
+            Response = quoteResponse.Data;
+        }
+
 
         [Then(@"quote should be avaliable")]
         public void ThenQuoteShouldBeAvaliable()
