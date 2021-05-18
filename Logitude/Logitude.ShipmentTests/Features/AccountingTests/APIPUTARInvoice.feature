@@ -1,4 +1,5 @@
-﻿Feature: PUT AR Invoice
+﻿@Need-Debug
+Feature: PUT AR Invoice
 	The API updates AR Invoice.
 
 Scenario: PUT AR Invoice
