@@ -141,6 +141,11 @@ export class CounterTableComponent extends BaseComponent {
 
         else {
             var errors: string[] = [];
+           
+            if (!this.ValidateInvoicesSize()) {
+                errors.push("Size field is mandatory!"); 
+            }
+
             if (this.CounterSize > counterLength) {
                 errors.push("Maximum size allowed for counter is " + counterLength);
                 }
@@ -193,6 +198,17 @@ export class CounterTableComponent extends BaseComponent {
     }
 
     public SampleValue: string;
+
+    private ValidateInvoicesSize() {
+        // Check if Invoice Type to validate
+        return !(this.CheckInvoice() && this.CounterSize == null);
+    }
+
+    private CheckInvoice() {
+         // Invoices Parameters: "IN" A/P, "CNS" Constituent, "CA" Customs
+        return (this.EntityPM.Parameter1 == "IN" || this.EntityPM.Parameter1 == "CNS" || this.EntityPM.Parameter1 == "CA");
+    }
+
     CalculateSampleValue() {
 
         this.SampleValue = AppTool.GetCounterResolvedNumber(this.Prefix, this.StartNumber, "", this.CounterSize);
