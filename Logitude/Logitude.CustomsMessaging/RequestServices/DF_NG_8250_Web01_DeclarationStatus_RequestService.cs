@@ -39,7 +39,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 declarationStatus_RequestQueryDetails.QueryByDeclaration = new DF_NG_8250_Web01_DeclarationStatus_RequestQueryDetailsQueryByDeclaration()
                 {
                     DeclarationID = requestParams.DeclarationNumber,
-                    DeclarationType = 1
+                    DeclarationType = (declarationPM != null && !String.IsNullOrWhiteSpace(declarationPM.DeclarationDocumentTypeCode)) ? int.Parse(declarationPM.DeclarationDocumentTypeCode)  : 1 ,
                 };
                 //declarationId = declarationQueryService.GetIdByDeclarationNumber(requestParams.DeclarationNumber, requestParams.Tenant);
                 declarationPM = declarationQueryService.GetSingleDeclarationByNumber(requestParams.DeclarationNumber, requestParams.Tenant);
