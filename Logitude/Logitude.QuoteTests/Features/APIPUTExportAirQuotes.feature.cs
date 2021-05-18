@@ -19,12 +19,14 @@ namespace Logitude.QuoteTests.Features
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    [Xunit.TraitAttribute("Category", "Pre-Prepare")]
     public partial class PUTQuoteDirectExportAirFeature : object, Xunit.IClassFixture<PUTQuoteDirectExportAirFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-        private string[] _featureTags = ((string[])(null));
+        private string[] _featureTags = new string[] {
+                "Pre-Prepare"};
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
@@ -40,7 +42,8 @@ namespace Logitude.QuoteTests.Features
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "PUT Quote Direct Export Air", "\tThe API updates direct export air quote by adding charges and packages.", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "PUT Quote Direct Export Air", "\tThe API updates direct export air quote by adding charges and packages.", ProgrammingLanguage.CSharp, new string[] {
+                        "Pre-Prepare"});
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -88,7 +91,7 @@ namespace Logitude.QuoteTests.Features
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("PUT Shipment Direct Export Air", null, tagsOfScenario, argumentsOfScenario);
-#line 4
+#line 5
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -126,7 +129,7 @@ this.ScenarioInitialize(scenarioInfo);
                 table2.AddRow(new string[] {
                             "Height",
                             "100"});
-#line 5
+#line 6
  testRunner.Given("a package with the following properties", ((string)(null)), table2, "Given ");
 #line hidden
                 TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
@@ -147,16 +150,16 @@ this.ScenarioInitialize(scenarioInfo);
                 table3.AddRow(new string[] {
                             "ExchangeRate",
                             "1"});
-#line 12
+#line 13
  testRunner.And("a Charge with the following properties", ((string)(null)), table3, "And ");
 #line hidden
-#line 19
+#line 20
  testRunner.And("an export air quote", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 20
+#line 21
  testRunner.When("update a quote", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 21
+#line 22
  testRunner.Then("the quote should update successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

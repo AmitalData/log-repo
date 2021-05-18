@@ -65,11 +65,7 @@ namespace Logitude.InvoiceTests.Steps.SecurityTests
 
         private APInvoicePM GetAnAPInvoiceFromFirstUserList()
         {
-            ApiQueryFilters apiQueryFilters = new ApiQueryFilters
-            {
-                PageIndex = 0,
-                PageSize = 1
-            };
+            ApiQueryFilters apiQueryFilters = new ApiQueryFiltersBuilder().WithDefualtValues().Build();
 
             ApiResponse<IEnumerable<APInvoicePM>> response = APICaller.CallGetByFilters<IEnumerable<APInvoicePM>>(Urls.APInvoiceViewsGetByFilters, UserTenant.Token, apiQueryFilters);
             return response.Data?.FirstOrDefault();

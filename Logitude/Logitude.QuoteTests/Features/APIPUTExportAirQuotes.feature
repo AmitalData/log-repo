@@ -1,4 +1,5 @@
-﻿Feature: PUT Quote Direct Export Air
+﻿@Pre-Prepare
+Feature: PUT Quote Direct Export Air
 	The API updates direct export air quote by adding charges and packages.
 
 Scenario: PUT Shipment Direct Export Air

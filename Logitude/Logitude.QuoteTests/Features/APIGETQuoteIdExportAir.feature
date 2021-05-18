@@ -1,4 +1,5 @@
-﻿Feature: GET Quote Export Air
+﻿@Pre-Prepare
+Feature: GET Quote Export Air
 	The API retrieves direct export air quote.
 
 Scenario: GET Quote Export Air

@@ -176,17 +176,14 @@ namespace Logitude.ShipmentTests.Services
         #region Build ApiQueryFilters
         private static ApiQueryFilters BuildApiQueryFilters(string code ,string SearchFieldsCode)
         {
-            return new ApiQueryFilters 
-            {
-                PageIndex = 0,
-                PageSize = 1,
-                Filter1Name = "Code",
-                Filter1Operator = "equals",
-                Filter1Value = code ,
-                Filter2Name = "SearchFields",
-                Filter2Operator = "Contains",
-                Filter2Value = SearchFieldsCode
-            };
+            return new ApiQueryFiltersBuilder().WithDefualtValues()
+                .Filter1Name("Code")
+                .Filter1Operator("equals")
+                .Filter1Value(code)
+                .Filter2Name("SearchFields")
+                .Filter2Operator("Contains")
+                .Filter2Value(SearchFieldsCode)
+                .Build();
         }
         #endregion
 

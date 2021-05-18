@@ -282,13 +282,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.IntegrationTest.Au
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.SpecFlow", "Logitude.SpecFlow\Logitude.SpecFlow.csproj", "{A6824623-99F0-425E-8979-B643C1DAC4CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.ShipmentTests", "Logitude.ShipmentTests\Logitude.ShipmentTests.csproj", "{81E2985E-F90A-49B1-9D8C-6A28589E7AAF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.Shipment", "Logitude.ShipmentTests\Logitude.Shipment.csproj", "{81E2985E-F90A-49B1-9D8C-6A28589E7AAF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.Test.Base", "Logitude.Test.Base\Logitude.Test.Base.csproj", "{74FBC07E-5CBF-44C5-85C8-F86FACAA06B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.InvoiceTests", "Logitude.InvoiceTests\Logitude.InvoiceTests.csproj", "{4CDBA717-9F04-4632-94C6-03F692AE76D9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.Invoice", "Logitude.InvoiceTests\Logitude.Invoice.csproj", "{4CDBA717-9F04-4632-94C6-03F692AE76D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.CommonTests", "Logitude.CommonDataTests\Logitude.CommonTests.csproj", "{169A3591-DAE5-4FD2-8A11-BB925658A893}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.Common", "Logitude.CommonDataTests\Logitude.Common.csproj", "{169A3591-DAE5-4FD2-8A11-BB925658A893}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BDDTests", "BDDTests", "{785555D1-1D4F-480B-B441-B6F0A35965AC}"
 EndProject
@@ -298,9 +298,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTenantConfiguration", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogitudeTransferData", "LogitudeTransferData\LogitudeTransferData.csproj", "{5B669934-9A06-4683-AE30-01960E11DEAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.QuoteTests", "Logitude.QuoteTests\Logitude.QuoteTests.csproj", "{98786FEF-8F2F-4AD1-9FEB-90E7AFF5F5B4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.Quote", "Logitude.QuoteTests\Logitude.Quote.csproj", "{98786FEF-8F2F-4AD1-9FEB-90E7AFF5F5B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.CargoTrackingTests", "Logitude.CargoTrackingTests\Logitude.CargoTrackingTests.csproj", "{B107B702-11C0-4EFE-987E-44E89209DCE1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.CargoTracking", "Logitude.CargoTrackingTests\Logitude.CargoTracking.csproj", "{B107B702-11C0-4EFE-987E-44E89209DCE1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

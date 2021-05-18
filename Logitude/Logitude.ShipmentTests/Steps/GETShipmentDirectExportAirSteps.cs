@@ -41,17 +41,14 @@ namespace Logitude.ShipmentTests.Steps
 
         private ShipmentPM GetDirectShipment()
         {
-            ApiQueryFilters apiQueryFilters = new ApiQueryFilters
-            {
-                PageIndex = 0,
-                PageSize = 1,
-                Filter1Name = "ShipmentLevelCode",
-                Filter1Operator = "equals",
-                Filter1Value = "D",
-                Filter2Name = "TransportModeId",
-                Filter2Operator = "equals",
-                Filter2Value = "A"
-            };
+            ApiQueryFilters apiQueryFilters = new ApiQueryFiltersBuilder().WithDefualtValues()
+                .Filter1Name("ShipmentLevelCode")
+                .Filter1Operator("equals")
+                .Filter1Value("D")
+                .Filter2Name("TransportModeId")
+                .Filter2Operator("equals")
+                .Filter2Value("A")
+                .Build(); 
 
             ApiResponse<IEnumerable<ShipmentPM>> response = APICaller.CallGetByFilters<IEnumerable<ShipmentPM>>(Urls.ShipmentViewsGetByFilters, UserTenant.Token, apiQueryFilters);
             return response.Data?.FirstOrDefault();
@@ -59,14 +56,11 @@ namespace Logitude.ShipmentTests.Steps
 
         private ApiQueryFilters BuildApiQueryFilters(string shipmentNumber)
         {
-            return new ApiQueryFilters
-            {
-                PageIndex = 0,
-                PageSize = 1,
-                Filter1Name = "SearchFields",
-                Filter1Operator = "Contains",
-                Filter1Value = shipmentNumber,
-            };
+            return new ApiQueryFiltersBuilder().WithDefualtValues()
+                .Filter1Name("SearchFields")
+                .Filter1Operator("Contains")
+                .Filter1Value(shipmentNumber)
+                .Build(); 
         }
 
     }
