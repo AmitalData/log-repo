@@ -11,11 +11,10 @@ declare var window: any;
 @Injectable()
 export class DocumentDownloadService {
     private  _apiUrl: string;
-    private  baseUrl;
-    public  token: string;
+    private  token: string;
 
-    constructor(@Inject('BASE_URL') baseUrl: string, public  _http: HttpClient,) {
-        baseUrl = baseUrl;
+    constructor(@Inject('BASE_URL') private baseUrl: string, private  _http: HttpClient) {
+        
     }
 
     public  DownloadPage(id: string) {
