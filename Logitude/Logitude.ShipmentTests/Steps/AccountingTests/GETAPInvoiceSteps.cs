@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
-using Logitude.AccountingTests.Models;
+using Logitude.ShipmentTests.Models.Accounting;
+using Logitude.ShipmentTests.Models.Accounting.APInvoice;
 using Logitude.Test.Base.Models.Api;
 using Logitude.Test.Base.Models.PartnersPreparation;
 using Logitude.Test.Base.Models.Shared;
@@ -8,7 +9,7 @@ using Logitude.Test.Base.Services;
 using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow;
-namespace Logitude.AccountingTests.Steps
+namespace Logitude.ShipmentTests.Steps.AccountingTests
 {
     [Binding]
     public class GETAPInvoiceSteps
@@ -19,13 +20,14 @@ namespace Logitude.AccountingTests.Steps
         public GETAPInvoiceSteps(AccountingContext accountingContext)
         {
             AccountingContext = accountingContext;
+            AccountingContext.ShipmentAPInvoice = new ShipmentAPInvoice();
         }
 
         [When(@"get APInvoice with APInvoiceNumber")]
         public void WhenGetAPInvoiceWithAPInvoiceNumber()
         {
-            AccountingContext.ShipmentAPInvoice = GetDirectAPInvoice();
-            ApiQueryFilters apiQueryFilters = BuildApiQueryFilters(AccountingContext.ShipmentAPInvoice.InvoiceNumber);
+            AccountingContext.ShipmentAPInvoice.APInvoicePM = GetDirectAPInvoice();
+            ApiQueryFilters apiQueryFilters = BuildApiQueryFilters(AccountingContext.ShipmentAPInvoice.APInvoicePM.InvoiceNumber);
             ApiResponse<IEnumerable<APInvoicePM>> response = APICaller.CallGetByFilters<IEnumerable<APInvoicePM>>(Urls.APInvoiceViewsGetByFilters, UserTenant.Token, apiQueryFilters);
             Response = response.Data?.FirstOrDefault();
         }

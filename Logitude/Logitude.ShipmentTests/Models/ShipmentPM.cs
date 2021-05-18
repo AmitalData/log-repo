@@ -36,6 +36,9 @@ namespace Logitude.ShipmentTests.Models
         public string AgentComputed { get; set; }
         public List<PackagePM> ShipmentPackages { get; set; }
         public List<PayablesPM> ShipmentPayables { get; set; }
-        public List<ReceivablePM> ShipmentReceivable { get; set; }
+        public List<ShipmentReceivablePM> ShipmentReceivable { get; set; }
+        public string ShipmentReceivableStatusName { get; set; }
+        public string ShipmentReceivableStatusCode { get; set; }
+
     }
 }

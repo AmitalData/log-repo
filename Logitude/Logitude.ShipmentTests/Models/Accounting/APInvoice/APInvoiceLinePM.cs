@@ -1,4 +1,4 @@
-﻿namespace Logitude.AccountingTests.Models
+﻿namespace Logitude.ShipmentTests.Models.Accounting.APInvoice
 {
     public class APInvoiceLinePM
     {

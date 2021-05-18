@@ -1,8 +1,19 @@
 ﻿Feature: PUT AP Invoice
 	The API updates AP Invoice.
 
-Scenario: PUT AP Invoice 
-	Given a payable receive invoice with the following properties
+Scenario: PUT AP Invoice
+	Given a direct shipment
+	And a receivable with the following properties
+		| property                         | Value       |
+		| ChargesTypeName                  | Air Freight |
+		| ChargesType                      | AFT         |
+		| Measurement                      | GRWT        |
+		| Currency                         | EUR         |
+		| Rate                             | 3.8         |
+		| Quantity                         | 20          |
+		| UnitPrice                        | 5           |
+		| ShipmentReceivableLineStatusCode | OAMT        |
+	And a payable receive invoice with the following properties
 		| property        | Value       |
 		| Vendor          | TestVendor  |
 		| InvoiceNumber   | 98675625870 |
@@ -13,7 +24,7 @@ Scenario: PUT AP Invoice
 		| PaymentTerms    | Cash        |
 		| DueDate         | Today       |
 		| VatNumber       | zero        |
-	And an first invoice line with the following properties
+	And an invoice line with the following properties
 		| property        | Value               |
 		| ChargesTypeName | Air Freight         |
 		| ChargesType     | AFT                 |
@@ -21,8 +32,7 @@ Scenario: PUT AP Invoice
 		| VatPrecentage   | 0                   |
 		| Amount          | 100                 |
 		| Description     | API POST AP Invoice |
-	And a direct export shipment
-	When update APInvoice by adding invoice line the following properties
+	When update APInvoice by adding invoice line with the following properties
 		| property        | Value              |
 		| ChargesTypeName | Air Freight        |
 		| ChargesType     | AFT                |
@@ -30,4 +40,4 @@ Scenario: PUT AP Invoice
 		| VatPrecentage   | 0                  |
 		| Amount          | 50                 |
 		| Description     | API PUT AP Invoice |
-	Then the invoice should update successfully
+	Then the APInvoice should update successfully

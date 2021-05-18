@@ -17,7 +17,7 @@ namespace Logitude.ShipmentTests.Steps
         protected readonly ShipmentContext ShipmentContext;
         private PackagePM directPackages;
         private PayablesPM PayablesPM;
-        private ReceivablePM receivablePM;
+        private ShipmentReceivablePM receivablePM;
         private ShipmentPM Partners;
 
         public PUTShipmentDirectExportAirSteps(ShipmentContext shipmentContext)
@@ -62,7 +62,7 @@ namespace Logitude.ShipmentTests.Steps
             ShipmentContext.DirectShipment.Id.Should().NotBeNull();
         }
 
-        private ApiResponse<ShipmentPM> UpdateShipmentByAddingPackages(ShipmentPM shipment, PackagePM package, PayablesPM payable, ReceivablePM receivable)
+        private ApiResponse<ShipmentPM> UpdateShipmentByAddingPackages(ShipmentPM shipment, PackagePM package, PayablesPM payable, ShipmentReceivablePM receivable)
         {
             shipment = AddPackagesToShipment(shipment, package);
             shipment = AddPayablesToShipment(shipment, payable);
@@ -94,7 +94,7 @@ namespace Logitude.ShipmentTests.Steps
                 .ShipmentPayables(payable)
                 .Build();
         }
-        private ShipmentPM AddReceivableToShipment(ShipmentPM shipment, ReceivablePM receivable)
+        private ShipmentPM AddReceivableToShipment(ShipmentPM shipment, ShipmentReceivablePM receivable)
         {
             receivable = new ReceivableBuilder().WithModel(receivable)
                 .ShipmentId(shipment.Id)
@@ -145,7 +145,7 @@ namespace Logitude.ShipmentTests.Steps
                 .Build();
         }
 
-        private ReceivablePM CreateReceivableInstance(Table DataTable)
+        private ShipmentReceivablePM CreateReceivableInstance(Table DataTable)
         {
             dynamic dataTable = DataTable.CreateDynamicInstance();
 

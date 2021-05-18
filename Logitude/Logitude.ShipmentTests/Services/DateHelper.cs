@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logitude.AccountingTests.Services
+namespace LLogitude.ShipmentTests.Services
 {
     public class DateHelper
     {

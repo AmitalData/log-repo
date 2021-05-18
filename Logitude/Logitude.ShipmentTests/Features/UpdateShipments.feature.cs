@@ -109,26 +109,26 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table24 = new TechTalk.SpecFlow.Table(new string[] {
                             "property",
                             "Value"});
-                table10.AddRow(new string[] {
+                table24.AddRow(new string[] {
                             "Quantity",
                             "1"});
-                table10.AddRow(new string[] {
+                table24.AddRow(new string[] {
                             "Length",
                             "100"});
-                table10.AddRow(new string[] {
+                table24.AddRow(new string[] {
                             "Width",
                             "100"});
-                table10.AddRow(new string[] {
+                table24.AddRow(new string[] {
                             "Height",
                             "100"});
-                table10.AddRow(new string[] {
+                table24.AddRow(new string[] {
                             "Weight",
                             "200"});
 #line 6
- testRunner.Given("a master package with the following properties", ((string)(null)), table10, "Given ");
+ testRunner.Given("a master package with the following properties", ((string)(null)), table24, "Given ");
 #line hidden
 #line 13
  testRunner.And("a master shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
@@ -171,26 +171,26 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table25 = new TechTalk.SpecFlow.Table(new string[] {
                             "property",
                             "Value"});
-                table11.AddRow(new string[] {
+                table25.AddRow(new string[] {
                             "Quantity",
                             "1"});
-                table11.AddRow(new string[] {
+                table25.AddRow(new string[] {
                             "Length",
                             "100"});
-                table11.AddRow(new string[] {
+                table25.AddRow(new string[] {
                             "Width",
                             "100"});
-                table11.AddRow(new string[] {
+                table25.AddRow(new string[] {
                             "Height",
                             "100"});
-                table11.AddRow(new string[] {
+                table25.AddRow(new string[] {
                             "Weight",
                             "200"});
 #line 18
- testRunner.Given("a house package with the following properties", ((string)(null)), table11, "Given ");
+ testRunner.Given("a house package with the following properties", ((string)(null)), table25, "Given ");
 #line hidden
 #line 25
  testRunner.And("a master shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
@@ -236,29 +236,29 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table12 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table26 = new TechTalk.SpecFlow.Table(new string[] {
                             "property",
                             "Value"});
-                table12.AddRow(new string[] {
+                table26.AddRow(new string[] {
                             "ChargesTypeName",
                             "Air Freight"});
-                table12.AddRow(new string[] {
+                table26.AddRow(new string[] {
                             "ChargesType",
                             "AFT"});
-                table12.AddRow(new string[] {
+                table26.AddRow(new string[] {
                             "Measurement",
                             "GRWT"});
-                table12.AddRow(new string[] {
+                table26.AddRow(new string[] {
                             "UnitPrice",
                             "100"});
-                table12.AddRow(new string[] {
+                table26.AddRow(new string[] {
                             "Currency",
                             "EUR"});
-                table12.AddRow(new string[] {
+                table26.AddRow(new string[] {
                             "ShipmentPayableLineStatus",
                             "OAMT"});
 #line 31
- testRunner.Given("a master payable with the following properties", ((string)(null)), table12, "Given ");
+ testRunner.Given("a master payable with the following properties", ((string)(null)), table26, "Given ");
 #line hidden
 #line 39
  testRunner.And("a master shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");

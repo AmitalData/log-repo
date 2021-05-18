@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Logitude.AccountingTests.Features
+namespace Logitude.ShipmentTests.Features.AccountingTests
 {
     using TechTalk.SpecFlow;
     using System;
@@ -31,7 +31,7 @@ namespace Logitude.AccountingTests.Features
 #line 1 "APIPOSTAPInvoice.feature"
 #line hidden
         
-        public POSTAPInvoiceFeature(POSTAPInvoiceFeature.FixtureData fixtureData, Logitude_AccountingTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public POSTAPInvoiceFeature(POSTAPInvoiceFeature.FixtureData fixtureData, Logitude_ShipmentTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -40,7 +40,7 @@ namespace Logitude.AccountingTests.Features
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "POST AP Invoice", "\tThe API creates AP Invoice for a vendor.", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/AccountingTests", "POST AP Invoice", "\tThe API creates AP Invoice for a vendor.", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -115,64 +115,94 @@ this.ScenarioInitialize(scenarioInfo);
                             "property",
                             "Value"});
                 table1.AddRow(new string[] {
-                            "Vendor",
-                            "TestVendor"});
+                            "ChargesTypeName",
+                            "Air Freight"});
                 table1.AddRow(new string[] {
-                            "InvoiceNumber",
-                            "98675625870"});
+                            "ChargesType",
+                            "AFT"});
                 table1.AddRow(new string[] {
-                            "InvoiceAmount",
-                            "100"});
+                            "Measurement",
+                            "GRWT"});
                 table1.AddRow(new string[] {
-                            "InvoiceCurrency",
+                            "Currency",
                             "EUR"});
                 table1.AddRow(new string[] {
-                            "ExchangeRate",
+                            "Rate",
                             "3.8"});
                 table1.AddRow(new string[] {
-                            "InvoiceDate",
-                            "Today"});
+                            "Quantity",
+                            "20"});
                 table1.AddRow(new string[] {
-                            "PaymentTerms",
-                            "Cash"});
+                            "UnitPrice",
+                            "5"});
                 table1.AddRow(new string[] {
-                            "DueDate",
-                            "Today"});
-                table1.AddRow(new string[] {
-                            "VatNumber",
-                            "zero"});
+                            "ShipmentReceivableLineStatusCode",
+                            "OAMT"});
 #line 6
- testRunner.And("a payable receive invoice with the following properties", ((string)(null)), table1, "And ");
+ testRunner.And("a payable with the following properties", ((string)(null)), table1, "And ");
 #line hidden
                 TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                             "property",
                             "Value"});
                 table2.AddRow(new string[] {
-                            "ChargesTypeName",
-                            "Air Freight"});
+                            "Vendor",
+                            "TestVendor"});
                 table2.AddRow(new string[] {
-                            "ChargesType",
-                            "AFT"});
+                            "InvoiceNumber",
+                            "98675625870"});
                 table2.AddRow(new string[] {
-                            "VatType",
-                            "Zero"});
-                table2.AddRow(new string[] {
-                            "VatPrecentage",
-                            "0"});
-                table2.AddRow(new string[] {
-                            "Amount",
+                            "InvoiceAmount",
                             "100"});
                 table2.AddRow(new string[] {
+                            "InvoiceCurrency",
+                            "EUR"});
+                table2.AddRow(new string[] {
+                            "ExchangeRate",
+                            "3.8"});
+                table2.AddRow(new string[] {
+                            "InvoiceDate",
+                            "Today"});
+                table2.AddRow(new string[] {
+                            "PaymentTerms",
+                            "Cash"});
+                table2.AddRow(new string[] {
+                            "DueDate",
+                            "Today"});
+                table2.AddRow(new string[] {
+                            "VatNumber",
+                            "zero"});
+#line 16
+ testRunner.And("a payable receive invoice with the following properties", ((string)(null)), table2, "And ");
+#line hidden
+                TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                            "property",
+                            "Value"});
+                table3.AddRow(new string[] {
+                            "ChargesTypeName",
+                            "Air Freight"});
+                table3.AddRow(new string[] {
+                            "ChargesType",
+                            "AFT"});
+                table3.AddRow(new string[] {
+                            "VatType",
+                            "Zero"});
+                table3.AddRow(new string[] {
+                            "VatPrecentage",
+                            "0"});
+                table3.AddRow(new string[] {
+                            "Amount",
+                            "100"});
+                table3.AddRow(new string[] {
                             "Description",
                             "API POST AP Invoice"});
-#line 17
- testRunner.And("an invoice line with the following properties", ((string)(null)), table2, "And ");
+#line 27
+ testRunner.And("an invoice line with the following properties", ((string)(null)), table3, "And ");
 #line hidden
-#line 25
- testRunner.When("create invoice", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 35
+ testRunner.When("create APInvoice", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 26
- testRunner.Then("the invoice should create successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 36
+ testRunner.Then("the APInvoice should create successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

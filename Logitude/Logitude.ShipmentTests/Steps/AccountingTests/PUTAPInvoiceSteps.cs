@@ -1,9 +1,7 @@
 ﻿using FluentAssertions;
-using Logitude.AccountingTests.Models;
-using Logitude.AccountingTests.Models.APInvoiceBuilders;
-using Logitude.AccountingTests.Models.Builders;
 using Logitude.ShipmentTests.Models;
-using Logitude.ShipmentTests.Models.Builders;
+using Logitude.ShipmentTests.Models.Accounting;
+using Logitude.ShipmentTests.Models.Accounting.APInvoice;
 using Logitude.Test.Base.Models.Api;
 using Logitude.Test.Base.Models.Shared;
 using Logitude.Test.Base.Models.UserTenantPreparation;
@@ -11,46 +9,33 @@ using Logitude.Test.Base.Services;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 
-namespace Logitude.AccountingTests.Steps
+namespace Logitude.ShipmentTests.Steps.AccountingTests
 {
     [Binding]
     public class PUTAPInvoiceSteps
     {
         protected readonly AccountingContext AccountingContext;
+        protected readonly ShipmentContext ShipmentContext;
         private APInvoicePM PutResponse;
-        private ShipmentPM DirectShipment;
-        private APInvoiceLinePM FirstAPInvoiceLinePM , SecondAPInvoiceLinePM;
+        private APInvoiceLinePM  SecondAPInvoiceLinePM;
 
-        public PUTAPInvoiceSteps(AccountingContext accountingContext)
+        public PUTAPInvoiceSteps(AccountingContext accountingContext, ShipmentContext shipmentContext)
         {
             AccountingContext = accountingContext;
+            ShipmentContext = shipmentContext;
         }
 
-        [Given(@"an first invoice line with the following properties")]
-        public void GivenAnFirstInvoiceLineWithTheFollowingProperties(Table table)
+        [When(@"update APInvoice by adding invoice line with the following properties")]
+        public void WhenUpdateAPInvoiceByAddingInvoiceLineWithTheFollowingProperties(Table table)
         {
-            FirstAPInvoiceLinePM = CreateAPInvoiceLineInstance(table);
-        }
-
-        [Given(@"a direct export shipment")]
-        public void GivenADirectExportShipment()
-        {
-            DirectShipment = GetValidShipmentPM("D", null);
-            DirectShipment = CreateAndGetShipment(DirectShipment);
-            ApiResponse<APInvoicePM> response = CreateAPInvoice(AccountingContext.ShipmentAPInvoice, FirstAPInvoiceLinePM);
-            AccountingContext.ShipmentAPInvoice = response.Data ;
-        }
-
-        [When(@"update APInvoice by adding invoice line the following properties")]
-        public void WhenUpdateAPInvoiceByAddingInvoiceLineTheFollowingProperties(Table table)
-        {
+            AccountingContext.ShipmentAPInvoice.APInvoicePM = CreateAPInvoice(AccountingContext.ShipmentAPInvoice.APInvoicePM, AccountingContext.ShipmentAPInvoice.APInvoiceLinePM);
             SecondAPInvoiceLinePM = CreateAPInvoiceLineInstance(table);
-            ApiResponse<APInvoicePM> response = UpdateAPInvoice(AccountingContext.ShipmentAPInvoice, SecondAPInvoiceLinePM);
+            ApiResponse<APInvoicePM> response = UpdateAPInvoice(AccountingContext.ShipmentAPInvoice.APInvoicePM, SecondAPInvoiceLinePM);
             PutResponse = response.Data;
         }
 
-        [Then(@"the invoice should update successfully")]
-        public void ThenTheInvoiceShouldUpdateSuccessfully()
+        [Then(@"the APInvoice should update successfully")]
+        public void ThenTheAPInvoiceShouldUpdateSuccessfully()
         {
             PutResponse.Id.Should().NotBeNull();
         }
@@ -66,10 +51,11 @@ namespace Logitude.AccountingTests.Steps
             return GetResponse.Data;
         }
 
-        private ApiResponse<APInvoicePM> CreateAPInvoice(APInvoicePM shipmentAPInvoice, APInvoiceLinePM firstAPInvoiceLinePM)
+        private APInvoicePM CreateAPInvoice(APInvoicePM shipmentAPInvoice, APInvoiceLinePM firstAPInvoiceLinePM)
         {
             shipmentAPInvoice = AddAPInvoiceLine(shipmentAPInvoice, firstAPInvoiceLinePM);
-            return APICaller.CallPost<APInvoicePM>(shipmentAPInvoice, Urls.APInvoicesController, UserTenant.Token);
+            ApiResponse<APInvoicePM> response = APICaller.CallPost<APInvoicePM>(shipmentAPInvoice, Urls.APInvoicesController, UserTenant.Token);
+            return response.Data;
         }
 
         private ApiResponse<APInvoicePM> UpdateAPInvoice(APInvoicePM shipmentAPInvoice, APInvoiceLinePM secondAPInvoiceLinePM)
@@ -81,21 +67,21 @@ namespace Logitude.AccountingTests.Steps
         private APInvoicePM AddAPInvoiceLine(APInvoicePM shipmentAPInvoice, APInvoiceLinePM APInvoiceLinePM)
         {
             APInvoiceLinePM = new APInvoiceLineBuilder().WithModel(APInvoiceLinePM)
-                .EntityId(DirectShipment.Id)
+                .EntityId(ShipmentContext.DirectShipment.Id)
                 .Build();
 
             return new APInvoiceBuilder().WithModel(shipmentAPInvoice)
                 .InvoiceLines(APInvoiceLinePM)
-                .ShipmentsNumbers(DirectShipment.ShipmentNumber)
+                .ShipmentsNumbers(ShipmentContext.DirectShipment.ShipmentNumber)
                 .Build();
         }
 
         private APInvoicePM AddNewAPInvoiceLine(APInvoicePM shipmentAPInvoice, APInvoiceLinePM APInvoiceLinePM)
         {
-            double totalAmount = (double)(FirstAPInvoiceLinePM.InvoiceCurrencyAmount + SecondAPInvoiceLinePM.InvoiceCurrencyAmount);
+            double totalAmount = (double)(100 + SecondAPInvoiceLinePM.InvoiceCurrencyAmount);
 
             APInvoiceLinePM = new APInvoiceLineBuilder().WithModel(APInvoiceLinePM)
-                .EntityId(DirectShipment.Id)
+                .EntityId(ShipmentContext.DirectShipment.Id)
                 .Build();
 
             return new APInvoiceBuilder().WithModel(shipmentAPInvoice)
@@ -107,20 +93,6 @@ namespace Logitude.AccountingTests.Steps
                 .AmountInProfitCurrency(totalAmount)
                 .SubTotalInInvoiceCurrency(totalAmount)
                 .SubTotalInLocalCurrency(totalAmount)
-                .Build();
-        }
-
-        private ShipmentPM GetValidShipmentPM(string shipmentLevel, string masterShipmentDataId)
-        {
-            return new ShipmentBuilder().WithDefualtValues()
-                .DirectionId("E")
-                .TransportModeId("A")
-                .ShipmentLevelCode(shipmentLevel)
-                .OtherPrepaidCollectId("P")
-                .FreightPrepaidCollectId("C")
-                .MainCarriageToPortIdByCode("LHR")
-                .MainCarriageFromPortIdByCode("MIA")
-                .MasterShipmentDataId(masterShipmentDataId)
                 .Build();
         }
 

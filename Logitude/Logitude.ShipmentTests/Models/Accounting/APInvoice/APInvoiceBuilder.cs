@@ -1,4 +1,4 @@
-﻿using Logitude.AccountingTests.Services;
+﻿using LLogitude.ShipmentTests.Services;
 using Logitude.Test.Base.Models.BillingsPreparation;
 using Logitude.Test.Base.Models.PartnersPreparation;
 using Logitude.Test.Base.Models.UserTenantPreparation;
@@ -6,7 +6,7 @@ using Simplog.Data.Helpers;
 using System;
 using System.Collections.Generic;
 
-namespace Logitude.AccountingTests.Models.APInvoiceBuilders
+namespace Logitude.ShipmentTests.Models.Accounting.APInvoice
 {
     public class APInvoiceBuilder
     {

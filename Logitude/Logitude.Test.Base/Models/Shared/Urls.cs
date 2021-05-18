@@ -30,6 +30,7 @@
         public static string QuoteViewsGetByFilters = "Quoteviews/Getbyfilters";
 
         public static string APInvoicesController = "APInvoices";
+        public static string ARInvoicesController = "ARInvoices";
         //public static string APInvoiceViewsGetByFilters = "APInvoiceViews/getbyfilters";
 
 

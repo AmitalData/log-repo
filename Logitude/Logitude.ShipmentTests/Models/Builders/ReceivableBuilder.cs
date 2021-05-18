@@ -1,5 +1,7 @@
-﻿using Logitude.Test.Base.Models.BillingsPreparation;
+﻿using Logitude.ShipmentTests.Models.Accounting;
+using Logitude.Test.Base.Models.BillingsPreparation;
 using Logitude.Test.Base.Models.UserTenantPreparation;
+using Simplog.Data.Helpers;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 
@@ -7,7 +9,7 @@ namespace Logitude.ShipmentTests.Models.Builders
 {
     public class ReceivableBuilder
     {
-        private ReceivablePM _receivablePM;
+        private ShipmentReceivablePM _receivablePM;
 
         public ReceivableBuilder()
         {
@@ -16,7 +18,7 @@ namespace Logitude.ShipmentTests.Models.Builders
 
         private void Reset()
         {
-            _receivablePM = new ReceivablePM();
+            _receivablePM = new ShipmentReceivablePM();
         }
 
         public ReceivableBuilder Id(string id)
@@ -34,6 +36,11 @@ namespace Logitude.ShipmentTests.Models.Builders
         public ReceivableBuilder ShipmentId(string shipmentId)
         {
             _receivablePM.ShipmentId = shipmentId;
+            return this;
+        }
+        public ReceivableBuilder ShipmentNumber(string ShipmentNumber)
+        {
+            _receivablePM.ShipmentNumber = ShipmentNumber;
             return this;
         }
 
@@ -73,6 +80,30 @@ namespace Logitude.ShipmentTests.Models.Builders
             return this;
         }
 
+        public ReceivableBuilder Quantity(double? Quantity)
+        {
+            _receivablePM.Quantity = Quantity;
+            return this;
+        }
+
+        public ReceivableBuilder Rate(double? Rate)
+        {
+            _receivablePM.Rate = Rate;
+            return this;
+        }
+
+        public ReceivableBuilder TotalAmount(double? TotalAmount)
+        {
+            _receivablePM.TotalAmount = TotalAmount;
+            return this;
+        }
+
+        public ReceivableBuilder TotalAmountLocal(double? TotalAmountLocal)
+        {
+            _receivablePM.TotalAmountLocal = TotalAmountLocal;
+            return this;
+        }
+
         public ReceivableBuilder CurrencyId(string currencyId)
         {
             _receivablePM.CurrencyId = currencyId;
@@ -93,7 +124,7 @@ namespace Logitude.ShipmentTests.Models.Builders
 
         public ReceivableBuilder MeasurementId(string measurementId)
         {
-            _receivablePM.MeasurementId = measurementId;
+            _receivablePM.MeasurementId = measurementId == "GRWT" ? BillingData.MeasurementGRWTId : null;
             return this;
         }
 
@@ -108,17 +139,22 @@ namespace Logitude.ShipmentTests.Models.Builders
             _receivablePM.MeasurementCode = measurementCode;
             return this;
         }
-
-        public ReceivablePM Build()
+        public ReceivableBuilder ChangeSetOp(ChangeSetOperation ChangeSetOp)
         {
-            ReceivablePM result = _receivablePM;
+            _receivablePM.ChangeSetOp = ChangeSetOp;
+            return this;
+        }
+
+        public ShipmentReceivablePM Build()
+        {
+            ShipmentReceivablePM result = _receivablePM;
 
             this.Reset();
 
             return result;
         }
 
-        public ReceivableBuilder WithModel(ReceivablePM ReceivablePM)
+        public ReceivableBuilder WithModel(ShipmentReceivablePM ReceivablePM)
         {
             _receivablePM = ReceivablePM;
             return this;
@@ -126,16 +162,26 @@ namespace Logitude.ShipmentTests.Models.Builders
 
         public ReceivableBuilder WithDefualtValues()
         {
-            _receivablePM = new ReceivablePM
+            _receivablePM = new ShipmentReceivablePM
             {
                 Tenant = UserTenant.Tenant,
+                CreateDate = TenantServerConfigration.GetCurrentDateTime(UserTenant.Tenant),
+                UpdateDate = TenantServerConfigration.GetCurrentDateTime(UserTenant.Tenant),
+                CreatedByUserId = UserTenant.UserId,
+                DueTypeCode = "CA",
+                IATACodeId="1-2",
+                PrepaidCollectId = "P",
+                UpdateByUserId = UserTenant.UserId,
+                VatAmountLocal=380,
+                VatAmountProfit=380,
+                VatTypeId="1-3810"
             };
             return this;
         }
 
         public ReceivableBuilder FromDataTable(Table dataTable)
         {
-            _receivablePM = dataTable.CreateInstance<ReceivablePM>();
+            _receivablePM = dataTable.CreateInstance<ShipmentReceivablePM>();
             return this;
         }
     }

@@ -1,7 +1,7 @@
 ﻿using Logitude.Test.Base.Models.BillingsPreparation;
 using Logitude.Test.Base.Models.UserTenantPreparation;
 
-namespace Logitude.AccountingTests.Models.Builders
+namespace Logitude.ShipmentTests.Models.Accounting.APInvoice
 {
     public class APInvoiceLineBuilder
     {
