@@ -189,5 +189,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public ChangeSetOperation ChangeSetOp { get; set; }
 
         public List<ShipmentPickUpDeliveryPackagePM> ShipmentPickUpPackagesChangeSet { get; set; }
+        public string StandaloneShipmentId { get; set; }
+        public string StandaloneShipmentNumber { get; set; }
     }
 }

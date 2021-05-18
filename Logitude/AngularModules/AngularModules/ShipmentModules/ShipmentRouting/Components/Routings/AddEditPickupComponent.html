@@ -6,6 +6,14 @@
         </td>
     </tr>
 
+    <tr style="height: 1px;" *ngIf="EntityPM.StandaloneShipmentId">
+        <td>
+            <div class="OrangeInfo" style="margin: 5px;">
+                This pickup is connected to a standalone shipment and can only be updated from there
+            </div>
+        </td>
+    </tr>
+
     <tr>
         <td>
             <div class="MediaFill CurvedEditArea">
@@ -82,6 +90,17 @@
                         <div></div>
                     </td>
 
+                    <td style="width: 1px;" *ngIf="IsAddingStandaloneShipmentVisible && EntityPM.StandaloneShipmentId">
+                        <Hyperlink (click)="ViewStandaloneShipmentClicked(item)">{{EntityPM.StandaloneShipmentNumber}}</Hyperlink>
+                    </td>
+
+                    <td style="width: 1px;" *ngIf="IsAddingStandaloneShipmentVisible && !EntityPM.StandaloneShipmentId">
+                        <button class="Button" (click)="CreateStandaloneShipmentClicked()" [disabled]="!IsCreateStandaloneShipmentEnabled">Create Standalone Shipment</button>
+                    </td>
+
+                    <td style="width: 5px;" *ngIf="IsAddingStandaloneShipmentVisible">
+                        <div></div>
+                    </td>
 
                     <td style="width: 57px;">
                         <button id="{{ 'CloseBtn' | IdGeneratorPipe}}" class="Button" (click)="CloseClicked()">Close</button>
@@ -93,12 +112,12 @@
 
                     <!-- Save -->
                     <td style="width: 57px;">
-                        <button id="{{ 'SaveBtn' | IdGeneratorPipe}}" *ngIf="!EntityPM.IsDirty" class="Button">
+                        <button id="{{ 'SaveBtn' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled" *ngIf="!EntityPM.IsDirty" class="Button">
                             <img class="LeftCenter" style="margin-left: 2px;" src="./Images/Buttons/Save.png" />
                             <span style="line-height: 19px; margin-left: 17px;">Save</span>
                         </button>
 
-                        <button id="{{ 'SaveBtn' | IdGeneratorPipe}}" *ngIf="EntityPM.IsDirty" class="EntityChangesButton" (click)="OkButtonClicked()">
+                        <button id="{{ 'SaveBtn' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled" *ngIf="EntityPM.IsDirty" class="EntityChangesButton" (click)="OkButtonClicked()">
                             <img class="LeftCenter" style="margin-left: 2px;" src="./Images/Buttons/Save.Red.png" />
                             <span style="line-height: 19px; margin-left: 17px;">Save</span>
                         </button>
@@ -110,12 +129,12 @@
 
                     <!-- Save & Close -->
                     <td style="width: 25px;">
-                        <button id="{{ 'SaveClose' | IdGeneratorPipe}}" *ngIf="!EntityPM.IsDirty" class="Button" (click)="SaveChangesAndClose()" [title]="'General.B.SaveAndClose' | TextCodeTranslationPipe">
+                        <button id="{{ 'SaveClose' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled" *ngIf="!EntityPM.IsDirty" class="Button" (click)="SaveChangesAndClose()" [title]="'General.B.SaveAndClose' | TextCodeTranslationPipe">
                             <img class="CenterCenter" src="./Images/Buttons/Save.png" />
                             <img src="./Images/RedX2.png" style="width: 7px; height: 7px; position: absolute; top:1px;" />
                         </button>
 
-                        <button id="{{ 'SaveClose' | IdGeneratorPipe}}" *ngIf="EntityPM.IsDirty" class="EntityChangesButton" (click)="SaveChangesAndClose()" [title]="'General.B.SaveAndClose' | TextCodeTranslationPipe">
+                        <button id="{{ 'SaveClose' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled" *ngIf="EntityPM.IsDirty" class="EntityChangesButton" (click)="SaveChangesAndClose()" [title]="'General.B.SaveAndClose' | TextCodeTranslationPipe">
                             <img class="CenterCenter" src="./Images/Buttons/Save.Red.png" />
                             <img src="./Images/RedX2.png" style="width: 7px; height: 7px; position: absolute; top:1px;" />
                         </button>

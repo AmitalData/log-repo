@@ -19,9 +19,8 @@ Given("the user logged in and navigates to {string} in reports menu", (reportNam
     ReportActions.NavigatesToReportWorkspaceInReportsMenu(reportName);
 });
 
-Given("a report settings with the following details", (dataTable) => {
-    reportSettingsDetails = Assists.CreateInstance<ReportSettingsDetails>(dataTable, true);
-    ReportActions.ChangeReportsSettings(reportSettingsDetails)
+Given("a report settings with {string} as is exception", (isException) => {
+    ReportActions.ChangeReportsSettings(isException)
 });
 
 When("run report", () => {

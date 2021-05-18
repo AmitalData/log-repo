@@ -190,4 +190,8 @@ export  class ServiceHelper{
        
         return httpOptions;
     }
+
+    public static GetLDocumentDownloadToken() {
+        return SessionInfo.DocumentDownloadToken;
+    }
 }

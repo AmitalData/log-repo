@@ -1873,8 +1873,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
             }
         }
 
-
-
         public string MainCarriageFromPartnerId { get; set; }
         public string MainCarriageFromAddressId { get; set; }
         public string MainCarriageToPartnerId { get; set; }
@@ -2654,7 +2652,35 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string TotalTax { get; set; }
         public string WarehouseLegLocalName { get; set; }
         public string WarehouseLegEnglishName { get; set; }
+        public bool IsHTSMissing { get; set; }
 
+        private List<ShipmentProductItemPM> shipmentProductItems;
+        [Include]
+        [Association("ShipmentProductItemShipment", "Id", "ShipmentId")]
+        [Composition]
+        public virtual List<ShipmentProductItemPM> ShipmentProductItems
+        {
+            get
+            {
+
+                if (this.shipmentProductItems == null)
+                {
+                    shipmentProductItems = new List<ShipmentProductItemPM>();
+                }
+                return this.shipmentProductItems;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    shipmentProductItems = value;
+                }
+            }
+        }
+
+        public bool IsStandalonePickupDelivery { get; set; }
+        public string StandalonePickupDeliveryId { get; set; }
+        public string StandalonePickupDeliveryNumber { get; set; }
     }
 
     public class TransshipmentLeg

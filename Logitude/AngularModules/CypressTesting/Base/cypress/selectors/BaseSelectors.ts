@@ -186,6 +186,9 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly WindowHeader=".WindowHeader"
     public static readonly TemplateBoxItem = ".TemplateBoxItem"
     public static readonly ShortTitleDiv = ".ShortTitleDiv";
+    public static readonly IsAir = "#IsAir"
+    public static readonly IsInland = "#IsInland"
+    public static readonly IsOcean = "#IsOcean"
 
     public static readonly EventNotes = "#EventNotes";
     public static readonly ConfirmWindowButton = "button[id^='ConfirmWindow_Yes']";

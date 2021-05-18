@@ -66,7 +66,7 @@ namespace Logitude.Test.Base.Services
             {
                 Tenant = UserTenant.Tenant,
                 Code = code,
-                EnglishName = "Test Special Services Types",
+                EnglishName = "TestSpecialServicesTypes",
                 InActive = false,
                 IsHybrid=false,
                 IsSecured=false,

@@ -3542,14 +3542,10 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
     IsUseCardSearchMechanism() {
         var result: boolean = false;
-        if (this.ObjectTableName == "Customer") {
-            var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SCV")[0];
-            if (featureToggle) {
+        if (this.ObjectTableName == "Customer" && ObjectsLocator.GlobalSetting.WorkEnvironment != "customs") {
             result = true;
-            }
         }
         return result;
-
     }
 
     private currentFilters: ApiQueryFilters;

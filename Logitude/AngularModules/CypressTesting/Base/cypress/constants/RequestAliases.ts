@@ -103,6 +103,9 @@ export class RequestAliases {
     public static readonly PostGlobalZone="PostGlobalZone"
     public static readonly PutGlobalZone="PutGlobalZone"
    
+    public static readonly PostSpecialServicesType="PostSpecialServicesType"
+    public static readonly PutSpecialServicesType="PutSpecialServicesType"
+
     public static readonly PostCity="PostCity"
     public static readonly PutCity="PutCity"
 
@@ -126,8 +129,25 @@ export class RequestAliases {
     public static readonly PostCurrencyRate = "PostCurrencyRate";
     public static readonly GetCurrencyRate = "GetCurrencyRate";
 
+    public static readonly PostCard = "PostCard";
+
     public static readonly PostShippingAgent = "PostShippingAgent";
     public static readonly PutShippingAgent = "PutShippingAgent";
+
+    public static readonly PostCustomAgent = "PostCustomAgent";
+    public static readonly PutCustomAgent = "PutCustomAgent";
+
+    public static readonly PutTrucker="PostTrucker"
+    public static readonly PostTrucker="PostTrucker"
+
+    public static readonly PutMoveType="PutMoveType"
+    public static readonly PostMoveType="PostMoveType"
+
+    public static readonly PutShipmentSubType = "PutShipmentSubType"
+    public static readonly PostShipmentSubType = "PostShipmentSubType"
+
+    public static readonly PostCreditCardType = "PostCreditCardType"
+    public static readonly PutCreditCardType = "PutCreditCardType"
 
     public static readonly GetSignle = "GetSignle"
     public static readonly GetByFilter = "GetByFilter"

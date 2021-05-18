@@ -541,6 +541,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 TenantManagementPM entityPM = tenantManagementQuery.GetSinglePM(id);
 
                 TenantManagementJS myResult = new TenantManagementJS();
+                bool isLogboxSystem = CheckIsLogboxSystem();
 
                 if (entityPM != null)
                 {
@@ -574,7 +575,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         NumberOfFreeUsers = entityPM.FreeUsers == null ? 0 : entityPM.FreeUsers.Value,
                         PaidDaysLeft = entityPM.PaidDaysLeft,
                         PaymentFailure = entityPM.PaymentFailure,
-                        PrivateLabelId = entityPM.PrivateLabelId,
+                        PrivateLabelId = isLogboxSystem ? null : entityPM.PrivateLabelId,
                         SuspendDate = entityPM.SuspendDate,
                         SuspendDaysLeft = entityPM.SuspendDaysLeft,
                         TemporalPackageCode = entityPM.TemporalPackageCode,
@@ -685,6 +686,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+        private static bool CheckIsLogboxSystem()
+        {
+            bool isLogboxSystem = false;
+            string url = SecurityUtility.getLoggedDomain();
+            if (url.Contains("system.logbox.co.il") || url.Contains("pre.logbox.co.il") || url.Contains("test.logitudeworld.com")) //Test env acts Like Logbox
+                isLogboxSystem = true;
+            return isLogboxSystem;
         }
     }
 

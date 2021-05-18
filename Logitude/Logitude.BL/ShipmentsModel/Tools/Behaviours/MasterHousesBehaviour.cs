@@ -63,7 +63,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
         {
             if (initializer.ShipmentConsoleShipmentsChangeSet != null && (initializer.IsUpdatingHouses || initializer.IsUpdatingHousesFinalArrivalDate))
             {
-                List<string> ids = initializer.ShipmentConsoleShipmentsChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert).Select(s => s.Id).ToList();
+                List<string> ids = initializer.ShipmentConsoleShipmentsChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Select(s => s.Id).ToList();
                 if (ids.Count > 0)
                 {
                     ShipmentQuery iShipmentQuery = new ShipmentQuery(initializer.Repository);
@@ -166,7 +166,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
         private void UpdateShipment(bool mapComposition = false)
         {
             ShipmentService iShipmentService = new ShipmentService(initializer.ShipmentContext, iHousePM, initializer.LoggedContactEmail);
-            iShipmentService.SetChangeSet(iHousePM.ShipmentPackages, iHousePM.ShipmentOrderPackages, iHousePM.ShipmentPickUps, iHousePM.ShipmentDeliveries, iHousePM.ShipmentReceivables, iHousePM.ShipmentPayables, iHousePM.FollowUps, iHousePM.ShipmentAWBPrintOnlies, iHousePM.ShipmentConsoleShipments, iHousePM.ShipmentCarrierStatuses, iHousePM.AWBOCIPMs, iHousePM.ShipmentCommodities, iHousePM.ShipmentAssemblies, iHousePM.ShipmentStoragePricings);
+            iShipmentService.SetChangeSet(iHousePM.ShipmentPackages, iHousePM.ShipmentOrderPackages, iHousePM.ShipmentPickUps, iHousePM.ShipmentDeliveries, iHousePM.ShipmentReceivables, iHousePM.ShipmentPayables, iHousePM.FollowUps, iHousePM.ShipmentAWBPrintOnlies, iHousePM.ShipmentConsoleShipments, iHousePM.ShipmentCarrierStatuses, iHousePM.AWBOCIPMs, iHousePM.ShipmentCommodities, iHousePM.ShipmentAssemblies, iHousePM.ShipmentStoragePricings, iHousePM.ShipmentProductItems);
             iShipmentService.Update(mapComposition);
         }
         private void UpdateMasterHouses(List<string> ids, bool isDisconnecting)

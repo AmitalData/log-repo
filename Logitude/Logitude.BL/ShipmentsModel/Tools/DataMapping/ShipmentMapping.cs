@@ -466,6 +466,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.TruckerId = entityPM.TruckerId;
             entityPoco.AssginedToCustomsAgentDate = entityPM.AssginedToCustomsAgentDate;
             entityPoco.AssginedtoCustomsAgentId = entityPM.AssginedtoCustomsAgentId;
+            entityPoco.IsStandalonePickupDelivery = entityPM.IsStandalonePickupDelivery;
+            entityPoco.IsHTSMissing = entityPM.IsHTSMissing;
 
             BuildSearchField(entityPM, entityPoco, entityMasterData, myPackagesList);
             if (!LBcurrentTenant.IsDocumentsArchive)

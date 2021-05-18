@@ -29,7 +29,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             string multi = TranslateTextsClass.Translate("GLAccounts.Q.Multi", 0);
             string active = TranslateTextsClass.Translate("GLAccounts.Q.Active", 0);
             string inactive = TranslateTextsClass.Translate("GLAccounts.Q.Inactive", 0);
-            Contact loggedContact = GetLoggedContact(iQueryable.FirstOrDefault().Tenant);
+            
             IQueryable<GLAccountList> query = (from a in iQueryable//.Include("ChartOfAccount").Include("ChartOfAccountsType")
                                                join chartOfAccount in context.ChartOfAccounts on a.ChartOfAccountsId equals chartOfAccount.Id
                                                join chartOfAccountsType in context.ChartOfAccountsTypes on a.ChartOfAccountsTypeCode equals chartOfAccountsType.Code
@@ -38,7 +38,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                join RecocileDatas in context.GLAccountRecocileDatas on a.Id equals RecocileDatas.AccountId
 
                                                join CardsDatas in context.GLAccountCardsDatas on a.CardsDataId equals CardsDatas.Id
-                                              into CardsDatasjoin
+                                               into CardsDatasjoin
                                                from CardsDatas in CardsDatasjoin.DefaultIfEmpty()
                                                join FollowUpDatas in context.GLAccountFollowUpDatas on a.Id equals FollowUpDatas.GlAccountId
                                                into FollowUpDatasjoin
@@ -174,17 +174,17 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                    TotalOpenTransactions = AgingDatas.TotalOpenTransactions,
 
                                                    // GLAccount Recocile Datas
-                                                   LastReconciledBy = loggedContact.DontShowLocalLabels ? RecocileDatas.LastReconciledByUser.Contact.EnglishName : RecocileDatas.LastReconciledByUser.Contact.LocalName == null ? RecocileDatas.LastReconciledByUser.Contact.EnglishName : RecocileDatas.LastReconciledByUser.Contact.LocalName,
+                                                   LastReconciledBy =  RecocileDatas.LastReconciledByUser.Contact.LocalName == null ? RecocileDatas.LastReconciledByUser.Contact.EnglishName : RecocileDatas.LastReconciledByUser.Contact.LocalName,
                                                    LastReconcileDate = RecocileDatas.LastReconcileDateTime,
 
                                                    // GLAccount Cards Datas
                                                    CreditLimit = CardsDatas != null ? CardsDatas.CreditLimit : null,
                                                    VatNumber = CardsDatas != null ? CardsDatas.VatNumber : null,
-                                                   PaymentTerm = CardsDatas != null ? loggedContact.DontShowLocalLabels ? CardsDatas.PaymentTerm.EnglishName : CardsDatas.PaymentTerm.LocalName == null ? CardsDatas.PaymentTerm.EnglishName : CardsDatas.PaymentTerm.LocalName : null,
+                                                   PaymentTerm = CardsDatas != null ? CardsDatas.PaymentTerm.LocalName == null ? CardsDatas.PaymentTerm.EnglishName : CardsDatas.PaymentTerm.LocalName : null,
                                                    TotalOpenShipments = CardsDatas != null ? CardsDatas.TotalOpenShipments : null,
                                                    Phone = CardsDatas != null ? CardsDatas.Phone : null,
-                                                   Salesman = CardsDatas != null ? loggedContact.DontShowLocalLabels ? CardsDatas.SalesmanUser.Contact.EnglishName : CardsDatas.SalesmanUser.Contact.LocalName == null ? CardsDatas.SalesmanUser.Contact.EnglishName : CardsDatas.SalesmanUser.Contact.LocalName : null,
-                                                   Collector = CardsDatas != null ? loggedContact.DontShowLocalLabels ? CardsDatas.CollectorUser.Contact.EnglishName : CardsDatas.CollectorUser.Contact.LocalName == null ? CardsDatas.CollectorUser.Contact.EnglishName : CardsDatas.CollectorUser.Contact.LocalName : null,
+                                                   Salesman = CardsDatas != null ?  CardsDatas.SalesmanUser.Contact.LocalName == null ? CardsDatas.SalesmanUser.Contact.EnglishName : CardsDatas.SalesmanUser.Contact.LocalName : null,
+                                                   Collector = CardsDatas != null ? CardsDatas.CollectorUser.Contact.LocalName == null ? CardsDatas.CollectorUser.Contact.EnglishName : CardsDatas.CollectorUser.Contact.LocalName : null,
 
                                                    // GLAccount Follow Up Datas
                                                    FollowupDate = FollowUpDatas != null ? FollowUpDatas.FollowUpDate : null,

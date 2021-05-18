@@ -500,6 +500,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 CurrenciesDetailed = true,
                 DetailedControlVendors = true,
                 DetailedControlClients = true,
+                DetailedControlJob= true,
+                DetailedControlFile= true,
                 Category1 = null,
                 Category2 = null,
                 Category3 = null,

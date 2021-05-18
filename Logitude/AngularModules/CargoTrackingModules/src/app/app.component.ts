@@ -1,6 +1,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { RootContext } from 'src/CargoTracking/Utilities/RootContext';
+import { SessionInfo } from '../Infrastructure/Utilities/SessionInfo';
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
@@ -19,9 +20,16 @@ export class AppComponent
     constructor()
     {
         RootContext.AppComponent = this;
+        this.SetSeSessionInfo();
     }
 
-
+    private SetSeSessionInfo() {
+        SessionInfo.LoggedUserEmail = sessionStorage.getItem("LoggedUserEmail");
+        SessionInfo.LoggedUserId = sessionStorage.getItem("LoggedUserId");
+        SessionInfo.LoggedUserTenant = Number(sessionStorage.getItem("LoggedUserTenant"));
+        SessionInfo.Token = sessionStorage.getItem("Token");
+        SessionInfo.DocumentDownloadToken = sessionStorage.getItem("DocumentDownloadToken");
+    }
 
     
  

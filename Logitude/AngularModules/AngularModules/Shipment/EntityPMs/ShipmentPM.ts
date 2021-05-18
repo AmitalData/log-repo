@@ -19,6 +19,7 @@ import { PropertyChangedArgs } from '../../Infrastructure/EventEmitterArgs/Prope
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 import { ShipmentAssemblyPM } from './ShipmentAssemblyPM';
 import { ShipmentStoragePricingPM } from './ShipmentStoragePricingPM';
+import { ShipmentProductItemPM } from './ShipmentProductItemPM';
 
 export class ShipmentPM {
     public UIProperties: UIProperties;
@@ -4917,12 +4918,21 @@ export class ShipmentPM {
         }
     }
 
-
     private documentFilingIds: string;
     public get DocumentFilingIds() { return this.documentFilingIds; }
     public set DocumentFilingIds(newValue: string) { if (this.documentFilingIds != newValue) { this.documentFilingIds = newValue; this.MarkAsDirty("DocumentFilingIds"); } }
 
+    private isStandalonePickupDelivery: boolean;
+    public get IsStandalonePickupDelivery() { return this.isStandalonePickupDelivery; }
+    public set IsStandalonePickupDelivery(newValue: boolean) { if (this.isStandalonePickupDelivery != newValue) { this.isStandalonePickupDelivery = newValue; this.MarkAsDirty("IsStandalonePickupDelivery"); } }      
 
+    private standalonePickupDeliveryId: string;
+    public get StandalonePickupDeliveryId() { return this.standalonePickupDeliveryId; }
+    public set StandalonePickupDeliveryId(newValue: string) { if (this.standalonePickupDeliveryId != newValue) { this.standalonePickupDeliveryId = newValue; this.MarkAsDirty("StandalonePickupDeliveryId"); } }      
+
+    private standalonePickupDeliveryNumber: string;
+    public get StandalonePickupDeliveryNumber() { return this.standalonePickupDeliveryNumber; }
+    public set StandalonePickupDeliveryNumber(newValue: string) { if (this.standalonePickupDeliveryNumber != newValue) { this.standalonePickupDeliveryNumber = newValue; this.MarkAsDirty("StandalonePickupDeliveryNumber"); } }      
 
     public OldEntityPM: ShipmentPM;
 
@@ -5337,6 +5347,7 @@ export class ShipmentPM {
             this.shipmentStoragePricings = newValue;
         }
     }
+    
     public AddShipmentStoragePricing(item: ShipmentStoragePricingPM) {
         if (item != null) {
             var index = this.ShipmentStoragePricings.indexOf(item);
@@ -5352,6 +5363,39 @@ export class ShipmentPM {
             var index = this.ShipmentStoragePricings.indexOf(item);
             if (index > -1) {
                 this.ShipmentStoragePricings.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+
+    private shipmentProductItems: ShipmentProductItemPM[];
+    get ShipmentProductItems() {
+        if (this.shipmentProductItems == null) {
+            this.shipmentProductItems = [];
+        }
+
+        return this.shipmentProductItems;
+    }
+    set ShipmentProductItems(newValue: ShipmentProductItemPM[]) {
+        if (this.shipmentProductItems != newValue) {
+            this.shipmentProductItems = newValue;
+        }
+    }
+    public AddProductItem(item: ShipmentProductItemPM) {
+        if (item != null) {
+            var index = this.ShipmentProductItems.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this.ShipmentProductItems.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveProductItem(item: ShipmentProductItemPM) {
+        if (item != null) {
+            var index = this.ShipmentProductItems.indexOf(item);
+            if (index > -1) {
+                this.ShipmentProductItems.splice(index, 1);
                 this.MarkAsDirty();
             }
         }

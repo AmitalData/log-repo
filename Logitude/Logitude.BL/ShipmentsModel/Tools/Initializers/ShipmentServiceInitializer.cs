@@ -79,7 +79,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
         public List<ShipmentCommodityPM> ShipmentCommoditiesChangeSet;
         public List<ShipmentAssemblyPM> ShipmentAssembliesChangeSet;
         public List<ShipmentStoragePricingPM> ShipmentStoragePricingsChangeSet;
-
+        public List<ShipmentProductItemPM> ShipmentProductItemsChangeSet;
         public Customer Customer { get; private set; }
 
         public ShipmentServiceInitializer(IShipmentsContext ShipmentContext, ShipmentPM entityPM, string loggedEmail)

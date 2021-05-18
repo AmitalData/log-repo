@@ -384,7 +384,8 @@ using Simplog.Data.ShipmentsModel;
 				   
 				   temp.BookingConfirmationNumber = MyEntityPM.BookingConfirmationNumber;
 				   temp.EstimatedFinalArrivalDate = MyEntityPM.EstimatedFinalArrivalDate;
-				   temp.ActualFinalArrivalDate = MyEntityPM.ActualFinalArrivalDate;					
+				   temp.ActualFinalArrivalDate = MyEntityPM.ActualFinalArrivalDate;
+				   temp.IsHTSMissing = MyEntityPM.IsHTSMissing;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -1204,6 +1205,12 @@ using Simplog.Data.ShipmentsModel;
 							temp.ActualFinalArrivalDate = MyEntity.ActualFinalArrivalDate;
 
 										}  
+
+					
+                    							//throw new ApplicationException("IsHTSMissing Can't be update"); 
+							temp.IsHTSMissing = MyEntity.IsHTSMissing;
+
+					 
 
 										   
 					return temp;

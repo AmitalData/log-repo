@@ -38,7 +38,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;הגדרות הנהלת חשבונות&quot;"
   DefaultText="&quot;Full Accounting Settings&quot;"
-  Code="&quot;be7f&quot;"
+  Code="&quot;02d6&quot;"
   Name="&quot;FullAccountingSetting Query Group&quot;"
   GenerateDomainService="true"
   ClientModuleName="&quot;Accounting&quot;"
@@ -3843,6 +3843,21 @@
       LocalDefaultText="&quot;ניתן להזין בין 1 ל 9 חודשים לגיול&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;FullAccountingSetting.O.AgingDefinition&quot;"
+      DefaultText="&quot;Aging Definition&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
-  <AdditionalFeatures />
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;AgingDefenetionSettings&quot;"
+      FeatureTypeCode="&quot;OTH&quot;"
+      FeatureTextCodeCode="&quot;FullAccountingSetting.Features.FullAccountingSetting.F.AgingDefenetion&quot;"
+      FeatureDefaultText="&quot;Aging Period Definition Settings&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+  </AdditionalFeatures>
 </entity>

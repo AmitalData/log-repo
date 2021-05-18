@@ -134,32 +134,36 @@ namespace WarehouseData
 
                             #region Create and Build  DW Table
 
-                            foreach (TableClass table in tableNameLists.Where(d => !d.HasFactTable))
-                            {
-                                stepName = table.DBTableName;
-
-                            
-                                Stopwatch stopWatchDWTable = null;
-                                if (table.DispayInScreen)
-                                {
-                                    stopWatchDWTable = new Stopwatch();
-                                    stopWatchDWTable.Start();
-                                    SetControlPropertyValue("Text", "Copying...", table);
-                                }
+                            TableClass waterMark = tableNameLists.Where(d => d.TableName == "WaterMark").FirstOrDefault();
+                           Parallel.ForEach(tableNameLists.Where(d => !d.HasFactTable && d.TableName != waterMark.TableName).ToList(), (table) =>
+                           {
+                               stepName = table.DBTableName;
 
 
-                                mainDataWarehouseService.BuildDWDataBase(sourceConnectionString, destinationConnectionString, table, TotalCountLabel);
-
-                                if (table.DispayInScreen)
-                                {
-                                    stopWatchDWTable.Stop();
-                                    TimeSpan stopWatchDWTableTs = stopWatchDWTable.Elapsed;
-                                    SetControlPropertyValue("ForeColor", Color.Green, table);
-                                    SetControlPropertyValue("Text", "Done in ( " + stopWatchDWTableTs.ToString(@"hh\:mm\:ss") + " )", table);
-                                }
+                               Stopwatch stopWatchDWTable = null;
+                               if (table.DispayInScreen)
+                               {
+                                   stopWatchDWTable = new Stopwatch();
+                                   stopWatchDWTable.Start();
+                                   SetControlPropertyValue("Text", "Copying...", table);
+                               }
 
 
-                            }
+                               mainDataWarehouseService.BuildDWDataBase(sourceConnectionString, destinationConnectionString, table, TotalCountLabel);
+
+                               if (table.DispayInScreen)
+                               {
+                                   stopWatchDWTable.Stop();
+                                   TimeSpan stopWatchDWTableTs = stopWatchDWTable.Elapsed;
+                                   SetControlPropertyValue("ForeColor", Color.Green, table);
+                                   SetControlPropertyValue("Text", "Done in ( " + stopWatchDWTableTs.ToString(@"hh\:mm\:ss") + " )", table);
+                               }
+
+
+                           });
+
+
+                            mainDataWarehouseService.BuildDWDataBase(sourceConnectionString, destinationConnectionString, waterMark, TotalCountLabel);
 
                             #endregion
 
@@ -173,8 +177,7 @@ namespace WarehouseData
                             mainDataWarehouseService.RunAdditionalScripte(destinationConnectionString, tableNameLists);
 
 
-
-                            foreach (TableClass table in tableNameLists.Where(d => d.HasDimensionTable).ToList())
+                            Parallel.ForEach(tableNameLists.Where(d => d.HasDimensionTable).ToList(), (table) =>
                             {
                                 Stopwatch stopWatchDimensionsTable = null;
 
@@ -203,11 +206,11 @@ namespace WarehouseData
 
                                 }
 
-                            }
+                            });
                             #endregion
 
                             #region  Create and Build Fact Table
-                            foreach (TableClass table in tableNameLists.Where(d => d.HasFactTable).ToList())
+                            Parallel.ForEach(tableNameLists.Where(d => d.HasFactTable).ToList(), (table) =>
                             {
                                 stepName = table.BuildScriptName;
 
@@ -224,7 +227,7 @@ namespace WarehouseData
                                 SetControlPropertyValue("ForeColor", Color.Green, table, "Fact");
                                 SetControlPropertyValue("Text", "Done in ( " + stopWatchDFactTableTs.ToString(@"hh\:mm\:ss") + " )", table, "Fact");
 
-                            }
+                            });
 
                             #endregion
 

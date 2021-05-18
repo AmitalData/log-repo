@@ -31,7 +31,7 @@ import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { BookingWizardPackageItem } from 'Booking/Components/BookingWizard/Packages/PackagesTabComponent';
 
 @Component({
-    
+
     selector: 'FullAccountingSettingsComponent',
     templateUrl: './FullAccountingSettingsComponent.html',
     providers: [ServiceArgs]
@@ -58,14 +58,21 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
         this.CurrentSession.StartBusyIndicatorLoading();
 
-        this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((responseGLAccount: any) => {
-        this._entityResourceService.getEntityResourceByTableName("ChartOfAccount").subscribe((response1: any) => {
-        this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response => {
-            this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => { });
-            });
+        this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((responseGLAccount: any) =>
+        {
+            this._entityResourceService.getEntityResourceByTableName("ChartOfAccount").subscribe((response1: any) =>
+            {
+                this._entityResourceService.getEntityResourceByTableName("FullAccountingSetting").subscribe((response1: any) =>
+                {
+                    this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response =>
+                    {
+                        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => { });
+                    });
 
+                });
             });
         });
+
         this.fullAccountingSettingPMService.get(SessionLocator.Tenant.toString()).subscribe((myResult: any) => {
             this.CurrentSession.StopBusyIndicator();
 
@@ -563,6 +570,11 @@ SubmitChanges(ControlAccountId:string) {
         this.TabsSource.push({ Name: "ControlAccounts", isSelected: false, Header: TextCodeTranslator.Translate("Accounting.O.ControlGLAccounts") });
         this.TabsSource.push({ Name: "Logo", isSelected: false, Header: TextCodeTranslator.Translate("Accounting.General.O.Cheques") });
 
+
+        const isAgingDefinitionEnabled = FeatureLocator.HasFeaturePermession("FullAccountingSetting", "AgingDefenetionSettings");
+        if(isAgingDefinitionEnabled)
+            this.TabsSource.push({ Name: "AgingDefinition", isSelected: false, Header: TextCodeTranslator.Translate("FullAccountingSetting.O.AgingDefinition") });
+
     }
     SelectionChanged(tab: any) {
 
@@ -619,5 +631,23 @@ SubmitChanges(ControlAccountId:string) {
 
     }
 
+
+    public ShowLocals: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
+    isRTL = ObjectsLocator.GlobalSetting ? (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl") : false;
+
+    NumberOfPeriods: number = 1;
+    Periods: any[] = [
+        {EnglishName: 'Period 1', LocalName: 'תקופה גיול 1', Code: 'period1'},
+        {EnglishName: 'Period 2', LocalName: 'תקופה גיול 2', Code: 'period2'},
+        {EnglishName: 'Period 3', LocalName: 'תקופה גיול 3', Code: 'period3'},
+        {EnglishName: 'Period 4', LocalName: 'תקופה גיול 4', Code: 'period4'},
+        {EnglishName: 'Period 5', LocalName: 'תקופה גיול 5', Code: 'period5'},
+        {EnglishName: 'Period Past', LocalName: 'לפני התקופה', Code: 'period-past'}
+    ];
+
+    // fill these arrays from database
+    SelectedPeriods1: any[] = [];
+    SelectedPeriods2: any[] = [];
+    SelectedPeriods3: any[] = [];
 
 }

@@ -185,6 +185,8 @@
     <Compile Include="CommonDataModel\EntityPOCOs\CustomerOpenFilesAmount.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\DWHEnvironmentSetting.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\Horse.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\HTSCode.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\ProductItem.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\TariffCarrierTranslation.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\UserLastSettings.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CustomerAdditional.cs" />
@@ -510,6 +512,8 @@
     <Compile Include="CommonDataModel\Repositories\ContactsUnseenEntitieRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CustomerOpenFilesAmountRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\HorseRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\HTSCodeRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\ProductItemRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\TariffCarrierTranslationRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\UserLastSettingsRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\DocumentsExecutionLogRepository.cs" />
@@ -673,6 +677,7 @@
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentCustomsMessageType.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentCustomsTransmission.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentPackageHarmonize.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentProductItem.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentStoragePricing.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentSubType.cs" />
     <Compile Include="ShipmentsModel\Mapping\CustomsTransferHeaderMap.cs" />
@@ -693,6 +698,7 @@
     <Compile Include="ShipmentsModel\Mapping\ShipmentCustomsMessageTypeMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentCustomsTransmissionMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentPackageHarmonizeMap.cs" />
+    <Compile Include="ShipmentsModel\Mapping\ShipmentProductItemMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentStoragePricingMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentSubTypeMap.cs" />
     <Compile Include="ShipmentsModel\Repositories\CustomsTransferHeaderRepository.cs" />
@@ -1113,6 +1119,7 @@
     <Compile Include="ShipmentsModel\Repositories\ShipmentCustomsMessageTypeRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentCustomsTransmissionRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentPackageHarmonizeRepository.cs" />
+    <Compile Include="ShipmentsModel\Repositories\ShipmentProductItemRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentStoragePricingRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentSubTypeRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\SpecialServicesTypeRepository.cs" />
