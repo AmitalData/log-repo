@@ -883,6 +883,41 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     // Pending 900
                     CourierMasterQueryService courierMasterService = new CourierMasterQueryService(requestParams.Tenant);
                     CourierMasterPM courierMaster = courierMasterService.GetSingle(_MyDeclarationPM.CourierMasterId, false, false);
+
+                    if (isCollectActive)
+                    {
+
+                        LogMessagingUtil.Instance.AppendLine("תהליך גביה- במידה ומופעל בדיקה האם להגדיר גבייה = 900");
+                        if (_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.FirstOrDefault().IncotermCode != "DDP" && _MyDeclarationPM.TotalTax > 0)
+                        {
+                            if (declarationPendingPM_900 == null)
+                            {
+                                declarationPendingPM_900 = new DeclarationPendingPM();
+                                declarationPendingPM_900.CourierPendingReasonCode = "900";
+                                declarationPendingPM_900.Status = "A";
+                                declarationPendingPM_900.ChangeSetOp = ChangeSetOperation.Insert;
+                                _MyDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM_900);
+                            }
+                            else if (declarationPendingPM_900.Status != "A")
+                            {
+                                declarationPendingPM_900.ChangeSetOp = ChangeSetOperation.Update;
+                                declarationPendingPM_900.Status = "A";
+                            }
+                            if (declarationPendingPM_900.ChangeSetOp != ChangeSetOperation.None)
+                            {
+                                LogMessagingUtil.Instance.AppendLine("Set Courier Pending Reason Code 900");
+                                if (_MyDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) _MyDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                            }
+                        }
+                        else if (declarationPendingPM_900 != null)
+                        {
+                            declarationPendingPM_900.ChangeSetOp = ChangeSetOperation.Update;
+                            declarationPendingPM_900.Status = "S";
+                            if (_MyDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) _MyDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                            LogMessagingUtil.Instance.AppendLine("Courier Pending Reason Code 900 Set as Solved");
+                        }
+                    }
+
                     if (courierMaster != null)
                     {
                         var myGDFDATAQueryService = new GDFDATAQueryService(AmitalContext.GetContext(requestParams.Tenant));
@@ -900,7 +935,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         }
                         if (isCollectActive && _MyDeclarationPM.TotalTax > 0 && _MyDeclarationPM.TotalTax != prev_TotalTax)
                         {
-                            if ((declarationPendingPM_900 != null && declarationPendingPM_900.Status != "S")  || prev_TotalTax==0  || prev_TotalTax==null)
+                            if ((declarationPendingPM_900 != null && declarationPendingPM_900.Status != "S") )
                             {
                                 if (_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.FirstOrDefault().IncotermCode != "DDP")
                                 {
@@ -923,39 +958,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             if (isStatusVPA) isCollectActive = false;
                         }
 
-                        if (isCollectActive)
-                        {
-
-                            LogMessagingUtil.Instance.AppendLine("תהליך גביה- במידה ומופעל בדיקה האם להגדיר גבייה = 900");
-                            if (_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.FirstOrDefault().IncotermCode != "DDP" && _MyDeclarationPM.TotalTax > 0)
-                            {
-                                if (declarationPendingPM_900 == null)
-                                {
-                                    declarationPendingPM_900 = new DeclarationPendingPM();
-                                    declarationPendingPM_900.CourierPendingReasonCode = "900";
-                                    declarationPendingPM_900.Status = "A";
-                                    declarationPendingPM_900.ChangeSetOp = ChangeSetOperation.Insert;
-                                    _MyDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM_900);
-                                }
-                                else if (declarationPendingPM_900.Status != "A")
-                                {
-                                    declarationPendingPM_900.ChangeSetOp = ChangeSetOperation.Update;
-                                    declarationPendingPM_900.Status = "A";
-                                }
-                                if (declarationPendingPM_900.ChangeSetOp != ChangeSetOperation.None)
-                                {
-                                    LogMessagingUtil.Instance.AppendLine("Set Courier Pending Reason Code 900");
-                                    if (_MyDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) _MyDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                                }
-                            }
-                            else if (declarationPendingPM_900 != null)
-                            {
-                                declarationPendingPM_900.ChangeSetOp = ChangeSetOperation.Update;
-                                declarationPendingPM_900.Status = "S";
-                                if (_MyDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) _MyDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                                LogMessagingUtil.Instance.AppendLine("Courier Pending Reason Code 900 Set as Solved");
-                            }
-                        }
                     }
 
                 }
