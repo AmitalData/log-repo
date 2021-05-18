@@ -39,7 +39,6 @@ namespace Logitude.QuoteTests.Steps
         [Given(@"an export air quote")]
         public void GivenAnExportAirQuote()
         {
-            CreateQuote(GetValidaQuotePM());
             QuoteContext.ExportAirQuote = GetCreatedQuote();
         }
 
@@ -86,15 +85,9 @@ namespace Logitude.QuoteTests.Steps
                 .Build();
         }
 
-        private void CreateQuote(QuotePM quotePM)
-        {
-            ApiResponse<QuotePM> PostResponse = APICaller.CallPost<QuotePM>(quotePM, Urls.QuoteController, UserTenant.Token);
-            quote = PostResponse.Data;
-        }
-
         private QuotePM GetCreatedQuote()
         {
-            string singleQuoteUrl = Urls.QuoteGetSingle(quote?.Id);
+            string singleQuoteUrl = Urls.QuoteGetSingle(QuoteData.Id);
 
             ApiResponse<QuotePM> GetResponse = APICaller.CallGet<QuotePM>(singleQuoteUrl, UserTenant.Token);
             return GetResponse.Data;
@@ -128,19 +121,6 @@ namespace Logitude.QuoteTests.Steps
                 .SaleCurrencyId((string)dataTable.Currency)
                 .CostExchangeRate((double)dataTable.ExchangeRate)
                 .SaleExchangeRate((double)dataTable.ExchangeRate)
-                .Build();
-        }
-        private QuotePM GetValidaQuotePM()
-        {
-            return new QuoteBuilder().WithDefualtValues()
-                .DirectionId("E")
-                .TransportModeId("A")
-                .QuoteTypeCode("A")
-                .FromPortId("JFK")
-                .ToPortId("MIA")
-                .ExchangeRate(1)
-                .SaleCurrencyId("EUR")
-                .QuoteCustomerTypeCode("SHI")
                 .Build();
         }
         #endregion

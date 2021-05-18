@@ -1,4 +1,5 @@
-﻿Feature: Quote Controller API's
+﻿@Pre-Prepare
+Feature: Quote Controller API's
 	The API creates a Direct Export Air quote , then update the quote
 	The API get Quote by single , single list and by filter
 
@@ -41,4 +42,12 @@ Scenario: GET Single Quote Export Air
 
 Scenario: GET Single List Quote Export Air
 	When get single list quote with QuoteId
+	Then quote should be avaliable
+
+Scenario: GET Quote By Filter
+	Given a quote with the following params
+		| property      | Value  |
+		| Direction     | Export |
+		| TransportMode | Air    |
+	When get quote by filter
 	Then quote should be avaliable
