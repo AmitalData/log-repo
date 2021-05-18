@@ -12,313 +12,102 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.HasKey(t => new { t.Id, t.Tenant, t.ShipmentNumber, t.ConsigneeAddressOneTime, t.ShipperAddressOneTime, t.ProfitInLocalCurrency, t.AccountedReceivablesInLocalCurrency, t.OpenReceivablesInLocalCurrency, t.LastUpdateDate, t.UpdatedByUserId, t.IsCancelled, t.IsAccountingClosed, t.LTCWEdited, t.IsDangerous, t.ShipmentStatusId, t.ChargeableWeightEdited, t.GrossWeightEdited, t.OtherPrepaidCollectId, t.FreightPrepaidCollectId, t.OrderIsDangerouseGoods,  t.IsOperationalClosed, t.DirectionId, t.TransportModeId, t.DepartmentId, t.CreateDateTime, t.BranchId, t.CreatedByUserId, t.AWBPrint, t.FollowUpId, t.FollowUpTypeId, t.FollowUpOwnerId });
 
             // Properties
-            this.Property(t => t.Id)
-                .IsRequired()
-                .HasMaxLength(15);
-
-            this.Property(t => t.Tenant)
-                .HasDatabaseGeneratedOption(null);
-
-            this.Property(t => t.ShipmentNumber)
-                .IsRequired()
-                .HasMaxLength(15);
-
-            this.Property(t => t.ShipperReference1)
-                .HasMaxLength(50);
-
-            this.Property(t => t.ShipmentMasterDataId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.MainCarriageFromPortId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.MainCarriageToPortId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.MainCarriageFinalDestinationPortId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.Transshipment3CarrierId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.Transshipment2CarrierId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.Transshipment1CarrierId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.MainCarriageCarrierId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.Transshipment3AdditionalMAWBOBLBL)
-                .HasMaxLength(20);
-
-            this.Property(t => t.Transshipment2AdditionalMAWBOBLBL)
-                .HasMaxLength(20);
-
-            this.Property(t => t.Transshipment1AdditionalMAWBOBLBL)
-                .HasMaxLength(20);
-
-            this.Property(t => t.Transshipment3VesselId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.Transshipment2VesselId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.Transshipment1VesselId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.MainCarriageVesselId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.BookingConfirmedBy)
-                .HasMaxLength(40);
-
-            this.Property(t => t.BookingConfirmationNotes)
-                .HasMaxLength(250);
-
-            this.Property(t => t.BookingConfirmationNumber)
-                .HasMaxLength(25);
-
-            this.Property(t => t.Transshipment3CarrierNumber)
-                .HasMaxLength(15);
-
-            this.Property(t => t.Transshipment3ToPortId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.Transshipment3FromPortId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.Transshipment2CarrierNumber)
-                .HasMaxLength(15);
-
-            this.Property(t => t.Transshipment2ToPortId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.Transshipment2FromPortId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.Transshipment1CarrierNumber)
-                .HasMaxLength(15);
-
-            this.Property(t => t.Transshipment1ToPortId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.Transshipment1FromPortId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.Master)
-                .HasMaxLength(20);
-
-            this.Property(t => t.MainCarriageCarrierNumber)
-                .HasMaxLength(15);
-
-            this.Property(t => t.ShipperReference2)
-                .HasMaxLength(50);
-
-            this.Property(t => t.ToPortId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.FromPortId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.MasterShipmentDataId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.ShipmentLevelCode)
-                .HasMaxLength(1);
-
-            this.Property(t => t.NextLegCode)
-                .HasMaxLength(4);
-
-            this.Property(t => t.ProfitCurrencyId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.SCI)
-                .HasMaxLength(1);
-
-            this.Property(t => t.AWBHandlingInformation)
-                .HasMaxLength(250);
-
-            this.Property(t => t.AWBInsurrenceValue)
-                .HasMaxLength(25);
-
-            this.Property(t => t.AWBAccountingInformation)
-                .HasMaxLength(250);
-
-            this.Property(t => t.AWBDeclaredValueForCustoms)
-                .HasMaxLength(25);
-
-            this.Property(t => t.AWBDeclaredValueForCarriage)
-                .HasMaxLength(25);
-
-            this.Property(t => t.AWBCarrierTarrifReference)
-                .HasMaxLength(25);
-
-            this.Property(t => t.FreightForwarderContactId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.FreightForwarderAddressId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.CustomAgentExportContactId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.CustomAgentExportAddressId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.ShipmentCustomerTypeCode)
-                .HasMaxLength(4);
-
-            this.Property(t => t.CustomerReference1)
-                .HasMaxLength(50);
-            
-            this.Property(t => t.CustomerReference2)
-                .HasMaxLength(50);
-
-            this.Property(t => t.CustomerContactId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.CustomerAddressId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.CustomerId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.FreightForwarderReference)
-                .HasMaxLength(50);
-
-            this.Property(t => t.FreightForwarderId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.CustomAgentExportReference)
-                .HasMaxLength(50);
-
-            this.Property(t => t.CustomAgentExportId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.CustomAgentImportReference)
-                .HasMaxLength(50);
-
-            this.Property(t => t.AWBCurrencyId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.OnCarriageCarrierId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.PreCarriageCarrierId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.UpdatedByUserId)
-                .IsRequired()
-                .HasMaxLength(15);
-
-            this.Property(t => t.ShipmentPayableStatusCode)
-                .HasMaxLength(4);
-
-            this.Property(t => t.ShipmentReceivableStatusCode)
-                .HasMaxLength(4);
-
-            this.Property(t => t.QuoteId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.OnCarriageVesselId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.PreCarriageVesselId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.DangerousMaterialDescription)
-                .HasMaxLength(30);
-
-            this.Property(t => t.DangerousPackagingGroup)
-                .HasMaxLength(10);
-
-            this.Property(t => t.DangerousClassNumber)
-                .HasMaxLength(10);
-
-            this.Property(t => t.DangerousUnNumber)
-                .HasMaxLength(4);
-
-            this.Property(t => t.DangerousIMDGCode)
-                .HasMaxLength(4);
-
-            this.Property(t => t.DangerousFlashPoint)
-                .HasMaxLength(8);
-
-            this.Property(t => t.MainHarmonize)
-                .HasMaxLength(9);
-
-
-
-            this.Property(t => t.VolumeUnitCode)
-                .HasMaxLength(3);
-
-            this.Property(t => t.DimensionsUnitCode)
-                .HasMaxLength(3);
-
-            this.Property(t => t.AgentReference2)
-                .HasMaxLength(50);
-
-            this.Property(t => t.AgentReference1)
-                .HasMaxLength(50);
-
-            this.Property(t => t.ShipperNotExporterContactId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.ConsigneeNotImporterContactId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.ConsigneeNotImporterAddressId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.ShipperNotExporterAddressId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.ConsigneeNotImporterId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.ShipperNotExporterId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.OtherPrepaidCollectId)
-                .IsRequired()
-                .HasMaxLength(1);
-
-            this.Property(t => t.FreightPrepaidCollectId)
-                .IsRequired()
-                .HasMaxLength(1);
-
-            this.Property(t => t.Field10)
-                .HasMaxLength(250);
-
-            this.Property(t => t.Field9)
-                .HasMaxLength(250);
-
-            this.Property(t => t.Field8)
-                .HasMaxLength(250);
-
-            this.Property(t => t.Field7)
-                .HasMaxLength(250);
-
-            this.Property(t => t.Field6)
-                .HasMaxLength(250);
-
-            this.Property(t => t.Field5)
-                .HasMaxLength(250);
-
-            this.Property(t => t.Field4)
-                .HasMaxLength(250);
-
-            this.Property(t => t.Field3)
-                .HasMaxLength(250);
-
-            this.Property(t => t.Field2)
-                .HasMaxLength(250);
-
-            this.Property(t => t.Field1)
-                .HasMaxLength(250);
-
+            this.Property(t => t.Id).IsRequired().HasMaxLength(15);
+            this.Property(t => t.Tenant).HasDatabaseGeneratedOption(null);
+            this.Property(t => t.ShipmentNumber).IsRequired().HasMaxLength(15);
+            this.Property(t => t.ShipperReference1).HasMaxLength(50);
+            this.Property(t => t.ShipmentMasterDataId).HasMaxLength(15);
+            this.Property(t => t.MainCarriageFromPortId).HasMaxLength(15);
+            this.Property(t => t.MainCarriageToPortId).HasMaxLength(15);
+            this.Property(t => t.MainCarriageFinalDestinationPortId).HasMaxLength(15);
+            this.Property(t => t.Transshipment3CarrierId).HasMaxLength(15);
+            this.Property(t => t.Transshipment2CarrierId).HasMaxLength(15);
+            this.Property(t => t.Transshipment1CarrierId).HasMaxLength(15);
+            this.Property(t => t.MainCarriageCarrierId).HasMaxLength(15);
+            this.Property(t => t.Transshipment3AdditionalMAWBOBLBL).HasMaxLength(20);
+            this.Property(t => t.Transshipment2AdditionalMAWBOBLBL).HasMaxLength(20);
+            this.Property(t => t.Transshipment1AdditionalMAWBOBLBL).HasMaxLength(20);
+            this.Property(t => t.Transshipment3VesselId).HasMaxLength(15);
+            this.Property(t => t.Transshipment2VesselId).HasMaxLength(15);
+            this.Property(t => t.Transshipment1VesselId).HasMaxLength(15);
+            this.Property(t => t.MainCarriageVesselId).HasMaxLength(15);
+            this.Property(t => t.BookingConfirmedBy).HasMaxLength(40);
+            this.Property(t => t.BookingConfirmationNotes).HasMaxLength(250);
+            this.Property(t => t.BookingConfirmationNumber).HasMaxLength(25);
+            this.Property(t => t.Transshipment3CarrierNumber).HasMaxLength(15);
+            this.Property(t => t.Transshipment3ToPortId).HasMaxLength(15);
+            this.Property(t => t.Transshipment3FromPortId).HasMaxLength(15);
+            this.Property(t => t.Transshipment2CarrierNumber).HasMaxLength(15);
+            this.Property(t => t.Transshipment2ToPortId).HasMaxLength(15);
+            this.Property(t => t.Transshipment2FromPortId).HasMaxLength(15);
+            this.Property(t => t.Transshipment1CarrierNumber).HasMaxLength(15);
+            this.Property(t => t.Transshipment1ToPortId).HasMaxLength(15);
+            this.Property(t => t.Transshipment1FromPortId).HasMaxLength(15);
+            this.Property(t => t.Master).HasMaxLength(20);
+            this.Property(t => t.MainCarriageCarrierNumber).HasMaxLength(15);
+            this.Property(t => t.ShipperReference2).HasMaxLength(50);
+            this.Property(t => t.ToPortId).HasMaxLength(15);
+            this.Property(t => t.FromPortId).HasMaxLength(15);
+            this.Property(t => t.MasterShipmentDataId).HasMaxLength(15);
+            this.Property(t => t.ShipmentLevelCode).HasMaxLength(1);
+            this.Property(t => t.NextLegCode).HasMaxLength(4);
+            this.Property(t => t.ProfitCurrencyId).HasMaxLength(15);
+            this.Property(t => t.SCI).HasMaxLength(1);
+            this.Property(t => t.AWBHandlingInformation).HasMaxLength(250);
+            this.Property(t => t.AWBInsurrenceValue).HasMaxLength(25);
+            this.Property(t => t.AWBAccountingInformation).HasMaxLength(250);
+            this.Property(t => t.AWBDeclaredValueForCustoms).HasMaxLength(25);
+            this.Property(t => t.AWBDeclaredValueForCarriage).HasMaxLength(25);
+            this.Property(t => t.AWBCarrierTarrifReference).HasMaxLength(25);
+            this.Property(t => t.FreightForwarderContactId).HasMaxLength(15);
+            this.Property(t => t.FreightForwarderAddressId).HasMaxLength(15);
+            this.Property(t => t.CustomAgentExportContactId).HasMaxLength(15);
+            this.Property(t => t.CustomAgentExportAddressId).HasMaxLength(15);
+            this.Property(t => t.ShipmentCustomerTypeCode).HasMaxLength(4);
+            this.Property(t => t.CustomerReference1).HasMaxLength(50);            
+            this.Property(t => t.CustomerReference2).HasMaxLength(50);
+            this.Property(t => t.CustomerContactId).HasMaxLength(15);
+            this.Property(t => t.CustomerAddressId).HasMaxLength(15);
+            this.Property(t => t.CustomerId).HasMaxLength(15);
+            this.Property(t => t.FreightForwarderReference).HasMaxLength(50);
+            this.Property(t => t.FreightForwarderId).HasMaxLength(15);
+            this.Property(t => t.CustomAgentExportReference).HasMaxLength(50);
+            this.Property(t => t.CustomAgentExportId).HasMaxLength(15);
+            this.Property(t => t.CustomAgentImportReference).HasMaxLength(50);
+            this.Property(t => t.AWBCurrencyId).HasMaxLength(15);
+            this.Property(t => t.UpdatedByUserId).IsRequired().HasMaxLength(15);
+            this.Property(t => t.ShipmentPayableStatusCode).HasMaxLength(4);
+            this.Property(t => t.ShipmentReceivableStatusCode).HasMaxLength(4);
+            this.Property(t => t.QuoteId).HasMaxLength(15);
+            this.Property(t => t.DangerousMaterialDescription).HasMaxLength(30);
+            this.Property(t => t.DangerousPackagingGroup).HasMaxLength(10);
+            this.Property(t => t.DangerousClassNumber).HasMaxLength(10);
+            this.Property(t => t.DangerousUnNumber).HasMaxLength(4);
+            this.Property(t => t.DangerousIMDGCode).HasMaxLength(4);
+            this.Property(t => t.DangerousFlashPoint).HasMaxLength(8);
+            this.Property(t => t.MainHarmonize).HasMaxLength(9);
+            this.Property(t => t.VolumeUnitCode).HasMaxLength(3);
+            this.Property(t => t.DimensionsUnitCode).HasMaxLength(3);
+            this.Property(t => t.AgentReference2).HasMaxLength(50);
+            this.Property(t => t.AgentReference1).HasMaxLength(50);
+            this.Property(t => t.ShipperNotExporterContactId).HasMaxLength(15);
+            this.Property(t => t.ConsigneeNotImporterContactId).HasMaxLength(15);
+            this.Property(t => t.ConsigneeNotImporterAddressId).HasMaxLength(15);
+            this.Property(t => t.ShipperNotExporterAddressId).HasMaxLength(15);
+            this.Property(t => t.ConsigneeNotImporterId).HasMaxLength(15);
+            this.Property(t => t.ShipperNotExporterId).HasMaxLength(15);
+            this.Property(t => t.OtherPrepaidCollectId).IsRequired().HasMaxLength(1);
+            this.Property(t => t.FreightPrepaidCollectId).IsRequired().HasMaxLength(1);
+            this.Property(t => t.Field10).HasMaxLength(250);
+            this.Property(t => t.Field9).HasMaxLength(250);
+            this.Property(t => t.Field8).HasMaxLength(250);
+            this.Property(t => t.Field7).HasMaxLength(250);
+            this.Property(t => t.Field6).HasMaxLength(250);
+            this.Property(t => t.Field5).HasMaxLength(250);
+            this.Property(t => t.Field4).HasMaxLength(250);
+            this.Property(t => t.Field3).HasMaxLength(250);
+            this.Property(t => t.Field2).HasMaxLength(250);
+            this.Property(t => t.Field1).HasMaxLength(250);
             this.Property(t => t.Field11).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.Field12).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.Field13).HasMaxLength(250).IsUnicode(true);
@@ -352,87 +141,21 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.From).HasMaxLength(150).IsUnicode(false);
             this.Property(t => t.To).HasMaxLength(150).IsUnicode(false);
             this.Property(t => t.Origin).HasMaxLength(150).IsUnicode(false);
-
-            //this.Property(t => t.LastModified)
-            //    .IsRequired()
-            //    .IsFixedLength()
-            //    .HasMaxLength(8)
-            //    .IsRowVersion();
-
-            this.Property(t => t.ConsigneeContactId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.AgentContactId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.AgentAddressId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.CustomAgentImportAddressId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.CustomAgentImportContactId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.ShipperContactId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.Notify2ContactId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.Notify1ContactId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.Notify2AddressId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.Notify1AddressId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.AgentId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.OnCarriageCarrierNumber)
-                .HasMaxLength(15);
-
-            this.Property(t => t.OnCarriageToPortId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.OnCarriageFromPortId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.OnCarriageTransportModeId)
-                .IsFixedLength()
-                .HasMaxLength(1);
-
-            this.Property(t => t.PreCarriageCarrierNumber)
-                .HasMaxLength(15);
-
-            this.Property(t => t.PreCarriageToPortId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.PreCarriageFromPortId)
-                .HasMaxLength(15);
-
-            this.Property(t => t.PreCarriageTransportModeId)
-                .IsFixedLength()
-                .HasMaxLength(1);
-
-            this.Property(t => t.DescriptionOfGoods)
-                .HasMaxLength(512);
-
-            this.Property(t => t.Notes)
-                .HasMaxLength(250);
-
-            this.Property(t => t.DirectionId)
-                .IsRequired()
-                .IsFixedLength()
-                .HasMaxLength(1);
-
-            this.Property(t => t.TransportModeId)
-                .IsRequired()
-                .IsFixedLength()
-                .HasMaxLength(1);
+            this.Property(t => t.ConsigneeContactId).HasMaxLength(15);
+            this.Property(t => t.AgentContactId).HasMaxLength(15);
+            this.Property(t => t.AgentAddressId).HasMaxLength(15);
+            this.Property(t => t.CustomAgentImportAddressId).HasMaxLength(15);
+            this.Property(t => t.CustomAgentImportContactId).HasMaxLength(15);
+            this.Property(t => t.ShipperContactId).HasMaxLength(15);
+            this.Property(t => t.Notify2ContactId).HasMaxLength(15);
+            this.Property(t => t.Notify1ContactId).HasMaxLength(15);
+            this.Property(t => t.Notify2AddressId).HasMaxLength(15);
+            this.Property(t => t.Notify1AddressId).HasMaxLength(15);
+            this.Property(t => t.AgentId).HasMaxLength(15);
+            this.Property(t => t.DescriptionOfGoods).HasMaxLength(512);
+            this.Property(t => t.Notes).HasMaxLength(250);
+            this.Property(t => t.DirectionId).IsRequired().IsFixedLength().HasMaxLength(1);
+            this.Property(t => t.TransportModeId).IsRequired().IsFixedLength().HasMaxLength(1);
 
             this.Property(t => t.ConsigneeAddressId)
                 .HasMaxLength(15);
@@ -511,23 +234,7 @@ namespace Simplog.Data.ShipmentModel.Mapping
 
             this.Property(t => t.Transshipment3ToPortCode)
                 .IsFixedLength()
-                .HasMaxLength(3);
-
-            this.Property(t => t.PreCarriageFromPortCode)
-                .IsFixedLength()
-                .HasMaxLength(3);
-
-            this.Property(t => t.PreCarriageToPortCode)
-                .IsFixedLength()
-                .HasMaxLength(3);
-
-            this.Property(t => t.OnCarriageFromPortCode)
-                .IsFixedLength()
-                .HasMaxLength(3);
-
-            this.Property(t => t.OnCarriageToPortCode)
-                .IsFixedLength()
-                .HasMaxLength(3);
+                .HasMaxLength(3);           
 
             this.Property(t => t.MainCarriageToPortName)
                 .HasMaxLength(40);
@@ -545,26 +252,14 @@ namespace Simplog.Data.ShipmentModel.Mapping
                 .HasMaxLength(40);
 
             this.Property(t => t.Transshipment2FromPortName)
-                .HasMaxLength(40);
-
-            this.Property(t => t.PreCarriageFromPortName)
-                .HasMaxLength(40);
-
-            this.Property(t => t.OnCarriageFromPortName)
-                .HasMaxLength(40);
-
-            this.Property(t => t.PreCarriageToPortName)
-                .HasMaxLength(40);
+                .HasMaxLength(40);           
 
             this.Property(t => t.Transshipment3FromPortName)
                 .HasMaxLength(40);
 
             this.Property(t => t.Transshipment3ToPortName)
                 .HasMaxLength(40);
-
-            this.Property(t => t.OnCarriageToPortName)
-                .HasMaxLength(40);
-
+            
             this.Property(t => t.CustomerName)
                 .HasMaxLength(60);
 
@@ -678,49 +373,21 @@ namespace Simplog.Data.ShipmentModel.Mapping
                 .HasMaxLength(2);
 
             this.Property(t => t.Transshipment3FromPortCountryName)
-                .HasMaxLength(120);
-
-            this.Property(t => t.PreCarriageFromPortCountryCode)
-                .IsFixedLength()
-                .HasMaxLength(2);
-
-            this.Property(t => t.PreCarriageFromPortCountryName)
-                .HasMaxLength(120);
-
-            this.Property(t => t.OnCarriageFromPortCountryCode)
-                .IsFixedLength()
-                .HasMaxLength(2);
-
-            this.Property(t => t.OnCarriageFromPortCountryName)
-                .HasMaxLength(120);
+                .HasMaxLength(120);            
 
             this.Property(t => t.Transshipment1ToPortCountryCode)
                 .IsFixedLength()
                 .HasMaxLength(2);
 
             this.Property(t => t.Transshipment1ToPortCountryName)
-                .HasMaxLength(120);
-
-            this.Property(t => t.OnCarriageToPortCountryCode)
-                .IsFixedLength()
-                .HasMaxLength(2);
-
-            this.Property(t => t.OnCarriageToPortCountryName)
-                .HasMaxLength(120);
+                .HasMaxLength(120);            
 
             this.Property(t => t.Transshipment2ToPortCountryCode)
                 .IsFixedLength()
                 .HasMaxLength(2);
 
             this.Property(t => t.Transshipment2ToPortCountryName)
-                .HasMaxLength(120);
-
-            this.Property(t => t.PreCarriageToPortCountryCode)
-                .IsFixedLength()
-                .HasMaxLength(2);
-
-            this.Property(t => t.PreCarriageToPortCountryName)
-                .HasMaxLength(120);
+                .HasMaxLength(120);            
 
             this.Property(t => t.Transshipment3ToPortCountryCode)
                 .IsFixedLength()
@@ -751,19 +418,7 @@ namespace Simplog.Data.ShipmentModel.Mapping
                 .HasMaxLength(60);
 
             this.Property(t => t.Transshipment3CarrierCode)
-                .HasMaxLength(15);
-
-            this.Property(t => t.PreCarriageCarrierName)
-                .HasMaxLength(60);
-
-            this.Property(t => t.PreCarriageCarrierCode)
-                .HasMaxLength(15);
-
-            this.Property(t => t.OnCarriageCarrierName)
-                .HasMaxLength(60);
-
-            this.Property(t => t.OnCarriageCarrierCode)
-                .HasMaxLength(15);
+                .HasMaxLength(15);           
 
             this.Property(t => t.NextLegName)
                 .HasMaxLength(40);
@@ -904,9 +559,7 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Ignore(d => d.NumberOfShipments);
             this.Ignore(d => d.AccessDate);
             this.Ignore(d => d.UpdatedByUserName);
-            this.Ignore(d => d.EventNote);
-            this.Ignore(d => d.PreCarriageCarrierWebSite);
-            this.Ignore(d => d.OnCarriageCarrierWebSite);
+            this.Ignore(d => d.EventNote);            
             this.Ignore(d => d.MainCarriageTransportModeId);
             this.Ignore(d => d.MainCarriageCarrierWebSite);
             this.Ignore(d => d.Transshipment1CarrierWebSite);
@@ -956,42 +609,7 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.Notify2Reference).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.ShipperNotExporterReference).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.ConsigneeNotImporterReference).HasMaxLength(50).IsUnicode(false);
-            this.Property(t => t.ARInvoices).HasMaxLength(1000).IsUnicode(false);
-
-            this.Property(t => t.PreForwardingCarrierId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.PreForwardingVesselId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.PreForwardingCarrierNumber).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.PreForwardingToPortId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.PreForwardingFromPortId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.PreForwardingTransportModeId).IsFixedLength().HasMaxLength(1).IsUnicode(false);
-            this.Property(t => t.PreForwardingFromPortCode).IsFixedLength().HasMaxLength(3).IsUnicode(false);
-            this.Property(t => t.PreForwardingToPortCode).IsFixedLength().HasMaxLength(3).IsUnicode(false);
-            this.Property(t => t.PreForwardingFromPortName).HasMaxLength(40).IsUnicode(false);
-            this.Property(t => t.PreForwardingToPortName).HasMaxLength(40).IsUnicode(false);
-            this.Property(t => t.PreForwardingFromPortCountryCode).IsFixedLength().HasMaxLength(2).IsUnicode(false);
-            this.Property(t => t.PreForwardingFromPortCountryName).HasMaxLength(120).IsUnicode(false);
-            this.Property(t => t.PreForwardingToPortCountryCode).IsFixedLength().HasMaxLength(2).IsUnicode(false);
-            this.Property(t => t.PreForwardingToPortCountryName).HasMaxLength(120).IsUnicode(false);
-            this.Property(t => t.PreForwardingCarrierName).HasMaxLength(60).IsUnicode(false);
-            this.Property(t => t.PreForwardingCarrierCode).HasMaxLength(15).IsUnicode(false);
-            this.Ignore(d => d.PreForwardingCarrierWebSite);
-            this.Property(t => t.OnForwardingCarrierId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.OnForwardingVesselId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.OnForwardingCarrierNumber).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.OnForwardingToPortId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.OnForwardingFromPortId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.OnForwardingTransportModeId).IsFixedLength().HasMaxLength(1).IsUnicode(false);
-            this.Property(t => t.OnForwardingFromPortCode).IsFixedLength().HasMaxLength(3).IsUnicode(false);
-            this.Property(t => t.OnForwardingToPortCode).IsFixedLength().HasMaxLength(3).IsUnicode(false);
-            this.Property(t => t.OnForwardingFromPortName).HasMaxLength(40).IsUnicode(false);
-            this.Property(t => t.OnForwardingToPortName).HasMaxLength(40).IsUnicode(false);
-            this.Property(t => t.OnForwardingFromPortCountryCode).IsFixedLength().HasMaxLength(2);
-            this.Property(t => t.OnForwardingFromPortCountryName).HasMaxLength(120).IsUnicode(false);
-            this.Property(t => t.OnForwardingToPortCountryCode).IsFixedLength().HasMaxLength(2).IsUnicode(false);
-            this.Property(t => t.OnForwardingToPortCountryName).HasMaxLength(120).IsUnicode(false);
-            this.Property(t => t.OnForwardingCarrierName).HasMaxLength(60).IsUnicode(false);
-            this.Property(t => t.OnForwardingCarrierCode).HasMaxLength(15).IsUnicode(false);
-            this.Ignore(d => d.OnForwardingCarrierWebSite);
+            this.Property(t => t.ARInvoices).HasMaxLength(1000).IsUnicode(false);            
 
             // Table & Column Mappings
             this.ToTable("ShipmentFollowUpDataView");
@@ -1086,9 +704,7 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.ShipperAddressOneTime).HasColumnName("ShipperAddressOneTime");
             this.Property(t => t.EstimateProfitInLocalCurrency).HasColumnName("EstimateProfitInLocalCurrency");
             this.Property(t => t.AWBCurrencyId).HasColumnName("AWBCurrencyId");
-            this.Property(t => t.OrderChargeableWeight).HasColumnName("OrderChargeableWeight");
-            this.Property(t => t.OnCarriageCarrierId).HasColumnName("OnCarriageCarrierId");
-            this.Property(t => t.PreCarriageCarrierId).HasColumnName("PreCarriageCarrierId");
+            this.Property(t => t.OrderChargeableWeight).HasColumnName("OrderChargeableWeight");            
             this.Property(t => t.ProfitInLocalCurrency).HasColumnName("ProfitInLocalCurrency");
             this.Property(t => t.AccountedReceivablesInLocalCurrency).HasColumnName("AccountedReceivablesInLocalCurrency");
             this.Property(t => t.OpenReceivablesInLocalCurrency).HasColumnName("OpenReceivablesInLocalCurrency");
@@ -1101,9 +717,7 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.QuoteId).HasColumnName("QuoteId");
             this.Property(t => t.ShipmentDeliveryIndex).HasColumnName("ShipmentDeliveryIndex");
             this.Property(t => t.ShipmentPickUpIndex).HasColumnName("ShipmentPickUpIndex");
-            this.Property(t => t.LTCWEdited).HasColumnName("LTCWEdited");
-            this.Property(t => t.OnCarriageVesselId).HasColumnName("OnCarriageVesselId");
-            this.Property(t => t.PreCarriageVesselId).HasColumnName("PreCarriageVesselId");
+            this.Property(t => t.LTCWEdited).HasColumnName("LTCWEdited");            
             this.Property(t => t.DangerousMaterialDescription).HasColumnName("DangerousMaterialDescription");
             this.Property(t => t.DangerousPackagingGroup).HasColumnName("DangerousPackagingGroup");
             this.Property(t => t.DangerousClassNumber).HasColumnName("DangerousClassNumber");
@@ -1195,19 +809,11 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.PreCarriageETA).HasColumnName("PreCarriageETA");
             this.Property(t => t.OnCarriageETA).HasColumnName("OnCarriageETA");
             this.Property(t => t.OnCarriageETD).HasColumnName("OnCarriageETD");
-            this.Property(t => t.AgentId).HasColumnName("AgentId");
-            this.Property(t => t.OnCarriageCarrierNumber).HasColumnName("OnCarriageCarrierNumber");
+            this.Property(t => t.AgentId).HasColumnName("AgentId");            
             this.Property(t => t.OnCarriageATA).HasColumnName("OnCarriageATA");
-            this.Property(t => t.OnCarriageATD).HasColumnName("OnCarriageATD");
-            this.Property(t => t.OnCarriageToPortId).HasColumnName("OnCarriageToPortId");
-            this.Property(t => t.OnCarriageFromPortId).HasColumnName("OnCarriageFromPortId");
-            this.Property(t => t.OnCarriageTransportModeId).HasColumnName("OnCarriageTransportModeId");
-            this.Property(t => t.PreCarriageCarrierNumber).HasColumnName("PreCarriageCarrierNumber");
+            this.Property(t => t.OnCarriageATD).HasColumnName("OnCarriageATD");            
             this.Property(t => t.PreCarriageATA).HasColumnName("PreCarriageATA");
-            this.Property(t => t.PreCarriageATD).HasColumnName("PreCarriageATD");
-            this.Property(t => t.PreCarriageToPortId).HasColumnName("PreCarriageToPortId");
-            this.Property(t => t.PreCarriageFromPortId).HasColumnName("PreCarriageFromPortId");
-            this.Property(t => t.PreCarriageTransportModeId).HasColumnName("PreCarriageTransportModeId");
+            this.Property(t => t.PreCarriageATD).HasColumnName("PreCarriageATD");            
             this.Property(t => t.HAWBDate).HasColumnName("HAWBDate");
             this.Property(t => t.DescriptionOfGoods).HasColumnName("DescriptionOfGoods");
             this.Property(t => t.Notes).HasColumnName("Notes");
@@ -1236,23 +842,15 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.Transshipment2FromPortCode).HasColumnName("Transshipment2FromPortCode");
             this.Property(t => t.Transshipment2ToPortCode).HasColumnName("Transshipment2ToPortCode");
             this.Property(t => t.Transshipment3FromPortCode).HasColumnName("Transshipment3FromPortCode");
-            this.Property(t => t.Transshipment3ToPortCode).HasColumnName("Transshipment3ToPortCode");
-            this.Property(t => t.PreCarriageFromPortCode).HasColumnName("PreCarriageFromPortCode");
-            this.Property(t => t.PreCarriageToPortCode).HasColumnName("PreCarriageToPortCode");
-            this.Property(t => t.OnCarriageFromPortCode).HasColumnName("OnCarriageFromPortCode");
-            this.Property(t => t.OnCarriageToPortCode).HasColumnName("OnCarriageToPortCode");
+            this.Property(t => t.Transshipment3ToPortCode).HasColumnName("Transshipment3ToPortCode");            
             this.Property(t => t.MainCarriageToPortName).HasColumnName("MainCarriageToPortName");
             this.Property(t => t.MainCarriageFromPortName).HasColumnName("MainCarriageFromPortName");
             this.Property(t => t.Transshipment1FromPortName).HasColumnName("Transshipment1FromPortName");
             this.Property(t => t.Transshipment1ToPortName).HasColumnName("Transshipment1ToPortName");
             this.Property(t => t.Transshipment2ToPortName).HasColumnName("Transshipment2ToPortName");
-            this.Property(t => t.Transshipment2FromPortName).HasColumnName("Transshipment2FromPortName");
-            this.Property(t => t.PreCarriageFromPortName).HasColumnName("PreCarriageFromPortName");
-            this.Property(t => t.OnCarriageFromPortName).HasColumnName("OnCarriageFromPortName");
-            this.Property(t => t.PreCarriageToPortName).HasColumnName("PreCarriageToPortName");
+            this.Property(t => t.Transshipment2FromPortName).HasColumnName("Transshipment2FromPortName");            
             this.Property(t => t.Transshipment3FromPortName).HasColumnName("Transshipment3FromPortName");
-            this.Property(t => t.Transshipment3ToPortName).HasColumnName("Transshipment3ToPortName");
-            this.Property(t => t.OnCarriageToPortName).HasColumnName("OnCarriageToPortName");
+            this.Property(t => t.Transshipment3ToPortName).HasColumnName("Transshipment3ToPortName");            
             this.Property(t => t.CustomerName).HasColumnName("CustomerName");
             this.Property(t => t.CustomerNote).HasColumnName("CustomerNote");
             this.Property(t => t.FreightForwarderName).HasColumnName("FreightForwarderName");
@@ -1288,19 +886,11 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.Transshipment2FromPortCountryCode).HasColumnName("Transshipment2FromPortCountryCode");
             this.Property(t => t.Transshipment2FromPortCountryName).HasColumnName("Transshipment2FromPortCountryName");
             this.Property(t => t.Transshipment3FromPortCountryCode).HasColumnName("Transshipment3FromPortCountryCode");
-            this.Property(t => t.Transshipment3FromPortCountryName).HasColumnName("Transshipment3FromPortCountryName");
-            this.Property(t => t.PreCarriageFromPortCountryCode).HasColumnName("PreCarriageFromPortCountryCode");
-            this.Property(t => t.PreCarriageFromPortCountryName).HasColumnName("PreCarriageFromPortCountryName");
-            this.Property(t => t.OnCarriageFromPortCountryCode).HasColumnName("OnCarriageFromPortCountryCode");
-            this.Property(t => t.OnCarriageFromPortCountryName).HasColumnName("OnCarriageFromPortCountryName");
+            this.Property(t => t.Transshipment3FromPortCountryName).HasColumnName("Transshipment3FromPortCountryName");            
             this.Property(t => t.Transshipment1ToPortCountryCode).HasColumnName("Transshipment1ToPortCountryCode");
-            this.Property(t => t.Transshipment1ToPortCountryName).HasColumnName("Transshipment1ToPortCountryName");
-            this.Property(t => t.OnCarriageToPortCountryCode).HasColumnName("OnCarriageToPortCountryCode");
-            this.Property(t => t.OnCarriageToPortCountryName).HasColumnName("OnCarriageToPortCountryName");
+            this.Property(t => t.Transshipment1ToPortCountryName).HasColumnName("Transshipment1ToPortCountryName");            
             this.Property(t => t.Transshipment2ToPortCountryCode).HasColumnName("Transshipment2ToPortCountryCode");
-            this.Property(t => t.Transshipment2ToPortCountryName).HasColumnName("Transshipment2ToPortCountryName");
-            this.Property(t => t.PreCarriageToPortCountryCode).HasColumnName("PreCarriageToPortCountryCode");
-            this.Property(t => t.PreCarriageToPortCountryName).HasColumnName("PreCarriageToPortCountryName");
+            this.Property(t => t.Transshipment2ToPortCountryName).HasColumnName("Transshipment2ToPortCountryName");            
             this.Property(t => t.Transshipment3ToPortCountryCode).HasColumnName("Transshipment3ToPortCountryCode");
             this.Property(t => t.Transshipment3ToPortCountryName).HasColumnName("Transshipment3ToPortCountryName");
             this.Property(t => t.MainCarriageCarrierName).HasColumnName("MainCarriageCarrierName");
@@ -1310,11 +900,7 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.Transshipment2CarrierName).HasColumnName("Transshipment2CarrierName");
             this.Property(t => t.Transshipment2CarrierCode).HasColumnName("Transshipment2CarrierCode");
             this.Property(t => t.Transshipment3CarrierName).HasColumnName("Transshipment3CarrierName");
-            this.Property(t => t.Transshipment3CarrierCode).HasColumnName("Transshipment3CarrierCode");
-            this.Property(t => t.PreCarriageCarrierName).HasColumnName("PreCarriageCarrierName");
-            this.Property(t => t.PreCarriageCarrierCode).HasColumnName("PreCarriageCarrierCode");
-            this.Property(t => t.OnCarriageCarrierName).HasColumnName("OnCarriageCarrierName");
-            this.Property(t => t.OnCarriageCarrierCode).HasColumnName("OnCarriageCarrierCode");
+            this.Property(t => t.Transshipment3CarrierCode).HasColumnName("Transshipment3CarrierCode");            
             this.Property(t => t.NextLegName).HasColumnName("NextLegName");
             this.Property(t => t.DirectionName).HasColumnName("DirectionName");
             this.Property(t => t.TransportModeName).HasColumnName("TransportModeName");
@@ -1448,49 +1034,15 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.DeclarationDate).HasColumnName("DeclarationDate");
             this.Property(t => t.DeclarationNumber).HasColumnName("DeclarationNumber");
             this.Property(t => t.ARInvoices).HasColumnName("ARInvoices");
-            this.Property(t => t.NotInvoicedReceivablesAmount).HasColumnName("NotInvoicedReceivablesAmount");
-
-            this.Property(t => t.PreForwardingCarrierId).HasColumnName("PreForwardingCarrierId");
-            this.Property(t => t.PreForwardingVesselId).HasColumnName("PreForwardingVesselId");
+            this.Property(t => t.NotInvoicedReceivablesAmount).HasColumnName("NotInvoicedReceivablesAmount");            
             this.Property(t => t.PreForwardingETD).HasColumnName("PreForwardingETD");
-            this.Property(t => t.PreForwardingETA).HasColumnName("PreForwardingETA");
-            this.Property(t => t.PreForwardingCarrierNumber).HasColumnName("PreForwardingCarrierNumber");
+            this.Property(t => t.PreForwardingETA).HasColumnName("PreForwardingETA");            
             this.Property(t => t.PreForwardingATA).HasColumnName("PreForwardingATA");
             this.Property(t => t.PreForwardingATD).HasColumnName("PreForwardingATD");
-            this.Property(t => t.PreForwardingToPortId).HasColumnName("PreForwardingToPortId");
-            this.Property(t => t.PreForwardingFromPortId).HasColumnName("PreForwardingFromPortId");
-            this.Property(t => t.PreForwardingTransportModeId).HasColumnName("PreForwardingTransportModeId");
-            this.Property(t => t.PreForwardingFromPortCode).HasColumnName("PreForwardingFromPortCode");
-            this.Property(t => t.PreForwardingToPortCode).HasColumnName("PreForwardingToPortCode");
-            this.Property(t => t.PreForwardingFromPortName).HasColumnName("PreForwardingFromPortName");
-            this.Property(t => t.PreForwardingToPortName).HasColumnName("PreForwardingToPortName");
-            this.Property(t => t.PreForwardingFromPortCountryCode).HasColumnName("PreForwardingFromPortCountryCode");
-            this.Property(t => t.PreForwardingFromPortCountryName).HasColumnName("PreForwardingFromPortCountryName");
-            this.Property(t => t.PreForwardingToPortCountryCode).HasColumnName("PreForwardingToPortCountryCode");
-            this.Property(t => t.PreForwardingToPortCountryName).HasColumnName("PreForwardingToPortCountryName");
-            this.Property(t => t.PreForwardingCarrierName).HasColumnName("PreForwardingCarrierName");
-            this.Property(t => t.PreForwardingCarrierCode).HasColumnName("PreForwardingCarrierCode");
-
-            this.Property(t => t.OnForwardingCarrierId).HasColumnName("OnForwardingCarrierId");
-            this.Property(t => t.OnForwardingVesselId).HasColumnName("OnForwardingVesselId");
             this.Property(t => t.OnForwardingETA).HasColumnName("OnForwardingETA");
-            this.Property(t => t.OnForwardingETD).HasColumnName("OnForwardingETD");
-            this.Property(t => t.OnForwardingCarrierNumber).HasColumnName("OnForwardingCarrierNumber");
+            this.Property(t => t.OnForwardingETD).HasColumnName("OnForwardingETD");            
             this.Property(t => t.OnForwardingATA).HasColumnName("OnForwardingATA");
-            this.Property(t => t.OnForwardingATD).HasColumnName("OnForwardingATD");
-            this.Property(t => t.OnForwardingToPortId).HasColumnName("OnForwardingToPortId");
-            this.Property(t => t.OnForwardingFromPortId).HasColumnName("OnForwardingFromPortId");
-            this.Property(t => t.OnForwardingTransportModeId).HasColumnName("OnForwardingTransportModeId");
-            this.Property(t => t.OnForwardingFromPortCode).HasColumnName("OnForwardingFromPortCode");
-            this.Property(t => t.OnForwardingToPortCode).HasColumnName("OnForwardingToPortCode");
-            this.Property(t => t.OnForwardingFromPortName).HasColumnName("OnForwardingFromPortName");
-            this.Property(t => t.OnForwardingToPortName).HasColumnName("OnForwardingToPortName");
-            this.Property(t => t.OnForwardingFromPortCountryCode).HasColumnName("OnForwardingFromPortCountryCode");
-            this.Property(t => t.OnForwardingFromPortCountryName).HasColumnName("OnForwardingFromPortCountryName");
-            this.Property(t => t.OnForwardingToPortCountryCode).HasColumnName("OnForwardingToPortCountryCode");
-            this.Property(t => t.OnForwardingToPortCountryName).HasColumnName("OnForwardingToPortCountryName");
-            this.Property(t => t.OnForwardingCarrierName).HasColumnName("OnForwardingCarrierName");
-            this.Property(t => t.OnForwardingCarrierCode).HasColumnName("OnForwardingCarrierCode");
+            this.Property(t => t.OnForwardingATD).HasColumnName("OnForwardingATD");            
         }
     }
 }
