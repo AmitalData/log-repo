@@ -900,7 +900,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         }
                         if (isCollectActive && _MyDeclarationPM.TotalTax > 0 && _MyDeclarationPM.TotalTax != prev_TotalTax)
                         {
-                            if (declarationPendingPM_900 != null && declarationPendingPM_900.Status != "S")
+                            if ((declarationPendingPM_900 != null && declarationPendingPM_900.Status != "S")  || prev_TotalTax==0  || prev_TotalTax==null)
                             {
                                 if (_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.FirstOrDefault().IncotermCode != "DDP")
                                 {
