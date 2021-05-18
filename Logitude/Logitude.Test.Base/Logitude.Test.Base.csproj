@@ -85,6 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\Transforms.cs" />
+    <Compile Include="Models\Api\ApiQueryFiltersBuilder.cs" />
     <Compile Include="Models\BillingsPreparation\BillingData.cs" />
     <Compile Include="Models\BillingsPreparation\BillingVariables.cs" />
     <Compile Include="Models\BillingsPreparation\ChargeType.cs" />

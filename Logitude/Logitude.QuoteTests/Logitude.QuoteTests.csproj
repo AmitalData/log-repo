@@ -103,9 +103,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Hooks\BeforeFeatureRun.cs" />
     <Compile Include="Models\Builders\ChargesBuilder.cs" />
     <Compile Include="Models\Builders\PackageBuilder.cs" />
     <Compile Include="Models\Builders\QuoteBuilder.cs" />
+    <Compile Include="Models\QuoteData.cs" />
+    <Compile Include="Models\QuoteList.cs" />
     <Compile Include="Models\QuotePackagePM.cs" />
     <Compile Include="Models\QuoteChargePM.cs" />
     <Compile Include="Models\QuoteContext.cs" />
@@ -120,6 +123,7 @@
     <None Include="Features\APIGETQuoteIdExportAir.feature" />
     <None Include="Features\APIPOSTExportAirQuotes.feature" />
     <None Include="Features\APIPUTExportAirQuotes.feature" />
+    <None Include="Features\QuoteControllerAPI.feature" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -133,7 +137,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Hooks\" />
     <Folder Include="Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
