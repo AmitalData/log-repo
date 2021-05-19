@@ -68,8 +68,9 @@ export class AttachmentDocsInComponent implements OnInit {
             item.Tenant = doc.Tenant;
             item.FileSize = doc.FileSize;
             item.FileExtension = doc.FileExtension;
-            item.DocumentTypeCopyNameWithDocumentTypeName = doc.DocumentTypeName;
+            item.DocumentTypeCopyNameWithDocumentTypeName = doc.FileName; 
             item.ShowRemoveLink = true;
+            item.DirectionCode =  "I";
             this.AttachmentsLists.push(item);
 
         }); 

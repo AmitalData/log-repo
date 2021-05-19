@@ -7,7 +7,7 @@ export class AttachmentsList {
     FileExtension: string;
     DocumentFilingId: string;
     IsDefultTemplate: boolean;
-
+    DirectionCode: string;
 
     constructor() {
 
