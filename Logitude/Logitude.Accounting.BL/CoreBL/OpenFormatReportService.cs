@@ -62,7 +62,7 @@ namespace Logitude.Accounting.BL.CoreBL
         public   int APinvoiceTotalRecords;
         public   decimal APinvoiceTotalAmount;
         public   TenantPM tenantPM;
-      
+        private CardQuery cardQuery;
         public  DocumentsFilingPM CreateBKMVDATAFile(string openFormatReportId, int tenant, bool TestingMode)
         { 
              B100Count = 0;
@@ -95,6 +95,7 @@ namespace Logitude.Accounting.BL.CoreBL
             UserQuery userQuery = new UserQuery(tenant);
             CurrencyQuery currencyQuery = new CurrencyQuery(tenant);
             GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(tenant);
+             cardQuery = new CardQuery(tenant);
             List<B110Data> b110Data = gLAccountQueryService.GetB110sForGLAccounts(tenant);
             
           
@@ -489,7 +490,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
             AddressQuery addressQuery = new AddressQuery(tenant);
-            CardQuery cardQuery = new CardQuery(tenant);
+             cardQuery = new CardQuery(tenant);
            
             var trailReportParam = new TrailReportParam()
             {
@@ -535,7 +536,7 @@ namespace Logitude.Accounting.BL.CoreBL
             var result = res.Where(d => d.Key != null).ToDictionary(x => x.Key, x => x);
             b110Data = b110Data.Where(d => includedGLAccounts.Contains(d.GLAccountId)).ToList();
 
-            List<CardList> cardLists = cardQuery.GetCardsByGLAccountIds(includedGLAccounts.Where(d=> d!=null).ToList(),tenant).ToList();        
+            List<CardList> cardLists = GetCardsByGLAccountIds(includedGLAccounts.Where(d => d != null).ToList(),tenant);
             List<AddressList> addreses = addressQuery.GetAddressesByCardIds(cardLists.Select(d=> d.Id).ToList(), tenant);
             foreach (B110Data item in b110Data)
             {
@@ -3934,6 +3935,30 @@ namespace Logitude.Accounting.BL.CoreBL
             
 
 
+        }
+
+        private List<CardList> GetCardsForMoreThan3000Accounts(List<string> accountIds, int tenant)
+        {
+            List<CardList> cards = new List<CardList>();
+            int maxAllowedAccountsCount = 3000;
+            for (int i = 0; i < accountIds.Count; i += maxAllowedAccountsCount)
+            {
+                cards = cards.Concat(cardQuery.GetCardsByGLAccountIds(accountIds.GetRange(i, Math.Min(maxAllowedAccountsCount, accountIds.Count - i)), tenant)).ToList();
+            }
+            return cards;
+        }
+        private List<CardList> GetCardsByGLAccountIds(List<string> accountIds, int tenant)
+        {           
+            List<CardList> cards = new List<CardList>();
+            if (accountIds.Count > 3000)
+            {
+                cards = GetCardsForMoreThan3000Accounts(accountIds, tenant);
+            }
+            else
+            {
+              cards = cardQuery.GetCardsByGLAccountIds(accountIds, tenant);
+            }
+            return cards;
         }
         private List<string> GetIncludedGLAccounts(List<TrailReportM> result,OpenFormatReportPM openFormatReport, int tenant)
         {
