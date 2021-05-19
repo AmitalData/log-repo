@@ -123,8 +123,10 @@ namespace Logitude.Test.Base.Services
                 IncotermLDEId = GetIncotermId("LDE"),
                 PaymentTermCashId = GetPaymentTermId("Cash"),
                 VATTypeZeroId = GetVATTypeId("ZERO"),
+                CreditCardTSId = GetCreditCardTypeId("TS")
             };
         }
+
         #endregion
 
         #region Locations Preparation Variables
@@ -681,6 +683,44 @@ namespace Logitude.Test.Base.Services
         }
 
         #endregion
+
+        #region Credit Card Type
+        private static string GetCreditCardTypeId(string code)
+        {
+            ApiQueryFilters apiQueryFilters = BuildApiQueryFiltersForBillings(code, null);
+
+            string UserTenantCreditCardId = GetCreditCardIdFromUserTenant(apiQueryFilters);
+            if (string.IsNullOrEmpty(UserTenantCreditCardId))
+            {
+                UserTenantCreditCardId = GetCreatedCreditCardFromTenantZero(code);
+            }
+
+            return UserTenantCreditCardId;
+        }
+
+        private static string GetCreditCardIdFromUserTenant(ApiQueryFilters apiQueryFilters)
+        {
+            ApiResponse<IEnumerable<CreditCardTypePM>> response = APICaller.CallGetByFilters<IEnumerable<CreditCardTypePM>>(Urls.CreditCardTypeViewsGetByFilters, UserTenant.Token, apiQueryFilters);
+            return response.Data?.FirstOrDefault()?.Id;
+        }
+
+        private static string GetCreatedCreditCardFromTenantZero(string code)
+        {
+            CreditCardTypePM CreditCard = CreateCreditCardPM(code);
+            ApiResponse<CreditCardTypePM> response = APICaller.CallPost<CreditCardTypePM>(CreditCard, Urls.CreditCardController, UserTenant.Token);
+            return response.Data?.Id;
+        }
+
+        private static CreditCardTypePM CreateCreditCardPM(string code)
+        {
+            CreditCardTypePM CreditCard = new CreditCardTypePM();
+            CreditCard.Tenant = UserTenant.Tenant;
+            CreditCard.Code = code;
+            CreditCard.Name = "TestCreditCardType";
+            return CreditCard;
+        }
+        #endregion
+
         #endregion
     }
 }

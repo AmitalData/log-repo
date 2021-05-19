@@ -224,6 +224,7 @@ namespace Logitude.Test.Base.Hooks
             BillingData.IncotermLDEId = billingVariables.IncotermLDEId;
             BillingData.VATTypeZeroId = billingVariables.VATTypeZeroId;
             BillingData.PaymentTermCashId = billingVariables.PaymentTermCashId;
+            BillingData.CreditCardTSId = billingVariables.CreditCardTSId;
         }
     }
 }

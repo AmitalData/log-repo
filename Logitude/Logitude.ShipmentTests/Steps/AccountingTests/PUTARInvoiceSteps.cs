@@ -30,10 +30,6 @@ namespace Logitude.ShipmentTests.Steps.AccountingTests
         [When(@"update ARInvoice by edit invoice line with the following properties")]
         public void WhenUpdateARInvoiceByEditInvoiceLineWithTheFollowingProperties(Table table)
         {
-            //CreateARInvoice(AccountingContext.ShipmentARInvoice.ARInvoicePM,AccountingContext.ShipmentARInvoice.ARInvoiceLinePM);
-            //dynamic dataTable = DataTable.CreateDynamicInstance();
-            //ApiResponse<ARInvoicePM> response = EditARInvoice(AccountingContext.ShipmentARInvoice.ARInvoicePM, dataTable);
-            //AccountingContext.ShipmentARInvoice.ARInvoicePM.Id = response.Data?.Id;
             AccountingContext.ShipmentARInvoice.ARInvoicePM = CreateARInvoicew(AccountingContext.ShipmentARInvoice.ARInvoicePM, AccountingContext.ShipmentARInvoice.ARInvoiceLinePM);
             SecondARInvoiceLinePM = CreateARInvoiceLineInstance(table);
             ApiResponse<ARInvoicePM> response = UpdateARInvoice(AccountingContext.ShipmentARInvoice.ARInvoicePM, SecondARInvoiceLinePM);
@@ -43,7 +39,6 @@ namespace Logitude.ShipmentTests.Steps.AccountingTests
         [Then(@"the ARInvoice should update successfully")]
         public void ThenTheARInvoiceShouldUpdateSuccessfully()
         {
-            //AccountingContext.ShipmentARInvoice.ARInvoicePM.Id.Should().NotBeNull();
             PutResponse.Id.Should().NotBeNull();
         }
 
@@ -51,13 +46,14 @@ namespace Logitude.ShipmentTests.Steps.AccountingTests
         {
             shipmentARInvoice = AddARInvoiceLine(shipmentARInvoice, firstARInvoiceLinePM);
             ApiResponse<ARInvoicePM> response = APICaller.CallPost<ARInvoicePM>(shipmentARInvoice, Urls.ARInvoicesController, UserTenant.Token);
+            response.Data.VATNumber = "zero";
             return response.Data;
         }
 
         private ApiResponse<ARInvoicePM> UpdateARInvoice(ARInvoicePM shipmentARInvoice, ARInvoiceLinePM secondARInvoiceLinePM)
         {
             shipmentARInvoice = AddNewARInvoiceLine(shipmentARInvoice, secondARInvoiceLinePM);
-            return APICaller.CallPut<ARInvoicePM>(shipmentARInvoice, Urls.ARInvoicesController, UserTenant.Token , 2);
+            return APICaller.CallPut<ARInvoicePM>(shipmentARInvoice, Urls.ARInvoicesController, UserTenant.Token, 2);
         }
 
 

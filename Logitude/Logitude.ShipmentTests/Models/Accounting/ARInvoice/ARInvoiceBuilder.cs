@@ -186,6 +186,8 @@ namespace Logitude.ShipmentTests.Models.Accounting.ARInvoice
                 IssuedByUserId = UserTenant.UserId,
                 ARInvoiceTypeCode = "IN",
                 CreateDate = TenantServerConfigration.GetCurrentDateTime(UserTenant.Tenant),
+                ConcurrencyGUID = Guid.NewGuid().ToString(),
+                NewConcurrencyGUID = Guid.NewGuid().ToString()
             };
             return this;
         }

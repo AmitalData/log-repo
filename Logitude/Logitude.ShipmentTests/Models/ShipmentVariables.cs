@@ -15,6 +15,8 @@ namespace Logitude.ShipmentTests.Models
         public string QuoteStageQTDRId { get; set; }
         public string VesselPTId { get; set; }
         public string MoveTypeMTAId { get; set; }
+        public string MoveTypeTSMId { get; set; }
         public string MoveTypeMTOId { get; set; }
+        public string ShipmentSubTypeTSSTId { get; set; }
     }
 }
