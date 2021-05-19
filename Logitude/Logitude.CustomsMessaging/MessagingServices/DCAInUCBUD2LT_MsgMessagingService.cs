@@ -284,10 +284,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 }
                 logData = $"DocumentsFilingPM.Id={_DocumentsFilingPM.Id},Code={_DocumentsFilingPM.Code}"; //Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertSerialize(_DocumentsFilingPM);
 
-                if (String.IsNullOrWhiteSpace(_DocumentsFilingPM.DocumentTypeCode))
-                {
-                    FixDocumentTypeCodeEmpty(logData);//hd367591
-                }
+                //if (String.IsNullOrWhiteSpace(_DocumentsFilingPM.DocumentTypeCode))
+                //{
+                //    FixDocumentTypeCodeEmpty(logData);//hd367591
+                //}
                 
 
                 if (String.IsNullOrWhiteSpace(_DocumentsFilingPM.DocumentTypeCode))

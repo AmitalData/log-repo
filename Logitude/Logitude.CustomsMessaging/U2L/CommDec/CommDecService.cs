@@ -1184,6 +1184,8 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     if (courierMaster != null)
 
                     {
+                        if(false)
+                        {
 
                         DeclarationCourierStatusRepository rep = new DeclarationCourierStatusRepository(_context);
 
@@ -1209,6 +1211,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                             courierMasterRepository.Update(courierMaster);
 
                             courierMasterRepository.SubmitChanges();
+                            }
 
                         }
 

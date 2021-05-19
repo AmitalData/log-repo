@@ -1872,6 +1872,10 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                     {
                         courierGWMessageECSpclRequestService = new Logitude.Customs.BL.Messaging.ILOVS.CourierOVSSpecialActionRequestService();
                     }
+                    else if (def.DEFDATA.Contains("ILSWS") && declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILSWS") // OVS
+                    {
+                        courierGWMessageECSpclRequestService = new Logitude.Customs.BL.Messaging.ILSWS.CourierSWSSpecialActionRequestService();
+                    }
                 }
 
                 string actionResultString = "";

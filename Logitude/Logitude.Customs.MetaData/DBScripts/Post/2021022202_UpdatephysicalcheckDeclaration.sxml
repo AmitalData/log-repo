@@ -2,9 +2,9 @@
 <Script DBType="Main" Module="Customs">
   <Sql Version="1">
   </Sql>
-
+ 
   <Oracle Version="3">
-    <![CDATA[
+     <![CDATA[
 
 
 update declarations 
