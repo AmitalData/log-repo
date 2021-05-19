@@ -2015,6 +2015,7 @@
     <Compile Include="Messaging\Amital\UnifreightTaskService.cs" />
     <Compile Include="Messaging\Amital\UServerCommunicationService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\AnalyzeQueueUtil.cs" />
+    <Compile Include="Messaging\CustomsAnalyzeQueue\CourieSWSSpecialActionQService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\CourierSWSStatusAvailabilityQService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\CourierOVSStatusAvailabilityQService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\CourierSWSStatusAvailabilitySplitterQService.cs" />
@@ -2050,6 +2051,7 @@
     <Compile Include="Messaging\ILOVS\CourierOVSSpecialActionRequestService.cs" />
     <Compile Include="Messaging\ILSWS\CourierECSWSTHRMessageRequestService.cs" />
     <Compile Include="Messaging\ILSWS\CourierECSWSTHRMessageResponseService.cs" />
+    <Compile Include="Messaging\ILSWS\CourierSWSSpecialActionRequestService.cs" />
     <Compile Include="Messaging\L2U\CustomFile\CustomCertificatesService.cs" />
     <Compile Include="Messaging\L2U\CustomFile\CustomFileCreditService.cs" />
     <Compile Include="Messaging\L2U\CustomFile\CustomFileCreditService.Model.cs" />

@@ -76,7 +76,7 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
                 var defDefault = ProxyUtil.JsonConvertDeserializeTyped<InterfaceDetails>(defDefaultJSON);
                 if (haveDefinition)
                 {
-                    fTPOutMawbSWSServie.BuildCommunicationLog(bytearray, tenant, declarationId);
+                    fTPOutMawbSWSServie.BuildCommunicationLog(bytearray, tenant,declarationId, CustomsPartnerFtpDetails.InterfaceName_ECSWSTHR_REQUEST);
                 }
                 ///scop.Complete();
                 //output  ftp://192.168.10.88/FTP_MAMAN/  
