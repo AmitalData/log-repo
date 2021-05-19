@@ -32,6 +32,8 @@ export class AccountingNoteComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     public isRTL: boolean = false;
     public isEditForm: boolean = false;
+    public FIELD_IS_REQUIERD: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+    private IsNotesEmpty: boolean = false;
 
      _AccountingNotePMService: AccountingNotePMService = new AccountingNotePMService();
 
@@ -40,7 +42,8 @@ export class AccountingNoteComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor () {
         super();
-        if(ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+        this.SetUIProperty();
 
     }
 
@@ -80,6 +83,7 @@ export class AccountingNoteComponent extends BaseComponent {
 
     SetUIProperty() {
         this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, true);
+        this.UIProperties.SetRequired("Notes", this.ObjectTableName, true);
     }
 
     //#region Properties
@@ -89,6 +93,7 @@ export class AccountingNoteComponent extends BaseComponent {
     }
     public set Notes(v : string) {
         this.entityPM.Notes = v;
+        this.CheckIfNotesEmpty();
     }
 
 
@@ -97,19 +102,22 @@ export class AccountingNoteComponent extends BaseComponent {
     //#region Buttons Handlers
     OkButtonClicked()
     {
+
+        this.CheckIfNotesEmpty();
         if(this.isEditForm)
         {
             this.CurrentSession.StartBusyIndicatorSaving();
             this._AccountingNotePMService.update(this.entityPM).subscribe((myResult:any) => {
 
                 var mm: ServiceResponse = myResult;
-                if (!mm.HasError) {
+                if (!mm.HasError && !this.IsNotesEmpty) {
                     this.CurrentSession.StopBusyIndicator();
                     this.CurrentSession.CloseCurrentWindow();
 
                 }
                 else {
                     this.ValidationErrorsList = mm.ErrorsArray;
+                    this.SetNotesRequierdErrorMessage();
                     this.CurrentSession.StopBusyIndicator();
                 }
             });
@@ -120,18 +128,37 @@ export class AccountingNoteComponent extends BaseComponent {
             this._AccountingNotePMService.insert(this.entityPM).subscribe((myResult:any) => {
 
                 var mm: ServiceResponse = myResult;
-                if (!mm.HasError) {
+                if (!mm.HasError && !this.IsNotesEmpty) {
                     this.CurrentSession.StopBusyIndicator();
                     this.CurrentSession.CloseCurrentWindow();
 
                 }
                 else {
                     this.ValidationErrorsList = mm.ErrorsArray;
+                    this.SetNotesRequierdErrorMessage();
                     this.CurrentSession.StopBusyIndicator();
                 }
             });
         }
     }
+ 
+    CheckIfNotesEmpty() {
+        if (AppTool.IsNullOrEmpty(this.Notes)) {
+            this.UIProperties.SetRequired("Notes", this.ObjectTableName, true);
+            this.IsNotesEmpty = true;
+        }
+        else {
+            this.UIProperties.SetRequired("Notes", this.ObjectTableName, false);
+        }
+    }
+
+    SetNotesRequierdErrorMessage() {
+        if (AppTool.IsNullOrEmpty(this.Notes)) {
+            var s: string = this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("Accounting.General.O.Notes"));
+            this.ValidationErrorsList.push(s);
+        }
+    }
+
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
