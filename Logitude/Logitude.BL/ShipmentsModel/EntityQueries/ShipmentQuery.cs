@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Transactions;
-using Logitude.BL.CommonDataModel.EntityPMs;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.DataContracts;
 using Logitude.BL.Helpers;
-using Logitude.BL.InfrastructureModel;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BookingLib.Data.EntityPOCOs;
+using Logitude.BookingLib.Data.Repositories;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -19,27 +17,17 @@ using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
-using Simplog.Data.QuoteModel.EntityPOCOs;
-using Simplog.Data.QuoteModel.Repositories;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
-using System.Data.Entity.Core.Objects;
-using Logitude.BookingLib.Data.Repositories;
-using Logitude.BookingLib.Data.EntityPOCOs;
-using Logitude.Server.Tools.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
-using Logitude.BL.CommonDataModel.EntityLists;
-using Simplog.Server.Infrastructure;
-using System.IO;
+using System.Transactions;
 using System.Xml;
-using Logitude.Server.Tools;
-using System.Xml.Serialization;
-using System.Text;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -13510,21 +13498,23 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return isCFS;
         }
 
-        public string GetMasterNumberFromHouseShipmentByShipmentNumber(string shipmentNumber, int tenant)
+        public List<HouseMaster> GetHouseShipmentsByShipmentNumbers(List<string> ids, int tenant)
         {
-            var masterNumber = "";
-            var shipment = (from a in repository.context.Shipments
-                            where a.ShipmentNumber == shipmentNumber && a.Tenant == tenant
-                            select a).FirstOrDefault();
-            if(shipment != null && shipment.ShipmentLevelCode == "H")
-            {
-                masterNumber = (from a in repository.context.Shipments
-                                           where a.Id == shipment.MasterShipmentDataId
-                                           select a).Select(a=>a.ShipmentNumber).FirstOrDefault();
-            }
-            return masterNumber;
-        }
+            var shipments = (from a in repository.context.Shipments
+                             where ids.Contains(a.ShipmentNumber) && a.Tenant == tenant && a.ShipmentLevelCode == "H"
+                             select a);
 
+            var masterNumbers =
+            (from shipment in shipments
+             join masterData in repository.context.ShipmentMasterDatas on shipment.MasterShipmentDataId equals masterData.Id
+             select new HouseMaster()
+             {
+                 HouseId =  shipment.Id,
+                 MasterNumber = masterData.MasterShipmentNumber
+             }).ToList();
+
+            return masterNumbers;
+        }
 
         public ShipmentPM GetShipmentPMForCargoTrackingByEntityId(string id, int tenant)
         {
@@ -13761,5 +13751,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public string TypeCode { get; set; }
         public string ForwarderPartnerId { get; set; }
     }
+
+    public class HouseMaster
+    {
+        public string HouseId { get; set; }
+        public string MasterNumber { get; set; }
+    }
+
 
 }
