@@ -46,7 +46,7 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
             bool useSFTP = false;
 
             var myCustomsPartnerFtpQueryService = new CustomsPartnerFtpQueryService(tenant);
-            var pmCustomsPartnerFtp = myCustomsPartnerFtpQueryService.GetBy(tenant, CustomsPartnerFtpDetails.InterfaceName_ECSWSTHR_REQUEST, CustomsPartnerFtpDetails.PartnerCode_ILSWS, CustomsPartnerFtpDetails.TypeCode_Out);
+            var pmCustomsPartnerFtp = myCustomsPartnerFtpQueryService.GetBy(tenant, ftpDetailsName, CustomsPartnerFtpDetails.PartnerCode_ILSWS, CustomsPartnerFtpDetails.TypeCode_Out);
             string xmlSubject = (new CustomsPartnerFtpDetails()).GetAllInterfaceDetails().First(r => r.Code == CustomsPartnerFtpDetails.InterfaceName_ECSWSTHR_REQUEST).Subject; ;
             
 
