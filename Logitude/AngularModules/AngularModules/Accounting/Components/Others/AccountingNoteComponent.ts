@@ -149,6 +149,7 @@ export class AccountingNoteComponent extends BaseComponent {
         }
         else {
             this.UIProperties.SetRequired("Notes", this.ObjectTableName, false);
+            this.IsNotesEmpty = false;
         }
     }
 
