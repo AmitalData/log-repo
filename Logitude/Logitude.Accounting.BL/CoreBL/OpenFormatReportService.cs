@@ -63,8 +63,10 @@ namespace Logitude.Accounting.BL.CoreBL
         public   decimal APinvoiceTotalAmount;
         public   TenantPM tenantPM;
         private CardQuery cardQuery;
+        private int Tenant;
         public  DocumentsFilingPM CreateBKMVDATAFile(string openFormatReportId, int tenant, bool TestingMode)
-        { 
+        {
+            Tenant = tenant;
              B100Count = 0;
              B110Count = 0;
             C100Count = 0;
@@ -3937,13 +3939,18 @@ namespace Logitude.Accounting.BL.CoreBL
 
         }
 
+        private List<CardList> GetCardsForAccountIdsInMaxAllowedListRange(List<string> accountIds,int startIndex, int maxAllowedAccountsCount)
+        {
+            return cardQuery.GetCardsByGLAccountIds(accountIds.GetRange(startIndex, Math.Min(maxAllowedAccountsCount, accountIds.Count - startIndex)), Tenant);
+        }
+
         private List<CardList> GetCardsForMoreThan3000Accounts(List<string> accountIds, int tenant)
         {
             List<CardList> cards = new List<CardList>();
             int maxAllowedAccountsCount = 3000;
             for (int i = 0; i < accountIds.Count; i += maxAllowedAccountsCount)
             {
-                cards = cards.Concat(cardQuery.GetCardsByGLAccountIds(accountIds.GetRange(i, Math.Min(maxAllowedAccountsCount, accountIds.Count - i)), tenant)).ToList();
+                cards = cards.Concat(GetCardsForAccountIdsInMaxAllowedListRange(accountIds,i,maxAllowedAccountsCount)).ToList();
             }
             return cards;
         }
