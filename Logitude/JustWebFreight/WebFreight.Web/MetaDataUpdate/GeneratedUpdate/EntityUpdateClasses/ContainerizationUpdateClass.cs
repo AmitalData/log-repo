@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ContainerizationUpdateClass
    {  		
-		public const string HashString = "92a87eeaf2cb80e952509b7158c0616d";
+		public const string HashString = "599bd10ad161336f764b8f5144e1f6ad";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -906,6 +906,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "HataraStatusIsNull",
 					  						ListPropertyPath =  "HataraStatusIsNull",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1082,8 +1083,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen ContainerizationCustomsContainerizationHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Containerization.HeaderScreen", Name = "Customs.ContainerizationHeaderScreen", ObjectTableId = ContainerizationObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
-      	
+	         Screen ContainerizationCustomsContainerizationHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.Containerization.HeaderScreen", Name = "Customs.ContainerizationHeaderScreen", ObjectTableId = ContainerizationObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
+      
+             ScreenField CustomsContainerizationCustomsContainerizationHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ContainerizationCustomsContainerizationHeaderScreenScreen0.Id,ScreenCode = ContainerizationCustomsContainerizationHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Containerization.ContainerizationNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsContainerizationCustomsContainerizationHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ContainerizationCustomsContainerizationHeaderScreenScreen0.Id,ScreenCode = ContainerizationCustomsContainerizationHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Containerization.ImporterName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsContainerizationCustomsContainerizationHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ContainerizationCustomsContainerizationHeaderScreenScreen0.Id,ScreenCode = ContainerizationCustomsContainerizationHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Containerization.ContainerizationDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsContainerizationCustomsContainerizationHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = ContainerizationCustomsContainerizationHeaderScreenScreen0.Id,ScreenCode = ContainerizationCustomsContainerizationHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Containerization.ContainerizationStatus", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsContainerizationCustomsContainerizationHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = ContainerizationCustomsContainerizationHeaderScreenScreen0.Id,ScreenCode = ContainerizationCustomsContainerizationHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Containerization.HataraStatus", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    ContainerizationObjectTable.HeaderScreenId = ContainerizationCustomsContainerizationHeaderScreenScreen0.Id;
 		    ContainerizationObjectTable.HeaderScreenCode = ContainerizationCustomsContainerizationHeaderScreenScreen0.Code;
 
@@ -1092,7 +1103,25 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {      
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable ContainerizationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.Containerization" && d.Tenant == 0).FirstOrDefault();  
+                 
+			   TextCode ContainerizationGeneralDetailsTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.TH.GeneralDetails", DefaultText = "General Details",LocalDefaultText = "פרטים כללים", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ContainerizationGeneralDetailsFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Containerization.Tab.GeneralDetails", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerizationFeatures.CNGN", NameTextCodeDefaultText = "General Details", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContainerizationObjectTable);
+ 
+                 
+			   TextCode ContainerizationRequestSheetTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.TH.RequestSheet", DefaultText = "Request Sheet",LocalDefaultText = "גיליון בקשה", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ContainerizationRequestSheetFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Containerization.Tab.RequestSheet", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerizationFeatures.CNRS", NameTextCodeDefaultText = "Request Sheet", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContainerizationObjectTable);
+			 TextCodeRepository.SubmitChanges();
+			 FeaturesRepository.SubmitChanges();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			    
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CNGN",HtmlComponentName = "ContainerizationGeneralComponent",HtmlComponentUrl = "./CustomsModules/CustomsContainerization/Components/EditTabs/ContainerizationGeneralComponent", FeatureId = ContainerizationGeneralDetailsFeature_TH0.Id,FeatureUniqeCode = ContainerizationGeneralDetailsFeature_TH0.FeatureUniqeCode, ControlPath = "", ObjectTableId = ContainerizationObjectTable.Id, TabNameTextCodeId = ContainerizationGeneralDetailsTextCode_TH0.Id, TabNameTextCodeCode = ContainerizationGeneralDetailsTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CNRS",HtmlComponentName = "RequestSheetTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsControls/Components/CustomsRequestsSheetsComponent", FeatureId = ContainerizationRequestSheetFeature_TH1.Id,FeatureUniqeCode = ContainerizationRequestSheetFeature_TH1.FeatureUniqeCode, ControlPath = "", ObjectTableId = ContainerizationObjectTable.Id, TabNameTextCodeId = ContainerizationRequestSheetTextCode_TH1.Id, TabNameTextCodeCode = ContainerizationRequestSheetTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
