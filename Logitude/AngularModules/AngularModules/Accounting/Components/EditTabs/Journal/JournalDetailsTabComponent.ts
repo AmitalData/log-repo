@@ -1100,7 +1100,7 @@ class JournalLineModel extends BaseComponent {
             this.JournalLinePM.LocalAmount = value;
             this.parent.CalculateTotals();
             if(this.Currency){
-                if(this.Currency.Id ==SessionLocator.TenantPM.CurrencyId)  this.ForeignAmount= this.LocalAmount;
+                if(this.CurrencyId ==SessionLocator.TenantPM.CurrencyId)  this.ForeignAmount= this.LocalAmount;
             }
             if (!this.ForeignAmount && this.CurrencyId) this.GetExchangeRate(this.CurrencyId);
            
