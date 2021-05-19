@@ -142,7 +142,7 @@ export class CounterTableComponent extends BaseComponent {
         else {
             var errors: string[] = [];
            
-            if (!this.ValidateInvoicesSize()) {
+            if (!this.IsValidCounterSize()) {
                 errors.push("Size field is mandatory!"); 
             }
 
@@ -199,12 +199,12 @@ export class CounterTableComponent extends BaseComponent {
 
     public SampleValue: string;
 
-    private ValidateInvoicesSize() {
+    private IsValidCounterSize() {
         // Check if Invoice Type to validate
-        return !(this.CheckInvoice() && this.CounterSize == null);
+        return !(this.HasMandatoryCounterSize() && this.CounterSize == null);
     }
 
-    private CheckInvoice() {
+    private HasMandatoryCounterSize() {
          // Invoices Parameters: "IN" A/P, "CNS" Constituent, "CA" Customs
         return (this.EntityPM.Parameter1 == "IN" || this.EntityPM.Parameter1 == "CNS" || this.EntityPM.Parameter1 == "CA");
     }

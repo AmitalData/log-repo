@@ -291,7 +291,7 @@ export class CounterInvoiceComponent extends BaseComponent {
             else {
                 var errors: string[] = [];
 
-                if (this.isEmptySizes())
+                if (this.HasEmptyCounterSize())
                 {
                     errors.push("Size field is mandatory!");
                 }  
@@ -350,15 +350,8 @@ export class CounterInvoiceComponent extends BaseComponent {
 
     public SampleValue: string;
 
-    private isEmptySizes() {
-        let isEmpty = false;
-        this.ItemsSource.forEach(item => {
-            if (AppTool.IsNullOrEmpty(item.CounterSize)) {
-                isEmpty = true;
-            }
-        });
-
-        return isEmpty;
+    private HasEmptyCounterSize() {
+        return this.ItemsSource.some(item => AppTool.IsNullOrEmpty(item.CounterSize));
     }
 
     CalculateSampleValue() {
