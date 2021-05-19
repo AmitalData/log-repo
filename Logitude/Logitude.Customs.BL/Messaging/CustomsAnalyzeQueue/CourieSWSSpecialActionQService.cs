@@ -2,7 +2,7 @@
 using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
-using Logitude.Customs.BL.Messaging.ILOVS;
+using Logitude.Customs.BL.Messaging.ILSWS;
 using Logitude.Customs.BL.TraceEvents;
 using Logitude.Customs.Data;
 using Logitude.Server.Tools;
@@ -63,24 +63,24 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             var communicationsData = Communications.GetData(rqstCommunicationLog); ;
 
 
-            var myOVSECSpclRequest =ProxyUtil.JsonConvertDeserializeTyped<OVSECSpclRequest>(communicationsData);
+            var mySWSECSpclRequest =ProxyUtil.JsonConvertDeserializeTyped<SWSECSpclRequest>(communicationsData);
             
-            var responeECSpclMamanData = ProxyUtil.JsonConvertDeserializeTyped<CourierOVSHAWBResponse>(webAPIResultString);
+            var responeECSpclSWSData = ProxyUtil.JsonConvertDeserializeTyped<CourierSWSHAWBResponse>(webAPIResultString);
 
-            if (responeECSpclMamanData == null)
+            if (responeECSpclSWSData == null)
             {
                 throw new Exception("(responeECSpclMamanData == null)");
             }
 
 
 
-            LogMessagingUtil.Instance.AppendLine($"AnalyzeResponse(ResponseStatusCode={responeECSpclMamanData.StatusCode},{responeECSpclMamanData.ErrorDescription})");
+            LogMessagingUtil.Instance.AppendLine($"AnalyzeResponse(ResponseStatusCode={responeECSpclSWSData.StatusCode},{responeECSpclSWSData.ErrorDescription})");
             var context = CustomContext.GetContext(settings.Tenant);
 
 
             //בעת שליחת המסר תבוצע שליפה של טבלת DeclarationMamanSpecialAction לפי מפתח הצהרה + קוד פעולה מיוחדת, והנתונים יישלחו לפי קוד פעולה שהמשתמש בחר + נתונים מ DB של הצהרה + DeclarationMamanSpecialAction
             var declarationMamanSpecialActionQueryService = new DeclarationMamanSpecialActionQueryService(settings.Tenant);
-            var pmDeclarationMamanSpecialAction = declarationMamanSpecialActionQueryService.GetSingle(settings.DeclarationId, myOVSECSpclRequest.SpecialActionCode, true, false);
+            var pmDeclarationMamanSpecialAction = declarationMamanSpecialActionQueryService.GetSingle(settings.DeclarationId, mySWSECSpclRequest.SpecialActionCode, true, false);
 
 
 
@@ -92,7 +92,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
 
             bool mamanResponseSuccesed = false;
-            switch (responeECSpclMamanData.StatusCode)
+            switch (responeECSpclSWSData.StatusCode)
             {
                 case "1":
                     {
@@ -106,11 +106,11 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                     //declarationPM.MamanStatusCode = "2";
                     break;
             }
-            string MamanSpecialActionsErrorXml = responeECSpclMamanData.StatusCode.ToString() + "," + responeECSpclMamanData.ErrorDescription?? "";
+            string SWSSpecialActionsErrorXml = responeECSpclSWSData.StatusCode.ToString() + "," + responeECSpclSWSData.ErrorDescription?? "";
 
 
             string cfifilmFUStatus = "";
-            switch (myOVSECSpclRequest.SpecialActionCode)
+            switch (mySWSECSpclRequest.SpecialActionCode)
             {
                 case "2"://MamanSpecialCode.ReceivingDelayCertificate_DelayIt
                     cfifilmFUStatus = "CDE";
@@ -124,7 +124,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             }
             var toCancel = false;
             UnifreightEventMode unifreightEventMode = UnifreightEventMode.@new;
-            if (myOVSECSpclRequest.MessageType == "C")
+            if (mySWSECSpclRequest.MessageType == "C")
             {
                 toCancel = true;
                 unifreightEventMode = UnifreightEventMode.del;
@@ -133,10 +133,10 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             {
 
 
-                pmDeclarationMamanSpecialAction.MamanSpecialActionsErrorXml = MamanSpecialActionsErrorXml;
+                pmDeclarationMamanSpecialAction.MamanSpecialActionsErrorXml = SWSSpecialActionsErrorXml;
 
                 var myDeclarationMamanSpecialAction = new DeclarationMamanSpecialActionUpdateService(context, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), settings.Tenant);
-                pmDeclarationMamanSpecialAction.MamanSpecialActionsErrorXml = MamanSpecialActionsErrorXml;
+                pmDeclarationMamanSpecialAction.MamanSpecialActionsErrorXml = SWSSpecialActionsErrorXml;
 
                 if (!mamanResponseSuccesed)
                 {
@@ -169,7 +169,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                         PrimaryNum = declarationPM.CustomFileNo,
                         Mode = unifreightEventMode,
                         StatusCode = cfifilmFUStatus,
-                        StatusRemarks = MamanSpecialActionsErrorXml,
+                        StatusRemarks = SWSSpecialActionsErrorXml,
 
                     });
 
