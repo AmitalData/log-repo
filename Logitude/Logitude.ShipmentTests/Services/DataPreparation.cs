@@ -3,6 +3,8 @@ using Logitude.Test.Base.Models.Api;
 using Logitude.Test.Base.Models.Shared;
 using Logitude.Test.Base.Models.UserTenantPreparation;
 using Logitude.Test.Base.Services;
+using Simplog.Data.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -21,7 +23,9 @@ namespace Logitude.ShipmentTests.Services
                 QuoteStageQTDRId = GetQuoteStageId("QTDR"),
                 VesselPTId = GetVesselId("PT"),
                 MoveTypeMTAId = GetMoveTypeId("MTA", "A" ),
+                MoveTypeTSMId = GetMoveTypeId("TSM", "A" ),
                 MoveTypeMTOId = GetMoveTypeId("MTO", "O"),
+                ShipmentSubTypeTSSTId = GetShipmentSubTypeId("TSST","Air")
         };
         }
 
@@ -171,6 +175,48 @@ namespace Logitude.ShipmentTests.Services
             return moveTypePM;
         }
 
+        #endregion
+
+        #region Shipment Sub Type
+        private static string GetShipmentSubTypeId(string code , string shipmentTypeCpde)
+        {
+            ApiQueryFilters apiQueryFilters = BuildApiQueryFilters(code, null);
+
+            string UserTenantShipmentSubId = GetShipmentSubIdFromUserTenant(apiQueryFilters);
+            if (string.IsNullOrEmpty(UserTenantShipmentSubId))
+            {
+                UserTenantShipmentSubId = GetCreatedShipmentSubFromTenantZero(code, shipmentTypeCpde);
+            }
+
+            return UserTenantShipmentSubId;
+        }
+
+        private static string GetShipmentSubIdFromUserTenant(ApiQueryFilters apiQueryFilters)
+        {
+            ApiResponse<IEnumerable<ShipmentSubTypePM>> response = APICaller.CallGetByFilters<IEnumerable<ShipmentSubTypePM>>(Urls.ShipmentSubTypeViewsGetByFilters, UserTenant.Token, apiQueryFilters);
+            return response.Data?.FirstOrDefault()?.Id;
+        }
+
+        private static string GetCreatedShipmentSubFromTenantZero(string code , string shipmentTypeCpde)
+        {
+            ShipmentSubTypePM ShipmentSub = CreateShipmentSubPM(code , shipmentTypeCpde);
+            ApiResponse<ShipmentSubTypePM> response = APICaller.CallPost<ShipmentSubTypePM>(ShipmentSub, Urls.ShipmentSubTypesController, UserTenant.Token);
+            return response.Data?.Id;
+        }
+
+        private static ShipmentSubTypePM CreateShipmentSubPM(string code,string shipmentTypeCpde)
+        {
+            ShipmentSubTypePM ShipmentSub = new ShipmentSubTypePM();
+            ShipmentSub.Tenant = UserTenant.Tenant;
+            ShipmentSub.Code = code;
+            ShipmentSub.Name = "Test Shipment Sub Type";
+            ShipmentSub.ShipmentTypeCode = shipmentTypeCpde;
+            ShipmentSub.CreateDate = TenantServerConfigration.GetCurrentDateTime(UserTenant.Tenant);
+            ShipmentSub.UpdateDate = TenantServerConfigration.GetCurrentDateTime(UserTenant.Tenant);
+            ShipmentSub.CreatedByUserId = UserTenant.UserId;
+            ShipmentSub.UpdatedByUserId = UserTenant.UserId;
+            return ShipmentSub;
+        }
         #endregion
 
         #region Build ApiQueryFilters

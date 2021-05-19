@@ -89,6 +89,7 @@
     <Compile Include="Models\BillingsPreparation\BillingData.cs" />
     <Compile Include="Models\BillingsPreparation\BillingVariables.cs" />
     <Compile Include="Models\BillingsPreparation\ChargeType.cs" />
+    <Compile Include="Models\BillingsPreparation\CreditCardTypePM.cs" />
     <Compile Include="Models\BillingsPreparation\Currency.cs" />
     <Compile Include="Models\BillingsPreparation\Incoterm.cs" />
     <Compile Include="Models\BillingsPreparation\Measurement.cs" />

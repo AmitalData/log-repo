@@ -45,10 +45,13 @@
         //locations
         public static string VesselsController = "Vessels";
         public static string IncotermsController = "Incoterms";
+        public static string CreditCardController = "creditcardtypes";
         public static string MoveTypesController = "MoveTypes";
         public static string PackageTypesController = "PackageTypes";
+        public static string ShipmentSubTypesController = "ShipmentSubTypes";
         public static string CurrencyViewsGetByFilters = "CurrencyViews/GetByFilters";
         public static string IncotermViewsGetByFilters = "IncotermViews/GetByFilters";
+        public static string CreditCardTypeViewsGetByFilters = "CreditCardTypeViews/GetByFilters";
         public static string MeasurementViewsGetByFilters = "MeasurementViews/GetByFilters";
         public static string ChargeTypeViewsGetByFilters = "ChargesTypeViews/GetByFilters";
         public static string PackageTypeViewsGetByFilters = "PackageTypeViews/GetByFilters";
@@ -57,7 +60,8 @@
         public static string QuoteStageViewsGetByFilters = "QuoteStageViews/GetByFilters";
         public static string VesselViewsGetByFilters = "VesselViews/GetByFilters";
         public static string MoveTypeViewsGetByFilters = "MoveTypeViews/GetByFilters";
-        
+        public static string ShipmentSubTypeViewsGetByFilters = "ShipmentSubTypeViews/GetByFilters";
+
         //partners
         public static string PartnersDomainController = "PartnersDomain/PostPartnerAddress";
         public static string VendorViewsGetByFilters = "VendorViews/GetByFilters";

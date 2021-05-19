@@ -9,6 +9,8 @@
         public static string QuoteStageQTDRId { get; set; }
         public static string VesselPTId { get; set; }
         public static string MoveTypeMTAId { get; set; }
+        public static string MoveTypeTSMId { get; set; }
         public static string MoveTypeMTOId { get; set; }
+        public static string ShipmentSubTypeTSSTId { get; set; }
     }
 }

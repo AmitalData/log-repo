@@ -8,6 +8,7 @@
         public static string IncotermLDEId { get; set; }
         public static string PaymentTermCashId { get; set; }
         public static string VATTypeZeroId { get; set; }
+        public static string CreditCardTSId { get; set; }
 
     }
 }

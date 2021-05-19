@@ -23,7 +23,9 @@ namespace Logitude.ShipmentTests.Hooks
             ShipmentData.PackageTypePP2Id = shipmentVariables.PackageTypePP2Id;
             ShipmentData.QuoteStageQTDRId = shipmentVariables.QuoteStageQTDRId;
             ShipmentData.MoveTypeMTAId = shipmentVariables.MoveTypeMTAId;
+            ShipmentData.MoveTypeTSMId = shipmentVariables.MoveTypeTSMId;
             ShipmentData.MoveTypeMTOId = shipmentVariables.MoveTypeMTOId;
+            ShipmentData.ShipmentSubTypeTSSTId = shipmentVariables.ShipmentSubTypeTSSTId;
         }
     }
 }
