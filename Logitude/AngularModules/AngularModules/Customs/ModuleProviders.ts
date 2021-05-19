@@ -400,6 +400,7 @@ import { ExportStorgeListService } from './Services/StandardLists/ExportStorgeLi
 import { LogisticsReferenceTypeListService } from './Services/StandardLists/LogisticsReferenceTypeListService';
 import { ReferenceStatusListService } from './Services/StandardLists/ReferenceStatusListService';
 import { ReferenceInputTypeListService } from './Services/StandardLists/ReferenceInputTypeListService';
+import { ContainerizationPMService } from './Services/StandardPMs/ContainerizationPMService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -740,6 +741,7 @@ export class ModuleProviders {
             case "CurrencyTypePMService": { myResult = new CurrencyTypePMService(); break; }
             case "ReferantTeamPMService": { myResult = new ReferantTeamPMService(); break; }
             case "ExportStorgePMService": { myResult = new ExportStorgePMService(); break; }
+            case "ContainerizationPMService": { myResult = new ContainerizationPMService(); break; }
 
             //#endregion
 
