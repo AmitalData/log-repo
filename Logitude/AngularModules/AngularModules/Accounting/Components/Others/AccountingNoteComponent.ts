@@ -48,7 +48,7 @@ export class AccountingNoteComponent extends BaseComponent {
         if (args != null) {
 
             this.entityPM = args.AccountingNotePM;
-            this.accountPM = args.AccountPM;
+            this.accountPM = args.EntityPM;
             if(this.entityPM)
             {
                 this.isEditForm = true;
