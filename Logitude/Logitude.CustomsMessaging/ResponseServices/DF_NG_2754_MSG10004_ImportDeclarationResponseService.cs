@@ -890,6 +890,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         var myGDFDATAQueryService = new GDFDATAQueryService(AmitalContext.GetContext(requestParams.Tenant));
                         var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_ACT_COLLECT", "NON", courierMaster.IntegratorNumber, false, true);
                         bool isCollectActive = def.DEFDATA == "Y";
+ 
 
 
                         if (isCollectActive)

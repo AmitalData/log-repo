@@ -339,6 +339,10 @@ namespace Logitude.CustomsMessaging.RequestServices
             {
                 myGeneralData.submitDate = myDeclarationPaymentsPM.PaymentDate.Value;
             }
+            else if (myDeclarationPaymentsPM.AutomaticPayment==1 && !(myDeclarationPaymentsPM.PaymentDate.HasValue))
+            {
+                myGeneralData.submitDate = DateTime.Now;
+            }
             /*else // temp
             {
                 myGeneralData.submitDate = DateTime.Now;
