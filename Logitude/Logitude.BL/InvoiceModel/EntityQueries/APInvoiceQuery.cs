@@ -1196,6 +1196,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                          where a.Tenant == tenant
                          select new APInvoiceList()
                          {
+                             MainEntityId = a.MainEntityId,
                              CreateDate = a.CreateDate,
                              CreatedByUserId = a.CreatedByUserId,
                              DueDate = a.DueDate,

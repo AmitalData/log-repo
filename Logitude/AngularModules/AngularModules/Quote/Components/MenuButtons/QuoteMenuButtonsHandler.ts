@@ -442,7 +442,7 @@ export class QuoteMenuButtonsHandler {
                     }
 
                     this.Reload = true;
-
+                    this.entityArgs.EditComponent.SaveChanges();
                     this.isButtonClicked = false;
                 }
             });
@@ -753,7 +753,7 @@ export class QuoteMenuButtonsHandler {
     }
 
     IsSetAsSentQuote: boolean = false;
-    private SetAsSentToCustomer() {
+    private SetAsSentToCustomer() { 
         this.isLCL = QuoteUtilities.IsLCLQuote(this.EntityPM);
         this.CheckUpdateQuantities();
 
@@ -801,8 +801,7 @@ export class QuoteMenuButtonsHandler {
     }
 
     private CancelQuote() {
-        this.Validate();
-
+        this.Validate(); 
         if (this.isValid) {
             var myService: ShipmentDomainService = new ShipmentDomainService();
             myService.GetShipmentsCountByQuoteId(this.EntityPM.Id).subscribe((myResult: ServiceResponse) => {
@@ -1210,8 +1209,7 @@ export class QuoteMenuButtonsHandler {
     }
 
     private OnNotesWindowClosed(actionType: string) {
-        this.isButtonClicked = false;
-
+        this.isButtonClicked = false; 
         if (actionType == "sent") {
             this.EntityPM.IsClosed = false;
             this.EntityPM.ActionType = "SetAsSentToCustomer";

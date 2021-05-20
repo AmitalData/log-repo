@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountFollowUpDataUpdateClass
    {  		
-		public const string HashString = "244e57817617c6b9cdaecaea3f7763ab";
+		public const string HashString = "884f78cbf1f6ba2d31809ce1c8e9ffc7";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "GLAccountFollowUpData",
-			      				    Code =  "587c",
+			      				    Code =  "e6db",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -413,9 +413,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FollowUpDate",
-					  						DefaultText =  "Follow-Up Date",
+					  						DefaultText =  "Follow Up Date",
+					  						FullLocalDefaultText =  "תאריך למעקב",
 					  						ListFieldLable =  "FollowUpDateListLable",
 					  						ListLableDefaultText =  "FollowUpDate",
+					  						ListLocalDefaultText =  "תאריך למעקב",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -473,8 +475,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FollowUpRemarks",
 					  						DefaultText =  "Follow Up Remarks ",
+					  						FullLocalDefaultText =  "הערות למעקב",
 					  						ListFieldLable =  "FollowUpRemarksListLable",
 					  						ListLableDefaultText =  "FollowUpRemarks",
+					  						ListLocalDefaultText =  "הערות למעקב",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

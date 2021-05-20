@@ -87,9 +87,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
             this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "AWBWizardClosed") {
-                    this.SetUIProperties();
-                    this.SetGenerateData();
-                    this.BuildItemsSource();
+                    this.entityArgs.EditComponent.ReloadEntityPM();
                 }
 
                 else if (s == "RefreshPackagesTabFromAWBWizard") {
@@ -142,9 +140,6 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                     this.DirectionId = this.EntityPM.DirectionId;
 
                     this.OnResourcesReady();
-                    //this.SetUIProperties();
-                    //this.SetGenerateData();
-                    //this.BuildItemsSource();
                 }
             });
 
@@ -444,8 +439,13 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             })
 
             this.ItemsSource.InsertCollection(itemsCollection);
-            this.SetGenerateData();
         }
+
+        else {
+            this.ItemsSource = new ObservableCollection([]);
+        }
+
+        this.SetGenerateData();
     }
 
     // Measurments
@@ -994,7 +994,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     }
 
     SetGenerateData() {
-        this.IsGenerateControlVisible = this.EntityPM.ShipmentPackages.length == 0 ? true : false;
+        this.IsGenerateControlVisible = !this.EntityPM.IsMultipleCommodities && this.EntityPM.ShipmentPackages.length == 0 ? true : false;
         if (this.IsGenerateControlVisible) {
 
             var count = 0;

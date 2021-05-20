@@ -4918,6 +4918,13 @@ export class ShipmentPM {
         }
     }
 
+
+    private documentFilingIds: string;
+    public get DocumentFilingIds() { return this.documentFilingIds; }
+    public set DocumentFilingIds(newValue: string) { if (this.documentFilingIds != newValue) { this.documentFilingIds = newValue; this.MarkAsDirty("DocumentFilingIds"); } }
+
+
+
     public OldEntityPM: ShipmentPM;
 
     private aWBOCIPMs: AWBOCIPM[];

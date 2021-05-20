@@ -27,48 +27,15 @@ SELECT         dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNum
                          dbo.ShipmentMasterDatas.ManifestReason, dbo.ShipmentMasterDatas.ManifestStatusCode, dbo.ShipmentMasterDatas.AirlinePrefix, dbo.Shipments.OperationalCloseDate, dbo.Shipments.AccountingCloseDate,
 						 dbo.MoveTypes.MoveTypeEnglishName AS MoveTypeName,
 						 dbo.Shipments.ARInvoices,
-						 dbo.Shipments.NotInvoicedReceivablesAmount,
-             
-             dbo.Shipments.PreForwardingCarrierId,
-             dbo.Shipments.PreForwardingVesselId,
+						 dbo.Shipments.NotInvoicedReceivablesAmount,             
              dbo.Shipments.PreForwardingETD,
              dbo.Shipments.PreForwardingETA,
-             dbo.Shipments.PreForwardingCarrierNumber, 
              dbo.Shipments.PreForwardingATA,
-             dbo.Shipments.PreForwardingATD, 
-             dbo.Shipments.PreForwardingToPortId,
-             dbo.Shipments.PreForwardingFromPortId, 
-             dbo.Shipments.PreForwardingTransportModeId,
-             PreForwardingFromPorts.Code AS PreForwardingFromPortCode, 
-             PreForwardingToPorts.Code AS PreForwardingToPortCode,
-             PreForwardingFromPorts.EnglishName AS PreForwardingFromPortName,
-             PreForwardingToPorts.EnglishName AS PreForwardingToPortName,
-             PreForwardingFromCountries.Code AS PreForwardingFromPortCountryCode, 
-             PreForwardingFromCountries.EnglishName AS PreForwardingFromPortCountryName,
-             PreForwardingToCountries.Code AS PreForwardingToPortCountryCode, 
-             PreForwardingToCountries.EnglishName AS PreForwardingToPortCountryName, 
-             PreForwardingCarrierCards.EnglishName AS PreForwardingCarrierName, 
-             PreForwardingCarrierCards.Code AS PreForwardingCarrierCode,
-             dbo.Shipments.OnForwardingCarrierId,
-             dbo.Shipments.OnForwardingVesselId,
+             dbo.Shipments.PreForwardingATD,             
              dbo.Shipments.OnForwardingETA, 
              dbo.Shipments.OnForwardingETD,
-             dbo.Shipments.OnForwardingCarrierNumber,
              dbo.Shipments.OnForwardingATA,
              dbo.Shipments.OnForwardingATD,
-             dbo.Shipments.OnForwardingToPortId,
-             dbo.Shipments.OnForwardingFromPortId,
-             dbo.Shipments.OnForwardingTransportModeId,
-             OnForwardingFromPorts.Code AS OnForwardingFromPortCode, OnForwardingToPorts.Code AS OnForwardingToPortCode, 
-             OnForwardingFromPorts.EnglishName AS OnForwardingFromPortName, 
-             OnForwardingToPorts.EnglishName AS OnForwardingToPortName, 
-             OnForwardingFromCountries.Code AS OnForwardingFromPortCountryCode, 
-             OnForwardingFromCountries.EnglishName AS OnForwardingFromPortCountryName, 
-             OnForwardingToCountries.Code AS OnForwardingToPortCountryCode, 
-             OnForwardingToCountries.EnglishName AS OnForwardingToPortCountryName,
-             OnForwardingCarrierCards.EnglishName AS OnForwardingCarrierName, 
-             OnForwardingCarrierCards.Code AS OnForwardingCarrierCode,
-
 						 dbo.Shipments.ContainerLastStatusDate,
 						 dbo.Shipments.Notify1Reference,
 						 dbo.Shipments.Notify2Reference,
@@ -94,16 +61,16 @@ SELECT         dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNum
                          dbo.Shipments.CustomerAddressId, dbo.Shipments.CustomerId, dbo.Shipments.FreightForwarderReference, dbo.Shipments.FreightForwarderId, 
                          dbo.Shipments.CustomAgentExportReference, dbo.Shipments.CustomAgentExportId, dbo.Shipments.CustomAgentImportReference, 
                          dbo.Shipments.ConsigneeAddressOneTime, dbo.Shipments.ShipperAddressOneTime, dbo.Shipments.EstimateProfitInLocalCurrency, dbo.Shipments.AWBCurrencyId, 
-                         dbo.Shipments.OrderChargeableWeight, dbo.ShipmentMasterDatas.OnCarriageCarrierId, dbo.ShipmentMasterDatas.PreCarriageCarrierId, dbo.Shipments.ProfitInLocalCurrency, 
+                         dbo.Shipments.OrderChargeableWeight, dbo.Shipments.ProfitInLocalCurrency, 
                          dbo.Shipments.AccountedReceivablesInLocalCurrency, dbo.Shipments.OpenReceivablesInLocalCurrency, dbo.Shipments.LastUpdateDate, 
                          dbo.Shipments.UpdatedByUserId, dbo.Shipments.IsCancelled, dbo.Shipments.IsAccountingClosed, dbo.Shipments.ShipmentPayableStatusCode, 
                          dbo.Shipments.ShipmentReceivableStatusCode, dbo.Shipments.QuoteId, dbo.Shipments.ShipmentDeliveryIndex, dbo.Shipments.ShipmentPickUpIndex, 
-                         dbo.Shipments.LTCWEdited, dbo.ShipmentMasterDatas.OnCarriageVesselId, dbo.ShipmentMasterDatas.PreCarriageVesselId, dbo.Shipments.DangerousMaterialDescription, 
+                         dbo.Shipments.LTCWEdited, dbo.Shipments.DangerousMaterialDescription, 
                          dbo.Shipments.DangerousPackagingGroup, dbo.Shipments.DangerousClassNumber, dbo.Shipments.DangerousUnNumber, dbo.Shipments.DangerousIMDGCode, 
                          dbo.Shipments.DangerousFlashPoint, dbo.Shipments.AWBFreightAmountPrepaid, dbo.Shipments.AWBFreightAmountCollect, dbo.Shipments.IsDangerous, 
                          dbo.Shipments.MainHarmonize, dbo.Shipments.VolumeUnitCode, dbo.Shipments.ChargeableWeightEdited,
                          dbo.Shipments.GrossWeightEdited, dbo.Shipments.Ratio, dbo.Shipments.PackagesQuantity, dbo.Shipments.RegistryDate, dbo.Shipments.IsAssembly, dbo.Shipments.FirstOperationalCloseDate,
-						 dbo.Shipments.NumberOfPackages, dbo.Shipments.NumberOfContainers, dbo.Shipments.VolumeInCBM, dbo.Shipments.NumberOfFollowUps, dbo.Shipments.FirstAccountingCloseDate,
+						             dbo.Shipments.NumberOfPackages, dbo.Shipments.NumberOfContainers, dbo.Shipments.VolumeInCBM, dbo.Shipments.NumberOfFollowUps, dbo.Shipments.FirstAccountingCloseDate,
                          dbo.Shipments.DimensionsUnitCode, dbo.Shipments.AgentReference2, dbo.Shipments.ValueOfGoods,
                          dbo.Shipments.AgentReference1, dbo.Shipments.ShipperNotExporterContactId, dbo.Shipments.ConsigneeNotImporterContactId, 
                          dbo.Shipments.ConsigneeNotImporterAddressId, dbo.Shipments.ShipperNotExporterAddressId, dbo.Shipments.ConsigneeNotImporterId, 
@@ -111,46 +78,43 @@ SELECT         dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNum
                          dbo.Shipments.BookingNumberOfPackages, dbo.Shipments.BookingVolume, dbo.Shipments.OrderGrossWeight, dbo.Shipments.Field10, dbo.Shipments.Field9, 
                          dbo.Shipments.Field8, dbo.Shipments.Field7, dbo.Shipments.Field6, dbo.Shipments.Field5, dbo.Shipments.Field4, dbo.Shipments.Field3, dbo.Shipments.Field2, 
                          dbo.Shipments.Field1, dbo.Shipments.GrossWeight, dbo.Shipments.ChargeableWeight, dbo.Shipments.IsOperationalClosed, dbo.Shipments.ConsigneeContactId,
-						 dbo.Shipments.Field11, dbo.Shipments.Field12, dbo.Shipments.Field13, dbo.Shipments.Field14, dbo.Shipments.Field15,
-						 dbo.Shipments.Field16, dbo.Shipments.Field17, dbo.Shipments.Field18, dbo.Shipments.Field19, dbo.Shipments.Field20,
-						 dbo.Shipments.Field21, dbo.Shipments.Field22, dbo.Shipments.Field23, dbo.Shipments.Field24, dbo.Shipments.Field25,
-						 dbo.Shipments.Field26, dbo.Shipments.Field27, dbo.Shipments.Field28, dbo.Shipments.Field29, dbo.Shipments.Field30,
-						 dbo.Shipments.Field31, dbo.Shipments.Field32, dbo.Shipments.Field33, dbo.Shipments.Field34, dbo.Shipments.Field35,
-						 dbo.Shipments.Field36, dbo.Shipments.Field37, dbo.Shipments.Field38, dbo.Shipments.Field39, dbo.Shipments.Field40,
-
+						             dbo.Shipments.Field11, dbo.Shipments.Field12, dbo.Shipments.Field13, dbo.Shipments.Field14, dbo.Shipments.Field15,
+						             dbo.Shipments.Field16, dbo.Shipments.Field17, dbo.Shipments.Field18, dbo.Shipments.Field19, dbo.Shipments.Field20,
+						             dbo.Shipments.Field21, dbo.Shipments.Field22, dbo.Shipments.Field23, dbo.Shipments.Field24, dbo.Shipments.Field25,
+						             dbo.Shipments.Field26, dbo.Shipments.Field27, dbo.Shipments.Field28, dbo.Shipments.Field29, dbo.Shipments.Field30,
+						             dbo.Shipments.Field31, dbo.Shipments.Field32, dbo.Shipments.Field33, dbo.Shipments.Field34, dbo.Shipments.Field35,
+						             dbo.Shipments.Field36, dbo.Shipments.Field37, dbo.Shipments.Field38, dbo.Shipments.Field39, dbo.Shipments.Field40,
                          dbo.Shipments.AgentContactId, dbo.Shipments.AgentAddressId, dbo.Shipments.CustomAgentImportAddressId, dbo.Shipments.CustomAgentImportContactId, 
                          dbo.Shipments.ShipperContactId, dbo.Shipments.Notify2ContactId, dbo.Shipments.Notify1ContactId, dbo.Shipments.Notify2AddressId, 
-                         dbo.Shipments.Notify1AddressId, dbo.ShipmentMasterDatas.PreCarriageETD, dbo.ShipmentMasterDatas.PreCarriageETA, dbo.ShipmentMasterDatas.OnCarriageETA, dbo.ShipmentMasterDatas.OnCarriageETD, 
-                         dbo.Shipments.AgentId,dbo.Shipments.AgentComputed, dbo.ShipmentMasterDatas.OnCarriageCarrierNumber, dbo.ShipmentMasterDatas.OnCarriageATA, dbo.ShipmentMasterDatas.OnCarriageATD, 
-                         dbo.ShipmentMasterDatas.OnCarriageToPortId, dbo.ShipmentMasterDatas.OnCarriageFromPortId, dbo.ShipmentMasterDatas.OnCarriageTransportModeId, dbo.ShipmentMasterDatas.PreCarriageCarrierNumber, 
-                         dbo.ShipmentMasterDatas.PreCarriageATA, dbo.ShipmentMasterDatas.PreCarriageATD, dbo.ShipmentMasterDatas.PreCarriageToPortId, dbo.ShipmentMasterDatas.PreCarriageFromPortId, 
-                         dbo.ShipmentMasterDatas.PreCarriageTransportModeId, dbo.Shipments.HAWBDate, dbo.Shipments.DescriptionOfGoods, dbo.Shipments.Notes, dbo.Shipments.DirectionId, 
+                         dbo.Shipments.Notify1AddressId, 
+                         dbo.ShipmentMasterDatas.PreCarriageETD, dbo.ShipmentMasterDatas.PreCarriageETA, dbo.ShipmentMasterDatas.PreCarriageATA, dbo.ShipmentMasterDatas.PreCarriageATD,
+                         dbo.ShipmentMasterDatas.OnCarriageETA, dbo.ShipmentMasterDatas.OnCarriageETD, dbo.ShipmentMasterDatas.OnCarriageATA, dbo.ShipmentMasterDatas.OnCarriageATD,
+                         dbo.Shipments.AgentId,dbo.Shipments.AgentComputed,
+                         dbo.Shipments.HAWBDate, dbo.Shipments.DescriptionOfGoods, dbo.Shipments.Notes, dbo.Shipments.DirectionId, 
                          dbo.Shipments.TransportModeId, dbo.Shipments.ConsigneeAddressId, dbo.Shipments.ShipperAddressId, dbo.Shipments.Notify2Id, dbo.Shipments.Notify1Id, 
                          dbo.Shipments.ConsigneeId, dbo.Shipments.CustomAgentImportId, dbo.Shipments.ShipperId, dbo.Shipments.ShipmentTypeId, dbo.Shipments.DepartmentId, 
                          dbo.Shipments.CreateDateTime, dbo.Shipments.SalesmanUserId, dbo.Shipments.IncotermId, dbo.Shipments.BranchId, dbo.Shipments.House, 
                          dbo.Shipments.ConsigneeReference2, dbo.Shipments.ConsigneeReference1, MainCarriageFromPorts.Code AS MainCarriageFromPortCode, 
                          dbo.Shipments.ConsolidatorId,dbo.Shipments.ConsolidatorAddressId,dbo.Shipments.ConsolidatorContactId,dbo.Shipments.ConsolidatorReference,						 
-						 dbo.Shipments.CustomsDeclarationNumber,dbo.Shipments.FBLIsFromStock,
-						 dbo.Shipments.FreightRelease, dbo.Shipments.TerminalAvailable, dbo.Shipments.ISFDate, dbo.Shipments.ISFNumber, dbo.Shipments.ITDate, dbo.Shipments.ITNumber,
-						 dbo.ShipmentMasterDatas.OBLTypeCode, dbo.ShipmentMasterDatas.DocumentsClosingDate, dbo.Shipments.ENSNumber, dbo.Shipments.ENSDate,
-						 dbo.Shipments.WarehouseLegWarehouseId, dbo.Shipments.WarehouseLegAddressId, dbo.Shipments.WarehouseLegTerminalCode, dbo.Shipments.WarehouseLegExpectedEntryDate,  
-						 dbo.Shipments.WarehouseLegLastFreeDate,dbo.Shipments.WarehouseLegExpectedReleaseDate,dbo.Shipments.WarehouseLegActualReleaseDate, dbo.Shipments.WarehouseLegRemarks, dbo.Shipments.WarehouseLegActualEntryDate,dbo.Shipments.WarehouseLegReference,
-						 dbo.Shipments.LastSharedEventId, dbo.Shipments.LastSharedEventLocation, dbo.Shipments.LastSharedEventNotes, dbo.Shipments.LastSharedEventDate,	
-						 dbo.EventTypes.EnglishName as LastSharedEventName, dbo.Vessels.EnglishName AS MainCarriageVesselName,
-						 MainCarriageToPorts.Code AS MainCarriageToPortCode, Transshipment1FromPorts.Code AS Transshipment1FromPortCode, 
+						             dbo.Shipments.CustomsDeclarationNumber,dbo.Shipments.FBLIsFromStock,
+						             dbo.Shipments.FreightRelease, dbo.Shipments.TerminalAvailable, dbo.Shipments.ISFDate, dbo.Shipments.ISFNumber, dbo.Shipments.ITDate, dbo.Shipments.ITNumber,
+						             dbo.ShipmentMasterDatas.OBLTypeCode, dbo.ShipmentMasterDatas.DocumentsClosingDate, dbo.Shipments.ENSNumber, dbo.Shipments.ENSDate,
+						             dbo.Shipments.WarehouseLegWarehouseId, dbo.Shipments.WarehouseLegAddressId, dbo.Shipments.WarehouseLegTerminalCode, dbo.Shipments.WarehouseLegExpectedEntryDate,  
+						             dbo.Shipments.WarehouseLegLastFreeDate,dbo.Shipments.WarehouseLegExpectedReleaseDate,dbo.Shipments.WarehouseLegActualReleaseDate, dbo.Shipments.WarehouseLegRemarks, dbo.Shipments.WarehouseLegActualEntryDate,dbo.Shipments.WarehouseLegReference,
+						             dbo.Shipments.LastSharedEventId, dbo.Shipments.LastSharedEventLocation, dbo.Shipments.LastSharedEventNotes, dbo.Shipments.LastSharedEventDate,	
+						             dbo.EventTypes.EnglishName as LastSharedEventName, dbo.Vessels.EnglishName AS MainCarriageVesselName,
+						             MainCarriageToPorts.Code AS MainCarriageToPortCode, Transshipment1FromPorts.Code AS Transshipment1FromPortCode, 
                          Transshipment1ToPorts.Code AS Transshipment1ToPortCode, Transshipment2FromPorts.Code AS Transshipment2FromPortCode, 
                          Transshipment2ToPorts.Code AS Transshipment2ToPortCode, Transshipment3FromPorts.Code AS Transshipment3FromPortCode, 
-                         Transshipment3ToPorts.Code AS Transshipment3ToPortCode, PreCarriageFromPorts.Code AS PreCarriageFromPortCode, 
-                         PreCarriageToPorts.Code AS PreCarriageToPortCode, OnCarriageFromPorts.Code AS OnCarriageFromPortCode, OnCarriageToPorts.Code AS OnCarriageToPortCode, 
+                         Transshipment3ToPorts.Code AS Transshipment3ToPortCode,                        
                          MainCarriageToPorts.EnglishName AS MainCarriageToPortName, MainCarriageFromPorts.EnglishName AS MainCarriageFromPortName, 
                          Transshipment1FromPorts.EnglishName AS Transshipment1FromPortName, Transshipment1ToPorts.EnglishName AS Transshipment1ToPortName, 
-                         Transshipment2ToPorts.EnglishName AS Transshipment2ToPortName, Transshipment2FromPorts.EnglishName AS Transshipment2FromPortName, 
-                         PreCarriageFromPorts.EnglishName AS PreCarriageFromPortName, OnCarriageFromPorts.EnglishName AS OnCarriageFromPortName, 
-                         PreCarriageToPorts.EnglishName AS PreCarriageToPortName, Transshipment3FromPorts.EnglishName AS Transshipment3FromPortName, 
-                         Transshipment3ToPorts.EnglishName AS Transshipment3ToPortName, OnCarriageToPorts.EnglishName AS OnCarriageToPortName, 
+                         Transshipment2ToPorts.EnglishName AS Transshipment2ToPortName, Transshipment2FromPorts.EnglishName AS Transshipment2FromPortName,                          
+                         Transshipment3FromPorts.EnglishName AS Transshipment3FromPortName, 
+                         Transshipment3ToPorts.EnglishName AS Transshipment3ToPortName,
                          CustomerCards.EnglishName AS CustomerName, CustomerCards.Notes AS CustomerNote,
-						 ConsolidatorCards.EnglishName AS ConsolidatorName, ConsolidatorCards.Notes AS ConsolidatorNote,
-						 FreightForwarderCards.EnglishName AS FreightForwarderName, 
+						             ConsolidatorCards.EnglishName AS ConsolidatorName, ConsolidatorCards.Notes AS ConsolidatorNote,
+						             FreightForwarderCards.EnglishName AS FreightForwarderName, 
                          FreightForwarderCards.Notes AS FreightForwarderNote, ShipperCards.EnglishName AS ShipperName, ShipperCards.Notes AS ShipperNote, 
                          ConsigneeCards.EnglishName AS ConsigneeName, ConsigneeCards.Notes AS ConsigneeNote, AgentCards.EnglishName AS AgentName, 
                          AgentCards.Notes AS AgentNote, CustomAgentExportCards.EnglishName AS CustomAgentExportName, CustomAgentExportCards.Notes AS CustomAgentExportNote, 
@@ -166,20 +130,18 @@ SELECT         dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNum
                          Transshipment2FromCountries.Code AS Transshipment2FromPortCountryCode, 
                          Transshipment2FromCountries.EnglishName AS Transshipment2FromPortCountryName, 
                          Transshipment3FromCountries.Code AS Transshipment3FromPortCountryCode, 
-                         Transshipment3FromCountries.EnglishName AS Transshipment3FromPortCountryName, PreCarriageFromCountries.Code AS PreCarriageFromPortCountryCode, 
-                         PreCarriageFromCountries.EnglishName AS PreCarriageFromPortCountryName, OnCarriageFromCountries.Code AS OnCarriageFromPortCountryCode, 
-                         OnCarriageFromCountries.EnglishName AS OnCarriageFromPortCountryName, Transshipment1ToCountries.Code AS Transshipment1ToPortCountryCode, 
-                         Transshipment1ToCountries.EnglishName AS Transshipment1ToPortCountryName, OnCarriageToCountries.Code AS OnCarriageToPortCountryCode, 
-                         OnCarriageToCountries.EnglishName AS OnCarriageToPortCountryName, Transshipment2ToCountries.Code AS Transshipment2ToPortCountryCode, 
-                         Transshipment2ToCountries.EnglishName AS Transshipment2ToPortCountryName, PreCarriageToCountries.Code AS PreCarriageToPortCountryCode, 
-                         PreCarriageToCountries.EnglishName AS PreCarriageToPortCountryName, Transshipment3ToCountries.Code AS Transshipment3ToPortCountryCode, 
+                         Transshipment3FromCountries.EnglishName AS Transshipment3FromPortCountryName,                          
+                         Transshipment1ToCountries.Code AS Transshipment1ToPortCountryCode, 
+                         Transshipment1ToCountries.EnglishName AS Transshipment1ToPortCountryName,  
+                         Transshipment2ToCountries.Code AS Transshipment2ToPortCountryCode, 
+                         Transshipment2ToCountries.EnglishName AS Transshipment2ToPortCountryName,  
+                         Transshipment3ToCountries.Code AS Transshipment3ToPortCountryCode, 
                          Transshipment3ToCountries.EnglishName AS Transshipment3ToPortCountryName, MainCarriageCarrierCards.EnglishName AS MainCarriageCarrierName, 
                          MainCarriageCarrierCards.Code AS MainCarriageCarrierCode, Transshipment1CarrierCards.EnglishName AS Transshipment1CarrierName, 
                          Transshipment1CarrierCards.Code AS Transshipment1CarrierCode, Transshipment2CarrierCards.EnglishName AS Transshipment2CarrierName, 
                          Transshipment2CarrierCards.Code AS Transshipment2CarrierCode, Transshipment3CarrierCards.EnglishName AS Transshipment3CarrierName, 
-                         Transshipment3CarrierCards.Code AS Transshipment3CarrierCode, PreCarriageCarrierCards.EnglishName AS PreCarriageCarrierName, 
-                         PreCarriageCarrierCards.Code AS PreCarriageCarrierCode, OnCarriageCarrierCards.EnglishName AS OnCarriageCarrierName, 
-                         OnCarriageCarrierCards.Code AS OnCarriageCarrierCode, dbo.NextLegs.Name AS NextLegName, dbo.Directions.Name AS DirectionName, 
+                         Transshipment3CarrierCards.Code AS Transshipment3CarrierCode,                          
+                         dbo.NextLegs.Name AS NextLegName, dbo.Directions.Name AS DirectionName, 
                          dbo.TransportModes.Name AS TransportModeName, dbo.ShipmentTypes.Name AS ShipmentTypeName, 
                          dbo.ShipmentReceivableStatus.Name AS ShipmentReceivableStatusName, dbo.ShipmentPayableStatus.Name AS ShipmentPayableStatusName, 
                          AWBCurrencies.Code AS AWBCurrencyCode, dbo.Branches.EnglishName AS BranchName, 
@@ -261,31 +223,15 @@ FROM            dbo.Shipments LEFT OUTER JOIN
                          dbo.Ports AS Transshipment3ToPorts ON dbo.ShipmentMasterDatas.Transshipment3ToPortId = Transshipment3ToPorts.Id LEFT OUTER JOIN
                          dbo.Ports AS MainCarriageFinalDestinationPorts ON 
                          dbo.ShipmentMasterDatas.MainCarriageFinalDestinationPortId = MainCarriageFinalDestinationPorts.Id LEFT OUTER JOIN
-                         dbo.Ports AS PreCarriageFromPorts ON dbo.ShipmentMasterDatas.PreCarriageFromPortId = PreCarriageFromPorts.Id LEFT OUTER JOIN
-                         dbo.Ports AS PreCarriageToPorts ON dbo.ShipmentMasterDatas.PreCarriageToPortId = PreCarriageToPorts.Id LEFT OUTER JOIN
-                         dbo.Ports AS OnCarriageFromPorts ON dbo.ShipmentMasterDatas.OnCarriageFromPortId = OnCarriageFromPorts.Id LEFT OUTER JOIN
-                         dbo.Ports AS OnCarriageToPorts ON dbo.ShipmentMasterDatas.OnCarriageToPortId = OnCarriageToPorts.Id LEFT OUTER JOIN
                          dbo.Ports AS ToPorts ON dbo.Shipments.ToPortId = ToPorts.Id LEFT OUTER JOIN
                          dbo.Ports AS FromPorts ON dbo.Shipments.FromPortId = FromPorts.Id LEFT OUTER JOIN
                          dbo.Cards AS CustomerCards ON dbo.Shipments.CustomerId = CustomerCards.Id LEFT OUTER JOIN
 						             dbo.Cards AS ConsolidatorCards ON dbo.Shipments.ConsolidatorId = ConsolidatorCards.Id LEFT OUTER JOIN
-             
-                         dbo.Ports AS PreForwardingFromPorts ON dbo.Shipments.PreForwardingFromPortId = PreForwardingFromPorts.Id LEFT OUTER JOIN
-                         dbo.Ports AS PreForwardingToPorts ON dbo.Shipments.PreForwardingToPortId = PreForwardingToPorts.Id LEFT OUTER JOIN
-                         dbo.Cards AS PreForwardingCarrierCards ON dbo.Shipments.PreForwardingCarrierId = PreForwardingCarrierCards.Id LEFT OUTER JOIN
-                         dbo.Countries AS PreForwardingFromCountries ON PreForwardingFromPorts.CountryId = PreForwardingFromCountries.Id LEFT OUTER JOIN
-                         dbo.Countries AS PreForwardingToCountries ON PreForwardingToPorts.CountryId = PreForwardingToCountries.Id LEFT OUTER JOIN
-                         dbo.Ports AS OnForwardingFromPorts ON dbo.Shipments.OnForwardingFromPortId = OnForwardingFromPorts.Id LEFT OUTER JOIN
-                         dbo.Ports AS OnForwardingToPorts ON dbo.Shipments.OnForwardingToPortId = OnForwardingToPorts.Id LEFT OUTER JOIN
-                         dbo.Countries AS OnForwardingFromCountries ON OnForwardingFromPorts.CountryId = OnForwardingFromCountries.Id LEFT OUTER JOIN
-                         dbo.Countries AS OnForwardingToCountries ON OnForwardingToPorts.CountryId = OnForwardingToCountries.Id LEFT OUTER JOIN
-                         dbo.Cards AS OnForwardingCarrierCards ON dbo.Shipments.OnForwardingCarrierId = OnForwardingCarrierCards.Id LEFT OUTER JOIN
-
                          dbo.Cards AS FreightForwarderCards ON dbo.Shipments.FreightForwarderId = FreightForwarderCards.Id LEFT OUTER JOIN
                          dbo.Cards AS ShipperCards ON dbo.Shipments.ShipperId = ShipperCards.Id LEFT OUTER JOIN
                          dbo.Cards AS ConsigneeCards ON dbo.Shipments.ConsigneeId = ConsigneeCards.Id LEFT OUTER JOIN
                          dbo.Cards AS AgentCards ON dbo.Shipments.AgentId = AgentCards.Id LEFT OUTER JOIN
-						 dbo.Cards AS AgentComputedCards ON dbo.Shipments.AgentComputed = AgentComputedCards.Id LEFT OUTER JOIN
+						             dbo.Cards AS AgentComputedCards ON dbo.Shipments.AgentComputed = AgentComputedCards.Id LEFT OUTER JOIN
                          dbo.Cards AS CustomAgentExportCards ON dbo.Shipments.CustomAgentExportId = CustomAgentExportCards.Id LEFT OUTER JOIN
                          dbo.Cards AS CustomAgentImportCards ON dbo.Shipments.CustomAgentImportId = CustomAgentImportCards.Id LEFT OUTER JOIN
                          dbo.Cards AS Notify1Cards ON dbo.Shipments.Notify1Id = Notify1Cards.Id LEFT OUTER JOIN
@@ -298,21 +244,15 @@ FROM            dbo.Shipments LEFT OUTER JOIN
                          dbo.Countries AS Transshipment1FromCountries ON Transshipment1FromPorts.CountryId = Transshipment1FromCountries.Id LEFT OUTER JOIN
                          dbo.Countries AS Transshipment2FromCountries ON Transshipment2FromPorts.CountryId = Transshipment2FromCountries.Id LEFT OUTER JOIN
                          dbo.Countries AS Transshipment3FromCountries ON Transshipment3FromPorts.CountryId = Transshipment3FromCountries.Id LEFT OUTER JOIN
-                         dbo.Countries AS PreCarriageFromCountries ON PreCarriageFromPorts.CountryId = PreCarriageFromCountries.Id LEFT OUTER JOIN
-                         dbo.Countries AS OnCarriageFromCountries ON OnCarriageFromPorts.CountryId = OnCarriageFromCountries.Id LEFT OUTER JOIN
                          dbo.Countries AS Transshipment1ToCountries ON Transshipment1ToPorts.CountryId = Transshipment1ToCountries.Id LEFT OUTER JOIN
                          dbo.Countries AS Transshipment2ToCountries ON Transshipment2ToPorts.CountryId = Transshipment2ToCountries.Id LEFT OUTER JOIN
                          dbo.Countries AS Transshipment3ToCountries ON Transshipment3ToPorts.CountryId = Transshipment3ToCountries.Id LEFT OUTER JOIN
-                         dbo.Countries AS PreCarriageToCountries ON PreCarriageToPorts.CountryId = PreCarriageToCountries.Id LEFT OUTER JOIN
-                         dbo.Countries AS OnCarriageToCountries ON OnCarriageToPorts.CountryId = OnCarriageToCountries.Id LEFT OUTER JOIN
                          dbo.Countries AS FromPortCountries ON FromPorts.CountryId = FromPortCountries.Id LEFT OUTER JOIN
                          dbo.Countries AS ToPortCountries ON ToPorts.CountryId = ToPortCountries.Id LEFT OUTER JOIN
                          dbo.Cards AS MainCarriageCarrierCards ON dbo.ShipmentMasterDatas.MainCarriageCarrierId = MainCarriageCarrierCards.Id LEFT OUTER JOIN
                          dbo.Cards AS Transshipment1CarrierCards ON dbo.ShipmentMasterDatas.Transshipment1CarrierId = Transshipment1CarrierCards.Id LEFT OUTER JOIN
                          dbo.Cards AS Transshipment2CarrierCards ON dbo.ShipmentMasterDatas.Transshipment2CarrierId = Transshipment2CarrierCards.Id LEFT OUTER JOIN
                          dbo.Cards AS Transshipment3CarrierCards ON dbo.ShipmentMasterDatas.Transshipment3CarrierId = Transshipment3CarrierCards.Id LEFT OUTER JOIN
-                         dbo.Cards AS PreCarriageCarrierCards ON dbo.ShipmentMasterDatas.PreCarriageCarrierId = PreCarriageCarrierCards.Id LEFT OUTER JOIN
-                         dbo.Cards AS OnCarriageCarrierCards ON dbo.ShipmentMasterDatas.OnCarriageCarrierId = OnCarriageCarrierCards.Id LEFT OUTER JOIN
                          dbo.NextLegs ON dbo.Shipments.NextLegCode = dbo.NextLegs.Code LEFT OUTER JOIN
                          dbo.Directions ON dbo.Shipments.DirectionId = dbo.Directions.Id LEFT OUTER JOIN
                          dbo.TransportModes ON dbo.Shipments.TransportModeId = dbo.TransportModes.Id LEFT OUTER JOIN
@@ -322,22 +262,20 @@ FROM            dbo.Shipments LEFT OUTER JOIN
                          dbo.EntityStatus ON dbo.Shipments.StatusId = dbo.EntityStatus.Id LEFT OUTER JOIN
                          dbo.Currencies AS AWBCurrencies ON dbo.Shipments.AWBCurrencyId = AWBCurrencies.Id LEFT OUTER JOIN
                          dbo.Branches ON dbo.Shipments.BranchId = dbo.Branches.Id LEFT OUTER JOIN
-						 dbo.MoveTypes ON dbo.Shipments.MoveTypeId = dbo.MoveTypes.Id LEFT OUTER JOIN
+						             dbo.MoveTypes ON dbo.Shipments.MoveTypeId = dbo.MoveTypes.Id LEFT OUTER JOIN
                          dbo.ShipmentLevels ON dbo.Shipments.ShipmentLevelCode = dbo.ShipmentLevels.Code LEFT OUTER JOIN
                          dbo.EntityStatus AS ShipmentMasterDataEntityStatus ON dbo.ShipmentMasterDatas.StatusId = ShipmentMasterDataEntityStatus.Id LEFT OUTER JOIN
                          dbo.Airlines AS MainCarriageAirline ON dbo.ShipmentMasterDatas.MainCarriageCarrierId = MainCarriageAirline.Id LEFT OUTER JOIN
                          dbo.Incoterms ON dbo.Shipments.IncotermId = dbo.Incoterms.Id LEFT OUTER JOIN
                          dbo.Vessels ON dbo.ShipmentMasterDatas.MainCarriageVesselId = dbo.Vessels.Id LEFT OUTER JOIN
-						 dbo.CustomsTransmissionsStatus ON dbo.Shipments.LocalCustomsTransmissionsStatusCode = dbo.CustomsTransmissionsStatus.Code LEFT OUTER JOIN
-
-						 dbo.FHLStatus ON dbo.Shipments.FHLStatusCode = dbo.FHLStatus.Code LEFT OUTER JOIN
+						             dbo.CustomsTransmissionsStatus ON dbo.Shipments.LocalCustomsTransmissionsStatusCode = dbo.CustomsTransmissionsStatus.Code LEFT OUTER JOIN
+						             dbo.FHLStatus ON dbo.Shipments.FHLStatusCode = dbo.FHLStatus.Code LEFT OUTER JOIN
                          dbo.FWBStatus ON dbo.ShipmentMasterDatas.FWBStatusCode = dbo.FWBStatus.Code LEFT OUTER JOIN
                          dbo.FHLStatus AS CargonautFHLStatus ON dbo.Shipments.CargonautFHLStatusCode = CargonautFHLStatus.Code LEFT OUTER JOIN
                          dbo.FWBStatus AS CargonautFWBStatus ON dbo.ShipmentMasterDatas.CargonautFWBStatusCode = CargonautFWBStatus.Code LEFT OUTER JOIN
                          dbo.EventTypes ON dbo.Shipments.LastSharedEventId = dbo.EventTypes.Id LEFT OUTER JOIN
-						 dbo.INTTRASIStatus ON dbo.Shipments.INTTRASIStatusCode = dbo.INTTRASIStatus.Code LEFT OUTER JOIN
-
-						 dbo.AWBStatus AS CarrierLastStatuses ON dbo.Shipments.CarrierLastStatusCode = CarrierLastStatuses.Code LEFT OUTER JOIN
+						             dbo.INTTRASIStatus ON dbo.Shipments.INTTRASIStatusCode = dbo.INTTRASIStatus.Code LEFT OUTER JOIN
+						             dbo.AWBStatus AS CarrierLastStatuses ON dbo.Shipments.CarrierLastStatusCode = CarrierLastStatuses.Code LEFT OUTER JOIN
                          dbo.EventTypes AS FollowUpTypes ON dbo.FollowUps.EventTypeId = FollowUpTypes.Id LEFT OUTER JOIN
                          dbo.Contacts AS FollowUpOwners ON dbo.FollowUps.OwnerUserId = FollowUpOwners.Id LEFT OUTER JOIN
                          dbo.Addresses AS MainCarriageFromAddresses ON dbo.ShipmentMasterDatas.MainCarriageFromAddressId = MainCarriageFromAddresses.Id LEFT OUTER JOIN
@@ -347,14 +285,13 @@ FROM            dbo.Shipments LEFT OUTER JOIN
                          dbo.Countries AS MainCarriageFromAddressCountries ON MainCarriageFromAddresses.CountryId = MainCarriageFromAddressCountries.Id LEFT OUTER JOIN
                          dbo.Countries AS MainCarriageToAddressCountries ON MainCarriageToAddresses.CountryId = MainCarriageToAddressCountries.Id LEFT OUTER JOIN
                          dbo.SpecialServicesTypes ON dbo.Shipments.SpecialServicesTypeId = dbo.SpecialServicesTypes.Id INNER JOIN
-						 dbo.ShipmentComputedFields AS ShipmentComputedFields ON dbo.Shipments.Id = ShipmentComputedFields.Id LEFT OUTER JOIN
-
-						 dbo.States AS MainCarriageFromAddressesStates ON MainCarriageFromAddresses.StateId = MainCarriageFromAddressesStates.Id LEFT OUTER JOIN
-						 dbo.States AS MainCarriageToAddressesStates ON MainCarriageToAddresses.StateId = MainCarriageToAddressesStates.Id LEFT OUTER JOIN
-						 dbo.States AS FromPortsStates ON FromPorts.StateId = FromPortsStates.Id  LEFT OUTER JOIN
-						 dbo.States AS ToPortsStates ON ToPorts.StateId = ToPortsStates.Id LEFT OUTER JOIN
-						 dbo.States AS MainCarriageFromPortsStates ON MainCarriageFromPorts.StateId = MainCarriageFromPortsStates.Id LEFT OUTER JOIN
-						 dbo.States AS MainCarriageFinalDestinationPortsStates ON MainCarriageFinalDestinationPorts.StateId = MainCarriageFinalDestinationPortsStates.Id
+						             dbo.ShipmentComputedFields AS ShipmentComputedFields ON dbo.Shipments.Id = ShipmentComputedFields.Id LEFT OUTER JOIN
+						             dbo.States AS MainCarriageFromAddressesStates ON MainCarriageFromAddresses.StateId = MainCarriageFromAddressesStates.Id LEFT OUTER JOIN
+						             dbo.States AS MainCarriageToAddressesStates ON MainCarriageToAddresses.StateId = MainCarriageToAddressesStates.Id LEFT OUTER JOIN
+						             dbo.States AS FromPortsStates ON FromPorts.StateId = FromPortsStates.Id  LEFT OUTER JOIN
+						             dbo.States AS ToPortsStates ON ToPorts.StateId = ToPortsStates.Id LEFT OUTER JOIN
+						             dbo.States AS MainCarriageFromPortsStates ON MainCarriageFromPorts.StateId = MainCarriageFromPortsStates.Id LEFT OUTER JOIN
+						             dbo.States AS MainCarriageFinalDestinationPortsStates ON MainCarriageFinalDestinationPorts.StateId = MainCarriageFinalDestinationPortsStates.Id
     ]]>
   </SqlScript>
   <OracleScript>

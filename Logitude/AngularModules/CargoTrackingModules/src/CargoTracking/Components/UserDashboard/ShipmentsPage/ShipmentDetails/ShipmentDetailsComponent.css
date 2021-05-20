@@ -520,8 +520,10 @@ h1 {
     flex-wrap: wrap;
 }
 .partner-card {
-    width: 140px;
-    height: 180px;
+    /* min-width: 180px; */
+    width: 180px;
+    min-height: 180px;
+    max-width: 250px;
     margin: 0 10px 20px;
     padding: 15px;
 }
@@ -551,8 +553,8 @@ h1 {
 }
 
 .circle-icon {
-    width: 25px;
-    height: 25px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     background: var(--MainColor);
     color: white;
@@ -575,6 +577,14 @@ h1 {
     font-weight: 600;
     line-height: 32px;
 }
+.circle-icon img{
+    width: 16px;
+    padding-top: 7px;
+}
+.circle-icon-x2 img{
+    width: 18px;
+    padding-top: 9px;
+}
 
 .partners-buttons {
     margin-bottom: 10px;
@@ -586,9 +596,11 @@ h1 {
 
 @media screen and (max-width: 479px) {
     .partner-card {
-        width: calc(100vw - 80px);
+        width: calc(100vw - 80px) !important;
         margin-bottom: 15px;
         height: unset !important;
+        min-height: unset !important;
+        max-width: unset !important;
     }
 
         .partner-card .body {
@@ -608,4 +620,58 @@ h1 {
         justify-content: space-between;
         align-items: center;
     }
+}
+
+
+.document-card{
+    width: 100%;
+    height: 150px;
+    background: #F2F4F7;
+    padding: 30px 20px;
+    text-align: center;
+
+}
+
+.document-mobile-card{
+    position: relative;
+    padding: 0;
+}
+.row{
+    display: flex;
+}
+.row div{
+    /* display: inline-block; */
+}
+.col-50{
+    width: 50%;
+}
+.col-40{
+    width: 40%;
+}
+.col-10{
+    width: 10%;
+}
+.text-end{
+    text-align: end;
+}
+.card-title{
+    text-transform: uppercase;
+    color: var(--MainColor);
+    font-weight: 700;
+
+    font-size: 12px;
+}
+
+.document-mobile-card .notes-section{
+    text-align: center;
+    background: #F2F4F7;
+    padding: 10px 15px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    font-size: 13px;
+
+}
+
+.document-mobile-card .details-section{
+    padding: 10px 15px;
 }

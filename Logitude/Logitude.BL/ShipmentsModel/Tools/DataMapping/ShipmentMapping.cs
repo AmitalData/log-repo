@@ -648,6 +648,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                         }
                     }
 
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(preCrriageFromPortCode))
+                        {
+                            myRoutingField = preCrriageFromPortCode + " , " + myRoutingField;
+                        }
+                    }
+
                     if (!string.IsNullOrEmpty(onForwardingToPortCode))
                     {
                         if (!string.IsNullOrEmpty(onCarriageToPortCode))
@@ -658,6 +666,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                         else
                         {
                             myRoutingField = myRoutingField + " , " + onForwardingToPortCode;
+                        }
+                    }
+
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(onCarriageToPortCode))
+                        {
+                            myRoutingField = myRoutingField + " , " + onCarriageToPortCode;
                         }
                     }
                 }

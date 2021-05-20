@@ -391,7 +391,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         {
                             row[0] = item.OriginPortCombinedCode ?? null;
                             row[1] = item.DestinationPortCombinedCode ?? null;
-                            row[2] = item.ViaPortCode ?? null;
+                            row[2] = item.ViaPortCombinedCode ?? null;
                         }
                         
                         row[3] = item.MinPrice ?? null;

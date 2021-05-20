@@ -55,7 +55,7 @@ export class ShipmentsListComponent implements AfterViewInit
     ShipmentTypeAndDirectionTooltip: string;
     SupplierOrClientTitle: string;
     ShipmenTypeForRouting: string;
-    
+
 
 
 
@@ -89,7 +89,7 @@ export class ShipmentsListComponent implements AfterViewInit
     }
 
     SetShipmentTypeAndDirectionTooltip(shipment: CargoTrackingShipmentList) {
-        var type = ""; 
+        var type = "";
         var direction = "";
         switch (shipment.TransportModeId) {
             case 'A': {
@@ -142,7 +142,7 @@ export class ShipmentsListComponent implements AfterViewInit
     }
 
     SetShipmenTypeForRouting(shipment: CargoTrackingShipmentList) {
-        
+
         if (shipment.ShipmentLevelCode == 'D') {
             this.ShipmenTypeForRouting = "Direct"
         }
@@ -192,6 +192,8 @@ export class ShipmentsListComponent implements AfterViewInit
         this.GetInvitedCustomers();
     }
 
+    FiltersSelectedInvitedCustoms: any[] = [];
+    SelectedInvitedCustomers: any[] = [];
     private GetInvitedCustomers()
     {
 
@@ -206,9 +208,10 @@ export class ShipmentsListComponent implements AfterViewInit
             .map(d => (
                 {
                     IsSelected: false,
-                    Name: d.CompanyName.substring(0,d.CompanyName.indexOf('(')),
+                    Name: d.CompanyName.substring(0,d.CompanyName.lastIndexOf('(')),
                     ...d }
                 ));
+
 
 
         console.log("[Invited Customers]", this.InvitedCustomersIds);
@@ -353,8 +356,8 @@ export class ShipmentsListComponent implements AfterViewInit
 
     private SetCustomersFilter(shipmentFilters: CargoTrackingShipmentFilters)
     {
-        if(this.InvitedCustomers.filter(cs=>cs.IsSelected).length > 0){
-            var str = this.InvitedCustomers.filter(cs=>cs.IsSelected).map(d => d.CardId)?.join(',');
+        if(this.SelectedInvitedCustomers.length > 0){
+            var str = this.SelectedInvitedCustomers.map(d => d.CardId)?.join(',');
 
         }else{
             var str = this.InvitedCustomers.map(d => d.CardId)?.join(',');
@@ -409,7 +412,7 @@ export class ShipmentsListComponent implements AfterViewInit
         }
     }
 
-    
+
     SetEstimationORActualDate(shipment: CargoTrackingShipmentList) {
         if (shipment.ArrivalDate != null) {
             this.TitleOfEstimationORActualDate = 'ATA'
@@ -434,7 +437,7 @@ export class ShipmentsListComponent implements AfterViewInit
             this.TitleOfEstimationORActualDate = 'ATA'
             this.ValueOfEstimationORActualDate = null;
         }
-        
+
 
 
 
@@ -515,11 +518,14 @@ export class ShipmentsListComponent implements AfterViewInit
     ApplyFilterButtonClicked()
     {
         this.isFiltersSideBarOpened = false;
+
+        this.SelectedInvitedCustomers = this.FiltersSelectedInvitedCustoms.map(d=>d);
+
         this.LoadScreenData();
     }
     ClearAdvancedFilters(){
         this.isFiltersSideBarOpened = false;
-        this.InvitedCustomers.forEach(d=>{d.IsSelected=false});
+        this.SelectedInvitedCustomers = [];
         this.LoadScreenData();
     }
     SortMenuClicked(buttonCode: string)
@@ -561,8 +567,38 @@ export class ShipmentsListComponent implements AfterViewInit
 
     UnselectCustomer(customer)
     {
-        customer.IsSelected=false;
+        var index = this.SelectedInvitedCustomers.findIndex(d=>d==customer);
+            if(index >= 0)
+                this.SelectedInvitedCustomers.splice(index,1);
+
         this.LoadScreenData();
+
+    }
+    FiltersInvitedCustomers: any[] = [];
+    OpenAdvancedFiltersSidebar(){
+        this.isFiltersSideBarOpened = true;
+
+        this.FiltersSelectedInvitedCustoms = this.SelectedInvitedCustomers.map(d=>d);
+
+        this.InvitedCustomers.forEach(d=>d.IsSelected = false);
+        this.FiltersSelectedInvitedCustoms.forEach(d=>d.IsSelected = true);
+
+        this.FiltersInvitedCustomers = this.InvitedCustomers.map(d=>{
+            var selected = this.FiltersSelectedInvitedCustoms.find(g=>g==d);
+            return selected || d;
+        });
+    }
+    OnCustomerValueChanged(value,customer){
+        if(value){
+            var index = this.FiltersSelectedInvitedCustoms.findIndex(d=>d==customer);
+            if(index < 0)
+                this.FiltersSelectedInvitedCustoms.push(customer);
+        }
+        else{
+            var index = this.FiltersSelectedInvitedCustoms.findIndex(d=>d==customer);
+            if(index >= 0)
+                this.FiltersSelectedInvitedCustoms.splice(index,1);
+        }
 
     }
 

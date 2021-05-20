@@ -1106,6 +1106,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "ImporterTenant", customerTenantAccessInfo.CustomerTenant.ToString() }, { "CustomerId", entityPM.CustomerId } }, tenant, null, entityPM.CustomerId);
                         }
                     }
+
+                    OpenForwarderShipmentQueue();
                 }
                 catch (Exception ex)
                 {
@@ -1181,18 +1183,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "ImporterTenant", customerTenantAccessInfo.CustomerTenant.ToString() }, { "CustomerId", !string.IsNullOrEmpty(OldCustomerId) ? OldCustomerId : entityPM.CustomerId }, { "CustomerChanged", CustomerChanged } }, tenant, null, entityPM.CustomerId);
                         }
                     }
-                    EntityStatusRepository entityStatusRep = new EntityStatusRepository(tenant);
-                    EntityStatus myStatus = entityStatusRep.GetSingleEntityStatusByCode("INPS", tenant);//"in progress"
-                    if (loggedTenant.LogBoxTenantSetting.IsDocumentsArchive && !entityPM.DontAddToForwarderQueue && (myStatus != null && (entityPM.StatusId == myStatus.Id && string.IsNullOrEmpty(entityPM.ForwarderShipmentNumber)) || entityPM.SendUpdatesToAgentEnabled))
-                    {
-                        if (IsPrivateLabelTenant(entityPM.Tenant))
-                        {
-                            IQueueService queueservice = new DbQueueService();
-                            queueservice.InitializeQueue("ForwarderShipmentQueue", 0);
-                            queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, }, tenant);
-                        }
+                    OpenForwarderShipmentQueue();
 
-                    }
                 }
                 catch (Exception ex)
                 {
@@ -1208,6 +1200,22 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
                     ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "web role", null, ip);
                 }
+            }
+        }
+
+        private void OpenForwarderShipmentQueue()
+        {
+            EntityStatusRepository entityStatusRep = new EntityStatusRepository(tenant);
+            EntityStatus myStatus = entityStatusRep.GetSingleEntityStatusByCode("INPS", tenant);//"in progress"
+            if (loggedTenant.LogBoxTenantSetting.IsDocumentsArchive && !entityPM.DontAddToForwarderQueue && (myStatus != null && (entityPM.StatusId == myStatus.Id && string.IsNullOrEmpty(entityPM.ForwarderShipmentNumber)) || entityPM.SendUpdatesToAgentEnabled))
+            {
+                if (IsPrivateLabelTenant(entityPM.Tenant))
+                {
+                    IQueueService queueservice = new DbQueueService();
+                    queueservice.InitializeQueue("ForwarderShipmentQueue", 0);
+                    queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, }, tenant);
+                }
+
             }
         }
 
@@ -1320,7 +1328,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 if (this.entityPM.ShipmentLevelCode != "D")
                 {
                     UpdateShipmentProfitClass.UpdatePayables(entityPM.Id, entityPM.Tenant, false);
-                    UpdateShipmentProfitClass.UpdateShipmentHousesPayablesVatAmounts(entityPM.Id, tenant);
 
                     // Ayman: Please don't remove
                     if (this.entityPM.ShipmentLevelCode == "C")
@@ -1338,7 +1345,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 if (this.entityPM.ShipmentLevelCode != "D")
                 {
                     UpdateShipmentProfitClass.UpdateReceivables(entityPM.Id, entityPM.Tenant, false);
-                    UpdateShipmentProfitClass.UpdateShipmentHousesReceivablesVatAmounts(entityPM.Id, tenant);
 
                     // Ayman: Please don't remove
                     if (this.entityPM.ShipmentLevelCode == "C")
@@ -3371,9 +3377,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             entityPM.AWBChargeRate = airFreightCharge.UnitPrice;
             entityPM.AWBCurrencyId = airFreightCharge.CurrencyId;
             entityPM.AWBChargeAmount = this.SetAWBChargeAmount();
-            entityPM.FreightPrepaidCollectId = airFreightCharge.PrepaidCollectId;
-            entityPM.AWBChargesCodeCode = this.SetAWBChargesCodeCode();
-            SetAWBFrieghtAmountCollectAndPrepaid();
+            if (!string.IsNullOrEmpty (airFreightCharge.PrepaidCollectId))
+            {
+                entityPM.FreightPrepaidCollectId = airFreightCharge.PrepaidCollectId;
+                entityPM.AWBChargesCodeCode = this.SetAWBChargesCodeCode();
+                SetAWBFrieghtAmountCollectAndPrepaid();
+            }
         }
 
         public string SetAWBChargesCodeCode()
@@ -4349,6 +4358,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     {
                         this.initializer.IsUpdatingHouses = true;
                     }
+                    //else if (entityPM.ShipmentConsoleShipments != null && entityPM.ShipmentConsoleShipments.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert).Any())
+                    //{
+                    //    this.initializer.IsUpdatingHouses = true;
+                    //}
                 }
             }
         }

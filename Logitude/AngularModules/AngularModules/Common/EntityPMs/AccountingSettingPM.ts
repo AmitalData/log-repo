@@ -145,6 +145,11 @@ export class AccountingSettingPM {
     public set ARPaymentTransferStartDate(newValue: Date) { if (this.aRPaymentTransferStartDate != newValue) { this.aRPaymentTransferStartDate = newValue; this.MarkAsDirty("ARPaymentTransferStartDate"); } }
        
 	 
+    private aPPaymentTransferStartDate: Date;
+    public get APPaymentTransferStartDate() { return this.aPPaymentTransferStartDate; }
+    public set APPaymentTransferStartDate(newValue: Date) { if (this.aPPaymentTransferStartDate != newValue) { this.aPPaymentTransferStartDate = newValue; this.MarkAsDirty("APPaymentTransferStartDate"); } }
+       
+	 
     private allowPositiveAmountsInTheCreditNote: boolean;
     public get AllowPositiveAmountsInTheCreditNote() { return this.allowPositiveAmountsInTheCreditNote; }
     public set AllowPositiveAmountsInTheCreditNote(newValue: boolean) { if (this.allowPositiveAmountsInTheCreditNote != newValue) { this.allowPositiveAmountsInTheCreditNote = newValue; this.MarkAsDirty("AllowPositiveAmountsInTheCreditNote"); } }

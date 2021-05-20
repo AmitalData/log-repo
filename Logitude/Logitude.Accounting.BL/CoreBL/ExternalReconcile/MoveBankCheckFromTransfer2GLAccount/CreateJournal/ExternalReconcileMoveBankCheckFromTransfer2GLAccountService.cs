@@ -33,6 +33,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
         public const string M_LedgerAlreadyHaveExternalReconcile = "התנועה מסומנת שהותאמה כבר חיצונית";
         public const string M_InProgressExternalReconcile_Ledger = "התנועה מסומנת בתהליך התאמה חצונית";
         public const string M_InProgressExternalReconcile_Page = "השורה בדף מסומנת בתהליך התאמה חצונית ";
+        public const string M_AdjustAccoutMustBeDiffFromBank = "החשבון להפרשים חייב להיות שונה מהבנק";
         public JournalPM TheJournalPM { get; private set; }
         
 
@@ -455,7 +456,14 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
                     M_OnAdjustMustInit// " סכום החובה בדף בנק שונה מסכום התנועה בכרטסת בנק לשלם בזכות אולם המשתנה כרטיס להפרשים לא אותחל";
                     );
             }
+            if (!String.IsNullOrWhiteSpace(_OnAdjust_adjustGLAccountId) && bankAccountFromTransfer != null &&  _OnAdjust_adjustGLAccountId == bankAccountFromTransfer.Id)
+            {
+                
+                err.Add(
+                    M_AdjustAccoutMustBeDiffFromBank// = "החשבון להפרשים חייב להיות שונה מהבנק";
+                    );
 
+            }
             if (myReconcileExternalPageLinePM.DebitAmount <= 0)
             {
                 err.Add(

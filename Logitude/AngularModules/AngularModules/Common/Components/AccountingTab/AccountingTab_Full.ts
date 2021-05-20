@@ -100,7 +100,7 @@ export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnIn
                     var myComponentPath = "./Accounting/Components/EditTabs/GLAccount/GLAccountOverviewComponent";
                     SessionLocator.DynamicLoader.Load(myComponentPath, this.viewContainerRef)
                         .then(cmpRef => {
-                            cmpRef.instance.AccountPM = entity;
+                            cmpRef.instance.EntityPM = entity;
                             cmpRef.instance.LoadAllData();
                         });
                 }

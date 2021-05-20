@@ -20,8 +20,13 @@ namespace Logitude.Accounting.Data.Repositories
             
 			throw new NotImplementedException();
         }
-
-   }
+        public GLAccountFollowUpData GetSingleByAccountId(string accountid, int tenant)
+        {
+            return (from a in context.GLAccountFollowUpDatas
+                    where a.GlAccountId == accountid && a.Tenant == tenant
+                    select a).FirstOrDefault();
+        }
+    }
 
 }
    

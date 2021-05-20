@@ -78,6 +78,9 @@ export class RootComponentAOT implements OnInit {
             changeFavicon(window.sessionStorage.getItem("SmallLogoURL"));
             changeTitle(privateLableShortName);
         }
+        else {
+            document.location.href = Tools.GetSystemURL() + "Login.aspx";
+        }
         SessionInfo.MainLocation = this.location;
         this.LoadLoginPage();
     }    

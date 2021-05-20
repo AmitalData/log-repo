@@ -316,7 +316,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             }
 
 
-            this.quoteFollowUpUpdateService = new QuoteFollowUpUpdateService(this.entityPM, this.tenant);
+            this.quoteFollowUpUpdateService = new QuoteFollowUpUpdateService(entityPM, entityPM.Tenant); 
 
             quoteFollowUpUpdateService.RefreshFollowUps(); 
         }
