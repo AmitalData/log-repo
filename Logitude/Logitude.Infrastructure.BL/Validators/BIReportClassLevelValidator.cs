@@ -26,9 +26,9 @@ namespace Logitude.Infrastructure.BL.Validators
             if (value != null)
             {
                 string biReportName = (string)value.GetType().GetProperty("Name").GetValue(value);
-                if (biReportName.Contains("#") || biReportName.Contains("&"))
+                if (biReportName.Contains("#") || biReportName.Contains("&") || biReportName.Contains("+"))
                 {
-                    errorMessage = "Name field can't contain the following special characters # &";
+                    errorMessage = "Name field can't contain the following special characters # & +";
                     return false;
                 }
             }
