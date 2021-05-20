@@ -2589,6 +2589,8 @@
       <DependentUpon>HealthProb.aspx</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AdvancedDateResolver.cs" />
+    <Compile Include="Helpers\ExternalAPITemplatesBuilder.cs" />
+    <Compile Include="Helpers\ExternalAPIResponseParameters.cs" />
     <Compile Include="Helpers\APIHelpers\ApiExceptionFilter.cs" />
     <Compile Include="Helpers\APIHelpers\CargoTrackingShipmentDetailsInstanceCreator.cs" />
     <Compile Include="Helpers\APIHelpers\APIReceivablePayableHelper.cs" />
@@ -2613,6 +2615,7 @@
     <Compile Include="Helpers\BluesnapAnalyzer.cs" />
     <Compile Include="Helpers\BluesnapExecutionService.cs" />
     <Compile Include="Helpers\BluesnapHelper.cs" />
+    <Compile Include="Helpers\CaptchaParameters.cs" />
     <Compile Include="Helpers\CargoTrackingHelper.cs" />
     <Compile Include="Helpers\DataProviderHelpers\AutomationTestReportDataProvider.cs" />
     <Compile Include="Helpers\DataProviderHelpers\CrossDockEntryLabelDataProviderHelper.cs" />

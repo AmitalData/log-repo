@@ -9,14 +9,24 @@ import { ServiceResponse } from '../../DataContracts/ServiceResponse';
 
 export class CargoTrackingShipmentService {
     private _apiUrl: string;
+    public authHeaders = ServiceHelper.GetHeadersWithToken();
+
     constructor(private _http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
         this._apiUrl = ServiceHelper.GetAppURL(baseUrl) + 'api/ShipmentCargoTracking';
     }
 
     get(id: string) {
-        var authHeaders = ServiceHelper.GetHeadersWithToken();
+        return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, this.authHeaders).pipe(
+            map((response: ServiceResponse) => {
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse = response;
+                return serviceResponse;
+            }),
+            catchError(null));
+    }
 
-        return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, authHeaders).pipe(
+    GetShipmentPackages(id: string) {
+        return this._http.get(this._apiUrl + '/GetShipmentPackages?' + 'id=' + id, this.authHeaders).pipe(
             map((response: ServiceResponse) => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 serviceResponse = response;
@@ -26,8 +36,6 @@ export class CargoTrackingShipmentService {
     }
 
     GetPartnersAddresses(partnersIds: string[]) {
-        var authHeaders = ServiceHelper.GetHeadersWithToken();
-
         var IdsParameterString = "";
         if (partnersIds && partnersIds.length > 0) {
             partnersIds.forEach(el => {
@@ -36,7 +44,7 @@ export class CargoTrackingShipmentService {
         }
 
 
-        return this._http.get(this._apiUrl + '/GetPartnersAddresses?' + IdsParameterString, authHeaders).pipe(
+        return this._http.get(this._apiUrl + '/GetPartnersAddresses?' + IdsParameterString, this.authHeaders).pipe(
             map((response: ServiceResponse) => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 serviceResponse = response;
@@ -46,9 +54,17 @@ export class CargoTrackingShipmentService {
     }
 
     GetShipmentCustomsData(shipmentId: string) {
-        var authHeaders = ServiceHelper.GetHeadersWithToken();
+        return this._http.get(`${this._apiUrl}/GetShipmentCustomsData?shipmentId=${shipmentId}`, this.authHeaders).pipe(
+            map((response: ServiceResponse) => {
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse = response;
+                return serviceResponse;
+            }),
+            catchError(null));
+    }
 
-        return this._http.get(`${this._apiUrl}/GetShipmentCustomsData?shipmentId=${shipmentId}`, authHeaders).pipe(
+    GetDocumentsFilingsConnectedToShipment(id: string) {
+        return this._http.get(this._apiUrl + '/GetDocumentsFilingsConnectedToShipment?' + 'id=' + id, this.authHeaders).pipe(
             map((response: ServiceResponse) => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 serviceResponse = response;

@@ -1051,6 +1051,14 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                     accountingSettingRepository.SubmitChanges();
                                     break;
                                 }
+
+                            case "APPayment":
+                                {
+                                    entityPOCO.APPaymentTransferStartDate = myStartDate;
+                                    accountingSettingRepository.Update(entityPOCO);
+                                    accountingSettingRepository.SubmitChanges();
+                                    break;
+                                }
                         }
 
                         scope.Complete();

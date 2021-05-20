@@ -99,7 +99,7 @@ namespace WebFreight.Web.AccountingModel.Reports.BankDeposit
                 SetCreatedByUserName(tenant, bankDepositDP, bankDepositPM);
 
                 // BankAccount mapping
-                BankAccountPM bankAccount = bankAccountQuery.GetByAccountNumber(bankDepositPM.BankAccountNumber, tenant);
+                BankAccountPM bankAccount = bankAccountQuery.GetSingle(bankDepositPM.DepositBankAccountId, false,false);
                 if (bankAccount != null)
                 {
                     bankDepositDP.BankAccountBranchNo = bankAccount.BranchNumber == null ? "" : bankAccount.BranchNumber;

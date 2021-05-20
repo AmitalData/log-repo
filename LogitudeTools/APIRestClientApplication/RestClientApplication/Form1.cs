@@ -25,7 +25,7 @@ namespace RestClientApplication
         {
             InitializeComponent();
             Application.EnableVisualStyles();
-           
+
 
             this.apiCombo.Items.Add("House");
             this.apiCombo.Items.Add("Direct");
@@ -56,7 +56,7 @@ namespace RestClientApplication
 
         private void BuildOperationComboBox()
         {
-            if(apiCombo.SelectedIndex == ratesUpdateIndex)
+            if (apiCombo.SelectedIndex == ratesUpdateIndex)
             {
                 this.operationCombo.Items.Clear();
                 this.operationCombo.Items.Add("Create (POST)");
@@ -1140,14 +1140,14 @@ namespace RestClientApplication
                             {
                                 response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?id=" + textBox1.Text + "&DisplayNumber=" + textBox2.Text + "&InternalNumber=" + textBox3.Text);
                             }
-                            else if (apiName == "ARInvoice" || apiName == "ARPayment" )
-                            { 
+                            else if (apiName == "ARInvoice" || apiName == "ARPayment")
+                            {
                                 response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?id=" + textBox4.Text + "&number=" + txtParameter2.Text);
                             }
-                            else if ( apiName == "APInvoice")
+                            else if (apiName == "APInvoice")
                             {
-                               
-                                   response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?id=" + textBox4.Text + "&number=" + txtParameter2.Text + "&externalId=" + textBox7.Text + "&internalNumber=" + null);
+
+                                response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?id=" + textBox4.Text + "&number=" + txtParameter2.Text + "&externalId=" + textBox7.Text + "&internalNumber=" + null);
                             }
                             else if (apiName == "Journal")
                             {
@@ -1166,7 +1166,7 @@ namespace RestClientApplication
                         if (apiName == "APInvoiceCancellation")
                         {
                             client.DefaultRequestHeaders.Add("Accept", "application/xml");
-                            response = await client.GetAsync(txtServerUrl.Text + "/" + api +  "?externalId=" + textBox4.Text);
+                            response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?externalId=" + textBox4.Text);
 
                         }
                         else
@@ -1433,7 +1433,7 @@ namespace RestClientApplication
 
         private void btnConnect_Click(object sender, EventArgs e)
         {
-          
+
             this.LoginWithCredentials();
         }
         private void groupBox2_Enter(object sender, EventArgs e)

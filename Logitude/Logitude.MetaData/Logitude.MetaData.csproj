@@ -472,7 +472,6 @@
     <None Include="DBScripts\ShipmentModel\202006111515_AddShipmentSubTypesToTenants.sxml" />
     <None Include="DBScripts\ShipmentModel\202006140958_FillAirShipmentShipmentTypeField.sxml" />
     <None Include="DBScripts\ShipmentModel\202006141227_FillShipmentSubTypeBackward.sxml" />
-    <None Include="DBScripts\ShipmentModel\202104181355_UpdateContainerNumbersAndTypesArray.sxml" />
     <None Include="DBScripts\ShipmentModel\202009031302_FillDataFromShipmentPackagesToShipmentComputedFields.sxml" />
     <None Include="DBScripts\ShipmentModel\202008110940_SetIsBondedWarehouseField.sxml" />
     <None Include="DBScripts\ShipmentModel\202007051320_UpdateAirShipmentSubType.sxml" />
@@ -489,6 +488,7 @@
     <None Include="DBScripts\ShipmentModel\202102241906_UpdateCustomerContactAndAddress.sxml" />
     <None Include="DBScripts\ShipmentModel\202103211413_UpdateOnForwardingDepartedEventStatusWeight.sxml" />
     <None Include="DBScripts\ShipmentModel\202104051350_UpdatePreForwardingArrivedStatusWeight.sxml" />
+    <None Include="DBScripts\ShipmentModel\202104251340_UpdateCustomClearanceStatusWeight.sxml" />
     <None Include="DBScripts\ShipmentModel\202122031108_UpdateFollowUpForwardingEvents.sxml" />
     <None Include="DBScripts\ShipmentModel\UpdateshipmentsCalculateDocumentsKPIFields.sxml" />
     <None Include="DBScripts\ShipmentModel\UpdateShipmentsCalculateSendDocumentField.sxml" />

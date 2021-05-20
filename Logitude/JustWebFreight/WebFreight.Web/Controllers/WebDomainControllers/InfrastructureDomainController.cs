@@ -222,7 +222,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     FilterSerializer serializer = new FilterSerializer();
                     QueryOperations queryOperations = new QueryOperations();
                     queryOperations.SetFilter("FollowUpOwnerUserId", loggedUserId, true, "Equals", null, true);
-                    queryOperations.PageSize = 1000;
+                    queryOperations.PageSize = 6;
                     queryOperations.PageIndex = 0;
                     byte[] arrayOfBytes = serializer.SerializeFilterItems(queryOperations);
 
@@ -241,7 +241,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         iQueryable = iQueryable.Where(d => d.FollowUpOwnerId == loggedUserId);
                     }
 
+                    iQueryable = iQueryable.Skip(0);
+                    iQueryable = iQueryable.Take(6);
+
                     List<QuoteList> myResult = iQueryable.ToList();
+
                     return Request.CreateResponse(HttpStatusCode.OK, myResult);
                 }
 

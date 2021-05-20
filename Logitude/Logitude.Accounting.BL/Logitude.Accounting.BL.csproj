@@ -236,6 +236,7 @@
     <Compile Include="CoreBL\BuildTenant\FullAccountingProvider.cs" />
     <Compile Include="CoreBL\BuildTenant\IFullAccountingGenerator.cs" />
     <Compile Include="CoreBL\ConsolidatedTaxReportFlatFileAnalyser.cs" />
+    <Compile Include="CoreBL\ExchangeRatesFromExternalLinkUpdateService.cs" />
     <Compile Include="CoreBL\ExternalPagesBalanceService.cs" />
     <Compile Include="CoreBL\ExternalPages\DateAfterAllPagesClosedBalanceCalculator.cs" />
     <Compile Include="CoreBL\ExternalPages\DateBeforeAllPagesClosedBalanceCalculator.cs" />
@@ -251,6 +252,7 @@
     <Compile Include="CoreBL\ExternalReconcile\MoveBankCheckFromTransfer2GLAccount\CreateJournal\ExternalReconcileMoveBankCheckFromTransfer2GLAccountService.cs" />
     <Compile Include="CoreBL\ExternalReconcile\TransferTransactionsExternalReconciliationService.cs" />
     <Compile Include="CoreBL\ExternalReconcile\Utils\ExternalReconcileTypeService.cs" />
+    <Compile Include="CoreBL\Fix\FixJournaRecolService.cs" />
     <Compile Include="CoreBL\GLAccountChequesTotalCalculator.cs" />
     <Compile Include="CoreBL\GLAccountCounterService.cs" />
     <Compile Include="CoreBL\ExternalReconcile\CreateAutoExternalReconcileWhileStreamingService.cs" />
@@ -646,6 +648,7 @@
     <Compile Include="EntityQueryServices\GLAccountAgingDataQueryService.cs" />
     <Compile Include="EntityQueryServices\GLAccountConnectedPartnerService.cs" />
     <Compile Include="EntityQueryServices\GLAccountCounterQueryService.cs" />
+    <Compile Include="EntityQueryServices\GLAccountFollowUpDataQueryService.cs" />
     <Compile Include="EntityQueryServices\GLAccountInterestPeriodQueryService.cs" />
     <Compile Include="EntityQueryServices\GLAccountMoreDataQueryService.cs" />
     <Compile Include="EntityQueryServices\GLAccountTypeQueryService.cs" />

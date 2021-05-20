@@ -32,6 +32,7 @@ import { LoginServiceHelper } from 'src/Infrastructure/Utilities/LoginServiceHel
 import { CommonModule, DatePipe } from '@angular/common';
 import { CargoTrackingPortService } from '../CargoTracking/Services/Others/CargoTrackingPortService';
 import { CargoTrackingShipmentService } from '../CargoTracking/Services/Others/CargoTrackingShipmentService';
+import { DocumentDownloadService } from '../CargoTracking/Services/Others/DocumentDownloadService';
 
 
 export function getBaseUrl() {
@@ -81,6 +82,7 @@ export function getBaseUrl() {
         LoginExtendedService,
         CargoTrackingPortService,
         CargoTrackingShipmentService,
+        DocumentDownloadService,
         CommonDataExtendedService,
         CargoTrackingMilestoneService,
         AuthGuardService,

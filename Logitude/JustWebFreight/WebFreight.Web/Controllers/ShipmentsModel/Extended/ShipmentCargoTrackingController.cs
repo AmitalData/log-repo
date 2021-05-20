@@ -101,6 +101,46 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
 
         }
 
+
+        public HttpResponseMessage GetDocumentsFilingsConnectedToShipment(string id)
+        {
+            try
+            {
+                int tenant = GetAuthinticatedTenant();
+                DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery();
+                List<DocumentsFilingPM> documentsFilingPM = documentsFilingQuery.GetInputDocumentsFilingPMsByEntityId(id, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, documentsFilingPM);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+
+        public HttpResponseMessage GetShipmentPackages(string id)
+        {
+            try
+            {
+                string logKey = PerformanceLogger.LogCurrentTime();
+                int tenant = GetAuthinticatedTenant();
+
+                ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+                List<ShipmentPackagePM> shipmentPM = shipmentQuery.GetPackagesOfShipment(tenant, id);
+
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                return Request.CreateResponse(HttpStatusCode.OK, shipmentPM);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
         private int GetAuthinticatedTenant()
         {
             string token = HttpContext.Current.Request.Headers["Token"];
@@ -110,7 +150,5 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
             return tenant;
         }
 
-
     }
-
 }

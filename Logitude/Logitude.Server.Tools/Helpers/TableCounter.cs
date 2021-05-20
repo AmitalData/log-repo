@@ -22,8 +22,7 @@ namespace Logitude.Server.Tools.Helpers
 {
     public class TableCounter
     {
-        private static Object thisLock = new Object();
-        public static string GetNumber(int tenant ,string counterCode,string parameter1,string parameter2, Dictionary<string, string> additionalParameters = null)
+        public static string GetNumber(int tenant, string counterCode, string parameter1, string parameter2, Dictionary<string, string> additionalParameters = null)
         {
             Counter counter = null;
             CounterDefinition counterDef = null;
@@ -59,184 +58,175 @@ namespace Logitude.Server.Tools.Helpers
             {
                 prefix = counterDef.Prefix;
             }
-            
+
             int startNumber = counterDef.StartNumber;
             string number = null;
-			string counterLastNumberValue;
+            string counterLastNumberValue;
             string strConnString = GetConnection(tenant);//ConfigurationManager.ConnectionStrings["str"].ConnectionString;
-
-
-            lock (thisLock)
+            if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
-                using (TransactionScope scope = TransactionFactory.GetNewReadCommittedTransaction())
+
+                using (OracleConnection cn = new OracleConnection(strConnString))
                 {
-                    if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+                    OracleCommand cmd = new OracleCommand();
+                    cmd.Connection = cn;
+                    cmd.CommandText =
+                        //LogitudeDBSchema.LOGITUDE_MAIN.ToString() + "." +  "usp_GetNextTableNumberValue";
+                        DbContextBaseUtil.GetStoredProcedureName("usp_GetNextTableNumberValue", LogitudeDBSchema.LOGITUDE_MAIN,
+                        cmd.Connection.ConnectionString);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    /*
+                     v_pLastValue OUT NUMBER,
+--    v_pTenant      IN NUMBER,
+--    v_pCounterId   IN NVARCHAR2,
+--    v_pPrefix      IN NVARCHAR2,
+--    v_pStartNumber IN NUMBER */
+                    try
                     {
+                        OracleParameter lastValuePar = new OracleParameter("v_pLastValue", OracleDbType.Number);
+                        OracleParameter counterIdPar = new OracleParameter("v_pCounterId", OracleDbType.NVarChar);
+                        OracleParameter tenantPar = new OracleParameter("v_pTenant", OracleDbType.Number);
+                        OracleParameter prefixPar = new OracleParameter("v_pPrefix", OracleDbType.NVarChar);
+                        OracleParameter startNumberPar = new OracleParameter("v_pStartNumber", OracleDbType.Number);
 
-                        using (OracleConnection cn = new OracleConnection(strConnString))
+                        lastValuePar.Direction = ParameterDirection.Output;
+                        counterIdPar.Direction = ParameterDirection.Input;
+                        tenantPar.Direction = ParameterDirection.Input;
+                        prefixPar.Direction = ParameterDirection.Input;
+                        startNumberPar.Direction = ParameterDirection.Input;
+
+                        counterIdPar.Value = counter.Id;
+                        tenantPar.Value = tenant;
+
+                        startNumberPar.Value = startNumber;
+
+                        if (prefix != null)
                         {
-                            OracleCommand cmd = new OracleCommand();
-                            cmd.Connection = cn;
-                            cmd.CommandText =
-                                //LogitudeDBSchema.LOGITUDE_MAIN.ToString() + "." +  "usp_GetNextTableNumberValue";
-                                DbContextBaseUtil.GetStoredProcedureName("usp_GetNextTableNumberValue", LogitudeDBSchema.LOGITUDE_MAIN,
-                                cmd.Connection.ConnectionString);
-                            cmd.CommandType = CommandType.StoredProcedure;
-                            /*
-                             v_pLastValue OUT NUMBER,
-        --    v_pTenant      IN NUMBER,
-        --    v_pCounterId   IN NVARCHAR2,
-        --    v_pPrefix      IN NVARCHAR2,
-        --    v_pStartNumber IN NUMBER */
-                            try
-                            {
-                                OracleParameter lastValuePar = new OracleParameter("v_pLastValue", OracleDbType.Number);
-                                OracleParameter counterIdPar = new OracleParameter("v_pCounterId", OracleDbType.NVarChar);
-                                OracleParameter tenantPar = new OracleParameter("v_pTenant", OracleDbType.Number);
-                                OracleParameter prefixPar = new OracleParameter("v_pPrefix", OracleDbType.NVarChar);
-                                OracleParameter startNumberPar = new OracleParameter("v_pStartNumber", OracleDbType.Number);
-
-                                lastValuePar.Direction = ParameterDirection.Output;
-                                counterIdPar.Direction = ParameterDirection.Input;
-                                tenantPar.Direction = ParameterDirection.Input;
-                                prefixPar.Direction = ParameterDirection.Input;
-                                startNumberPar.Direction = ParameterDirection.Input;
-
-                                counterIdPar.Value = counter.Id;
-                                tenantPar.Value = tenant;
-
-                                startNumberPar.Value = startNumber;
-
-                                if (prefix != null)
-                                {
-                                    prefixPar.Value = prefix;
-                                }
-                                else
-                                {
-                                    prefixPar.Value = DBNull.Value;
-                                }
-
-                                cmd.Parameters.Add(lastValuePar);
-                                cmd.Parameters.Add(tenantPar);
-                                cmd.Parameters.Add(counterIdPar);
-                                cmd.Parameters.Add(prefixPar);
-                                cmd.Parameters.Add(startNumberPar);
-
-
-                                cn.Open();
-                                cmd.ExecuteNonQuery();
-                                cn.Close();
-                                //number = (counterDef.Prefix != null ? counterDef.Prefix + cmd.Parameters["v_pLastValue"].Value : counterDef.Prefix + cmd.Parameters["v_pLastValue"].Value);
-                                counterLastNumberValue = cmd.Parameters["v_pLastValue"].Value.ToString();
-
-
-                            }
-                            catch (Exception ex)
-                            {
-                                System.Console.WriteLine("Exception: {0}", ex.ToString());
-                                throw;
-                            }
-
-                            cn.Close();
+                            prefixPar.Value = prefix;
+                        }
+                        else
+                        {
+                            prefixPar.Value = DBNull.Value;
                         }
 
+                        cmd.Parameters.Add(lastValuePar);
+                        cmd.Parameters.Add(tenantPar);
+                        cmd.Parameters.Add(counterIdPar);
+                        cmd.Parameters.Add(prefixPar);
+                        cmd.Parameters.Add(startNumberPar);
 
+
+                        cn.Open();
+                        cmd.ExecuteNonQuery();
+                        cn.Close();
+                        //number = (counterDef.Prefix != null ? counterDef.Prefix + cmd.Parameters["v_pLastValue"].Value : counterDef.Prefix + cmd.Parameters["v_pLastValue"].Value);
+                        counterLastNumberValue = cmd.Parameters["v_pLastValue"].Value.ToString();
+
+
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Console.WriteLine("Exception: {0}", ex.ToString());
+                        throw;
+                    }
+
+                    cn.Close();
+                }
+
+
+            }
+            else
+            {
+                using (SqlConnection cn = new SqlConnection(strConnString))
+                {
+                    SqlCommand cmd = new SqlCommand("dbo.usp_GetNextTableNumberValue", cn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    SqlParameter lastValuePar = new SqlParameter("@pLastValue", SqlDbType.Int);
+                    SqlParameter counterIdPar = new SqlParameter("@pCounterId", SqlDbType.NVarChar);
+                    SqlParameter tenantPar = new SqlParameter("@pTenant", SqlDbType.Int);
+                    SqlParameter prefixPar = new SqlParameter("@pPrefix", SqlDbType.NVarChar);
+                    SqlParameter startNumberPar = new SqlParameter("@pStartNumber", SqlDbType.Int);
+
+                    lastValuePar.Direction = ParameterDirection.Output;
+                    counterIdPar.Direction = ParameterDirection.Input;
+                    tenantPar.Direction = ParameterDirection.Input;
+                    prefixPar.Direction = ParameterDirection.Input;
+                    startNumberPar.Direction = ParameterDirection.Input;
+
+                    counterIdPar.Value = counter.Id;
+                    tenantPar.Value = tenant;
+
+                    startNumberPar.Value = startNumber;
+
+                    if (prefix != null)
+                    {
+                        prefixPar.Value = prefix;
                     }
                     else
                     {
-                        using (SqlConnection cn = new SqlConnection(strConnString))
-                        {
-                            SqlCommand cmd = new SqlCommand("dbo.usp_GetNextTableNumberValue", cn);
-                            cmd.CommandType = CommandType.StoredProcedure;
-
-                            SqlParameter lastValuePar = new SqlParameter("@pLastValue", SqlDbType.Int);
-                            SqlParameter counterIdPar = new SqlParameter("@pCounterId", SqlDbType.NVarChar);
-                            SqlParameter tenantPar = new SqlParameter("@pTenant", SqlDbType.Int);
-                            SqlParameter prefixPar = new SqlParameter("@pPrefix", SqlDbType.NVarChar);
-                            SqlParameter startNumberPar = new SqlParameter("@pStartNumber", SqlDbType.Int);
-
-                            lastValuePar.Direction = ParameterDirection.Output;
-                            counterIdPar.Direction = ParameterDirection.Input;
-                            tenantPar.Direction = ParameterDirection.Input;
-                            prefixPar.Direction = ParameterDirection.Input;
-                            startNumberPar.Direction = ParameterDirection.Input;
-
-                            counterIdPar.Value = counter.Id;
-                            tenantPar.Value = tenant;
-
-                            startNumberPar.Value = startNumber;
-
-                            if (prefix != null)
-                            {
-                                prefixPar.Value = prefix;
-                            }
-                            else
-                            {
-                                prefixPar.Value = DBNull.Value;
-                            }
-
-                            cmd.Parameters.Add(lastValuePar);
-                            cmd.Parameters.Add(tenantPar);
-                            cmd.Parameters.Add(prefixPar);
-                            cmd.Parameters.Add(counterIdPar);
-                            cmd.Parameters.Add(startNumberPar);
-
-
-                            cn.Open();
-                            cmd.ExecuteNonQuery();
-                            cn.Close();
-                            //number = (counterDef.Prefix != null ? counterDef.Prefix + cmd.Parameters["@pLastValue"].Value : counterDef.Prefix + cmd.Parameters["@pLastValue"].Value);
-                            counterLastNumberValue = cmd.Parameters["@pLastValue"].Value.ToString();
-
-
-                        }
-
-
+                        prefixPar.Value = DBNull.Value;
                     }
 
-                    scope.Complete();
+                    cmd.Parameters.Add(lastValuePar);
+                    cmd.Parameters.Add(tenantPar);
+                    cmd.Parameters.Add(prefixPar);
+                    cmd.Parameters.Add(counterIdPar);
+                    cmd.Parameters.Add(startNumberPar);
+
+
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
+                    cn.Close();
+                    //number = (counterDef.Prefix != null ? counterDef.Prefix + cmd.Parameters["@pLastValue"].Value : counterDef.Prefix + cmd.Parameters["@pLastValue"].Value);
+                    counterLastNumberValue = cmd.Parameters["@pLastValue"].Value.ToString();
+
+
                 }
+
+
             }
-			number = GetCounterLastNumberWithPrefixSuffix(counter, counterDef, tenant, counterLastNumberValue, additionalParameters);
 
-			return number;
-		}
+            number = GetCounterLastNumberWithPrefixSuffix(counter, counterDef, tenant, counterLastNumberValue, additionalParameters);
 
-		private static string GetCounterLastNumberWithPrefixSuffix(Counter counter, CounterDefinition counterDef, int tenant, string counterLastNumberValue, Dictionary<string, string> additionalParameters)
-		{
-			string counterPrefix = !string.IsNullOrEmpty(counterDef.Prefix) ? counterDef.Prefix : "";
-			string counterSuffix = !string.IsNullOrEmpty(counterDef.Suffix) ? counterDef.Suffix : "";
+            return number;
+        }
+
+        private static string GetCounterLastNumberWithPrefixSuffix(Counter counter, CounterDefinition counterDef, int tenant, string counterLastNumberValue, Dictionary<string, string> additionalParameters)
+        {
+            string counterPrefix = !string.IsNullOrEmpty(counterDef.Prefix) ? counterDef.Prefix : "";
+            string counterSuffix = !string.IsNullOrEmpty(counterDef.Suffix) ? counterDef.Suffix : "";
 
 
-			//if (!string.IsNullOrEmpty(counterPrefix))
-			//{
-			//number = (counterDef.Prefix != null ? counterDef.Prefix + cmd.Parameters["v_pLastValue"].Value : counterDef.Prefix + cmd.Parameters["v_pLastValue"].Value);
+            //if (!string.IsNullOrEmpty(counterPrefix))
+            //{
+            //number = (counterDef.Prefix != null ? counterDef.Prefix + cmd.Parameters["v_pLastValue"].Value : counterDef.Prefix + cmd.Parameters["v_pLastValue"].Value);
 
-			//[MM],[YY] or [YYYY],[B]
-			ResolveCounterPrefixSuffixVariables(tenant, additionalParameters, ref counterPrefix, ref counterSuffix);
-			//YYYShipEEE (15 - 9) + 3 
-			if (counterDef.CounterSize != null && counterDef.CounterSize.Value > 0 && (counterPrefix + counterLastNumberValue + counterSuffix).Length < counterDef.CounterSize.Value)
-			{
-				int sizeOfStartNumber = (counterDef.CounterSize.Value - (counterPrefix + counterSuffix).Length);
-				counterLastNumberValue = counterLastNumberValue.ToString().PadLeft(sizeOfStartNumber, '0');
-			}
+            //[MM],[YY] or [YYYY],[B]
+            ResolveCounterPrefixSuffixVariables(tenant, additionalParameters, ref counterPrefix, ref counterSuffix);
+            //YYYShipEEE (15 - 9) + 3 
+            if (counterDef.CounterSize != null && counterDef.CounterSize.Value > 0 && (counterPrefix + counterLastNumberValue + counterSuffix).Length < counterDef.CounterSize.Value)
+            {
+                int sizeOfStartNumber = (counterDef.CounterSize.Value - (counterPrefix + counterSuffix).Length);
+                counterLastNumberValue = counterLastNumberValue.ToString().PadLeft(sizeOfStartNumber, '0');
+            }
 
-			counterLastNumberValue = counterPrefix + counterLastNumberValue + counterSuffix;
+            counterLastNumberValue = counterPrefix + counterLastNumberValue + counterSuffix;
 
-			return counterLastNumberValue;
-		}
+            return counterLastNumberValue;
+        }
 
-		private static void ResolveCounterPrefixSuffixVariables(int tenant, Dictionary<string, string> additionalParameters, ref string counterPrefix, ref string counterSuffix)
-		{
-			DateTime date = TenantServerConfigration.GetCurrentDateTime(tenant);
-			string MM = date.ToString("MM");
-			string YY = date.ToString("yy");
-			string YYYY = date.ToString("yyyy");
+        private static void ResolveCounterPrefixSuffixVariables(int tenant, Dictionary<string, string> additionalParameters, ref string counterPrefix, ref string counterSuffix)
+        {
+            DateTime date = TenantServerConfigration.GetCurrentDateTime(tenant);
+            string MM = date.ToString("MM");
+            string YY = date.ToString("yy");
+            string YYYY = date.ToString("yyyy");
 
-			counterPrefix = counterPrefix.Replace("[MM]", MM).Replace("[YY]", YY).Replace("[YYYY]", YYYY);
+            counterPrefix = counterPrefix.Replace("[MM]", MM).Replace("[YY]", YY).Replace("[YYYY]", YYYY);
             counterSuffix = counterSuffix.Replace("[MM]", MM).Replace("[YY]", YY).Replace("[YYYY]", YYYY);
             if (additionalParameters != null)
-			{
+            {
                 foreach (var k in additionalParameters.Keys)
                 {
                     if (k == "[B]" && !FeatureToggleHelper.HasFeatureToggle("BCC", tenant))
@@ -247,11 +237,11 @@ namespace Logitude.Server.Tools.Helpers
                     counterPrefix = counterPrefix.Replace(k, additionalParameters[k]);
                     counterSuffix = counterSuffix.Replace(k, additionalParameters[k]);
                 }
-			}
-             
-		}
+            }
 
-		public static string GetCounterPrefix(int tenant, string counterCode, string parameter1, string parameter2, Dictionary<string, string> additionalParameters = null)
+        }
+
+        public static string GetCounterPrefix(int tenant, string counterCode, string parameter1, string parameter2, Dictionary<string, string> additionalParameters = null)
         {
             //ObjectTabelRepository tablesRepository = new ObjectTabelRepository();
             //ObjectTablePM table = tablesRepository.GetObjectTableByCode(objectTableName, tenant);
@@ -265,16 +255,16 @@ namespace Logitude.Server.Tools.Helpers
             List<CounterDefinition> tableCounters = counterDefinitionRep.GetCounterDefinitionsByCounterId(counterId, tenant).ToList();
             CounterDefinition counterDef = tableCounters.Where(c => c.Parameter1 == parameter1 && c.Parameter2 == parameter2).FirstOrDefault();
 
-			string counterPrefix = !string.IsNullOrEmpty(counterDef.Prefix) ? counterDef.Prefix : "";
-			string counterSuffix = !string.IsNullOrEmpty(counterDef.Suffix) ? counterDef.Suffix : "";
+            string counterPrefix = !string.IsNullOrEmpty(counterDef.Prefix) ? counterDef.Prefix : "";
+            string counterSuffix = !string.IsNullOrEmpty(counterDef.Suffix) ? counterDef.Suffix : "";
 
-			ResolveCounterPrefixSuffixVariables(tenant, additionalParameters, ref counterPrefix, ref counterSuffix);
-			//ResolveCounterPrefixVariables(counter, counterDef, tenant, counterLastNumberValue, additionalParameters);
+            ResolveCounterPrefixSuffixVariables(tenant, additionalParameters, ref counterPrefix, ref counterSuffix);
+            //ResolveCounterPrefixVariables(counter, counterDef, tenant, counterLastNumberValue, additionalParameters);
 
-			return counterPrefix;
+            return counterPrefix;
         }
 
-		public static string GetConnection(int tenant)
+        public static string GetConnection(int tenant)
         {
             GlobalDB currentDb;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -286,7 +276,7 @@ namespace Logitude.Server.Tools.Helpers
             string dbConnectionInfo = currentDb.DBConnection;
             string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
 
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
             WebFreightContext context = new WebFreightContext(connection);
 
             return context.Database.Connection.ConnectionString;// entityBuilder.ConnectionString;
