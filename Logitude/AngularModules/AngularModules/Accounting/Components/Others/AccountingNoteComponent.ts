@@ -94,6 +94,7 @@ export class AccountingNoteComponent extends BaseComponent {
     public set Notes(v : string) {
         this.entityPM.Notes = v;
         this.CheckIfNotesEmpty();
+        this.SetNotesRequrierdState();
     }
 
 
@@ -102,7 +103,6 @@ export class AccountingNoteComponent extends BaseComponent {
     //#region Buttons Handlers
     OkButtonClicked()
     {
-
         this.CheckIfNotesEmpty();
         if(this.isEditForm)
         {
@@ -141,23 +141,34 @@ export class AccountingNoteComponent extends BaseComponent {
             });
         }
     }
- 
-    CheckIfNotesEmpty() {
+
+
+    SetNotesRequrierdState() {
         if (AppTool.IsNullOrEmpty(this.Notes)) {
             this.UIProperties.SetRequired("Notes", this.ObjectTableName, true);
-            this.IsNotesEmpty = true;
         }
         else {
             this.UIProperties.SetRequired("Notes", this.ObjectTableName, false);
+        }
+    }
+    CheckIfNotesEmpty() {
+        if (AppTool.IsNullOrEmpty(this.Notes)) {
+            this.IsNotesEmpty = true;
+        }
+        else {
             this.IsNotesEmpty = false;
         }
     }
 
     SetNotesRequierdErrorMessage() {
         if (AppTool.IsNullOrEmpty(this.Notes)) {
-            var s: string = this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("Accounting.General.O.Notes"));
-            this.ValidationErrorsList.push(s);
+            var requierdErrorMessage: string = this.AddFieldNameToErrorMessage();
+            this.ValidationErrorsList.push(requierdErrorMessage);
         }
+    }
+
+    private AddFieldNameToErrorMessage(): string {
+        return this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("Accounting.General.O.Notes"));
     }
 
     CancelButtonClicked() {
