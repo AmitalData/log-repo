@@ -14,8 +14,8 @@ Create PROCEDURE [dbo].[usp_UpdateReceivablesData]
 )
 AS
 
-if exists (select * from Shipments where Id = @ShipmentId_PARAM and ShipmentLevelCode != 'D')
-BEGIN
+	if exists (select * from Shipments where Id = @ShipmentId_PARAM and ShipmentLevelCode != 'D')
+	BEGIN
 
 	declare @Tenant as int
 	declare @MasterId as varchar(15)
@@ -174,6 +174,8 @@ BEGIN
 				declare @MasterReceivableARInvoiceLineId as varchar(15)
 				declare @MasterReceivableIsFixedPrice as bit
 				declare @MasterReceivableIsExchangeRateFixed as bit
+				declare @MasterPayableVatProfitAmount as float
+                declare @MasterPayableVatLocalAmount as float
 			END
 
 			-- House Receivable Variables
@@ -208,6 +210,8 @@ BEGIN
 				declare @AmountLocal as float
 				declare @AmountInProfitCurrency as float
 				declare @AmountRatio as float
+				declare @VatAmountLocal as float
+		        declare @VatAmountProfit as float
         declare @HousePercentForeignChargesLocalAmount as float
 			END
 
@@ -215,10 +219,10 @@ BEGIN
 			BEGIN
 				DECLARE MasterReceivables1Cursor CURSOR READ_ONLY
 				FOR
-				SELECT Id, Quantity, UnitPrice, ChargesTypeId, MeasurementId, PrepaidCollectId, DueTypeCode, AWBPrint, CurrencyId, Rate, ProfitCurrencyExchangeRate, ShipmentReceivableLineStatusCode, CreatedByUserId, UpdateByUserId, CreateDate, UpdateDate, TotalAmount, ARInvoiceId, ARInvoiceLineId, IsFixedPrice, IsExchangeRateFixed, IATACodeId
+				SELECT Id, Quantity, UnitPrice, ChargesTypeId, MeasurementId, PrepaidCollectId, DueTypeCode, AWBPrint, CurrencyId, Rate, ProfitCurrencyExchangeRate, ShipmentReceivableLineStatusCode, CreatedByUserId, UpdateByUserId, CreateDate, UpdateDate, TotalAmount, ARInvoiceId, ARInvoiceLineId, IsFixedPrice, IsExchangeRateFixed, IATACodeId, VatAmountLocal, VatAmountProfit
 				FROM ShipmentReceivables
 				WHERE Tenant = @Tenant AND ShipmentId = @MasterId AND (MeasurementId != @PRFR_Id  OR MeasurementId != @PFCL_Id)
-				OPEN MasterReceivables1Cursor FETCH NEXT FROM MasterReceivables1Cursor INTO @MasterReceivableId, @MasterReceivableQuantity, @MasterReceivableUnitPrice, @MasterReceivableChargesTypeId, @MasterReceivableMeasurementId, @MasterReceivablePrepaidCollectId, @MasterReceivableDueTypeCode, @MasterReceivableAWBPrint, @MasterReceivableCurrencyId, @MasterReceivableRate, @MasterReceivableProfitRate, @MasterReceivableLineStatusCode,  @MasterReceivableCreatedByUserId, @MasterReceivableUpdatedByUserId, @MasterReceivableCreateDate, @MasterReceivableUpdateDate, @MasterReceivableAmount, @MasterReceivableARInvoiceId, @MasterReceivableARInvoiceLineId, @MasterReceivableIsFixedPrice, @MasterReceivableIsExchangeRateFixed, @MasterReceivableIATACodeId
+				OPEN MasterReceivables1Cursor FETCH NEXT FROM MasterReceivables1Cursor INTO @MasterReceivableId, @MasterReceivableQuantity, @MasterReceivableUnitPrice, @MasterReceivableChargesTypeId, @MasterReceivableMeasurementId, @MasterReceivablePrepaidCollectId, @MasterReceivableDueTypeCode, @MasterReceivableAWBPrint, @MasterReceivableCurrencyId, @MasterReceivableRate, @MasterReceivableProfitRate, @MasterReceivableLineStatusCode,  @MasterReceivableCreatedByUserId, @MasterReceivableUpdatedByUserId, @MasterReceivableCreateDate, @MasterReceivableUpdateDate, @MasterReceivableAmount, @MasterReceivableARInvoiceId, @MasterReceivableARInvoiceLineId, @MasterReceivableIsFixedPrice, @MasterReceivableIsExchangeRateFixed, @MasterReceivableIATACodeId, @MasterPayableVatLocalAmount, @MasterPayableVatProfitAmount
 				WHILE @@FETCH_STATUS = 0
 				BEGIN
 
@@ -573,6 +577,10 @@ BEGIN
 
 										set @AmountLocal = @Amount * @MasterReceivableRate
 										set @AmountInProfitCurrency = @AmountLocal / @MasterReceivableProfitRate
+
+										set @Ratio = @Amount / @MasterReceivableAmount
+										set @VatAmountLocal =  @MasterPayableVatLocalAmount  * @Ratio;
+										set @VatAmountProfit = @MasterPayableVatProfitAmount * @Ratio;
 									END
 
 									-- Update Receivable
@@ -598,7 +606,9 @@ BEGIN
 										IsExchangeRateFixed = @MasterReceivableIsExchangeRateFixed,
 										ARInvoiceId = @MasterReceivableARInvoiceId,
 										ARInvoiceLineId = @MasterReceivableARInvoiceLineId,
-										IATACodeId = @MasterReceivableIATACodeId
+										IATACodeId = @MasterReceivableIATACodeId,
+										VatAmountLocal = isnull(Round(@VatAmountLocal,3),0),
+								        VatAmountProfit = isnull(Round(@VatAmountProfit,3),0)
 										where Id = @HouseReceivableId and Tenant = @Tenant
 									END
 
@@ -616,7 +626,7 @@ BEGIN
 						DEALLOCATE Houses2Cursor
 					END
 
-				FETCH NEXT FROM MasterReceivables1Cursor INTO @MasterReceivableId, @MasterReceivableQuantity, @MasterReceivableUnitPrice, @MasterReceivableChargesTypeId, @MasterReceivableMeasurementId, @MasterReceivablePrepaidCollectId, @MasterReceivableDueTypeCode, @MasterReceivableAWBPrint, @MasterReceivableCurrencyId, @MasterReceivableRate, @MasterReceivableProfitRate, @MasterReceivableLineStatusCode,  @MasterReceivableCreatedByUserId, @MasterReceivableUpdatedByUserId, @MasterReceivableCreateDate, @MasterReceivableUpdateDate, @MasterReceivableAmount, @MasterReceivableARInvoiceId, @MasterReceivableARInvoiceLineId, @MasterReceivableIsFixedPrice, @MasterReceivableIsExchangeRateFixed, @MasterReceivableIATACodeId
+				FETCH NEXT FROM MasterReceivables1Cursor INTO @MasterReceivableId, @MasterReceivableQuantity, @MasterReceivableUnitPrice, @MasterReceivableChargesTypeId, @MasterReceivableMeasurementId, @MasterReceivablePrepaidCollectId, @MasterReceivableDueTypeCode, @MasterReceivableAWBPrint, @MasterReceivableCurrencyId, @MasterReceivableRate, @MasterReceivableProfitRate, @MasterReceivableLineStatusCode,  @MasterReceivableCreatedByUserId, @MasterReceivableUpdatedByUserId, @MasterReceivableCreateDate, @MasterReceivableUpdateDate, @MasterReceivableAmount, @MasterReceivableARInvoiceId, @MasterReceivableARInvoiceLineId, @MasterReceivableIsFixedPrice, @MasterReceivableIsExchangeRateFixed, @MasterReceivableIATACodeId, @MasterPayableVatLocalAmount, @MasterPayableVatProfitAmount
 				END
 				CLOSE MasterReceivables1Cursor
 				DEALLOCATE MasterReceivables1Cursor
@@ -626,10 +636,10 @@ BEGIN
 			BEGIN
 				DECLARE MasterReceivables2Cursor CURSOR READ_ONLY
 				FOR
-				SELECT Id, Quantity, UnitPrice, ChargesTypeId, MeasurementId, PrepaidCollectId, DueTypeCode, AWBPrint, CurrencyId, Rate, ProfitCurrencyExchangeRate, ShipmentReceivableLineStatusCode, CreatedByUserId, UpdateByUserId, CreateDate, UpdateDate, TotalAmount, ARInvoiceId, ARInvoiceLineId, IsFixedPrice, IsExchangeRateFixed, IATACodeId
+				SELECT Id, Quantity, UnitPrice, ChargesTypeId, MeasurementId, PrepaidCollectId, DueTypeCode, AWBPrint, CurrencyId, Rate, ProfitCurrencyExchangeRate, ShipmentReceivableLineStatusCode, CreatedByUserId, UpdateByUserId, CreateDate, UpdateDate, TotalAmount, ARInvoiceId, ARInvoiceLineId, IsFixedPrice, IsExchangeRateFixed, IATACodeId, VatAmountLocal, VatAmountProfit
 				FROM ShipmentReceivables
 				WHERE Tenant = @Tenant AND ShipmentId = @MasterId AND MeasurementId = @PRFR_Id
-				OPEN MasterReceivables2Cursor FETCH NEXT FROM MasterReceivables2Cursor INTO @MasterReceivableId, @MasterReceivableQuantity, @MasterReceivableUnitPrice, @MasterReceivableChargesTypeId, @MasterReceivableMeasurementId, @MasterReceivablePrepaidCollectId, @MasterReceivableDueTypeCode, @MasterReceivableAWBPrint, @MasterReceivableCurrencyId, @MasterReceivableRate, @MasterReceivableProfitRate, @MasterReceivableLineStatusCode,  @MasterReceivableCreatedByUserId, @MasterReceivableUpdatedByUserId, @MasterReceivableCreateDate, @MasterReceivableUpdateDate, @MasterReceivableAmount, @MasterReceivableARInvoiceId, @MasterReceivableARInvoiceLineId, @MasterReceivableIsFixedPrice, @MasterReceivableIsExchangeRateFixed, @MasterReceivableIATACodeId
+				OPEN MasterReceivables2Cursor FETCH NEXT FROM MasterReceivables2Cursor INTO @MasterReceivableId, @MasterReceivableQuantity, @MasterReceivableUnitPrice, @MasterReceivableChargesTypeId, @MasterReceivableMeasurementId, @MasterReceivablePrepaidCollectId, @MasterReceivableDueTypeCode, @MasterReceivableAWBPrint, @MasterReceivableCurrencyId, @MasterReceivableRate, @MasterReceivableProfitRate, @MasterReceivableLineStatusCode,  @MasterReceivableCreatedByUserId, @MasterReceivableUpdatedByUserId, @MasterReceivableCreateDate, @MasterReceivableUpdateDate, @MasterReceivableAmount, @MasterReceivableARInvoiceId, @MasterReceivableARInvoiceLineId, @MasterReceivableIsFixedPrice, @MasterReceivableIsExchangeRateFixed, @MasterReceivableIATACodeId, @MasterPayableVatLocalAmount, @MasterPayableVatProfitAmount
 				WHILE @@FETCH_STATUS = 0
 				BEGIN
 
@@ -767,6 +777,10 @@ BEGIN
 									set @AmountLocal = @Amount * @MasterReceivableRate
 									set @AmountInProfitCurrency = @AmountLocal / @MasterReceivableProfitRate
 
+									set @Ratio = @Amount / @MasterReceivableAmount
+									set @VatAmountLocal =  @MasterPayableVatLocalAmount  * @Ratio;
+									set @VatAmountProfit = @MasterPayableVatProfitAmount * @Ratio;
+
 									-- Update Receivable
 									BEGIN
 										update ShipmentReceivables
@@ -790,7 +804,9 @@ BEGIN
 										IsExchangeRateFixed = @MasterReceivableIsExchangeRateFixed,
 										ARInvoiceId = @MasterReceivableARInvoiceId,
 										ARInvoiceLineId = @MasterReceivableARInvoiceLineId,
-										IATACodeId = @MasterReceivableIATACodeId
+										IATACodeId = @MasterReceivableIATACodeId, 
+										VatAmountLocal = isnull(Round(@VatAmountLocal,3),0),
+								        VatAmountProfit = isnull(Round(@VatAmountProfit,3),0)
 										where Id = @HouseReceivableId and Tenant = @Tenant
 									END
 								END
@@ -806,7 +822,7 @@ BEGIN
 						DEALLOCATE Houses3Cursor
 					END
 
-				FETCH NEXT FROM MasterReceivables2Cursor INTO @MasterReceivableId, @MasterReceivableQuantity, @MasterReceivableUnitPrice, @MasterReceivableChargesTypeId, @MasterReceivableMeasurementId, @MasterReceivablePrepaidCollectId, @MasterReceivableDueTypeCode, @MasterReceivableAWBPrint, @MasterReceivableCurrencyId, @MasterReceivableRate, @MasterReceivableProfitRate, @MasterReceivableLineStatusCode,  @MasterReceivableCreatedByUserId, @MasterReceivableUpdatedByUserId, @MasterReceivableCreateDate, @MasterReceivableUpdateDate, @MasterReceivableAmount, @MasterReceivableARInvoiceId, @MasterReceivableARInvoiceLineId, @MasterReceivableIsFixedPrice, @MasterReceivableIsExchangeRateFixed, @MasterReceivableIATACodeId
+				FETCH NEXT FROM MasterReceivables2Cursor INTO @MasterReceivableId, @MasterReceivableQuantity, @MasterReceivableUnitPrice, @MasterReceivableChargesTypeId, @MasterReceivableMeasurementId, @MasterReceivablePrepaidCollectId, @MasterReceivableDueTypeCode, @MasterReceivableAWBPrint, @MasterReceivableCurrencyId, @MasterReceivableRate, @MasterReceivableProfitRate, @MasterReceivableLineStatusCode,  @MasterReceivableCreatedByUserId, @MasterReceivableUpdatedByUserId, @MasterReceivableCreateDate, @MasterReceivableUpdateDate, @MasterReceivableAmount, @MasterReceivableARInvoiceId, @MasterReceivableARInvoiceLineId, @MasterReceivableIsFixedPrice, @MasterReceivableIsExchangeRateFixed, @MasterReceivableIATACodeId, @MasterPayableVatLocalAmount, @MasterPayableVatProfitAmount
 				END
 				CLOSE MasterReceivables2Cursor
 				DEALLOCATE MasterReceivables2Cursor
@@ -816,10 +832,10 @@ BEGIN
 			BEGIN
 				DECLARE MasterReceivables3Cursor CURSOR READ_ONLY
 				FOR
-				SELECT Id, Quantity, UnitPrice, ChargesTypeId, MeasurementId, PrepaidCollectId, DueTypeCode, AWBPrint, CurrencyId, Rate, ProfitCurrencyExchangeRate, ShipmentReceivableLineStatusCode, CreatedByUserId, UpdateByUserId, CreateDate, UpdateDate, TotalAmount, ARInvoiceId, ARInvoiceLineId, IsFixedPrice, IsExchangeRateFixed, IATACodeId
+				SELECT Id, Quantity, UnitPrice, ChargesTypeId, MeasurementId, PrepaidCollectId, DueTypeCode, AWBPrint, CurrencyId, Rate, ProfitCurrencyExchangeRate, ShipmentReceivableLineStatusCode, CreatedByUserId, UpdateByUserId, CreateDate, UpdateDate, TotalAmount, ARInvoiceId, ARInvoiceLineId, IsFixedPrice, IsExchangeRateFixed, IATACodeId, VatAmountLocal, VatAmountProfit
 				FROM ShipmentReceivables
 				WHERE Tenant = @Tenant AND ShipmentId = @MasterId AND MeasurementId = @PFCL_Id
-				OPEN MasterReceivables3Cursor FETCH NEXT FROM MasterReceivables3Cursor INTO @MasterReceivableId, @MasterReceivableQuantity, @MasterReceivableUnitPrice, @MasterReceivableChargesTypeId, @MasterReceivableMeasurementId, @MasterReceivablePrepaidCollectId, @MasterReceivableDueTypeCode, @MasterReceivableAWBPrint, @MasterReceivableCurrencyId, @MasterReceivableRate, @MasterReceivableProfitRate, @MasterReceivableLineStatusCode,  @MasterReceivableCreatedByUserId, @MasterReceivableUpdatedByUserId, @MasterReceivableCreateDate, @MasterReceivableUpdateDate, @MasterReceivableAmount, @MasterReceivableARInvoiceId, @MasterReceivableARInvoiceLineId, @MasterReceivableIsFixedPrice, @MasterReceivableIsExchangeRateFixed, @MasterReceivableIATACodeId
+				OPEN MasterReceivables3Cursor FETCH NEXT FROM MasterReceivables3Cursor INTO @MasterReceivableId, @MasterReceivableQuantity, @MasterReceivableUnitPrice, @MasterReceivableChargesTypeId, @MasterReceivableMeasurementId, @MasterReceivablePrepaidCollectId, @MasterReceivableDueTypeCode, @MasterReceivableAWBPrint, @MasterReceivableCurrencyId, @MasterReceivableRate, @MasterReceivableProfitRate, @MasterReceivableLineStatusCode,  @MasterReceivableCreatedByUserId, @MasterReceivableUpdatedByUserId, @MasterReceivableCreateDate, @MasterReceivableUpdateDate, @MasterReceivableAmount, @MasterReceivableARInvoiceId, @MasterReceivableARInvoiceLineId, @MasterReceivableIsFixedPrice, @MasterReceivableIsExchangeRateFixed, @MasterReceivableIATACodeId, @MasterPayableVatLocalAmount, @MasterPayableVatProfitAmount
 				WHILE @@FETCH_STATUS = 0
 				BEGIN
 
@@ -957,7 +973,9 @@ BEGIN
 									set @Amount = @Quantity * @UnitPrice / 100
 									set @AmountLocal = @Amount * @MasterReceivableRate
 									set @AmountInProfitCurrency = @AmountLocal / @MasterReceivableProfitRate
-
+									set @Ratio = @Amount / @MasterReceivableAmount
+									set @VatAmountLocal =  @MasterPayableVatLocalAmount  * @Ratio;
+									set @VatAmountProfit = @MasterPayableVatProfitAmount * @Ratio;
 									-- Update Receivable
 									BEGIN
 										update ShipmentReceivables
@@ -981,7 +999,9 @@ BEGIN
 										IsExchangeRateFixed = @MasterReceivableIsExchangeRateFixed,
 										ARInvoiceId = @MasterReceivableARInvoiceId,
 										ARInvoiceLineId = @MasterReceivableARInvoiceLineId,
-										IATACodeId = @MasterReceivableIATACodeId
+										IATACodeId = @MasterReceivableIATACodeId,
+										VatAmountLocal = isnull(Round(@VatAmountLocal,3),0),
+								        VatAmountProfit = isnull(Round(@VatAmountProfit,3),0)
 										where Id = @HouseReceivableId and Tenant = @Tenant
 									END
 								END
@@ -997,7 +1017,7 @@ BEGIN
 						DEALLOCATE Houses3Cursor
 					END
 
-				FETCH NEXT FROM MasterReceivables3Cursor INTO @MasterReceivableId, @MasterReceivableQuantity, @MasterReceivableUnitPrice, @MasterReceivableChargesTypeId, @MasterReceivableMeasurementId, @MasterReceivablePrepaidCollectId, @MasterReceivableDueTypeCode, @MasterReceivableAWBPrint, @MasterReceivableCurrencyId, @MasterReceivableRate, @MasterReceivableProfitRate, @MasterReceivableLineStatusCode,  @MasterReceivableCreatedByUserId, @MasterReceivableUpdatedByUserId, @MasterReceivableCreateDate, @MasterReceivableUpdateDate, @MasterReceivableAmount, @MasterReceivableARInvoiceId, @MasterReceivableARInvoiceLineId, @MasterReceivableIsFixedPrice, @MasterReceivableIsExchangeRateFixed, @MasterReceivableIATACodeId
+				FETCH NEXT FROM MasterReceivables3Cursor INTO @MasterReceivableId, @MasterReceivableQuantity, @MasterReceivableUnitPrice, @MasterReceivableChargesTypeId, @MasterReceivableMeasurementId, @MasterReceivablePrepaidCollectId, @MasterReceivableDueTypeCode, @MasterReceivableAWBPrint, @MasterReceivableCurrencyId, @MasterReceivableRate, @MasterReceivableProfitRate, @MasterReceivableLineStatusCode,  @MasterReceivableCreatedByUserId, @MasterReceivableUpdatedByUserId, @MasterReceivableCreateDate, @MasterReceivableUpdateDate, @MasterReceivableAmount, @MasterReceivableARInvoiceId, @MasterReceivableARInvoiceLineId, @MasterReceivableIsFixedPrice, @MasterReceivableIsExchangeRateFixed, @MasterReceivableIATACodeId, @MasterPayableVatLocalAmount, @MasterPayableVatProfitAmount
 				END
 				CLOSE MasterReceivables3Cursor
 				DEALLOCATE MasterReceivables3Cursor
@@ -1005,7 +1025,7 @@ BEGIN
 		END				
 	END
 END
-	
+
 	 ]]>
   </SqlScript>
   <OracleScript>
