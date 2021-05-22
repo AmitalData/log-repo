@@ -304,6 +304,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             }
                         }
 
+                        if(IsInlandDomesticShipment(entityPM))
+                        {
+                            ValidateInlandDomesticShipment(entityPM);
+                        }
+
                         ComputeHelper.ComputeTotals(entityPM);
 
                         APIReceivablePayableHelper receivablePayableHelper = new APIReceivablePayableHelper(entityPM, authToken.Tenant);
@@ -664,6 +669,16 @@ namespace WebFreight.Web.ExternalAPIs.V1
             {
                 entityPM.ShipmentCustomerTypeCode = "FOR";
             }
+        }
+
+        private bool IsInlandDomesticShipment(ShipmentPM entityPM)
+        {
+            return entityPM.DirectionId == "D";
+        }
+
+        private void ValidateInlandDomesticShipment(ShipmentPM entityPM)
+        {
+        //    entityPM.MainCarriageFromPartnerId = 
         }
 
         public HttpResponseMessage Put(Direct entity)

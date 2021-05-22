@@ -165,6 +165,14 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public DateTime? ActualFinalArrivalDate { get; set; }
     
     public string HouseNo { get; set; }
+    
+    public Card MainCarriageFromPartner { get; set; }
+    
+    public Card MainCarriageToPartner { get; set; }
+    
+    public DateTime? MainCarriageETA { get; set; }
+    
+    public DateTime? MainCarriageETD { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 
