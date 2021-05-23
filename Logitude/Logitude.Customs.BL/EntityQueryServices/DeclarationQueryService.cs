@@ -268,6 +268,27 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return res;
         }
 
+
+        public DeclarationPM GetSingleByCustomFileNo(string customFileNo, int tenant)
+        {
+            if (String.IsNullOrWhiteSpace(customFileNo)) return null;
+            DeclarationPM declarationPM = new DeclarationPM();
+            DeclarationDataMapping mapping = new DeclarationDataMapping();
+            var declaration = repository.GetDeclarationByCustomFileNo(customFileNo, tenant);
+
+            if (declaration == null) return null;
+
+
+            mapping.CustomPOCOToPM(declarationPM, declaration);
+            mapping.POCOToPM(declarationPM, declaration);
+
+
+            return declarationPM;
+
+
+
+        }
+
         public List<DeclarationPendingPM> GetDeclarationPendingListPMByDeclarationId(string declarationId, int tenant)
         {
             if (string.IsNullOrWhiteSpace(declarationId))
