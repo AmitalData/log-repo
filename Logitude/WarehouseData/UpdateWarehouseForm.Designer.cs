@@ -122,6 +122,8 @@
             this.label42 = new System.Windows.Forms.Label();
             this.DWPaymentTermslabel = new System.Windows.Forms.Label();
             this.label41 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.FactInvoiceslabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // DestinationConnectionlTextBox
@@ -1269,11 +1271,37 @@
             this.label41.TabIndex = 244;
             this.label41.Text = "DW  PaymentTerms";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.SystemColors.Control;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.label2.Location = new System.Drawing.Point(1410, 352);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(127, 25);
+            this.label2.TabIndex = 256;
+            this.label2.Text = "Fact Invoices";
+            // 
+            // FactInvoiceslabel
+            // 
+            this.FactInvoiceslabel.AutoSize = true;
+            this.FactInvoiceslabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.FactInvoiceslabel.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.FactInvoiceslabel.Location = new System.Drawing.Point(1695, 352);
+            this.FactInvoiceslabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.FactInvoiceslabel.Name = "FactInvoiceslabel";
+            this.FactInvoiceslabel.Size = new System.Drawing.Size(0, 25);
+            this.FactInvoiceslabel.TabIndex = 257;
+            // 
             // UpdateWarehouseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1799, 830);
+            this.Controls.Add(this.FactInvoiceslabel);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.DWAPInvoiceTypeslabel);
             this.Controls.Add(this.label44);
             this.Controls.Add(this.DWARInvoiceTypeslabel);
@@ -1472,5 +1500,7 @@
         private System.Windows.Forms.Label label42;
         private System.Windows.Forms.Label DWPaymentTermslabel;
         private System.Windows.Forms.Label label41;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label FactInvoiceslabel;
     }
 }

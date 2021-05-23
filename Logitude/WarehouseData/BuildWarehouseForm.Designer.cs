@@ -123,6 +123,8 @@
             this.label44 = new System.Windows.Forms.Label();
             this.DWARInvoiceTypeslabel = new System.Windows.Forms.Label();
             this.label47 = new System.Windows.Forms.Label();
+            this.label40 = new System.Windows.Forms.Label();
+            this.FactInvoicesLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // BuildWarehouseData
@@ -1280,11 +1282,37 @@
             this.label47.TabIndex = 194;
             this.label47.Text = "DW ARInvoiceTypes";
             // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.BackColor = System.Drawing.SystemColors.Control;
+            this.label40.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label40.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.label40.Location = new System.Drawing.Point(1453, 342);
+            this.label40.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(117, 25);
+            this.label40.TabIndex = 198;
+            this.label40.Text = "Fact Invoice";
+            // 
+            // FactInvoicesLabel
+            // 
+            this.FactInvoicesLabel.AutoSize = true;
+            this.FactInvoicesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.FactInvoicesLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.FactInvoicesLabel.Location = new System.Drawing.Point(1737, 341);
+            this.FactInvoicesLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.FactInvoicesLabel.Name = "FactInvoicesLabel";
+            this.FactInvoicesLabel.Size = new System.Drawing.Size(0, 25);
+            this.FactInvoicesLabel.TabIndex = 199;
+            // 
             // BuildWarehouseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1789, 859);
+            this.Controls.Add(this.FactInvoicesLabel);
+            this.Controls.Add(this.label40);
             this.Controls.Add(this.DWAPInvoiceTypeslabel);
             this.Controls.Add(this.label44);
             this.Controls.Add(this.DWARInvoiceTypeslabel);
@@ -1485,6 +1513,8 @@
         private System.Windows.Forms.Label label44;
         private System.Windows.Forms.Label DWARInvoiceTypeslabel;
         private System.Windows.Forms.Label label47;
+        private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.Label FactInvoicesLabel;
     }
 }
 

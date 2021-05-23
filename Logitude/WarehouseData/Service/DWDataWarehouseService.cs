@@ -315,7 +315,17 @@ namespace WarehouseData.Service
 
                 case "ARInvoices":
 
-                    cmd = " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "BillToId DEFAULT -1 FOR BillToId";
+                    cmd = " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "BillToId DEFAULT -1 FOR BillToId"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "SalesmanUserId DEFAULT -1 FOR SalesmanUserId"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PrintByUserId DEFAULT -1 FOR PrintByUserId"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ApprovedByUserId DEFAULT -1 FOR ApprovedByUserId"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PartnerId DEFAULT -1 FOR PartnerId";
+
+                    break;
+
+                case "APInvoices":
+
+                    cmd = " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ApprovedByUserId DEFAULT -1 FOR ApprovedByUserId";
 
                     break;
 

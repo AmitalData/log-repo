@@ -61,22 +61,44 @@ namespace WarehouseData.Helper
             using (SqlConnection sourceConnection = new SqlConnection(connectionString))
             {
                 sourceConnection.Open();
-                SqlCommand commandSourceData = new SqlCommand(
-               "SELECT " + table.DWTableKeyName +
-               " FROM dbo." + table.Dw_TableName + " where AutomaticLastUpdateDate > ( select LastUpdateDate from dw_WaterMarks where TableName = " + "'" + table.TableName + "');", sourceConnection);
-                SqlDataReader reader = commandSourceData.ExecuteReader();
-                if (reader.HasRows)
+                if (table.HasMultipleDWTables)
                 {
-                    var dataTable = new DataTable();
-                    dataTable.Load(reader);
-                    var columns = dataTable.Rows.Cast<DataRow>().Select(r => (string)r[table.DWTableKeyName].ToString()).ToList();
-                    generalDataWarehouseService.DeleteRowsFromDataWarehouse(new DeleteRowsArgs() { TableName = table.DWObjectTableCode, KeyName =table.KeyName, IdsList = columns, ConnectionString = connectionString });
+                    RemoveOldRowsFromMultipleDWFactTable(table, connectionString, sourceConnection);
                 }
-                reader.Close();
+                else
+                {
+                    RemoveOldRowsFromSingleDWFactTable(table, connectionString, sourceConnection);
+                }
             }
         }
 
-       
+        private void RemoveOldRowsFromMultipleDWFactTable(TableClass table, string connectionString, SqlConnection sourceConnection)
+        {
+            TableClass tableClass = table;
+            for (int i = 0; i < tableClass.MultipleDW_TablesNames.Count; i++)
+            {
+                tableClass.Dw_TableName = tableClass.MultipleDW_TablesNames[i];
+                tableClass.TableName = tableClass.MultipleTablesNames[i];
+                RemoveOldRowsFromSingleDWFactTable(tableClass, connectionString, sourceConnection);
+            }
+        }
+
+        private void RemoveOldRowsFromSingleDWFactTable(TableClass table, string connectionString, SqlConnection sourceConnection)
+        {
+            SqlCommand commandSourceData = new SqlCommand(
+                           "SELECT " + table.DWTableKeyName +
+                           " FROM dbo." + table.Dw_TableName + " where AutomaticLastUpdateDate > ( select LastUpdateDate from dw_WaterMarks where TableName = " + "'" + table.TableName + "');", sourceConnection);
+            SqlDataReader reader = commandSourceData.ExecuteReader();
+            if (reader.HasRows)
+            {
+                var dataTable = new DataTable();
+                dataTable.Load(reader);
+                var columns = dataTable.Rows.Cast<DataRow>().Select(r => (string)r[table.DWTableKeyName].ToString()).ToList();
+                generalDataWarehouseService.DeleteRowsFromDataWarehouse(new DeleteRowsArgs() { TableName = table.DWObjectTableCode, KeyName = table.KeyName, IdsList = columns, ConnectionString = connectionString });
+            }
+            reader.Close();
+        }
+
 
 
     }

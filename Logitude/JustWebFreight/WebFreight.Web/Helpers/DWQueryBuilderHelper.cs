@@ -630,6 +630,7 @@ namespace WebFreight.Web.Helpers
             string innerjoinSql = string.Empty;
             foreach (var mytbl in sqlStatmentDetails.InnerTables)
             {
+                string innerTableRelationType = "inner";
                 var Key = OFieldQuery.GetPrimaryKeyFieldForDWObjectTable(mytbl.ParentDimTabelName);
                 var FactKey = mytbl.DimensionTableDisplayName;
                 if ((mytbl.ParentDataTypeCode == "Dimension" || mytbl.ParentDataTypeCode.ToLower() == "lookup") && string.IsNullOrEmpty(mytbl.DimensionTableDisplayName))
@@ -651,14 +652,18 @@ namespace WebFreight.Web.Helpers
                 var factTable = dWObjectFieldAdditionalFactService.DWObjectFieldPMs.Where(d => d.Code == FactKey).Select(d => d.DWObjectTableCode).FirstOrDefault();
                 if (string.IsNullOrEmpty(factTable)) factTable = Fact;
 
-                if (factTable != Fact) isDWQueryUsedAdditionalFact = true;
+                if (factTable != Fact)
+                {
+                    isDWQueryUsedAdditionalFact = true;
+                    innerTableRelationType = dWObjectFieldAdditionalFactService.DwObjectTable.AdditionalFactRelationType;
+                }
 
-                innerjoinSql += " inner join " + mytbl.ParentDimTabelName + " " + "[" + mytbl.ParentDimTabelName + mytbl.DimensionTableDisplayName + "]" + " on " + factTable + "." + (FactKey) + " = " + "[" + mytbl.ParentDimTabelName + mytbl.DimensionTableDisplayName + "]" + "." + Key.Code;
+                innerjoinSql += " " + innerTableRelationType + " join " + mytbl.ParentDimTabelName + " " + "[" + mytbl.ParentDimTabelName + mytbl.DimensionTableDisplayName + "]" + " on " + factTable + "." + (FactKey) + " = " + "[" + mytbl.ParentDimTabelName + mytbl.DimensionTableDisplayName + "]" + "." + Key.Code;
             }
 
             if (isDWQueryUsedAdditionalFact)
             {
-                FinalSelectStmt += " inner join " + dWObjectFieldAdditionalFactService.DwObjectTable.AdditionalFactCode + " " + " on " + Fact + "." + (dWObjectFieldAdditionalFactService.DwObjectTable.AdditionalFactForeignKey) + " = " + dWObjectFieldAdditionalFactService.DwObjectTable.AdditionalFactCode + ".Id";
+                FinalSelectStmt += " "+ dWObjectFieldAdditionalFactService.DwObjectTable.AdditionalFactRelationType  + " join " + dWObjectFieldAdditionalFactService.DwObjectTable.AdditionalFactCode + " " + " on " + Fact + "." + (dWObjectFieldAdditionalFactService.DwObjectTable.AdditionalFactForeignKey) + " = " + dWObjectFieldAdditionalFactService.DwObjectTable.AdditionalFactCode + ".Id";
             }
             FinalSelectStmt += innerjoinSql;
 
