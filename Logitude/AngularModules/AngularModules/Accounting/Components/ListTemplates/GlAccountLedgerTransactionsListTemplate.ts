@@ -206,32 +206,4 @@ export class GlAccountLedgerTransactionsListTemplate {
         });
     }
 
-    GetCalculatedAgingPeriod(){
-
-        var periodsNames = this.GetAgingPeriodsNames();
-
-        if(!periodsNames)
-            return 0;
-
-        return this.CalculatePeriodTotalByPeriodsNames(periodsNames);
-    }
-
-    private CalculatePeriodTotalByPeriodsNames(periodsNames: string[])
-    {
-        var periodTotal = 0;
-        periodsNames.forEach(periodName =>
-        {
-            periodTotal += this.rowData[periodName];
-        });
-        return periodTotal;
-    }
-
-    GetAgingPeriodsNames() : string[]{
-        var periodNumber = this.rowData[this.fieldName];
-        switch (periodNumber) {
-            case 1: return this.rowData.FirstPeriodsMonths?.split(',');
-            case 2: return this.rowData.SecondPeriodsMonths?.split(',');
-            case 3: return this.rowData.ThirdPeriodsMonths?.split(',');
-        }
-    }
 }

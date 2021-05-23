@@ -138,6 +138,7 @@ import { InterestReportEditCalculationDateComponent } from './Components/EditTab
 import { UserDefinedReportGeneralTabComponent } from './Components/EditTabs/UserDefinedReport/UserDefinedReportGeneralTabComponent';
 import { AccountingMainTesterComponent } from './Components/Maintenance/Tester/AccountingMainTesterComponent';
 import { UpdateJournalLineNoteComponent } from './Components/EditTabs/Journal/UpdateJournalLineNoteComponent';
+import { GlAccountListTemplate } from './Components/ListTemplates/GlAccountListTemplate';
 
 
 //import { CashBookGeneralTabComponent } from './Components/EditTabs/CashBook/CashBookGeneralTabComponent';
@@ -158,7 +159,7 @@ export const Components =
         MiscPageComponent,
         InterestPageComponent,
         BatchInvoicesComponent,
-        BatchPrintComponent, 
+        BatchPrintComponent,
         //New Entites
         NewGLAccountComponent,
         NewChartOfAccountComponent,
@@ -175,7 +176,7 @@ export const Components =
         NewOpenFormatReportComponent,
         LoadRecoExPageComponent,
         NewUserDefinedReportComponent,
-        
+
         //Maintenance
         NewCategory1Component,
         NewCategory2Component,
@@ -229,6 +230,7 @@ export const Components =
         UserDefinedReportGeneralTabComponent,
         //Templates
         GlAccountLedgerTransactionsListTemplate,
+        GlAccountListTemplate,
         ReconcileExternalPageListTemplate,
         ReconcileExternalPageLineListTemplate,
         FieldTemplateComponent,
@@ -283,10 +285,10 @@ export const Components =
 
         CargoTrackingIncrementalStatListTemplate,
 
-     
+
         InterestReportEditCalculationDateComponent,
 
-      
+
 
         InterestReportEditOpenBalanceComponent,
         BtatchPrintWarningComponent,
@@ -389,6 +391,7 @@ export class ModuleDeclarations {
 
              //Templates
             case "GlAccountLedgerTransactionsListTemplate": { myResult = GlAccountLedgerTransactionsListTemplate; break; }
+            case "GlAccountListTemplate": { myResult = GlAccountListTemplate; break; }
             case "ReconcileExternalPageListTemplate": { myResult = ReconcileExternalPageListTemplate; break; }
             case "ReconcileExternalPageLineListTemplate": { myResult = ReconcileExternalPageLineListTemplate; break; }
             case "FieldTemplateComponent": { myResult = FieldTemplateComponent; break; }
@@ -447,7 +450,7 @@ export class ModuleDeclarations {
             case "InvoiceDateForBatchInvoicesComponent" :{myResult =InvoiceDateForBatchInvoicesComponent; break;}
             case "BtatchPrintWarningComponent": { myResult = BtatchPrintWarningComponent; break; }
             case "InterestInvoiceAutoCreditComponent": { myResult = InterestInvoiceAutoCreditComponent; break; }
-            
+
 
         }
 
