@@ -192,10 +192,10 @@ export class CustomerProductItem extends BaseComponent {
         }
     }
 
-    get ItemCode() { return this.EntityPM.ItemCode }
-    set ItemCode(value: string) {
-        if (this.EntityPM.ItemCode != value) {
-            this.EntityPM.ItemCode = value;
+    get Name() { return this.EntityPM.Name }
+    set Name(value: string) {
+        if (this.EntityPM.Name != value) {
+            this.EntityPM.Name = value;
         }
     }
 

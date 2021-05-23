@@ -30,7 +30,7 @@
     Type="varchar"
     Size="30">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="Remarks"
@@ -53,11 +53,26 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="ItemCode"
+    Name="Name"
+    OldNames="ItemCode"
     Type="varchar"
-    Size="10">
+    Size="40">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="Brand"
+    Type="varchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="CustomerId"

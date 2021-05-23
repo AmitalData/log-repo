@@ -24,13 +24,20 @@
                             <ng-template let-item>
                                 <log-cell-template #logcelltemplate [IsEnabled]="IsEditingEnabled">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                                        <span>{{item.ProductItemCode}}</span>
+                                        <span>{{item.SKU}}</span>
                                     </div>
                                     <div *ngIf="logcelltemplate.IsEditMode">
-                                        <ComboBox [ItemsSource]="ProductItemsFilterList"
-                                                  [Binding]="'ItemCode'"
-                                                  [SelectedItem]="item.SelectedProductItem"
-                                                  (SelectedItemChanged)="item.SelectedProductItem = $event"></ComboBox>
+                                        <LogLov [ObjectFieldName]="'ProductItemId'"
+                                                [ObjectTableName]="'ShipmentProductItem'"
+                                                [DataContext]="item"
+                                                [LookUpTableName]="'ProductItem'"
+                                                [HideColumns]="true"
+                                                [HideMaintenanceIcon]="true"
+                                                (SelectedItemChanged)="item.ProductItem = $event"
+                                                [SelectedValue]="item.ProductItemId"
+                                                [DependencyFilter1Value]="CustomerId"
+                                                [FocusOnMe]="'true'">
+                                        </LogLov>
                                     </div>
                                 </log-cell-template>
                             </ng-template>

@@ -25,6 +25,7 @@ import {GroupageComponent} from './Components/Windows/Groupage/GroupageComponent
 import {GroupageContainerComponent} from './Components/Windows/Groupage/GroupageContainerComponent';
 import { HarmonizesComponent } from './Components/Windows/Harmonizes/HarmonizesComponent';
 import { ProductItemsTabComponent } from './Components/ProductItems/ProductItemsTabComponent';
+import { EditCustomerProductItemComponent } from './Components/ProductItems/EditCustomerProductItemComponent';
 
 export const Components =
     [
@@ -55,6 +56,7 @@ export const Components =
         GroupageContainerComponent,
         HarmonizesComponent,
         ProductItemsTabComponent,
+        EditCustomerProductItemComponent,
     ];
 
 export class ModuleDeclarations {
@@ -90,6 +92,7 @@ export class ModuleDeclarations {
             case "GroupageContainerComponent": { myResult = GroupageContainerComponent; break; }
             case "HarmonizesComponent": { myResult = HarmonizesComponent; break; }
             case "ProductItemsTabComponent": { myResult = ProductItemsTabComponent; break; }
+            case "EditCustomerProductItemComponent": { myResult = EditCustomerProductItemComponent; break; }
         }
 
         return myResult;

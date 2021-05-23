@@ -67,7 +67,7 @@ export class AddEditCustomerProductItemComponent extends BaseComponent {
 
     private ValidateProductItemAndHTsCode() {
         var errors: string[] = [];        
-        Validator.TryValidateObject(this.EntityPM, this.DataContext.ObjectTableName, errors);
+        //Validator.TryValidateObject(this.EntityPM, this.DataContext.ObjectTableName, errors);
         this.ValidateItemCode(errors);
         this.ValidateHTSCodes(errors);
         return errors;
@@ -75,20 +75,20 @@ export class AddEditCustomerProductItemComponent extends BaseComponent {
     private ValidateHTSCodes(errors: string[]) {
         if (this.DataContext.HTSCodes != null) {
             this.DataContext.HTSCodes.Collection.forEach(item => {
-                Validator.TryValidateObject(item, "HTSCode", errors);                
+                //Validator.TryValidateObject(item, "HTSCode", errors);                
             });
         }
     }
     private ValidateItemCode(errors: string[]) {
         if (this.DataContext.FatherComponent.ProductItems != null) {
             if (this.DataContext.IsNewEntity) {
-                if (this.DataContext.FatherComponent.ProductItems.Collection.filter(d => d.ItemCode == this.EntityPM.ItemCode).length > 0) {
+                if (this.DataContext.FatherComponent.ProductItems.Collection.filter(d => d.SKU == this.EntityPM.SKU).length > 0) {
                     errors.push("A Product Item with this code already exists");
                 }
             }
 
             else {
-                if (this.DataContext.FatherComponent.ProductItems.Collection.filter(d => d.ItemCode == this.EntityPM.ItemCode && d.Id != this.EntityPM.Id).length > 0) {
+                if (this.DataContext.FatherComponent.ProductItems.Collection.filter(d => d.SKU == this.EntityPM.SKU && d.Id != this.EntityPM.Id).length > 0) {
                     errors.push("A Product Item with this code already exists");
                 }
             }
@@ -120,7 +120,7 @@ export class AddEditCustomerProductItemComponent extends BaseComponent {
         this.myCloner = new Cloner(this.DataContext);
         this.myCloner.AddField('InActive');
         this.myCloner.AddField('Description');
-        this.myCloner.AddField('ItemCode');
+        this.myCloner.AddField('Name');
         this.myCloner.AddField('SKU');
         this.myCloner.AddField('Remarks');
         this.myCloner.AddField('Code');

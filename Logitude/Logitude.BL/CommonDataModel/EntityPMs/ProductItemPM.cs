@@ -17,6 +17,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string Remarks { get; set; }
         public bool InActive { get; set; }
         public string Description { get; set; }
+        public string Brand { get; set; }
         public ChangeSetOperation ChangeSetOp { get; set; }
 
         private List<HTSCodePM> HTScodes;
@@ -43,8 +44,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         }
 
         public string HTSCodeByCountry { get; set; }        
-        public string ItemCode { get; set; }
+        public string Name { get; set; }
         public List<HTSCodePM> HTSCodeChangeSet { get; set; }
-
+        public string SearchFields { get; set; }
     }
 }

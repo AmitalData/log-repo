@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
@@ -23,13 +24,21 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.Remarks = entityPM.Remarks;
             poco.InActive = entityPM.InActive;
             poco.Description = entityPM.Description;
-            poco.ItemCode = entityPM.ItemCode;
+            poco.Name = entityPM.Name;
+            poco.Brand = entityPM.Brand;
+
             BuildSearchField(entityPM, poco);
         }
 
         private static void BuildSearchField(ProductItemPM entityPM, ProductItem entityPoco)
         {
-  
+            string mySearchFields = "";
+
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.SKU);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Name);
+
+            entityPM.SearchFields = mySearchFields;
+            entityPoco.SearchFields = mySearchFields;
         }
     }
 }

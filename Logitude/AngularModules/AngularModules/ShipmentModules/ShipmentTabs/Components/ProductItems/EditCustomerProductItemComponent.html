@@ -9,58 +9,53 @@
         <td>
             <table>
                 <tr>
-
-                    <td style="width:250px;">
+                    <td style="width:300px;">
                         <table>
-                            <tr class="FormFieldRow">
-                                <!-- Name -->
-                                <td style="width:80px;">
-                                    <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                </td>
-                                <td style="width:150px;">
-                                    <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-                                </td>
-
-                            </tr>
-
                             <!-- SKU -->
                             <tr class="FormFieldRow">
-
                                 <td style="width:80px;">
                                     <LogLabel [ObjectFieldName]="'SKU'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
-                                <td style="width:150px;">
-                                    <LogTextBox [ObjectFieldName]="'SKU'" [Text]="SKU" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'SKU'" [Text]="SKU" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                 </td>
+                            </tr>
 
+                            <!-- Name -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
                             </tr>
 
                             <!-- InActive -->
                             <tr class="FormFieldRow">
-
-                                <td style="width:80px;">
+                                <td>
                                     <LogLabel [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td>
                                     <LogCheckBox [ObjectFieldName]="'InActive'" [Checked]="InActive" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                 </td>
-
                             </tr>
 
                             <tr>
-                                <td colspan="2">
+                                <td>
                                     <div></div>
                                 </td>
                             </tr>
 
                         </table>
                     </td>
+
                     <td style="width:10px;">
                         <div>
-
                         </div>
                     </td>
-                    <td style="width:400px;">
+
+                    <td>
                         <table>
                             <!-- Description -->
                             <tr class="FormFieldRow" style="height:50px;">
@@ -75,7 +70,7 @@
                             </tr>
 
                             <tr style="height:10px;">
-                                <td colspan="2">
+                                <td>
                                     <div></div>
                                 </td>
                             </tr>
@@ -90,22 +85,15 @@
                                         <LogTextBox [ObjectFieldName]="'Remarks'" [Text]="Remarks" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
                                     </div>
                                 </td>
-
                             </tr>
 
-
                             <tr>
-                                <td colspan="2">
+                                <td>
                                     <div></div>
                                 </td>
                             </tr>
 
                         </table>
-                    </td>
-                    <td>
-                        <div>
-
-                        </div>
                     </td>
                 </tr>
             </table>
@@ -125,7 +113,7 @@
                                         <label>  HTS Codes</label>
                                     </td>
                                     <td style="width:25px;">
-                                        <IconButton [Name]="'Add'" (click)="DataContext.AddHTSCode()"></IconButton>
+                                        <IconButton [Name]="'Add'" (click)="AddHTSCode()"></IconButton>
                                     </td>
                                 </tr>
                             </table>
@@ -137,7 +125,7 @@
                             <div class="MediaFill">
                                 <div class="SimpleGridView">
                                     <div class="MediaFill" style="overflow-x: hidden;">
-                                        <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="DataContext.HTSCodes" [Disabled]="!IsEditingEnabled" (RowEnded)="DataContext.OnRowEnded($event)">
+                                        <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="HTSCodes" [Disabled]="!IsEditingEnabled" (RowEnded)="OnRowEnded($event)">
                                             <!-- Line -->
                                             <log-column [header]="'Line'" [width]="'80'" [Alignment]="'left'">
                                                 <ng-template let-item>
@@ -215,11 +203,6 @@
         </td>
     </tr>
 
-    <tr style="height:20px;">
-        <td>
-            <div></div>
-        </td>
-    </tr>
     <!-- Buttons -->
     <tr style="height: 32px;">
         <td style="vertical-align: bottom">

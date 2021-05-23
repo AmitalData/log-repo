@@ -1389,15 +1389,15 @@ namespace WebFreight.Web.ReportsWebServices
               
                         if (productItem != null)
                         {
-                            productItemLine.Id = productItem.Id;
-                            productItemLine.ItemCode = productItem.ItemCode;
+                            productItemLine.Name = productItem.Name;
+                            productItemLine.Brand = productItem.Brand;
                             productItemLine.InActive = productItem.InActive;
                             productItemLine.Remarks = productItem.Remarks;
                             productItemLine.Description = productItem.Description;
                             productItemLine.Tenant = productItem.Tenant;
                             productItemLine.SKU = productItem.SKU;
                             productItemLine.CustomerId = productItem.CustomerId;
-                            productItemLine.ShipmentItemHTSCode = shipmentProductItem.ProductItemCode;
+                            //productItemLine.ShipmentItemHTSCode = shipmentProductItem.ProductItemCode;
                         }
                         productItemsLines.Add(productItemLine);
                     }

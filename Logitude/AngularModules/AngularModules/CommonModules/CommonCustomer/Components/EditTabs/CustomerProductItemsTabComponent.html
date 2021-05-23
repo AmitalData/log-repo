@@ -21,12 +21,12 @@
                         <div class="MediaFill" style="overflow-x: hidden;">
                             <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ProductItems" [Disabled]="!IsEditingEnabled" (RowEnded)="OnRowEnded($event)">
 
-                                <!-- ItemCode -->
+                                <!-- SKU -->
                                 <log-column [header]="'Item Code'" [width]="'150'" [Alignment]="'left'">
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate>
                                             <div class="TextTrimming">
-                                                <span>{{item.ItemCode}}</span>
+                                                <span>{{item.SKU}}</span>
                                             </div>
                                         </log-cell-template>
                                     </ng-template>
@@ -43,12 +43,12 @@
                                     </ng-template>
                                 </log-column>
 
-                                <!-- SKU -->
+                                <!-- Name -->
                                 <log-column [header]="'SKU'" [width]="'150'" [Alignment]="'left'">
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate>
                                             <div class="TextTrimming">
-                                                <span>{{item.SKU}}</span>
+                                                <span>{{item.Name}}</span>
                                             </div>
                                         </log-cell-template>
                                     </ng-template>

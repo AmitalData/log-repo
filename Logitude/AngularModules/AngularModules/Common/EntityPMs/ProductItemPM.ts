@@ -65,6 +65,11 @@ export class ProductItemPM {
     public set Description(newValue: string) { if (this.description != newValue) { this.description = newValue; this.MarkAsDirty("Description"); } }
        
 	 
+    private brand: string;
+    public get Brand() { return this.brand; }
+    public set Brand(newValue: string) { if (this.brand != newValue) { this.brand = newValue; this.MarkAsDirty("Brand"); } }
+       
+	 
     private changeSetOp: string;
     public get ChangeSetOp() { return this.changeSetOp; }
     public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
@@ -111,14 +116,19 @@ export class ProductItemPM {
     public set HTSCodeByCountry(newValue: string) { if (this.hTSCodeByCountry != newValue) { this.hTSCodeByCountry = newValue; this.MarkAsDirty("HTSCodeByCountry"); } }
        
 	 
-    private itemCode: string;
-    public get ItemCode() { return this.itemCode; }
-    public set ItemCode(newValue: string) { if (this.itemCode != newValue) { this.itemCode = newValue; this.MarkAsDirty("ItemCode"); } }
+    private name: string;
+    public get Name() { return this.name; }
+    public set Name(newValue: string) { if (this.name != newValue) { this.name = newValue; this.MarkAsDirty("Name"); } }
        
 	 
 
     public HTSCodeChangeSet: Array<HTSCodePM>= [];
-		 
+		     private searchFields: string;
+    public get SearchFields() { return this.searchFields; }
+    public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
+       
+	 
+
     public OldEntityPM: ProductItemPM;
 	    
 	private entityParentPM: any;

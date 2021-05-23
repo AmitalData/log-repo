@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -72,8 +73,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public List<HTSCodePM> GetHTSCodePMsByProductItemIds(string itemId, int tenant)
         {
-            List<HTSCodePM> hTSCodes = (from entity in repository.context.HTSCodes
-                                            where entity.Tenant == tenant && entity.ItemId == itemId
+            List<HTSCodePM> hTSCodes = (from entity in repository.context.HTSCodes.Include("Country")
+                                        where entity.Tenant == tenant && entity.ItemId == itemId
                                         select new HTSCodePM()
                                         {
                                             Id = entity.Id,
@@ -81,11 +82,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             Code = entity.Code,
                                             ItemId = entity.ItemId,
                                             DestinationCountryId = entity.DestinationCountryId,
+                                            CountryEnglishName = entity.Country == null ? null : entity.Country.EnglishName,
                                             ApprovedByCustomer = entity.ApprovedByCustomer,
                                             InActive = entity.InActive,
                                         }).ToList();
 
             return hTSCodes;
-        }
+        }       
     }
 }

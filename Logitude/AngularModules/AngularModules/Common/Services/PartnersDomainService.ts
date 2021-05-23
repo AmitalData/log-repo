@@ -1947,26 +1947,19 @@ export class PartnersDomainService {
         return entityPM;
     }
 
-    GetCustomerProductItems(customerId: string, dischargePortCountryId: string) {
+    GetCustomerProductItemHTSCode(productItemId: string, dischargePortCountryId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        var url = this._apiUrl + '/GetCustomerProductItems?customerId=' + customerId + "&dischargePortCountryId=" + dischargePortCountryId;
+        var url = this._apiUrl + '/GetCustomerProductItemHTSCode?productItemId=' + productItemId + "&dischargePortCountryId=" + dischargePortCountryId;
 
         return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-                var listJason = response;
-                var listMapped: Array<ProductItemPM> = [];
-
-                for (var itemJeson in listJason) {
-                    var itemMapped: ProductItemPM = this.MapProductItemPM(listJason[itemJeson]);
-                    listMapped.push(itemMapped);
-                }
+            return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
+                var done: string = response.body;
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
-                serviceResponse.Result = listMapped;
+                serviceResponse.Result = done;
                 return serviceResponse;
             }), catchError(ServiceHelper.HandleServiceError));
         });
@@ -2017,11 +2010,86 @@ export class PartnersDomainService {
                 entityPM[property] = jsonList[property];
             }
 
+            var oldHTSCodes: HTSCodePM[] = [];
+            if (entityPM.OldEntityPM && !mapParent) {
+                oldHTSCodes = entityPM.OldEntityPM.HTSCodes;
+            }
+
+            entityPM.HTSCodes = new Array<HTSCodePM>();
+            for (var item in jsonList.HTSCodes) {
+
+                var jItem = jsonList.HTSCodes[item];
+                if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                    continue;
+                }
+                var newHTSCodePM: HTSCodePM;
+                if (mapParent) {
+                    newHTSCodePM = new HTSCodePM(entityPM);
+                }
+                else {
+                    newHTSCodePM = new HTSCodePM(null);
+                }
+
+                var pmKeysArray = Object.keys(jItem);
+                for (var pmKey in pmKeysArray) {
+
+                    if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties") {
+                        continue;
+                    }
+                    var pmProperty = pmKeysArray[pmKey];
+                    newHTSCodePM[pmProperty] = jItem[pmProperty];
+                }
+
+                newHTSCodePM.IsDirty = false;
+
+                if (mapParent) {
+                    newHTSCodePM.OldEntityPM = this.clone(newHTSCodePM);
+                    newHTSCodePM.UniqueKey = Guid.newGuid();
+                    newHTSCodePM.ChangeSetOp = "None";
+                    jItem.ChangeSetOp = "None";
+                }
+
+                else {
+                    if (newHTSCodePM.UniqueKey) {
+                        if (jItem.IsDirty) {
+                            newHTSCodePM.ChangeSetOp = "Update";
+                        }
+                    }
+
+                    else {
+                        newHTSCodePM.ChangeSetOp = "Insert";
+                    }
+
+                    newHTSCodePM.OldEntityPM = null;
+                    newHTSCodePM.EntityParentPM = null;
+                }
+
+                entityPM.HTSCodes.push(newHTSCodePM);
+            }
+
+            if (oldHTSCodes) {
+
+                for (var itemKey in oldHTSCodes) {
+                    if (entityPM.HTSCodes.filter(p => p.UniqueKey === oldHTSCodes[itemKey].UniqueKey).length === 0) {
+
+                        if (oldHTSCodes[itemKey]) {
+                            oldHTSCodes[itemKey].ChangeSetOp = "Delete";
+                            entityPM.HTSCodes.push(oldHTSCodes[itemKey]);
+                        }
+                    }
+                }
+            }
+
             entityPM.IsDirty = false;
 
             if (mapParent) {
                 entityPM.OldEntityPM = this.clone(entityPM);
+                entityPM.OldEntityPM.HTSCodes = [];
+                for (var m in entityPM.HTSCodes) {
+                    entityPM.OldEntityPM.HTSCodes.push(this.clone(entityPM.HTSCodes[m]));
+                }
             }
+
             else {
                 entityPM.OldEntityPM = null;
             }

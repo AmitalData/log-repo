@@ -2576,7 +2576,34 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        public HttpResponseMessage GetCustomerProductItems(string customerId, string dischargePortCountryId)
+        public HttpResponseMessage GetCustomerProductItemHTSCode(string productItemId, string dischargePortCountryId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                HTSCodeRepository hTSCodeRepository = new HTSCodeRepository(tenant);
+                HTSCode hTSCodePOCO = hTSCodeRepository.GetSingleHTSCodeByProductItemAndCountry(productItemId, dischargePortCountryId, tenant);
+
+                string htsCode = null;
+                if(hTSCodePOCO != null)
+                {
+                    htsCode = hTSCodePOCO.Code;
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, htsCode);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetSingleCustomerProductItem(string productItemId)
         {
             try
             {
@@ -2586,17 +2613,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
                 ProductItemQuery productItemQuery = new ProductItemQuery(tenant);
-                List<ProductItemPM> productItems = productItemQuery.GetProductItemPMsByCustomerAndPortIds(customerId, dischargePortCountryId, tenant);
+                ProductItemPM productItem = productItemQuery.GetSinglePM(productItemId, tenant);
 
-                return Request.CreateResponse(HttpStatusCode.OK, productItems);
+                return Request.CreateResponse(HttpStatusCode.OK, productItem);
             }
 
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-
-
         }
     }
 }

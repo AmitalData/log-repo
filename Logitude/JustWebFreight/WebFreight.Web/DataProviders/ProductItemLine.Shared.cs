@@ -12,14 +12,14 @@ namespace WebFreight.Web.DataProviders
             this.HTScodeLines = new List<HTSCodeLine>();
         }
 
-        public string Id { get; set; }
+        public string Name { get; set; }
+        public string Brand { get; set; }
         public int Tenant { get; set; }
         public string CustomerId { get; set; }
         public string SKU { get; set; }
         public string Remarks { get; set; }
         public bool InActive { get; set; }
         public string Description { get; set; }
-        public string ItemCode { get; set; }
         public string ShipmentItemHTSCode { get; set; }
         public  List<HTSCodeLine> HTScodeLines { get; set; }
     }

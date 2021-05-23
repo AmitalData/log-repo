@@ -314,6 +314,7 @@
     <Content Include="InvoiceModules\ARPayment\Components\Other\ARPaymentMultiChequesComponent.html" />
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityComponent.html" />
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityPackageComponent.html" />
+    <Content Include="ShipmentModules\ShipmentTabs\Components\ProductItems\EditCustomerProductItemComponent.html" />
     <Content Include="ShipmentModules\ShipmentTabs\Components\ProductItems\ProductItemsTabComponent.html" />
     <Content Include="TasksApp\Components\TasksAppComponent.html" />
     <Content Include="TasksApp\Scripts\tasks-app.js" />
@@ -334,12 +335,14 @@
     <TypeScriptCompile Include="Common\CustomFilters\ChargesTypeCustomFilter.ts" />
     <TypeScriptCompile Include="Common\CustomFilters\ChargesTypeCustomFilter.ts" />
     <TypeScriptCompile Include="Common\CustomFilters\ChargesTypeCustomFilter.ts" />
+    <TypeScriptCompile Include="Common\EntityLists\ProductItemList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\ReportExecutionLogList.ts" />
     <TypeScriptCompile Include="Common\EntityPMInitServices\ReportExecutionLogPMInitService.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\HTSCodePM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\ProductItemPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\ReportExecutionLogPM.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedPMs\CarrierAreaExtendedPMService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardLists\ProductItemListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\ReportExecutionLogListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\ReportExecutionLogPMService.ts" />
     <TypeScriptCompile Include="Common\Tools.ts" />
@@ -7400,6 +7403,7 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\Components\Partners\PartnersTabComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\Components\Payables\AddEditPayableComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\Components\Payables\PayablesTabComponent.ts" />
+    <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\Components\ProductItems\EditCustomerProductItemComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\Components\ProductItems\ProductItemsTabComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\Components\Receivables\AddEditReceivableComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\Components\Receivables\ReceivablesTabComponent.ts" />

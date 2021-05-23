@@ -14,6 +14,9 @@ import { ShipmentProductItemPM } from '../../../../Shipment/EntityPMs/ShipmentPr
 import { ProductItemPM } from '../../../../Common/EntityPMs/ProductItemPM';
 import { Validator } from '../../../../Infrastructure/Validators/Validator';
 import { PartnersDomainService } from '../../../../Common/Services/PartnersDomainService';
+import { ProductItemList } from '../../../../Common/EntityLists/ProductItemList';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
     templateUrl: './ProductItemsTabComponent.html',
@@ -28,8 +31,8 @@ export class ProductItemsTabComponent extends BaseComponent implements OnDestroy
     public IsFCLEntity: boolean = false;   
     private CurrentSession = SessionLocator.SelectedSession;
     public ProductItems: ObservableCollection;
-    public ProductItemsFilterList: ProductItemPM[] = [];
-    private partnersDomainService: PartnersDomainService;
+    public PartnersDomainService: PartnersDomainService;
+    public CustomerId: string;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
@@ -37,11 +40,13 @@ export class ProductItemsTabComponent extends BaseComponent implements OnDestroy
         this.TransportModeId = this.EntityPM.TransportModeId;
         this.IsLCLEntity = AppTool.IsLCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
         this.IsFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
+        this.CustomerId = this.EntityPM.CustomerId;
 
-        this.partnersDomainService = new PartnersDomainService();
+        this.PartnersDomainService = new PartnersDomainService();
         this.ProductItems = new ObservableCollection([]);
 
-        this.LoadConsigneeProductItems();        
+        this.SetUIProperties();
+        this.BuildProductItems();    
         this.Listen();
     }
 
@@ -50,21 +55,22 @@ export class ProductItemsTabComponent extends BaseComponent implements OnDestroy
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    this.LoadConsigneeProductItems();
+                    this.CustomerId = this.EntityPM.CustomerId;
                 }                
             });
 
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    this.LoadConsigneeProductItems();
+                    this.CustomerId = this.EntityPM.CustomerId;
                 }
             });
         }
 
         this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
-            if (s == "ShipmentProductItemsDeleted") {
-                this.LoadConsigneeProductItems();
+            if (s == "ShipmentPartnersChanged") {
+                this.CustomerId = this.EntityPM.CustomerId;
+                this.BuildProductItems();
             }
         });
     }
@@ -76,17 +82,6 @@ export class ProductItemsTabComponent extends BaseComponent implements OnDestroy
         AppTool.KillEventEmitter(this.SessionEvent);
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
-    }
-
-    private LoadConsigneeProductItems() {        
-        this.partnersDomainService.GetCustomerProductItems(this.EntityPM.ConsigneeId, this.EntityPM.ToCountryId).subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                this.ProductItemsFilterList = myResponse.Result;
-                
-                this.SetUIProperties();
-                this.BuildProductItems();
-            }
-        });
     }
 
     public IsEditingEnabled: boolean = false;
@@ -122,18 +117,26 @@ export class ProductItemsTabComponent extends BaseComponent implements OnDestroy
         this.EntityPM.AddProductItem(item);
     }
     EditCustomerProductItem(item: ProductItem) {
-        if (!AppTool.IsNullOrEmpty(item.ProductItemId)) {
-            this.partnersDomainService.GetSingleCustomerProductItem(item.ProductItemId).subscribe((myResponse: ServiceResponse) => {
-                if (!myResponse.HasError) {
-                    var customerProductItem: ProductItemPM = myResponse.Result;
-                    if (customerProductItem) {
-
-                    }
+        var entityResourceService: EntityResourceService = new EntityResourceService();
+        entityResourceService.getEntityResourceByTableName("ProductItem").subscribe((res1: any) => {
+            entityResourceService.getEntityResourceByTableName("HTSCode").subscribe((res2: any) => {
+                if (!AppTool.IsNullOrEmpty(item.ProductItemId)) {
+                    this.PartnersDomainService.GetSingleCustomerProductItem(item.ProductItemId).subscribe((myResponse: ServiceResponse) => {
+                        if (!myResponse.HasError) {
+                            var customerProductItem: ProductItemPM = myResponse.Result;
+                            if (customerProductItem) {
+                                var logitudeWindow = new LogitudeWindow();
+                                logitudeWindow.Title = "Edit Customer Product Item";
+                                logitudeWindow.WindowArgs = { EntityPM: customerProductItem, ShipmentPM: this.EntityPM };
+                                logitudeWindow.Show('./ShipmentModules/ShipmentTabs/Components/ProductItems/EditCustomerProductItemComponent');
+                                //logitudeWindow.WindowClosed.subscribe(($event: any) => this.BuildProductItems());
+                            }
+                        }
+                    });
                 }
             });
-        }
+        });
     }
-
 
     OnRowEnded($event) {
         var errors = [];
@@ -148,96 +151,71 @@ export class ProductItem extends BaseComponent {
     public EntityPM: ShipmentProductItemPM;
     public ObjectTableName: string = "ShipmentProductItem";
     public IsNewEntity: boolean = false;
-
     constructor(entity: ShipmentProductItemPM, public fatherComponent: ProductItemsTabComponent, isNew: boolean) {
         super();
         this.EntityPM = entity;
         this.IsNewEntity = isNew;
-
-        if (!isNew) {
-            this.selectedProductItem = this.fatherComponent.ProductItemsFilterList.filter(d => d.Id == entity.Id)[0];
-        }
     }
 
-    private selectedProductItem: ProductItemPM;
-    get SelectedProductItem() { return this.selectedProductItem; }
-    set SelectedProductItem(value: ProductItemPM) {
-        if (this.selectedProductItem != value) {
-            this.selectedProductItem = value;
-
-            if (value) {
-                this.ProductItemId = value.Id;
-                this.Description = value.Description;
-                this.HTSCode = value.HTSCodeByCountry;
-                this.ProductItemCode = value.ItemCode;
-            }
-
-            else {
-                this.ProductItemId = null;
-                this.Description = null;
-                this.HTSCode = null;
-                this.ProductItemCode = null;
-            }
-        }
-    }
-
-    get ProductItemId() {
-        var myResult = null;
-
-        if (this.EntityPM != null) {
-            myResult = this.EntityPM.ProductItemId;
-        }
-
-        return myResult;
-    }
+    get ProductItemId() { return this.EntityPM.ProductItemId; }
     set ProductItemId(newValue: string) {
         if (this.EntityPM.ProductItemId != newValue) {
             this.EntityPM.ProductItemId = newValue;
+
+            this.GetCustomerProductItemHTSCode();          
         }
     }
 
-    get HTSCode() {
-        var myResult = null;
-
-        if (this.EntityPM != null) {
-            myResult = this.EntityPM.HTSCode;
+    private GetCustomerProductItemHTSCode() {
+        if (AppTool.IsNullOrEmpty(this.ProductItemId)) {
+            this.HTSCode = null;
         }
 
-        return myResult;
+        else {
+            this.fatherComponent.PartnersDomainService.GetCustomerProductItemHTSCode(this.ProductItemId, this.fatherComponent.EntityPM.ToCountryId).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    this.HTSCode = myResponse.Result;
+                }
+            });
+        }
     }
+
+    productItem: ProductItemList;
+    get ProductItem() { return this.productItem; }
+    set ProductItem(value: ProductItemList) {
+        if (this.productItem != value) {
+            this.productItem = value;
+        }
+
+        if (!AppTool.IsNullOrEmpty(value)) {
+            this.SKU = value.SKU;
+            this.Description = value.Description;            
+        }
+
+        else {
+            this.SKU = null;
+            this.Description = null; 
+        }
+    }
+
+    get HTSCode() {return this.EntityPM.HTSCode;}
     set HTSCode(newValue: string) {
         if (this.EntityPM.HTSCode != newValue) {
             this.EntityPM.HTSCode = newValue;
         }
     }
 
-    get Description() {
-        var myResult = null;
-
-        if (this.EntityPM != null) {
-            myResult = this.EntityPM.Description;
-        }
-
-        return myResult;
-    }
+    get Description() { return this.EntityPM.Description; }
     set Description(newValue: string) {
         if (this.EntityPM.Description != newValue) {
             this.EntityPM.Description = newValue;
         }
     }
 
-    get ProductItemCode() {
-        var myResult = null;
-
-        if (this.EntityPM != null) {
-            myResult = this.EntityPM.ProductItemCode;
-        }
-
-        return myResult;
-    }
-    set ProductItemCode(newValue: string) {
-        if (this.EntityPM.ProductItemCode != newValue) {
-            this.EntityPM.ProductItemCode = newValue;
+    get SKU() {return this.EntityPM.SKU; }
+    set SKU(newValue: string) {
+        if (this.EntityPM.SKU != newValue) {
+            this.EntityPM.SKU = newValue;
         }
     }
 

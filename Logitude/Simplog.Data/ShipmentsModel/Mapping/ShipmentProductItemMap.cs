@@ -19,7 +19,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ProductItemId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Description).HasMaxLength(1000).IsUnicode(true);
             this.Property(t => t.HTSCode).HasMaxLength(20).IsUnicode(false);
-            this.Property(t => t.ProductItemCode).HasMaxLength(10).IsUnicode(false);
+            this.Property(t => t.SKU).HasMaxLength(30).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("ShipmentProductItems");
@@ -29,7 +29,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ProductItemId).HasColumnName("ProductItemId");
             this.Property(t => t.Description).HasColumnName("Description");
             this.Property(t => t.HTSCode).HasColumnName("HTSCode");
-            this.Property(t => t.ProductItemCode).HasColumnName("ProductItemCode");
+            this.Property(t => t.SKU).HasColumnName("SKU");
+            this.Property(t => t.ApprovedByCustomer).HasColumnName("ApprovedByCustomer");
 
             // Relationships
             this.HasRequired(t => t.ProductItem)

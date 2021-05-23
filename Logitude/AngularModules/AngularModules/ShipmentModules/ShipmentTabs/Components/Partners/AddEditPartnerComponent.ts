@@ -141,7 +141,7 @@ export class AddEditPartnerComponent implements OnInit {
         messageWindow.Show("All product items in this shipment will be deleted");
         messageWindow.WindowClosed.subscribe((event: any) => {
             this.EntityPM.ShipmentProductItems = [];
-            this.CurrentSession.FireEvent("ShipmentProductItemsDeleted");
+            this.CurrentSession.FireEvent("ShipmentPartnersChanged");
         });
     }
 

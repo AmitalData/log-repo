@@ -14,6 +14,8 @@ export class ProductItemList {
 		Remarks: string;
 		InActive: boolean;
 		Description: string;
-		ItemCode: string;
+		Name: string;
+		Brand: string;
+		SearchFields: string;
 	
 }
