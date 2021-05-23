@@ -1,4 +1,5 @@
 ﻿using Logitude.Accounting.BL.CoreBL;
+using Logitude.SystemLogs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,34 +13,27 @@ namespace CommunicationWorkerRole.Tasks
 
 
         int Tenant;
-        private StringBuilder _SB;
         public ExchangeRateUpdateTask(string Id, int tenant) : base(Id, tenant)
         {
             Tenant = tenant;
-            _SB = new StringBuilder();
         }
 
         public override void StartTask()
-        {
-            bool failed = false;
+        {        
             try
             {
-
-
-                _SB.Append(DateTime.Now.ToString()).AppendLine("ExchangeRateUpdateTask:Start");
-                ExchangeRatesFromExternalLinkUpdateService exchangeRatesFromExternalLinkUpdateService = new ExchangeRatesFromExternalLinkUpdateService(Tenant);
-                exchangeRatesFromExternalLinkUpdateService.UpdateRatesByExternalXML();
-
-                //}
+                UpdateExchangeRateByExternalLink();               
             }
-            finally
+            catch (Exception ex)
             {
-                if (failed)
-                {
-                    throw new Exception(_SB.ToString());
-                }
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "WorkerRole", $"ExchangeRateUpdateTask()", null);
             }
-            //base.StartTask();
         }
+        private void UpdateExchangeRateByExternalLink()
+        {
+            ExchangeRatesFromExternalLinkUpdateService exchangeRatesFromExternalLinkUpdateService = new ExchangeRatesFromExternalLinkUpdateService(Tenant);
+            exchangeRatesFromExternalLinkUpdateService.UpdateRatesByExternalXML();
+        }
+
     }
 }
