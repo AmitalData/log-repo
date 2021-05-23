@@ -439,12 +439,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="InsruedcreditLimit"
-    Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column>
   <Relation
     ForeignKeyColumn="InvoiceCurrencyId"
     ReferencedTable="Currencies"
