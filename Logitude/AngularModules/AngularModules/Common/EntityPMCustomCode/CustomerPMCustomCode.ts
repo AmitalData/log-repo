@@ -6,6 +6,8 @@ export class CustomerPMCustomCode {
 
         if (!SessionLocator.TenantPM.AccountingActivated) {
             entityPM.UIProperties.SetVisibility("CreditLimitAmount", "Customer", false);
+            entityPM.UIProperties.SetVisibility("InsuredcreditLimit", "Customer", false);
+
         }
     }
 }

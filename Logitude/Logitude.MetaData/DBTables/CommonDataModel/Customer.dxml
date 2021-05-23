@@ -440,7 +440,8 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="InsruedcreditLimit"
+    Name="InsuredcreditLimit"
+    OldNames="InsruedcreditLimit"
     Type="float">
     <Constraints
       Nullable="true" />

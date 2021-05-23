@@ -17101,8 +17101,8 @@
     EnableFullscreenTextBox="false" />
   <field
     Id="&quot;68b6c16c-973d-4d50-b245-0d455badfb44&quot;"
-    FieldName="&quot;InsruedcreditLimit&quot;"
-    OldNames="InsruedcreditLimit"
+    FieldName="&quot;InsuredcreditLimit&quot;"
+    OldNames="InsruedcreditLimit,InsuredcreditLimit"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -17119,13 +17119,14 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
-    PMPropertyPath="&quot;InsruedcreditLimit&quot;"
-    ListPropertyPath="&quot;InsruedcreditLimit&quot;"
+    PMPropertyPath="&quot;InsuredcreditLimit&quot;"
+    ListPropertyPath="&quot;InsuredcreditLimit&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -17133,8 +17134,9 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;Customer&quot;"
     IsRestrictable="false"
-    DisplayInEntityVariables="false"
+    DisplayInEntityVariables="true"
     AllowedInCustomerFieldsSettings="false"
     DisplayInSearchWindowFilters="false"
     DisplayInSearchWindowFiltersIndex="0"
@@ -17142,9 +17144,12 @@
     DigitsAfterPoint="2"
     InActive="false"
     DisplayLongName="false"
-    FullFieldLable="&quot;InsruedcreditLimit&quot;"
-    DefaultText="&quot;Insrued Credit Limit&quot;"
+    FullFieldLable="&quot;InsuredcreditLimit&quot;"
+    DefaultText="&quot;Insured Credit Limit&quot;"
     FullLocalDefaultText="&quot;מסגרת אשראי מבוטחת&quot;"
+    ListFieldLable="&quot;InsuredcreditLimitListLable&quot;"
+    ListLableDefaultText="&quot;Insured Credit Limit&quot;"
+    ListLocalDefaultText="&quot;מסגרת אשראי מבוטחת&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -17154,7 +17159,7 @@
     IsComposition="false"
     IsMaxLength="false"
     NoMetaDataField="false"
-    GenerateInList="false"
+    GenerateInList="true"
     IsFixedLength="false"
     EnableAutoFill="false"
     IncludeInSearchField="false"
@@ -18018,7 +18023,7 @@
     IsHeaderScreen="false"
     Code="&quot;Customer.BillingTabScreen&quot;"
     NumberOfColumns="2"
-    NumberOfRows="6">
+    NumberOfRows="7">
     <ScreenFields>
       <ScreenField
         Column="0"
@@ -18049,6 +18054,11 @@
         Column="0"
         Row="5"
         ObjectFieldName="&quot;CreditLimitAmount&quot;"
+        ScreenName="Billing Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="6"
+        ObjectFieldName="&quot;InsuredcreditLimit&quot;"
         ScreenName="Billing Tab Screen" />
       <ScreenField
         Column="1"
