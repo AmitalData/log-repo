@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Logitude.Accounting.BL.CoreBL
@@ -30,8 +31,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
         public virtual void OnUpdate(JournalLinePM journalLinePM, JournalPM journalPM)
         {
-
-
+            ReplaceNotesFieldFromNewLineToBlank(journalLinePM);//Task 139510: ביצירת פקודת יומן יש להתעלם מסימן "הורדת שורה" במידה ונרשם בשדה "הערות"
 
 
             //journalLinePM.ChangeSetOp = ChangeSetOperation.Insert;
@@ -99,6 +99,15 @@ namespace Logitude.Accounting.BL.CoreBL
                     rate = local / foreign;
                 }
                 journalLinePM.ExchangeRate = Math.Round((decimal)rate, 5);
+            }
+        }
+
+        private static void ReplaceNotesFieldFromNewLineToBlank(JournalLinePM journalLinePM)
+        {
+            if (!string.IsNullOrWhiteSpace(journalLinePM.Notes))
+            {
+                string replacementString = " ";
+                journalLinePM.Notes = Regex.Replace(journalLinePM.Notes, @"\r\n?|\n", replacementString);
             }
         }
 
