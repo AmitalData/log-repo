@@ -4324,8 +4324,8 @@
     <EventType
       Code="&quot;JNUP&quot;"
       ObjectTableName="&quot;Journal&quot;"
-      EnglishName="&quot;Journal Notes Updated&quot;"
-      LocalName="&quot;Journal Notes Updated&quot;"
+      EnglishName="&quot;Journal Line Updated&quot;"
+      LocalName="&quot;Journal Line Updated&quot;"
       IsManualEntry="false"
       ShortView="false"
       IsAgentView="false"
@@ -5017,9 +5017,9 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Journal.M.EditLineNote&quot;"
-      DefaultText="&quot;Edit Line Note&quot;"
-      LocalDefaultText="&quot;ערוך הערת שורה&quot;"
+      Code="&quot;Journal.M.EditJournalLine&quot;"
+      DefaultText="&quot;Edit Journal Line&quot;"
+      LocalDefaultText="&quot;ערוך שורה&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
     <TextCode
