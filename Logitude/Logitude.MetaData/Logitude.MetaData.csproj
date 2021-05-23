@@ -1118,6 +1118,7 @@
     </None>
     <None Include="EntityFiles\CommonDataModel\FilingInbox.lxml" />
     <None Include="EntityFiles\CommonDataModel\FilingInboxAttachmentLog.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\Container.lxml" />
     <None Include="EntityFiles\ShipmentsModel\OBLType.lxml" />
     <None Include="EntityFiles\CommonDataModel\PaymentGatewayPartner.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteVATsTotal.lxml" />

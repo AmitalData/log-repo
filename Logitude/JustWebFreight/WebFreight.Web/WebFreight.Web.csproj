@@ -1038,6 +1038,8 @@
     <Compile Include="Controllers\ShipmentsModel\Extended\ShipmentCargoTrackingController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\AccountingInformationIdentifierViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\DocumentApprovalController.cs" />
+    <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ContainerViewsController.Generated.cs" />
+    <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\ContainerController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffVersionUploadedExcelViewsController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\PMControllers\TariffVersionUploadedExcelController.Generated.cs" />
     <Compile Include="Controllers\WebDomainControllers\PotentialAddressController.cs" />
@@ -3296,6 +3298,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\AWBCustomsInformationUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\AWBInformationUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ContainerFollowUpUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ContainerUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\CustomsTransferHeaderUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\CustomsTransferLineUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\CustomsTransferTypeUpdateClass.cs" />
