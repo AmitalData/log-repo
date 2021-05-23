@@ -11,6 +11,7 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
     
@@ -37,10 +38,18 @@ export class UserDefinedReportFilterControl extends BaseComponent implements OnI
     public UserDefinedReportId:string;
     public IncludeAnOpeningBalance:boolean =true;
     public ExpandChartOfAccountToGLAccounts:boolean =false;
-    public IsScreenLoaded:boolean=false;
+    public IsScreenLoaded: boolean = false;
+    public UserDefinedReportFilterItems: ApiQueryFilters = new ApiQueryFilters();
     constructor() {
         super();
+      
          this._entityResourceService.getEntityResourceByTableName("UserDefinedReport", 0).subscribe((response: any) => { this.IsScreenLoaded=true; });
+        this.ExcludeCancelledReports();
+
+    }
+    ExcludeCancelledReports() {
+        this.UserDefinedReportFilterItems.addAdditionalFilter("IsCancelled", false, null, null, "Equals", false, false, false, "boolean");
+
     }
     ngOnInit(): void {
         throw new Error('Method not implemented.');
