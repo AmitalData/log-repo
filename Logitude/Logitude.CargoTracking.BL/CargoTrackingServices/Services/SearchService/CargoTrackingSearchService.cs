@@ -16,7 +16,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
     {
 
         public static List<string> PrivateRefrencesList = new List<string>() { "ConsigneeName", "ShipperName" };
-
+        public static List<string> PrivateShipmentTypes = new List<string> { "LCLD", "MYGO", "MYGI" };
 
         public static void CreateSearchReferencesForShipment(DataRow tableRow, BulkDataPreperation bulkDataPreperation, string tableName)
         {
@@ -230,7 +230,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
 
             if(coulmnName == "ContainersNumbers")
             {
-                IsPublic = SetIsPublicForContainerColumn(TableRow);
+                IsPublic = CheckContainerShipmentSearchPublicity(TableRow);
             }
             TableRow.SetField("IsPublic", IsPublic);
         }
@@ -250,10 +250,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             return true;
         }
 
-        private static bool SetIsPublicForContainerColumn(DataRow tableRow)
+        private static bool CheckContainerShipmentSearchPublicity(DataRow searchRecord)
         {
-            if (tableRow["ShipmentTypeId"].Equals("LCLD")){ return false;}
-            return true;
+            string shipmentTypeId = (string)searchRecord["ShipmentTypeId"];
+
+            return !PrivateShipmentTypes.Contains(shipmentTypeId?.ToUpper());
         }
 
         private static string GetReferenceTypeFromCoulmnName(string CoulmnName)
