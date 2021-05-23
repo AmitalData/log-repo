@@ -2552,9 +2552,8 @@ namespace WebFreight.Web
                 Email = email.ToLower(),
                 IsChampLogin = ischamplogin,
                 IsMobile = false,
-                UseCaptcha = false,
             };
-            UserData userData = resetPasswordHelper.ForgetPassword(resetPasswordParameters);
+            UserData userData = resetPasswordHelper.ForgetPassword(resetPasswordParameters,false);
 
             return userData;
         }
@@ -2587,9 +2586,8 @@ namespace WebFreight.Web
                 Email = email.ToLower(),
                 IsChampLogin = false,
                 IsMobile = ismobile,
-                UseCaptcha = false,
             };
-            UserData userData = resetPasswordHelper.ForgetPassword(resetPasswordParameters);
+            UserData userData = resetPasswordHelper.ForgetPassword(resetPasswordParameters , false);
 
             return userData;
         }
@@ -2603,12 +2601,11 @@ namespace WebFreight.Web
                 Email = email.ToLower(),
                 IsChampLogin = false,
                 IsMobile= true,
-                UseCaptcha = false,
                 CaptchaCode = null,
                 CaptchaKey = null,
                 AppEnvironment = appEnvironment,
             };
-            UserData userData = resetPasswordHelper.ForgetPassword(resetPasswordParameters);
+            UserData userData = resetPasswordHelper.ForgetPassword(resetPasswordParameters , false);
 
             return userData;
         }
