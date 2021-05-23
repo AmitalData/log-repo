@@ -1455,12 +1455,12 @@
       <ScreenField
         Column="1"
         Row="1"
-        ObjectFieldName="&quot;ContainerizationStatus&quot;"
+        ObjectFieldName="&quot;ContainerizationStatusName&quot;"
         ScreenName="Customs.ContainerizationHeaderScreen" />
       <ScreenField
         Column="2"
         Row="0"
-        ObjectFieldName="&quot;HataraStatus&quot;"
+        ObjectFieldName="&quot;HataraStatusName&quot;"
         ScreenName="Customs.ContainerizationHeaderScreen" />
     </ScreenFields>
   </Screen>

@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ContainerizationUpdateClass
    {  		
-		public const string HashString = "599bd10ad161336f764b8f5144e1f6ad";
+		public const string HashString = "e44daf9b180dafec516138468935334a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1091,9 +1091,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	          
              ScreenField CustomsContainerizationCustomsContainerizationHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ContainerizationCustomsContainerizationHeaderScreenScreen0.Id,ScreenCode = ContainerizationCustomsContainerizationHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Containerization.ContainerizationDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField CustomsContainerizationCustomsContainerizationHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = ContainerizationCustomsContainerizationHeaderScreenScreen0.Id,ScreenCode = ContainerizationCustomsContainerizationHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Containerization.ContainerizationStatus", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField CustomsContainerizationCustomsContainerizationHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = ContainerizationCustomsContainerizationHeaderScreenScreen0.Id,ScreenCode = ContainerizationCustomsContainerizationHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Containerization.ContainerizationStatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField CustomsContainerizationCustomsContainerizationHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = ContainerizationCustomsContainerizationHeaderScreenScreen0.Id,ScreenCode = ContainerizationCustomsContainerizationHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Containerization.HataraStatus", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField CustomsContainerizationCustomsContainerizationHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = ContainerizationCustomsContainerizationHeaderScreenScreen0.Id,ScreenCode = ContainerizationCustomsContainerizationHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Containerization.HataraStatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          	
 		    ContainerizationObjectTable.HeaderScreenId = ContainerizationCustomsContainerizationHeaderScreenScreen0.Id;
 		    ContainerizationObjectTable.HeaderScreenCode = ContainerizationCustomsContainerizationHeaderScreenScreen0.Code;
