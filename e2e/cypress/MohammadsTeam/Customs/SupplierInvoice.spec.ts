@@ -74,10 +74,10 @@ cy.get('#Add_2').click({force: true} );
        if (LogHelper.checkIfEleExists('#edit-log-grid_0_3')) {
             cy.get('#Add_4').click({force: true} );
             cy.get('input[id="Customs.SupplierInvoice_ItemCode"]').type('10')
-        if (LogHelper.checkIfEleExists('#edit-log-grid_0_30_2_0')){
+       /* if (LogHelper.checkIfEleExists('#edit-log-grid_0_30_2_0')){
 			cy.get('#edit-log-grid_0_30_2_0').click({force: true} );
-			cy.get('input[id="Customs.SupplierInvoice_ItemDescription"]').type('1A');
-		}
+			cy.get('input[id="Customs.SupplierInvoice_ItemDescription"]').click().type('1A');
+		}*/
         if (LogHelper.checkIfEleExists('#edit-log-grid_0_30_3_0')){
 			 cy.get('#edit-log-grid_0_30_3_0').click({force: true} );
 			 cy.get('input[id="Customs.SupplierInvoiceItem_ClassificationCode"]').type('123456782');
