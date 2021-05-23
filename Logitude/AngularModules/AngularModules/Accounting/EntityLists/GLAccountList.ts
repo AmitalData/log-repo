@@ -147,6 +147,12 @@ export class GLAccountList {
 	Collector: string;
 	FollowupDate: Date;
 	FollowupNotes: string;
+	CalculatedAgingPeriod1: number;
+	CalculatedAgingPeriod2: number;
+	CalculatedAgingPeriod3: number;
+	FirstPeriodsMonths: string;
+	SecondPeriodsMonths: string;
+	ThirdPeriodsMonths: string;
 	
 }
  

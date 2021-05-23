@@ -37,12 +37,16 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                join AgingDatas in context.GLAccountAgingDatas on a.Id equals AgingDatas.AccountId
                                                join RecocileDatas in context.GLAccountRecocileDatas on a.Id equals RecocileDatas.AccountId
 
+                                               join fullAccountingSettings in context.FullAccountingSettings on a.Tenant equals fullAccountingSettings.Tenant
+
                                                join CardsDatas in context.GLAccountCardsDatas on a.CardsDataId equals CardsDatas.Id
                                                into CardsDatasjoin
                                                from CardsDatas in CardsDatasjoin.DefaultIfEmpty()
+
                                                join FollowUpDatas in context.GLAccountFollowUpDatas on a.Id equals FollowUpDatas.GlAccountId
                                                into FollowUpDatasjoin
                                                from FollowUpDatas in FollowUpDatasjoin.DefaultIfEmpty()
+
                                                select new GLAccountList()
                                                {
                                                    Id = a.Id,
@@ -172,6 +176,11 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                    PeriodPast = AgingDatas.PeriodPast,
                                                    PeriodFuture = AgingDatas.PeriodFuture,
                                                    TotalOpenTransactions = AgingDatas.TotalOpenTransactions,
+                                                   FirstPeriodsMonths = fullAccountingSettings.FirstPeriodsMonths,
+                                                   SecondPeriodsMonths = fullAccountingSettings.SecondPeriodsMonths,
+                                                   ThirdPeriodsMonths = fullAccountingSettings.ThirdsPeriodsMonths,
+
+
 
                                                    // GLAccount Recocile Datas
                                                    LastReconciledBy =  RecocileDatas.LastReconciledByUser.Contact.LocalName == null ? RecocileDatas.LastReconciledByUser.Contact.EnglishName : RecocileDatas.LastReconciledByUser.Contact.LocalName,
@@ -185,7 +194,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                    Phone = CardsDatas != null ? CardsDatas.Phone : null,
                                                    Salesman = CardsDatas != null ?  CardsDatas.SalesmanUser.Contact.LocalName == null ? CardsDatas.SalesmanUser.Contact.EnglishName : CardsDatas.SalesmanUser.Contact.LocalName : null,
                                                    Collector = CardsDatas != null ? CardsDatas.CollectorUser.Contact.LocalName == null ? CardsDatas.CollectorUser.Contact.EnglishName : CardsDatas.CollectorUser.Contact.LocalName : null,
-
+                                                   
                                                    // GLAccount Follow Up Datas
                                                    FollowupDate = FollowUpDatas != null ? FollowUpDatas.FollowUpDate : null,
                                                    FollowupNotes = FollowUpDatas != null ? FollowUpDatas.FollowUpRemarks : null

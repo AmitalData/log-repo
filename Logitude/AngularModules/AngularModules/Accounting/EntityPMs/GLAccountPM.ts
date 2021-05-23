@@ -10,7 +10,7 @@
 import {GLAccountWithholdingTaxPM} from './GLAccountWithholdingTaxPM';
 import {GLAccountInterestPeriodPM} from './GLAccountInterestPeriodPM';
 import {GLAccountCurrencyPM} from './GLAccountCurrencyPM';
-
+import {GLAccountPM} from './GLAccountPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -842,6 +842,21 @@ export class GLAccountPM {
     private gLAccountFollowUpRemarks: string;
     public get GLAccountFollowUpRemarks() { return this.gLAccountFollowUpRemarks; }
     public set GLAccountFollowUpRemarks(newValue: string) { if (this.gLAccountFollowUpRemarks != newValue) { this.gLAccountFollowUpRemarks = newValue; this.MarkAsDirty("GLAccountFollowUpRemarks"); } }
+       
+	 
+    private calculatedAgingPeriod1: number;
+    public get CalculatedAgingPeriod1() { return this.calculatedAgingPeriod1; }
+    public set CalculatedAgingPeriod1(newValue: number) { if (this.calculatedAgingPeriod1 != newValue) { this.calculatedAgingPeriod1 = newValue; this.MarkAsDirty("CalculatedAgingPeriod1"); } }
+       
+	 
+    private calculatedAgingPeriod2: number;
+    public get CalculatedAgingPeriod2() { return this.calculatedAgingPeriod2; }
+    public set CalculatedAgingPeriod2(newValue: number) { if (this.calculatedAgingPeriod2 != newValue) { this.calculatedAgingPeriod2 = newValue; this.MarkAsDirty("CalculatedAgingPeriod2"); } }
+       
+	 
+    private calculatedAgingPeriod3: number;
+    public get CalculatedAgingPeriod3() { return this.calculatedAgingPeriod3; }
+    public set CalculatedAgingPeriod3(newValue: number) { if (this.calculatedAgingPeriod3 != newValue) { this.calculatedAgingPeriod3 = newValue; this.MarkAsDirty("CalculatedAgingPeriod3"); } }
        
 	 
 

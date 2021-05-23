@@ -292,6 +292,18 @@ namespace Logitude.Accounting.Data.EntityLists
        public DateTime? FollowupDate  { get; set; }
        [DataMember]
        public string FollowupNotes  { get; set; }
+       [DataMember]
+       public decimal? CalculatedAgingPeriod1  { get; set; }
+       [DataMember]
+       public decimal? CalculatedAgingPeriod2  { get; set; }
+       [DataMember]
+       public decimal? CalculatedAgingPeriod3  { get; set; }
+       [DataMember]
+       public string FirstPeriodsMonths  { get; set; }
+       [DataMember]
+       public string SecondPeriodsMonths  { get; set; }
+       [DataMember]
+       public string ThirdPeriodsMonths  { get; set; }
    }
 
 }

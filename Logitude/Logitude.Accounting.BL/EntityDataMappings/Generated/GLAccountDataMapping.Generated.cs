@@ -223,9 +223,12 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         Salesman, 
 	         Collector, 
 	         FollowupDate, 
-	         FollowupNotes,
+	         FollowupNotes, 
 	         GLAccountFollowUpDate, 
-	         GLAccountFollowUpRemarks,
+	         GLAccountFollowUpRemarks, 
+	         CalculatedAgingPeriod1, 
+	         CalculatedAgingPeriod2, 
+	         CalculatedAgingPeriod3,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
