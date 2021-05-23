@@ -604,6 +604,11 @@ export class CustomerPM {
     public set PrimaryContactId(newValue: string) { if (this.primaryContactId != newValue) { this.primaryContactId = newValue; this.MarkAsDirty("PrimaryContactId"); } }
        
 	 
+    private phone: string;
+    public get Phone() { return this.phone; }
+    public set Phone(newValue: string) { if (this.phone != newValue) { this.phone = newValue; this.MarkAsDirty("Phone"); } }
+       
+	 
     private readyForActivationDate: Date;
     public get ReadyForActivationDate() { return this.readyForActivationDate; }
     public set ReadyForActivationDate(newValue: Date) { if (this.readyForActivationDate != newValue) { this.readyForActivationDate = newValue; this.MarkAsDirty("ReadyForActivationDate"); } }
@@ -1273,6 +1278,11 @@ export class CustomerPM {
     private creditLimitAmount: number;
     public get CreditLimitAmount() { return this.creditLimitAmount; }
     public set CreditLimitAmount(newValue: number) { if (this.creditLimitAmount != newValue) { this.creditLimitAmount = newValue; this.MarkAsDirty("CreditLimitAmount"); } }
+       
+	 
+    private insuredcreditLimit: number;
+    public get InsuredcreditLimit() { return this.insuredcreditLimit; }
+    public set InsuredcreditLimit(newValue: number) { if (this.insuredcreditLimit != newValue) { this.insuredcreditLimit = newValue; this.MarkAsDirty("InsuredcreditLimit"); } }
        
 	 
     private creditLimitOpenBalance: number;

@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CustomerUpdateClass
    {  		
-		public const string HashString = "ccd8b0c61d5bcdf4d2aa2e9f487c35a7";
+		public const string HashString = "95324613d965cfeec1ec9a06eabbc40e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -9467,6 +9467,68 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "InsuredcreditLimit",
+					  						ObjectTableName =  "Customer",
+					  						FieldsDataType =  "Double",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "InsuredcreditLimit",
+					  						ListPropertyPath =  "InsuredcreditLimit",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customer",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						DigitsAfterPoint =  2,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "InsuredcreditLimit",
+					  						DefaultText =  "Insured Credit Limit",
+					  						FullLocalDefaultText =  "מסגרת אשראי מבוטחת",
+					  						ListFieldLable =  "InsuredcreditLimitListLable",
+					  						ListLableDefaultText =  "Insured Credit Limit",
+					  						ListLocalDefaultText =  "מסגרת אשראי מבוטחת",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -9847,7 +9909,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	   		  
 	      
 
-	         Screen CustomerBillingTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customer.BillingTabScreen", Name = "Billing Tab Screen", ObjectTableId = CustomerObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 6, IsReadOnly = false }, screensRepository, tenantScreens);
+	         Screen CustomerBillingTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customer.BillingTabScreen", Name = "Billing Tab Screen", ObjectTableId = CustomerObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 7, IsReadOnly = false }, screensRepository, tenantScreens);
       
              ScreenField CustomerCustomerBillingTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.InvoiceCurrencyId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
@@ -9861,13 +9923,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	          
              ScreenField CustomerCustomerBillingTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.CreditLimitAmount", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField CustomerCustomerBillingTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.BankAddress", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField CustomerCustomerBillingTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.InsuredcreditLimit", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField CustomerCustomerBillingTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.Swift", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField CustomerCustomerBillingTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.BankAddress", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField CustomerCustomerBillingTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.AccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField CustomerCustomerBillingTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.Swift", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField CustomerCustomerBillingTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.IBANNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField CustomerCustomerBillingTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.AccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomerCustomerBillingTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.IBANNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	            
 	      
 
