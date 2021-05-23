@@ -62,7 +62,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 {
                     ReshimonNumber = requestParams.OldReshimonNumber, //oldReshimonNumber,
                     //ReshimonNumberSpecified = true,
-                    DeclarationType = 1
+                    DeclarationType = (declarationPM != null && !String.IsNullOrWhiteSpace(declarationPM.DeclarationDocumentTypeCode)) ? int.Parse(declarationPM.DeclarationDocumentTypeCode) : 1,
                 };
                 requestDescription = requestParams.OldReshimonNumber;
             }
