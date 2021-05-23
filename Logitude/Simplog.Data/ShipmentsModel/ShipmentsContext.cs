@@ -404,6 +404,7 @@ namespace Simplog.Data.ShipmentsModel
         public IDbSet<ShipmentSubType> ShipmentSubTypes { get; set; }
         public IDbSet<ShipmentStoragePricing> ShipmentStoragePricings { get; set; }
         public IDbSet<ShipmentProductItem> ShipmentProductItems { get; set; }
+        public IDbSet<Container> Containers { get; set; }
 
         [DbFunction("ShipmentsContext", "udf_ShipmentSearch")]
         public IQueryable<ShipmentDataView> ShipmentSearch(string SearchFields)

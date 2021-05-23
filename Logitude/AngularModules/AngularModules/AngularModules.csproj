@@ -7438,6 +7438,7 @@
     <TypeScriptCompile Include="Shipment\Components\Workspaces\ContainersFUsComponent.ts" />
     <TypeScriptCompile Include="Shipment\DataContract\LogboxShipmentExportExcelArgs.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\ContainerFollowUpList.ts" />
+    <TypeScriptCompile Include="Shipment\EntityLists\ContainerList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\CustomsTransferHeaderList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\CustomsTransferTypeList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\CustomsTransmissionsStatusList.ts" />
@@ -7454,6 +7455,7 @@
     <TypeScriptCompile Include="Shipment\EntityLists\ShipmentSubTypeList.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMInitServices\ShipmentSubTypePMInitService.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ContainerFollowUpPM.ts" />
+    <TypeScriptCompile Include="Shipment\EntityPMs\ContainerPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\CustomsTransferHeaderPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\CustomsTransferLinePM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\FBLStockPM.ts" />
@@ -7484,6 +7486,7 @@
     <TypeScriptCompile Include="Shipment\Services\SplitShipmentService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\AWBAdditionalHandlingInfoListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\ContainerFollowUpListService.ts" />
+    <TypeScriptCompile Include="Shipment\Services\StandardLists\ContainerListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\CustomsTransferHeaderListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\CustomsTransferTypeListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\HarmonizeCodeListService.ts" />
@@ -7498,6 +7501,7 @@
     <TypeScriptCompile Include="Shipment\Services\StandardLists\ShipmentSubTypeListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\AWBAdditionalHandlingInfoPMService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\ContainerFollowUpPMService.ts" />
+    <TypeScriptCompile Include="Shipment\Services\StandardPMs\ContainerPMService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\CustomsTransferHeaderPMService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\FBLStockPMService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\ShipmentCustomsTransmissionPMService.ts" />

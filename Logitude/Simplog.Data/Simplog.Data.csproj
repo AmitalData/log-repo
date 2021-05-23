@@ -659,6 +659,7 @@
     <Compile Include="QuoteModel\Mapping\QuoteSettingMap.cs" />
     <Compile Include="QuoteModel\Repositories\QuoteSettingRepository.cs" />
     <Compile Include="QuoteModel\Repositories\QuoteComputedFieldRepository.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\Container.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\CustomsTransferHeader.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\CustomsTransferLine.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\CustomsTransferType.cs" />
@@ -701,6 +702,7 @@
     <Compile Include="ShipmentsModel\Mapping\ShipmentProductItemMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentStoragePricingMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentSubTypeMap.cs" />
+    <Compile Include="ShipmentsModel\Repositories\ContainerRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\CustomsTransferHeaderRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\CustomsTransferLineRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\CustomsTransferTypeRepository.cs" />

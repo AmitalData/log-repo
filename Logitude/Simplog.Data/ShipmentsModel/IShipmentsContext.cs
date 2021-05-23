@@ -78,6 +78,7 @@ namespace Simplog.Data.ShipmentsModel
         IDbSet<ShipmentSubType> ShipmentSubTypes { get; }
         IDbSet<ShipmentStoragePricing> ShipmentStoragePricings { get; set; }
         IDbSet<ShipmentProductItem> ShipmentProductItems { get; set; }
+        IDbSet<Container> Containers { get; set; }
 
         IQueryable<TOutput> FunctionTableValue<TOutput>(string functionName, SqlParameter[] parameters);
         IQueryable<ShipmentDataView> ShipmentSearch(string SearchFields);
