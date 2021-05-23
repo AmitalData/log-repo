@@ -299,7 +299,19 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                 bool shouldCreateDCAComm = false;
                 var decQS = new DeclarationQueryService(tenant);
-                declarationPM = decQS.GetSingle(this._DocumentsFilingPM.EntityId, false, false);
+                if(!string.IsNullOrEmpty(this._DocumentsFilingPM.EntityId))
+                {
+                    declarationPM = decQS.GetSingle(this._DocumentsFilingPM.EntityId, false, false);
+
+                }
+                else
+                {
+                    declarationPM = decQS.GetSingleByCustomFileNo(this._DocumentsFilingPM.ExternalEntityReference, _DocumentsFilingPM.Tenant);
+
+                }
+
+
+
                 logData += $"declarationPM.id={declarationPM.Id},CustomFileNo={declarationPM.CustomFileNo}"; //Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertSerialize(declarationPM);
                 if (declarationPM.PaymentDate.HasValue)
                 {
@@ -476,7 +488,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         private bool IsConnected2Declaration()
         {
-            return (this._DocumentsFilingPM.ObjectTableId == ObjectTableRepository.GetObjectTableByName("Customs.Declaration") && !String.IsNullOrWhiteSpace(this._DocumentsFilingPM.EntityId));
+            return (this._DocumentsFilingPM.ObjectTableId == ObjectTableRepository.GetObjectTableByName("Customs.Declaration") &&  ( !String.IsNullOrWhiteSpace(this._DocumentsFilingPM.EntityId) || !String.IsNullOrWhiteSpace(this._DocumentsFilingPM.ExternalEntityReference)));
         }
     }
 }
