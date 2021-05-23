@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ShipmentPM } from '../../../../Shipment/EntityPMs/ShipmentPM';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { ProductItemPM } from '../../../../Common/EntityPMs/ProductItemPM';
@@ -10,6 +9,8 @@ import { Validator } from '../../../../Infrastructure/Validators/Validator';
 import { AppTool } from '../../../../Infrastructure/Tools';
 import { CountryList } from '../../../../Common/EntityLists/CountryList';
 import { ShipmentTool } from '../../../../Shipment/Tools';
+import { PartnersDomainService } from '../../../../Common/Services/PartnersDomainService';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
     templateUrl: './EditCustomerProductItemComponent.html',
@@ -60,53 +61,6 @@ export class EditCustomerProductItemComponent extends BaseComponent {
 
         this.HTSCodes.InsertCollection(itemsCollection);
     }
-
-    //public savedItems: HTSCodePM[] = [];
-    //private CopyHTSCodes() {
-    //    this.savedItems = [];
-    //    if (this.EntityPM.HTSCodes.length > 0) {
-    //        this.EntityPM.HTSCodes.forEach(item => {
-    //            var htsCode = new HTSCodePM(null);
-    //            htsCode.ApprovedByCustomer = item.ApprovedByCustomer;
-    //            htsCode.Tenant = item.Tenant;
-    //            htsCode.Code = item.Code;
-    //            htsCode.CountryEnglishName = item.CountryEnglishName;
-    //            htsCode.DestinationCountryId = item.DestinationCountryId;
-    //            htsCode.InActive = item.InActive;
-    //            htsCode.ItemId = item.ItemId;
-    //            this.savedItems.push(htsCode);
-    //        });
-    //    }
-    //}
-
-    //public ResetHTSCodes() {
-    //    if (this.savedItems != null) {
-    //        var items: HTSCodePM[] = this.EntityPM.HTSCodes;
-    //        items.forEach(item => {
-    //            var savedItem: HTSCodePM = this.savedItems.filter(d => d.Code == item.Code)[0];
-    //            if (savedItem == null) {
-    //                if (this.EntityPM.HTSCodes.indexOf(item) != -1) {
-    //                    this.EntityPM.RemoveHTSCodePM(item);
-    //                }
-    //            }
-
-    //            else {
-    //                item.ApprovedByCustomer = savedItem.ApprovedByCustomer;
-    //                item.Code = savedItem.Code;
-    //                item.CountryEnglishName = savedItem.CountryEnglishName;
-    //                item.DestinationCountryId = savedItem.DestinationCountryId;
-    //                item.InActive = savedItem.InActive;
-    //            }
-    //        });
-
-    //        this.savedItems.forEach(item => {
-    //            var list = this.EntityPM.HTSCodes.filter(d => d.Code == item.Code);
-    //            if (list == null) {
-    //                this.EntityPM.HTSCodes.push(item);
-    //            }
-    //        });
-    //    }
-    //}
 
     get Id() { return this.EntityPM.Id; }
 
@@ -160,9 +114,6 @@ export class EditCustomerProductItemComponent extends BaseComponent {
     }
 
     OnRowEnded($event) {
-        var errors = [];
-        Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
-
         if (($event) == this.HTSCodes.Length) {
             this.AddHTSCode();
         }
@@ -173,23 +124,64 @@ export class EditCustomerProductItemComponent extends BaseComponent {
     }
     OkButtonClicked() {
         this.ValidationErrorsList = [];
+        Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, this.ValidationErrorsList);
 
-        var msg: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+        this.HTSCodes.Collection.forEach(item => {
+            Validator.TryValidateObject(item.EntityPM, item.ObjectTableName, this.ValidationErrorsList);
+        });
 
         if (this.ValidationErrorsList.length == 0) {
-           
+            this.ValidateHTSCodeUniqueCodeAndCountry(this.ValidationErrorsList);
 
-            //this.CurrentSession.CloseCurrentWindowEmit("OK");
-            //this.CurrentSession.FireEvent("ShipmentPartnersChanged");
+            if (this.ValidationErrorsList.length == 0) {
+                this.CurrentSession.StartBusyIndicatorSaving();
+                this.HTSCodes.Collection.forEach(item => {
+                    if (item != null) {
+                        if (item.IsNewEntity) {
+                            if (this.EntityPM.HTSCodes.indexOf(item.EntityPM) == -1) {
+                                item.IsNewEntity = false;
+                                this.EntityPM.AddHTSCodePM(item.EntityPM);
+                            }
+                        }
+                    }
+                });
+
+                var partnersDomainService: PartnersDomainService = new PartnersDomainService();
+                partnersDomainService.UpdateCustomerProductItem(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+                        this.EntityPM = myResponse.Result;
+                        this.CurrentSession.CloseCurrentWindowEmit("OK");
+                    }
+
+                    else {
+                        this.ValidationErrorsList = myResponse.ErrorsArray;
+                    }
+
+                    this.CurrentSession.StopBusyIndicator();
+                });
+            }   
         }
-    }    
+    }
 
+    private ValidateHTSCodeUniqueCodeAndCountry(errors: string[]) {
+        if (this.HTSCodes != null) {
+            this.HTSCodes.Collection.forEach(item => {
+                if (!AppTool.IsNullOrEmpty(item.DestinationCountryId)) {
+                    //var filteredHTSCodes: CustomerHTSCode[] = this.DataContext.HTSCodes.Collection.filter(d => !AppTool.IsNullOrEmpty(d.DestinationCountryId));
+                    //if (filteredHTSCodes.filter(d => d.DestinationCountryId == item.DestinationCountryId && d.LineNumber != item.LineNumber).length > 0) {
+                    //errors.push("An HTSCode with " + item.CountryEnglishName + " country already exists");
+                    //}
+                }
+            });
+        }
+    }
 }
 
 export class CustomerHTSCode extends BaseComponent {
     public EntityPM: HTSCodePM;
     public ObjectTableName: string = "HTSCode";
     public IsNewEntity: boolean = false;
+    public DataContext = this;
     constructor(entity: HTSCodePM, public FatherComponent: EditCustomerProductItemComponent, isNew: boolean) {
         super();
         this.EntityPM = entity;

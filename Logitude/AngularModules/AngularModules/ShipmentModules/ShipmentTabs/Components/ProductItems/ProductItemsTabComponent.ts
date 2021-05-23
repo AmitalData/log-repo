@@ -17,6 +17,7 @@ import { PartnersDomainService } from '../../../../Common/Services/PartnersDomai
 import { ProductItemList } from '../../../../Common/EntityLists/ProductItemList';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { HTSCodePM } from '../../../../Common/EntityPMs/HTSCodePM';
 
 @Component({
     templateUrl: './ProductItemsTabComponent.html',
@@ -129,13 +130,36 @@ export class ProductItemsTabComponent extends BaseComponent implements OnDestroy
                                 logitudeWindow.Title = "Edit Customer Product Item";
                                 logitudeWindow.WindowArgs = { EntityPM: customerProductItem, ShipmentPM: this.EntityPM };
                                 logitudeWindow.Show('./ShipmentModules/ShipmentTabs/Components/ProductItems/EditCustomerProductItemComponent');
-                                //logitudeWindow.WindowClosed.subscribe(($event: any) => this.BuildProductItems());
+                                logitudeWindow.ComponentLoaded.subscribe(comp => {
+                                    logitudeWindow.WindowClosed.subscribe(s => {
+                                        if (s) {
+                                            this.UpdateShipmentProductItem(item, comp.EntityPM);
+                                        }
+                                    });
+                                });
                             }
                         }
                     });
                 }
             });
         });
+    }
+    private UpdateShipmentProductItem(shipmentItem: ProductItem, customerItem: ProductItemPM) {
+        var shipmentProductItem: ShipmentProductItemPM = this.EntityPM.ShipmentProductItems.filter(d => d.Id == shipmentItem.EntityPM.Id)[0];
+        if (shipmentProductItem) {
+            this.MapProductItems(shipmentProductItem, customerItem);
+            this.BuildProductItems();
+        }
+    }
+    MapProductItems(shipmentProductItem: ShipmentProductItemPM, customerItem: ProductItemPM) {
+        shipmentProductItem.Description = customerItem.Description;        
+        shipmentProductItem.SKU = customerItem.SKU;
+
+        var htsCode: HTSCodePM = customerItem.HTSCodes.filter(d => d.DestinationCountryId == this.EntityPM.ToCountryId)[0];
+        if (htsCode) {
+            shipmentProductItem.HTSCode = htsCode.Code;
+            shipmentProductItem.ApprovedByCustomer = htsCode.ApprovedByCustomer;
+        }
     }
 
     OnRowEnded($event) {
