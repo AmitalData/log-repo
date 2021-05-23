@@ -735,15 +735,15 @@
                             <div *ngSwitchCase="'AgingDefinition'" style="height: 100%;">
                                 <table class="FixedTable">
                                     <tr class="FormFieldRow">
-                                        <td style="width:150px;">Numbers of periods:</td>
+                                        <td style="width:160px;"><LogLabel [ObjectFieldName]="'NumberofPeriods'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>                                        </td>
                                         <td >
-                                            <div style="width:150px;">
+                                            <div style="width:150px;top: 8px; position: relative;">
                                                 <NumberInput [(ngModel)]="NumberOfPeriods" name="no" [min]="1" [max]="3"></NumberInput>
                                             </div>
                                         </td>
                                     </tr>
                                     <tr *ngIf="NumberOfPeriods > 0" class="FormFieldRow">
-                                        <td>Period 1</td>
+                                        <td>                                                            <LogLabel [ObjectFieldName]="'FirstPeriodsMonths'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel></td>
                                         <td>
                                             <LogChips
                                                 [Options]="Periods"
@@ -752,7 +752,7 @@
                                         </td>
                                     </tr>
                                     <tr *ngIf="NumberOfPeriods > 1" class="FormFieldRow">
-                                        <td>Period 2</td>
+                                        <td>                                                            <LogLabel [ObjectFieldName]="'SecondPeriodsMonths'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel></td>
                                         <td>
                                             <LogChips
                                                 [Options]="Periods"
@@ -761,7 +761,7 @@
                                         </td>
                                     </tr>
                                     <tr *ngIf="NumberOfPeriods > 2" class="FormFieldRow">
-                                        <td>Period 3</td>
+                                        <td>                                                            <LogLabel [ObjectFieldName]="'ThirdsPeriodsMonths'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel></td>
                                         <td>
                                             <LogChips
                                                 [Options]="Periods"
