@@ -4,10 +4,12 @@ import { DynamicLoaderAOT } from './Utilities/DynamicLoaderAOT';
 import { Tools } from './Utilities/Tools';
 import { ExternalParams, ExternalParamsArg } from './Utilities/ExternalParams';
 import { SessionInfo } from './SessionInfo';
+import { PrivateLabelsService } from './PrivateLabels/Services/PrivateLabelsService';
 export var RootComponentAOT = (function () {
-    function RootComponentAOT(compiler, resolver, http) {
+    function RootComponentAOT(compiler, resolver, http, privateLabelsService) {
         this.resolver = resolver;
         this.http = http;
+        this.privateLabelsService = privateLabelsService;
         this.isPrivateLable = false;
         this.isDSV = false;
         //ServiceHelper.Http = http;
@@ -15,8 +17,6 @@ export var RootComponentAOT = (function () {
         DynamicLoaderAOT.Resolver = resolver;
         Tools.DynamicLoader = DynamicLoaderAOT;
         this.ResetPWD = window.sessionStorage.getItem("ResetPWD");
-        //SessionLocator.DynamicLoader = DynamicLoaderAOT;
-        //SessionLocator.IsProduction = true;
         var data = window.sessionStorage.getItem('userdata');
         if (data != "SignOut") {
             this.BuildExternalParams();
@@ -52,6 +52,7 @@ export var RootComponentAOT = (function () {
         }
     };
     RootComponentAOT.prototype.ngOnInit = function () {
+        window.sessionStorage.setItem("ssHHHH", "WssESEW");
         this.isPrivateLable = window.sessionStorage.getItem("IsPrivateLabel") == "true";
         this.isDSV = window.sessionStorage.getItem("IsDSV") == "true";
         if (this.isPrivateLable) {
@@ -61,43 +62,19 @@ export var RootComponentAOT = (function () {
             changeTitle(privateLableShortName);
         }
         else {
-            document.location.href = Tools.GetSystemURL() + "Login.aspx";
+            //document.location.href = Tools.GetSystemURL() + "Login.aspx";
+            this.GetPrivateLabelsData();
         }
         SessionInfo.MainLocation = this.location;
-        this.LoadLoginPage();
+        this.LoadPrivateLableLoginPages();
     };
     RootComponentAOT.prototype.ClearLocation = function () {
         if (this.location) {
             this.location.clear();
         }
     };
-    RootComponentAOT.prototype.LoadLoginPage = function () {
-        this.ClearLocation();
-        if (!this.isPrivateLable) {
-            if (this.ResetPWD == "true") {
-                DynamicLoaderAOT.Load("./Login/Components/ChangePasswordComponent", this.location)
-                    .then(function (cmpRef) {
-                    window.sessionStorage.setItem("ResetPWD", "false");
-                });
-            }
-            else {
-                DynamicLoaderAOT.Load("./Login/Components/LoginComponent", this.location)
-                    .then(function (cmpRef) {
-                    //cmpRef.instance.Blocking.subscribe(s => {
-                    //    SessionLocator.BlockType = s;
-                    //    this.LoadBlockingScreen();
-                    //});
-                    //cmpRef.instance.LoginCompleted.subscribe(s => {
-                    //    this.OnLoginCompleted();
-                    //});
-                });
-            }
-        }
-        else {
-            this.LoadPrivateLableLoginPages();
-        }
-    };
     RootComponentAOT.prototype.LoadPrivateLableLoginPages = function () {
+        this.ClearLocation();
         if (this.ResetPWD == "true") {
             this.LoadPrivateLableChangePasswordPage();
         }
@@ -134,6 +111,19 @@ export var RootComponentAOT = (function () {
         DynamicLoaderAOT.Load("./Login/Components/DSVMobileLoginComponent", this.location)
             .then(function (cmpRef) { });
     };
+    RootComponentAOT.prototype.GetPrivateLabelsData = function () {
+        this.privateLabelsService.GetIsPrivateLableUrl(Tools.GetSystemURL()).subscribe(function (response) {
+            if (response.EnablePrivateLable) {
+                window.sessionStorage.setItem("ContactEmail", response.ContactUsEmail);
+                window.sessionStorage.setItem("IsPrivateLabel", "true");
+                window.sessionStorage.setItem("SmallLogoURL", response.SmallLogoURL);
+                window.sessionStorage.setItem("LogoURL", response.LogoURL);
+                window.sessionStorage.setItem("PrivateLabelUrl", response.PrivateLabelUrl);
+                window.sessionStorage.setItem("PrivateLabelShortName", response.PrivateLabelShortName);
+                window.sessionStorage.setItem("IsDSV", (response.PrivateLabelDomain.toLowerCase().indexOf("dsv") > -1).toString());
+            }
+        });
+    };
     RootComponentAOT.decorators = [
         { type: Component, args: [{
                     selector: 'RootComponentAOT',
@@ -145,6 +135,7 @@ export var RootComponentAOT = (function () {
         { type: Compiler, },
         { type: ComponentFactoryResolver, },
         { type: Http, },
+        { type: PrivateLabelsService, },
     ];
     RootComponentAOT.propDecorators = {
         'location': [{ type: ViewChild, args: ["Child", { read: ViewContainerRef },] },],
