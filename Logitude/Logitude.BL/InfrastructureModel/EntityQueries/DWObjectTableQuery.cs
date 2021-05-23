@@ -54,6 +54,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         ObjectTableName = a.ObjectTableName ,
                         HasCustomFields = a.HasCustomFields , 
                         MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
+                        AdditionalFactRelationType = a.AdditionalFactRelationType,
 
                     }).FirstOrDefault();
         }
@@ -84,6 +85,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         ObjectTableName = a.ObjectTableName,
                         HasCustomFields = a.HasCustomFields,
                         MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
+                        AdditionalFactRelationType = a.AdditionalFactRelationType,
                     });
         }
 
@@ -111,6 +113,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         ObjectTableName = a.ObjectTableName,
                         HasCustomFields = a.HasCustomFields,
                         MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
+                        AdditionalFactRelationType = a.AdditionalFactRelationType,
                     }).FirstOrDefault();
         }
 
@@ -138,6 +141,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         ObjectTableName = a.ObjectTableName,
                         HasCustomFields = a.HasCustomFields,
                         MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
+                        AdditionalFactRelationType = a.AdditionalFactRelationType,
                     });
         }
 
@@ -164,6 +168,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        ObjectTableName = a.ObjectTableName,
                                                        HasCustomFields = a.HasCustomFields,
                                                        MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
+                                                       AdditionalFactRelationType = a.AdditionalFactRelationType,
                                                    };
 
             return result;

@@ -499,8 +499,6 @@
     <None Include="DBScripts\ShipmentModel\202009281700_MapValuesFromIsBondedToIsCFS.sxml" />
     <None Include="DBScripts\ShipmentModel\202012100302_ComputeMasterHousesAmounts.sxml" />
     <None Include="DBScripts\ShipmentModel\202101100944_FillQuoteNumberOnShipmentBackward.sxml" />
-    <None Include="DBScripts\ShipmentModel\202103070931_FillPreOnForwardingFieldsForHouses.sxml" />
-    <None Include="DBScripts\ShipmentModel\202103071010_FillPreOnCarriageFieldsForMasters.sxml" />
     <None Include="DBScripts\ShipmentModel\202103141040_AddPreOnCarriageEventTypesAndStatus.sxml" />
     <None Include="DBScripts\ShipmentModel\202103181700_AddShipmentNumberToSearchFieldInCustomsTransferHeaders.sxml" />
     <None Include="DBScripts\ShipmentModel\202101271225_AddNewSpecialHandlingCodes.sxml" />

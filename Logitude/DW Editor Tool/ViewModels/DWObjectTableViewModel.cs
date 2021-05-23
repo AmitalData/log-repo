@@ -58,6 +58,8 @@ namespace DW_Editor_Tool.ViewModels
         public bool HasCustomFields { get { return hasCustomFields; } set { hasCustomFields = value; FirePropertyChanged("HasCustomFields"); } }
 
 
+        private string additionalFactRelationType;
+        public string AdditionalFactRelationType { get { return additionalFactRelationType; } set { additionalFactRelationType = value; FirePropertyChanged("AdditionalFactRelationType"); } }
 
 
 
