@@ -94,7 +94,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         public string CreateCRS(int tenant, string LoggingUserId,
             //string DeclarationId, string master,string courierDeclarationStatusCode, List<string> DeclarationsList = null)
-            DocumentsFilingPM documentsFilingPM/*, DeclarationPM declarationPM*/)
+            DocumentsFilingPM documentsFilingPM/*, DeclarationPM declarationPM*/ ,string entityId)
         {
 
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
@@ -129,7 +129,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             var myDCAInUCBUD2LTWithResponseContentHeader = new DCAInUCBUD2LTWithResponseContentHeader()
             {
-                DeclarationId = documentsFilingPM.EntityId,
+                DeclarationId = !string.IsNullOrEmpty(documentsFilingPM.EntityId)? documentsFilingPM.EntityId : entityId,
                 DocumentsFilingId = documentsFilingPM.Id,
                 DocumentsFilingCode = documentsFilingPM.Code,
                 LoggingUserId = LoggingUserId,
@@ -421,7 +421,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     )
                 {
                     var myDCAInUCBUD2LT_MsgMessagingService = new DCAInUCBUD2LT_MsgMessagingService();
-                    string crs = myDCAInUCBUD2LT_MsgMessagingService.CreateCRS(tenant, loggingUserId, _DocumentsFilingPM);
+                    string crs = myDCAInUCBUD2LT_MsgMessagingService.CreateCRS(tenant, loggingUserId, _DocumentsFilingPM, declarationPM.Id);
                     LogitudeSettings.HandleLogMe(crs + " " + logData, false, "CreateUD2LTService.OK", stopLogAt);
 
                 }
