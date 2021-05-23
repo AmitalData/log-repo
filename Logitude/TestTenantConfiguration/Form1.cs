@@ -250,14 +250,14 @@ namespace TestTenantConfiguration
             {
                 CreateTenantConfiguration();
 
-                //Maintenance settings
+                ////Maintenance settings
                 ComputingPartnersPrepare();
                 UpdateQuoteSettings();
                 UpdateAMANACTab();
                 UpdateTrialStatus();
                 TicketPrepareData();
 
-                //Prepare data location , partners , shipment
+                ////Prepare data location , partners , shipment
                 PrepareDataForTenant();
             }
             catch (Exception ex)
@@ -266,6 +266,7 @@ namespace TestTenantConfiguration
                 if (ex.InnerException != null)
                 {
                     msg = msg + ex.InnerException.Message;
+                    msg = msg +"inner Exception : "+ ex.InnerException.InnerException;
                 }
                 MessageBox.Show(msg, this.Title, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
