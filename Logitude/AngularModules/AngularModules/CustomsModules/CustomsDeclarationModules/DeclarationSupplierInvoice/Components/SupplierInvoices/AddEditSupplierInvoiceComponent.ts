@@ -1047,16 +1047,22 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
     }
 
     
-    OnCTRL_S_HotKeyPressed(){
-        this.OkButtonClicked();
+    OnCTRL_S_HotKeyPressed() {
+        if (!this.IsDisplayOnly) {
+            this.OkButtonClicked();
+        }
     }
 
     OnEscHotKeyPressed(){
-        this.CancelButtonClicked();
+        if (!this.IsDisplayOnly) { 
+            this.CancelButtonClicked();
+        }
     }
 
     OnCTRL_Shift_S_HotKeyPressed(){
-        this.OkButtonClicked();
+        if (!this.IsDisplayOnly) {
+            this.OkButtonClicked();
+        }
     }
 
 
