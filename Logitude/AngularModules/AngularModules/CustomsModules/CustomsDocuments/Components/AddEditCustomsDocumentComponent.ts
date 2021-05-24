@@ -920,7 +920,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     }
     //#endregion
 
-    private _SendCustomsDocumentAfter = false;
+    private _SendCustomsDocumentAfter = false;//IT SEEMS THAT ITS OK IN THE DIST =- SOO REVERT MY CODE 
     PerformSubmitChanges() {
         if (!this._SendCustomsDocumentAfter &&  this.CustomsDocument) {
             this.SendCustomsDocumentMethod();
