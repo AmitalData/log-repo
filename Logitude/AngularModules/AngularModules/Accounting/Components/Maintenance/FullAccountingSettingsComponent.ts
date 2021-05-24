@@ -684,6 +684,7 @@ SubmitChanges(ControlAccountId:string) {
     }
 
     Periods: any[] = [
+        {EnglishName: 'Period 0', LocalName: 'תקופה גיול 0', Code: 'period0'},
         {EnglishName: 'Period 1', LocalName: 'תקופה גיול 1', Code: 'period1'},
         {EnglishName: 'Period 2', LocalName: 'תקופה גיול 2', Code: 'period2'},
         {EnglishName: 'Period 3', LocalName: 'תקופה גיול 3', Code: 'period3'},
