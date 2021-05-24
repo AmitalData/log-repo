@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;bce7&quot;"
+  Code="&quot;229b&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -537,6 +537,11 @@
       Name="&quot;Standalone Shipment&quot;"
       SearchFields="&quot;SAS,Standalone Shipment&quot;"
       Description="&quot;Standalone Shipment&quot;" />
+    <Record
+      Name="&quot;Ocean Insights Containers&quot;"
+      Code="&quot;OIC&quot;"
+      SearchFields="&quot;OIC,Ocean Insights Containers&quot;"
+      Description="&quot;Ocean Insights Containers&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

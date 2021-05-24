@@ -80,6 +80,13 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="Master"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="MainCarriageVesselId"
     Type="varchar"
     Size="15">
