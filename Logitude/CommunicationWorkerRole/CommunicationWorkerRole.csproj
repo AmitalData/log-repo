@@ -379,6 +379,7 @@
     <Compile Include="CollaborationToolShipmentUpdateWR.cs" />
     <Compile Include="CollaborationToolTaskWR.cs" />
     <Compile Include="Services\QuoteSchedulerTaskService.cs" />
+    <Compile Include="Tasks\ExchangeRateUpdateTask.cs" />
     <Compile Include="WarmCargoTracking.cs" />
     <Compile Include="BatchTaskExecutionWR.cs" />
     <Compile Include="BIReportsExecutionLogWorkerRole.cs" />
