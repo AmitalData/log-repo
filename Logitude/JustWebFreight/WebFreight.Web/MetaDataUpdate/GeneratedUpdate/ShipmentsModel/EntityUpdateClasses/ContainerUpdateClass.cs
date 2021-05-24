@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ContainerUpdateClass
    {  		
-		public const string HashString = "8ec370e979b787ef8ac0a50b2604228b";
+		public const string HashString = "acecf7eb9df6ef7fc21cd9a59db75da3";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -111,9 +111,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    EnableEditFromLOV =  false,
 			      				    SortingByObjectField =  "Id",
 			      				    InActive =  false,
-			      				    IsSaveButtonVisible =  false,
+			      				    IsSaveButtonVisible =  true,
 			      				    IsComposition =  false,
-			      				    EnableSecurity =  false,
+			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "BR",
@@ -1232,7 +1232,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllContainersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerTextCode_0.Id, NameTextCodeCode = ContainerTextCode_0.Code, ObjectTableName = "Container", Code = "All Containers",  QueryGroupCode = "38cb", IndexOrder = 0, Tenant = 0, ObjectTableId = ContainerObjectTable.Id, QuerySection = "Container", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ContainerFeature_0.Id,FeatureUniqeCode= ContainerFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query AllContainersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerTextCode_0.Id, NameTextCodeCode = ContainerTextCode_0.Code, ObjectTableName = "Container", Code = "All Containers",  QueryGroupCode = "38cb", IndexOrder = 0, Tenant = 0, ObjectTableId = ContainerObjectTable.Id, QuerySection = "Container", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFeature_0.Id,FeatureUniqeCode= ContainerFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
 			 QueryColumn AllContainersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainersQuery.Id,QueryCode = AllContainersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Container.ContainerNumber" , ColumnWidth = 120 }, addedQueryColumns);
 
@@ -1267,18 +1267,40 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 		       
 	      
 
-	         Screen ContainerContainerHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Container.HeaderScreen", Name = "ContainerHeaderScreen", ObjectTableId = ContainerObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen ContainerContainerHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Container.HeaderScreen", Name = "ContainerHeaderScreen", ObjectTableId = ContainerObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
              ScreenField ContainerContainerHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ContainerContainerHeaderScreenScreen0.Id,ScreenCode = ContainerContainerHeaderScreenScreen0.Code, ObjectFieldCode = "Container.ContainerNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField ContainerContainerHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ContainerContainerHeaderScreenScreen0.Id,ScreenCode = ContainerContainerHeaderScreenScreen0.Code, ObjectFieldCode = "Container.CarrierName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField ContainerContainerHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ContainerContainerHeaderScreenScreen0.Id,ScreenCode = ContainerContainerHeaderScreenScreen0.Code, ObjectFieldCode = "Container.Master", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField ContainerContainerHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = ContainerContainerHeaderScreenScreen0.Id,ScreenCode = ContainerContainerHeaderScreenScreen0.Code, ObjectFieldCode = "Container.Master", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField ContainerContainerHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ContainerContainerHeaderScreenScreen0.Id,ScreenCode = ContainerContainerHeaderScreenScreen0.Code, ObjectFieldCode = "Container.CarrierName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ContainerContainerHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = ContainerContainerHeaderScreenScreen0.Id,ScreenCode = ContainerContainerHeaderScreenScreen0.Code, ObjectFieldCode = "Container.MainCarriageCarrierNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ContainerContainerHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = ContainerContainerHeaderScreenScreen0.Id,ScreenCode = ContainerContainerHeaderScreenScreen0.Code, ObjectFieldCode = "Container.VesselName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          	
 		    ContainerObjectTable.HeaderScreenId = ContainerContainerHeaderScreenScreen0.Id;
 		    ContainerObjectTable.HeaderScreenCode = ContainerContainerHeaderScreenScreen0.Code;
 
 	   		  
+	      
+
+	         Screen ContainerGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Container.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = ContainerObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 7, IsReadOnly = false }, screensRepository, tenantScreens);
+      
+             ScreenField ContainerContainerGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ContainerGeneralTabScreenScreen1.Id,ScreenCode = ContainerGeneralTabScreenScreen1.Code, ObjectFieldCode = "Container.MainCarriageCarrierId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ContainerContainerGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ContainerGeneralTabScreenScreen1.Id,ScreenCode = ContainerGeneralTabScreenScreen1.Code, ObjectFieldCode = "Container.MainCarriageVesselId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ContainerContainerGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = ContainerGeneralTabScreenScreen1.Id,ScreenCode = ContainerGeneralTabScreenScreen1.Code, ObjectFieldCode = "Container.Master", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ContainerContainerGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = ContainerGeneralTabScreenScreen1.Id,ScreenCode = ContainerGeneralTabScreenScreen1.Code, ObjectFieldCode = "Container.MainCarriageETA", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ContainerContainerGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = ContainerGeneralTabScreenScreen1.Id,ScreenCode = ContainerGeneralTabScreenScreen1.Code, ObjectFieldCode = "Container.MainCarriageETD", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ContainerContainerGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = ContainerGeneralTabScreenScreen1.Id,ScreenCode = ContainerGeneralTabScreenScreen1.Code, ObjectFieldCode = "Container.MainCarriageATA", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ContainerContainerGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = ContainerGeneralTabScreenScreen1.Id,ScreenCode = ContainerGeneralTabScreenScreen1.Code, ObjectFieldCode = "Container.MainCarriageATD", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 
@@ -1287,20 +1309,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
 			   ObjectTable ContainerObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Container" && d.Tenant == 0).FirstOrDefault();  
                  
-			   TextCode ContainerCommunicationTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.TH.Communications", DefaultText = "Communication",LocalDefaultText = null, ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ContainerCommunicationFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Tab.Communication", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.SCCM", NameTextCodeDefaultText = "Communication", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContainerObjectTable);
+			   TextCode ContainerGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ContainerGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Tab.General", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.COGE", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContainerObjectTable);
  
                  
-			   TextCode ContainerEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.TH.Events", DefaultText = "Events",LocalDefaultText = "", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ContainerEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Tab.Events", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.CSEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContainerObjectTable);
+			   TextCode ContainerCommunicationTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.TH.Communications", DefaultText = "Communication",LocalDefaultText = null, ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ContainerCommunicationFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Tab.Communication", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.SCCM", NameTextCodeDefaultText = "Communication", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContainerObjectTable);
+ 
+                 
+			   TextCode ContainerEventsTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.TH.Events", DefaultText = "Events",LocalDefaultText = "", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ContainerEventsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Tab.Events", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.CIEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContainerObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SCCM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ContainerCommunicationFeature_TH0.Id,FeatureUniqeCode = ContainerCommunicationFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = ContainerObjectTable.Id, TabNameTextCodeId = ContainerCommunicationTextCode_TH0.Id, TabNameTextCodeCode = ContainerCommunicationTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "COGE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ContainerGeneralFeature_TH0.Id,FeatureUniqeCode = ContainerGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = ContainerObjectTable.Id, TabNameTextCodeId = ContainerGeneralTextCode_TH0.Id, TabNameTextCodeCode = ContainerGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CSEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ContainerEventsFeature_TH1.Id,FeatureUniqeCode = ContainerEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ContainerObjectTable.Id, TabNameTextCodeId = ContainerEventsTextCode_TH1.Id, TabNameTextCodeCode = ContainerEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SCCM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ContainerCommunicationFeature_TH1.Id,FeatureUniqeCode = ContainerCommunicationFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = ContainerObjectTable.Id, TabNameTextCodeId = ContainerCommunicationTextCode_TH1.Id, TabNameTextCodeCode = ContainerCommunicationTextCode_TH1.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CIEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ContainerEventsFeature_TH2.Id,FeatureUniqeCode = ContainerEventsFeature_TH2.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ContainerObjectTable.Id, TabNameTextCodeId = ContainerEventsTextCode_TH2.Id, TabNameTextCodeCode = ContainerEventsTextCode_TH2.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

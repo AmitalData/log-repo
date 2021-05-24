@@ -29,9 +29,9 @@
   SortingByObjectField="&quot;Id&quot;"
   SortingByDirection="&quot;Ascending&quot;"
   InActive="false"
-  IsSaveButtonVisible="false"
+  IsSaveButtonVisible="true"
   IsComposition="false"
-  EnableSecurity="false"
+  EnableSecurity="true"
   AllowCustomFields="false"
   HasDynamicHeader="false"
   ObjectTableTypeCode="&quot;BR&quot;"
@@ -46,7 +46,7 @@
   NoTS="false"
   NoDefaultFeatures="false"
   HasCompactSearch="false"
-  ApplyDefaultValues="false"
+  ApplyDefaultValues="true"
   HasMenuButtons="false"
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
@@ -1517,7 +1517,7 @@
     ObjectTableName="&quot;Container&quot;"
     QuerySection="&quot;Container&quot;"
     SystemLevel="true"
-    IsAddNewEntity="true"
+    IsAddNewEntity="false"
     IsPackagable="true"
     DefaultSortName="&quot;CreateDate&quot;"
     DefaultSortDirection="&quot;Desending&quot;"
@@ -1576,13 +1576,18 @@
     ObjectTableName="&quot;Container&quot;"
     IsReadOnly="true"
     IsHeaderScreen="true"
-    NumberOfColumns="3"
-    NumberOfRows="1">
+    NumberOfColumns="4"
+    NumberOfRows="2">
     <ScreenFields>
       <ScreenField
         Column="0"
         Row="0"
         ObjectFieldName="&quot;ContainerNumber&quot;"
+        ScreenName="ContainerHeaderScreen" />
+      <ScreenField
+        Column="0"
+        Row="1"
+        ObjectFieldName="&quot;Master&quot;"
         ScreenName="ContainerHeaderScreen" />
       <ScreenField
         Column="1"
@@ -1592,10 +1597,71 @@
       <ScreenField
         Column="2"
         Row="0"
-        ObjectFieldName="&quot;Master&quot;"
+        ObjectFieldName="&quot;MainCarriageCarrierNumber&quot;"
+        ScreenName="ContainerHeaderScreen" />
+      <ScreenField
+        Column="3"
+        Row="0"
+        ObjectFieldName="&quot;VesselName&quot;"
         ScreenName="ContainerHeaderScreen" />
     </ScreenFields>
   </Screen>
+  <Screen
+    Name="&quot;General Tab Screen&quot;"
+    ObjectTableName="&quot;Container&quot;"
+    IsReadOnly="false"
+    IsHeaderScreen="false"
+    Code="&quot;Container.GeneralTabScreen&quot;"
+    NumberOfColumns="1"
+    NumberOfRows="7">
+    <ScreenFields>
+      <ScreenField
+        Column="0"
+        Row="0"
+        ObjectFieldName="&quot;MainCarriageCarrierId&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="1"
+        ObjectFieldName="&quot;MainCarriageVesselId&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="2"
+        ObjectFieldName="&quot;Master&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="3"
+        ObjectFieldName="&quot;MainCarriageETA&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="4"
+        ObjectFieldName="&quot;MainCarriageETD&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="5"
+        ObjectFieldName="&quot;MainCarriageATA&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="6"
+        ObjectFieldName="&quot;MainCarriageATD&quot;"
+        ScreenName="General Tab Screen" />
+    </ScreenFields>
+  </Screen>
+  <Tab
+    TabName="&quot;General&quot;"
+    ObjectTableName="&quot;Container&quot;"
+    Code="&quot;COGE&quot;"
+    ControlPath="&quot;Simplog.Infrastructure.GeneralControls.GeneralTabControl&quot;"
+    TextCode="&quot;Container.TH.General&quot;"
+    IsPackagable="false"
+    IndexOrder="0"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
   <Tab
     TabName="&quot;Communication&quot;"
     ObjectTableName="&quot;Container&quot;"
@@ -1610,7 +1676,7 @@
     TabName="&quot;Events&quot;"
     TabLocalName="&quot;&quot;"
     ObjectTableName="&quot;Container&quot;"
-    Code="&quot;CSEV&quot;"
+    Code="&quot;CIEV&quot;"
     ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;"
     TextCode="&quot;Container.TH.Events&quot;"
     IsPackagable="true"

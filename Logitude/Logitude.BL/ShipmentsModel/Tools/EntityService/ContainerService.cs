@@ -7,6 +7,7 @@ using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
+using Logitude.BL.ShipmentsModel.Tools.TraceEvents;
 
 namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 {
@@ -14,29 +15,25 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
     {
         bool isNewEntity;
         private int tenant;  
-        private ContainerPM entityPm;
-        private IShipmentsContext objectContext;
+        private ContainerPM containerPm;
+        private IShipmentsContext shipmentsContext;
         private ContainerRepository entityRepository;
-        public Container containerPoco { get; set; }
-        public IShipmentsContext ObjectContext
-        {
-            get { return objectContext; }
-            set { objectContext = value; }
-        }
+        private Container containerPoco { get; set; }
 
-        public ContainerService(IShipmentsContext objectContext, int tenant)
+        public ContainerService(IShipmentsContext shipmentsContext, int tenant)
         {
             this.tenant = tenant;
-            this.ObjectContext = objectContext;
-            this.entityRepository = new ContainerRepository(objectContext);
+            this.shipmentsContext = shipmentsContext;
+            this.entityRepository = new ContainerRepository(shipmentsContext);
         }
 
         public void Create(ContainerPM entityPM)
         {
             this.isNewEntity = true;
-            this.entityPm = entityPM;
+            this.containerPm = entityPM;
             this.containerPoco = new Container();
-            this.entityPm.Id = IdCounter.GetNumber("Container", tenant).ToString();
+            this.containerPm.Id = IdCounter.GetNumber("Container", tenant).ToString();
+            ContainerTracing.Trace(entityPM, containerPoco, isNewEntity);
             ShipmentMapping.MapContainer(entityPM, containerPoco, isNewEntity);
             entityRepository.Add(containerPoco);
             entityRepository.SubmitChanges();
@@ -45,9 +42,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         public void Update(ContainerPM entityPM)
         {
             this.isNewEntity = false;
-            this.entityPm = entityPM;
+            this.containerPm = entityPM;
             this.containerPoco = entityRepository.GetSingleContainer(entityPM.Id,tenant);
-
+            ContainerTracing.Trace(entityPM, containerPoco, isNewEntity);
             ShipmentMapping.MapContainer(entityPM, containerPoco, isNewEntity);
             entityRepository.Update(containerPoco);
             entityRepository.SubmitChanges();

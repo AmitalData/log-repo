@@ -32,11 +32,13 @@ export class ContainersFUsComponent implements OnInit {
     }
 
     ngOnInit() {
-        this._entityResourceService.getEntityResourceByTableName("ContainerFollowUp", 0).subscribe((response: any) => {
-            this.IsResourcesReady = true;
-            this.LoadAllScreenData();
-            this.SetQueriesVisibility();
-            this.SetContainersQueriesVisibility();
+        this._entityResourceService.getEntityResourceByTableName("Container", 0).subscribe((response: any) => {
+            this._entityResourceService.getEntityResourceByTableName("ContainerFollowUp", 0).subscribe((response: any) => {
+                this.IsResourcesReady = true;
+                this.LoadAllScreenData();
+                this.SetQueriesVisibility();
+                this.SetContainersQueriesVisibility();
+            });
         });
     }
 
@@ -61,7 +63,7 @@ export class ContainersFUsComponent implements OnInit {
     private SetContainersQueriesVisibility() {
         this.IsContainersToggleFeatureUp = false;
         var isOceanInsightsContainersFeatureToggleUp: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0];
-        if (isOceanInsightsContainersFeatureToggleUp) {
+        if (isOceanInsightsContainersFeatureToggleUp && this.IsQueryVisible_AllContainers) {
             this.IsContainersToggleFeatureUp = true;
         }
     }
@@ -76,7 +78,7 @@ export class ContainersFUsComponent implements OnInit {
         this.IsQueryVisible_ArrivedNotDelivered = FeatureLocator.HasFeaturePermession("ContainerFollowUp", "ArrivedNotDelivered") ? true : false;
         this.IsQueryVisible_DeliveredNotReturned = FeatureLocator.HasFeaturePermession("ContainerFollowUp", "DeliveredNotReturned") ? true : false;
         this.IsQueryVisible_MyViewsGroup = FeatureLocator.HasFeaturePermession("General", "BUILDQUERIES") ? true : false;
-        this.IsQueryVisible_AllContainers = FeatureLocator.HasFeaturePermession("Container", "AllContainers") ? true : false;
+        this.IsQueryVisible_AllContainers = FeatureLocator.HasFeaturePermession("Container", "Container.Q.AllContainers") ? true : false;
     }
 
     public InTransit: string;
@@ -116,7 +118,7 @@ export class ContainersFUsComponent implements OnInit {
                     ServiceLocator.SendTotangoUserActivity("Container F/U", "In Transit View");
                     break;
                 }
-                case "AllContainers": {
+                case "All Containers": {
                     ServiceLocator.SendTotangoUserActivity("Container", "All Containers");
                     objectTableName = "Container";
                     break;
