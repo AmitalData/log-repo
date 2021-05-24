@@ -50,9 +50,9 @@ export class ProductItemPM {
     public set SKU(newValue: string) { if (this.sKU != newValue) { this.sKU = newValue; this.MarkAsDirty("SKU"); } }
        
 	 
-    private remarks: string;
-    public get Remarks() { return this.remarks; }
-    public set Remarks(newValue: string) { if (this.remarks != newValue) { this.remarks = newValue; this.MarkAsDirty("Remarks"); } }
+    private name: string;
+    public get Name() { return this.name; }
+    public set Name(newValue: string) { if (this.name != newValue) { this.name = newValue; this.MarkAsDirty("Name"); } }
        
 	 
     private inActive: boolean;
@@ -68,6 +68,11 @@ export class ProductItemPM {
     private brand: string;
     public get Brand() { return this.brand; }
     public set Brand(newValue: string) { if (this.brand != newValue) { this.brand = newValue; this.MarkAsDirty("Brand"); } }
+       
+	 
+    private searchFields: string;
+    public get SearchFields() { return this.searchFields; }
+    public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
        
 	 
     private changeSetOp: string;
@@ -111,24 +116,9 @@ export class ProductItemPM {
         }
     }
 	    //public HTSCodes: Array<HTSCodePMPM>= [];
-     private hTSCodeByCountry: string;
-    public get HTSCodeByCountry() { return this.hTSCodeByCountry; }
-    public set HTSCodeByCountry(newValue: string) { if (this.hTSCodeByCountry != newValue) { this.hTSCodeByCountry = newValue; this.MarkAsDirty("HTSCodeByCountry"); } }
-       
-	 
-    private name: string;
-    public get Name() { return this.name; }
-    public set Name(newValue: string) { if (this.name != newValue) { this.name = newValue; this.MarkAsDirty("Name"); } }
-       
-	 
-
+ 
     public HTSCodeChangeSet: Array<HTSCodePM>= [];
-		     private searchFields: string;
-    public get SearchFields() { return this.searchFields; }
-    public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
-       
-	 
-
+		 
     public OldEntityPM: ProductItemPM;
 	    
 	private entityParentPM: any;

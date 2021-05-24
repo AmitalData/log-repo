@@ -1392,7 +1392,6 @@ namespace WebFreight.Web.ReportsWebServices
                             productItemLine.Name = productItem.Name;
                             productItemLine.Brand = productItem.Brand;
                             productItemLine.InActive = productItem.InActive;
-                            productItemLine.Remarks = productItem.Remarks;
                             productItemLine.Description = productItem.Description;
                             productItemLine.Tenant = productItem.Tenant;
                             productItemLine.SKU = productItem.SKU;

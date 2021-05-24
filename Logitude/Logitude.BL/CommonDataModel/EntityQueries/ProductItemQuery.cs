@@ -42,7 +42,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     Tenant = entityPoco.Tenant,
                     CustomerId = entityPoco.CustomerId,
                     SKU = entityPoco.SKU,
-                    Remarks = entityPoco.Remarks,
                     InActive = entityPoco.InActive,
                     Description = entityPoco.Description,
                     Name = entityPoco.Name,
@@ -66,7 +65,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    Tenant = entity.Tenant,
                                                    CustomerId = entity.CustomerId,
                                                    SKU = entity.SKU,
-                                                   Remarks = entity.Remarks,
+                                                   Brand = entity.Brand,
                                                    InActive = entity.InActive,
                                                    Description = entity.Description,
                                                    Name = entity.Name,
@@ -85,7 +84,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     Tenant = a.Tenant,
                                                     CustomerId = a.CustomerId,
                                                     SKU = a.SKU,
-                                                    Remarks = a.Remarks,
+                                                    Brand = a.Brand,
                                                     InActive = a.InActive,
                                                     Description = a.Description,
                                                     Name = a.Name,
@@ -108,6 +107,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     ApprovedByCustomer = a.ApprovedByCustomer,
                                                     CountryEnglishName = country!=null ? country.EnglishName :"",
                                                     InActive = a.InActive,
+                                                    LineNumber = a.LineNumber,
                                                 }).ToList();
 
             
@@ -115,9 +115,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     {
                         productItem.HTSCodes = hTSCodes;
                     }
-                }
-
-            
+                }            
             }
 
             return productItems;

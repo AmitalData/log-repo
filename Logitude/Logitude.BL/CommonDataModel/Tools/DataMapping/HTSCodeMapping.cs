@@ -23,6 +23,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.Code = entityPM.Code;
             poco.ApprovedByCustomer = entityPM.ApprovedByCustomer;
             poco.InActive = entityPM.InActive;
+            poco.LineNumber = entityPM.LineNumber;
             BuildSearchField(entityPM, poco);
         }
 

@@ -12,11 +12,10 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         [ForeignKey("CustomerId")]
         public virtual Customer Customer { get; set; }
         public string SKU { get; set; }
-        public string Remarks { get; set; }
-        public bool InActive { get; set; }
-        public string Description { get; set; }
         public string Name { get; set; }
         public string Brand { get; set; }
+        public string Description { get; set; }
         public string SearchFields { get; set; }
+        public bool InActive { get; set; }        
     }
 }

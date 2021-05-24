@@ -49,6 +49,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     CountryEnglishName = destinationCountry != null?destinationCountry.EnglishName:"",
                     ApprovedByCustomer = entityPoco.ApprovedByCustomer,
                     InActive = entityPoco.InActive,
+                    LineNumber = entityPoco.LineNumber,
                 };
             }
 
@@ -67,6 +68,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    DestinationCountryId = entity.DestinationCountryId,
                                                    ApprovedByCustomer = entity.ApprovedByCustomer,
                                                    InActive = entity.InActive,
+                                                   LineNumber = entity.LineNumber,
                                                };
             return result;
         }
@@ -85,6 +87,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             CountryEnglishName = entity.Country == null ? null : entity.Country.EnglishName,
                                             ApprovedByCustomer = entity.ApprovedByCustomer,
                                             InActive = entity.InActive,
+                                            LineNumber = entity.LineNumber,
                                         }).ToList();
 
             return hTSCodes;

@@ -21,7 +21,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
 
             poco.CustomerId = entityPM.CustomerId;
             poco.SKU = entityPM.SKU;
-            poco.Remarks = entityPM.Remarks;
             poco.InActive = entityPM.InActive;
             poco.Description = entityPM.Description;
             poco.Name = entityPM.Name;

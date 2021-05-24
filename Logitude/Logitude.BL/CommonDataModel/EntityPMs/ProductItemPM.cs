@@ -14,10 +14,11 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public int Tenant { get; set; }
         public string CustomerId { get; set; }
         public string SKU { get; set; }
-        public string Remarks { get; set; }
+        public string Name { get; set; }
         public bool InActive { get; set; }
         public string Description { get; set; }
         public string Brand { get; set; }
+        public string SearchFields { get; set; }
         public ChangeSetOperation ChangeSetOp { get; set; }
 
         private List<HTSCodePM> HTScodes;
@@ -41,11 +42,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
             {
                 HTScodes = value;
             }
-        }
-
-        public string HTSCodeByCountry { get; set; }        
-        public string Name { get; set; }
-        public List<HTSCodePM> HTSCodeChangeSet { get; set; }
-        public string SearchFields { get; set; }
+        }                    
+        public List<HTSCodePM> HTSCodeChangeSet { get; set; }        
     }
 }

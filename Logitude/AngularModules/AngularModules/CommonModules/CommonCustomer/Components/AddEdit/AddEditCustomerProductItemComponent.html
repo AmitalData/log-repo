@@ -9,93 +9,77 @@
         <td>
             <table>
                 <tr>
-
-                    <td style="width:250px;">
+                    <td style="width:300px;">
                         <table>
-                            <tr class="FormFieldRow">
-                                <!-- Name -->
-                                <td style="width:80px;">
-                                    <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                </td>
-                                <td style="width:150px;">
-                                    <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-                                </td>
-
-                            </tr>
-
                             <!-- SKU -->
                             <tr class="FormFieldRow">
-
                                 <td style="width:80px;">
                                     <LogLabel [ObjectFieldName]="'SKU'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
-                                <td style="width:150px;">
-                                    <LogTextBox [ObjectFieldName]="'SKU'" [Text]="SKU" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'SKU'" [Text]="SKU" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                 </td>
+                            </tr>
 
+                            <!-- Name -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                            </tr>
+
+                            <!-- Brand -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'Brand'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'Brand'" [Text]="Brand" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
                             </tr>
 
                             <!-- InActive -->
                             <tr class="FormFieldRow">
-
-                                <td style="width:80px;">
+                                <td>
                                     <LogLabel [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td>
                                     <LogCheckBox [ObjectFieldName]="'InActive'" [Checked]="InActive" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                 </td>
-
                             </tr>
 
                             <tr>
-                                <td colspan="2">
+                                <td>
                                     <div></div>
                                 </td>
                             </tr>
-
                         </table>
                     </td>
+
                     <td style="width:10px;">
                         <div>
-
                         </div>
                     </td>
-                    <td style="width:400px;">
+
+                    <td>
                         <table>
                             <!-- Description -->
                             <tr class="FormFieldRow" style="height:50px;">
                                 <td style="width:80px;vertical-align:top">
                                     <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
-                                <td style="height:50px;width:200px;">
+                                <td style="height:50px;">
                                     <div class="FillParent">
                                         <LogTextBox [ObjectFieldName]="'Description'" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
                                     </div>
                                 </td>
                             </tr>
 
-                            <tr style="height:10px;">
-                                <td colspan="2">
-                                    <div></div>
-                                </td>
-                            </tr>
-
-                            <!-- Remarks -->
-                            <tr class="FormFieldRow" style="height:50px;">
-                                <td style="width:80px;vertical-align:top">
-                                    <LogLabel [ObjectFieldName]="'Remarks'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                </td>
-                                <td style="height:50px;width:200px;">
-                                    <div class="FillParent">
-                                        <LogTextBox [ObjectFieldName]="'Remarks'" [Text]="Remarks" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
-                                    </div>
-                                </td>
-
-                            </tr>
-
-
                             <tr>
-                                <td colspan="2">
+                                <td>
                                     <div></div>
                                 </td>
                             </tr>
@@ -122,10 +106,10 @@
                             <table>
                                 <tr>
                                     <td>
-                                        <label>  HTS Codes</label>
+                                        <label>  HTS Codes ({{MainAddressCountryName}})</label>
                                     </td>
                                     <td style="width:25px;">
-                                        <IconButton [Name]="'Add'" (click)="DataContext.AddHTSCode()"></IconButton>
+                                        <IconButton [Name]="'Add'" (click)="AddHTSCode()"></IconButton>
                                     </td>
                                 </tr>
                             </table>
@@ -137,32 +121,12 @@
                             <div class="MediaFill">
                                 <div class="SimpleGridView">
                                     <div class="MediaFill" style="overflow-x: hidden;">
-                                        <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="DataContext.HTSCodes" [Disabled]="!IsEditingEnabled" (RowEnded)="DataContext.OnRowEnded($event)">
+                                        <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="DataContext.HTSCodes" [Disabled]="!IsEditingEnabled" (RowEnded)="OnRowEnded($event)">
                                             <!-- Line -->
                                             <log-column [header]="'Line'" [width]="'80'" [Alignment]="'left'">
                                                 <ng-template let-item>
                                                     <log-cell-template #logcelltemplate>
                                                         <span>{{item.LineNumber}}</span>
-                                                    </log-cell-template>
-                                                </ng-template>
-                                            </log-column>
-
-                                            <!-- HTSCode -->
-                                            <log-column [header]="'HTS Code'" [width]="'150'" [Alignment]="'left'">
-                                                <ng-template let-item>
-                                                    <log-cell-template #logcelltemplate>
-                                                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                                                            <span>{{item.Code}}</span>
-                                                        </div>
-                                                        <div *ngIf="logcelltemplate.IsEditMode">
-                                                            <LogTextBox [FocusOnMe]="'true'"
-                                                                        [ObjectFieldName]="'Code'"
-                                                                        [DataContext]="item"
-                                                                        [Text]="item.Code"
-                                                                        [ObjectTableName]="'HTSCode'"
-                                                                        [HideColumns]="true">
-                                                            </LogTextBox>
-                                                        </div>
                                                     </log-cell-template>
                                                 </ng-template>
                                             </log-column>
@@ -188,13 +152,46 @@
                                                 </ng-template>
                                             </log-column>
 
+                                            <!-- HTSCode -->
+                                            <log-column [header]="'HTS Code'" [width]="'150'" [Alignment]="'left'">
+                                                <ng-template let-item>
+                                                    <log-cell-template #logcelltemplate>
+                                                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                            <span>{{item.Code}}</span>
+                                                        </div>
+                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                            <LogTextBox [FocusOnMe]="'true'"
+                                                                        [ObjectFieldName]="'Code'"
+                                                                        [DataContext]="item"
+                                                                        [Text]="item.Code"
+                                                                        [ObjectTableName]="'HTSCode'"
+                                                                        [HideColumns]="true">
+                                                            </LogTextBox>
+                                                        </div>
+                                                    </log-cell-template>
+                                                </ng-template>
+                                            </log-column>
+
+                                            <!-- ApprovedByCustomer -->
+                                            <log-column [header]="'Approved'" [width]="'80'" [Alignment]="'left'">
+                                                <ng-template let-item>
+                                                    <log-cell-template #logcelltemplate>
+                                                        <div style="height: 100%; width: 100%; position:relative;">
+                                                            <div class="CenterCenter" style="width: 16px;">
+                                                                <CheckBox [IsEnabled]="item.IsCheckBoxesEnabled" (Checked)="item.ApprovedByCustomer=$event" [IsChecked]="item.ApprovedByCustomer"></CheckBox>
+                                                            </div>
+                                                        </div>
+                                                    </log-cell-template>
+                                                </ng-template>
+                                            </log-column>
+
                                             <!-- InActive -->
                                             <log-column [header]="'Inactive'" [width]="'80'" [Alignment]="'left'">
                                                 <ng-template let-item>
                                                     <log-cell-template #logcelltemplate>
                                                         <div style="height: 100%; width: 100%; position:relative;">
                                                             <div class="CenterCenter" style="width: 16px;">
-                                                                <CheckBox (Checked)="item.InActive=$event" [IsChecked]="item.InActive"></CheckBox>
+                                                                <CheckBox [IsEnabled]="item.IsCheckBoxesEnabled" (Checked)="item.InActive=$event" [IsChecked]="item.InActive"></CheckBox>
                                                             </div>
                                                         </div>
                                                     </log-cell-template>
@@ -215,11 +212,6 @@
         </td>
     </tr>
 
-    <tr style="height:20px;">
-        <td>
-            <div></div>
-        </td>
-    </tr>
     <!-- Buttons -->
     <tr style="height: 32px;">
         <td style="vertical-align: bottom">

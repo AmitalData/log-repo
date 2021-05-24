@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
-import { AppTool } from '../../../../Infrastructure/Tools';
+import { AppTool, ArrayTool } from '../../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -23,11 +23,14 @@ export class CustomerProductItemsTabComponent extends BaseComponent implements O
     public ProductItems: ObservableCollection;    
     public ValidationErrorsList: string[];
     public IsEditingEnabled: boolean = true;
-
+    private CurrentSession = SessionLocator.SelectedSession;
+    public MainAddressCountryName: string;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
-        this.EntityPM = this.entityArgs.EntityPM;        
+        this.EntityPM = this.entityArgs.EntityPM;
+        this.MainAddressCountryName = this.EntityPM.CountryName;
         this.ProductItems = new ObservableCollection([]);
+        this.Listen();
     }
 
     ngOnInit() {
@@ -39,12 +42,19 @@ export class CustomerProductItemsTabComponent extends BaseComponent implements O
         });
     }
 
-    private SessionEvent: any = null;
-    private SaveCompletedEvent: any = null;
+    private Listen() {
+        if (this.entityArgs.EditComponent) {
+            this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                if (isLoadSuccess) {
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.MainAddressCountryName = this.EntityPM.CountryName;
+                }
+            });
+        }
+    }
+
     private LoadCompletedEvent: any = null;
     ngOnDestroy() {
-        AppTool.KillEventEmitter(this.SessionEvent);
-        AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
 
@@ -90,14 +100,17 @@ export class CustomerProductItem extends BaseComponent {
     public IsNewEntity: boolean = false;
     public CustomerPM: CustomerPM;
     public HTSCodes: ObservableCollection;
+    public maxHTSCodesLineNumber: number = 0;
     constructor(entity: ProductItemPM, public FatherComponent: CustomerProductItemsTabComponent, isNew: boolean) {
         super();
         this.EntityPM = entity;
         this.IsNewEntity = isNew;
         this.CustomerPM = this.FatherComponent.EntityPM;
         this.HTSCodes = new ObservableCollection([]);
+        
         this.SetUIProperties();
-        this.BuildHTSCodes();
+        this.BuildHTSCodes();        
+        this.maxHTSCodesLineNumber = ArrayTool.Max(this.HTSCodes.Collection, "LineNumber");
     }
 
     BuildHTSCodes() {
@@ -132,6 +145,7 @@ export class CustomerProductItem extends BaseComponent {
                 htsCode.DestinationCountryId = item.DestinationCountryId;
                 htsCode.InActive = item.InActive;
                 htsCode.ItemId = item.ItemId;
+                htsCode.LineNumber = item.LineNumber;
                 this.savedItems.push(htsCode);
             });
         }
@@ -141,7 +155,7 @@ export class CustomerProductItem extends BaseComponent {
         if (this.savedItems != null) {
             var items: HTSCodePM[] = this.EntityPM.HTSCodes;
             items.forEach(item => {
-                var savedItem: HTSCodePM = this.savedItems.filter(d => d.Code == item.Code)[0];
+                var savedItem: HTSCodePM = this.savedItems.filter(d => d.LineNumber == item.LineNumber)[0];
                 if (savedItem == null) {
                     if (this.EntityPM.HTSCodes.indexOf(item) != -1) {
                         this.EntityPM.RemoveHTSCodePM(item);
@@ -158,7 +172,7 @@ export class CustomerProductItem extends BaseComponent {
             });
 
             this.savedItems.forEach(item => {
-                var list = this.EntityPM.HTSCodes.filter(d => d.Code == item.Code);
+                var list = this.EntityPM.HTSCodes.filter(d => d.LineNumber == item.LineNumber);
                 if (list == null) {
                     this.EntityPM.HTSCodes.push(item);
                 }
@@ -206,53 +220,11 @@ export class CustomerProductItem extends BaseComponent {
         }
     }
 
-    get Remarks() { return this.EntityPM.Remarks }
-    set Remarks(value: string) {
-        if (this.EntityPM.Remarks != value) {
-            this.EntityPM.Remarks = value;
+    get Brand() { return this.EntityPM.Brand }
+    set Brand(value: string) {
+        if (this.EntityPM.Brand != value) {
+            this.EntityPM.Brand = value;
         }
-    }
-
-    AddHTSCode() {
-        //this.ValidationErrorsList = this.ValidiateLastHTSCode();
-
-        //if (this.ValidationErrorsList.length == 0) {
-            var hTSCodeItem: HTSCodePM = new HTSCodePM(null);
-            hTSCodeItem.Tenant = SessionLocator.Tenant;
-            hTSCodeItem.ItemId = this.EntityPM.Id;
-            this.HTSCodes.Insert(new CustomerHTSCode(hTSCodeItem, this, true));
-        //}
-    }
-
-    OnRowEnded($event) {
-        var errors = [];
-        Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
-
-        if (($event) == this.HTSCodes.Length) {
-            this.AddHTSCode();
-        }
-    }
-
-    GetIndexOfHTSCode(hTSCode: CustomerHTSCode) {
-        return this.HTSCodes.GetIndex(hTSCode) + 1;
-    }
-
-    ValidiateLastHTSCode() {
-        var errors: string[] = [];
-        if (this.HTSCodes.Length != 0) {
-            var lastHTSCode = this.HTSCodes.Collection[this.HTSCodes.Length - 1];
-            if (lastHTSCode.EntityPM.Code == null && lastHTSCode.EntityPM.DestinationCountryId == null) {
-                errors.push("Can't Add New HTSCode Line While HTSCode Code And Country are required");
-            }
-            else if (lastHTSCode.EntityPM.DestinationCountryId == null) {
-                errors.push("Can't Add New HTSCode Line While HTSCode Country is required");
-            }
-            else if (lastHTSCode.EntityPM.Code == null) {
-                errors.push("Can't Add New HTSCode Line While HTSCode Code is required");
-            }
-        }
-
-        return errors;
     }
 }
 
@@ -272,7 +244,16 @@ export class CustomerHTSCode extends BaseComponent {
     }
 
     get LineNumber() {
-        return this.FatherComponent.GetIndexOfHTSCode(this);
+        var myResult = null;
+        if (this.EntityPM != null) {
+            myResult = this.EntityPM.LineNumber;
+        }
+        return myResult;
+    }
+    set LineNumber(newValue: number) {
+        if (this.EntityPM.LineNumber != newValue) {
+            this.EntityPM.LineNumber = newValue;
+        }
     }
 
     get Id() {
@@ -385,4 +366,13 @@ export class CustomerHTSCode extends BaseComponent {
         }
     }
 
+    get IsCheckBoxesEnabled() {
+        var isEnabled = false;
+
+        if (!AppTool.IsNullOrEmpty(this.Code) || !AppTool.IsNullOrEmpty(this.DestinationCountryId)) {
+            isEnabled = true;
+        }
+
+        return isEnabled;
+    }
 }

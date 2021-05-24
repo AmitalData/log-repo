@@ -41,7 +41,7 @@ export class ProductItemsTabComponent extends BaseComponent implements OnDestroy
         this.TransportModeId = this.EntityPM.TransportModeId;
         this.IsLCLEntity = AppTool.IsLCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
         this.IsFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
-        this.CustomerId = this.EntityPM.CustomerId;
+        this.CustomerId = this.EntityPM.ConsigneeId;
 
         this.PartnersDomainService = new PartnersDomainService();
         this.ProductItems = new ObservableCollection([]);
@@ -56,21 +56,21 @@ export class ProductItemsTabComponent extends BaseComponent implements OnDestroy
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    this.CustomerId = this.EntityPM.CustomerId;
+                    this.CustomerId = this.EntityPM.ConsigneeId;
                 }                
             });
 
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    this.CustomerId = this.EntityPM.CustomerId;
+                    this.CustomerId = this.EntityPM.ConsigneeId;
                 }
             });
         }
 
         this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
             if (s == "ShipmentPartnersChanged") {
-                this.CustomerId = this.EntityPM.CustomerId;
+                this.CustomerId = this.EntityPM.ConsigneeId;
                 this.BuildProductItems();
             }
         });
