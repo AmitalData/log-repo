@@ -938,6 +938,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 isCollectActive = false;
                             }
                         }
+
+                        def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_COL_LOW_DIF", "NON", "NON", false, true);
+                        string defValue = def.DEFDATA;
+                        decimal defaultAmount = 0;
+                        var boolvar = (decimal.TryParse(defValue, out defaultAmount));
+                        decimal totalTax = _MyDeclarationPM.TotalTax > 0 ? _MyDeclarationPM.TotalTax.Value : 0;
+                        decimal prevTotalTax = prev_TotalTax > 0 ? prev_TotalTax.Value : 0;
+                        if (defaultAmount > 0 && defaultAmount >= Math.Abs(totalTax - prevTotalTax))
+                        {
+                            isCollectActive = false;
+                        }
+
                         if (isCollectActive && _MyDeclarationPM.TotalTax > 0 && _MyDeclarationPM.TotalTax != prev_TotalTax)
                         {
                             if ((declarationPendingPM_900 != null && declarationPendingPM_900.Status != "S") )
