@@ -5786,6 +5786,7 @@
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.AccountingInformationIdentifier.cs" />
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.AWBAdditionalHandlingInfo.cs" />
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.AWBMessagingStock.cs" />
+    <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.Container.cs" />
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.ContainerFollowUp.cs" />
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.CustomsTransmissionsStatus.cs" />
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.INTTRADocumentType.cs" />
