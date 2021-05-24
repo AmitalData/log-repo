@@ -83,7 +83,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             var JournalLineUpdateServicePriv = new JournalLineUpdateServicePriv
            //JournalLineUpdateService journalLineUpdateService = new JournalLineUpdateService
            (MainContext, new Dictionary<string, IContext>(), Tenant);
-            UpdatePrintNotesRelatedToJournal(entityPM);
+            UpdateLedgerTransactionWithNewValuesFromJournalLines(entityPM);
             bool supperssSaveOnUpdateMultiDueIsFaster = true;
             JournalLineUpdateServicePriv.UpdateMulti(entityPM.JournalLines, entityPM.DeletedJournalLines, entityPM,
 
@@ -140,7 +140,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
         }
 
-        private void UpdatePrintNotesRelatedToJournal(JournalPM entityPM)
+        private void UpdateLedgerTransactionWithNewValuesFromJournalLines(JournalPM entityPM)
         {
             foreach(JournalLinePM JournalLine in entityPM.JournalLines) {
                 if (JournalLine != null)
@@ -149,23 +149,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                     if (oldJournalLine != null)
                     {
-                        List<LedgerTransactionPM> allTransactionsRelatedToJournal = GetAllTransactionsRelatedToJournal(entityPM, JournalLine);
-                        var ledgerTransactionUpdateService = new LedgerTransactionUpdateService(this.MainContext as IAccountingContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-                        var isOneValueOfJournalLineChanged = JournalLine.Notes != oldJournalLine.Notes || JournalLine.Reference1 != oldJournalLine.Reference1 || JournalLine.Reference2 != oldJournalLine.Reference2 || JournalLine.Reference3 != oldJournalLine.Reference3;
-                        if (isOneValueOfJournalLineChanged)
-                        {
-                            foreach (LedgerTransactionPM transaction in allTransactionsRelatedToJournal)
-                            {
-                                transaction.Notes = JournalLine.Notes;
-                                transaction.Reference1 = JournalLine.Reference1;
-                                transaction.Reference2 = JournalLine.Reference2;
-                                transaction.Reference3 = JournalLine.Reference3;
-
-                                transaction.ChangeSetOp = ChangeSetOperation.Update;
-                                ledgerTransactionUpdateService.Update(transaction, false, null);
-                            }
-
-                        }
+                        CheckIfJournalLinesChangedAndUpdateRelatedLedgerTransaction(entityPM, JournalLine, oldJournalLine);
                     }
                 }
             }
@@ -178,6 +162,17 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             return journalLine;
         }
 
+        private void CheckIfJournalLinesChangedAndUpdateRelatedLedgerTransaction(JournalPM entityPM, JournalLinePM JournalLine, JournalLinePM oldJournalLine)
+        {
+            List<LedgerTransactionPM> allTransactionsRelatedToJournal = GetAllTransactionsRelatedToJournal(entityPM, JournalLine);
+            var ledgerTransactionUpdateService = new LedgerTransactionUpdateService(this.MainContext as IAccountingContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+            var isOneValueOfJournalLineChanged = JournalLine.Notes != oldJournalLine.Notes || JournalLine.Reference1 != oldJournalLine.Reference1 || JournalLine.Reference2 != oldJournalLine.Reference2 || JournalLine.Reference3 != oldJournalLine.Reference3;
+            if (isOneValueOfJournalLineChanged)
+            {
+                UpdateAllLedgerTransactionsRelatedToJournalLine(JournalLine, allTransactionsRelatedToJournal, ledgerTransactionUpdateService);
+            }
+        }
+
         private static List<LedgerTransactionPM> GetAllTransactionsRelatedToJournal(JournalPM entityPM, JournalLinePM JournalLine)
         {
             LedgerTransactionQueryService ledgerTransactionQueryService = new LedgerTransactionQueryService(entityPM.Tenant);
@@ -185,6 +180,22 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             return allTransactionsRelatedToJournal;
         }
 
+
+        private static void UpdateAllLedgerTransactionsRelatedToJournalLine(JournalLinePM JournalLine, List<LedgerTransactionPM> allTransactionsRelatedToJournal, LedgerTransactionUpdateService ledgerTransactionUpdateService)
+        {
+            foreach (LedgerTransactionPM transaction in allTransactionsRelatedToJournal)
+            {
+                transaction.Notes = JournalLine.Notes;
+                transaction.Reference1 = JournalLine.Reference1;
+                transaction.Reference2 = JournalLine.Reference2;
+                transaction.Reference3 = JournalLine.Reference3;
+
+                transaction.ChangeSetOp = ChangeSetOperation.Update;
+                ledgerTransactionUpdateService.Update(transaction, false, null);
+            }
+        }
+
+       
         protected override void OnUpdating(JournalPM entityPM, Journal entityPOCO)
         {
             var journalUpdate = GetJournalOnUpdtatingObject();
