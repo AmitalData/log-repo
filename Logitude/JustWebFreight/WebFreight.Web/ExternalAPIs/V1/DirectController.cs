@@ -319,7 +319,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             {
                                 entityPM.ShipmentPackages.Clear();
                             }
-                            ValidateInlandDomesticShipment(entityPM);
+                            entityPM = this.ValidateInlandDomesticShipment(entityPM);
                         }
                         ComputeHelper.ComputeTotals(entityPM);
 
@@ -703,19 +703,31 @@ namespace WebFreight.Web.ExternalAPIs.V1
             return isDomestic && isInland;
         }
 
-        private void ValidateInlandDomesticShipment(ShipmentPM entityPM)
+        private ShipmentPM ValidateInlandDomesticShipment(ShipmentPM entityPM)
         {
+
+            entityPM = SetInlandDomesticShipmentPartners(entityPM);
             ValidateInlandDomesticShipmentPartnersAddesses(entityPM);
+            ValidateInlandDomesticMainCarriageDates(entityPM);
+
+            return entityPM;
+        }
+        private ShipmentPM SetInlandDomesticShipmentPartners(ShipmentPM entityPM)
+        {
+
             if (entityPM.MainCarriageToPartnerId == null)
             {
                 entityPM.MainCarriageToPartnerId = entityPM.ConsigneeId;
             }
-
-            if(entityPM.MainCarriageFromPartnerId == null)
+            if (entityPM.MainCarriageFromPartnerId == null)
             {
                 entityPM.MainCarriageFromPartnerId = entityPM.ShipperId;
             }
+            return entityPM;
 
+        }
+        private void ValidateInlandDomesticMainCarriageDates(ShipmentPM entityPM)
+        {
             if (!this.IsRoutingLegDatesValid(entityPM.MainCarriageETD, entityPM.MainCarriageETA))
             {
                 throw new ApplicationException("Main-Carriage expected departure must be less than Main-Carriage expected arrival");
@@ -726,8 +738,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 throw new ApplicationException("Main-Carriage actual departure must be less than Main-Carriage actual arrival");
             }
 
-            
         }
+
         private void ValidateInlandDomesticShipmentPartnersAddesses(ShipmentPM entityPM)
         {
             List<DomesticCountry> iDomesticCountries = new List<DomesticCountry>();
@@ -822,7 +834,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             this.ValidateAndSetCustomerData(directPM, addressRepository, authToken.Tenant);
                             if (IsInlandDomesticShipment(directPM))
                             {
-                                this.ValidateInlandDomesticShipment(directPM);
+                                directPM = this.ValidateInlandDomesticShipment(directPM);
                                 if (directPM.ShipmentPackages != null)
                                 {
                                     directPM.ShipmentPackages.Clear();
