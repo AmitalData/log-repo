@@ -38,7 +38,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;הגדרות הנהלת חשבונות&quot;"
   DefaultText="&quot;Full Accounting Settings&quot;"
-  Code="&quot;06e0&quot;"
+  Code="&quot;a2d0&quot;"
   Name="&quot;FullAccountingSetting Query Group&quot;"
   GenerateDomainService="true"
   ClientModuleName="&quot;Accounting&quot;"
@@ -3863,9 +3863,10 @@
       LocalDefaultText="&quot;ניתן להזין בין 1 ל 9 חודשים לגיול&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-       <TextCode
+    <TextCode
       Code="&quot;FullAccountingSetting.O.AgingDefinition&quot;"
       DefaultText="&quot;Aging Definition&quot;"
+      LocalDefaultText="&quot;הגדרות גיול&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

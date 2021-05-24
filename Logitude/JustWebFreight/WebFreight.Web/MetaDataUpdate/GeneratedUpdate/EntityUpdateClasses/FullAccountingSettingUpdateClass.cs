@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class FullAccountingSettingUpdateClass
    {  		
-		public const string HashString = "7b914921fe66b066c2a3f0f358dca990";
+		public const string HashString = "2768edb85560a00110a902f56cbd294b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -121,7 +121,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "הגדרות הנהלת חשבונות",
 			      				    DefaultText =  "Full Accounting Settings",
-			      				    Code =  "06e0",
+			      				    Code =  "a2d0",
 			      				    Name =  "FullAccountingSetting Query Group",
 			      				    GenerateDomainService =  true,
 			      				    ClientModuleName =  "Accounting",
@@ -3179,7 +3179,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode FullAccountingSettingTextCode_FullAccountingSettingONoOfAgingMonthsBW1n9 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "FullAccountingSetting.O.NoOfAgingMonthsBW1n9", DefaultText = "You can enter aging values from 1 to 9 only",LocalDefaultText = @"ניתן להזין בין 1 ל 9 חודשים לגיול", ObjectTableId = FullAccountingSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode FullAccountingSettingTextCode_FullAccountingSettingOAgingDefinition = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "FullAccountingSetting.O.AgingDefinition", DefaultText = "Aging Definition",LocalDefaultText = null, ObjectTableId = FullAccountingSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode FullAccountingSettingTextCode_FullAccountingSettingOAgingDefinition = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "FullAccountingSetting.O.AgingDefinition", DefaultText = "Aging Definition",LocalDefaultText = @"הגדרות גיול", ObjectTableId = FullAccountingSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
