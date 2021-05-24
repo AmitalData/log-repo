@@ -503,5 +503,6 @@ namespace WebFreight.Web.DataProviders
         public string FirstPickupLoadNumber { get; set; }
         public string LastDeliveryLoadNumber { get; set; }
         public string MainCarriageLoadNumber { get; set; }
+        public string SCI { get; set; }
     }
 }
