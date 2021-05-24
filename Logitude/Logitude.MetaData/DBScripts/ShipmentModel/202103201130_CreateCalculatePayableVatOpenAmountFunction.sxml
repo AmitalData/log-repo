@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Shipment" Pre="true">
-  <Sql Version="7">
+  <Sql Version="8">
     <![CDATA[
     
     IF EXISTS (SELECT *
@@ -46,7 +46,7 @@
 					FETCH NEXT FROM VatGroups_CURSOR INTO @SingleVATTypeId
 					WHILE @@FETCH_STATUS = 0
 					BEGIN 
-						set @VatPercentage = (select top 1 Percentage from VatTypePercentages where VatTypeId = @SingleVATTypeId AND Tenant = @Tenant and FromDate <= GETDATE() order by FromDate desc)
+						set @VatPercentage = (select top 1 Percentage from VatTypePercentages where VatTypeId = @SingleVATTypeId AND Tenant = @Tenant and FromDate <= @CreateDate order by FromDate desc)
 						if(@VatPercentage is not null)
 							set @Result =@Result + (@amount * @VatPercentage / 100);
 

@@ -541,6 +541,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     GetForeignFields();
                     BuildActivityLog();
                     BuildImportersQueue();
+                    UpdatePayablesLinesVatAmounts();
                     #endregion
                 }
 
@@ -584,11 +585,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 // Produce shipment update msg
                 ProduceShipmentUpdateKafkaMessage();
 
+
                 scope.Complete();
                 #endregion
             }
         }
-
         private void ProduceShipmentUpdateKafkaMessage()
         {
             if (entityPM.Tenant == 1321 || entityPM.Tenant == 951)
@@ -596,6 +597,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 var ShipmentUpdateMessageProducer = new Producer();
                 var serializedShipmentUpdateMessage = JsonConvert.SerializeObject(entityPM, Formatting.Indented);
                 ShipmentUpdateMessageProducer.Produce(MessageType.Shipment, serializedShipmentUpdateMessage);
+            }
+        }
+        private void UpdatePayablesLinesVatAmounts()
+        {
+            if(initializer.ShipmentPayablesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.None).Any()) {
+                var allPayablesIds = (from d in entityPM.ShipmentPayables select d.Id).ToList();
+                var allPayables = shipmentPayableRepository.GetShipmentPayablesFromIdList(allPayablesIds, tenant);
+                PayablesLinesVatAmounts payablesLinesVatAmounts = new PayablesLinesVatAmounts(allPayables, initializer.Tenant, shipmentPayableRepository);
+                payablesLinesVatAmounts.UpdateAllPayablesVatAmount();
             }
         }
 

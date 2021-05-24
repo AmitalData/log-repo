@@ -462,6 +462,7 @@
     <Compile Include="DataContracts\QuoteDashboardArguments.cs" />
     <Compile Include="ExternalService\IEntityAutomationMappingPMFields.cs" />
     <Compile Include="Helpers\ObjectFieldPropertyGetter.cs" />
+    <Compile Include="Helpers\PayablesLinesVatAmounts.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\EntityStatus.Generated.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\QueryService\EntityStatusQueryService.Generated.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\Messages\RatesUpdateService.cs" />
