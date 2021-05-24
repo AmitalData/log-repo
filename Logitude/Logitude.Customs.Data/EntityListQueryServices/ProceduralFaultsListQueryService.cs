@@ -264,6 +264,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         private IQueryable<ProceduralFaultList> GetIqueryableListForView(IQueryable<ProceduralFaultDeclarationView> iQueryable)
         {
             IQueryable<ProceduralFaultList> query = (from a in iQueryable
+                                                     where a.DeclarationId != null
                                                      select new ProceduralFaultList()
                                                      {
                                                          Id = a.Id,
