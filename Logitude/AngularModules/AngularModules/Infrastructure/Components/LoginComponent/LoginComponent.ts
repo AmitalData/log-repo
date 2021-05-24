@@ -175,7 +175,7 @@ export class LoginComponent implements OnInit {
     StartLoginProcess() {
 
         var url = window.location.href;
-        if (url.indexOf('localhost') > -1 && !AppTool.IsNullOrEmpty(url.split('?')[1])) {
+        if (url.indexOf('AmitalSSOAngular') < 1 &&  url.indexOf('localhost') > -1 && !AppTool.IsNullOrEmpty(url.split('?')[1])) {
             this.isLocalPrivateLable = true;
             let isDSV = url.indexOf('?D') > -1;
             window.sessionStorage.setItem('userdata', url.split(isDSV ? '?D' : '?P')[1]);
