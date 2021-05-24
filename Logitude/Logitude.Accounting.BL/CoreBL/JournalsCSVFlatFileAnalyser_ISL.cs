@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -36,7 +37,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 string fileContent = ConvertFromDosHebrewToWinHebrew(FileContent);
                 int? tenantFromPage4Tester = null;
-                FileContent = fileContent.Replace("\"", "");
+           //     FileContent = fileContent.Replace("\"", "");
                 _JournalSrcLinesDTO = CreateJournalSrcLinesDTOFromFile(FileContent, out tenantFromPage4Tester);
 
                 if (tenantFromPage4Tester.HasValue)
@@ -203,7 +204,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 var rowtype = rawLine.Split(',')[0];///.Substring(0, 1);
 
-                if (Opening_LineDTO_JCSV_ISL.RowType.Contains(rowtype))
+                if (Opening_LineDTO_JCSV_ISL.RowType.Contains(rowtype) || Opening_LineDTO_JCSV_ISL.RowType.Contains(rowtype.Substring(0, 1)))
                 {
                     Opening_Line = Opening_LineDTO_JCSV_ISL.Create(rawLine);
                     reading_Lines = true;
@@ -212,11 +213,11 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     if (!reading_Lines)
                     {
-
-                        string text_3 = TranslateTextsClassTranslate("JournalsCSV.O.AccountLine", 0, useLocal);
-                        string text_44 = TranslateTextsClassTranslate("JournalsCSV.O.AppearsBefore", 0, useLocal);
-                        string text_2 = TranslateTextsClassTranslate("JournalsCSV.O.HeaderType", 0, useLocal);
-                        throw new ApplicationException($"{text_3} {rowtype} {text_44} {text_2} {Opening_LineDTO_JCSV_ISL.RowType} ");
+                        reading_Lines = true;
+                        //string text_3 = TranslateTextsClassTranslate("JournalsCSV.O.AccountLine", 0, useLocal);
+                        //string text_44 = TranslateTextsClassTranslate("JournalsCSV.O.AppearsBefore", 0, useLocal);
+                        //string text_2 = TranslateTextsClassTranslate("JournalsCSV.O.HeaderType", 0, useLocal);
+                        //throw new ApplicationException($"{text_3} {rowtype} {text_44} {text_2} {Opening_LineDTO_JCSV_ISL.RowType} ");
                     }
                     JournalSrcLineDTO_ISL taxLine = JournalSrcLineDTO_ISL.Create(rawLine);
                     JournalSrcLines.Add(taxLine);
@@ -455,7 +456,7 @@ namespace Logitude.Accounting.BL.CoreBL
             if (rawLine.Length >= 1)
             {
                 actualRowType = rawLine.Split(',')[0]; ////rawLine.Substring(0, 1);
-                if (RowType.Contains(actualRowType)) startsWithRowTypeOk = true;
+                if (RowType.Contains(actualRowType) || RowType.Contains(actualRowType.Substring(0, 1))) startsWithRowTypeOk = true;
             }
 
             if (!startsWithRowTypeOk || actualRowType == "")
@@ -572,7 +573,13 @@ namespace Logitude.Accounting.BL.CoreBL
                 string text = TranslateTextsClassTranslate("JournalsCSV.O.DoesntStartWithCoAType", 0, useLocal);
                 throw new ApplicationException($"{text} {RowType.ToString()} ");
             }
-
+            string orig_rawLine = rawLine;
+            if (rawLine.Contains("\""))
+            {
+                Regex regex = new Regex("\\\"(.*?)\\\"");
+                string temp = regex.Replace(rawLine, m => m.Value.Replace(',', '@'));
+                rawLine = temp.Replace("@", "").Replace("\"", ""); 
+            }
             var rec = new JournalSrcLineDTO_ISL();
             rec.RawLine = rawLine;
 
@@ -585,18 +592,18 @@ namespace Logitude.Accounting.BL.CoreBL
                     case "c":
                     case "C":
                     case "ז":
-                //    case "2": //  2 = credit in the input file
+                    case "2": //  2 = credit in the input file
                         rec.ActionCode = "1";
                         break;
                     case "d":
                     case "D":
                     case "ח":
-                //    case "1": //  1 = debit in the input file
+                    case "1": //  1 = debit in the input file
                         rec.ActionCode = "2";
                         break;
-                //    case "3":
-                //        rec.ActionCode = "3";
-                //        break;
+                    case "3":
+                        rec.ActionCode = "3";
+                        break;
                     default:
                         break;
                 }
