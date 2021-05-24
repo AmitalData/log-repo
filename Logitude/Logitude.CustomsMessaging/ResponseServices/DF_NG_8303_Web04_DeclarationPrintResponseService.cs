@@ -170,11 +170,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                 }
             }
-
-            this.MyRequestSheetParam = new RequestSheetParam();
-            this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-            this.MyRequestSheetParam.EntityId1 = _MyDeclarationPM.Id;
-            this.MyRequestSheetParam.RequestDescription = "בקשה לטופס הצהרה " + _MyDeclarationPM.DeclarationNumber; 
+            if (_MyDeclarationPM != null)
+            {
+                this.MyRequestSheetParam = new RequestSheetParam();
+                this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+                this.MyRequestSheetParam.EntityId1 = _MyDeclarationPM.Id;
+                this.MyRequestSheetParam.RequestDescription = "בקשה לטופס הצהרה " + _MyDeclarationPM.DeclarationNumber;
+            }
         }
 
         private void AnalyzePaymentDocument(Attachment attachment, DF_NG_8302_Web03_DeclarationPrintRequestParams requestParams,string MyDeclarationNumVersionId)
