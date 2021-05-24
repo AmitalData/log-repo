@@ -91,6 +91,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
                 this.AccountingActivationDate = this.EntityPM.AccountingActivationDate;
                 this.SetUIProperties();
+                this.SetSelectedAgingPeriods();
             }
 
         });
@@ -499,6 +500,10 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
 SubmitChanges(ControlAccountId:string) {
     //console.log("EntityPM: ", this.EntityPM);
+
+    this.SetAgingPeriodsFields();
+    this.ResetAgingPeriodsFields();
+
     this.fullAccountingSettingPMService.update(this.EntityPM).subscribe(myResult => {
 
         var mm: ServiceResponse = myResult;
@@ -522,6 +527,41 @@ SubmitChanges(ControlAccountId:string) {
             this.ValidationErrorsList.push('Server Error!');
         });
     }
+
+    SetAgingPeriodsFields(){
+        this.EntityPM.FirstPeriodsMonths = this.JoinCodesOfPeriods(this.SelectedPeriods1);
+        this.EntityPM.SecondPeriodsMonths = this.JoinCodesOfPeriods(this.SelectedPeriods2);
+        this.EntityPM.ThirdsPeriodsMonths = this.JoinCodesOfPeriods(this.SelectedPeriods3);
+    }
+
+    ResetAgingPeriodsFields(){
+        if(this.NumberOfPeriods <= 2)
+            this.EntityPM.ThirdsPeriodsMonths = null;
+
+        if(this.NumberOfPeriods == 1)
+            this.EntityPM.SecondPeriodsMonths = null;
+    }
+
+    SetSelectedAgingPeriods(){
+
+        this.SelectedPeriods1 = this.SetSelectedPeriods(this.EntityPM.FirstPeriodsMonths);
+        this.SelectedPeriods2 = this.SetSelectedPeriods(this.EntityPM.SecondPeriodsMonths);
+        this.SelectedPeriods3 = this.SetSelectedPeriods(this.EntityPM.ThirdsPeriodsMonths);
+    }
+
+    JoinCodesOfPeriods(periods: any[]){
+        if(periods)
+            return periods.map(d=>d.Code)?.join(',');
+    }
+
+    SetSelectedPeriods(joinedPeriodsCodes: string){
+        if(joinedPeriodsCodes){
+            var codes = joinedPeriodsCodes.split(',');
+            return this.Periods.filter(d=>codes.includes(d.Code));
+        }
+        return [];
+    }
+
 
     ValidateMulticurrencyAccounts() {
         console.log("ValidateMulticurrencyAccounts");
@@ -635,7 +675,14 @@ SubmitChanges(ControlAccountId:string) {
     public ShowLocals: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
     isRTL = ObjectsLocator.GlobalSetting ? (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl") : false;
 
-    NumberOfPeriods: number = 1;
+
+    public get NumberOfPeriods() : number {
+        return this.EntityPM.NumberofPeriods;
+    }
+    public set NumberOfPeriods(v : number) {
+        this.EntityPM.NumberofPeriods = v;
+    }
+
     Periods: any[] = [
         {EnglishName: 'Period 1', LocalName: 'תקופה גיול 1', Code: 'period1'},
         {EnglishName: 'Period 2', LocalName: 'תקופה גיול 2', Code: 'period2'},
