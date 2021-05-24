@@ -920,7 +920,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     }
     //#endregion
 
-    private _SendCustomsDocumentAfter = true;
+    private _SendCustomsDocumentAfter = false;
     PerformSubmitChanges() {
         if (!this._SendCustomsDocumentAfter &&  this.CustomsDocument) {
             this.SendCustomsDocumentMethod();
