@@ -4,7 +4,7 @@
 	declare @ParentTenant as int
 	declare @Tenant as int
 	declare @InvoiceNumber as varchar(25)
-	declare @VATNumber as varchar(25)
+	declare @VATNumber as varchar(30)
 	declare @ShipmentsNumbers as varchar(1000)
 	declare @SubTotalInLocalCurrency as float
 	declare @SubTotalInInvoiceCurrency as float
