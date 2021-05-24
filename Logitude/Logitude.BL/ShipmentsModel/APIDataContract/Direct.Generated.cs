@@ -173,6 +173,8 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public DateTime? MainCarriageETA { get; set; }
     
     public DateTime? MainCarriageETD { get; set; }
+    
+    public string TruckNumber { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

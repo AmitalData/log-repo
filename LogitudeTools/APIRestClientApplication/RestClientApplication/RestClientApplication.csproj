@@ -37,12 +37,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Interop.MSXML2, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
       <HintPath>..\packages\RestClientDlls.1.0.0\lib\Net40\Interop.MSXML2.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="Json2KeyValue, Version=1.1.0.5, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\RestClientDlls.1.0.0\lib\Net40\Json2KeyValue.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -56,7 +54,6 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="XmlRender, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\RestClientDlls.1.0.0\lib\Net40\XmlRender.dll</HintPath>
     </Reference>
   </ItemGroup>
@@ -89,6 +86,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

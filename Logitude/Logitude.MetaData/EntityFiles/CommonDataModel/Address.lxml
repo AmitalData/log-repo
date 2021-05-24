@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Address&quot;"
-  Code="&quot;cc37&quot;"
+  Code="&quot;c5a7&quot;"
   Name="&quot;Address&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Common&quot;"
@@ -3711,7 +3711,7 @@
         IsCompositKey="false"
         IsUpdateAllowed="false" />
       <DCField
-        DCFieldName="&quot;AddressTypeId&quot;"
+        DCFieldName="&quot;AddressType&quot;"
         DCVersion="&quot;ApiV1&quot;"
         FieldName="&quot;AddressTypeId&quot;"
         IsKey="false"

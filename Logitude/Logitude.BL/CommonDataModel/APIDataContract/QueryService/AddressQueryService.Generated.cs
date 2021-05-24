@@ -97,7 +97,7 @@ using Simplog.Data.CommonDataModel;
 				   if(MyEntityPM.AddressTypeId != null)
 				   {
 					   AddressTypeQueryService AddressTypeService2 = new AddressTypeQueryService(Tenant);
-					   					   temp.AddressTypeId = AddressTypeService2.GetAddressTypeById(MyEntityPM.AddressTypeId,Tenant,ComputingPartnerName); 
+					   					   temp.AddressType = AddressTypeService2.GetAddressTypeById(MyEntityPM.AddressTypeId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   					
@@ -247,18 +247,18 @@ using Simplog.Data.CommonDataModel;
 										}  
 
 					
-					AddressTypeQueryService AddressTypeIdAddressTypeService = new AddressTypeQueryService(Tenant);
-					if(MyEntity.AddressTypeId != null)
+					AddressTypeQueryService AddressTypeAddressTypeService = new AddressTypeQueryService(Tenant);
+					if(MyEntity.AddressType != null)
 					{
-						var myAddressTypeIdPM = AddressTypeIdAddressTypeService.AddressTypeDataMappingAndValidatin(MyEntity.AddressTypeId,Tenant,ComputingPartnerName,IsUpdate);
+						var myAddressTypePM = AddressTypeAddressTypeService.AddressTypeDataMappingAndValidatin(MyEntity.AddressType,Tenant,ComputingPartnerName,IsUpdate);
 						
-						if(myAddressTypeIdPM != null)
+						if(myAddressTypePM != null)
 						{ 
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("AddressTypeId Can't be update"); 
-								temp.AddressTypeId = myAddressTypeIdPM.Id;
+							{								//throw new ApplicationException("AddressType Can't be update"); 
+								temp.AddressTypeId = myAddressTypePM.Id;
 						  
 							}  
 

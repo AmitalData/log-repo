@@ -102,7 +102,8 @@ using Simplog.Data.CommonDataModel;
 				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.Code,ComputingPartnerName,"Card");  
 				   temp.IsDisconnectedFromGLAccount = MyEntityPM.IsDisconnectedFromGLAccount;
 				   temp.ReceivablesAccountingCard = MyEntityPM.ReceivablesAccountingCard;
-				   temp.PayablesAccountingCard = MyEntityPM.PayablesAccountingCard;					
+				   temp.PayablesAccountingCard = MyEntityPM.PayablesAccountingCard;
+				   temp.ICAO = MyEntityPM.ICAO;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -256,6 +257,14 @@ using Simplog.Data.CommonDataModel;
 					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.PayablesAccountingCard))
 					{							//throw new ApplicationException("PayablesAccountingCard Can't be update"); 
 							temp.PayablesAccountingCard = MyEntity.PayablesAccountingCard;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.ICAO))
+					{							//throw new ApplicationException("ICAO Can't be update"); 
+							temp.ICAO = MyEntity.ICAO;
 
 										}  
 

@@ -452,7 +452,8 @@ using Simplog.Data.ShipmentsModel;
 					   				   }
 				   
 				   temp.MainCarriageETA = MyEntityPM.MainCarriageETA;
-				   temp.MainCarriageETD = MyEntityPM.MainCarriageETD;					
+				   temp.MainCarriageETD = MyEntityPM.MainCarriageETD;
+				   temp.TruckNumber = MyEntityPM.TruckNumber;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -1463,6 +1464,14 @@ using Simplog.Data.ShipmentsModel;
 
 					 
 
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.TruckNumber))
+					{							//throw new ApplicationException("TruckNumber Can't be update"); 
+							temp.TruckNumber = MyEntity.TruckNumber;
+
+										}  
+
 										   
 					return temp;
 		    }
@@ -1474,4 +1483,4 @@ using Simplog.Data.ShipmentsModel;
         }
 		 
    }
-}
+}
