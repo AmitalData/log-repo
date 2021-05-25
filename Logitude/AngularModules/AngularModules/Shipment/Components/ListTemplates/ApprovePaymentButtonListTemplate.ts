@@ -109,8 +109,9 @@ export class ApprovePaymentButtonListTemplate {
                         windowArgs.EntityPm = myResult.Result
                         windowArgs.AdditionalData = AdditionalResult.Result;
                         newWindow.WindowArgs = windowArgs;
-                        //newWindow.Add(control); 
-                        newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/PrivateLabelApprovePaymentComponent');
+                        //newWindow.Add(control);
+                        let privateLabelApprovePaymentComponentPath = this.GetPrivateLabelApprovePaymentComponentPath();
+                        newWindow.Show(privateLabelApprovePaymentComponentPath);
                         newWindow.WindowClosed.subscribe(($event: any) => {
                             this.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
                             //if ($event == "MyShipmentAdded") {
@@ -122,6 +123,12 @@ export class ApprovePaymentButtonListTemplate {
                 
             }
         });
+    }
+
+    GetPrivateLabelApprovePaymentComponentPath() {
+        let isDSV = SessionLocator?.PrivateLableSettings?.PrivateLabelDomain?.toLowerCase()?.indexOf("dsv") > -1;
+        let privateLabelApprovePaymentComponentPath = './ShipmentModules/ShipmentLogBox/Components/Logbox/' + (isDSV ? 'DSVApprovePaymentComponent' : 'PrivateLabelApprovePaymentComponent');
+        return privateLabelApprovePaymentComponentPath;
     }
 
     RemoveTasksButtonClicked() {
