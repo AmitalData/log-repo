@@ -9,7 +9,7 @@ import {ForwarderShipmentsComponent} from './Components/Logbox/ForwarderShipment
 import {MultiArchiveShipmentsComponent} from './Components/Logbox/MultiArchiveShipmentsComponent';
 import { DownloadAllFilesComponent } from './Components/Logbox/DownloadAllFilesComponent';
 import {AddEditPrivateLabelShipmentComponent} from './Components/Logbox/AddEditPrivateLabelShipmentComponent';
-import { PrivateLabelApprovePaymentComponent } from './Components/Logbox/PrivateLabelApprovePaymentComponent';
+import { DSVApprovePaymentComponent } from './Components/Logbox/DSVApprovePaymentComponent';
 import { LogBoxApprovePaymentComponent } from './Components/Logbox/LogBoxApprovePaymentComponent';
 import {PrivateLabelApprovebyMobileComponent} from './Components/Logbox/PrivateLabelApprovebyMobileComponent';
 import {ECommercePaymentRequestMobileComponent} from './Components/Logbox/ECommercePaymentRequestMobileComponent';
@@ -20,6 +20,7 @@ import {LogBoxPackagesComponent} from './Components/Logbox/LogBoxPackagesCompone
 import {DepositionRequestComponent} from './Components/Logbox/DepositionRequestComponent';
 import { UserIdNumberMobileComponent } from './Components/Logbox/UserIdNumberMobileComponent';
 import { WarningApprovePaymentComponent } from './Components/Logbox/WarningApprovePaymentComponent';
+import { PrivateLabelApprovePaymentComponent } from './Components/Logbox/PrivateLabelApprovePaymentComponent';
 
 
 
@@ -34,7 +35,7 @@ export const Components =
         MultiArchiveShipmentsComponent,
         DownloadAllFilesComponent,
         AddEditPrivateLabelShipmentComponent,
-        PrivateLabelApprovePaymentComponent,
+        DSVApprovePaymentComponent,
         LogBoxApprovePaymentComponent,
         PrivateLabelApprovebyMobileComponent,
         TaxScreenComponent,
@@ -47,6 +48,7 @@ export const Components =
         DepositionRequestComponent,
         UserIdNumberMobileComponent,
         WarningApprovePaymentComponent,
+        PrivateLabelApprovePaymentComponent,
     ];
 
 
@@ -65,7 +67,7 @@ export class ModuleDeclarations {
             case "MultiArchiveShipmentsComponent": { myResult = MultiArchiveShipmentsComponent; break; };
             case "DownloadAllFilesComponent": { myResult = DownloadAllFilesComponent; break; }
             case "AddEditPrivateLabelShipmentComponent": { myResult = AddEditPrivateLabelShipmentComponent; break; }
-            case "PrivateLabelApprovePaymentComponent": { myResult = PrivateLabelApprovePaymentComponent; break; }
+            case "DSVApprovePaymentComponent": { myResult = DSVApprovePaymentComponent; break; }
             case "LogBoxApprovePaymentComponent": { myResult = LogBoxApprovePaymentComponent; break; }
             case "PrivateLabelApprovebyMobileComponent": { myResult = PrivateLabelApprovebyMobileComponent; break; }
             case "TaxScreenComponent": { myResult = TaxScreenComponent; break; }
@@ -77,7 +79,8 @@ export class ModuleDeclarations {
             case "ECommercePaymentRequestMobileComponent": { myResult = ECommercePaymentRequestMobileComponent; break; }
             case "DepositionRequestComponent": { myResult = DepositionRequestComponent; break; }
             case "UserIdNumberMobileComponent": { myResult = UserIdNumberMobileComponent; break; }
-            case "WarningApprovePaymentComponent": { myResult = WarningApprovePaymentComponent; break; }                
+            case "WarningApprovePaymentComponent": { myResult = WarningApprovePaymentComponent; break; }
+            case "PrivateLabelApprovePaymentComponent": { myResult = PrivateLabelApprovePaymentComponent; break; }            
         }
 
         return myResult;
