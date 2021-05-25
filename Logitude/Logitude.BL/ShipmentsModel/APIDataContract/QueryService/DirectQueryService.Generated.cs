@@ -1465,12 +1465,10 @@ using Simplog.Data.ShipmentsModel;
 					 
 
 					
-                    
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.TruckNumber))
-					{							//throw new ApplicationException("TruckNumber Can't be update"); 
+                    							//throw new ApplicationException("TruckNumber Can't be update"); 
 							temp.TruckNumber = MyEntity.TruckNumber;
 
-										}  
+					 
 
 										   
 					return temp;
@@ -1483,4 +1481,4 @@ using Simplog.Data.ShipmentsModel;
         }
 		 
    }
-}
+}
