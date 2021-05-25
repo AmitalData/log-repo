@@ -537,16 +537,24 @@ SubmitChanges(ControlAccountId:string) {
         const two = 2;
         const one = 2;
         const thirdPeriodIsNotSelected = this.NumberOfPeriods <= two;
-        if(thirdPeriodIsNotSelected){
-            this.EntityPM.ThirdsPeriodsMonths = null;
-            this.SelectedPeriods3 = [];
-        }
+        if(thirdPeriodIsNotSelected)
+            this.ResetThirdPeriod();
 
         const SecondPeriodIsNotSelected = this.NumberOfPeriods == one;
-        if(SecondPeriodIsNotSelected){
-            this.EntityPM.SecondPeriodsMonths = null;
-            this.SelectedPeriods2 = [];
-        }
+        if(SecondPeriodIsNotSelected)
+            this.ResetSecondPeriod();
+    }
+
+    private ResetSecondPeriod()
+    {
+        this.EntityPM.SecondPeriodsMonths = null;
+        this.SelectedPeriods2 = [];
+    }
+
+    private ResetThirdPeriod()
+    {
+        this.EntityPM.ThirdsPeriodsMonths = null;
+        this.SelectedPeriods3 = [];
     }
 
     SetSelectedAgingPeriods(){
