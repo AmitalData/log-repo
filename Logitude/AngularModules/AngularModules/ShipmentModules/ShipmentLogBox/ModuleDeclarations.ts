@@ -21,6 +21,7 @@ import {DepositionRequestComponent} from './Components/Logbox/DepositionRequestC
 import { UserIdNumberMobileComponent } from './Components/Logbox/UserIdNumberMobileComponent';
 import { WarningApprovePaymentComponent } from './Components/Logbox/WarningApprovePaymentComponent';
 import { PrivateLabelApprovePaymentComponent } from './Components/Logbox/PrivateLabelApprovePaymentComponent';
+import { ApprovePaymentBaseComponent } from './Components/Logbox/ApprovePaymentBaseComponent';
 
 
 
@@ -49,6 +50,7 @@ export const Components =
         UserIdNumberMobileComponent,
         WarningApprovePaymentComponent,
         PrivateLabelApprovePaymentComponent,
+        ApprovePaymentBaseComponent,
     ];
 
 
@@ -81,6 +83,7 @@ export class ModuleDeclarations {
             case "UserIdNumberMobileComponent": { myResult = UserIdNumberMobileComponent; break; }
             case "WarningApprovePaymentComponent": { myResult = WarningApprovePaymentComponent; break; }
             case "PrivateLabelApprovePaymentComponent": { myResult = PrivateLabelApprovePaymentComponent; break; }            
+            case "ApprovePaymentBaseComponent": { myResult = ApprovePaymentBaseComponent; break; }            
         }
 
         return myResult;
