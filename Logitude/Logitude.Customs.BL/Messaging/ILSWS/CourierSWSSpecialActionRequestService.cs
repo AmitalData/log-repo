@@ -55,7 +55,7 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
             {
                 byte[] bytearray = Encoding.UTF8.GetBytes(XMLmessageToSWS.OuterXml);
                 FTPOutMawbSWSService fTPOutMawbSWSServie = new FTPOutMawbSWSService();
-                fTPOutMawbSWSServie.BuildCommunicationLog(bytearray, tenant, declarationId, CustomsPartnerFtpDetails.InterfaceName_ECSWSSPCL_REQUEST);
+                fTPOutMawbSWSServie.BuildCommunicationLog(bytearray, tenant, declarationId, CustomsPartnerFtpDetails.InterfaceName_ECSWSSPCL_REQUEST,null);
 
                 scop.Complete();
             }
