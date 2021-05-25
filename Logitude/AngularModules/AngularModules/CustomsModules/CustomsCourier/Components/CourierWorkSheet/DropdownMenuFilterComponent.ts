@@ -23,6 +23,11 @@ export class DropdownMenuFilterComponent implements OnInit {
     public DivLeft: number = -9999;
     @Input()
     public DivTop: number = -9999;
+
+    @Input()
+    public DivHight: number = -9999;
+
+
     private _CustomSendOptionsArgs: CustomSendOptionsArgs;
     public _DropdownDisplay: string = 'none';
     private _ElementRef: any;
@@ -123,14 +128,25 @@ export class DropdownMenuFilterComponent implements OnInit {
             let DDLHeight = 65+70;//    height: 22px; * 3 +30 
             let Extra = 22 + 1 + 1; //    height: 22px; +1 UP +1 DOWN
             let ExtraTop = 150;
-            if (itemRect.bottom + DDLHeight + Extra >this.getScreenHeight()) {
-                document.getElementById(this._DropdownMenuFilterComponentMenuId).style.top =
-                    (itemRect.top - DDLHeight - Extra) + 'px';
+
+            if (this.DivHight != -9999) {
+                if (itemRect.bottom + DDLHeight + Extra > this.getScreenHeight()) {
+                    document.getElementById(this._DropdownMenuFilterComponentMenuId).style.marginTop =
+                        -1 * (this.DivHight) + 'px';
+                }
+
+            } else {
+
+                if (itemRect.bottom + DDLHeight + Extra > this.getScreenHeight()) {
+                    document.getElementById(this._DropdownMenuFilterComponentMenuId).style.top =
+                        (itemRect.top - DDLHeight - Extra) + 'px';
+                }
+                if (itemRect.bottom + this.DivTop > this.getScreenHeight() && this.DivTop != -9999) {//this.PaintTop = true                
+                    document.getElementById(this._DropdownMenuFilterComponentMenuId).style.top =
+                        (itemRect.top - this.DivTop - ExtraTop) + 'px';
+                }
             }
-            if (itemRect.bottom + this.DivTop> this.getScreenHeight() && this.DivTop != -9999) {//this.PaintTop = true                
-                document.getElementById(this._DropdownMenuFilterComponentMenuId).style.top =
-                    (itemRect.top - this.DivTop - ExtraTop) + 'px'; 
-            }
+
             if (this.DivLeft != -9999) {
                // document.getElementById(this._DropdownMenuFilterComponentMenuId).style.left =
 //(myleft + this.DivLeft)+ 'px';
