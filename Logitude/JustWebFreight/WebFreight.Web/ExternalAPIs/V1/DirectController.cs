@@ -315,10 +315,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         }
                         else
                         {
-                            if (entityPM.ShipmentPackages != null)
-                            {
-                                entityPM.ShipmentPackages.Clear();
-                            }
                             entityPM = this.ValidateInlandDomesticShipment(entityPM);
                         }
                         ComputeHelper.ComputeTotals(entityPM);
@@ -825,20 +821,18 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             {
                                 throw new ApplicationException("Can't update cancelled shipments");
                             }
+                            if (!IsInlandDomesticShipment(directPM))
+                            {
+                                APITransshipmentHelper aPITransshipmentHelper = new APITransshipmentHelper(directPM, authToken.Tenant);
+                                aPITransshipmentHelper.ValidateTransshipments();
+                                aPITransshipmentHelper.MapTransshipments();
 
-                            APITransshipmentHelper aPITransshipmentHelper = new APITransshipmentHelper(directPM, authToken.Tenant);
-                            aPITransshipmentHelper.ValidateTransshipments();
-                            aPITransshipmentHelper.MapTransshipments();
-
-                            AddressRepository addressRepository = new AddressRepository(authToken.Tenant);
-                            this.ValidateAndSetCustomerData(directPM, addressRepository, authToken.Tenant);
-                            if (IsInlandDomesticShipment(directPM))
+                                AddressRepository addressRepository = new AddressRepository(authToken.Tenant);
+                                this.ValidateAndSetCustomerData(directPM, addressRepository, authToken.Tenant);
+                            }
+                            else
                             {
                                 directPM = this.ValidateInlandDomesticShipment(directPM);
-                                if (directPM.ShipmentPackages != null)
-                                {
-                                    directPM.ShipmentPackages.Clear();
-                                }
                             }
                             ShipmentService service = new ShipmentService(MyContext, directPM, SecurityUtility.GetAuthenticatedUser());
                             service.Update(true);
