@@ -99,7 +99,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-                TermsofUseQuery termsofUseQuery = new TermsofUseQuery(authToken);  
+                TermsofUseQuery termsofUseQuery = new TermsofUseQuery(authToken.Tenant);  
                 List<TermsofUsePM> TermsofUsePMLists = termsofUseQuery.GetTermsofUseByTenant(tenant).ToList();
 
 

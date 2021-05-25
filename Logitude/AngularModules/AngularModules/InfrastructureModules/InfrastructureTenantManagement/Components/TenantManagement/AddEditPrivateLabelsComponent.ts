@@ -170,6 +170,9 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
                     this.TermsofUsePMLists.push(new TermsofUsePMViewModel(termsofUsePM));
                 }
             }
+            else {
+                this.HandleServiceError(response)
+            }
         });
     }
 
@@ -192,7 +195,9 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
                     this.GetTermsOfUse(this.ParentTenant);
                 }
             }
-
+            else {
+                this.HandleServiceError(serviceResponse)
+            }
         });
 
     }
@@ -208,53 +213,23 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
                             this.TermsofUsePMLists.push(new TermsofUsePMViewModel(item));
                         });
                     } 
-                } 
+            }
+                else {
+                    this.HandleServiceError(serviceResponse)
+                }
             });
     }
 
-    LoadData() {
-        this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
-
-        this.TermsofUsePMLists = [];
-
-        this.hybridPartnerListService.getSingle(this.EntityPM.HybridPartnerId).subscribe((res: any) => {
-
-            var serviceResponse: ServiceResponse = res;
-            if (!serviceResponse.HasError) {
-                var result = serviceResponse.Result;
-                if (result) {
-                    this.hybridPartner = result
-                }
-            }
-            else {
-                if (serviceResponse.ErrorsArray && serviceResponse.ErrorsArray.length > 0) {
-                    var messageWindow: MessageWindow = new MessageWindow();
-                    messageWindow.Show(serviceResponse.ErrorsArray[0]); 
-                }  
-            }
-
-        });
-
-        this.termsofUseService.GetTermOfUseByTenant(this.hybridPartner.PartnerTenant).subscribe((res: any) => {
-
-            var pmResponse: ServiceResponse = res;
-            if (!pmResponse.HasError) {
-                var myResult = pmResponse.Result;
-                if (myResult) {
-
-                    myResult.forEach((item) => {
-                        this.TermsofUsePMLists.push(new TermsofUsePMViewModel(item));
-                    });
-
-                }
-                this.CurrentSession.CurrentWindow.StopBusyIndicator();
-
-            }
-            else {
-                this.CurrentSession.CurrentWindow.StopBusyIndicator();
-            }
-               
-        });
+ 
+    HandleServiceError(serviceResponse: ServiceResponse) {
+        if (!serviceResponse.ErrorsArray && serviceResponse.ErrorsArray.length ==0) {
+            return;
+        } 
+        var messageWindow: MessageWindow = new MessageWindow();
+        messageWindow.Show(serviceResponse.ErrorsArray[0]);
+    
+      
+      
     }
 
 
