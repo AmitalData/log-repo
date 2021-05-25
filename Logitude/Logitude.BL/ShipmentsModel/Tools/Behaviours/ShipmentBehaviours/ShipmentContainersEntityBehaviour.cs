@@ -1,0 +1,123 @@
+﻿using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
+using Logitude.BL.ShipmentsModel.Tools.Initializers;
+using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Data.Helpers;
+using Simplog.Data.QuoteModel;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.QuoteModel.Repositories;
+using Simplog.Data.ShipmentsModel;
+using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
+{
+    public class ShipmentContainersEntityBehaviour : IServiceBehaviour
+    {
+        private ShipmentServiceInitializer initializer;
+        private IShipmentsContext shipmentsContext;
+        private ContainerService containerService; 
+        public void Handle(IServiceInitializer initializer)
+        {
+            this.initializer = (ShipmentServiceInitializer)initializer;
+            this.shipmentsContext = this.initializer.ShipmentContext;
+            this.containerService = new ContainerService(this.shipmentsContext, this.initializer.Tenant);
+            this.HandleBehaviour();
+        }
+
+        private void HandleBehaviour()
+        {
+            HandelContainers();
+        }
+
+        private void HandelContainers()
+        {
+            if (this.ValidHandelContainers()) {
+                foreach (ShipmentPackagePM itemPM in initializer.ShipmentPackagesChangeSet)
+                {
+                    switch (itemPM.ChangeSetOp)
+                    {
+                        case ChangeSetOperation.Insert:
+                            {
+                                this.CreateContainer(itemPM);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Update:
+                            {
+                                this.UpdateContainer(itemPM);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Delete:
+                            {
+                                this.DeleteContainer(itemPM);
+                                break;
+                            }
+
+                        default: { break; }
+                    }
+                }
+            }
+        }
+
+        private bool ValidHandelContainers()
+        {
+            if (!FeatureToggleHelper.HasFeatureToggle("OIC", this.initializer.Tenant))
+                return false;
+
+            if (initializer.EntityPM.TransportModeId != "O" &&
+               (initializer.EntityPM.TransportModeId.ToLower() != "fcl" || initializer.EntityPM.TransportModeId.ToLower() != "fcld"))
+                return false;
+
+            if (initializer.ShipmentPackagesChangeSet == null)
+                return false;
+
+            return true;
+        }
+
+        private void CreateContainer(ShipmentPackagePM shipmentPackage)
+        {
+            ContainerPM containerPM = new ContainerPM
+            {
+                Id = IdCounter.GetNumber("Container", this.initializer.Tenant).ToString(),
+                Tenant = this.initializer.Tenant,
+                CreateDate = TenantServerConfigration.GetCurrentDateTime(this.initializer.Tenant),
+                CreatedByUserId = this.initializer.LoggedContactId,
+                UpdateDate = TenantServerConfigration.GetCurrentDateTime(this.initializer.Tenant),
+                UpdatedByUserId = this.initializer.LoggedContactId,
+                MainCarriageCarrierId = this.initializer.EntityMasterData.MainCarriageCarrierId,
+                MainCarriageCarrierNumber = this.initializer.EntityMasterData.MainCarriageCarrierNumber,
+                MainCarriageVesselId = this.initializer.EntityMasterData.MainCarriageVesselId,
+                MainCarriageATA = this.initializer.EntityMasterData.MainCarriageATA,
+                MainCarriageATD = this.initializer.EntityMasterData.MainCarriageATD,
+                MainCarriageETA = this.initializer.EntityMasterData.MainCarriageETA,
+                MainCarriageETD = this.initializer.EntityMasterData.MainCarriageETD,
+                Master = this.initializer.EntityMasterData.Master,
+                ContainerNumber = shipmentPackage.ContainerNumber,
+                ShipmentPackagesId = shipmentPackage.Id,
+                SearchFields = shipmentPackage.ContainerNumber + ","
+                + this.initializer.EntityMasterData.MainCarriageCarrierNumber + "," 
+                + this.initializer.EntityMasterData.MainCarriageCarrierCard != null ? this.initializer.EntityMasterData.MainCarriageCarrierCard.EnglishName + "," : ""
+                + this.initializer.EntityMasterData.Master + ",",
+            };
+            containerService.Create(containerPM);
+        }
+
+        private void UpdateContainer(ShipmentPackagePM itemPM)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void DeleteContainer(ShipmentPackagePM itemPM)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

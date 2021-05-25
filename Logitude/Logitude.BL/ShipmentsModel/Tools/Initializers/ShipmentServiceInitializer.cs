@@ -186,6 +186,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
             serviceBehaviours.Add(new ShipmentConversionBehaviour());
             serviceBehaviours.Add(new ShipmentOperationalDateBehaviour());
             serviceBehaviours.Add(new UpdateDocumentFilingBehaviour());
+            serviceBehaviours.Add(new ShipmentContainersEntityBehaviour());
 
             foreach (IServiceBehaviour behaviour in serviceBehaviours)
             {

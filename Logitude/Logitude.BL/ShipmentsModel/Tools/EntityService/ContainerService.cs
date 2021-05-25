@@ -31,8 +31,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         {
             this.isNewEntity = true;
             this.containerPm = entityPM;
-            this.containerPoco = new Container();
             this.containerPm.Id = IdCounter.GetNumber("Container", tenant).ToString();
+            this.containerPoco = new Container { Id = this.containerPm.Id, Tenant = this.containerPm.Tenant };
             ContainerTracing.Trace(entityPM, containerPoco, isNewEntity);
             ShipmentMapping.MapContainer(entityPM, containerPoco, isNewEntity);
             entityRepository.Add(containerPoco);
