@@ -15,25 +15,25 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
         {
             if (isNewEntity)
             {
-                containerPM.Tenant = container.Tenant;               
+                container.Id = containerPM.Id;
+                container.Tenant = containerPM.Tenant;
+                container.CreateDate = containerPM.CreateDate;
+                container.CreatedByUserId = containerPM.CreatedByUserId;
             }
 
-            containerPM.CreateDate = container.CreateDate;
-            containerPM.CreatedByUserId = container.CreatedByUserId;
-            containerPM.UpdateDate = container.UpdateDate;
-            containerPM.UpdatedByUserId = container.UpdatedByUserId;
-            containerPM.MainCarriageCarrierId = container.MainCarriageCarrierId;
-            containerPM.MainCarriageCarrierNumber = container.MainCarriageCarrierNumber;
-            containerPM.MainCarriageATA = container.MainCarriageATA;
-            containerPM.MainCarriageATD = container.MainCarriageATD;
-            containerPM.MainCarriageETA = container.MainCarriageETA;
-            containerPM.MainCarriageETD = container.MainCarriageETD;
-            containerPM.MainCarriageVesselId = container.MainCarriageVesselId;
-            containerPM.DischargeDate = container.DischargeDate;
-            containerPM.Master = container.Master;
-            containerPM.SearchFields = container.SearchFields;
-            containerPM.ShipmentPackagesId = container.ShipmentPackagesId;
-            containerPM.ContainerNumber = container.ContainerNumber;
+            container.UpdateDate = containerPM.UpdateDate;
+            container.UpdatedByUserId = containerPM.UpdatedByUserId;
+            container.MainCarriageCarrierId = containerPM.MainCarriageCarrierId;
+            container.MainCarriageCarrierNumber = containerPM.MainCarriageCarrierNumber;
+            container.MainCarriageATA = containerPM.MainCarriageATA;
+            container.MainCarriageATD = containerPM.MainCarriageATD;
+            container.MainCarriageETA = containerPM.MainCarriageETA;
+            container.MainCarriageETD = containerPM.MainCarriageETD;
+            container.MainCarriageVesselId = containerPM.MainCarriageVesselId;
+            container.DischargeDate = containerPM.DischargeDate;
+            container.Master = containerPM.Master;
+            container.ShipmentPackagesId = containerPM.ShipmentPackagesId;
+            container.ContainerNumber = containerPM.ContainerNumber;
             BuildSearchField(containerPM, container);
         }
 

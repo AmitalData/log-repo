@@ -59,7 +59,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
 
         public void SubmitChanges()
         {
-            throw new NotImplementedException();
+            context.SaveChanges();
         }
 
         public void Update(Container entity)

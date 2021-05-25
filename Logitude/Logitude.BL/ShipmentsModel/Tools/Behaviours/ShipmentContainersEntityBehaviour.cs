@@ -18,20 +18,19 @@ using System.Threading.Tasks;
 
 namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 {
-    public class ShipmentContainersEntityBehaviour : IServiceBehaviour
+    public class ShipmentContainersEntityBehaviour
     {
         private ShipmentServiceInitializer initializer;
         private IShipmentsContext shipmentsContext;
         private ContainerService containerService; 
-        public void Handle(IServiceInitializer initializer)
+        public ShipmentContainersEntityBehaviour(IServiceInitializer initializer)
         {
             this.initializer = (ShipmentServiceInitializer)initializer;
             this.shipmentsContext = this.initializer.ShipmentContext;
             this.containerService = new ContainerService(this.shipmentsContext, this.initializer.Tenant);
-            this.HandleBehaviour();
         }
 
-        private void HandleBehaviour()
+        public void HandleBehaviour()
         {
             HandelContainers();
         }
@@ -101,11 +100,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 MainCarriageETD = this.initializer.EntityMasterData.MainCarriageETD,
                 Master = this.initializer.EntityMasterData.Master,
                 ContainerNumber = shipmentPackage.ContainerNumber,
-                ShipmentPackagesId = shipmentPackage.Id,
-                SearchFields = shipmentPackage.ContainerNumber + ","
-                + this.initializer.EntityMasterData.MainCarriageCarrierNumber + "," 
-                + this.initializer.EntityMasterData.MainCarriageCarrierCard != null ? this.initializer.EntityMasterData.MainCarriageCarrierCard.EnglishName + "," : ""
-                + this.initializer.EntityMasterData.Master + ",",
+                ShipmentPackagesId = shipmentPackage.Id
             };
             containerService.Create(containerPM);
         }

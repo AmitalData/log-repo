@@ -57,6 +57,7 @@ using Logitude.BL.ShipmentsModel.EntityOtherServices;
 using Logitude.Server.Tools.Messages;
 using Logitude.Server.Tools.Constants;
 using Newtonsoft.Json;
+using Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours;
 
 namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 {
@@ -111,12 +112,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         public ShipmentComputedFields UpdatedShipmentComputedFields;
 
         private ShipmentServiceInitializer initializer;
+        private ShipmentContainersEntityBehaviour shipmentContainersEntityBehaviour;
 
         public ShipmentService(IShipmentsContext objectContext, ShipmentPM entityPM, string serviceContextUser)
         {
             this.initializer = new ShipmentServiceInitializer(objectContext, entityPM, serviceContextUser);
             this.initializer.Initialize();
-
+            this.shipmentContainersEntityBehaviour = new ShipmentContainersEntityBehaviour(this.initializer);
             this.tenant = initializer.Tenant;
             this.entityPM = initializer.EntityPM;
             this.entityPoco = initializer.EntityPOCO;
@@ -422,6 +424,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.initializer.HandleComposition();
 
                     this.UpdateShipmentPackagesCollection();
+                    this.shipmentContainersEntityBehaviour.HandleBehaviour();
                     this.UpdateShipmentPickUpsCollection();
                     this.UpdateShipmentDeliveriesCollection();
                     this.UpdateShipmentPayablesCollection();
