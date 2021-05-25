@@ -66,8 +66,15 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public TermsofUse GetSingleTermsofUse(DateTime toUdate, int version)
         {
-            return (from record in context.TermsofUses where record.Date == toUdate && record.Version == version select record).FirstOrDefault();
+            return (from record in context.TermsofUses where record.Date == toUdate && record.VersionNumber == version select record).FirstOrDefault();
         }
+
+
+        public int GetLastTermsofUseVersionNumber(int tenant)
+        {
+            return (from record in context.TermsofUses where record.Tenant == tenant select record).OrderByDescending(d => d.VersionNumber).Select(d=>d.VersionNumber).FirstOrDefault();
+        }
+
 
         public IQueryable<TermsofUse> GetTermsofUses()
         {
@@ -77,7 +84,15 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public IQueryable<TermsofUse> GetTermsofUsesByVersion(int version)
         {
             IQueryable<TermsofUse> termsofUses = from a in context.TermsofUses
-                                                 where a.Version == version
+                                                 where a.VersionNumber == version
+                                                 select a;
+            return termsofUses;
+        }
+
+        public IQueryable<TermsofUse> GetById(int id)
+        {
+            IQueryable<TermsofUse> termsofUses = from a in context.TermsofUses
+                                                 where a.Id == id
                                                  select a;
             return termsofUses;
         }

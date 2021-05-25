@@ -17,7 +17,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             termsofUseSignature.Tenant = termsofUseSignaturePm.Tenant;
             termsofUseSignature.SignedDatetime = termsofUseSignaturePm.SignedDatetime;
             termsofUseSignature.ContactId = termsofUseSignaturePm.ContactId;
-            termsofUseSignature.TermsofUseVersion = termsofUseSignaturePm.TermsofUseVersion;
+            termsofUseSignature.TermsofUseId = termsofUseSignaturePm.TermsofUseId;
         }
     }
 }
