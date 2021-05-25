@@ -277,7 +277,24 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         {
             return (from record in context.Shipments where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
         }
-        
+
+        public Shipment GetShipmentForCargoTracking(string id, int tenant)
+        {
+
+            return (from shipment in context.Shipments
+                                            .Include("Incoterm")
+                                            .Include("ShipmentAdditionalCloudData")
+                                            .Include("WarehouseLegCard")
+                                            .Include("ShipmentType")
+                                            .Include("ShipperCard")
+                                            .Include("EntityStatus").Include("ComputedEntityStatus").Include("ShipmentType").Include("Incoterm")
+                                            .Include("ShipmentReceivableStatus").Include("ShipmentPayableStatus").Include("ShipmentLevel").Include("NextLeg")
+                                            .Include("ShipmentType").Include("ShipmentMasterData").Include("SpecialServicesType").Include("MoveType")
+                    where shipment.Id == id && shipment.Tenant == tenant
+                    select shipment)
+                    .FirstOrDefault();
+        }
+
         public Shipment GetSingleShipmentByNumberWithOutIncludes(string shipmentNumber, int tenant)
         {
             return (from record in context.Shipments where record.ShipmentNumber == shipmentNumber && record.Tenant == tenant select record).FirstOrDefault();

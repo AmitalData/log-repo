@@ -118,6 +118,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string CompetitorFields { get; set; }
         public bool IsCreditLimitEnabled { get; set; }
         public double? CreditLimitAmount { get; set; }
+        public double? InsuredcreditLimit { get; set; }
         public double? CreditLimitOpenBalance { get; set; }
         public int? CreditLimitWarningPercentage { get; set; }
         public bool BlockNewInvoiceCreation { get; set; }

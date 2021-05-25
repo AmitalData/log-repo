@@ -115,6 +115,7 @@ namespace WebFreight.Web.DataProviders
         public string ShipperName { get; set; }
         public string ShipperAddress { get; set; }
         public string ShipperReference2 { get; set; }
+        public string ShipperReference1 { get; set; }
         public string ShipperContactName { get; set; }
         public string ShipperContactMobileNumber { get; set; }
         public int? TotalNumberOfPackages { get; set; }
@@ -152,6 +153,7 @@ namespace WebFreight.Web.DataProviders
         public string Reference3 { get; set; }
         public string Reference4 { get; set; }
         public string OnCarriageCarrier { get; set; }
+        public string OnForwardingCarrier { get; set; }
         public string FreightLocation { get; set; }
         public DateTime? LastFreeDate { get; set; }
         public string CustomerContactName { get; set; }

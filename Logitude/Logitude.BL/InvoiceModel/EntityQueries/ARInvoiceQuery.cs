@@ -1447,7 +1447,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              InternalNotes = entity.InternalNotes,
                              InvoiceCurrencyId = entity.InvoiceCurrencyId,
                              InvoiceDate = entity.InvoiceDate,
-                             InvoiceNumber = entity.StatusCode != "DR" && entity.StatusCode != "LL" ? entity.InvoiceNumber : (!string.IsNullOrEmpty(entity.DraftNumber) ? entity.DraftNumber : entity.Id),
+                             InvoiceNumber = entity.StatusCode == "DR" ? entity.DraftNumber : (entity.StatusCode == "LL" ? (!string.IsNullOrEmpty(entity.InvoiceNumber) ? entity.InvoiceNumber : entity.DraftNumber) : entity.InvoiceNumber),
                              DraftNumber = !string.IsNullOrEmpty(entity.DraftNumber) ? entity.DraftNumber : entity.Id,
                              StatusCode = entity.StatusCode,
                              StatusName = entity.Status == null ? "" : entity.Status.Name,
@@ -1560,6 +1560,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              PaidDate = entity.PaidDate,
                              IsFromInterestBatchInvoice =entity .IsFromInterestBatchInvoice,
                              PartnerId = entity.PartnerId,
+                             ShipmentsNumbers = entity.ShipmentsNumbers
                          };
 
             return result;
@@ -1676,6 +1677,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               RegionalTaxPercentage = a.RegionalTaxPercentage,
                                               PaidDate = a.PaidDate,
                                               PartnerId = a.PartnerId,
+                                              ShipmentsNumbers = a.ShipmentsNumbers
                                           }).ToList();
             return invoices;
         }
@@ -1796,6 +1798,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     RegionalTaxPercentage = entityPOCO.RegionalTaxPercentage,
                     PaidDate = entityPOCO.PaidDate,
                     PartnerId = entityPOCO.PartnerId,
+                    ShipmentsNumbers = entityPOCO.ShipmentsNumbers
                 };
 
                 entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;
@@ -1940,16 +1943,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             entityPM.ConsolidationInvoiceNumber = myInvoice.InvoiceNumber;
                         }
                     }
-                }
-
-                foreach (ARInvoiceEntityPM invEntity in entityPM.InvoiceEntities)
-                {
-                    entityPM.ConnectedEntityReferences = entityPM.ConnectedEntityReferences + "," + invEntity.EntityReference;
-                }
-
-                if (entityPM.ConnectedEntityReferences != null)
-                {
-                    entityPM.ConnectedEntityReferences = entityPM.ConnectedEntityReferences.TrimStart(',');
                 }
 
                 //Full Accounting 

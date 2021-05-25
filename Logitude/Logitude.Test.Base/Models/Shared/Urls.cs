@@ -23,14 +23,35 @@
         public static string GlobalZoneViewsGetByFilters = "GlobalZoneViews/GetByFilters";
         public static string StateViewsGetByFilters = "StateViews/GetByFilters";
 
+        public static string SpecialServicesTypesController = "SpecialServicesTypes";
+        public static string SpecialServicesTypeViewsGetByFilters = "SpecialServicesTypeViews/GetByFilters";
+
+        public static string QuoteController = "Quotes";
+        public static string QuoteViewsGetByFilters = "Quoteviews/Getbyfilters";
+
+        //public static string QuotesGetSingle(string id)
+        //{
+        //    return "Quotes/GetSingle?id=" + id;
+        //}
+
+        public static string APInvoicesController = "APInvoices";
+        public static string ARInvoicesController = "ARInvoices";
+        //public static string APInvoiceViewsGetByFilters = "APInvoiceViews/getbyfilters";
+
+
+
 
         #region Shipment Prepare Data URls
+        //locations
         public static string VesselsController = "Vessels";
         public static string IncotermsController = "Incoterms";
+        public static string CreditCardController = "creditcardtypes";
         public static string MoveTypesController = "MoveTypes";
         public static string PackageTypesController = "PackageTypes";
+        public static string ShipmentSubTypesController = "ShipmentSubTypes";
         public static string CurrencyViewsGetByFilters = "CurrencyViews/GetByFilters";
         public static string IncotermViewsGetByFilters = "IncotermViews/GetByFilters";
+        public static string CreditCardTypeViewsGetByFilters = "CreditCardTypeViews/GetByFilters";
         public static string MeasurementViewsGetByFilters = "MeasurementViews/GetByFilters";
         public static string ChargeTypeViewsGetByFilters = "ChargesTypeViews/GetByFilters";
         public static string PackageTypeViewsGetByFilters = "PackageTypeViews/GetByFilters";
@@ -39,8 +60,9 @@
         public static string QuoteStageViewsGetByFilters = "QuoteStageViews/GetByFilters";
         public static string VesselViewsGetByFilters = "VesselViews/GetByFilters";
         public static string MoveTypeViewsGetByFilters = "MoveTypeViews/GetByFilters";
-        #endregion
+        public static string ShipmentSubTypeViewsGetByFilters = "ShipmentSubTypeViews/GetByFilters";
 
+        //partners
         public static string PartnersDomainController = "PartnersDomain/PostPartnerAddress";
         public static string VendorViewsGetByFilters = "VendorViews/GetByFilters";
         public static string AgentViewsGetByFilters = "AgentViews/GetByFilters";
@@ -55,6 +77,8 @@
         public static string CountryCityViewsGetByFilters = "CountryCityViews/GetByFilters";
         public static string CountryCities = "CountryCities";
         public static string ChargesTypes = "ChargesTypes";
+        public static string Airlines = "airlines";
+        #endregion
 
         public static string TenantsGetSingle(int id)
         {
@@ -101,6 +125,11 @@
             return "ARPayments/GetSingle?id=" + id;
         }
 
+        public static string AirlineGetSingle(string id)
+        {
+            return "airlines/getsingle?id=" + id;
+        }
+
         public static string CommonDomainGetPortCopyToCurrentTenant(string portId)
         {
             return "CommonDomain/GetPortCopyToCurrentTenant?entityId=" + portId;
@@ -114,6 +143,15 @@
         public static string CommonDomainGetCopyCurrencyToTenant(string currencyId)
         {
             return "CommonDomain/GetCopyCurrencyToTenant?currencyId=" + currencyId + "&CurrencyRate=4&RateDate=2019-6-24%2015:2:53.564";
+        }
+
+        public static string QuoteGetSingle(string id)
+        {
+            return "Quotes/GetSingle?id=" + id;
+        }
+        public static string QuoteGetSingleList(string id)
+        {
+            return "Quoteviews/getsingle/?id=" + id;
         }
     }
 }

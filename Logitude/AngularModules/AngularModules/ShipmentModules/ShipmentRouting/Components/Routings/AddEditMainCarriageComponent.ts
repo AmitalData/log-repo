@@ -41,6 +41,7 @@ export class AddEditMainCarriageComponent extends BaseComponent {
     public FatherComponent: RoutingsTabComponent;
     public LabelWidth: number = 100;
     private CurrentSession = SessionLocator.SelectedSession;
+    private oldCountryId: string = null;
     constructor() {
         super();
         this.InitServices();
@@ -66,6 +67,7 @@ export class AddEditMainCarriageComponent extends BaseComponent {
         this.ObjectTableName = args['ObjectTableName'];
         this.FatherComponent = args['FatherComponent'];
         this.LabelWidth = this.EntityPM.TransportModeId == "I" ? 115 : 100;
+        this.oldCountryId = this.EntityPM.ToCountryId;
 
         if (this.EntityPM.TransportModeId == "A") {
             this.LabelWidth = 80;
@@ -1776,6 +1778,7 @@ export class AddEditMainCarriageComponent extends BaseComponent {
             }
 
             var isConfirmingPorts: boolean = false;
+            var confirmationMessage: string = null
             if (this.EntityPM.ShipmentLevelCode == "C" && this.EntityPM.ShipmentConsoleShipments.length > 0) {
                 if (this.EntityPM.OriginMainCarriageFromPortId != this.EntityPM.MainCarriageFromPortId) {
                     isConfirmingPorts = true;
@@ -1783,16 +1786,39 @@ export class AddEditMainCarriageComponent extends BaseComponent {
 
                 else if (this.EntityPM.OriginFinalDestinationPortId != this.EntityPM.MainCarriageFinalDestinationPortId) {
                     isConfirmingPorts = true;
-                }                
+                }
+
+                if (isConfirmingPorts) {
+                    confirmationMessage = "Updating the Master shipment ports will update the house shipment accordingly";
+                }
+            }
+
+            var deleteProductItems: boolean = false
+            if (this.oldCountryId != this.EntityPM.ToCountryId) {
+                if (this.EntityPM.ShipmentProductItems.length > 0) {
+                    isConfirmingPorts = true;
+                    deleteProductItems = true;
+
+                    if (AppTool.IsNullOrEmpty(confirmationMessage)) {
+                        confirmationMessage = "All product items in this shipment will be deleted";
+                    }
+
+                    else {
+                        confirmationMessage = confirmationMessage + ", " + "All product items in this shipment will be deleted";
+                    }
+                }
             }
 
             if (isConfirmingPorts) {
                 var confirmWindow = new ConfirmWindow();
                 confirmWindow.Title = "Ports Changed";
-                confirmWindow.Show("Updating the Master shipment ports will update the house shipment accordingly");
+                confirmWindow.Show(confirmationMessage);
                 confirmWindow.WindowClosed.subscribe((event: any) => {
                     if (confirmWindow.Yes) {
-                       
+                        if (deleteProductItems) {
+                            this.EntityPM.ShipmentProductItems = [];
+                        }
+
                         if (!this.SaveCompletedEvent) {
                             this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
 
@@ -1800,8 +1826,11 @@ export class AddEditMainCarriageComponent extends BaseComponent {
                                 this.SaveCompletedEvent = null;
 
                                 if (isSaveSuccess) {
-
                                     this.CurrentSession.SessionEvent.emit("ReloadHouses");
+
+                                    if (deleteProductItems) {
+                                        this.CurrentSession.FireEvent("ShipmentProductItemsDeleted");
+                                    }
 
                                     this.CloseOk();
                                 }

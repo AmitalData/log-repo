@@ -1,0 +1,16 @@
+<div class="log-chips" [class.rtl]="isRTL">
+    <div class="chips-selected-items" >
+        <div class="chips-selected-item" *ngFor="let item of SelectedItems" (click)="DeselectItem(item)">
+            {{item[DisplayFieldName]}}
+            <div class="close-icon">&#10006;</div>
+        </div>
+    </div>
+    <div class="chips-combobox">
+        <ComboBox
+            [ItemsSource]="Options"
+            [Binding]="DisplayFieldName"
+            [HideSelectedText]="true"
+            [WaterMark]="'Select...'"
+            (SelectedItemChanged)="ItemSelected($event)"></ComboBox>
+    </div>
+</div>

@@ -96,7 +96,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         DeliveryNotes, 
 	         DeliveryExceptionReason, 
 	         GrossWeightUnitCode, 
-	         ForwardingShipmentNumber,
+	         ForwardingShipmentNumber, 
+	         ShipmentTypeCode,
 	      }
 
 
@@ -185,7 +186,13 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         DeliveryNotes, 
 	         DeliveryExceptionReason, 
 	         GrossWeightUnitCode, 
-	         ForwardingShipmentNumber,
+	         ForwardingShipmentNumber, 
+	         ShipmentTypeCode, 
+	         CustomerEnglishName, 
+	         CustomerLocalName, 
+	         FromPortCode, 
+	         ToPortCode, 
+	         NumberOfPackages,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -563,6 +570,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             {
 				entityPOCO.ForwardingShipmentNumber = entityPM.ForwardingShipmentNumber;
 			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentTypeCode))
+            {
+				entityPOCO.ShipmentTypeCode = entityPM.ShipmentTypeCode;
+			}
 			}
 
 		public void POCOToPM(CargoTrackingShipmentPM entityPM, CargoTrackingShipment entityPOCO)
@@ -874,9 +886,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AssignedTruckerEstimationDate))
-			{
-				entityPM.AssignedTruckerEstimationDate = entityPOCO.AssignedTruckerEstimationDate;
-
+            {
+					entityPM.AssignedTruckerEstimationDate = entityPOCO.AssignedTruckerEstimationDate;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AssignedTruckerNotes))
@@ -942,6 +953,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ForwardingShipmentNumber))
             {
 					entityPM.ForwardingShipmentNumber = entityPOCO.ForwardingShipmentNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ShipmentTypeCode))
+            {
+					entityPM.ShipmentTypeCode = entityPOCO.ShipmentTypeCode;
             }
 
 		}
@@ -1318,6 +1334,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForwardingShipmentNumber))
             {
                 oldEntityPM.ForwardingShipmentNumber = entityPM.ForwardingShipmentNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentTypeCode))
+            {
+                oldEntityPM.ShipmentTypeCode = entityPM.ShipmentTypeCode;
             }
 			
 		}

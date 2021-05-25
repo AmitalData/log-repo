@@ -26,7 +26,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             SetFieldsForCustomShipment(tableRow);
             SetGrossWeightUnit(tableRow);
             SetCurrentMilestone(tableRow);
+            SetShipmentTypeCode(tableRow);
         }
+
+       
 
         private static void SetCreateDate(DataRow tableRow)
         {
@@ -478,6 +481,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
 
 
         }
- 
+
+        private static void SetShipmentTypeCode(DataRow tableRow)
+        {
+            tableRow.SetField("ShipmentTypeCode", tableRow["ShipmentTypeId"]);
+        }
+
     }
 }

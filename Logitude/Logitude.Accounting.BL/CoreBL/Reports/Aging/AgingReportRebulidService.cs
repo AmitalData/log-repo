@@ -244,9 +244,9 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 var orderLessThanExclusive = lessThan; ;//.AddMonths(-1);
                 var myorderLessThanExclusive = new DateTime(orderLessThanExclusive.Year, orderLessThanExclusive.Month, 1);
                 var listLessThanExclusivePeriods = new List<DateTime>() { orderLessThanExclusive };
-
+                listPeriods.Add(graterThen_OpenTransactionsFutureDueDate);
                 List<PeriodM> dummiesPeriodsList = BuildDummiesPeriod(listPeriods, myorderLessThanExclusive, listLessThanExclusivePeriods);
-
+                
 
                 //var dummiesWithoutDBRecord=  dummiesPeriodsList.Where(dummy => dbList.Any(db => db.AccountId != dummy.AccountId));
                 var DBAndDummies = //dummiesWithoutDBRecord.Union(dbList);
@@ -330,7 +330,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
         
 
-        internal void RebuildGLAccountAgingData()
+        public List<GLAccountAgingDataPM> RebuildGLAccountAgingData()
         {
             using (var tran = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(5)))
             {
@@ -378,6 +378,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 us.UpdateMulti(notEqualPMs, new List<GLAccountAgingDataPM>(), new EntityPM(), false);
                 _AccountingContext.SaveChanges();
                 tran.Complete();
+
+                return notEqualPMs;
             }
 
 
@@ -419,12 +421,19 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                     Tenant = tenant,
                     TotalOpenTransactions = listperiodMs.Sum(r => r.TotalOpenTransactions),
                     PeriodPast = listperiodMs.Skip(0).First().Total,
-                    Period0 = listperiodMs.Skip(1).First().Total,
-                    Period1 = listperiodMs.Skip(2).First().Total,
-                    Period2 = listperiodMs.Skip(3).First().Total,
-                    Period3 = listperiodMs.Skip(4).First().Total,
-                    Period4 = listperiodMs.Skip(5).First().Total,
-                    Period5 = listperiodMs.Skip(6).First().Total,
+                    //Period0 = listperiodMs.Skip(1).First().Total,
+                    //Period1 = listperiodMs.Skip(2).First().Total,
+                    //Period2 = listperiodMs.Skip(3).First().Total,
+                    //Period3 = listperiodMs.Skip(4).First().Total,
+                    //Period4 = listperiodMs.Skip(5).First().Total,
+                    //Period5 = listperiodMs.Skip(6).First().Total,
+                    Period5 = listperiodMs.Skip(1).First().Total,
+                    Period4 = listperiodMs.Skip(2).First().Total,
+                    Period3 = listperiodMs.Skip(3).First().Total,
+                    Period2 = listperiodMs.Skip(4).First().Total,
+                    Period1 = listperiodMs.Skip(5).First().Total,
+                    Period0 = listperiodMs.Skip(6).First().Total,
+
                     PeriodFuture = listperiodMs.Skip(7).First().Total,
 
                 };
@@ -974,12 +983,19 @@ _Param.AgingForDate.Date, false, true, true, false);
                 AccountId = entityPM.AccountId,
                 Tenant = entityPM.Tenant,
                 PeriodPast = myLess == null ? 0 : myLess.Total * multi,
-                Period0 = mainPeriods.Skip(0).First().Total* multi,
+                Period0 = mainPeriods.Skip(0).First().Total * multi,
                 Period1 = mainPeriods.Skip(1).First().Total * multi,
                 Period2 = mainPeriods.Skip(2).First().Total * multi,
                 Period3 = mainPeriods.Skip(3).First().Total * multi,
                 Period4 = mainPeriods.Skip(4).First().Total * multi,
                 Period5 = mainPeriods.Skip(5).First().Total * multi,
+                //Period5 = mainPeriods.Skip(0).First().Total * multi,
+                //Period4 = mainPeriods.Skip(1).First().Total * multi,
+                //Period3 = mainPeriods.Skip(2).First().Total * multi,
+                //Period2 = mainPeriods.Skip(3).First().Total * multi,
+                //Period1 = mainPeriods.Skip(4).First().Total * multi,
+                //Period0 = mainPeriods.Skip(5).First().Total * multi,
+
                 PeriodFuture = myFuture == null ? 0 : myFuture.Total * multi,
                 TotalOpenTransactions = totalClose * multi,
             };
@@ -1140,9 +1156,15 @@ _Param.AgingForDate.Date, false, true, true, false);
                 var reconciliationQueryService = new ReconciliationQueryService(accountingContext);
                 var reconciliationPM=reconciliationQueryService.GetSingle(reconcileId, true, false);
                 var reconciliationUpdateAgingService = new ReconciliationUpdateAgingService(accountingContext);
-                var deltaPM=reconciliationUpdateAgingService.GetDelta(false, reconciliationPM);
-                reconciliationUpdateAgingService.UpdateDelta(deltaPM, false);
-                accountingContext.SaveChanges();
+                var deltaGLAccountAgingDataPM =reconciliationUpdateAgingService.GetDelta(false, reconciliationPM);
+                //reconciliationUpdateAgingService.UpdateDelta(deltaPM, false);
+                //accountingContext.SaveChanges();
+                if (!string.IsNullOrWhiteSpace(deltaGLAccountAgingDataPM.AccountId))
+                {
+                    reconciliationUpdateAgingService.UpdateDelta(deltaGLAccountAgingDataPM, false);
+                    accountingContext.SaveChanges();// MUST SAVE DUE NEW CONTEXT !!!
+
+                }
                 scope.Complete();
 
             }

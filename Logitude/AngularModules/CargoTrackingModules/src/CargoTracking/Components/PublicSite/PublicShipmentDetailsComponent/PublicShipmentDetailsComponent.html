@@ -198,7 +198,7 @@
                         <li *ngFor="let item of CompletedMilestoneFields" [class.hide]='!item.Date'>
                             <ng-container *ngIf="item.Date">
                                 <div class="tick"> <img src="./assets/images/icons/tick.png" alt=""> </div>
-                                <div class="caption" style="width: fit-content;max-width: 205px;">{{item.Name}}</div>
+                                <div class="caption" style="width: 205px;">{{item.Name}}</div>
                                 <div class="date" style="width: 130px;">{{item.Date | date: 'dd/MM/yyyy, HH:mm'}}</div>
                                 <div class="desc" style="width: calc(100% - 450px); padding: 0;" [attr.title]="item.Notes">{{item.Notes}}</div>
                             </ng-container>
@@ -233,7 +233,7 @@
 
                 <div class="field">
                     <div class="label">Quantity</div>
-                    <div class="value">{{Shipment.PackagesQuantity!=null?Shipment.PackagesQuantity:0}}</div>
+                    <div class="value">{{Shipment.NumberOfPackages!=null?Shipment.NumberOfPackages:0}}</div>
                 </div>
 
 

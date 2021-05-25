@@ -221,6 +221,7 @@ namespace WebFreight.Web.ReportsWebServices
             this.MapShipmentCutoffDate();
             this.MapShipmentFreightLocation();
             this.MapShipmentOnCarriage();
+            this.MapShipmentOnForwarding();
             this.MapShipmentShipper();
             this.MapShipmentConsignee();
             this.MapShipmentCustomer();
@@ -326,56 +327,80 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
         }
+        private void MapShipmentOnForwarding()
+        {
+            if (shipment.OnForwardingFromPortId != null && shipment.OnForwardingToPortId != null)
+            {
+                if (shipment.OnForwardingCarrierId != null)
+                {
+                    dataProvider.OnForwardingCarrier = shipment.OnForwardingCarrierName;
+                }
+            }
+        }
         private void MapShipmentShipper()
         {
             if (!string.IsNullOrEmpty(shipment.ShipperId))
             {
-                dataProvider.ClientReferenceNumber = shipment.CustomerReference1 != null ? shipment.CustomerReference1 : "";
-                dataProvider.ShipperReference2 = shipment.ShipperReference2;
-
-                Card card = CardRepository.GetSingleCard(shipment.ShipperId, tenant, true);
-                if (card != null)
+                this.MapShipperReferences();
+                this.MapShipperAddress();
+                this.MapShipperContact();
+                this.MapShipperCard();
+            }
+        }
+        private void MapShipperReferences()
+        {
+            dataProvider.ClientReferenceNumber = shipment.CustomerReference1 != null ? shipment.CustomerReference1 : "";
+            dataProvider.ShipperReference2 = shipment.ShipperReference2;
+            dataProvider.ShipperReference1 = shipment.ShipperReference1;
+        }
+        private void MapShipperAddress()
+        {
+            if (!string.IsNullOrEmpty(shipment.ShipperAddressId))
+            {
+                Address address = addressRepository.GetSingleAddress(shipment.ShipperAddressId, tenant);
+                if (address != null)
                 {
-                    dataProvider.ShipperName = card.EnglishName;
-                    dataProvider.ShipperVATNumber = card.VatNumber;
+                    dataProvider.ShipperAddress = DataProviders.General.GetAddress(address);
 
-                    if (!string.IsNullOrEmpty(shipment.ShipperAddressId))
+                    if (!string.IsNullOrEmpty(address.PhoneNumber) || !string.IsNullOrEmpty(address.FaxNumber))
                     {
-                        Address address = addressRepository.GetSingleAddress(shipment.ShipperAddressId, tenant);
-                        if (address != null)
-                        {
-                            dataProvider.ShipperAddress = DataProviders.General.GetAddress(address);
-
-                            if (!string.IsNullOrEmpty(address.PhoneNumber) || !string.IsNullOrEmpty(address.FaxNumber))
-                            {
-                                dataProvider.ShipperAddress += Environment.NewLine;
-                            }
-
-                            if (!string.IsNullOrEmpty(address.PhoneNumber))
-                            {
-                                dataProvider.ShipperAddress += "Tel: " + address.PhoneNumber + " ";
-                            }
-
-                            if (!string.IsNullOrEmpty(address.FaxNumber))
-                            {
-                                dataProvider.ShipperAddress += "Fax: " + address.FaxNumber;
-                            }
-                        }
+                        dataProvider.ShipperAddress += Environment.NewLine;
                     }
 
-                    if (!string.IsNullOrEmpty(shipment.ShipperContactId))
+                    if (!string.IsNullOrEmpty(address.PhoneNumber))
                     {
-                        Contact contact = ContactRepository.GetSingleContact(shipment.ShipperContactId, tenant, true);
-                        if (contact != null)
-                        {
-                            dataProvider.ShipperContactName = contact.EnglishName;
-                            dataProvider.ShipperContactMobileNumber = contact.Mobile;
-                        }
+                        dataProvider.ShipperAddress += "Tel: " + address.PhoneNumber + " ";
                     }
 
+                    if (!string.IsNullOrEmpty(address.FaxNumber))
+                    {
+                        dataProvider.ShipperAddress += "Fax: " + address.FaxNumber;
+                    }
                 }
             }
         }
+        private void MapShipperContact()
+        {
+            if (!string.IsNullOrEmpty(shipment.ShipperContactId))
+            {
+                Contact contact = ContactRepository.GetSingleContact(shipment.ShipperContactId, tenant, true);
+                if (contact != null)
+                {
+                    dataProvider.ShipperContactName = contact.EnglishName;
+                    dataProvider.ShipperContactMobileNumber = contact.Mobile;
+                }
+            }
+        }
+        private void MapShipperCard()
+        {
+            Card card = CardRepository.GetSingleCard(shipment.ShipperId, tenant, true);
+            if (card != null)
+            {
+                dataProvider.ShipperName = card.EnglishName;
+                dataProvider.ShipperVATNumber = card.VatNumber;
+            }
+        }
+
         private void MapShipmentConsignee()
         {
             if (!string.IsNullOrEmpty(shipment.ConsigneeId))

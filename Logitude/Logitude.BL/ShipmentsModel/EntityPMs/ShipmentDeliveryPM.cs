@@ -168,7 +168,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         public string ParentPickUpDeliveryId { get; set; }
         public int? ChildDeliveryIndex { get; set; }
-        
+        public string BookingConfirmationNumber { get; set; }
+
         private List<ShipmentPickUpDeliveryPackagePM> shipmentPickUpDeliveryPackages;
         [Include]
         [Composition]
@@ -199,5 +200,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         public int SplitIndex { get; set; }
         public bool IsFromSplit { get; set; }
+        public string StandaloneShipmentId { get; set; }
+        public string StandaloneShipmentNumber { get; set; }
     }
 }

@@ -87,9 +87,13 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
             this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "AWBWizardClosed") {
+                    this.entityArgs.EditComponent.ReloadEntityPM();
+                }
+
+                else if (s == "RefreshPackagesTabFromAWBWizard") {
+                    this.ItemsSource = new ObservableCollection([]);
                     this.SetUIProperties();
                     this.SetGenerateData();
-                    this.BuildItemsSource();
                 }
             });
 
@@ -136,9 +140,6 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                     this.DirectionId = this.EntityPM.DirectionId;
 
                     this.OnResourcesReady();
-                    //this.SetUIProperties();
-                    //this.SetGenerateData();
-                    //this.BuildItemsSource();
                 }
             });
 
@@ -359,8 +360,13 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     public IsTotalsFieldEnabled: boolean = true;
     public IsAddInsideButtonEnabled: boolean = false;
     SetUIProperties() {
+        if (this.EntityPM.IsMultipleCommodities) {
+            this.IsEditingEnabled = false;
+        }
 
-        this.IsEditingEnabled = ShipmentTool.IsEditingEnabled(this.EntityPM);
+        else {
+            this.IsEditingEnabled = ShipmentTool.IsEditingEnabled(this.EntityPM);
+        }
 
         this.UIProperties.SetEnabled("DimensionsUnitCode", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("GrossWeightUnitCode", this.ObjectTableName, this.IsEditingEnabled);
@@ -384,6 +390,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         this.UIProperties.SetEnabled("AWBCommodityItemNumber", this.ObjectTableName, isTotalsFieldEnabled && !this.EntityPM.IsMultipleCommodities);
         this.SetUIProperties_DimFactor();
         this.SetUIProperties_DimensionsUnitCode();
+
     }
     SetUIProperties_InsideButton() {
         var isButtonEnabled = false;
@@ -424,13 +431,20 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     }
 
     BuildItemsSource() {
-        var itemsCollection: ShipmentPackageItem[] = [];
+        if (!this.EntityPM.IsMultipleCommodities) {
+            var itemsCollection: ShipmentPackageItem[] = [];
 
-        this.EntityPM.ShipmentPackages.forEach((item) => {
-            itemsCollection.push(new ShipmentPackageItem(item, this));
-        })
+            this.EntityPM.ShipmentPackages.forEach((item) => {
+                itemsCollection.push(new ShipmentPackageItem(item, this));
+            })
 
-        this.ItemsSource.InsertCollection(itemsCollection);
+            this.ItemsSource.InsertCollection(itemsCollection);
+        }
+
+        else {
+            this.ItemsSource = new ObservableCollection([]);
+        }
+
         this.SetGenerateData();
     }
 
@@ -980,7 +994,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     }
 
     SetGenerateData() {
-        this.IsGenerateControlVisible = this.EntityPM.ShipmentPackages.length == 0 ? true : false;
+        this.IsGenerateControlVisible = !this.EntityPM.IsMultipleCommodities && this.EntityPM.ShipmentPackages.length == 0 ? true : false;
         if (this.IsGenerateControlVisible) {
 
             var count = 0;

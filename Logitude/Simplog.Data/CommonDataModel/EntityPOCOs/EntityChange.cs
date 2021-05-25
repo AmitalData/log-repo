@@ -46,6 +46,13 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string SendDocumentAutomationFailedXml { get; set; }
         public string SendDocumentAutomationSsucceedXml { get; set; }
 
+
+        public string CreateTaskAutomationFailedXml { get; set; }
+        public string CreateTaskAutomationSsucceedXml { get; set; }
+        
+
+
+
         public int ExecutionTime { get; set; }
 
         [ForeignKey("CreateByUserId")]

@@ -160,6 +160,7 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
                 this.warehouseReleasePM.DirectionId = this.ShipmentPM.DirectionId;
                 this.warehouseReleasePM.ConnectedTo = args.ConnectedTo;
                 this.warehouseReleasePM.ChildEntityReference = args.ChildEntityReference;
+                this.MapConnectedShipmentFields(args.ConnectedTo);
             } else {
                 this.warehouseReleasePM.ShipmentId = args.ShipmentId;
                 this.warehouseReleasePM.ConnectedTo = args.ConnectedTo;
@@ -190,7 +191,21 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
         }
     }
 
+    MapConnectedShipmentFields(connectedTo: string) {
+        if (connectedTo == "Shipment") {
+            this.MapMasterShipmentNumber();
+        }
+    }
    
+    MapMasterShipmentNumber() {
+        if (this.ShipmentPM.ShipmentLevelCode == "H") {
+            this.warehouseReleasePM.MasterShipmentNumber = this.ShipmentPM.MasterShipmentNumber;
+        }
+        else {
+            this.warehouseReleasePM.MasterShipmentNumber = this.ShipmentPM.ShipmentNumber;
+        }
+    }
+
     SetDefultWarehouseValue(args: any) {
         if (!AppTool.IsNullOrEmpty(args.WarehouseId)) this.warehouseReleasePM.WarehouseId = args.WarehouseId;
         else if (this.ShipmentPM && this.ShipmentPM.WarehouseLegWarehouseId) this.warehouseReleasePM.WarehouseId = this.ShipmentPM.WarehouseLegWarehouseId;
@@ -260,6 +275,7 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
 
         if (this.ShipmentPM) {
             this.warehouseReleasePM.ShipmentNumber = shipment.ShipmentNumber;
+            this.MapConnectedShipmentFields("Shipment");
         }
 
 

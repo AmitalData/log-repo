@@ -17,6 +17,7 @@ export var DSVChangePasswordComponent = (function (_super) {
         this.BackgroundImage = "";
         this.ForgetPasswordImage = "";
         this.MainLogo = "";
+        this.MainColor = null;
     }
     DSVChangePasswordComponent.prototype.ngOnInit = function () {
         this.GetPrivateLabelsData();
@@ -25,6 +26,7 @@ export var DSVChangePasswordComponent = (function (_super) {
         this.BackgroundImage = BrandingDataService.GetImage("BackgroundImage");
         this.MainLogo = BrandingDataService.GetImage("MainLogo");
         this.ForgetPasswordImage = BrandingDataService.GetImage("ForgetPasswordImage");
+        this.MainColor = BrandingDataService.GetColor("MainColor");
     };
     DSVChangePasswordComponent.decorators = [
         { type: Component, args: [{

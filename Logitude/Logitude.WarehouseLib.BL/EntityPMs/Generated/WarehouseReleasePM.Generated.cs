@@ -1366,6 +1366,29 @@ namespace Logitude.WarehouseLib.BL.EntityPMs
 			
 		 }
 	   }
+	  private string masterShipmentNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string MasterShipmentNumber  
+	   {
+	    
+	     get
+		{
+		   return masterShipmentNumber;
+		 }
+		 set
+		 {
+		   if(masterShipmentNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MasterShipmentNumber",OldValue=masterShipmentNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   masterShipmentNumber=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -854,7 +854,7 @@ namespace WebFreight.Web.Helpers
                     }
                 case "ERLR":
                     {
-                        ExternalReconciliationLinesReportManager ExternalReconciliationManager = new ExternalReconciliationLinesReportManager(filters, reportFliter.tenant);
+                        ExternalReconciliationLinesReportLoader ExternalReconciliationManager = new ExternalReconciliationLinesReportLoader(filters, reportFliter.tenant);
                         dataProvider = ExternalReconciliationManager.GetData();
                         break;
                     }
@@ -2344,7 +2344,7 @@ namespace WebFreight.Web.Helpers
                 Tenant = reportFliter.tenant,
                 StatusCode = "W",
                 ReportId = reportFliter.ReportId,
-                ReportTemplateId = reportFliter.DefaultTemplateId,
+                ReportTemplateId = string.IsNullOrWhiteSpace(reportFliter.DefaultTemplateId) ? null : reportFliter.DefaultTemplateId,
                 DisablePreview = reportFliter.DisablePreview,
 
             };

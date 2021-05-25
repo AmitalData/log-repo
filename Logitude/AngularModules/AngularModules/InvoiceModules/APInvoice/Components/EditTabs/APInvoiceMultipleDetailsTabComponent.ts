@@ -39,7 +39,6 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
     public isRTL: boolean = false;
     public apiQueryFilters: ApiQueryFilters = null;
     private CurrentSession = SessionLocator.SelectedSession;
-
     constructor(private entityArgs: EntityArgs) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
@@ -91,6 +90,13 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
     private myPaymentTermListService: PaymentTermListService;
     InitializeServices() {
         this.myPaymentTermListService = new PaymentTermListService();
+    }
+
+    SetShipmentSearchApiQueryFilter(shipmentsLevelCods: string) {
+        this.apiQueryFilters = new ApiQueryFilters();
+        this.apiQueryFilters.PageIndex = 0;
+        this.apiQueryFilters.PageSize = 10;
+        this.apiQueryFilters.addAdditionalFilter("ShipmentLevelCode", shipmentsLevelCods, null, null, "InList", true, true, false, "string");
     }
 
     public IsEditingEnabled: boolean = false;
@@ -640,6 +646,7 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
                     this.EntityPM.AddAPInvoiceMultipleShipmentPM(itemPM);
                     this.BuildItemsSource();
                     this.ComputeTotals();
+                    this.ComputeShipmentsNumbers();
                 }
             }
         }
@@ -683,6 +690,7 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
 
                 if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
                     this.BuildItemsSource();
+                    this.ComputeShipmentsNumbers();
                 }
 
                 else {
@@ -708,21 +716,16 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
     LevelCodeitemClicked(itemValue: string) {
         if (this.LevelCodeSelectedValue != itemValue) {
             this.LevelCodeSelectedValue = itemValue;
-
+            var shipmentsLevelCods = "";
             if (itemValue == "All") {
                 this.apiQueryFilters = null;
-            } else {
-                this.apiQueryFilters = new ApiQueryFilters();
-                this.apiQueryFilters.PageIndex = 0;
-                this.apiQueryFilters.PageSize = 10;
-
-                if (itemValue == "MasterAndDirect") {   
-                    this.apiQueryFilters.addAdditionalFilter("ShipmentLevelCode", "D,C", null, null, "InList", true, true, false, "string");
-                } else if (itemValue == "HouseAndDirect") {
-                        this.apiQueryFilters.addAdditionalFilter("ShipmentLevelCode", "D,H", null, null, "InList", true, true, false, "string");
-                } 
-            }
-            
+            } else if (itemValue == "MasterAndDirect") {
+                shipmentsLevelCods = "D,C";
+                this.SetShipmentSearchApiQueryFilter(shipmentsLevelCods);
+            } else if (itemValue == "HouseAndDirect") {
+                shipmentsLevelCods = "D,H";
+                this.SetShipmentSearchApiQueryFilter(shipmentsLevelCods);
+            }           
         }
     }
 
@@ -736,6 +739,25 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
         }
     }
 
+    ComputeShipmentsNumbers() {
+        var shipmentsNumbers: string = "";
+
+        this.ItemsSource.forEach(item => {
+            if (AppTool.IsNullOrEmpty(shipmentsNumbers)) {
+                shipmentsNumbers = item.ShipmentNumber;
+            }
+
+            else {
+                shipmentsNumbers = shipmentsNumbers + ", " + item.ShipmentNumber;
+            }
+        });
+
+        if (shipmentsNumbers.length > 1000) {
+            shipmentsNumbers = shipmentsNumbers.substring(0, 1000);
+        }
+
+        this.EntityPM.ShipmentsNumbers = shipmentsNumbers;
+    }
 }
 
 export class MultipleShipmentLine {

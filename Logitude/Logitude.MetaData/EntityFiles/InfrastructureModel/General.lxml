@@ -35,10 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-
-
-  Code="&quot;3029&quot;"
-
+  Code="&quot;5a7f&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -4631,12 +4628,6 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Accounting.O.MoreThanPaymentCheque&quot;"
-      DefaultText="&quot;There are more than one cheques for this payment&quot;"
-      LocalDefaultText="&quot;קיימת יותר מהמחאה אחת עבור קבלה זו&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
       Code="&quot;Accounting.O.CantIncludeTwoOrMorePayment&quot;"
       DefaultText="&quot;Can’t include more than one payment in the same reconciliation&quot;"
       LocalDefaultText="&quot;לא ניתן לכלול יותר מקבלה אחת באותה התאמה&quot;"
@@ -5073,6 +5064,23 @@
       DefaultText="&quot;Last login&quot;"
       LocalDefaultText="&quot;תאריך חיבור אחרון&quot;"
       TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MH.ReportExecutionLogs&quot;"
+      DefaultText="&quot;Report Execution Logs&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.M.MoreThanPaymentCheque&quot;"
+      DefaultText="&quot;There are more than one Cheque for this payment. Click on Edit to view them&quot;"
+      LocalDefaultText="&quot;ישנם מספר שקים לקבלה זאת, לחץ על כפתור &quot;עריכה&quot; כדי להציגם&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.M.MoreThanChequeWithTheSameChequeNumber&quot;"
+      DefaultText="&quot;Can't Add more than one cheque with the same cheque number &quot;"
+      LocalDefaultText="&quot;לא ניתן להוסיף שיק עם מספר זהה לשיק שככבר הוקלד&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
@@ -6713,7 +6721,8 @@
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      IsBusinessUnitEnabled="false"
+      ToggleCode="&quot;TAR&quot;" />
     <Feature
       Code="&quot;CREATETENANT&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
@@ -7065,7 +7074,6 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
-
     <Feature
       Code="&quot;ChangeLocalProfitCurrency&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
@@ -7075,7 +7083,6 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
-
     <Feature
       Code="&quot;DailyCurrenciesRates&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
@@ -7085,6 +7092,23 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
-
+    <Feature
+      Code="&quot;REPORTEXECUTIONLOGS&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.REPORTEXECUTIONLOGS&quot;"
+      FeatureDefaultText="&quot;Report Execution Logs&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;DefaultRatios&quot;"
+      FeatureTypeCode="&quot;OTH&quot;"
+      FeatureTextCodeCode="&quot;General.Features.DefaultRatios&quot;"
+      FeatureDefaultText="&quot;Default Ratios&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>

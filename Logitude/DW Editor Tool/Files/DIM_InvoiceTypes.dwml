@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<entity Id="&quot;c0c18be8-3dce-498d-a67f-6e1ed84b27fe&quot;" Code="&quot;DIM_InvoiceTypes&quot;" Name="&quot;DIM_InvoiceTypes&quot;" TypeCode="&quot;Dimension&quot;" IsClosed="true" DefaultFilterBy="&quot;[Name]&quot;" HasPivotColumn="false" HasCustomFields="false" MaxNumberOfCustomFields="0">
+  <fields>
+    <field Id="&quot;dcaa79ba-bcff-4fd7-a9f3-7eea7afde5ca&quot;" Code="&quot;[Name]&quot;" Name="&quot;Name&quot;" DataTypeCode="&quot;Text&quot;" IsRequired="true" MinLength="0" MaxLength="20" IsPrimaryKey="true" IsMeasurement="false" DisplayInQueryBuilder="true" HideTree="false" CannotFilter="true" IsCustom="false" DontDisplayInView="false" IsMultipleSelection="false" />
+    <field Id="&quot;c698b42f-c43e-45bf-869e-2044bf104b6d&quot;" Code="&quot;[Code]&quot;" Name="&quot;Code&quot;" DataTypeCode="&quot;Text&quot;" IsRequired="true" MinLength="0" MaxLength="2" IsPrimaryKey="false" IsMeasurement="false" DisplayInQueryBuilder="true" LOVAdditionalColumns="&quot;[Name]&quot;" HideTree="false" CannotFilter="false" IsCustom="false" DontDisplayInView="false" IsMultipleSelection="false" />
+    <field Id="&quot;98b29f85-6f57-438e-a6cf-e4f0646ef810&quot;" Code="&quot;[Automatic Last Update Date]&quot;" Name="&quot;Last Update Date&quot;" DataTypeCode="&quot;DateTime&quot;" IsRequired="false" MinLength="0" MaxLength="0" IsPrimaryKey="false" IsMeasurement="false" DisplayInQueryBuilder="true" HideTree="false" CannotFilter="false" IsCustom="false" DontDisplayInView="false" IsMultipleSelection="false" />
+  </fields>
+</entity>

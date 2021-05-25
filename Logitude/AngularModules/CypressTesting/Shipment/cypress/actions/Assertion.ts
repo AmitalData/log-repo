@@ -3,6 +3,7 @@ import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion"
 import { AMANACStatusDetails } from "../models/AMANACStatusDetails";
 import * as Actions from "../actions/Actions"
+import * as BaseActions from "../../../Base/cypress/actions/Actions"
 
 export function AssertAMANAandCustomsTransmissionsStatuses(Status: string){
     cy.Click(ShipmentSelectors.CustomsTab, null);
@@ -14,14 +15,22 @@ export function AssertAMANAandCustomsTransmissionsStatuses(Status: string){
 
 export function AssertAMANAandCustomsTransmissionsStatusDetails(amanacStatusDetails: AMANACStatusDetails){
     cy.Click(ShipmentSelectors.CustomsTab, null);
-    var currentDate = Actions.FormatDate(amanacStatusDetails.LastSent);
+    //var currentDate = Actions.FormatDate(amanacStatusDetails.LastSent);
     BaseAssertion.AssertElementContain(ShipmentSelectors.StatusValue, amanacStatusDetails.Status);
-    BaseAssertion.AssertElementContain(ShipmentSelectors.StatusDate, currentDate);
-    BaseAssertion.AssertElementContain(ShipmentSelectors.UserName, amanacStatusDetails.SentBy);
-
+   //BaseAssertion.AssertElementContain(ShipmentSelectors.StatusDate, currentDate);
+    BaseActions.AssertDateOneOf(ShipmentSelectors.StatusDate)
+    cy.get(BaseSelectors.LoggedUser).invoke('text').then(text => {
+        var SentBy = text.replace(/\s/g, "");
+        BaseAssertion.AssertElementContain(ShipmentSelectors.UserName, SentBy);
+        })
+    
     cy.Click(BaseSelectors.Button, BaseSelectors.ContainsSendtoCustoms);
     BaseAssertion.AssertElementContain(ShipmentSelectors.CustomsTransmissionsStatusValue, amanacStatusDetails.Status);
-    BaseAssertion.AssertElementContain(ShipmentSelectors.CustomsTransmissionsStatusDate, currentDate);
-    BaseAssertion.AssertElementContain(ShipmentSelectors.CustomsTransmissionsUserName, amanacStatusDetails.SentBy);
+   // BaseAssertion.AssertElementContain(ShipmentSelectors.CustomsTransmissionsStatusDate, currentDate);
+   BaseActions.AssertDateOneOf(ShipmentSelectors.CustomsTransmissionsStatusDate)
+    cy.get(BaseSelectors.LoggedUser).invoke('text').then(text => {
+        var SentBy = text.replace(/\s/g, "");
+        BaseAssertion.AssertElementContain(ShipmentSelectors.CustomsTransmissionsUserName, SentBy);
+    })
     cy.Click(ShipmentSelectors.CloseCustomsTransmissions, null)
 }

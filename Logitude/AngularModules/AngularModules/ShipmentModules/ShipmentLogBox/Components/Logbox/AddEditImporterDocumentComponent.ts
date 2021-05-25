@@ -92,8 +92,12 @@ export class AddEditImporterDocumentComponent implements OnInit {
             this.setAgentLabelClass(this.AgentLable);
         }
 
-    
-        this.ShareAsDefault = SessionLocator.TenantPM.DocumentShareAsDefault;
+
+
+        if (!this.ShareAsDefault) {
+            this.ShareAsDefault = SessionLocator.TenantPM.DocumentShareAsDefault;
+        }
+
         this.OrigionalShareAsDefault = SessionLocator.TenantPM.DocumentShareAsDefault;
         this.UIProperties.SetEnabled("DocumentTypeId", "DocumentsFiling", true);
         if (AppTool.IsNullOrEmpty(this.EntityPm.Description)) {
@@ -181,7 +185,8 @@ export class AddEditImporterDocumentComponent implements OnInit {
     SetWindowArgs(args: any) {
         this.ShipmentList = args.SelectedShipment;
         this.IsNewDocument = args.IsNewDocument;
-      
+        this.ShareAsDefault = args.ShareAsDefault;
+
         if (args.EntityPm) {
             this.EntityPm = args.EntityPm;
             if (this.IsNewDocument == false && this.EntityPm.HasFile == true && this.EntityPm.FileExtension.toLowerCase() == "pdf") {
@@ -547,9 +552,10 @@ export class AddEditImporterDocumentComponent implements OnInit {
                         //    this.EntityPm.IsSharedWithForwarder = false;
                         //    this.EntityPm.DontAddToQueue = true;
                         //}
+
                         this._documentExtendedService.update(this.EntityPm, true).subscribe((myResult:any) => {
                             this.CurrentSession.StopBusyIndicator();
-                            this.CurrentSession.CloseCurrentWindow();
+                            this.CurrentSession.CurrentWindow.Close(this.EntityPm.Id); 
                         });
                         //Context.SubmitChanges().Completed += new EventHandler(SaveOp_Completed);
                     }
@@ -579,7 +585,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
                     //}
                     this._documentExtendedService.update(this.EntityPm, true).subscribe((myResult:any) => {
                         this.CurrentSession.StopBusyIndicator();
-                        this.CurrentSession.CloseCurrentWindow();
+                        this.CurrentSession.CurrentWindow.Close(this.EntityPm.Id); 
                     });
                     //Context.SubmitChanges().Completed += new EventHandler(SaveOp_Completed);
                 }
@@ -589,7 +595,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
                     //}
                     this._documentExtendedService.update(this.EntityPm, true).subscribe((myResult:any) => {
                         this.CurrentSession.StopBusyIndicator();
-                        this.CurrentSession.CloseCurrentWindow();
+                        this.CurrentSession.CurrentWindow.Close(this.EntityPm.Id); 
                     });
                 }
             }

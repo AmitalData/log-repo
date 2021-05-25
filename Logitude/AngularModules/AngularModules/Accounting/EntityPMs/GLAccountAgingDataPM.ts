@@ -39,24 +39,9 @@ export class GLAccountAgingDataPM {
     public set PeriodPast(newValue: number) { if (this.periodPast != newValue) { this.periodPast = newValue; this.MarkAsDirty("PeriodPast"); } }
        
 	 
-    private period0: number;
-    public get Period0() { return this.period0; }
-    public set Period0(newValue: number) { if (this.period0 != newValue) { this.period0 = newValue; this.MarkAsDirty("Period0"); } }
-       
-	 
-    private period1: number;
-    public get Period1() { return this.period1; }
-    public set Period1(newValue: number) { if (this.period1 != newValue) { this.period1 = newValue; this.MarkAsDirty("Period1"); } }
-       
-	 
-    private period2: number;
-    public get Period2() { return this.period2; }
-    public set Period2(newValue: number) { if (this.period2 != newValue) { this.period2 = newValue; this.MarkAsDirty("Period2"); } }
-       
-	 
-    private period3: number;
-    public get Period3() { return this.period3; }
-    public set Period3(newValue: number) { if (this.period3 != newValue) { this.period3 = newValue; this.MarkAsDirty("Period3"); } }
+    private period5: number;
+    public get Period5() { return this.period5; }
+    public set Period5(newValue: number) { if (this.period5 != newValue) { this.period5 = newValue; this.MarkAsDirty("Period5"); } }
        
 	 
     private period4: number;
@@ -64,9 +49,24 @@ export class GLAccountAgingDataPM {
     public set Period4(newValue: number) { if (this.period4 != newValue) { this.period4 = newValue; this.MarkAsDirty("Period4"); } }
        
 	 
-    private period5: number;
-    public get Period5() { return this.period5; }
-    public set Period5(newValue: number) { if (this.period5 != newValue) { this.period5 = newValue; this.MarkAsDirty("Period5"); } }
+    private period3: number;
+    public get Period3() { return this.period3; }
+    public set Period3(newValue: number) { if (this.period3 != newValue) { this.period3 = newValue; this.MarkAsDirty("Period3"); } }
+       
+	 
+    private period2: number;
+    public get Period2() { return this.period2; }
+    public set Period2(newValue: number) { if (this.period2 != newValue) { this.period2 = newValue; this.MarkAsDirty("Period2"); } }
+       
+	 
+    private period1: number;
+    public get Period1() { return this.period1; }
+    public set Period1(newValue: number) { if (this.period1 != newValue) { this.period1 = newValue; this.MarkAsDirty("Period1"); } }
+       
+	 
+    private period0: number;
+    public get Period0() { return this.period0; }
+    public set Period0(newValue: number) { if (this.period0 != newValue) { this.period0 = newValue; this.MarkAsDirty("Period0"); } }
        
 	 
     private periodFuture: number;

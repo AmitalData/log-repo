@@ -477,7 +477,7 @@ namespace WebFreight.Web.WcfApi
 
                     if (entity == null)
                     {
-                        service.SetChangeSet(new List<CustomerSalesNotePM>(), new List<CustomerProductPM>(), new List<CustomerCompetitorPM>(), new List<CustomerAdditionalServicePM>(), entityPM.CustomerSalesmanByProducts, entityPM.CustomerAccountManagerByProducts, entityPM.CustomerCustomsAgentByProducts, entityPM.CustomerForwarderByProducts, entityPM.CustomerMediatorByProducts, entityPM.CardExternalCodeByCurrencies);
+                        service.SetChangeSet(new List<CustomerSalesNotePM>(), new List<CustomerProductPM>(), new List<CustomerCompetitorPM>(), new List<CustomerAdditionalServicePM>(), entityPM.CustomerSalesmanByProducts, entityPM.CustomerAccountManagerByProducts, entityPM.CustomerCustomsAgentByProducts, entityPM.CustomerForwarderByProducts, entityPM.CustomerMediatorByProducts, entityPM.CardExternalCodeByCurrencies, entityPM.CustomerProductItems);
                         service.Create();
                     }
                     else
@@ -504,20 +504,20 @@ namespace WebFreight.Web.WcfApi
                         if (salesManSettings != null && salesManSettings.UpdateDirection == "NOUP")
                         {
                             entityPM.SalesmanUserId = entity.SalesmanUserId;
-                            entityPM.CustomerSalesmanByProducts = new List<CustomerSalesmanByProductPM>();
+                            //entityPM.CustomerSalesmanByProducts = new List<CustomerSalesmanByProductPM>();
                         }
-                        else
+                        //else
+                        //{
+                        CustomerSalesmanByProductQuery customerSalesmanByProductQuery = new CustomerSalesmanByProductQuery(customerSalesmanByProductRepository);
+                        List<CustomerSalesmanByProductPM> CustomerSalesmanByProducts = customerSalesmanByProductQuery.GetCustomerSalesmanByProductPMs(entity.Tenant, entity.Id);
+                        foreach (CustomerSalesmanByProductPM salesman in CustomerSalesmanByProducts)
                         {
-                            CustomerSalesmanByProductQuery customerSalesmanByProductQuery = new CustomerSalesmanByProductQuery(customerSalesmanByProductRepository);
-                            List<CustomerSalesmanByProductPM> CustomerSalesmanByProducts = customerSalesmanByProductQuery.GetCustomerSalesmanByProductPMs(entity.Tenant, entity.Id);
-                            foreach (CustomerSalesmanByProductPM salesman in CustomerSalesmanByProducts)
-                            {
-                                salesman.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Delete;
-                                entityPM.CustomerSalesmanByProducts.Add(salesman);
+                            salesman.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Delete;
+                            entityPM.CustomerSalesmanByProducts.Add(salesman);
 
 
-                            }
                         }
+                        //}
 
 
 
@@ -557,7 +557,7 @@ namespace WebFreight.Web.WcfApi
 
                         }
 
-                        service.SetChangeSet(new List<CustomerSalesNotePM>(), new List<CustomerProductPM>(), new List<CustomerCompetitorPM>(), new List<CustomerAdditionalServicePM>(), entityPM.CustomerSalesmanByProducts, entityPM.CustomerAccountManagerByProducts, entityPM.CustomerCustomsAgentByProducts, entityPM.CustomerForwarderByProducts, entityPM.CustomerMediatorByProducts, entityPM.CardExternalCodeByCurrencies);
+                        service.SetChangeSet(new List<CustomerSalesNotePM>(), new List<CustomerProductPM>(), new List<CustomerCompetitorPM>(), new List<CustomerAdditionalServicePM>(), entityPM.CustomerSalesmanByProducts, entityPM.CustomerAccountManagerByProducts, entityPM.CustomerCustomsAgentByProducts, entityPM.CustomerForwarderByProducts, entityPM.CustomerMediatorByProducts, entityPM.CardExternalCodeByCurrencies, entityPM.CustomerProductItems);
                         service.Update();
                     }
 

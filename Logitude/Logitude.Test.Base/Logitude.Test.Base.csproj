@@ -85,10 +85,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\Transforms.cs" />
+    <Compile Include="Models\Api\ApiQueryFiltersBuilder.cs" />
+    <Compile Include="Models\BillingsPreparation\BillingData.cs" />
+    <Compile Include="Models\BillingsPreparation\BillingVariables.cs" />
+    <Compile Include="Models\BillingsPreparation\ChargeType.cs" />
+    <Compile Include="Models\BillingsPreparation\CreditCardTypePM.cs" />
+    <Compile Include="Models\BillingsPreparation\Currency.cs" />
+    <Compile Include="Models\BillingsPreparation\Incoterm.cs" />
+    <Compile Include="Models\BillingsPreparation\Measurement.cs" />
+    <Compile Include="Models\BillingsPreparation\PaymentTerm.cs" />
+    <Compile Include="Models\BillingsPreparation\VATType.cs" />
     <Compile Include="Models\Infrastructure\Configurations.cs" />
     <Compile Include="Models\LocationsPreparation\City.cs" />
     <Compile Include="Models\LocationsPreparation\GlobalZone.cs" />
     <Compile Include="Models\LocationsPreparation\Country.cs" />
+    <Compile Include="Models\LocationsPreparation\SpecialServicesTypePM.cs" />
     <Compile Include="Models\PartnersPreparation\Address.cs" />
     <Compile Include="Models\PartnersPreparation\Contact.cs" />
     <Compile Include="Models\PartnersPreparation\PartnerParameters.cs" />
@@ -129,7 +140,12 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
+      <Project>{a663e7ef-b858-4bb6-bc33-e473f51b8e56}</Project>
+      <Name>Logitude.BL</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\SpecFlow.3.5.14\build\SpecFlow.targets" Condition="Exists('..\packages\SpecFlow.3.5.14\build\SpecFlow.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

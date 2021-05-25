@@ -15,7 +15,7 @@ namespace Logitude.BL.DataContracts
 {
     public class UpdateShipmentProfitClass
     {
-        public static void UpdatePayables(string shipmentId,int tenant, bool isInvoiceUpdated)
+        public static void UpdatePayables(string shipmentId, int tenant, bool isInvoiceUpdated)
         {
             string strConnString = GetConnection(tenant);
             using (SqlConnection cn = new SqlConnection(strConnString))
@@ -64,7 +64,7 @@ namespace Logitude.BL.DataContracts
                 cmd.ExecuteNonQuery();
                 cn.Close();
             }
-        }        
+        }
         public static void UpdateProfit(string shipmentId, int tenant)
         {
             string strConnString = GetConnection(tenant);
@@ -181,7 +181,7 @@ namespace Logitude.BL.DataContracts
             string dbConnectionInfo = currentDb.DBConnection;
             string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
 
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
             WebFreightContext context = new WebFreightContext(connection);
 
             return context.Database.Connection.ConnectionString;// entityBuilder.ConnectionString;

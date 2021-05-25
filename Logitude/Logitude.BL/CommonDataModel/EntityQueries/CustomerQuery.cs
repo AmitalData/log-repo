@@ -159,6 +159,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   IsPrivateLabelCustomer = a.IsPrivateLabelCustomer,
                                   IsCreditLimitEnabled = a.IsCreditLimitEnabled,
                                   CreditLimitAmount = a.CreditLimitAmount,
+                                  InsuredcreditLimit = a.InsuredcreditLimit,
                                   CreditLimitOpenBalance = a.CreditLimitOpenBalance,
                                   CreditLimitWarningPercentage = a.CreditLimitWarningPercentage,
                                   ExternalAccountingBusinessArea = a.Card.ExternalAccountingBusinessArea,
@@ -320,6 +321,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               IsPrivateLabelCustomer = a.IsPrivateLabelCustomer,
                               IsCreditLimitEnabled = a.IsCreditLimitEnabled,
                               CreditLimitAmount = a.CreditLimitAmount,
+                              InsuredcreditLimit = a.InsuredcreditLimit,
                               CreditLimitOpenBalance = a.CreditLimitOpenBalance,
                               CreditLimitWarningPercentage = a.CreditLimitWarningPercentage,
                               ExternalAccountingBusinessArea = a.Card.ExternalAccountingBusinessArea,
@@ -375,6 +377,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 CustomerCustomsAgentByProductRepository customerCustomsAgentByProductRepository = new CustomerCustomsAgentByProductRepository(repository.context);
                 CustomerMediatorByProductRepository customerMediatorByProductRepository = new CustomerMediatorByProductRepository(repository.context);
                 CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(repository.context);
+                ProductItemRepository productItemRepository = new ProductItemRepository(repository.context);
 
                 CustomerProductQuery customerProductQuery = new CustomerProductQuery(customerProductRepository);
                 CustomerCompetitorQuery customerCompetitorQuery = new CustomerCompetitorQuery(customerCompetitorRepository);
@@ -385,6 +388,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 CustomerCustomsAgentByProductQuery customerCustomsAgentByProductQuery = new CustomerCustomsAgentByProductQuery(customerCustomsAgentByProductRepository);
                 CustomerMediatorByProductQuery customerMediatorByProductQuery = new CustomerMediatorByProductQuery(customerMediatorByProductRepository);
                 CardExternalCodeByCurrencyQuery cardExternalCodeByCurrencyQuery = new CardExternalCodeByCurrencyQuery(cardExternalCodeByCurrencyRepository);
+                ProductItemQuery productItemQuery = new ProductItemQuery(productItemRepository);
 
                 entity.CustomerProducts = customerProductQuery.GetCustomerProductPMsByCustomerId(entity.Id, entity.Tenant).ToList();
                 entity.CustomerCompetitors = customerCompetitorQuery.GetCustomerCompetitorsByCustomerId(entity.Id, entity.Tenant).ToList();
@@ -396,6 +400,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 entity.CustomerCustomsAgentByProducts = customerCustomsAgentByProductQuery.GetCustomerCustomsAgentByProductPMs(entity.Tenant, entity.Id);
                 entity.CustomerMediatorByProducts = customerMediatorByProductQuery.GetCustomerMediatorByProductPMs(entity.Tenant, entity.Id);
                 entity.CardExternalCodeByCurrencies = cardExternalCodeByCurrencyQuery.GetCardExternalCodeByCurrencyPMsForCustomer(entity.Id, entity.Tenant);
+                entity.CustomerProductItems = productItemQuery.GetProductItemPMsByCustomerId(entity.Id, entity.Tenant);
 
                 CustomerSalesNoteRepository salesNoteRepository = new CustomerSalesNoteRepository(repository.context);
                 CustomerSalesNoteQuery salesNoteQuery = new CustomerSalesNoteQuery(salesNoteRepository);
@@ -859,6 +864,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 CustomerCustomsAgentByProductRepository customerCustomsAgentByProductRepository = new CustomerCustomsAgentByProductRepository(repository.context);
                 CustomerMediatorByProductRepository customerMediatorByProductRepository = new CustomerMediatorByProductRepository(repository.context);
                 CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(repository.context);
+                ProductItemRepository productItemRepository = new ProductItemRepository(repository.context);
 
                 CustomerProductQuery customerProductQuery = new CustomerProductQuery(customerProductRepository);
                 CustomerCompetitorQuery customerCompetitorQuery = new CustomerCompetitorQuery(customerCompetitorRepository);
@@ -869,6 +875,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 CustomerCustomsAgentByProductQuery customerCustomsAgentByProductQuery = new CustomerCustomsAgentByProductQuery(customerCustomsAgentByProductRepository);
                 CustomerMediatorByProductQuery customerMediatorByProductQuery = new CustomerMediatorByProductQuery(customerMediatorByProductRepository);
                 CardExternalCodeByCurrencyQuery cardExternalCodeByCurrencyQuery = new CardExternalCodeByCurrencyQuery(cardExternalCodeByCurrencyRepository);
+                ProductItemQuery productItemQuery = new ProductItemQuery(productItemRepository);
 
                 entity.CustomerProducts = customerProductQuery.GetCustomerProductPMsByCustomerId(entity.Id, entity.Tenant).ToList();
                 entity.CustomerCompetitors = customerCompetitorQuery.GetCustomerCompetitorsByCustomerId(entity.Id, entity.Tenant).ToList();
@@ -880,6 +887,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 entity.CustomerCustomsAgentByProducts = customerCustomsAgentByProductQuery.GetCustomerCustomsAgentByProductPMs(entity.Tenant, entity.Id);
                 entity.CustomerMediatorByProducts = customerMediatorByProductQuery.GetCustomerMediatorByProductPMs(entity.Tenant, entity.Id);
                 entity.CardExternalCodeByCurrencies = cardExternalCodeByCurrencyQuery.GetCardExternalCodeByCurrencyPMsForCustomer(entity.Id, entity.Tenant);
+                entity.CustomerProductItems = productItemQuery.GetProductItemPMsByCustomerId(entity.Id, entity.Tenant);
 
                 CustomerSalesNoteRepository salesNoteRepository = new CustomerSalesNoteRepository(repository.context);
                 CustomerSalesNoteQuery salesNoteQuery = new CustomerSalesNoteQuery(salesNoteRepository);
@@ -3879,6 +3887,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 CustomerCustomsAgentByProductRepository customerCustomsAgentByProductRepository = new CustomerCustomsAgentByProductRepository(repository.context);
                 CustomerMediatorByProductRepository customerMediatorByProductRepository = new CustomerMediatorByProductRepository(repository.context);
                 CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(repository.context);
+                ProductItemRepository productItemRepository = new ProductItemRepository(repository.context);
 
                 CustomerProductQuery customerProductQuery = new CustomerProductQuery(customerProductRepository);
                 CustomerCompetitorQuery customerCompetitorQuery = new CustomerCompetitorQuery(customerCompetitorRepository);
@@ -3889,6 +3898,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 CustomerCustomsAgentByProductQuery customerCustomsAgentByProductQuery = new CustomerCustomsAgentByProductQuery(customerCustomsAgentByProductRepository);
                 CustomerMediatorByProductQuery customerMediatorByProductQuery = new CustomerMediatorByProductQuery(customerMediatorByProductRepository);
                 CardExternalCodeByCurrencyQuery cardExternalCodeByCurrencyQuery = new CardExternalCodeByCurrencyQuery(cardExternalCodeByCurrencyRepository);
+                ProductItemQuery productItemQuery = new ProductItemQuery(productItemRepository);
 
                 entity.CustomerProducts = customerProductQuery.GetCustomerProductPMsByCustomerId(entity.Id, entity.Tenant).ToList();
                 entity.CustomerCompetitors = customerCompetitorQuery.GetCustomerCompetitorsByCustomerId(entity.Id, entity.Tenant).ToList();
@@ -3900,6 +3910,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 entity.CustomerCustomsAgentByProducts = customerCustomsAgentByProductQuery.GetCustomerCustomsAgentByProductPMs(entity.Tenant, entity.Id);
                 entity.CustomerMediatorByProducts = customerMediatorByProductQuery.GetCustomerMediatorByProductPMs(entity.Tenant, entity.Id);
                 entity.CardExternalCodeByCurrencies = cardExternalCodeByCurrencyQuery.GetCardExternalCodeByCurrencyPMsForCustomer(entity.Id, entity.Tenant);
+                entity.CustomerProductItems = productItemQuery.GetProductItemPMsByCustomerId(entity.Id, entity.Tenant);
 
                 CustomerSalesNoteRepository salesNoteRepository = new CustomerSalesNoteRepository(repository.context);
                 CustomerSalesNoteQuery salesNoteQuery = new CustomerSalesNoteQuery(salesNoteRepository);

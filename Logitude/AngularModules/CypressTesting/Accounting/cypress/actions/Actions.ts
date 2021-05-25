@@ -127,7 +127,13 @@ export function ReceiveAPInvoice() {
         }
     })
 }
-
+export function AssertSaveMultipleAPInvoice(){
+    BaseAssertion.AssertStatusCode(RequestAliases.InvoiceDomain, 200).then((interception) => {
+        if (interception.response.body) {
+            ClickOnSaveOnConfirmWindow()
+        }
+    })
+}
 export function SaveAPInvoice() {
     cy.DefineRequestWait(RestAPI.POST, AccountingURLs.InvoiceDomain, RequestAliases.InvoiceDomain)
     cy.Click(AccountingSelectors.APInvoiceSaveButton, null)
@@ -261,6 +267,7 @@ export function AddShipmentLines(shipmentNumbers: string[]) {
 }
 export function EditAmountsINMultipleShipmentAPInvoice(shipmentNumbers: string[],VATType: string,payableDetails: PayableDetails){
     const amount = CalculateAmount(payableDetails.Quantity, payableDetails.UnitPrice);
+    const totalAmount = amount * shipmentNumbers.length;
     for (let i = 0; i < shipmentNumbers.length; i++) {
         cy.Click(AccountingSelectors.EditShipmentLineIcon(shipmentNumbers[i]), null, true)
         cy.FillLogTextBox(AccountingSelectors.APInvoiceLineForiegnCurrencyAmount, amount.toString());
@@ -268,11 +275,10 @@ export function EditAmountsINMultipleShipmentAPInvoice(shipmentNumbers: string[]
         cy.Click(BaseSelectors.Button, BaseSelectors.ContainsApplytoall);
         cy.DefineRequestWait(RestAPI.GET, AccountingURLs.APInvoicesGetSingle, RequestAliases.APInvoicesRequest);
         cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
-        BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200);
-    
-    const totalAmount = amount * shipmentNumbers.length;
-    cy.FillLogTextBox(AccountingSelectors.APInvoiceAmountInInvoiceCurrency, totalAmount.toString());
+     BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200);
 }
+cy.FillLogTextBox(AccountingSelectors.APInvoiceAmountInInvoiceCurrency, totalAmount.toString());
+
 }
 //#endregion
 

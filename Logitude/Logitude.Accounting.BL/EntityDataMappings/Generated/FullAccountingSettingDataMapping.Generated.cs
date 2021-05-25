@@ -50,7 +50,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         GLAccounterCounterLength, 
 	         PaymentChequesLogoId, 
 	         NumberOfAgingMonths, 
-	         AllowMultiRatesInInvoiceLines,
+	         AllowMultiRatesInInvoiceLines, 
+	         NumberofPeriods, 
+	         FirstPeriodsMonths, 
+	         SecondPeriodsMonths, 
+	         ThirdsPeriodsMonths,
 	      }
 
 
@@ -102,7 +106,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         GLAccounterCounterLength, 
 	         PaymentChequesLogoId, 
 	         NumberOfAgingMonths, 
-	         AllowMultiRatesInInvoiceLines,
+	         AllowMultiRatesInInvoiceLines, 
+	         NumberofPeriods, 
+	         FirstPeriodsMonths, 
+	         SecondPeriodsMonths, 
+	         ThirdsPeriodsMonths,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -249,6 +257,26 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AllowMultiRatesInInvoiceLines))
             {
 				entityPOCO.AllowMultiRatesInInvoiceLines = entityPM.AllowMultiRatesInInvoiceLines;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NumberofPeriods))
+            {
+				entityPOCO.NumberofPeriods = entityPM.NumberofPeriods;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FirstPeriodsMonths))
+            {
+				entityPOCO.FirstPeriodsMonths = entityPM.FirstPeriodsMonths;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SecondPeriodsMonths))
+            {
+				entityPOCO.SecondPeriodsMonths = entityPM.SecondPeriodsMonths;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ThirdsPeriodsMonths))
+            {
+				entityPOCO.ThirdsPeriodsMonths = entityPM.ThirdsPeriodsMonths;
 			}
 			}
 
@@ -400,6 +428,26 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.AllowMultiRatesInInvoiceLines = entityPOCO.AllowMultiRatesInInvoiceLines;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.NumberofPeriods))
+            {
+					entityPM.NumberofPeriods = entityPOCO.NumberofPeriods;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FirstPeriodsMonths))
+            {
+					entityPM.FirstPeriodsMonths = entityPOCO.FirstPeriodsMonths;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SecondPeriodsMonths))
+            {
+					entityPM.SecondPeriodsMonths = entityPOCO.SecondPeriodsMonths;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ThirdsPeriodsMonths))
+            {
+					entityPM.ThirdsPeriodsMonths = entityPOCO.ThirdsPeriodsMonths;
+            }
+
 		}
 
 		public void PMToOldPM(FullAccountingSettingPM entityPM, FullAccountingSettingPM oldEntityPM)
@@ -544,6 +592,26 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AllowMultiRatesInInvoiceLines))
             {
                 oldEntityPM.AllowMultiRatesInInvoiceLines = entityPM.AllowMultiRatesInInvoiceLines;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NumberofPeriods))
+            {
+                oldEntityPM.NumberofPeriods = entityPM.NumberofPeriods;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FirstPeriodsMonths))
+            {
+                oldEntityPM.FirstPeriodsMonths = entityPM.FirstPeriodsMonths;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SecondPeriodsMonths))
+            {
+                oldEntityPM.SecondPeriodsMonths = entityPM.SecondPeriodsMonths;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ThirdsPeriodsMonths))
+            {
+                oldEntityPM.ThirdsPeriodsMonths = entityPM.ThirdsPeriodsMonths;
             }
 			
 		}

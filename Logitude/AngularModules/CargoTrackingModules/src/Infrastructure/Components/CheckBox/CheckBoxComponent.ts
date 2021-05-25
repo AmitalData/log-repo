@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input,Output, OnInit, EventEmitter } from '@angular/core';
 
 @Component({
     selector: 'CheckBox',
@@ -12,6 +12,7 @@ export class CheckBoxComponent implements OnInit
     @Input() public Bind: string;
     @Input() public Text: string = "";
     @Input() public IsChecked: boolean = false;
+    @Output() public ValueChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     constructor() { }
 
@@ -35,17 +36,20 @@ export class CheckBoxComponent implements OnInit
     }
 
 
-    private _Value: string;
+    private _Value: boolean;
     @Input()
-    public get Value(): string
+    public get Value(): boolean
     {
         return this._Value;
     }
-    public set Value(v: string)
+    public set Value(v: boolean)
     {
         this._Value = v;
-        if (this.DataContext)
+        this.ValueChanged.emit(v);
+
+        if (this.DataContext){
             this.DataContext[this.Bind] = v;
+        }
     }
 
 

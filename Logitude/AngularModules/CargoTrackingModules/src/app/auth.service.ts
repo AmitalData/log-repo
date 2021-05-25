@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class AuthService {
     public redirectUrl: string;
-    public DefaultPageCargoTracking: string = "Cargo-Tracking";
+    public DefaultPageCargoTracking: string = "cargo-tracking";
     constructor() {}
 
     public isAuthenticated(): boolean {

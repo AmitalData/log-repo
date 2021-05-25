@@ -16,6 +16,7 @@ export class NewShipmentComponentArgs {
     public IsCreatedFromMasterHouses: boolean = false;
     public IsCreatedFromCustomerOverview: boolean = false;
     public IsMasterCreatedFromHouse: boolean = false;
+    public IsStandalone: boolean = false;
 }
 export class FSRWizardArgs {
     EntityPM: any;

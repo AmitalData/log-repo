@@ -21,7 +21,18 @@ export class Tools {
 
 
 
+    public static GetSystemURL() {
+        let systemUrl = location.href.replace('index.html', '');
+        if (location.href.indexOf('localhost') > -1) {
+            systemUrl = 'http://localhost:9996/';
+        }
+        else {
+            let userLoginUrl = location.href.split("/index.html")[0];
+            userLoginUrl = userLoginUrl.replace(userLoginUrl.substring(userLoginUrl.lastIndexOf('/'), userLoginUrl.length), "");
+            systemUrl = userLoginUrl + "/";
+        }
 
-
+        return systemUrl;
+    }
 
 }

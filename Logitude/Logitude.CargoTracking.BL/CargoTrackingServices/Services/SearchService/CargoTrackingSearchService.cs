@@ -16,7 +16,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
     {
 
         public static List<string> PrivateRefrencesList = new List<string>() { "ConsigneeName", "ShipperName" };
-
+        public static List<string> PrivateShipmentTypes = new List<string> { "LCLD", "MYGO", "MYGI" };
 
         public static void CreateSearchReferencesForShipment(DataRow tableRow, BulkDataPreperation bulkDataPreperation, string tableName)
         {
@@ -223,12 +223,38 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             bool IsPublic = true;
             if (PrivateRefrencesList.Contains(coulmnName))
                 IsPublic = false;
-            if (coulmnName == "Master" && TableRow["ShipmentLevelCode"].Equals("H"))
+            if(coulmnName == "Master")
             {
-                IsPublic = false;
+                IsPublic = SetIsPublicForMasterColumn(TableRow);
+            }
+
+            if(coulmnName == "ContainersNumbers")
+            {
+                IsPublic = CheckContainerShipmentSearchPublicity(TableRow);
             }
             TableRow.SetField("IsPublic", IsPublic);
+        }
 
+        private static bool SetIsPublicForMasterColumn(DataRow TableRow)
+        {
+            if (TableRow["ShipmentLevelCode"].Equals("H"))
+            {
+                return false;
+            }
+
+            if (TableRow["ForwardingShipmentLevelCode"].Equals("H"))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private static bool CheckContainerShipmentSearchPublicity(DataRow searchRecord)
+        {
+            string shipmentTypeId = (string)searchRecord["ShipmentTypeId"];
+
+            return !PrivateShipmentTypes.Contains(shipmentTypeId?.ToUpper());
         }
 
         private static string GetReferenceTypeFromCoulmnName(string CoulmnName)

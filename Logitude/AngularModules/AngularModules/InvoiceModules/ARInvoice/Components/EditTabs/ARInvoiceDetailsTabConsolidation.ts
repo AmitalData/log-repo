@@ -1082,8 +1082,6 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
         }
     }
 
-
-
     get IsInvoiceNumberManuallySet() { return this.EntityPM.IsInvoiceNumberManuallySet; }
     set IsInvoiceNumberManuallySet(value: boolean) {
         if (this.EntityPM.IsInvoiceNumberManuallySet != value) {
@@ -1233,6 +1231,26 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
         this.IsInvoiceNumberComboBoxEnabled = false;
         this.CurrentSession.CurrentEditComponent.SaveChanges(msg);
     }
+
+    ComputeShipmentsNumbers() {
+        var shipmentsNumbers: string = "";
+
+        this.ItemsSource.filter(f => f.IsConnected).forEach(item => {
+            if (AppTool.IsNullOrEmpty(shipmentsNumbers)) {
+                shipmentsNumbers = item.MainEntityReference;
+            }
+
+            else {
+                shipmentsNumbers = shipmentsNumbers + ", " + item.MainEntityReference;
+            }
+        });
+
+        if (shipmentsNumbers.length > 1000) {
+            shipmentsNumbers = shipmentsNumbers.substring(0, 1000);
+        }
+
+        this.EntityPM.ShipmentsNumbers = shipmentsNumbers;         
+    }
 }
 export class SubInvoiceLine {
     public entityList: ARInvoiceList;
@@ -1271,6 +1289,7 @@ export class SubInvoiceLine {
     get MasterNumber() { return this.entityList.MasterNumber; }
     get HouseNumber() { return this.entityList.HouseNumber; }
     get MainEntityReference() { return this.entityList.MainEntityReference; }
+    get MainEntityId() { return this.entityList.MainEntityId; }
     get SubTotalInInvoiceCurrency() { return this.entityList.SubTotalInInvoiceCurrency; }
     get SubTotalInLocalCurrency() { return this.entityList.SubTotalInLocalCurrency; }
     get AmountInInvoiceCurrency() { return this.entityList.AmountInInvoiceCurrency; }
@@ -1327,6 +1346,7 @@ export class SubInvoiceLine {
                 }
             }
 
+            this.fatherComponent.ComputeShipmentsNumbers();
             this.fatherComponent.ComputeTotals();
             this.fatherComponent.SetUIProperties_Connected();
 
@@ -1338,36 +1358,48 @@ export class SubInvoiceLine {
         }
     }
 
-    ViewEntityClicked() {
-        var myBackButtonLabel = "A/R Invoice";
-        if (!AppTool.IsNullOrEmpty(this.fatherComponent.EntityPM.InvoiceNumber)) {
-            myBackButtonLabel += ": " + this.fatherComponent.EntityPM.InvoiceNumber;
+    ViewEntityClicked(entityCode: string) {
+        var entityId: string = "";
+
+        if (entityCode == "ARInvoice") {
+            entityId = this.Id;
         }
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-            .then(cmpRef => {
-                cmpRef.instance.ComponentRef = cmpRef;
-                cmpRef.instance.Run({ EntityId: this.Id, ObjectTableName: 'ARInvoice', BackButtonLabel: myBackButtonLabel });
+        else if (entityCode == "Shipment") {
+            entityId = this.MainEntityId;
+        }
 
-                let isEditComponentSaved = false;
+        if (!AppTool.IsNullOrEmpty(entityId)) {
+            var myBackButtonLabel = "A/R Invoice";
+            if (!AppTool.IsNullOrEmpty(this.fatherComponent.EntityPM.InvoiceNumber)) {
+                myBackButtonLabel += ": " + this.fatherComponent.EntityPM.InvoiceNumber;
+            }
 
-                cmpRef.instance.BackCompleted.subscribe(bk => {
-                    if (isEditComponentSaved) {
-                        this.fatherComponent.LoadInvoices();
-                    }
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: entityCode, BackButtonLabel: myBackButtonLabel });
+
+                    let isEditComponentSaved = false;
+
+                    cmpRef.instance.BackCompleted.subscribe(bk => {
+                        if (isEditComponentSaved) {
+                            this.fatherComponent.LoadInvoices();
+                        }
+                    });
+
+                    cmpRef.instance.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                        if (isSaveSuccess) {
+                            isEditComponentSaved = true;
+                        }
+                    });
+
+                    cmpRef.instance.SaveAndCloseCompleted.subscribe((isSaveSuccess: boolean) => {
+                        if (isSaveSuccess) {
+                            isEditComponentSaved = true;
+                        }
+                    });
                 });
-
-                cmpRef.instance.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                    if (isSaveSuccess) {
-                        isEditComponentSaved = true;
-                    }
-                });
-
-                cmpRef.instance.SaveAndCloseCompleted.subscribe((isSaveSuccess: boolean) => {
-                    if (isSaveSuccess) {
-                        isEditComponentSaved = true;
-                    }
-                });                
-            });
+        }
     }
 }

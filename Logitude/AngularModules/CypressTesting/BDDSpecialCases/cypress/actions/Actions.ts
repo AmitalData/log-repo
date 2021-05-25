@@ -10,10 +10,10 @@ import { Urls } from "../constants/URLs";
 
 
 export function FillLocalSettingsDetails(localSettingsDetails: LocalSettingsDetails) {
-  cy.get(BDDSpecialCasesSelectors.TimeZoneComboBox).find("img").click()
-  cy.get(BDDSpecialCasesSelectors.ComboBoxItem).find("span").contains(localSettingsDetails.TimeZone).click({ force: true });
-  cy.get(BDDSpecialCasesSelectors.DateTimeFormatComboBox).find("img").click()
-  cy.get(BDDSpecialCasesSelectors.ComboBoxItem).find("span").contains(localSettingsDetails.DateTimeFormat).click({ force: true });
+  cy.get(BDDSpecialCasesSelectors.TimeZoneComboBox).find("img").click({force:true})
+  cy.get(BDDSpecialCasesSelectors.ComboBoxItem).find("span").contains(localSettingsDetails.TimeZone).type('{enter}');
+  cy.get(BDDSpecialCasesSelectors.DateTimeFormatComboBox).find("img").click({force:true})
+  cy.get(BDDSpecialCasesSelectors.ComboBoxItem).find("span").contains(localSettingsDetails.DateTimeFormat).type('{enter}');
 }
 
 export function UpdateLocalSettings() {
@@ -33,16 +33,15 @@ function AssertPutTenant() {
   BaseAssertion.AssertStatusCode(RequestAliases.PutTenant, 200);
 }
 
-export function ValidateDateFormat(dateFormat: string , timeZoneRegion:string) {
-  var todayDate = new Date().toLocaleDateString("en-US", { timeZone: timeZoneRegion })
-  cy.get(BDDSpecialCasesSelectors.HAWBDate).should(BaseSelectors.HaveValue, FormateTheDate(todayDate, dateFormat))
+export function ValidateDateFormat(dateFormat: string , date:string) {
+  cy.get(BDDSpecialCasesSelectors.HAWBDate).focus().should(BaseSelectors.HaveValue, FormateTheDate(date, dateFormat))
 }
 
 function FormateTheDate(date: string, format: string) {
   var DateFormat
   var Datelist = date.split("/");
-  var dd = Datelist[1];
-  var mm = Datelist[0]
+    var dd = Datelist[0];
+    var mm = Datelist[1]
   var yyyy = Datelist[2]
 
   if (Number(dd) < 10) {

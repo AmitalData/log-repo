@@ -243,7 +243,7 @@
                                                                                             </td>
                                                                                         </tr>
 
-                                                                                        <tr *ngIf="ResultCodeSelected.Code !='SETSLA' && !(ResultCodeSelected.Code =='FIELDSET' && ObjectTableName == 'Shipment')" style="height:25px">
+                                                                                        <tr *ngIf="ResultCodeSelected.Code !='SETSLA' && ResultCodeSelected.Code !='CREATETASK' &&!(ResultCodeSelected.Code =='FIELDSET' && ObjectTableName == 'Shipment')" style="height:25px">
                                                                                             <td style="width:10px">
                                                                                                 <div></div>
                                                                                             </td>
@@ -253,7 +253,7 @@
                                                                                             </td>
                                                                                             <td [style.width]="TypeWidth">
 
-                                                                                                <table style="vertical-align:top;height:25px">
+                                                                                                <table  style="vertical-align:top;height:25px">
                                                                                                     <tr style="vertical-align:top;height:25px">
                                                                                                         <td style="vertical-align:central;width:100px;">
                                                                                                             <RadioButton [Name]="'DateRadio'" [Text]="'Immediately'" [IsChecked]="IsSelectedImmediatly" (Checked)="SelectedDelayedImmediatlRadioClcik('Immeduiatly')"></RadioButton>
@@ -410,6 +410,13 @@
                                                                                             </td>
                                                                                         </tr>
 
+                                                                                        <tr style="height:1px">
+                                                                                            <td colspan="4">
+                                                                                                <div class="LocationDirective" LocationDirective Code="CREATETASK"> </div>
+                                                                                            </td>
+                                                                                        </tr>
+
+
                                                                                         <!--Documen tType Area-->
                                                                                         <tr *ngIf="IsResultEmail || IsSendDocument" style="height:2px;">
                                                                                             <td colspan="4" style="height:2px">
@@ -525,7 +532,8 @@
 
                                                                                                                             <td style="vertical-align:central;width:203px">
                                                                                                                                 <div style="text-align:left;width:203px;vertical-align:central">
-                                                                                                                                    <ComboBox style="width:203px;" (SelectedItemChanged)="DocumentTypeTemplateReportSelected = $event" [ItemsSource]="DocumentTypeTemplateReportLists" [SelectedItem]="DocumentTypeTemplateReportSelected" [Binding]="'Description'"></ComboBox>
+                                                                                                                                    <ComboBox style="width:203px;" (SelectedItemChanged)="DocumentTypeTemplateReportSelected = $event" [ItemsSource]="DocumentTypeTemplateReportLists" [SelectedItem]="DocumentTypeTemplateReportSelected" [Binding]="DocumentTypeReportTemplateBinding"></ComboBox>
+
                                                                                                                                 </div>
                                                                                                                             </td>
 

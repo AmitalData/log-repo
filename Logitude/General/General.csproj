@@ -843,6 +843,7 @@
     <Content Include="DataViews And Procedures\Stored Procedures\UpdateShipmentProfit.sql" />
     <Content Include="DataViews And Procedures\Stored Procedures\UpdateShipmentProfitFunction.sql" />
     <Content Include="DataViews And Procedures\Stored Procedures\UpdateShipmentRegistryDate.sql" />
+    <Content Include="Report Execution Logs\categorytype.sql" />
     <Content Include="Usefull Scripts\Detect Data Problems\Wrong Receivables Percentage Amounts.sql" />
     <Content Include="Usefull Scripts\Detect Data Problems\[Islam] shipments related with tenant zero issue.sql" />
     <Content Include="Usefull Scripts\Fill Data\BIReport\[Abed] UpdateBIReportFactTablePackageFeaturesAndRole.sql" />
@@ -2026,6 +2027,8 @@
     <Content Include="Usefull Scripts\Fill Data\[Ayman] Calculate Shipments NumberOfHouses.sql" />
     <Content Include="Usefull Scripts\Fill Data\[Ayman] Calculate Shipments TEU.sql" />
     <Content Include="Usefull Scripts\Fill Data\[Ayman] ShipmentPayablesReceivablesFields.sql" />
+    <Content Include="Usefull Scripts\Islam\[Wesam] Add General BI Report Folder For All Tenants.sql" />
+    <Content Include="Usefull Scripts\Islam\[Wesam] Fix Duplicated QueryColumns.sql" />
     <Content Include="Usefull Scripts\Islam\delete duplicated vessels codes - Cloud.sql" />
     <Content Include="Usefull Scripts\Islam\logbox\logbox duplicated documents.sql" />
     <Content Include="Usefull Scripts\Islam\logbox\logbox duplicated shipments fix.sql" />
@@ -2035,6 +2038,7 @@
     <Content Include="Usefull Scripts\Islam\duplicated Global Contacts Fix.sql" />
     <Content Include="Usefull Scripts\Islam\duplicated user codes.sql" />
     <Content Include="Usefull Scripts\Islam\zombie Global contacts issue fix.sql" />
+    <Content Include="Usefull Scripts\Islam\[Wesam] Fix Duplicated Query Columns.sql" />
     <Content Include="Usefull Scripts\MetaData\2MetaDataScripts_Delete_BeforeUpdate.sql" />
     <Content Include="Usefull Scripts\MetaData\3MetaDataScripts _AfterDeleteAndUpdate.sql" />
     <Content Include="Usefull Scripts\MetaData\1MetaDataScripts_BeforeDeleteAndUpdate.sql" />

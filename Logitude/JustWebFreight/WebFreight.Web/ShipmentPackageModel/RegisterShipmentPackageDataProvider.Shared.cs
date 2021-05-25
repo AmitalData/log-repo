@@ -91,10 +91,13 @@ namespace WebFreight.Web.ShipmentPackageModel
             public string ShipmentPackageReference4 { get; set; }
             public string ContainerTypeName { get; set; }
             public string OnCarriageTo { get; set; }
+            public string OnForwardingTo { get; set; }
             public DateTime? ATD { get; set; }
             public DateTime? ATA { get; set; }
             public DateTime? OnCarriageATD { get; set; }
             public DateTime? OnCarriageATA { get; set; }
+            public DateTime? OnForwardingATD { get; set; }
+            public DateTime? OnForwardingATA { get; set; }
             public string ContainerNotes { get; set; }
             public string GrossWeight { get; set; }
             public bool? Flagged { get; set; }
@@ -121,7 +124,7 @@ namespace WebFreight.Web.ShipmentPackageModel
 
             public DateTime? ETARamp { get; set; }
             public DateTime? OnCarriageETA { get; set; }
-
+            public DateTime? OnForwardingETA { get; set; }
             public string ShipperCityAndCountry { get; set; }
             public string ConsigneeCityAndCountry { get; set; }
             public string Incoterm { get; set; }

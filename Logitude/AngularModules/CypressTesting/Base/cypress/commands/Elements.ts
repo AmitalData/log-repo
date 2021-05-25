@@ -26,12 +26,18 @@ declare global {
             ClickingAfterHovering(LogLovSelector:string,HiddenElementSelector:string): Chainable<Element>
             SelectCheckBox(Selector:string): Chainable<Element>
             SelectDropDownListItem(Selector:string,contain:string): Chainable<Element>
+            SelectDropDownListItemNumber(Selector:string,number:number): Chainable<Element>
+
         }
     }
 }
 Cypress.Commands.add("SelectDropDownListItem", (Selector:string,contain:string) => {
     cy.get(Selector).find(BaseSelectors.DownArrow).click()
     cy.get(BaseSelectors.DropDownList).find(BaseSelectors.DropDownListItem).contains(contain).click()
+})
+Cypress.Commands.add("SelectDropDownListItemNumber", (Selector:string,number:number) => {
+    cy.get(Selector).find(BaseSelectors.DownArrow).click()
+    cy.get(BaseSelectors.DropDownList).find(BaseSelectors.DropDownListItem).eq(number).click({force:true})
 })
 Cypress.Commands.add("SelectCheckBox", (Selector:string) => {
     cy.get(Selector).check({ force: true })
@@ -69,7 +75,7 @@ Cypress.Commands.add("FillDate", (selector, value) => {
         cy.get(selector).focus().clear().type("+1{enter}")
     }
     else {
-        cy.get(selector).focus().clear().type(value)
+        cy.get(selector).focus().clear().type(value+'{enter}')
     }
 })
 
@@ -124,7 +130,7 @@ function FillLogLovProcess(selector: any, value: string, fromCache: boolean, get
         }).as(requestAlias);
     }
 
-    cy.get(selector).clear().type(value).then($input => {
+    cy.get(selector).clear({ force: true }).type(value).then($input => {
         if($input[0].value == value || ($input[0].value == "" && value == "{downarrow}")){
             if (!fromCache) {
                 cy.wait("@" + requestAlias);

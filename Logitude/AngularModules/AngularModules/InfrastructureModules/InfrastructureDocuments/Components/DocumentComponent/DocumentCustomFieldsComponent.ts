@@ -204,6 +204,7 @@ export class DocumentCustomFieldsComponent extends BaseComponent implements OnIn
             this.DocumentCustomArgs.editDocumentComponent.ValidationErrorsList = [];
         }
 
+        item.ObjectTableId = this.DocumentCustomArgs.ObjectTableId;
         this._documentTypeCustomFieldService.UpdateFormCustomField(item).subscribe((res:any) => {
             this.CurrentSession.StopBusyIndicator();
             if (res.HasError) {

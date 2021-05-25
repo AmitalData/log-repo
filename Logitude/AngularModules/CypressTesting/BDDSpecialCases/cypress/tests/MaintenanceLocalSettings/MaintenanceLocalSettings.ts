@@ -14,7 +14,7 @@ import {BDDSpecialCasesSelectors} from "../../selectors/Selectors"
 
 let shipmentDetails: ShipmentDetails
 let localSettingsDetails : LocalSettingsDetails
-
+let testDate:string
 //#region Change time zone and date time format
 Given("the user logged in and open {string} in maintenance menu", (maintenanceItemName) => {
     cy.Login()
@@ -71,10 +71,11 @@ Given("open the direct shipment and navigate to general tab", () => {
 
 When("fill {string} as HAWB date", (date) => {
     cy.FillDate(BDDSpecialCasesSelectors.HAWBDate,date);
+    testDate=date
 });
 
 Then("the date format should be {string}", (dateFormat) => {
-    Actions.ValidateDateFormat(dateFormat , localSettingsDetails.TimeZoneRegion);
+    Actions.ValidateDateFormat(dateFormat , testDate);
 });
 //#endregion
 

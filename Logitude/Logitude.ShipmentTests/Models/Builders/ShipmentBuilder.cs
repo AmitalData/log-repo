@@ -154,6 +154,24 @@ namespace Logitude.ShipmentTests.Models.Builders
             return this;
         }
 
+        public ShipmentBuilder AgentAddressCountryCode(string agentAddressCountryCode)
+        {
+            _shipmentPM.AgentAddressCountryCode = agentAddressCountryCode;
+            return this; 
+        }
+
+        public ShipmentBuilder AgentName(string agentName)
+        {
+            _shipmentPM.AgentName = agentName;
+            return this;
+        }
+
+        public ShipmentBuilder AgentId(string PartnerType)
+        {
+            _shipmentPM.AgentId = PartnerType == "AG" ? PartnersData.AgentId : null;
+            return this;
+        }
+
         public ShipmentBuilder ShipmentPackages(List<PackagePM> shipmentPackages)
         {
             _shipmentPM.ShipmentPackages.AddRange(shipmentPackages);
@@ -175,6 +193,32 @@ namespace Logitude.ShipmentTests.Models.Builders
         public ShipmentBuilder ShipmentPayables(PayablesPM shipmentPayable)
         {
             _shipmentPM.ShipmentPayables.Add(shipmentPayable);
+            return this;
+        }
+
+        public ShipmentBuilder ShipmentReceivable(List<ShipmentReceivablePM> shipmentReceivable)
+        {
+            _shipmentPM.ShipmentReceivable.AddRange(shipmentReceivable);
+            return this;
+        }
+
+        public ShipmentBuilder ShipmentReceivable(ShipmentReceivablePM shipmentReceivable)
+        {
+            if (_shipmentPM.ShipmentReceivable == null)
+            {
+                _shipmentPM.ShipmentReceivable = new List<ShipmentReceivablePM>();
+            }
+            _shipmentPM.ShipmentReceivable.Add(shipmentReceivable);
+            return this;
+        }
+        public ShipmentBuilder ShipmentReceivableStatusCode(string ShipmentReceivableStatusCode)
+        {
+            _shipmentPM.ShipmentReceivableStatusCode = ShipmentReceivableStatusCode ;
+            return this;
+        }
+        public ShipmentBuilder ShipmentReceivableStatusName(string ShipmentReceivableStatusName)
+        {
+            _shipmentPM.ShipmentReceivableStatusName = ShipmentReceivableStatusName;
             return this;
         }
 
@@ -216,7 +260,7 @@ namespace Logitude.ShipmentTests.Models.Builders
 
         private string PortCodeMapping(string portCode)
         {
-            switch(portCode)
+            switch (portCode)
             {
                 case "LHR":
                     return LocationsData.PortLHRId;

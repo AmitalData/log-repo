@@ -136,9 +136,13 @@ namespace Logitude.Accounting.Data
 	
             modelBuilder.Configurations.Add(new GLAccountAgingDataMap());
 	
+            modelBuilder.Configurations.Add(new GLAccountCardsDataMap());
+	
             modelBuilder.Configurations.Add(new GLAccountCounterMap());
 	
             modelBuilder.Configurations.Add(new GLAccountCurrencyMap());
+	
+            modelBuilder.Configurations.Add(new GLAccountFollowUpDataMap());
 	
             modelBuilder.Configurations.Add(new GLAccountInterestPeriodMap());
 	
@@ -277,19 +281,21 @@ namespace Logitude.Accounting.Data
 				
 			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.PeriodPast).HasPrecision(16, 2);
 				
-			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.Period0).HasPrecision(16, 2);
-				
-			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.Period1).HasPrecision(16, 2);
-				
-			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.Period2).HasPrecision(16, 2);
-				
-			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.Period3).HasPrecision(16, 2);
+			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.Period5).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.Period4).HasPrecision(16, 2);
 				
-			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.Period5).HasPrecision(16, 2);
+			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.Period3).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.Period2).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.Period1).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.Period0).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.PeriodFuture).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<GLAccountCardsData>().Property(x => x.TotalOpenShipments).HasPrecision(18, 2);
 				
 			modelBuilder.Entity<GLAccountInterestPeriod>().Property(x => x.StandardAddInterestPercent).HasPrecision(4, 2);
 				
@@ -901,6 +907,12 @@ namespace Logitude.Accounting.Data
 	 
 	 }
 	
+	 public IDbSet<GLAccountCardsData> GLAccountCardsDatas 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<GLAccountCounter> GLAccountCounters 
 	 {
 	      get; set;
@@ -908,6 +920,12 @@ namespace Logitude.Accounting.Data
 	 }
 	
 	 public IDbSet<GLAccountCurrency> GLAccountCurrencies 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<GLAccountFollowUpData> GLAccountFollowUpDatas 
 	 {
 	      get; set;
 	 

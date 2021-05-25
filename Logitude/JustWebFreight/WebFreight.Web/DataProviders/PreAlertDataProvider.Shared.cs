@@ -76,6 +76,7 @@ namespace WebFreight.Web.DataProviders
         public List<PayableLine> PayablesList { get; set; }
         public List<PickUpDeliveryLine> PickUpsList { get; set; }
         public List<PickUpDeliveryLine> DeliveriesList { get; set; }
+        public List<ProductItemLine> ProductItemsLines { get; set; }
         public string Origin { get; set; }
         public string Destination { get; set; }
         public string IncotermCode { get; set; }
@@ -165,6 +166,10 @@ namespace WebFreight.Web.DataProviders
         public DateTime? PreCarriageATD { get; set; }
         public string PreCarriageCarrierCode { get; set; }
         public string PreCarriageCarrierNumber { get; set; }
+        public DateTime? PreForwardingETD { get; set; }
+        public DateTime? PreForwardingATD { get; set; }
+        public string PreForwardingCarrierCode { get; set; }
+        public string PreForwardingCarrierNumber { get; set; }
         public DateTime? PickupETD { get; set; }
         public DateTime? PickupATD { get; set; }
         public DateTime? MainCarriageATD { get; set; }

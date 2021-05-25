@@ -73,6 +73,7 @@ export class AddEditPreCarriageComponent extends BaseComponent {
     }
 
     public IsEditingEnabled: boolean = true;
+    public IsCloseMasterInfoVisible: boolean = false;
     SetUIProperties() {
         var isEditingEnabled = ShipmentTool.IsEditingEnabled(this.EntityPM);
         this.IsEditingEnabled = isEditingEnabled;
@@ -93,7 +94,19 @@ export class AddEditPreCarriageComponent extends BaseComponent {
     SetUIProperties_Carriage() {
         var isTransportFieldEnabled = false;
         var isCarrierNumberFieldEnabled = false;
+        var isConnectedMasterPortsEnabled = false;
+        this.IsCloseMasterInfoVisible = false;
+
         if (this.IsEditingEnabled) {
+            isConnectedMasterPortsEnabled = true;
+
+            if (this.EntityPM.ShipmentLevelCode == "C" && this.EntityPM.ShipmentConsoleShipments.length > 0) {
+                if (this.EntityPM.StatusWeight >= 60) {
+                    isConnectedMasterPortsEnabled = false;
+                    this.IsCloseMasterInfoVisible = true;
+                }
+            }
+
             if (!AppTool.IsNullOrEmpty(this.PreCarriageTransportModeId)) {
                 isTransportFieldEnabled = true;
             }
@@ -103,9 +116,9 @@ export class AddEditPreCarriageComponent extends BaseComponent {
             }
         }
 
-        this.UIProperties.SetEnabled("PreCarriageTransportModeId", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("PreCarriageFromPortId", this.ObjectTableName, isTransportFieldEnabled);
-        this.UIProperties.SetEnabled("PreCarriageToPortId", this.ObjectTableName, isTransportFieldEnabled && this.IsConnectedHouse == false);
+        this.UIProperties.SetEnabled("PreCarriageTransportModeId", this.ObjectTableName, isConnectedMasterPortsEnabled);
+        this.UIProperties.SetEnabled("PreCarriageFromPortId", this.ObjectTableName, isConnectedMasterPortsEnabled && isTransportFieldEnabled);
+        this.UIProperties.SetEnabled("PreCarriageToPortId", this.ObjectTableName, isConnectedMasterPortsEnabled && !this.IsConnectedHouse && isTransportFieldEnabled);
         this.UIProperties.SetEnabled("PreCarriageCarrierId", this.ObjectTableName, isTransportFieldEnabled);
         this.UIProperties.SetEnabled("PreCarriageCarrierNumber", this.ObjectTableName, isCarrierNumberFieldEnabled);
         this.UIProperties.SetEnabled("PreCarriageVesselId", this.ObjectTableName, this.IsEditingEnabled);

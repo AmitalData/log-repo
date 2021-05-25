@@ -31,7 +31,12 @@ namespace Logitude.Test.Base.Extensions
         #region PrepaidCollect
             {"Prepaid", "P"},
             {"Collect", "C"},
-            {"Both", "B"}
+            {"Both", "B"},
+            #endregion
+            #region QuoteTypes
+            {"Spot Rate","A" },
+            {"Routing Rates","P" },
+            {"Shipper" ,"SHI" }
         #endregion
         };
 

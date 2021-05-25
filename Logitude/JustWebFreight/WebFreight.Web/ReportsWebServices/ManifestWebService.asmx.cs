@@ -728,7 +728,6 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                     #endregion
 
-
                     #region PlaceOfReceipt
                     ShipmentPickUpDelivery myFirstPickup =
                         (from d in shipmentsContext.ShipmentPickUpDeliveries
@@ -762,12 +761,24 @@ namespace WebFreight.Web.ReportsWebServices
                     else
                     {
                         Port preCarriageFromPort = null;
+                        Port preForwardingFromPort = null;
+
                         if (shipmentView.PreCarriageFromPortId != null)
                         {
                             preCarriageFromPort = (from a in commonContext.Ports where a.Id == shipmentView.PreCarriageFromPortId select a).FirstOrDefault();
                         }
 
-                        if (preCarriageFromPort != null)
+                        if (shipmentView.PreForwardingFromPortId != null)
+                        {
+                            preForwardingFromPort = (from a in commonContext.Ports where a.Id == shipmentView.PreForwardingFromPortId select a).FirstOrDefault();
+                        }
+
+                        if(preForwardingFromPort != null)
+                        {
+                            detail.PlaceOfReceipt = newDetail.PlaceOfReceipt = preForwardingFromPort.EnglishName;
+                        }
+
+                        else if (preCarriageFromPort != null)
                         {
                             detail.PlaceOfReceipt = newDetail.PlaceOfReceipt = preCarriageFromPort.EnglishName;
                         }
@@ -783,9 +794,36 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                     #endregion
 
-                    newDetail.OnCarriageFromPort = shipmentView.OnCarriageFromPortName;
-                    newDetail.OnCarriageToPort = shipmentView.OnCarriageToPortName;
-                  
+                    Port onCarriageFromPort = null;
+                    Port onCarriageToPort = null;
+                    Port onForwardingFromPort = null;
+                    Port onForwardingToPort = null;
+
+                    if (shipmentView.OnCarriageFromPortId != null)
+                    {
+                        onCarriageFromPort = (from a in commonContext.Ports where a.Id == shipmentView.OnCarriageFromPortId select a).FirstOrDefault();
+                    }                    
+
+                    if (shipmentView.OnCarriageToPortId != null)
+                    {
+                        onCarriageToPort = (from a in commonContext.Ports where a.Id == shipmentView.OnCarriageToPortId select a).FirstOrDefault();
+                    }                    
+
+                    if (shipmentView.OnForwardingFromPortId != null)
+                    {
+                        onForwardingFromPort = (from a in commonContext.Ports where a.Id == shipmentView.OnForwardingFromPortId select a).FirstOrDefault();
+                    }                    
+
+                    if (shipmentView.OnForwardingToPortId != null)
+                    {
+                        onForwardingToPort = (from a in commonContext.Ports where a.Id == shipmentView.OnForwardingToPortId select a).FirstOrDefault();
+                    }
+
+                    newDetail.OnCarriageFromPort = onCarriageFromPort == null ? null : onCarriageFromPort.EnglishName;
+                    newDetail.OnCarriageToPort = onCarriageToPort == null ? null : onCarriageToPort.EnglishName;
+                    newDetail.OnForwardingFromPort = onForwardingFromPort == null ? null : onForwardingFromPort.EnglishName;
+                    newDetail.OnForwardingToPort = onForwardingToPort ==  null ? null : onForwardingToPort.EnglishName;
+
                     ShipmentPickUpDelivery myLineFirstDelivery = (from d in shipmentsContext.ShipmentPickUpDeliveries
                                                                   where d.ShipmentId == shipmentView.Id && d.PickUpDeliveryTypeCode == "DELV"
                                                                   select d).OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();

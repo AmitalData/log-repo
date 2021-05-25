@@ -49,7 +49,7 @@ export class MaintenanceComponent {
         this.PagesMenu.push(new Menu("OTH", TextCodeTranslator.Translate("General.MC.Others.Others")));
         this.PagesMenu.push(new Menu("PRS", TextCodeTranslator.Translate("General.MC.PersonalSettings.PersonalSettings")));
         this.PagesMenu.push(new Menu("CMS", TextCodeTranslator.Translate("General.MC.SystemSettings.SystemSettings")));
-
+         
 
         if (SessionLocator.Tenant == 0) {
             this.PagesMenu.push(new Menu("MNG", TextCodeTranslator.Translate("General.MC.Management.Management")));
@@ -128,6 +128,12 @@ export class MaintenanceComponent {
                         if (FeatureLocator.HasFeaturePermession("HelpResource", "HelpResource.M.HelpResources")) {
                             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
                         }
+                    }
+                }
+
+                else if (item.Code == "MTRP") {
+                    if (SessionLocator.LoggedUserPM.IsCustomerCare || SessionLocator.LoggedUserPM.IsDistributor) {
+                        this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
                     }
                 }
 

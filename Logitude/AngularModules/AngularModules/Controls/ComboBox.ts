@@ -1,11 +1,11 @@
-import {Component, OnInit, OnDestroy, Output, EventEmitter, AfterViewInit, ChangeDetectorRef} from '@angular/core';
+import {Component, OnInit, OnDestroy, Output,Input, EventEmitter, AfterViewInit, ChangeDetectorRef} from '@angular/core';
 import {SessionLocator} from '../Infrastructure/Utilities/SessionLocator';
 import {AppTool} from '../Infrastructure/Tools'
 import {ObjectsLocator} from '../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     selector: 'ComboBox',
-    
+
     templateUrl: './ComboBox.html',
     inputs: ['ItemsSource', 'SelectedItem', 'Binding', 'IsDisabled', 'WaterMark', 'IsBlueBox', 'IsGreenButton', 'FocusOnMe', 'SelectedValue', 'SelectedValuePath', 'MaxHeight', 'WithCheckBoxes', 'WithIcons'],
 })
@@ -33,6 +33,8 @@ export class ComboBox implements OnInit, AfterViewInit, OnDestroy {
             this.ItemsButtonClicked = false;
         }
     }
+
+    @Input() HideSelectedText: boolean = false;
 
     public WithIcons: boolean = false;
     public WithCheckBoxes: boolean = false;
@@ -263,25 +265,27 @@ export class ComboBox implements OnInit, AfterViewInit, OnDestroy {
     }
 
     private SetDisplayText() {
-        var myDisplayText: string = null;
+        if (!this.HideSelectedText) {
+            var myDisplayText: string = null;
 
-        if (this.SelectedItem != null) {
-            if (this.WithCheckBoxes) {
-                myDisplayText = this.SelectedItem;
-            }
-            
-            else {
-                if (this.Binding == null) {
+            if (this.SelectedItem != null) {
+                if (this.WithCheckBoxes) {
                     myDisplayText = this.SelectedItem;
                 }
 
                 else {
-                    myDisplayText = this.SelectedItem[this.Binding];
+                    if (this.Binding == null) {
+                        myDisplayText = this.SelectedItem;
+                    }
+
+                    else {
+                        myDisplayText = this.SelectedItem[this.Binding];
+                    }
                 }
             }
-        }
 
-        this.Text = myDisplayText;
+            this.Text = myDisplayText;
+        }
     }
 
     selectedIndex: number;
@@ -471,7 +475,7 @@ export class ComboBox implements OnInit, AfterViewInit, OnDestroy {
         for (var i = 0; i < this.ItemsSource.length; i++) {
             if (this.ItemsSource[i].Checked) {
                 if (this.WithIcons) {
-                    // product types                  
+                    // product types
                     if (AppTool.IsNullOrEmpty(this.Text)) {
                         this.Text = this.ItemsSource[i].Code;
                     }

@@ -126,6 +126,27 @@ export class GLAccountList {
 	ChartOfAccountsTypeEnglishName: string;
 	ChartOfAccountsTypeLocalName: string;
 	ChartOfAccountsLocalName: string;
+	CardsDataId: string;
+	PaymentTermName: string;
+	Period0: number;
+	Period1: number;
+	Period2: number;
+	Period3: number;
+	Period4: number;
+	Period5: number;
+	PeriodPast: number;
+	PeriodFuture: number;
+	TotalOpenTransactions: number;
+	LastReconciledBy: string;
+	LastReconcileDate: Date;
+	CreditLimit: number;
+	PaymentTerm: string;
+	TotalOpenShipments: number;
+	Phone: string;
+	Salesman: string;
+	Collector: string;
+	FollowupDate: Date;
+	FollowupNotes: string;
 	
 }
  

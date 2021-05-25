@@ -8,6 +8,8 @@ import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { ShipmentDataSource } from '../../../../DataContracts/CargoTrackingShipmentDataSource';
 import { CargoTrackingShipmentFilters } from '../../../../DataContracts/CargoTrackingShipmentFilters';
 import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
+import { CargoTrackingPortService } from '../../../../Services/Others/CargoTrackingPortService';
+import { CargoTrackingShipmentService } from '../../../../Services/Others/CargoTrackingShipmentService';
 
 @Component({
     selector: 'ShipmentsListComponent',
@@ -42,6 +44,19 @@ export class ShipmentsListComponent implements AfterViewInit
     ShipmentsDataSource;
     @ViewChild(CdkVirtualScrollViewport) virtualScroll: CdkVirtualScrollViewport;
     @ViewChild('input') searchInput: ElementRef;
+    public MoreReferenceText: string;
+    public ConsignmentNumber: string;
+    public toPortCode: string;
+    public fromPortCode: string;
+    ShipmentPM: any;
+    NumberOfPackages: number = 0;
+    TitleOfEstimationORActualDate: string = "";
+    ValueOfEstimationORActualDate: Date;
+    ShipmentTypeAndDirectionTooltip: string;
+    SupplierOrClientTitle: string;
+    ShipmenTypeForRouting: string;
+
+
 
 
     get tenant(){
@@ -52,13 +67,14 @@ export class ShipmentsListComponent implements AfterViewInit
         private route: ActivatedRoute,
         private formBuilder: FormBuilder,
         private changeDetector: ChangeDetectorRef,
+        private cargoTrackingPortService: CargoTrackingPortService,
+        private cargoTrackingShipmentService: CargoTrackingShipmentService,
         private searchService: CargoTrackingSearchService)
     {
 
 
         this.InitComponent();
         this.SetDefaultBackgroundColor();
-
     }
     ngAfterViewInit(): void
     {
@@ -72,6 +88,79 @@ export class ShipmentsListComponent implements AfterViewInit
         document.documentElement.style.setProperty('--BGColor', 'RGB(250,251,252)');
     }
 
+    SetShipmentTypeAndDirectionTooltip(shipment: CargoTrackingShipmentList) {
+        var type = "";
+        var direction = "";
+        switch (shipment.TransportModeId) {
+            case 'A': {
+                type = "Air"
+                break;
+            }
+
+            case 'I': {
+                type = "Inland"
+                break;
+            }
+
+            case 'O': {
+                type = "Ocean"
+                break;
+            }
+        }
+
+        switch (shipment.DirectionId) {
+            case 'E': {
+                direction = "Export "
+                break;
+            }
+
+            case 'I': {
+                direction = "Import"
+                break;
+            }
+        }
+
+        this.ShipmentTypeAndDirectionTooltip = type +' '+ direction;
+
+    }
+
+    SetSupplierOrClientTitle(shipment: CargoTrackingShipmentList) {
+        var title;
+        switch (shipment.DirectionId) {
+            case 'E': {
+                title = "CLIENT"
+                break;
+            }
+
+            case 'I': {
+                title = "SUPPLIER"
+                break;
+            }
+        }
+
+        this.SupplierOrClientTitle = title;
+    }
+
+    SetShipmenTypeForRouting(shipment: CargoTrackingShipmentList) {
+
+        if (shipment.ShipmentLevelCode == 'D') {
+            this.ShipmenTypeForRouting = "Direct"
+        }
+
+        else if (shipment.ShipmentLevelCode == 'H') {
+            this.ShipmenTypeForRouting = "House"
+        }
+
+        else if (shipment.ShipmentTypeCode == "FCL") {
+            this.ShipmenTypeForRouting = "FCL"
+        }
+
+        else if (shipment.ShipmentTypeCode == "LCL") {
+            this.ShipmenTypeForRouting = "LCL"
+        }
+    }
+
+
     private GetPreservedToggleFiltersFromSessionInfo()
     {
         if (SessionInfo.ShipmentsFilters) {
@@ -83,11 +172,19 @@ export class ShipmentsListComponent implements AfterViewInit
 
     private InitComponent()
     {
-
         this.InitForm();
         ''.substring(''.indexOf('('))
     }
 
+    SetMoreReferenceText(reference: string) {
+        var allreferences = reference?.split(',');
+        if (allreferences?.length > 4) {
+
+            var morereferences = allreferences.slice(4, allreferences.length + 1)
+            this.MoreReferenceText = morereferences.join(',');
+
+        }
+    }
     private GetCompanyLoginsFromCache()
     {
         SessionInfo.LoggedUserCompanyLogins = JSON.parse(sessionStorage.getItem("LoggedUserCompanyLogins"));
@@ -95,6 +192,8 @@ export class ShipmentsListComponent implements AfterViewInit
         this.GetInvitedCustomers();
     }
 
+    FiltersSelectedInvitedCustoms: any[] = [];
+    SelectedInvitedCustomers: any[] = [];
     private GetInvitedCustomers()
     {
 
@@ -109,9 +208,10 @@ export class ShipmentsListComponent implements AfterViewInit
             .map(d => (
                 {
                     IsSelected: false,
-                    Name: d.CompanyName.substring(0,d.CompanyName.indexOf('(')),
+                    Name: d.CompanyName.substring(0,d.CompanyName.lastIndexOf('(')),
                     ...d }
                 ));
+
 
 
         console.log("[Invited Customers]", this.InvitedCustomersIds);
@@ -256,8 +356,8 @@ export class ShipmentsListComponent implements AfterViewInit
 
     private SetCustomersFilter(shipmentFilters: CargoTrackingShipmentFilters)
     {
-        if(this.InvitedCustomers.filter(cs=>cs.IsSelected).length > 0){
-            var str = this.InvitedCustomers.filter(cs=>cs.IsSelected).map(d => d.CardId)?.join(',');
+        if(this.SelectedInvitedCustomers.length > 0){
+            var str = this.SelectedInvitedCustomers.map(d => d.CardId)?.join(',');
 
         }else{
             var str = this.InvitedCustomers.map(d => d.CardId)?.join(',');
@@ -301,6 +401,48 @@ export class ShipmentsListComponent implements AfterViewInit
         this.references = reference != null ? reference.split(',') : null;
 
     }
+
+    SetConsignmentNumber(shipment: CargoTrackingShipmentList) {
+        if (shipment.ShipmentLevelCode == 'D') {
+            this.ConsignmentNumber = shipment.Master;
+        }
+
+        else if (shipment.ShipmentLevelCode == 'H') {
+            this.ConsignmentNumber = shipment.House;
+        }
+    }
+
+
+    SetEstimationORActualDate(shipment: CargoTrackingShipmentList) {
+        if (shipment.ArrivalDate != null) {
+            this.TitleOfEstimationORActualDate = 'ATA'
+            this.ValueOfEstimationORActualDate = shipment.ArrivalDate;
+        }
+
+        else if (shipment.ArrivalEstimationDate != null) {
+            this.TitleOfEstimationORActualDate = 'ETA'
+            this.ValueOfEstimationORActualDate = shipment.ArrivalEstimationDate;
+        }
+
+        else if (shipment.DepartureDate != null) {
+            this.TitleOfEstimationORActualDate = 'ATD'
+            this.ValueOfEstimationORActualDate = shipment.DepartureDate;
+        }
+
+        else if (shipment.DepartureEstimationDate != null) {
+            this.TitleOfEstimationORActualDate = 'ETD'
+            this.ValueOfEstimationORActualDate = shipment.DepartureEstimationDate;
+        }
+        else {
+            this.TitleOfEstimationORActualDate = 'ATA'
+            this.ValueOfEstimationORActualDate = null;
+        }
+
+
+
+
+    }
+
 
     GetModeIcon(mode: string)
     {
@@ -376,11 +518,14 @@ export class ShipmentsListComponent implements AfterViewInit
     ApplyFilterButtonClicked()
     {
         this.isFiltersSideBarOpened = false;
+
+        this.SelectedInvitedCustomers = this.FiltersSelectedInvitedCustoms.map(d=>d);
+
         this.LoadScreenData();
     }
     ClearAdvancedFilters(){
         this.isFiltersSideBarOpened = false;
-        this.InvitedCustomers.forEach(d=>{d.IsSelected=false});
+        this.SelectedInvitedCustomers = [];
         this.LoadScreenData();
     }
     SortMenuClicked(buttonCode: string)
@@ -422,8 +567,38 @@ export class ShipmentsListComponent implements AfterViewInit
 
     UnselectCustomer(customer)
     {
-        customer.IsSelected=false;
+        var index = this.SelectedInvitedCustomers.findIndex(d=>d==customer);
+            if(index >= 0)
+                this.SelectedInvitedCustomers.splice(index,1);
+
         this.LoadScreenData();
+
+    }
+    FiltersInvitedCustomers: any[] = [];
+    OpenAdvancedFiltersSidebar(){
+        this.isFiltersSideBarOpened = true;
+
+        this.FiltersSelectedInvitedCustoms = this.SelectedInvitedCustomers.map(d=>d);
+
+        this.InvitedCustomers.forEach(d=>d.IsSelected = false);
+        this.FiltersSelectedInvitedCustoms.forEach(d=>d.IsSelected = true);
+
+        this.FiltersInvitedCustomers = this.InvitedCustomers.map(d=>{
+            var selected = this.FiltersSelectedInvitedCustoms.find(g=>g==d);
+            return selected || d;
+        });
+    }
+    OnCustomerValueChanged(value,customer){
+        if(value){
+            var index = this.FiltersSelectedInvitedCustoms.findIndex(d=>d==customer);
+            if(index < 0)
+                this.FiltersSelectedInvitedCustoms.push(customer);
+        }
+        else{
+            var index = this.FiltersSelectedInvitedCustoms.findIndex(d=>d==customer);
+            if(index >= 0)
+                this.FiltersSelectedInvitedCustoms.splice(index,1);
+        }
 
     }
 

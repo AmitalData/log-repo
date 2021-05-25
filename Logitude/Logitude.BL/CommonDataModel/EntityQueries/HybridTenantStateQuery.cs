@@ -49,6 +49,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                       LastUpdateDateTimeTextColor = "#000000",
                                                                       WaitingQueueTextColor = "#000000",
                                                                       LastQueueDateTime = a.LastQueueDateTime,
+                                                                      VersionNumber = a.VersionNumber,
+                                                                      VersionDate = a.VersionDate,
                                                                   }).ToList();
 
             List<int> statetenants = hybridTenantStateLists.Select(t => t.Tenant).ToList();

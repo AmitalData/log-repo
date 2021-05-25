@@ -51,8 +51,10 @@ namespace Logitude.Accounting.Data
 		 IDbSet<FullAccountingSetting> FullAccountingSettings { get; }
 		 IDbSet<GLAccount> GLAccounts { get; }
 		 IDbSet<GLAccountAgingData> GLAccountAgingDatas { get; }
+		 IDbSet<GLAccountCardsData> GLAccountCardsDatas { get; }
 		 IDbSet<GLAccountCounter> GLAccountCounters { get; }
 		 IDbSet<GLAccountCurrency> GLAccountCurrencies { get; }
+		 IDbSet<GLAccountFollowUpData> GLAccountFollowUpDatas { get; }
 		 IDbSet<GLAccountInterestPeriod> GLAccountInterestPeriods { get; }
 		 IDbSet<GLAccountMoreData> GLAccountMoreDatas { get; }
 		 IDbSet<GLAccountRecocileData> GLAccountRecocileDatas { get; }

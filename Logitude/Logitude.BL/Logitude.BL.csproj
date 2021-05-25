@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\librdkafka.redist.1.6.1\build\librdkafka.redist.props" Condition="Exists('..\packages\librdkafka.redist.1.6.1\build\librdkafka.redist.props')" />
   <Import Project="..\packages\Microsoft.Net.Compilers.2.10.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.10.0\build\Microsoft.Net.Compilers.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -52,6 +53,9 @@
     <OutputPath>bin\None\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Confluent.Kafka, Version=1.6.3.0, Culture=neutral, PublicKeyToken=12c514ca49093d1e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Confluent.Kafka.1.6.3\lib\net46\Confluent.Kafka.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -69,6 +73,10 @@
     </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.8.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.8.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\JustWebFreight\WebFreight.Web\bin\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="Intuit.Ipp.Core, Version=7.5.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\IppDotNetSdkForQuickBooksApiV3.7.5.0\lib\Intuit.Ipp.Core.dll</HintPath>
@@ -167,6 +175,7 @@
       <HintPath>..\packages\WindowsAzure.Storage.8.0.1\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="Profact.TimbraCFDI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -180,12 +189,25 @@
       <HintPath>..\packages\Syncfusion.1.0.0\lib\Net40\Syncfusion.XlsIO.Web.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.4.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Memory, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.0\lib\netstandard2.0\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -263,6 +285,7 @@
     <Compile Include="CommonDataModel\APIDataContract\QueryService\VesselQueryService.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Vendor.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Vessel.Generated.cs" />
+    <Compile Include="CommonDataModel\Args\CustomReferenceDocumentsMetaDataType.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\AccountingSystemDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\AddressTypeDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\CheckDigitControlAlgorithmDetails.Generated.cs" />
@@ -337,6 +360,16 @@
     <Compile Include="CommonDataModel\CustomFilters\CardDataSearchService.cs" />
     <Compile Include="CommonDataModel\CustomFilters\ChargesTypeCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\CommunicationLogCustomFilter.cs" />
+    <Compile Include="CommonDataModel\CustomFilters\ReportExecutionLogCustomFilter.cs" />
+    <Compile Include="CommonDataModel\EntityLists\HTSCodeList.cs" />
+    <Compile Include="CommonDataModel\EntityLists\ProductItemList.cs" />
+    <Compile Include="CommonDataModel\EntityLists\ReportExecutionLogList.cs" />
+    <Compile Include="CommonDataModel\EntityPMs\HTSCodePM.cs" />
+    <Compile Include="CommonDataModel\EntityPMs\ProductItemPM.cs" />
+    <Compile Include="CommonDataModel\EntityPMs\ReportExecutionLogPM.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\HTSCodeQuery.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\ProductItemQuery.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\ReportExecutionLogQuery.cs" />
     <Compile Include="CommonDataModel\ExternalService\CustomerDataSearchService.cs" />
     <Compile Include="CommonDataModel\CustomFilters\CustomsShipperCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\AccountingPartnerCustomFilter.cs" />
@@ -399,6 +432,8 @@
     <Compile Include="CommonDataModel\Tools\DataMapping\DocumentsExecutionLogMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\HorseMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\PaymentGatewayPartnerMapping.cs" />
+    <Compile Include="CommonDataModel\Tools\DataMapping\HTSCodeMapping.cs" />
+    <Compile Include="CommonDataModel\Tools\DataMapping\ProductItemMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\TariffCarrierTranslationMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\TenantAdditionalDataMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\AccountingPartnerMapping.cs" />
@@ -409,8 +444,11 @@
     <Compile Include="CommonDataModel\Tools\EntityService\CarrierAreaService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\CustomerOpenFilesAmountService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\DocumentsExecutionLogService.cs" />
+    <Compile Include="CommonDataModel\Tools\EntityService\GLAccountCardDataService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\HorseService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\NumberOfUsersService.cs" />
+    <Compile Include="CommonDataModel\Tools\EntityService\HTSCodeService.cs" />
+    <Compile Include="CommonDataModel\Tools\EntityService\ProductItemService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\TariffCarrierTranslationService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\TenantAdditionalDataService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\AccountingPartnerService.cs" />
@@ -426,6 +464,7 @@
     <Compile Include="DataContracts\QuoteDashboardArguments.cs" />
     <Compile Include="ExternalService\IEntityAutomationMappingPMFields.cs" />
     <Compile Include="Helpers\ObjectFieldPropertyGetter.cs" />
+    <Compile Include="Helpers\PayablesLinesVatAmounts.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\EntityStatus.Generated.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\QueryService\EntityStatusQueryService.Generated.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\Messages\RatesUpdateService.cs" />
@@ -502,10 +541,12 @@
     <Compile Include="InvoiceModel\Tools\Behaviours\APInvoiceBehaviours\APInvoiceAmountDueBehaviour.cs" />
     <Compile Include="InvoiceModel\Tools\Behaviours\APInvoiceBehaviours\APInvoiceFieldsBehaviour.cs" />
     <Compile Include="InvoiceModel\Tools\Behaviours\APInvoiceBehaviours\APInvoiceLinesBehavior.cs" />
+    <Compile Include="InvoiceModel\Tools\Behaviours\APInvoiceBehaviours\APInvoiceShipmentsNumbersBehaviour.cs" />
     <Compile Include="InvoiceModel\Tools\Behaviours\APInvoiceBehaviours\APInvoiceTotalVatsBehavior.cs" />
     <Compile Include="ExternalService\EntityAutomationService.cs" />
     <Compile Include="InvoiceModel\Tools\Behaviours\ARInvoiceBehaviours\ARInvoiceApproveBehaviour.cs" />
     <Compile Include="InvoiceModel\Tools\Behaviours\ARInvoiceBehaviours\ARInvoiceFieldsBehaviour.cs" />
+    <Compile Include="InvoiceModel\Tools\Behaviours\ARInvoiceBehaviours\ARInvoiceShipmentsNumbersBehaviour.cs" />
     <Compile Include="InvoiceModel\Tools\Behaviours\EntityAutomationAPInvoiceMappingPMFields.cs" />
     <Compile Include="InvoiceModel\Tools\Initializers\APInvoiceServiceInitializer.cs" />
     <Compile Include="InvoiceModel\Tools\Initializers\ARInvoiceServiceInitializer.cs" />
@@ -2538,6 +2579,7 @@
     <Compile Include="ShipmentsModel\EntityLists\AWBChargesCodeList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\AWBCustomsInformationList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\AWBInformationList.cs" />
+    <Compile Include="ShipmentsModel\EntityLists\ContainerList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\CustomsTransferHeaderList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\CustomsTransferTypeList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\HarmonizeCodeList.cs" />
@@ -2592,6 +2634,7 @@
     <Compile Include="ShipmentsModel\EntityPMs\AWBChargesCodePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\AWBCustomsInformationPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\AWBInformationPM.cs" />
+    <Compile Include="ShipmentsModel\EntityPMs\ContainerPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\CustomsTransferHeaderPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\CustomsTransferLinePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\DeclarationApprovalRequestPM.cs" />
@@ -2644,6 +2687,7 @@
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentPickUpDeliveryPackagePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentPickUpPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentPM.cs" />
+    <Compile Include="ShipmentsModel\EntityPMs\ShipmentProductItemPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentReceivableLineStatusPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentReceivablePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentReceivableStatusPM.cs" />
@@ -2657,6 +2701,7 @@
     <Compile Include="ShipmentsModel\EntityQueries\AWBChargeCodesQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\AWBCustomsInformationQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\AWBInformationQuery.cs" />
+    <Compile Include="ShipmentsModel\EntityQueries\ContainerQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\CustomsTransferHeaderQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\CustomsTransferLineQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\CustomsTransferTypeQuery.cs" />
@@ -2688,6 +2733,7 @@
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentAssemblyQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentAWBPrintOnlyQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentCarrierStatusQuery.cs" />
+    <Compile Include="ShipmentsModel\EntityQueries\ShipmentCloudCustomDataDeserializer.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentCommodityQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentConsoleShipmentQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentCustomerTypeQuery.cs" />
@@ -2707,6 +2753,7 @@
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentPickUpDeliveryQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentPickUpQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentPreperationIntegrationVariables.cs" />
+    <Compile Include="ShipmentsModel\EntityQueries\ShipmentProductItemQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentReceivableLineStatusQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentReceivableQuery.cs" />
@@ -2734,15 +2781,18 @@
     <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\Validators\ShipmentMasterIsUsedValidator.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentFinalArrivalDateBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\UpdateCrossDockBehaviour.cs" />
+    <Compile Include="ShipmentsModel\Tools\Behaviours\UpdateDocumentFilingBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\UpdateShipmentComputedFieldsBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\AWBSpecialHandlingCodeMapping.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\CustomsTransferHeaderMapping.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.Assembly.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\OceanInsightsRequestsCountMapping.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.Concurrency.cs" />
+    <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.Container.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.ShipmentCustomsTransmission.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.ShipmentStoragePricing.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.ShipmentSubType.cs" />
+    <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.ProductItem.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentTypeMapping.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\FBLStockMapping.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\OceanInsightsRequestMapping.cs" />
@@ -2763,6 +2813,7 @@
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.ShipmentCarrierStatus.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\SpecialServicesTypeMapping.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\AWBAdditionalHandlingInfoService.cs" />
+    <Compile Include="ShipmentsModel\Tools\EntityService\ContainerService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\CustomsTransferHeaderService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\MessagingStockService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\AWBSpecialHandlingCodeService.cs" />
@@ -2895,6 +2946,7 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
     <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.10.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.10.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\librdkafka.redist.1.6.1\build\librdkafka.redist.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\librdkafka.redist.1.6.1\build\librdkafka.redist.props'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

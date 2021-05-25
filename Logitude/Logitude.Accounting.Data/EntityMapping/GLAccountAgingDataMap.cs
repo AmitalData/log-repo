@@ -29,17 +29,17 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.PeriodPast).HasColumnName("PeriodPast").HasPrecision(16, 2);
 
-            this.Property(t => t.Period0).HasColumnName("Period0").HasPrecision(16, 2);
-
-            this.Property(t => t.Period1).HasColumnName("Period1").HasPrecision(16, 2);
-
-            this.Property(t => t.Period2).HasColumnName("Period2").HasPrecision(16, 2);
-
-            this.Property(t => t.Period3).HasColumnName("Period3").HasPrecision(16, 2);
+            this.Property(t => t.Period5).HasColumnName("Period5").HasPrecision(16, 2);
 
             this.Property(t => t.Period4).HasColumnName("Period4").HasPrecision(16, 2);
 
-            this.Property(t => t.Period5).HasColumnName("Period5").HasPrecision(16, 2);
+            this.Property(t => t.Period3).HasColumnName("Period3").HasPrecision(16, 2);
+
+            this.Property(t => t.Period2).HasColumnName("Period2").HasPrecision(16, 2);
+
+            this.Property(t => t.Period1).HasColumnName("Period1").HasPrecision(16, 2);
+
+            this.Property(t => t.Period0).HasColumnName("Period0").HasPrecision(16, 2);
 
             this.Property(t => t.PeriodFuture).HasColumnName("PeriodFuture").HasPrecision(16, 2);
 

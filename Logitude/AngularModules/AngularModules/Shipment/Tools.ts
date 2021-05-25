@@ -451,7 +451,7 @@ export class ShipmentTool {
         shipmentPM.FinalDistenationPortId = oldShipment.FinalDistenationPortId;
         shipmentPM.MainCarriageFinalDestinationPortId = oldShipment.MainCarriageFinalDestinationPortId;
         shipmentPM.ValueOfGoods = oldShipment.ValueOfGoods;
-        shipmentPM.ValueOfGoodsCurrencyId = oldShipment.ValueOfGoodsCurrencyId;
+        shipmentPM.ValueOfGoodsCurrencyId = oldShipment.ValueOfGoodsCurrencyId;        
     }
     public static CopyShipmentPackages(shipmentPM: ShipmentPM, oldShipment: ShipmentPM, copyOtherProperties: boolean) {
         if (copyOtherProperties) {
@@ -1003,6 +1003,32 @@ export class ShipmentTool {
 
         else {
             entityPM.AWBChargesCodeCode = "PC";
+        }
+    }
+    public static ComputeAWBFrieghtAmountCollectAndPrepaid(entityPM: ShipmentPM) {
+        var computedAmount = entityPM.AWBChargeAmount;
+        var totaAmount = entityPM.AWBFreightAmountPrepaid + entityPM.AWBFreightAmountCollect;
+
+        var recompute = true;
+        var isPrepaidHasAmount = (entityPM.AWBFreightAmountPrepaid != 0 && entityPM.AWBFreightAmountPrepaid != null);
+        var isCollectHasAmount = (entityPM.AWBFreightAmountCollect != 0 && entityPM.AWBFreightAmountCollect != null);
+
+        if (!AppTool.IsNullOrEmpty(entityPM.FreightPrepaidCollectId)) {
+            if (isPrepaidHasAmount && isCollectHasAmount && (computedAmount == totaAmount)) {
+                recompute = false;
+            }
+        }
+
+        if (recompute) {
+            if (entityPM.FreightPrepaidCollectId == "P") {
+                entityPM.AWBFreightAmountCollect = 0;
+                entityPM.AWBFreightAmountPrepaid = computedAmount == null ? 0 : computedAmount;
+            }
+
+            else if (entityPM.FreightPrepaidCollectId == "C") {
+                entityPM.AWBFreightAmountPrepaid = 0;
+                entityPM.AWBFreightAmountCollect = computedAmount == null ? 0 : computedAmount;
+            }
         }
     }
 
@@ -2219,6 +2245,93 @@ export class ShipmentTool {
         }
 
         return output;
+    }
+
+    public static BuildStansaloneShipment(delivery: ShipmentDeliveryPM, pickup: ShipmentPickUpPM, shipment: ShipmentPM) {
+        var shipmentPM: ShipmentPM = new ShipmentPM();
+        var isLCLShipment = this.IsLCL(shipment);
+
+        shipmentPM.IsStandalonePickupDelivery = true;
+        shipmentPM.Tenant = SessionLocator.Tenant;
+        shipmentPM.TransportModeId = "I";
+        shipmentPM.DirectionId = "D";
+        shipmentPM.ProfitCurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
+        shipmentPM.AWBCurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
+        shipmentPM.FreightPrepaidCollectId = SessionLocator.TenantPM.ExportFreightPrepaidCollectId;
+        shipmentPM.OtherPrepaidCollectId = SessionLocator.TenantPM.ExportOtherPrepaidCollectId;
+        shipmentPM.ShipmentLevelCode = "D";
+        shipmentPM.ShipmentTypeId = isLCLShipment ? "LTL" : "FTL";
+        shipmentPM.FHLStatusCode = "NSEN";
+        shipmentPM.FWBStatusCode = "NSEN";
+        shipmentPM.FHLStatusName = "Not Sent";
+        shipmentPM.FWBStatusName = "Not Sent";
+        shipmentPM.ManifestStatusCode = "NSEN";
+        shipmentPM.LocalCustomsTransmissionsStatusCode = "NSEN";
+        shipmentPM.IsOperationalClosed = false;
+        shipmentPM.CreateDateTime = DateTool.GetCurrentDateTimeAsUtc();
+        shipmentPM.LastUpdateDate = DateTool.GetCurrentDateTimeAsUtc();
+        shipmentPM.StatusDate = DateTool.GetCurrentDateTimeAsUtc();
+        shipmentPM.Tenant = SessionLocator.Tenant;
+        shipmentPM.AWBCurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
+        shipmentPM.ProfitCurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
+        shipmentPM.VolumeUnitCode = SessionLocator.TenantPM.VolumeUnitCode;
+        shipmentPM.DimensionsUnitCode = SessionLocator.TenantPM.DimensionsUnitCode;
+        shipmentPM.GrossWeightUnitCode = SessionLocator.TenantPM.GrossWeightUnitCode;
+        shipmentPM.CreatedByUserId = SessionLocator.LoggedUserId;
+        shipmentPM.NewConcurrencyGUID = AppTool.GetNewGuid();
+        shipmentPM.ValueOfGoodsCurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
+        shipmentPM.OnCarriageAdditionalTransportModeCode = "BYTR";
+        shipmentPM.OnForwardingAdditionalTransportModeCode = "BYTR";
+        shipmentPM.ShipmentNumber = shipment.ShipmentNumber;
+        shipmentPM.DepartmentId = shipment.DepartmentId;
+        shipmentPM.BranchId = shipment.BranchId;
+        shipmentPM.IncotermId = shipment.IncotermId;      
+        
+        if (delivery) {
+            shipmentPM.StandalonePickupDeliveryId = delivery.Id;
+            shipmentPM.StandalonePickupDeliveryNumber = delivery.PickUpDeliveryNumber;            
+            shipmentPM.ShipperId = delivery.FromPartnerCardId;
+            shipmentPM.ConsigneeId = delivery.ToPartnerCardId;
+            shipmentPM.ShipperAddressId = delivery.FromAddressId;
+            shipmentPM.ConsigneeAddressId = delivery.ToAddressId;
+            shipmentPM.MainCarriageFromPartnerId = delivery.FromPartnerCardId;
+            shipmentPM.MainCarriageFromAddressId = delivery.FromAddressId;
+            shipmentPM.MainCarriageToPartnerId = delivery.ToPartnerCardId;
+            shipmentPM.MainCarriageToAddressId = delivery.ToAddressId;
+            shipmentPM.MainCarriageCarrierId = delivery.CarrierId;
+            shipmentPM.MainCarriageCarrierNumber = delivery.CarrierNumber;
+            shipmentPM.Driver = delivery.Driver;
+            shipmentPM.TruckNumber = delivery.TruckNumber;
+            shipmentPM.TrailerNumber = delivery.TrailerNumber;
+            shipmentPM.MainCarriageETD = delivery.ETD;
+            shipmentPM.MainCarriageETA = delivery.ETA;
+            shipmentPM.MainCarriageATD = delivery.ATD;
+            shipmentPM.MainCarriageATA = delivery.ATA;
+        }
+
+        else if (pickup) {
+            shipmentPM.StandalonePickupDeliveryId = pickup.Id;
+            shipmentPM.StandalonePickupDeliveryNumber = pickup.PickUpDeliveryNumber;            
+            shipmentPM.ShipperId = pickup.FromPartnerCardId;
+            shipmentPM.ConsigneeId = pickup.ToPartnerCardId;
+            shipmentPM.ShipperAddressId = pickup.FromAddressId;
+            shipmentPM.ConsigneeAddressId = pickup.ToAddressId;
+            shipmentPM.MainCarriageFromPartnerId = pickup.FromPartnerCardId;
+            shipmentPM.MainCarriageFromAddressId = pickup.FromAddressId;
+            shipmentPM.MainCarriageToPartnerId = pickup.ToPartnerCardId;
+            shipmentPM.MainCarriageToAddressId = pickup.ToAddressId;
+            shipmentPM.MainCarriageCarrierId = pickup.CarrierId;
+            shipmentPM.MainCarriageCarrierNumber = pickup.CarrierNumber;
+            shipmentPM.Driver = pickup.Driver;
+            shipmentPM.TruckNumber = pickup.TruckNumber;
+            shipmentPM.TrailerNumber = pickup.TrailerNumber;
+            shipmentPM.MainCarriageETD = pickup.ETD;
+            shipmentPM.MainCarriageETA = pickup.ETA;
+            shipmentPM.MainCarriageATD = pickup.ATD;
+            shipmentPM.MainCarriageATA = pickup.ATA;
+        }
+
+        return shipmentPM;
     }
 }
 export class ByPckageType {
@@ -4204,12 +4317,24 @@ export class RoutingHelper {
             ShipmentTool.BuildAWBPlaceField(entityPM);
 
             // Previous.To == this.From
-            if (!AppTool.IsNullOrEmpty(entityPM.PreCarriageFromPortId)) {
-                entityPM.PreCarriageToPortId = myPortId;
-                entityPM.PreCarriageToPortCode = myPortCode;
-                entityPM.PreCarriageToPortName = myPortName;
-                entityPM.PreCarriageToPortCountryCode = myPortCountryCode;
-                entityPM.PreCarriageToPortCountryName = myPortCountryName;
+            if (entityPM.ShipmentLevelCode == "H" && AppTool.IsNullOrEmpty(entityPM.MasterShipmentDataId)) {
+                if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingFromPortId)) {
+                    entityPM.PreForwardingToPortId = myPortId;
+                    entityPM.PreForwardingToPortCode = myPortCode;
+                    entityPM.PreForwardingToPortName = myPortName;
+                    entityPM.PreForwardingToPortCountryCode = myPortCountryCode;
+                    entityPM.PreForwardingToPortCountryName = myPortCountryName;
+                }
+            }
+
+            else {
+                if (!AppTool.IsNullOrEmpty(entityPM.PreCarriageFromPortId)) {
+                    entityPM.PreCarriageToPortId = myPortId;
+                    entityPM.PreCarriageToPortCode = myPortCode;
+                    entityPM.PreCarriageToPortName = myPortName;
+                    entityPM.PreCarriageToPortCountryCode = myPortCountryCode;
+                    entityPM.PreCarriageToPortCountryName = myPortCountryName;
+                }
             }
         }
     }
@@ -4579,6 +4704,14 @@ export class RoutingHelper {
                 entityPM.OnCarriageFromPortCountryCode = myPortCountryCode;
                 entityPM.OnCarriageFromPortCountryName = myPortCountryName;
             }
+
+            else if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingToPortId)) {
+                entityPM.OnForwardingFromPortId = myPortId;
+                entityPM.OnForwardingFromPortCode = myPortCode;
+                entityPM.OnForwardingFromPortName = myPortName;
+                entityPM.OnForwardingFromPortCountryCode = myPortCountryCode;
+                entityPM.OnForwardingFromPortCountryName = myPortCountryName;
+            }
         }
     }
 
@@ -4714,14 +4847,17 @@ export class RoutingHelper {
             entityPM.PreForwardingToPortCountryName = myPortCountryName;
 
             // next.From == this.To
-            entityPM.FromCountryId = myPortCountryId;
-            entityPM.FromCountryIsEC = myPortCountryEC;
-            entityPM.MainCarriageFromPortId = myPortId;
-            entityPM.MainCarriageFromPortCode = myPortCode;
-            entityPM.MainCarriageFromPortName = myPortName;
-            entityPM.MainCarriageFromPortCountryCode = myPortCountryCode;
-            entityPM.MainCarriageFromPortCountryName = myPortCountryName;
-
+            if (AppTool.IsNullOrEmpty(entityPM.MasterShipmentDataId)) {
+                entityPM.FromCountryId = myPortCountryId;
+                entityPM.FromCountryIsEC = myPortCountryEC;
+                entityPM.MainCarriageFromPortId = myPortId;
+                entityPM.MainCarriageFromPortCode = myPortCode;
+                entityPM.MainCarriageFromPortName = myPortName;
+                entityPM.MainCarriageFromPortCountryCode = myPortCountryCode;
+                entityPM.MainCarriageFromPortCountryName = myPortCountryName;
+                entityPM.FromPortId = myPortId;
+            }
+           
             ShipmentTool.ComputeSCI(entityPM);
             ShipmentTool.BuildAWBPlaceField(entityPM);
         }
@@ -4751,45 +4887,22 @@ export class RoutingHelper {
             entityPM.OnForwardingFromPortCountryName = myPortCountryName;
 
             // Previous.To == this.From
-            if (entityPM.Transshipment3FromPortId != null && entityPM.Transshipment3ToPortId != null) {
-                entityPM.Transshipment3ToPortId = myPortId;
-                entityPM.Transshipment3ToPortCode = myPortCode;
-                entityPM.Transshipment3ToPortName = myPortName;
-                entityPM.Transshipment3ToPortCountryCode = myPortCountryCode;
-                entityPM.Transshipment3ToPortCountryName = myPortCountryName;
-            }
-
-            else if (entityPM.Transshipment2FromPortId != null && entityPM.Transshipment2ToPortId != null) {
-                entityPM.Transshipment2ToPortId = myPortId;
-                entityPM.Transshipment2ToPortCode = myPortCode;
-                entityPM.Transshipment2ToPortName = myPortName;
-                entityPM.Transshipment2ToPortCountryCode = myPortCountryCode;
-                entityPM.Transshipment2ToPortCountryName = myPortCountryName;
-            }
-
-            else if (entityPM.Transshipment1FromPortId != null && entityPM.Transshipment1ToPortId != null) {
-                entityPM.Transshipment1ToPortId = myPortId;
-                entityPM.Transshipment1ToPortCode = myPortCode;
-                entityPM.Transshipment1ToPortName = myPortName;
-                entityPM.Transshipment1ToPortCountryCode = myPortCountryCode;
-                entityPM.Transshipment1ToPortCountryName = myPortCountryName;
-            }
-
-            else {
+            if (AppTool.IsNullOrEmpty(entityPM.MasterShipmentDataId)) {
                 entityPM.MainCarriageToPortId = myPortId;
                 entityPM.MainCarriageToPortCode = myPortCode;
                 entityPM.MainCarriageToPortName = myPortName;
                 entityPM.MainCarriageToPortCountryCode = myPortCountryCode;
-                entityPM.MainCarriageToPortCountryName = myPortCountryName;
-            }
+                entityPM.MainCarriageToPortCountryName = myPortCountryName;          
 
-            entityPM.ToCountryId = myPortCountryId;
-            entityPM.FinalDistenationPortId = myPortId;
-            entityPM.MainCarriageFinalDestinationPortId = myPortId;
-            entityPM.MainCarriageFinalDestinationPortCode = myPortCode;
-            entityPM.MainCarriageFinalDestinationPortName = myPortName;
-            entityPM.MainCarriageFinalDestinationPortCountryCode = myPortCountryCode;
-            entityPM.MainCarriageFinalDestinationPortCountryName = myPortCountryName;
+                entityPM.ToCountryId = myPortCountryId;
+                entityPM.FinalDistenationPortId = myPortId;
+                entityPM.MainCarriageFinalDestinationPortId = myPortId;
+                entityPM.MainCarriageFinalDestinationPortCode = myPortCode;
+                entityPM.MainCarriageFinalDestinationPortName = myPortName;
+                entityPM.MainCarriageFinalDestinationPortCountryCode = myPortCountryCode;
+                entityPM.MainCarriageFinalDestinationPortCountryName = myPortCountryName;
+                entityPM.ToPortId = myPortId;
+            }
         }
     }
 

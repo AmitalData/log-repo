@@ -714,6 +714,135 @@ export class GLAccountPM {
     public set RelatedGLAccount(newValue: string) { if (this.relatedGLAccount != newValue) { this.relatedGLAccount = newValue; this.MarkAsDirty("RelatedGLAccount"); } }
        
 	 
+     
+	private gLAccountChildren: GLAccountPM[];
+    get  GLAccountChildren() {
+        if (this.gLAccountChildren == null) {
+            this.gLAccountChildren = [];
+        }
+
+        return this.gLAccountChildren;
+    }
+    set  GLAccountChildren(newValue: GLAccountPM[]) {
+        if (this.gLAccountChildren != newValue) {
+            this.gLAccountChildren = newValue;
+        }
+    }
+    private cardsDataId: string;
+    public get CardsDataId() { return this.cardsDataId; }
+    public set CardsDataId(newValue: string) { if (this.cardsDataId != newValue) { this.cardsDataId = newValue; this.MarkAsDirty("CardsDataId"); } }
+       
+	 
+    private paymentTermName: string;
+    public get PaymentTermName() { return this.paymentTermName; }
+    public set PaymentTermName(newValue: string) { if (this.paymentTermName != newValue) { this.paymentTermName = newValue; this.MarkAsDirty("PaymentTermName"); } }
+       
+	 
+    private period0: number;
+    public get Period0() { return this.period0; }
+    public set Period0(newValue: number) { if (this.period0 != newValue) { this.period0 = newValue; this.MarkAsDirty("Period0"); } }
+       
+	 
+    private period1: number;
+    public get Period1() { return this.period1; }
+    public set Period1(newValue: number) { if (this.period1 != newValue) { this.period1 = newValue; this.MarkAsDirty("Period1"); } }
+       
+	 
+    private period2: number;
+    public get Period2() { return this.period2; }
+    public set Period2(newValue: number) { if (this.period2 != newValue) { this.period2 = newValue; this.MarkAsDirty("Period2"); } }
+       
+	 
+    private period3: number;
+    public get Period3() { return this.period3; }
+    public set Period3(newValue: number) { if (this.period3 != newValue) { this.period3 = newValue; this.MarkAsDirty("Period3"); } }
+       
+	 
+    private period4: number;
+    public get Period4() { return this.period4; }
+    public set Period4(newValue: number) { if (this.period4 != newValue) { this.period4 = newValue; this.MarkAsDirty("Period4"); } }
+       
+	 
+    private period5: number;
+    public get Period5() { return this.period5; }
+    public set Period5(newValue: number) { if (this.period5 != newValue) { this.period5 = newValue; this.MarkAsDirty("Period5"); } }
+       
+	 
+    private periodPast: number;
+    public get PeriodPast() { return this.periodPast; }
+    public set PeriodPast(newValue: number) { if (this.periodPast != newValue) { this.periodPast = newValue; this.MarkAsDirty("PeriodPast"); } }
+       
+	 
+    private periodFuture: number;
+    public get PeriodFuture() { return this.periodFuture; }
+    public set PeriodFuture(newValue: number) { if (this.periodFuture != newValue) { this.periodFuture = newValue; this.MarkAsDirty("PeriodFuture"); } }
+       
+	 
+    private totalOpenTransactions: number;
+    public get TotalOpenTransactions() { return this.totalOpenTransactions; }
+    public set TotalOpenTransactions(newValue: number) { if (this.totalOpenTransactions != newValue) { this.totalOpenTransactions = newValue; this.MarkAsDirty("TotalOpenTransactions"); } }
+       
+	 
+    private lastReconciledBy: string;
+    public get LastReconciledBy() { return this.lastReconciledBy; }
+    public set LastReconciledBy(newValue: string) { if (this.lastReconciledBy != newValue) { this.lastReconciledBy = newValue; this.MarkAsDirty("LastReconciledBy"); } }
+       
+	 
+    private lastReconcileDate: Date;
+    public get LastReconcileDate() { return this.lastReconcileDate; }
+    public set LastReconcileDate(newValue: Date) { if (this.lastReconcileDate != newValue) { this.lastReconcileDate = newValue; this.MarkAsDirty("LastReconcileDate"); } }
+       
+	 
+    private creditLimit: number;
+    public get CreditLimit() { return this.creditLimit; }
+    public set CreditLimit(newValue: number) { if (this.creditLimit != newValue) { this.creditLimit = newValue; this.MarkAsDirty("CreditLimit"); } }
+       
+	 
+    private paymentTerm: string;
+    public get PaymentTerm() { return this.paymentTerm; }
+    public set PaymentTerm(newValue: string) { if (this.paymentTerm != newValue) { this.paymentTerm = newValue; this.MarkAsDirty("PaymentTerm"); } }
+       
+	 
+    private totalOpenShipments: number;
+    public get TotalOpenShipments() { return this.totalOpenShipments; }
+    public set TotalOpenShipments(newValue: number) { if (this.totalOpenShipments != newValue) { this.totalOpenShipments = newValue; this.MarkAsDirty("TotalOpenShipments"); } }
+       
+	 
+    private phone: string;
+    public get Phone() { return this.phone; }
+    public set Phone(newValue: string) { if (this.phone != newValue) { this.phone = newValue; this.MarkAsDirty("Phone"); } }
+       
+	 
+    private salesman: string;
+    public get Salesman() { return this.salesman; }
+    public set Salesman(newValue: string) { if (this.salesman != newValue) { this.salesman = newValue; this.MarkAsDirty("Salesman"); } }
+       
+	 
+    private collector: string;
+    public get Collector() { return this.collector; }
+    public set Collector(newValue: string) { if (this.collector != newValue) { this.collector = newValue; this.MarkAsDirty("Collector"); } }
+       
+	 
+    private followupDate: Date;
+    public get FollowupDate() { return this.followupDate; }
+    public set FollowupDate(newValue: Date) { if (this.followupDate != newValue) { this.followupDate = newValue; this.MarkAsDirty("FollowupDate"); } }
+       
+	 
+    private followupNotes: string;
+    public get FollowupNotes() { return this.followupNotes; }
+    public set FollowupNotes(newValue: string) { if (this.followupNotes != newValue) { this.followupNotes = newValue; this.MarkAsDirty("FollowupNotes"); } }
+       
+	 
+    private gLAccountFollowUpDate: Date;
+    public get GLAccountFollowUpDate() { return this.gLAccountFollowUpDate; }
+    public set GLAccountFollowUpDate(newValue: Date) { if (this.gLAccountFollowUpDate != newValue) { this.gLAccountFollowUpDate = newValue; this.MarkAsDirty("GLAccountFollowUpDate"); } }
+       
+	 
+    private gLAccountFollowUpRemarks: string;
+    public get GLAccountFollowUpRemarks() { return this.gLAccountFollowUpRemarks; }
+    public set GLAccountFollowUpRemarks(newValue: string) { if (this.gLAccountFollowUpRemarks != newValue) { this.gLAccountFollowUpRemarks = newValue; this.MarkAsDirty("GLAccountFollowUpRemarks"); } }
+       
+	 
 
     public OldEntityPM: GLAccountPM;
 		

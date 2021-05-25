@@ -71,6 +71,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.KCExpirationDate = entityPM.KCExpirationDate;
             entityPOCO.IsCreditLimitEnabled = entityPM.IsCreditLimitEnabled;
             entityPOCO.CreditLimitAmount = entityPM.CreditLimitAmount;
+            entityPOCO.InsuredcreditLimit = entityPM.InsuredcreditLimit;
             entityPOCO.CreditLimitOpenBalance = entityPM.CreditLimitOpenBalance;
             entityPOCO.CreditLimitWarningPercentage = entityPM.CreditLimitWarningPercentage;
             entityPOCO.BlockNewInvoiceCreation = entityPM.BlockNewInvoiceCreation;

@@ -25,6 +25,8 @@ import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {GLAccountListService} from '../../../Services/StandardLists/GLAccountListService'
+import { APInvoicePMService } from '../../../../Invoice/Services/StandardPMs/APInvoicePMService';
+import { APInvoicePM } from '../../../../Invoice/EntityPMs/APInvoicePM';
 
 
 @Component({
@@ -33,7 +35,9 @@ import {GLAccountListService} from '../../../Services/StandardLists/GLAccountLis
     providers:
         [CurrencyListService,
         AccountingPeriodExtendedListService,
-        RatesTableExtendedListService]
+        RatesTableExtendedListService,
+        APInvoicePMService
+        ]
 })
 
 export class JournalDetailsTabComponent extends BaseComponent implements OnInit {
@@ -53,6 +57,8 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     Opacity: string = "1";
     referencesDivHeight: number;
     Approved: boolean = false;
+    IsJournalEditableAfterApproval: boolean = false;
+    APInvoice: APInvoicePM;
     Voided: boolean = false;
     AccountingPeriods: AccountingPeriodList[] = [];
     _AccountingPeriodListService: AccountingPeriodListService = new AccountingPeriodListService();
@@ -103,7 +109,8 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
         private entityArgs: EntityArgs,
         private currencyListService: CurrencyListService,
         private accountingPeriodListService: AccountingPeriodExtendedListService,
-        private CD : ChangeDetectorRef
+        private CD: ChangeDetectorRef,
+        private apInvoicePMService :APInvoicePMService
     ) {
         super();
 
@@ -201,6 +208,53 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
             this.UIProperties.SetVisibility("Reference3", "Journal", false);
             this.UIProperties.SetVisibility("Notes", "Journal", false);
         }
+
+        this.CheckIfJournalEditableAfterApproval();
+    }
+
+
+    private CheckIfJournalEditableAfterApproval() {
+        if (this.Approved) {
+
+            this.CheckIfJournalManuallyCreated();
+
+            this.CheckIfJournalFromAPInvoiceAndCreatedExternally();
+        }
+    }
+
+    private CheckIfJournalManuallyCreated() {
+        const AccountingEntityCode_Journal = "1";
+        var isJournalManuallyCreated = this.EntityPM.ExternalSystem == null && this.EntityPM.ExternalNo == null && this.EntityPM.AccountingEntityCode == AccountingEntityCode_Journal;
+        if (isJournalManuallyCreated) {
+            this.IsJournalEditableAfterApproval = true;
+        }
+    }
+
+    private CheckIfJournalFromAPInvoiceAndCreatedExternally() {
+        var isJournalCreatedFromAPInvoice = this.CheckIfJournalFromAPInvoice();
+
+        if (isJournalCreatedFromAPInvoice) {
+            this.CheckIfAPInvoiceCreatedExternally(this.EntityPM.AccountingEntityId);
+        }
+    }
+
+    private CheckIfJournalFromAPInvoice() {
+        const AccountingEntityCode_APInvoice = "4";
+        var isJournalCreatedFromAPInvoice = this.EntityPM.AccountingEntityCode == AccountingEntityCode_APInvoice;
+        return isJournalCreatedFromAPInvoice;
+    }
+
+    CheckIfAPInvoiceCreatedExternally(id: string) {
+        this.apInvoicePMService.get(id).subscribe((myResponse: ServiceResponse) => {
+            if (myResponse != null) {
+                if (!myResponse.HasError) {
+                    this.APInvoice = myResponse.Result;
+                    if (this.APInvoice.IsExternalEntity == false) {
+                        this.IsJournalEditableAfterApproval = true;
+                    }
+                }
+            }
+        });
     }
 
     FillGrid() {
@@ -728,8 +782,21 @@ getHeaderCurrency(CurrencyId:string){
         }
     }
 
-  
-
+    EditJournalLineNotes(line: any) {
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 450;
+        logWindow.Height = 200;
+        logWindow.Title = TextCodeTranslator.Translate("Journal.M.EditLineNote");
+        logWindow.WindowArgs = { journalLine: line };
+        logWindow.ComponentLoaded.subscribe(comp => {
+            logWindow.WindowClosed.subscribe(s => {
+                if (s) {
+                    this.JournalLines.Collection.filter(line => line.Line == line.Line)[0].Note = comp.Note;
+                }
+            });
+        });
+        logWindow.Show('./Accounting/Components/EditTabs/Journal//UpdateJournalLineNoteComponent');
+    }
 }
 
 
@@ -1033,7 +1100,7 @@ class JournalLineModel extends BaseComponent {
             this.JournalLinePM.LocalAmount = value;
             this.parent.CalculateTotals();
             if(this.Currency){
-                if(this.Currency.Id ==SessionLocator.TenantPM.CurrencyId)  this.ForeignAmount= this.LocalAmount;
+                if(this.CurrencyId ==SessionLocator.TenantPM.CurrencyId)  this.ForeignAmount= this.LocalAmount;
             }
             if (!this.ForeignAmount && this.CurrencyId) this.GetExchangeRate(this.CurrencyId);
            
@@ -1538,6 +1605,7 @@ class JournalLineModel extends BaseComponent {
         });
 
     }
+
 
     //#endregion
 }

@@ -262,6 +262,46 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
 
         [TestMethod]
+        public void OnCreate_RemoveNewLine()
+        {
+            int tenant = 1;
+
+            //arrange
+            var journalPM = new JournalPM()
+            {
+                Tenant = tenant
+            };
+            var journalLinePM = new JournalLinePM()
+            {
+                Tenant = 2,
+                CurrencyCode = "USD",
+                CurrencyId = "",
+                Notes = "123" + Environment.NewLine + "456",
+            };
+            var currencyPM = new CurrencyPM() { Id = "1-1", Code = "USD", };
+            IAccountingContext mainContext = A.Fake<IAccountingContext>();
+
+            IJournalActionTypeListQueryService myIJournalActionTypeListQueryService =
+                A.Fake<IJournalActionTypeListQueryService>();
+
+            var fakeJournalUpdateOnCreatingLine = A.Fake<JournalLineOnUpdate>(
+                option => option.CallsBaseMethods()
+                    );
+
+            A.CallTo(() => fakeJournalUpdateOnCreatingLine.GetSingleCurrencyByCode(1, "USD"))
+                .Returns(currencyPM);
+            A.CallTo(() => fakeJournalUpdateOnCreatingLine.getFullAccountingSettings(tenant))
+                .Returns(new FullAccountingSettingPM() { });
+
+            fakeJournalUpdateOnCreatingLine.OnUpdate(journalLinePM, journalPM);
+
+
+            ///checke
+            Assert.AreEqual(journalLinePM.Notes, "123" + " " /*Environment.NewLine*/ + "456");
+
+        }
+
+        [TestMethod]
         public void OnCreateRange_BadGLAccountId_debitDueVat_AccountIdBecomeNUll()
         {
             int tenant = 1;

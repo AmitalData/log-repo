@@ -313,6 +313,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 table.Columns.Add("From");
                 table.Columns.Add("To");
+                table.Columns.Add("Via");
                 table.Columns.Add("Min Price");
 
                 sheet1.InsertColumn(3, steps.Length, ExcelInsertOptions.FormatAsAfter);
@@ -328,6 +329,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 table.Columns.Add("From");
                 table.Columns.Add("To");
+                table.Columns.Add("Via");
                 table.Columns.Add("Min Price");
                 table.Columns.Add(tariff.PriceSteps + " KG");
                 table.Columns.Add("Transit Time");
@@ -335,41 +337,42 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
 
             #region Range
-            string range = "A3:F3";
+            string range = "A3:G3";
             if (steps.Length == 2)
-            {
-                range = "A3:G3";
-            }
-
-            else if (steps.Length == 3)
             {
                 range = "A3:H3";
             }
 
-            else if (steps.Length == 4)
+            else if (steps.Length == 3)
             {
                 range = "A3:I3";
             }
 
-            else if (steps.Length == 5)
+            else if (steps.Length == 4)
             {
                 range = "A3:J3";
             }
 
-            else if (steps.Length == 6)
+            else if (steps.Length == 5)
             {
                 range = "A3:K3";
             }
 
-            else if (steps.Length == 7)
+            else if (steps.Length == 6)
             {
                 range = "A3:L3";
             }
 
-            else if (steps.Length == 8)
+            else if (steps.Length == 7)
             {
                 range = "A3:M3";
             }
+
+            else if (steps.Length == 8)
+            {
+                range = "A3:N3";
+            }
+
             #endregion
 
             if (type == "Data")
@@ -383,53 +386,55 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         {
                             row[0] = item.OriginPortCode ?? null;
                             row[1] = item.DestinationPortCode ?? null;
+                            row[2] = item.ViaPortCode ?? null;
                         } else
                         {
                             row[0] = item.OriginPortCombinedCode ?? null;
                             row[1] = item.DestinationPortCombinedCode ?? null;
+                            row[2] = item.ViaPortCombinedCode ?? null;
                         }
                         
-                        row[2] = item.MinPrice ?? null;
-                        row[3] = item.Step1Price ?? null;
+                        row[3] = item.MinPrice ?? null;
+                        row[4] = item.Step1Price ?? null;
 
                         if (item.Step2Price.HasValue)
                         {
-                            row[4] = item.Step2Price ?? null;
+                            row[5] = item.Step2Price ?? null;
                         }
 
                         if (item.Step3Price.HasValue)
                         {
-                            row[5] = item.Step3Price ?? null;
+                            row[6] = item.Step3Price ?? null;
                         }
 
                         if (item.Step4Price.HasValue)
                         {
-                            row[6] = item.Step4Price ?? null;
+                            row[7] = item.Step4Price ?? null;
                         }
 
                         if (item.Step5Price.HasValue)
                         {
-                            row[7] = item.Step5Price ?? null;
+                            row[8] = item.Step5Price ?? null;
                         }
 
                         if (item.Step6Price.HasValue)
                         {
-                            row[8] = item.Step6Price ?? null;
+                            row[9] = item.Step6Price ?? null;
                         }
 
                         if (item.Step7Price.HasValue)
                         {
-                            row[9] = item.Step7Price ?? null;
+                            row[10] = item.Step7Price ?? null;
                         }
 
                         if (item.Step8Price.HasValue)
                         {
-                            row[10] = item.Step8Price ?? null;
+                            row[11] = item.Step8Price ?? null;
                         }
 
-                        row[steps.Length + 3] = item.TransitTime ?? null;
+                        row[steps.Length + 4] = item.TransitTime ?? null;
 
-                        row[steps.Length + 4] = item.Notes ?? null;
+                        row[steps.Length + 5] = item.Notes ?? null;
 
                         table.Rows.Add(row);
                     }
@@ -465,6 +470,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             #region header
             table.Columns.Add("From");
             table.Columns.Add("To");
+            table.Columns.Add("Via");
 
             int count = 0;
             PackageTypeRepository packageTypeRepository = new PackageTypeRepository(tenant);
@@ -530,27 +536,28 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             #endregion
 
             #region range
-            string range = "A3:D3";
+            string range = "A3:E3";
             if (count == 1)
-            {
-                range = "A3:E3";
-            }
-            else if (count == 2)
             {
                 range = "A3:F3";
             }
-            else if (count == 3)
+            else if (count == 2)
             {
                 range = "A3:G3";
             }
-            else if (count == 4)
+            else if (count == 3)
             {
                 range = "A3:H3";
             }
-            else if (count == 5)
+            else if (count == 4)
             {
                 range = "A3:I3";
-            }          
+            }
+            else if (count == 5)
+            {
+                range = "A3:J3";
+            }
+
             #endregion
 
             if (type == "Data")
@@ -562,8 +569,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         DataRow row = table.NewRow();
                         row[0] = item.OriginPortCombinedCode ?? null;
                         row[1] = item.DestinationPortCombinedCode ?? null;
+                        row[2] = item.ViaPortCombinedCode ?? null;
 
-                        int rowIndex = 2;
+                        int rowIndex = 3;
                         
                         if (item.Surcharge1Price.HasValue)
                         {
@@ -590,8 +598,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             row[rowIndex++] = item.Surcharge5Price ?? null;
                         }
 
-                        row[count + 2] = item.TransitTime ?? null;
-                        row[count + 3] = item.Notes ?? null;
+                        row[count + 3] = item.TransitTime ?? null;
+                        row[count + 4] = item.Notes ?? null;
 
                         table.Rows.Add(row);
                     }

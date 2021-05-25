@@ -549,9 +549,10 @@ export function FillPayablesTab(payableDetails: PayableDetails) {
 
     if (payableDetails.Vendor) {
         cy.FillLogLov(ShipmentSelectors.ShipmentPayableVendor, payableDetails.Vendor, true)
-        cy.DefineRequestWait(RestAPI.GET, '**/cardviews/**', 'cardviews')
+        BaseAssertion.AssertElementHaveValue(ShipmentSelectors.ShipmentPayableVendor,payableDetails.Vendor)
+      //  cy.DefineRequestWait(RestAPI.GET, '**/cardviews/**', 'cardviews')
         cy.Click(ShipmentSelectors.AddPayableOkButton, null)
-        BaseAssertion.AssertStatusCode('cardviews', 200)
+       // BaseAssertion.AssertStatusCode('cardviews', 200)
     } else {
         cy.Click(ShipmentSelectors.AddPayableOkButton, null)
     }
@@ -871,11 +872,11 @@ function FillShipperAndConsignee(shipmentDetails: ShipmentDetails) {
 
 function FillCustomerType(shipmentDetails: ShipmentDetails) { 
     if (Conditions.IsImport(shipmentDetails.Direction)) {
-        cy.FillLogLov(ShipmentSelectors.ShipmentCustomerType, "Consignee", true)
-      //cy.SelectDropDownListItem(ShipmentSelectors.LogLovShipmentCustomer,"Consignee")
+       // cy.FillLogLov(ShipmentSelectors.ShipmentCustomerType, "Consignee", true)
+      cy.SelectDropDownListItem(ShipmentSelectors.LogLovShipmentCustomer,"Consignee")
     } else {
-        cy.FillLogLov(ShipmentSelectors.ShipmentCustomerType, "Shipper", true)
-        //cy.SelectDropDownListItem(ShipmentSelectors.LogLovShipmentCustomer,"Shipper")
+       // cy.FillLogLov(ShipmentSelectors.ShipmentCustomerType, "Shipper", true)
+        cy.SelectDropDownListItem(ShipmentSelectors.LogLovShipmentCustomer,"Shipper")
 
     }
 }
@@ -929,11 +930,11 @@ export function FillEventNotesWizard(notes: string) {
 }
 
 export function ConvertShipmentDirection() {
-    ConvertShipment(true);
+    ConvertShipment();
 }
 
 export function ConvertShipmentType() {
-    ConvertShipment(false);
+    ConvertShipment();
 }
 
 export function ValidateShipmentTypeInHeaderScreen(expectedShipmentType: string) {
@@ -1008,13 +1009,9 @@ function OpenConversionWizard(convertButtonSelector: string) {
     cy.Click(convertButtonSelector, null);
 }
 
-function ConvertShipment(isDirectionConversion: boolean){
+function ConvertShipment(){
     cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.PutShipment);
     cy.Click(BaseSelectors.RedButton + ":last", null);
-    if(isDirectionConversion){
-        cy.get(BaseSelectors.ConfirmWindow).should("be.visible")
-        cy.Click(BaseSelectors.ConfirmWindowButton + ":last", null);
-    }
 }
 
 //#endregion

@@ -184,16 +184,20 @@ namespace WebFreight.Web.ShipmentPackageModel
                 provider.ShipmentPackageReference4 = shipment.ShipmentPackageReference4;
                 provider.ContainerTypeName = shipment.ContainerTypeName;
                 provider.OnCarriageTo = shipment.OnCarriageTo;
+                provider.OnForwardingTo = shipment.OnForwardingTo;
                 provider.ATD = shipment.ATD;
                 provider.ATA = shipment.ATA;
                 provider.OnCarriageATD = shipment.OnCarriageATD;
                 provider.OnCarriageATA = shipment.OnCarriageATA;
                 provider.OnCarriageETA = shipment.OnCarriageETA;
+                provider.OnForwardingATD = shipment.OnForwardingATD;
+                provider.OnForwardingATA = shipment.OnForwardingATA;
+                provider.OnForwardingETA = shipment.OnForwardingETA;
                 provider.ContainerNotes = shipment.ContainerNotes;
                 provider.GrossWeight = String.Format("{0:0,0.00}", shipment.PackagesGrossWeight);
                 provider.Flagged = shipment.ContainerFollowUp;
                 provider.GrossWeightAsDouble = shipment.PackagesGrossWeight;
-                provider.Ramp = shipment.OnCarriageToPortCode;
+                provider.Ramp = shipment.ShipmentLevelCode == "H" ? shipment.OnForwardingToPortCode : shipment.OnCarriageToPortCode;
                 provider.BookingConfirmationNumber = shipment.BookingConfirmationNumber;
                 provider.Volume = shipment.Volume;
                 provider.ContainerVolume = shipment.PackageVolume;
@@ -375,9 +379,19 @@ namespace WebFreight.Web.ShipmentPackageModel
 
                 else
                 {
-                    provider.ATARamp = shipment.OnCarriageATA;
-                    provider.ATDRamp = shipment.OnCarriageATD;
-                    provider.ETARamp = shipment.OnCarriageETA;
+                    if (shipment.ShipmentLevelCode == "H")
+                    {
+                        provider.ATARamp = shipment.OnForwardingATA;
+                        provider.ATDRamp = shipment.OnForwardingATD;
+                        provider.ETARamp = shipment.OnForwardingETA;
+                    }
+
+                    else
+                    {
+                        provider.ATARamp = shipment.OnCarriageATA;
+                        provider.ATDRamp = shipment.OnCarriageATD;
+                        provider.ETARamp = shipment.OnCarriageETA;
+                    }
                 }
 
                 if (!string.IsNullOrEmpty(shipment.PackageDliveryId))
@@ -511,10 +525,16 @@ namespace WebFreight.Web.ShipmentPackageModel
                     }
                 }
 
+                else if (!string.IsNullOrEmpty(shipment.OnForwardingToPortId))
+                {
+                    provider.FinalDestination = shipment.OnForwardingTo;
+                }
+
                 else if (!string.IsNullOrEmpty(shipment.OnCarriageToPortId))
                 {
                     provider.FinalDestination = shipment.OnCarriageTo;
                 }
+
                 else
                 {
                     if (shipment.Transshipment3ToPortId != null)

@@ -201,6 +201,7 @@ export class GLAccountPMService {
                this.MapGLAccountWithholdingTaxes(entityPM, jsonPM, mapParent); // Call composition tables map methods
                this.MapGLAccountInterestPeriods(entityPM, jsonPM, mapParent); // Call composition tables map methods
                this.MapGLAccountCurrencies(entityPM, jsonPM, mapParent); // Call composition tables map methods
+               this.MapGLAccountChildren(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
@@ -232,6 +233,36 @@ export class GLAccountPMService {
 						
 							 
             entityPM.OldEntityPM.GLAccountCurrencies.push(newGLAccountCurrencyPM);
+            }
+			   			   			   
+            entityPM.OldEntityPM.GLAccountChildren = [];
+            for (var item in entityPM.GLAccountChildren) {
+            var myGLAccountPM = entityPM.GLAccountChildren[item];
+            var newGLAccountPM: GLAccountPM = this.clone(myGLAccountPM);
+						
+                newGLAccountPM.GLAccountWithholdingTaxes = [];
+                for (var k in myGLAccountPM.GLAccountWithholdingTaxes) {
+				    var myGLAccountWithholdingTaxPM =myGLAccountPM.GLAccountWithholdingTaxes[k];
+				//    var newGLAccountWithholdingTaxPM=this.clone(myGLAccountPM.GLAccountWithholdingTaxes[k]);
+                   // newGLAccountPM.GLAccountWithholdingTaxes.push(newGLAccountWithholdingTaxPM);
+
+					                 }
+                newGLAccountPM.GLAccountInterestPeriods = [];
+                for (var k in myGLAccountPM.GLAccountInterestPeriods) {
+				    var myGLAccountInterestPeriodPM =myGLAccountPM.GLAccountInterestPeriods[k];
+				  //  var newGLAccountInterestPeriodPM=this.clone(myGLAccountPM.GLAccountInterestPeriods[k]);
+                 //   newGLAccountPM.GLAccountInterestPeriods.push(newGLAccountInterestPeriodPM);
+
+					                 }
+                newGLAccountPM.GLAccountCurrencies = [];
+                for (var k in myGLAccountPM.GLAccountCurrencies) {
+				    var myGLAccountCurrencyPM =myGLAccountPM.GLAccountCurrencies[k];
+				    //var newGLAccountCurrencyPM=this.clone(myGLAccountPM.GLAccountCurrencies[k]);
+                  //  newGLAccountPM.GLAccountCurrencies.push(newGLAccountCurrencyPM);
+
+					                 }
+							 
+            entityPM.OldEntityPM.GLAccountChildren.push(newGLAccountPM);
             }
 			   
 		}
@@ -519,6 +550,32 @@ export class GLAccountPMService {
                     }
                 }
             }
+        }
+    }
+    MapGLAccountChildren(entityPM: GLAccountPM, jsonPM: any, mapParent: boolean = true) {
+
+        entityPM.GLAccountChildren = new Array<GLAccountPM>();
+        for (var item in jsonPM.GLAccountChildren) {
+
+            var jItem = jsonPM.GLAccountChildren[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newGLAccountPM: GLAccountPM;
+            newGLAccountPM = new GLAccountPM();
+		    newGLAccountPM.DisableMarkAsDirty = true;                
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+			
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newGLAccountPM[pmProperty] = jItem[pmProperty];
+            }
+			newGLAccountPM.DisableMarkAsDirty = false;
+            newGLAccountPM.IsDirty = false;
+            entityPM.GLAccountChildren.push(newGLAccountPM);
         }
     }
 

@@ -159,6 +159,7 @@ namespace WebFreight.Web.DataProviders
         public string FinalPortofDestination { get; set; }
         public string FinalCountryofDestination { get; set; }
         public string OnCarriageTransportMode { get; set; }
+        public string OnForwardingTransportMode { get; set; }
         public string CustomerName { get; set; }
         public string Notify1Name { get; set; }
         public string Notify2Name { get; set; }
