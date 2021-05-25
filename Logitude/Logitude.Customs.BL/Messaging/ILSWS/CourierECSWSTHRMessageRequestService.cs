@@ -74,6 +74,10 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
                 var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
                 var defDefaultJSON = customsPartnerFtpDetails.GetAllInterfaceName().First(r => r.Key == CustomsPartnerFtpDetails.InterfaceName_ECSWSTHR_REQUEST).Value;
                 var defDefault = ProxyUtil.JsonConvertDeserializeTyped<InterfaceDetails>(defDefaultJSON);
+                ConsignmentRepository consignmentRepository = new ConsignmentRepository(tenant);
+                string manifestnumber = consignmentRepository.GetManfiestNumberByDecId(declarationId, tenant);
+                Guid g = Guid.NewGuid();
+                string filename = manifestnumber + "_" + g;
                 if (haveDefinition)
                 {
                     fTPOutMawbSWSServie.BuildCommunicationLog(bytearray, tenant, declarationId, CustomsPartnerFtpDetails.InterfaceName_ECSWSTHR_REQUEST, filename);
