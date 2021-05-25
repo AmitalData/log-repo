@@ -1148,8 +1148,8 @@ namespace Simplog.Data.CommonDataModel.Mocks
                 if (termOfUses == null)
                 {
                     termOfUses = new List<TermsofUse>() {
-                        new TermsofUse() {Version=1,Date=DateTime.Now.Date, },
-                        new TermsofUse() { Version=2} };
+                        new TermsofUse() {VersionNumber=1,Date=DateTime.Now.Date, },
+                        new TermsofUse() { VersionNumber=2} };
                     termOfUsesObjectSet = new MockObjectSet<TermsofUse>(termOfUses);
                 }
                 return termOfUsesObjectSet;

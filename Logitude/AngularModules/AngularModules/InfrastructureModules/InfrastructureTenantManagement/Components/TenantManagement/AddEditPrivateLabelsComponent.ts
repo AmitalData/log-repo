@@ -14,9 +14,16 @@ import {ImageParameter} from '../../../../Infrastructure/DataContracts/ImagePara
 import {SessionInfo} from '../../../../Infrastructure/Utilities/SessionInfo';
 import {ImageLibraryService} from '../../../../Common/Services/Others/ImageLibraryService';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { TermsofUseService } from '../../../../Infrastructure/Services/WebServices/TermsofUseService';
+import { TermsofUsePM } from '../../../../Common/EntityPMs/TermsofUsePM';
+import { HybridPartnerListService } from '../../../../Common/Services/StandardLists/HybridPartnerListService';
+import { HybridPartnerPM } from '../../../../Common/EntityPMs/HybridPartnerPM';
+import { getLocaleDateTimeFormat } from '@angular/common';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
 
 declare var UploadLogoFile, HideImage, SetImage, ArrayBufferToBase64: any;
-
+declare var querySelection, StringToBase64, resultToUnitArray: any;
 @Component({
     
     templateUrl: './AddEditPrivateLabelsComponent.html',
@@ -47,17 +54,30 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
     public ForgetPasswordImageId: string;
     public SelectedTabCode: string;
 
-
+    TermsofUsePMLists: TermsofUsePMViewModel[]; 
+    TermsofUseSelectedViewModel: TermsofUsePMViewModel;
+    private termsofUseService: TermsofUseService = new TermsofUseService();
+    private hybridPartnerListService: HybridPartnerListService = new HybridPartnerListService();
     private entityResourceService: EntityResourceService = new EntityResourceService();
     IsVisibile: boolean;
-    public EntityId: number; 
+    public EntityId: number;
+    public hybridPartner: HybridPartnerPM;
+    public ParentTenant: number;
+
+    public TermsOfUsePM: TermsofUsePM;
+     
+    VersionDocumentId: string = Guid.NewRandomString();
+
 
     @ViewChildren(LocationDirective) public AllLocations: LocationDirective; 
     private CurrentSession = SessionLocator.SelectedSession;
+
     constructor() {
         super();
         this.SelectedTabCode = "TMM";
         this.EntityPM = new TenantManagmentPrivateLabelsPM();
+        this.TermsOfUsePM = new TermsofUsePM();
+        this.hybridPartner = new HybridPartnerPM();
          
     }
      
@@ -65,6 +85,151 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
     ngOnInit() {
         this.SelectedTabCode = "TMM";
         this.UIProperties.SetRequired("HybridPartnerId", this.ObjectTableName, true); 
+        this.GetHybridPartnerTermsOfUse();
+ 
+    }
+
+
+    // Upload Terms Of Use
+    OpenUpLoadTemplateFile() {
+        document.getElementById(this.VersionDocumentId).click();
+
+    }
+
+    FileName: string;
+    UpLoadTemplateFileMethod(event: any) {
+
+        var file = querySelection(this.VersionDocumentId);
+
+        if (file) {
+            var fileExtension = file.name.split('.')[1];
+            this.FileName = file.name.split('.')[0];
+            if (fileExtension) {
+                if (fileExtension != "Pdf") {
+                    this.ShowMessage("File extension must be pdf");
+                } else {
+                    this.ConvertArrayBufferToBase64(file, this); 
+                }
+            } 
+        }
+
+    }
+
+
+
+    ViewFile(item: TermsofUsePMViewModel) {
+
+            var documentName = item.DocumentId
+            DownloadManager.DownloadPage(documentName);
+
+    }
+
+
+    ConvertArrayBufferToBase64(file: any, viewmodel: any) {
+
+        var reader: FileReader = new FileReader();
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            var binary = '';
+            var bytes = new Uint8Array(resultToUnitArray(e));
+            var len = bytes.byteLength;
+            for (var i = 0; i < len; i++) {
+                binary += String.fromCharCode(bytes[i]);
+            }  
+            viewmodel.createTermsOfUse(window.btoa(binary));
+        };
+
+        reader.onerror = function (e) {
+
+        };
+        reader.readAsArrayBuffer(file);
+
+ 
+    }
+
+    createTermsOfUse(file: any) {
+
+        var termsofUsePM = new TermsofUsePM();
+        termsofUsePM.FileData = file;
+        termsofUsePM.Date = new Date();
+        termsofUsePM.Tenant = this.ParentTenant;
+        termsofUsePM.VersionDocumentName = this.FileName;
+
+        this.InsertTermsOfUse(termsofUsePM);
+         
+    }
+
+    private InsertTermsOfUse(termsofUsePM: TermsofUsePM) {
+        this.termsofUseService.insert(termsofUsePM).subscribe((res: any) => {
+
+            var response: ServiceResponse = res;
+            var response: ServiceResponse = res;
+            if (!response.HasError) {
+                var myResult = response.Result;
+                if (myResult) {
+                    this.TermsofUsePMLists.push(new TermsofUsePMViewModel(termsofUsePM));
+                }
+            }
+            else {
+                this.HandleServiceError(response)
+            }
+        });
+    }
+
+    public ShowMessage(message: string) {
+        var messageWindow: MessageWindow = new MessageWindow();
+        messageWindow.Show(message);
+    }
+
+
+    GetHybridPartnerTermsOfUse() {
+        this.TermsofUsePMLists = [];
+        this.hybridPartnerListService.getSingle(this.EntityPM.HybridPartnerId).subscribe((res: any) => {
+
+            var serviceResponse: ServiceResponse = res;
+            if (!serviceResponse.HasError) {
+                var result = serviceResponse.Result;
+                if (result) {
+                    this.hybridPartner = result
+                    this.ParentTenant = this.hybridPartner.PartnerTenant;
+                    this.GetTermsOfUse(this.ParentTenant);
+                }
+            }
+            else {
+                this.HandleServiceError(serviceResponse)
+            }
+        });
+
+    }
+
+    GetTermsOfUse(PartnerTenant) { 
+        this.termsofUseService.GetTermOfUseByTenant(PartnerTenant).subscribe((res: any) => {
+
+                var serviceResponse: ServiceResponse = res;
+                if (!serviceResponse.HasError) {
+                    var result = serviceResponse.Result;
+                    if (result && result != null) {
+                        result.forEach((item) => {
+                            this.TermsofUsePMLists.push(new TermsofUsePMViewModel(item));
+                        });
+                    } 
+            }
+                else {
+                    this.HandleServiceError(serviceResponse)
+                }
+            });
+    }
+
+ 
+    HandleServiceError(serviceResponse: ServiceResponse) {
+        if (!serviceResponse.ErrorsArray && serviceResponse.ErrorsArray.length ==0) {
+            return;
+        } 
+        var messageWindow: MessageWindow = new MessageWindow();
+        messageWindow.Show(serviceResponse.ErrorsArray[0]);
+    
+      
+      
     }
 
 
@@ -379,7 +544,7 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
     OpenUpLoadMainLogo() {
         document.getElementById(this.LogoMainFileHtmlId).click();
     }
-
+ 
     OpenUpLoadSmallLogo() {
         document.getElementById(this.LogoSmallFileHtmlId).click();
     }
@@ -645,4 +810,17 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
     private RejectChanges() {
         this.myCloner.RejectChanges();
     }
+}
+class TermsofUsePMViewModel {
+
+
+    Date: Date;
+    VersionNumber: number;
+    DocumentId: string;
+    constructor(item: TermsofUsePM) {
+        this.Date = item.Date;
+        this.VersionNumber = item.VersionNumber;
+        this.DocumentId = item.VersionDocumentId;
+    }
+
 }

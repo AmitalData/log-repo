@@ -11,12 +11,12 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public int Tenant { get; set; }
         public DateTime SignedDatetime { get; set; }
         public string ContactId { get; set; }
-        public int TermsofUseVersion { get; set; }
+        public int TermsofUseId { get; set; }
 
         [ForeignKey("ContactId")]
         public virtual Contact Contact { get; set; }
 
-        [ForeignKey("TermsofUseVersion")]
+        [ForeignKey("TermsofUseId")]
         public virtual TermsofUse TermsofUse { get; set; }
     }
 }

@@ -9,30 +9,42 @@ namespace Simplog.Data.CommonDataModel.Mapping
         public TermsofUsMap()
         {
             // Primary Key
-            this.HasKey(t => t.Version);
+            this.HasKey(t => t.Id);
 
             // Properties
-            this.Property(t => t.Version)
+            this.Property(t => t.Id)
                 .HasDatabaseGeneratedOption(null);
+
+            this.Property(t => t.VersionDocumentId).HasMaxLength(15);
 
             // Table & Column Mappings
             this.ToTable("TermsofUses");
 
-//#if ORACLE_DB
+
+            //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
-                this.Property(t => t.Version).HasColumnName("Version_");
+                this.Property(t => t.Id).HasColumnName("Id_");
                 this.Property(t => t.Date).HasColumnName("Date_");
+                this.Property(t => t.VersionNumber).HasColumnName("VersionNumber_");
+                this.Property(t => t.VersionDocumentId).HasColumnName("VersionDocumentId_");
+
             }
             //#else
             else
             {
-                this.Property(t => t.Version).HasColumnName("Version");
+                this.Property(t => t.Id).HasColumnName("Id");
                 this.Property(t => t.Date).HasColumnName("Date");
+                this.Property(t => t.VersionNumber).HasColumnName("VersionNumber");
+                this.Property(t => t.VersionDocumentId).HasColumnName("VersionDocumentId");
+
             }
-//#endif
-           
+            //#endif
+
+            this.Property(t => t.Tenant).HasColumnName("Tenant");
+
+
         }
     }
 }
