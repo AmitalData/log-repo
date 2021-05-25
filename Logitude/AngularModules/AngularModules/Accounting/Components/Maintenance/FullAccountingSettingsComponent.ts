@@ -534,14 +534,12 @@ SubmitChanges(ControlAccountId:string) {
     }
 
     ResetAgingPeriodsFields(){
-        const two = 2;
-        const one = 2;
-        const thirdPeriodIsNotSelected = this.NumberOfPeriods <= two;
+        const thirdPeriodIsNotSelected = this.NumberOfPeriods <= 2;
         if(thirdPeriodIsNotSelected)
             this.ResetThirdPeriod();
 
-        const SecondPeriodIsNotSelected = this.NumberOfPeriods == one;
-        if(SecondPeriodIsNotSelected)
+        const secondPeriodIsNotSelected = this.NumberOfPeriods == 1;
+        if(secondPeriodIsNotSelected)
             this.ResetSecondPeriod();
     }
 
