@@ -144,6 +144,18 @@ var InvoiceListClass = function () {
 
 }
 
+
+var QuotesRequestListClass = function () {
+
+    this.ReferenceNumber = "";
+    this.IsQuotationPrepard = "";
+    this.CreateDate = "";
+    this.QuotationUpdateDate = "";
+
+}
+
+
+
 var CustomerListClass = function () {
 
     this.EntityId = "";
@@ -1686,6 +1698,37 @@ function BuildInvoicesList(invoices, TenantDateTimeFormat) {
     });
 
     return InvoicesList;
+}
+
+
+function BuildQuotesRequestsList(quotesRequests, TenantDateTimeFormat) {
+
+    var quotesRequestsList = [];
+    var todayDate = new Date();
+
+    var item = new QuotesRequestListClass();
+    item.CreateDate = $.Convert.ToShortDate(todayDate, TenantDateTimeFormat);
+    item.ReferenceNumber = $.trim("ssssss");
+    item.IsQuotationPrepard = $.trim(true);
+    item.QuotationUpdateDate = $.Convert.ToShortDate(todayDate, TenantDateTimeFormat);
+    quotesRequestsList.push(item);
+
+
+    //var todayDate = new Date();
+
+    //$.each(quotesRequests, function (index, quotesRequest) {
+
+    //    var item = new QuotesRequestListClass();
+
+    //    item.CreateDate = $.Convert.ToShortDate(quotesRequest.CreateDate, TenantDateTimeFormat);
+    //    item.ReferenceNumber = $.trim(quotesRequest.ReferenceNumber);
+    //    item.IsQuotationPrepard = $.trim(quotesRequest.IsQuotationPrepard);
+    //    item.QuotationUpdateDate = $.Convert.ToShortDate(quotesRequest.QuotationUpdateDate, TenantDateTimeFormat);
+
+    //    quotesRequestsList.push(item);
+    //});
+
+    return quotesRequestsList;
 }
 
 function BuildCustomersList(entities, TenantDateTimeFormat) {

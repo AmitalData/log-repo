@@ -14,6 +14,8 @@
 
     jQuery.SearchText_SHI = null;
     jQuery.SearchText_INV = null;
+    jQuery.SearchText_QUOTESREQUESTS = null;
+
     jQuery.SearchTimer_SHI = null;
     jQuery.SearchTimer_INV = null;
     jQuery.SelectedQuery_SHI = null;
@@ -25,10 +27,15 @@
     jQuery.IsDataCountLoaded = false;
     jQuery.IsShipmentsDataLoaded = false;
     jQuery.IsInvoicesDataLoaded = false;
+    jQuery.IsQuotesRequestsDataLoaded = false;
+
 
     jQuery.SelectedTabId = "TAB_SHI";
     jQuery.watermark_SHI = "Search partners / ports / ref.#";
     jQuery.watermark_INV = "Search Inv. # / bill to / ref.#";
+    jQuery.watermark_QUOTESREQUESTS = "Search ref.#";
+
+
 
     jQuery.ResizePage = (function (myFixedHeight) {
         var minHeight = 400;
@@ -269,6 +276,83 @@
         });
     });
 
+
+
+    jQuery.LoadQuotesRequsts = (function () {
+
+        $("#QuotesRequestsBusyIndicator").show();
+
+        function QuotesRequstFilters() {
+            this.PartnerId = $.CurrentCardId;
+            this.PartnerType = $.CurrentCardType;
+            this.SearchField = ($.trim($.SearchText_QUOTESREQUESTS) == "" || $.trim($.SearchText_QUOTESREQUESTS) == $.watermark_QUOTESREQUESTS) ? null : $.trim($.SearchText_QUOTESREQUESTS);
+            this.PageSize = jQuery.LoadingCount;
+            this.PageIndex = 0
+
+        };
+
+        var filters = new QuotesRequstFilters();
+        $("#QuotesRequestQueryCount").html("(" + (5) + "+)");
+        $("#QuotesRequestsListBox").html("");
+        $("#QuotesRequestsListBox").kendoListView(
+                    {
+                dataSource: { data: BuildQuotesRequestsList(null, $.TenantDateTimeFormat) },
+                template: kendo.template($("#QuotesRequestsListBoxItemDataTemplate").html())
+                    });
+
+        $("#QuotesRequestsBusyIndicator").hide();
+
+        //var url = "api/InvoicesData?tenant=" + $.CurrentTenant;
+
+        //$.ajax({
+        //    url: url,
+        //    data: JSON.stringify(filters),
+        //    type: 'POST',
+        //    contentType: 'application/json',
+        //    headers: {
+        //        'Token': $.Token
+        //    },
+
+        //    success: function (result) {
+        //        $.SendContactActivity($.CurrentEmail, "Invoice", "Invoices List", $.CurrentTenant, $.CurrentCardId);
+
+
+        //        if (result.length >= $.LoadingCount) {
+        //            $("#InvoicesQueryCount").html("(" + ($.LoadingCount - 1) + "+)");
+        //        }
+
+        //        else {
+        //            $("#InvoicesQueryCount").html("(" + result.length + ")");
+        //        }
+
+        //        $("#InvoicesListBox").html("");
+        //        $("#InvoicesListBox").kendoListView(
+        //            {
+        //                dataSource: { data: BuildInvoicesList(result, $.TenantDateTimeFormat) },
+        //                template: kendo.template($("#InvoiceListBoxItemDataTemplate").html())
+        //            });
+
+        //        $("#InvoicesBusyIndicator").hide();
+        //    },
+
+        //    error: function (jqXHR, textStatus, errorThrown) {
+        //        $.CheckUserException(jqXHR);
+        //        $("#InvoicesQueryCount").html("(0)");
+        //        $("#InvoicesBusyIndicator").hide();
+        //    }
+        //});
+
+    });
+
+
+    
+
+
+
+
+
+
+
     jQuery.LoadDataCount = (function () {
 
         $.IsDataCountLoaded = $('#SavedIsDataCountLoaded').val();
@@ -297,6 +381,11 @@
 
             case "TAB_INV": {
                 $.LoadInvoices();
+                break;
+            }
+
+            case "TAB_QUOTESREQUESTS": {
+                $.LoadQuotesRequsts();
                 break;
             }
         }
@@ -363,6 +452,27 @@
                 }
 
                 $("#InvoicesQueryTitle").html(SelectedQueryLabel);
+            }
+
+
+            case "TAB_QUOTESREQUESTS": {
+
+                $(".HyperLinkQuery_QUOTESREQUESTS").css({
+                    "color": "#45494A",
+                    "background": "transparent",
+                });
+
+                $("#" + $.SelectedQuery_QuotesRequest).css({
+                    "color": "white",
+                    "background": "url('HtmlHelpers/Images/Bars_Images/SelectedQuery.png') repeat-x",
+                });
+
+                var SelectedQueryLabel = "All Quotes Requests";
+
+
+            
+
+                $("#QuotesRequestQueryTitle").html(SelectedQueryLabel);
             }
         }
 
@@ -500,6 +610,34 @@
 
                 break;
             }
+
+            case "TAB_QUOTESREQUESTS": {
+
+                $.SearchText_QUOTESREQUESTS = $('#SavedSearchText_QUOTESREQUESTS').val();
+                $.SelectedQuery_QuotesRequest = $('#SavedSelectedQuery_QUOTESREQUESTS').val();
+
+                if ($.trim($.SelectedQuery_QUOTESREQUESTS) == "") {
+                    $.SelectedQuery_QuotesRequest = "Query_PRG_QUOTESREQUESTS";
+                    $('#SavedSelectedQuery_QUOTESREQUESTS').attr("value", $.SelectedQuery_QuotesRequest);
+                }
+
+                $.SelectQuery();
+
+                if (!$.IsQuotesRequestsDataLoaded) {
+
+                    //$.IsQuotesRequestsDataLoaded = true;
+                    $.LoadData();
+                }
+
+                break;
+            }
+
+                
+
+
+
+
+
         }
 
     });
@@ -580,6 +718,30 @@
 
                 break;
             }
+
+
+            case "SearchBox_QUOTESREQUESTS": {
+
+                if ($("#SearchBox_QUOTESREQUESTS").val().length == 0 || $("#SearchBox_QUOTESREQUESTS").val() == $.watermark_QUOTESREQUESTS) {
+                    $('#SearchDeleteButton_QUOTESREQUESTS').hide();
+                }
+
+                else {
+                    $('#SearchDeleteButton_QUOTESREQUESTS').show();
+                }
+
+                $.SearchText_QUOTESREQUESTS = $("#SearchBox_QUOTESREQUESTS").val();
+                $('#SavedSearchText_QUOTESREQUESTS').attr("value", $.SearchText_QUOTESREQUESTS);
+
+                if ($.SearchTimer_QUOTESREQUESTS != null) {
+                    clearTimeout($.SearchTimer_QUOTESREQUESTS);
+                }
+
+                $.SearchTimer_QUOTESREQUESTS = setTimeout(function () { $.LoadData() }, 500);
+
+                break;
+            }
+
         }
     });
 
@@ -598,6 +760,8 @@
     $('.SearchDeleteButton').hide();
     $('#SearchBox_SHI').val($.watermark_SHI).addClass('watermark');
     $('#SearchBox_INV').val($.watermark_INV).addClass('watermark');
+    $('#SearchBox_QUOTESREQUESTS').val($.watermark_QUOTESREQUESTS).addClass('watermark');
+
 
     $('.SearchBox').blur(function () {
 
@@ -622,6 +786,17 @@
                     $('#SearchDeleteButton_INV').hide();
                 }
             }
+
+            case "SearchBox_QUOTESREQUESTS": {
+
+                if ($(this).val().length == 0) {
+                    $(this).val($.watermark_QUOTESREQUESTS).addClass('watermark');
+                    $('#SearchIcon_QUOTESREQUESTS').show();
+                    $('#SearchDeleteButton_QUOTESREQUESTS').hide();
+                }
+            }
+
+
         }
     });
     $('.SearchBox').focus(function () {
@@ -645,6 +820,15 @@
                     $('#SearchIcon_INV').hide();
                 }
             }
+
+            case "SearchBox_QUOTESREQUESTS": {
+
+                if ($(this).val() == $.watermark_QUOTESREQUESTS) {
+                    $(this).val('').removeClass('watermark');
+                    $('#SearchIcon_QUOTESREQUESTS').hide();
+                }
+            }
+
         }
     });
     $('.SearchBox').keyup(function () {
@@ -669,6 +853,15 @@
                 $('#SearchBox_INV').val($.watermark_INV).addClass('watermark');
                 $.SearchTextChanged("SearchBox_INV");
             }
+
+            case "SearchDeleteButton_QUOTESREQUESTS": {
+                $('#SearchIcon_QUOTESREQUESTS').show();
+                $('#SearchBox_QUOTESREQUESTS').attr("value", "");
+                $('#SearchBox_QUOTESREQUESTS').val($.watermark_QUOTESREQUESTS).addClass('watermark');
+                $.SearchTextChanged("SearchBox_QUOTESREQUESTS");
+            }
+
+
         }
     });
 
@@ -817,6 +1010,36 @@
             $.LoadData();
         }
     });
+
+
+    $(".HyperLinkQuery_QUOTESREQUESTS").mouseenter(function () {
+        if ($(this).attr('id') != $.SelectedQuery_QuotesRequest) {
+            $(this).css({ "color": "black", "background": "url('HtmlHelpers/Images/Bars_Images/tab-over.png') repeat-x" });
+        }
+    });
+    $(".HyperLinkQuery_QUOTESREQUESTS").mouseleave(function () {
+        if ($(this).attr('id') != $.SelectedQuery_QuotesRequest) {
+            $(this).css({ "color": "#45494A", "background": "transparent" });
+        }
+    });
+
+
+
+    $(".HyperLinkQuery_QUOTESREQUESTS").click(function () {
+        if ($(this).attr('id') != $.SelectedQuery_QuotesRequest) {
+            $.SelectedQuery_QuotesRequest = $(this).attr('id');
+            $("#SavedSelectedQuery_QUOTESREQUESTS").attr("value", $.SelectedQuery_QuotesRequest);
+            $.SelectQuery();
+            $.LoadData();
+        }
+    });
+
+
+
+
+
+
+
 
     $("#SignOutButton").click(function () {
 

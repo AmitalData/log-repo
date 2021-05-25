@@ -30,7 +30,7 @@
 
 <style type="text/css">
 
-    .ShipmentListBoxItem:hover, .InvoiceListBoxItem:hover
+    .ShipmentListBoxItem:hover, .InvoiceListBoxItem:hover , .QuotesRequestsListBoxItem:hover
     {
         background: url("HtmlHelpers/Images/Bars_Images/BigBlueBar.png");
         border-color: #3BB3E2;
@@ -78,6 +78,19 @@
         -webkit-border-radius: 3px;
         -moz-border-radius: 3px;
     }
+    
+      .QuotesRequestsListBoxItem
+    {
+        height: 75px;
+        border: 1px solid #D1D1D1;
+        margin: 0 0 5px 0;
+        background:#F7F7F7;
+        border-radius: 3px;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+    }
+
+
 
     .k-tabstrip .k-state-active, .k-tabstrip .k-state-active:hover
     {
@@ -99,6 +112,20 @@
         height:20px;
         line-height:20px;
     }
+    .k-tabstrip .k-item {            
+            height: 25px;
+/*            font-size: 12px;
+    
+*/  
+width:130px;
+font-family: "Lucida Sans Unicode";
+            color: #282E30;
+            cursor: default;
+            background: url("images/TabItem-N.png");            
+        }
+
+
+
 </style>
 
 </head>
@@ -115,8 +142,14 @@
         <input id="SavedShipmentLevel" />
         <input id="SavedSelectedQuery_SHI" />
         <input id="SavedSelectedQuery_INV" />
+        <input id="SavedSelectedQuery_QUOTESREQUESTS" />
+
+
         <input id="SavedSearchText_SHI" />
         <input id="SavedSearchText_INV" />
+         <input id="SavedSearchText_QUOTESREQUESTS" />
+
+
         <input id="TokenInput" runat="server" />
         <input id="LoginInput" runat="server" />
     </form>
@@ -228,26 +261,13 @@
                                     </div>                                        
                                 </li>
 
-<%--                                <li id="TAB_QUO">
-                                    <div>
+                              <li id="TAB_QUOTESREQUESTS">
+                                    <div style="width:120px">
                                         <span><img class="TabImage" src="HtmlHelpers/Images/Tabs_Images/Quotes-N.png" /></span>
-                                        <span>Quotes</span>
+                                        <span>Quotes Requests</span>
                                     </div>                                        
                                 </li>
 
-                                <li id="TAB_DSH">
-                                    <div>
-                                        <span><img class="TabImage" src="HtmlHelpers/Images/Tabs_Images/Dashboard-N.png" /></span>
-                                        <span>Dashboard</span>
-                                    </div>                                        
-                                </li>
-
-                                <li id="TAB_STT">
-                                    <div>
-                                        <span><img class="TabImage" src="HtmlHelpers/Images/Tabs_Images/Settings-N.png"/></span>
-                                        <span>Settings</span>
-                                    </div>                                        
-                                </li>--%>
                             </ul>
 
                             <%-- Shipments Tab --%>
@@ -521,7 +541,119 @@
                                 <div class="BusyIndicator" id="InvoicesBusyIndicator"></div>
                             </div>
 
-<%--                            <div class="tabPage" style="margin:0 -1px;">
+                                   <div class="tabPage" style="margin:0 -1px;">
+                                <div style="margin-top:5px">
+
+                                    <div style="width:100%; height:13px;">
+                                        <table style="width:100%; height:100%; border-collapse:collapse; border-spacing:0px;">
+                                            <tr>
+                                               <td style="width:15px; background:url('HtmlHelpers/Images/bars_Images/top-left.png') no-repeat"></td>
+                                               <td style="background:url('HtmlHelpers/images/bars_Images/top-middle.png') repeat-x"></td>
+                                               <td style="width:15px; background:url('HtmlHelpers/Images/bars_Images/top-right.png') no-repeat"></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                    <div class="tabPageContent" style="width:100%; position:relative; margin:-7px 0 -1px 0;">
+                                        <table style="width:100%; height:100%; border-collapse:collapse; border-spacing:0px; border:0px">
+                                            <tr>
+                                               <td style="padding:0; width:1px; height:100%; vertical-align:top;"><div style="width:1px; height:100%; background:#D1D1D1; margin-left:4px; margin-top:4px;"></div></td>
+
+                                               <td style="padding:0; vertical-align:top;">
+                                                   <table style="width:100%; border:0; border-collapse:collapse; border-spacing:0;">
+                                                      
+                                                       <tr style="height:25px;">
+
+                                                            <td style="width:143px; margin-top:-5px; background: url('HtmlHelpers/Images/Bars_Images/QueryArea.png') repeat-y; border-radius: 5px 0 0 0; -moz-border-radius: 5px 0 0 0; -webkit-border-radius: 5px 0 0 0; padding:0;">
+                                                               <div style="
+                                                                   height:25px;
+                                                                   width:143px;
+                                                                   font-size:16px;
+                                                                   font-family:'Lucida Sans Unicode'; 
+                                                                   color: #45494A;
+                                                                   text-indent:10px;
+                                                                   
+                                                                   border-radius: 5px 0 0 0; 
+                                                                   -moz-border-radius: 5px 0 0 0; 
+                                                                   -webkit-border-radius: 5px 0 0 0;
+                                                                   "
+                                                                   >
+                                                                   Views
+
+                                                               </div>
+                                                            </td>
+
+                                                            <td style="width:10px; padding:0;">
+                                                                <%--<div style="height:38px; width:1px; overflow:hidden; background:#D1D1D1;"></div>--%>
+                                                            </td>
+
+                                                            <td style="vertical-align:top; padding:0;">
+                                                                <table style="margin-top:5px;">
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div style="font-size:16px; font-family:'Lucida Sans Unicode'; color: #1B90CB;">
+                                                                                <span id="QuotesRequestRefreshButton"><img style="width:16px; height:16px; cursor:pointer; margin-bottom:-3px;" src="HtmlHelpers/Images/refresh.png"/></span>                                                                                
+                                                                                <span id="QuotesRequestQueryTitle">All Quotes Requests</span>
+                                                                                <span id="QuotesRequestQueryCount">(0)</span>
+                                                                            </div>
+                                                                        </td>
+                                 
+                                                                        <td style="width:200px;">
+                                                                            <input class="SearchBox" id="SearchBox_QUOTESREQUESTS" type="text" style="width: 200px; margin:0; z-index:0"/>
+                                                                            <div class="SearchIcon" id="SearchIcon_QUOTESREQUESTS"></div>
+                                                                            <div class="SearchDeleteButton" id="SearchDeleteButton_QUOTESREQUESTS"></div>
+                                                                        </td>   
+                                                                         
+                                                                        <td style="width:5px;"></td>
+                                                                    </tr>
+                                                                </table>                           
+                                                            </td>
+
+                                                       </tr>
+
+                                                       <tr>
+
+                                                            <td class="box" style="background:url('HtmlHelpers/Images/Bars_Images/QueryArea.png') repeat-y; padding:0; border-radius: 0 0 0 5px; -moz-border-radius: 0 0 0 5px; -webkit-border-radius: 0 0 0 5px;">
+                                                                <div style="margin-top:5px; background:url(HtmlHelpers/Images/Bars_Images/Queries.png) repeat-y; border-top:1px solid #CCCCCC; border-bottom:1px solid #CCCCCC;">
+                                                                    <div class="HyperLinkQuery_QUOTESREQUESTS"  id="Query_PRG_QUOTESREQUESTS" ><div class="HyperLinkQueryContent">All Quotes Requests </div></div>
+
+                                                                    </div>
+                                                            </td>
+
+                                                            <td class="box" style="padding:0; text-align:center;">
+                                                                <%--<div class="VerticalLine" style="width:1px; overflow:hidden; background:#D1D1D1;"></div>--%>
+                                                            </td>
+
+                                                            <td class="box" style="padding:0;">
+                                                                <div class="ListBoxContainer" style="overflow:auto;">
+                                                                    <div id="QuotesRequestsListBox" class="ListBox"></div>
+                                                                </div>
+                                                            </td>
+                                                       </tr>
+
+                                                   </table>
+                                               </td>
+
+                                               <td style="padding:0; width:10px; height:100%; vertical-align:top;"><div style="width:1px; height:100%; background:#D1D1D1; margin-left:5px; margin-top:4px;"></div></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                    <div style="width:100%; height:13px;">
+                                        <table style="width:100%; height:100%; border-collapse:collapse; border-spacing:0px;">
+                                            <tr>
+                                               <td style="width:15px; background:url('HtmlHelpers/Images/bars_Images/bottom-left.png') no-repeat"></td>
+                                               <td style="background:url('HtmlHelpers/Images/bars_Images/bottom-middle.png') repeat-x"></td>
+                                               <td style="width:15px; background:url('HtmlHelpers/Images/bars_Images/bottom-right.png') no-repeat"></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="BusyIndicator" id="QuotesRequestsBusyIndicator"></div>
+                            </div>
+
+            <%--               <div class="tabPage" style="margin:0 -1px;">
                                 <div style="margin-top:5px">
                                     <div style="width:100%; height:13px;">
                                         <table style="width:100%; height:100%; border-collapse:collapse; border-spacing:0px;">
@@ -555,73 +687,7 @@
                                 </div>
                             </div>--%>
 
-<%--                            <div class="tabPage" style="margin:0 -1px;">
-                                <div style="margin-top:5px">
-                                    <div style="width:100%; height:13px;">
-                                        <table style="width:100%; height:100%; border-collapse:collapse; border-spacing:0px;">
-                                            <tr>
-                                               <td style="width:15px; background:url('HtmlHelpers/images/bars_Images/top-left.png') no-repeat"></td>
-                                               <td style="background:url('HtmlHelpers/images/bars_Images/top-middle.png') repeat-x"></td>
-                                               <td style="width:15px; background:url('HtmlHelpers/images/bars_Images/top-right.png') no-repeat"></td>
-                                            </tr>
-                                        </table>
-                                    </div>
 
-                                    <div class="tabPageContent" style="width:100%; position:relative; margin:-3px 0 -3px 0;"">
-                                        <table style="width:100%; height:100%; border-collapse:collapse; border-spacing:0px; border:0px">
-                                            <tr>
-                                               <td style="width:15px; height:100%;"><div style="width:1px; height:100%; background:#D1D1D1; margin-left:3px;"></div></td>
-                                               <td style="vertical-align:central; text-align:center; font-family:Arial; color:#8F9293; font-style:italic; font-size:22px;">Next Version</td>
-                                               <td style="width:15px; height:100%;"><div style="width:1px; height:100%; background:#D1D1D1; margin-left:12px;"></div></td>
-                                            </tr>
-                                        </table>
-                                    </div>
-
-                                    <div style="width:100%; height:13px;">
-                                        <table style="width:100%; height:100%; border-collapse:collapse; border-spacing:0px;">
-                                            <tr>
-                                               <td style="width:15px; background:url('HtmlHelpers/images/bars_Images/bottom-left.png') no-repeat"></td>
-                                               <td style="background:url('HtmlHelpers/images/bars_Images/bottom-middle.png') repeat-x"></td>
-                                               <td style="width:15px; background:url('HtmlHelpers/images/bars_Images/bottom-right.png') no-repeat"></td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>--%>
-
-<%--                            <div class="tabPage" style="margin:0 -1px;">
-                                <div style="margin-top:5px">
-                                    <div style="width:100%; height:13px;">
-                                        <table style="width:100%; height:100%; border-collapse:collapse; border-spacing:0px;">
-                                            <tr>
-                                               <td style="width:15px; background:url('HtmlHelpers/images/bars_Images/top-left.png') no-repeat"></td>
-                                               <td style="background:url('HtmlHelpers/images/bars_Images/top-middle.png') repeat-x"></td>
-                                               <td style="width:15px; background:url('HtmlHelpers/images/bars_Images/top-right.png') no-repeat"></td>
-                                            </tr>
-                                        </table>
-                                    </div>
-
-                                    <div class="tabPageContent" style="width:100%; position:relative; margin:-3px 0 -3px 0;">
-                                        <table style="width:100%; height:100%; border-collapse:collapse; border-spacing:0px; border:0px">
-                                            <tr>
-                                               <td style="width:15px; height:100%;"><div style="width:1px; height:100%; background:#D1D1D1; margin-left:3px;"></div></td>
-                                               <td style="vertical-align:central; text-align:center; font-family:Arial; color:#8F9293; font-style:italic; font-size:22px;">Next Version</td>
-                                               <td style="width:15px; height:100%;"><div style="width:1px; height:100%; background:#D1D1D1; margin-left:12px;"></div></td>
-                                            </tr>
-                                        </table>
-                                    </div>
-
-                                    <div style="width:100%; height:13px;">
-                                        <table style="width:100%; height:100%; border-collapse:collapse; border-spacing:0px;">
-                                            <tr>
-                                               <td style="width:15px; background:url('HtmlHelpers/images/bars_Images/bottom-left.png') no-repeat"></td>
-                                               <td style="background:url('HtmlHelpers/images/bars_Images/bottom-middle.png') repeat-x"></td>
-                                               <td style="width:15px; background:url('HtmlHelpers/images/bars_Images/bottom-right.png') no-repeat"></td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>--%>
 
                          </div>                                                     
 
@@ -633,6 +699,40 @@
     </table>
     </div>
     
+
+     <script type="text/x-kendo-tmpl" id="QuotesRequestsListBoxItemDataTemplate">
+        <div class="QuotesRequestsListBoxItem">
+            <div class="ListItem" style="width:100%; height:100%;">
+                <div style="margin:3px 3px 0px 3px;">
+
+                            <div style="height:12px;">      </div>
+
+   
+
+                    <div style="height:25px; vertical-align:central;">
+                      <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:20px;"></div>
+
+                        <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:110px;">Reference Number :</div>
+                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:120px; color:\\#1B90CB;">${ReferenceNumber}</div>
+                        <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:130px;">Quotation Prepard:</div>
+
+                       <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:120px; visibility: #= IsQuotationPrepard #;"><img src="../HtmlHelpers/Images/Icons/Tick.png" style="width: 20px; height: 20px; position:relative; margin-top:-3px;" /></div>
+
+                    </div>
+                    <div style="height:25px; vertical-align:central;">
+                               <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:20px;"></div>
+
+                        <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:110px;">Create Date:</div>
+                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:120px;">${CreateDate}</div>
+                        <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:130px;">Quotation Update Date:</div>
+                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:120px;">${QuotationUpdateDate}</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </script>
+
     <script type="text/x-kendo-tmpl" id="InvoiceListBoxItemDataTemplate">
         <div class="InvoiceListBoxItem">
             <div class="ListItem" style="width:100%; height:100%;" id="#= EntityId #" OnClick="ViewInvoice(id)">

@@ -132,6 +132,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate");
             this.Property(t => t.DisplayDocumentsAndEvents).HasColumnName("DisplayDocumentsAndEvents");
 
+            
+
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
@@ -145,6 +147,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 this.Property(t => t.IsCorrespondenceRightToLeftEnabled).HasColumnName("IsCorrespondenceRTLEnabled");
                 this.Property(t => t.ExportQuotationsToIntegratedSystem).HasColumnName("ExportQuotationsToIntegrated");
                 this.Property(t => t.TransferQuotationsToUnifreightTrigger).HasColumnName("TransferQuotationsToUNFTrigger");
+                this.Property(t => t.IsQuotesRequestActivatedInShared).HasColumnName("IsQuotesRequestActivated");
+
             }
             //#else
 
@@ -159,6 +163,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 this.Property(t => t.IsCorrespondenceRightToLeftEnabled).HasColumnName("IsCorrespondenceRightToLeftEnabled");
                 this.Property(t => t.ExportQuotationsToIntegratedSystem).HasColumnName("ExportQuotationsToIntegratedSystem");
                 this.Property(t => t.TransferQuotationsToUnifreightTrigger).HasColumnName("TransferQuotationsToUnifreightTrigger");
+                this.Property(t => t.IsQuotesRequestActivatedInShared).HasColumnName("IsQuotesRequestActivatedInShared");
+
             }
 
             //#endif

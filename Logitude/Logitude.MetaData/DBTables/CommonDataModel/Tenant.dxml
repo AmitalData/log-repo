@@ -745,6 +745,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsQuotesRequestActivatedInShared"
+    ShortName="IsQuotesRequestActivated"
+  Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="AddressId"
     ReferencedTable="Addresses"

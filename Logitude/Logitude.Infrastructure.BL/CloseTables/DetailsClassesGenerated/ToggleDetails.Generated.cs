@@ -236,6 +236,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "PRE,Master Pre/On Carriage", 
                 Description = "Master Pre/On Carriage", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Quotes Request Activated In Shared Logistic", 
+                Code = "QRA", 
+                SearchFields = "QRA, Quotes Request Activated In Shared Logistic", 
+                Description = "Quotes Request Activated In Shared Logistic", 
+			});
 			
             return all;
        }
