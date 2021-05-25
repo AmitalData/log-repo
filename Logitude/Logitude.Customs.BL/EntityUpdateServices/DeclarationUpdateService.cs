@@ -133,7 +133,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (!entityPM.IsCourierDeclaration)
             {
                 CustomsHouseTypePM houseType = houseTypeQuery.GetHouseTypewithAdditional(entityPM.DeclarationOfficeCode, entityPM.Tenant);
-                if (houseType != null)
+                if (houseType != null &&  entityPM.IsAmendment!= true)
                 {
                     entityPM.Consignments[0].UnloadPortCode = houseType.UnloadPortCode;
                 }
