@@ -1,8 +1,8 @@
-﻿
-<style>
-   
 
-    
+<style>
+
+
+
     .FormFieldRow {
         height: auto !important;
     }
@@ -74,170 +74,179 @@
 
 
 
-    <table>
+<table>
 
-        <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
-            <td colspan="4">
-                <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
-            </td>
-        </tr>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td colspan="4">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+        </td>
+    </tr>
 
-        <tr style="height:30px">
-            <td style="width:160px; padding-right:10px">
-                <ul class="FiltersMenu">
-                    <li id="All" style="width: 50px; height: 22px;"
-                        [class.SelectedFilter]="FilterSelectedValue == '2'" (click)="FilterItemClicked('2')" class="noselect">
-                        {{'Customs.Declaration.O.Digital' | TextCodeTranslationPipe}}
-                    </li>
-                    <li id="Errors" style="width: 50px; height: 22px;"
-                        [class.SelectedFilter]="FilterSelectedValue == '1'" (click)="FilterItemClicked('1')" class="noselect">
-                        {{'Customs.Declaration.O.Manual' | TextCodeTranslationPipe}}
-                    </li>
-                    <li id="Constraints" style="width: 50px; height: 22px;"
-                        [class.SelectedFilter]="FilterSelectedValue == '4'" (click)="FilterItemClicked('4')" class="noselect">
-                        {{'Customs.Declaration.O.Exempt' |TextCodeTranslationPipe }}
-                    </li>
-                </ul>
-            </td>
-            <td> <img class="SearchIcon" src="./Images/Search.png"  (click)="SearchMethod()" *ngIf="IsSearchIconVisibile"/></td>
-            <td></td>
-        </tr>
+    <tr style="height:30px">
+        <td style="width:160px; padding-right:10px">
+            <ul class="FiltersMenu">
+                <li id="All" style="width: 50px; height: 22px;"
+                    [class.SelectedFilter]="FilterSelectedValue == '2'" (click)="FilterItemClicked('2')" class="noselect">
+                    {{'Customs.Declaration.O.Digital' | TextCodeTranslationPipe}}
+                </li>
+                <li id="Errors" style="width: 50px; height: 22px;"
+                    [class.SelectedFilter]="FilterSelectedValue == '1'" (click)="FilterItemClicked('1')" class="noselect">
+                    {{'Customs.Declaration.O.Manual' | TextCodeTranslationPipe}}
+                </li>
+                <li id="Constraints" style="width: 50px; height: 22px;"
+                    [class.SelectedFilter]="FilterSelectedValue == '4'" (click)="FilterItemClicked('4')" class="noselect">
+                    {{'Customs.Declaration.O.Exempt' |TextCodeTranslationPipe }}
+                </li>
+            </ul>
+        </td>
+        <td> <img class="SearchIcon" src="./Images/Search.png" (click)="SearchMethod()" *ngIf="IsSearchIconVisibile" /></td>
+        <td></td>
+    </tr>
 
-        <tr [style.height.px]="ExemptRowHeight" *ngIf="IsExemptVisibile">
-            <td>
-                <LogLabel [ObjectFieldName]="'CertificateExemptionTypeCode'" [ObjectTableName]="ObjectTableName"
-                          [DataContext]="DataContext"></LogLabel>
-
-
-            </td>
-            <td style="width:200px">
-                <ul class="FiltersMenu">
-                    <li id="All" style="width: 50px; height: 22px;"
-                        [class.SelectedFilter]="ExemptionFilterSelectedValue == '92'" (click)="ExemptionFilterClicked('92')" class="noselect">
-                        92
-                    </li>
-                    <li id="Errors" style="width: 50px; height: 22px;"
-                        [class.SelectedFilter]="ExemptionFilterSelectedValue == '96'" (click)="ExemptionFilterClicked('96')" class="noselect">
-                      96
-                    </li>
-                    <li id="Constraints" style="width: 50px; height: 22px;"
-                        [class.SelectedFilter]="ExemptionFilterSelectedValue == 'other'" (click)="ExemptionFilterClicked('other')" class="noselect">
-                        {{'Customs.Declaration.O.Other' |TextCodeTranslationPipe }}
-                       
-                    </li>
-                </ul>
-                
-            </td>
-            <td></td>
-        </tr>
-        <tr style="height:30px" *ngIf="IsConfirmationVisibile">
-            <td>
-                <LogLabel [ObjectFieldName]="'CertificateNumber'" [ObjectTableName]="ObjectTableName"
-                          [DataContext]="DataContext"></LogLabel>
-
-            </td>
-            <td style="width:230px">
-
-                <LogTextBox [ObjectFieldName]="'CertificateNumber'" [ObjectTableName]="ObjectTableName" [Text]="CertificateNumber"
-                            [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
-
-            </td>
-            <td></td>
-        </tr>
-        <tr style="height:30px" *ngIf="IsConfirmationVisibile">
-            <td>
-                <LogLabel [ObjectFieldName]="'ResConfirmationTypeCode'" [ObjectTableName]="ObjectTableName"
-                          [DataContext]="DataContext"></LogLabel>
+    <tr [style.height.px]="ExemptRowHeight" *ngIf="IsExemptVisibile">
+        <td>
+            <LogLabel [ObjectFieldName]="'CertificateExemptionTypeCode'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
 
 
-            </td>
-            <td style="width:230px">
-                <table>
-                    <tr>
-                        <td style="width:100px" *ngIf="ResConfirmationFilterVisibility">
-                            <ul class="FiltersMenu">
-                                <li id="All" style="width: 50px; height: 22px;"
-                                    [class.SelectedFilter]="ResConfirmationFilterSelectedValue == 'request'" (click)="ResConfirmationFilterClicked('request')" class="noselect">
-                                    {{ReqConfirmationTypeCode}}
-                                </li>
-                                <li id="Errors" style="width: 50px; height: 22px;"
-                                    [class.SelectedFilter]="ResConfirmationFilterSelectedValue == 'other'" (click)="ResConfirmationFilterClicked('other')" class="noselect">
-                                    {{'Customs.Declaration.O.Other' |TextCodeTranslationPipe }}
-                                </li>
-                               
-                            </ul>
-                        </td>
-                        <td style="width:5px" *ngIf="ResConfirmationFilterVisibility">
+        </td>
+        <td style="width:200px">
+            <ul class="FiltersMenu">
+                <li id="All" style="width: 50px; height: 22px;"
+                    [class.SelectedFilter]="ExemptionFilterSelectedValue == '92'" (click)="ExemptionFilterClicked('92')" class="noselect">
+                    92
+                </li>
+                <li id="Errors" style="width: 50px; height: 22px;"
+                    [class.SelectedFilter]="ExemptionFilterSelectedValue == '96'" (click)="ExemptionFilterClicked('96')" class="noselect">
+                    96
+                </li>
+                <li id="Constraints" style="width: 50px; height: 22px;"
+                    [class.SelectedFilter]="ExemptionFilterSelectedValue == 'other'" (click)="ExemptionFilterClicked('other')" class="noselect">
+                    {{'Customs.Declaration.O.Other' |TextCodeTranslationPipe }}
 
-                        </td>
-                        <td>
-                            <LogLov [ObjectFieldName]="'ResConfirmationTypeCode'"
-                                    [ObjectTableName]="ObjectTableName"
-                                    [DataContext]="DataContext"
-                                    [LookUpTableName]="'Customs.ConfirmationType'"
-                                    [SelectedValue]="ResConfirmationTypeCode"
-                                    [HideColumns]="true">
-                            </LogLov>
-                        </td>
-                    </tr>
-                </table>
-               
-            </td>
-            <td></td>
-        </tr>
+                </li>
+            </ul>
 
-        <tr style="height:30px" *ngIf="IsExemptVisibile">
-            <td style="width:160px">
-             
+        </td>
+        <td></td>
+    </tr>
+    <tr style="height:30px" *ngIf="IsConfirmationVisibile">
+        <td>
+            <LogLabel [ObjectFieldName]="'CertificateNumber'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
 
-            </td>
-            <td style="width:200px">
+        </td>
+        <td style="width:230px">
+
+            <LogTextBox [ObjectFieldName]="'CertificateNumber'" [ObjectTableName]="ObjectTableName" [Text]="CertificateNumber"
+                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+
+        </td>
+        <td></td>
+    </tr>
+    <tr style="height:30px" *ngIf="IsConfirmationVisibile">
+        <td>
+            <LogLabel [ObjectFieldName]="'ResConfirmationTypeCode'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+
+
+        </td>
+        <td style="width:230px">
+            <table>
+                <tr>
+                    <td style="width:100px" *ngIf="ResConfirmationFilterVisibility">
+                        <ul class="FiltersMenu">
+                            <li id="All" style="width: 50px; height: 22px;"
+                                [class.SelectedFilter]="ResConfirmationFilterSelectedValue == 'request'" (click)="ResConfirmationFilterClicked('request')" class="noselect">
+                                {{ReqConfirmationTypeCode}}
+                            </li>
+                            <li id="Errors" style="width: 50px; height: 22px;"
+                                [class.SelectedFilter]="ResConfirmationFilterSelectedValue == 'other'" (click)="ResConfirmationFilterClicked('other')" class="noselect">
+                                {{'Customs.Declaration.O.Other' |TextCodeTranslationPipe }}
+                            </li>
+
+                        </ul>
+                    </td>
+                    <td style="width:5px" *ngIf="ResConfirmationFilterVisibility">
+                    </td>
+                    <td>
+                        <LogLov [ObjectFieldName]="'ResConfirmationTypeCode'"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'Customs.ConfirmationType'"
+                                [SelectedValue]="ResConfirmationTypeCode"
+                                [HideColumns]="true">
+                        </LogLov>
+                    </td>
+                </tr>
+            </table>
+
+        </td>
+        <td></td>
+    </tr>
+
+    <tr style="height:30px" *ngIf="IsExemptVisibile">
+        <td style="width:160px">
+        </td>
+        <td style="width:200px">
+            <div *ngIf="Parent.DeclarationPM.Direction != 'E'">
                 <LogLov [ObjectFieldName]="'CertificateExemptionTypeCode'"
-              [ObjectTableName]="ObjectTableName"
-              [DataContext]="DataContext"
-              [LookUpTableName]="'Customs.CertificateExemptionType'"
-              [SelectedValue]="CertificateExemptionTypeCode"
-              [HideColumns]="true">
-               </LogLov>
+                        [ObjectTableName]="ObjectTableName"
+                        [DataContext]="DataContext"
+                        [LookUpTableName]="'Customs.CertificateExemptionType'"
+                        [SelectedValue]="CertificateExemptionTypeCode"
+                        [HideColumns]="true"
+                        [QueryFilterItems]="TypeCodeFilterItems">
+                </LogLov>
+            </div>
+            <div *ngIf="Parent.DeclarationPM.Direction == 'E'">
+                <LogLov [ObjectFieldName]="'CertificateExemptionTypeCode'"
+                        [ObjectTableName]="ObjectTableName"
+                        [DataContext]="DataContext"
+                        [LookUpTableName]="'Customs.CertificateExemptionType'"
+                        [SelectedValue]="CertificateExemptionTypeCode"
+                        [HideColumns]="true"
+                        [QueryFilterItems]="ExportTypeCodeFilterItems">
+                </LogLov>
+            </div>
+        </td>
+        <td></td>
+    </tr>
+    <tr></tr>
 
-            </td>
-            <td></td>
-        </tr>
-        <tr></tr>
- 
 
-   
-        <tr style="height: 32px;">
-         <!--   <td colspan="2"></td>-->
 
-            <td colspan="3">
-                <table>
-                    <tr>
-                        <td style="width:200px">
-                            <div></div>
-                        </td>
+    <tr style="height: 32px;">
+        <!--   <td colspan="2"></td>-->
 
-                        <td style="vertical-align: bottom;width:80px">
-                            <table style="height: 22px;">
-                                <tr>
-                                    <td style="width: 57px;">
-                                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
-                                    </td>
+        <td colspan="3">
+            <table>
+                <tr>
+                    <td style="width:200px">
+                        <div></div>
+                    </td>
 
-                                    <td style="width: 5px;">
-                                        <div></div>
-                                    </td>
+                    <td style="vertical-align: bottom;width:80px">
+                        <table style="height: 22px;">
+                            <tr>
+                                <td style="width: 57px;">
+                                    <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                                </td>
 
-                                    <td style="width: 57px;">
-                                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
-            </td>
+                                <td style="width: 5px;">
+                                    <div></div>
+                                </td>
 
-           
-        </tr>
-    </table>
+                                <td style="width: 57px;">
+                                    <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+
+
+    </tr>
+</table>
