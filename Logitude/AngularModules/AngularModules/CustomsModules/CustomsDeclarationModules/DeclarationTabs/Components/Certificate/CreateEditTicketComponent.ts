@@ -25,6 +25,7 @@ import { CustomsDocumentPointerPM } from '../../../../../Customs/EntityPMs/Custo
 import { CustomsDocumentsTicketsExtendedService } from '../../../../../Customs/Services/ExtendedPMs/CustomsDocumentsTicketsExtendedService';
 import { CustomsDocumentsTicketPMService } from '../../../../../Customs/Services/StandardPMs/CustomsDocumentsTicketPMService';
 import { DocumentsFilingPMService } from '../../../../../Common/Services/StandardPMs/DocumentsFilingPMService';
+import { ApiQueryFilters } from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
 @Component({
     
     templateUrl: './CreateEditTicketComponent.html',
@@ -55,12 +56,16 @@ export class CreateEditTicketComponent extends BaseComponent {
     public customsDocumentsTicketPMService = new CustomsDocumentsTicketPMService();
     documentFilingId: string;
     documentTypeId: string;
+    public TypeCodeFilterItems: ApiQueryFilters;
+    public ExportTypeCodeFilterItems: ApiQueryFilters;
     constructor() {
         super();
         this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
-       
+        this.TypeCodeFilterItems = new ApiQueryFilters();
+        this.TypeCodeFilterItems.addAdditionalFilter("IsImportDeclaration", true, null, null, "Equals", false, false, false, "boolean");
+        this.ExportTypeCodeFilterItems = new ApiQueryFilters();
+        this.ExportTypeCodeFilterItems.addAdditionalFilter("IsExportDeclaration", true, null, null, "Equals", false, false, false, "boolean");
     }
-
     public ExemptRowHeight: number;
     public FilterSelectedValue: string;
     ExemptionFilterSelectedValue: string = 'other';

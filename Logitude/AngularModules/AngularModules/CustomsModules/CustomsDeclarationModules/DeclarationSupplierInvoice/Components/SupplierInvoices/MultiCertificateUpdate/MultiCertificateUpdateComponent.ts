@@ -12,6 +12,7 @@ import {TextCodeTranslator} from '../../../../../../Infrastructure/Utilities/Tex
 import {MultiCertificatesService} from '../../../../../../Customs/Services/Others/MultiCertificatesService';
 
 import {MessageWindow} from '../../../../../../Controls/Windows/MessageWindow';
+import { ApiQueryFilters } from '../../../../../../Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
     
@@ -22,6 +23,7 @@ export class MultiCertificateUpdateComponent extends BaseComponent {
     DataContext: any = this;
     public ValidationErrorsList: string[] = [];
     CertTableName: string = "Customs.SupplierInvioceItemCertificat";
+    public TypeCodeFilterItems: ApiQueryFilters;
     IsDisplayOnly: boolean = false;
     _MultiCertificatesService: MultiCertificatesService = new MultiCertificatesService();
     CertPM: SupplierInvioceItemCertificatPM;
@@ -35,7 +37,11 @@ export class MultiCertificateUpdateComponent extends BaseComponent {
     SetWindowArgs(args: any) {
         if (!AppTool.IsNullOrEmpty(args)) {
             this.InvoicPM = args.EntityPM;
+            this.TypeCodeFilterItems = new ApiQueryFilters();
+            this.TypeCodeFilterItems.addAdditionalFilter("IsImportDeclaration", true, null, null, "Equals", false, false, false, "boolean");
         }
+
+
     }
 
     SetUIProperties() {

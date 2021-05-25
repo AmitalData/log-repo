@@ -49,6 +49,16 @@ export class CertificateExemptionTypePM {
     public set Inactive(newValue: boolean) { if (this.inactive != newValue) { this.inactive = newValue; this.MarkAsDirty("Inactive"); } }
        
 	 
+    private isImportDeclaration: boolean;
+    public get IsImportDeclaration() { return this.isImportDeclaration; }
+    public set IsImportDeclaration(newValue: boolean) { if (this.isImportDeclaration != newValue) { this.isImportDeclaration = newValue; this.MarkAsDirty("IsImportDeclaration"); } }
+       
+	 
+    private isExportDeclaration: boolean;
+    public get IsExportDeclaration() { return this.isExportDeclaration; }
+    public set IsExportDeclaration(newValue: boolean) { if (this.isExportDeclaration != newValue) { this.isExportDeclaration = newValue; this.MarkAsDirty("IsExportDeclaration"); } }
+       
+	 
 
     public OldEntityPM: CertificateExemptionTypePM;
 		

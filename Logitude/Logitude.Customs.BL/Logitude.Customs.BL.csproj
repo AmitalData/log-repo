@@ -1058,6 +1058,7 @@
     <Compile Include="EntityQueryServices\Generated\SupplierPartyTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TransportMeansTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\ContainerTypeQueryService.cs" />
+    <Compile Include="EntityQueryServices\CertificateExemptionTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\NDMessageActionCodeQueryService.cs" />
     <Compile Include="EntityQueryServices\ModificationAndDiscountTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\SuppInvoiceItemsAbachStatementQueryService.cs" />
@@ -1591,6 +1592,7 @@
     <Compile Include="EntityUpdateServices\Generated\TransactionNatureTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TransportMeansTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\ContainerTypeUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\CertificateExemptionTypeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\NDMessageActionCodeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ModificationAndDiscountTypeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ReferantExceptionUpdateService.amital.cs" />
