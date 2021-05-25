@@ -259,22 +259,22 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
         private void FillReportTransactionGLAccountFields(GLAccountPM glaccountPM, List<GLAccountList> accounts, ReportLedgerTransaction reportTransaction)
         {
-            if (glaccountPM != null)
-            {
-                reportTransaction.GLAccountRecoMethodCode = glaccountPM.ReconcileMethodCode;
-                reportTransaction.AccountNumber = glaccountPM.DisplayNumber;
-                reportTransaction.AccountEnglishName = glaccountPM.EnglishName;
-                reportTransaction.AccountLocalName = glaccountPM.LocalName;
-            }
-            else
-            {
+            //if (glaccountPM != null)
+            //{
+            //    reportTransaction.GLAccountRecoMethodCode = glaccountPM.ReconcileMethodCode;
+            //    reportTransaction.AccountNumber = glaccountPM.DisplayNumber;
+            //    reportTransaction.AccountEnglishName = glaccountPM.EnglishName;
+            //    reportTransaction.AccountLocalName = glaccountPM.LocalName;
+            //}
+            //else
+            //{
                 GLAccountList account = accounts.FirstOrDefault(d => d.Id == reportTransaction.AccountId);
                 reportTransaction.GLAccountRecoMethodCode = account.ReconcileMethodCode;
                 reportTransaction.AccountNumber = account.DisplayNumber;
                 reportTransaction.AccountEnglishName = account.EnglishName;
                 reportTransaction.AccountLocalName = account.LocalName;
 
-            }
+            //}
             
         }
 
