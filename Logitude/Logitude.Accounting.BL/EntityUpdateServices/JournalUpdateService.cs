@@ -142,60 +142,75 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         private void UpdateLedgerTransactionWithNewValuesFromJournalLines(JournalPM entityPM)
         {
-            foreach(JournalLinePM JournalLine in entityPM.JournalLines) {
-                if (JournalLine != null)
-                {
-                    JournalLinePM oldJournalLine = GetOldJournalLineFromDB(JournalLine);
+            foreach(JournalLinePM JournalLine in entityPM.JournalLines)
+            {
+                UpdateRelatedLedgerTransactionIfJournalLineUpdated(entityPM, JournalLine);
+            }
+        }
 
-                    if (oldJournalLine != null)
-                    {
-                        CheckIfJournalLinesChangedAndUpdateRelatedLedgerTransaction(entityPM, JournalLine, oldJournalLine);
-                    }
+        private void UpdateRelatedLedgerTransactionIfJournalLineUpdated(JournalPM entityPM, JournalLinePM JournalLine)
+        {
+            if (JournalLine != null)
+            {
+                JournalLinePM oldJournalLine = GetOldJournalLineFromDB(JournalLine);
+
+                bool isJournalLineUpdated = CheckIfJournalLineChanged(JournalLine, oldJournalLine);
+                if (isJournalLineUpdated)
+                {
+                    UpdateLedgerTransactionRelatedToJournalLine(entityPM, JournalLine, oldJournalLine);
                 }
             }
         }
 
-        private static JournalLinePM GetOldJournalLineFromDB(JournalLinePM firstJournalLine)
+        private JournalLinePM GetOldJournalLineFromDB(JournalLinePM firstJournalLine)
         {
             JournalLineQueryService journalLineQueryService = new JournalLineQueryService(firstJournalLine.Tenant);
             JournalLinePM journalLine = journalLineQueryService.GetSingle(firstJournalLine.JournalId, firstJournalLine.Line, false, false);
             return journalLine;
         }
 
-        private void CheckIfJournalLinesChangedAndUpdateRelatedLedgerTransaction(JournalPM entityPM, JournalLinePM JournalLine, JournalLinePM oldJournalLine)
+        private bool CheckIfJournalLineChanged(JournalLinePM journalLine, JournalLinePM oldJournalLine) {
+           return  oldJournalLine != null && journalLine != null && (journalLine.Notes != oldJournalLine.Notes || journalLine.Reference1 != oldJournalLine.Reference1 || journalLine.Reference2 != oldJournalLine.Reference2 || journalLine.Reference3 != oldJournalLine.Reference3);
+        }
+       
+        private void UpdateLedgerTransactionRelatedToJournalLine(JournalPM entityPM, JournalLinePM JournalLine, JournalLinePM oldJournalLine)
         {
             List<LedgerTransactionPM> allTransactionsRelatedToJournal = GetAllTransactionsRelatedToJournal(entityPM, JournalLine);
-            var ledgerTransactionUpdateService = new LedgerTransactionUpdateService(this.MainContext as IAccountingContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-            var isOneValueOfJournalLineChanged = JournalLine.Notes != oldJournalLine.Notes || JournalLine.Reference1 != oldJournalLine.Reference1 || JournalLine.Reference2 != oldJournalLine.Reference2 || JournalLine.Reference3 != oldJournalLine.Reference3;
-            if (isOneValueOfJournalLineChanged)
-            {
-                UpdateAllLedgerTransactionsRelatedToJournalLine(JournalLine, allTransactionsRelatedToJournal, ledgerTransactionUpdateService);
-            }
+            UpdateAllLedgerTransactionsRelatedToJournalLine(JournalLine, allTransactionsRelatedToJournal);
         }
 
-        private static List<LedgerTransactionPM> GetAllTransactionsRelatedToJournal(JournalPM entityPM, JournalLinePM JournalLine)
+        private  List<LedgerTransactionPM> GetAllTransactionsRelatedToJournal(JournalPM entityPM, JournalLinePM JournalLine)
         {
             LedgerTransactionQueryService ledgerTransactionQueryService = new LedgerTransactionQueryService(entityPM.Tenant);
             List<LedgerTransactionPM> allTransactionsRelatedToJournal = ledgerTransactionQueryService.GetByJournalLineIdAndLine(entityPM.Id, JournalLine.Line, entityPM.Tenant).ToList();
             return allTransactionsRelatedToJournal;
         }
 
-
-        private static void UpdateAllLedgerTransactionsRelatedToJournalLine(JournalLinePM JournalLine, List<LedgerTransactionPM> allTransactionsRelatedToJournal, LedgerTransactionUpdateService ledgerTransactionUpdateService)
+        private void UpdateAllLedgerTransactionsRelatedToJournalLine(JournalLinePM journalLine, List<LedgerTransactionPM> allTransactionsRelatedToJournal)
         {
+
             foreach (LedgerTransactionPM transaction in allTransactionsRelatedToJournal)
             {
-                transaction.Notes = JournalLine.Notes;
-                transaction.Reference1 = JournalLine.Reference1;
-                transaction.Reference2 = JournalLine.Reference2;
-                transaction.Reference3 = JournalLine.Reference3;
-
-                transaction.ChangeSetOp = ChangeSetOperation.Update;
-                ledgerTransactionUpdateService.Update(transaction, false, null);
+                MapJournalLineValuesToLedgerTransaction(journalLine, transaction);
+                UpdateLedgerTransaction(transaction);
             }
         }
 
-       
+        private void MapJournalLineValuesToLedgerTransaction(JournalLinePM journalLine, LedgerTransactionPM transaction)
+        {
+            transaction.Notes = journalLine.Notes;
+            transaction.Reference1 = journalLine.Reference1;
+            transaction.Reference2 = journalLine.Reference2;
+            transaction.Reference3 = journalLine.Reference3;
+        }
+
+        private  void UpdateLedgerTransaction(LedgerTransactionPM transaction)
+        {
+            var ledgerTransactionUpdateService = new LedgerTransactionUpdateService(this.MainContext as IAccountingContext, new Dictionary<string, IContext>(), transaction.Tenant);
+            transaction.ChangeSetOp = ChangeSetOperation.Update;
+            ledgerTransactionUpdateService.Update(transaction, false, null);
+        }
+
         protected override void OnUpdating(JournalPM entityPM, Journal entityPOCO)
         {
             var journalUpdate = GetJournalOnUpdtatingObject();
