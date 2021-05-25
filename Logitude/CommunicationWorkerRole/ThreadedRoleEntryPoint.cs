@@ -492,7 +492,7 @@ namespace CommunicationWorkerRole
             {
                 BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName == "LogMessagesWorkerRole" || r.ClassName == "CustomsSchedularWR").ToList();
             }
-            var reportsTest = true;
+            var reportsTest = false;
 
             if (reportsTest)
             {
