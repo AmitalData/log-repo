@@ -2,7 +2,6 @@
 <Table
   Name="TermsofUseSignatures"
   Schema="dbo"
- Module="Common"
   DBType="Main">
   <Column
     Name="Id"

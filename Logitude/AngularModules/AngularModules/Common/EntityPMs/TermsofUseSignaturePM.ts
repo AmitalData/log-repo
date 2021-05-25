@@ -50,6 +50,16 @@ export class TermsofUseSignaturePM {
     public set TermsofUseId(newValue: number) { if (this.termsofUseId != newValue) { this.termsofUseId = newValue; this.MarkAsDirty("TermsofUseId"); } }
        
 	 
+    private versionNumber: number;
+    public get VersionNumber() { return this.versionNumber; }
+    public set VersionNumber(newValue: number) { if (this.versionNumber != newValue) { this.versionNumber = newValue; this.MarkAsDirty("VersionNumber"); } }
+       
+	 
+    private versionDocumentId: string;
+    public get VersionDocumentId() { return this.versionDocumentId; }
+    public set VersionDocumentId(newValue: string) { if (this.versionDocumentId != newValue) { this.versionDocumentId = newValue; this.MarkAsDirty("VersionDocumentId"); } }
+       
+	 
 
     public OldEntityPM: TermsofUseSignaturePM;
 		

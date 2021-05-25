@@ -7,7 +7,8 @@
   <Column
     Name="Id"
     OldNames="Version"
-    Type="int">
+    Type="int"
+	  Identity="true">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
@@ -36,4 +37,14 @@
     <Constraints
       Nullable="false" />
   </Column>
+
+	<Column
+    Name="VersionDocumentId"
+    ShortName="VersionDocumentId" 
+ Type="varchar"
+   Size="15">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	 
 </Table>

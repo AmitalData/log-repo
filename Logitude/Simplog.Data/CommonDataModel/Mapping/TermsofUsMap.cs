@@ -15,6 +15,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Id)
                 .HasDatabaseGeneratedOption(null);
 
+            this.Property(t => t.VersionDocumentId).HasMaxLength(15);
+
             // Table & Column Mappings
             this.ToTable("TermsofUses");
 
@@ -26,6 +28,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 this.Property(t => t.Id).HasColumnName("Id_");
                 this.Property(t => t.Date).HasColumnName("Date_");
                 this.Property(t => t.VersionNumber).HasColumnName("VersionNumber_");
+                this.Property(t => t.VersionDocumentId).HasColumnName("VersionDocumentId_");
 
             }
             //#else
@@ -34,6 +37,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 this.Property(t => t.Id).HasColumnName("Id");
                 this.Property(t => t.Date).HasColumnName("Date");
                 this.Property(t => t.VersionNumber).HasColumnName("VersionNumber");
+                this.Property(t => t.VersionDocumentId).HasColumnName("VersionDocumentId");
 
             }
             //#endif

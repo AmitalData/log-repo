@@ -11,7 +11,8 @@ import {EntityPMServiceResponse} from '../../../../Infrastructure/DataContracts/
 import {DateTool, AppTool} from '../../../../Infrastructure/Tools';
 import {Environment} from '../../../../Infrastructure/Locators/Environment';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
-import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadManager';
+import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
+
 @Component({
     
 
@@ -25,11 +26,13 @@ export class TermsOfUseStartupComponent implements OnInit {
     termsofUseSignaturePMService: TermsofUseSignaturePMService;
     @Output() TermsOfUseCompleted = new EventEmitter();
 
-    Version: number;
+    VersionDocumentId: string;
+    TermsOfUseId: number;
+    termsofUseSignaturePM: TermsofUseSignaturePM = new TermsofUseSignaturePM();
+
     ShowBusyIndicator: boolean;
     BusyIndicatorText: string;
-
-  
+     
     public LogoURL: string = "./Images/LoginScreen/header.jpg";
     public Name: string = "Logitude";
 
@@ -55,18 +58,18 @@ export class TermsOfUseStartupComponent implements OnInit {
     ) {
 
 
-   
+
 
     }
-
 
     SetDataContext(data: any) {
 
     }
 
-    Load(version: number) {
+    Load(versionDocumentId: string, termsOfUseId: number) {
   
-            this.Version = version;
+        this.VersionDocumentId = versionDocumentId;
+        this.TermsOfUseId = termsOfUseId;
 
     }
 
@@ -76,19 +79,27 @@ export class TermsOfUseStartupComponent implements OnInit {
 
 
     AcceptButtonClicked() {
+
         this.ShowBusyIndicator = true;
         this.BusyIndicatorText = "Loading..";
 
 
-        var termsofUseSignaturePM = new TermsofUseSignaturePM();
-        termsofUseSignaturePM.TermsofUseId = this.Version;
-        termsofUseSignaturePM.ContactId = SessionInfo.LoggedUserId;
-        termsofUseSignaturePM.Tenant = SessionInfo.LoggedUserTenant;
-        termsofUseSignaturePM.SignedDatetime = DateTool.GetCurrentDateAsUtc();
+        this.CreateTermsOfSignature(); 
+        this.InsertTermsOfUseSignature(); 
+    }
+
+    CreateTermsOfSignature() { 
+         
+        this.termsofUseSignaturePM.TermsofUseId = this.TermsOfUseId;
+        this.termsofUseSignaturePM.ContactId = SessionInfo.LoggedUserId;
+        this.termsofUseSignaturePM.Tenant = SessionInfo.LoggedUserTenant;
+        this.termsofUseSignaturePM.SignedDatetime = DateTool.GetCurrentDateAsUtc();
+    }
+
+    InsertTermsOfUseSignature() {
 
 
-
-        this.termsofUseSignaturePMService.insert(termsofUseSignaturePM).subscribe((res:any)=> {
+        this.termsofUseSignaturePMService.insert(this.termsofUseSignaturePM).subscribe((res: any) => {
 
             var pmResponse: EntityPMServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -96,28 +107,20 @@ export class TermsOfUseStartupComponent implements OnInit {
                 if (myResult) {
                     this.ShowBusyIndicator = false;
                     this.TermsOfUseCompleted.emit("Accept");
-                    
                 }
-
             }
-            
 
         });
     }
 
-
-
-
-    TermsofUse() {
-        if (SessionLocator.PrivateLableSettings) {
-            var documentName =  SessionLocator.PrivateLableSettings.PrivateLabelShortName + "-" + this.Version + "_termsofuses";// +"." + CurrentDocument.Extension;
-            DownloadManager.DownloadPage(documentName);
-        }
-        else {
-            var documentName = this.Version + "_termsofuses";// +"." + CurrentDocument.Extension;
-            DownloadManager.DownloadPage(documentName);
+    GetTermsofUseDocument() {
+        if (this.VersionDocumentId == null) {
+            // Tenant 0 terms of use
+            var documentId = this.TermsOfUseId + "_termsofuses";
+            DownloadManager.DownloadPage(documentId);
+        } else{ 
+            DownloadManager.DownloadPage(this.VersionDocumentId); 
         } 
-    }
-
+    } 
 
 }

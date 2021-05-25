@@ -89,6 +89,14 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return termsofUses;
         }
 
+        public IQueryable<TermsofUse> GetById(int id)
+        {
+            IQueryable<TermsofUse> termsofUses = from a in context.TermsofUses
+                                                 where a.Id == id
+                                                 select a;
+            return termsofUses;
+        }
+
 
         public List<TermsofUse> GetMulti(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {

@@ -11,6 +11,7 @@ import { environment } from '../environments/environment';
 import { LoginService } from './Services/LoginService';
 import { AppTool } from './Tools'
 import { ChildDirective } from './Directives/ChildDirective';
+import { MessageWindow } from '../Controls/Windows/MessageWindow';
 declare var IsMobileDetected;
 
 @Component({
@@ -290,65 +291,70 @@ export class RootComponent implements AfterViewInit {
     var termsofUseService = new TermsofUseService();
     termsofUseService.GetCheckIfGoToTermUseComponent(SessionLocator.Tenant, SessionLocator.LoggedUserId).subscribe((res: ServiceResponse) => {
       var pmResponse: ServiceResponse = res;
-      if (!pmResponse.HasError) {
-        var myResult: TermsofUseArgs = pmResponse.Result;
-        if (myResult) {
-          if (myResult.IsTermOfUse) {
-              this.ClearLocation();
-              if (this.isPrivateLable == true) {
-                  let privateLableTermOfUsePage = "./InfrastructureModules/InfrastructureOthers/Components/TermsOfUse/CustomTermsOfUse/";
-                  privateLableTermOfUsePage += this.isDSV ? "DSVTermsOfUseStartupComponent" : "HybridTermsOfUseStartupComponent";
-                  SessionLocator.DynamicLoader.Load(privateLableTermOfUsePage, this.Child.Location)
-                      .then(cmpRef => {
-                          cmpRef.instance.ComponentRef = cmpRef;
-                          cmpRef.instance.Load(myResult.Version);
-                          cmpRef.instance.TermsOfUseCompleted.subscribe(($event: any) => {
+        if (!pmResponse.HasError) {
+            var myResult: TermsofUseArgs = pmResponse.Result;
+            if (myResult) {
+                if (myResult.IsTermOfUse) {
+                    this.ClearLocation();
+                    if (this.isPrivateLable == true) {
+                        let privateLableTermOfUsePage = "./InfrastructureModules/InfrastructureOthers/Components/TermsOfUse/CustomTermsOfUse/";
+                        privateLableTermOfUsePage += this.isDSV ? "DSVTermsOfUseStartupComponent" : "HybridTermsOfUseStartupComponent";
+                        SessionLocator.DynamicLoader.Load(privateLableTermOfUsePage, this.Child.Location)
+                            .then(cmpRef => {
+                                cmpRef.instance.ComponentRef = cmpRef;
+                                cmpRef.instance.Load(myResult.VersionDocumentId, myResult.Id);
+                                cmpRef.instance.TermsOfUseCompleted.subscribe(($event: any) => {
 
-                              if ($event == "Accept") {
-                                  this.ViewHomeComponent();
-                              }
+                                    if ($event == "Accept") {
+                                        this.ViewHomeComponent();
+                                    }
 
-                              else if ($event == "Decline") {
-                                  this.SignOutCompleted();
-                              }
-                          });
-                      });
-              }
-            else {
-              SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureOthers/Components/TermsOfUse/TermsOfUseStartupComponent", this.Child.Location)
-                .then(cmpRef => {
-                  cmpRef.instance.ComponentRef = cmpRef;
-                  cmpRef.instance.Load(myResult.Version);
-                  cmpRef.instance.TermsOfUseCompleted.subscribe(($event: any) => {
-
-                    if ($event == "Accept") {
-                      this.ViewHomeComponent();
+                                    else if ($event == "Decline") {
+                                        this.SignOutCompleted();
+                                    }
+                                });
+                            });
                     }
+                    else {
+                        SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureOthers/Components/TermsOfUse/TermsOfUseStartupComponent", this.Child.Location)
+                            .then(cmpRef => {
+                                cmpRef.instance.ComponentRef = cmpRef;
+                                cmpRef.instance.Load(myResult.VersionDocumentId, myResult.Id);
+                                cmpRef.instance.TermsOfUseCompleted.subscribe(($event: any) => {
 
-                    else if ($event == "Decline") {
-                      this.SignOutCompleted();
+                                    if ($event == "Accept") {
+                                        this.ViewHomeComponent();
+                                    }
+
+                                    else if ($event == "Decline") {
+                                        this.SignOutCompleted();
+                                    }
+                                });
+                            });
                     }
-                  });
-                });
-            }
-          }
+                }
 
-          else {
-            if (SessionLocator.IsExternalParams && SessionLocator.ExternalParams && SessionLocator.ExternalParams.Menu && SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "dapp" && IsMobileDetected() == true) {
-              this.ViewDeclarationApprovalComponent();
+                else {
+                    if (SessionLocator.IsExternalParams && SessionLocator.ExternalParams && SessionLocator.ExternalParams.Menu && SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "dapp" && IsMobileDetected() == true) {
+                        this.ViewDeclarationApprovalComponent();
+                    }
+                    else if (SessionLocator.IsExternalParams && SessionLocator.ExternalParams && SessionLocator.ExternalParams.Menu && SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "preq" && IsMobileDetected() == true) {
+                        this.ViewEComercePaymentRequestComponent();
+                    }
+                    else if (SessionLocator.IsExternalParams && SessionLocator.ExternalParams && SessionLocator.ExternalParams.Menu && SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "uid" && IsMobileDetected() == true) {
+                        this.VieUserIdNumberMobileComponent();
+                    }
+                    else {
+                        this.ViewHomeComponent();
+                    }
+                }
             }
-            else if (SessionLocator.IsExternalParams && SessionLocator.ExternalParams && SessionLocator.ExternalParams.Menu && SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "preq" && IsMobileDetected() == true) {
-              this.ViewEComercePaymentRequestComponent();
-            }
-            else if (SessionLocator.IsExternalParams && SessionLocator.ExternalParams && SessionLocator.ExternalParams.Menu && SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "uid" && IsMobileDetected() == true) {
-              this.VieUserIdNumberMobileComponent();
-            }
-            else {
-              this.ViewHomeComponent();
-            }
-          }
         }
-      }
+        else {
+            if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
+                window.alert(pmResponse.ErrorsArray[0]); 
+            }
+        }
     });
   }
   SignOutCompleted() {

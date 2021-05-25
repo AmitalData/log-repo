@@ -15,6 +15,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public DateTime SignedDatetime { get; set; }
         public string ContactId { get; set; }
         public int TermsofUseId { get; set; }
+        public int VersionNumber { get; set; }
+        public string VersionDocumentId { get; set; }
 
     }
 }

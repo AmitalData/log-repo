@@ -12,5 +12,7 @@ export class TermsofUseSignatureList {
 		SignedDatetime: Date;
 		ContactId: string;
 		TermsofUseId: number;
+		VersionNumber: number;
+		VersionDocumentId: string;
 	
 }

@@ -524,7 +524,7 @@ namespace WebFreight.Web.Helpers
                 Extension = extension,
                 HasFile = true,
                 CalculatedFileName = fileName,
-                Folder = "reports",
+                Folder = folder,
 
             };
             documentRepository.Add(newDocument);
