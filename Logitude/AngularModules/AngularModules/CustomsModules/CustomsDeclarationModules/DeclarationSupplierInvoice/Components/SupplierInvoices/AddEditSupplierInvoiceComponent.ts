@@ -1054,9 +1054,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
     }
 
     OnEscHotKeyPressed(){
-        if (!this.IsDisplayOnly) { 
             this.CancelButtonClicked();
-        }
     }
 
     OnCTRL_Shift_S_HotKeyPressed(){
