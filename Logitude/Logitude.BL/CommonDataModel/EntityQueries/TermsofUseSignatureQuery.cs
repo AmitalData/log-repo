@@ -100,11 +100,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return result;
         }
         //// Get By Tenant, Last Version, and ContatId
-        public TermsofUseSignaturePM GetByIdAndContactId(int versionId, string userId, int tenant)
+        public TermsofUseSignaturePM GetByIdAndContactId(int termsofUseId, string userId, int tenant)
         {
             TermsofUseSignaturePM termsofUseSignatures = (from a in repository.context.TermsofUseSignatures
                                                           where a.ContactId == userId && a.Tenant == tenant
-                                                          && a.TermsofUseId == versionId
+                                                          && a.TermsofUseId == termsofUseId
                                                           select new TermsofUseSignaturePM()
                                                           {
                                                               Id = a.Id,
