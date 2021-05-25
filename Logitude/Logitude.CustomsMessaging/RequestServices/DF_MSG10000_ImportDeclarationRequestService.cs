@@ -1324,7 +1324,10 @@ namespace Logitude.CustomsMessaging.RequestServices
                 if (!(string.IsNullOrWhiteSpace(CertificateItem.ResConfirmationTypeCode) && string.IsNullOrWhiteSpace(CertificateItem.CertificateNumber) && string.IsNullOrWhiteSpace(CertificateItem.CertificateExemptionTypeCode) && string.IsNullOrWhiteSpace(CertificateItem.AttachmentTypeCode) && string.IsNullOrWhiteSpace(CertificateItem.CustomsAttachmentID)))
                 { // moran 26.9.16 - Task 22961 - enter into 'if' fields are empty
                     var declarationGoodsShipmentAdditionalDocument = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemAdditionalDocument();
-                    declarationGoodsShipmentAdditionalDocument.ID = SetIDTypeValue<AdditionalDocumentIdentificationIDType>(string.Join("", CertificateItem.CertificateNumber.ToCharArray().Where(Char.IsDigit)));
+                    if (CertificateItem.CertificateNumber != null)
+                    {
+                        declarationGoodsShipmentAdditionalDocument.ID = SetIDTypeValue<AdditionalDocumentIdentificationIDType>(string.Join("", CertificateItem.CertificateNumber.ToCharArray().Where(Char.IsDigit)));
+                    }
                     declarationGoodsShipmentAdditionalDocument.LPCOExemptionCode = SetCodeTypeValue<AdditionalDocumentLPCOExemptionCodeType>(CertificateItem.CertificateExemptionTypeCode);
                     declarationGoodsShipmentAdditionalDocument.TypeCode = SetCodeTypeValue<AdditionalDocumentTypeCodeType>(CertificateItem.AttachmentTypeCode);
                     declarationGoodsShipmentAdditionalDocument.DMExtensions = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemAdditionalDocumentDMExtensions();
