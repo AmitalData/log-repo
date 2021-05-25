@@ -890,8 +890,58 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         var myGDFDATAQueryService = new GDFDATAQueryService(AmitalContext.GetContext(requestParams.Tenant));
                         var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_ACT_COLLECT", "NON", courierMaster.IntegratorNumber, false, true);
                         bool isCollectActive = def.DEFDATA == "Y";
- 
 
+                        
+                        if (declarationPendingPM_900 == null)
+                        {
+                            CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(context);
+                            CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle("900", false, false);
+                            if (courierPendingReasonPM == null)
+                            {
+                                LogMessagingUtil.Instance.AppendLine("לא קיים קוד תהליך גביה- במידה ומופעל בדיקה האם להגדיר גבייה = 900 בטבלת סיבות Pending");
+                                isCollectActive = false;
+                            }
+                        }
+                        if (isCollectActive)
+                        {
+                            bool isStatusVPA = false;
+                            try
+                            {
+                                isStatusVPA = myDeclarationUpdateService.CheckFileStatus(_MyDeclarationPM, requestParams.LoggingUserId, "VPA");
+                            }
+                            catch (Exception e)
+                            {
+                                LogMessagingUtil.Instance.AppendLine("Exception was thrown while checking if VPA exist in the file " + _MyDeclarationPM.CustomFileNo + Environment.NewLine + e.Message);
+                            }
+                            if (isStatusVPA) isCollectActive = false;
+                        }
+
+                        // if (declarationPendingPM_900 == null)
+                        // {
+                        //     CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(context);
+                        //     CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle("900", false, false);
+                        //     if (courierPendingReasonPM == null)
+                        //     {
+                        //         LogMessagingUtil.Instance.AppendLine("לא קיים קוד תהליך גביה- במידה ומופעל בדיקה האם להגדיר גבייה = 900 בטבלת סיבות Pending");
+                        //         isCollectActive = false;
+                        //     }
+                        // }
+
+             
+
+                        // if (isCollectActive)
+                        // {
+                        //     def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_COL_LOW_DIF", "NON", "NON", false, true);
+                        //     string defValue = def.DEFDATA;
+                        //     decimal defaultAmount = 0;
+                        //     var boolvar = (decimal.TryParse(defValue, out defaultAmount));
+                        //     decimal totalTax = _MyDeclarationPM.TotalTax > 0 ? _MyDeclarationPM.TotalTax.Value : 0;
+                        //     decimal prevTotalTax = prev_TotalTax > 0 ? prev_TotalTax.Value : 0;
+                        //     if (defaultAmount > 0 && defaultAmount >= totalTax - prevTotalTax)
+                        //     {
+                        //         isCollectActive = false;
+                        //     }
+                        // }
 
                         if (isCollectActive)
                         {
@@ -924,20 +974,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 declarationPendingPM_900.Status = "S";
                                 if (_MyDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) _MyDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
                                 LogMessagingUtil.Instance.AppendLine("Courier Pending Reason Code 900 Set as Solved");
+
                             }
                         }
-
-
-                        if (declarationPendingPM_900 == null)
-                        {
-                            CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(context);
-                            CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle("900", false, false);
-                            if (courierPendingReasonPM == null)
-                            {
-                                LogMessagingUtil.Instance.AppendLine("לא קיים קוד תהליך גביה- במידה ומופעל בדיקה האם להגדיר גבייה = 900 בטבלת סיבות Pending");
-                                isCollectActive = false;
-                            }
-                        }
+ 
+ 
                         if (isCollectActive && _MyDeclarationPM.TotalTax > 0 && _MyDeclarationPM.TotalTax != prev_TotalTax)
                         {
                             if ((declarationPendingPM_900 != null && declarationPendingPM_900.Status != "S") )
@@ -947,21 +988,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     isSendVPE = true;
                                 }
                             }
+
                         }
 
-                        if (isCollectActive)
-                        {
-                            bool isStatusVPA = false;
-                            try
-                            {
-                                isStatusVPA = myDeclarationUpdateService.CheckFileStatus(_MyDeclarationPM, requestParams.LoggingUserId, "VPA");
-                            }
-                            catch (Exception e)
-                            {
-                                LogMessagingUtil.Instance.AppendLine("Exception was thrown while checking if VPA exist in the file " + _MyDeclarationPM.CustomFileNo + Environment.NewLine + e.Message);
-                            }
-                            if (isStatusVPA) isCollectActive = false;
-                        }
+                      
 
                     }
 

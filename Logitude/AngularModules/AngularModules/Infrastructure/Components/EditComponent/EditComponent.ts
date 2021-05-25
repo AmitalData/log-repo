@@ -347,12 +347,23 @@ export class EditComponent implements OnDestroy {
                                         this._SubEditComponentDefaultController == null;
                                     }
                                 });
+                            let sync: boolean = true;
+                            if (sync) {
+                                this.BuildEditTabs(() => {
+                                    this.RunComponent();
+                                    this.StopBusyIndicator();
+                                });
 
-                            // if (this.CurrentNavigatedIndex ==0) {
-                            this.BuildEditTabs();
-                            //}
-                            this.RunComponent();
-                            this.StopBusyIndicator();
+                            } else {
+                                // if (this.CurrentNavigatedIndex ==0) {
+                                this.BuildEditTabs(null);
+                                //}
+                                this.RunComponent();
+                                this.StopBusyIndicator();
+
+                            }
+
+
                         }
                     });
                 });
@@ -774,14 +785,15 @@ export class EditComponent implements OnDestroy {
     public TabsItemsSource: TabItem[] = [];
     private LoadedTabsList: LoadedTabItem[] = [];
     private SingleDetailsTab: any = null;
-    private BuildEditTabs() {
+    private BuildEditTabs(onCallBack: () => void ) {
 
         if (this.IsTabsHidden) {
             this.BuildSingleEditTab();
         }
 
         else {
-            this.BuildTabsItemsSource();
+            
+            this.BuildTabsItemsSource(onCallBack);
         }
     }
     private BuildSingleEditTab() {
@@ -889,7 +901,7 @@ export class EditComponent implements OnDestroy {
     
 
 
-    private BuildTabsItemsSource() {
+    private BuildTabsItemsSource(onCallBack: () => void ) {
 
         this.TabsItemsSource = [];
         var myComponentPath = "./" + this.ObjectTable.ClientModuleName + "/MetaDataServices/TabsServices/" + this.GetObjectTableName() + "TabsService";
@@ -903,6 +915,8 @@ export class EditComponent implements OnDestroy {
             if (this.TabControlBodyViewContainerRef)
                 this.SetSelectedTab();
 
+
+            onCallBack();
         });
 
     }

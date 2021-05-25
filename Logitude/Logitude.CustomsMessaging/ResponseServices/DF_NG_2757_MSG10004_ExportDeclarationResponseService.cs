@@ -931,17 +931,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 isCollectActive = false;
                             }
                         }
-                        if (isCollectActive && _MyDeclarationPM.TotalTax > 0 && _MyDeclarationPM.TotalTax != prev_TotalTax)
-                        {
-                            if (declarationPendingPM_900 != null && declarationPendingPM_900.Status != "S")
-                            {
-                                if (_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.FirstOrDefault().IncotermCode != "DDP")
-                                {
-                                    isSendVPE = true;
-                                }
-                            }
-                        }
-                            
+
                         if (isCollectActive)
                         {
                             bool isStatusVPA = false;
@@ -954,6 +944,31 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 LogMessagingUtil.Instance.AppendLine("Exception was thrown while checking if VPA exist in the file " + _MyDeclarationPM.CustomFileNo + Environment.NewLine + e.Message);
                             }
                             if (isStatusVPA) isCollectActive = false;
+                        }
+
+                        if (isCollectActive)
+                        {
+                            def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_COL_LOW_DIF", "NON", "NON", false, true);
+                            string defValue = def.DEFDATA;
+                            decimal defaultAmount = 0;
+                            var boolvar = (decimal.TryParse(defValue, out defaultAmount));
+                            decimal totalTax = _MyDeclarationPM.TotalTax > 0 ? _MyDeclarationPM.TotalTax.Value : 0;
+                            decimal prevTotalTax = prev_TotalTax > 0 ? prev_TotalTax.Value : 0;
+                            if (defaultAmount > 0 && defaultAmount >= totalTax - prevTotalTax)
+                            {
+                                isCollectActive = false;
+                            }
+                        }
+
+                        if (isCollectActive && _MyDeclarationPM.TotalTax > 0 && _MyDeclarationPM.TotalTax != prev_TotalTax)
+                        {
+                            if (declarationPendingPM_900 != null && declarationPendingPM_900.Status != "S")
+                            {
+                                if (_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.FirstOrDefault().IncotermCode != "DDP")
+                                {
+                                    isSendVPE = true;
+                                }
+                            }
                         }
 
                         if (isCollectActive)
