@@ -920,7 +920,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     }
     //#endregion
 
-    private _SendCustomsDocumentAfter = true;
+    private _SendCustomsDocumentAfter = false;//IT SEEMS THAT ITS OK IN THE DIST =- SOO REVERT MY CODE 
     PerformSubmitChanges() {
         if (!this._SendCustomsDocumentAfter &&  this.CustomsDocument) {
             this.SendCustomsDocumentMethod();
@@ -994,8 +994,12 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                 });
             }
             else {
-                this.CurrentSession.StopBusyIndicator();
-                this.CurrentSession.CloseCurrentWindowEmit("ok");
+                if (!this._SendCustomsDocumentAfter) {
+                    this.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.CloseCurrentWindowEmit("ok");
+                } else {
+                    this.SendCustomsDocumentMethod();
+                }
             }
         }
         else {

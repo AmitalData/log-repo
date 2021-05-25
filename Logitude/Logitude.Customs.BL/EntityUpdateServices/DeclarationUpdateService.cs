@@ -733,6 +733,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 entityPM.CasualImporterTel = Regex.Replace(entityPM.CasualImporterTel, "[^0-9]", "");///- יש להוריד את כל התווים הלא נומריים 
                 entityPM.CasualImporterTel = Regex.Replace(entityPM.CasualImporterTel, @"\s+", "");///שיהייה
+                if (!string.IsNullOrWhiteSpace( entityPM.CasualImporterTel) && entityPM.CasualImporterTel.StartsWith("5"))//If the number start with 5 add 0 
+                {
+                    entityPM.CasualImporterTel = "0" + entityPM.CasualImporterTel;//Task 139114: בדיקת חוקיות של הזנת מספר טלפון והעלאת PENDING 903- טלפון לא חוקי + טיפול נוסף
+                }
+
             }
             if (entityPM.CasualImporterTel!= entityPOCO.CasualImporterTel)
             {
@@ -1255,7 +1260,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             }
                         }
                     }
-
+                    /*
                     if(newDeclarationCourierStatusPM != null && !newDeclarationCourierStatusPM.IsClosedForFollowUp)
                     {
                         if (this._CourierMasterPM == null)
@@ -1276,6 +1281,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             myCourierMasterUpdateService.Update(this._CourierMasterPM, true);
                         }
                     }
+                    */
                 }
                 
             }
