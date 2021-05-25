@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
         {
             if (isNewEntity)
             {
-                containerPM.Id = container.Id;
                 containerPM.Tenant = container.Tenant;               
             }
 
@@ -34,6 +34,20 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             containerPM.SearchFields = container.SearchFields;
             containerPM.ShipmentPackagesId = container.ShipmentPackagesId;
             containerPM.ContainerNumber = container.ContainerNumber;
+            BuildSearchField(containerPM, container);
+        }
+
+        public static void BuildSearchField(ContainerPM containerPM, Container container)
+        {
+            string mySearchFields = "";
+
+            MethodHelper.AddToSearchFields(ref mySearchFields, containerPM.ContainerNumber);
+            MethodHelper.AddToSearchFields(ref mySearchFields, containerPM.Master);
+            MethodHelper.AddToSearchFields(ref mySearchFields, containerPM.MainCarriageCarrierNumber);
+            MethodHelper.AddToSearchFields(ref mySearchFields, containerPM.CarrierName);
+
+            containerPM.SearchFields = mySearchFields;
+            container.SearchFields = mySearchFields;
         }
     }
 }
