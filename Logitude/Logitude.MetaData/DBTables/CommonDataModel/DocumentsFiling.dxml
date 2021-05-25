@@ -466,4 +466,7 @@
   <Index
 Columns="Tenant,DocumentId" />
 
+	<Index
+	Columns="SearchFields" />
+
 </Table>
