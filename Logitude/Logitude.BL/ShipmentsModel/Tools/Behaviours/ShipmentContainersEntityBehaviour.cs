@@ -72,7 +72,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 return false;
 
             if (initializer.EntityPM.TransportModeId != "O" &&
-               (initializer.EntityPM.TransportModeId.ToLower() != "fcl" || initializer.EntityPM.TransportModeId.ToLower() != "fcld"))
+               (initializer.EntityPM.ShipmentTypeId.ToLower() != "fcl" || initializer.EntityPM.ShipmentTypeId.ToLower() != "fcld"))
                 return false;
 
             if (initializer.ShipmentPackagesChangeSet == null)
