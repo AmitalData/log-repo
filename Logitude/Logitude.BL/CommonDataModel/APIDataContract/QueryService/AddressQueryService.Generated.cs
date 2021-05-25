@@ -91,7 +91,16 @@ using Simplog.Data.CommonDataModel;
 			       
 					   				   }
 				   
-				   temp.ExternalId = MyEntityPM.ExternalId;					
+				   temp.ExternalId = MyEntityPM.ExternalId; 
+
+			  
+				   if(MyEntityPM.AddressTypeId != null)
+				   {
+					   AddressTypeQueryService AddressTypeService2 = new AddressTypeQueryService(Tenant);
+					   					   temp.AddressType = AddressTypeService2.GetAddressTypeById(MyEntityPM.AddressTypeId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				   					
 				   return temp;
 			}
             catch (Exception ex)
@@ -237,6 +246,27 @@ using Simplog.Data.CommonDataModel;
 
 										}  
 
+					
+					AddressTypeQueryService AddressTypeAddressTypeService = new AddressTypeQueryService(Tenant);
+					if(MyEntity.AddressType != null)
+					{
+						var myAddressTypePM = AddressTypeAddressTypeService.AddressTypeDataMappingAndValidatin(MyEntity.AddressType,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myAddressTypePM != null)
+						{ 
+
+						 
+							if(!IsUpdate)
+							{								//throw new ApplicationException("AddressType Can't be update"); 
+								temp.AddressTypeId = myAddressTypePM.Id;
+						  
+							}  
+
+							
+						} 
+
+					}
+			
 										   
 					return temp;
 		    }
