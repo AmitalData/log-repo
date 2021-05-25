@@ -901,6 +901,19 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 isCollectActive = false;
                             }
                         }
+                    
+
+                        if (isCollectActive && _MyDeclarationPM.TotalTax > 0 && _MyDeclarationPM.TotalTax != prev_TotalTax)
+                        {
+                            if ((declarationPendingPM_900 != null && declarationPendingPM_900.Status != "S"))
+                            {
+                                if (_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.FirstOrDefault().IncotermCode != "DDP")
+                                {
+                                    isSendVPE = true;
+                                }
+                            }
+                        }
+
                         if (isCollectActive)
                         {
                             bool isStatusVPA = false;
@@ -951,16 +964,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
                        
-                        if (isCollectActive && _MyDeclarationPM.TotalTax > 0 && _MyDeclarationPM.TotalTax != prev_TotalTax)
-                        {
-                            if ((declarationPendingPM_900 != null && declarationPendingPM_900.Status != "S") )
-                            {
-                                if (_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.FirstOrDefault().IncotermCode != "DDP")
-                                {
-                                    isSendVPE = true;
-                                }
-                            }
-                        }
+                      
 
                       
 
