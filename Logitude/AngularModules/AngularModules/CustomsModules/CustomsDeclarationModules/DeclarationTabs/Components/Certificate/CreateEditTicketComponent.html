@@ -189,7 +189,7 @@
         <td style="width:160px">
         </td>
         <td style="width:200px">
-            <div *ngIf="Parent.DeclarationPM.Direction != E">
+            <div *ngIf="Parent.DeclarationPM.Direction != 'E'">
                 <LogLov [ObjectFieldName]="'CertificateExemptionTypeCode'"
                         [ObjectTableName]="ObjectTableName"
                         [DataContext]="DataContext"
@@ -199,7 +199,7 @@
                         [QueryFilterItems]="TypeCodeFilterItems">
                 </LogLov>
             </div>
-            <div *ngIf="Parent.DeclarationPM.Direction == E">
+            <div *ngIf="Parent.DeclarationPM.Direction == 'E'">
                 <LogLov [ObjectFieldName]="'CertificateExemptionTypeCode'"
                         [ObjectTableName]="ObjectTableName"
                         [DataContext]="DataContext"
