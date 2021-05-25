@@ -176,7 +176,7 @@ namespace Logitude.Accounting.BL.DataContract
             List<string> vendorIds = payments.Select(d => d.VendorId).ToList();
           
             List<CardList> vendors= (from a in commoncontext.Cards
-                    where vendorIds.Contains(a.Id) && a.CountryCode == "IL"
+                    where vendorIds.Contains(a.Id)
                     && a.Tenant == Tenant
                     select new CardList()
                     {
@@ -202,7 +202,7 @@ namespace Logitude.Accounting.BL.DataContract
         private List<CardList> GetAccountsVendors(List<string> accountIds)
         {
             List<CardList> vendors = (from a in commoncontext.Cards
-                                      where accountIds.Contains(a.GLAccountId) && a.CountryCode == "IL"
+                                      where accountIds.Contains(a.GLAccountId)
                                       && a.Tenant == Tenant
                                       select new CardList()
                                       {
@@ -224,7 +224,7 @@ namespace Logitude.Accounting.BL.DataContract
         {
             List<CardList> vendors = (from a in commoncontext.Cards
                                       where accountIds.Contains(a.GLAccountId)
-                                      && a.Tenant == Tenant && a.CountryCode =="IL"
+                                      && a.Tenant == Tenant 
                                       select new CardList()
                                       {
                                           Id = a.Id,

@@ -492,11 +492,12 @@ namespace CommunicationWorkerRole
             {
                 BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName == "LogMessagesWorkerRole" || r.ClassName == "CustomsSchedularWR").ToList();
             }
-            var reportsTest = false;
+            var reportsTest = true;
 
             if (reportsTest)
             {
-                BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName == "ReportExecutionLogWorkerRole").ToList();
+                
+                   BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName == "BatchTaskExecutionWR").ToList();
             }
             if(ActiveWorkers != null && ActiveWorkers.Length > 0)
             {
