@@ -536,12 +536,14 @@ SubmitChanges(ControlAccountId:string) {
     ResetAgingPeriodsFields(){
         const two = 2;
         const one = 2;
-        if(this.NumberOfPeriods <= two){
+        const thirdPeriodIsNotSelected = this.NumberOfPeriods <= two;
+        if(thirdPeriodIsNotSelected){
             this.EntityPM.ThirdsPeriodsMonths = null;
             this.SelectedPeriods3 = [];
         }
 
-        if(this.NumberOfPeriods == one){
+        const SecondPeriodIsNotSelected = this.NumberOfPeriods == one;
+        if(SecondPeriodIsNotSelected){
             this.EntityPM.SecondPeriodsMonths = null;
             this.SelectedPeriods2 = [];
         }
