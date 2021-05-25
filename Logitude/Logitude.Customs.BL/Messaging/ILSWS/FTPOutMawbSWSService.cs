@@ -29,7 +29,7 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
         //private string communicationSubject = "שידור פנימיים מסוכנים לממן";
         public void BuildCommunicationLog(byte[] bytearray, int tenant, string declarationId, string ftpDetailsName, string fileName)
         {
-
+          
             ObjectTableRepository repo = new ObjectTableRepository(tenant);
             var objectTableId = repo.GetObjectTableIdByName("Customs.Declaration");
 
@@ -70,9 +70,12 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
                 password = fTPDetail.Password;
                 useSFTP = fTPDetail.UseSFTP;
             }
+            if (fileName == null)
+            {
+                fileName = Path.GetFileNameWithoutExtension(pmCustomsPartnerFtp.FileName);
+            }
 
-
-            var settings = new CommunicationLogSettings() { host = host, folder = folder, username = username, password = password, filename = Path.GetFileNameWithoutExtension(pmCustomsPartnerFtp.FileName), UseSFTP= useSFTP };
+            var settings = new CommunicationLogSettings() { host = host, folder = folder, username = username, password = password, filename = fileName, UseSFTP= useSFTP };
             var settingsData = Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertSerialize(settings);
 
             Document document = new Document()
