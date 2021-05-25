@@ -1361,7 +1361,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
             item.Id = uploader.CurrentDocument.DocumentId;
             item.Tenant = uploader.CurrentDocument.Tenant;
             item.FileSize = uploader.CurrentDocument.FileSize;
-            item.DocumentTypeCopyNameWithDocumentTypeName = uploader.CurrentDocument.DocumentTypeName;
+            item.DocumentTypeCopyNameWithDocumentTypeName = uploader.CurrentDocument.DirectionCode == "I" ? uploader.FileName : uploader.CurrentDocument.DocumentTypeName;
             item.FileExtension = uploader.CurrentDocument.FileExtension;
             item.ShowRemoveLink = true;
             var attachmentsLists = this.AttachmentsLists;
@@ -1652,7 +1652,8 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                 if (myResult) {
                     this.documentPM = myResult;
                     att.FileSize = this.documentPM.FileSize;
-                    att.FileName = !AppTool.IsNullOrEmpty(this.documentPM.CalculatedFileName) ? this.documentPM.CalculatedFileName : item.DocumentTypeCopyNameWithDocumentTypeName;
+                    att.FileName = (!AppTool.IsNullOrEmpty(this.documentPM.CalculatedFileName) && item.DirectionCode !=  "I") ? this.documentPM.CalculatedFileName : item.DocumentTypeCopyNameWithDocumentTypeName;
+                    
                     this.CreateAttachment(att, this.documentPM, item.ShowRemoveLink, this);
                 }
 

@@ -468,6 +468,7 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.Transshipment1ATD = shipment.Transshipment1ATD;
                 myDataProvider.Transshipment1ATA = shipment.Transshipment1ATA;
                 myDataProvider.AWBCommodityItemNumber = shipment.AWBCommodityItemNumber;
+                myDataProvider.SCI = shipment.SCI;
 
                 #region MasterAMSBL
                 var aMSBL_FromHouse = "";

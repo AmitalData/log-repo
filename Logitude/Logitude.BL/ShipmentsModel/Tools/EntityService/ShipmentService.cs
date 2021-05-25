@@ -528,6 +528,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     GetForeignFields();
                     BuildActivityLog();
                     BuildImportersQueue();
+                    UpdatePayablesLinesVatAmounts();
                     #endregion
                 }
 
@@ -568,8 +569,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.RefreshFollowUpDate();
                 this.UpdateExtendedTasksDueDate();
 
+
                 scope.Complete();
                 #endregion
+            }
+        }
+        private void UpdatePayablesLinesVatAmounts()
+        {
+            if(initializer.ShipmentPayablesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.None).Any()) {
+                var allPayablesIds = (from d in entityPM.ShipmentPayables select d.Id).ToList();
+                var allPayables = shipmentPayableRepository.GetShipmentPayablesFromIdList(allPayablesIds, tenant);
+                PayablesLinesVatAmounts payablesLinesVatAmounts = new PayablesLinesVatAmounts(allPayables, initializer.Tenant, shipmentPayableRepository);
+                payablesLinesVatAmounts.UpdateAllPayablesVatAmount();
             }
         }
 

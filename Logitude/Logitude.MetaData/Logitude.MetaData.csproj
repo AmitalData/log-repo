@@ -48,11 +48,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>All Models Metadata Only Generator.tt</DependentUpon>
     </Compile>
-    <Compile Include="AutoGenerators\CommonClassesGenerator1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CommonClassesGenerator.tt</DependentUpon>
-    </Compile>
     <Compile Include="AutoGenerators\DataContractsClassesGenerator1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -190,8 +185,6 @@
     <None Include="DBOthers\QuoteModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateQuotes.dxml" />
     <None Include="DBOthers\QuoteModel\Triggers\Trigger_AutomaticLastUpdateDateQuoteComputedFields.dxml" />
     <None Include="DBOthers\QuoteModel\Triggers\Trigger_AutomaticLastUpdateDateQuotes.dxml" />
-    <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdateShipmentPayablesVatAmounts.dxml" />
-    <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdateShipmentReceivablesVatAmounts.dxml" />
     <None Include="DBScripts\CommonModel\202105161305_AddCustomerProductItemEventTypesToTenants.sxml" />
     <None Include="DBScripts\CommonModel\202103161606_AddNewUOMPercentOForeignChargesLocalAmounts.sxml" />
     <None Include="DBScripts\CommonModel\202104161424_UpdateTenantRatios.sxml" />

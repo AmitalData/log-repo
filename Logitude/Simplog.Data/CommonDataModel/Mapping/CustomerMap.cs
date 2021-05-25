@@ -103,6 +103,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.IsPrivateLabelCustomer).HasColumnName("IsPrivateLabelCustomer");
             this.Property(t => t.IsCreditLimitEnabled).HasColumnName("IsCreditLimitEnabled");
             this.Property(t => t.CreditLimitAmount).HasColumnName("CreditLimitAmount");
+            this.Property(t => t.InsuredcreditLimit).HasColumnName("InsuredcreditLimit");
             this.Property(t => t.CreditLimitOpenBalance).HasColumnName("CreditLimitOpenBalance");
             this.Property(t => t.CreditLimitWarningPercentage).HasColumnName("CreditLimitWarningPercentage");
             this.Property(t => t.BlockNewInvoiceCreation).HasColumnName("BlockNewInvoiceCreation");

@@ -335,6 +335,7 @@
     <TypeScriptCompile Include="Login\PrivateLabels\DataContracts\PrivateLabelsImage.ts" />
     <TypeScriptCompile Include="Login\PrivateLabels\DataContracts\ServiceResponse.ts" />
     <TypeScriptCompile Include="Login\PrivateLabels\Services\BrandingDataService.ts" />
+    <TypeScriptCompile Include="Login\PrivateLabels\Services\PrivateLabelsService.ts" />
     <TypeScriptCompile Include="Login\PrivateLabels\Services\PrivateLabelsBrandingDataService.ts" />
     <TypeScriptCompile Include="Login\LoginService.ts" />
     <TypeScriptCompile Include="Login\LogitudeLoginModuleAOT.ts" />

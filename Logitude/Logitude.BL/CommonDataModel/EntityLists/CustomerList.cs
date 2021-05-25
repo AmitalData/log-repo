@@ -357,6 +357,9 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public double? CreditLimitAmount { get; set; }
 
         [DataMember]
+        public double? InsuredcreditLimit { get; set; }
+
+        [DataMember]
         public double? CreditLimitOpenBalance { get; set; }
 
         [DataMember]
