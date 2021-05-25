@@ -292,6 +292,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public DateTime? FollowupDate  { get; set; }
        [DataMember]
        public string FollowupNotes  { get; set; }
+       [DataMember]
+       public double? InsuredCreditLimit  { get; set; }
    }
 
 }
