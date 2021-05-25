@@ -65,7 +65,6 @@ export class ShipmentDetailsComponent implements AfterViewInit
             this.BuildSliderCards();
 
         }, 200);
-        this.InitRoutes();
         this.CreatePartnerCardsFromShipmentPM();
 
     }
@@ -169,8 +168,11 @@ export class ShipmentDetailsComponent implements AfterViewInit
         {
             if (result) {
                 this.ShipmentPM = result;
+                console.log("ShipmentPM", this.ShipmentPM);
+
                 this.GetPartnersAddresses();
                 this.FillCustomsBrokerReferenceFromShipmentPM();
+                this.InitRoutes();
             }
         });
     }
@@ -669,39 +671,124 @@ export class ShipmentDetailsComponent implements AfterViewInit
 
     InitRoutes()
     {
-        var step1 = new RoutingStep();
-        step1.FromPortLabel = "US-BOS";
-        step1.ToPortLabel = "US-NYC";
-        step1.Description = "Via lorem ipsum co.";
-        step1.TransportModeCode = "A";
-        step1.Directions = [
-            new RouteDirection(new Date(), "ATA", "in"),
-            new RouteDirection(new Date(), "ETD", "out"),
-        ];
+        this.SetShipmentPickUpsRoutes();
+        this.SetWarehouseLegRoutes();
+        this.SetMainCarriageLegsRoutes();
+        this.SetShipmentDeliveriesRoutes();
+    }
+
+    private SetShipmentPickUpsRoutes() {
+        for (let i = 0; i < this.ShipmentPM.ShipmentPickUps.length; i++) {
+            var step = new RoutingStep();
+            step.TransportModeCode = 'I';
+            step.Description = this.ShipmentPM.ShipmentPickUps[i].Notes == null ? "No Notes For This Milstone" : this.ShipmentPM.ShipmentPickUps[i].Notes;
+
+            if (this.ShipmentPM.ShipmentPickUps[i].PickUpDeliveryFromTypeCode == "PORT") {
+                step.FromPortLabel = this.ShipmentPM.ShipmentPickUps[i].FromPortCode;
+            }
+            else {
+                step.FromPortLabel = this.ShipmentPM.ShipmentPickUps[i].FromLocation.toString().split("\r")[0];
+            }
+
+            if (this.ShipmentPM.ShipmentPickUps[i].PickUpDeliveryToTypeCode == "PORT") {
+                step.ToPortLabel = this.ShipmentPM.ShipmentPickUps[i].ToPortCode;
+            }
+            else {
+                step.ToPortLabel = this.ShipmentPM.ShipmentPickUps[i].ToLocation.toString().split("\r")[0];
+            }
+
+            step.Directions = this.BuildRouteDirections(this.ShipmentPM.ShipmentPickUps[i]);
+
+            this.ShipmentRouteSteps.push(step);
+        }
+    }
+
+    private SetWarehouseLegRoutes() {
+        var step = new RoutingStep();
+        step.TransportModeCode = 'I';
+        step.Description = this.ShipmentPM.WarehouseLegRemarks == null ? "No Notes For This Milstone" : this.ShipmentPM.WarehouseLegRemarks;
+        step.FromPortLabel = this.ShipmentPM.WarehouseLegTerminalName;
+
+        if (this.ShipmentPM.WarehouseLegExpectedEntryDate != null) {
+            step.Directions.push(new RouteDirection(this.ShipmentPM.WarehouseLegExpectedEntryDate, "ETD", "out"))
+        }
+
+        if (this.ShipmentPM.WarehouseLegExpectedReleaseDate != null) {
+            step.Directions.push(new RouteDirection(this.ShipmentPM.WarehouseLegExpectedReleaseDate, "ETA", "in"))
+        }
+
+        if (this.ShipmentPM.WarehouseLegActualEntryDate != null) {
+            step.Directions.push(new RouteDirection(this.ShipmentPM.WarehouseLegActualEntryDate, "ATD", "out"))
+        }
+
+        if (this.ShipmentPM.WarehouseLegActualReleaseDate != null) {
+            step.Directions.push(new RouteDirection(this.ShipmentPM.WarehouseLegActualReleaseDate, "ATA", "in"))
+        }
+
+        this.ShipmentRouteSteps.push(step);
+    }
+
+    private SetMainCarriageLegsRoutes() {
+        for (let i = 0; i < this.ShipmentPM.MainCarriageLegs.length; i++) {
+            var step = new RoutingStep();
+            step.TransportModeCode = this.ShipmentPM.TransportModeId;
+            step.Description = "No Notes For This Milstone"
+            step.FromPortLabel = this.ShipmentPM.MainCarriageFromPortCode;
+            step.ToPortLabel = this.ShipmentPM.MainCarriageToPortCode;
+
+            step.Directions = this.BuildRouteDirections(this.ShipmentPM.MainCarriageLegs[i]);
+
+            this.ShipmentRouteSteps.push(step);
+        }
+    }
+
+    private SetShipmentDeliveriesRoutes() {
+        for (let i = 0; i < this.ShipmentPM.ShipmentDeliveries.length; i++) {
+            var step = new RoutingStep();
+            step.TransportModeCode = 'I';
+            step.Description = this.ShipmentPM.ShipmentDeliveries[i].Notes == null ? "No Notes For This Milstone" : this.ShipmentPM.ShipmentDeliveries[i].Notes;
+            step.FromPortLabel = this.ShipmentPM.ShipmentDeliveries[i].FromPortCode;
+            step.ToPortLabel = this.ShipmentPM.ShipmentDeliveries[i].ToPortCode;
+
+            step.Directions = this.BuildRouteDirections(this.ShipmentPM.ShipmentDeliveries[i]);
+
+            this.ShipmentRouteSteps.push(step);
+        }
+    }
+     
+    BuildRouteDirections(shipmentRoute) {
+        var directions = [];
+
+        var direction = this.BuildExportRouteDirection(shipmentRoute, "ETD");
+        if (direction)
+            directions.push(direction);
+
+        var direction = this.BuildImportRouteDirection(shipmentRoute, "ETA");
+        if (direction)
+            directions.push(direction);
+
+        var direction = this.BuildExportRouteDirection(shipmentRoute, "ATD");
+        if (direction)
+            directions.push(direction);
+
+        var direction = this.BuildImportRouteDirection(shipmentRoute, "ATA");
+        if (direction)
+            directions.push(direction);
 
 
-        var step2 = new RoutingStep();
-        step2.FromPortLabel = "US-QAL";
-        step2.ToPortLabel = "US-NYC";
-        step2.Description = "Via lorem ipsum co.";
-        step2.TransportModeCode = "I";
-        step2.Directions = [
-            new RouteDirection(new Date(), "ATA", "in"),
-            new RouteDirection(new Date(), "ETD", "out"),
-        ];
+        return directions;
+    }
 
-        var step3 = new RoutingStep();
-        step3.FromPortLabel = "US-QAL";
-        step3.ToPortLabel = "US-NAB";
-        step3.Description = "Rafedia main st.";
-        step3.TransportModeCode = "O";
-        step3.IsActive = true;
-        step3.Directions = [
-            new RouteDirection(new Date(), "ATA", "in"),
-            new RouteDirection(new Date(), "ATD", "in"),
-        ];
+    BuildExportRouteDirection(shipmentDelivary, fieldName: string) {
+        if (shipmentDelivary[fieldName] != null) {
+            return new RouteDirection(shipmentDelivary[fieldName], fieldName, "out");
+        }
+    }
 
-        this.ShipmentRouteSteps = [step1, step2, step3];
+    BuildImportRouteDirection(shipmentDelivary, fieldName: string) {
+        if (shipmentDelivary[fieldName] != null) {
+            return new RouteDirection(shipmentDelivary[fieldName], fieldName, "in");
+        }
     }
 
     DownloadDocument(document: string) {

@@ -376,6 +376,7 @@ h1 {
     }
 .routing-card {
     width: calc(100% - 50px);
+    min-height: 80px;
     border-radius: 5px;
     padding: 5px;
     background: #fff;
