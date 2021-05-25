@@ -61,23 +61,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         }).FirstOrDefault();
             return termsofUses;
         }
-
-        public TermsofUsePM GetSinglePMByDocumentId(int id)
-        {
-            TermsofUsePM termsofUses = (from a in repository.context.TermsofUses
-                                        where a.Id == id
-                                        select new TermsofUsePM()
-                                        {
-                                            Id = a.Id,
-                                            Date = a.Date,
-                                            VersionNumber = a.VersionNumber,
-                                            Tenant = a.Tenant,
-                                            VersionDocumentId = a.VersionDocumentId,
-                                        }).FirstOrDefault();
-            return termsofUses;
-        }
-
-
+  
         public TermsofUsePM GetSinglePMByVersion(int version)
         {
             TermsofUsePM termsofUses = (from a in repository.context.TermsofUses
@@ -147,7 +131,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return termsofUses;
         }
 
-        public TermsofUsePM GetPrivateLabelTermsOfUse(int tenant)
+        public TermsofUsePM GetTermOfUseByTenant(int tenant)
         { 
             TermsofUsePM termsofUses = (from a in repository.context.TermsofUses.OrderByDescending(d => d.VersionNumber)
                                         where a.Tenant == tenant

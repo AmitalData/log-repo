@@ -109,8 +109,7 @@ export class TermsofUseService {
             return pmresponse;
         }), catchError(ServiceHelper.HandleServiceError));
     }
-
-    GetTenantTermsofUse(tenant: number) {
+    GetTermOfUseByTenant(tenant: number) {
         var url = this._apiUrl + '?tenant=' + tenant;
 
         return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {

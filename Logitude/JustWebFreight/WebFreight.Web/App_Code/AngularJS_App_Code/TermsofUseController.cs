@@ -37,7 +37,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                     TenantPM tenantPM = TenantQuery.GetSingleTenantPM(tenant, false);
                     TermsofUsePM termofuse = new TermsofUsePM();
 
-                    termofuse = termsofUseQuery.GetPrivateLabelTermsOfUse(tenant);
+                    termofuse = termsofUseQuery.GetTermOfUseByTenant(tenant);
                     if (!string.IsNullOrEmpty(tenantPM.PrivateLabelId) && termofuse == null)
                     {
                         throw new Exception("You are unable to login without approving the terms of use, please contact your administrator!");
@@ -99,7 +99,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-                TermsofUseQuery termsofUseQuery = new TermsofUseQuery(tenant);  
+                TermsofUseQuery termsofUseQuery = new TermsofUseQuery(authToken);  
                 List<TermsofUsePM> TermsofUsePMLists = termsofUseQuery.GetTermsofUseByTenant(tenant).ToList();
 
 

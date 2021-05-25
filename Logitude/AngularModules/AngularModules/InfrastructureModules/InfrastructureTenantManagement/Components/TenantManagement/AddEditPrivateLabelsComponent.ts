@@ -155,6 +155,11 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
         termsofUsePM.Tenant = this.ParentTenant;
         termsofUsePM.VersionDocumentName = this.FileName;
 
+        this.InsertTermsOfUse(termsofUsePM);
+         
+    }
+
+    private InsertTermsOfUse(termsofUsePM: TermsofUsePM) {
         this.termsofUseService.insert(termsofUsePM).subscribe((res: any) => {
 
             var response: ServiceResponse = res;
@@ -162,11 +167,10 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
             if (!response.HasError) {
                 var myResult = response.Result;
                 if (myResult) {
-                    this.TermsofUsePMLists.push(new TermsofUsePMViewModel(termsofUsePM)); 
+                    this.TermsofUsePMLists.push(new TermsofUsePMViewModel(termsofUsePM));
                 }
             }
         });
-         
     }
 
     public ShowMessage(message: string) {
@@ -193,8 +197,8 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
 
     }
 
-    GetTermsOfUse(PertnerTenant) { 
-            this.termsofUseService.GetTenantTermsofUse(PertnerTenant).subscribe((res: any) => {
+    GetTermsOfUse(PartnerTenant) { 
+        this.termsofUseService.GetTermOfUseByTenant(PartnerTenant).subscribe((res: any) => {
 
                 var serviceResponse: ServiceResponse = res;
                 if (!serviceResponse.HasError) {
@@ -219,13 +223,19 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
             if (!serviceResponse.HasError) {
                 var result = serviceResponse.Result;
                 if (result) {
-                    this.hybridPartner = result 
+                    this.hybridPartner = result
+                }
+            }
+            else {
+                if (serviceResponse.ErrorsArray && serviceResponse.ErrorsArray.length > 0) {
+                    var messageWindow: MessageWindow = new MessageWindow();
+                    messageWindow.Show(serviceResponse.ErrorsArray[0]); 
                 }  
-            } 
+            }
 
         });
 
-        this.termsofUseService.GetTenantTermsofUse(this.hybridPartner.PartnerTenant).subscribe((res: any) => {
+        this.termsofUseService.GetTermOfUseByTenant(this.hybridPartner.PartnerTenant).subscribe((res: any) => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
