@@ -1,12 +1,12 @@
 ﻿<Script DBType="Main">
-	<Sql Version="1">
+	<Sql Version="2">
 		<![CDATA[
 
       ALTER TABLE TermsofUseSignatures
 DROP CONSTRAINT  [FK_TermsofUseSignatureTermsofUse];
 ALTER TABLE TermsofUses
 DROP CONSTRAINT  [PK_TermsofUses];
-Alter TABLE [dbo].[TermsofUses] drop column [Version]
+Alter TABLE [dbo].[TermsofUses] drop column [Id]
 Alter TABLE [dbo].[TermsofUses]
 add  [id] [int] PRIMARY KEY IDENTITY(1,1) NOT NULL
 ALTER TABLE [dbo].[TermsofUseSignatures]  WITH CHECK ADD  CONSTRAINT [FK_TermsofUseSignatures_TermsofUses_TermsofUseId] FOREIGN KEY([TermsofUseId])
