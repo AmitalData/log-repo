@@ -525,28 +525,27 @@
             <div class="hide-mobile" style="clear: both;"></div>
 
             <div class="mobile-only">
-                <div class="card document-mobile-card">
+                <div class="card document-mobile-card" *ngFor="let item of DocumentsFilings">
                     <div class="details-section">
                         <div class="row" style="margin-bottom: 5px;">
-                            <div class="col-50 card-title">Text</div>
-                            <div class="col-40 card-title">Text</div>
+                            <div class="col-50 card-title">type</div>
+                            <div class="col-40 card-title">customs ref</div>
                             <div class="col-10 text-end">
                                 <a href="javascript:;" style="padding: 10px 3px 0px 13px;"><img src="./assets/images/icons/more.png" alt=""></a>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-50">
-                                supplier invoice
+                                {{item.DocumentTypeName}}
                                 <br>
-                                <span style="color: gray;font-size: 13px;">17/08/2020</span>
+                                <span style="color: gray;font-size: 13px;">{{item.CreateDate | date:'d-MMM-yyyy, H:mm'}}</span>
 
                             </div>
-                            <div class="col-50">1547231</div>
+                            <div class="col-50">{{item.CustomReference}}</div>
                         </div>
                     </div>
 
                     <div class="notes-section">
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ea provident
                     </div>
                 </div>
             </div>
