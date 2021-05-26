@@ -782,11 +782,11 @@ getHeaderCurrency(CurrencyId:string){
         }
     }
 
-    EditJournalLineNotes(line: any) {
+    EditJournalLine(line: any) {
         var logWindow = new LogitudeWindow();
         logWindow.Width = 450;
-        logWindow.Height = 200;
-        logWindow.Title = TextCodeTranslator.Translate("Journal.M.EditLineNote");
+        logWindow.Height = 350;
+        logWindow.Title = TextCodeTranslator.Translate("Journal.M.EditJournalLine");
         logWindow.WindowArgs = { journalLine: line };
         logWindow.ComponentLoaded.subscribe(comp => {
             logWindow.WindowClosed.subscribe(s => {
@@ -795,7 +795,7 @@ getHeaderCurrency(CurrencyId:string){
                 }
             });
         });
-        logWindow.Show('./Accounting/Components/EditTabs/Journal//UpdateJournalLineNoteComponent');
+        logWindow.Show('./Accounting/Components/EditTabs/Journal//UpdateJournalLineComponent');
     }
 }
 

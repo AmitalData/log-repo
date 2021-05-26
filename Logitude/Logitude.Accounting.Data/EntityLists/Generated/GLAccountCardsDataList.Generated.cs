@@ -32,6 +32,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string VatNumber  { get; set; }
        [DataMember]
        public decimal? TotalOpenShipments  { get; set; }
+       [DataMember]
+       public double? InsuredcreditLimit  { get; set; }
    }
 
 }

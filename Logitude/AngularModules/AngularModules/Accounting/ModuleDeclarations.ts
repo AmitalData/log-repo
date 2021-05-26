@@ -137,7 +137,7 @@ import { CargoTrackingIncrementalStatListTemplate } from './Components/ListTempl
 import { InterestReportEditCalculationDateComponent } from './Components/EditTabs/InterestReport/GeneralTab/InterestReportEditCalculationDate/InterestReportEditCalculationDateComponent';
 import { UserDefinedReportGeneralTabComponent } from './Components/EditTabs/UserDefinedReport/UserDefinedReportGeneralTabComponent';
 import { AccountingMainTesterComponent } from './Components/Maintenance/Tester/AccountingMainTesterComponent';
-import { UpdateJournalLineNoteComponent } from './Components/EditTabs/Journal/UpdateJournalLineNoteComponent';
+import { UpdateJournalLineComponent } from './Components/EditTabs/Journal/UpdateJournalLineComponent';
 
 
 //import { CashBookGeneralTabComponent } from './Components/EditTabs/CashBook/CashBookGeneralTabComponent';
@@ -202,7 +202,7 @@ export const Components =
         GLAccountTransactionsTabComponent,
         ManageReconciliationsTabComponent,
         JournalDetailsTabComponent,
-        UpdateJournalLineNoteComponent,
+        UpdateJournalLineComponent,
         CashBookDetailsTabComponent,
         CashBookManageDepoTabComponent,
         ChartOfAccountGeneralTabComponent,
@@ -362,7 +362,7 @@ export class ModuleDeclarations {
             case "GLAccountTransactionsTabComponent": { myResult = GLAccountTransactionsTabComponent; break; }
             case "ManageReconciliationsTabComponent": { myResult = ManageReconciliationsTabComponent; break; }
             case "JournalDetailsTabComponent": { myResult = JournalDetailsTabComponent; break; }
-            case "UpdateJournalLineNoteComponent": { myResult = UpdateJournalLineNoteComponent; break; }
+            case "UpdateJournalLineComponent": { myResult = UpdateJournalLineComponent; break; }
             case "CashBookDetailsTabComponent": { myResult = CashBookDetailsTabComponent; break; }
             case "CashBookManageDepoTabComponent": { myResult = CashBookManageDepoTabComponent; break; }
             case "ChartOfAccountGeneralTabComponent": { myResult = ChartOfAccountGeneralTabComponent; break; }
