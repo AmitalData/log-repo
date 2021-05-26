@@ -28,9 +28,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             ContainerPM result = null;
             Container entityPoco = repository.GetSingleContainer(id, tenant);
-            CardQuery cardQuery = new CardQuery(tenant);
-            CardPM carrier = cardQuery.GetSinglePM(entityPoco.MainCarriageCarrierId, tenant);
-            CardPM vessel = cardQuery.GetSinglePM(entityPoco.MainCarriageVesselId, tenant);
             if (entityPoco != null)
             {
                 result = new ContainerPM()
@@ -53,8 +50,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     SearchFields = entityPoco.SearchFields,
                     DischargeDate = entityPoco.DischargeDate,
                     Master = entityPoco.Master,
-                    CarrierName = carrier != null ? carrier.EnglishName : "",
-                    VesselName = vessel != null ? vessel.EnglishName : "",
+                    CarrierName = entityPoco.CarrierCard != null ? entityPoco.CarrierCard.EnglishName : "",
+                    VesselName = entityPoco.VesselCard != null ? entityPoco.VesselCard.EnglishName : "",
                 };
             }
 
@@ -90,7 +87,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     }).ToList();
         }
 
-
         public IQueryable<ContainerList> GetIQueryableEntityList(IQueryable<Container> iQueryable)
         {
             IQueryable<ContainerList> result = from entity in iQueryable.Include("CarrierCard").Include("VesselCard")
@@ -120,5 +116,35 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return result;
         }
 
+        public ContainerPM GetContainerByContainerNumberAndShipmentPackagesId(string containerNumber, string shipmentPackageId, int tenant)
+        {
+            ContainerPM containerPM = null;
+            Container container = repository.GetContainerByContainerNumberAndShipmentPackagesId(containerNumber, shipmentPackageId, tenant);
+            if (container != null)
+            {
+                containerPM = new ContainerPM()
+                {
+                    Id = container.Id,
+                    Tenant = container.Tenant,
+                    CreateDate = container.CreateDate,
+                    CreatedByUserId = container.CreatedByUserId,
+                    UpdateDate = container.UpdateDate,
+                    UpdatedByUserId = container.UpdatedByUserId,
+                    MainCarriageCarrierId = container.MainCarriageCarrierId,
+                    MainCarriageCarrierNumber = container.MainCarriageCarrierNumber,
+                    MainCarriageATA = container.MainCarriageATA,
+                    MainCarriageATD = container.MainCarriageATD,
+                    MainCarriageETA = container.MainCarriageETA,
+                    MainCarriageETD = container.MainCarriageETD,
+                    ContainerNumber = container.ContainerNumber,
+                    MainCarriageVesselId = container.MainCarriageVesselId,
+                    ShipmentPackagesId = container.ShipmentPackagesId,
+                    SearchFields = container.SearchFields,
+                    DischargeDate = container.DischargeDate,
+                    Master = container.Master
+                };
+            }
+            return containerPM;
+        }
     }
 }

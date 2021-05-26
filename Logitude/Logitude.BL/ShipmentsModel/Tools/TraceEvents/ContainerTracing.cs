@@ -11,14 +11,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
     {
         public static void Trace(ContainerPM entityPM, Container container, bool isNewEntity)
         {
-            ContactPM loggedContact = new ContactQuery(entityPM.Tenant).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), entityPM.Tenant);
             if (isNewEntity)
             {
                 EventTracer.CreateTraceEvent(new EventTracerArgs()
                 {
                     Tenant = entityPM.Tenant,
                     EventTypeCode = "CREV",
-                    UserId = loggedContact.Id,
+                    UserId = entityPM.CreatedByUserId,
                     EntityId = entityPM.Id,
                     ObjectTableName = "Container",
                 });
@@ -28,7 +27,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 {
                     Tenant = entityPM.Tenant,
                     EventTypeCode = "UPEV",
-                    UserId = loggedContact.Id,
+                    UserId = entityPM.UpdatedByUserId,
                     EntityId = entityPM.Id,
                     ObjectTableName = "Container",
                 });

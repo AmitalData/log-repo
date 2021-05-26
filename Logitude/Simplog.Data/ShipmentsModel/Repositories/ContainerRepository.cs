@@ -3,15 +3,14 @@ using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Simplog.Data.ShipmentsModel.Repositories
 {
     public class ContainerRepository : IRepository<Container>
     {
 
-        IShipmentsContext shipmentContext;
+        public IShipmentsContext shipmentContext;
         public ContainerRepository(int tenant)
         {
             shipmentContext = ShipmentsContext.GetContext(tenant);
@@ -39,9 +38,11 @@ namespace Simplog.Data.ShipmentsModel.Repositories
 
         public Container GetSingleContainer(string id, int tenant)
         {
-            return (from container in context.Containers where container.Id == id && container.Tenant == tenant select container).FirstOrDefault();
+            return (from container in context.Containers.Include("CarrierCard").Include("VesselCard")
+                    where container.Id == id && container.Tenant == tenant
+                    select container).FirstOrDefault();
         }
-        
+
         public IQueryable<Container> GetContainers(int tenant)
         {
             return context.Containers;
@@ -81,5 +82,11 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             throw new NotImplementedException();
         }
 
+        public Container GetContainerByContainerNumberAndShipmentPackagesId(string containerNumber, string shipmentPackageId, int tenant)
+        {
+            return (from container in context.Containers
+                    where container.ContainerNumber == containerNumber && container.Tenant == tenant && container.ShipmentPackagesId == shipmentPackageId
+                    select container).FirstOrDefault();
+        }
     }
 }
