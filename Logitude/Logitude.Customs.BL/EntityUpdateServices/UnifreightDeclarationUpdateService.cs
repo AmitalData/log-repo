@@ -138,11 +138,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
 
                 //if ((!Environment.MachineName.Equals("itzik-7-new", StringComparison.OrdinalIgnoreCase)) && (!Environment.MachineName.Equals("yuval-7-new", StringComparison.OrdinalIgnoreCase))) return;
-                if (String.IsNullOrWhiteSpace(_DirtyDeclarationPM.CustomFileNo) && !(_DirtyDeclarationPM.IsCancelled == true && !String.IsNullOrWhiteSpace(_DBOccDeclarationPM.CustomFileNo)))
+                if (_DirtyDeclarationPM.IsCancelled == true)
                 {
-                    logData = $"_DirtyDeclarationPM.CustomFileNo={_DirtyDeclarationPM.CustomFileNo},_DirtyDeclarationPM.IsCancelled={_DirtyDeclarationPM.IsCancelled}"; 
+                    logData = $"_DirtyDeclarationPM.CustomFileNo={_DirtyDeclarationPM.CustomFileNo},_DBOccDeclarationPM.CustomFileNo={_DBOccDeclarationPM.CustomFileNo},_DirtyDeclarationPM.IsCancelled={_DirtyDeclarationPM.IsCancelled}"; 
                     LogitudeSettings.HandleLogMe(logData, false, "UpdateUnifreight_" + _DirtyDeclarationPM.Id, stopLogAt);
-                    return;
+                    //return;
                 }
                 //<--- Yuval Chalup 19.11.2015 TASK-17450
                 if (_DirtyDeclarationPM.IsConvertedDeclaration)
