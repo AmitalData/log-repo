@@ -609,7 +609,7 @@ namespace CommunicationWorkerRole
                         HtmlTemplate.Append("<br /><br />");
                         HtmlTemplate.Append("Best Regards,");
                         HtmlTemplate.Append("<br />");
-                        HtmlTemplate.Append("<div style='text-align:left;font-weight:bold;color:#1F497D'>The Logitude Team</div>");
+                        HtmlTemplate.Append("<div style='text-align:left;font-weight:bold;color:#4472C4'>The Logitude Team</div>");
                         HtmlTemplate.Append("<a href='http://www.Logitudeworld.com'>www.Logitudeworld.com</a>");
                         HtmlTemplate.Append("<br />");
                         HtmlTemplate.Append("<img width='258' height='101' src='cid:logo0' />");
@@ -845,7 +845,7 @@ namespace CommunicationWorkerRole
             HtmlTemplate.Append("<br /><br />");
             HtmlTemplate.Append("Best Regards,");
             HtmlTemplate.Append("<br />");
-            HtmlTemplate.Append("<div style='text-align:left;font-weight:bold;color:#1F497D'>The Logitude Team</div>");
+            HtmlTemplate.Append("<div style='text-align:left;font-weight:bold;color:#4472C4'>The Logitude Team</div>");
             HtmlTemplate.Append("<a href='http://www.Logitudeworld.com'>www.Logitudeworld.com</a>");
             HtmlTemplate.Append("<br />");
             HtmlTemplate.Append("<img width='258' height='101' src='cid:logo0' />");
