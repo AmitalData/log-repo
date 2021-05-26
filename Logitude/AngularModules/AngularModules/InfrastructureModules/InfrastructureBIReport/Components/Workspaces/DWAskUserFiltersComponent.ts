@@ -52,7 +52,7 @@ export class DWAskUserFiltersComponent extends BaseComponent implements OnInit {
         return this.selectedFiltersDataSource;
     }
     set SelectedFiltersDataSource(value: DWObjectFieldsDetails[]) {
-
+        //
         this.selectedFiltersDataSource = value;
         this.SelectedDynamicFiltersDataSource = this.selectedFiltersDataSource.filter(a => a.FilterType == "Ask User");
         this.SelectedFixedFiltersDataSource = this.selectedFiltersDataSource.filter(a => a.FilterType == "Fixed Filter");
