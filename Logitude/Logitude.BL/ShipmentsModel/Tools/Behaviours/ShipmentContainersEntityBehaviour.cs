@@ -22,7 +22,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
     {
         private ShipmentServiceInitializer initializer;
         private IShipmentsContext shipmentsContext;
-        private ContainerService containerService; 
+        private ContainerService containerService;
         public ShipmentContainersEntityBehaviour(IServiceInitializer initializer)
         {
             this.initializer = (ShipmentServiceInitializer)initializer;
@@ -37,7 +37,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
         private void HandelContainers()
         {
-            if (this.ValidHandelContainers()) {
+            if (this.ValidHandelContainers())
+            {
                 foreach (ShipmentPackagePM itemPM in initializer.ShipmentPackagesChangeSet)
                 {
                     switch (itemPM.ChangeSetOp)
@@ -85,7 +86,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         {
             ContainerPM containerPM = new ContainerPM
             {
-                Id = IdCounter.GetNumber("Container", this.initializer.Tenant).ToString(),
                 Tenant = this.initializer.Tenant,
                 CreateDate = TenantServerConfigration.GetCurrentDateTime(this.initializer.Tenant),
                 CreatedByUserId = this.initializer.LoggedContactId,
@@ -105,14 +105,28 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             containerService.Create(containerPM);
         }
 
-        private void UpdateContainer(ShipmentPackagePM itemPM)
+        private void UpdateContainer(ShipmentPackagePM shipmentPackage)
         {
-            throw new NotImplementedException();
+            bool isContainerExists = CheckIfContainerExists(shipmentPackage);
+            if (isContainerExists == true)
+            {
+
+            }
         }
 
-        private void DeleteContainer(ShipmentPackagePM itemPM)
+        private void DeleteContainer(ShipmentPackagePM shipmentPackage)
         {
-            throw new NotImplementedException();
+            bool isContainerExists = CheckIfContainerExists(shipmentPackage);
+            if (isContainerExists == true)
+            {
+
+            }
+        }
+
+        private bool CheckIfContainerExists(ShipmentPackagePM shipmentPackage)
+        {
+            return shipmentsContext.Containers.Any(container => container.ContainerNumber == shipmentPackage.ContainerNumber
+                                                 && container.Tenant == shipmentPackage.Tenant && container.ShipmentPackagesId == shipmentPackage.Id);
         }
     }
 }

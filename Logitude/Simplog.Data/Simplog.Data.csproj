@@ -681,6 +681,7 @@
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentProductItem.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentStoragePricing.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentSubType.cs" />
+    <Compile Include="ShipmentsModel\Mapping\ContainerMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\CustomsTransferHeaderMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\CustomsTransferLineMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\CustomsTransferTypeMap.cs" />

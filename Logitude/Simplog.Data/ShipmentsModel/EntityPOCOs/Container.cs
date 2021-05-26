@@ -21,6 +21,9 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string SearchFields { get; set; }
         public string ContainerNumber { get; set; }
         public string ShipmentPackagesId { get; set; }
+        [ForeignKey("ShipmentPackagesId")]
+        public virtual ShipmentPackage ShipmentPackage { get; set; }
+
         public string MainCarriageCarrierId { get; set; }
         [ForeignKey("MainCarriageCarrierId")]
         public virtual Card CarrierCard { get; set; }
