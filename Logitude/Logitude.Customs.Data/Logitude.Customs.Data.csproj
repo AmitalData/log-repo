@@ -90,9 +90,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Logitude.BL\CommonDataModel\EntityPMs\ReportExecutionLogPM.cs">
-      <Link>ReportExecutionLogPM.cs</Link>
-    </Compile>
     <Compile Include="CustomContext.SharedTables.cs" />
     <Compile Include="CustomContextExt.cs" />
     <Compile Include="CustomFilters\ClientCustomFilters.cs" />
