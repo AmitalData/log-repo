@@ -164,5 +164,6 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public int LastWeekCreatedTariffs { get; set; }
         public int LastMonthCreatedTariffs { get; set; }
         public int ScheduledTasksLimitPerReport { get; set; }
+        public bool IsHybrid { get; set; }
     }
 }
