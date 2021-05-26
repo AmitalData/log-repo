@@ -743,6 +743,13 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         }
     }
 
+    get IsHybridTenant() { return this.EntityPM.IsHybridTenant; }
+    set IsHybridTenant(newValue: boolean) {
+        if (this.EntityPM.IsHybridTenant != newValue) {
+            this.EntityPM.IsHybridTenant = newValue;
+        }
+    }
+
     get DocumentShareAsDefault() { return this.EntityPM.DocumentShareAsDefault; }
     set DocumentShareAsDefault(newValue: boolean) {
         if (this.EntityPM.DocumentShareAsDefault != newValue) {
