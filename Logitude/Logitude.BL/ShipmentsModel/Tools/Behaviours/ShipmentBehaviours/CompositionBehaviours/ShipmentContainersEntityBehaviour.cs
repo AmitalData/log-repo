@@ -76,28 +76,31 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
         private void HandelShipmentPackagesChangeSets()
         {
-            foreach (ShipmentPackagePM itemPM in initializer.ShipmentPackagesChangeSet)
+            if (initializer.ShipmentPackagesChangeSet != null)
             {
-                switch (itemPM.ChangeSetOp)
+                foreach (ShipmentPackagePM itemPM in initializer.ShipmentPackagesChangeSet)
                 {
-                    case ChangeSetOperation.Insert:
-                        {
-                            this.CreateContainer(itemPM);
-                            break;
-                        }
+                    switch (itemPM.ChangeSetOp)
+                    {
+                        case ChangeSetOperation.Insert:
+                            {
+                                this.CreateContainer(itemPM);
+                                break;
+                            }
 
-                    case ChangeSetOperation.Update:
-                        {
-                            this.UpdateContainer(itemPM);
-                            break;
-                        }
+                        case ChangeSetOperation.Update:
+                            {
+                                this.UpdateContainer(itemPM);
+                                break;
+                            }
 
-                    case ChangeSetOperation.Delete:
-                        {
-                            this.DeleteContainer(itemPM);
-                            break;
-                        }
-                    default: { break; }
+                        case ChangeSetOperation.Delete:
+                            {
+                                this.DeleteContainer(itemPM);
+                                break;
+                            }
+                        default: { break; }
+                    }
                 }
             }
         }
