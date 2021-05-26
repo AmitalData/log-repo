@@ -268,17 +268,6 @@
                                                                         </td>
                                                                     </tr>
 
-                                                                    <tr class="FormFieldRow">
-                                                                        <td>
-                                                                            <LogLabel [ObjectFieldName]="'IsHybrid'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                        </td>
-
-                                                                        <td>
-                                                                            <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsHybrid'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                                        </td>
-                                                                    </tr>
-
-
                                                                     <tr *ngIf="tenantLoginPolicyPM && IsLogBoxTenant" class="FormFieldRow">
                                                                         <td>
                                                                             <LogLabel [Text]="'Keep User Logged In'" [ObjectFieldName]="'KeepUserLoggedIn'" [ObjectTableName]="'TenantLoginPolicy'" [DataContext]="DataContext"></LogLabel>
@@ -286,6 +275,17 @@
 
                                                                         <td>
                                                                             <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'KeepUserLoggedIn'" [ObjectTableName]="'TenantLoginPolicy'" [DataContext]="DataContext"></LogCheckBox>
+                                                                        </td>
+                                                                    </tr>
+
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'IsHybrid'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsHybrid'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                                                         </td>
                                                                     </tr>
 
