@@ -461,8 +461,8 @@
                     <div class="routing-card">
                         <div class="route-card-body">
                             <div *ngIf="step.FromPortLabel != null || step.ToPortLabel != null" class="route-label">
-                                <div class="mobile-font-18"> {{step.FromPortLabel}} </div>
-                                <div *ngIf="step.ToPortLabel != null" >> {{step.ToPortLabel}} </div>
+                                <div class="mobile-font-18"  [attr.title]="step.ToolTipFromPortLabel"> {{step.FromPortLabel}} </div>
+                                <div *ngIf="step.ToPortLabel != null" [attr.title]="step.ToolTipToPortLabel">> {{step.ToPortLabel}} </div>
                             </div>
                             <div class="route-description TextTrimming">{{step.Description}}</div>
                             <div *ngFor="let direction of step.Directions" class="route-direction">
