@@ -1,22 +1,17 @@
 import {Component, OnInit,ChangeDetectorRef}  from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
-import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
-import {GLAccountListService} from '../../../Services/StandardLists/GLAccountListService'
 import { JournalLinePM } from '../../../EntityPMs/JournalLinePM';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
-import { JournalPM } from '../../../EntityPMs/JournalPM';
-import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 
 
 @Component({
 
-    templateUrl: './UpdateJournalLineNoteComponent.html',
+    templateUrl: './UpdateJournalLineComponent.html',
 })
 
-export class UpdateJournalLineNoteComponent extends BaseComponent{
+export class UpdateJournalLineComponent extends BaseComponent{
 
     private CurrentSession = SessionLocator.SelectedSession;
     public isRTL: boolean = false;
@@ -29,6 +24,9 @@ export class UpdateJournalLineNoteComponent extends BaseComponent{
     public Notes: string = "";
     public line: number;
     public journalLine: JournalLinePM;
+    public Reference1: string;
+    public Reference2: string;
+    public Reference3: string;
 
     constructor(private entityResourceService: EntityResourceService) {
         super();
@@ -41,6 +39,10 @@ export class UpdateJournalLineNoteComponent extends BaseComponent{
         this.entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((res: any) => {
             this.EntityPM = args['journalLine'];
             this.Notes = this.EntityPM.Notes;
+            this.Reference1 = this.EntityPM.Reference1;
+            this.Reference2 = this.EntityPM.Reference2;
+            this.Reference3 = this.EntityPM.Reference3;
+
             this.IsResourcesReady = true;
         });
     }
@@ -50,7 +52,7 @@ export class UpdateJournalLineNoteComponent extends BaseComponent{
     }
 
     OkButtonClicked() {
-        this.EntityPM.Notes = this.Notes;
+        this.SetJournalLineProperties();
         var SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
             SaveCompletedEvent.unsubscribe();
                if (isSaveSuccess) {
@@ -63,8 +65,14 @@ export class UpdateJournalLineNoteComponent extends BaseComponent{
 
         this.CurrentSession.CurrentEditComponent.SaveChanges();
         this.CurrentSession.CloseCurrentWindow();
-
     }
 
 
+
+    private SetJournalLineProperties() {
+        this.EntityPM.Notes = this.Notes;
+        this.EntityPM.Reference1 = this.Reference1;
+        this.EntityPM.Reference2 = this.Reference2;
+        this.EntityPM.Reference3 = this.Reference3;
+    }
 }
