@@ -128,7 +128,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
             var declarationMamanSpecialActionQueryService = new DeclarationMamanSpecialActionQueryService(context);
             var pmDeclarationMamanSpecialAction = declarationMamanSpecialActionQueryService.GetSingle(myDeclarationPM.Id, ((int)MamanSpecialCode.ReceivingDelayCertificate_DelayIt).ToString(), false, false);
 
-            if(pmDeclarationMamanSpecialAction!= null)
+            if(pmDeclarationMamanSpecialAction!= null && pmDeclarationMamanSpecialAction.MamanSpecialActionStatusCode=="1")
             {
                 isDelay = true;
             }

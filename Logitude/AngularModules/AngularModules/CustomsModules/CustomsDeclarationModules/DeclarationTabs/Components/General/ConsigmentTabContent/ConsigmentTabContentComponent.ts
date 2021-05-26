@@ -79,7 +79,7 @@ export class ConsigmentTabContentComponent
         // this.declarationPM = entityArgs.EntityPM;
         this.WeightValueFilterItems = new ApiQueryFilters();
         this.WeightValueFilterItems.addAdditionalFilter("Code", "CC,CA,NC,PO,PP", null, null, "InListExact", false, false, false, "string", false, true);
-
+        this.UIProperties.SetEnabled("CrateNumber", "Customs.DeclarationCourierStatus", false);
         this.SiteList = [];
         this.LoadingPortFilterItems = new ApiQueryFilters();//38388
 

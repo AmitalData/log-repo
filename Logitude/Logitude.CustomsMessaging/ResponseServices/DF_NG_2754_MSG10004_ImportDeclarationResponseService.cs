@@ -883,11 +883,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     // Pending 900
                     CourierMasterQueryService courierMasterService = new CourierMasterQueryService(requestParams.Tenant);
                     CourierMasterPM courierMaster = courierMasterService.GetSingle(_MyDeclarationPM.CourierMasterId, false, false);
+
+
                     if (courierMaster != null)
                     {
                         var myGDFDATAQueryService = new GDFDATAQueryService(AmitalContext.GetContext(requestParams.Tenant));
                         var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_ACT_COLLECT", "NON", courierMaster.IntegratorNumber, false, true);
                         bool isCollectActive = def.DEFDATA == "Y";
+                        
                         if (declarationPendingPM_900 == null)
                         {
                             CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(context);
@@ -898,9 +901,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 isCollectActive = false;
                             }
                         }
+                    
+
                         if (isCollectActive && _MyDeclarationPM.TotalTax > 0 && _MyDeclarationPM.TotalTax != prev_TotalTax)
                         {
-                            if (declarationPendingPM_900 != null && declarationPendingPM_900.Status != "S")
+                            if ((declarationPendingPM_900 != null && declarationPendingPM_900.Status != "S"))
                             {
                                 if (_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.FirstOrDefault().IncotermCode != "DDP")
                                 {
@@ -956,6 +961,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 LogMessagingUtil.Instance.AppendLine("Courier Pending Reason Code 900 Set as Solved");
                             }
                         }
+
+
+                       
+                      
+
+                      
+
                     }
 
                 }
