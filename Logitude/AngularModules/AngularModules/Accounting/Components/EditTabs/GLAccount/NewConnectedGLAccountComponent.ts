@@ -132,7 +132,7 @@ export class NewConnectedGLAccountComponent extends BaseComponent {
                                   this.accountPM.IsControlAccount = false;
                                   this.accountPM.ChartOfAccountsId = this.entityPM.ChartOfAccountsId;
                                   this.accountPM.ChartOfAccountsTypeCode = response.Result.ChartOfAccountsTypeCode;
-                                  this.accountPM.ReconcileMethodCode = "1";
+                                  this.accountPM.ReconcileMethodCode = SessionLocator.TenantPM.CurrencyId == this.CurrencyId ? "0":"1";
                                   this.accountPM.AutomaticReconcileId = this.entityPM.AutomaticReconcileId;
                                   this.accountPM.ControlAccountId = this.entityPM.ControlAccountId;
                                   this.accountPM.Tenant = this.entityPM.Tenant;
