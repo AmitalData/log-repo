@@ -145,13 +145,14 @@ var InvoiceListClass = function () {
 }
 
 
-var QuotesRequestListClass = function () {
+var QuotesRequest = function () {
 
     this.ReferenceNumber = "";
-    this.IsQuotationPrepard = "";
     this.CreateDate = "";
     this.QuotationUpdateDate = "";
+    this.QuotationPrepardTickVisibility = "";
 
+    
 }
 
 
@@ -1701,35 +1702,29 @@ function BuildInvoicesList(invoices, TenantDateTimeFormat) {
 }
 
 
-function BuildQuotesRequestsList(quotesRequests, TenantDateTimeFormat) {
+function BuildQuotesRequests(quotesRequests, tenantDateTimeFormat) {
+    var results = [];
+    $.each(quotesRequests, function (index, quotesRequest) {
+        var newQuotesRequest = GetNewInStanceFromQuotesRequest(quotesRequest, tenantDateTimeFormat);
+        results.push(newQuotesRequest);
+    });
 
-    var quotesRequestsList = [];
-    var todayDate = new Date();
+    return results;
 
-    var item = new QuotesRequestListClass();
-    item.CreateDate = $.Convert.ToShortDate(todayDate, TenantDateTimeFormat);
-    item.ReferenceNumber = $.trim("ssssss");
-    item.IsQuotationPrepard = $.trim(true);
-    item.QuotationUpdateDate = $.Convert.ToShortDate(todayDate, TenantDateTimeFormat);
-    quotesRequestsList.push(item);
-
-
-    //var todayDate = new Date();
-
-    //$.each(quotesRequests, function (index, quotesRequest) {
-
-    //    var item = new QuotesRequestListClass();
-
-    //    item.CreateDate = $.Convert.ToShortDate(quotesRequest.CreateDate, TenantDateTimeFormat);
-    //    item.ReferenceNumber = $.trim(quotesRequest.ReferenceNumber);
-    //    item.IsQuotationPrepard = $.trim(quotesRequest.IsQuotationPrepard);
-    //    item.QuotationUpdateDate = $.Convert.ToShortDate(quotesRequest.QuotationUpdateDate, TenantDateTimeFormat);
-
-    //    quotesRequestsList.push(item);
-    //});
-
-    return quotesRequestsList;
+ 
 }
+
+function GetNewInStanceFromQuotesRequest(quotesRequest, tenantDateTimeFormat) {
+
+    var newQuotesRequest = new QuotesRequest();
+    newQuotesRequest.CreateDate = $.Convert.ToShortDate(quotesRequest.CreateDate, tenantDateTimeFormat);
+    newQuotesRequest.ReferenceNumber = $.trim(quotesRequest.ReferenceNumber);
+    newQuotesRequest.QuotationPrepardTickVisibility = quotesRequest.IsQuotationPrepard ? "visible" :"collapse";
+    newQuotesRequest.QuotationUpdateDate = $.Convert.ToShortDate(quotesRequest.QuotationUpdateDate, tenantDateTimeFormat);
+
+    return newQuotesRequest;
+}
+
 
 function BuildCustomersList(entities, TenantDateTimeFormat) {
 

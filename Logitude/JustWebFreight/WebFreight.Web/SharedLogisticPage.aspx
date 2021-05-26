@@ -112,19 +112,8 @@
         height:20px;
         line-height:20px;
     }
-    .k-tabstrip .k-item {            
-            height: 25px;
-/*            font-size: 12px;
-    
-*/  
-width:130px;
-font-family: "Lucida Sans Unicode";
-            color: #282E30;
-            cursor: default;
-            background: url("images/TabItem-N.png");            
-        }
-
-
+ 
+ 
 
 </style>
 
@@ -262,8 +251,7 @@ font-family: "Lucida Sans Unicode";
                                 </li>
 
                               <li id="TAB_QUOTESREQUESTS">
-                                    <div style="width:120px">
-                                        <span><img class="TabImage" src="HtmlHelpers/Images/Tabs_Images/Quotes-N.png" /></span>
+                                    <div>
                                         <span>Quotes Requests</span>
                                     </div>                                        
                                 </li>
@@ -707,7 +695,6 @@ font-family: "Lucida Sans Unicode";
 
                             <div style="height:12px;">      </div>
 
-   
 
                     <div style="height:25px; vertical-align:central;">
                       <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:20px;"></div>
@@ -716,7 +703,7 @@ font-family: "Lucida Sans Unicode";
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:120px; color:\\#1B90CB;">${ReferenceNumber}</div>
                         <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:130px;">Quotation Prepard:</div>
 
-                       <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:120px; visibility: #= IsQuotationPrepard #;"><img src="../HtmlHelpers/Images/Icons/Tick.png" style="width: 20px; height: 20px; position:relative; margin-top:-3px;" /></div>
+                       <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:120px; visibility: #= QuotationPrepardTickVisibility #;"><img src="../HtmlHelpers/Images/Icons/Tick.png" style="width: 20px; height: 20px; position:relative; margin-top:-3px;" /></div>
 
                     </div>
                     <div style="height:25px; vertical-align:central;">

@@ -284,63 +284,53 @@
 
         function QuotesRequstFilters() {
             this.PartnerId = $.CurrentCardId;
-            this.PartnerType = $.CurrentCardType;
             this.SearchField = ($.trim($.SearchText_QUOTESREQUESTS) == "" || $.trim($.SearchText_QUOTESREQUESTS) == $.watermark_QUOTESREQUESTS) ? null : $.trim($.SearchText_QUOTESREQUESTS);
             this.PageSize = jQuery.LoadingCount;
             this.PageIndex = 0
-
+            this.Tenant = $.CurrentTenant
         };
 
         var filters = new QuotesRequstFilters();
-        $("#QuotesRequestQueryCount").html("(" + (5) + "+)");
-        $("#QuotesRequestsListBox").html("");
-        $("#QuotesRequestsListBox").kendoListView(
+
+        var url = "api/QuotesRequest";
+
+        $.ajax({
+            url: url,
+            data: JSON.stringify(filters),
+            type: 'POST',
+            contentType: 'application/json',
+            headers: {
+                'Token': $.Token
+            },
+
+            success: function (result) {
+                $.SendContactActivity($.CurrentEmail, "QuoteRequsts", "Quote Requsts List", $.CurrentTenant, $.CurrentCardId);
+
+
+                if (result.length >= $.LoadingCount) {
+                    $("#QuotesRequestQueryCount").html("(" + ($.LoadingCount - 1) + "+)");
+                }
+
+                else {
+                    $("#QuotesRequestQueryCount").html("(" + result.length + ")");
+                }
+
+                $("#QuotesRequestsListBox").html("");
+                $("#QuotesRequestsListBox").kendoListView(
                     {
-                dataSource: { data: BuildQuotesRequestsList(null, $.TenantDateTimeFormat) },
-                template: kendo.template($("#QuotesRequestsListBoxItemDataTemplate").html())
+                        dataSource: { data: BuildQuotesRequests(result, $.TenantDateTimeFormat) },
+                        template: kendo.template($("#QuotesRequestsListBoxItemDataTemplate").html())
                     });
 
-        $("#QuotesRequestsBusyIndicator").hide();
+                $("#QuotesRequestsBusyIndicator").hide();
+            },
 
-        //var url = "api/InvoicesData?tenant=" + $.CurrentTenant;
-
-        //$.ajax({
-        //    url: url,
-        //    data: JSON.stringify(filters),
-        //    type: 'POST',
-        //    contentType: 'application/json',
-        //    headers: {
-        //        'Token': $.Token
-        //    },
-
-        //    success: function (result) {
-        //        $.SendContactActivity($.CurrentEmail, "Invoice", "Invoices List", $.CurrentTenant, $.CurrentCardId);
-
-
-        //        if (result.length >= $.LoadingCount) {
-        //            $("#InvoicesQueryCount").html("(" + ($.LoadingCount - 1) + "+)");
-        //        }
-
-        //        else {
-        //            $("#InvoicesQueryCount").html("(" + result.length + ")");
-        //        }
-
-        //        $("#InvoicesListBox").html("");
-        //        $("#InvoicesListBox").kendoListView(
-        //            {
-        //                dataSource: { data: BuildInvoicesList(result, $.TenantDateTimeFormat) },
-        //                template: kendo.template($("#InvoiceListBoxItemDataTemplate").html())
-        //            });
-
-        //        $("#InvoicesBusyIndicator").hide();
-        //    },
-
-        //    error: function (jqXHR, textStatus, errorThrown) {
-        //        $.CheckUserException(jqXHR);
-        //        $("#InvoicesQueryCount").html("(0)");
-        //        $("#InvoicesBusyIndicator").hide();
-        //    }
-        //});
+            error: function (jqXHR, textStatus, errorThrown) {
+                $.CheckUserException(jqXHR);
+                $("#QuotesRequestQueryCount").html("(0)");
+                $("#QuotesRequestsBusyIndicator").hide();
+            }
+        });
 
     });
 
@@ -651,20 +641,23 @@
 	        var clss = $("#" + id).attr('class');
 
 	        var currentTarget = "#" + $.SelectedTabId + " div span .TabImage";
-	        var currentScr = $(currentTarget).attr('src');
-	        var currenttargetSRC = currentScr.replace('S.png', 'N.png');
-	        $(currentTarget).attr("src", currenttargetSRC);
-
+           
+            var currentScr = $(currentTarget).attr('src');
+            if (currentScr) {
+                var currenttargetSRC = currentScr.replace('S.png', 'N.png');
+                $(currentTarget).attr("src", currenttargetSRC);
+            }
 	        var target = "#" + id + " div span .TabImage";
-	        var scr = $(target).attr('src');
-	        var targetSRC = scr.replace('O.png', 'S.png');
-	        if (targetSRC == scr) {
+            var scr = $(target).attr('src');
+            if (scr) {
+                var targetSRC = scr.replace('O.png', 'S.png');
+                if (targetSRC == scr) {
 
-	            targetSRC = scr.replace('N.png', 'S.png');
-	        }
+                    targetSRC = scr.replace('N.png', 'S.png');
+                }
 
-	        $(target).attr("src", targetSRC);
-
+                $(target).attr("src", targetSRC);
+            }
 	        $.SelectedTabId = $(e.item).attr("id");
 	        $('#SavedSelectedTabId').attr("value", $.SelectedTabId);
 	        $.SelectTab($.SelectedTabId);
@@ -756,6 +749,15 @@
         $("#InvoicesListBox").html("");
         $.LoadInvoices();
     });
+
+    $("#QuotesRequestRefreshButton").click(function () {
+
+        $("#QuotesRequestsListBox").html("");
+        $.LoadQuotesRequsts();
+    });
+
+
+
 
     $('.SearchDeleteButton').hide();
     $('#SearchBox_SHI').val($.watermark_SHI).addClass('watermark');
@@ -953,9 +955,12 @@
 
             var target = "#" + id + " div span .TabImage";
             var scr = $(target).attr('src');
-            var targetSRC = scr.replace('N.png', 'O.png');
 
-            $(target).attr("src", targetSRC);
+            if (scr) {
+                var targetSRC = scr.replace('N.png', 'O.png');
+
+                $(target).attr("src", targetSRC);
+            }
         }
     });
     $(".k-tabstrip .k-item").mouseleave(function () {
@@ -967,9 +972,10 @@
 
             var target = "#" + id + " div span .TabImage";
             var scr = $(target).attr('src');
-            var targetSRC = scr.replace('O.png', 'N.png');
-
-            $(target).attr("src", targetSRC);
+            if (scr) {
+                var targetSRC = scr.replace('O.png', 'N.png');
+                $(target).attr("src", targetSRC);
+            }
         }
     });
 
