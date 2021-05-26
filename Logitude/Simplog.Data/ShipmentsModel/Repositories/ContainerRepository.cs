@@ -50,12 +50,8 @@ namespace Simplog.Data.ShipmentsModel.Repositories
 
         public void Remove(Container entity)
         {
-            try
-            {
-                context.Containers.Attach(entity);
-            }
-            catch { }
-            context.Containers.Remove(entity);
+           context.Containers.Attach(entity);
+           context.Containers.Remove(entity);
         }
 
         public void SubmitChanges()

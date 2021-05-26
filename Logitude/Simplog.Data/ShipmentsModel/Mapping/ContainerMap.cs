@@ -41,9 +41,9 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Master).HasColumnName("Master");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
 
-            this.HasOptional(t => t.CarrierCard).WithMany().HasForeignKey(d => d.MainCarriageCarrierId);
-            this.HasOptional(t => t.ShipmentPackage).WithMany().HasForeignKey(d => d.ShipmentPackagesId);
-            this.HasOptional(t => t.VesselCard).WithMany().HasForeignKey(d => d.MainCarriageVesselId);
+            this.HasOptional(t => t.CarrierCard).WithMany().HasForeignKey(d => d.MainCarriageCarrierId).WillCascadeOnDelete(false); ;
+            this.HasOptional(t => t.ShipmentPackage).WithMany().HasForeignKey(d => d.ShipmentPackagesId).WillCascadeOnDelete(false);
+            this.HasOptional(t => t.VesselCard).WithMany().HasForeignKey(d => d.MainCarriageVesselId).WillCascadeOnDelete(false); ;
         }
     }
 }
