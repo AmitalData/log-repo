@@ -33,6 +33,8 @@
 	declare @Partner as int
 	declare @PartnerExternalID as nvarchar(25)
 	declare @MainEntityId as varchar(15)
+	declare @StatusCode as varchar(2)
+	declare @DraftNumber as varchar(20)
 
 	DECLARE InvoicesCursor CURSOR READ_ONLY
 	FOR
@@ -42,7 +44,7 @@
 			dw_ARInvoices.PrintNotes, dw_ARInvoices.InvoiceDate, dw_ARInvoices.CreateDate, dw_ARInvoices.ApprovedDate, dw_ARInvoices.DueDate, dw_ARInvoices.PrintDate,
 			null, NewDIM_Branches.Id_Number, NewDIM_PaymentTerms.Id_Number, LocalCurrency.Id_Number, InvoiceCurrency.Id_Number,
 			SalesmanUser.Id_Number, ApprovedByUser.Id_Number, CreatedByUser.Id_Number, PrintedByUser.Id_Number, dw_ARInvoiceStatus.Name, 'AR Invoice',
-			dw_ARInvoiceTypes.Name, ARPartner.Id_Number, dw_ARInvoices.AccountingExternalCode, dw_ARInvoices.MainEntityId
+			dw_ARInvoiceTypes.Name, ARPartner.Id_Number, dw_ARInvoices.AccountingExternalCode, dw_ARInvoices.MainEntityId, dw_ARInvoices.StatusCode, dw_ARInvoices.DraftNumber
 		--, @dw_ARInvoices.CustomFieldsVariable
 
     From dw_ARInvoices
@@ -80,7 +82,7 @@
 			null, dw_APInvoices.InvoiceDate, dw_APInvoices.CreateDate, dw_APInvoices.ApprovedDate, dw_APInvoices.DueDate, null,
 			dw_APInvoices.FirstApproveDate, NewDIM_Branches.Id_Number, NewDIM_PaymentTerms.Id_Number, LocalCurrency.Id_Number, InvoiceCurrency.Id_Number,
 			1, ApprovedByUser.Id_Number, CreatedByUser.Id_Number, 1, dw_APInvoiceStatus.Name, 'AP Invoice',
-			'Invoice', 1, dw_APInvoices.AccountingExternalCode, dw_APInvoices.MainEntityId
+			'Invoice', 1, dw_APInvoices.AccountingExternalCode, dw_APInvoices.MainEntityId, dw_APInvoices.StatusCode, null
 			--, @dw_ARInvoices.CustomFieldsVariable
 
     From dw_APInvoices
@@ -113,11 +115,29 @@
 		@AmountInLocalCurrency, @AmountInProfitCurrency, @AmountDueInLocalCurrency, @AmountDueInProfitCurrency, @PrintNotes, @InvoiceDate, @CreateDate,
 		@ApprovedDate, @DueDate, @PrintDate, @FirstApproveDate, @Branch, @PaymentTerm, @LocalCurrency, @InvoiceCurrency,
 		@Salesman, @ApprovedBy, @CreatedBy, @PrintedBy, @Status, @AR_APInvoice,
-		@InvoiceType, @Partner, @PartnerExternalID, @MainEntityId
+		@InvoiceType, @Partner, @PartnerExternalID, @MainEntityId, @StatusCode, @DraftNumber
 
 		
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
+
+		--------------AR Invoice Number------------------
+		IF(@AR_APInvoice = 'AR Invoice')
+			BEGIN
+				IF(@StatusCode = 'DR' or @StatusCode = 'LL')
+					BEGIN
+						IF(@DraftNumber is not null)
+							BEGIN
+								SET @InvoiceNumber = @DraftNumber;
+							END
+						ELSE
+							BEGIN
+								SET @InvoiceNumber = @Id;
+							END
+					END
+			END
+		----------------------------------------------
+
 		BEGIN TRY
 		insert into #Fact_InvoicesTemp 
 			([Id], [Source Tenant], [Parent Tenant], [Invoice Number], [VAT Number], [Shipment Number], [Subtotal (Local)], [Subtotal (Profit)],
@@ -149,7 +169,7 @@
 			@AmountInLocalCurrency, @AmountInProfitCurrency, @AmountDueInLocalCurrency, @AmountDueInProfitCurrency, @PrintNotes, @InvoiceDate, @CreateDate,
 			@ApprovedDate, @DueDate, @PrintDate, @FirstApproveDate, @Branch, @PaymentTerm, @LocalCurrency, @InvoiceCurrency,
 			@Salesman, @ApprovedBy, @CreatedBy, @PrintedBy, @Status, @AR_APInvoice,
-			@InvoiceType, @Partner, @PartnerExternalID, @MainEntityId
+			@InvoiceType, @Partner, @PartnerExternalID, @MainEntityId, @StatusCode, @DraftNumber
 
 	END
 	CLOSE InvoicesCursor
