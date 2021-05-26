@@ -449,6 +449,7 @@ export class PartnerItem extends BaseComponent {
     public EntityPM: ShipmentPM;
     public Code: string;
     public ObjectTableName: string = "Shipment";
+    public IsInlandDomestic: boolean = false;
     constructor(public fatherComponent: PartnersTabComponent, typeCode: string) {
         super();
         this.EntityPM = fatherComponent.EntityPM;
@@ -458,6 +459,9 @@ export class PartnerItem extends BaseComponent {
         this.SetRemoveButtonVisibility();
         this.GetPartnerAddress();
         this.GetPartnerContact();
+        if (this.EntityPM != null) {
+           this.IsInlandDomestic = this.EntityPM.TransportModeId == "I" && this.EntityPM.DirectionId == "D" ? true : false;
+        }
     }
 
     public IsEditingEnabled: boolean = true;
@@ -510,7 +514,11 @@ export class PartnerItem extends BaseComponent {
 
         switch (this.Code) {
             case "SHIPR":
+                myResult = this.IsInlandDomestic ? "CS,WH" : myResult;
+                break;
             case "CONSI":
+                myResult = this.IsInlandDomestic ? "CS,WH" : myResult;
+                break;
             case "CSTMR":
                 {
                     myResult = "CS";
@@ -529,7 +537,7 @@ export class PartnerItem extends BaseComponent {
                         }
                     }
 
-                    break
+                    break;
                 }
 
             case "AGENT":
@@ -597,7 +605,11 @@ export class PartnerItem extends BaseComponent {
 
         switch (this.Code) {
             case "SHIPR":
+                myResult = this.IsInlandDomestic && SessionLocator.TenantPM.AllowCustomersInAgentsLOV ? true : myResult;
+                break;
             case "CONSI":
+                myResult = this.IsInlandDomestic && SessionLocator.TenantPM.AllowCustomersInAgentsLOV ? true : myResult;
+                break;
             case "CSTMR":
                 {
                     if (this.EntityPM.ShipmentLevelCode == "C") {
@@ -612,7 +624,7 @@ export class PartnerItem extends BaseComponent {
                         }
                     }
 
-                    break
+                    break;
                 }
 
             case "AGENT":
