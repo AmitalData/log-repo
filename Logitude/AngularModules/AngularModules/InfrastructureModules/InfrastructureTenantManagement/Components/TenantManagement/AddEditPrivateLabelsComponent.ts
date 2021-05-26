@@ -104,8 +104,9 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
         if (file) {
             var fileExtension = file.name.split('.')[1];
             this.FileName = file.name.split('.')[0];
-            if (fileExtension) {
-                if (fileExtension != "Pdf") {
+
+            if (fileExtension) { 
+                if (!this.isPdfExtension(fileExtension)) {
                     this.ShowMessage("File extension must be pdf");
                 } else {
                     this.ConvertArrayBufferToBase64(file, this); 
@@ -114,6 +115,10 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
         }
 
     }
+
+    isPdfExtension(fileExtension: any) { 
+    return fileExtension.toLowerCase() == "pdf"
+}
 
 
 
