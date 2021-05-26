@@ -5034,6 +5034,12 @@
       LocalDefaultText="&quot;שורה&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.O.LoadCsv&quot;"
+      DefaultText="&quot;Load Journal from CSV&quot;"
+      LocalDefaultText="&quot;טען פקודת יומן מ CSV&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
@@ -5140,6 +5146,15 @@
       FeatureTypeCode="&quot;QUER&quot;"
       FeatureTextCodeCode="&quot;Journal.Features.ExternalJournals&quot;"
       FeatureDefaultText="&quot;External Journals&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;LOADJOURNALCSV&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;Journal.Features.LOADJOURNALCSV&quot;"
+      FeatureDefaultText="&quot;Load Journal From CSV&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

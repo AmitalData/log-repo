@@ -138,6 +138,7 @@ import { InterestReportEditCalculationDateComponent } from './Components/EditTab
 import { UserDefinedReportGeneralTabComponent } from './Components/EditTabs/UserDefinedReport/UserDefinedReportGeneralTabComponent';
 import { AccountingMainTesterComponent } from './Components/Maintenance/Tester/AccountingMainTesterComponent';
 import { UpdateJournalLineNoteComponent } from './Components/EditTabs/Journal/UpdateJournalLineNoteComponent';
+import { JournalCSVLoadComponent } from './Components/NewEntity/JournalCSVLoadComponent';
 
 
 //import { CashBookGeneralTabComponent } from './Components/EditTabs/CashBook/CashBookGeneralTabComponent';
@@ -175,6 +176,7 @@ export const Components =
         NewOpenFormatReportComponent,
         LoadRecoExPageComponent,
         NewUserDefinedReportComponent,
+        JournalCSVLoadComponent,
         
         //Maintenance
         NewCategory1Component,
@@ -331,6 +333,7 @@ export class ModuleDeclarations {
             case "NewTaxDeductionReportComponent": { myResult = NewTaxDeductionReportComponent; break; }
             case "NewOpenFormatReportComponent": { myResult = NewOpenFormatReportComponent; break; }
             case "LoadRecoExPageComponent": { myResult = LoadRecoExPageComponent; break; }
+            case "JournalCSVLoadComponent": { myResult = JournalCSVLoadComponent; break; }
             case "NewInterestReportComponent": { myResult = NewInterestReportComponent; break; }
             case "NewUserDefinedReportComponent": { myResult = NewUserDefinedReportComponent; break; }
 

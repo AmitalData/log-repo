@@ -31,7 +31,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private const bool useLocal = true;
 
 
-        public void Analyse(int? ptenant, string FileContent)
+        public JournalPM Analyse(int? ptenant, string FileContent)
         {
             try
             {
@@ -142,6 +142,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     //        throw new ApplicationException($"{text}");
                     //    }
                     scope.Complete();
+                    return journal;
 
 
                 }

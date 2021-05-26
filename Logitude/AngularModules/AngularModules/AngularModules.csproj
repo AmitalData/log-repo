@@ -139,6 +139,7 @@
     <Content Include="Accounting\Components\Templates\FieldTemplateComponent.html" />
     <Content Include="Accounting\Components\Workspaces\GLAccounts\GLAccountsPageComponent.html" />
     <Content Include="Accounting\Components\Workspaces\Interest\InterestPageComponent.html" />
+    <Content Include="Accounting\Components\NewEntity\JournalCSVLoadComponent.html" />
     <Content Include="Accounting\Components\Workspaces\Main\MainPageComponent.html" />
     <Content Include="Booking\Components\BookingWizard\NoRemainingStockComponent.html" />
     <Content Include="CommonModules\CommonAgent\Components\NewEntity\NewAgentComponent.html" />
@@ -319,6 +320,7 @@
     <TypeScriptCompile Include="Abstractions\Services\BaseService.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\Journal\UpdateJournalLineNoteComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Maintenance\Tester\AccountingMainTesterComponent.ts" />
+    <TypeScriptCompile Include="Accounting\Components\NewEntity\JournalCSVLoadComponent.ts" />
     <TypeScriptCompile Include="Accounting\EntityPMs\GLAccountFollowUpDataPM.ts" />
     <TypeScriptCompile Include="Accounting\Services\ExtendedPMs\GLaccountFollowUpDataExtendedPMService.ts" />
     <TypeScriptCompile Include="App\DynamicLoader\LazyWidgetsLogitude.ts" />
