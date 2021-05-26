@@ -41,17 +41,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         public void Update(ContainerPM entityPM, bool isDeleted = false)
         {
-            if (isDeleted == true) 
+            this.isNewEntity = false;
+            this.containerPm = entityPM;
+            this.containerPoco = entityRepository.GetSingleContainer(entityPM.Id, tenant);
+            ContainerTracing.Trace(entityPM, containerPoco, isNewEntity);
+            ShipmentMapping.MapContainer(entityPM, containerPoco, isNewEntity);
+
+            if (isDeleted == true)
                 entityRepository.Remove(containerPoco);
             else
-            {
-                this.isNewEntity = false;
-                this.containerPm = entityPM;
-                this.containerPoco = entityRepository.GetSingleContainer(entityPM.Id, tenant);
-                ContainerTracing.Trace(entityPM, containerPoco, isNewEntity);
-                ShipmentMapping.MapContainer(entityPM, containerPoco, isNewEntity);
                 entityRepository.Update(containerPoco);
-            }
+
             entityRepository.SubmitChanges();
         }
     }

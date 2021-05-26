@@ -142,14 +142,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 container.UpdatedByUserId = this.initializer.LoggedContactId;
                 container.ShipmentPackagesId = shipmentPackage.Id;
             }
-            container.MainCarriageCarrierId = this.initializer.EntityMasterData.MainCarriageCarrierId;
-            container.MainCarriageCarrierNumber = this.initializer.EntityMasterData.MainCarriageCarrierNumber;
-            container.MainCarriageVesselId = this.initializer.EntityMasterData.MainCarriageVesselId;
-            container.MainCarriageATA = this.initializer.EntityMasterData.MainCarriageATA;
-            container.MainCarriageATD = this.initializer.EntityMasterData.MainCarriageATD;
-            container.MainCarriageETA = this.initializer.EntityMasterData.MainCarriageETA;
-            container.MainCarriageETD = this.initializer.EntityMasterData.MainCarriageETD;
-            container.Master = this.initializer.EntityMasterData.Master;
+            container.MainCarriageCarrierId = this.initializer.EntityPM.MainCarriageCarrierId;
+            container.MainCarriageCarrierNumber = this.initializer.EntityPM.MainCarriageCarrierNumber;
+            container.MainCarriageVesselId = this.initializer.EntityPM.MainCarriageVesselId;
+            container.MainCarriageATA = this.initializer.EntityPM.MainCarriageATA;
+            container.MainCarriageATD = this.initializer.EntityPM.MainCarriageATD;
+            container.MainCarriageETA = this.initializer.EntityPM.MainCarriageETA;
+            container.MainCarriageETD = this.initializer.EntityPM.MainCarriageETD;
+            container.Master = this.initializer.EntityPM.Master;
             container.ContainerNumber = shipmentPackage.ContainerNumber;
         }
 
