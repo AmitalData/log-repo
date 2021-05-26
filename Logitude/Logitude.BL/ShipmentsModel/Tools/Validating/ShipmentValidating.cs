@@ -1258,7 +1258,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                         {
                             if (myCard.PartnerTypeId != "CS" && myCard.PartnerTypeId != "AG")
                             {
-                                if (!IsInlandDomesticShipment(entityPM) && myCard.PartnerTypeId != "WH")
+                                if (IsInlandDomesticShipment(entityPM))
+                                {
+                                    if (myCard.PartnerTypeId != "WH")
+                                    {
+                                        throw new ApplicationException("Shipper partner type should be agent or customer");
+                                    }
+                                }
+                                else
                                 {
                                     throw new ApplicationException("Shipper partner type should be agent or customer");
                                 }
@@ -1280,7 +1287,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                         {
                             if (myCard.PartnerTypeId != "CS" && myCard.PartnerTypeId != "AG")
                             {
-                                if (!IsInlandDomesticShipment(entityPM) && myCard.PartnerTypeId != "WH")
+                                if (IsInlandDomesticShipment(entityPM))
+                                {
+                                    if (myCard.PartnerTypeId != "WH")
+                                    {
+                                        throw new ApplicationException("Shipper partner type should be agent or customer");
+                                    }
+                                }
+                                else
                                 {
                                     throw new ApplicationException("Shipper partner type should be agent or customer");
                                 }
@@ -1309,7 +1323,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                         {
                             if (myCard.PartnerTypeId != "CS" && myCard.PartnerTypeId != "AG")
                             {
-                                if (!IsInlandDomesticShipment(entityPM) && myCard.PartnerTypeId != "WH")
+                                if (IsInlandDomesticShipment(entityPM))
+                                {
+                                    if (myCard.PartnerTypeId != "WH")
+                                    {
+                                        throw new ApplicationException("Consignee partner type should be agent or customer");
+                                    }
+                                }
+                                else
                                 {
                                     throw new ApplicationException("Consignee partner type should be agent or customer");
                                 }
@@ -1331,7 +1352,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                         {
                             if (myCard.PartnerTypeId != "CS" && myCard.PartnerTypeId != "AG")
                             {
-                                if (!IsInlandDomesticShipment(entityPM) && myCard.PartnerTypeId != "WH")
+                                if (IsInlandDomesticShipment(entityPM))
+                                {
+                                    if (myCard.PartnerTypeId != "WH")
+                                    {
+                                        throw new ApplicationException("Consignee partner type should be agent or customer");
+                                    }
+                                }
+                                else
                                 {
                                     throw new ApplicationException("Consignee partner type should be agent or customer");
                                 }
