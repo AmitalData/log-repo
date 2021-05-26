@@ -30,7 +30,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CollectorUserId, 
 	         Phone, 
 	         VatNumber, 
-	         TotalOpenShipments,
+	         TotalOpenShipments, 
+	         InsuredcreditLimit,
 	      }
 
 
@@ -45,7 +46,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CollectorUserId, 
 	         Phone, 
 	         VatNumber, 
-	         TotalOpenShipments,
+	         TotalOpenShipments, 
+	         InsuredcreditLimit,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -92,6 +94,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TotalOpenShipments))
             {
 				entityPOCO.TotalOpenShipments = entityPM.TotalOpenShipments;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InsuredcreditLimit))
+            {
+				entityPOCO.InsuredcreditLimit = entityPM.InsuredcreditLimit;
 			}
 			}
 
@@ -143,6 +150,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.TotalOpenShipments = entityPOCO.TotalOpenShipments;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InsuredcreditLimit))
+            {
+					entityPM.InsuredcreditLimit = entityPOCO.InsuredcreditLimit;
+            }
+
 		}
 
 		public void PMToOldPM(GLAccountCardsDataPM entityPM, GLAccountCardsDataPM oldEntityPM)
@@ -187,6 +199,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TotalOpenShipments))
             {
                 oldEntityPM.TotalOpenShipments = entityPM.TotalOpenShipments;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InsuredcreditLimit))
+            {
+                oldEntityPM.InsuredcreditLimit = entityPM.InsuredcreditLimit;
             }
 			
 		}
