@@ -533,7 +533,7 @@ namespace TestTenantConfiguration
                 ContactId = ContactId,
                 SignedDatetime = TenantServerConfigration.GetCurrentDateTime(this.Tenant),
                 Tenant = this.Tenant,
-                TermsofUseVersion = LastTermOfUseLastVersion()
+                TermsofUseId = LastTermOfUseLastVersion()
             };
             return entityPM;
         }
@@ -541,8 +541,8 @@ namespace TestTenantConfiguration
         private int LastTermOfUseLastVersion()
         {
             TermsofUseQuery termsofUseQuery = new TermsofUseQuery(this.Tenant);
-            TermsofUsePM termsofUsePM = termsofUseQuery.GetTermsofUseDeflut();
-            return termsofUsePM.Version;
+            TermsofUsePM termsofUsePM = termsofUseQuery.GetTermsofUseDefault();
+            return termsofUsePM.VersionNumber;
         }
         #endregion
 
