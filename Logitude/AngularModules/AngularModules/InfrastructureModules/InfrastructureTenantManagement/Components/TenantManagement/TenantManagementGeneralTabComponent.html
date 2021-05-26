@@ -279,7 +279,7 @@
                                                                     </tr>
 
 
-                                                                    <tr class="FormFieldRow">
+                                                                    <tr *ngIf="IsLogBoxTenant" class="FormFieldRow">
                                                                         <td>
                                                                             <LogLabel [ObjectFieldName]="'IsHybrid'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                         </td>
