@@ -743,10 +743,10 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         }
     }
 
-    get IsHybridTenant() { return this.EntityPM.IsHybridTenant; }
-    set IsHybridTenant(newValue: boolean) {
-        if (this.EntityPM.IsHybridTenant != newValue) {
-            this.EntityPM.IsHybridTenant = newValue;
+    get IsHybrid() { return this.EntityPM.IsHybrid; }
+    set IsHybrid(newValue: boolean) {
+        if (this.EntityPM.IsHybrid != newValue) {
+            this.EntityPM.IsHybrid = newValue;
         }
     }
 
