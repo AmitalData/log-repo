@@ -215,13 +215,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     ShipmentValidating.ValidateRoutingDates(entityPM, entityPM.ShipmentPickUps, entityPM.ShipmentDeliveries);
                 }
 
-                this.initializer.HandleComposition();
-
+                
                 foreach (ShipmentPackagePM itemPM in entityPM.ShipmentPackages)
                 {
                     this.CreateShipmentPackage(itemPM);
                 }
-
+                
                 foreach (ShipmentPickUpPM itemPM in entityPM.ShipmentPickUps)
                 {
                     this.CreateShipmentPickUp(itemPM);
@@ -281,6 +280,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 {
                     this.CreateShipmentProductItem(itemPM);
                 }
+
+                this.initializer.HandleComposition();
 
                 entityPM.CalculateProfit = calculateProfit;
                 entityPM.CalculatePayables = calculatePayables;
@@ -417,9 +418,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         ShipmentValidating.ValidateRoutingDates(entityPM, initializer.ShipmentPickUpsChangeSet, initializer.ShipmentDeliveriesChangeSet);
                     }
 
-                    this.initializer.HandleComposition();
-
                     this.UpdateShipmentPackagesCollection();
+                    
                     this.UpdateShipmentPickUpsCollection();
                     this.UpdateShipmentDeliveriesCollection();
                     this.UpdateShipmentPayablesCollection();
@@ -433,6 +433,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.UpdateShipmentAssembliesCollection();
                     this.UpdateShipmentStoragePricingsCollection();
                     this.UpdateShipmentProductItemsCollection();
+
+                    this.initializer.HandleComposition();
 
                     this.InitializeBookingData();
                     this.RemoveDeletedItemsFromEntityPM();

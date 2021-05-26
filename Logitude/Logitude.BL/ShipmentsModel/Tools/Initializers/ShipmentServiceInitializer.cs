@@ -186,7 +186,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
             serviceBehaviours.Add(new ShipmentConversionBehaviour());
             serviceBehaviours.Add(new ShipmentOperationalDateBehaviour());
             serviceBehaviours.Add(new UpdateDocumentFilingBehaviour());
-            serviceBehaviours.Add(new ShipmentContainersEntityBehaviour());
             foreach (IServiceBehaviour behaviour in serviceBehaviours)
             {
                 behaviour.Handle(this);
@@ -198,7 +197,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
             List<IServiceBehaviour> behaviours = new List<IServiceBehaviour>();
 
             behaviours.Add(new OrderPackagesBehaviour());
-            //
+            behaviours.Add(new ShipmentContainersEntityBehaviour());
             foreach (IServiceBehaviour behaviour in behaviours)
             {
                 behaviour.Handle(this);
