@@ -496,7 +496,8 @@ namespace CommunicationWorkerRole
 
             if (reportsTest)
             {
-                BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName == "ReportExecutionLogWorkerRole").ToList();
+                
+                   BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName == "BatchTaskExecutionWR").ToList();
             }
             if(ActiveWorkers != null && ActiveWorkers.Length > 0)
             {
