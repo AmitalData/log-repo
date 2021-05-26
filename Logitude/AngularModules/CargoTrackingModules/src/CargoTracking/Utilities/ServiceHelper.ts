@@ -39,7 +39,7 @@ export  class ServiceHelper{
         BrandingDataRequest.BrowserIconId = BrowserIconId;
         BrandingDataRequest.ShipmentHeaderImageId = ShipmentHeaderImageId;
 
-        BrandingDataRequest.Domain = baseUrl;
+        BrandingDataRequest.Domain = 'tracking.orian.com/CargoTracking' || baseUrl;
         return BrandingDataRequest;
     }
 
