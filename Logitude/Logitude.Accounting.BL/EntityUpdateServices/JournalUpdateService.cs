@@ -150,15 +150,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         private void UpdateRelatedLedgerTransactionIfJournalLineUpdated(JournalPM entityPM, JournalLinePM JournalLine)
         {
-            if (JournalLine != null)
+            if (JournalLine == null) { return; }
+            
+            JournalLinePM oldJournalLine = GetOldJournalLineFromDB(JournalLine);
+            bool isJournalLineUpdated = CheckIfJournalLineChanged(JournalLine, oldJournalLine);
+            if (isJournalLineUpdated)
             {
-                JournalLinePM oldJournalLine = GetOldJournalLineFromDB(JournalLine);
-
-                bool isJournalLineUpdated = CheckIfJournalLineChanged(JournalLine, oldJournalLine);
-                if (isJournalLineUpdated)
-                {
-                    UpdateLedgerTransactionRelatedToJournalLine(entityPM, JournalLine, oldJournalLine);
-                }
+                UpdateLedgerTransactionRelatedToJournalLine(entityPM, JournalLine, oldJournalLine);
             }
         }
 
