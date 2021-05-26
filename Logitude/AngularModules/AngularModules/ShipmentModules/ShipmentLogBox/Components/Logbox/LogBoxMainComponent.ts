@@ -170,7 +170,8 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                                     windowArgs.AdditionalData = AdditionalResult.Result;
                                     newWindow.WindowArgs = windowArgs;
                                     //newWindow.Add(control); 
-                                    newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/PrivateLabelApprovePaymentComponent');
+                                    let privateLabelApprovePaymentComponentPath = this.GetPrivateLabelApprovePaymentComponentPath();
+                                    newWindow.Show(privateLabelApprovePaymentComponentPath);
                                     newWindow.WindowClosed.subscribe(($event: any) => {
                                         this.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
                                         //if ($event == "MyShipmentAdded") {
@@ -187,6 +188,12 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 }
             }
         }
+    }
+
+    GetPrivateLabelApprovePaymentComponentPath() {
+        let isDSV = SessionLocator?.PrivateLableSettings?.PrivateLabelDomain?.toLowerCase()?.indexOf("dsv") > -1;
+        let privateLabelApprovePaymentComponentPath = './ShipmentModules/ShipmentLogBox/Components/Logbox/' + (isDSV ? 'DSVApprovePaymentComponent' : 'PrivateLabelApprovePaymentComponent');
+        return privateLabelApprovePaymentComponentPath;
     }
 
     ngAfterViewInit() {

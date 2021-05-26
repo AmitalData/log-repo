@@ -38,12 +38,10 @@
   <ItemGroup>
     <Reference Include="Interop.MSXML2, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RestClientDlls.1.0.0\lib\Net40\Interop.MSXML2.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-      <Private>True</Private>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="Json2KeyValue, Version=1.1.0.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RestClientDlls.1.0.0\lib\Net40\Json2KeyValue.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -57,7 +55,6 @@
     <Reference Include="System.Xml" />
     <Reference Include="XmlRender, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RestClientDlls.1.0.0\lib\Net40\XmlRender.dll</HintPath>
-      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -317,6 +317,8 @@
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityComponent.html" />
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityPackageComponent.html" />
     <Content Include="ShipmentModules\ShipmentTabs\Components\ProductItems\ProductItemsTabComponent.html" />
+    <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\ApprovePaymentBaseComponent.html" />
+    <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\PrivateLabelApprovePaymentComponent.html" />
     <Content Include="TasksApp\Components\TasksAppComponent.html" />
     <Content Include="TasksApp\Scripts\tasks-app.js" />
     <Content Include="_Resources\css\PrimeWebComponent.css" />
@@ -3143,7 +3145,7 @@
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\DenyReasonComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\PrivateLabelApprovebyMobileComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\TaxScreenComponent.html" />
-    <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\PrivateLabelApprovePaymentComponent.html" />
+    <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\DSVApprovePaymentComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\AddEditPrivateLabelShipmentComponent.html" />
     <Content Include="Shipment\Components\Helpers\AnalyzeChampXMLComponent.html" />
     <Content Include="Shipment\Components\MenuButtons\MasterActionConfirmationComponent.html" />
@@ -4571,6 +4573,8 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentINTTRA\Components\Wizard\SimulatorBookingComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentINTTRA\Components\Wizard\SimulatorBookingLoadComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\DepositionRequestComponent.ts" />
+    <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\ApprovePaymentBaseComponent.ts" />
+    <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\PrivateLabelApprovePaymentComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\UserIdNumberMobileComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\LogBoxPackagesComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\ECommercePaymentRequestMobileComponent.ts" />
@@ -7429,7 +7433,7 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\DenyReasonComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\PrivateLabelApprovebyMobileComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\TaxScreenComponent.ts" />
-    <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\PrivateLabelApprovePaymentComponent.ts" />
+    <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\DSVApprovePaymentComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\AddEditPrivateLabelShipmentComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\ListTemplates\TaskCellDisplayListTemplate.ts" />
     <TypeScriptCompile Include="Shipment\Components\MenuButtons\MasterActionConfirmationComponent.ts" />

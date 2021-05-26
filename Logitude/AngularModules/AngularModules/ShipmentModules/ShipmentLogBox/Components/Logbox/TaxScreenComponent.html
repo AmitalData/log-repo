@@ -198,10 +198,10 @@
                     <table>
                         <tr class="SimpleGridHeaderRow">
                             <td style="width: 90px; max-width: 90px;padding-right: 4px;">{{'Shipment.O.PLPayableTax' | TextCodeTranslationPipe}}</td>
-                            <td style="width: 110px; max-width: 110px;padding-right: 4px;">{{'Shipment.O.PLBasisCalculateTax' | TextCodeTranslationPipe}}</td>
+                            <td style="width: 110px; max-width: 110px;padding-right: 4px;" [hidden]="!IsDSV">{{'Shipment.O.PLBasisCalculateTax' | TextCodeTranslationPipe}}</td>
                             <td style="width: 90px; max-width: 90px;padding-right: 4px;">{{'Shipment.O.PLTaxToPay' | TextCodeTranslationPipe}}</td>
-                            <td style="width: 110px; max-width: 110px;padding-right: 4px;">{{'Shipment.O.PLTotalAmountToPay' | TextCodeTranslationPipe}}</td>
-                            <td style="width: 90px; max-width: 90px;padding-right: 4px;">{{'Shipment.O.PLRejectedTax' | TextCodeTranslationPipe}}</td>
+                            <td style="width: 110px; max-width: 110px;padding-right: 4px;" [hidden]="!IsDSV">{{'Shipment.O.PLTotalAmountToPay' | TextCodeTranslationPipe}}</td>
+                            <td style="width: 90px; max-width: 90px;padding-right: 4px;" [hidden]="!IsDSV">{{'Shipment.O.PLRejectedTax' | TextCodeTranslationPipe}}</td>
                             <td></td>
                             <!--<td class="LastChild">
         <div></div>
@@ -218,7 +218,7 @@
                                 {{item.Taxtypename }}
                             </td>
 
-                            <td class="CellStretched  TextTrimming" style="width: 110px; max-width: 110px;padding-right: 4px;">
+                            <td [hidden]="!IsDSV" class="CellStretched  TextTrimming" style="width: 110px; max-width: 110px;padding-right: 4px;">
                                 {{item.TaxBasis | CustomNumbersPipe:0}}
                             </td>
 
@@ -226,11 +226,11 @@
                                 {{item.TaxAmount | CustomNumbersPipe:0}}
                             </td>
 
-                            <td class="CellStretched  TextTrimming" style="width: 110px; max-width: 110px;padding-right: 4px;">
+                            <td [hidden]="!IsDSV" class="CellStretched  TextTrimming" style="width: 110px; max-width: 110px;padding-right: 4px;">
                                 {{item.TaxToPay | CustomNumbersPipe:0}}
                             </td>
 
-                            <td class="CellStretched  TextTrimming" style="width: 90px; max-width: 90px; text-align: right;padding-right: 4px;">
+                            <td [hidden]="!IsDSV" class="CellStretched  TextTrimming" style="width: 90px; max-width: 90px; text-align: right;padding-right: 4px;">
                                 {{item.TaxPostponed | CustomNumbersPipe:0}}
                             </td> 
                             <td><div></div></td>
@@ -247,10 +247,10 @@
                     <table>
                         <tr class="MySimpleGridViewFooter">
                             <td style="width: 90px; max-width: 90px;padding-right: 4px;">{{'Shipment.O.PLTotalTax' | TextCodeTranslationPipe}}</td>
-                            <td style="width: 110px; max-width: 110px;padding-right: 4px;">{{TotalTaxBasis | CustomNumbersPipe:0}}</td>
+                            <td style="width: 110px; max-width: 110px;padding-right: 4px;" [hidden]="!IsDSV">{{TotalTaxBasis | CustomNumbersPipe:0}}</td>
                             <td style="width: 90px; max-width: 90px;padding-right: 4px;">{{TotalTaxToPay | CustomNumbersPipe:0}}</td>
-                            <td style="width: 110px; max-width: 110px;padding-right: 4px;">{{TotalAmount | CustomNumbersPipe:0}}</td>
-                            <td style="width: 90px; max-width: 90px;padding-right: 4px;">{{TotalPostboned | CustomNumbersPipe:0}}</td> 
+                            <td style="width: 110px; max-width: 110px;padding-right: 4px;" [hidden]="!IsDSV">{{TotalAmount | CustomNumbersPipe:0}}</td>
+                            <td style="width: 90px; max-width: 90px;padding-right: 4px;" [hidden]="!IsDSV">{{TotalPostboned | CustomNumbersPipe:0}}</td> 
                         </tr>
                     </table>
                 </div>

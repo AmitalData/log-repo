@@ -194,7 +194,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       InvoiceCurrencyId = a.InvoiceCurrencyId,
                                       VatTypeId = a.VatTypeId,
                                       SearchFields = a.SearchFields,
-                                      Prefix = al.Prefix,
+                                      Prefix = al.Prefix,                                     
                                       ImageDetailId = a.ImageDetailId,
                                       AccountNumber = a.AccountNumber,
                                       BankName = a.BankName,
@@ -240,6 +240,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       RankId = a.Customer != null ? (a.Customer.Rank != null ? a.Customer.Rank.Id : null) : null,
                                       IndustryId = a.Customer != null ? (a.Customer.Industry != null ? a.Customer.Industry.Id : null) : null,
                                       BillToId = a.BillToId,
+                                      ICAO = al != null ? al.ICAO : "",
                                   }).FirstOrDefault();
 
 
@@ -333,6 +334,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   IsAutonomy = a.IsAutonomy,
                                   CreatedByPartner = a.CreatedByPartner,
                                   BillToId = a.BillToId,
+                                  ICAO = al != null ? al.ICAO : "",
                               }).FirstOrDefault();
 
                     if (entity != null)
