@@ -98,7 +98,7 @@
 
         <!-- References -->
         <div>
-            <div class="title">Customer Ref.  &nbsp;&nbsp;&nbsp;<a (click)="showMoreReferences=!showMoreReferences" style="cursor: pointer;text-decoration: underline;">{{showMoreReferences?'Show Less':'See all'}}</a>  </div>
+            <div class="title">Customer Ref.  &nbsp;&nbsp;&nbsp;<a *ngIf="!NoReferences" (click)="showMoreReferences=!showMoreReferences" style="cursor: pointer;text-decoration: underline;">{{showMoreReferences?'Show Less':'See all'}}</a>  </div>
             <ul *ngIf="showMoreReferences">
                 <li *ngFor="let ref of ShipmentReferences, let i = index">{{ref}}</li>
             </ul>

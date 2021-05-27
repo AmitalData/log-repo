@@ -39,7 +39,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
     ShipmentPackages: any[];
     DocumentsFilings: any[];
     PartnerCards: PartnerCard[] = [];
-
+    NoReferences: boolean = false;
     ShipmentCustomsData: CargoTrackingShipmentCustomsData;
     get tenant()
     {
@@ -123,6 +123,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
             if (this.ShipmentWithMilestones) {
                 this.Shipment = result;
                 this.ShipmentReferences = result.ShipmentList.CustomerReference ? result.ShipmentList.CustomerReference.split(',') : null;
+                this.NoReferences = this.ShipmentReferences == null ? true : false;
                 this.SetRoutingVariables();
                 this.GetShipmentPM();
                 this.GetShipmentCustomsData();
