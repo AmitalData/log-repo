@@ -494,7 +494,7 @@
 
         <div body>
             <a *ngIf="DocumentsFilings?.length > 0 " href="javascript:;" (click)="DownloadAllClick(Shipment.ShipmentList.EntityId)">Download all</a>
-            <div class="hide-mobile" style="min-width: 720px;width: calc(100% - 100px);">
+            <div class="hide-mobile hide-tablet" style="min-width: 720px;width: calc(100% - 100px);">
 
                 <table class="row-hover" style="width: 100%;">
                     <tr class="header">
@@ -522,15 +522,15 @@
                 </table>
 
             </div>
-            <div class="hide-mobile" style="clear: both;"></div>
+            <div class="hide-mobile hide-tablet" style="clear: both;"></div>
 
-            <div class="mobile-only">
+            <div class="mobile-only tablet-only">
                 <div class="card document-mobile-card" *ngFor="let item of DocumentsFilings">
                     <div class="details-section">
                         <div class="row" style="margin-bottom: 5px;">
                             <div class="col-50 card-title">type</div>
                             <div class="col-40 card-title">customs ref</div>
-                            <div class="col-10 text-end">
+                            <div class="col-10 text-end" (click)="item.ShowDetailsMenu=!item.ShowDetailsMenu">
                                 <a href="javascript:;" style="padding: 10px 3px 0px 13px;"><img src="./assets/images/icons/more.png" alt=""></a>
                             </div>
                         </div>
@@ -545,8 +545,17 @@
                         </div>
                     </div>
 
-                    <div class="notes-section">
+                    <div *ngIf="0" class="notes-section">
+                        hellow tester
                     </div>
+
+                    <details-menu
+                                    [Show]="item.ShowDetailsMenu"
+                                    [Toggle]="'ShowDetailsMenu'"
+                                    [DataContext]="item"
+                                    [MenuTitle]="item.DocumentTypeName"
+                                    [Buttons]="[{Code: 'download', Name:'Download'}]"
+                                    (ButtonClicked)="DownloadDocument(item.DocumentId)"></details-menu>
                 </div>
             </div>
         </div>

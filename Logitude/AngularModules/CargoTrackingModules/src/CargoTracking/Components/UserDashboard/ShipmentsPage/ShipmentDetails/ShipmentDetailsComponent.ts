@@ -187,7 +187,11 @@ export class ShipmentDetailsComponent implements AfterViewInit
     GetDocumentsFilingsConnectedToShipment() {
         this.cargoTrackingShipmentService.GetDocumentsFilingsConnectedToShipment(this.Shipment.ShipmentList.EntityId).subscribe((result: any) => {
             if (result) {
-                this.DocumentsFilings = result;
+                this.DocumentsFilings = result.map(d => (
+                    {
+                        ShowDetailsMenu: false,
+                        ...d }
+                    ));;
                 console.log("DocumentsFilings", this.DocumentsFilings);
                 this.isLoading = false;
 
@@ -705,7 +709,8 @@ export class ShipmentDetailsComponent implements AfterViewInit
     }
 
     DownloadDocument(document: string) {
-        this.documentDownloadService.DownloadPage(document);
+        if(document)
+            this.documentDownloadService.DownloadPage(document);
     }
 
     DownloadAllClick(entityId: string) {

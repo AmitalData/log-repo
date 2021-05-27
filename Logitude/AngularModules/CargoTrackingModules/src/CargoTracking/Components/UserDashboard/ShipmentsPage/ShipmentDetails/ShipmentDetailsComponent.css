@@ -635,6 +635,7 @@ h1 {
 .document-mobile-card{
     position: relative;
     padding: 0;
+    margin: 10px 0;
 }
 .row{
     display: flex;
