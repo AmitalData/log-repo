@@ -517,6 +517,11 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
             this.UIProperties.SetValidity("ChartOfAccountsId", this.ObjectTableName, true, "");
         }
 
+        if (this.EntityPM.ParentCurrencyId != null) {
+            this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
+            this.IsMultiCurrencyCheckboxEnabled=  false;
+        }
+
         if (this.EntityPM.RevenueExpenseType == "3") {
 
 
