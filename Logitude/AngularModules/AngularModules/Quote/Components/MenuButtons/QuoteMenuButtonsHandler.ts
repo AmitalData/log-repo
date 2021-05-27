@@ -13,7 +13,7 @@ import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
-import {AppTool} from '../../../Infrastructure/Tools';
+import {AppTool, ArrayTool} from '../../../Infrastructure/Tools';
 import {PartnersDomainService} from '../../../Common/Services/PartnersDomainService';
 import {CustomerPM} from '../../../Common/EntityPMs/CustomerPM';
 import {CustomerActivationArgs} from '../../../Common/Args';
@@ -1157,6 +1157,25 @@ export class QuoteMenuButtonsHandler {
                     displayUpdateMessage = true;
                 }
 
+                var PFCL_CostQuantity = ArrayTool.Sum(this.EntityPM.QuoteCharges.filter(d => d.CostCurrencyId != SessionLocator.LocalCurrencyId && d.CostMeasurementCode != "PFCL"), "CostTotalAmountLocal");
+                var PFCL_SaleQuantity = ArrayTool.Sum(this.EntityPM.QuoteCharges.filter(d => d.SaleCurrencyId != SessionLocator.LocalCurrencyId && d.SaleMeasurementCode != "PFCL"), "SaleTotalAmountLocal");;
+
+                if (AppTool.IsNullOrZero(PFCL_CostQuantity)) {
+                    PFCL_CostQuantity = 0;
+                }
+
+                if (AppTool.IsNullOrZero(PFCL_SaleQuantity)) {
+                    PFCL_SaleQuantity = 0;
+                }
+
+                if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "PFCL" && f.CostQuantity != null && f.CostQuantity != 0 && f.CostQuantity != PFCL_CostQuantity).length > 0) {
+                    displayUpdateMessage = true;
+                }
+
+                else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "PFCL" && f.SaleQuantity != null && f.SaleQuantity != 0 && f.SaleQuantity != PFCL_SaleQuantity).length > 0) {
+                    displayUpdateMessage = true;
+                }
+
                 if (this.EntityPM.QuoteCharges.filter(d => d.SaleUnitPrice != null || d.CostUnitPrice != null).length > 0) {
                     if (this.EntityPM.QuoteCharges.filter(d => (d.CostMeasurementCode == "PRVL" && d.CostQuantity != this.EntityPM.ValueOfGoods) || (d.CostMeasurementCode == "PRVL" && d.CostQuantity != this.EntityPM.ValueOfGoods)).length > 0) {
                         updateMessage = "Please update charge screen by pressing on \"Update\" button first";
@@ -1167,7 +1186,7 @@ export class QuoteMenuButtonsHandler {
                     }
                 }
 
-                if (displayUpdateMessage) {
+                if (displayUpdateMessage && AppTool.IsNullOrEmpty(updateMessage)) {
                     updateMessage = "Please update charge screen by pressing on \"Update\" button first";
                 }
 

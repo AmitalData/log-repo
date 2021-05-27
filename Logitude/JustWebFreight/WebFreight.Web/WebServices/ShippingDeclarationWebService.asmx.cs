@@ -49,6 +49,7 @@ namespace WebFreight.Web.WebServices
         private IWebFreightContext webfreightContext;
         private ShipmentPM shipment;
         private AddressRepository addressRepository;
+        private ContactRepository contactRepository;
         private CountryRepository countryRepository;
         
         [WebMethod]
@@ -87,7 +88,7 @@ namespace WebFreight.Web.WebServices
 
             PortRepository portRepository = new PortRepository(commonContext);
             addressRepository = new AddressRepository(commonContext);
-            ContactRepository contactRepository = new ContactRepository(commonContext);
+            contactRepository = new ContactRepository(commonContext);
             TenantRepository tenantRepository = new TenantRepository(commonContext);
             countryRepository = new CountryRepository(commonContext);
             CardQuery cardQuery = new CardQuery(tenant);
@@ -468,6 +469,7 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.Transshipment1ATD = shipment.Transshipment1ATD;
                 myDataProvider.Transshipment1ATA = shipment.Transshipment1ATA;
                 myDataProvider.AWBCommodityItemNumber = shipment.AWBCommodityItemNumber;
+                myDataProvider.SCI = shipment.SCI;
 
                 #region MasterAMSBL
                 var aMSBL_FromHouse = "";
@@ -2659,48 +2661,7 @@ namespace WebFreight.Web.WebServices
 
                 if (!string.IsNullOrEmpty(shipment.CustomerId))
                 {
-                    myDataProvider.CustomerReferenceNumber = shipment.CustomerReference1 != null ? shipment.CustomerReference1: "";
-
-                    Card customer = CardRepository.GetSingleCard(shipment.CustomerId, tenant, false);
-                    if (customer != null)
-                    {
-                        myDataProvider.CustomerVat = customer.VatNumber;
-                        myDataProvider.IRSPlace = customer.IRSPlace;
-                        myDataProvider.IRSNumber = customer.IRSNumber;
-                        myDataProvider.CustomerName = customer.EnglishName;
-                    }
-
-                    Address customerAddress = addressRepository.GetSingleAddress(shipment.CustomerAddressId, tenant);
-                    if (customerAddress != null)
-                    {
-                        myDataProvider.CustomerAddress = DataProviders.General.GetAddress(customerAddress);
-
-                        if (customerAddress.PhoneNumber != null || customerAddress.FaxNumber != null)
-                        {
-                            myDataProvider.CustomerAddress = myDataProvider.CustomerAddress + Environment.NewLine + (customerAddress.PhoneNumber != null ? "Tel: " + customerAddress.PhoneNumber + " " : "") + (customerAddress.FaxNumber != null ? "Fax: " + customerAddress.FaxNumber + " " : "");
-                        }
-                    }
-
-                    Contact customerContact = contactRepository.GetSingleContact(shipment.CustomerContactId, tenant);
-                    if (customerContact != null)
-                    {
-                        myDataProvider.ContactDetails = customerContact.EnglishName;
-
-                        if (!string.IsNullOrEmpty(customerContact.Email))
-                        {
-                            myDataProvider.ContactDetails = myDataProvider.ContactDetails + ", " + customerContact.Email;
-                        }
-
-                        if (!string.IsNullOrEmpty(customerContact.Mobile))
-                        {
-                            myDataProvider.ContactDetails = myDataProvider.ContactDetails + ", " + customerContact.Mobile;
-                        }
-
-                        if (!string.IsNullOrEmpty(customerContact.Fax))
-                        {
-                            myDataProvider.ContactDetails = myDataProvider.ContactDetails + ", " + customerContact.Fax;
-                        }
-                    }
+                    SetCustomerDetails(myDataProvider);
                 }
 
                 #endregion
@@ -3849,6 +3810,73 @@ namespace WebFreight.Web.WebServices
 
             return myDataProvider;
         }
+
+        private void SetCustomerDetails(ShippingDeclarationDataProvider myDataProvider)
+        {
+            myDataProvider.CustomerReferenceNumber = shipment.CustomerReference1 != null ? shipment.CustomerReference1 : "";
+
+            Card customer = CardRepository.GetSingleCard(shipment.CustomerId, tenant, false);
+            if (customer != null)
+            {
+                myDataProvider.CustomerVat = customer.VatNumber;
+                myDataProvider.IRSPlace = customer.IRSPlace;
+                myDataProvider.IRSNumber = customer.IRSNumber;
+                myDataProvider.CustomerName = customer.EnglishName;
+            }
+
+            Address address = addressRepository.GetSingleAddress(shipment.CustomerAddressId, tenant);
+            if (address != null)
+            {
+                myDataProvider.CustomerAddress1 = address.Address1;
+                myDataProvider.CustomerAddress2 = address.Address2;
+                myDataProvider.CustomerCity = address.City;
+                myDataProvider.CustomerTel = address.PhoneNumber;
+                myDataProvider.CustomerFax = address.FaxNumber;
+                myDataProvider.CustomerZipCode = address.ZipCode;
+
+                if (address.CountryId != null)
+                {
+                    Country country = countryRepository.GetSingleCountry(address.CountryId, tenant);
+                    if (country != null)
+                    {
+                        myDataProvider.CustomerCountry = country.EnglishName;
+                    }
+                }
+
+                myDataProvider.CustomerAddress = DataProviders.General.GetAddress(address);
+
+                if (address.PhoneNumber != null || address.FaxNumber != null)
+                {
+                    myDataProvider.CustomerAddress = myDataProvider.CustomerAddress + Environment.NewLine + (address.PhoneNumber != null ? "Tel: " + address.PhoneNumber + " " : "") + (address.FaxNumber != null ? "Fax: " + address.FaxNumber + " " : "");
+                }
+            }
+
+            Contact customerContact = contactRepository.GetSingleContact(shipment.CustomerContactId, tenant);
+            if (customerContact != null)
+            {
+                myDataProvider.CustomerContactEmail = customerContact.Email;
+                myDataProvider.CustomerContactMobile = customerContact.Mobile;
+                myDataProvider.CustomerContactPhone = customerContact.BusinessPhone;
+
+                myDataProvider.ContactDetails = customerContact.EnglishName;
+
+                if (!string.IsNullOrEmpty(customerContact.Email))
+                {
+                    myDataProvider.ContactDetails = myDataProvider.ContactDetails + ", " + customerContact.Email;
+                }
+
+                if (!string.IsNullOrEmpty(customerContact.Mobile))
+                {
+                    myDataProvider.ContactDetails = myDataProvider.ContactDetails + ", " + customerContact.Mobile;
+                }
+
+                if (!string.IsNullOrEmpty(customerContact.Fax))
+                {
+                    myDataProvider.ContactDetails = myDataProvider.ContactDetails + ", " + customerContact.Fax;
+                }
+            }
+        }
+
         private void ComputeLastToField(ShippingDeclarationDataProvider myDataProvider, ShipmentPickUpDelivery myLastDelivery)
         {
             if (myLastDelivery != null)

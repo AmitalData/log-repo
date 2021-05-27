@@ -10,6 +10,7 @@ import { PrivateLabelsBrandingDataService } from './PrivateLabels/Services/Priva
 import { BrandingDataService } from './PrivateLabels/Services/BrandingDataService';
 import { CommonModule } from '@angular/common';
 import { SessionInfo } from './SessionInfo';
+import { PrivateLabelsService } from './PrivateLabels/Services/PrivateLabelsService';
 export function getBaseUrl() {
     var logitudeURL = SessionInfo.GetLogitudeURL();
     return logitudeURL;
@@ -38,6 +39,7 @@ export var LogitudeLoginModuleAOT = (function () {
                         LoginService,
                         PasswordChangeService,
                         PrivateLabelsBrandingDataService,
+                        PrivateLabelsService,
                         BrandingDataService,
                         { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] }
                     ],

@@ -17,7 +17,6 @@ namespace WebFreight.Web.Helpers
         public bool IsChampLogin { get; set; }
         public bool IsMobile { get; set; }
         public string ClientType { get; set; }
-        public bool UseCaptcha { get; set; }
         public string CaptchaKey { get; set; }
         public string CaptchaCode { get; set; }
         public string PageName { get; set; }

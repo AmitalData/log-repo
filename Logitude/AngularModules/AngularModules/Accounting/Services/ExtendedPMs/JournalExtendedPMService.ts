@@ -8,6 +8,7 @@ import {JournalLinePM} from '../../EntityPMs/JournalLinePM';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators'
+import { ImageParameter } from '../../../Infrastructure/DataContracts/ImageParameter';
  
 
 @Injectable()
@@ -67,6 +68,21 @@ export class JournalExtendedPMService {
         }),
         catchError(ServiceHelper.HandleServiceError));
      
+
+    }
+    PostJournalAsCSV(fileUploadParamerter: ImageParameter) {
+
+        return this.httpClient.post(this._apiUrl + '/PostJournalAsCSV', JSON.stringify(fileUploadParamerter), ServiceHelper.GetHttpHeaders()).pipe(
+            map(response => {
+                var result = response;
+                var pmresponse: ServiceResponse;
+                pmresponse = new ServiceResponse();
+
+                pmresponse.Result = result;
+                return pmresponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+
 
     }
 

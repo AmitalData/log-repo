@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class JournalUpdateClass
    {  		
-		public const string HashString = "9f45316bad1ad416f74a10d98d55728d";
+		public const string HashString = "59685c71e1854f12e7dc4e4fbeff7e65";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3313,6 +3313,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 		   Feature JournalFeature_ExternalJournals = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExternalJournals", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.ExternalJournals", NameTextCodeDefaultText = @"External Journals" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,JournalObjectTable);
 
+		   Feature JournalFeature_LOADJOURNALCSV = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LOADJOURNALCSV", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.LOADJOURNALCSV", NameTextCodeDefaultText = @"Load Journal From CSV" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,JournalObjectTable);
+
    
 	    
 		}
@@ -3802,6 +3804,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode JournalTextCode_JournalMNote = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.Note", DefaultText = "Note",LocalDefaultText = @"הערת", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode JournalTextCode_JournalMLine = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.Line", DefaultText = "Line",LocalDefaultText = @"שורה", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalOLoadCsv = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.LoadCsv", DefaultText = "Load Journal from CSV",LocalDefaultText = @"טען פקודת יומן מ CSV", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
