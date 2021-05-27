@@ -44,7 +44,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours.Validat
             }
         }
 
-        private void ValidateShipperAndConsigneePartners(ShipmentPM entityPM, string partnerName, string partnerId)
+        private void ValidateShipperAndConsigneePartners(ShipmentPM entityPM, string partnerTypeName, string partnerId)
         {
             Card partner = this.Args.CardRepository.GetSingleCard(partnerId, entityPM.Tenant);
             if (partner != null)
@@ -55,7 +55,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours.Validat
                     {
                         if (IsPartnerNotCustomerAndAgent(partner))
                         {
-                            throw new ApplicationException(partnerName + " partner type should be agent or customer");
+                            throw new ApplicationException(partnerTypeName + " partner type should be agent or customer");
                         }
                     }
 
@@ -63,7 +63,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours.Validat
                     {
                         if (partner.PartnerTypeId != "AG")
                         {
-                            throw new ApplicationException(partnerName + " partner type should be agent");
+                            throw new ApplicationException(partnerTypeName + " partner type should be agent");
                         }
                     }
                 }
@@ -73,7 +73,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours.Validat
                     {
                         if (IsPartnerNotCustomerAndAgent(partner))
                         {
-                            SetShipperAndConsigneeValidationExceptionForDirectAndHouseShipment(entityPM, partner, partnerName);
+                            SetShipperAndConsigneeValidationExceptionForDirectAndHouseShipment(entityPM, partner, partnerTypeName);
                         }
                     }
 
@@ -81,25 +81,25 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours.Validat
                     {
                         if (partner.PartnerTypeId != "CS")
                         {
-                            SetShipperAndConsigneeValidationExceptionForDirectAndHouseShipment(entityPM, partner, partnerName);
+                            SetShipperAndConsigneeValidationExceptionForDirectAndHouseShipment(entityPM, partner, partnerTypeName);
                         }
                     }
                 }
             }
         }
 
-        private void SetShipperAndConsigneeValidationExceptionForDirectAndHouseShipment(ShipmentPM entityPM, Card card, string partnerName)
+        private void SetShipperAndConsigneeValidationExceptionForDirectAndHouseShipment(ShipmentPM entityPM, Card card, string partnerTypeName)
         {
             if (IsInlandDomesticShipment(entityPM))
             {
                 if (card.PartnerTypeId != "WH")
                 {
-                    throw new ApplicationException(partnerName + " partner type should be customer or Warehouse");
+                    throw new ApplicationException(partnerTypeName + " partner type should be customer or Warehouse");
                 }
             }
             else
             {
-                throw new ApplicationException(partnerName + " partner type should be customer");
+                throw new ApplicationException(partnerTypeName + " partner type should be customer");
             }
         }
 
