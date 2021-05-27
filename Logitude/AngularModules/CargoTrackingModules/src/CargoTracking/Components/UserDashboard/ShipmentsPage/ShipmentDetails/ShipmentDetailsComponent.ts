@@ -233,12 +233,14 @@ export class ShipmentDetailsComponent implements AfterViewInit
     }
 
     loadingCustomsData: boolean = false;
+    NoTaxDetails: boolean = false;
     GetShipmentCustomsData() {
         this.loadingCustomsData = true;
         this.cargoTrackingShipmentService.GetShipmentCustomsData(this.Shipment.ShipmentList.EntityId).subscribe((result: any) => {
             if (result) {
                 this.ShipmentCustomsData = result;
                 this.loadingCustomsData = false;
+                this.NoTaxDetails = this.ShipmentCustomsData.TaxDetails.length == 0 ? true : false;
             }
         }, () => {
             this.loadingCustomsData = false;

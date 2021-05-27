@@ -6,8 +6,8 @@
 <div *ngIf="isLoading"> <br>  Loading...</div>
 
 <div *ngIf="!isLoading" class="shipment-details-container">
-    <div style="padding: 16px 76px 0px 90px;background: RGB(242,244,247);color: var(--MainColor);">
-        <a href="javascript:;" (click)="BackLinkClicked()">Back to shipments</a>
+    <div style="padding: 16px 76px 0px 90px;background: RGB(242,244,247);">
+        <a style="color: var(--MainColor);" href="javascript:;" (click)="BackLinkClicked()">Back to shipments</a>
     </div>
 
     <!-- Shipment Header -->
@@ -335,7 +335,7 @@
 
     <panel style="order: 5;" [Title]="'Customs Data'"
            [Name]="'CustomsDataPanel'"
-           [HaveDetailsSection]="true"
+           [HaveDetailsSection]="!NoTaxDetails"
            [ShowWhitePanelOnMobile]="true"
            [DetailsTitle]="'Tax Details'">
 
