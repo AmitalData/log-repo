@@ -321,6 +321,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
     sliderCardWidth: number = 200;
     sliderVisibleCardsCount: number = 5;
     sliderVisibleCardsWidth: number = 0;
+    NoMilstonesFound: boolean = false;
     BuildSliderCards()
     {
         // this.Shipment.Milestones.forEach((milstone:Milestone) => {
@@ -333,7 +334,8 @@ export class ShipmentDetailsComponent implements AfterViewInit
         //     newCard.IsActive = milstone.Code == this.Shipment.ShipmentList.CurrentMilestoneCode;
         //     this.SliderCards.push(newCard);
         // });
-
+        this.SetNoMilstonesFound();
+      
         this.SliderCards = this.Shipment.Milestones
             .filter(milstone =>
             {
@@ -366,7 +368,9 @@ export class ShipmentDetailsComponent implements AfterViewInit
         //      return 0;
         //     });
     }
-
+    SetNoMilstonesFound() {
+        if (this.Shipment.Milestones.length == 0) this.NoMilstonesFound = true;
+    }
     MoveSlider(dir)
     {
 
