@@ -84,7 +84,7 @@ export class JournalCSVLoadComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     HasError: boolean;
     _LabelLog: string;
-    private _NewJournalPM: JournalPM;
+    public _NewJournalPM: JournalPM;
     constructor(private CD: ChangeDetectorRef, public entityListService: EntityListService) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
