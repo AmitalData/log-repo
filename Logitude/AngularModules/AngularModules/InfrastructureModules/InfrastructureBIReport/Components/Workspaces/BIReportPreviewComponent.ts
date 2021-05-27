@@ -73,6 +73,9 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     public ValidationErrorsList: string[] = [];
     public HasRunFeature: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    private hasFixedFilter = false;
+    private filterButtonTitle;
+     
     @Output() ComputeFiltersCommand = new EventEmitter();
     constructor() {
         super();
@@ -100,6 +103,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
                         temp.push(MyFilter);
                         //temp[0].FilterType = 'Ask User';
                         this.SelectedFiltersDataSource = temp;
+                        this.checkFixedFilter();
                         //this.SelectedDynamicFiltersDataSource = this.SelectedFiltersDataSource.filter(a => a.FilterType == "Ask User");
                     }
                 }
@@ -107,6 +111,22 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
             this.LoadBIReportData();
         }
     }
+    checkFixedFilter() { 
+        var isFixedFilter = false;
+        this.SelectedFiltersDataSource.forEach(item => {
+            if (item.FilterItems.some(a => a.filterType == "Fixed Filter")) isFixedFilter = true;
+        });
+        this.hasFixedFilter = isFixedFilter;
+        this.getFixedButtonTitle(); 
+    }
+    getFixedButtonTitle() {
+        var title = "Show fixed filters";
+        if (!this.hasFixedFilter) {
+            title = "No available fixed filters"
+        }
+        this.filterButtonTitle = title;
+    } 
+
     public Run(args: any) {
         this.InitializeServices();
         this.DWQueryId = args['DWQueryId'];
@@ -691,6 +711,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
                         temp.push(MyFilter);
                         //temp[0].FilterType = 'Ask User';
                         this.SelectedFiltersDataSource = temp;
+                        this.checkFixedFilter();
                         //this.SelectedDynamicFiltersDataSource = this.SelectedFiltersDataSource.filter(a => a.FilterType == "Ask User");
                     }
                     else {
