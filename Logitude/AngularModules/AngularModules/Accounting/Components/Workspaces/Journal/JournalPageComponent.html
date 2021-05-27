@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .SquareIcon {
         width: 10px;
@@ -137,7 +137,12 @@
                                                                 <p class="QueryLink" (click)="ViewRevaluationQuery()">{{'Revaluation.Q.AllRevaluations' | TextCodeTranslationPipe}}</p>
                                                             </td>
                                                         </tr>
-
+                                                        <tr *ngIf="LoadCVS_JournalsVisibility">
+                                                            <td style="width:190px;" (click)="LoadJournalFromFile()">
+                                                                <span class="QueryLink" >{{'Journal.Features.LOADJOURNALCSV' | TextCodeTranslationPipe}}</span><span><img src="./Images/Buttons/excelicon.png" /></span>
+                                                                
+                                                            </td>
+                                                        </tr>
                                                     </table>
                                                 </div>
                                             </div>
