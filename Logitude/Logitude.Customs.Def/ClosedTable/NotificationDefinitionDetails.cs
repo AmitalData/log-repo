@@ -502,7 +502,7 @@ namespace Logitude.Customs.Def.ClosedTable
             {
                 Code = "5117N",
                 EnglishName = "Declaration Changed By Customs",
-                LocalName = "בוצע תיקון הצהרה ע'י המכס",
+                LocalName = "בוצע תיקון הצהרה",
                 AssigneeNotificationTypeCode = "A",
             });
 
