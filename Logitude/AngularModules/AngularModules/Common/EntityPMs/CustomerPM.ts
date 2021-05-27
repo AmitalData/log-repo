@@ -1318,6 +1318,11 @@ export class CustomerPM {
     public set CreditLimitAmount(newValue: number) { if (this.creditLimitAmount != newValue) { this.creditLimitAmount = newValue; this.MarkAsDirty("CreditLimitAmount"); } }
        
 	 
+    private insuredcreditLimit: number;
+    public get InsuredcreditLimit() { return this.insuredcreditLimit; }
+    public set InsuredcreditLimit(newValue: number) { if (this.insuredcreditLimit != newValue) { this.insuredcreditLimit = newValue; this.MarkAsDirty("InsuredcreditLimit"); } }
+       
+	 
     private creditLimitOpenBalance: number;
     public get CreditLimitOpenBalance() { return this.creditLimitOpenBalance; }
     public set CreditLimitOpenBalance(newValue: number) { if (this.creditLimitOpenBalance != newValue) { this.creditLimitOpenBalance = newValue; this.MarkAsDirty("CreditLimitOpenBalance"); } }

@@ -95,30 +95,8 @@ namespace WebFreight.Web.App_Code
         {
             try
             {
-                PrivateLableResult PrivateLableArgs = new PrivateLableResult();
                 //var URL = SecurityUtility.getLoggedDomain();
-                if (!url.Contains("system.logitudeworld.com") && !url.Contains("system.logbox.co.il") && !url.Contains("cloud.amital.co.il"))
-                {
-                    TenantManagmentPrivateLabelsQuery query = new TenantManagmentPrivateLabelsQuery(0);
-                    var privatelabel = query.GetSingleActivePMByUrl(url);
-                    if (privatelabel != null)
-                    {
-                        PrivateLableArgs.Id = privatelabel.Id;
-                        PrivateLableArgs.PrivateLabelName = privatelabel.PrivateLabelName;
-                        PrivateLableArgs.PrivateLabelShortName = privatelabel.PrivateLabelShortName;
-                        PrivateLableArgs.PrivateLabelUrl = privatelabel.PrivateLabelUrl;
-                        PrivateLableArgs.PrivateLabelDomain = privatelabel.PrivateLabelDomain;
-                        PrivateLableArgs.MainLogo = privatelabel.MainLogo;
-                        PrivateLableArgs.ContactUsEmail = privatelabel.ContactUsEmail;
-                        PrivateLableArgs.EnablePrivateLable = true;
-                        PrivateLableArgs.SmallLogoURL = GetPrivateLabelSmallLogoUri(privatelabel.SmallLogo,24,24);
-                        PrivateLableArgs.LogoURL = GetPrivateLabelSmallLogoUri(privatelabel.MainLogo,290,114);
-                    }
-                    else
-                    {
-                        PrivateLableArgs.EnablePrivateLable = false;
-                    }
-                }
+                PrivateLableResult PrivateLableArgs = MapPrivateLableArgs(url);
                 return PrivateLableArgs;
             }
 
@@ -127,6 +105,51 @@ namespace WebFreight.Web.App_Code
                 ExceptionHandler.HandleException(e, DateTime.Now, 0, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "", "PrivateLableController : GetIsPrivateLableUrl Method", null);
                 return null;
             }
+        }
+
+        public PrivateLableResult GetIsPrivateLableByLoggedDomain()
+        {
+            try
+            {
+                string url = SecurityUtility.getLoggedDomain();
+                PrivateLableResult PrivateLableArgs = MapPrivateLableArgs(url);
+                return PrivateLableArgs;
+            }
+
+            catch (Exception e)
+            {
+                ExceptionHandler.HandleException(e, DateTime.Now, 0, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "", "PrivateLableController : GetIsPrivateLableUrl Method", null);
+                return null;
+            }
+        }
+
+        private PrivateLableResult MapPrivateLableArgs(string url)
+        {
+            PrivateLableResult PrivateLableArgs = new PrivateLableResult();
+            if (!url.Contains("system.logitudeworld.com") && !url.Contains("system.logbox.co.il") && !url.Contains("cloud.amital.co.il"))
+            {
+                TenantManagmentPrivateLabelsQuery query = new TenantManagmentPrivateLabelsQuery(0);
+                var privatelabel = query.GetSingleActivePMByUrl(url);
+                if (privatelabel != null)
+                {
+                    PrivateLableArgs.Id = privatelabel.Id;
+                    PrivateLableArgs.PrivateLabelName = privatelabel.PrivateLabelName;
+                    PrivateLableArgs.PrivateLabelShortName = privatelabel.PrivateLabelShortName;
+                    PrivateLableArgs.PrivateLabelUrl = privatelabel.PrivateLabelUrl;
+                    PrivateLableArgs.PrivateLabelDomain = privatelabel.PrivateLabelDomain;
+                    PrivateLableArgs.MainLogo = privatelabel.MainLogo;
+                    PrivateLableArgs.ContactUsEmail = privatelabel.ContactUsEmail;
+                    PrivateLableArgs.EnablePrivateLable = true;
+                    PrivateLableArgs.SmallLogoURL = GetPrivateLabelSmallLogoUri(privatelabel.SmallLogo, 24, 24);
+                    PrivateLableArgs.LogoURL = GetPrivateLabelSmallLogoUri(privatelabel.MainLogo, 290, 114);
+                }
+                else
+                {
+                    PrivateLableArgs.EnablePrivateLable = false;
+                }
+            }
+
+            return PrivateLableArgs;
         }
 
 
