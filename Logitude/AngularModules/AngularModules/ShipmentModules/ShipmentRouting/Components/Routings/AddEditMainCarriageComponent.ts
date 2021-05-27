@@ -1793,18 +1793,18 @@ export class AddEditMainCarriageComponent extends BaseComponent {
                 }
             }
 
-            var deleteProductItems: boolean = false
+            var updateProductItems: boolean = false
             if (this.oldCountryId != this.EntityPM.ToCountryId) {
                 if (this.EntityPM.ShipmentProductItems.length > 0) {
                     isConfirmingPorts = true;
-                    deleteProductItems = true;
+                    updateProductItems = true;
 
                     if (AppTool.IsNullOrEmpty(confirmationMessage)) {
-                        confirmationMessage = "All product items in this shipment will be deleted";
+                        confirmationMessage = "All product items in this shipment will be updated";
                     }
 
                     else {
-                        confirmationMessage = confirmationMessage + ", " + "All product items in this shipment will be deleted";
+                        confirmationMessage = confirmationMessage + ", " + "All product items in this shipment will be updated";
                     }
                 }
             }
@@ -1815,8 +1815,8 @@ export class AddEditMainCarriageComponent extends BaseComponent {
                 confirmWindow.Show(confirmationMessage);
                 confirmWindow.WindowClosed.subscribe((event: any) => {
                     if (confirmWindow.Yes) {
-                        if (deleteProductItems) {
-                            this.EntityPM.ShipmentProductItems = [];
+                        if (updateProductItems) {
+                            this.EntityPM.IsProductItemsUpdated = true;
                         }
 
                         if (!this.SaveCompletedEvent) {
@@ -1828,8 +1828,8 @@ export class AddEditMainCarriageComponent extends BaseComponent {
                                 if (isSaveSuccess) {
                                     this.CurrentSession.SessionEvent.emit("ReloadHouses");
 
-                                    if (deleteProductItems) {
-                                        this.CurrentSession.FireEvent("ShipmentProductItemsDeleted");
+                                    if (updateProductItems) {
+                                        this.CurrentSession.FireEvent("ShipmentProductItemsUpdated");
                                     }
 
                                     this.CloseOk();

@@ -4923,6 +4923,11 @@ export class ShipmentPM {
     public get DocumentFilingIds() { return this.documentFilingIds; }
     public set DocumentFilingIds(newValue: string) { if (this.documentFilingIds != newValue) { this.documentFilingIds = newValue; this.MarkAsDirty("DocumentFilingIds"); } }
 
+    private isProductItemsUpdated: boolean;
+    public get IsProductItemsUpdated() { return this.isProductItemsUpdated; }
+    public set IsProductItemsUpdated(newValue: boolean) { if (this.isProductItemsUpdated != newValue) { this.isProductItemsUpdated = newValue; this.MarkAsDirty("IsProductItemsUpdated"); } }
+
+
 
 
     public OldEntityPM: ShipmentPM;

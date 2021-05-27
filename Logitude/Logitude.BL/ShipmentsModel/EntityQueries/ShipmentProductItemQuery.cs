@@ -23,11 +23,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             this.repository = repository;
         }
 
-        public ShipmentProductItemPM GetSinglePM(string shipmentId, int tenant)
+        public ShipmentProductItemPM GetSinglePM(string id, int tenant)
         {
             ShipmentProductItemPM myResult
                 = (from a in repository.context.ShipmentProductItems
-                   where a.ShipmentId == shipmentId && a.Tenant == tenant
+                   where a.Id == id && a.Tenant == tenant
                    select new ShipmentProductItemPM()
                    {
                        Id = a.Id,
@@ -37,7 +37,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        Description = a.Description,
                        HTSCode = a.HTSCode,
                        SKU = a.SKU,
-                       ApprovedByCustomer = a.ApprovedByCustomer
+                       ApprovedByCustomer = a.ApprovedByCustomer,
+                       Brand = a.Brand,
+                       Name = a.Name,
                    }).FirstOrDefault();
 
             return myResult;
@@ -45,7 +47,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         public List<ShipmentProductItemPM> GetShipmentProductItems(string shipmentId, int tenant)
         {
-            List<ShipmentProductItemPM> shipmentAssembleies
+            List<ShipmentProductItemPM> shipmentProductItems
                 = (from a in repository.context.ShipmentProductItems
                    where a.ShipmentId == shipmentId && a.Tenant == tenant
                    select new ShipmentProductItemPM()
@@ -57,10 +59,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        Description = a.Description,
                        HTSCode = a.HTSCode,
                        SKU = a.SKU,
-                       ApprovedByCustomer = a.ApprovedByCustomer
+                       ApprovedByCustomer = a.ApprovedByCustomer,
+                       Brand = a.Brand,
+                       Name = a.Name,
                    }).ToList();
 
-            return shipmentAssembleies;
+            return shipmentProductItems;
         }
     }
 }

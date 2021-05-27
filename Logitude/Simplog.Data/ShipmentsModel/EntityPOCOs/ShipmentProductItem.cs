@@ -14,6 +14,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string HTSCode { get; set; }
         public string SKU { get; set; }
         public bool ApprovedByCustomer { get; set; }
+        public string Brand { get; set; }
+        public string Name { get; set; }
         public virtual ProductItem ProductItem { get; set; }
         public virtual Shipment Shipment { get; set; }
     }

@@ -30,6 +30,7 @@ export class EditCustomerProductItemComponent extends BaseComponent {
     private maxHTSCodesLineNumber: number = 0;
     constructor() {
         super();
+        this.HTSCodes = new ObservableCollection([]);
     }
 
     SetWindowArgs(windowArgs: any) {

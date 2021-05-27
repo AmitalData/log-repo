@@ -1947,11 +1947,11 @@ export class PartnersDomainService {
         return entityPM;
     }
 
-    GetCustomerProductItemHTSCode(productItemId: string, dischargePortCountryId: string) {
+    GetCustomerProductItemHTSCodeByCountry(productItemId: string, dischargePortCountryId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        var url = this._apiUrl + '/GetCustomerProductItemHTSCode?productItemId=' + productItemId + "&dischargePortCountryId=" + dischargePortCountryId;
+        var url = this._apiUrl + '/GetCustomerProductItemHTSCodeByCountry?productItemId=' + productItemId + "&dischargePortCountryId=" + dischargePortCountryId;
 
         return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {

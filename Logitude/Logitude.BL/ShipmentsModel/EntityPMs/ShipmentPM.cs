@@ -2653,6 +2653,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string WarehouseLegLocalName { get; set; }
         public string WarehouseLegEnglishName { get; set; }
         public bool IsHTSMissing { get; set; }
+        public bool IsProductItemsUpdated { get; set; }
 
         private List<ShipmentProductItemPM> shipmentProductItems;
         [Include]

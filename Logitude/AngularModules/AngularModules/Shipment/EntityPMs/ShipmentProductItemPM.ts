@@ -68,6 +68,16 @@ export class ShipmentProductItemPM {
     public set ApprovedByCustomer(newValue: boolean) { if (this.approvedByCustomer != newValue) { this.approvedByCustomer = newValue; this.MarkAsDirty("ApprovedByCustomer"); } }
        
 	 
+    private brand: string;
+    public get Brand() { return this.brand; }
+    public set Brand(newValue: string) { if (this.brand != newValue) { this.brand = newValue; this.MarkAsDirty("Brand"); } }
+       
+	 
+    private name: string;
+    public get Name() { return this.name; }
+    public set Name(newValue: string) { if (this.name != newValue) { this.name = newValue; this.MarkAsDirty("Name"); } }
+       
+	 
     private changeSetOp: string;
     public get ChangeSetOp() { return this.changeSetOp; }
     public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }

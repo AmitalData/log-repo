@@ -19,6 +19,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string HTSCode { get; set; }
         public string SKU { get; set; }
         public bool ApprovedByCustomer { get; set; }
+        public string Brand { get; set; }
+        public string Name { get; set; }
         public ChangeSetOperation ChangeSetOp { get; set; }
     }
 }

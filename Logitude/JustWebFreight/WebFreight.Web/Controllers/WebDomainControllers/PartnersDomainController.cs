@@ -2577,7 +2577,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        public HttpResponseMessage GetCustomerProductItemHTSCode(string productItemId, string dischargePortCountryId)
+        public HttpResponseMessage GetCustomerProductItemHTSCodeByCountry(string productItemId, string dischargePortCountryId)
         {
             try
             {
@@ -2586,16 +2586,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
-                HTSCodeRepository hTSCodeRepository = new HTSCodeRepository(tenant);
-                HTSCode hTSCodePOCO = hTSCodeRepository.GetSingleHTSCodeByProductItemAndCountry(productItemId, dischargePortCountryId, tenant);
+                HTSCodeQuery hTSCodeQuery = new HTSCodeQuery(tenant);
+                HTSCodePM hTSCode = hTSCodeQuery.GetSingleHTSCodeByProductItemAndCountry(productItemId, dischargePortCountryId, tenant);
 
-                string htsCode = null;
-                if(hTSCodePOCO != null)
-                {
-                    htsCode = hTSCodePOCO.Code;
-                }
-
-                return Request.CreateResponse(HttpStatusCode.OK, htsCode);
+                return Request.CreateResponse(HttpStatusCode.OK, hTSCode);
             }
 
             catch (Exception ex)

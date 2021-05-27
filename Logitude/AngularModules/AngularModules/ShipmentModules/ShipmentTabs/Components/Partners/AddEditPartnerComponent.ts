@@ -5,6 +5,7 @@ import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 
 @Component({
     
@@ -18,7 +19,6 @@ export class AddEditPartnerComponent implements OnInit {
     public ObjectTableName: string = "Shipment";
     private isMyCustomer: boolean = false;
     private oldCustomerPartnerId: string = null;
-    private oldConsigneeId: string = null;
     public ValidationErrorsList: string[];
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
@@ -34,7 +34,6 @@ export class AddEditPartnerComponent implements OnInit {
         this.EntityPM = dataContext.EntityPM;
         this.isMyCustomer = dataContext.IsCustomer;
         this.oldCustomerPartnerId = this.EntityPM.CustomerId;
-        this.oldConsigneeId = this.EntityPM.ConsigneeId;
         this.Clone();
     }
 
@@ -42,6 +41,8 @@ export class AddEditPartnerComponent implements OnInit {
         this.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
     }
+
+    private showDeleteProductItemsConfirmWindow: boolean = false;
     OkButtonClicked() {
         this.ValidationErrorsList = [];
 
@@ -123,25 +124,32 @@ export class AddEditPartnerComponent implements OnInit {
 
                 if (this.oldCustomerPartnerId != this.EntityPM.CustomerId) {
                     this.DataContext.fatherComponent.OnCustomerChanged();
+
+                    if (this.EntityPM.ShipmentProductItems.length > 0) {
+                        this.showDeleteProductItemsConfirmWindow = true;
+                    }                    
                 }
             }
 
-            if (this.oldConsigneeId != this.EntityPM.ConsigneeId) {
-                if (this.DataContext.Code == "CONSI" && this.EntityPM.ShipmentProductItems.length > 0) {
-                    this.ShowDeleteProductItemsConfirmation();
-                }
+            if (this.showDeleteProductItemsConfirmWindow) {
+                this.ShowDeleteProductItemsConfirmation();
             }
 
-            this.CurrentSession.CloseCurrentWindowEmit("OK");
-            this.CurrentSession.FireEvent("ShipmentPartnersChanged");
+            else {
+                this.CurrentSession.CloseCurrentWindowEmit("OK");
+                this.CurrentSession.FireEvent("ShipmentPartnersChanged");
+            }
         }
     }
     ShowDeleteProductItemsConfirmation() {
-        var messageWindow = new MessageWindow();
-        messageWindow.Show("All product items in this shipment will be deleted");
-        messageWindow.WindowClosed.subscribe((event: any) => {
-            this.EntityPM.ShipmentProductItems = [];
-            this.CurrentSession.FireEvent("ShipmentPartnersChanged");
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Show("All product items in this shipment will be deleted");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.EntityPM.ShipmentProductItems = [];
+                this.CurrentSession.CloseCurrentWindowEmit("OK");
+                this.CurrentSession.FireEvent("ShipmentPartnersChanged");
+            }
         });
     }
 

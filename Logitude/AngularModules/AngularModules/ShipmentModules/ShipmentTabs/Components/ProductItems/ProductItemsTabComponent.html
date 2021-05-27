@@ -1,6 +1,6 @@
 
 <div class="TabHolder">
-    <table>
+    <table *ngIf="IsResourcesReady">
         <tr class="TabTitleRow">
             <td>
                 <table>
@@ -20,11 +20,11 @@
                 <div class="MediaFill" style="overflow-x: hidden;">
                     <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ProductItems" [Disabled]="!IsEditingEnabled" (RowEnded)="OnRowEnded($event)">
 
-                        <log-column [header]="'Item Code'" [width]="'150'" [Alignment]="'left'">
+                        <log-column [header]="'Product Item'" [width]="'150'" [Alignment]="'left'">
                             <ng-template let-item>
                                 <log-cell-template #logcelltemplate [IsEnabled]="IsEditingEnabled">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                                        <span>{{item.SKU}}</span>
+                                        <span>{{item.Name}}</span>
                                     </div>
                                     <div *ngIf="logcelltemplate.IsEditMode">
                                         <LogLov [ObjectFieldName]="'ProductItemId'"
@@ -36,9 +36,25 @@
                                                 (SelectedItemChanged)="item.ProductItem = $event"
                                                 [SelectedValue]="item.ProductItemId"
                                                 [DependencyFilter1Value]="CustomerId"
-                                                [FocusOnMe]="'true'">
+                                                [FocusOnMe]="true">
                                         </LogLov>
                                     </div>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+
+                        <log-column [header]="'SKU'" [width]="'150'" [Alignment]="'left'">
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate>
+                                    <span>{{item.SKU}}</span>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+
+                        <log-column [header]="'Brand'" [width]="'150'" [Alignment]="'left'">
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate>
+                                    <span>{{item.Brand}}</span>
                                 </log-cell-template>
                             </ng-template>
                         </log-column>
@@ -46,7 +62,7 @@
                         <log-column [header]="'Description'" [width]="'150'" [Alignment]="'left'">
                             <ng-template let-item>
                                 <log-cell-template #logcelltemplate>
-                                    <span>{{item.Description}}</span>                                    
+                                    <span>{{item.Description}}</span>
                                 </log-cell-template>
                             </ng-template>
                         </log-column>
@@ -54,11 +70,22 @@
                         <log-column [header]="'HTS Code'" [width]="'120'" [Alignment]="'left'">
                             <ng-template let-item>
                                 <log-cell-template #logcelltemplate>
-                                   <span>{{item.HTSCode}}</span>
+                                    <span>{{item.HTSCode}}</span>
                                 </log-cell-template>
                             </ng-template>
                         </log-column>
 
+                        <log-column [header]="'Approved'" [width]="'80'" [Alignment]="'left'">
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate>
+                                    <div style="height: 100%; width: 100%; position:relative;">
+                                        <div class="CenterCenter" style="width: 16px;">
+                                            <img *ngIf="item.ApprovedByCustomer" class="CenterCenter" src="./Images/GreenTick.png" />
+                                        </div>
+                                    </div>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
 
                         <!-- Buttons -->
                         <log-column [width]="'60'" [Alignment]="'left'">

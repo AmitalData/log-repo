@@ -38,7 +38,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             if (entityPoco != null)
             {
                 CountryQuery countryQuery = new CountryQuery(tenant);
-                CountryPM destinationCountry = countryQuery.GetSinglePM(entityPoco.DestinationCountryId,tenant);
+                CountryPM destinationCountry = countryQuery.GetSinglePM(entityPoco.DestinationCountryId, tenant);
                 result = new HTSCodePM()
                 {
                     Id = entityPoco.Id,
@@ -46,7 +46,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     Code = entityPoco.Code,
                     ItemId = entityPoco.ItemId,
                     DestinationCountryId = entityPoco.DestinationCountryId,
-                    CountryEnglishName = destinationCountry != null?destinationCountry.EnglishName:"",
+                    CountryEnglishName = destinationCountry != null ? destinationCountry.EnglishName : "",
                     ApprovedByCustomer = entityPoco.ApprovedByCustomer,
                     InActive = entityPoco.InActive,
                     LineNumber = entityPoco.LineNumber,
@@ -59,17 +59,17 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public IQueryable<HTSCodeList> GetIQueryableEntityList(IQueryable<HTSCode> iQueryable)
         {
             IQueryable<HTSCodeList> result = from entity in iQueryable
-                                               select new HTSCodeList()
-                                               {
-                                                   Id = entity.Id,
-                                                   Tenant = entity.Tenant,
-                                                   Code = entity.Code,
-                                                   ItemId = entity.ItemId,
-                                                   DestinationCountryId = entity.DestinationCountryId,
-                                                   ApprovedByCustomer = entity.ApprovedByCustomer,
-                                                   InActive = entity.InActive,
-                                                   LineNumber = entity.LineNumber,
-                                               };
+                                             select new HTSCodeList()
+                                             {
+                                                 Id = entity.Id,
+                                                 Tenant = entity.Tenant,
+                                                 Code = entity.Code,
+                                                 ItemId = entity.ItemId,
+                                                 DestinationCountryId = entity.DestinationCountryId,
+                                                 ApprovedByCustomer = entity.ApprovedByCustomer,
+                                                 InActive = entity.InActive,
+                                                 LineNumber = entity.LineNumber,
+                                             };
             return result;
         }
 
@@ -91,6 +91,24 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         }).ToList();
 
             return hTSCodes;
-        }       
+        }
+
+        public HTSCodePM GetSingleHTSCodeByProductItemAndCountry(string itemId, string countryId, int tenant)
+        {
+            return (from a in repository.context.HTSCodes.Include("Country")
+                    where a.ItemId == itemId && a.DestinationCountryId == countryId && a.Tenant == tenant && !a.InActive
+                    select new HTSCodePM()
+                    {
+                        Id = a.Id,
+                        Tenant = a.Tenant,
+                        Code = a.Code,
+                        ItemId = a.ItemId,
+                        DestinationCountryId = a.DestinationCountryId,
+                        CountryEnglishName = a.Country == null ? null : a.Country.EnglishName,
+                        ApprovedByCustomer = a.ApprovedByCustomer,
+                        InActive = a.InActive,
+                        LineNumber = a.LineNumber,
+                    }).FirstOrDefault();
+        }
     }
 }

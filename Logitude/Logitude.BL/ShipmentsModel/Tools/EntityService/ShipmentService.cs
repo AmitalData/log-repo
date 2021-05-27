@@ -413,6 +413,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     this.initializer.HandleComposition();
 
+                    this.UpdateShipmentProductItems();
+                    this.ComputeIsHTSMissingField();
+
                     this.UpdateShipmentPackagesCollection();
                     this.UpdateShipmentPickUpsCollection();
                     this.UpdateShipmentDeliveriesCollection();
@@ -427,7 +430,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.UpdateShipmentAssembliesCollection();
                     this.UpdateShipmentStoragePricingsCollection();
                     this.UpdateShipmentProductItemsCollection();
-
                     this.InitializeBookingData();
                     this.RemoveDeletedItemsFromEntityPM();
 
@@ -470,8 +472,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.BuildShipmentExternalUpdate();
                     this.ComputeIsAssemblyField();
                     this.ComputeFinalDestination();
-                    this.CheckUpdatingMasterHouses();
-                    this.ComputeIsHTSMissingField();
+                    this.CheckUpdatingMasterHouses();                    
 
                     shipmentBehaviourFacade = new ShipmentBehaviourFacade(entityPM, objectContext, UpdatedShipmentComputedFields, isNewEntity);
                     shipmentBehaviourFacade.Handle();
@@ -6796,6 +6797,26 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 tariffRepository.Update(tariff);
                 tariffRepository.SubmitChanges();
 
+            }
+        }
+
+        private void UpdateShipmentProductItems()
+        {
+            if (entityPM.IsProductItemsUpdated)
+            {
+                HTSCodeQuery hTSCodeQuery = new HTSCodeQuery(tenant);
+                foreach (ShipmentProductItemPM productItem in this.entityPM.ShipmentProductItems.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete))
+                {
+                    HTSCodePM hTSCodePM = hTSCodeQuery.GetSingleHTSCodeByProductItemAndCountry(productItem.ProductItemId, entityPM.ToCountryId, tenant);
+                    if(hTSCodePM != null)
+                    {
+                        productItem.HTSCode = hTSCodePM.Code;
+                        productItem.ApprovedByCustomer = hTSCodePM.ApprovedByCustomer;
+                        productItem.ChangeSetOp = ChangeSetOperation.Update;
+                    }
+                }
+
+                entityPM.IsProductItemsUpdated = false;
             }
         }
         private void ComputeIsHTSMissingField()
