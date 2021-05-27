@@ -39,6 +39,9 @@ export class ShipmentDetailsComponent implements AfterViewInit
     ShipmentPackages: any[];
     DocumentsFilings: any[];
     PartnerCards: PartnerCard[] = [];
+    InlandTransportMode = 'I';
+    OceanTransportMode = 'O';
+    AirTransportMode = 'A';
 
     ShipmentCustomsData: CargoTrackingShipmentCustomsData;
     get tenant()
@@ -671,16 +674,16 @@ export class ShipmentDetailsComponent implements AfterViewInit
 
     InitRoutes()
     {
-        this.SetShipmentPickUpsRoutes();
-        this.SetWarehouseLegRoutes();
-        this.SetMainCarriageLegsRoutes();
-        this.SetShipmentDeliveriesRoutes();
+        this.CreatePickupsRoutesFromShipmentPM();
+        this.CreateWarehouseLegRoutesFromShipmentPM();
+        this.CreateMainCarriageLegsRoutesFromShipmentPM();
+        this.CreateShipmentDeliveriesRoutesFromShipmentPM();
     }
 
-    private SetShipmentPickUpsRoutes() {
+    private CreatePickupsRoutesFromShipmentPM() {
         for (let i = 0; i < this.ShipmentPM.ShipmentPickUps.length; i++) {
             var step = new RoutingStep();
-            step.TransportModeCode = 'I';
+            step.TransportModeCode = this.InlandTransportMode;
             step.Description = "Via "+this.ShipmentPM.ShipmentPickUps[i].CarrierName;
 
             this.SetFromAndToLabelsForShipmentPickUpsRoutes(i, step);
@@ -690,9 +693,9 @@ export class ShipmentDetailsComponent implements AfterViewInit
         }
     }
 
-    private SetWarehouseLegRoutes() {
+    private CreateWarehouseLegRoutesFromShipmentPM() {
         var step = new RoutingStep();
-        step.TransportModeCode = 'I';
+        step.TransportModeCode = this.InlandTransportMode;
         step.Description = this.ShipmentPM.WarehouseLegRemarks == null ? "WarehouseLeg" : this.ShipmentPM.WarehouseLegRemarks;
         step.FromPortLabel = this.ShipmentPM.WarehouseLegTerminalName;
 
@@ -701,7 +704,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
         this.ShipmentRouteSteps.push(step);
     }
 
-    private SetMainCarriageLegsRoutes() {
+    private CreateMainCarriageLegsRoutesFromShipmentPM() {
         for (let i = 0; i < this.ShipmentPM.MainCarriageLegs.length; i++) {
             var step = new RoutingStep();
             step.TransportModeCode = this.ShipmentPM.TransportModeId;
@@ -715,10 +718,10 @@ export class ShipmentDetailsComponent implements AfterViewInit
         }
     }
 
-    private SetShipmentDeliveriesRoutes() {
+    private CreateShipmentDeliveriesRoutesFromShipmentPM() {
         for (let i = 0; i < this.ShipmentPM.ShipmentDeliveries.length; i++) {
             var step = new RoutingStep();
-            step.TransportModeCode = 'I';
+            step.TransportModeCode = this.InlandTransportMode;
             step.Description = "Via " + this.ShipmentPM.ShipmentDeliveries[i].CarrierName;
             step.FromPortLabel = this.ShipmentPM.ShipmentDeliveries[i].FromPortCode;
             step.ToPortLabel = this.ShipmentPM.ShipmentDeliveries[i].ToPortCode;
@@ -848,7 +851,7 @@ export class RoutingStep
     ToolTipFromPortLabel;
     ToolTipToPortLabel;
     Description: string;
-    TransportModeCode: 'A' | 'I' | 'O';
+    TransportModeCode;
     Directions: RouteDirection[] = [];
 }
 export class RouteDirection
