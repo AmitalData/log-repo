@@ -47,7 +47,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours.Validat
                 {
                     if (this.serviceInitializer.LoggedTenant.AllowCustomersInAgentsLOV)
                     {
-                        if (IsPartnerNotCustomerAndAgent(partner))
+                        if (IsPartnerNotCustomerAndAgent(partner.PartnerTypeId))
                         {
                             throw new ApplicationException(partnerTypeName + " partner type should be agent or customer");
                         }
@@ -65,9 +65,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours.Validat
                 {
                     if (this.serviceInitializer.LoggedTenant.AllowAgentInCustomersLOV)
                     {
-                        if (IsPartnerNotCustomerAndAgent(partner))
+                        if (IsPartnerNotCustomerAndAgent(partner.PartnerTypeId))
                         {
-                            ValidateDirectOrHouseShipmentCustomerPartnersType(partner, partnerTypeName);
+                            ValidateDirectOrHouseShipmentCustomerPartnersType(partner.PartnerTypeId, partnerTypeName);
                         }
                     }
 
@@ -75,18 +75,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours.Validat
                     {
                         if (partner.PartnerTypeId != "CS")
                         {
-                            ValidateDirectOrHouseShipmentCustomerPartnersType(partner, partnerTypeName);
+                            ValidateDirectOrHouseShipmentCustomerPartnersType(partner.PartnerTypeId, partnerTypeName);
                         }
                     }
                 }
             }
         }
 
-        private void ValidateDirectOrHouseShipmentCustomerPartnersType(Card card, string partnerTypeName)
+        private void ValidateDirectOrHouseShipmentCustomerPartnersType(string partnerTypeId, string partnerTypeName)
         {
             if (IsInlandDomesticShipment())
             {
-                if (card.PartnerTypeId != "WH")
+                if (partnerTypeId != "WH")
                 {
                     throw new ApplicationException(partnerTypeName + " partner type should be customer or Warehouse");
                 }
@@ -102,9 +102,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours.Validat
             return this.serviceInitializer.EntityPM.DirectionId == "D" && this.serviceInitializer.EntityPM.TransportModeId == "I";
         }
 
-        private bool IsPartnerNotCustomerAndAgent(Card card)
+        private bool IsPartnerNotCustomerAndAgent(string partnerTypeId)
         {
-            return (card.PartnerTypeId != "CS" && card.PartnerTypeId != "AG");
+            return (partnerTypeId != "CS" && partnerTypeId != "AG");
         }
 
 
