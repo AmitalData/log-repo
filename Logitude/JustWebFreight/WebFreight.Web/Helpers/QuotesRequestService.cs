@@ -39,14 +39,14 @@ namespace WebFreight.Web.Helpers
 
         public List<QuotesRequest> Get()
         {
-            QueryOperations queryOperations = GetQueryOperations();
+            QueryOperations queryOperations = BuildQueryOperations();
             tickets = GetTickets(queryOperations);
-            documentsFilings = GetDocumentsFilings();
+            documentsFilings = GetTicketsDocumentsFilings();
             List<QuotesRequest> quotesRequests = BuildQuotesRequests();
             return quotesRequests;
         }
 
-        private QueryOperations GetQueryOperations()
+        private QueryOperations BuildQueryOperations()
         {
             QueryOperations queryOperations = new QueryOperations()
             {
@@ -67,9 +67,12 @@ namespace WebFreight.Web.Helpers
             return ticketQuery.GetList(queryOperations, tenant);
         }
 
-        private List<DocumentsFilingList> GetDocumentsFilings()
+        private List<DocumentsFilingList> GetTicketsDocumentsFilings()
         {
-            if (tickets.Count == 0 || string.IsNullOrEmpty(documentTypeId)) return null;
+            if (tickets.Count == 0 || string.IsNullOrEmpty(documentTypeId))
+            {
+                return new List<DocumentsFilingList>();
+            }
             List<string> ticketIds = tickets.Select(d => d.Id).ToList();
             DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(tenant);
             List<DocumentsFilingList> documentsFilings = documentsFilingQuery.GetDocumentsFilingThatHasFileByEntityIdsAndObjectTableIdAndDocumentTypeId(ticketIds, ticketObjectTableId, documentTypeId).Where(d => d.Tenant == tenant).ToList();
@@ -92,13 +95,16 @@ namespace WebFreight.Web.Helpers
             QuotesRequest quotesRequest = new QuotesRequest() { CreateDate = ticketList.CreateDate, ReferenceNumber = ticketList.TicketNumber };
             if (documentsFilings.Where(d => d.EntityId == ticketList.Id).Any())
             {
-                quotesRequest.QuotationUpdateDate = documentsFilings.Where(d => d.EntityId == ticketList.Id).OrderByDescending(d => d.CreateDate).Select(d => d.CreateDate).FirstOrDefault() ;
+                quotesRequest.QuotationUpdateDate = GetLatestCreatedDocumentsFilingDateByEntityId(ticketList.Id);
             }
             return quotesRequest;
 
         }
 
-
+        private DateTime GetLatestCreatedDocumentsFilingDateByEntityId(string entityId)
+        {
+            return documentsFilings.Where(d => d.EntityId == entityId).OrderByDescending(d => d.CreateDate).Select(d => d.CreateDate).FirstOrDefault();
+        }
     }
 
     public class QuotesRequest
