@@ -93,6 +93,12 @@
         }
     });
 
+    jQuery.SetQuotesRequestsTabVisibility = (function (isVisibly ) {
+        $("#TAB_QUOTESREQUESTS").toggle(isVisibly);
+    });
+
+
+
     jQuery.GetLogginData = (function () {
 
         var url = "api/commondata/?email=" + $.CurrentEmail + "&tenant=" + $.CurrentTenant + "&cardId=" + $.CurrentCardId;
@@ -101,9 +107,7 @@
             url: url,
             type: 'GET',
             contentType: 'application/json',
-            headers: {
-                'Token': $.Token
-            },
+            headers: {'Token': $.Token},
             
             success: function (result) {
                 
@@ -115,7 +119,7 @@
                 $.IsAgentShared = result.IsAgentShared;
                 $.IsShipperShared = result.IsShipperShared;
                 $.IsConsigneeShared = result.IsConsigneeShared;
-
+                $.SetQuotesRequestsTabVisibility(result.IsQuotesRequestsMenuEnabled);
                 $.SetTabsHidden($.IsInvoicesMenuEnabled);
                 $.SetSelectedTab();                
             },
@@ -277,69 +281,67 @@
     });
 
 
+    jQuery.SetQuotesRequestQueryCount = (function (result) {
+        let quotesRequestQueryCount = (result.length >= $.LoadingCount) ? "(" + ($.LoadingCount - 1) + "+)" : "(" + result.length + ")";
+        $("#QuotesRequestQueryCount").html(quotesRequestQueryCount);
+    });
+
+    jQuery.FullQuotesRequestsListData = (function (result) {
+        $("#QuotesRequestsListBox").html("");
+        $("#QuotesRequestsListBox").kendoListView(
+            {
+                dataSource: { data: BuildQuotesRequests(result, $.TenantDateTimeFormat) },
+                template: kendo.template($("#QuotesRequestsListBoxItemDataTemplate").html())
+            });
+
+    });
+  
+    function QuotesRequstFilters() {
+        this.PartnerId = $.CurrentCardId;
+        this.SearchField = ($.trim($.SearchText_QUOTESREQUESTS) == "" || $.trim($.SearchText_QUOTESREQUESTS) == $.watermark_QUOTESREQUESTS) ? null : $.trim($.SearchText_QUOTESREQUESTS);
+        this.PageSize = jQuery.LoadingCount;
+        this.PageIndex = 0
+        this.Tenant = $.CurrentTenant
+    };
+
+
 
     jQuery.LoadQuotesRequsts = (function () {
 
         $("#QuotesRequestsBusyIndicator").show();
-
-        function QuotesRequstFilters() {
-            this.PartnerId = $.CurrentCardId;
-            this.SearchField = ($.trim($.SearchText_QUOTESREQUESTS) == "" || $.trim($.SearchText_QUOTESREQUESTS) == $.watermark_QUOTESREQUESTS) ? null : $.trim($.SearchText_QUOTESREQUESTS);
-            this.PageSize = jQuery.LoadingCount;
-            this.PageIndex = 0
-            this.Tenant = $.CurrentTenant
-        };
-
         var filters = new QuotesRequstFilters();
-
         var url = "api/QuotesRequest";
-
         $.ajax({
             url: url,
             data: JSON.stringify(filters),
             type: 'POST',
             contentType: 'application/json',
-            headers: {
-                'Token': $.Token
-            },
-
+            headers: { 'Token': $.Token },
             success: function (result) {
-                $.SendContactActivity($.CurrentEmail, "QuoteRequsts", "Quote Requsts List", $.CurrentTenant, $.CurrentCardId);
-
-
-                if (result.length >= $.LoadingCount) {
-                    $("#QuotesRequestQueryCount").html("(" + ($.LoadingCount - 1) + "+)");
-                }
-
-                else {
-                    $("#QuotesRequestQueryCount").html("(" + result.length + ")");
-                }
-
-                $("#QuotesRequestsListBox").html("");
-                $("#QuotesRequestsListBox").kendoListView(
-                    {
-                        dataSource: { data: BuildQuotesRequests(result, $.TenantDateTimeFormat) },
-                        template: kendo.template($("#QuotesRequestsListBoxItemDataTemplate").html())
-                    });
-
-                $("#QuotesRequestsBusyIndicator").hide();
+                $.QuotesRequstsLoadedSsuccess(result);
             },
-
             error: function (jqXHR, textStatus, errorThrown) {
-                $.CheckUserException(jqXHR);
-                $("#QuotesRequestQueryCount").html("(0)");
-                $("#QuotesRequestsBusyIndicator").hide();
+                $.QuotesRequstsLoadedFailure(jqXHR);
             }
         });
 
     });
 
 
+
+    jQuery.QuotesRequstsLoadedSsuccess = (function (result) {
+        $.SendContactActivity($.CurrentEmail, "QuoteRequsts", "Quote Requsts List", $.CurrentTenant, $.CurrentCardId);
+        $.SetQuotesRequestQueryCount(result);
+        $.FullQuotesRequestsListData(result);
+        $("#QuotesRequestsBusyIndicator").hide();
+    });
     
 
-
-
-
+    jQuery.QuotesRequstsLoadedFailure = (function (jqXHR) {
+        $.CheckUserException(jqXHR);
+        $("#QuotesRequestQueryCount").html("(0)");
+        $("#QuotesRequestsBusyIndicator").hide();
+    });
 
 
 
@@ -457,12 +459,7 @@
                     "background": "url('HtmlHelpers/Images/Bars_Images/SelectedQuery.png') repeat-x",
                 });
 
-                var SelectedQueryLabel = "All Quotes Requests";
-
-
-            
-
-                $("#QuotesRequestQueryTitle").html(SelectedQueryLabel);
+                $("#QuotesRequestQueryTitle").html("All Quotes Requests");
             }
         }
 
@@ -605,7 +602,6 @@
 
                 $.SearchText_QUOTESREQUESTS = $('#SavedSearchText_QUOTESREQUESTS').val();
                 $.SelectedQuery_QuotesRequest = $('#SavedSelectedQuery_QUOTESREQUESTS').val();
-
                 if ($.trim($.SelectedQuery_QUOTESREQUESTS) == "") {
                     $.SelectedQuery_QuotesRequest = "Query_PRG_QUOTESREQUESTS";
                     $('#SavedSelectedQuery_QUOTESREQUESTS').attr("value", $.SelectedQuery_QuotesRequest);
@@ -614,8 +610,7 @@
                 $.SelectQuery();
 
                 if (!$.IsQuotesRequestsDataLoaded) {
-
-                    //$.IsQuotesRequestsDataLoaded = true;
+                    $.IsQuotesRequestsDataLoaded = true;
                     $.LoadData();
                 }
 
@@ -1087,7 +1082,9 @@
 
     $(document).ready(function () {
         $("#TAB_INV").hide();
+        $("#TAB_QUOTESREQUESTS").hide();
 
+        
         $.ResizePage(130);
 
         var userdata = null;
@@ -1118,3 +1115,5 @@
     });
 
 }(jQuery));
+
+

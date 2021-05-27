@@ -14,21 +14,16 @@ namespace WebFreight.Web.Controllers.CRMModel.Extended
 {
     public class QuotesRequestController : ApiController
     {
-
-
-        public HttpResponseMessage PostFilteredQuotesRequests(QuotesRequestFilters quotesRequestFilters)
+        [HttpPost]
+        public HttpResponseMessage GetQuotesRequestsByFilters(QuotesRequestFilters quotesRequestFilters)
         {
             try
             {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                SecurityUtility.CheckSharedContactAuthentication(tenant, quotesRequestFilters.PartnerId);
-         
-                return Request.CreateResponse(HttpStatusCode.OK, "");
-
+                AuthenticationToken authenticationToken = GetAuthenticationToken();
+                SecurityUtility.AuthenticationOnTenant(authenticationToken.Tenant);
+                SecurityUtility.CheckSharedContactAuthentication(authenticationToken.Tenant, quotesRequestFilters.PartnerId);
+                List<QuotesRequest> quotesRequests = new QuotesRequestService(authenticationToken.Tenant, quotesRequestFilters).Get();
+                return Request.CreateResponse(HttpStatusCode.OK, quotesRequests);
             }
             catch (Exception ex)
             {
@@ -36,7 +31,10 @@ namespace WebFreight.Web.Controllers.CRMModel.Extended
             }
         }
 
-
-
+        private static AuthenticationToken GetAuthenticationToken()
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            return AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+        }
     }
 }

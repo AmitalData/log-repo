@@ -150,7 +150,7 @@ var QuotesRequest = function () {
     this.ReferenceNumber = "";
     this.CreateDate = "";
     this.QuotationUpdateDate = "";
-    this.QuotationPrepardTickVisibility = "";
+    this.QuotationPreparedTickVisibility = "";
 
     
 }
@@ -1719,7 +1719,7 @@ function GetNewInStanceFromQuotesRequest(quotesRequest, tenantDateTimeFormat) {
     var newQuotesRequest = new QuotesRequest();
     newQuotesRequest.CreateDate = $.Convert.ToShortDate(quotesRequest.CreateDate, tenantDateTimeFormat);
     newQuotesRequest.ReferenceNumber = $.trim(quotesRequest.ReferenceNumber);
-    newQuotesRequest.QuotationPrepardTickVisibility = quotesRequest.IsQuotationPrepard ? "visible" :"collapse";
+    newQuotesRequest.QuotationPreparedTickVisibility = quotesRequest.QuotationUpdateDate ? "visible" :"collapse";
     newQuotesRequest.QuotationUpdateDate = $.Convert.ToShortDate(quotesRequest.QuotationUpdateDate, tenantDateTimeFormat);
 
     return newQuotesRequest;

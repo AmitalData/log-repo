@@ -700,17 +700,17 @@
                       <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:20px;"></div>
 
                         <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:110px;">Reference Number :</div>
-                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:120px; color:\\#1B90CB;">${ReferenceNumber}</div>
-                        <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:130px;">Quotation Prepard:</div>
+                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:130px; color:\\#1B90CB;">${ReferenceNumber}</div>
+                        <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:130px;">Quotation Prepared:</div>
 
-                       <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:120px; visibility: #= QuotationPrepardTickVisibility #;"><img src="../HtmlHelpers/Images/Icons/Tick.png" style="width: 20px; height: 20px; position:relative; margin-top:-3px;" /></div>
+                       <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:120px; visibility: #= QuotationPreparedTickVisibility #;"><img src="../HtmlHelpers/Images/Icons/Tick.png" style="width: 20px; height: 20px; position:relative; margin-top:-3px;" /></div>
 
                     </div>
                     <div style="height:25px; vertical-align:central;">
                                <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:20px;"></div>
 
                         <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:110px;">Create Date:</div>
-                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:120px;">${CreateDate}</div>
+                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:130px;">${CreateDate}</div>
                         <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:130px;">Quotation Update Date:</div>
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:120px;">${QuotationUpdateDate}</div>
                     </div>
