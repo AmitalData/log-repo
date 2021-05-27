@@ -596,7 +596,7 @@ namespace CommunicationWorkerRole
 
                         #region send email to customer
                         string path = LogitudeSettings.LogitudeURL + "/SignUpVerification.aspx?id=" + lead.Id;
-                        HtmlTemplate.Append("<div style='text-align:left;font-family: Calibri;font-size: 16px;'>");
+                        HtmlTemplate.Append("<div style='text-align:left;font-family: Calibri;font-size: 16px;color:#4472C4'>");
                         HtmlTemplate.Append("Dear " + (!string.IsNullOrEmpty(lead.ContactName) && lead.ContactName != "Unassigned" ? (lead.ContactName + ", ") : ",") + (!string.IsNullOrEmpty(lead.CompanyName) && lead.CompanyName != "Unassigned" ? lead.CompanyName : ""));// " (" + lead.Country + ")");
                         HtmlTemplate.Append("<br /><br />");
                         HtmlTemplate.Append("Thank You for your interest in Logitude World, the first Freight Forwarding Software built totally in the cloud.");
@@ -609,7 +609,7 @@ namespace CommunicationWorkerRole
                         HtmlTemplate.Append("<br /><br />");
                         HtmlTemplate.Append("Best Regards,");
                         HtmlTemplate.Append("<br />");
-                        HtmlTemplate.Append("<div style='text-align:left;font-weight:bold;color:#1F497D'>The Logitude Team</div>");
+                        HtmlTemplate.Append("<div style='text-align:left;font-weight:bold;color:#4472C4'>The Logitude Team</div>");
                         HtmlTemplate.Append("<a href='http://www.Logitudeworld.com'>www.Logitudeworld.com</a>");
                         HtmlTemplate.Append("<br />");
                         HtmlTemplate.Append("<img width='258' height='101' src='cid:logo0' />");
@@ -805,8 +805,7 @@ namespace CommunicationWorkerRole
 
         private void SendPasswordEmailToUser(int demoTenant, int crmTenant, User ownerUser, LogitudeLead lead, ObjectTable table, StringBuilder HtmlTemplate, UserPM createdUser)
         {
-
-            HtmlTemplate.Append("<div style='text-align:left;font-family: Calibri;font-size: 16px;'>");
+            HtmlTemplate.Append("<div style='text-align:left;font-family: Calibri;font-size: 16px;color:#4472C4'>");
             HtmlTemplate.Append("Dear " + lead.ContactName + " , " + lead.CompanyName + " (" + lead.Country + ") ");
             HtmlTemplate.Append("<br /><br />");
             HtmlTemplate.Append("Thank you for verifying your account!");
@@ -846,7 +845,7 @@ namespace CommunicationWorkerRole
             HtmlTemplate.Append("<br /><br />");
             HtmlTemplate.Append("Best Regards,");
             HtmlTemplate.Append("<br />");
-            HtmlTemplate.Append("<div style='text-align:left;font-weight:bold;color:#1F497D'>The Logitude Team</div>");
+            HtmlTemplate.Append("<div style='text-align:left;font-weight:bold;color:#4472C4'>The Logitude Team</div>");
             HtmlTemplate.Append("<a href='http://www.Logitudeworld.com'>www.Logitudeworld.com</a>");
             HtmlTemplate.Append("<br />");
             HtmlTemplate.Append("<img width='258' height='101' src='cid:logo0' />");
