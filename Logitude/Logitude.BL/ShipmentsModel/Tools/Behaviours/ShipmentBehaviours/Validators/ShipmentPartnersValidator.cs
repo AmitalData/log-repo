@@ -14,44 +14,38 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours.Validat
 {
     public class ShipmentPartnersValidator : IServiceValidator
     {
-        public ShipmentPartnersValidatorParameters Args { get; private set; }
+        private ShipmentServiceInitializer serviceInitializer;
         public void Validate(IServiceInitializer initializer)
         {
-            ShipmentServiceInitializer serviceInitializer = (ShipmentServiceInitializer)initializer;
-            this.Args = new ShipmentPartnersValidatorParameters
-            {
-                Tenant = serviceInitializer.Tenant,
-                TenantPM = serviceInitializer.LoggedTenantPM,
-                EntityPM = serviceInitializer.EntityPM,
-                CardRepository = serviceInitializer.CardRepository,
-            };
+             this.serviceInitializer = (ShipmentServiceInitializer)initializer;
+
             this.RunValidator();
         }
 
         private void RunValidator()
         {
-            if (this.Args != null)
+            if (this.serviceInitializer != null)
             {
-                if (!string.IsNullOrEmpty(this.Args.EntityPM.ShipperId))
+                if (!string.IsNullOrEmpty(this.serviceInitializer.EntityPM.ShipperId))
                 {
-                    ValidateShipperAndConsigneePartners(this.Args.EntityPM, "Shipper", this.Args.EntityPM.ShipperId);
+                    ValidateShipmentCustomerPartnersType("Shipper", this.serviceInitializer.EntityPM.ShipperId);
                 }
 
-                if (!string.IsNullOrEmpty(this.Args.EntityPM.ConsigneeId))
+                if (!string.IsNullOrEmpty(this.serviceInitializer.EntityPM.ConsigneeId))
                 {
-                    ValidateShipperAndConsigneePartners(this.Args.EntityPM, "Consignee", this.Args.EntityPM.ConsigneeId);
+                    ValidateShipmentCustomerPartnersType("Consignee", this.serviceInitializer.EntityPM.ConsigneeId);
                 }
             }
         }
 
-        private void ValidateShipperAndConsigneePartners(ShipmentPM entityPM, string partnerTypeName, string partnerId)
+        private void ValidateShipmentCustomerPartnersType(string partnerTypeName, string partnerId)
         {
-            Card partner = this.Args.CardRepository.GetSingleCard(partnerId, entityPM.Tenant);
+            Card partner = this.serviceInitializer.CardRepository.GetSingleCard(partnerId, this.serviceInitializer.Tenant);
             if (partner != null)
             {
-                if (entityPM.ShipmentLevelCode == "C")
+                if (this.serviceInitializer.EntityPM.ShipmentLevelCode == "C")
                 {
-                    if (this.Args.TenantPM.AllowCustomersInAgentsLOV)
+                    if (this.serviceInitializer.LoggedTenant.AllowCustomersInAgentsLOV)
                     {
                         if (IsPartnerNotCustomerAndAgent(partner))
                         {
@@ -69,11 +63,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours.Validat
                 }
                 else
                 {
-                    if (this.Args.TenantPM.AllowAgentInCustomersLOV)
+                    if (this.serviceInitializer.LoggedTenant.AllowAgentInCustomersLOV)
                     {
                         if (IsPartnerNotCustomerAndAgent(partner))
                         {
-                            SetShipperAndConsigneeValidationExceptionForDirectAndHouseShipment(entityPM, partner, partnerTypeName);
+                            ValidateDirectOrHouseShipmentCustomerPartnersType(partner, partnerTypeName);
                         }
                     }
 
@@ -81,16 +75,16 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours.Validat
                     {
                         if (partner.PartnerTypeId != "CS")
                         {
-                            SetShipperAndConsigneeValidationExceptionForDirectAndHouseShipment(entityPM, partner, partnerTypeName);
+                            ValidateDirectOrHouseShipmentCustomerPartnersType(partner, partnerTypeName);
                         }
                     }
                 }
             }
         }
 
-        private void SetShipperAndConsigneeValidationExceptionForDirectAndHouseShipment(ShipmentPM entityPM, Card card, string partnerTypeName)
+        private void ValidateDirectOrHouseShipmentCustomerPartnersType(Card card, string partnerTypeName)
         {
-            if (IsInlandDomesticShipment(entityPM))
+            if (IsInlandDomesticShipment())
             {
                 if (card.PartnerTypeId != "WH")
                 {
@@ -103,9 +97,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours.Validat
             }
         }
 
-        private bool IsInlandDomesticShipment(ShipmentPM entityPM)
+        private bool IsInlandDomesticShipment()
         {
-            return entityPM.DirectionId == "D" && entityPM.TransportModeId == "I";
+            return this.serviceInitializer.EntityPM.DirectionId == "D" && this.serviceInitializer.EntityPM.TransportModeId == "I";
         }
 
         private bool IsPartnerNotCustomerAndAgent(Card card)
@@ -113,12 +107,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours.Validat
             return (card.PartnerTypeId != "CS" && card.PartnerTypeId != "AG");
         }
 
-        public class ShipmentPartnersValidatorParameters {
-            public int Tenant { get; set; }
-            public TenantPM TenantPM { get; set; }
-            public CardRepository CardRepository { get; set; }
-            public ShipmentPM EntityPM { get;  set; }
-        }
 
     }
 }

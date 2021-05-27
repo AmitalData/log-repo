@@ -45,8 +45,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
         public ShipmentOrderPackageRepository ShipmentOrderPackageRepository { get; private set; }
 
         public Tenant LoggedTenant { get; private set; }
-        public TenantPM LoggedTenantPM { get; private set; }
-        public TenantQuery TenantQuery { get; private set; }
         public ContactPM LoggedContact { get; private set; }
         public string LoggedContactId { get; private set; }
         public string LoggedContactEmail { get; private set; }
@@ -109,7 +107,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
             this.CardRepository = new CardRepository(this.CommonContext);
             this.AddressRepository = new AddressRepository(this.CommonContext);
             this.ContactRepository = new ContactRepository(this.CommonContext);
-            this.TenantQuery = new TenantQuery(this.Tenant);
             this.TodayDateTime = TenantServerConfigration.GetCurrentDateTime(Tenant);
             this.TodayDate = this.TodayDateTime.Date;
 
@@ -129,7 +126,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
         {
             LoggedTenant = TenantRepository.GetSingleTenant(Tenant, true);
             LoggedTenant.LogBoxTenantSetting = LogBoxTenantSettingRepository.GetSingleLBTenantSetting(Tenant);
-            LoggedTenantPM = this.TenantQuery.GetSinglePM(this.Tenant);
         }
         private void InitializeLoggedContact()
         {
