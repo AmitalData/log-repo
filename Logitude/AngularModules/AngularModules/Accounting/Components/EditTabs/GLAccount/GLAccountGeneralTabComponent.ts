@@ -519,6 +519,7 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
 
         if (this.EntityPM.ParentCurrencyId != null) {
             this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
+            this.IsMultiCurrencyCheckboxEnabled=  false;
         }
 
         if (this.EntityPM.RevenueExpenseType == "3") {
