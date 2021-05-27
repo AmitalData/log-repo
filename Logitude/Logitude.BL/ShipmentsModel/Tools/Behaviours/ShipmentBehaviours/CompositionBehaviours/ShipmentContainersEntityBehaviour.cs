@@ -42,14 +42,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         private void HandelShipmentMasterDataFieldsChanges()
         {
             if (CheckIfShipmentMasterDataFieldsUpdated()) {
-
-                foreach (ShipmentPackagePM itemPM in initializer.ShipmentPackagesChangeSet)
-                {
-                    if (itemPM.ChangeSetOp == ChangeSetOperation.None)
-                    {
-                        itemPM.ChangeSetOp = ChangeSetOperation.Update;
-                    }
-                }
+                this.UpdateShipmentPackagesChangeSetOperation();
             }
         }
 
@@ -73,7 +66,19 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 return true;
             return false;
         }
-
+        private void UpdateShipmentPackagesChangeSetOperation()
+        {
+            if (initializer.ShipmentPackagesChangeSet != null)
+            {
+                foreach (ShipmentPackagePM itemPM in initializer.ShipmentPackagesChangeSet)
+                {
+                    if (itemPM.ChangeSetOp == ChangeSetOperation.None)
+                    {
+                        itemPM.ChangeSetOp = ChangeSetOperation.Update;
+                    }
+                }
+            }
+        }
         private void HandelShipmentPackagesChangeSets()
         {
             if (initializer.ShipmentPackagesChangeSet != null)
