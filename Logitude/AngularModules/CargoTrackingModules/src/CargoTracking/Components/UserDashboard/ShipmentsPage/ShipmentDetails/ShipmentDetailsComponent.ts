@@ -686,7 +686,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
             step.TransportModeCode = this.InlandTransportMode;
             step.Description = "Via "+this.ShipmentPM.ShipmentPickUps[i].CarrierName;
 
-            this.SetFromAndToLabelsForShipmentPickUpsRoutes(i, step);
+            this.SetFromAndToLabelsForShipmentPickUpsRoutes(this.ShipmentPM.ShipmentPickUps[i], step);
             step.Directions = this.BuildRouteDirections(this.ShipmentPM.ShipmentPickUps[i]);
 
             this.ShipmentRouteSteps.push(step);
@@ -732,40 +732,40 @@ export class ShipmentDetailsComponent implements AfterViewInit
         }
     }
 
-    private SetFromAndToLabelsForShipmentPickUpsRoutes(index: number, step: RoutingStep) {
+    private SetFromAndToLabelsForShipmentPickUpsRoutes(shipmentPickup: any, step: RoutingStep) {
 
-        if (this.ShipmentPM.ShipmentPickUps[index].PickUpDeliveryFromTypeCode == "PORT")
+        if (shipmentPickup.PickUpDeliveryFromTypeCode == "PORT")
         {
-            step.FromPortLabel = this.ShipmentPM.ShipmentPickUps[index].FromPortCode;
+            step.FromPortLabel = shipmentPickup.FromPortCode;
         }
 
-        else if (this.ShipmentPM.ShipmentPickUps[index].PickUpDeliveryFromTypeCode == "PART")
+        else if (shipmentPickup.PickUpDeliveryFromTypeCode == "PART")
         {
-            step.FromPortLabel = this.ShipmentPM.ShipmentPickUps[index].FromLocation.toString().split(" ")[0];
-            step.ToolTipFromPortLabel = "Partner: \n"+this.ShipmentPM.ShipmentPickUps[index].FromLocation.toString().split("\r")[0];
-        }
-
-        else
-        {
-            step.FromPortLabel = this.ShipmentPM.ShipmentPickUps[index].FromAddressCountryCode;
-            step.ToolTipFromPortLabel = "Address: \n"+this.ShipmentPM.ShipmentPickUps[index].FromAddressCity_Dummy + ',' + this.ShipmentPM.ShipmentPickUps[index].FromAddressCountryName;
-        }
-
-        if (this.ShipmentPM.ShipmentPickUps[index].PickUpDeliveryToTypeCode == "PORT")
-        {
-            step.ToPortLabel = this.ShipmentPM.ShipmentPickUps[index].ToPortCode;
-        }
-
-        else if (this.ShipmentPM.ShipmentPickUps[index].PickUpDeliveryToTypeCode == "PART")
-        {
-            step.ToPortLabel = this.ShipmentPM.ShipmentPickUps[index].ToLocation.toString().split(" ")[0];
-            step.ToolTipToPortLabel = "Partner: \n" +this.ShipmentPM.ShipmentPickUps[index].ToLocation.toString().split("\r")[0];
+            step.FromPortLabel = shipmentPickup.FromLocation.toString().split(" ")[0];
+            step.ToolTipFromPortLabel = "Partner: \n" + shipmentPickup.FromLocation.toString().split("\r")[0];
         }
 
         else
         {
-            step.ToPortLabel = this.ShipmentPM.ShipmentPickUps[index].ToAddressCountryCode;
-            step.ToolTipToPortLabel = "Address: \n" + this.ShipmentPM.ShipmentPickUps[index].ToAddressCity_Dummy + ',' + this.ShipmentPM.ShipmentPickUps[index].ToAddressCountryName;
+            step.FromPortLabel = shipmentPickup.FromAddressCountryCode;
+            step.ToolTipFromPortLabel = "Address: \n" + shipmentPickup.FromAddressCity_Dummy + ',' + shipmentPickup.FromAddressCountryName;
+        }
+
+        if (shipmentPickup.PickUpDeliveryToTypeCode == "PORT")
+        {
+            step.ToPortLabel = shipmentPickup.ToPortCode;
+        }
+
+        else if (shipmentPickup.PickUpDeliveryToTypeCode == "PART")
+        {
+            step.ToPortLabel = shipmentPickup.ToLocation.toString().split(" ")[0];
+            step.ToolTipToPortLabel = "Partner: \n" + shipmentPickup.ToLocation.toString().split("\r")[0];
+        }
+
+        else
+        {
+            step.ToPortLabel = shipmentPickup.ToAddressCountryCode;
+            step.ToolTipToPortLabel = "Address: \n" + shipmentPickup.ToAddressCity_Dummy + ',' + shipmentPickup.ToAddressCountryName;
         }
     }
 
