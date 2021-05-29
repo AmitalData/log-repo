@@ -491,7 +491,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                              Code = a.Card.Code,
                                                          },
                                                          BillToId = a.Card.BillToId,
-                                                         //??
                                                          CollectorId = a.Card.CollectorId,
                                                      }).FirstOrDefault();
 
@@ -882,6 +881,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         SATForeignRFC = a.Card.SATForeignRFC,
                         MetodoPagoCode = a.Card.MetodoPagoCode,
                         UsoCFDICode = a.Card.UsoCFDICode,
+                        CollectorId = a.Card.CollectorId,
                         Card = new CardPM()
                         {
                             Id = a.Id,
@@ -927,6 +927,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         SATForeignRFC = a.Card.SATForeignRFC,
                         MetodoPagoCode = a.Card.MetodoPagoCode,
                         UsoCFDICode = a.Card.UsoCFDICode,
+                        CollectorId = a.Card.CollectorId,
                         Card = new CardPM()
                         {
                             Id = a.Id,
@@ -972,6 +973,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         SATForeignRFC = a.Card.SATForeignRFC,
                         MetodoPagoCode = a.Card.MetodoPagoCode,
                         UsoCFDICode = a.Card.UsoCFDICode,
+                        CollectorId = a.Card.CollectorId,
                         Card = new CardPM()
                         {
                             Id = a.Id,
