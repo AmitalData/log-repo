@@ -433,7 +433,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                             PrimaryContactEmail = a.PrimaryContactEmail,
                                                             PrimaryContactPhone = a.PrimaryContactPhone,
                                                             GLAccountNumber = a.Card.GLAccountDisplayNumber,
-
+                                                            CollectorId = a.Card.CollectorId, 
                                                         });
 
 
@@ -491,6 +491,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                              Code = a.Card.Code,
                                                          },
                                                          BillToId = a.Card.BillToId,
+                                                         //??
+                                                         CollectorId = a.Card.CollectorId,
                                                      }).FirstOrDefault();
 
             CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(repository.context);
