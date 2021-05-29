@@ -3368,7 +3368,7 @@ namespace HypredTest
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", token);
 
                 Response resultResponse = new Response();
-               AccountingPartnerProxy.AccountingPartnerPM accountingPartnerPM = accountingPartnerservice.GetAccountingPartnerPM(new AccountingPartnerApiFilters() { ByCode = true, SearchCode = "1002" }, 1, ref resultResponse);
+               AccountingPartnerProxy.AccountingPartnerPM accountingPartnerPM = accountingPartnerservice.GetAccountingPartnerPM(new AccountingPartnerApiFilters() { ByCode = true, SearchCode = "HEHYBRID6" }, 1, ref resultResponse);
 
               if(accountingPartnerPM != null)
                 {
