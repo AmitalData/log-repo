@@ -378,6 +378,7 @@
     <Compile Include="AutoSignUpWorkerRole.cs" />
     <Compile Include="CollaborationToolShipmentUpdateWR.cs" />
     <Compile Include="CollaborationToolTaskWR.cs" />
+    <Compile Include="ContainerStatusesMonitorWorkerRole.cs" />
     <Compile Include="Services\QuoteSchedulerTaskService.cs" />
     <Compile Include="WarmCargoTracking.cs" />
     <Compile Include="BatchTaskExecutionWR.cs" />

@@ -968,6 +968,7 @@
     <None Include="DBTables\ShipmentsModel\INTTRADocumentType.dxml" />
     <None Include="DBTables\ShipmentsModel\INTTRASIStatus.dxml" />
     <None Include="DBTables\ShipmentsModel\INTTRAStatus.dxml" />
+    <None Include="DBTables\ShipmentsModel\LogitudeOceanInsightsRequest.dxml" />
     <None Include="DBTables\ShipmentsModel\ManifestStatus.dxml" />
     <None Include="DBTables\ShipmentsModel\MessagingStock.dxml" />
     <None Include="DBTables\ShipmentsModel\MessagingStockUsageHistory.dxml" />

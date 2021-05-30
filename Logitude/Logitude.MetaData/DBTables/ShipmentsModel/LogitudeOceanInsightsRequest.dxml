@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="LogitudeOceanInsightsRequests"
+  Schema="dbo"
+  DBType="Main"
+  Module="Shipment">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ContainerNumber"
+    Type="varchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="OceanInsigntId"
+    Type="varchar"
+    Size="500">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CreateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="UpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="BLNumber"
+    Type="varchar"
+    Size="18">
+    <Constraints
+      Nullable="true" />
+  </Column>
+</Table>

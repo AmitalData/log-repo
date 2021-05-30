@@ -166,13 +166,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             var container = CheckIfContainerExists(shipmentPackage);
             if (container != null)
             {
-                containerService.Update(container, true);
+                containerService.Delete(container);
             }
         }
 
         private ContainerPM CheckIfContainerExists(ShipmentPackagePM shipmentPackage)
         {
-            var containerPM = containerQuery.GetContainerByContainerNumberAndShipmentPackagesId(shipmentPackage.ContainerNumber, shipmentPackage.Id, shipmentPackage.Tenant);
+            var containerPM = containerQuery.GetContainerByShipmentPackagesId(shipmentPackage.Id, shipmentPackage.Tenant);
             return containerPM;
         }
     }

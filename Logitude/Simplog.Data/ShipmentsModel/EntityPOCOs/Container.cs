@@ -31,7 +31,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string Master { get; set; }
         public string MainCarriageVesselId { get; set; }
         [ForeignKey("MainCarriageVesselId")]
-        public virtual Card VesselCard { get; set; }
+        public virtual Vessel VesselCard { get; set; }
         public DateTime? MainCarriageETA { get; set; }
         public DateTime? MainCarriageETD { get; set; }
         public DateTime? MainCarriageATA { get; set; }

@@ -14,7 +14,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
     public class ContainerService
     {
         bool isNewEntity;
-        private int tenant;  
+        private int tenant;
         private ContainerPM containerPm;
         private IShipmentsContext shipmentsContext;
         private ContainerRepository entityRepository;
@@ -39,19 +39,23 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             entityRepository.SubmitChanges();
         }
 
-        public void Update(ContainerPM entityPM, bool isDeleted = false)
+        public void Update(ContainerPM entityPM)
         {
             this.isNewEntity = false;
             this.containerPm = entityPM;
             this.containerPoco = entityRepository.GetSingleContainer(entityPM.Id, tenant);
             ContainerTracing.Trace(entityPM, containerPoco, isNewEntity);
             ShipmentMapping.MapContainer(entityPM, containerPoco, isNewEntity);
+            entityRepository.Update(containerPoco);
+            entityRepository.SubmitChanges();
+        }
 
-            if (isDeleted == true)
-                entityRepository.Remove(containerPoco);
-            else
-                entityRepository.Update(containerPoco);
-
+        public void Delete(ContainerPM entityPM)
+        {
+            this.containerPm = entityPM;
+            this.containerPoco = entityRepository.GetSingleContainer(entityPM.Id, tenant);
+            ContainerTracing.Trace(entityPM, containerPoco, isNewEntity);
+            entityRepository.Remove(containerPoco);
             entityRepository.SubmitChanges();
         }
     }

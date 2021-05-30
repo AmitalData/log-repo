@@ -78,10 +78,10 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             throw new NotImplementedException();
         }
 
-        public Container GetContainerByContainerNumberAndShipmentPackagesId(string containerNumber, string shipmentPackageId, int tenant)
+        public Container GetContainerByShipmentPackagesId(string shipmentPackageId, int tenant)
         {
             return (from container in context.Containers
-                    where container.ContainerNumber == containerNumber && container.Tenant == tenant && container.ShipmentPackagesId == shipmentPackageId
+                    where container.Tenant == tenant && container.ShipmentPackagesId == shipmentPackageId
                     select container).FirstOrDefault();
         }
     }

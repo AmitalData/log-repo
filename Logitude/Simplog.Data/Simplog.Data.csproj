@@ -669,6 +669,7 @@
     <Compile Include="ShipmentsModel\EntityPOCOs\INTTRADocumentType.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\INTTRASIStatus.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\INTTRAStatus.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\LogitudeOceanInsightsRequest.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\OBLType.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\OceanInsightsRequestsCount.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\PickUpDeliveryPackageHarmonize.cs" />
@@ -691,6 +692,7 @@
     <Compile Include="ShipmentsModel\Mapping\INTTRADocumentTypeMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\INTTRASIStatusMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\INTTRAStatusMap.cs" />
+    <Compile Include="ShipmentsModel\Mapping\LogitudeOceanInsightsRequestMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\OBLTypeMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\OceanInsightsRequestsCountMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\PickUpDeliveryPackageHarmonizeMap.cs" />
@@ -1101,6 +1103,7 @@
     <Compile Include="ShipmentsModel\Repositories\HarmonizeCodeRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\INTTRABookingStatusRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\INTTRABookingTransStatusRepository.cs" />
+    <Compile Include="ShipmentsModel\Repositories\LogitudeOceanInsightsRequestRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\MessagingStockRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\MessagingStockUsageHistoryRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\CustomsTransmissionsStatusRepository.cs" />

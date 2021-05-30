@@ -134,11 +134,6 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="ShipmentPackagesId"
-    ReferencedTable="ShipmentPackages"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
     ForeignKeyColumn="MainCarriageCarrierId"
     ReferencedTable="Cards"
     ReferencedColumn="Id"

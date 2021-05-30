@@ -488,4 +488,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+
+ <Column
+    Name="OITenantNumber"
+    Type="int" DefaultValue="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
+
+
 </Table>

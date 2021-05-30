@@ -385,6 +385,8 @@ namespace Simplog.Data.ShipmentsModel
         public IDbSet<ShipmentAdditionalCloudData> ShipmentAdditionalCloudDatas { get; set; }
         public IDbSet<OceanInsightsRequestsCount> OceanInsightsRequestsCounts { get; set; }
         public IDbSet<OceanInsightsRequest> OceanInsightsRequests { get; set; }
+        public IDbSet<LogitudeOceanInsightsRequest> LogitudeOceanInsightsRequests { get; set; }
+
         public IDbSet<OceanInsightsStatuses> OceanInsightsStatuses { get; set; }
         public IDbSet<OtherParticipantId> OtherParticipantIds { get; set; }
         public IDbSet<CustomsTransmissionsStatus> CustomsTransmissionsStatus { get; set; }
