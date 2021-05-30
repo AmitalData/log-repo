@@ -10,6 +10,7 @@ export class RegexSelectors {
     public static readonly DropdownListItem = "div[id^=Dropdown_]:last > div > ul > li"
     public static readonly InputCheckBox = "input[id^='CheckBox_']"
     public static readonly Refresh = '[id^="Refresh_"]'
+    public static readonly EmailSearchTextBox = 'input[id^=EmailSearchTextBox_TextArea]';
 
     public static PackageGrid(cellNumber: string): string {
         return "div[id^='edit-log-grid_'][id$='_" + cellNumber + "_0" + "']";

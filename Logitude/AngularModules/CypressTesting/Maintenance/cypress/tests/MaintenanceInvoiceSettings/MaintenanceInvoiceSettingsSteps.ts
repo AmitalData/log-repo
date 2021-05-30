@@ -18,6 +18,7 @@ let invoiceSettingsDetails: InvoiceSettingsDetails;
 let shipmentDetails: ShipmentDetails;
 let shipmentNumber: string;
 let ARInvoiceNumber: string;
+let AccountingSystem: string;
 //#region Disable/enable void invoice settings
 Given("the user logged in and navigate to {string} in maintenance menu", (InvoiceSettings) => {
     cy.Login()
@@ -43,7 +44,18 @@ Then("the invoice setting should update successfully", () => {
     MaintenanceActions.AssertUpdateInvoiceSettings()
 });
 //#endregion
-
+//#region Update Accounting System
+  Given("accounting System as {string}", (accountingSystem) => {
+    AccountingSystem = accountingSystem;
+  });
+  
+  When("change the accounting system", () => {
+    AccountingActions.changeAccountingsSystem(AccountingSystem)
+  });
+  Then("the accounting system should update successfully", () => {
+    BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow);
+  });
+  //#endregion
 //#region Create direct export air shipment
 Given("the user navigates to shipments workspace", () => {
     ShipmentActions.NavigatesToShipmentsWorkspace();

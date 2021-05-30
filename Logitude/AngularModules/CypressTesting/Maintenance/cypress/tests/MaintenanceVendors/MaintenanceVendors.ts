@@ -2,11 +2,16 @@ import * as Actions from "../../actions/Actions";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { ContactDetails } from "../../models/ContactDetails";
-import { VendorDetails } from "../../models/VendorDetails";
 import { MaintenanceSelectors } from "../../selectors/Selectors";
+import { CardDetails } from "../../../cypress/models/CardDetails";
+import { CardGeneralTabDetails } from "cypress/models/CardGeneralTabDetails";
+import { CardBillingTabDetails } from "cypress/models/CardBillingTabDetails";
+import { Constants } from '../../constants/Constants'
 
-let vendorDetails :VendorDetails
-
+let vendorDetails: CardDetails
+let contactDetails: ContactDetails
+let cardGeneralTabDetails:CardGeneralTabDetails
+let cardBillingTabDetails:CardBillingTabDetails
 //#region Create new vendor
 Given("the user logged in and open {string} in maintenance menu", (maintenanceItemName) => {
     cy.Login()
@@ -14,7 +19,7 @@ Given("the user logged in and open {string} in maintenance menu", (maintenanceIt
 });
 
 Given("a vendor with the following details", (dataTable) => {
-    vendorDetails = Assists.CreateInstance<VendorDetails>(dataTable, true);
+    vendorDetails = Assists.CreateInstance<CardDetails>(dataTable, true);
     Actions.OpenNewWizard("Vendor");
     Actions.FillVendorDetails(vendorDetails)
 });
@@ -47,7 +52,7 @@ Then("the vendor should appear successfully", () => {
 
 //#region Open the vendor
 When("open vendor", () => {
-   Actions.OpenVendor();
+   Actions.OpenCard(Constants.Vendor);
 });
 
 Then("the vendor should open successfully", () => {
@@ -57,12 +62,12 @@ Then("the vendor should open successfully", () => {
 
 //#region Edit the vendor
 Given("the user fill the following vendor details", (dataTable) => {
-    let vendorDetails = Assists.CreateInstance<VendorDetails>(dataTable, true);
+    let vendorDetails = Assists.CreateInstance<CardGeneralTabDetails>(dataTable, true);
     Actions.FillVendorGeneralTab(vendorDetails)
 });
 
 Given("fill the following vendor Billing details", (dataTable) => {
-    let vendorBillingDetails = Assists.CreateInstance<VendorDetails>(dataTable, true);
+    let vendorBillingDetails = Assists.CreateInstance<CardBillingTabDetails>(dataTable, true);
     cy.Navigate(MaintenanceSelectors.VendorBillingTab);
     Actions.FillVendorBillingTab(vendorBillingDetails);
 });
