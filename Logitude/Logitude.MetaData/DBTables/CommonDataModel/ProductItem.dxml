@@ -72,4 +72,6 @@
     ReferencedTable="Customers"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <UniqueConstraint
+    Columns="Tenant,SKU,CustomerId" />
 </Table>
