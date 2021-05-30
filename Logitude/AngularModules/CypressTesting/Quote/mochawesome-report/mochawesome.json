@@ -1,0 +1,163 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 4,
+    "passes": 4,
+    "pending": 0,
+    "failures": 0,
+    "start": "2021-05-30T06:49:33.107Z",
+    "end": "2021-05-30T06:52:06.515Z",
+    "duration": 153408,
+    "testsRegistered": 4,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "3ea3ed64-81bf-4151-9fba-501fb3f4348a",
+      "title": "",
+      "fullFile": "cypress\\tests\\AddDeletePackage.feature",
+      "file": "cypress\\tests\\AddDeletePackage.feature",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "3bc67771-fed5-4ac4-91ad-933961bf304a",
+          "title": "Add and delete package from a quote",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Create customer",
+              "fullTitle": "Add and delete package from a quote Create customer",
+              "timedOut": null,
+              "duration": 88444,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "eceae306-02e7-4d64-9783-cbae564f0a9a",
+              "parentUUID": "3bc67771-fed5-4ac4-91ad-933961bf304a",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Create export ocean LCL quote",
+              "fullTitle": "Add and delete package from a quote Create export ocean LCL quote",
+              "timedOut": null,
+              "duration": 26240,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "6e90bf9e-9aea-4abe-9d09-b1746241a19e",
+              "parentUUID": "3bc67771-fed5-4ac4-91ad-933961bf304a",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Add package",
+              "fullTitle": "Add and delete package from a quote Add package",
+              "timedOut": null,
+              "duration": 23069,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "9beded6e-c3fc-4614-8e3d-6d4cf17fe69a",
+              "parentUUID": "3bc67771-fed5-4ac4-91ad-933961bf304a",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Delete package",
+              "fullTitle": "Add and delete package from a quote Delete package",
+              "timedOut": null,
+              "duration": 8851,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "1049e084-146a-41af-95d3-d973b7d7f5a5",
+              "parentUUID": "3bc67771-fed5-4ac4-91ad-933961bf304a",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "eceae306-02e7-4d64-9783-cbae564f0a9a",
+            "6e90bf9e-9aea-4abe-9d09-b1746241a19e",
+            "9beded6e-c3fc-4614-8e3d-6d4cf17fe69a",
+            "1049e084-146a-41af-95d3-d973b7d7f5a5"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 146604,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false
+      },
+      "version": "4.1.0"
+    },
+    "marge": {
+      "options": {
+        "id": "default",
+        "reportDir": "./mochawesome-report",
+        "quite": true,
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "4.0.1"
+    }
+  }
+}
