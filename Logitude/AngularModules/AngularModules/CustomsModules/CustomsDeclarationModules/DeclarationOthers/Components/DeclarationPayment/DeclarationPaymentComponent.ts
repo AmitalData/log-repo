@@ -2333,9 +2333,9 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     }
 
     OnlySendPayment(params: CustomFileCreditRequestParams) {
-        var myCustomMessageProgressHelper = new CustomMessageProgressHelper();
-        myCustomMessageProgressHelper.BasicResponse = true;
-        myCustomMessageProgressHelper.StartProgress(params.PBId, 5, true);
+       // var myCustomMessageProgressHelper = new CustomMessageProgressHelper();
+      //  myCustomMessageProgressHelper.BasicResponse = true;
+      //  myCustomMessageProgressHelper.StartProgress(params.PBId, 5, true);
 
         if (AmitalGatewayUtil.Instance.IsDeclarationInUse(this.DeclarationPM.CustomFileNo, this.DeclarationPM.IsConvertedDeclaration, this.DeclarationPM.IsConnectedToUnifreight)) {
             SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.UnifreightInstSentMehes"));
