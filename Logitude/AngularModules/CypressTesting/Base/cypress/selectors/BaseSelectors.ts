@@ -161,7 +161,7 @@ export class BaseSelectors extends RegexSelectors {
 
     //#region Customs settings
     public static readonly LocalCustomsInterfaceCode = "#CustomsInterfaceSetting_LocalCustomsInterfaceCode";
-
+    public static readonly LogLoveLocalCustomsInterfaceCode="#LogLov_CustomsInterfaceSetting_LocalCustomsInterfaceCode"
     //#endregion
     public static readonly SingleError = ".SingleError"
     public static readonly HeaderScreen= ".HeaderScreen"
