@@ -56,6 +56,9 @@ namespace HypredTest.AccountingPartnerProxy {
         private string CodeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CollectorIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ComputedLocalNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -351,6 +354,19 @@ namespace HypredTest.AccountingPartnerProxy {
                 if ((object.ReferenceEquals(this.CodeField, value) != true)) {
                     this.CodeField = value;
                     this.RaisePropertyChanged("Code");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CollectorId {
+            get {
+                return this.CollectorIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CollectorIdField, value) != true)) {
+                    this.CollectorIdField = value;
+                    this.RaisePropertyChanged("CollectorId");
                 }
             }
         }
@@ -1096,6 +1112,9 @@ namespace HypredTest.AccountingPartnerProxy {
         private string CreatedByUserIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> CreditLimitAmountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private HypredTest.AccountingPartnerProxy.CustomAgentPM CustomAgentField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -1130,6 +1149,9 @@ namespace HypredTest.AccountingPartnerProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string IBANNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ICAOField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string IRSNumberField;
@@ -1202,6 +1224,9 @@ namespace HypredTest.AccountingPartnerProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PaymentTermIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PhoneField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PrefixField;
@@ -1650,6 +1675,19 @@ namespace HypredTest.AccountingPartnerProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> CreditLimitAmount {
+            get {
+                return this.CreditLimitAmountField;
+            }
+            set {
+                if ((this.CreditLimitAmountField.Equals(value) != true)) {
+                    this.CreditLimitAmountField = value;
+                    this.RaisePropertyChanged("CreditLimitAmount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public HypredTest.AccountingPartnerProxy.CustomAgentPM CustomAgent {
             get {
                 return this.CustomAgentField;
@@ -1801,6 +1839,19 @@ namespace HypredTest.AccountingPartnerProxy {
                 if ((object.ReferenceEquals(this.IBANNumberField, value) != true)) {
                     this.IBANNumberField = value;
                     this.RaisePropertyChanged("IBANNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ICAO {
+            get {
+                return this.ICAOField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ICAOField, value) != true)) {
+                    this.ICAOField = value;
+                    this.RaisePropertyChanged("ICAO");
                 }
             }
         }
@@ -2113,6 +2164,19 @@ namespace HypredTest.AccountingPartnerProxy {
                 if ((object.ReferenceEquals(this.PaymentTermIdField, value) != true)) {
                     this.PaymentTermIdField = value;
                     this.RaisePropertyChanged("PaymentTermId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Phone {
+            get {
+                return this.PhoneField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PhoneField, value) != true)) {
+                    this.PhoneField = value;
+                    this.RaisePropertyChanged("Phone");
                 }
             }
         }
@@ -4456,6 +4520,9 @@ namespace HypredTest.AccountingPartnerProxy {
         private string IdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ImageDetailIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool InActiveField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -4982,6 +5049,19 @@ namespace HypredTest.AccountingPartnerProxy {
                 if ((object.ReferenceEquals(this.IdField, value) != true)) {
                     this.IdField = value;
                     this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ImageDetailId {
+            get {
+                return this.ImageDetailIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ImageDetailIdField, value) != true)) {
+                    this.ImageDetailIdField = value;
+                    this.RaisePropertyChanged("ImageDetailId");
                 }
             }
         }
@@ -6725,6 +6805,9 @@ namespace HypredTest.AccountingPartnerProxy {
         private string IndustryNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> InsuredcreditLimitField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> InvitationDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -6840,6 +6923,9 @@ namespace HypredTest.AccountingPartnerProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PendingAirlinesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PhoneField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PhoneNumberField;
@@ -8257,6 +8343,19 @@ namespace HypredTest.AccountingPartnerProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> InsuredcreditLimit {
+            get {
+                return this.InsuredcreditLimitField;
+            }
+            set {
+                if ((this.InsuredcreditLimitField.Equals(value) != true)) {
+                    this.InsuredcreditLimitField = value;
+                    this.RaisePropertyChanged("InsuredcreditLimit");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Nullable<System.DateTime> InvitationDate {
             get {
                 return this.InvitationDateField;
@@ -8759,6 +8858,19 @@ namespace HypredTest.AccountingPartnerProxy {
                 if ((object.ReferenceEquals(this.PendingAirlinesField, value) != true)) {
                     this.PendingAirlinesField = value;
                     this.RaisePropertyChanged("PendingAirlines");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Phone {
+            get {
+                return this.PhoneField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PhoneField, value) != true)) {
+                    this.PhoneField = value;
+                    this.RaisePropertyChanged("Phone");
                 }
             }
         }
@@ -9494,6 +9606,9 @@ namespace HypredTest.AccountingPartnerProxy {
         private string IdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ImageDetailIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool InActiveField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -9966,6 +10081,19 @@ namespace HypredTest.AccountingPartnerProxy {
                 if ((object.ReferenceEquals(this.IdField, value) != true)) {
                     this.IdField = value;
                     this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ImageDetailId {
+            get {
+                return this.ImageDetailIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ImageDetailIdField, value) != true)) {
+                    this.ImageDetailIdField = value;
+                    this.RaisePropertyChanged("ImageDetailId");
                 }
             }
         }
