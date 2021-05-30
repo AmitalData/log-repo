@@ -104,6 +104,7 @@ export class DeclarationList {
 	ManifestCargoStatusCode: string;
 	ManifestErrorXml: string;
 	CourierHAWB: string;
+	ManifestNumber: string;
 	StorageStatusName: string;
 	ExcludeConsignment: boolean;
 	CourierCustomStatusCode: string;
@@ -195,7 +196,7 @@ export class DeclarationList {
 	RequestedCustomsDocId: number;
 	ExportDeclarationOfficeCode: string;
 	PhysicalCheck: number;
-	ManifestNumber: string;
+	CargoTypeName: string;
 	SecondCargoID: string;
 	ThirdCargoID: string;
 	

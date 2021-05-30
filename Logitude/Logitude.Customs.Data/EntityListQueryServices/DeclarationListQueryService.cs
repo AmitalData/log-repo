@@ -442,9 +442,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      IsCourierMissingClassification = myJoin != null ? myJoin.IsCourierMissingClassification : false,
                                                      CargoDescription = myJoinConsignment != null ? myJoinConsignment.CargoDescription : null,
 
-                                                     ManifestNumber = myJoinConsignment != null ? myJoinConsignment.ManifestNumber : null,
-                                                     SecondCargoID = myJoinConsignment != null ? myJoinConsignment.SecondCargoID : null,
-                                                     ThirdCargoID = myJoinConsignment != null ? myJoinConsignment.ThirdCargoID : null,
+                                                     //ManifestNumber = myJoinConsignment != null ? myJoinConsignment.ManifestNumber : null,
+                                                     //SecondCargoID = myJoinConsignment != null ? myJoinConsignment.SecondCargoID : null,
+                                                     //ThirdCargoID = myJoinConsignment != null ? myJoinConsignment.ThirdCargoID : null,
 
 
                                                      IsPaymentProtested = a.IsPaymentProtested,
