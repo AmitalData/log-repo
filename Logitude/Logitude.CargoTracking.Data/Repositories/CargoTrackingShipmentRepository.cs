@@ -31,9 +31,10 @@ namespace Logitude.CargoTracking.Data.Repositories
 
         private IQueryable<CargoTrackingShipment> GetFilteredShipments(int tenant)
         {
-            var shipments = (from shipment in currentContext.CargoTrackingShipments
-                             where (shipment.Tenant == tenant && shipment.IsMainRecord == true)
-                                    || (shipment.Tenant == tenant &&  shipment.IsMainRecord == false && shipment.CustomsShipmentHeaderId != null)
+
+            var shipments = (from shipment in currentContext.CargoTrackingShipments // new changes
+                             where (shipment.Tenant == tenant && shipment.IsMainRecord == true) 
+                                    || (shipment.Tenant == tenant &&  shipment.IsMainRecord == false && shipment.CustomsShipmentHeaderId != null) 
 
                               select shipment);
             return shipments;
