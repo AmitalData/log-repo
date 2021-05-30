@@ -13,6 +13,7 @@ import {EntityResourceService} from '../../../Infrastructure/Services/EntityReso
 import {ShipmentDomainService} from '../../../Shipment/Services/ShipmentDomainService';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
+import { ShipmentContainersWebService } from '../../../Shipment/Services/ShipmentContainersWebService';
 
 @Component({
     
@@ -613,7 +614,13 @@ export class ShipmentHelperComponent implements OnDestroy {
     }
 
     ContainersRequestStatusClicked() {
+        var service = new ShipmentContainersWebService();
+        service.GetContainerStatusResult(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
+            this.CurrentSession.StopBusyIndicator();
+            if (!myResponse.HasError) {
 
+            }
+        });            
     }
 
 }

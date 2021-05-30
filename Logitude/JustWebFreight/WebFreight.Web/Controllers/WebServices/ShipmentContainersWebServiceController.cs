@@ -49,8 +49,8 @@ namespace WebFreight.Web.Controllers.WebServices
 
                             else
                             {
-                                INTTRAAnalyzer Analyzer = new INTTRAAnalyzer(analyzeQueue, analyzeQueueReposiory);
-                                Analyzer.Run();
+                                //ContainerStatusesAnalyzer Analyzer = new ContainerStatusesAnalyzer(analyzeQueue, analyzeQueueReposiory);
+                               // Analyzer.Run();
                             }
                         }
 
@@ -89,8 +89,8 @@ namespace WebFreight.Web.Controllers.WebServices
                             analyzeQueueReposiory.Add(analyzeQueue);
                             analyzeQueueReposiory.SubmitChanges();
 
-                            INTTRAAnalyzer Analyzer = new INTTRAAnalyzer(analyzeQueue, analyzeQueueReposiory);
-                            Analyzer.Run();
+                            //ContainerStatusesAnalyzer Analyzer = new ContainerStatusesAnalyzer(analyzeQueue, analyzeQueueReposiory);
+                            //Analyzer.Run();
                         }
 
                         scope2.Complete();
@@ -107,6 +107,28 @@ namespace WebFreight.Web.Controllers.WebServices
             }
         }
 
+        public HttpResponseMessage GetContainerStatusResult(string shipmentId)
+        {
+            try
+            {
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    int tenant = authToken.Tenant;
+
+                    SecurityUtility.AuthenticationOnTenant(tenant);
+                    ContainerStatusesHelper myHelper = new ContainerStatusesHelper(shipmentId, tenant);
+                    myHelper.SendContainerStatusRequest();
+                    scope.Complete();
+                    return Request.CreateResponse(HttpStatusCode.OK, "");
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 
     public class ShipmentContainerSimulator

@@ -1,6 +1,10 @@
-﻿using Logitude.SystemLogs;
+﻿using Logitude.Server.Tools.QueueService;
+using Logitude.SystemLogs;
 using Microsoft.ServiceBus.Messaging;
 using Microsoft.WindowsAzure.ServiceRuntime;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using System;
@@ -10,11 +14,14 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using WebFreight.Web.Helpers;
 
 namespace CommunicationWorkerRole
 {
-    public class ContainerStatusesMonitorWorkerRole : WorkerEntryPoint
+    public class ContainerStatusesMonitorWR : WorkerEntryPoint
     {
+
+        private int tenant;
         public override void Run()
         {
             while (IsRunning)
@@ -23,20 +30,18 @@ namespace CommunicationWorkerRole
                 {
                     try
                     {
-                        AnalyzeQueueRepository analyzeQueueRepository = new AnalyzeQueueRepository();
-                        AnalyzeQueue analyzeQueue = analyzeQueueRepository.GetOpenAnalyzeQueue("");
-                        LastActivity = DateTime.UtcNow;
 
-                        if (analyzeQueue != null)
+                        DbQueueService queueservice = queueservice = new DbQueueService("ContainerStatusesCommunicationLogQueue", 0);
+                        QueueResponse iQueueResponse = queueservice.Receive(new TimeSpan(0, 0, 0, 10));
+
+                        if (iQueueResponse.MessageId != null)
                         {
-                            //ContainerStatusesAnalyzer analyzer = new ContainerStatusesAnalyzer(analyzeQueue, analyzeQueueRepository);
-
-                            //analyzer.Run();
+                            string communicationLogId = iQueueResponse.MessageValues["CommunicationLogId"].ToString();
+                            int.TryParse(iQueueResponse.MessageValues["Tenant"].ToString(), out tenant);
+                            ContainerStatusesAnalyzer analyzer = new ContainerStatusesAnalyzer(communicationLogId, tenant);
+                            analyzer.Run();
+                            queueservice.Complete();
                             LogDoneItemInMemory();
-                        }
-                        else
-                        {
-                            Thread.Sleep(3000);
                         }
                     }
 
@@ -59,7 +64,7 @@ namespace CommunicationWorkerRole
             ServicePointManager.DefaultConnectionLimit = 12;
 
             ThreadId = Guid.NewGuid().ToString();
-            BatchServiceCode = "ContainerStatusesMonitorWorkerRole";
+            BatchServiceCode = "ContainerStatusesMonitorWR";
             DoneItemsInRange = new Dictionary<DateTime, int>();
 
             RoleEnvironment.Changing += RoleEnvironmentChanging;
@@ -74,6 +79,5 @@ namespace CommunicationWorkerRole
                 e.Cancel = true;
             }
         }
-
     }
 }

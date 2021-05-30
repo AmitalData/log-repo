@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {INTRAWebService, INTTRASimulator} from '../../../../Shipment/Services/INTRAWebService';
+import { ShipmentContainersWebService, ShipmentContainerSimulator } from '../../../../Shipment/Services/ShipmentContainersWebService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 
@@ -48,11 +48,11 @@ export class ContainersStatusesSimulatorComponent {
         if (errors.length == 0) {
             this.CurrentSession.StartBusyIndicator("Simulating...");
 
-            var simulator = new INTTRASimulator();
+            var simulator = new ShipmentContainerSimulator();
             simulator.AnalyzeQueueId = this.AnalyzeQueueId;
             simulator.XmlString = this.XML_Text;
 
-            var myService = new INTRAWebService();
+            var myService = new ShipmentContainersWebService();
 
             myService.Simulate(simulator).subscribe((myResponse: ServiceResponse) => {
 
@@ -63,7 +63,7 @@ export class ContainersStatusesSimulatorComponent {
                 }
 
                 else {
-                    var myResult: INTTRASimulator = myResponse.Result;
+                    var myResult: ShipmentContainerSimulator = myResponse.Result;
 
                     if (myResult.Success) {                       
                         var messageWindow = new MessageWindow();
