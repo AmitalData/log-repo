@@ -39,7 +39,8 @@ export class ShipmentDetailsComponent implements AfterViewInit
     ShipmentPackages: any[];
     DocumentsFilings: any[];
     PartnerCards: PartnerCard[] = [];
-    NoReferences: boolean = false;
+    HasReferences: boolean = false;
+    HasContainersDetails: boolean = false;
     ShipmentCustomsData: CargoTrackingShipmentCustomsData;
     get tenant()
     {
@@ -123,7 +124,8 @@ export class ShipmentDetailsComponent implements AfterViewInit
             if (this.ShipmentWithMilestones) {
                 this.Shipment = result;
                 this.ShipmentReferences = result.ShipmentList.CustomerReference ? result.ShipmentList.CustomerReference.split(',') : null;
-                this.NoReferences = this.ShipmentReferences == null ? true : false;
+                this.HasReferences = this.SetHasReferences(); 
+               
                 this.SetRoutingVariables();
                 this.GetShipmentPM();
                 this.GetShipmentCustomsData();
@@ -140,7 +142,12 @@ export class ShipmentDetailsComponent implements AfterViewInit
             }, 200);
         });
     }
-
+    SetHasReferences() {
+        return this.ShipmentReferences == null ? false : true;
+    }
+    SetHasContainersDetails() {
+        return this.ShipmentPackages.length==0  ? false : true;
+    }
     SetRoutingVariables()
     {
         this.SetFromPortCode(this.Shipment.ShipmentList.FromPortId);
@@ -180,6 +187,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
         this.cargoTrackingShipmentService.GetShipmentPackages(this.Shipment.ShipmentList.EntityId).subscribe((result: any) => {
             if (result) {
                 this.ShipmentPackages = result;
+                this.HasContainersDetails = this.SetHasContainersDetails();
                 console.log("GetShipmentPackages", this.ShipmentPackages);
             }
         });

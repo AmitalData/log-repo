@@ -98,7 +98,7 @@
 
         <!-- References -->
         <div>
-            <div class="title">Customer Ref.  &nbsp;&nbsp;&nbsp;<a *ngIf="!NoReferences" (click)="showMoreReferences=!showMoreReferences" style="cursor: pointer;text-decoration: underline;">{{showMoreReferences?'Show Less':'See all'}}</a>  </div>
+            <div class="title">Customer Ref.  &nbsp;&nbsp;&nbsp;<a *ngIf="HasReferences" (click)="showMoreReferences=!showMoreReferences" style="cursor: pointer;text-decoration: underline;">{{showMoreReferences?'Show Less':'See all'}}</a>  </div>
             <ul *ngIf="showMoreReferences">
                 <li *ngFor="let ref of ShipmentReferences, let i = index">{{ref}}</li>
             </ul>
@@ -295,7 +295,8 @@
 
         <div details>
             <br>
-            <div *ngIf="Shipment && Shipment.ShipmentList">
+            <div *ngIf="!HasContainersDetails">No Containers Details for this Shipment</div>
+            <div *ngIf="Shipment && Shipment.ShipmentList && HasContainersDetails">
 
                 <table *ngIf="Shipment.ShipmentList.TransportModeId != 'A' ">
                     <tr>
@@ -335,7 +336,7 @@
 
     <panel style="order: 5;" [Title]="'Customs Data'"
            [Name]="'CustomsDataPanel'"
-           [HaveDetailsSection]="!NoTaxDetails"
+           [HaveDetailsSection]="true"
            [ShowWhitePanelOnMobile]="true"
            [DetailsTitle]="'Tax Details'">
 
@@ -382,10 +383,10 @@
 
         <div details>
             <br>
+            <div *ngIf="NoTaxDetails"> No Tax Details for this Shipment </div>
+            <div *ngIf="!loadingCustomsData && !ShipmentCustomsData && !NoTaxDetails">Customs data is not available yet</div>
 
-            <div *ngIf="!loadingCustomsData && !ShipmentCustomsData">Customs data is not available yet</div>
-
-            <table class="row-hover" *ngIf="!loadingCustomsData && ShipmentCustomsData">
+            <table class="row-hover" *ngIf="!loadingCustomsData && ShipmentCustomsData && !NoTaxDetails">
                 <tr class="header">
                     <th style="width: 400px;">type</th>
                     <th style="width: 200px;">calculation base</th>
