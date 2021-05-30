@@ -70,9 +70,13 @@ function FillShipmentType(ShipmentType: string, TransportMode: string) {
 
 function FillCustomerType(direction: string) {
     if (Conditions.IsImport(direction)) {
-        cy.FillLogLov(QuoteSelectors.QuoteCustomerType, "Consignee", true)
+        //cy.FillLogLov(QuoteSelectors.QuoteCustomerType, "Consignee", true)
+        cy.SelectDropDownListItem(QuoteSelectors.LogLovQuoteCustomerType,"Consignee")
+
     } else {
-        cy.FillLogLov(QuoteSelectors.QuoteCustomerType, "Shipper", true)
+       // cy.FillLogLov(QuoteSelectors.QuoteCustomerType, "Shipper", true)
+       cy.SelectDropDownListItem(QuoteSelectors.LogLovQuoteCustomerType,"Shipper")
+
     }
 }
 
