@@ -362,8 +362,11 @@ export class DWAskUserFiltersComponent extends BaseComponent implements OnInit {
         this.showStaticFilters = newValue;
     }
 
-    OperationValueChanged(event, Item) {
-        Item.Operation = new ObjectFieldOperator(event.Code, event.Name);
+    OperationValueChanged(operation, Item) {
+
+        Item.Operation = new ObjectFieldOperator(operation.Code, operation.Name);
+        Item.TextValue = operation.Code;
+        
     }
 
     list: ObjectFieldOperator[];
@@ -378,6 +381,14 @@ export class DWAskUserFiltersComponent extends BaseComponent implements OnInit {
         this.list.push(this.currentOp);
         this.list.push(this.nextOp);
         this.list.push(this.BetweenOp);
+        this.list.push(this.IsNullOp);
+        this.list.push(this.IsNotNullOp);
+        this.list.push(this.equalsOp);
+        this.list.push(this.notEqualsOp);
+        this.list.push(this.largerThanOp);
+        this.list.push(this.lessThanOp);
+        this.list.push(this.greaterThanOrEqualOp);
+        this.list.push(this.lessThanOrEqualOp);
         return this.list;
     }
 
@@ -387,6 +398,14 @@ export class DWAskUserFiltersComponent extends BaseComponent implements OnInit {
     currentOp: ObjectFieldOperator = new ObjectFieldOperator("Current", "Current");
     nextOp: ObjectFieldOperator = new ObjectFieldOperator("Next", "Next");
     BetweenOp: ObjectFieldOperator = new ObjectFieldOperator("Between", "Between");
+    IsNullOp: ObjectFieldOperator = new ObjectFieldOperator("IsNull", "Is Empty");
+    IsNotNullOp: ObjectFieldOperator = new ObjectFieldOperator("IsNotNull", "Has Value"); startsWithOp: ObjectFieldOperator = new ObjectFieldOperator("StartsWith", "Starts With");
+    equalsOp: ObjectFieldOperator = new ObjectFieldOperator("Equals", "Equals to");
+    notEqualsOp: ObjectFieldOperator = new ObjectFieldOperator("NotEqual", "Not Equal to");
+    largerThanOp: ObjectFieldOperator = new ObjectFieldOperator("LargerThan", "Greater Than");
+    lessThanOp: ObjectFieldOperator = new ObjectFieldOperator("LessThan", "Less Than");
+    greaterThanOrEqualOp: ObjectFieldOperator = new ObjectFieldOperator("GreaterThanOrEqual", "Greater Than Or Equal");
+    lessThanOrEqualOp: ObjectFieldOperator = new ObjectFieldOperator("LessThanOrEqual", "Less Than Or Equal");
 }
 
 export class ObjectFieldOperator {
