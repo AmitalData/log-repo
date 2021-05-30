@@ -10,14 +10,14 @@ Feature: Create Global Zone, Inactivate and activate it from Maintenance
 
     Scenario: Add global zone
         Given a global zone with the following details
-            | GlobalZoneCode      | random |
-            | GlobalZoneName      | random |
-            | GlobalZoneLocalName | random |
-            | InactiveGlobalZone  | Yes    |
+            | GlobalZoneCode      | random         |
+            | GlobalZoneName      | TestGlobalZone |
+            | GlobalZoneLocalName | TestGlobalZone |
+            | InactiveGlobalZone  | Yes            |
         When add global zone
         Then the global zone should add successfully
 
-    Scenario: Search for the global zone by name
+    Scenario: Search for the global zone by code
         When search for global zone
         Then the global zone should appear successfully
 
@@ -26,7 +26,7 @@ Feature: Create Global Zone, Inactivate and activate it from Maintenance
         Then the global zone should open successfully
 
     Scenario: Edit the global zone
-        Given a "random" as globalZoneLocalName
+        Given a "EditTestGlobalZone" as globalZoneLocalName
         And  the user activate global zone
         When edit global zone
         Then the global zone should update successfully

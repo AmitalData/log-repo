@@ -18,7 +18,7 @@ import { EventDetails } from '../models/EventDetails';
 import { EventTypeDetails } from '../models/EventTypeDetails';
 import { WarehouseStorage } from 'cypress/models/WarehouseStorage';
 import { ShipmentContext } from '../models/ShipmentContext';
-import {ShipmentConstants} from '../../../Shipment/cypress/constants/constants'
+
 export function NavigatesToEventsTab() {
     cy.DefineRequestWait(RestAPI.GET, URLs.TraceEventsDomain, RequestAliases.GetTraceEvent);
     cy.Click(ShipmentSelectors.EventsTab, null)
@@ -872,11 +872,11 @@ function FillShipperAndConsignee(shipmentDetails: ShipmentDetails) {
 
 function FillCustomerType(shipmentDetails: ShipmentDetails) { 
     if (Conditions.IsImport(shipmentDetails.Direction)) {
-        //cy.FillLogLov(ShipmentSelectors.ShipmentCustomerType, "Consignee", true)
-      cy.SelectDropDownListItem(ShipmentSelectors.LogLovShipmentCustomer,ShipmentConstants.Consignee)
+       // cy.FillLogLov(ShipmentSelectors.ShipmentCustomerType, "Consignee", true)
+      cy.SelectDropDownListItem(ShipmentSelectors.LogLovShipmentCustomer,"Consignee")
     } else {
-        //cy.FillLogLov(ShipmentSelectors.ShipmentCustomerType, "Shipper", true)
-        cy.SelectDropDownListItem(ShipmentSelectors.LogLovShipmentCustomer,ShipmentConstants.Shipper)
+       // cy.FillLogLov(ShipmentSelectors.ShipmentCustomerType, "Shipper", true)
+        cy.SelectDropDownListItem(ShipmentSelectors.LogLovShipmentCustomer,"Shipper")
 
     }
 }

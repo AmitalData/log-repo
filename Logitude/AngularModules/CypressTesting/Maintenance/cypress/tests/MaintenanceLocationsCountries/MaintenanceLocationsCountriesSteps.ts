@@ -42,9 +42,9 @@ Then("the country should add successfully", () => {
 });
 //#endregion
 
-//#region Search for the Country by name
-When("search for {string} country", (country) => {
-    MaintenanceActions.SearchCountry(country)
+//#region Search for the Country by code in filter
+When("search for {string} country code", (country) => {
+    MaintenanceActions.SearchCountryByCode(country)
 });
 
 Then("the {string} country should appear successfully", (country) => {

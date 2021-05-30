@@ -127,7 +127,13 @@ export function ReceiveAPInvoice() {
         }
     })
 }
-
+export function AssertSaveMultipleAPInvoice(){
+    BaseAssertion.AssertStatusCode(RequestAliases.InvoiceDomain, 200).then((interception) => {
+        if (interception.response.body) {
+            ClickOnSaveOnConfirmWindow()
+        }
+    })
+}
 export function SaveAPInvoice() {
     cy.DefineRequestWait(RestAPI.POST, AccountingURLs.InvoiceDomain, RequestAliases.InvoiceDomain)
     cy.Click(AccountingSelectors.APInvoiceSaveButton, null)
