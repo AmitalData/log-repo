@@ -605,10 +605,10 @@ export class PartnerItem extends BaseComponent {
 
         switch (this.Code) {
             case "SHIPR":
-                myResult = this.IsInlandDomestic && SessionLocator.TenantPM.AllowCustomersInAgentsLOV ? true : myResult;
+                myResult = this.IsInlandDomestic ? true : myResult;
                 break;
             case "CONSI":
-                myResult = this.IsInlandDomestic && SessionLocator.TenantPM.AllowCustomersInAgentsLOV ? true : myResult;
+                myResult = this.IsInlandDomestic ? true : myResult;
                 break;
             case "CSTMR":
                 {
