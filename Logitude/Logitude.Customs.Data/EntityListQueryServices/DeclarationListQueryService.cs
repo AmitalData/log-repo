@@ -221,7 +221,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                       new
                                       {
                                           DeclarationId = gConsignments.Key,
-                                          ConsignmentNumber = gConsignments.Min(r => r.ConsignmentNumber)
+                                          ConsignmentNumber = gConsignments.Min(r => r.ConsignmentNumber),
+
                                       });
 
             var q1stConsignments =
@@ -440,6 +441,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      MAWB = myJoin != null ? myJoin.MAWB : null,
                                                      IsCourierMissingClassification = myJoin != null ? myJoin.IsCourierMissingClassification : false,
                                                      CargoDescription = myJoinConsignment != null ? myJoinConsignment.CargoDescription : null,
+
+                                                     //ManifestNumber = myJoinConsignment != null ? myJoinConsignment.ManifestNumber : null,
+                                                     //SecondCargoID = myJoinConsignment != null ? myJoinConsignment.SecondCargoID : null,
+                                                     //ThirdCargoID = myJoinConsignment != null ? myJoinConsignment.ThirdCargoID : null,
 
 
                                                      IsPaymentProtested = a.IsPaymentProtested,

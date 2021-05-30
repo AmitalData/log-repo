@@ -1525,6 +1525,7 @@
     <Compile Include="EntityUpdateServices\ClientDrivingLicenseTypeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClientDrivingLicenseUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ConsignmentPackDangerUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\ContainerizationUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CourierPendingReasonUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CurrencyTypeTenantUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CurrencyTypeUpdateService.cs" />
