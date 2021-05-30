@@ -38,14 +38,14 @@ import { HybridPartnerPMService } from '../../../../Common/Services/StandardPMs/
 import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
 @Component({
 
-    templateUrl: './LogBoxApprovePaymentComponent.html'
+    templateUrl: './ApprovePaymentBaseComponent.html'
 })
 
-export class LogBoxApprovePaymentComponent extends BaseComponent implements OnInit, AfterViewInit {
+export class ApprovePaymentBaseComponent extends BaseComponent implements OnInit, AfterViewInit {
     public SearchText: string = null;
     public DeleteDocumentClicked(item: any) { }
 
-    DataContext: LogBoxApprovePaymentComponent = this;
+    DataContext: ApprovePaymentBaseComponent = this;
     private myCommonDomainService: CommonDomainService;
     private messageWindow: MessageWindow = new MessageWindow();
     SelectedTicket: any = null;
@@ -440,14 +440,22 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
 
     TotalTaxClick() {
         var newWindow = new LogitudeWindow();
-        newWindow.Width = 550;
+        newWindow.Width = 200;
         newWindow.Height = 230;
+        //if (this.Language == 'HB') {
+        //    newWindow.RTL = true;
+        //}
+        //else {
         newWindow.RTL = this.RTL;
+        //}
         newWindow.Title = TextCodeTranslator.Translate("Shipment.O.TaxInformation");//"פרטי מס";
         var windowArgs: any = {};
+        //windowArgs.IsNew = false;
 
         windowArgs.AdditionalData = this.AdditionalData;
         newWindow.WindowArgs = windowArgs;
+        //newWindow.Add(control); 
         newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/TaxScreenComponent');
+
     }
 }
