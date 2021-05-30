@@ -2458,6 +2458,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    StateName = customer.StateName,
                                                    GLAccountNumber = customer.GLAccountDisplayNumber,
                                                    IsAutonomy = customer.IsAutonomy,
+                                                
                                                });
 
 

@@ -11848,6 +11848,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;InsuredCreditLimit&quot;"
     ListPropertyPath="&quot;InsuredCreditLimit&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"

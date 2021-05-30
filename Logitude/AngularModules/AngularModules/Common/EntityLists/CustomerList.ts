@@ -123,7 +123,6 @@ export class CustomerList {
 		IsPrivateLabelCustomer: boolean;
 		IsCreditLimitEnabled: boolean;
 		CreditLimitAmount: number;
-		InsuredcreditLimit: number;
 		CreditLimitOpenBalance: number;
 		CreditLimitWarningPercentage: number;
 		ExternalAccountingBusinessArea: string;
