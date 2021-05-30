@@ -128,11 +128,19 @@ export class SharedLogisticsSettingComponent implements OnInit {
     public tenantPMService: TenantPMService;
     OnCloseWindowEvent = new EventEmitter();
     private CurrentSession = SessionLocator.SelectedSession;
+
+    IsShowQuotesRequestActivatedInSharedLogistics: boolean = false;
+
     constructor() {
         if (this.tenantPMService == null) {
             this.tenantPMService = new TenantPMService();
+        }
 
-        } 
+        var quotesRequestActivatedInSharedLogisticsfeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "QRA" && d.TenantNumber == SessionLocator.Tenant)[0];
+        if (quotesRequestActivatedInSharedLogisticsfeatureToggle) {
+            this.IsShowQuotesRequestActivatedInSharedLogistics = true;
+        }
+
     }
 
     ngOnInit(
@@ -158,6 +166,7 @@ export class SharedLogisticsSettingComponent implements OnInit {
          this.IsMobileActivated = this.TenantPM.IsMobileActivated;
          this.SharedLogisticsMessageLink = this.TenantPM.SharedLogisticsMessageLink;
          this.SharedLogisticsMasterMessageLink = this.TenantPM.SharedLogisMasterMessageLink;
+        this.IsQuotesRequestActivatedInSharedLogistics = this.TenantPM.IsQuotesRequestActivatedInShared;
 
         if (!FeatureLocator.HasFeaturePermession("General", "MOBILE")) {
             this.IsShowMobileActivateArea = false;
@@ -267,6 +276,8 @@ export class SharedLogisticsSettingComponent implements OnInit {
         this.myCloner.AddField('SharedLogisticsMessageLink');
         this.myCloner.AddField('DisplayDocumentsAndEvents');
         this.myCloner.AddField('SharedLogisticsMasterMessageLink');
+        this.myCloner.AddField('IsQuotesRequestActivatedInShared');
+
         this.myCloner.AddEntity(this.TenantPM);
     }
     private RejectChanges() {
@@ -289,5 +300,29 @@ export class SharedLogisticsSettingComponent implements OnInit {
         }
 
     }
+
+
+
+
+
+
+
+    public get IsQuotesRequestActivatedInSharedLogistics() {
+
+     if (!this.TenantPM) return false
+        return this.TenantPM.IsQuotesRequestActivatedInShared;
+
+    }
+    public set IsQuotesRequestActivatedInSharedLogistics(value: boolean) {
+        if (this.TenantPM) {
+            this.TenantPM.IsQuotesRequestActivatedInShared = value;
+        }
+
+    }
+
+
+
+
+
 }
 

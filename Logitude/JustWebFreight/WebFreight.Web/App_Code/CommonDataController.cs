@@ -246,6 +246,7 @@ namespace WebFreight.Web
                 myResult.ProfitCurrencyCode = myTenant.ProfitCurrency.Code;
                 myResult.TenantDateTimeFormat = myTenant.DateTimeFormat;
                 myResult.DisplayDocumentsAndEvents = myTenant.DisplayDocumentsAndEvents;
+                myResult.IsQuotesRequestsMenuEnabled = myTenant.IsQuotesRequestActivatedInShared;
             }
 
             SharedLogisticsSettingRepository sharedLogisticsSettingRepository = new SharedLogisticsSettingRepository(tenant);
