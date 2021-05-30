@@ -48,7 +48,7 @@ export class JournalCSVLoadComponent extends BaseComponent {
     public IsDisplayOnly: boolean = false;
     public IsMultiCurrency: boolean = false;
     currency: any;
-    
+
     AmountColHeader: string;
     PageLinesList: ObservableCollection;
     public isRTL: boolean = false;
@@ -130,7 +130,7 @@ export class JournalCSVLoadComponent extends BaseComponent {
     //#region Prev Bank Page
 
     //#endregion
-    
+
     SendJournal(): any {
         //throw new Error("Method not implemented.");
         this.CurrentSession.StartBusyIndicatorCreating();
@@ -145,7 +145,7 @@ export class JournalCSVLoadComponent extends BaseComponent {
                     if (myServiceResponse.HasError) {
                         this.HasError = true
                         this._LabelLog = myServiceResponse.ErrorsArray.join(',');
-                        
+
                     } else {
 
                         if (!AppTool.IsNullOrEmpty(response)) {
