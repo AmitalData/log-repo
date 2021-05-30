@@ -1,4 +1,6 @@
-﻿using Logitude.ShipmentTests.Models;
+﻿using Logitude.CargoTracking.BL.CargoTrackingServices.Services;
+using Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelper;
+using Logitude.ShipmentTests.Models;
 using Logitude.ShipmentTests.Models.Builders;
 using Logitude.Test.Base.Models.Api;
 using Logitude.Test.Base.Models.Shared;
@@ -22,7 +24,12 @@ namespace Logitude.CargoTrackingTests.Steps
         public void WhenUpdatingAShipmentsGrossWeightAndBuildingCargoTables()
         {
             ApiResponse<ShipmentPM> response = UpdateShipmentGrossWeight(ShipmentContext.HouseShipment);
-
+            CargoTrackingMainService cargoTrackingMainService = new CargoTrackingMainService();
+            TenantRepository tenantRepository = new TenantRepository(0);
+            UpdateIsIncrementalRunning(tenantRepository, true);
+            ServiceHelper.CheckAndUpdateWaterMark(destinationConnectionString, sourceConnectionString);
+            AddAllTablesToThread(CargoTrackingTableList.GetCargoTrackingTableList());
+            UpdateIsIncrementalRunning(tenantRepository, false);
         }
 
         
@@ -43,6 +50,7 @@ namespace Logitude.CargoTrackingTests.Steps
         {
             return grossWeight + 100;
         }
+
 
     }
 }

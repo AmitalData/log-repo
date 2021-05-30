@@ -83,12 +83,7 @@ namespace Logitude.CargoTracking.BL.CoreBL.Batch
             };
             CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs = new CargoTrackingUpdateDataBaseArgs()
             {
-                BuildCargoArgs = new CargoTrackingServices.HelperClasses.CargoTrackingArgs()
-                {
-                    Table = table,
-                    SourceConnectionString = sourceConnectionString,
-                    DestinationConnectionString = destinationConnectionString
-                },
+                BuildCargoArgs = new CargoTrackingServices.HelperClasses.CargoTrackingArgs() { Table = table, SourceConnectionString = sourceConnectionString, DestinationConnectionString = destinationConnectionString },
                 NumberOfBulkPerTime = 1000,
                 IsUpdateAfterFinished = null,
                 CargoTrackingArguments = CargoTrackingArgs,
