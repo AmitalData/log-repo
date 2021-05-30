@@ -112,12 +112,21 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         }
     }
     checkFixedFilter() { 
-        var isFixedFilter = false;
+        this.hasFixedFilter = false; 
+        this.ShowStaticFilters = false;
         this.SelectedFiltersDataSource.forEach(item => {
-            if (item.FilterItems.some(a => a.filterType == "Fixed Filter")) isFixedFilter = true;
-        });
-        this.hasFixedFilter = isFixedFilter;
+            this.checkFixedItemFilters(item); 
+        }); 
         this.getFixedButtonTitle(); 
+    }
+    checkFixedItemFilters(item: any) {
+        item.FilterItems.forEach(nestedItem => {
+            if (nestedItem.FilterItems.length > 0) {
+                this.checkFixedItemFilters(nestedItem);
+            }
+            else if (nestedItem.filterType == "Fixed Filter") {
+                this.hasFixedFilter = true 
+            }}) 
     }
     getFixedButtonTitle() {
         var title = "Show fixed filters";
