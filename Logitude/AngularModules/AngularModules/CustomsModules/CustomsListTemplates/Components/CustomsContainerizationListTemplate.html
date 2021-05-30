@@ -4,7 +4,7 @@
 
     <div class="TextTrimming RightCenter"
          *ngIf="fieldName == 'PaymentDate'">
-        <div style="text-align:center" *ngIf="AppTool.IsNullOrEmpty(CustomsContainerizationRecord.PaymentDate)">
+        <div style="text-align:center" *ngIf="CustomsContainerizationRecord.PaymentDate!=null">
             <img  title="הגשה" src="./Images/CheckBoxIcon.png" />
         </div>
         <!--*ngIf="CustomsContainerizationRecord.PaymentDate"-->
@@ -28,7 +28,7 @@
 
     </div>
 
-         <div *ngIf="FieldName == 'TransportModeForExport'" style="position:relative;width:100%; height: 100%;">
+     <div *ngIf="fieldName == 'TransportModeForExport'" style="position:relative;width:100%; height: 100%;">
                  <div *ngIf="CustomsContainerizationRecord.TransportModeForExport=='A'">
                     <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Airline.png" />
                 </div>
