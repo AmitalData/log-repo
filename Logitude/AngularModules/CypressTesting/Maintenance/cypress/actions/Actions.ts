@@ -2299,8 +2299,13 @@ export function AssertPostCreditCardType(responseStatusCode: number, expectedSta
     assert.equal(responseStatusCode, expectedStatusCode)
     CreditCardTypeCode = creditCardTypeCode
 }
+export function AssertSearchCreditCardTypeByFilter(companyName: string) {
+    cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
+        expect(text).to.contain(companyName);
+    });
+}
 export function SearchCreditCardType(){
-   SearchCardByValue(CreditCardTypeCode)
+    SearchCardByFilter(CreditCardTypeCode,MaintenanceSelectors.CreditCardTypeCodeFilterCheckBox)
 }
 export function AssertSearchCreditCardType(companyName: string) {
     AssertSearchCard(companyName)
