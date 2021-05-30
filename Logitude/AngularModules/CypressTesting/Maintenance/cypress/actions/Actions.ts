@@ -2300,10 +2300,15 @@ export function AssertPostCreditCardType(responseStatusCode: number, expectedSta
     CreditCardTypeCode = creditCardTypeCode
 }
 export function SearchCreditCardType(){
-   SearchCardByValue(CreditCardTypeCode)
+    SearchCardByFilter(CreditCardTypeCode,MaintenanceSelectors.CreditCardTypeCodeFilterCheckBox)
+}
+export function AssertSearchCreditCardTypeByFilter(companyName: string) {
+    cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
+        expect(text).to.contain(companyName);
+    });
 }
 export function AssertSearchCreditCardType(companyName: string) {
-    AssertSearchCard(companyName)
+   AssertSearchCard(companyName)
 }
 export function OpenCreditCardType() {
     DefineCreditCardTypeGetSingleRequest();
