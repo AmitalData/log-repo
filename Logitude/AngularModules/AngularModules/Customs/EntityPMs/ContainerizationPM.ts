@@ -89,6 +89,11 @@ export class ContainerizationPM {
     public set HataraStatusName(newValue: string) { if (this.hataraStatusName != newValue) { this.hataraStatusName = newValue; this.MarkAsDirty("HataraStatusName"); } }
        
 	 
+    private notConnectedDeclarations: string;
+    public get NotConnectedDeclarations() { return this.notConnectedDeclarations; }
+    public set NotConnectedDeclarations(newValue: string) { if (this.notConnectedDeclarations != newValue) { this.notConnectedDeclarations = newValue; this.MarkAsDirty("NotConnectedDeclarations"); } }
+       
+	 
 
     public OldEntityPM: ContainerizationPM;
 		
