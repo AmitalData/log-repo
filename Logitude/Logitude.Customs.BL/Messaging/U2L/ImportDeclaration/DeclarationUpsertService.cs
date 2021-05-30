@@ -226,6 +226,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     {
                         UpdateTrucker();
                         MyGenericResponseObj.Message = "Declaration has already been paid (Payment date " + this._MyDeclarationPM.PaymentDate + "), only Trucker details will be updated";
+                        MyGenericResponseObj.ApplicationId = _MyDeclarationPM.Id;
+                        MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
+                        MyCommunicationsParams.LoggingEntityId = MyGenericResponseObj.ApplicationId;
+                        scope.Complete();
                         return;
                     }
                     //Yuval Chalup 04.03.2015 TASK-11617 --->
