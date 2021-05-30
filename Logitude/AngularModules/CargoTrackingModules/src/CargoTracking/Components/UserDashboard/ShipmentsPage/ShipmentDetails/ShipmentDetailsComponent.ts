@@ -708,7 +708,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
         step.TransportModeCode = this.InlandTransportMode;
         step.Description = this.ShipmentPM.ShipmentPickUps[i].CarrierName != null ? "Via " + this.ShipmentPM.ShipmentPickUps[i].CarrierName : null;
 
-        this.SetFromAndToLabelsForShipmentPickUpsRoutes(this.ShipmentPM.ShipmentPickUps[i], step);
+        this.SetFromAndToLabelsForShipmentRoutes(this.ShipmentPM.ShipmentPickUps[i], step);
         step.Directions = this.BuildRouteDirections(this.ShipmentPM.ShipmentPickUps[i]);
         return step;
     }
@@ -738,90 +738,88 @@ export class ShipmentDetailsComponent implements AfterViewInit
         var step = new RoutingStep();
         step.TransportModeCode = this.InlandTransportMode;
         step.Description = this.ShipmentPM.ShipmentDeliveries[i].CarrierName != null ? "Via " + this.ShipmentPM.ShipmentDeliveries[i].CarrierName : null;
-        step.FromPortLabel = this.ShipmentPM.ShipmentDeliveries[i].FromPortCode;
-        step.ToPortLabel = this.ShipmentPM.ShipmentDeliveries[i].ToPortCode;
 
+        this.SetFromAndToLabelsForShipmentRoutes(this.ShipmentPM.ShipmentDeliveries[i], step);
         step.Directions = this.BuildRouteDirections(this.ShipmentPM.ShipmentDeliveries[i]);
         return step;
     }
 
-    private SetFromAndToLabelsForShipmentPickUpsRoutes(shipmentPickup: any, step: RoutingStep) {
-        step.FromPortLabel = this.GetFromPortLabel(shipmentPickup);
-        step.ToolTipFromPortLabel = this.GetToolTipFromPortLabel(shipmentPickup);
+    private SetFromAndToLabelsForShipmentRoutes(shipmentRoute: any, step: RoutingStep) {
+        step.FromPortLabel = this.GetFromPortLabel(shipmentRoute);
+        step.ToolTipFromPortLabel = this.GetToolTipFromPortLabel(shipmentRoute);
 
-        step.ToPortLabel = this.GetToPortLabel(shipmentPickup);
-        step.ToolTipToPortLabel = this.GetToolTipToPortLabel(shipmentPickup);
+        step.ToPortLabel = this.GetToPortLabel(shipmentRoute);
+        step.ToolTipToPortLabel = this.GetToolTipToPortLabel(shipmentRoute);
     }
 
-    private GetFromPortLabel(shipmentPickup: any) {
-        if (shipmentPickup.PickUpDeliveryFromTypeCode == "PORT") {
-            return shipmentPickup.FromPortCode;
+    private GetFromPortLabel(shipmentRoute: any) {
+        if (shipmentRoute.PickUpDeliveryFromTypeCode == "PORT") {
+            return shipmentRoute.FromPortCode;
         }
 
-        else if (shipmentPickup.PickUpDeliveryFromTypeCode == "PART") {
-            return shipmentPickup.FromLocation.toString().split(" ")[0];
+        else if (shipmentRoute.PickUpDeliveryFromTypeCode == "PART") {
+            return shipmentRoute.FromLocation.toString().split(" ")[0];
         }
 
         else {
-           return shipmentPickup.FromAddressCountryCode;
+           return shipmentRoute.FromAddressCountryCode;
         }
     }
 
-    private GetToolTipFromPortLabel(shipmentPickup: any) {
+    private GetToolTipFromPortLabel(shipmentRoute: any) {
 
-        if (shipmentPickup.PickUpDeliveryFromTypeCode == "PART") {
-            return "Partner: \n" + shipmentPickup.FromLocation.toString().split("\r")[0];
+        if (shipmentRoute.PickUpDeliveryFromTypeCode == "PART") {
+            return "Partner: \n" + shipmentRoute.FromLocation.toString().split("\r")[0];
         }
 
-        else {
-            return "Address: \n" + shipmentPickup.FromAddressCity_Dummy + ',' + shipmentPickup.FromAddressCountryName;
-        }
-    }
-
-    private GetToPortLabel(shipmentPickup: any) {
-
-        if (shipmentPickup.PickUpDeliveryToTypeCode == "PORT") {
-           return shipmentPickup.ToPortCode;
-        }
-
-        else if (shipmentPickup.PickUpDeliveryToTypeCode == "PART") {
-            return shipmentPickup.ToLocation.toString().split(" ")[0];
-        }
-
-        else {
-            return shipmentPickup.ToAddressCountryCode;
+        else if (shipmentRoute.PickUpDeliveryFromTypeCode == "CASL") {
+            return "Address: \n" + (shipmentRoute.FromAddressCity_Dummy != null ? shipmentRoute.FromAddressCity_Dummy + ',' :"")  + shipmentRoute.FromAddressCountryName;
         }
     }
 
-    private GetToolTipToPortLabel(shipmentPickup: any) {
-        if (shipmentPickup.PickUpDeliveryToTypeCode == "PART") {
-            return "Partner: \n" + shipmentPickup.ToLocation.toString().split("\r")[0];
+    private GetToPortLabel(shipmentRoute: any) {
+
+        if (shipmentRoute.PickUpDeliveryToTypeCode == "PORT") {
+           return shipmentRoute.ToPortCode;
+        }
+
+        else if (shipmentRoute.PickUpDeliveryToTypeCode == "PART") {
+            return shipmentRoute.ToLocation.toString().split(" ")[0];
         }
 
         else {
-            return "Address: \n" + shipmentPickup.ToAddressCity_Dummy + ',' + shipmentPickup.ToAddressCountryName;
+            return shipmentRoute.ToAddressCountryCode;
+        }
+    }
+
+    private GetToolTipToPortLabel(shipmentRoute: any) {
+        if (shipmentRoute.PickUpDeliveryToTypeCode == "PART") {
+            return "Partner: \n" + shipmentRoute.ToLocation.toString().split("\r")[0];
+        }
+
+        else if (shipmentRoute.PickUpDeliveryToTypeCode == "CASL") {
+            return "Address: \n" + (shipmentRoute.ToAddressCity_Dummy != null ? shipmentRoute.ToAddressCity_Dummy + ',' : "" ) + shipmentRoute.ToAddressCountryName;
         }
     }
 
     BuildRouteDirections(shipmentRoute) {
         var directions = [];
 
-        var direction = this.BuildExportRouteDirection(shipmentRoute, "ETD");
+        var direction = this.BuildExportRouteDirection(shipmentRoute.ETD, "ETD");
         if (direction)
             directions.push(direction);
 
-        var direction = this.BuildImportRouteDirection(shipmentRoute, "ETA");
+        var direction = this.BuildImportRouteDirection(shipmentRoute.ETA, "ETA");
         if (direction)
             directions.push(direction);
 
-        var direction = this.BuildExportRouteDirection(shipmentRoute, "ATD");
+        var direction = this.BuildExportRouteDirection(shipmentRoute.ATD, "ATD");
         if (direction)
             directions.push(direction);
 
-        var direction = this.BuildImportRouteDirection(shipmentRoute, "ATA");
+        var direction = this.BuildImportRouteDirection(shipmentRoute.ATA, "ATA");
         if (direction)
             directions.push(direction);
-
 
         return directions;
     }
@@ -829,33 +827,26 @@ export class ShipmentDetailsComponent implements AfterViewInit
     private SetWarehouseLegDirections(step: RoutingStep) {
         if (this.ShipmentPM.WarehouseLegExpectedEntryDate != null) {
             step.Directions.push(this.BuildExportRouteDirection(this.ShipmentPM.WarehouseLegExpectedEntryDate,"ETD"));
-
         }
 
         if (this.ShipmentPM.WarehouseLegExpectedReleaseDate != null) {
             step.Directions.push(this.BuildImportRouteDirection(this.ShipmentPM.WarehouseLegExpectedReleaseDate,"ETA"));
-
-
         }
 
         if (this.ShipmentPM.WarehouseLegActualEntryDate != null) {
             step.Directions.push(this.BuildExportRouteDirection(this.ShipmentPM.WarehouseLegActualEntryDate, "ATD"));
-
         }
 
         if (this.ShipmentPM.WarehouseLegActualReleaseDate != null) {
             step.Directions.push(this.BuildImportRouteDirection(this.ShipmentPM.WarehouseLegActualReleaseDate, "ATA"));
         }
     }
-
   
-
     BuildExportRouteDirection(fieldValue, fieldName: string) {
         if (fieldValue != null) {
             return new RouteDirection(fieldValue, fieldName, "out");
         }
     }
-
 
     BuildImportRouteDirection(fieldValue, fieldName: string) {
         if (fieldValue != null) {
@@ -866,6 +857,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
     private AddShipmentRouteStep(step: RoutingStep) {
         this.ShipmentRouteSteps.push(step);
     }
+
     DownloadDocument(document: string) {
         this.documentDownloadService.DownloadPage(document);
     }
