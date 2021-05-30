@@ -22,6 +22,9 @@ export class NewContainerizationComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     isLoad: boolean = false;
     ExportFileFilter: FilterItem;
+    TransportFilter_A: string;
+    TransportFilter_O: string;
+    TransportFilter_I: string;
 
     private selectedValue: string = "All";
     public get SelectedValue() { return this.selectedValue; }
@@ -54,11 +57,72 @@ export class NewContainerizationComponent extends BaseComponent {
         this.EntityResourceService.getEntityResourceByTableName("Customs.Containerization").subscribe((response: any) => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
                 this.entityListService = new EntityListService();
+                if (this.CurrentSession == null) {
+                    this.TransportFilter_A = "TransportFilter_A_-1_-1";
+                    this.TransportFilter_O = "TransportFilter_O_-1_-1";
+                    this.TransportFilter_I = "TransportFilter_I_-1_-1";
+                } else {
+                    var index_T = this.CurrentSession.GetNewId("ShipmentTransportFilterMenu");
+                    this.TransportFilter_A = "TransportFilter_A" + index_T;
+                    this.TransportFilter_O = "TransportFilter_O" + index_T;
+                    this.TransportFilter_I = "TransportFilter_I" + index_T;
+                }
                 this.BuildColumns();
                 this.isLoad = true;
             });
         });
 
+    }
+
+    itemMouseOver(itemValue: string) {
+        if (this.SelectedValue != itemValue) {
+            var img_A = document.getElementById(this.TransportFilter_A);
+            var img_O = document.getElementById(this.TransportFilter_O);
+            var img_I = document.getElementById(this.TransportFilter_I);
+
+            switch (itemValue) {
+                case "A": {
+                    img_A.setAttribute("src", "./Images/TransportModes/A.png");
+                    break;
+                }
+
+                case "O": {
+                    img_O.setAttribute("src", "./Images/TransportModes/O.png");
+                    break;
+                }
+
+                case "L": {
+                    img_I.setAttribute("src", "./Images/TransportModes/I.png");
+                    //img_I.style.top = "1px";
+                    break;
+                }
+            }
+        }
+    }
+
+    itemMouseLeave(itemValue: string) {
+        if (this.SelectedValue != itemValue) {
+            var img_A = document.getElementById(this.TransportFilter_A);
+            var img_O = document.getElementById(this.TransportFilter_O);
+            var img_I = document.getElementById(this.TransportFilter_I);
+
+            switch (itemValue) {
+                case "A": {
+                    img_A.setAttribute("src", "./Images/TransportModes/A_g.png");
+                    break;
+                }
+
+                case "O": {
+                    img_O.setAttribute("src", "./Images/TransportModes/O_g.png");
+                    break;
+                }
+
+                case "L": {
+                    img_I.setAttribute("src", "./Images/TransportModes/I_g.png");
+                    break;
+                }
+            }
+        }
     }
 
 
@@ -79,6 +143,11 @@ export class NewContainerizationComponent extends BaseComponent {
         filters.AdditionalFilters.push(ExportFilter);
         var ProcFilter = new FilterItem("ProcedureCurrentName", 'המכלה', null, null, "Contains", false, false, false, "string", false);
         filters.AdditionalFilters.push(ProcFilter);
+
+        if (this.selectedValue != 'All') {
+            var ModeFilter = new FilterItem("TransportModeId", this.selectedValue, null, null, "Equals", false, false, false, "string", false);
+            filters.AdditionalFilters.push(ModeFilter);
+        }
 
         if (this.ExportFileFilter) {
             filters.AdditionalFilters.push(this.ExportFileFilter);
@@ -122,7 +191,7 @@ export class NewContainerizationComponent extends BaseComponent {
             FieldName: 'CreateDateTime',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate('Customs.Declaration.F.CreateDateTime'),
-            Styles: { width: '120px' },
+            Styles: { width: '80px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'CreateDateTime',
@@ -168,7 +237,7 @@ export class NewContainerizationComponent extends BaseComponent {
             FieldName: 'CustomFileNo',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate('Customs.Declaration.F.CustomFileNo'),
-            Styles: { width: '120px' },
+            Styles: { width: '80px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'CustomFileNo'
@@ -189,7 +258,7 @@ export class NewContainerizationComponent extends BaseComponent {
             FieldName: 'ManifestNumber',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate('Customs.Declaration.F.ManifestNumber'),
-            Styles: { width: '120px' },
+            Styles: { width: '100px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'ManifestNumber'
@@ -199,7 +268,7 @@ export class NewContainerizationComponent extends BaseComponent {
             FieldName: 'SecondCargoID',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate('Customs.Declaration.F.SecondCargoID'),
-            Styles: { width: '120px' },
+            Styles: { width: '100px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'SecondCargoID'
@@ -231,7 +300,7 @@ export class NewContainerizationComponent extends BaseComponent {
             FieldName: 'PaymentDate',
             DataTypeCode: 'String',//'Number',
             Display: "הגשה",
-            Styles: { width: '60px' },
+            Styles: { width: '50px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CustomsContainerizationListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsContainerizationListTemplate',
@@ -242,13 +311,48 @@ export class NewContainerizationComponent extends BaseComponent {
 
     }
 
-    itemClicked(type:string) {
+    itemClicked(itemValue: string) {
+          if (this.SelectedValue != itemValue) {
+            this.SelectedValue = itemValue;
+        }
 
+
+        this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
+
+         this.ApplyTransportSelectedStyle();
     }
 
-    itemMouseOver(type: string){
 
-}
+    ApplyTransportSelectedStyle() {
+        var itemValue = this.SelectedValue;
+        var img_A = document.getElementById(this.TransportFilter_A);
+        var img_O = document.getElementById(this.TransportFilter_O);
+        var img_I = document.getElementById(this.TransportFilter_I);
+        if (img_A) {
+            this.CurrentSession.ChangeSessionHeader({ TransportId: itemValue });
+            img_A.setAttribute("src", "./Images/TransportModes/A_g.png");
+            img_O.setAttribute("src", "./Images/TransportModes/O_g.png");
+            img_I.setAttribute("src", "./Images/TransportModes/I_g.png");
+            switch (itemValue) {
+                case "A": {
+                    img_A.setAttribute("src", "./Images/TransportModes/A_w.png");
+                    break;
+                }
+
+                case "O": {
+                    img_O.setAttribute("src", "./Images/TransportModes/O_w.png");
+                    break;
+                }
+
+                case "L": {
+                    img_I.setAttribute("src", "./Images/TransportModes/I_w.png");
+                    break;
+                }
+            }
+        }
+    }
+
+ 
     SendButtonClicked() {
 
     }

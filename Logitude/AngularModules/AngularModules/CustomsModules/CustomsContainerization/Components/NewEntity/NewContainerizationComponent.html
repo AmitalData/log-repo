@@ -22,8 +22,37 @@
                         <td colspan="2" style="width: 1200px;">
                             <table style="table-layout: fixed;">
                                 <tr class="FormFieldRow">
+                                    <td style="height:26px; ">
+                                        <div style="border:1px solid #6A8299;width:47px;border-radius: 3px;max-height: 26px;">
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <div class="ActionButton" style="width: 35px;height:23px; ">
+                                                            <CheckBox style="pointer-events:none;"   ></CheckBox>
+
+                                                        </div>
+                                                    </td>
+
+                                                    <td>
+                                                        <div class="ToggleButton" tabindex="-1" style="width: 20px;height:23px;left:10px ">
+
+
+                                                            <img src="./Images/ToggleIcon.png" style="float:left;" />
+                                                            <div class="ToggleButtonMenu" style="width: 70px;top:26px;text-align:right">
+                                                                <button style="text-align:right"  >{{'Customs.CourierMaster.O.All' | TextCodeTranslationPipe}}</button>
+                                                                <button style="text-align:right" >{{'Customs.CourierMaster.O.None' | TextCodeTranslationPipe}}</button>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+
+
+
+                                    </td>
                                     <td colspan="6">
-                                        <button style="width: 100px; float: left; " class="GreenButton" (click)="SendButtonClicked()" [disabled]="'false'">{{ 'Customs.Declaration.O.SendDocument' |TextCodeTranslationPipe }}</button>
+                                        <button style="width: 100px; float: left; " class="GreenButton" (click)="SendButtonClicked()">המשך</button>
 
                                     </td>
 
