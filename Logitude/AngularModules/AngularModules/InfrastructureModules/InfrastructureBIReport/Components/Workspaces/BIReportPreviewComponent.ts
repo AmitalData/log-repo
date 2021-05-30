@@ -74,7 +74,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     public HasRunFeature: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     private hasFixedFilter = false;
-    private filterButtonTitle;
+    private filterButtonTitle = "No available fixed filters";
      
     @Output() ComputeFiltersCommand = new EventEmitter();
     constructor() {
@@ -129,11 +129,8 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
             }}) 
     }
     getFixedButtonTitle() {
-        var title = "Show fixed filters";
-        if (!this.hasFixedFilter) {
-            title = "No available fixed filters"
-        }
-        this.filterButtonTitle = title;
+        if (this.hasFixedFilter)
+            this.filterButtonTitle = "Show fixed filters"; 
     } 
 
     public Run(args: any) {
