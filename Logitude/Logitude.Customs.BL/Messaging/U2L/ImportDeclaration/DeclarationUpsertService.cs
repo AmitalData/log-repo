@@ -214,11 +214,18 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
                     //Check if Declaration was already paid, constraint in progress or Future payment was done
                     var declarationValidator = new Logitude.Customs.BL.Validators.DeclarationValidator(_MyDeclarationPM);
+                    declarationValidator.ToUpdateWithPaymentDate = true;
                     declarationValidator.DeclarationViewDisplayOnlyChecks();
                     if (declarationValidator.ErrorCode.Count > 0)
                     {
                         MyGenericResponseObj.Message = TranslateTextsClass.Translate(declarationValidator.ErrorCode[0], _MyDeclarationPM.Tenant, true);
                         MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
+                        return;
+                    }
+                    if (_MyDeclarationPM.PaymentDate.HasValue)
+                    {
+                        UpdateTrucker();
+                        MyGenericResponseObj.Message = "Declaration has already been paid (Payment date " + this._MyDeclarationPM.PaymentDate + "), only Trucker details will be updated";
                         return;
                     }
                     //Yuval Chalup 04.03.2015 TASK-11617 --->
@@ -853,7 +860,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
             }
         }
- 
+
+
         public void SendClientSearch()
         {
             int.TryParse(_AmitalCustomsFile.Tenant, out int Tenant);
