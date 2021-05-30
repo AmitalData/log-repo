@@ -225,7 +225,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                       });
 
             var q1stConsignments =
-                (from a in context.Consignments
+                (from a in context.Consignments.Include("CargoType")
                  join c in qConsignmentNumber
                  on new { a.DeclarationId, a.ConsignmentNumber } equals new { c.DeclarationId, c.ConsignmentNumber }
                  select a
@@ -275,7 +275,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                IsPendingNotNull = true,
                            });
                 //qMyJoin = Enumerable.Empty<MyDecJoin>().AsQueryable();
-                q1stConsignments = context.Consignments.Where(r => r.DeclarationId == "-1");
+               // q1stConsignments = context.Consignments.Where(r => r.DeclarationId == "-1");
                 //q1stConsignments = Enumerable.Empty<Consignment>().AsQueryable();
             }
 
@@ -464,6 +464,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      CreateDateForExport = a.CreateDateTime,
                                                      TransportModeForExport = a.TransportModeId,
                                                      CustomFileForExport = a.CustomFileNo,
+                                                     CargoTypeName = myJoinConsignment != null && myJoinConsignment.CargoType  != null ? myJoinConsignment.CargoType.LocalName : null,
+                                                     SecondCargoID= myJoinConsignment != null ? myJoinConsignment.SecondCargoID : null,
+                                                     ThirdCargoID= myJoinConsignment != null ? myJoinConsignment.ThirdCargoID : null,
+                                                     ManifestNumber = myJoinConsignment != null ? myJoinConsignment.ManifestNumber :null
                                                  });
 
 

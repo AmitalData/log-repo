@@ -1,0 +1,122 @@
+<style>
+    .FormFieldRow {
+        height: 30px;
+    }
+
+    .subTitle {
+        color: #1b90cb;
+        font-size: 15px;
+        padding-top: 10px;
+        padding-bottom: 2px;
+    }
+</style>
+<table *ngIf="isLoad">
+
+    <tr>
+        <td>
+            <div class="TableHolder">
+                <table>
+
+                    <!-- Filters Fields [style.pointer-events]="AllowPointerEvents"-->
+                    <tr>
+                        <td colspan="2" style="width: 1200px;">
+                            <table style="table-layout: fixed;">
+                                <tr class="FormFieldRow">
+                                    <td colspan="6">
+                                        <button style="width: 100px; float: left; " class="GreenButton" (click)="SendButtonClicked()" [disabled]="'false'">{{ 'Customs.Declaration.O.SendDocument' |TextCodeTranslationPipe }}</button>
+
+                                    </td>
+
+                                </tr>
+                                <tr class="FormFieldRow">
+
+                                     <td style="text-align:right !important;">
+                                         <div style="color: #555555;">
+                                             {{'Customs.Declaration.F.ExportFile' |TextCodeTranslationPipe}} :
+                                         </div>
+                                    </td>
+                                    <td>
+
+                                        <LogTextBox [ObjectFieldName]="'ExportFile'" [InputType]="'text'" [DataContext]="DataContext"
+                                                    [ObjectTableName]="objectTableNameDec" [HideColumns]="true" [Text]="ExportFile"></LogTextBox>
+                                    </td>
+
+
+                                    <td style="width: 60px;"><div></div></td>
+                                    <td style="text-align:right !important;">
+                                        <ul class="FiltersMenu">
+                                            <li (click)="itemClicked('All')" (mouseover)="itemMouseOver('All')" [class.SelectedFilter]="SelectedValue === 'All'">
+                                                All
+                                            </li>
+                                            <li (click)="itemClicked('A')" (mouseover)="itemMouseOver('A')" (mouseleave)="itemMouseLeave('A')" [class.SelectedFilter]="SelectedValue === 'A'" title="Air">
+                                                <img [id]="TransportFilter_A" class="CenterCenter" src="./Images/TransportModes/A_g.png" style="top: 1px;" />
+                                            </li>
+                                            <li (click)="itemClicked('O')" (mouseover)="itemMouseOver('O')" (mouseleave)="itemMouseLeave('O')" [class.SelectedFilter]="SelectedValue === 'O'" title="Ocean">
+                                                <img [id]="TransportFilter_O" class="CenterCenter" src="./Images/TransportModes/O_g.png" style="top: 1px;" />
+                                            </li>
+                                            <li (click)="itemClicked('L')" (mouseover)="itemMouseOver('L')" (mouseleave)="itemMouseLeave('L')" [class.SelectedFilter]="SelectedValue === 'L'" title="Inland">
+                                                <img [id]="TransportFilter_I" class="CenterCenter" src="./Images/TransportModes/I_g.png" style="top: 1px;" />
+                                            </li>
+                                        </ul>
+                                    </td>
+
+                                    <td></td>
+ 
+                                    <td style="width:130px;">
+
+                                        <SearchTextBox [PlaceHolder]="'הצהרה/מזהה מטען/לקוח'" [ObjectTableName]="objectTableNameDec" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
+                                    </td>
+
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <!-- Grid -->
+                    <tr>
+                        <td colspan="4" style="height: 100%;">
+
+                            <div style="height: 100%;">
+
+                                <table style="height: 100%;">
+                                    <tr>
+                                        <td>
+                                             <logitude-grid GridWidth="100%" GridHeight="100%" [ObjectTable]="objectTableNameDec" [dataSource]="DataSource"
+                                                           [columns]="columns" [autoLoad]="true" [QueryChangeEvent]="onQueryChangeEvent"  >
+                                            </logitude-grid>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- footer -->
+                    <tr style="height: 30px;">
+                        <td>
+                            <div></div>
+                        </td>
+
+                        <td style="width: 57px;">
+                            <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Close' |TextCodeTranslationPipe}}</button>
+                        </td>
+
+                        <!--<td style="width: 5px;">
+            <div></div>
+        </td>
+
+        <td style="width: 57px;">
+            <button class="RedButton" [disabled]="IsDisplayOnly" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+        </td>-->
+                    </tr>
+
+                </table>
+            </div>
+        </td>
+    </tr>
+
+</table>

@@ -1227,5 +1227,5 @@
   <Index
     Columns="IsClose" />
   <Index
-  Columns="ExternalDeclarationNumber" />
+    Columns="ExternalDeclarationNumber" />
 </Table>
