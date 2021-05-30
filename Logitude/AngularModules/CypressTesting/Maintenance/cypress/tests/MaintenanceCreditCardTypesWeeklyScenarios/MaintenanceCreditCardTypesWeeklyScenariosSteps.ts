@@ -47,7 +47,7 @@ When("search for credit card type", () => {
 });
 
 Then("the credit card type should appear successfully", () => {
-    MaintenanceActions.AssertSearchCreditCardType(creditCardTypeDetails.EnglishName)
+    MaintenanceActions.AssertSearchCreditCardTypeByFilter(creditCardTypeDetails.EnglishName)
 });
 
 //#endregion
