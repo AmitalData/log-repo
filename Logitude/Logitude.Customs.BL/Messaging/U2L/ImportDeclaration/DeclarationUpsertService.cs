@@ -214,7 +214,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
                     //Check if Declaration was already paid, constraint in progress or Future payment was done
                     var declarationValidator = new Logitude.Customs.BL.Validators.DeclarationValidator(_MyDeclarationPM);
-                    declarationValidator.ToUpdateWithPaymentDate = true;
+                    if (_MyDeclarationPM.IsCourierDeclaration) declarationValidator.ToUpdateWithPaymentDate = true;
                     declarationValidator.DeclarationViewDisplayOnlyChecks();
                     if (declarationValidator.ErrorCode.Count > 0)
                     {
@@ -222,7 +222,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                         MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
                         return;
                     }
-                    if (_MyDeclarationPM.PaymentDate.HasValue)
+                    if (_MyDeclarationPM.IsCourierDeclaration && _MyDeclarationPM.PaymentDate.HasValue)
                     {
                         UpdateTrucker();
                         MyGenericResponseObj.Message = "Declaration has already been paid (Payment date " + this._MyDeclarationPM.PaymentDate + "), only Trucker details will be updated";
