@@ -39,6 +39,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string PrimaryContactPhone { get; set; }
 
         public string GLAccountNumber { get; set; }
-
+        public string CollectorId { get; set; }
     }
 }
