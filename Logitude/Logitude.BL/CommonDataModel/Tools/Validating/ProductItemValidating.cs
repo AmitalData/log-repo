@@ -10,25 +10,11 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
 {
     public class ProductItemValidating
     {
-        public static void Validate(ProductItemPM productItemPM, ICommonDataContext commonContext, bool isNew)
+        public static void Validate(ProductItemPM productItemPM, CustomerPM customerPM)
         {
-            bool isExist = false;
-
-            if (isNew)
-            {
-                isExist = (from a in commonContext.ProductItems
-                           where a.SKU == productItemPM.SKU && a.Tenant == productItemPM.Tenant && a.CustomerId == productItemPM.CustomerId
-                           select a).Any();
-            }
-
-            else
-            {
-                isExist = (from a in commonContext.ProductItems
-                           where a.SKU == productItemPM.SKU && a.Tenant == productItemPM.Tenant && a.CustomerId == productItemPM.CustomerId && a.Id != productItemPM.Id
-                           select a).Any();
-            }
-
-            if (isExist)
+            int sameSKURecordscount = customerPM.CustomerProductItems.Where(a => a.SKU == productItemPM.SKU && a.Tenant == productItemPM.Tenant).Count();
+             
+            if (sameSKURecordscount > 1)
             {
                 throw new ApplicationException("A Product Item with same SKU already exists");
             }

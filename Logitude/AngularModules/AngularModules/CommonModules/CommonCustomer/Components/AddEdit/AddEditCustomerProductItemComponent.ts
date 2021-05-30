@@ -121,16 +121,10 @@ export class AddEditCustomerProductItemComponent extends BaseComponent {
     }
     private ValidateProductItemSKU(errors: string[]) {
         if (this.DataContext.FatherComponent.ProductItems != null) {
-            if (this.DataContext.IsNewEntity) {
-                if (this.DataContext.FatherComponent.ProductItems.Collection.filter(d => d.SKU == this.EntityPM.SKU).length > 0) {
-                    errors.push("A Product Item with same SKU already exists");
-                }
-            }
+            var sameSKURecordscount: number = this.DataContext.FatherComponent.ProductItems.Collection.filter(a => a.SKU == this.EntityPM.SKU).length;
 
-            else {
-                if (this.DataContext.FatherComponent.ProductItems.Collection.filter(d => d.SKU == this.EntityPM.SKU && d.Id != this.EntityPM.Id).length > 0) {
-                    errors.push("A Product Item with same SKU already exists");
-                }
+            if (sameSKURecordscount > 1) {
+                errors.push("A Product Item with same SKU already exists");
             }
         }
     }
