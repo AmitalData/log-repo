@@ -110,13 +110,15 @@ namespace Logitude.Accounting.BL.CoreBL
                         {
                             case "S":
                                 v_total = taxLineDTO.VatableInvoiceAmount;
+                                if (taxLineDTO.VatAmount != 0m) v_vatable = taxLineDTO.VatableInvoiceAmount;
                                 break;
                             case "M":
                             case "I":
-                                v_vatable = taxLineDTO.VatableInvoiceAmount;
-                                v_total = taxLineDTO.VatableInvoiceAmount + taxLineDTO.VatAmount;
+                               // v_vatable = taxLineDTO.VatableInvoiceAmount;
+                               // v_total = taxLineDTO.VatableInvoiceAmount + taxLineDTO.VatAmount;
+                                v_total = taxLineDTO.VatableInvoiceAmount;
+                                if (taxLineDTO.VatAmount != 0m) v_vatable = taxLineDTO.VatableInvoiceAmount;
                                 break;
-
                             default:
                                 v_total = taxLineDTO.VatableInvoiceAmount;
                                 break;
