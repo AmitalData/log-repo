@@ -264,6 +264,7 @@ export class MaintenanceSelectors extends RegexSelectors {
      public static readonly ShipmentSubTypeSaveButton = "#ShipmentSubType-Save"
      public static readonly ShipmentSubTypeEventsTab = "#ShipmentSubTypeTHEvents"
      public static readonly ShipmentSubTypeCodeFilterCheckBox = '[data-cy="CheckBox_ShipmentSubType.F.Code"]'
+     public static readonly CreditCardTypeCodeFilterCheckBox='input[data-cy="CheckBox_CreditCardType.F.Code"]'
         //#endregion
    //#region credit card type 
    public static readonly CreditCardTypeCode = "#CreditCardType_Code"
