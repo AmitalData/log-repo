@@ -345,7 +345,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
         //     newCard.IsActive = milstone.Code == this.Shipment.ShipmentList.CurrentMilestoneCode;
         //     this.SliderCards.push(newCard);
         // });
-        this.SetNoMilstonesFound();
+       
       
         this.SliderCards = this.Shipment.Milestones
             .filter(milstone =>
@@ -373,6 +373,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
                 newCard.HasWarning = newCard.IsActive;
                 return newCard;
             });
+        this.SetNoMilstonesFound();
         // .sort((a, b) => {
         //     if (a.Date > b.Date) return 1;
         //     if (a.Date < b.Date) return -1;
@@ -380,7 +381,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
         //     });
     }
     SetNoMilstonesFound() {
-        if (this.Shipment.Milestones.length == 0) this.NoMilstonesFound = true;
+        if (this.SliderCards.length == 0) this.NoMilstonesFound = true;
     }
     MoveSlider(dir)
     {
