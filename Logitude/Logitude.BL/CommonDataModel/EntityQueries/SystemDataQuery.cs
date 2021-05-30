@@ -13,6 +13,7 @@ using System.Transactions;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
+using Simplog.Data.Helpers;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -40,8 +41,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return new SystemDataPM()
             {
-                UserId = user != null ? user.Id:"",
-                Date = DateTime.Now.ToShortDateString(),
+                UserId = user != null ? user.Id : "",
+                Date = TenantServerConfigration.GetCurrentDateTime(tenantNum),
                 Signature = user != null ? user.Contact.Signature: null,
                 SignatureHtml = user != null ? user.Contact.SignatureHtml: null,
                 UserName = user!=null ? user.Contact.EnglishName: "",
