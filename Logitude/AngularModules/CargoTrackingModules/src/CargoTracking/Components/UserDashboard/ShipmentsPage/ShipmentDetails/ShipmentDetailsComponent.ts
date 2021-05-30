@@ -39,7 +39,8 @@ export class ShipmentDetailsComponent implements AfterViewInit
     ShipmentPackages: any[];
     DocumentsFilings: any[];
     PartnerCards: PartnerCard[] = [];
-
+    HasReferences: boolean = false;
+    HasContainersDetails: boolean = false;
     ShipmentCustomsData: CargoTrackingShipmentCustomsData;
     get tenant()
     {
@@ -123,6 +124,8 @@ export class ShipmentDetailsComponent implements AfterViewInit
             if (this.ShipmentWithMilestones) {
                 this.Shipment = result;
                 this.ShipmentReferences = result.ShipmentList.CustomerReference ? result.ShipmentList.CustomerReference.split(',') : null;
+                this.HasReferences = this.SetHasReferences(); 
+               
                 this.SetRoutingVariables();
                 this.GetShipmentPM();
                 this.GetShipmentCustomsData();
@@ -139,7 +142,12 @@ export class ShipmentDetailsComponent implements AfterViewInit
             }, 200);
         });
     }
-
+    SetHasReferences() {
+        return this.ShipmentReferences == null ? false : true;
+    }
+    SetHasContainersDetails() {
+        return this.ShipmentPackages.length==0  ? false : true;
+    }
     SetRoutingVariables()
     {
         this.SetFromPortCode(this.Shipment.ShipmentList.FromPortId);
@@ -179,6 +187,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
         this.cargoTrackingShipmentService.GetShipmentPackages(this.Shipment.ShipmentList.EntityId).subscribe((result: any) => {
             if (result) {
                 this.ShipmentPackages = result;
+                this.HasContainersDetails = this.SetHasContainersDetails();
                 console.log("GetShipmentPackages", this.ShipmentPackages);
             }
         });
@@ -236,12 +245,14 @@ export class ShipmentDetailsComponent implements AfterViewInit
     }
 
     loadingCustomsData: boolean = false;
+    NoTaxDetails: boolean = false;
     GetShipmentCustomsData() {
         this.loadingCustomsData = true;
         this.cargoTrackingShipmentService.GetShipmentCustomsData(this.Shipment.ShipmentList.EntityId).subscribe((result: any) => {
             if (result) {
                 this.ShipmentCustomsData = result;
                 this.loadingCustomsData = false;
+                this.NoTaxDetails = this.ShipmentCustomsData.TaxDetails.length == 0 ? true : false;
             }
         }, () => {
             this.loadingCustomsData = false;
@@ -325,6 +336,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
     sliderCardWidth: number = 200;
     sliderVisibleCardsCount: number = 5;
     sliderVisibleCardsWidth: number = 0;
+    NoMilstonesFound: boolean = false;
     BuildSliderCards()
     {
         // this.Shipment.Milestones.forEach((milstone:Milestone) => {
@@ -337,7 +349,8 @@ export class ShipmentDetailsComponent implements AfterViewInit
         //     newCard.IsActive = milstone.Code == this.Shipment.ShipmentList.CurrentMilestoneCode;
         //     this.SliderCards.push(newCard);
         // });
-
+       
+      
         this.SliderCards = this.Shipment.Milestones
             .filter(milstone =>
             {
@@ -364,13 +377,16 @@ export class ShipmentDetailsComponent implements AfterViewInit
                 newCard.HasWarning = newCard.IsActive;
                 return newCard;
             });
+        this.SetNoMilstonesFound();
         // .sort((a, b) => {
         //     if (a.Date > b.Date) return 1;
         //     if (a.Date < b.Date) return -1;
         //      return 0;
         //     });
     }
-
+    SetNoMilstonesFound() {
+        if (this.SliderCards.length == 0) this.NoMilstonesFound = true;
+    }
     MoveSlider(dir)
     {
 
