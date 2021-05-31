@@ -463,6 +463,37 @@ ID List :
                         break;
 
                     }
+                case "1259":
+                case "CargoIdentifireType":
+                    {
+                        var extList = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt>();
+                        Logitude.CustomsMessaging.Helpers.ClosedTable.
+                                                    ManipulateCustomResponse.
+                                                DataSetToTableData(customResponse,
+                                                (newResponseTableData, dr) =>
+                                                {
+                                                    var newExt =
+                                                        SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt.CreateNew(newResponseTableData);
+                                                    newExt.MyCargoIdentifireType = new Helpers.ClosedTable.CargoIdentifireType();
+                                                    if (!writeHighlight)
+                                                    {
+                                                        writeHighlight = true;
+                                                    }
+                                                   /* if (dr["IsRelevantInvoice"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyModificationAndDiscountType.IsRelevantInvoice = true;
+                                                    }
+                                                    if (dr["IsRelevantGoodsItem"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyModificationAndDiscountType.IsRelevantGoodsItem = true;
+                                                    }*/
+                                                    extList.Add(newExt);
+                                                });
+                        return extList;
+
+                    }
                 case "1423":
                 case "CertificateExemptionType":
                     {

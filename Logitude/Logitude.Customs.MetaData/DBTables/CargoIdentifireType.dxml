@@ -39,4 +39,10 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="ValidForExport"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
 </Table>
