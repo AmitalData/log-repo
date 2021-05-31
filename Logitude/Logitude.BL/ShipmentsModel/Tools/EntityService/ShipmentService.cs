@@ -461,6 +461,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.ComputeIsAssemblyField();
                     this.ComputeFinalDestination();
                     this.CheckUpdatingMasterHouses();
+                    //this.UpdateHouseRoutingFieldsOnMasterConnection();
 
                     shipmentBehaviourFacade = new ShipmentBehaviourFacade(entityPM, objectContext, UpdatedShipmentComputedFields, isNewEntity);
                     shipmentBehaviourFacade.Handle();
@@ -565,7 +566,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
         private void UpdatePayablesLinesVatAmounts()
         {
-            if(initializer.ShipmentPayablesChangeSet != null && initializer.ShipmentPayablesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.None).Any()) {
+            if (initializer.ShipmentPayablesChangeSet != null && initializer.ShipmentPayablesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.None).Any())
+            {
                 var allPayablesIds = (from d in entityPM.ShipmentPayables select d.Id).ToList();
                 var allPayables = shipmentPayableRepository.GetShipmentPayablesFromIdList(allPayablesIds, tenant);
                 PayablesLinesVatAmounts payablesLinesVatAmounts = new PayablesLinesVatAmounts(allPayables, initializer.Tenant, shipmentPayableRepository);
@@ -1499,7 +1501,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                         default: { break; }
                     }
-                }                             
+                }
             }
         }
         private void UpdateShipmentDeliveriesCollection()
@@ -1530,7 +1532,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                         default: { break; }
                     }
-                }                         
+                }
             }
         }
         private void UpdateShipmentPayablesCollection()
@@ -1561,7 +1563,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                         default: { break; }
                     }
-                }                             
+                }
             }
         }
         private void UpdateShipmentReceivablesCollection()
@@ -1594,7 +1596,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                         default: { break; }
                     }
-                }                
+                }
             }
         }
         private void UpdateShipmentAWBPrintOnliesCollection()
@@ -3202,7 +3204,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 if (entityPM.TransportModeId == "A")
                 {
                     this.ComputeFreightChargesFromFreightPayableLine();
-                  
+
                     if (string.IsNullOrEmpty(entityPM.RateClassCode))
                     {
                         entityPM.RateClassCode = "Q";
@@ -3312,7 +3314,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             if (entityPM.AWBChargeRate == null)
             {
                 var airFreightCode = "AFT";
-                var airFreightCharge =entityPM.ShipmentPayables.Where(a => a.ChargesTypeCode == airFreightCode).FirstOrDefault();
+                var airFreightCharge = entityPM.ShipmentPayables.Where(a => a.ChargesTypeCode == airFreightCode).FirstOrDefault();
                 if (airFreightCharge != null && ValidateCurrencyOfShipmentAWBPrintOnlies(airFreightCharge))
                 {
                     this.SetAWBFreightChargeFields(airFreightCharge);
@@ -3341,7 +3343,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             entityPM.AWBChargeRate = airFreightCharge.UnitPrice;
             entityPM.AWBCurrencyId = airFreightCharge.CurrencyId;
             entityPM.AWBChargeAmount = this.SetAWBChargeAmount();
-            if (!string.IsNullOrEmpty (airFreightCharge.PrepaidCollectId))
+            if (!string.IsNullOrEmpty(airFreightCharge.PrepaidCollectId))
             {
                 entityPM.FreightPrepaidCollectId = airFreightCharge.PrepaidCollectId;
                 entityPM.AWBChargesCodeCode = this.SetAWBChargesCodeCode();
@@ -3408,14 +3410,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         {
             double? myResult = null;
             var myRateClassCode = entityPM.RateClassCode;
-            var myChargeRate =  entityPM.AWBChargeRate;
+            var myChargeRate = entityPM.AWBChargeRate;
             var chargeAmount = entityPM.ChargeableWeight;
             var groupCode = this.GetRateClassGroupCode(myRateClassCode);
             if (entityPM.RateClassCode == "K")
             {
                 chargeAmount = entityPM.ChargeableWeightInKG;
             }
-           
+
             if (groupCode == "M")
             {
                 myResult = myChargeRate;
@@ -4873,7 +4875,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             if (!string.IsNullOrEmpty(itemPM.ParentPickUpDeliveryId))
             {
                 ShipmentPickUpDelivery parent = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDelivery(tenant, itemPM.ParentPickUpDeliveryId);
-                if(parent != null)
+                if (parent != null)
                 {
                     if (parent.ChildPickUpIndex == null)
                     {
@@ -4894,7 +4896,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 entityPM.ShipmentPickUpIndex += 1;
                 itemPM.PickUpDeliveryNumber = entityPM.ShipmentNumber + "/" + entityPM.ShipmentPickUpIndex;
-            }            
+            }
 
             ShipmentPickUpDelivery itemPoco = new ShipmentPickUpDelivery()
             {
@@ -5549,7 +5551,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 shipmentPayableRepository.Remove(itemPoco);
                 calculateProfit = true;
-                calculatePayables = true;                
+                calculatePayables = true;
             }
         }
         private void CreateChildPayable(ShipmentPayablePM childPayablePM, string parentId)
@@ -5787,7 +5789,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
-        
+
         private void CreateConsoleShipment(ConsoleShipmentPM itemPM)
         {
             Shipment houseShipment = entityRepository.GetSingleShipment(itemPM.Id, tenant);
@@ -5797,6 +5799,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 houseShipment.MasterShipmentDataId = itemPM.MasterShipmentDataId;
                 houseShipment.ComputedShipmentNumber = itemPM.ShipmentNumber;
                 houseShipment.AgentComputed = houseShipment.AgentId == null ? entityPM.AgentId : houseShipment.AgentId;
+                this.UpdateHouseRoutingFieldsWhenConnectedToMaster(houseShipment);
                 entityRepository.Update(houseShipment);
                 entityRepository.SubmitChanges();
 
@@ -6729,6 +6732,20 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 tariffRepository.Update(tariff);
                 tariffRepository.SubmitChanges();
 
+            }
+        }
+        private void UpdateHouseRoutingFieldsWhenConnectedToMaster(Shipment houseShipment)
+        {
+            if (!string.IsNullOrEmpty(entityPM.PreCarriageFromPortId) && !string.IsNullOrEmpty(entityPM.PreCarriageToPortId)
+                && !string.IsNullOrEmpty(houseShipment.PreForwardingFromPortId) && !string.IsNullOrEmpty(houseShipment.PreForwardingToPortId))
+            {
+                houseShipment.PreForwardingToPortId = entityPM.PreCarriageFromPortId;
+            }
+
+            if (!string.IsNullOrEmpty(entityPM.OnCarriageFromPortId) && !string.IsNullOrEmpty(entityPM.OnCarriageToPortId)
+                && !string.IsNullOrEmpty(houseShipment.OnForwardingFromPortId) && !string.IsNullOrEmpty(houseShipment.OnForwardingToPortId))
+            {
+                houseShipment.OnForwardingFromPortId = entityPM.OnCarriageToPortId;
             }
         }
     }
