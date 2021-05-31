@@ -41,6 +41,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
     private CurrentSession = SessionLocator.SelectedSession;
     public IsChildFeatureExists: boolean = false;
     public IsAddingPreOnCarriageVisible: boolean = false
+    public CardLOVDependencyProperty1IsList: boolean = true;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -111,7 +112,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             this.IsInlandDomestic = ShipmentTool.IsInlandDomestic(this.EntityPM);
 
             if (this.IsInlandDomestic) {
-                this.CardLOVDependencyProperty1 = (this.ShipmentLevelCode == "C") ? "AG" : "CS";
+                this.CardLOVDependencyProperty1 = (this.ShipmentLevelCode == "C") ? "AG,WH" : "CS,WH";
                 this.InitializePartners();
             }
 

@@ -2782,6 +2782,7 @@
     <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\ShipmentPartnersBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\ShipmentQuoteBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\Validators\ShipmentMasterIsUsedValidator.cs" />
+    <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\Validators\ShipmentPartnersValidator.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentFinalArrivalDateBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\UpdateCrossDockBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\UpdateDocumentFilingBehaviour.cs" />

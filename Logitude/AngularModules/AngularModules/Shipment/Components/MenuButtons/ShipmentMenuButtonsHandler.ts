@@ -874,7 +874,7 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         if (ShipmentTool.IsInlandDomestic(this.EntityPM)) {
             var messageWindow: MessageWindow = new MessageWindow();
             messageWindow.Title = "Converting Shipment";
-            messageWindow.Show("Converting inland domestic house to direct is not allowed");
+            messageWindow.Show("Converting inland domestic direct to house is not allowed");
         }
 
         else {
