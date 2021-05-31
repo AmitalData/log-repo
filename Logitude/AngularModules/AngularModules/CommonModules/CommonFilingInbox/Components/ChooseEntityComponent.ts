@@ -34,10 +34,12 @@ export class ChooseEntityComponent {
     public IsShipment = false; 
     public IsQuote = false; 
     public EntityObjectTableName: string = "";
-    public IsFromTicket = false; 
+    public IsFromTicket = false;
+    public IsStandAloneSearch = false;
     SetWindowArgs(args: any) {
         this.EntityObjectTableName = args.EntityObjectTableName;
         this.IsFromTicket = args.IsFromTicket;
+        this.IsStandAloneSearch = args.IsStandAloneSearch;
 
         if (this.EntityObjectTableName == "Shipment" || this.EntityObjectTableName == "Master") {
             this.IsShipment = true;
@@ -118,6 +120,12 @@ export class ChooseEntityComponent {
             }
         }
 
+        if (this.IsStandAloneSearch) {
+            filters.addAdditionalFilter("SearchFields", searchValue, null, null, "Contains", false, false, false, "string");
+            filters.addAdditionalFilter("DirectionId", "D", null, null, "Equals", false, true, false, "string");
+            filters.addAdditionalFilter("TransportModeId", "I", null, null, "Equals", false, true, false, "string");
+            filters.addAdditionalFilter("IsStandalonePickupDelivery", false, null, null, "Equals", true, false, false, "Boolean");
+        }
         //this.DomainService.GetShipmentFullTextSearch(filters).subscribe((myResponse: ServiceResponse) => {
         //    if (!myResponse.HasError) {
         //        this.ItemsSource = myResponse.Result;

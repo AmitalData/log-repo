@@ -1,4 +1,32 @@
+<style>
+ .x-button-drop-menu {
+   position: absolute;
+   top: 22px;
+   z-index: 1000;
+   text-align: center;
+   padding: 1px;
+   font-size: 15px;
+   list-style: none;
+   background-color: #F2F2F2;
+   background-clip: padding-box;
+   border: .5px solid #45494A;
+ }
 
+ .x-button-drop-menu li span {
+   display: block;
+   clear: both;
+   font-family: arial;
+   color: #444;
+   text-decoration: none;
+   height: 22px;
+   line-height: 23px;
+ }
+
+ .x-button-drop-menu li span:hover {
+   background: #D3D3D3;
+   cursor: pointer;
+ }
+</style>
 <table>
     <tr style="height:1px;" *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
         <td>
@@ -94,8 +122,24 @@
                         <Hyperlink (click)="ViewStandaloneShipmentClicked(item)">{{EntityPM.StandaloneShipmentNumber}}</Hyperlink>
                     </td>
 
-                    <td style="width: 1px;" *ngIf="IsAddingStandaloneShipmentVisible && !EntityPM.StandaloneShipmentId">
-                        <button class="Button" (click)="CreateStandaloneShipmentClicked()" [disabled]="!IsCreateStandaloneShipmentEnabled">Create Standalone Shipment</button>
+                    <td  *ngIf="IsAddingStandaloneShipmentVisible && !EntityPM.StandaloneShipmentId">
+                        <split-button [ButtonText]="'  Create Standalone Shipment  '"
+                                      (DefaultSplitButtonClicked)="StandAloneShipmentButtonClicked('CreateStandalone')"
+                                      [IsDisabled]="!IsCreateStandaloneShipmentEnabled"
+                                      [MENUDivExtraTop]="0"
+                                      [MENUDivExtraLeft]="0">
+
+                            <div class="class-MENUSplitButton-content">
+                                <div>
+                                    <ul class="x-button-drop-menu" style="width:200px;">
+                                        <li>
+                                            <span (click)="StandAloneShipmentButtonClicked('ConnectStandalone')">Connect leg to an existing shipment</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </split-button>
                     </td>
 
                     <td style="width: 5px;" *ngIf="IsAddingStandaloneShipmentVisible">
