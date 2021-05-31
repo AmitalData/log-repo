@@ -127,7 +127,13 @@ export class ChooseEntityComponent {
             filters.addAdditionalFilter("DirectionId", "D", null, null, "Equals", false, true, false, "string");
             filters.addAdditionalFilter("TransportModeId", "I", null, null, "Equals", false, true, false, "string");
             filters.addAdditionalFilter("IsStandalonePickupDelivery", false, null, null, "Equals", true, false, false, "Boolean");
-            filters.addAdditionalFilter("ShipmentTypeId", this.ShipmentType, null, null, "Equals", true, false, false, "string");
+            if (!AppTool.IsNullOrEmpty(this.ShipmentType) && ["FCL", "FCLD"].includes(this.ShipmentType)) {
+                filters.addAdditionalFilter("ShipmentTypeId", "FTL", null, null, "Equals", true, false, false, "string");
+            } else if (!AppTool.IsNullOrEmpty(this.ShipmentType) && ["LCL", "LCLD"].includes(this.ShipmentType)) {
+                filters.addAdditionalFilter("ShipmentTypeId", "LTL", null, null, "Equals", true, false, false, "string");
+            } else {
+                filters.addAdditionalFilter("ShipmentTypeId", this.ShipmentType, null, null, "Equals", true, false, false, "string");
+            }
         }
         //this.DomainService.GetShipmentFullTextSearch(filters).subscribe((myResponse: ServiceResponse) => {
         //    if (!myResponse.HasError) {
