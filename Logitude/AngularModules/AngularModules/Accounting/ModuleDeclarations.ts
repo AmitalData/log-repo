@@ -140,7 +140,6 @@ import { AccountingMainTesterComponent } from './Components/Maintenance/Tester/A
 
 import { UpdateJournalLineComponent } from './Components/EditTabs/Journal/UpdateJournalLineComponent';
 
-
 import { JournalCSVLoadComponent } from './Components/NewEntity/JournalCSVLoadComponent';
 
 
