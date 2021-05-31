@@ -3140,6 +3140,12 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="IsHTSMissing"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
     ReferencedTable="Countries"

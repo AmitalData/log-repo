@@ -190,6 +190,7 @@
     <None Include="DBOthers\QuoteModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateQuotes.dxml" />
     <None Include="DBOthers\QuoteModel\Triggers\Trigger_AutomaticLastUpdateDateQuoteComputedFields.dxml" />
     <None Include="DBOthers\QuoteModel\Triggers\Trigger_AutomaticLastUpdateDateQuotes.dxml" />
+    <None Include="DBScripts\CommonModel\202105161305_AddCustomerProductItemEventTypesToTenants.sxml" />
     <None Include="DBScripts\CommonModel\202103161606_AddNewUOMPercentOForeignChargesLocalAmounts.sxml" />
     <None Include="DBScripts\CommonModel\202104161424_UpdateTenantRatios.sxml" />
     <None Include="DBScripts\CommonModel\202104161425_UpdateTenantRatiosOnCloud.sxml" />
@@ -655,6 +656,7 @@
     <None Include="DBTables\CommonDataModel\PaymentTerm.dxml" />
     <None Include="DBTables\CommonDataModel\PaymentTermDateType.dxml" />
     <None Include="DBTables\CommonDataModel\Port.dxml" />
+    <None Include="DBTables\CommonDataModel\ProductItem.dxml" />
     <None Include="DBTables\CommonDataModel\ProductPeriod.dxml" />
     <None Include="DBTables\CommonDataModel\ProductType.dxml" />
     <None Include="DBTables\CommonDataModel\ProductTypeModification.dxml" />
@@ -1009,7 +1011,9 @@
     </None>
     <None Include="EntityFiles\CommonDataModel\CardSearch.lxml" />
     <None Include="EntityFiles\CommonDataModel\Horse.lxml" />
+    <None Include="EntityFiles\CommonDataModel\HTSCode.lxml" />
     <None Include="EntityFiles\CommonDataModel\HybridTenantState.lxml" />
+    <None Include="EntityFiles\CommonDataModel\ProductItem.lxml" />
     <None Include="EntityFiles\CommonDataModel\ReportExecutionLog.lxml" />
     <None Include="EntityFiles\CommonDataModel\TariffCarrierTranslation.lxml">
       <SubType>Designer</SubType>
@@ -1560,6 +1564,7 @@
     <None Include="EntityFiles\ShipmentsModel\ShipmentPickUpDeliveryPackage.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EntityFiles\ShipmentsModel\ShipmentProductItem.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentReceivable.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentReceivableStatus.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentStoragePricing.lxml" />

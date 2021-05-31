@@ -24,6 +24,8 @@ import {PayablesComponent} from './Components/Windows/Payables/PayablesComponent
 import {GroupageComponent} from './Components/Windows/Groupage/GroupageComponent';
 import {GroupageContainerComponent} from './Components/Windows/Groupage/GroupageContainerComponent';
 import { HarmonizesComponent } from './Components/Windows/Harmonizes/HarmonizesComponent';
+import { ProductItemsTabComponent } from './Components/ProductItems/ProductItemsTabComponent';
+import { EditCustomerProductItemComponent } from './Components/ProductItems/EditCustomerProductItemComponent';
 
 export const Components =
     [
@@ -53,8 +55,9 @@ export const Components =
         GroupageComponent,
         GroupageContainerComponent,
         HarmonizesComponent,
+        ProductItemsTabComponent,
+        EditCustomerProductItemComponent,
     ];
-
 
 export class ModuleDeclarations {
     public static Get(name: string) {
@@ -88,6 +91,8 @@ export class ModuleDeclarations {
             case "GroupageComponent": { myResult = GroupageComponent; break; }
             case "GroupageContainerComponent": { myResult = GroupageContainerComponent; break; }
             case "HarmonizesComponent": { myResult = HarmonizesComponent; break; }
+            case "ProductItemsTabComponent": { myResult = ProductItemsTabComponent; break; }
+            case "EditCustomerProductItemComponent": { myResult = EditCustomerProductItemComponent; break; }
         }
 
         return myResult;

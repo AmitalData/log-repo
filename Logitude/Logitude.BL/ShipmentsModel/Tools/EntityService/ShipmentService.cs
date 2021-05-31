@@ -99,6 +99,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private ContactPM loggedContact;
         private ShipmentAssemblyRepository shipmentAssemblyRepository;
         private ShipmentStoragePricingRepository shipmentStoragePricingRepository;
+        private ShipmentProductItemRepository shipmentProductItemRepository;
 
         List<ShipmentPM> housesList = new List<ShipmentPM>();
         private ShipmentBehaviourFacade shipmentBehaviourFacade;
@@ -147,6 +148,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.shipmentAdditionalCloudDataRepository = new ShipmentAdditionalCloudDataRepository(objectContext);
             this.shipmentAssemblyRepository = new ShipmentAssemblyRepository(objectContext);
             this.shipmentStoragePricingRepository = new ShipmentStoragePricingRepository(objectContext);
+            this.shipmentProductItemRepository = new ShipmentProductItemRepository(objectContext);
 
             this.SetHybridPartner(this.tenant);
         }
@@ -158,7 +160,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
 
 
-        public void SetChangeSet(List<ShipmentPackagePM> shipmentPackagesChangeSet, List<ShipmentOrderPackagePM> shipmentOrderPackagesChangeSet, List<ShipmentPickUpPM> shipmentPickUpsChangeSet, List<ShipmentDeliveryPM> shipmentDeliveriesChangeSet, List<ShipmentReceivablePM> shipmentReceivablesChangeSet, List<ShipmentPayablePM> shipmentPayablesChangeSet, List<ShipmentFollowUpPM> shipmentFollowUpsChangeSet, List<ShipmentAWBPrintOnlyPM> shipmentAWBPrintOnliesChangeSet, List<ConsoleShipmentPM> shipmentConsoleShipmentsChangeSet, List<ShipmentCarrierStatusPM> shipmentCarrierStatusesChangeSet, List<AWBOCIPM> aWBOCIPMChangeSet, List<ShipmentCommodityPM> shipmentCommoditiesChangeSet, List<ShipmentAssemblyPM> shipmentAssembliesChangeSet, List<ShipmentStoragePricingPM> shipmentStoragePricingsChangeSet)
+        public void SetChangeSet(List<ShipmentPackagePM> shipmentPackagesChangeSet, List<ShipmentOrderPackagePM> shipmentOrderPackagesChangeSet, List<ShipmentPickUpPM> shipmentPickUpsChangeSet, List<ShipmentDeliveryPM> shipmentDeliveriesChangeSet, List<ShipmentReceivablePM> shipmentReceivablesChangeSet, List<ShipmentPayablePM> shipmentPayablesChangeSet, List<ShipmentFollowUpPM> shipmentFollowUpsChangeSet, List<ShipmentAWBPrintOnlyPM> shipmentAWBPrintOnliesChangeSet, List<ConsoleShipmentPM> shipmentConsoleShipmentsChangeSet, List<ShipmentCarrierStatusPM> shipmentCarrierStatusesChangeSet, List<AWBOCIPM> aWBOCIPMChangeSet, List<ShipmentCommodityPM> shipmentCommoditiesChangeSet, List<ShipmentAssemblyPM> shipmentAssembliesChangeSet, List<ShipmentStoragePricingPM> shipmentStoragePricingsChangeSet, List<ShipmentProductItemPM> shipmentProductItemsChangeSet)
         {
             // this was for the old silverlight system
             this.initializer.ShipmentPackagesChangeSet = shipmentPackagesChangeSet;
@@ -175,6 +177,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.initializer.ShipmentCommoditiesChangeSet = shipmentCommoditiesChangeSet;
             this.initializer.ShipmentAssembliesChangeSet = shipmentAssembliesChangeSet;
             this.initializer.ShipmentStoragePricingsChangeSet = shipmentStoragePricingsChangeSet;
+            this.initializer.ShipmentProductItemsChangeSet = shipmentProductItemsChangeSet;
         }
 
         public void Create()
@@ -273,6 +276,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.CreateShipmentStoragePricing(itemPM);
                 }
 
+                foreach (ShipmentProductItemPM itemPM in entityPM.ShipmentProductItems)
+                {
+                    this.CreateShipmentProductItem(itemPM);
+                }
+
                 entityPM.CalculateProfit = calculateProfit;
                 entityPM.CalculatePayables = calculatePayables;
                 entityPM.CalculateReceivables = calculateReceivables;
@@ -288,6 +296,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 this.ComputeIsAssemblyField();
                 this.ComputeFinalDestination();
+                this.ComputeIsHTSMissingField();
 
                 ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, entityPM.ShipmentPackages, objectContext);
                 this.ComputeAgentComputed(entityPM, entityPoco);
@@ -404,6 +413,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     this.initializer.HandleComposition();
 
+                    this.UpdateShipmentProductItems();
+                    this.ComputeIsHTSMissingField();
+
                     this.UpdateShipmentPackagesCollection();
                     this.UpdateShipmentPickUpsCollection();
                     this.UpdateShipmentDeliveriesCollection();
@@ -417,8 +429,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.UpdateShipmentCommoditiesCollection();
                     this.UpdateShipmentAssembliesCollection();
                     this.UpdateShipmentStoragePricingsCollection();
+                    this.UpdateShipmentProductItemsCollection();
                     this.InitializeBookingData();
-
                     this.RemoveDeletedItemsFromEntityPM();
 
                     if (entityPM.WarehouseStorageFreeDays != entityPoco.WarehouseStorageFreeDays)
@@ -460,7 +472,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.BuildShipmentExternalUpdate();
                     this.ComputeIsAssemblyField();
                     this.ComputeFinalDestination();
-                    this.CheckUpdatingMasterHouses();
+                    this.CheckUpdatingMasterHouses();                    
                     //this.UpdateHouseRoutingFieldsOnMasterConnection();
 
                     shipmentBehaviourFacade = new ShipmentBehaviourFacade(entityPM, objectContext, UpdatedShipmentComputedFields, isNewEntity);
@@ -911,6 +923,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             foreach (ShipmentStoragePricingPM pm in entityPM.ShipmentStoragePricings)
             {
                 this.DeleteShipmentStoragePricing(pm);
+            }
+
+            foreach (ShipmentProductItemPM pm in entityPM.ShipmentProductItems)
+            {
+                this.DeleteShipmentProductItem(pm);
             }
 
             entityRepository.Remove(this.entityPoco);
@@ -1927,6 +1944,37 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         case ChangeSetOperation.Delete:
                             {
                                 this.DeleteShipmentStoragePricing(itemPM);
+                                break;
+                            }
+
+                        default: { break; }
+                    }
+                }
+            }
+        }
+        private void UpdateShipmentProductItemsCollection()
+        {
+            if (initializer.ShipmentProductItemsChangeSet != null)
+            {
+                foreach (ShipmentProductItemPM itemPM in initializer.ShipmentProductItemsChangeSet)
+                {
+                    switch (itemPM.ChangeSetOp)
+                    {
+                        case ChangeSetOperation.Insert:
+                            {
+                                this.CreateShipmentProductItem(itemPM);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Update:
+                            {
+                                this.UpdateShipmentProductItem(itemPM);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Delete:
+                            {
+                                this.DeleteShipmentProductItem(itemPM);
                                 break;
                             }
 
@@ -6135,6 +6183,37 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
+        private void CreateShipmentProductItem(ShipmentProductItemPM itemPM)
+        {
+            itemPM.Id = IdCounter.GetNumber("ShipmentProductItem", tenant).ToString();
+            itemPM.ShipmentId = entityPM.Id;
+            itemPM.Tenant = tenant;
+
+            ShipmentProductItem itemPoco = new ShipmentProductItem()
+            {
+                Id = itemPM.Id,
+            };
+
+            ShipmentMapping.MapProductItem(itemPM, itemPoco, true);
+            shipmentProductItemRepository.Add(itemPoco);
+        }
+        private void UpdateShipmentProductItem(ShipmentProductItemPM itemPM)
+        {
+            ShipmentProductItem itemPoco = shipmentProductItemRepository.GetSingleShipmentProductItem(itemPM.Id, itemPM.Tenant);
+            if (itemPoco != null)
+            {
+                ShipmentMapping.MapProductItem(itemPM, itemPoco, false);
+                shipmentProductItemRepository.Update(itemPoco);
+            }
+        }
+        private void DeleteShipmentProductItem(ShipmentProductItemPM itemPM)
+        {
+            ShipmentProductItem itemPoco = shipmentProductItemRepository.GetSingleShipmentProductItem(itemPM.Id, itemPM.Tenant);
+            if (itemPoco != null)
+            {
+                shipmentProductItemRepository.Remove(itemPoco);
+            }
+        }
         private void ComputeShipmentStatus()
         {
             if (isNewEntity)
@@ -6731,7 +6810,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 tariff.LastUsedDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                 tariffRepository.Update(tariff);
                 tariffRepository.SubmitChanges();
-
             }
         }
         private void UpdateHouseRoutingFieldsWhenConnectedToMaster(Shipment houseShipment)
@@ -6746,6 +6824,42 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 && !string.IsNullOrEmpty(houseShipment.OnForwardingFromPortId) && !string.IsNullOrEmpty(houseShipment.OnForwardingToPortId))
             {
                 houseShipment.OnForwardingFromPortId = entityPM.OnCarriageToPortId;
+            }
+        }
+
+        private void UpdateShipmentProductItems()
+        {
+            if (entityPM.IsProductItemsUpdated)
+            {
+                HTSCodeQuery hTSCodeQuery = new HTSCodeQuery(tenant);
+                foreach (ShipmentProductItemPM productItem in this.entityPM.ShipmentProductItems.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete))
+                {
+                    productItem.ChangeSetOp = ChangeSetOperation.Update;
+                    HTSCodePM hTSCodePM = hTSCodeQuery.GetSingleHTSCodeByProductItemAndCountry(productItem.ProductItemId, entityPM.ToCountryId, tenant);
+                    if(hTSCodePM != null)
+                    {
+                        productItem.HTSCode = hTSCodePM.Code;
+                        productItem.ApprovedByCustomer = hTSCodePM.ApprovedByCustomer;
+                    }
+                    else
+                    {
+                        productItem.HTSCode = null;
+                        productItem.ApprovedByCustomer = false;                        
+                    }
+                }
+
+                entityPM.IsProductItemsUpdated = false;
+            }
+        }
+        private void ComputeIsHTSMissingField()
+        {
+            List<ShipmentProductItemPM> shipmentProductItem = this.entityPM.ShipmentProductItems.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+
+            entityPM.IsHTSMissing = false;
+            
+            if (shipmentProductItem.Count > 0 && shipmentProductItem.Where(d => string.IsNullOrEmpty(d.HTSCode)).Any())
+            {
+                entityPM.IsHTSMissing = true;
             }
         }
     }

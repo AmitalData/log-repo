@@ -129,7 +129,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string RankId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        [DataMember]
+        [DataMember] 
         public string VatTypeId { get; set; }
 
         [DataMember]
@@ -923,6 +923,29 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
             set
             {
                 cardExternalCodeByCurrencies = value;
+            }
+        }
+
+        private List<ProductItemPM> customerProductItems;
+        [Include]
+        [Association("CustomerProductItemCustomer", "Id", "CustomerId")]
+        [Composition]
+        [DataMember]
+        public virtual List<ProductItemPM> CustomerProductItems
+        {
+            get
+            {
+                if (customerProductItems == null)
+                {
+                    customerProductItems = new List<ProductItemPM>();
+                }
+
+                return customerProductItems;
+            }
+
+            set
+            {
+                customerProductItems = value;
             }
         }
 
