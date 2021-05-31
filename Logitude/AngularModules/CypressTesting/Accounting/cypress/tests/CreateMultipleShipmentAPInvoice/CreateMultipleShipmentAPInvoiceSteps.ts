@@ -141,7 +141,7 @@ Given("the user add and edit shipment lines", () => {
 });
 
 Then("the invoice should update successfully", () => {
-  BaseAssertion.AssertStatusCode(RequestAliases.InvoiceDomain, 200);
+  AccountingActions.AssertSaveMultipleAPInvoice()
 });
 //#endregion
 

@@ -1728,7 +1728,9 @@ namespace WebFreight.Web
                     myObjectTableId = objectTable.Id;
                 }
 
-                string body = "Please use the code " + device.AuthenticationCode + " to verify your Logitude Account";
+
+                string environment = IsLogBoxEnvironment() ? "Logbox" : LogitudeSettings.WorkEnvironment == "cloud" ? "Cloud" : "Logitude";
+                string body = "Please use the code " + device.AuthenticationCode + " to verify your " + environment + " Account";
                 byte[] bytearray = Encoding.ASCII.GetBytes(body);
 
                 Document document = new Document()
@@ -1792,6 +1794,11 @@ namespace WebFreight.Web
             }
 
             return null;
+        }
+
+        private bool IsLogBoxEnvironment()
+        {
+            return LogitudeSettings.DeploymentStage != null && (LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1" || LogitudeSettings.DeploymentStage.ToLower() == "test2");
         }
 
         private string GetContactMaskedMobileNumber(Contact loggedContact)

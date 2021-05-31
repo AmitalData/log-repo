@@ -476,7 +476,7 @@ AccountBalanceM endAccountBalanceService)
             var periodSumLocal = this.Response.EndBalanceLocal - this.Response.StartBalanceLocal;
             if (periodSumLocal != periodSumLocalAmount)
             {
-                throw new Exception("periodSum!=periodSumLocalAmount");
+                throw new Exception("periodSum!=periodSumLocalAmount   בעיית מצטברים;;");
             }
 
             if (!this.Response.SuppressCumulativeDueMultiCurrencyInPeriod.GetValueOrDefault())
@@ -494,7 +494,7 @@ AccountBalanceM endAccountBalanceService)
                     StartBalanceForeign.GetValueOrDefault();
                 if (periodSumForeign != periodSumForeignAmount)
                 {
-                    throw new Exception("periodSum(this.Response.EndBalanceForeign - this.Response.StartBalanceForeign.GetValueOrDefault())!=periodSumLocalAmount");
+                    throw new Exception("בעיית מצטברים;; periodSum(this.Response.EndBalanceForeign - this.Response.StartBalanceForeign.GetValueOrDefault())!=periodSumLocalAmount");
                 }
 
             }

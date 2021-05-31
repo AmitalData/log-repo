@@ -791,6 +791,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.MainCarriageFromPortId = shipment.FromPortId;
                     shipmentPM.MainCarriageToPortId = shipment.ToPortId;
                     shipmentPM.MainCarriageFinalDestinationPortId = shipment.ToPortId;
+                    shipmentPM.MainCarriageTransportModeId = shipment.TransportModeId;
 
                     PortPM fromPort = portQuery.GetSinglePM(shipment.FromPortId, shipment.Tenant);
                     if (fromPort != null)
@@ -13506,7 +13507,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             var shipmentPM = new ShipmentPM();
 
-            MapShipmentToShipmentPM(shipmentPM, shipment, null, null, false);
+            ShipmentMasterData masterData = (from a in repository.context.ShipmentMasterDatas
+                                             where a.Id == shipment.MasterShipmentDataId
+                                             select a).FirstOrDefault();
+
+            MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, false);
 
             CreateShipmentPMForCargoTracking(tenant, shipment, shipmentPM);
 

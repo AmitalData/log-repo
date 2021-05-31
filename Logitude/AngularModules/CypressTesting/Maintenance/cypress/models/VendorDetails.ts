@@ -7,9 +7,5 @@ export interface VendorDetails {
     Country : string , 
     State:string,
     Phone : string ,
-    Fax :string ,
-    Website:string,
-    Notes: string,
-    VatNumber :string,
-    BankName : string ;
+    Fax :string ,   
 }

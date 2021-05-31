@@ -2594,6 +2594,23 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return customerList;
         }
+        public List<CustomerPM> GetCustomersByCardsIds(List<string> cardsIds, int tenant)
+        {
+
+            List<Customer> customers = repository.GetCustomersByCardsIds(cardsIds, tenant);
+            return (from a in customers
+
+                    select new CustomerPM()
+                    {
+                        Id = a.Id,
+                        InsuredcreditLimit = a.InsuredcreditLimit,
+                        Tenant = a.Tenant,
+
+                    }).ToList();
+
+
+
+        }
 
         public CustomerList GetSingleCustomerListById(string id, int tenant)
         {

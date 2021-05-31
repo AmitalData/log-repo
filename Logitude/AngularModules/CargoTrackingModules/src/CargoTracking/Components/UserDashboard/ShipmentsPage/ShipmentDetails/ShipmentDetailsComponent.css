@@ -376,6 +376,8 @@ h1 {
     }
 .routing-card {
     width: calc(100% - 50px);
+    min-height: 80px;
+    height:148px;
     border-radius: 5px;
     padding: 5px;
     background: #fff;
@@ -635,6 +637,7 @@ h1 {
 .document-mobile-card{
     position: relative;
     padding: 0;
+    margin: 10px 0;
 }
 .row{
     display: flex;

@@ -1,4 +1,4 @@
-@smoke @release @dev @all
+@smoke @release @stable @all
 Feature: Create multiple shipment AP Invoice
   After the user logging in the system and navigate to customers workspace
   will create a customer as shipper in the new shipments
