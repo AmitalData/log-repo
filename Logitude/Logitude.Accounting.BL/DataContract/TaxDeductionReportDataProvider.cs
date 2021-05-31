@@ -154,10 +154,11 @@ namespace Logitude.Accounting.BL.DataContract
 
         private List<LedgerTransaction> GetOppositeTransactions(List<LedgerTransaction> transactions)
         {
-            List<string> oopositeAccountIds = transactions.Select(d => d.OppositeAccountId).ToList();
-            return (from a in accountingContext.LedgerTransactions                  
+            List<string> oopositeAccountIds = transactions.Where(d => d.OppositeAccountId != null).Select(d => d.OppositeAccountId).ToList();
+            return (from a in accountingContext.LedgerTransactions
+                    join journal in accountingContext.Journals on a.JournalId equals journal.Id
                     where oopositeAccountIds.Contains(a.AccountId)
-                    && a.Tenant == Tenant                  
+                    && a.Tenant == Tenant && (a.AccountingDate >= startDate && a.AccountingDate <= endDate) && journal.ExternalSystem != null
                     select a).ToList();
 
         }
