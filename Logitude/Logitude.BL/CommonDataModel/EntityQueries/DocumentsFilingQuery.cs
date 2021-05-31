@@ -2363,7 +2363,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return extDocPm;
         }
-
         public DocumentsFilingPM GetDocumentsFilingByChild(string documentTypeId, string paymentNumber, int tenant)
         {
             DocumentsFilingPM extDocPm = (from a in repository.context.DocumentsFilings.Include("CreatedByUser.Contact").Include("ReceivedByUser.Contact").Include("Document").Include("DocumentType").Include("Owner.Contact")
@@ -2457,6 +2456,17 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             }
 
             return extDocPm;
+        }
+
+        //externalentityreference ='60206223',  externalentityname ='CFIFILEM',
+        public IQueryable<DocumentsFiling> GetByexternalentityreference(string externalentityname, string externalentityreference, int tenant)
+        {
+            return (from a in repository.context.DocumentsFilings
+                    where a.ExternalEntityReference == externalentityreference && a.ExternalEntityName == externalentityname && a.Tenant == tenant && a.IsDeleted == false
+                    select a);
+
+
+                                          
         }
 
 
