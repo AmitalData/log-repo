@@ -853,6 +853,18 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
         }
     }
 
+    private isConnctingStandaloneShipmentClicked: boolean = false;
+    ConnctingStandaloneShipmentClicked() {
+        if (this.EntityPM.IsDirty) {
+            this.isConnctingStandaloneShipmentClicked = true;
+            this.Save(false);
+        }
+
+        else {
+            this.ChooseStandAloneShipment();
+        }
+    }
+
     private CreateStandaloneShipment() {
         var shipmentPM: ShipmentPM = ShipmentTool.BuildStansaloneShipment(this.EntityPM, null, this.ShipmentPM);
 
@@ -876,7 +888,7 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
             this.CreateStandaloneShipmentClicked();
         }
         else if (buttonCode == "ConnectStandalone") {
-            this.ChooseStandAloneShipment();
+            this.ConnctingStandaloneShipmentClicked();
         }
     }
 
