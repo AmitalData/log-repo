@@ -6850,6 +6850,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     shipmentPickUpDelivery.StandaloneShipmentNumber = entityPM.ShipmentNumber;
 
                     shipmentPickUpDeliveryRepository.Update(shipmentPickUpDelivery);
+                }
             }
         }
 
@@ -6877,7 +6878,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 entityPM.IsProductItemsUpdated = false;
                 }
             }
-        }
+        
         private void UpdatePickUpDeliveryStandaloneFieldsOnShipmentUpdate()
         {
             ShipmentPickUpDelivery shipmentPickUpDelivery = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDeliveryByStandaloneShipmentId(entityPM.Id, tenant);
