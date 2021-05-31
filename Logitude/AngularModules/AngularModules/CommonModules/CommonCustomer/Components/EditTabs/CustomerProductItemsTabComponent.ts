@@ -44,18 +44,33 @@ export class CustomerProductItemsTabComponent extends BaseComponent implements O
 
     private Listen() {
         if (this.entityArgs.EditComponent) {
+            this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                if (isSaveSuccess) {
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.MainAddressCountryName = this.EntityPM.CountryName;
+
+                    this.SetUIProperties();
+                    this.BuildProductItems();
+                }
+            });
+
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.MainAddressCountryName = this.EntityPM.CountryName;
+
+                    this.SetUIProperties();
+                    this.BuildProductItems();
                 }
             });
         }
     }
 
+    private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
+        AppTool.KillEventEmitter(this.SaveCompletedEvent);
     }
 
     SetUIProperties() {
