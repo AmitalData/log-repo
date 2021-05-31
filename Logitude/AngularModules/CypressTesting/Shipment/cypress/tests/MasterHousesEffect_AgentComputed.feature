@@ -1,6 +1,6 @@
-Feature: Close Master And Connected House Operationally 
+Feature: AgentComputed in house and master
     The user creates a Master Export Air shipment, creates a House Export Air shipment from withing the Master shipment,
-    update the routing tab of master shipment to close it operationallay, close the master operationally 
+    update the agent of master shipment to compute the AgentComputed, update the agent of house shipment to compute the AgentComputed.
 
     Scenario: Create master export air shipment
         Given the user logged in and navigates to shipments workspace
@@ -19,14 +19,12 @@ Feature: Close Master And Connected House Operationally
         When create house with "TestShipperExport" as Shipper
         Then the house should create successfully
         And the house should connect successfully
+        And the house computedAgent should be TestAgent 
 
-     Scenario: Update routing tab
-        Given the user in the master's rounting tab
-        And edit main carriage leg with the following details
-              | MainCarriageFromPort      | FRA     |
-              | MainCarriageToPort        | TLV     |
-        When update master
-        Then the master should update successfully
-        Then the connceted house's main carriage leg should update with the following 
-              | MainCarriageFromPort      | FRA     |
-              | MainCarriageToPort        | TLV     |
+     Scenario: Update Partners
+        Given the user in the houses's Partners tab
+        And the user add partner with following details
+           | Agent                | TestAgent1   |
+        When update house
+        Then the house should update successfully
+        And the  the house computedAgent should be TestAgent1 

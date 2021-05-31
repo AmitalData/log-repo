@@ -1,5 +1,5 @@
-Feature:  Operation Accounting Close and Reopen Master And House Export Air Shipment
- The user creates a master Export Air Shipment, creates a house Export Air Shipmen within the master, perationally closes the shipment, 
+Feature:   Accounting Close , Accounting Reopen For Master And House Shipment
+ The user creates a master Export Air Shipment, creates a house Export Air Shipmen within the master, operationally closes the shipment, 
  closes accounting, reopens accounting.
  
     Scenario: Create master export air shipment
