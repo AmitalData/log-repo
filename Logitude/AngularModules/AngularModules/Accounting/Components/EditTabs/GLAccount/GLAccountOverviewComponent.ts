@@ -38,6 +38,7 @@ import { AccountingNoteListService } from '../../../Services/StandardLists/Accou
 import { GLAccountExtendedPMService } from 'Accounting/Services/ExtendedPMs/GLAccountExtendedPMService';
 import { GLAccountFollowUpDataPM } from '../../../EntityPMs/GLaccountFollowUpDataPM';
 import { GLaccountFollowUpDataExtendedPMService } from 'Accounting/Services/ExtendedPMs/GLaccountFollowUpDataExtendedPMService';
+import { GLAccountCardsDataPMService } from '../../../Services/StandardPMs/GLAccountCardsDataPMService';
 
 @Component({
 
@@ -60,6 +61,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
     public isUsedOutside: boolean = false; // when view tab inside customer ..
     public OpenShipments:number=0;
     public CreditLimitAmount: number = 0;
+    public InsuredCreditLimit: number = 0;
     public gLAccountFollowUpDataPM: GLAccountFollowUpDataPM;
    
     //Services
@@ -72,6 +74,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
     _CardListService: CardListService = new CardListService();
     _GLAccountExtendedPMService: GLAccountExtendedPMService = new GLAccountExtendedPMService();
     private gLAccountFollowUpDataPMService: GLaccountFollowUpDataExtendedPMService = new GLaccountFollowUpDataExtendedPMService();
+    private gLAccountCardsDataPMService: GLAccountCardsDataPMService = new GLAccountCardsDataPMService();
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
         super();
@@ -688,7 +691,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
 
         this.LoadExternalTransactionTotal();
-
+        this.GetInsuredCreditLimit();
         console.log("LoadCreditDetailsData");
 
         // Calculate credit percentage
@@ -721,6 +724,15 @@ export class GLAccountOverviewComponent extends BaseComponent {
         this.creditPercentage = percentage;
 
 
+    }
+
+    GetInsuredCreditLimit() {
+        this.gLAccountCardsDataPMService.get(this.EntityPM.CardsDataId).subscribe((myResult: ServiceResponse) => {
+            var myResult: ServiceResponse ;
+            if (!myResult.HasError) {
+                this.InsuredCreditLimit = myResult.Result.InsuredcreditLimit;
+            }
+        });
     }
 
     DisplayChequelistClicked(){

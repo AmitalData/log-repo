@@ -624,14 +624,18 @@
                                             <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" float-start text-start style="padding-top: 5px;">
                                                  {{ 'GLAccounts.O.CreditLimit' | TextCodeTranslationPipe }}
                                             </div>
-                                            <div     *ngIf="!IsCreditNotDefined()" style="font-weight: bold;" class="amount tooltip-CreditLimit" float-start style="padding-top: 5px;font-weight: bold;font-size: 18px;text-align: right;cursor: pointer;">
-                                                <LogToolTip [bottom]="5" [float]="'none'" *ngIf="accountCardlist && accountCardlist.length > 1"  [direction]="!showLocal? 'topright':'topleft'" [name]="'CreditLimit'"
-                                                    [mode]="'Warning'" [title]="''">
-                                                    {{GLaccountConnectedMoreOneCardText}} 
+                                            <div *ngIf="!IsCreditNotDefined()" style="font-weight: bold;" class="amount tooltip-CreditLimit" float-start style="padding-top: 5px;font-weight: bold;font-size: 18px;text-align: right;cursor: pointer;">
+                                                <LogToolTip [bottom]="5" [float]="'none'" *ngIf="accountCardlist && accountCardlist.length > 1" [direction]="!showLocal? 'topright':'topleft'" [name]="'CreditLimit'"
+                                                            [mode]="'Warning'" [title]="''">
+                                                    {{GLaccountConnectedMoreOneCardText}}
                                                 </LogToolTip>
-                                                
+
+                                                <LogToolTip [bottom]="5" [float]="'right'" [direction]="showLocal?'bottomleft':'bottomright'" [name]="'InsuredCreditLimit'"
+                                                            [mode]="'Info'">
+                                                    {{InsuredCreditLimit? InsuredCreditLimit : 0}} {{'GLAccount.O.AmountIsInsured' | TextCodeTranslationPipe}}
+                                                </LogToolTip>
                                                 {{CreditLimitAmount | NumbersPipe:'N2'}}
- 
+
 
                                             </div>
                                             <div *ngIf="!IsCreditNotDefined()" class="progress green" [class.red]="IsOverCredit()" float-end>
