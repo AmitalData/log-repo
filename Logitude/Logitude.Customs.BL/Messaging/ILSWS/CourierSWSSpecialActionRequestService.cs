@@ -4,6 +4,7 @@
 using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Data;
+using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools.Utils;
 using Simplog.Server.Infrastructure.Helpers;
@@ -53,9 +54,13 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
             XmlDocument XMLmessageToSWS = DeserializeXmlNode(messageToSWS);
             using (var scop = TransactionFactory.GetTransaction())
             {
+                ConsignmentRepository consignmentRepository = new ConsignmentRepository(tenant);
+                string manifestnumber = consignmentRepository.GetManfiestNumberByDecId(declarationId, tenant);
+                Guid g = Guid.NewGuid();
+                string filename = manifestnumber + "_" + g;
                 byte[] bytearray = Encoding.UTF8.GetBytes(XMLmessageToSWS.OuterXml);
                 FTPOutMawbSWSService fTPOutMawbSWSServie = new FTPOutMawbSWSService();
-                fTPOutMawbSWSServie.BuildCommunicationLog(bytearray, tenant, declarationId, CustomsPartnerFtpDetails.InterfaceName_ECSWSSPCL_REQUEST);
+                fTPOutMawbSWSServie.BuildCommunicationLog(bytearray, tenant, declarationId, CustomsPartnerFtpDetails.InterfaceName_ECSWSSPCL_REQUEST, filename);
 
                 scop.Complete();
             }
