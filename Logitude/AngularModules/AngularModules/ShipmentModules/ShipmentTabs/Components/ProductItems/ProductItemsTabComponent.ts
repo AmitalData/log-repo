@@ -174,8 +174,10 @@ export class ProductItemsTabComponent extends BaseComponent implements OnInit, O
     MapProductItems(shipmentProductItem: ShipmentProductItemPM, customerItem: ProductItemPM) {
         shipmentProductItem.Description = customerItem.Description;
         shipmentProductItem.SKU = customerItem.SKU;
+        shipmentProductItem.Name = customerItem.Name;
+        shipmentProductItem.Brand = customerItem.Brand;
 
-        var htsCode: HTSCodePM = customerItem.HTSCodes.filter(d => d.DestinationCountryId == this.EntityPM.ToCountryId)[0];
+        var htsCode: HTSCodePM = customerItem.HTSCodes.filter(d => d.DestinationCountryId == this.EntityPM.ToCountryId && !d.InActive)[0];
         if (htsCode) {
             shipmentProductItem.HTSCode = htsCode.Code;
             shipmentProductItem.ApprovedByCustomer = htsCode.ApprovedByCustomer;

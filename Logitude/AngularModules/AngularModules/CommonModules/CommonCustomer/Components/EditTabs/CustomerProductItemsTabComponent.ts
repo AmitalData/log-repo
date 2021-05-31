@@ -90,7 +90,6 @@ export class CustomerProductItemsTabComponent extends BaseComponent implements O
         logitudeWindow.Title = myWindowTitle;
         logitudeWindow.DataContext = itemPM;
         logitudeWindow.Show('./CommonModules/CommonCustomer/Components/AddEdit/AddEditCustomerProductItemComponent');
-        logitudeWindow.WindowClosed.subscribe(($event: any) => this.BuildProductItems());
     }
 }
 

@@ -6818,12 +6818,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 HTSCodeQuery hTSCodeQuery = new HTSCodeQuery(tenant);
                 foreach (ShipmentProductItemPM productItem in this.entityPM.ShipmentProductItems.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete))
                 {
+                    productItem.ChangeSetOp = ChangeSetOperation.Update;
                     HTSCodePM hTSCodePM = hTSCodeQuery.GetSingleHTSCodeByProductItemAndCountry(productItem.ProductItemId, entityPM.ToCountryId, tenant);
                     if(hTSCodePM != null)
                     {
                         productItem.HTSCode = hTSCodePM.Code;
                         productItem.ApprovedByCustomer = hTSCodePM.ApprovedByCustomer;
-                        productItem.ChangeSetOp = ChangeSetOperation.Update;
+                    }
+                    else
+                    {
+                        productItem.HTSCode = null;
+                        productItem.ApprovedByCustomer = false;                        
                     }
                 }
 
