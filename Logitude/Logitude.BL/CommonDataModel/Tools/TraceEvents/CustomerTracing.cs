@@ -416,7 +416,7 @@ namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
             {
                 if (isNewEntity)
                 {
-                    addedItemsTexts.Add(itemPM.ItemCode);
+                    addedItemsTexts.Add(itemPM.Name);
                 }
 
                 else
@@ -425,19 +425,19 @@ namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
                     {
                         case ChangeSetOperation.Insert:
                             {
-                                addedItemsTexts.Add(itemPM.ItemCode);
+                                addedItemsTexts.Add(itemPM.SKU);
                                 break;
                             }
 
                         case ChangeSetOperation.Update:
                             {
-                                updatedItemsTexts.Add(itemPM.ItemCode);
+                                updatedItemsTexts.Add(itemPM.SKU);
                                 break;
                             }
 
                         case ChangeSetOperation.Delete:
                             {
-                                deletedItemsTexts.Add(itemPM.ItemCode);
+                                deletedItemsTexts.Add(itemPM.SKU);
                                 break;
                             }
                     }

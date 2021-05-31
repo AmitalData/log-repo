@@ -58,9 +58,24 @@ export class ShipmentProductItemPM {
     public set HTSCode(newValue: string) { if (this.hTSCode != newValue) { this.hTSCode = newValue; this.MarkAsDirty("HTSCode"); } }
        
 	 
-    private productItemCode: string;
-    public get ProductItemCode() { return this.productItemCode; }
-    public set ProductItemCode(newValue: string) { if (this.productItemCode != newValue) { this.productItemCode = newValue; this.MarkAsDirty("ProductItemCode"); } }
+    private sKU: string;
+    public get SKU() { return this.sKU; }
+    public set SKU(newValue: string) { if (this.sKU != newValue) { this.sKU = newValue; this.MarkAsDirty("SKU"); } }
+       
+	 
+    private approvedByCustomer: boolean;
+    public get ApprovedByCustomer() { return this.approvedByCustomer; }
+    public set ApprovedByCustomer(newValue: boolean) { if (this.approvedByCustomer != newValue) { this.approvedByCustomer = newValue; this.MarkAsDirty("ApprovedByCustomer"); } }
+       
+	 
+    private brand: string;
+    public get Brand() { return this.brand; }
+    public set Brand(newValue: string) { if (this.brand != newValue) { this.brand = newValue; this.MarkAsDirty("Brand"); } }
+       
+	 
+    private name: string;
+    public get Name() { return this.name; }
+    public set Name(newValue: string) { if (this.name != newValue) { this.name = newValue; this.MarkAsDirty("Name"); } }
        
 	 
     private changeSetOp: string;

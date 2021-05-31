@@ -278,8 +278,8 @@ export class ShipmentValidator implements IShipmentValidator {
         this.entityPM.ShipmentProductItems.forEach(item => {
             Validator.TryValidateObject(item, "ShipmentProductItem", this.Errors);
 
-            if (AppTool.IsNullOrEmpty(item.ProductItemCode)) {
-                this.Errors.push("Product Item Code is required");
+            if (AppTool.IsNullOrEmpty(item.SKU)) {
+                this.Errors.push("Product Item SKU is required");
             }
         });
     }

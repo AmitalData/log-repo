@@ -421,6 +421,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     this.initializer.HandleComposition();
 
+                    this.UpdateShipmentProductItems();
+                    this.ComputeIsHTSMissingField();
+
                     this.UpdateShipmentPackagesCollection();
                     this.UpdateShipmentPickUpsCollection();
                     this.UpdateShipmentDeliveriesCollection();
@@ -435,7 +438,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.UpdateShipmentAssembliesCollection();
                     this.UpdateShipmentStoragePricingsCollection();
                     this.UpdateShipmentProductItemsCollection();
-
                     this.InitializeBookingData();
                     this.RemoveDeletedItemsFromEntityPM();
 
@@ -478,7 +480,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.BuildShipmentExternalUpdate();
                     this.ComputeIsAssemblyField();
                     this.ComputeFinalDestination();
-                    this.CheckUpdatingMasterHouses();
+                    this.CheckUpdatingMasterHouses();                    
                     this.ComputeIsHTSMissingField();
                     //this.UpdateHouseRoutingFieldsOnMasterConnection();
 
@@ -6834,7 +6836,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 tariff.LastUsedDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                 tariffRepository.Update(tariff);
                 tariffRepository.SubmitChanges();
-
             }
         }
 
@@ -6849,6 +6850,31 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     shipmentPickUpDelivery.StandaloneShipmentNumber = entityPM.ShipmentNumber;
 
                     shipmentPickUpDeliveryRepository.Update(shipmentPickUpDelivery);
+            }
+        }
+
+        private void UpdateShipmentProductItems()
+        {
+            if (entityPM.IsProductItemsUpdated)
+            {
+                HTSCodeQuery hTSCodeQuery = new HTSCodeQuery(tenant);
+                foreach (ShipmentProductItemPM productItem in this.entityPM.ShipmentProductItems.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete))
+                {
+                    productItem.ChangeSetOp = ChangeSetOperation.Update;
+                    HTSCodePM hTSCodePM = hTSCodeQuery.GetSingleHTSCodeByProductItemAndCountry(productItem.ProductItemId, entityPM.ToCountryId, tenant);
+                    if(hTSCodePM != null)
+                    {
+                        productItem.HTSCode = hTSCodePM.Code;
+                        productItem.ApprovedByCustomer = hTSCodePM.ApprovedByCustomer;
+                    }
+                    else
+                    {
+                        productItem.HTSCode = null;
+                        productItem.ApprovedByCustomer = false;                        
+                    }
+                }
+
+                entityPM.IsProductItemsUpdated = false;
                 }
             }
         }

@@ -47,9 +47,29 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="ProductItemCode"
+    Name="SKU"
     Type="varchar"
-    Size="10">
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ApprovedByCustomer"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Brand"
+    Type="varchar"
+    Size="60">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Name"
+    Type="varchar"
+    Size="40">
     <Constraints
       Nullable="true" />
   </Column>

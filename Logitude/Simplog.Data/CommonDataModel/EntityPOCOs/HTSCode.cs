@@ -18,6 +18,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string Code { get; set; }
         public bool ApprovedByCustomer { get; set; }
         public bool InActive { get; set; }
-
+        public int? LineNumber { get; set; }
     }
 }

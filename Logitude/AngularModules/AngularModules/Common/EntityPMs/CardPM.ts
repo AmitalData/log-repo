@@ -82,6 +82,7 @@ export class CardPM {
     private gLAccountDisplayNumber: string;
     public get GLAccountDisplayNumber() { return this.gLAccountDisplayNumber; }
     public set GLAccountDisplayNumber(newValue: string) { if (this.gLAccountDisplayNumber != newValue) { this.gLAccountDisplayNumber = newValue; this.MarkAsDirty("GLAccountDisplayNumber"); } }
+    	 
        
 	  
     private creditLimitAmount: number;

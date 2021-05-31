@@ -4922,6 +4922,7 @@ export class ShipmentPM {
     public get DocumentFilingIds() { return this.documentFilingIds; }
     public set DocumentFilingIds(newValue: string) { if (this.documentFilingIds != newValue) { this.documentFilingIds = newValue; this.MarkAsDirty("DocumentFilingIds"); } }
 
+
     private isStandalonePickupDelivery: boolean;
     public get IsStandalonePickupDelivery() { return this.isStandalonePickupDelivery; }
     public set IsStandalonePickupDelivery(newValue: boolean) { if (this.isStandalonePickupDelivery != newValue) { this.isStandalonePickupDelivery = newValue; this.MarkAsDirty("IsStandalonePickupDelivery"); } }      
@@ -4933,6 +4934,12 @@ export class ShipmentPM {
     private standalonePickupDeliveryNumber: string;
     public get StandalonePickupDeliveryNumber() { return this.standalonePickupDeliveryNumber; }
     public set StandalonePickupDeliveryNumber(newValue: string) { if (this.standalonePickupDeliveryNumber != newValue) { this.standalonePickupDeliveryNumber = newValue; this.MarkAsDirty("StandalonePickupDeliveryNumber"); } }      
+
+
+    private isProductItemsUpdated: boolean;
+    public get IsProductItemsUpdated() { return this.isProductItemsUpdated; }
+    public set IsProductItemsUpdated(newValue: boolean) { if (this.isProductItemsUpdated != newValue) { this.isProductItemsUpdated = newValue; this.MarkAsDirty("IsProductItemsUpdated"); } }
+
 
     public OldEntityPM: ShipmentPM;
 

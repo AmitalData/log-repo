@@ -23,8 +23,7 @@ import { ShipmentTool, ShipmentGenerator} from '../../../../Shipment/Tools';
 import { ContactInputTemplateArgs } from '../../../../CommonModules/CommonPartners/Components/Templates/ContactInputTemplate';
 import { CurrencyRatesService, LastRate } from '../../../../Common/Services/CurrencyRatesService';
 
-@Component({
-    
+@Component({    
     templateUrl: './PartnersTabComponent.html',
 })
 
@@ -34,7 +33,6 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
     public ItemsCollection: PartnerItem[];
     private CurrentSession = SessionLocator.SelectedSession;
     public AllRates: LastRate[] = [];
-
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = this.entityArgs.EntityPM;
         this.ObjectTableName = this.entityArgs.ObjectTableName;
@@ -450,6 +448,7 @@ export class PartnerItem extends BaseComponent {
     public Code: string;
     public ObjectTableName: string = "Shipment";
     public IsInlandDomestic: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public fatherComponent: PartnersTabComponent, typeCode: string) {
         super();
         this.EntityPM = fatherComponent.EntityPM;
@@ -965,8 +964,25 @@ export class PartnerItem extends BaseComponent {
     }
 
     SetAsCustomer() {
+        if (this.EntityPM.CustomerId != this.PartnerId && this.EntityPM.ShipmentProductItems.length > 0) {
+            this.ShowDeleteProductItemsConfirmation();
+        }
 
-        //|| this.CardDependencyProperty1 != "CS"
+        else {
+            this.ContinueChangeCustomer();
+        }
+    }
+    private ShowDeleteProductItemsConfirmation() {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Show("All product items in this shipment will be deleted");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.EntityPM.ShipmentProductItems = [];
+                this.ContinueChangeCustomer();                
+            }
+        });
+    }
+    private ContinueChangeCustomer() {
         if (this.EntityPM.ShipmentLevelCode == "C") {
             this.EntityPM.CustomerName = null;
             this.EntityPM.CustomerNote = null;
@@ -1011,6 +1027,7 @@ export class PartnerItem extends BaseComponent {
         }
 
         this.fatherComponent.OnCustomerChanged();
+        this.CurrentSession.FireEvent("ShipmentCustomerChanged");
     }
 
     public IsRemoveButtonVisible: boolean = false;

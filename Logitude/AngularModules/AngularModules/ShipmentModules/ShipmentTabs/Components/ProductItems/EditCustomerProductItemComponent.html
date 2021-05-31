@@ -17,7 +17,7 @@
                                     <LogLabel [ObjectFieldName]="'SKU'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td>
-                                    <LogTextBox [ObjectFieldName]="'SKU'" [Text]="DataContext.SKU" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    <LogTextBox [ObjectFieldName]="'SKU'" [Text]="SKU" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                 </td>
                             </tr>
 
@@ -27,7 +27,7 @@
                                     <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td>
-                                    <LogTextBox [ObjectFieldName]="'Name'" [Text]="DataContext.Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                 </td>
                             </tr>
 
@@ -37,7 +37,7 @@
                                     <LogLabel [ObjectFieldName]="'Brand'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td>
-                                    <LogTextBox [ObjectFieldName]="'Brand'" [Text]="DataContext.Brand" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    <LogTextBox [ObjectFieldName]="'Brand'" [Text]="Brand" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                 </td>
                             </tr>
 
@@ -47,7 +47,7 @@
                                     <LogLabel [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td>
-                                    <LogCheckBox [ObjectFieldName]="'InActive'" [Checked]="DataContext.InActive" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                    <LogCheckBox [ObjectFieldName]="'InActive'" [Checked]="InActive" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                 </td>
                             </tr>
 
@@ -56,6 +56,7 @@
                                     <div></div>
                                 </td>
                             </tr>
+
                         </table>
                     </td>
 
@@ -73,7 +74,7 @@
                                 </td>
                                 <td style="height:50px;">
                                     <div class="FillParent">
-                                        <LogTextBox [ObjectFieldName]="'Description'" [Text]="DataContext.Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                        <LogTextBox [ObjectFieldName]="'Description'" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
                                     </div>
                                 </td>
                             </tr>
@@ -85,11 +86,6 @@
                             </tr>
 
                         </table>
-                    </td>
-                    <td>
-                        <div>
-
-                        </div>
                     </td>
                 </tr>
             </table>
@@ -106,7 +102,7 @@
                             <table>
                                 <tr>
                                     <td>
-                                        <label>  HTS Codes ({{MainAddressCountryName}})</label>
+                                        <label>  HTS Codes ({{CustomerMainAddressCountryName}})</label>
                                     </td>
                                     <td style="width:25px;">
                                         <IconButton [Name]="'Add'" (click)="AddHTSCode()"></IconButton>
@@ -121,7 +117,7 @@
                             <div class="MediaFill">
                                 <div class="SimpleGridView">
                                     <div class="MediaFill" style="overflow-x: hidden;">
-                                        <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="DataContext.HTSCodes" [Disabled]="!IsEditingEnabled" (RowEnded)="OnRowEnded($event)">
+                                        <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="HTSCodes" [Disabled]="!IsEditingEnabled" (RowEnded)="OnRowEnded($event)">
                                             <!-- Line -->
                                             <log-column [header]="'Line'" [width]="'80'" [Alignment]="'left'">
                                                 <ng-template let-item>

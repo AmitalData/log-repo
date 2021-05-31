@@ -91,5 +91,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             throw new System.NotImplementedException();
         }
+
+        public HTSCode GetSingleHTSCodeByProductItemAndCountry(string itemId, string countryId, int tenant)
+        {
+            return (from a in context.HTSCodes
+                    where a.ItemId == itemId && a.DestinationCountryId == countryId && a.Tenant == tenant
+                    select a).FirstOrDefault();
+        }
     }
 }

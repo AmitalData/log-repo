@@ -30,14 +30,7 @@
     Type="varchar"
     Size="30">
     <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Remarks"
-    Type="nvarchar"
-    Size="1000">
-    <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="InActive"
@@ -53,15 +46,32 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="ItemCode"
+    Name="Name"
+    OldNames="ItemCode"
     Type="varchar"
-    Size="10">
+    Size="40">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="Brand"
+    Type="varchar"
+    Size="60">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="CustomerId"
     ReferencedTable="Customers"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <UniqueConstraint
+    Columns="Tenant,SKU,CustomerId" />
 </Table>

@@ -11,9 +11,10 @@ export class ProductItemList {
 		Tenant: number;
 		CustomerId: string;
 		SKU: string;
-		Remarks: string;
 		InActive: boolean;
 		Description: string;
-		ItemCode: string;
+		Name: string;
+		Brand: string;
+		SearchFields: string;
 	
 }
