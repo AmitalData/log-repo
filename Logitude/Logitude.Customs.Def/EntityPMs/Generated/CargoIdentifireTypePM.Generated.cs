@@ -135,6 +135,190 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isForDeclarationExport ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsForDeclarationExport  
+	   {
+	    
+	     get
+		{
+		   return isForDeclarationExport;
+		 }
+		 set
+		 {
+		   if(isForDeclarationExport != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsForDeclarationExport",OldValue=isForDeclarationExport,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isForDeclarationExport=value;
+		   }
+			
+		 }
+	   }
+	  private bool isForDeclarationImport ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsForDeclarationImport  
+	   {
+	    
+	     get
+		{
+		   return isForDeclarationImport;
+		 }
+		 set
+		 {
+		   if(isForDeclarationImport != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsForDeclarationImport",OldValue=isForDeclarationImport,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isForDeclarationImport=value;
+		   }
+			
+		 }
+	   }
+	  private bool isForManifest ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsForManifest  
+	   {
+	    
+	     get
+		{
+		   return isForManifest;
+		 }
+		 set
+		 {
+		   if(isForManifest != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsForManifest",OldValue=isForManifest,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isForManifest=value;
+		   }
+			
+		 }
+	   }
+	  private bool isKey2Mandatory ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsKey2Mandatory  
+	   {
+	    
+	     get
+		{
+		   return isKey2Mandatory;
+		 }
+		 set
+		 {
+		   if(isKey2Mandatory != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsKey2Mandatory",OldValue=isKey2Mandatory,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isKey2Mandatory=value;
+		   }
+			
+		 }
+	   }
+	  private bool isKey3Mandatory ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsKey3Mandatory  
+	   {
+	    
+	     get
+		{
+		   return isKey3Mandatory;
+		 }
+		 set
+		 {
+		   if(isKey3Mandatory != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsKey3Mandatory",OldValue=isKey3Mandatory,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isKey3Mandatory=value;
+		   }
+			
+		 }
+	   }
+	  private string cargoIdentifierKey1Name ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CargoIdentifierKey1Name  
+	   {
+	    
+	     get
+		{
+		   return cargoIdentifierKey1Name;
+		 }
+		 set
+		 {
+		   if(cargoIdentifierKey1Name != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CargoIdentifierKey1Name",OldValue=cargoIdentifierKey1Name,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   cargoIdentifierKey1Name=value;
+		   }
+			
+		 }
+	   }
+	  private string cargoIdentifierKey2Name ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CargoIdentifierKey2Name  
+	   {
+	    
+	     get
+		{
+		   return cargoIdentifierKey2Name;
+		 }
+		 set
+		 {
+		   if(cargoIdentifierKey2Name != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CargoIdentifierKey2Name",OldValue=cargoIdentifierKey2Name,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   cargoIdentifierKey2Name=value;
+		   }
+			
+		 }
+	   }
+	  private string cargoIdentifierKey3Name ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CargoIdentifierKey3Name  
+	   {
+	    
+	     get
+		{
+		   return cargoIdentifierKey3Name;
+		 }
+		 set
+		 {
+		   if(cargoIdentifierKey3Name != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CargoIdentifierKey3Name",OldValue=cargoIdentifierKey3Name,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   cargoIdentifierKey3Name=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -1027,6 +1027,7 @@
     <Compile Include="EntityDataMappings\VendorTransactionTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\VendorTypeDataMapping.cs" />
     <Compile Include="EntityQueryServiceExt\CustomsDocumentQueryServiceExt.cs" />
+    <Compile Include="EntityQueryServices\CargoIdentifireTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\DeclarationReferantDataQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\AmendCancellRequestInitiatorQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\AmendmentFieldStatusTypeQueryService.Generated.cs" />
@@ -1526,6 +1527,7 @@
     <Compile Include="EntityUpdateServices\ClientDrivingLicenseUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ConsignmentPackDangerUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ContainerizationUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\CargoIdentifireTypeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CourierPendingReasonUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CurrencyTypeTenantUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CurrencyTypeUpdateService.cs" />

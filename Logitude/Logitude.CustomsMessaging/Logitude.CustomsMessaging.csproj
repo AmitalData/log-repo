@@ -166,6 +166,7 @@
     <Compile Include="FakeMessagingServices\Fake_DCA_NG_5110_DepositRequestFulfillednfoMsgMessagingService.cs" />
     <Compile Include="FakeMessagingServices\Courier\FAKE_CourierMasterDeclarations.cs" />
     <Compile Include="FakeMessagingServices\Fake_SaveDF_MSG5002_DeclarationCancellationRequestMsg.cs" />
+    <Compile Include="Helpers\ClosedTable\Update1259CargoIdentifireType.cs" />
     <Compile Include="Helpers\ClosedTable\Update1366ContainerType.cs" />
     <Compile Include="Helpers\ClosedTable\Update1423CertificateExemptionType.cs" />
     <Compile Include="Helpers\ClosedTable\Update1998NDMessageActionCode.cs" />

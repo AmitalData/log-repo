@@ -24,6 +24,22 @@ namespace Logitude.Customs.Data.EntityLists
        public string EnglishName  { get; set; }
        [DataMember]
        public bool Inactive  { get; set; }
+       [DataMember]
+       public bool IsForDeclarationExport  { get; set; }
+       [DataMember]
+       public bool IsForDeclarationImport  { get; set; }
+       [DataMember]
+       public bool IsForManifest  { get; set; }
+       [DataMember]
+       public bool IsKey2Mandatory  { get; set; }
+       [DataMember]
+       public bool IsKey3Mandatory  { get; set; }
+       [DataMember]
+       public string CargoIdentifierKey1Name  { get; set; }
+       [DataMember]
+       public string CargoIdentifierKey2Name  { get; set; }
+       [DataMember]
+       public string CargoIdentifierKey3Name  { get; set; }
    }
 
 }

@@ -466,7 +466,14 @@
   <Index
 Columns="Tenant,DocumentId" />
 
+
 	<Index
 	Columns="SearchFields" />
+
+	<Index
+  Columns="Tenant,ExternalEntityReference,ExternalEntityName" />
+
+
+
 
 </Table>
