@@ -28,8 +28,15 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          EnglishName = a.EnglishName,
                                                          LocalName = a.LocalName,
                                                          SearchFields = a.SearchFields,
-                                                         Inactive = a.Inactive
-
+                                                         Inactive = a.Inactive,
+                                                         IsForDeclarationExport=a.IsForDeclarationExport,
+                                                         IsForDeclarationImport=a.IsForDeclarationImport,
+                                                         IsForManifest=a.IsForManifest,
+                                                         IsKey2Mandatory=a.IsKey2Mandatory,
+                                                         IsKey3Mandatory=a.IsKey3Mandatory,
+                                                         CargoIdentifierKey1Name=a.CargoIdentifierKey1Name,
+                                                         CargoIdentifierKey2Name=a.CargoIdentifierKey2Name,
+                                                         CargoIdentifierKey3Name=a.CargoIdentifierKey3Name,
                                                      });
             return query;
 		}

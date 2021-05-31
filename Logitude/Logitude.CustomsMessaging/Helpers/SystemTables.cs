@@ -217,6 +217,7 @@ namespace Logitude.CustomsMessaging.Helpers
                 case "1930": //Yuval Chalup 24.01.2016 AMI-55745
                 case "13": //Yuval Chalup 05.07.2016 TASK-21102
                 case "1385":
+                case "1259":
                 case "1345":
                 case "1416":
                 case "1422":

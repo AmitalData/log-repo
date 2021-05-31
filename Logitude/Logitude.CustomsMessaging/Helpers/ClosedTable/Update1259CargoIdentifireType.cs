@@ -29,7 +29,15 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
         protected override bool IsEqual(SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt mehesTableRow, CargoIdentifireTypePM curDbPM)
         {
             var gov = mehesTableRow.MyCargoIdentifireType ?? new CargoIdentifireType();
-            return base.IsEqual(mehesTableRow, curDbPM);
+            return base.IsEqual(mehesTableRow, curDbPM)
+                && curDbPM.IsForDeclarationExport == gov.IsForDeclarationExport 
+                && gov.IsForDeclarationImport == curDbPM.IsForDeclarationImport
+                 && gov.IsForManifest == curDbPM.IsForManifest
+                  && gov.IsKey2Mandatory == curDbPM.IsKey2Mandatory
+                   && gov.IsKey3Mandatory == curDbPM.IsKey3Mandatory
+                    && gov.CargoIdentifierKey1Name == curDbPM.CargoIdentifierKey1Name
+                     && gov.CargoIdentifierKey2Name == curDbPM.CargoIdentifierKey2Name
+                      && gov.CargoIdentifierKey3Name == curDbPM.CargoIdentifierKey3Name;
         }
         protected override void SetOtherFields(SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt mehesTableRow, CargoIdentifireTypePM curDbPM)
         {

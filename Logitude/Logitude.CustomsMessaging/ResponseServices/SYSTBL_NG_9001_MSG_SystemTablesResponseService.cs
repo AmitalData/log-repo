@@ -504,17 +504,17 @@ ID List :
                                                         LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
                                                         newExt.MyCargoIdentifireType.IsKey3Mandatory = true;
                                                     }
-                                                    if (dr["CargoIdentifierKey1Name"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
+                                                    if (dr["CargoIdentifierKey1Name"].ToString() != null)
                                                     {
                                                         LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
                                                         newExt.MyCargoIdentifireType.CargoIdentifierKey1Name = dr["CargoIdentifierKey1Name"].ToString();
                                                     }
-                                                    if (dr["CargoIdentifierKey2Name"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
+                                                    if (dr["CargoIdentifierKey2Name"].ToString() != null)
                                                     {
                                                         LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
                                                         newExt.MyCargoIdentifireType.CargoIdentifierKey2Name = dr["CargoIdentifierKey2Name"].ToString();
                                                     }
-                                                    if (dr["CargoIdentifierKey3Name"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
+                                                    if (dr["CargoIdentifierKey3Name"].ToString() != null)
                                                     {
                                                         LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
                                                         newExt.MyCargoIdentifireType.CargoIdentifierKey3Name = dr["CargoIdentifierKey3Name"].ToString();
