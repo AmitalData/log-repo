@@ -39,8 +39,13 @@ export class ShipmentDetailsComponent implements AfterViewInit
     ShipmentPackages: any[];
     DocumentsFilings: any[];
     PartnerCards: PartnerCard[] = [];
+ 
     HasReferences: boolean = false;
     HasContainersDetails: boolean = false;
+    InlandTransportMode = 'I';
+    OceanTransportMode = 'O';
+    AirTransportMode = 'A';
+
     ShipmentCustomsData: CargoTrackingShipmentCustomsData;
     get tenant()
     {
@@ -66,7 +71,6 @@ export class ShipmentDetailsComponent implements AfterViewInit
             this.BuildSliderCards();
 
         }, 200);
-        this.InitRoutes();
         this.CreatePartnerCardsFromShipmentPM();
 
     }
@@ -177,8 +181,11 @@ export class ShipmentDetailsComponent implements AfterViewInit
         {
             if (result) {
                 this.ShipmentPM = result;
+                console.log("ShipmentPM", this.ShipmentPM);
+
                 this.GetPartnersAddresses();
                 this.FillCustomsBrokerReferenceFromShipmentPM();
+                this.InitRoutes();
             }
         });
     }
@@ -689,39 +696,188 @@ export class ShipmentDetailsComponent implements AfterViewInit
 
     InitRoutes()
     {
-        var step1 = new RoutingStep();
-        step1.FromPortLabel = "US-BOS";
-        step1.ToPortLabel = "US-NYC";
-        step1.Description = "Via lorem ipsum co.";
-        step1.TransportModeCode = "A";
-        step1.Directions = [
-            new RouteDirection(new Date(), "ATA", "in"),
-            new RouteDirection(new Date(), "ETD", "out"),
-        ];
+        this.CreatePickupsRoutesFromShipmentPM();
+        this.CreateWarehouseLegRoutesFromShipmentPMIfExist();
+        this.CreateMainCarriageLegsRoutesFromShipmentPM();
+        this.CreateShipmentDeliveriesRoutesFromShipmentPM();
+    }
 
+    private CreatePickupsRoutesFromShipmentPM() {
+        for (let i = 0; i < this.ShipmentPM.ShipmentPickUps.length; i++) {
+            this.AddShipmentRouteStep(this.CreateSinglePickupsRoute(i));
+        }
+    }
 
-        var step2 = new RoutingStep();
-        step2.FromPortLabel = "US-QAL";
-        step2.ToPortLabel = "US-NYC";
-        step2.Description = "Via lorem ipsum co.";
-        step2.TransportModeCode = "I";
-        step2.Directions = [
-            new RouteDirection(new Date(), "ATA", "in"),
-            new RouteDirection(new Date(), "ETD", "out"),
-        ];
+    private CreateWarehouseLegRoutesFromShipmentPMIfExist() {
+        if (this.ShipmentPM.WarehouseLegTerminalName != null) {
+            this.AddShipmentRouteStep(this.CreateSingleWarehouseLegRoute());
+        }
+    }
 
-        var step3 = new RoutingStep();
-        step3.FromPortLabel = "US-QAL";
-        step3.ToPortLabel = "US-NAB";
-        step3.Description = "Rafedia main st.";
-        step3.TransportModeCode = "O";
-        step3.IsActive = true;
-        step3.Directions = [
-            new RouteDirection(new Date(), "ATA", "in"),
-            new RouteDirection(new Date(), "ATD", "in"),
-        ];
+    private CreateMainCarriageLegsRoutesFromShipmentPM() {
+        for (let i = 0; i < this.ShipmentPM.MainCarriageLegs.length; i++)
+            this.AddShipmentRouteStep(this.CreateSingleMainCarriageLegsRoute(i));
+    }
 
-        this.ShipmentRouteSteps = [step1, step2, step3];
+    private CreateShipmentDeliveriesRoutesFromShipmentPM() {
+        for (let i = 0; i < this.ShipmentPM.ShipmentDeliveries.length; i++) {
+            this.AddShipmentRouteStep(this.CreateSingleShipmentDeliveriesRoute(i));
+        }
+    }
+
+    private CreateSinglePickupsRoute(i: number) {
+        var step = new RoutingStep();
+        step.TransportModeCode = this.InlandTransportMode;
+        step.Description = this.ShipmentPM.ShipmentPickUps[i].CarrierName != null ? "Via " + this.ShipmentPM.ShipmentPickUps[i].CarrierName : null;
+
+        this.SetFromAndToLabelsForShipmentRoutes(this.ShipmentPM.ShipmentPickUps[i], step);
+        step.Directions = this.BuildRouteDirections(this.ShipmentPM.ShipmentPickUps[i]);
+        return step;
+    }
+
+    private CreateSingleWarehouseLegRoute() {
+        var step = new RoutingStep();
+        step.TransportModeCode = this.InlandTransportMode;
+        step.Description = this.ShipmentPM.WarehouseLegRemarks == null ? "WarehouseLeg" : this.ShipmentPM.WarehouseLegRemarks;
+        step.FromPortLabel = this.ShipmentPM.WarehouseLegTerminalName;
+
+        this.SetWarehouseLegDirections(step);
+        return step;
+    }
+
+    private CreateSingleMainCarriageLegsRoute(i: number) {
+        var step = new RoutingStep();
+        step.TransportModeCode = this.ShipmentPM.TransportModeId;
+        step.Description = this.ShipmentPM.MainCarriageCarrierName != null ? "Via " + this.ShipmentPM.MainCarriageCarrierName : null;
+        step.FromPortLabel = this.ShipmentPM.MainCarriageFromPortCode;
+        step.ToPortLabel = this.ShipmentPM.MainCarriageToPortCode;
+
+        step.Directions = this.BuildRouteDirections(this.ShipmentPM.MainCarriageLegs[i]);
+        return step;
+    }
+
+    private CreateSingleShipmentDeliveriesRoute(i: number) {
+        var step = new RoutingStep();
+        step.TransportModeCode = this.InlandTransportMode;
+        step.Description = this.ShipmentPM.ShipmentDeliveries[i].CarrierName != null ? "Via " + this.ShipmentPM.ShipmentDeliveries[i].CarrierName : null;
+
+        this.SetFromAndToLabelsForShipmentRoutes(this.ShipmentPM.ShipmentDeliveries[i], step);
+        step.Directions = this.BuildRouteDirections(this.ShipmentPM.ShipmentDeliveries[i]);
+        return step;
+    }
+
+    private SetFromAndToLabelsForShipmentRoutes(shipmentRoute: any, step: RoutingStep) {
+        step.FromPortLabel = this.GetFromPortLabel(shipmentRoute);
+        step.ToolTipFromPortLabel = this.GetToolTipFromPortLabel(shipmentRoute);
+
+        step.ToPortLabel = this.GetToPortLabel(shipmentRoute);
+        step.ToolTipToPortLabel = this.GetToolTipToPortLabel(shipmentRoute);
+    }
+
+    private GetFromPortLabel(shipmentRoute: any) {
+        if (shipmentRoute.PickUpDeliveryFromTypeCode == "PORT") {
+            return shipmentRoute.FromPortCode;
+        }
+
+        else if (shipmentRoute.PickUpDeliveryFromTypeCode == "PART") {
+            return shipmentRoute.FromLocation.toString().split(" ")[0];
+        }
+
+        else {
+           return shipmentRoute.FromAddressCountryCode;
+        }
+    }
+
+    private GetToolTipFromPortLabel(shipmentRoute: any) {
+
+        if (shipmentRoute.PickUpDeliveryFromTypeCode == "PART") {
+            return "Partner: \n" + shipmentRoute.FromLocation.toString().split("\r")[0];
+        }
+
+        else if (shipmentRoute.PickUpDeliveryFromTypeCode == "CASL") {
+            return "Address: \n" + (shipmentRoute.FromAddressCity_Dummy != null ? shipmentRoute.FromAddressCity_Dummy + ',' :"")  + shipmentRoute.FromAddressCountryName;
+        }
+    }
+
+    private GetToPortLabel(shipmentRoute: any) {
+
+        if (shipmentRoute.PickUpDeliveryToTypeCode == "PORT") {
+           return shipmentRoute.ToPortCode;
+        }
+
+        else if (shipmentRoute.PickUpDeliveryToTypeCode == "PART") {
+            return shipmentRoute.ToLocation.toString().split(" ")[0];
+        }
+
+        else {
+            return shipmentRoute.ToAddressCountryCode;
+        }
+    }
+
+    private GetToolTipToPortLabel(shipmentRoute: any) {
+        if (shipmentRoute.PickUpDeliveryToTypeCode == "PART") {
+            return "Partner: \n" + shipmentRoute.ToLocation.toString().split("\r")[0];
+        }
+
+        else if (shipmentRoute.PickUpDeliveryToTypeCode == "CASL") {
+            return "Address: \n" + (shipmentRoute.ToAddressCity_Dummy != null ? shipmentRoute.ToAddressCity_Dummy + ',' : "" ) + shipmentRoute.ToAddressCountryName;
+        }
+    }
+
+    BuildRouteDirections(shipmentRoute) {
+        var directions = [];
+
+        var direction = this.BuildExportRouteDirection(shipmentRoute.ETD, "ETD");
+        if (direction)
+            directions.push(direction);
+
+        var direction = this.BuildImportRouteDirection(shipmentRoute.ETA, "ETA");
+        if (direction)
+            directions.push(direction);
+
+        var direction = this.BuildExportRouteDirection(shipmentRoute.ATD, "ATD");
+        if (direction)
+            directions.push(direction);
+
+        var direction = this.BuildImportRouteDirection(shipmentRoute.ATA, "ATA");
+        if (direction)
+            directions.push(direction);
+
+        return directions;
+    }
+
+    private SetWarehouseLegDirections(step: RoutingStep) {
+        if (this.ShipmentPM.WarehouseLegExpectedEntryDate != null) {
+            step.Directions.push(this.BuildExportRouteDirection(this.ShipmentPM.WarehouseLegExpectedEntryDate,"ETD"));
+        }
+
+        if (this.ShipmentPM.WarehouseLegExpectedReleaseDate != null) {
+            step.Directions.push(this.BuildImportRouteDirection(this.ShipmentPM.WarehouseLegExpectedReleaseDate,"ETA"));
+        }
+
+        if (this.ShipmentPM.WarehouseLegActualEntryDate != null) {
+            step.Directions.push(this.BuildExportRouteDirection(this.ShipmentPM.WarehouseLegActualEntryDate, "ATD"));
+        }
+
+        if (this.ShipmentPM.WarehouseLegActualReleaseDate != null) {
+            step.Directions.push(this.BuildImportRouteDirection(this.ShipmentPM.WarehouseLegActualReleaseDate, "ATA"));
+        }
+    }
+  
+    BuildExportRouteDirection(fieldValue, fieldName: string) {
+        if (fieldValue != null) {
+            return new RouteDirection(fieldValue, fieldName, "out");
+        }
+    }
+
+    BuildImportRouteDirection(fieldValue, fieldName: string) {
+        if (fieldValue != null) {
+            return new RouteDirection(fieldValue, fieldName, "in");
+        }
+    }
+
+    private AddShipmentRouteStep(step: RoutingStep) {
+        this.ShipmentRouteSteps.push(step);
     }
 
     DownloadDocument(document: string) {
@@ -751,8 +907,10 @@ export class RoutingStep
     IsActive: boolean;
     FromPortLabel;
     ToPortLabel;
+    ToolTipFromPortLabel;
+    ToolTipToPortLabel;
     Description: string;
-    TransportModeCode: 'A' | 'I' | 'O';
+    TransportModeCode;
     Directions: RouteDirection[] = [];
 }
 export class RouteDirection
