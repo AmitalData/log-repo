@@ -26,6 +26,13 @@ using System.Configuration;
 using Logitude.CustomsMessaging.U2L.CommDec;
 using Unifreight.Data.AmitalModel.Repsitories;
 using Logitude.Server.Tools.Models;
+using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
+using Simplog.Data.CommonDataModel;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.CustomsMessaging.Helpers;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Logitude.BL.CommonDataModel.EntityPMs;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -64,7 +71,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                      throw new BusinessErrorException(error);
 
                 }
+                if (!String.IsNullOrWhiteSpace(decId))
+                {
+                    
+                    var myConnectDocumentsfilingService = new ConnectDocumentsfilingService();
+                    myConnectDocumentsfilingService.Connect(decId, customFileNo, requestParams);
 
+                }
                 this.MyResponseData.ApplicationID = customFileNo;
                      this.MyResponseData.HasException = false;
                     this.MyResponseData.Succeeded = true;
@@ -89,9 +102,58 @@ namespace Logitude.CustomsMessaging.ResponseServices
            // }
         }
 
+        
+    }
+    public class ConnectDocumentsfilingService
+    {
+        private ICommonDataContext _DataContext;
+        private DocumentsFilingQuery _documentsFilingQuery;
 
- 
+        public void Connect(string DeclarationId, string customFileNo, GenericRequestParams requestParams)
+        {
+            if (String.IsNullOrWhiteSpace(DeclarationId) || string.IsNullOrWhiteSpace(customFileNo))
+            {
+                LogMessagingUtil.Instance.AppendLine("ConnectDocumentsfilingService:" + DeclarationId + customFileNo);
+            }
+
+            _DataContext = CommonDataContext.GetContext(requestParams.Tenant);
+            //UpdatePaymentDocument(declarationId, requestParams.Tenant, requestParams.LoggingUserId);
+            _documentsFilingQuery = new DocumentsFilingQuery(requestParams.Tenant);
+            var documentsFilingIds = _documentsFilingQuery.GetByexternalentityreference("CFIFILEM", customFileNo, requestParams.Tenant)
+            .Where(r => r.EntityId == null || r.EntityId.Trim() == string.Empty)
+            .Select(r => r.Id).ToList();
+            foreach (string documentsFilingId in documentsFilingIds)
+            {
+                UpdatePaymentDocument(documentsFilingId,DeclarationId, requestParams.Tenant, requestParams.LoggingUserId);
+            }
+            
+            
 
 
+        }
+
+
+        private void UpdatePaymentDocument(string documentsFilingId, string DeclarationId, int Tenant, string LoggedUserId)
+        {
+            
+            var documentsFilingService = new UnifreightDocumentsFilingService(_DataContext, Tenant, new CustomDocumentsFilingParams() { MainInterfaceCode = "" });
+            //var documentTypeQuery = new DocumentTypeQuery(Tenant);
+            
+
+            //var documentType = documentTypeQuery.GetSinglePMByCodeAndTenant("POR", _PaymentOrderPM.Tenant);
+            DocumentsFilingPM documentsFilingPM = _documentsFilingQuery.GetSinglePM(documentsFilingId, Tenant);
+            if (documentsFilingPM != null && documentsFilingPM.EntityId != DeclarationId)
+            {
+                documentsFilingPM.EntityId = DeclarationId;
+                documentsFilingPM.ObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+                //documentsFilingPM.ChildEntityId = _PaymentOrderPM.Id;
+                //documentsFilingPM.ChildObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.PaymentOrder");
+                //documentsFilingPM.ExternalEntityReference = _PaymentOrderPM.AccountingCustomFile;
+                documentsFilingPM.IsHybrid = true;//this is as substituteto hybrid !!!!
+                documentsFilingService.Update(documentsFilingPM, null, LoggedUserId);
+                LogMessagingUtil.Instance.AppendLine("Connect  document " + documentsFilingPM.Code + " to DeclarationId:" + DeclarationId);
+            }
+
+        }
     }
 }
