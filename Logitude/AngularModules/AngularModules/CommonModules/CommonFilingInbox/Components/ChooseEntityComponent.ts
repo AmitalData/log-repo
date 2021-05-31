@@ -24,6 +24,7 @@ export class ChooseEntityComponent {
     private DomainService: ShipmentDomainService;
     public ListTitle = "";
     public EntityId: string;
+    public ShipmentType: string;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.DomainService = new ShipmentDomainService();
@@ -40,6 +41,7 @@ export class ChooseEntityComponent {
         this.EntityObjectTableName = args.EntityObjectTableName;
         this.IsFromTicket = args.IsFromTicket;
         this.IsStandAloneSearch = args.IsStandAloneSearch;
+        this.ShipmentType = args.ShipmentType
 
         if (this.EntityObjectTableName == "Shipment" || this.EntityObjectTableName == "Master") {
             this.IsShipment = true;
@@ -125,6 +127,7 @@ export class ChooseEntityComponent {
             filters.addAdditionalFilter("DirectionId", "D", null, null, "Equals", false, true, false, "string");
             filters.addAdditionalFilter("TransportModeId", "I", null, null, "Equals", false, true, false, "string");
             filters.addAdditionalFilter("IsStandalonePickupDelivery", false, null, null, "Equals", true, false, false, "Boolean");
+            filters.addAdditionalFilter("ShipmentTypeId", this.ShipmentType, null, null, "Equals", true, false, false, "string");
         }
         //this.DomainService.GetShipmentFullTextSearch(filters).subscribe((myResponse: ServiceResponse) => {
         //    if (!myResponse.HasError) {

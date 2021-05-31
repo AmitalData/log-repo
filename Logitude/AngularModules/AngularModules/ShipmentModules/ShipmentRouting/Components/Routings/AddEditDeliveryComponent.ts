@@ -637,6 +637,11 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
                 this.isCreateStandaloneShipmentClicked = false;
                 this.CreateStandaloneShipment();
             }
+            if (this.isConnctingStandaloneShipmentClicked) {
+                this.isConnctingStandaloneShipmentClicked = false;
+                this.ChooseStandAloneShipment();
+            }
+
 
             this.Clone();
         }
@@ -902,6 +907,7 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
         var args: any = {};
         args.IsStandAloneSearch = true;
         args.EntityObjectTableName = "Shipment";
+        args.ShipmentType = this.ShipmentPM?.ShipmentTypeId;
         logWindow.WindowArgs = args;
         logWindow.Show('./CommonModules/CommonFilingInbox/Components/ChooseEntityComponent');
         logWindow.ComponentLoaded.subscribe(s => {

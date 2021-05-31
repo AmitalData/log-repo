@@ -742,6 +742,7 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
             var args: any = {};
             args.IsStandAloneSearch = true;
             args.EntityObjectTableName = "Shipment";
+            args.ShipmentType = this.ShipmentPM?.ShipmentTypeId;
             logWindow.WindowArgs = args;
             logWindow.Show('./CommonModules/CommonFilingInbox/Components/ChooseEntityComponent');
             logWindow.ComponentLoaded.subscribe(s => {
