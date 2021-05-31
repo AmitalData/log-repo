@@ -1642,13 +1642,13 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     }
 
     ContainersRequestStatusClicked() {
-        var service = new ShipmentContainersWebService();
-        service.GetContainerStatusResult(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
-            this.CurrentSession.StopBusyIndicator();
-            if (!myResponse.HasError) {
+        //var service = new ShipmentContainersWebService();
+        //service.GetContainerStatusResult(this.EntityPM.Id,  , true).subscribe((myResponse: ServiceResponse) => {
+        //    this.CurrentSession.StopBusyIndicator();
+        //    if (!myResponse.HasError) {
 
-            }
-        });
+        //    }
+        //});
     }
 
   DeletePackage(shipmentPackageItem: ShipmentPackageItem) {

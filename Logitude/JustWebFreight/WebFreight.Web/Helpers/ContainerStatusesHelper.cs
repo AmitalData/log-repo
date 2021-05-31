@@ -1,4 +1,6 @@
 ﻿using Logitude.BL.Security;
+using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.QueueService;
@@ -24,40 +26,59 @@ namespace WebFreight.Web.Helpers
     {
         private int tenant;
         private string shipmentId;
+        private string containerId;
         private CommunicationLog communicationLog;
         private ICommonDataContext commonContext;
-        private IShipmentsContext shipmentContext;
-        private ShipmentRepository shipmentRepository;
-        private Shipment shipment;
-        private string shipmentObjectTableId;
+        private ShipmentQuery shipmentQuery;
+        private ShipmentPM shipment;
+        private ContainerQuery containerQuery;
+        private ContainerPM container;
+        private string communicationLogObjectTableId;
         private string loggedContactId;
         private Document document;
         private string communicationLogTo = "OceanInsightStatusRequest";
         private string communicationLogSubject = "Shipment Containers Statuses";
-
-        public ContainerStatusesHelper(string shipmentId, int tenant)
+        private string objectTableName = "Shipment";
+        private bool isContainer = false;
+        private string communicationLogAdditionalFields;
+        private string scacCode;
+        private string entityReference;
+        public ContainerStatusesHelper(string shipmentId, string containerId, bool isContainer, int tenant)
         {
             this.tenant = tenant;
             this.shipmentId = shipmentId;
+            this.containerId = containerId;
+            this.isContainer = isContainer;
             this.commonContext = CommonDataContext.GetContext(this.tenant);
-            this.GetSingleShipmentById();
-            this.GetShipmentObjectTableId();
+            if (!isContainer)
+                this.GetSingleShipmentById();
+            else
+            {
+                this.GetSingleContainerById();
+            }
+            this.GetCommuniactionLogObjectTableId();
             this.GetLoggedContactId();
+            this.GetShipmentScacCode();
+            this.GetentityReference();
+            this.BuildCommunicationLogAdditionalFields();
         }
         private void GetSingleShipmentById()
         {
-            this.shipmentContext = ShipmentsContext.GetContext(tenant);
-            this.shipmentRepository = new ShipmentRepository(shipmentContext);
-            this.shipment = shipmentRepository.GetSingleShipment(shipmentId, tenant);
+            this.shipmentQuery = new ShipmentQuery(tenant);
+            this.shipment = shipmentQuery.GetSingleShipmentPM(shipmentId, tenant);
         }
-
-        private void GetShipmentObjectTableId()
+        private void GetSingleContainerById()
+        {
+            this.containerQuery = new ContainerQuery(tenant);
+            this.container = containerQuery.GetSinglePM(containerId, tenant);
+        }
+        private void GetCommuniactionLogObjectTableId()
         {
             ObjectTableRepository myObjectTabelRepository = new ObjectTableRepository(tenant);
-            ObjectTable objectTable = myObjectTabelRepository.GetObjectTableByName("Shipment", 0, true);
+            ObjectTable objectTable = myObjectTabelRepository.GetObjectTableByName(objectTableName, 0, true);
             if (objectTable != null)
             {
-                shipmentObjectTableId = objectTable.Id;
+                communicationLogObjectTableId = objectTable.Id;
             }
         }
         private void GetLoggedContactId()
@@ -66,6 +87,29 @@ namespace WebFreight.Web.Helpers
             var loggedContact = contactRepository.GetSingleContactByEmail(SecurityUtility.GetAuthenticatedUser(), tenant);
             this.loggedContactId = loggedContact.Id;
         }
+        private void GetShipmentScacCode()
+        {
+            string mainCarriageCarrierId = isContainer ? container.MainCarriageCarrierId : this.shipment.MainCarriageCarrierId;
+            ShippingLineRepository shippingLineRepository = new ShippingLineRepository(tenant);
+            var shippingLine = shippingLineRepository.GetSingleShippingLine(mainCarriageCarrierId, tenant);
+            this.scacCode = shippingLine != null ? shippingLine.SCACCode : "";
+        }
+        private void GetentityReference()
+        {
+            this.entityReference = this.isContainer ? container.ContainerNumber : shipment.Master;
+        }
+
+        private void BuildCommunicationLogAdditionalFields()
+        {
+            this.communicationLogAdditionalFields = "";
+            var oceanInsightType = "";
+            if (this.isContainer)
+            {
+                oceanInsightType = "c_id";
+            }
+            this.communicationLogAdditionalFields = scacCode + "," + oceanInsightType;
+        }
+
         public void SendContainerStatusRequest()
         {
             this.BuildDocument();
@@ -98,8 +142,8 @@ namespace WebFreight.Web.Helpers
                 LastStatusDateUTC = System.DateTime.UtcNow,
                 To = communicationLogTo,
                 InOut = "O",
-                EntityId = shipmentId,
-                ObjectTableId = shipmentObjectTableId,
+                EntityId = isContainer ? container.Id : shipment.Id,
+                ObjectTableId = communicationLogObjectTableId,
                 Subject = communicationLogSubject,
                 Tenant = tenant,
                 CommunicationLogTypeCode = "T",
@@ -107,15 +151,15 @@ namespace WebFreight.Web.Helpers
                 CommunicationStatusTypeCode = "W",
                 CreatedByUserId = this.loggedContactId,
                 DocumentId = document.Id,
-                EntityReference = this.shipment.ShipmentNumber,
-                SearchFields = this.shipment.ShipmentNumber + "," + communicationLogTo + "," + "O" + "," + communicationLogSubject,
+                EntityReference = entityReference, 
+                SearchFields = this.shipmentId + "," + communicationLogTo + "," + "O" + "," + communicationLogSubject,
                 CreateDateUTC = System.DateTime.UtcNow,
                 QueueName = "ContainerStatusesCommunicationLogQueue",
+                AdditionalFields = communicationLogAdditionalFields,
             };
             communicationLogRepository.Add(communicationLog);
             this.commonContext.SaveChanges();
         }
-
         private void SendDBQueueForContainerStatuses()
         {
             try
@@ -134,6 +178,16 @@ namespace WebFreight.Web.Helpers
                 }
                 ExceptionHandler.HandleException(ex, System.DateTime.Now, 0, null, "ShipmentContainersWebServiceController", null, ip);
             }
+        }
+
+        public bool Validate()
+        {
+            bool isValid = true;
+            if (string.IsNullOrEmpty(this.scacCode) || string.IsNullOrEmpty(this.entityReference))
+            {
+                isValid = false;
+            }
+            return isValid;
         }
     }
 }

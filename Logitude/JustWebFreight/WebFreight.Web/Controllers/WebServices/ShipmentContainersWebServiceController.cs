@@ -107,7 +107,7 @@ namespace WebFreight.Web.Controllers.WebServices
             }
         }
 
-        public HttpResponseMessage GetContainerStatusResult(string shipmentId)
+        public HttpResponseMessage GetContainerStatusRequest(string shipmentId, string containerId, bool isContainer)
         {
             try
             {
@@ -118,8 +118,15 @@ namespace WebFreight.Web.Controllers.WebServices
                     int tenant = authToken.Tenant;
 
                     SecurityUtility.AuthenticationOnTenant(tenant);
-                    ContainerStatusesHelper myHelper = new ContainerStatusesHelper(shipmentId, tenant);
-                    myHelper.SendContainerStatusRequest();
+                    ContainerStatusesHelper myHelper = new ContainerStatusesHelper(shipmentId, containerId, isContainer, tenant);
+                    if (myHelper.Validate())
+                    {
+                        myHelper.SendContainerStatusRequest();
+                    }
+                   else
+                    {
+                        throw new ApplicationException("The ScacCode code or Container number are empty, please fill them first");
+                    }
                     scope.Complete();
                     return Request.CreateResponse(HttpStatusCode.OK, "");
                 }

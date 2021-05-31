@@ -1,10 +1,9 @@
-﻿using Logitude.BL.ShipmentsModel.EntityPMs;
-using Logitude.BL.ShipmentsModel.EntityQueries;
+﻿using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.ShipmentsModel;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -18,14 +17,13 @@ namespace WebFreight.Web.Helpers
     public class ContainerStatusesAnalyzer
     {
         private int tenant;
-        private ShipmentPM shipmentPM;
-        private IShipmentsContext shipmentContext;
         private ICommonDataContext commonContext;
-        private ShipmentRepository shipmentRepository;
-        private ShipmentQuery shipmentQuery;
         private CommunicationLogRepository communicationLogRepository;
         private CommunicationLog communicationLog;
         private string communicationLogId;
+        private string oceanInsightId;
+        private LogitudeOceanInsightsRequestRepository logitudeOceanInsightsRequestRepository;
+        private int logitudeOceanInsightsTenant;
         public ContainerStatusesAnalyzer(string communicationLogId, int tenant)
         {
             this.communicationLogId = communicationLogId;
@@ -35,13 +33,26 @@ namespace WebFreight.Web.Helpers
 
         private void InitializeComponent()
         {
-            shipmentContext = ShipmentsContext.GetContext(this.tenant);
             commonContext = CommonDataContext.GetContext(this.tenant);
-            shipmentRepository = new ShipmentRepository(shipmentContext);
-            shipmentQuery = new ShipmentQuery(shipmentRepository);
+            logitudeOceanInsightsRequestRepository = new LogitudeOceanInsightsRequestRepository(this.tenant);
             communicationLogRepository = new CommunicationLogRepository(commonContext);
             communicationLog = communicationLogRepository.GetSingleCommunicationLog(communicationLogId, this.tenant);
-            this.shipmentPM = shipmentQuery.GetSinglePM(communicationLog.EntityId, this.tenant);
+            this.GetLogitudeOceanInsightsTenant();
+
+        }
+
+        private void GetLogitudeOceanInsightsTenant()
+        {
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                SettingRepository settingRepository = new SettingRepository();
+                Setting setting = settingRepository.GetSingleSetting("1");
+                if (setting != null)
+                {
+                    logitudeOceanInsightsTenant = setting.OITenantNumber;
+                }
+                scope.Complete();
+            }
         }
 
         public void Run()
@@ -53,26 +64,50 @@ namespace WebFreight.Web.Helpers
         {
             if (communicationLog != null && communicationLog.EntityId == null)
             {
-                throw new Exception("Analyzing shipment faild, shipment not found");
+                throw new Exception("Analyzing containetr status request faild, containetr not found");
             }
             else
             {
-                if (this.shipmentPM == null)
-                {
-                    throw new Exception("Analyzing shipment faild, shipment not found");
-                }
-                else
-                {
-                    this.SendContainerStatusRequestToOceanInsightSevice();
-                    this.DoneCommunicationLog();
-                }
+                this.ReadAdditionalFieldsFromCommunicationLog();
+                this.SendContainerStatusRequestToOceanInsightSevice();
+                this.InsertLogitudeOceanInsightsRequest();
+                this.DoneCommunicationLog();
             }
+        }
+        string refrenceNumber;
+        string scacCode;
+        string oceanInsightInsertType; 
+        private void ReadAdditionalFieldsFromCommunicationLog()
+        {
+            this.refrenceNumber = communicationLog.EntityReference;
+            this.scacCode = communicationLog.AdditionalFields?.Split(',')[0];
+            this.oceanInsightInsertType = communicationLog.AdditionalFields?.Split(',')[1];
         }
 
         private void SendContainerStatusRequestToOceanInsightSevice()
         {
-            OceanInsightsWcfService oceanInsightsWcfService = new OceanInsightsWcfService();
-            oceanInsightsWcfService.Insert(tenant, null, shipmentPM.ShipmentNumber, null);
+            OceanInsightsWcfService oceanInsightsWcfService = new OceanInsightsWcfService(); 
+            var oceanInsightResponse = oceanInsightsWcfService.Insert(logitudeOceanInsightsTenant, scacCode, refrenceNumber, oceanInsightInsertType);
+            oceanInsightId = oceanInsightResponse.Result;     
+        }
+
+        private void InsertLogitudeOceanInsightsRequest()
+        {
+            LogitudeOceanInsightsRequest logitudeOceanInsightsRequest = new LogitudeOceanInsightsRequest()
+            {
+                Id = IdCounter.GetNumber("LogitudeOceanInsightsRequest", tenant),
+                CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                OceanInsigntId = oceanInsightId,
+                BLNumber = this.refrenceNumber,
+                ContainerNumber = this.refrenceNumber,
+                SCACCode = scacCode, 
+                Tenant = this.tenant,
+                Type = this.oceanInsightInsertType
+            };
+
+            logitudeOceanInsightsRequestRepository.Add(logitudeOceanInsightsRequest);
+            logitudeOceanInsightsRequestRepository.SubmitChanges();
         }
 
         private void DoneCommunicationLog()
@@ -85,6 +120,5 @@ namespace WebFreight.Web.Helpers
             communicationLogRepository.Update(communicationLog);
             communicationLogRepository.SubmitChanges();
         }
-  
     }
 }

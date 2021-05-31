@@ -15,9 +15,9 @@ export class ShipmentContainersWebService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ShipmentContainersWebService';
     }
 
-    GetContainerStatusResult(myShipmentId: string) {
+    GetContainerStatusResult(shipmentId: string, containerId: string, isContainer: boolean) {
 
-        var url = this._apiUrl + '/GetContainerStatusResult?shipmentId=' + myShipmentId;
+        var url = this._apiUrl + '/GetContainerStatusRequest?shipmentId=' + shipmentId + '&containerId=' + containerId+ '&isContainer=' + isContainer;
         return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
