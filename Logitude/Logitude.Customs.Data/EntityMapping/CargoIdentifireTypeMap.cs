@@ -32,6 +32,22 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.EnglishName).HasColumnName("EnglishName").HasMaxLength(40).IsUnicode(false);
 
             this.Property(t => t.Inactive).HasColumnName("Inactive");
+
+            this.Property(t => t.IsForDeclarationExport).HasColumnName("IsForDeclarationExport");
+
+            this.Property(t => t.IsForDeclarationImport).HasColumnName("IsForDeclarationImport");
+
+            this.Property(t => t.IsForManifest).HasColumnName("IsForManifest");
+
+            this.Property(t => t.IsKey2Mandatory).HasColumnName("IsKey2Mandatory");
+
+            this.Property(t => t.IsKey3Mandatory).HasColumnName("IsKey3Mandatory");
+
+            this.Property(t => t.CargoIdentifierKey1Name).HasColumnName("CargoIdentifierKey1Name").HasMaxLength(40).IsUnicode(true);
+
+            this.Property(t => t.CargoIdentifierKey2Name).HasColumnName("CargoIdentifierKey2Name").HasMaxLength(40).IsUnicode(true);
+
+            this.Property(t => t.CargoIdentifierKey3Name).HasColumnName("CargoIdentifierKey3Name").HasMaxLength(40).IsUnicode(true);
         }
     }
 }

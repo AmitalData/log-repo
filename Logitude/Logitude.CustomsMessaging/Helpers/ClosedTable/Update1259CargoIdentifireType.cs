@@ -35,9 +35,14 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
         {
             base.SetOtherFields(mehesTableRow, curDbPM);
             var gov = mehesTableRow.MyCargoIdentifireType ?? new CargoIdentifireType();
-
-
-
+            curDbPM.IsForDeclarationExport = gov.IsForDeclarationExport;
+            curDbPM.IsForDeclarationImport = gov.IsForDeclarationImport;
+            curDbPM.IsForManifest = gov.IsForManifest;
+            curDbPM.IsKey2Mandatory = gov.IsKey2Mandatory; 
+            curDbPM.IsKey3Mandatory = gov.IsKey3Mandatory;
+            curDbPM.CargoIdentifierKey1Name = gov.CargoIdentifierKey1Name;
+            curDbPM.CargoIdentifierKey2Name = gov.CargoIdentifierKey2Name;
+            curDbPM.CargoIdentifierKey3Name = gov.CargoIdentifierKey3Name;
         }
     }
 }

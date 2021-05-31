@@ -479,16 +479,46 @@ ID List :
                                                     {
                                                         writeHighlight = true;
                                                     }
-                                                   /* if (dr["IsRelevantInvoice"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
+                                                    if (dr["IsForDeclarationExport"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
                                                     {
                                                         LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyModificationAndDiscountType.IsRelevantInvoice = true;
+                                                        newExt.MyCargoIdentifireType.IsForDeclarationExport = true;
                                                     }
-                                                    if (dr["IsRelevantGoodsItem"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
+                                                    if (dr["IsForDeclarationImport"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
                                                     {
                                                         LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyModificationAndDiscountType.IsRelevantGoodsItem = true;
-                                                    }*/
+                                                        newExt.MyCargoIdentifireType.IsForDeclarationImport = true;
+                                                    }
+                                                    if (dr["IsForManifest"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyCargoIdentifireType.IsForManifest = true;
+                                                    }
+                                                    if (dr["IsKey2Mandatory"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyCargoIdentifireType.IsKey2Mandatory = true;
+                                                    }
+                                                    if (dr["IsKey3Mandatory"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyCargoIdentifireType.IsKey3Mandatory = true;
+                                                    }
+                                                    if (dr["CargoIdentifierKey1Name"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyCargoIdentifireType.CargoIdentifierKey1Name = dr["CargoIdentifierKey1Name"].ToString();
+                                                    }
+                                                    if (dr["CargoIdentifierKey2Name"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyCargoIdentifireType.CargoIdentifierKey2Name = dr["CargoIdentifierKey2Name"].ToString();
+                                                    }
+                                                    if (dr["CargoIdentifierKey3Name"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyCargoIdentifireType.CargoIdentifierKey3Name = dr["CargoIdentifierKey3Name"].ToString();
+                                                    }
                                                     extList.Add(newExt);
                                                 });
                         return extList;
