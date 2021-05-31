@@ -480,6 +480,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.ComputeFinalDestination();
                     this.CheckUpdatingMasterHouses();
                     this.ComputeIsHTSMissingField();
+                    //this.UpdateHouseRoutingFieldsOnMasterConnection();
 
                     shipmentBehaviourFacade = new ShipmentBehaviourFacade(entityPM, objectContext, UpdatedShipmentComputedFields, isNewEntity);
                     shipmentBehaviourFacade.Handle();
@@ -601,7 +602,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
         private void UpdatePayablesLinesVatAmounts()
         {
-            if(initializer.ShipmentPayablesChangeSet != null && initializer.ShipmentPayablesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.None).Any()) {
+            if (initializer.ShipmentPayablesChangeSet != null && initializer.ShipmentPayablesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.None).Any())
+            {
                 var allPayablesIds = (from d in entityPM.ShipmentPayables select d.Id).ToList();
                 var allPayables = shipmentPayableRepository.GetShipmentPayablesFromIdList(allPayablesIds, tenant);
                 PayablesLinesVatAmounts payablesLinesVatAmounts = new PayablesLinesVatAmounts(allPayables, initializer.Tenant, shipmentPayableRepository);
@@ -5869,6 +5871,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 houseShipment.MasterShipmentDataId = itemPM.MasterShipmentDataId;
                 houseShipment.ComputedShipmentNumber = itemPM.ShipmentNumber;
                 houseShipment.AgentComputed = houseShipment.AgentId == null ? entityPM.AgentId : houseShipment.AgentId;
+                this.UpdateHouseRoutingFieldsWhenConnectedToMaster(houseShipment);
                 entityRepository.Update(houseShipment);
                 entityRepository.SubmitChanges();
 
@@ -6879,6 +6882,20 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             if (shipmentProductItem.Count > 0 && shipmentProductItem.Where(d => string.IsNullOrEmpty(d.HTSCode)).Any())
             {
                 entityPM.IsHTSMissing = true;
+            }
+        }
+        private void UpdateHouseRoutingFieldsWhenConnectedToMaster(Shipment houseShipment)
+        {
+            if (!string.IsNullOrEmpty(entityPM.PreCarriageFromPortId) && !string.IsNullOrEmpty(entityPM.PreCarriageToPortId)
+                && !string.IsNullOrEmpty(houseShipment.PreForwardingFromPortId) && !string.IsNullOrEmpty(houseShipment.PreForwardingToPortId))
+            {
+                houseShipment.PreForwardingToPortId = entityPM.PreCarriageFromPortId;
+            }
+
+            if (!string.IsNullOrEmpty(entityPM.OnCarriageFromPortId) && !string.IsNullOrEmpty(entityPM.OnCarriageToPortId)
+                && !string.IsNullOrEmpty(houseShipment.OnForwardingFromPortId) && !string.IsNullOrEmpty(houseShipment.OnForwardingToPortId))
+            {
+                houseShipment.OnForwardingFromPortId = entityPM.OnCarriageToPortId;
             }
         }
     }
