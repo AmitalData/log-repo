@@ -307,16 +307,16 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                 bool shouldCreateDCAComm = false;
                 var decQS = new DeclarationQueryService(tenant);
-                if(!string.IsNullOrEmpty(this._DocumentsFilingPM.EntityId))
+                //if(!string.IsNullOrEmpty(this._DocumentsFilingPM.EntityId))
                 {
                     declarationPM = decQS.GetSingle(this._DocumentsFilingPM.EntityId, false, false);
 
                 }
-                else
-                {
-                    declarationPM = decQS.GetSingleByCustomFileNo(this._DocumentsFilingPM.ExternalEntityReference, _DocumentsFilingPM.Tenant);
+                //else
+                //{
+                //    ///Elisheva ask to revert !!!---  declarationPM = decQS.GetSingleByCustomFileNo(this._DocumentsFilingPM.ExternalEntityReference, _DocumentsFilingPM.Tenant);
 
-                }
+                //}
 
 
 
