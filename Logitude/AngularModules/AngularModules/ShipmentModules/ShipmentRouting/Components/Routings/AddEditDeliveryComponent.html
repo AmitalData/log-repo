@@ -1,31 +1,90 @@
 <style>
+     .DisbleBox {
+        display: inline-block;
+        border: 1px solid #ffd800;
+        border-radius: 5px;
+        background: #faf5c0;
+        padding: 2px 10px;
+        margin: 5px;
+        color: gray;
+        font-family: sans-serif;
+     }
+
+     .x-split-button {
+        position: relative;
+        display: inline-block;
+        text-align: left;
+     }
+
+     .x-button {
+        width: initial !important;
+        position: relative;
+        margin: 0;
+        height: 22px;
+        float: left;
+        outline: none;
+        line-height: 21px;
+        border: 1px solid #6A8299;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(237, 192, 147, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(237, 192, 147, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+     }
+
+     .x-button:disabled {
+        opacity: 0.5;
+        pointer-events: none;
+     }
+
+     .x-button:hover {
+        cursor: pointer;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(237, 192, 147, 0.85) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 0.85) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(237, 192, 147, 0.85) ));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 0.85) 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 0.85) 100%);
+     }
+
+     .x-button:active {
+        background: #F2F2F2;
+     }
+
+     .x-button.x-button-drop {
+        border-right: 0;
+        height: 22px;
+     }
+
     .x-button-drop-menu {
         position: absolute;
         top: 22px;
+        right: 0;
         z-index: 1000;
-        text-align: center;
-        padding: 1px;
+        text-align: right;
+        float: left;
+        min-width: 130px;
         font-size: 15px;
         list-style: none;
         background-color: #F2F2F2;
         background-clip: padding-box;
         border: .5px solid #45494A;
+        box-shadow: .5px .5px 2px #6A8299;
     }
 
-        .x-button-drop-menu li span {
-            display: block;
-            clear: both;
-            font-family: arial;
-            color: #444;
-            text-decoration: none;
-            height: 22px;
-            line-height: 23px;
-        }
+    .x-button-drop-menu li span {
+        display: block;
+        padding: 3px 20px;
+        clear: both;
+        font-family: arial;
+        color: #444;
+        text-decoration: none;
+        height: 22px;
+    }
 
-            .x-button-drop-menu li span:hover {
-                background: #D3D3D3;
-                cursor: pointer;
-            }
+    .x-button-drop-menu li span:hover {
+       background: #D3D3D3;
+       cursor: pointer;
+    }
 </style>
 <table>
     <tr style="height:1px;" *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
@@ -122,24 +181,33 @@
                         <Hyperlink (click)="ViewStandaloneShipmentClicked(item)">{{EntityPM.StandaloneShipmentNumber}}</Hyperlink>
                     </td>
 
-                    <td *ngIf="IsAddingStandaloneShipmentVisible && !EntityPM.StandaloneShipmentId">
-                        <split-button [ButtonText]="'  Create Standalone Shipment  '"
-                                      (DefaultSplitButtonClicked)="StandAloneShipmentButtonClicked('CreateStandalone')"
-                                      [IsDisabled]="!IsCreateStandaloneShipmentEnabled"
-                                      [MENUDivExtraTop]="0"
-                                      [MENUDivExtraLeft]="0" style="width:200px;">
-
-                            <div class="class-MENUSplitButton-content">
-                                <div>
-                                    <ul class="x-button-drop-menu" style="width:200px;">
-                                        <li>
-                                            <span (click)="StandAloneShipmentButtonClicked('ConnectStandalone')">Connect leg to an existing shipment</span>
-                                        </li>
-                                    </ul>
+                    <td style="width:270px" *ngIf="IsAddingStandaloneShipmentVisible && !EntityPM.StandaloneShipmentId">
+                        <div [attr.id]="'printbutton'">
+                            <span style="display:inline" class="x-split-button">
+                                <button (click)="StandAloneShipmentButtonClicked('CreateStandalone')"
+                                        class="RedButton"
+                                        [disabled]="!IsCreateStandaloneShipmentEnabled"
+                                        style="width:220px;border-radius: 0px 5px 5px 0px;float:right">
+                                    Create Standalone Shipment
+                                </button>
+                                <button [attr.id]="'arrow'" class="x-button x-button-drop"
+                                        style="width: 20px;border-radius: 5px 0px 0px 5px;color:gray;float:right"
+                                        [disabled]="!IsCreateStandaloneShipmentEnabled"
+                                        (click)="DropdowndisplayToggle()">
+                                    &#9660;
+                                </button>
+                                <div [attr.id]="'dropdowmenu'" [ngStyle]="{'display': dropdownDisplay  }"
+                                     style="position: fixed;z-index:1 ;background-color : whitesmoke;width:270px; ">
+                                    <div>
+                                        <ul class="x-button-drop-menu">
+                                            <li>
+                                                <span style="width: 220px" (click)="StandAloneShipmentButtonClicked('ConnectStandalone')">Connect leg to an existing shipment</span>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
-
-                        </split-button>
+                            </span>
+                        </div>
                     </td>
 
                     <td style="width: 5px;" *ngIf="IsAddingStandaloneShipmentVisible">
