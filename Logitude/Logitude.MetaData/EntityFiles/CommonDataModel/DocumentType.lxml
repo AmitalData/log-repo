@@ -4470,6 +4470,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;CopyName&quot;"
     ListPropertyPath="&quot;CopyName&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -4925,6 +4926,15 @@
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;DocumentType.Features.EDITPRINTEDDOCUMENTS&quot;"
       FeatureDefaultText="&quot;Edit Printed Documents&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;MANAGEDOCUMENTTEMPLATES&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;DocumentType.Features.MANAGEDOCUMENTTEMPLATES&quot;"
+      FeatureDefaultText="&quot;Manage Document Templates&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
