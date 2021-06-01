@@ -1,4 +1,4 @@
-﻿    
+﻿
 //https://docs.google.com/document/d/1bFMdrDnByDpvLcvE9H5eOfCAzbVdeoUypbzhwxbr0Po/edit#heading=h.hjpcmz7krlpn
 
 using Logitude.BL.Helpers;
@@ -33,19 +33,25 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
     {
 
 
-        public void AnalyzeQResponse(CourierWEBAPICommSettings settings, string webAPIResultString)
+        public void AnalyzeQResponse(int tenant, CourierSWSHAWBResponse CourierSWSHAWBResponse)
 
         {
 
-            var CourierSWSHAWBResponse = ProxyUtil.JsonConvertDeserializeTyped<CourierSWSHAWBResponse>(webAPIResultString);
             if (CourierSWSHAWBResponse == null)
             {
                 throw new Exception("(CourierSWSHAWBResponse == null)");
             }
             LogMessagingUtil.Instance.AppendLine($"AnalyzeResponse(StatusCode={CourierSWSHAWBResponse.StatusCode},{CourierSWSHAWBResponse.ErrorDescription})");
-            var context = CustomContext.GetContext(settings.Tenant);
+            var context = CustomContext.GetContext(tenant);
+            var qs = new DeclarationQueryService(tenant);
+            var idList = qs.GetListByCourierHAWB(CourierSWSHAWBResponse.CourierHawbNumber, tenant);
+            string decID = null;
+            if (idList.Count == 1)
+            {
+                decID = idList.FirstOrDefault();
+            }
             var myDeclarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
-            var declarationCourierStatusQueryServicePM = myDeclarationCourierStatusQueryService.GetSingle(settings.DeclarationId, true, false);
+            var declarationCourierStatusQueryServicePM = myDeclarationCourierStatusQueryService.GetSingle(decID, true, false);
             declarationCourierStatusQueryServicePM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
 
             switch (CourierSWSHAWBResponse.StatusCode)
@@ -67,7 +73,7 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
 
             using (var scope = TransactionFactory.GetNewTransaction())
             {
-                var myDeclarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), settings.Tenant);
+                var myDeclarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
                 myDeclarationCourierStatusUpdateService.Update(declarationCourierStatusQueryServicePM, true);
                 scope.Complete();
             }
@@ -77,7 +83,7 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
         {
             throw new Exception("use  SetInAnalyzeQResponseService by @intrface.ResponseCode");
             var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
-            var def =customsPartnerFtpDetails.GetAllInterfaceDetails().First(r => r.Code == CustomsPartnerFtpDetails.InterfaceName_ECSWSTHR_RESPONE);
+            var def = customsPartnerFtpDetails.GetAllInterfaceDetails().First(r => r.Code == CustomsPartnerFtpDetails.InterfaceName_ECSWSTHR_RESPONE);
             var commSetting = Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertSerialize(settings);
             var analyzeQueueUtil = new AnalyzeQueueUtil();
             var new_analyze = analyzeQueueUtil
