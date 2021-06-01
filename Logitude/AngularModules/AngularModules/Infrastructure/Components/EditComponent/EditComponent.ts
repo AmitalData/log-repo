@@ -351,6 +351,7 @@ export class EditComponent implements OnDestroy {
                             if (sync) {
                                 this.BuildEditTabs(() => {
                                     this.RunComponent();
+                                    this.cd.detectChanges(); // to let HTML read split component location
                                     this.StopBusyIndicator();
                                 });
 
@@ -2073,8 +2074,10 @@ export class EditComponentDefaultController implements IEditComponentController 
             resolve();
         });
     }
-    OnCloseEditControl() {
-
+    OnCloseEditControl(onCallBack?: () => void ) {
+        if (!AppTool.IsNullOrEmpty(onCallBack)) {
+            onCallBack();
+        }
     }
     HaveSaved: boolean;
     InDisplayMode: boolean;

@@ -185,6 +185,9 @@ export class DeclarationEditComponentController implements IEditComponentControl
     }
     OnCloseEditControl(onCallBack?: () => void) {
         if (!this._ControllerOn) {
+            if (!AppTool.IsNullOrEmpty(onCallBack)) {
+                onCallBack();
+            }
             return;
         }
         if (
