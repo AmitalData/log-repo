@@ -434,7 +434,26 @@ using Simplog.Data.ShipmentsModel;
 				   temp.ActualFinalArrivalDate = MyEntityPM.ActualFinalArrivalDate;
 				   temp.HouseNo = MyEntityPM.House; 
 				   temp.IsHTSMissing = MyEntityPM.IsHTSMissing;					
+			  
+				   if(MyEntityPM.MainCarriageFromPartnerId != null)
+				   {
+					   CardQueryService CardService29 = new CardQueryService(Tenant);
+					   					   temp.MainCarriageFromPartner = CardService29.GetCardById(MyEntityPM.MainCarriageFromPartnerId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				    
 
+			  
+				   if(MyEntityPM.MainCarriageToPartnerId != null)
+				   {
+					   CardQueryService CardService30 = new CardQueryService(Tenant);
+					   					   temp.MainCarriageToPartner = CardService30.GetCardById(MyEntityPM.MainCarriageToPartnerId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				   
+				   temp.MainCarriageETA = MyEntityPM.MainCarriageETA;
+				   temp.MainCarriageETD = MyEntityPM.MainCarriageETD;
+				   temp.TruckNumber = MyEntityPM.TruckNumber;					
 			  
 				   if(MyEntityPM.MainCarriageFromPartnerId != null)
 				   {
@@ -1418,6 +1437,56 @@ using Simplog.Data.ShipmentsModel;
 					 
 
 					
+					CardQueryService MainCarriageFromPartnerCardService = new CardQueryService(Tenant);
+					if(MyEntity.MainCarriageFromPartner != null)
+					{
+						var myMainCarriageFromPartnerPM = MainCarriageFromPartnerCardService.CardDataMappingAndValidatin(MyEntity.MainCarriageFromPartner,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myMainCarriageFromPartnerPM != null)
+						{ 
+
+						 								//throw new ApplicationException("MainCarriageFromPartner Can't be update"); 
+								temp.MainCarriageFromPartnerId = myMainCarriageFromPartnerPM.Id;
+						  
+
+							
+						} 
+
+					}
+			
+					
+					CardQueryService MainCarriageToPartnerCardService = new CardQueryService(Tenant);
+					if(MyEntity.MainCarriageToPartner != null)
+					{
+						var myMainCarriageToPartnerPM = MainCarriageToPartnerCardService.CardDataMappingAndValidatin(MyEntity.MainCarriageToPartner,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myMainCarriageToPartnerPM != null)
+						{ 
+
+						 								//throw new ApplicationException("MainCarriageToPartner Can't be update"); 
+								temp.MainCarriageToPartnerId = myMainCarriageToPartnerPM.Id;
+						  
+
+							
+						} 
+
+					}
+			
+					
+                    							//throw new ApplicationException("MainCarriageETA Can't be update"); 
+							temp.MainCarriageETA = MyEntity.MainCarriageETA;
+
+					 
+
+					
+                    							//throw new ApplicationException("MainCarriageETD Can't be update"); 
+							temp.MainCarriageETD = MyEntity.MainCarriageETD;
+
+					 
+
+					
+                    							//throw new ApplicationException("TruckNumber Can't be update"); 
+							temp.TruckNumber = MyEntity.TruckNumber;
                     							//throw new ApplicationException("IsHTSMissing Can't be update"); 
 							temp.IsHTSMissing = MyEntity.IsHTSMissing;
 					CardQueryService MainCarriageFromPartnerCardService = new CardQueryService(Tenant);
