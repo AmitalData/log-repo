@@ -215,12 +215,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     ShipmentValidating.ValidateRoutingDates(entityPM, entityPM.ShipmentPickUps, entityPM.ShipmentDeliveries);
                 }
 
-                
+
                 foreach (ShipmentPackagePM itemPM in entityPM.ShipmentPackages)
                 {
                     this.CreateShipmentPackage(itemPM);
                 }
-                
+
                 foreach (ShipmentPickUpPM itemPM in entityPM.ShipmentPickUps)
                 {
                     this.CreateShipmentPickUp(itemPM);
@@ -425,7 +425,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.ComputeIsHTSMissingField();
 
                     this.UpdateShipmentPackagesCollection();
-                    
+
                     this.UpdateShipmentPickUpsCollection();
                     this.UpdateShipmentDeliveriesCollection();
                     this.UpdateShipmentPayablesCollection();
@@ -484,7 +484,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.BuildShipmentExternalUpdate();
                     this.ComputeIsAssemblyField();
                     this.ComputeFinalDestination();
-                    this.CheckUpdatingMasterHouses();                    
+                    this.CheckUpdatingMasterHouses();
                     this.ComputeIsHTSMissingField();
                     //this.UpdateHouseRoutingFieldsOnMasterConnection();
 
@@ -5003,9 +5003,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             ShipmentPickUpDelivery itemPoco = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDelivery(tenant, itemPM.Id);
 
-            if(string.IsNullOrEmpty(itemPoco.StandaloneShipmentId) && !string.IsNullOrEmpty(itemPM.StandaloneShipmentId))
+            if (string.IsNullOrEmpty(itemPoco.StandaloneShipmentId) && !string.IsNullOrEmpty(itemPM.StandaloneShipmentId))
             {
-               UpdateStandAloneShipment(itemPM.StandaloneShipmentId,itemPM.Id);
+                UpdateStandAloneShipment(itemPM.StandaloneShipmentId, itemPM.Id);
             }
 
             if (!entityPM.IsHybrid)
@@ -6873,24 +6873,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     shipmentPickUpDelivery.StandaloneShipmentNumber = entityPM.ShipmentNumber;
 
                     shipmentPickUpDeliveryRepository.Update(shipmentPickUpDelivery);
-            }
-        }
-        private void UpdateHouseRoutingFieldsWhenConnectedToMaster(Shipment houseShipment)
-        {
-            if (!string.IsNullOrEmpty(entityPM.PreCarriageFromPortId) && !string.IsNullOrEmpty(entityPM.PreCarriageToPortId)
-                && !string.IsNullOrEmpty(houseShipment.PreForwardingFromPortId) && !string.IsNullOrEmpty(houseShipment.PreForwardingToPortId))
-            {
-                houseShipment.PreForwardingToPortId = entityPM.PreCarriageFromPortId;
-            }
-
-            if (!string.IsNullOrEmpty(entityPM.OnCarriageFromPortId) && !string.IsNullOrEmpty(entityPM.OnCarriageToPortId)
-                && !string.IsNullOrEmpty(houseShipment.OnForwardingFromPortId) && !string.IsNullOrEmpty(houseShipment.OnForwardingToPortId))
-            {
-                houseShipment.OnForwardingFromPortId = entityPM.OnCarriageToPortId;
                 }
             }
         }
-
         private void UpdateShipmentProductItems()
         {
             if (entityPM.IsProductItemsUpdated)
@@ -6900,7 +6885,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 {
                     productItem.ChangeSetOp = ChangeSetOperation.Update;
                     HTSCodePM hTSCodePM = hTSCodeQuery.GetSingleHTSCodeByProductItemAndCountry(productItem.ProductItemId, entityPM.ToCountryId, tenant);
-                    if(hTSCodePM != null)
+                    if (hTSCodePM != null)
                     {
                         productItem.HTSCode = hTSCodePM.Code;
                         productItem.ApprovedByCustomer = hTSCodePM.ApprovedByCustomer;
@@ -6908,13 +6893,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     else
                     {
                         productItem.HTSCode = null;
-                        productItem.ApprovedByCustomer = false;                        
+                        productItem.ApprovedByCustomer = false;
                     }
                 }
 
                 entityPM.IsProductItemsUpdated = false;
-                }
             }
+        }    
         
         private void UpdatePickUpDeliveryStandaloneFieldsOnShipmentUpdate()
         {

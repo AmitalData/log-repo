@@ -79,7 +79,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "11c6d69bc61250ac187177b94f15df55";
+		public const string HashString = "1ggff1c6d69bc61250ac187177b94f15df55";
+
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -11837,6 +11838,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode GLAccountTextCode_GLAccountsOParent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.Parent", DefaultText = "Parent",LocalDefaultText = @"אב", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountsOChild = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.Child", DefaultText = "Child",LocalDefaultText = @"בן", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOAmountIsInsured = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.AmountIsInsured", DefaultText = "of this amount is insured",LocalDefaultText = @"מהסכום הוא מבוטח", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
