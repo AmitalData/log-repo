@@ -91,12 +91,6 @@ export class CardPM {
     private creditLimitAmount: number;
     public get CreditLimitAmount() { return this.creditLimitAmount; }
     public set CreditLimitAmount(newValue: number) { if (this.creditLimitAmount != newValue) { this.creditLimitAmount = newValue; this.MarkAsDirty("CreditLimitAmount"); } }
-       
-	 
-    private phone: string;
-    public get Phone() { return this.phone; }
-    public set Phone(newValue: string) { if (this.phone != newValue) { this.phone = newValue; this.MarkAsDirty("Phone"); } }
-       
 	 
     private vatNumber: string;
     public get VatNumber() { return this.vatNumber; }
