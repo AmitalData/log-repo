@@ -208,6 +208,7 @@
     <None Include="DBScripts\CommonModel\202104161424_UpdateTenantRatios.sxml" />
     <None Include="DBScripts\CommonModel\202104161425_UpdateTenantRatiosOnCloud.sxml" />
     <None Include="DBScripts\GlobalModel\202102161503_UpdateTenantManagmentPrivatLabelDomain.sxml" />
+    <None Include="DBScripts\GlobalModel\202105301502_AddContainerStatusesMonitorWR.sxml" />
     <None Include="DBScripts\GlobalModel\AddCollaborationToolSgipmentUpdateBatchService.sxml" />
     <None Include="DBScripts\InfrastructureModel\202101120950_ModifyDBMigrationLastScriptTrigger.sxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\dbo.usp_DoTheTableDeletionSet.dxml" />
@@ -960,6 +961,7 @@
     <None Include="DBTables\ShipmentsModel\AWBOCI.dxml" />
     <None Include="DBTables\ShipmentsModel\AWBSpecialHandlingCode.dxml" />
     <None Include="DBTables\ShipmentsModel\AWBStatus.dxml" />
+    <None Include="DBTables\ShipmentsModel\Container.dxml" />
     <None Include="DBTables\ShipmentsModel\CustomsTransferHeader.dxml" />
     <None Include="DBTables\ShipmentsModel\CustomsTransferLine.dxml" />
     <None Include="DBTables\ShipmentsModel\CustomsTransferType.dxml" />
@@ -974,6 +976,7 @@
     <None Include="DBTables\ShipmentsModel\INTTRADocumentType.dxml" />
     <None Include="DBTables\ShipmentsModel\INTTRASIStatus.dxml" />
     <None Include="DBTables\ShipmentsModel\INTTRAStatus.dxml" />
+    <None Include="DBTables\ShipmentsModel\LogitudeOceanInsightsRequest.dxml" />
     <None Include="DBTables\ShipmentsModel\ManifestStatus.dxml" />
     <None Include="DBTables\ShipmentsModel\MessagingStock.dxml" />
     <None Include="DBTables\ShipmentsModel\MessagingStockUsageHistory.dxml" />

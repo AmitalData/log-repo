@@ -57,6 +57,7 @@ using Logitude.BL.ShipmentsModel.EntityOtherServices;
 using Logitude.Server.Tools.Messages;
 using Logitude.Server.Tools.Constants;
 using Newtonsoft.Json;
+using Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours;
 
 namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 {
@@ -109,14 +110,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private ShipmentContainerStatusRepository shipmentContainerStatusRepository;
         HybridPartnerPM CurrentHybridPartner;
         public ShipmentComputedFields UpdatedShipmentComputedFields;
-
         private ShipmentServiceInitializer initializer;
 
         public ShipmentService(IShipmentsContext objectContext, ShipmentPM entityPM, string serviceContextUser)
         {
             this.initializer = new ShipmentServiceInitializer(objectContext, entityPM, serviceContextUser);
             this.initializer.Initialize();
-
             this.tenant = initializer.Tenant;
             this.entityPM = initializer.EntityPM;
             this.entityPoco = initializer.EntityPOCO;
@@ -146,7 +145,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.myAddressRepository = new AddressRepository(myCommonContext);
             this.myPortRepository = new PortRepository(myCommonContext);
             this.aWBOCIRepository = new AWBOCIRepository(objectContext);
-            //this.documentsFilingRepository = new DocumentsFilingRepository(myCommonContext);
             this.shipmentCommodityRepository = new ShipmentCommodityRepository(objectContext);
             this.shipmentAdditionalCloudDataRepository = new ShipmentAdditionalCloudDataRepository(objectContext);
             this.shipmentAssemblyRepository = new ShipmentAssemblyRepository(objectContext);
@@ -217,13 +215,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     ShipmentValidating.ValidateRoutingDates(entityPM, entityPM.ShipmentPickUps, entityPM.ShipmentDeliveries);
                 }
 
-                this.initializer.HandleComposition();
-
+                
                 foreach (ShipmentPackagePM itemPM in entityPM.ShipmentPackages)
                 {
                     this.CreateShipmentPackage(itemPM);
                 }
-
+                
                 foreach (ShipmentPickUpPM itemPM in entityPM.ShipmentPickUps)
                 {
                     this.CreateShipmentPickUp(itemPM);
@@ -283,6 +280,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 {
                     this.CreateShipmentProductItem(itemPM);
                 }
+
+                this.initializer.HandleComposition();
 
                 entityPM.CalculateProfit = calculateProfit;
                 entityPM.CalculatePayables = calculatePayables;
@@ -419,12 +418,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         ShipmentValidating.ValidateRoutingDates(entityPM, initializer.ShipmentPickUpsChangeSet, initializer.ShipmentDeliveriesChangeSet);
                     }
 
-                    this.initializer.HandleComposition();
+
+                    this.UpdateShipmentProductItems();
 
                     this.UpdateShipmentProductItems();
                     this.ComputeIsHTSMissingField();
 
                     this.UpdateShipmentPackagesCollection();
+                    
                     this.UpdateShipmentPickUpsCollection();
                     this.UpdateShipmentDeliveriesCollection();
                     this.UpdateShipmentPayablesCollection();
@@ -438,6 +439,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.UpdateShipmentAssembliesCollection();
                     this.UpdateShipmentStoragePricingsCollection();
                     this.UpdateShipmentProductItemsCollection();
+
+                    this.initializer.HandleComposition();
+
                     this.InitializeBookingData();
                     this.RemoveDeletedItemsFromEntityPM();
 

@@ -56,6 +56,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                SecurityUtility.CheckContactFeature("Container", "READ", authToken.Tenant);
                 ContainerQuery containerQuery = new ContainerQuery(authToken.Tenant);
                 ContainerPM containerPM = containerQuery.GetSinglePM(id, authToken.Tenant);
                 
@@ -86,6 +88,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.CheckContactFeature("Container", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("Container", entityPM.Tenant, authToken.Tenant);
                 
                         IShipmentsContext MyContext = ShipmentsContext.GetContext(entityPM.Tenant);
                         ContainerService service = new ContainerService(MyContext, entityPM.Tenant);
@@ -132,6 +136,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.CheckContactFeature("Container", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("Container", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "Container" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "ContainerPM" + entityPM.Id + entityPM.Tenant;

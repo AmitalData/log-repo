@@ -21,6 +21,9 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string SearchFields { get; set; }
         public string ContainerNumber { get; set; }
         public string ShipmentPackagesId { get; set; }
+        [ForeignKey("ShipmentPackagesId")]
+        public virtual ShipmentPackage ShipmentPackage { get; set; }
+
         public string MainCarriageCarrierId { get; set; }
         [ForeignKey("MainCarriageCarrierId")]
         public virtual Card CarrierCard { get; set; }
@@ -28,7 +31,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string Master { get; set; }
         public string MainCarriageVesselId { get; set; }
         [ForeignKey("MainCarriageVesselId")]
-        public virtual Card VesselCard { get; set; }
+        public virtual Vessel VesselCard { get; set; }
         public DateTime? MainCarriageETA { get; set; }
         public DateTime? MainCarriageETD { get; set; }
         public DateTime? MainCarriageATA { get; set; }

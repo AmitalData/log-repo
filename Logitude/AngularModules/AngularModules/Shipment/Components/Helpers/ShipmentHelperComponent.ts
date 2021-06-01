@@ -13,6 +13,7 @@ import {EntityResourceService} from '../../../Infrastructure/Services/EntityReso
 import {ShipmentDomainService} from '../../../Shipment/Services/ShipmentDomainService';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
+import { ShipmentContainersWebService } from '../../../Shipment/Services/ShipmentContainersWebService';
 
 @Component({
     
@@ -35,13 +36,13 @@ export class ShipmentHelperComponent implements OnDestroy {
 
         if (this.EntityPM) {
             this.ShowHideShippingInstructionsButton();
+            this.ShowHideShipmentContainersSimulatorButton();
             this.ShowHideSendBookingButton();
             if (this.EntityPM.DirectionId == "E" && this.EntityPM.TransportModeId == "A") {
                 if (FeatureLocator.IsPackage_DVMT()) {
                     this.IsAnalyzeChampXMLButtonVisible = true;
                 }
             }
-
             this.Listen();
             this.BuildComponent();
         }
@@ -228,6 +229,18 @@ export class ShipmentHelperComponent implements OnDestroy {
     public IsSendToCustomVisible: boolean = false
     public IsShippingInstructionsVisible: boolean = false;
     public IsSendBookingVisible: boolean = false;
+
+    public IsShipmentContainersSimulatorVisible: boolean = false;
+    private ShowHideShipmentContainersSimulatorButton() {
+        this.IsShipmentContainersSimulatorVisible = false;
+        if (FeatureLocator.HasFeaturePermession("Shipment", "INTTRASimulator")) {
+            var isFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
+            if (this.EntityPM.TransportModeId == "O" && isFCLEntity) {
+                this.IsShipmentContainersSimulatorVisible = true;
+            }
+        }
+    }
+
     setImportAWBWizardButton() {
         this.IsImportAWBWizardButtonVisible = false;
         if (FeatureLocator.HasFeaturePermession("Shipment", "IMPORTAWBWIZARD")) {
@@ -592,6 +605,25 @@ export class ShipmentHelperComponent implements OnDestroy {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Simulate Champ Message";
         logWindow.Show('./Shipment/Components/Helpers/AnalyzeChampXMLComponent');
+    }
+
+    ShipmentContainersSimulatorClicked() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Shipment Containers Statuses Simulator";
+        logWindow.Show('./ShipmentModules/ShipmentOthers/Components/ShipmentContainersStatuses/ContainersStatusesSimulatorComponent');
+    }
+
+    ContainersRequestStatusClicked() {
+        var service = new ShipmentContainersWebService();
+        service.GetContainerStatusResult(this.EntityPM.Id, null, false).subscribe((myResponse: ServiceResponse) => {
+            this.CurrentSession.StopBusyIndicator();
+            if (!myResponse.HasError) {
+               
+            }
+            else {
+                this.entityArgs.EditComponent.ValidationErrorsList = myResponse.ErrorsArray;
+            }
+        });            
     }
 }
 

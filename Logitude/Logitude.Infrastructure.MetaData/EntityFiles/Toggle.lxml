@@ -39,8 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-
-  Code="&quot;c5e0&quot;"
+  Code="&quot;229b&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -543,6 +542,11 @@
       Code="&quot;QRA&quot;"
       SearchFields="&quot;QRA, Quotes Request Activated In Shared Logistic&quot;"
       Description="&quot;Quotes Request Activated In Shared Logistic&quot;" />
+    <Record
+      Name="&quot;Ocean Insights Containers&quot;"
+      Code="&quot;OIC&quot;"
+      SearchFields="&quot;OIC,Ocean Insights Containers&quot;"
+      Description="&quot;Ocean Insights Containers&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

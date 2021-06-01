@@ -21,6 +21,7 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 
 import {ContainerPM} from '../../EntityPMs/ContainerPM';
 
+import {ContainerPMInitService} from '../../EntityPMInitServices/ContainerPMInitService';
 
 @Injectable()
 
@@ -45,6 +46,8 @@ export class ContainerPMService {
 						var entity: ContainerPM;
 						if (pm) {
 							entity = this.MapJsonToEntityPM(pm);
+                      ContainerPMInitService.InitValues(entity, false);
+                      ContainerPMInitService.ApplyUIPoperties(entity, false);
 						}
 
 						var serviceResponse: ServiceResponse = new ServiceResponse();
@@ -222,6 +225,10 @@ export class ContainerPMService {
 		    var entityPM: ContainerPM;
 			entityPM = new ContainerPM();
 			entityPM.Tenant = InfraSettings.TenantPM.Id;
+
+			ContainerPMInitService.InitValues(entityPM, true);
+			ContainerPMInitService.ApplyUIPoperties(entityPM, true);
+
 			return entityPM;
     }
 		 

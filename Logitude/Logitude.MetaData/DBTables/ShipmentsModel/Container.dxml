@@ -80,6 +80,13 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="Master"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="MainCarriageVesselId"
     Type="varchar"
     Size="15">
@@ -90,25 +97,25 @@
     Name="MainCarriageETA"
     Type="datetime">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="MainCarriageETD"
     Type="datetime">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="MainCarriageATA"
     Type="datetime">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="MainCarriageATD"
     Type="datetime">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="DischargeDate"
@@ -124,11 +131,6 @@
   <Relation
     ForeignKeyColumn="UpdatedByUserId"
     ReferencedTable="Users"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ShipmentPackagesId"
-    ReferencedTable="ShipmentPackages"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation

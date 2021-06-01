@@ -318,6 +318,7 @@
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityComponent.html" />
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityPackageComponent.html" />
     <Content Include="ShipmentModules\ShipmentTabs\Components\ProductItems\EditCustomerProductItemComponent.html" />
+    <Content Include="ShipmentModules\ShipmentOthers\Components\ShipmentContainersStatuses\ContainersStatusesSimulatorComponent.html" />
     <Content Include="ShipmentModules\ShipmentTabs\Components\ProductItems\ProductItemsTabComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\ApprovePaymentBaseComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\PrivateLabelApprovePaymentComponent.html" />
@@ -4585,6 +4586,7 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\ECommercePaymentRequestMobileComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\LogBoxApprovePaymentComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\WarningApprovePaymentComponent.ts" />
+    <TypeScriptCompile Include="ShipmentModules\ShipmentOthers\Components\ShipmentContainersStatuses\ContainersStatusesSimulatorComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentPackages\Components\Packages\AddEditPackageHarmonizeComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentPackages\Components\Packages\DownloadPackagesFileComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentRouting\Components\Routings\AddEditPackageHarmonizeComponent.ts" />
@@ -7497,6 +7499,7 @@
     <TypeScriptCompile Include="Shipment\Services\Others\SharedAgentManifestService.ts" />
     <TypeScriptCompile Include="Shipment\Components\Spotlight\ShipmentSpotlightComponent.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentFollowUpPM.ts" />
+    <TypeScriptCompile Include="Shipment\Services\ShipmentContainersWebService.ts" />
     <TypeScriptCompile Include="Shipment\Services\SplitShipmentService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\AWBAdditionalHandlingInfoListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\ContainerFollowUpListService.ts" />
