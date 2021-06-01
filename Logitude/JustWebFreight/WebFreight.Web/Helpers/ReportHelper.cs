@@ -511,6 +511,7 @@ namespace WebFreight.Web.Helpers
 
         public Document CreateDocumentAndWriteOnStorage(string fileName, byte[] fileData, string extension, string folder, int tenant)
         {
+            // test
             #region Create Document and Write on Storage
             DocumentRepository documentRepository = new DocumentRepository(tenant);
 
