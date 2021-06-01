@@ -1,6 +1,8 @@
 ﻿//http://81.218.57.34:9094/Help/Api/POST-api-Courier-UpdateHawbStatus
 //https://docs.google.com/document/d/1bFMdrDnByDpvLcvE9H5eOfCAzbVdeoUypbzhwxbr0Po/edit#
 
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Data;
@@ -24,6 +26,8 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
     {
         //private DeclarationPM _DeclarationPM;
         //private CourierMasterPM _CourierMasterPM;
+        private GTRTRANQueryService _GTRTRANQueryService;
+        private AmitalContext _AmitalContext;
 
         public string BuildQueueSendWebAPI(string declarationId, int tenant,  DeclarationPM declarationPM = null, CourierMasterPM courierMasterPM = null)
         {
@@ -145,19 +149,7 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
             DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(myDeclarationPM.Id, true, false);
             if(currentDeclarationCourierStatusPM != null && !String.IsNullOrWhiteSpace(currentDeclarationCourierStatusPM.CrateNumber))crateNumber = currentDeclarationCourierStatusPM.CrateNumber;
 
-            string importerVat = "";
-            if (!String.IsNullOrWhiteSpace(myDeclarationPM.ImporterId))
-            {
-                ClientQueryService clientQueryService = new ClientQueryService(myCourierMasterPM.Tenant);
-
-                var clientPM = clientQueryService.GetSingle(myDeclarationPM.ImporterId, false, true); 
-                if (clientPM != null && !String.IsNullOrWhiteSpace(clientPM.Code)) importerVat = clientPM.Code;
-            }
-            else if(!String.IsNullOrWhiteSpace(myDeclarationPM.ImporterCode))
-            {
-                importerVat = myDeclarationPM.ImporterCode;
-            }
-
+            string importerVat = TranslateIntegratorIndex(myCourierMasterPM.IntegratorCode, myCourierMasterPM.Tenant);
 
             var pm = CustomsSettingQueryService.GetSettingByTenant(myDeclarationPM.Tenant);
 
@@ -200,6 +192,71 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
 
             return courierHawbMamanModel;
         }
+
+        private string TranslateIntegratorIndex(string integratorIndex, int tenant)
+        {
+            if (String.IsNullOrWhiteSpace(integratorIndex))
+            {
+                LogMessagingUtil.Instance.AppendLine("integratorIndex is null");
+                return null;
+            }
+            string integratorIndexId = null;
+
+            integratorIndexId = GetTranslationP2L("IIGC", "GNDCARD", integratorIndex, tenant);
+            if(!String.IsNullOrWhiteSpace(integratorIndexId)) return integratorIndexId;
+
+            CardQuery cardQuery = new CardQuery(tenant);
+            CardPM cardPM = cardQuery.GetSinglePMByCode(integratorIndex, tenant);
+            if (cardPM != null)
+            {
+                integratorIndexId = cardPM.Id;
+            }
+            else
+            {
+                LogMessagingUtil.Instance.AppendLine("integratorIndex = " + integratorIndex + " could not translate to Logitude Card Id");
+                return null;
+            }
+            LogMessagingUtil.Instance.AppendLine("integratorIndex = " + integratorIndex + " Translated to Card Id" + integratorIndexId);
+            return integratorIndexId;
+        }
+
+        private string GetTranslationP2L(string partnerID, string tableID, string partnerCode, int tenant)
+        {
+            if (partnerID == null || tableID == null || partnerCode == null)
+            {
+                return ("");
+            }
+            using (_AmitalContext = AmitalContext.GetContext(tenant))
+            {
+                if (_GTRTRANQueryService == null)
+                {
+                    _GTRTRANQueryService = new GTRTRANQueryService(_AmitalContext);
+                }
+                var myGTRTRANPM = _GTRTRANQueryService.GetSingle(partnerID, tableID, partnerCode, null, true);
+
+                if (myGTRTRANPM == null)
+                {
+                    return ("");
+                }
+                return (myGTRTRANPM.LOCALCODE);
+            }
+        }
+
+        public string GetTranslationL2P(string partnerID, string tableID, string localCode, int tenant)
+        {
+            using (_AmitalContext = AmitalContext.GetContext(tenant))
+            {
+                var rec = (from a in _AmitalContext.GTRTRANs
+                           where a.PARTNERID == partnerID && a.TABLEID == tableID && a.LOCALCODE == localCode
+                           select a).FirstOrDefault();
+                if (rec == null)
+                {
+                    return null;
+                }
+                return rec.PARTNERCODE;
+            }
+        }
+
         private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
         {
             var myGDFDATAQueryService = new GDFDATAQueryService(AmitalContext.GetContext(tenant));
