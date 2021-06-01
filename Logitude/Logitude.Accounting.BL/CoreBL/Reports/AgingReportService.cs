@@ -604,8 +604,9 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                              AccountLocalName = acc.LocalName,
                              AccountCurrencyCode = acc.ReconcileMethodCode == "0" ? tenant.CurrencyCode : acc.CurrencyCode,
                              AccountPhone = card.Phone,
+                             InsuredCreditLimit = card != null ? card.InsuredcreditLimit : 0
 
-                         }
+                     }
 
                      ).ToList();
 
@@ -654,6 +655,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                         AccountCurrencyCode = r.AccountCurrencyCode,
                         AccountTermName = r.AccountTermName,
                         InterestCreditLimit = r.InterestCreditLimit,
+                        InsuredCreditLimit = r.InsuredCreditLimit,
                         CreditLimitAmount = r.CreditLimitAmount,
                         CreditStatusAmount_AsIs = r.CreditStatusAmount_AsIs,
                         CreditStatusAmount =
@@ -1018,6 +1020,7 @@ _Param.AgingForDate.Date, false, true, true,false);
 
                                                       CreditLimitAmount = account.CreditLimitAmount,
                                                       InterestCreditLimit = account.InterestCreditLimit,
+                                                      InsuredCreditLimit = account.InsuredCreditLimit,
                                                       CreditStatusAmount_AsIs = account.CreditStatusAmount_AsIs,
                                                       BalanceInLocalCurrency = splitAccount != null ? splitAccount.BalanceInLocalCurrency : account.BalanceInLocalCurrency,
                                                       LocalBalanceInDue = splitAccount != null ? splitAccount.LocalBalanceInDue : account.LocalBalanceInDue,
@@ -1832,6 +1835,7 @@ Period	Acc	Currency	Total
 
         //ccountCardlist?accountCardlist.CreditLimitAmount:0>>entityList.CreditLimitAmount = entityPOCO.Customer.CreditLimitAmount;
         public double? CreditLimitAmount { get; set; }
+        public double? InsuredCreditLimit { get; set; }
         public decimal? InterestCreditLimit { get; set; }
 
         //this.creditStatusAmount = (this.accountCardlist.CreditLimitAmount ? this.accountCardlist.CreditLimitAmount : 0) - this.accountTotal;
