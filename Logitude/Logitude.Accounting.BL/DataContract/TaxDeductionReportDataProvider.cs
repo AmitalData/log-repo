@@ -154,10 +154,11 @@ namespace Logitude.Accounting.BL.DataContract
 
         private List<LedgerTransaction> GetOppositeTransactions(List<LedgerTransaction> transactions)
         {
-            List<string> oopositeAccountIds = transactions.Select(d => d.OppositeAccountId).ToList();
-            return (from a in accountingContext.LedgerTransactions                  
+            List<string> oopositeAccountIds = transactions.Where(d => d.OppositeAccountId != null).Select(d => d.OppositeAccountId).ToList();
+            return (from a in accountingContext.LedgerTransactions
+                    join journal in accountingContext.Journals on a.JournalId equals journal.Id
                     where oopositeAccountIds.Contains(a.AccountId)
-                    && a.Tenant == Tenant                  
+                    && a.Tenant == Tenant && (a.AccountingDate >= startDate && a.AccountingDate <= endDate) && journal.ExternalSystem != null
                     select a).ToList();
 
         }
@@ -341,8 +342,8 @@ namespace Logitude.Accounting.BL.DataContract
                 taxDeductionReportLine.TaxDeductionPercentage =(int?) ( transaction.LocalAmountCredit == 0 ? 0 : Math.Round(( (transaction.LocalAmountCredit / (decimal)taxDeductionReportLine.AmountInLocalCurrency))*100,2));
                 GLAccountList account = transactionsOppositGLAccounts.Where(d => d.Id == transaction.OppositeAccountId).FirstOrDefault();
                 taxDeductionReportLine.DeductionType = account != null ? account.DeductionFileTypeCode : null;
-                lines.Add(taxDeductionReportLine);
-              }
+                if (taxDeductionReportLine.VendorId != null) lines.Add(taxDeductionReportLine);
+            }
             return lines;
         }
         private string GetVendorId(LedgerTransaction transaction)
@@ -451,7 +452,7 @@ namespace Logitude.Accounting.BL.DataContract
                     {
                         byVendorList.Add(groupedbyVendor);
                     }
-                    else { DeleteVendorFromTaxDeductionReportLines(item.VendorId); }
+                  //  else { DeleteVendorFromTaxDeductionReportLines(item.VendorId); }
                       
                 }
                 else
