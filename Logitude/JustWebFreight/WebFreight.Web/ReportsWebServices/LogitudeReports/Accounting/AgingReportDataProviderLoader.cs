@@ -24,7 +24,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         private bool showLocals = false;
         private int tenant;
 
-
         public AgingReportDataProviderLoader(int _tenant)
         {
             tenant = _tenant;
@@ -51,7 +50,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             List<PeriodMExtended> filteredPeriods = FilterPeriods(resultedPeriods);
 
             AccountingAgingDataProvider dataProvider = new AccountingAgingDataProvider();
-
             dataProvider.Month = GetFilterValue<DateTime>("AgingForDate");
             dataProvider.PrintedByUser = GetLoggedContactName();
             dataProvider.CustomerFilterValue = GetCustomerFilterTitle();
@@ -69,9 +67,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             SetPeriodsTotal(filteredPeriods, dataProvider);
 
             ResharpPeriodsName(dataProvider);
+            
+            AddTotalInsuredCreditLimitForAllCustomers(filteredPeriods, dataProvider);
 
             return dataProvider;
         }
+
         private void EnsureSalesmanIdIfSalesmanRestricted(AgingReportParam args)
         {
             bool isSalsmanRestrictionsEnabled = SecurityUtility.CheckFeature("GLAccount", "SalesmanAging", tenant);
@@ -184,6 +185,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     AccountDisplayNumber = d.First().AccountCurrencyCode != d.First().CurrencyCode ?
                                 d.First().AccountDisplayNumber + "/" + d.First().CurrencyCode : d.First().AccountDisplayNumber,
                     CustomerCreditLimit = (decimal)d.First().CreditLimitAmount,
+                    InsuredCreditLimit = d.First().InsuredCreditLimit,
                     CustomerVatNumber = d.First().CustomerVatNumber,
                     CustomerPaymentTerm = d.First().AccountTermLocalName,                    
                     GLAccountStandardInterestRate = d.First().GLAccountStandardInterestRate,
@@ -223,6 +225,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     AccountCurrencyCode = d.First().AccountCurrencyCode,
                     AccountDisplayNumber = d.First().AccountDisplayNumber,
                     CustomerCreditLimit = (decimal)d.First().CreditLimitAmount,
+                    InsuredCreditLimit = d.First().InsuredCreditLimit,
                     CustomerVatNumber = d.First().CustomerVatNumber,
                     CustomerPaymentTerm = d.First().AccountTermLocalName,
                     GLAccountStandardInterestRate = d.First().GLAccountStandardInterestRate,
@@ -272,6 +275,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     AccountDisplayNumber = d.First().AccountCurrencyCode != d.First().CurrencyCode ?
                                   d.First().AccountDisplayNumber + "/" + d.First().CurrencyCode : d.First().AccountDisplayNumber,
                     CustomerCreditLimit = (decimal)d.First().CreditLimitAmount,
+                    InsuredCreditLimit = d.First().InsuredCreditLimit,
                     CustomerVatNumber = d.First().CustomerVatNumber,
                     CustomerPaymentTerm = d.First().AccountTermLocalName,
                     GLAccountStandardInterestRate = d.First().GLAccountStandardInterestRate,
@@ -312,6 +316,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     AccountDisplayNumber = d.First().AccountCurrencyCode != d.First().CurrencyCode ?
                                   d.First().AccountDisplayNumber + "/" + d.First().CurrencyCode : d.First().AccountDisplayNumber,
                     CustomerCreditLimit = (decimal)d.First().CreditLimitAmount,
+                    InsuredCreditLimit = d.First().InsuredCreditLimit,
                     CustomerVatNumber = d.First().CustomerVatNumber,
                     CustomerPaymentTerm = d.First().AccountTermLocalName,
                     GLAccountStandardInterestRate = d.First().GLAccountStandardInterestRate,
@@ -350,6 +355,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     AccountCurrencyCode = d.First().AccountCurrencyCode,
                     AccountDisplayNumber = d.First().AccountDisplayNumber,
                     CustomerCreditLimit = (decimal)d.First().CreditLimitAmount,
+                    InsuredCreditLimit = d.First().InsuredCreditLimit,
                     CustomerVatNumber = d.First().CustomerVatNumber,
                     CustomerPaymentTerm = d.First().AccountTermLocalName,
                     GLAccountStandardInterestRate = d.First().GLAccountStandardInterestRate,
@@ -416,7 +422,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
         }
 
-
         private static List<AgingPeriod> GetTotalBalancePeriods(AccountingAgingDataProvider totalData, bool showLocals)
         {
             var balancePeriod = showLocals ? "סיכום תקופות" : "Foreign";
@@ -464,6 +469,52 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 if (item.PeriodName.Contains("FutureAmount"))
                     item.PeriodName = item.PeriodName.Replace("FutureAmount", showLocals ? "סיכום תקופות עתידיות" : "FutureAmount");
             }
+        }
+
+        private void AddTotalInsuredCreditLimitForAllCustomers(List<PeriodMExtended> result, AccountingAgingDataProvider totalData)
+        {
+            List<AgingPeriod> groupedPeriodsByAccount;
+            groupedPeriodsByAccount = result.GroupBy(d => d.AccountId).Select(d => new AgingPeriod()
+            {
+                PeriodName = showLocals ? "מסגרת אשראי מבוטחת" : "Insured Credit Limit",
+                Total = d.First().InsuredCreditLimit == null ? 0 : (decimal)d.First().InsuredCreditLimit,
+
+                AccountName = (d.First().AccountLocalName != null ? d.First().AccountLocalName : d.First().AccountEnglishName),
+                AccountLocalName = d.First().AccountLocalName,
+                AccountEnglishName = d.First().AccountEnglishName,
+                AccountCurrencyCode = d.First().AccountCurrencyCode,
+                AccountDisplayNumber = d.First().AccountDisplayNumber,
+                CustomerCreditLimit = (decimal)d.First().CreditLimitAmount,
+                InsuredCreditLimit = d.First().InsuredCreditLimit,
+                CustomerVatNumber = d.First().CustomerVatNumber,
+                CustomerPaymentTerm = d.First().AccountTermLocalName,
+                GLAccountStandardInterestRate = d.First().GLAccountStandardInterestRate,
+                AccountSalesmanName = d.First().AccountSalesmanName,
+                AccountSalesmanLocalName = d.First().AccountSalesmanLocalName,
+                AccountCollectorName = d.First().AccountCollectorName,
+                AccountCollectorLocalName = d.First().AccountCollectorLocalName,
+                Category1Name = d.First().Category1Name,
+                Category2Name = d.First().Category2Name,
+                Category3Name = d.First().Category3Name,
+                Category4Name = d.First().Category4Name,
+                Category5Name = d.First().Category5Name,
+                Category6Name = d.First().Category6Name,
+                Category1LocalName = d.First().Category1LocalName,
+                Category2LocalName = d.First().Category2LocalName,
+                Category3LocalName = d.First().Category3LocalName,
+                Category4LocalName = d.First().Category4LocalName,
+                Category5LocalName = d.First().Category5LocalName,
+                Category6LocalName = d.First().Category6LocalName,
+
+
+
+                ChartOfAccountsLocalName = d.First().ChartOfAccountsLocalName,
+                ChartOfAccountsEnglishName = d.First().ChartOfAccountsEnglishName,
+                ChartOfAccountsTypeEnglishName = d.First().ChartOfAccountsTypeEnglishName,
+                ChartOfAccountsTypeLocalName = d.First().ChartOfAccountsTypeLocalName,
+
+            }).ToList();
+            totalData.AgingPeriods.AddRange(groupedPeriodsByAccount);
         }
 
         private void SetPeriodsTotal(List<PeriodMExtended> resultedPeriods, AccountingAgingDataProvider dataProvider)
@@ -539,6 +590,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     record.AccountDisplayNumber = item.AccountDisplayNumber;
                     record.AccountCurrencyCode = item.AccountCurrencyCode;
                     record.CustomerCreditLimit = (decimal)item.CreditLimitAmount;
+                    record.InsuredCreditLimit = item.InsuredCreditLimit;
                     record.CustomerVatNumber = item.CustomerVatNumber;
                     record.CustomerPaymentTerm = item.AccountTermLocalName;
                     record.GLAccountStandardInterestRate = item.GLAccountStandardInterestRate;
@@ -584,6 +636,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     record.AccountDisplayNumber = item.AccountDisplayNumber;
                     record.AccountCurrencyCode = item.AccountCurrencyCode;
                     record.CustomerCreditLimit = (decimal)item.CreditLimitAmount;
+                    record.InsuredCreditLimit = item.InsuredCreditLimit;
                     record.CustomerVatNumber = item.CustomerVatNumber;
                     record.CustomerPaymentTerm = item.AccountTermLocalName;
                     record.GLAccountStandardInterestRate = item.GLAccountStandardInterestRate;
