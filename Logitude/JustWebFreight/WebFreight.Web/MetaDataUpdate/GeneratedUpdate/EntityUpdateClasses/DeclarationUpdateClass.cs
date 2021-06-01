@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "9014a9b19df8c8b465b4647232d642a7";
+		public const string HashString = "16ed35d97fca300054f6538af540cfda";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -9596,7 +9596,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CourierSuspentionCode",
 					  						DefaultText =  "Courier Suspention Code",
-					  						FullLocalDefaultText =  "קוד עיכוב",
+					  						FullLocalDefaultText =  "קוד עיכוב מכס",
 					  						ListFieldLable =  "CourierSuspentionCodeListLable",
 					  						ListLableDefaultText =  "Courier Suspention Code",
 					  						ListLocalDefaultText =  "קוד עיכוב מכס",
@@ -9658,7 +9658,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CourierSuspentionName",
 					  						DefaultText =  "Courier Suspention Name",
-					  						FullLocalDefaultText =  "קוד עיכוב",
+					  						FullLocalDefaultText =  "תאור קוד עיכוב מכס",
 					  						ListFieldLable =  "CourierSuspentionNameListLable",
 					  						ListLableDefaultText =  "Courier Suspention Name",
 					  						ListLocalDefaultText =  "תאור קוד עיכוב מכס",
@@ -10267,10 +10267,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CourierPendingReasonList",
 					  						DefaultText =  "Courier Pending Reason List",
-					  						FullLocalDefaultText =  "PENDING קוד ",
+					  						FullLocalDefaultText =  "קוד PENDING",
 					  						ListFieldLable =  "CourierPendingReasonListListLable",
 					  						ListLableDefaultText =  "Courier Pending Reason List",
-					  						ListLocalDefaultText =  "PENDING קוד ",
+					  						ListLocalDefaultText =  "קוד PENDING",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
