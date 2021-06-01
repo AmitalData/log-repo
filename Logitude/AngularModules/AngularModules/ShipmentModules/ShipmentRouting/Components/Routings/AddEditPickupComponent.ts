@@ -399,6 +399,11 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
                 this.CreateStandaloneShipment();
             }
 
+            if (this.isConnctingStandaloneShipmentClicked) {
+                this.isConnctingStandaloneShipmentClicked = false;
+                this.ChooseStandAloneShipment();
+            }
+
             this.Clone();
         }
     }
@@ -688,6 +693,19 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
             this.CreateStandaloneShipment();
         }
     }
+
+    private isConnctingStandaloneShipmentClicked: boolean = false;
+    ConnctingStandaloneShipmentClicked() {
+        if (this.EntityPM.IsDirty) {
+            this.isConnctingStandaloneShipmentClicked = true;
+            this.Save(false);
+        }
+
+        else {
+            this.ChooseStandAloneShipment();
+        }
+    }
+
     private CreateStandaloneShipment() {
         var shipmentPM: ShipmentPM = ShipmentTool.BuildStansaloneShipment(null, this.EntityPM, this.ShipmentPM);
 
@@ -704,6 +722,39 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
         logWindow.WindowArgs = args;
         logWindow.Title = str;
         logWindow.Show('./Shipment/Components/NewShipment/NewShipmentComponent');
+    }
+
+    StandAloneShipmentButtonClicked(buttonCode: string) {
+        if (buttonCode == "CreateStandalone") {
+            this.CreateStandaloneShipmentClicked();
+        }
+        else if (buttonCode == "ConnectStandalone") {
+            this.ConnctingStandaloneShipmentClicked();
+        }
+    }
+    public ShipmentNumber: string = null;
+    public ShipmentId: string = null;
+    ChooseStandAloneShipment() {
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 800;
+            logWindow.Height = 570;
+            logWindow.Title = "Shipments Search";
+            var args: any = {};
+            args.IsStandAloneSearch = true;
+            args.EntityObjectTableName = "Shipment";
+            args.ShipmentType = this.ShipmentPM?.ShipmentTypeId;
+            logWindow.WindowArgs = args;
+            logWindow.Show('./CommonModules/CommonFilingInbox/Components/ChooseEntityComponent');
+            logWindow.ComponentLoaded.subscribe(s => {
+                    logWindow.WindowClosed.subscribe(d => {
+                        var shipmentList = s.SelectedShipment;
+                        if (shipmentList != null) {
+                            this.EntityPM.StandaloneShipmentId = shipmentList.Id;
+                            this.EntityPM.StandaloneShipmentNumber = shipmentList.ShipmentNumber;
+                            this.SaveChangesAndClose();      
+                        }
+                    });
+            });                        
     }
 
     ViewStandaloneShipmentClicked() {
