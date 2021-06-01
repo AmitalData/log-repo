@@ -112,13 +112,13 @@ import { AppTool } from '../Tools';
 import { ExceptionReasonListService } from '../../Customs/Services/StandardLists/ExceptionReasonListService';
 import { CustomerRoleTypeListService } from '../../Customs/Services/StandardLists/CustomerRoleTypeListService';
 import { AutonomyRegionTypeListService } from '../../Customs/Services/StandardLists/AutonomyRegionTypeListService';
- import { CancellationRequestStatusListService} from '../../Customs/Services/StandardLists/CancellationRequestStatusListService';
-import { CancellationReasonRequestTypeListService} from '../../Customs/Services/StandardLists/CancellationReasonRequestTypeListService';
-import { ReferantTeamListService} from '../../Customs/Services/StandardLists/ReferantTeamListService';
-import { LogisticsReferenceTypeListService} from '../../Customs/Services/StandardLists/LogisticsReferenceTypeListService';
-import { CancelRequestRejectReasonTypeListService} from '../../Customs/Services/StandardLists/CancelRequestRejectReasonTypeListService';
-import { ReferenceStatusListService} from '../../Customs/Services/StandardLists/ReferenceStatusListService';
-import { ReferenceInputTypeListService} from '../../Customs/Services/StandardLists/ReferenceInputTypeListService';
+ import { CancellationRequestStatusListService } from '../../Customs/Services/StandardLists/CancellationRequestStatusListService';
+import { CancellationReasonRequestTypeListService } from '../../Customs/Services/StandardLists/CancellationReasonRequestTypeListService';
+import { ReferantTeamListService } from '../../Customs/Services/StandardLists/ReferantTeamListService';
+import { ReferenceStatusListService } from '../../Customs/Services/StandardLists/ReferenceStatusListService';
+import { ReferenceInputTypeListService } from '../../Customs/Services/StandardLists/ReferenceInputTypeListService';
+import { LogisticsReferenceTypeListService } from '../../Customs/Services/StandardLists/LogisticsReferenceTypeListService';
+import { CancelRequestRejectReasonTypeListService } from '../../Customs/Services/StandardLists/CancelRequestRejectReasonTypeListService';
 
 
 export class CachedDataManagerServices {

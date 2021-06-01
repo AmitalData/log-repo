@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { CustomMessageWrapperComponent} from '../../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent'
+import { CustomMessageWrapperComponent } from '../../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent'
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { DeclarationRestoreArgs } from '../../../../Customs/Args';
 import { DeclarationPM } from '../../../../Customs/EntityPMs/DeclarationPM';
@@ -20,7 +20,7 @@ import { ObservableCollection } from '../../../../Infrastructure/Utilities/Obser
 
 @Component({
     selector: 'DeclarationStatusComponent',
-    
+
     templateUrl: './DeclarationStatusComponent.html',
 })
 
@@ -40,7 +40,7 @@ export class DeclarationStatusComponent
     constructor() {
         super();
 
-        this.AvailabiltyQuantitiesList = [];  
+        this.AvailabiltyQuantitiesList = [];
     }
 
     @ViewChild(CustomMessageWrapperComponent)
@@ -78,6 +78,24 @@ export class DeclarationStatusComponent
         this.OnMassageDisplayMethod();
         this.DeclarationNumber = MenuArg.DeclarationNumber;
         this.CustomFileNo = MenuArg.CustomsFile;
+        if (this.CustomFileNo != null) {
+            this._DeclarationExtendedListService.GetSingleDeclarationByCustomFileNo(this.CustomFileNo)
+                .subscribe((myResponse: ServiceResponse) => {
+                    if (myResponse.Result != null) {
+                        if (myResponse.Result.Direction == 'E') {
+                            this._DeclarationExtendedListService.GetConsignmentListPMByCustomFileNo(this.CustomFileNo)
+                                .subscribe((Response: ServiceResponse) => {
+                                    if (Response.Result != null) {
+                                        this.CargoTypeCode = Response.Result[0].CargoTypeCode;
+                                        this.ManifestNumber = Response.Result[0].ManifestNumber;
+                                        this.SecondCargoID = Response.Result[0].SecondCargoID;
+                                        this.ThirdCargoID = Response.Result[0].ThirdCargoID;
+                                    }
+                                });
+                        }
+                    }
+                });
+        }
     }
 
     //#region Properties
@@ -407,7 +425,7 @@ export class DeclarationStatusComponent
 
         CustomMessageProgressComponent
             .ShowProgressBar(currRequestParams.PBId,
-            "שליחת שאילתא לסטטוס הצהרה", true)
+                "שליחת שאילתא לסטטוס הצהרה", true)
             .then((res) => {
                 this.ResponseData = res;
                 this.OnMassageDisplayMethod();
