@@ -28,8 +28,9 @@
     jQuery.IsShipmentsDataLoaded = false;
     jQuery.IsInvoicesDataLoaded = false;
     jQuery.IsQuotesRequestsDataLoaded = false;
+    jQuery.IsReportsDataLoaded = false;
 
-
+    
     jQuery.SelectedTabId = "TAB_SHI";
     jQuery.watermark_SHI = "Search partners / ports / ref.#";
     jQuery.watermark_INV = "Search Inv. # / bill to / ref.#";
@@ -304,7 +305,7 @@
         this.Tenant = $.CurrentTenant
     };
 
-
+    
 
     jQuery.LoadQuotesRequsts = (function () {
 
@@ -344,6 +345,25 @@
     });
 
 
+    jQuery.LoadReports = (function () {
+
+        let reports =  [{ "Name": "Shipments Reports", "Code": "SHRE" }];
+
+        $("#ReportListBox").html("");
+        $("#ReportListBox").kendoListView(
+            {
+                dataSource: { data: reports },
+                template: kendo.template($("#ReportListBoxItemDataTemplate").html())
+            });
+
+    });
+
+    
+
+
+
+
+
 
     jQuery.LoadDataCount = (function () {
 
@@ -380,6 +400,12 @@
                 $.LoadQuotesRequsts();
                 break;
             }
+
+            case "TAB_REPORTS": {
+                $.LoadReports();
+                break;
+            }
+
         }
     });
 
@@ -617,7 +643,15 @@
                 break;
             }
 
-                
+            case "TAB_REPORTS": {
+
+                if (!$.IsReportsDataLoaded) {
+                    $.IsReportsDataLoaded = true;
+                    $.LoadData();
+                }
+
+                break;
+            }
 
 
 

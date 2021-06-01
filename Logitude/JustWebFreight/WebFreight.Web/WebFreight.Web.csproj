@@ -3480,6 +3480,7 @@
     <Content Include="Scripts\jquery.signalR-2.2.0.min.js" />
     <Content Include="SendGridWebPage.aspx" />
     <Content Include="SharedDocuments.aspx" />
+    <Content Include="SharedLogistic\ReportViewPage.aspx" />
     <Content Include="SharedMasterDocumentsPage.aspx" />
     <Content Include="SharedDocuments\SharedMasterDocumentsPageViewModel.js" />
     <Content Include="SharedDocument\DocumentsApprovalPage.aspx" />
@@ -5762,6 +5763,13 @@
     </Compile>
     <Compile Include="EntityExternalUpdate.aspx.designer.cs">
       <DependentUpon>EntityExternalUpdate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SharedLogistic\ReportViewPage.aspx.cs">
+      <DependentUpon>ReportViewPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SharedLogistic\ReportViewPage.aspx.designer.cs">
+      <DependentUpon>ReportViewPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="SharedMasterDocumentsPage.aspx.cs">
       <DependentUpon>SharedMasterDocumentsPage.aspx</DependentUpon>
