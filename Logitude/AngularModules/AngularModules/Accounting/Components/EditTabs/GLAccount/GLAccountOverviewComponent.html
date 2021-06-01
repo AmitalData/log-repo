@@ -633,9 +633,11 @@
                                                         </LogToolTip>
                                                     </div>
                                                     <div float-end  style="height:20px;">
-                                                        <LogToolTip *ngIf="IsInsuredCreditLimitDefined()" [bottom]="5" [name]="'InsuredCreditLimit'" [direction]="isRTL?'bottomright':'bottomleft'"
+                                                        <LogToolTip text-start *ngIf="IsInsuredCreditLimitDefined()" [bottom]="5" [name]="'InsuredCreditLimit'" [direction]="isRTL?'bottomright':'bottomleft'"
                                                                     [mode]="'Info'">
-                                                            {{InsuredCreditLimit? InsuredCreditLimit : 0}} {{'GLAccount.O.AmountIsInsured' | TextCodeTranslationPipe}}
+                                                            <span float-end>{{'GLAccount.O.AmountIsInsured' | TextCodeTranslationPipe}}</span>
+                                                            <span float-end>&nbsp;</span>
+                                                            <span float-end>{{InsuredCreditLimit }}</span>
                                                         </LogToolTip>
                                                     </div>
                                                 </div>
