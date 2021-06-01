@@ -342,8 +342,8 @@ namespace Logitude.Accounting.BL.DataContract
                 taxDeductionReportLine.TaxDeductionPercentage =(int?) ( transaction.LocalAmountCredit == 0 ? 0 : Math.Round(( (transaction.LocalAmountCredit / (decimal)taxDeductionReportLine.AmountInLocalCurrency))*100,2));
                 GLAccountList account = transactionsOppositGLAccounts.Where(d => d.Id == transaction.OppositeAccountId).FirstOrDefault();
                 taxDeductionReportLine.DeductionType = account != null ? account.DeductionFileTypeCode : null;
-                lines.Add(taxDeductionReportLine);
-              }
+                if (taxDeductionReportLine.VendorId != null) lines.Add(taxDeductionReportLine);
+            }
             return lines;
         }
         private string GetVendorId(LedgerTransaction transaction)
@@ -452,7 +452,7 @@ namespace Logitude.Accounting.BL.DataContract
                     {
                         byVendorList.Add(groupedbyVendor);
                     }
-                    else { DeleteVendorFromTaxDeductionReportLines(item.VendorId); }
+                  //  else { DeleteVendorFromTaxDeductionReportLines(item.VendorId); }
                       
                 }
                 else
