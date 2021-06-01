@@ -191,6 +191,18 @@ namespace Logitude.Accounting.BL.Validators
                 {
                     return null;
                 }
+
+
+                /// Attention!
+                /// This piece of code was written originally on 22.03.2021, see WI# 133425 
+                /// Then, deleted on 08.04.2021, see WI# 136952
+                /// Then, re-inserted on 01.06.2021, WI# 133425 - please refer Mr. Ohad from Amital 
+                if (myGLAccountPM.CurrencyId == tPM.CurrencyId)
+                {
+                    return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.RecoCurrencyErr", myGLAccountPM.Tenant, showLocals));
+                }
+
+
             }
             if (myGLAccountPM.IsControlAccount.GetValueOrDefault())
             {
