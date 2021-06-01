@@ -895,6 +895,7 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
         else if (buttonCode == "ConnectStandalone") {
             this.ConnctingStandaloneShipmentClicked();
         }
+        this.DropdownClose();
     }
 
     public ShipmentNumber: string = null;
@@ -948,6 +949,21 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
                     }
                 });
             });
+    }
+
+    dropdownDisplay: string = 'none';
+    DropdowndisplayToggle() {
+
+        if (this.dropdownDisplay == 'none') {
+            this.dropdownDisplay = 'block';
+        }
+        else {
+            this.dropdownDisplay = 'none';
+        }
+    }
+
+    DropdownClose() {
+        this.dropdownDisplay = 'none';
     }
 }
 class TabItem {

@@ -731,6 +731,7 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
         else if (buttonCode == "ConnectStandalone") {
             this.ConnctingStandaloneShipmentClicked();
         }
+        this.DropdownClose();
     }
     public ShipmentNumber: string = null;
     public ShipmentId: string = null;
@@ -783,6 +784,21 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
                     }
                 });
             });
+    }
+
+    dropdownDisplay: string = 'none';
+    DropdowndisplayToggle() {
+
+        if (this.dropdownDisplay == 'none') {
+            this.dropdownDisplay = 'block';
+        }
+        else {
+            this.dropdownDisplay = 'none';
+        }
+    }
+
+    DropdownClose() {
+        this.dropdownDisplay = 'none';
     }
 }
 
