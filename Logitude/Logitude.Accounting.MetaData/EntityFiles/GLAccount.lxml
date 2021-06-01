@@ -11848,6 +11848,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;InsuredCreditLimit&quot;"
     ListPropertyPath="&quot;InsuredCreditLimit&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -16615,6 +16616,12 @@
       Code="&quot;GLAccounts.O.Child&quot;"
       DefaultText="&quot;Child&quot;"
       LocalDefaultText="&quot;בן&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccount.O.AmountIsInsured&quot;"
+      DefaultText="&quot;of this amount is insured&quot;"
+      LocalDefaultText="&quot;מהסכום הוא מבוטח&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
