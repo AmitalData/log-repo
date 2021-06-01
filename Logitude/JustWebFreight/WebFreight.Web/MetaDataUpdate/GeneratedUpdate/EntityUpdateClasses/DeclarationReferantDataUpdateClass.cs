@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationReferantDataUpdateClass
    {  		
-		public const string HashString = "9da20a8cf585319f968da316215d490c";
+		public const string HashString = "37892337fbfbe1a0ac29e7989d819af4";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -5562,7 +5562,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query AllCasesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationReferantDataTextCode_12.Id, NameTextCodeCode = DeclarationReferantDataTextCode_12.Code, ObjectTableName = "Customs.DeclarationReferantData", Code = "AllCases",  SpotlightDataTemplate = "ReferantSpotlightDataTemplate",  QueryGroupCode = "5277", IndexOrder = 12, Tenant = 0, ObjectTableId = DeclarationReferantDataObjectTable.Id, QuerySection = "Customs.DeclarationReferantData", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationReferantDataFeature_12.Id,FeatureUniqeCode= DeclarationReferantDataFeature_12.FeatureUniqeCode, DefaultSortName = "SortedColumns", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+			  Query AllCasesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationReferantDataTextCode_12.Id, NameTextCodeCode = DeclarationReferantDataTextCode_12.Code, ObjectTableName = "Customs.DeclarationReferantData", Code = "AllCases",  QueryGroupCode = "5277", IndexOrder = 12, Tenant = 0, ObjectTableId = DeclarationReferantDataObjectTable.Id, QuerySection = "Customs.DeclarationReferantData", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationReferantDataFeature_12.Id,FeatureUniqeCode= DeclarationReferantDataFeature_12.FeatureUniqeCode, DefaultSortName = "SortedColumns", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
 	
 			 QueryColumn AllCasesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id,QueryCode = AllCasesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.DeclarationReferantData.Favorite" , ColumnWidth = 80 }, addedQueryColumns);
 
