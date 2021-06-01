@@ -754,6 +754,10 @@ export class GLAccountOverviewComponent extends BaseComponent {
     IsCreditNotDefined(){
         return this.CreditLimitAmount == null;
     }
+
+    IsInsuredCreditLimitDefined() {
+        return !AppTool.IsNullOrEmpty(this.InsuredCreditLimit);
+    }
     //
 
     //#endregion
