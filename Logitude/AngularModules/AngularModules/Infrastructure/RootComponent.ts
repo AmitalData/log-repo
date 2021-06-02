@@ -134,27 +134,28 @@ export class RootComponent implements AfterViewInit {
     }
   }
   _FinishLogin: boolean = false;
-  LoadLoginPage() {
-    this.ClearLocation();
+    LoadLoginPage() {
+        this.ClearLocation();
 
-      if (this.isPrivateLable == true) {
-      this.LoadPrivateLablePages();
+        let userData = window.sessionStorage.getItem('userdata');
+        if (userData && this.isPrivateLable == true) {
+            this.LoadPrivateLablePages();
+        }
+        else {
+            SessionLocator.DynamicLoader.Load("./Infrastructure/Components/LoginComponent/LoginComponent", this.Child.Location)
+                .then(cmpRef => {
+
+                    cmpRef.instance.Blocking.subscribe(s => {
+                        //SessionLocator.BlockType = s;
+                        //this.LoadBlockingScreen();
+                    });
+
+                    cmpRef.instance.LoginCompleted.subscribe(s => {
+                        this.OnLoginCompleted(s);
+                    });
+                });
+        }
     }
-    else {
-      SessionLocator.DynamicLoader.Load("./Infrastructure/Components/LoginComponent/LoginComponent", this.Child.Location)
-        .then(cmpRef => {
-
-          cmpRef.instance.Blocking.subscribe(s => {
-            //SessionLocator.BlockType = s;
-            //this.LoadBlockingScreen();
-          });
-
-          cmpRef.instance.LoginCompleted.subscribe(s => {
-            this.OnLoginCompleted(s);
-          });
-        });
-    }
-  }
     LoadPrivateLablePages() {
         if (SessionLocator.IsExternalParams && SessionLocator.ExternalParams && SessionLocator.ExternalParams.Menu && SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "dapp" && IsMobileDetected() == true) {
             this.LoadPrivateLableMobileLoginProcess();
