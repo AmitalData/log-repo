@@ -87,7 +87,8 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     public PrintAllCopiesBtnDisable: boolean;
     IsBuildDocumentViaWorkerRole: boolean = false;
 
-    IsEnableEditDocument: boolean = false;
+    IsEnableEditDocument: boolean = false; 
+    IsEnableManageDocument: boolean = false;
 
     public DisableSendOriginalCopy: boolean = false;
     public SelectedAsDefaultBtnVisible: boolean;
@@ -100,6 +101,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
         if (FeatureLocator.HasFeaturePermession("DocumentType", "EDITPRINTEDDOCUMENTS")) {
             this.IsEnableEditDocument = true;
         }
+        this.CheckManageDocumentFeature(); 
     }
 
 
@@ -107,6 +109,11 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
        
 
+    }
+    CheckManageDocumentFeature() {
+        if (FeatureLocator.HasFeaturePermession("DocumentType", "MANAGEDOCUMENTTEMPLATES")) {
+            this.IsEnableManageDocument = true;
+        }
     }
     ObjectTableId: string;
     ObjectTableName: string;

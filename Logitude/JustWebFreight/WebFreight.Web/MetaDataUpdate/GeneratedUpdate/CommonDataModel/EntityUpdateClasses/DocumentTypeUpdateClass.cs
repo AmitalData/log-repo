@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class DocumentTypeUpdateClass
    {  		
-		public const string HashString = "91b62c59e4d2bbe7be6d59b166fd1906";
+		public const string HashString = "90559733739995ae8392f3e573162d8c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2364,6 +2364,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CopyName",
 					  						ListPropertyPath =  "CopyName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -2585,6 +2586,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 		   Feature DocumentTypeFeature_LogBoxTab = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LogBoxTab", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.LogBoxTab", NameTextCodeDefaultText = @"Digital Sign Definitions" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DocumentTypeObjectTable);
 
 		   Feature DocumentTypeFeature_EDITPRINTEDDOCUMENTS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EDITPRINTEDDOCUMENTS", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.EDITPRINTEDDOCUMENTS", NameTextCodeDefaultText = @"Edit Printed Documents" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DocumentTypeObjectTable);
+
+		   Feature DocumentTypeFeature_MANAGEDOCUMENTTEMPLATES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MANAGEDOCUMENTTEMPLATES", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.MANAGEDOCUMENTTEMPLATES", NameTextCodeDefaultText = @"Manage Document Templates" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DocumentTypeObjectTable);
 
    
 	    
