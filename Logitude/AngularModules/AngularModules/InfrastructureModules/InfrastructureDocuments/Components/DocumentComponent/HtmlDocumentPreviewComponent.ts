@@ -1181,6 +1181,10 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
 
     }
 
+    AddDefultExternalAttachments() {
+
+    }
+
 }
 
 
