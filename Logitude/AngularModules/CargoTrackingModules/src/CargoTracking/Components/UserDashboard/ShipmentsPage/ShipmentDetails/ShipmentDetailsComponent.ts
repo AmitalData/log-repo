@@ -44,11 +44,6 @@ export class ShipmentDetailsComponent implements AfterViewInit
     InlandTransportMode = 'I';
     OceanTransportMode = 'O';
     AirTransportMode = 'A';
-    HasReferences: boolean = false;
-    HasContainersDetails: boolean = false;
-    InlandTransportMode = 'I';
-    OceanTransportMode = 'O';
-    AirTransportMode = 'A';
 
     ShipmentCustomsData: CargoTrackingShipmentCustomsData;
     get tenant()
