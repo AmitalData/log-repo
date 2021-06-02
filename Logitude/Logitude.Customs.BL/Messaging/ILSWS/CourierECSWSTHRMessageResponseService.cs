@@ -83,7 +83,7 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
         {
             throw new Exception("use  SetInAnalyzeQResponseService by @intrface.ResponseCode");
             var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
-            var def = customsPartnerFtpDetails.GetAllInterfaceDetails().First(r => r.Code == CustomsPartnerFtpDetails.InterfaceName_ECSWSTHR_RESPONE);
+            var def = customsPartnerFtpDetails.GetAllInterfaceDetails().First(r => r.Code == CustomsPartnerFtpDetails.InterfaceName_ECSWSTHR_IN);
             var commSetting = Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertSerialize(settings);
             var analyzeQueueUtil = new AnalyzeQueueUtil();
             var new_analyze = analyzeQueueUtil
