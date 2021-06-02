@@ -85,6 +85,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                             DefultAttachmentsXML = a.DefultAttachmentsXML,
                                                                             To = a.To,
                                                                             AutomationId = a.AutomationId,
+                                                                            AttachedExternalDocumentsIds = a.AttachedExternalDocumentsIds,
                                                                         }).ToList();
 
 
@@ -135,7 +136,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                         BCC = a.BCC,
                                                                         To = a.To,
                                                                         AutomationId = a.AutomationId,
-
+                                                                        AttachedExternalDocumentsIds = a.AttachedExternalDocumentsIds,
                                                                     }).ToList();
 
 
@@ -170,7 +171,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                               BCC = entity.BCC,
                                                               To = entity.To,
                                                               AutomationId = entity.AutomationId,
-
+                                                              AttachedExternalDocumentsIds = entity.AttachedExternalDocumentsIds,
                                                           };
             return result;
         }
@@ -217,8 +218,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                        CC = a.CC,
                        BCC = a.BCC,
                        DefultAttachmentsXML = a.DefultAttachmentsXML,
-                       AutomationId = a.AutomationId,
-
+                       AutomationId = a.AutomationId, 
+                       AttachedExternalDocumentsIds = a.AttachedExternalDocumentsIds,
                    };
         }
 
@@ -262,7 +263,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         CC = a.CC,
                         BCC = a.BCC,
                         To = a.To,
-                        AutomationId = a.AutomationId,
+                        AutomationId = a.AutomationId, 
+                        AttachedExternalDocumentsIds = a.AttachedExternalDocumentsIds,
 
                     }).FirstOrDefault();
 
@@ -322,8 +324,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                       BCC = a.BCC,
                                                                       DefultAttachmentsXML = a.DefultAttachmentsXML,
                                                                       To = a.To,
-                                                                      AutomationId = a.AutomationId,
-
+                                                                      AutomationId = a.AutomationId, 
+                                                                      AttachedExternalDocumentsIds = a.AttachedExternalDocumentsIds,
                                                                   }).ToList();
 
             foreach (DocumentTypeTemplatePM item in documentTypeTemplates.Where(d => d.TemplateType == "M").ToList())
@@ -391,8 +393,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         BCC = a.BCC,
                         DefultAttachmentsXML = a.DefultAttachmentsXML,
                         To = a.To,
-                        AutomationId = a.AutomationId,
-
+                        AutomationId = a.AutomationId, 
+                        AttachedExternalDocumentsIds = a.AttachedExternalDocumentsIds,
 
                     }).FirstOrDefault();
 
@@ -537,8 +539,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                CC = a.CC,
                                                                BCC = a.BCC,
                                                                To = a.To,
-                                                               AutomationId = a.AutomationId,
-
+                                                               AutomationId = a.AutomationId, 
+                                                               AttachedExternalDocumentsIds = a.AttachedExternalDocumentsIds,
                                                            });
 
                     if (withFilter)
@@ -623,8 +625,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                                       CC = a.CC,
                                                                                       BCC = a.BCC,
                                                                                       To = a.To,
-                                                                                      AutomationId = a.AutomationId,
-
+                                                                                      AutomationId = a.AutomationId, 
+                                                                                      AttachedExternalDocumentsIds = a.AttachedExternalDocumentsIds,
                                                                                   });
                 if (withFilter)
                 {

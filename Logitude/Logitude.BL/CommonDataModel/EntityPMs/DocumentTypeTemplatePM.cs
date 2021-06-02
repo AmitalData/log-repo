@@ -64,6 +64,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         public string AutomationId { get; set; }
 
+        public string AttachedExternalDocumentsIds { get; set; }
 
         [DataMember]
         public string DefultAttachmentsXML { get; set; }

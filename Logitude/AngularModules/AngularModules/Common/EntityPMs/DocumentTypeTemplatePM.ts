@@ -228,7 +228,9 @@ export class DocumentTypeTemplatePM {
     public get AutomationId() { return this.automationId; }
     public set AutomationId(newValue: string) { if (this.automationId != newValue) { this.automationId = newValue; this.MarkAsDirty("AutomationId"); } }
 
-
+    private attachedExternalDocumentsIds: string;
+    public get AttachedExternalDocumentsIds() { return this.attachedExternalDocumentsIds; }
+    public set AttachedExternalDocumentsIds(newValue: string) { if (this.attachedExternalDocumentsIds != newValue) { this.attachedExternalDocumentsIds = newValue; this.MarkAsDirty("AttachedExternalDocumentsIds"); } }
 
     private defultAttachmentsXML: string;
     public get DefultAttachmentsXML() { return this.defultAttachmentsXML; }
