@@ -253,7 +253,7 @@ namespace Logitude.Customs.BL.CloseTables
                 TypeCode = TypeCode_Out,
                 Partner = PartnerCode_ILSWS,
                 ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
-                Subject="ש.מ.ב  מסוויספורט",
+                Subject="ש.מ.ב  לסוויספורט",
                 ResponseCode = InterfaceName_ECSWSTHR_RESPONE,
             },
             new InterfaceDetails() // fake
