@@ -73,6 +73,11 @@ export class HTSCodePM {
     public set CountryEnglishName(newValue: string) { if (this.countryEnglishName != newValue) { this.countryEnglishName = newValue; this.MarkAsDirty("CountryEnglishName"); } }
        
 	 
+    private lineNumber: number;
+    public get LineNumber() { return this.lineNumber; }
+    public set LineNumber(newValue: number) { if (this.lineNumber != newValue) { this.lineNumber = newValue; this.MarkAsDirty("LineNumber"); } }
+       
+	 
 
     public OldEntityPM: HTSCodePM;
 	    

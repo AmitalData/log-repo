@@ -972,6 +972,7 @@
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\UserDefinedReportViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\CalculatedChartsOfAccountController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\CalculatedChartsOfAccountsLineController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\PMControllers\GLAccountCardsDataController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\GLAccountFollowUpDataController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\UserDefinedReportController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\LedgerTransactionBalanceFilterCreateLTBFilter.cs" />
@@ -998,6 +999,7 @@
     <Compile Include="Controllers\CommonDataModel\Extended\LogitudeGridExportToExcelController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\ReportExecutionLogExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\HorseViewsController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\ProductItemViewsController.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\ReportExecutionLogViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\VatUniquePartnerTypeViewsController.Generated.cs" />
     <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.WarehouseWeightMeasurement.cs" />
@@ -1011,6 +1013,7 @@
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\WarehouseWeightMeasurementViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\WarehouseWeightRoundingViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\HorseController.Generated.cs" />
+    <Compile Include="Controllers\CRMModel\Extended\QuotesRequestController.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\AmendCancellRequestInitiatorViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\AmendmentFieldStatusTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\AmendmentRequestRejectReasonTypeViewsController.Generated.cs" />
@@ -1043,6 +1046,7 @@
     <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffVersionUploadedExcelViewsController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\PMControllers\TariffVersionUploadedExcelController.Generated.cs" />
     <Compile Include="Controllers\WebDomainControllers\PotentialAddressController.cs" />
+    <Compile Include="Controllers\WebServices\ShipmentContainersWebServiceController.cs" />
     <Compile Include="DataContracts\AccountingPartnerApiFilters.cs" />
     <Compile Include="DataContracts\CargoTrackingBrandingDataRequest.cs" />
     <Compile Include="DataContracts\CargoTrackingBrandingData.cs" />
@@ -2592,6 +2596,8 @@
       <DependentUpon>HealthProb.aspx</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AdvancedDateResolver.cs" />
+    <Compile Include="Helpers\ContainerStatusesAnalyzer.cs" />
+    <Compile Include="Helpers\ContainerStatusesHelper.cs" />
     <Compile Include="Helpers\ExternalAPITemplatesBuilder.cs" />
     <Compile Include="Helpers\ExternalAPIResponseParameters.cs" />
     <Compile Include="Helpers\APIHelpers\ApiExceptionFilter.cs" />
@@ -2629,6 +2635,7 @@
     <Compile Include="Helpers\BaseDataProviderService.cs" />
     <Compile Include="Helpers\DocumentTypeTemplateDefultAttachmentService.cs" />
     <Compile Include="Helpers\PrivateLabelsBrandingDataService.cs" />
+    <Compile Include="Helpers\QuotesRequestService.cs" />
     <Compile Include="Helpers\UserViewLinkLimitationService.cs" />
     <Compile Include="Helpers\DWQueryBuilderHelper.cs" />
     <Compile Include="Helpers\AgentSharedManifestHelper.cs" />
@@ -5786,6 +5793,7 @@
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.AccountingInformationIdentifier.cs" />
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.AWBAdditionalHandlingInfo.cs" />
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.AWBMessagingStock.cs" />
+    <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.Container.cs" />
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.ContainerFollowUp.cs" />
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.CustomsTransmissionsStatus.cs" />
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.INTTRADocumentType.cs" />

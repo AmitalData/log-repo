@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ContainerUpdateClass
    {  		
-		public const string HashString = "5b6be52bf43ef107973e51778e3bce0c";
+		public const string HashString = "03f0136724be4053edba8caa46c5497a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -93,7 +93,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    ObjectTablePlural =  "Containers",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
-			      				    HasHelper =  false,
+			      				    HasHelper =  true,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  false,
@@ -111,15 +111,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    EnableEditFromLOV =  false,
 			      				    SortingByObjectField =  "Id",
 			      				    InActive =  false,
-			      				    IsSaveButtonVisible =  false,
+			      				    IsSaveButtonVisible =  true,
 			      				    IsComposition =  false,
-			      				    EnableSecurity =  false,
+			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Container",
-			      				    Code =  "2fd1",
+			      				    Code =  "38cb",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Shipment",
@@ -151,12 +151,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -267,12 +268,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -445,8 +447,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						SystemMaxLength =  20,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -461,6 +463,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Container",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -471,6 +474,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ContainerNumber",
 					  						DefaultText =  "Container Number",
+					  						ListFieldLable =  "ContainerNumberListLable",
+					  						ListLableDefaultText =  "Container Number",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -491,8 +496,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 
 					 						FieldName =  "ShipmentPackagesId",
 					  						ObjectTableName =  "Container",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "ShipmentPackage",
+					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
@@ -556,12 +560,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -584,7 +589,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MainCarriageCarrierId",
-					  						DefaultText =  "Main Carriage Carrier Id",
+					  						DefaultText =  "Main Carriage Carrier",
+					  						ListFieldLable =  "MainCarriageCarrierIdListLable",
+					  						ListLableDefaultText =  "Main Carriage Carrier",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -616,7 +623,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -631,6 +638,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Container",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -641,6 +649,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CarrierName",
 					  						DefaultText =  "Carrier Name",
+					  						ListFieldLable =  "CarrierNameListLable",
+					  						ListLableDefaultText =  "Carrier Name",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -668,12 +678,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "Contains",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -687,6 +698,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Container",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -697,6 +709,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MainCarriageCarrierNumber",
 					  						DefaultText =  "Main Carriage Carrier No.",
+					  						ListFieldLable =  "MainCarriageCarrierNumberListLable",
+					  						ListLableDefaultText =  "Main Carriage Carrier No.",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -724,12 +738,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						SystemMaxLength =  20,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "Contains",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -743,6 +758,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Container",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -753,6 +769,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Master",
 					  						DefaultText =  "Master",
+					  						ListFieldLable =  "MasterListLable",
+					  						ListLableDefaultText =  "Master",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -781,12 +799,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -841,7 +860,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -856,6 +875,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Container",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -866,6 +886,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "VesselName",
 					  						DefaultText =  "Main Carriage Vessel",
+					  						ListFieldLable =  "VesselNameListLable",
+					  						ListLableDefaultText =  "Main Carriage Vessel",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -893,12 +915,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -912,6 +935,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Container",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -922,6 +946,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MainCarriageETA",
 					  						DefaultText =  "Main Carriage ETA",
+					  						ListFieldLable =  "MainCarriageETAListLable",
+					  						ListLableDefaultText =  "Main Carriage ETA",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -949,12 +975,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -968,6 +995,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Container",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -978,6 +1006,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MainCarriageETD",
 					  						DefaultText =  "Main Carriage ETD",
+					  						ListFieldLable =  "MainCarriageETDListLable",
+					  						ListLableDefaultText =  "Main Carriage ETD",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1005,12 +1035,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -1024,6 +1055,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Container",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -1034,6 +1066,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MainCarriageATA",
 					  						DefaultText =  "Main Carriage ATA",
+					  						ListFieldLable =  "MainCarriageATAListLable",
+					  						ListLableDefaultText =  "Main Carriage ATA",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1061,12 +1095,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -1080,6 +1115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Container",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -1090,6 +1126,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MainCarriageATD",
 					  						DefaultText =  "Main Carriage ATD",
+					  						ListFieldLable =  "MainCarriageATDListLable",
+					  						ListLableDefaultText =  "Main Carriage ATD",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1117,12 +1155,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -1136,6 +1175,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Container",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -1146,6 +1186,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DischargeDate",
 					  						DefaultText =  "Discharge Date",
+					  						ListFieldLable =  "DischargeDateListLable",
+					  						ListLableDefaultText =  "Discharge Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1163,7 +1205,60 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
-	    {    
+	    {  
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+	        QueryGroup ContainerQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "38cb", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup ContainerQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "45b4", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+				        queryGroupRepository.SubmitChanges();
+	        ObjectTable ContainerObjectTable = objectTables.ContainsKey("Container") ? objectTables["Container"] : null;
+            if (ContainerObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
+                ContainerObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Container" && d.Tenant == 0).FirstOrDefault();
+            }
+
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
+
+			   TextCode ContainerTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.Q.AllContainers", DefaultText = @"All Containers",LocalDefaultText = null, ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ContainerFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Q.AllContainers", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.AllContainers", NameTextCodeDefaultText = "All Containers", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query AllContainersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerTextCode_0.Id, NameTextCodeCode = ContainerTextCode_0.Code, ObjectTableName = "Container", Code = "All Containers",  QueryGroupCode = "38cb", IndexOrder = 0, Tenant = 0, ObjectTableId = ContainerObjectTable.Id, QuerySection = "Container", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFeature_0.Id,FeatureUniqeCode= ContainerFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+	
+			 QueryColumn AllContainersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainersQuery.Id,QueryCode = AllContainersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Container.ContainerNumber" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn AllContainersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainersQuery.Id,QueryCode = AllContainersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Container.CarrierName" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn AllContainersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainersQuery.Id,QueryCode = AllContainersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Container.MainCarriageCarrierNumber" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn AllContainersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainersQuery.Id,QueryCode = AllContainersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Container.Master" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn AllContainersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainersQuery.Id,QueryCode = AllContainersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Container.VesselName" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn AllContainersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainersQuery.Id,QueryCode = AllContainersQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Container.MainCarriageETA" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllContainersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainersQuery.Id,QueryCode = AllContainersQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Container.MainCarriageETD" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllContainersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainersQuery.Id,QueryCode = AllContainersQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Container.MainCarriageATA" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllContainersQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainersQuery.Id,QueryCode = AllContainersQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Container.MainCarriageATD" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -1174,17 +1269,69 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 		       
 	      
 
-	         Screen ContainerContainerHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Container.HeaderScreen", Name = "ContainerHeaderScreen", ObjectTableId = ContainerObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
-      	
+	         Screen ContainerContainerHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Container.HeaderScreen", Name = "ContainerHeaderScreen", ObjectTableId = ContainerObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
+      
+             ScreenField ContainerContainerHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ContainerContainerHeaderScreenScreen0.Id,ScreenCode = ContainerContainerHeaderScreenScreen0.Code, ObjectFieldCode = "Container.ContainerNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ContainerContainerHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ContainerContainerHeaderScreenScreen0.Id,ScreenCode = ContainerContainerHeaderScreenScreen0.Code, ObjectFieldCode = "Container.Master", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ContainerContainerHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ContainerContainerHeaderScreenScreen0.Id,ScreenCode = ContainerContainerHeaderScreenScreen0.Code, ObjectFieldCode = "Container.CarrierName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ContainerContainerHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = ContainerContainerHeaderScreenScreen0.Id,ScreenCode = ContainerContainerHeaderScreenScreen0.Code, ObjectFieldCode = "Container.MainCarriageCarrierNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ContainerContainerHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = ContainerContainerHeaderScreenScreen0.Id,ScreenCode = ContainerContainerHeaderScreenScreen0.Code, ObjectFieldCode = "Container.VesselName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    ContainerObjectTable.HeaderScreenId = ContainerContainerHeaderScreenScreen0.Id;
 		    ContainerObjectTable.HeaderScreenCode = ContainerContainerHeaderScreenScreen0.Code;
 
 	   		  
+	      
+
+	         Screen ContainerGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Container.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = ContainerObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 7, IsReadOnly = false }, screensRepository, tenantScreens);
+      
+             ScreenField ContainerContainerGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ContainerGeneralTabScreenScreen1.Id,ScreenCode = ContainerGeneralTabScreenScreen1.Code, ObjectFieldCode = "Container.MainCarriageCarrierId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ContainerContainerGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ContainerGeneralTabScreenScreen1.Id,ScreenCode = ContainerGeneralTabScreenScreen1.Code, ObjectFieldCode = "Container.MainCarriageVesselId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ContainerContainerGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = ContainerGeneralTabScreenScreen1.Id,ScreenCode = ContainerGeneralTabScreenScreen1.Code, ObjectFieldCode = "Container.Master", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ContainerContainerGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = ContainerGeneralTabScreenScreen1.Id,ScreenCode = ContainerGeneralTabScreenScreen1.Code, ObjectFieldCode = "Container.MainCarriageETA", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ContainerContainerGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = ContainerGeneralTabScreenScreen1.Id,ScreenCode = ContainerGeneralTabScreenScreen1.Code, ObjectFieldCode = "Container.MainCarriageETD", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ContainerContainerGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = ContainerGeneralTabScreenScreen1.Id,ScreenCode = ContainerGeneralTabScreenScreen1.Code, ObjectFieldCode = "Container.MainCarriageATA", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ContainerContainerGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = ContainerGeneralTabScreenScreen1.Id,ScreenCode = ContainerGeneralTabScreenScreen1.Code, ObjectFieldCode = "Container.MainCarriageATD", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {      
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable ContainerObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Container" && d.Tenant == 0).FirstOrDefault();  
+                 
+			   TextCode ContainerGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ContainerGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Tab.General", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.COGE", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContainerObjectTable);
+ 
+                 
+			   TextCode ContainerCommunicationTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.TH.Communications", DefaultText = "Communication",LocalDefaultText = null, ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ContainerCommunicationFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Tab.Communication", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.SCCM", NameTextCodeDefaultText = "Communication", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContainerObjectTable);
+ 
+                 
+			   TextCode ContainerEventsTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.TH.Events", DefaultText = "Events",LocalDefaultText = "", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ContainerEventsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Tab.Events", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.CIEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContainerObjectTable);
+			 TextCodeRepository.SubmitChanges();
+			 FeaturesRepository.SubmitChanges();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			    
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "COGE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ContainerGeneralFeature_TH0.Id,FeatureUniqeCode = ContainerGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = ContainerObjectTable.Id, TabNameTextCodeId = ContainerGeneralTextCode_TH0.Id, TabNameTextCodeCode = ContainerGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SCCM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ContainerCommunicationFeature_TH1.Id,FeatureUniqeCode = ContainerCommunicationFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = ContainerObjectTable.Id, TabNameTextCodeId = ContainerCommunicationTextCode_TH1.Id, TabNameTextCodeCode = ContainerCommunicationTextCode_TH1.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CIEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ContainerEventsFeature_TH2.Id,FeatureUniqeCode = ContainerEventsFeature_TH2.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ContainerObjectTable.Id, TabNameTextCodeId = ContainerEventsTextCode_TH2.Id, TabNameTextCodeCode = ContainerEventsTextCode_TH2.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)

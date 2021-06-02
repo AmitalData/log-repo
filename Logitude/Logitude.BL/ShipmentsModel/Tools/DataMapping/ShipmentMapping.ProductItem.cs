@@ -21,7 +21,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.ProductItemId = itemPM.ProductItemId;
             itemPoco.Description = itemPM.Description;
             itemPoco.HTSCode = itemPM.HTSCode;
-            itemPoco.ProductItemCode = itemPM.ProductItemCode;
+            itemPoco.SKU = itemPM.SKU;
+            itemPoco.ApprovedByCustomer = itemPM.ApprovedByCustomer;
+            itemPoco.Name = itemPM.Name;
+            itemPoco.Brand = itemPM.Brand;
         }
     }
 }

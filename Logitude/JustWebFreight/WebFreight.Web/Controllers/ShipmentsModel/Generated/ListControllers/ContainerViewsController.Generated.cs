@@ -57,6 +57,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("Container", "READ", authToken.Tenant);
 				
 		    	IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
 				ContainerRepository  containerRepository = new ContainerRepository(MyContext);
@@ -94,6 +95,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("Container", "READ", authToken.Tenant);
 
 
 				IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
@@ -124,7 +126,9 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 				int tenant = authToken.Tenant;
-				
+				                
+				SecurityUtility.CheckContactFeature("Container", "READ", authToken.Tenant);
+	
                 QueryOperations queryOperations = new QueryOperations()
                 {
                     ObjectTableName = "Container",

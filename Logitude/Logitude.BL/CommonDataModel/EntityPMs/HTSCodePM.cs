@@ -15,5 +15,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool InActive { get; set; }
         public ChangeSetOperation ChangeSetOp { get; set; }
 		public string CountryEnglishName { get; set; }
+        public int? LineNumber { get; set; }
     }
 }

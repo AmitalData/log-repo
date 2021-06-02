@@ -1,5 +1,7 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
@@ -29,13 +31,30 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                     TermsofUseQuery termsofUseQuery = new TermsofUseQuery(tenant);
-                    TermsofUsePM termofuse = termsofUseQuery.GetTermsofUseDeflut();
+
                     TermsofUseSignatureQuery termsofUseSignatureQuery = new TermsofUseSignatureQuery(tenant);
+
+                    TenantPM tenantPM = TenantQuery.GetSingleTenantPM(tenant, false);
+                    TermsofUsePM termofuse = new TermsofUsePM();
+
+                    termofuse = termsofUseQuery.GetTermOfUseByTenant(tenant);
+                    if (!string.IsNullOrEmpty(tenantPM.PrivateLabelId) && termofuse == null)
+                    {
+                        throw new Exception("You are unable to login without approving the terms of use, please contact your administrator!");
+                    }
+
+                    if (termofuse == null) termofuse = termsofUseQuery.GetTermsofUseDefault();
+
                     if (termofuse == null) result.IsTermOfUse = false;
                     else
                     {
-                        result.Version = termofuse.Version;
-                        TermsofUseSignaturePM termsofUseSignaturePM = termsofUseSignatureQuery.GetTermsofUseSignatureByContactIdAndVersion(termofuse.Version, userId , authToken.Tenant);
+
+                        result.VersionNumber = termofuse.VersionNumber;
+                        result.Id = termofuse.Id;
+                        result.VersionDocumentId = termofuse.VersionDocumentId;
+
+                        TermsofUseSignaturePM termsofUseSignaturePM = termsofUseSignatureQuery.GetByIdAndContactId(termofuse.Id, userId, authToken.Tenant);
+
                         if (termsofUseSignaturePM != null)
                         {
                             result.IsTermOfUse = false;
@@ -44,8 +63,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                         {
                             if (LogitudeSettings.DeploymentStage == "logboxwe1")
                             {
-                                TenantPM currentTenant = TenantQuery.GetSingleTenantPM(tenant, false);
-                                if (string.IsNullOrEmpty(currentTenant.PrivateLabelId))
+                                if (string.IsNullOrEmpty(tenantPM.PrivateLabelId))
                                 {
                                     result.IsTermOfUse = false;
                                 }
@@ -58,11 +76,11 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                             {
                                 result.IsTermOfUse = true;
                             }
-                           
+
                         }
                     }
-                }
 
+                }
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (Exception ex)
@@ -72,6 +90,88 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
         }
 
+        public HttpResponseMessage GetTenantTermsofUse(int tenant)
+        {
+            try
+            {
+
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                TermsofUseQuery termsofUseQuery = new TermsofUseQuery(authToken.Tenant);  
+                List<TermsofUsePM> TermsofUsePMLists = termsofUseQuery.GetTermsofUseByTenant(tenant).ToList();
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, TermsofUsePMLists);
+
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetSingle(int Id, int tenant)
+        {
+            try
+            {
+
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                TermsofUseQuery termsofUseQuery = new TermsofUseQuery(tenant);
+                TermsofUsePM termsofUsePM = termsofUseQuery.GetSingleById(Id);
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, termsofUsePM);
+
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
+        public HttpResponseMessage Post(TermsofUsePM termsofUsePM)
+        {
+            try
+            {
+
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                //int tenant = authToken.Tenant;
+                int tenant = termsofUsePM.Tenant;
+                if (termsofUsePM.FileData == null)
+                {
+                    termsofUsePM.FileData = new byte[0];
+
+                }
+
+                string extension = "pdf";
+
+                ReportHelper reportHelper = new ReportHelper();
+                Document newDocument = reportHelper.CreateDocumentAndWriteOnStorage(termsofUsePM.VersionDocumentName, termsofUsePM.FileData, extension, "termsOfUse", tenant);
+
+                termsofUsePM.VersionDocumentId = newDocument.Id;
+
+                ICommonDataContext MyContext = CommonDataContext.GetContext(termsofUsePM.Tenant);
+                TermsofUseService service = new TermsofUseService(MyContext, termsofUsePM.Tenant);
+                service.Create(termsofUsePM);
+
+                return Request.CreateResponse(HttpStatusCode.OK, termsofUsePM);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
 
     }
 }

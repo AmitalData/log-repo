@@ -3,15 +3,14 @@ using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Simplog.Data.ShipmentsModel.Repositories
 {
     public class ContainerRepository : IRepository<Container>
     {
 
-        IShipmentsContext shipmentContext;
+        public IShipmentsContext shipmentContext;
         public ContainerRepository(int tenant)
         {
             shipmentContext = ShipmentsContext.GetContext(tenant);
@@ -39,9 +38,11 @@ namespace Simplog.Data.ShipmentsModel.Repositories
 
         public Container GetSingleContainer(string id, int tenant)
         {
-            return (from container in context.Containers where container.Id == id && container.Tenant == tenant select container).FirstOrDefault();
+            return (from container in context.Containers.Include("CarrierCard").Include("VesselCard")
+                    where container.Id == id && container.Tenant == tenant
+                    select container).FirstOrDefault();
         }
-        
+
         public IQueryable<Container> GetContainers(int tenant)
         {
             return context.Containers;
@@ -49,17 +50,13 @@ namespace Simplog.Data.ShipmentsModel.Repositories
 
         public void Remove(Container entity)
         {
-            try
-            {
-                context.Containers.Attach(entity);
-            }
-            catch { }
-            context.Containers.Remove(entity);
+           context.Containers.Attach(entity);
+           context.Containers.Remove(entity);
         }
 
         public void SubmitChanges()
         {
-            throw new NotImplementedException();
+            context.SaveChanges();
         }
 
         public void Update(Container entity)
@@ -81,5 +78,11 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             throw new NotImplementedException();
         }
 
+        public Container GetContainerByShipmentPackagesId(string shipmentPackageId, int tenant)
+        {
+            return (from container in context.Containers
+                    where container.Tenant == tenant && container.ShipmentPackagesId == shipmentPackageId
+                    select container).FirstOrDefault();
+        }
     }
 }

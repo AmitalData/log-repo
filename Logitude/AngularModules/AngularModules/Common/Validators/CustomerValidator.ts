@@ -20,7 +20,7 @@ export class CustomerValidator implements ICustomerValidator {
     Validate  = (customerPM: CustomerPM): any[] => {
         this.Errors = [];
         this.entityPM = customerPM;
-        this.ValidateProductItems();
+        //this.ValidateProductItems();
         return this.Errors;
     }
 

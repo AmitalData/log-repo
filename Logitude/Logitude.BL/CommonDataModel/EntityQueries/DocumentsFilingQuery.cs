@@ -3803,6 +3803,23 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return documentsFilingPM;
         }
 
+        public IQueryable<DocumentsFilingList> GetDocumentsFilingThatHasFileByEntityIdsAndObjectTableIdAndDocumentTypeId(List<string> entityIds, string objectTableId, string documentTypeId)
+        {
+            IQueryable<DocumentsFilingList> documentsFilingLists = (from a in repository.context.DocumentsFilings.Include("Document")
+                                                                    where a.Document.HasFile && entityIds.Contains(a.EntityId) && a.DocumentTypeId == documentTypeId && a.ObjectTableId == objectTableId
+                                                                    select new DocumentsFilingList()
+                                                                    {
+                                                                        Id = a.Id,
+                                                                        DocumentTypeId = a.DocumentTypeId,
+                                                                        EntityId = a.EntityId,
+                                                                        Tenant = a.Tenant,
+                                                                        CreateDate = a.CreateDate,
+                                                                    });
+            return documentsFilingLists;
+        }
+
+
+
     }
 
 

@@ -77,7 +77,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         this.OkButtonLabel = TextCodeTranslator.Translate("Shipment.B.Create");
 
         if (this.TenantPM.AllowAgentInCustomersLOV) {
-            this.CardDependencyProperty1 = "CS,AG";
+            this.CardDependencyProperty1 = this.IsInlandDomestic ? "CS,AG,WH" : "CS,AG";
             this.CardDependencyProperty1IsList = true;
         }
     }
@@ -511,7 +511,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             if (!this.IsShipmentLevelFixed) {
                 this.ShipmentLevelCode = "D";
             }
-
+            this.CardDependencyProperty1 =  "CS,AG,WH";
             this.ShowShipmentLevels = false;
         }
 
@@ -567,6 +567,8 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         if (this.EntityPM.DirectionId != newValue) {
             this.EntityPM.DirectionId = newValue;
             this.IsInlandDomestic = this.TransportModeId == "I" && this.DirectionId == "D" ? true : false;
+            this.CustomerDependencyProperty1 = this.IsInlandDomestic ? this.CustomerDependencyProperty1 + ",WH" : this.CustomerDependencyProperty1;
+            this.CustomerDependencyProperty1IsList = true;
             this.OnFiltersChanged();
             this.SetTransportModes();
         }
@@ -597,7 +599,8 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             this.IsLCLEntity = AppTool.IsLCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
             this.IsFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
             this.IsInlandDomestic = this.TransportModeId == "I" && this.DirectionId == "D" ? true : false;
-
+            this.CustomerDependencyProperty1 = this.IsInlandDomestic ? this.CustomerDependencyProperty1 + ",WH" : this.CustomerDependencyProperty1;
+            this.CustomerDependencyProperty1IsList = true;
             this.DelOrderDetails();
             this.OnFiltersChanged();
             this.BuildShipmentTypes();
@@ -1379,19 +1382,22 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
     private ComputeCustomerDependency() {
         switch (this.ShipmentCustomerTypeCode) {
             case "SHI":
+                this.CustomerDependencyProperty1 = this.IsInlandDomestic ? "CS,WH" : "CS";
+                this.CustomerDependencyProperty1IsList = this.IsInlandDomestic ? true : false;
+                break;
             case "CON":
                 {
-                    this.CustomerDependencyProperty1 = "CS";
-                    this.CustomerDependencyProperty1IsList = false;
+                    this.CustomerDependencyProperty1 = this.IsInlandDomestic ? "CS,WH":"CS";
+                    this.CustomerDependencyProperty1IsList = this.IsInlandDomestic ? true : false;
 
                     if (this.EntityPM.ShipmentLevelCode == "C") {
-                        this.CustomerDependencyProperty1 = "AG";
-                        this.CustomerDependencyProperty1IsList = false;
+                        this.CustomerDependencyProperty1 = this.IsInlandDomestic ? "AG,WH" : "AG";
+                        this.CustomerDependencyProperty1IsList = this.IsInlandDomestic ? true : false;
                     }
 
                     else {
                         if (SessionLocator.TenantPM.AllowAgentInCustomersLOV) {
-                            this.CustomerDependencyProperty1 = "CS,AG";
+                            this.CustomerDependencyProperty1 = this.IsInlandDomestic ? "CS,AG,WH" : "CS,AG";
                             this.CustomerDependencyProperty1IsList = true;
                         }
                     }

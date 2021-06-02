@@ -159,7 +159,7 @@
                                                                             <button (click)="SetTemplateAsDeflut(item)">Set as Default</button>
                                                                             <button (click)="SetTemplateAsInactive(item)"> {{item.LableSetactive}} </button>
                                                                             <!--[disabled]="'true'"-->
-                                                                            <button *ngIf="IsShowEditHtml" (click)="ShowHtmlDocumentPreview(item)">Edit</button>
+                                                                            <button *ngIf="IsShowEditHtml" [class.HyperlinkDisabled]="!IsEnableEditTemplate" (click)="ShowHtmlDocumentPreview(item)">Edit</button>
 
                                                                         </div>
 

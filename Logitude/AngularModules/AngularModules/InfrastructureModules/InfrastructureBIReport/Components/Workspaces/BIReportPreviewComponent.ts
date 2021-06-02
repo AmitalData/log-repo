@@ -73,6 +73,9 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     public ValidationErrorsList: string[] = [];
     public HasRunFeature: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    private hasFixedFilter = false;
+    private filterButtonTitle = "No available fixed filters";
+     
     @Output() ComputeFiltersCommand = new EventEmitter();
     constructor() {
         super();
@@ -100,6 +103,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
                         temp.push(MyFilter);
                         //temp[0].FilterType = 'Ask User';
                         this.SelectedFiltersDataSource = temp;
+                        this.checkFixedFilter();
                         //this.SelectedDynamicFiltersDataSource = this.SelectedFiltersDataSource.filter(a => a.FilterType == "Ask User");
                     }
                 }
@@ -107,6 +111,28 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
             this.LoadBIReportData();
         }
     }
+    checkFixedFilter() { 
+        this.hasFixedFilter = false; 
+        this.ShowStaticFilters = false;
+        this.SelectedFiltersDataSource.forEach(item => {
+            this.checkFixedItemFilters(item); 
+        }); 
+        this.getFixedButtonTitle(); 
+    }
+    checkFixedItemFilters(item: any) {
+        item.FilterItems.forEach(nestedItem => {
+            if (nestedItem.FilterItems.length > 0) {
+                this.checkFixedItemFilters(nestedItem);
+            }
+            else if (nestedItem.filterType == "Fixed Filter") {
+                this.hasFixedFilter = true 
+            }}) 
+    }
+    getFixedButtonTitle() {
+        if (this.hasFixedFilter)
+            this.filterButtonTitle = "Show fixed filters"; 
+    } 
+
     public Run(args: any) {
         this.InitializeServices();
         this.DWQueryId = args['DWQueryId'];
@@ -691,6 +717,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
                         temp.push(MyFilter);
                         //temp[0].FilterType = 'Ask User';
                         this.SelectedFiltersDataSource = temp;
+                        this.checkFixedFilter();
                         //this.SelectedDynamicFiltersDataSource = this.SelectedFiltersDataSource.filter(a => a.FilterType == "Ask User");
                     }
                     else {

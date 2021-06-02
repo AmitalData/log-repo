@@ -418,6 +418,10 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
 
             this.EntityPM.FromPortId = null;
             this.EntityPM.ToPortId = null;
+            this.CardDependencyProperty1 = this.CardDependencyProperty1 + ",WH";
+            this.CustomerDependencyProperty1 = ['SHI', 'CON'].includes(this.QuoteCustomerTypeCode) ? this.CustomerDependencyProperty1 + ",WH" : this.CustomerDependencyProperty1;
+            this.CustomerDependencyProperty1IsList = ['SHI', 'CON'].includes(this.QuoteCustomerTypeCode) ? true : this.CustomerDependencyProperty1IsList ; 
+
         }
 
         else {
@@ -986,13 +990,16 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
     private ComputeCustomerDependency() {
         switch (this.QuoteCustomerTypeCode) {
             case "SHI":
+                this.CustomerDependencyProperty1 = this.IsInlandDomestic ? "CS,WH" : "CS";
+                this.CustomerDependencyProperty1IsList = this.IsInlandDomestic ? true : false;
+                break;
             case "CON":
                 {
-                    this.CustomerDependencyProperty1 = "CS,PO";
+                    this.CustomerDependencyProperty1 = this.IsInlandDomestic ? "CS,PO,WH":"CS,PO";
                     this.CustomerDependencyProperty1IsList = true;
 
                     if (SessionLocator.TenantPM.AllowAgentInCustomersLOV) {
-                        this.CustomerDependencyProperty1 = "CS,PO,AG";
+                        this.CustomerDependencyProperty1 = this.IsInlandDomestic ? "CS,PO,AG,WH" : "CS,PO,AG";
                         this.CustomerDependencyProperty1IsList = true;
                     }
 
@@ -2654,6 +2661,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
             this.IncludeDelivery = false;
             this.FromPortId = null;
             this.ToPortId = null;
+            this.CardDependencyProperty1 = this.CardDependencyProperty1 + ",WH";
         }
     }
     private SetPickupDeliveryOnFinish() {

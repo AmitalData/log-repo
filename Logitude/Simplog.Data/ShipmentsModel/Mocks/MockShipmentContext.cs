@@ -642,6 +642,12 @@ namespace Simplog.Data.ShipmentsModel.Mocks
         {
             get { throw new NotImplementedException(); }
         }
+        public IDbSet<LogitudeOceanInsightsRequest> LogitudeOceanInsightsRequests
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+
         public IDbSet<OceanInsightsRequestsCount> OceanInsightsRequestsCounts
         {
             get { throw new NotImplementedException(); }

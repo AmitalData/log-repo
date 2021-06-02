@@ -48,6 +48,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>All Models Metadata Only Generator.tt</DependentUpon>
     </Compile>
+    <Compile Include="AutoGenerators\CommonClassesGenerator1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CommonClassesGenerator.tt</DependentUpon>
+    </Compile>
     <Compile Include="AutoGenerators\DataContractsClassesGenerator1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -195,11 +200,15 @@
     <None Include="DBOthers\QuoteModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateQuotes.dxml" />
     <None Include="DBOthers\QuoteModel\Triggers\Trigger_AutomaticLastUpdateDateQuoteComputedFields.dxml" />
     <None Include="DBOthers\QuoteModel\Triggers\Trigger_AutomaticLastUpdateDateQuotes.dxml" />
+    <None Include="DBScripts\CommonModel\202105301111_DeleteInsuredCreditLimitFromCustomerQuery.sxml" />
     <None Include="DBScripts\CommonModel\202105161305_AddCustomerProductItemEventTypesToTenants.sxml" />
     <None Include="DBScripts\CommonModel\202103161606_AddNewUOMPercentOForeignChargesLocalAmounts.sxml" />
+    <None Include="DBScripts\CommonModel\202104071606_FillTermsofUseVersionNumber.sxml.sxml" />
+    <None Include="DBScripts\CommonModel\UpdateTermsOfUsePrimaryKey.sxml" />
     <None Include="DBScripts\CommonModel\202104161424_UpdateTenantRatios.sxml" />
     <None Include="DBScripts\CommonModel\202104161425_UpdateTenantRatiosOnCloud.sxml" />
     <None Include="DBScripts\GlobalModel\202102161503_UpdateTenantManagmentPrivatLabelDomain.sxml" />
+    <None Include="DBScripts\GlobalModel\202105301502_AddContainerStatusesMonitorWR.sxml" />
     <None Include="DBScripts\GlobalModel\AddCollaborationToolSgipmentUpdateBatchService.sxml" />
     <None Include="DBScripts\InfrastructureModel\202101120950_ModifyDBMigrationLastScriptTrigger.sxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\dbo.usp_DoTheTableDeletionSet.dxml" />
@@ -665,6 +674,7 @@
     <None Include="DBTables\CommonDataModel\PaymentTerm.dxml" />
     <None Include="DBTables\CommonDataModel\PaymentTermDateType.dxml" />
     <None Include="DBTables\CommonDataModel\Port.dxml" />
+    <None Include="DBTables\CommonDataModel\ProductItem.dxml" />
     <None Include="DBTables\CommonDataModel\ProductPeriod.dxml" />
     <None Include="DBTables\CommonDataModel\ProductType.dxml" />
     <None Include="DBTables\CommonDataModel\ProductTypeModification.dxml" />
@@ -951,6 +961,7 @@
     <None Include="DBTables\ShipmentsModel\AWBOCI.dxml" />
     <None Include="DBTables\ShipmentsModel\AWBSpecialHandlingCode.dxml" />
     <None Include="DBTables\ShipmentsModel\AWBStatus.dxml" />
+    <None Include="DBTables\ShipmentsModel\Container.dxml" />
     <None Include="DBTables\ShipmentsModel\CustomsTransferHeader.dxml" />
     <None Include="DBTables\ShipmentsModel\CustomsTransferLine.dxml" />
     <None Include="DBTables\ShipmentsModel\CustomsTransferType.dxml" />
@@ -965,6 +976,7 @@
     <None Include="DBTables\ShipmentsModel\INTTRADocumentType.dxml" />
     <None Include="DBTables\ShipmentsModel\INTTRASIStatus.dxml" />
     <None Include="DBTables\ShipmentsModel\INTTRAStatus.dxml" />
+    <None Include="DBTables\ShipmentsModel\LogitudeOceanInsightsRequest.dxml" />
     <None Include="DBTables\ShipmentsModel\ManifestStatus.dxml" />
     <None Include="DBTables\ShipmentsModel\MessagingStock.dxml" />
     <None Include="DBTables\ShipmentsModel\MessagingStockUsageHistory.dxml" />

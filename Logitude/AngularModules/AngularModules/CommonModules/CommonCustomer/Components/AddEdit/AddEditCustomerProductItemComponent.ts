@@ -16,9 +16,10 @@ export class AddEditCustomerProductItemComponent extends BaseComponent {
     public EntityPM: ProductItemPM;
     public ObjectTableName: string = "ProductItem";
     public DataContext: CustomerProductItem;
-    public ValidationErrorsList: string[];
+    public ValidationErrorsList: string[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
     public IsEditingEnabled: boolean = true;
+    public MainAddressCountryName: string;
     constructor() {
         super();
     }
@@ -28,7 +29,36 @@ export class AddEditCustomerProductItemComponent extends BaseComponent {
         this.DataContext = dataContext;
         this.EntityPM = dataContext.EntityPM;
         this.IsEditingEnabled = dataContext.FatherComponent.IsEditingEnabled;
+        this.MainAddressCountryName = this.DataContext.FatherComponent.MainAddressCountryName;
+
+        if (this.DataContext.IsNewEntity) {
+            this.AddHTSCode();
+        }
+
         this.Clone();
+    }
+
+    AddHTSCode() {
+        this.ValidationErrorsList = [];
+        this.ValidateHTSCodes(this.ValidationErrorsList);
+
+        if (this.ValidationErrorsList.length == 0) {
+            this.DataContext.maxHTSCodesLineNumber += 1;
+            var hTSCodeItem: HTSCodePM = new HTSCodePM(null);
+            hTSCodeItem.Tenant = SessionLocator.Tenant;
+            hTSCodeItem.ItemId = this.EntityPM.Id;
+            hTSCodeItem.LineNumber = this.DataContext.maxHTSCodesLineNumber;
+            this.DataContext.HTSCodes.Insert(new CustomerHTSCode(hTSCodeItem, this.DataContext, true));
+        }
+    }
+
+    OnRowEnded($event) {
+        var errors = [];
+        Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
+
+        if (($event) == this.DataContext.HTSCodes.Length) {
+            this.AddHTSCode();
+        }
     }
 
     CancelButtonClicked() {
@@ -45,7 +75,7 @@ export class AddEditCustomerProductItemComponent extends BaseComponent {
             if (this.ValidationErrorsList.length == 0) {
                 this.DataContext.HTSCodes.Collection.forEach(item => {
                     if (item != null) {
-                        if (item.IsNewEntity) {
+                        if (item.IsNewEntity && !AppTool.IsNullOrEmpty(item.Code) && !AppTool.IsNullOrEmpty(item.DestinationCountryId)) {
                             if (this.DataContext.EntityPM.HTSCodes.indexOf(item.EntityPM) == -1) {
                                 item.IsNewEntity = false;
                                 this.DataContext.EntityPM.AddHTSCodePM(item.EntityPM);
@@ -68,43 +98,40 @@ export class AddEditCustomerProductItemComponent extends BaseComponent {
     private ValidateProductItemAndHTsCode() {
         var errors: string[] = [];        
         Validator.TryValidateObject(this.EntityPM, this.DataContext.ObjectTableName, errors);
-        this.ValidateItemCode(errors);
-        this.ValidateHTSCodes(errors);
+        this.ValidateProductItemSKU(errors);
+        this.ValidateHTSCodes(errors, true);
         return errors;
     }
-    private ValidateHTSCodes(errors: string[]) {
+    private ValidateHTSCodes(errors: string[], filterNewRecords: boolean = false) {
         if (this.DataContext.HTSCodes != null) {
-            this.DataContext.HTSCodes.Collection.forEach(item => {
-                Validator.TryValidateObject(item, "HTSCode", errors);                
-            });
-        }
-    }
-    private ValidateItemCode(errors: string[]) {
-        if (this.DataContext.FatherComponent.ProductItems != null) {
-            if (this.DataContext.IsNewEntity) {
-                if (this.DataContext.FatherComponent.ProductItems.Collection.filter(d => d.ItemCode == this.EntityPM.ItemCode).length > 0) {
-                    errors.push("A Product Item with this code already exists");
-                }
+            if (filterNewRecords) {
+                this.DataContext.HTSCodes.Collection
+                    .filter(d => !d.IsNewEntity || (d.IsNewEntity && (!AppTool.IsNullOrEmpty(d.Code) || !AppTool.IsNullOrEmpty(d.DestinationCountryId))))
+                    .forEach(item => {
+                    Validator.TryValidateObject(item, "HTSCode", errors);
+                });
             }
 
             else {
-                if (this.DataContext.FatherComponent.ProductItems.Collection.filter(d => d.ItemCode == this.EntityPM.ItemCode && d.Id != this.EntityPM.Id).length > 0) {
-                    errors.push("A Product Item with this code already exists");
-                }
+                this.DataContext.HTSCodes.Collection.forEach(item => {
+                    Validator.TryValidateObject(item, "HTSCode", errors);
+                });
+            }
+        }
+    }
+    private ValidateProductItemSKU(errors: string[]) {
+        if (this.DataContext.FatherComponent.ProductItems != null) {
+            var sameSKURecordscount: number = this.DataContext.FatherComponent.ProductItems.Collection.filter(a => a.SKU == this.EntityPM.SKU).length;
+
+            var sameSKURecordsCountForCompare = this.DataContext.IsNewEntity ? 0 : 1;
+            if (sameSKURecordscount > sameSKURecordsCountForCompare) {
+                errors.push("A Product Item with same SKU already exists");
             }
         }
     }
     private ValidateHTSCodeUniqueCodeAndCountry(errors: string[]) {
         if (this.DataContext.HTSCodes != null) {
             this.DataContext.HTSCodes.Collection.forEach(item => {
-
-                //if (!AppTool.IsNullOrEmpty(item.Code)) {
-                //    var filteredHTSCodes: CustomerHTSCode[] = this.DataContext.HTSCodes.Collection.filter(d => !AppTool.IsNullOrEmpty(d.Code));
-                //    if (filteredHTSCodes.filter(d => d.Code == item.Code && d.LineNumber != item.LineNumber).length > 0) {
-                //        errors.push("An HTSCode with " + item.Code + " code already exists");
-                //    }
-                //}
-
                 if (!AppTool.IsNullOrEmpty(item.DestinationCountryId)) {
                     var filteredHTSCodes: CustomerHTSCode[] = this.DataContext.HTSCodes.Collection.filter(d => !AppTool.IsNullOrEmpty(d.DestinationCountryId));
                     if (filteredHTSCodes.filter(d => d.DestinationCountryId == item.DestinationCountryId && d.LineNumber != item.LineNumber).length > 0) {
@@ -120,13 +147,9 @@ export class AddEditCustomerProductItemComponent extends BaseComponent {
         this.myCloner = new Cloner(this.DataContext);
         this.myCloner.AddField('InActive');
         this.myCloner.AddField('Description');
-        this.myCloner.AddField('ItemCode');
+        this.myCloner.AddField('Name');
         this.myCloner.AddField('SKU');
-        this.myCloner.AddField('Remarks');
-        this.myCloner.AddField('Code');
-        this.myCloner.AddField('DestinationCountryId');
-        this.myCloner.AddField('CountryEnglishName');
-        this.myCloner.AddField('ItemId');
+        this.myCloner.AddField('Brand');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DataContext.CustomerPM);
     }

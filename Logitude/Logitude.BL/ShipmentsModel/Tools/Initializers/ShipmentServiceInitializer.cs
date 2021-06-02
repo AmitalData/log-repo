@@ -107,7 +107,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
             this.CardRepository = new CardRepository(this.CommonContext);
             this.AddressRepository = new AddressRepository(this.CommonContext);
             this.ContactRepository = new ContactRepository(this.CommonContext);
-
             this.TodayDateTime = TenantServerConfigration.GetCurrentDateTime(Tenant);
             this.TodayDate = this.TodayDateTime.Date;
 
@@ -186,7 +185,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
             serviceBehaviours.Add(new ShipmentConversionBehaviour());
             serviceBehaviours.Add(new ShipmentOperationalDateBehaviour());
             serviceBehaviours.Add(new UpdateDocumentFilingBehaviour());
-
             foreach (IServiceBehaviour behaviour in serviceBehaviours)
             {
                 behaviour.Handle(this);
@@ -198,7 +196,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
             List<IServiceBehaviour> behaviours = new List<IServiceBehaviour>();
 
             behaviours.Add(new OrderPackagesBehaviour());
-
+            behaviours.Add(new ShipmentContainersEntityBehaviour());
             foreach (IServiceBehaviour behaviour in behaviours)
             {
                 behaviour.Handle(this);
@@ -212,6 +210,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
             if (!LoggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
             {
                 validators.Add(new ShipmentMasterIsUsedValidator());
+                validators.Add(new ShipmentPartnersValidator());
             }
 
             foreach (IServiceValidator behaviour in validators)

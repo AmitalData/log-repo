@@ -42,11 +42,15 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     Tenant = entityPoco.Tenant,
                     CustomerId = entityPoco.CustomerId,
                     SKU = entityPoco.SKU,
-                    Remarks = entityPoco.Remarks,
                     InActive = entityPoco.InActive,
                     Description = entityPoco.Description,
-                    ItemCode = entityPoco.ItemCode,
+                    Name = entityPoco.Name,
+                    SearchFields = entityPoco.SearchFields,
+                    Brand = entityPoco.Brand,                    
                 };
+
+                HTSCodeQuery hTSCodeQuery = new HTSCodeQuery(tenant);
+                result.HTSCodes = hTSCodeQuery.GetHTSCodePMsByProductItemIds(entityPoco.Id, tenant);                
             }
 
             return result;
@@ -61,43 +65,13 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    Tenant = entity.Tenant,
                                                    CustomerId = entity.CustomerId,
                                                    SKU = entity.SKU,
-                                                   Remarks = entity.Remarks,
+                                                   Brand = entity.Brand,
                                                    InActive = entity.InActive,
                                                    Description = entity.Description,
-                                                   ItemCode = entity.ItemCode,
+                                                   Name = entity.Name,
+                                                   SearchFields = entity.SearchFields,
                                                };
             return result;
-        }
-
-        public List<ProductItemPM> GetProductItemPMsByCustomerAndPortIds(string customerId, string dischargePortCountryId, int tenant)
-        {
-            List <ProductItemPM> productItems = (from a in repository.context.ProductItems
-                                                where a.Tenant == tenant && a.CustomerId == customerId
-                                                select new ProductItemPM()
-                                                {
-                                                    Id = a.Id,
-                                                    Tenant = a.Tenant,
-                                                    CustomerId = a.CustomerId,
-                                                    SKU = a.SKU,
-                                                    Remarks = a.Remarks,
-                                                    InActive = a.InActive,
-                                                    Description = a.Description,
-                                                    ItemCode = a.ItemCode,
-                                                }).ToList();
-
-            foreach (ProductItemPM productItem in productItems)
-            {
-                HTSCode hTSCode = (from a in repository.context.HTSCodes
-                                          where a.Tenant == tenant && a.ItemId == productItem.Id && a.DestinationCountryId == dischargePortCountryId
-                                          select a).FirstOrDefault();
-
-                if(hTSCode != null)
-                {
-                    productItem.HTSCodeByCountry = hTSCode.Code;
-                }
-            }
-
-            return productItems;
         }
 
         public List<ProductItemPM> GetProductItemPMsByCustomerId(string customerId,int tenant)
@@ -110,11 +84,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     Tenant = a.Tenant,
                                                     CustomerId = a.CustomerId,
                                                     SKU = a.SKU,
-                                                    Remarks = a.Remarks,
+                                                    Brand = a.Brand,
                                                     InActive = a.InActive,
                                                     Description = a.Description,
-                                                    ItemCode = a.ItemCode,
-                                            }).ToList();
+                                                    Name = a.Name,
+                                                    SearchFields = a.SearchFields,
+                                                }).ToList();
             if (productItems != null)
             { 
                 foreach (ProductItemPM productItem in productItems)
@@ -132,6 +107,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     ApprovedByCustomer = a.ApprovedByCustomer,
                                                     CountryEnglishName = country!=null ? country.EnglishName :"",
                                                     InActive = a.InActive,
+                                                    LineNumber = a.LineNumber,
                                                 }).ToList();
 
             
@@ -139,9 +115,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     {
                         productItem.HTSCodes = hTSCodes;
                     }
-                }
-
-            
+                }            
             }
 
             return productItems;

@@ -244,7 +244,7 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "BIF,Invoices DWH,Allow Tenants to Show Invoice Fact on the BI Report Screen", 
                 Description = "Allow Tenants to Show Invoice Fact on the BI Report Screen", 
 			});
-						 
+			 
             all.Add(new ToggleDetails()
             {    
                 Code = "SAS", 
@@ -252,7 +252,23 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "SAS,Standalone Shipment", 
                 Description = "Standalone Shipment", 
 			});
-					
+
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Ocean Insights Containers", 
+                Code = "OIC", 
+                SearchFields = "OIC,Ocean Insights Containers", 
+                Description = "Ocean Insights Containers", 
+			});
+			
+
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Quotes Request Activated In Shared Logistic", 
+                Code = "QRA", 
+                SearchFields = "QRA, Quotes Request Activated In Shared Logistic", 
+                Description = "Quotes Request Activated In Shared Logistic", 
+			});
 			
             return all;
        }

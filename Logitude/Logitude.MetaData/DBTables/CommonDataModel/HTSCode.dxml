@@ -52,6 +52,12 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="LineNumber"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ItemId"
     ReferencedTable="ProductItems"

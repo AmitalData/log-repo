@@ -145,12 +145,15 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
     ShowImagesLibraryComponent: boolean = false;
     IsResendEmail: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    IsEnableEditTemplate: boolean = false;
+
     constructor(public _communicationLogExtendedPMService: CommunicationLogExtendedPMService, public _communicationAttachmentExtendedPMService: CommunicationAttachmentExtendedPMService, public _documentOutPMService: DocumentOutPMService, public _documentExtendedService: DocumentExtendedService, public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService, public _documentTypeTemplateListExtendedService: DocumentTypeTemplateListExtendedService, public _htmlEditorService: HtmlEditorService, public _documentTypePMService: DocumentTypePMExtendedService, private cd: ChangeDetectorRef, public _documentTypeListService: DocumentTypeListService) {
 
         if (this.documentTypeTemplatePMService == null) {
             this.documentTypeTemplatePMService = new DocumentTypeTemplatePMService();
 
         }
+        this.CheckEditTemplateFeature();
 
 
         if (FeatureLocator.HasFeaturePermession("DocumentTypeTemplate", "UPDATE") && FeatureLocator.HasFeaturePermession("DocumentType", "HTMLEMAIL")) {
@@ -177,6 +180,12 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit() {
         this.FetchAttachmentsLists();
+    }
+
+    CheckEditTemplateFeature() {
+        if (FeatureLocator.HasFeaturePermession("DocumentType", "MANAGEDOCUMENTTEMPLATES")) {
+            this.IsEnableEditTemplate = true;
+        }
     }
 
     FetchAttachmentsLists() {

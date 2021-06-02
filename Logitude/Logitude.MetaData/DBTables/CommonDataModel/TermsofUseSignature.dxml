@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
+	
   Name="TermsofUseSignatures"
   Schema="dbo"
-  DBType="Main"
-  Module="Common">
+  DBType="Main">
   <Column
     Name="Id"
     Type="varchar"
@@ -19,12 +19,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="SignedDatetime"
-    Type="datetime">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="ContactId"
     Type="varchar"
     Size="15">
@@ -32,7 +26,14 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="TermsofUseVersion"
+    Name="SignedDatetime"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="TermsofUseId"
+    OldNames="TermsofUseVersion"
     Type="int">
     <Constraints
       Nullable="false" />
@@ -43,8 +44,8 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="TermsofUseVersion"
+    ForeignKeyColumn="TermsofUseId"
     ReferencedTable="TermsofUses"
-    ReferencedColumn="Version"
+    ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

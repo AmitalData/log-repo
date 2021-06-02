@@ -290,56 +290,62 @@ export class RootComponent implements AfterViewInit {
     var termsofUseService = new TermsofUseService();
     termsofUseService.GetCheckIfGoToTermUseComponent(SessionLocator.Tenant, SessionLocator.LoggedUserId).subscribe((res: ServiceResponse) => {
       var pmResponse: ServiceResponse = res;
-      if (!pmResponse.HasError) {
-        var myResult: TermsofUseArgs = pmResponse.Result;
-        if (myResult) {
-          if (myResult.IsTermOfUse) {
-              this.ClearLocation();
-              if (this.isPrivateLable == true) {
-                  this.LoadPrivateLableTermsOfUseComponent(myResult);
-              }
-            else {
-              SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureOthers/Components/TermsOfUse/TermsOfUseStartupComponent", this.Child.Location)
-                .then(cmpRef => {
-                  cmpRef.instance.ComponentRef = cmpRef;
-                  cmpRef.instance.Load(myResult.Version);
-                  cmpRef.instance.TermsOfUseCompleted.subscribe(($event: any) => {
-
-                    if ($event == "Accept") {
-                      this.ViewHomeComponent();
+        if (!pmResponse.HasError) {
+            var myResult: TermsofUseArgs = pmResponse.Result;
+            if (myResult) {
+                if (myResult.IsTermOfUse) {
+                    this.ClearLocation();
+                    if (this.isPrivateLable == true) {
+                        this.LoadPrivateLableTermsOfUseComponent(myResult);
                     }
+                    else {
+                        SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureOthers/Components/TermsOfUse/TermsOfUseStartupComponent", this.Child.Location)
+                            .then(cmpRef => {
+                                cmpRef.instance.ComponentRef = cmpRef;
+                                cmpRef.instance.Load(myResult.VersionDocumentId, myResult.Id);
+                                cmpRef.instance.TermsOfUseCompleted.subscribe(($event: any) => {
 
-                    else if ($event == "Decline") {
-                      this.SignOutCompleted();
+                                    if ($event == "Accept") {
+                                        this.ViewHomeComponent();
+                                    }
+
+                                    else if ($event == "Decline") {
+                                        this.SignOutCompleted();
+                                    }
+                                });
+                            });
                     }
-                  });
-                });
-            }
-          }
+                }
 
-          else {
-            if (SessionLocator.IsExternalParams && SessionLocator.ExternalParams && SessionLocator.ExternalParams.Menu && SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "dapp" && IsMobileDetected() == true) {
-              this.ViewDeclarationApprovalComponent();
+                else {
+                    if (SessionLocator.IsExternalParams && SessionLocator.ExternalParams && SessionLocator.ExternalParams.Menu && SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "dapp" && IsMobileDetected() == true) {
+                        this.ViewDeclarationApprovalComponent();
+                    }
+                    else if (SessionLocator.IsExternalParams && SessionLocator.ExternalParams && SessionLocator.ExternalParams.Menu && SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "preq" && IsMobileDetected() == true) {
+                        this.ViewEComercePaymentRequestComponent();
+                    }
+                    else if (SessionLocator.IsExternalParams && SessionLocator.ExternalParams && SessionLocator.ExternalParams.Menu && SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "uid" && IsMobileDetected() == true) {
+                        this.VieUserIdNumberMobileComponent();
+                    }
+                    else {
+                        this.ViewHomeComponent();
+                    }
+                }
             }
-            else if (SessionLocator.IsExternalParams && SessionLocator.ExternalParams && SessionLocator.ExternalParams.Menu && SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "preq" && IsMobileDetected() == true) {
-              this.ViewEComercePaymentRequestComponent();
-            }
-            else if (SessionLocator.IsExternalParams && SessionLocator.ExternalParams && SessionLocator.ExternalParams.Menu && SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "uid" && IsMobileDetected() == true) {
-              this.VieUserIdNumberMobileComponent();
-            }
-            else {
-              this.ViewHomeComponent();
-            }
-          }
         }
-      }
+     else {
+            if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
+                window.alert(pmResponse.ErrorsArray[0]);
+            }
+        }​​​​​​​
+
     });
   }
     LoadPrivateLableTermsOfUseComponent(myResult: TermsofUseArgs) {
         SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureOthers/Components/TermsOfUse/CustomTermsOfUse/DSVTermsOfUseStartupComponent", this.Child.Location)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
-                cmpRef.instance.Load(myResult.Version);
+                cmpRef.instance.Load(myResult.VersionDocumentId, myResult.Id);
                 cmpRef.instance.TermsOfUseCompleted.subscribe(($event: any) => {
 
                     if ($event == "Accept") {

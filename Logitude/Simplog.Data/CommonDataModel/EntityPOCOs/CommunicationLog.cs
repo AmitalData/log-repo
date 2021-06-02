@@ -65,6 +65,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool IsSecured { get; set; }
 
         public string EmailDeliveryError { get; set; }
+        public string AdditionalFields { get; set; }
 
         [ForeignKey("ObjectTableId")]
         public virtual ObjectTable ObjectTable { get; set; }

@@ -33,24 +33,16 @@ export class NumberInputComponent implements ControlValueAccessor
     {
         return this._value;
     }
-    public set value(v: number)
+    public set value(newValue: number)
     {
-        if ((v !== undefined && v !== this._value) || !v) {
+        if ((newValue !== undefined && newValue !== this._value) || !newValue) {
 
-            if(this.max && v > this.max)
-                v = this.max;
+            newValue = this.limitValueBoundaries(newValue);
 
-            if(this.min && v < this.min)
-                v = this.min;
+            this.replaceOldValueWithNewValue(newValue);
 
-            this._value = null;
-            this.changeDetector.detectChanges();
-
-            this._value = v;
-            this.changeDetector.detectChanges();
-
-            this.onChange(v);
-            this.onTouch(v);
+            this.onChange(newValue);
+            this.onTouch(newValue);
         }
     }
 
@@ -58,6 +50,25 @@ export class NumberInputComponent implements ControlValueAccessor
 
     onChange: any = () => { }
     onTouch: any = () => { }
+    private replaceOldValueWithNewValue(newValue: number)
+    {
+        this._value = null;
+        this.changeDetector.detectChanges();
+
+        this._value = newValue;
+        this.changeDetector.detectChanges();
+    }
+
+    private limitValueBoundaries(v: number)
+    {
+        if (this.max && v > this.max)
+            v = this.max;
+
+        if (this.min && v < this.min)
+            v = this.min;
+        return v;
+    }
+
     registerOnChange(fn: any): void
     {
         this.onChange = fn;

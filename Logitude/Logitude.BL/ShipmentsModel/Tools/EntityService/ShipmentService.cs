@@ -57,6 +57,7 @@ using Logitude.BL.ShipmentsModel.EntityOtherServices;
 using Logitude.Server.Tools.Messages;
 using Logitude.Server.Tools.Constants;
 using Newtonsoft.Json;
+using Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours;
 
 namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 {
@@ -109,14 +110,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private ShipmentContainerStatusRepository shipmentContainerStatusRepository;
         HybridPartnerPM CurrentHybridPartner;
         public ShipmentComputedFields UpdatedShipmentComputedFields;
-
         private ShipmentServiceInitializer initializer;
 
         public ShipmentService(IShipmentsContext objectContext, ShipmentPM entityPM, string serviceContextUser)
         {
             this.initializer = new ShipmentServiceInitializer(objectContext, entityPM, serviceContextUser);
             this.initializer.Initialize();
-
             this.tenant = initializer.Tenant;
             this.entityPM = initializer.EntityPM;
             this.entityPoco = initializer.EntityPOCO;
@@ -146,7 +145,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.myAddressRepository = new AddressRepository(myCommonContext);
             this.myPortRepository = new PortRepository(myCommonContext);
             this.aWBOCIRepository = new AWBOCIRepository(objectContext);
-            //this.documentsFilingRepository = new DocumentsFilingRepository(myCommonContext);
             this.shipmentCommodityRepository = new ShipmentCommodityRepository(objectContext);
             this.shipmentAdditionalCloudDataRepository = new ShipmentAdditionalCloudDataRepository(objectContext);
             this.shipmentAssemblyRepository = new ShipmentAssemblyRepository(objectContext);
@@ -217,7 +215,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     ShipmentValidating.ValidateRoutingDates(entityPM, entityPM.ShipmentPickUps, entityPM.ShipmentDeliveries);
                 }
 
-                this.initializer.HandleComposition();
 
                 foreach (ShipmentPackagePM itemPM in entityPM.ShipmentPackages)
                 {
@@ -283,6 +280,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 {
                     this.CreateShipmentProductItem(itemPM);
                 }
+
+                this.initializer.HandleComposition();
 
                 entityPM.CalculateProfit = calculateProfit;
                 entityPM.CalculatePayables = calculatePayables;
@@ -419,9 +418,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         ShipmentValidating.ValidateRoutingDates(entityPM, initializer.ShipmentPickUpsChangeSet, initializer.ShipmentDeliveriesChangeSet);
                     }
 
-                    this.initializer.HandleComposition();
+
+                    this.UpdateShipmentProductItems();
+
+                    this.UpdateShipmentProductItems();
+                    this.ComputeIsHTSMissingField();
 
                     this.UpdateShipmentPackagesCollection();
+
                     this.UpdateShipmentPickUpsCollection();
                     this.UpdateShipmentDeliveriesCollection();
                     this.UpdateShipmentPayablesCollection();
@@ -435,6 +439,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.UpdateShipmentAssembliesCollection();
                     this.UpdateShipmentStoragePricingsCollection();
                     this.UpdateShipmentProductItemsCollection();
+
+                    this.initializer.HandleComposition();
 
                     this.InitializeBookingData();
                     this.RemoveDeletedItemsFromEntityPM();
@@ -480,6 +486,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.ComputeFinalDestination();
                     this.CheckUpdatingMasterHouses();
                     this.ComputeIsHTSMissingField();
+                    //this.UpdateHouseRoutingFieldsOnMasterConnection();
 
                     shipmentBehaviourFacade = new ShipmentBehaviourFacade(entityPM, objectContext, UpdatedShipmentComputedFields, isNewEntity);
                     shipmentBehaviourFacade.Handle();
@@ -601,7 +608,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
         private void UpdatePayablesLinesVatAmounts()
         {
-            if(initializer.ShipmentPayablesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.None).Any()) {
+            if (initializer.ShipmentPayablesChangeSet != null && initializer.ShipmentPayablesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.None).Any())
+            {
                 var allPayablesIds = (from d in entityPM.ShipmentPayables select d.Id).ToList();
                 var allPayables = shipmentPayableRepository.GetShipmentPayablesFromIdList(allPayablesIds, tenant);
                 PayablesLinesVatAmounts payablesLinesVatAmounts = new PayablesLinesVatAmounts(allPayables, initializer.Tenant, shipmentPayableRepository);
@@ -4995,6 +5003,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             ShipmentPickUpDelivery itemPoco = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDelivery(tenant, itemPM.Id);
 
+            if (string.IsNullOrEmpty(itemPoco.StandaloneShipmentId) && !string.IsNullOrEmpty(itemPM.StandaloneShipmentId))
+            {
+                UpdateStandAloneShipment(itemPM.StandaloneShipmentId, itemPM.Id);
+            }
+
             if (!entityPM.IsHybrid)
             {
                 shipmentTracing.TracePickUp(itemPM, itemPoco, entityPM);
@@ -5039,6 +5052,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             if (!entityPM.IsHybrid)
             {
                 shipmentTracing.TraceDeletedPickUp(itemPM, itemPoco);
+            }
+            if (!string.IsNullOrEmpty(itemPoco.StandaloneShipmentId))
+            {
+                DeleteStandAloneShipmentFields(itemPoco.StandaloneShipmentId, itemPoco.Id);
             }
 
             ShipmentPickUpDeliveryPackageQuery shipmentPickUpDeliveryPackageQuery = new ShipmentPickUpDeliveryPackageQuery(shipmentPickUpDeliveryPackageRepository);
@@ -5125,6 +5142,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             ShipmentPickUpDelivery itemPoco = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDelivery(tenant, itemPM.Id);
 
+            if (string.IsNullOrEmpty(itemPoco.StandaloneShipmentId) && !string.IsNullOrEmpty(itemPM.StandaloneShipmentId))
+            {
+                UpdateStandAloneShipment(itemPM.StandaloneShipmentId, itemPM.Id);
+            }
+
             if (!entityPM.IsHybrid)
             {
                 shipmentTracing.TraceDelivery(itemPM, itemPoco);
@@ -5173,6 +5195,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 if (!entityPM.IsHybrid)
                 {
                     shipmentTracing.TraceDeletedDelivery(itemPM, itemPoco);
+                }
+
+                if (!string.IsNullOrEmpty(itemPoco.StandaloneShipmentId))
+                {
+                    DeleteStandAloneShipmentFields(itemPoco.StandaloneShipmentId, itemPoco.Id);
                 }
 
                 ShipmentPickUpDeliveryPackageQuery shipmentPickUpDeliveryPackageQuery = new ShipmentPickUpDeliveryPackageQuery(shipmentPickUpDeliveryPackageRepository);
@@ -5869,6 +5896,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 houseShipment.MasterShipmentDataId = itemPM.MasterShipmentDataId;
                 houseShipment.ComputedShipmentNumber = itemPM.ShipmentNumber;
                 houseShipment.AgentComputed = houseShipment.AgentId == null ? entityPM.AgentId : houseShipment.AgentId;
+                this.UpdateHouseRoutingFieldsWhenConnectedToMaster(houseShipment);
                 entityRepository.Update(houseShipment);
                 entityRepository.SubmitChanges();
 
@@ -6831,7 +6859,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 tariff.LastUsedDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                 tariffRepository.Update(tariff);
                 tariffRepository.SubmitChanges();
-
             }
         }
 
@@ -6849,6 +6876,31 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
         }
+        private void UpdateShipmentProductItems()
+        {
+            if (entityPM.IsProductItemsUpdated)
+            {
+                HTSCodeQuery hTSCodeQuery = new HTSCodeQuery(tenant);
+                foreach (ShipmentProductItemPM productItem in this.entityPM.ShipmentProductItems.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete))
+                {
+                    productItem.ChangeSetOp = ChangeSetOperation.Update;
+                    HTSCodePM hTSCodePM = hTSCodeQuery.GetSingleHTSCodeByProductItemAndCountry(productItem.ProductItemId, entityPM.ToCountryId, tenant);
+                    if (hTSCodePM != null)
+                    {
+                        productItem.HTSCode = hTSCodePM.Code;
+                        productItem.ApprovedByCustomer = hTSCodePM.ApprovedByCustomer;
+                    }
+                    else
+                    {
+                        productItem.HTSCode = null;
+                        productItem.ApprovedByCustomer = false;
+                    }
+                }
+
+                entityPM.IsProductItemsUpdated = false;
+            }
+        }    
+        
         private void UpdatePickUpDeliveryStandaloneFieldsOnShipmentUpdate()
         {
             ShipmentPickUpDelivery shipmentPickUpDelivery = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDeliveryByStandaloneShipmentId(entityPM.Id, tenant);
@@ -6881,6 +6933,45 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 entityPM.IsHTSMissing = true;
             }
         }
+        private void UpdateHouseRoutingFieldsWhenConnectedToMaster(Shipment houseShipment)
+        {
+            if (!string.IsNullOrEmpty(entityPM.PreCarriageFromPortId) && !string.IsNullOrEmpty(entityPM.PreCarriageToPortId)
+                && !string.IsNullOrEmpty(houseShipment.PreForwardingFromPortId) && !string.IsNullOrEmpty(houseShipment.PreForwardingToPortId))
+            {
+                houseShipment.PreForwardingToPortId = entityPM.PreCarriageFromPortId;
+            }
+
+            if (!string.IsNullOrEmpty(entityPM.OnCarriageFromPortId) && !string.IsNullOrEmpty(entityPM.OnCarriageToPortId)
+                && !string.IsNullOrEmpty(houseShipment.OnForwardingFromPortId) && !string.IsNullOrEmpty(houseShipment.OnForwardingToPortId))
+            {
+                houseShipment.OnForwardingFromPortId = entityPM.OnCarriageToPortId;
+            }
+        }
+        private void UpdateStandAloneShipment(string shipmentId,string StandalonePickupDeliveryId)
+        {
+            ShipmentQuery shipmentQuery = new ShipmentQuery(this.entityRepository);
+            ShipmentPM stanAloneShipmentPM = shipmentQuery.GetSinglePM(shipmentId, this.tenant);
+            if (stanAloneShipmentPM != null)
+            {
+                stanAloneShipmentPM.IsStandalonePickupDelivery = true;
+                stanAloneShipmentPM.StandalonePickupDeliveryId = StandalonePickupDeliveryId;
+                ShipmentService shipmentService = new ShipmentService(this.objectContext, stanAloneShipmentPM, "");
+                shipmentService.Update();
+            }
+        }
+        private void DeleteStandAloneShipmentFields(string shipmentId, string StandalonePickupDeliveryId)
+        {
+            ShipmentQuery shipmentQuery = new ShipmentQuery(this.entityRepository);
+            ShipmentPM stanAloneShipmentPM = shipmentQuery.GetSinglePM(shipmentId, this.tenant);
+            if (stanAloneShipmentPM != null)
+            {
+                stanAloneShipmentPM.IsStandalonePickupDelivery = false;
+                stanAloneShipmentPM.StandalonePickupDeliveryId = null;
+                ShipmentService shipmentService = new ShipmentService(this.objectContext, stanAloneShipmentPM, "");
+                shipmentService.Update();
+            }
+        }
+
     }
 
     public class NumberOfInsidePackagesHelper

@@ -3332,9 +3332,6 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-   
-	 
-	 
 	  private DateTime? gLAccountFollowUpDate ;
 	  	  
        
@@ -3377,6 +3374,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GLAccountFollowUpRemarks",OldValue=gLAccountFollowUpRemarks,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   gLAccountFollowUpRemarks=value;
+		   }
+			
+		 }
+	   }
+	  private double? insuredCreditLimit ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public double? InsuredCreditLimit  
+	   {
+	    
+	     get
+		{
+		   return insuredCreditLimit;
+		 }
+		 set
+		 {
+		   if(insuredCreditLimit != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InsuredCreditLimit",OldValue=insuredCreditLimit,NewValue=value,PropertyType="double?"};
+		    NotifyPropertyChanged(values);
+		   insuredCreditLimit=value;
 		   }
 			
 		 }

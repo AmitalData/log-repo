@@ -275,5 +275,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         public string BillToId { get; set; }
+        [DataMember]
+        public string CollectorId { get; set; }
+
     }
 }

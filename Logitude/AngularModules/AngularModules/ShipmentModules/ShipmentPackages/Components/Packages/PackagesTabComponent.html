@@ -715,7 +715,7 @@
                                     </log-column>
 
                                     <!-- Buttons -->
-                                    <log-column [width]="'100'">
+                                    <log-column [width]="'200'">
                                         <ng-template let-item>
                                             <log-cell-template  [TabIndex]="-1">
                                                 <div style="width: 100%; height: 100%; position: relative;">
@@ -736,6 +736,22 @@
                                                                 </td>
 
                                                                 <td style="width: 5px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td *ngIf="IsShipmentContainersRequestStatusVisible" style="width: 4px;">
+                                                                    <span class="CellSeparator"></span>
+                                                                </td>
+
+                                                                <td *ngIf="IsShipmentContainersRequestStatusVisible" style="width: 95px;">
+                                                                    <div class="MediaFill">
+                                                                        <div style="width: 95px; height: 16px;" class="CenterCenter">
+                                                                            <button style="height: 16px;" class="Button" (click)="ContainersRequestStatusClicked()">Request Status</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+
+                                                                <td *ngIf="IsShipmentContainersRequestStatusVisible" style="width: 5px;">
                                                                     <div></div>
                                                                 </td>
 

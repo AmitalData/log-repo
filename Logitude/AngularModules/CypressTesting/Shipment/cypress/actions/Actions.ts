@@ -598,7 +598,7 @@ export function NavigatesTocustomSettingsInMaintenance(maintenanceSearchValue: s
 
 export function UpdateLocalCustomsInterface(localCustomsInterfaceValue: string) {
     cy.get(BaseSelectors.typeCheckbox).check({ force: true });
-    cy.FillLogLov(BaseSelectors.LocalCustomsInterfaceCode, localCustomsInterfaceValue, true);
+    cy.SelectDropDownListItem(BaseSelectors.LogLoveLocalCustomsInterfaceCode, localCustomsInterfaceValue);
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
 }
 
