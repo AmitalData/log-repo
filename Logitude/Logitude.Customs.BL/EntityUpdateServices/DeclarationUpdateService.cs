@@ -133,7 +133,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (!entityPM.IsCourierDeclaration)
             {
                 CustomsHouseTypePM houseType = houseTypeQuery.GetHouseTypewithAdditional(entityPM.DeclarationOfficeCode, entityPM.Tenant);
-                if (houseType != null)
+                if (houseType != null &&  entityPM.IsAmendment!= true)
                 {
                     entityPM.Consignments[0].UnloadPortCode = houseType.UnloadPortCode;
                 }
@@ -1220,7 +1220,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             }
                         }
                     }
-
+                    /*
                     if(newDeclarationCourierStatusPM != null && !newDeclarationCourierStatusPM.IsClosedForFollowUp)
                     {
                         if (this._CourierMasterPM == null)
@@ -1241,6 +1241,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             myCourierMasterUpdateService.Update(this._CourierMasterPM, true);
                         }
                     }
+                    */
                 }
                 
             }

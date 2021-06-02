@@ -15,6 +15,8 @@ export class DeclarationEditComponentController implements IEditComponentControl
                 allTabs.splice(indexOfTab, 1);
             }
         }
+       
+
 
        else if (!FeatureLocator.HasFeaturePermession("Customs.Declaration", "DECLARATIONAMENDMENT")) {
             allTabs[indexOfTab].IndexOrder = Math.max.apply(Math, allTabs.map(function (o) { return o.IndexOrder; })) + 1;
@@ -23,13 +25,22 @@ export class DeclarationEditComponentController implements IEditComponentControl
             allTabs[indexOfTab].IndexOrder = -1;
         }
 
-        if (currentEntity.AmendmentDontDisplayInList) {
+         if (currentEntity.AmendmentDontDisplayInList) {
             var indexOfTab = allTabs.findIndex(t => t.Code == "DCDA");
             if (indexOfTab > -1) {
                 allTabs.splice(indexOfTab, 1);
             }
 
         }
+
+        if (currentEntity.IsAmendment || !FeatureLocator.HasFeaturePermession("Customs.Declaration", "DECLARATIONAMENDMENT")) {
+            var indexOfTab = allTabs.findIndex(t => t.Code == "DCCO");
+
+            if (indexOfTab > -1) {
+                allTabs.splice(indexOfTab, 1);
+            }
+        }
+
           if (currentEntity.Direction=="E") {
             var indexOfTab = allTabs.findIndex(t => t.Code == "DEIN");
              if (indexOfTab > -1) {

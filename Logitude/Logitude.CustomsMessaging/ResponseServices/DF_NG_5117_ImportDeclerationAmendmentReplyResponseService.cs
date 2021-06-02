@@ -102,7 +102,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (declaration != null)
                 {
                     _MyDeclarationPM = declaration;
-                    if (customResponse.Response.Declaration != null)
+                    var AdditionalInformation = customResponse.Response.AdditionalInformation;
+                    string status = "";
+                    if(AdditionalInformation != null)
+                    {
+                        status = AdditionalInformation.FirstOrDefault(x => x.Content!= null &&  x.StatementTypeCode.Value == "32").Content.Value;
+                    }
+                    if (customResponse.Response.Declaration != null && (status =="2"  || status=="1"))
                         _MyDeclarationPM = dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, _MyDeclarationPM.Id, out error, false, isUpdateAfterAccept: true);
 
                 }

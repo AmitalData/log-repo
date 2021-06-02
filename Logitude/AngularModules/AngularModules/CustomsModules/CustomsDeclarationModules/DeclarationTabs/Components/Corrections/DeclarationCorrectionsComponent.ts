@@ -54,6 +54,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
     public IsAmendmentDeficitInitiatedEnabled: boolean=false;
     public IsNoAmendmentsMsgVisible: boolean = false;
     ResponseData: INF_MSG_GenericResponseData;
+    public IsOldAmendment: boolean;
 
     //Grids data
     AdditionalInformationlist: ObservableCollection = new ObservableCollection([]);
@@ -116,9 +117,8 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
                         this.EntityPM = this.entityArgs.EntityPM;
                         this.ObjectTableName = this.entityArgs.ObjectTableName;
                         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
-
                         this.Listen();
-
+                        this.IsOldAmendment = this.entityArgs.EditComponent.SelectedTab.Code == "DCCO";
                         console.log("Declaration", this.EntityPM);
                         this.BuildTabs();
 

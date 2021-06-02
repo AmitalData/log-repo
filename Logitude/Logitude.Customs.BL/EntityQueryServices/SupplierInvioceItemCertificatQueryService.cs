@@ -157,7 +157,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
             {
                 ClassificationCode = ClassificationCodeFilter.FieldValue.ToString();
             }
-            IQueryable<CertificateConnectedItems> query2 = repository.GetCertificateConnectedItems(declarationId, attachmentTypeCode, reqConfirmationTypeCode, CertificateExemptionTypeCode, CertificateNumber, ResConfirmationTypeCode, tenant, invoiceNumber, ClassificationCode, skippedItems, queryOperations.PageSize, false);
+            string SearchFields = null;
+            QueryFilterItem SearchFieldsFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "SearchFields").FirstOrDefault();
+            if (SearchFieldsFilter != null)
+            {
+                SearchFields = SearchFieldsFilter.FieldValue.ToString();
+            }
+            IQueryable<CertificateConnectedItems> query2 = repository.GetCertificateConnectedItems(declarationId, attachmentTypeCode, reqConfirmationTypeCode, CertificateExemptionTypeCode, CertificateNumber, ResConfirmationTypeCode, tenant, invoiceNumber, ClassificationCode, SearchFields, skippedItems, queryOperations.PageSize, false);
 
 
 
@@ -176,6 +182,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 objectFields.Add(new ObjectField() { FieldName = "ClassificationCode", DataTypeCode = "ntext" });
                 objectFields.Add(new ObjectField() { FieldName = "OriginCountryName", DataTypeCode = "text" });
                 objectFields.Add(new ObjectField() { FieldName = "CatalogNumber", DataTypeCode = "text" });
+                objectFields.Add(new ObjectField() { FieldName = "SearchFields", DataTypeCode = "ntext" });
 
                 ObjectField objectField = (from a in objectFields
                                            where a.FieldName == queryOperations.SortByColumnName
@@ -238,7 +245,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         public List<CertificateConnectedItems> GetCertificateConnectedItemsList(string declarationId, string attachmentTypeCode, string reqConfirmationTypeCode, string CertificateExemptionTypeCode, string CertificateNumber, string ResConfirmationTypeCode, int tenant)
         {
-            List<CertificateConnectedItems> conntectedItems = repository.GetCertificateConnectedItems(declarationId, attachmentTypeCode, reqConfirmationTypeCode, CertificateExemptionTypeCode, CertificateNumber, ResConfirmationTypeCode, tenant, null, null, 0, 0, true).ToList();
+            List<CertificateConnectedItems> conntectedItems = repository.GetCertificateConnectedItems(declarationId, attachmentTypeCode, reqConfirmationTypeCode, CertificateExemptionTypeCode, CertificateNumber, ResConfirmationTypeCode, tenant, null, null, null, 0, 0, true).ToList();
             return conntectedItems;
         }
 
@@ -260,7 +267,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
             {
                 ClassificationCode = ClassificationCodeFilter.FieldValue.ToString();
             }
-            int count = repository.GetCertificateConnectedItemsCount(declarationId, attachmentTypeCode, reqConfirmationTypeCode, CertificateExemptionTypeCode, CertificateNumber, ResConfirmationTypeCode, tenant, invoiceNumber, ClassificationCode);
+            string SearchFields = null;
+            QueryFilterItem SearchFieldsFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "SearchFields").FirstOrDefault();
+            if (SearchFieldsFilter != null)
+            {
+                SearchFields = SearchFieldsFilter.FieldValue.ToString();
+            }
+            int count = repository.GetCertificateConnectedItemsCount(declarationId, attachmentTypeCode, reqConfirmationTypeCode, CertificateExemptionTypeCode, CertificateNumber, ResConfirmationTypeCode, tenant, invoiceNumber, ClassificationCode, SearchFields);
             
             return count;
         }

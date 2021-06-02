@@ -42,6 +42,7 @@ using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.Security;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Customs.Def.EntityQueryServicesExt;
+using Logitude.Customs.BL.EntityQueryServices;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -112,8 +113,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 base64string = base64string.Replace("+", "-");
                 this.entityPM.Id = base64string;
                 bool inOracleCreateNewTransaction =
-                 (this.MyCustomDocumentsFilingParams != null && this.MyCustomDocumentsFilingParams.MainInterfaceCode == "3053"
-                    && this.MyCustomDocumentsFilingParams.IsCourier);
+                 (
+                 this.MyCustomDocumentsFilingParams != null &&
+                 (this.MyCustomDocumentsFilingParams.MainInterfaceCode == "3053" || this.MyCustomDocumentsFilingParams.MainInterfaceCode == "8302") &&
+                 this.MyCustomDocumentsFilingParams.IsCourier
+                 //CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant).CompanyType == "B"//Courier
+                
+                 );
                 
                 this.entityPM.Code = CodeCounter.GetNumber("DocumentsFiling", tenant, inOracleCreateNewTransaction).ToString();
             }

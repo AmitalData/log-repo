@@ -28,7 +28,7 @@ import { CustomerActivityTypePM } from '../../../../../Customs/EntityPMs/Custome
 import { UserList } from '../../../../../Common/EntityLists/UserList';
 import { CustomBankList } from '../../../../../Customs/EntityLists/CustomBankList';
 import { AmitalGatewayUtil } from '../../../../../Infrastructure/Utilities/AmitalGatewayUtil';
-import { UnifreightController } from '../../../../../Customs/Controller/UnifreightController';
+import { UnifreightController, UnifreightInstructionController } from '../../../../../Customs/Controller/UnifreightController';
 import { CustomMessageProgressHelper, CustomMessageProgressComponent, ShowProgressBarParams } from '../../../../CustomsControls/Components/CustomMessageProgressComponent';
 
 import { ObjectTablePM } from '../../../../../Infrastructure/EntityPMs/ObjectTablePM';
@@ -2132,7 +2132,12 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         params.TestCase = this._TestCase;
         let splitRequest = true;
         if (splitRequest) {
-            this.CheckCustomFileCreditThenSendPayment(params);
+            if (this.DeclarationPM.IsCourierDeclaration) {
+                this.OnlySendPayment(params);
+            }
+            else {
+                this.CheckCustomFileCreditThenSendPayment(params);
+            }
             return;
         }
 
@@ -2267,7 +2272,8 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                         SessionLocator.SelectedSession.StopBusyIndicator();
                         confirmWindow.WindowClosed.subscribe((event: any) => {
                             if (confirmWindow.Yes) {
-                                this.ActualSendToTransfer();
+                                //this.ActualSendToTransfer();
+                                this.InstructionActualSendToTransfer()
                             }
                         });
                         return;
@@ -2325,6 +2331,39 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             });
 
     }
+
+    OnlySendPayment(params: CustomFileCreditRequestParams) {
+        var myCustomMessageProgressHelper = new CustomMessageProgressHelper();
+        myCustomMessageProgressHelper.BasicResponse = true;
+        myCustomMessageProgressHelper.StartProgress(params.PBId, 5, true);
+
+        if (AmitalGatewayUtil.Instance.IsDeclarationInUse(this.DeclarationPM.CustomFileNo, this.DeclarationPM.IsConvertedDeclaration, this.DeclarationPM.IsConnectedToUnifreight)) {
+            SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.UnifreightInstSentMehes"));
+
+            var myStoreViewUnifreightInstructionController = new UnifreightController(
+                this.DeclarationPM,
+                "Logitude.Customs.ViewModels.DeclarationPayment.DeclarationPaymentTabViewModel.MyStoreViewUnifreightInstructionController");
+            myStoreViewUnifreightInstructionController.GetPromise()
+                //myStoreViewUnifreightInstructionController.UnifreightCallbackCompleted += (sender, e) => {
+                .then((e) => {
+                    if (e.UnifreightResponseStatus) {
+                        this.Send2755(params);
+                    }
+                    else {
+                        SessionLocator.SelectedSession.StopBusyIndicator();
+
+                    }
+                });
+            SessionLocator.SelectedSession.StartBusyIndicator("");
+            myStoreViewUnifreightInstructionController.SendRequestInstructionToUnifreightAsync("PAYHAND_SEND");
+
+
+        } else {
+            this.Send2755(params);
+        }
+
+    }
+
     private Send2755(params: CustomFileCreditRequestParams) {
         let myShowProgressBarParams = new ShowProgressBarParams();
         myShowProgressBarParams.OnCloseCustomMessageProgressComponentMethod =
@@ -2371,6 +2410,17 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
     }
 
+    InstructionActualSendToTransfer() {
+        let myUnifreightInstructionController = new UnifreightInstructionController(this.DeclarationPM, "COLLECT_TRANSFER");
+        myUnifreightInstructionController
+            .ShowInstruction(
+                () => {
+                    console.log("Instruction return - continue TransferToCollectorMethod");
+                    this.ActualSendToTransfer();
+                },
+                () => { console.log("Instruction return - do not continue 2 TransferToCollectorMethod!!"); }
+            );
+    }
     ActualSendToTransfer() {
 
         if (this.customSendOptions == null) {
@@ -2563,7 +2613,8 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 confirmWindow.WindowClosed.subscribe((event: any) => {
                     if (confirmWindow.Yes) {
-                        this.ActualSendToTransfer();
+                        //this.ActualSendToTransfer();
+                        this.InstructionActualSendToTransfer();
                     }
                 });
 
