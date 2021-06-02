@@ -50,6 +50,7 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
             {
                 decID = idList.FirstOrDefault();
                 res.EntityReference = qs.GetCustomFileNoByDeclarationId(idList.FirstOrDefault(), tenant);
+                res.EntityID =decID;
             }
             var myDeclarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
             var declarationCourierStatusQueryServicePM = myDeclarationCourierStatusQueryService.GetSingle(decID, true, false);
