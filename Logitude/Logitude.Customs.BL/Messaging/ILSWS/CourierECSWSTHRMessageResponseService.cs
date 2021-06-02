@@ -45,6 +45,7 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
             var context = CustomContext.GetContext(tenant);
             var qs = new DeclarationQueryService(tenant);
             var idList = qs.GetListByCourierHAWB(CourierSWSHAWBResponse.CourierHawbNumber, tenant);
+            var myCourierDeclarationsQueryService = new CourierDeclarationQueryService(context);
             string decID = null;
             if (idList.Count == 1)
             {
@@ -53,8 +54,8 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
                 res.EntityID =decID;
             }
             var myDeclarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
+
             var declarationCourierStatusQueryServicePM = myDeclarationCourierStatusQueryService.GetSingle(decID, true, false);
-            res.EntityID = declarationCourierStatusQueryServicePM.CourierMasterId;
             declarationCourierStatusQueryServicePM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
 
             switch (CourierSWSHAWBResponse.StatusCode)
