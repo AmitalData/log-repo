@@ -386,7 +386,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
             if (!LogitudeSettings.IsCostomsDeploy && !tenantPM.IsDocumentsArchive && IsDocumentMatchesLogboxConditions(theEntityPm, HavingDREL))
             {
-                OpenImportersShipmentDocumentsQueueMessage();
+                AddImportersShipmentDocumentsQueueMessage();
             }
         }
 
@@ -395,11 +395,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             if (theEntityPm.DirectionCode != "I" || !(!theEntityPm.IsSharedWithForwarder || (theEntityPm.IsSharedWithForwarder && HavingDREL == true)))
                 return false;
 
-            ObjectTable objectTable = ObjectTableRepository.GetSingleObjectTable(Poco.ObjectTableId, tenant, false);
-            if (objectTable == null)
-                return false;
-
-            if (objectTable.Name != "Shipment" || string.IsNullOrEmpty(theEntityPm.EntityId))
+            if (!IsConnectedToShipment())
                 return false;
 
             bool isDocumentMatchsLogboxConditions = !entityPM.DontAddToQueue
@@ -409,30 +405,36 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             if (!isDocumentMatchsLogboxConditions)
                 return false;
 
-            isDocumentMatchsLogboxConditions = IsDocumentHasShipmentInLogbox(theEntityPm);
+            isDocumentMatchsLogboxConditions = HasConnectedShipmentInLogbox(theEntityPm);
             return isDocumentMatchsLogboxConditions;
         }
 
-        private bool IsDocumentHasShipmentInLogbox(DocumentsFilingPM documentsFilingPM)
+        private bool IsConnectedToShipment()
+        {
+            ObjectTable connectedObjectTable = ObjectTableRepository.GetSingleObjectTable(Poco.ObjectTableId, tenant, false);
+            if (connectedObjectTable != null && connectedObjectTable.Name == "Shipment")
+                return true;
+            return false;
+        }
+
+        private bool HasConnectedShipmentInLogbox(DocumentsFilingPM documentsFilingPM)
         {
             ShipmentQuery shipmentQuery = new ShipmentQuery(documentsFilingPM.Tenant);
             ShipmentPM connectedShipment = shipmentQuery.GetSingleShipmentPM(documentsFilingPM.EntityId, documentsFilingPM.Tenant);
             if (connectedShipment == null)
                 return false;
 
-            bool hasShipmentInLogbox;
             if (!string.IsNullOrEmpty(connectedShipment.CustomFileId))
             {
-                hasShipmentInLogbox = IsThereCustomFileShipmentInLogbox(documentsFilingPM, shipmentQuery, connectedShipment);
+                return HasCustomFileShipmentInLogbox(documentsFilingPM, shipmentQuery, connectedShipment);
             }
             else
             {
-                hasShipmentInLogbox = !string.IsNullOrEmpty(connectedShipment.CustomerShipmentNumber);
+                return !string.IsNullOrEmpty(connectedShipment.CustomerShipmentNumber);
             }
-            return hasShipmentInLogbox;
         }
 
-        private bool IsThereCustomFileShipmentInLogbox(DocumentsFilingPM documentsFilingPM, ShipmentQuery shipmentQuery, ShipmentPM connectedShipment)
+        private bool HasCustomFileShipmentInLogbox(DocumentsFilingPM documentsFilingPM, ShipmentQuery shipmentQuery, ShipmentPM connectedShipment)
         {
             ShipmentPM connectedImportFileShipment = shipmentQuery.GetSingleShipmentPM(connectedShipment.CustomFileId, documentsFilingPM.Tenant);
             bool hasShipmentInLogbox = connectedImportFileShipment != null && !string.IsNullOrEmpty(connectedImportFileShipment.CustomerShipmentNumber);
@@ -440,7 +442,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             return hasShipmentInLogbox;
         }
 
-        private void OpenImportersShipmentDocumentsQueueMessage()
+        private void AddImportersShipmentDocumentsQueueMessage()
         {
             IQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue("ImportersShipmentDocumentsQueue", 0);
