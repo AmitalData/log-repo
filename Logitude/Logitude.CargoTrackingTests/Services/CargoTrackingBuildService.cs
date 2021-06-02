@@ -2,7 +2,9 @@
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
+using Logitude.CargoTracking.BL.CargoTrackingServices.Services;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelper;
+using Logitude.CargoTracking.BL.CoreBL.Batch;
 using Simplog.Data.CommonDataModel;
 using System;
 using System.Collections.Generic;
@@ -16,12 +18,33 @@ namespace Logitude.CargoTrackingTests.Services
     {
         private string destinationConnectionString;
         private string sourceConnectionString;
-        CargoTrackingArgs CargoTrackingArguments;
-        public void BuildCargoTrackingTables()
+        CargoTrackingXMLParameters cargoTrackingXMLParameters;
+        CargoTrackingMainService cargoTrackingMainService;
+        public void BuildCargoTrackingTables(string sourceConnectionString,string destinationConnectionString)
         {
-            UpdateTenantAsIncrementalBuilding();
+            //UpdateTenantAsIncrementalBuilding();
+            cargoTrackingXMLParameters = new CargoTrackingXMLParameters()
+            {
+                FromDate = new DateTime(2021, 01, 01),
+                ToDate = DateTime.Now,
+                Tenant = 1,
+            };
+            this.destinationConnectionString = destinationConnectionString;
+            this.sourceConnectionString = sourceConnectionString;
+            cargoTrackingMainService = new CargoTrackingMainService();
             ServiceHelper.CheckAndUpdateWaterMark(destinationConnectionString, sourceConnectionString);
-            //AddAllTablesToThread(CargoTrackingTableList.GetCargoTrackingTableList());
+            BuildCargoTrackingDatabaseForCargoTrackingTables(CargoTrackingTableList.GetCargoTrackingTableList());
+            //UpdateIsIncrementalRunningFinished();
+        }
+
+        private void UpdateIsIncrementalRunningFinished()
+        {
+            TenantQuery tenantQuery = new TenantQuery(0);
+            TenantPM tenantPM = tenantQuery.GetSinglePM(0);
+            tenantPM.IsIncrementalBuildRunning = false;
+            ICommonDataContext commonDataContext = CommonDataContext.GetContext(0);
+            TenantService tenantService = new TenantService(commonDataContext, 0);
+            tenantService.Update(tenantPM);
         }
 
         private void UpdateTenantAsIncrementalBuilding()
@@ -33,35 +56,33 @@ namespace Logitude.CargoTrackingTests.Services
             TenantService tenantService = new TenantService(commonDataContext, 0);
             tenantService.Update(tenantPM);
         }
-        private void AddAllTablesToThread(List<CargoTrackingTable> CargoTableLists)
+        private void BuildCargoTrackingDatabaseForCargoTrackingTables(List<CargoTrackingTable> CargoTableLists)
         {
             foreach (CargoTrackingTable table in CargoTableLists)
             {
-
-                UpdateCargoDataBase(table);
-
+                BuildTableForCargoTracking(table);
             }
         }
 
-        private void UpdateCargoDataBase(CargoTrackingTable table)
+        private void BuildTableForCargoTracking(CargoTrackingTable table)
         {
-            //CargoTrackingArguments CargoTrackingArgs = new CargoTrackingArguments
-            //{
-            //    FromDate = CargoTrackingArguments.FromDate,
-            //    Tenant = CargoTrackingArguments.Tenant,
-            //    ToDate = CargoTrackingArguments.ToDate,
-            //    ThreadNumber = 50,
-            //    FormTableName = null,
-            //};
-            //CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs = new CargoTrackingUpdateDataBaseArgs()
-            //{
-            //    BuildCargoArgs = new CargoTrackingServices.HelperClasses.CargoTrackingArgs() { Table = table, SourceConnectionString = sourceConnectionString, DestinationConnectionString = destinationConnectionString },
-            //    NumberOfBulkPerTime = 1000,
-            //    IsUpdateAfterFinished = null,
-            //    CargoTrackingArguments = CargoTrackingArgs,
-            //    IsUpdateFromBuild = true,
-            //};
-            //cargoTrackingMainService.UpdateCargoTrackingDataBase(cargoTrackingDataBaseArgs);
+            CargoTrackingArguments CargoTrackingArgs = new CargoTrackingArguments
+            {
+                FromDate = cargoTrackingXMLParameters.FromDate,
+                Tenant = cargoTrackingXMLParameters.Tenant,
+                ToDate = cargoTrackingXMLParameters.ToDate,
+                ThreadNumber = 50,
+                FormTableName = null,
+            };
+            CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs = new CargoTrackingUpdateDataBaseArgs()
+            {
+                BuildCargoArgs = new CargoTrackingArgs() { Table = table, SourceConnectionString = sourceConnectionString, DestinationConnectionString = destinationConnectionString },
+                NumberOfBulkPerTime = 1000,
+                IsUpdateAfterFinished = null,
+                CargoTrackingArguments = CargoTrackingArgs,
+                IsUpdateFromBuild = true,
+            };
+            cargoTrackingMainService.UpdateCargoTrackingDataBase(cargoTrackingDataBaseArgs);
         }
     }
 }

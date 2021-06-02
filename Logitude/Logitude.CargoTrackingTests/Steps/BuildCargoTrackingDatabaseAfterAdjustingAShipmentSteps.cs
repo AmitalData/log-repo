@@ -1,5 +1,6 @@
 ﻿using Logitude.CargoTracking.BL.CargoTrackingServices.Services;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelper;
+using Logitude.CargoTrackingTests.Services;
 using Logitude.ShipmentTests.Models;
 using Logitude.ShipmentTests.Models.Builders;
 using Logitude.Test.Base.Models.Api;
@@ -24,12 +25,11 @@ namespace Logitude.CargoTrackingTests.Steps
         public void WhenUpdatingAShipmentsGrossWeightAndBuildingCargoTables()
         {
             ApiResponse<ShipmentPM> response = UpdateShipmentGrossWeight(ShipmentContext.HouseShipment);
-            CargoTrackingMainService cargoTrackingMainService = new CargoTrackingMainService();
-            TenantRepository tenantRepository = new TenantRepository(0);
-            UpdateIsIncrementalRunning(tenantRepository, true);
-            ServiceHelper.CheckAndUpdateWaterMark(destinationConnectionString, sourceConnectionString);
-            AddAllTablesToThread(CargoTrackingTableList.GetCargoTrackingTableList());
-            UpdateIsIncrementalRunning(tenantRepository, false);
+            CargoTrackingBuildService cargoTrackingBuildService = new CargoTrackingBuildService();
+            string sourceConnectionString = "Data Source=.;Initial Catalog=Logitude2-5_Main;Integrated Security=False;Persist Security Info=True;User ID=sa;Password=Saas256;MultipleActiveResultSets=True;Connect Timeout=60";
+            string destinationConnectionString = "Data Source=.;Initial Catalog=Logitude2-5_CargoTracking;Integrated Security=False;Persist Security Info=True;User ID=sa;Password=Saas256;MultipleActiveResultSets=True;Connect Timeout=60";
+            cargoTrackingBuildService.BuildCargoTrackingTables(sourceConnectionString,destinationConnectionString);
+
         }
 
         
