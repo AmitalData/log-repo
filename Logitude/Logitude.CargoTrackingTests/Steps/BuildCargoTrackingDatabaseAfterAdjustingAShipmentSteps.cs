@@ -1,8 +1,8 @@
 ﻿using Logitude.CargoTracking.BL.CargoTrackingServices.Services;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelper;
+using Logitude.CargoTrackingTests.Models;
 using Logitude.CargoTrackingTests.Services;
-using Logitude.ShipmentTests.Models;
-using Logitude.ShipmentTests.Models.Builders;
+
 using Logitude.Test.Base.Models.Api;
 using Logitude.Test.Base.Models.Shared;
 using Logitude.Test.Base.Models.UserTenantPreparation;
