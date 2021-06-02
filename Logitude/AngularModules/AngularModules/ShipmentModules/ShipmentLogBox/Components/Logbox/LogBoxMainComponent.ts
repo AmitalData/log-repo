@@ -111,7 +111,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             this.AgentShipmentsLabel = this.getAgentShipmentsLabel(AgentName);
             this.SelectedFilter = this.AgentShipmentsLabel;
             this.RequestedDocsLable = "Action Required";
-            this.RefTemplateWidth = this.ToggleIsExportShipments ? '150px' : '120px'; 
+            this.RefTemplateWidth = '150px';
              
         }
         else {
