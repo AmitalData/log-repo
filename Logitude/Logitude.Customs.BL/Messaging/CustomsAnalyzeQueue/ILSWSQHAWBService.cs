@@ -1,6 +1,7 @@
 ﻿
 using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.Messaging.ILSWS;
+using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,12 +24,14 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
         {
             CourierSWSHAWBResponse mySWSHAWBResponse = GetSWSHAWBResponse(communicationsData);
 
-            var res = new AnalyzeResultModel();
+            var res = new AnalyzeResultModel()
+            {
+                ObjectTableID = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
+            };
             try
             {
                 var courierECSWSTHRMessageResponseService = new CourierECSWSTHRMessageResponseService();
-                courierECSWSTHRMessageResponseService.AnalyzeQResponse(_CommunicationLog.Tenant, mySWSHAWBResponse);
-                res.MyCommStatusEnum = Def.ClosedTable.CommStatusEnum.D;
+                res=courierECSWSTHRMessageResponseService.AnalyzeQResponse(_CommunicationLog.Tenant, mySWSHAWBResponse,res);
 
             }
             catch (Exception eee)
@@ -37,6 +40,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 res.ErrorMessage = eee.ToString();
                 res.MyCommStatusEnum = Def.ClosedTable.CommStatusEnum.F;
             }
+
             return res;
         }
         private static XElement GetXElement(XElement myXElementSTBMessage, string field)

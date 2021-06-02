@@ -33,7 +33,7 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
     {
 
 
-        public void AnalyzeQResponse(int tenant, CourierSWSHAWBResponse CourierSWSHAWBResponse)
+        public AnalyzeResultModel AnalyzeQResponse(int tenant, CourierSWSHAWBResponse CourierSWSHAWBResponse, AnalyzeResultModel res)
 
         {
 
@@ -49,9 +49,11 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
             if (idList.Count == 1)
             {
                 decID = idList.FirstOrDefault();
+                res.EntityReference = qs.GetCustomFileNoByDeclarationId(idList.FirstOrDefault(), tenant);
             }
             var myDeclarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
             var declarationCourierStatusQueryServicePM = myDeclarationCourierStatusQueryService.GetSingle(decID, true, false);
+            res.EntityID = declarationCourierStatusQueryServicePM.CourierMasterId;
             declarationCourierStatusQueryServicePM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
 
             switch (CourierSWSHAWBResponse.StatusCode)
@@ -77,6 +79,8 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
                 myDeclarationCourierStatusUpdateService.Update(declarationCourierStatusQueryServicePM, true);
                 scope.Complete();
             }
+            res.MyCommStatusEnum = Def.ClosedTable.CommStatusEnum.D;
+            return res;
         }
 
         public void AnalyzeResponse(CourierWEBAPICommSettings settings, string webAPIResultString)
