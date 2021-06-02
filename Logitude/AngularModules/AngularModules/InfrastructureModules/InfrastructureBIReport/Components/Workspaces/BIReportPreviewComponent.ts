@@ -301,6 +301,35 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
                             });
                         }
                     }
+                  //Test for Invoice Number
+
+                    else if (columns[i].Code == "Invoice Number" || columns[i].FieldCode == "[Invoice Number]") {
+                        if (this.isParentTenant) {
+                            this.columnDefs.push({
+                                colId: columns[i].Code,
+                                headerName: columns[i].Code,
+                                field: columns[i].Code,
+                                sortable: true,
+                                filter: true,
+                                width: columns[i].Width,
+                                resizable: true,
+                                Index: columns[i].Index,
+                            });
+                        }
+                        else {
+                            this.columnDefs.push({
+                                colId: columns[i].Code,
+                                headerName: columns[i].Code,
+                                field: columns[i].Code,
+                                sortable: true,
+                                filter: true,
+                                width: columns[i].Width,
+                                resizable: true,
+                                Index: columns[i].Index,
+                                cellRendererFramework: EditShipmentLinkRendererComponent,
+                            });
+                        }
+                    }
                     else {
                         this.columnDefs.push({
                             colId: columns[i].Code,
@@ -407,20 +436,52 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
 
     }
 
-    public methodFromParent(cell) {
+    public methodFromParent(entityNumber) {
         this.StartBusyIndicator("Loading ...");
-        this._ShipmentPMService.getSingleByShipmentNumber(cell).subscribe((myResult:any) => {
-            if (!myResult.HasError) {
-                var Id = myResult.Result;
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-                    .then(cmpRef => {
-                        cmpRef.instance.ComponentRef = cmpRef;
-                        cmpRef.instance.Run({ EntityId: Id, ObjectTableName: 'Shipment', BackButtonLabel: "BI Report" });
-                    });
-            }
+        if (this.EntityPM.FactTableName == "Fact_Invoices") {
+            //if(ARInvoice){
+            //this.ARInvoieExtendedPMService.getSingleByInvoiceNumber(entityNumber).subscribe((myResult: any) => {
+            //    if (!myResult.HasError) {
+            //        var Id = myResult.Result?.Id;
+            //        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            //            .then(cmpRef => {
+            //                cmpRef.instance.ComponentRef = cmpRef;
+            //                cmpRef.instance.Run({ EntityId: Id, ObjectTableName: 'ARInvoice', BackButtonLabel: "BI Report" });
+            //            });
+            //    }
 
-            this.StopBusyIndicator();
-        });
+            //    this.StopBusyIndicator();
+            //});
+            //}
+            //else{
+            //this.APInvoieExtendedPMService.getSingleByInvoiceNumber(entityNumber).subscribe((myResult: any) => {
+            //    if (!myResult.HasError) {
+            //        var Id = myResult.Result?.Id;
+            //        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            //            .then(cmpRef => {
+            //                cmpRef.instance.ComponentRef = cmpRef;
+            //                cmpRef.instance.Run({ EntityId: Id, ObjectTableName: 'APInvoice', BackButtonLabel: "BI Report" });
+            //            });
+            //    }
+
+            //    this.StopBusyIndicator();
+            //});
+            //}
+        }
+        else {
+            this._ShipmentPMService.getSingleByShipmentNumber(entityNumber).subscribe((myResult: any) => {
+                if (!myResult.HasError) {
+                    var Id = myResult.Result;
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                        .then(cmpRef => {
+                            cmpRef.instance.ComponentRef = cmpRef;
+                            cmpRef.instance.Run({ EntityId: Id, ObjectTableName: 'Shipment', BackButtonLabel: "BI Report" });
+                        });
+                }
+
+                this.StopBusyIndicator();
+            });
+        }
     }
     //#endregion
 
