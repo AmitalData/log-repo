@@ -143,9 +143,26 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                             default: { itemPM.ChangeSetOp = ChangeSetOperation.None; break; }
                         }
                     }
+                    List<ProductItemPM> productItemsChangeSet = entityPM.CustomerProductItems.ToList();
+                    foreach (ProductItemPM itemPM in productItemsChangeSet)
+                    {
+                        switch (itemPM.ChangeSetOp)
+                        {
+                            case ChangeSetOperation.Insert: { itemPM.ChangeSetOp = ChangeSetOperation.Insert; break; }
+                            case ChangeSetOperation.Delete: { itemPM.ChangeSetOp = ChangeSetOperation.Delete; break; }
 
+                            case ChangeSetOperation.Update:
+                                {
+                                    itemPM.ChangeSetOp = ChangeSetOperation.Update;
+                                    itemPM.HTSCodeChangeSet = itemPM.HTSCodes.ToList();
+                                    break;
+                                }
 
-                    service.SetChangeSet(entityPM.SalesNotes.ToList(), productsChangeSet, entityPM.CustomerCompetitors.ToList(), entityPM.CustomerAdditionalServices.ToList(), entityPM.CustomerSalesmanByProducts.ToList(), entityPM.CustomerAccountManagerByProducts.ToList(), entityPM.CustomerCustomsAgentByProducts.ToList(), entityPM.CustomerForwarderByProducts.ToList(), entityPM.CustomerMediatorByProducts.ToList(), entityPM.CardExternalCodeByCurrencies.ToList());
+                            default: { itemPM.ChangeSetOp = ChangeSetOperation.None; break; }
+                        }
+                    }
+
+                    service.SetChangeSet(entityPM.SalesNotes.ToList(), productsChangeSet, entityPM.CustomerCompetitors.ToList(), entityPM.CustomerAdditionalServices.ToList(), entityPM.CustomerSalesmanByProducts.ToList(), entityPM.CustomerAccountManagerByProducts.ToList(), entityPM.CustomerCustomsAgentByProducts.ToList(), entityPM.CustomerForwarderByProducts.ToList(), entityPM.CustomerMediatorByProducts.ToList(), entityPM.CardExternalCodeByCurrencies.ToList(), productItemsChangeSet);
                     service.Update();
 
                     //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);

@@ -76,6 +76,7 @@ namespace WebFreight.Web.DataProviders
         public List<PayableLine> PayablesList { get; set; }
         public List<PickUpDeliveryLine> PickUpsList { get; set; }
         public List<PickUpDeliveryLine> DeliveriesList { get; set; }
+        public List<ProductItemLine> ProductItemsLines { get; set; }
         public string Origin { get; set; }
         public string Destination { get; set; }
         public string IncotermCode { get; set; }

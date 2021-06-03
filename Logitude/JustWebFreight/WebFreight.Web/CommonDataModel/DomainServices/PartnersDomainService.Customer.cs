@@ -602,8 +602,26 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 }
             }
 
+            List<ProductItemPM> productItemsChangeSet = ChangeSet.GetAssociatedChanges(entityPM, d => d.CustomerProductItems).Cast<ProductItemPM>().ToList();
+            foreach (ProductItemPM itemPM in productItemsChangeSet)
+            {
+                switch (ChangeSet.GetChangeOperation(itemPM))
+                {
+                    case ChangeOperation.Insert: { itemPM.ChangeSetOp = ChangeSetOperation.Insert; break; }
+                    case ChangeOperation.Delete: { itemPM.ChangeSetOp = ChangeSetOperation.Delete; break; }
+
+                    case ChangeOperation.Update:
+                        {
+                            itemPM.ChangeSetOp = ChangeSetOperation.Update;
+                            break;
+                        }
+
+                    default: { itemPM.ChangeSetOp = ChangeSetOperation.None; break; }
+                }
+            }
+
             CustomerService service = new CustomerService(objectContext, entityPM);
-            service.SetChangeSet(salesNotesChangeSet, productsChangeSet, competitorsChangeSet, servicesChangeSet, customerSalesmanByProductsChangeSet, customerAccountManagerByProductsChangeSet, customerCustomsAgentByProductsChangeSet, customerForwarderByProductsChangeSet, customerMediatorByProductsChangeSet, cardExternalCodeByCurrenciesChangeSet);
+            service.SetChangeSet(salesNotesChangeSet, productsChangeSet, competitorsChangeSet, servicesChangeSet, customerSalesmanByProductsChangeSet, customerAccountManagerByProductsChangeSet, customerCustomsAgentByProductsChangeSet, customerForwarderByProductsChangeSet, customerMediatorByProductsChangeSet, cardExternalCodeByCurrenciesChangeSet,productItemsChangeSet);
             service.Update();
 
             if (this.ChangeSet != null)

@@ -48,6 +48,8 @@ import { AccountingPartnerPMService } from './StandardPMs/AccountingPartnerPMSer
 import { TariffCarrierTranslationPM } from '../EntityPMs/TariffCarrierTranslationPM';
 import { WarehouseStoragePricingPM } from '../EntityPMs/WarehouseStoragePricingPM';
 import { CustomFieldClass } from '../../Infrastructure/DataContracts/CustomFieldClass'
+import { ProductItemPM } from '../EntityPMs/ProductItemPM';
+import { HTSCodePM } from '../EntityPMs/HTSCodePM';
 
 @Injectable()
 
@@ -1945,7 +1947,192 @@ export class PartnersDomainService {
         return entityPM;
     }
 
+    GetCustomerProductItemHTSCodeByCountry(productItemId: string, dischargePortCountryId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
+        var url = this._apiUrl + '/GetCustomerProductItemHTSCodeByCountry?productItemId=' + productItemId + "&dischargePortCountryId=" + dischargePortCountryId;
+
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
+                var done: string = response.body;
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = done;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+    GetSingleCustomerProductItem(productItemId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetSingleCustomerProductItem?productItemId=' + productItemId;
+
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map((response: HttpResponse<any>) => {
+                var pm = response;
+
+                var entity: ProductItemPM;
+                if (pm) {
+                    entity = this.MapProductItemPM(pm);
+                }
+
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse.Result = entity;
+                return serviceResponse;
+
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+    UpdateCustomerProductItem(entity: ProductItemPM) {
+        return defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+            authHeader.append('Content-Type', 'application/json');
+
+            var mappedEntity: ProductItemPM = this.MapProductItemPM(entity, false);
+
+            return this._http.put(this._apiUrl + "/PutCusttomerProductItem", JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                var myJsonResult = res;
+
+                var mappedResult: ProductItemPM = this.MapProductItemPM(myJsonResult, true, entity);
+
+                var myResponse = new ServiceResponse();
+                myResponse.Result = mappedResult;
+                return myResponse;
+
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+    MapProductItemPM(jsonPM: any, mapParent: boolean = true, entityPM: ProductItemPM = null) {
+        if (!entityPM) {
+            entityPM = new ProductItemPM(null);
+        }
+
+        var jsonPMKeys = Object.keys(jsonPM);
+
+        for (var key in jsonPMKeys) {
+            if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
+
+                continue;
+            }
+
+            var property = jsonPMKeys[key];
+            entityPM[property] = jsonPM[property];
+        }
+
+        this.MapHTSCodes(entityPM, jsonPM, mapParent);        
+
+        entityPM.IsDirty = false;
+
+        if (mapParent) {
+            entityPM.OldEntityPM = this.clone(entityPM);
+
+            entityPM.OldEntityPM.HTSCodes = [];
+            for (var item in entityPM.HTSCodes) {
+                var myHTSCodePM = entityPM.HTSCodes[item];
+                var newHTSCodePM: HTSCodePM = this.clone(myHTSCodePM);
+                entityPM.OldEntityPM.HTSCodes.push(newHTSCodePM);
+            }
+        }
+
+        else {
+            entityPM.OldEntityPM = null;
+        }
+
+        return entityPM;
+    }
+    MapHTSCodes(entityPM: ProductItemPM, jsonPM: any, mapParent: boolean = true) {
+        var oldHTSCodes: HTSCodePM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldHTSCodes = entityPM.OldEntityPM.HTSCodes;
+        }
+
+        entityPM.HTSCodes = new Array<HTSCodePM>();
+        for (var item in jsonPM.HTSCodes) {
+            var jItem = jsonPM.HTSCodes[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+
+            var newHTSCodePM: HTSCodePM;
+
+            if (mapParent) {
+                newHTSCodePM = new HTSCodePM(entityPM);
+            }
+
+            else {
+                newHTSCodePM = new HTSCodePM(null);
+            }
+
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+
+                var pmProperty = pmKeysArray[pmKey];
+                newHTSCodePM[pmProperty] = jItem[pmProperty];
+            }
+
+            newHTSCodePM.IsDirty = false;
+
+            if (mapParent) {
+                newHTSCodePM.UniqueKey = Guid.newGuid();
+                newHTSCodePM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newHTSCodePM.OldEntityPM = this.clone(newHTSCodePM);
+            }
+
+            else {
+                if (newHTSCodePM.UniqueKey) {
+                    if (jItem.IsDirty) {
+                        newHTSCodePM.ChangeSetOp = "Update";
+                    }
+                }
+
+                else {
+                    newHTSCodePM.ChangeSetOp = "Insert";
+                }
+
+                newHTSCodePM.OldEntityPM = null;
+                newHTSCodePM.EntityParentPM = null;
+            }
+
+            newHTSCodePM.IsDirty = false;
+            entityPM.HTSCodes.push(newHTSCodePM);
+        }
+
+        if (oldHTSCodes) {
+            for (var itemKey in oldHTSCodes) {
+                if (entityPM.HTSCodes.filter(p => p.UniqueKey === oldHTSCodes[itemKey].UniqueKey).length === 0) {
+
+                    if (oldHTSCodes[itemKey]) {
+                        var oldItemJson = oldHTSCodes[itemKey];
+                        var deletedPM: HTSCodePM = new HTSCodePM(null);
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        deletedPM.OldEntityPM = null;
+                        entityPM.HTSCodes.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
 }
 export class AirlineMessagingRuleList {
     Id: string;
