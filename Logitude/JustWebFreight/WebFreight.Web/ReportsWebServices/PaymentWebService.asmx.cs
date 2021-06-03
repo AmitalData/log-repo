@@ -766,9 +766,9 @@ namespace WebFreight.Web.ReportsWebServices
 
         private  void FillARPaymentCheques(string paymentId, int tenant, PaymentDataProvider paymentDataProvider)
         {
-            List<ARPaymentChequePM> arPaymentCheques = GetAllARPaymentCheques(paymentId, tenant);
+            List<ARPaymentChequePM> arPaymentChequesPMs = GetAllARPaymentCheques(paymentId, tenant);
             paymentDataProvider.ARPaymentCheques = new List<PaymentDataProvider.ARPaymentCheque>();
-            CreateARPaymentCheques(paymentDataProvider, arPaymentCheques);
+            CreateARPaymentCheques(paymentDataProvider, arPaymentChequesPMs);
         }
 
         private  List<ARPaymentChequePM> GetAllARPaymentCheques(string paymentId, int tenant)
@@ -782,7 +782,7 @@ namespace WebFreight.Web.ReportsWebServices
         {
             foreach (ARPaymentChequePM cheque in arPaymentCheques)
             {
-                AddChequeToARPaymentCheques(paymentDataProvider, CreateSingleARPaymentCheques(cheque));
+                AddChequeToARPaymentCheques(paymentDataProvider, MapPaymentChequeFieldsByEntityPM(cheque));
             }
         }
 
@@ -791,19 +791,19 @@ namespace WebFreight.Web.ReportsWebServices
             paymentDataProvider.ARPaymentCheques.Add(ChequeFromDataProvider);
         }
 
-        private  PaymentDataProvider.ARPaymentCheque CreateSingleARPaymentCheques(ARPaymentChequePM cheque)
+        private  PaymentDataProvider.ARPaymentCheque MapPaymentChequeFieldsByEntityPM(ARPaymentChequePM chequePM)
         {
-            PaymentDataProvider.ARPaymentCheque ChequeFromDataProvider = new PaymentDataProvider.ARPaymentCheque();
-            ChequeFromDataProvider.ChequeOrPaymentRef = cheque.ChequeNumber;
-            ChequeFromDataProvider.Bank = cheque.BankId;
-            ChequeFromDataProvider.Branch = cheque.BankBranch;
-            ChequeFromDataProvider.Account = cheque.BankAccount;
-            ChequeFromDataProvider.ValueDate = cheque.ValueDate.ToShortDateString();
-            ChequeFromDataProvider.CurrencyCode = cheque.CurrencyCode;
-            ChequeFromDataProvider.LocalAmount = cheque.LocalAmount;
-            ChequeFromDataProvider.ForeignAmount = cheque.ForeignAmount;
-            ChequeFromDataProvider.StatusName = cheque.StatusName;
-            return ChequeFromDataProvider;
+            PaymentDataProvider.ARPaymentCheque cheque = new PaymentDataProvider.ARPaymentCheque();
+            cheque.ChequeOrPaymentRef = chequePM.ChequeNumber;
+            cheque.Bank = chequePM.BankId;
+            cheque.Branch = chequePM.BankBranch;
+            cheque.Account = chequePM.BankAccount;
+            cheque.ValueDate = chequePM.ValueDate.ToShortDateString();
+            cheque.CurrencyCode = chequePM.CurrencyCode;
+            cheque.LocalAmount = chequePM.LocalAmount;
+            cheque.ForeignAmount = chequePM.ForeignAmount;
+            cheque.StatusName = chequePM.StatusName;
+            return cheque;
         }
 
     }
