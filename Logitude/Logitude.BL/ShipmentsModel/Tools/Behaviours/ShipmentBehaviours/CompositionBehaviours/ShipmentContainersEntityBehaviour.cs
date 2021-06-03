@@ -129,7 +129,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             ContainerPM containerPM = new ContainerPM();
             MapContainerPMFields(containerPM, shipmentPackage, true);
             containerService.Create(containerPM);
-            UpdateShipmentPackage(containerPM.Id,shipmentPackage.Id,false);
+            UpdateShipmentPackage(containerPM.Id,shipmentPackage.Id);
         }
 
         private void UpdateContainer(ShipmentPackagePM shipmentPackage)
@@ -169,7 +169,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             var container = CheckIfContainerExists(shipmentPackage);
             if (container != null)
             {
-                UpdateShipmentPackage(container.Id, shipmentPackage.Id, true);
                 containerService.Delete(container);
             }
         }
@@ -180,7 +179,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             return containerPM;
         }
 
-        private void UpdateShipmentPackage(string containerId, string shipmentPackageId ,bool isDeletingContainer)
+        private void UpdateShipmentPackage(string containerId, string shipmentPackageId)
         {
             if (containerId != null)
             {               
@@ -188,19 +187,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 ShipmentPackage shipmentPackage = shipmentPackageRepository.GetSingleShipmentPackage(shipmentPackageId, this.initializer.Tenant);
                 if (shipmentPackage != null)
                 {
-                    if (isDeletingContainer)
-                    {
-                        shipmentPackage.ContainerEntityId = null;
-                        shipmentPackageRepository.Update(shipmentPackage);
-                        shipmentPackageRepository.SubmitChanges();
-                    }
-
                     shipmentPackage.ContainerEntityId = containerId;
                     shipmentPackageRepository.Update(shipmentPackage);
                     shipmentPackageRepository.SubmitChanges();
+
                 }
             }
-       
         }
     }
 }
