@@ -318,6 +318,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         {
             CargoTrackingShipmentRepository repo = new CargoTrackingShipmentRepository(context);
             CargoTrackingShipment shipment = repo.GetCargoTrackingShipmentByEntityId(shipmentId, tenant);
+            if (shipment == null) throw new Exception("No shipment found");
             return CreateCargoTrackingShipmentListInstanceFromPOCO(shipment);
         }
 
