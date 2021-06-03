@@ -183,6 +183,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             }
 
             SyncShipmentMilstones(bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs);
+            AddDefaultEntities(bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs);
         }
 
         private static void SyncShipmentMilstones(CargoTrackingArgs buildCargoArgs)
@@ -194,6 +195,31 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 syncService.SyncShipmentMilstones(buildCargoArgs);
             }
 
+        }
+        private static void AddDefaultEntities(CargoTrackingArgs buildCargoArgs)
+        {
+            var tableName = buildCargoArgs.Table.Main_CargoTracking_TableName;
+            if (tableName == "CargoTrackingCards")
+            {
+                AddDefaultShipper(buildCargoArgs);
+                AddDefaultConsignee(buildCargoArgs);
+            }
+        }
+
+        private static void AddDefaultConsignee(CargoTrackingArgs buildCargoArgs)
+        {
+            var sql = string.Concat(
+                     $"INSERT INTO [dbo].[CargoTrackingCards] ([Id] ,[Code] ,[EnglishName] ,[LocalName] ,[Tenant]) ",
+                     $"VALUES ('DF-CONSIGNE', 'no-consignee', 'No Consignee', N'No Consignee', 0)");
+            ServiceHelper.ExecuteSql(sql, buildCargoArgs.DestinationConnectionString);
+        }
+
+        private static void AddDefaultShipper(CargoTrackingArgs buildCargoArgs)
+        {
+            var sql = string.Concat(
+                                     $"INSERT INTO [dbo].[CargoTrackingCards] ([Id] ,[Code] ,[EnglishName] ,[LocalName] ,[Tenant]) ",
+                                     $"VALUES ('DF-SHIPPER', 'no-shipper', 'No Shipper', N'No Shipper', 0)");
+            ServiceHelper.ExecuteSql(sql, buildCargoArgs.DestinationConnectionString);
         }
 
         private RecordUpdated UpdateCargoTrackingDatabase(CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs, 
