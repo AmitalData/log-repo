@@ -169,12 +169,12 @@ namespace WebFreight.Web.ReportsWebServices
                 DocumentTypeCopy documenttypecopy = (from copy in commonContext.DocumentTypeCopies
                                                      where copy.DocumentTypeId == documentTypeId
                                                      select copy).FirstOrDefault();
-				//received from = bill to name + address
-				Card billToCard = (from a in commonContext.Cards
-								   where a.Id == currentPayment.BillToId
-								   select a).FirstOrDefault();
+                //received from = bill to name + address
+                Card billToCard = (from a in commonContext.Cards
+                                   where a.Id == currentPayment.BillToId
+                                   select a).FirstOrDefault();
 
-				if (currentObjectTable != null)
+                if (currentObjectTable != null)
                 {
                     if (documenttypecopy != null)
                     {
@@ -198,7 +198,7 @@ namespace WebFreight.Web.ReportsWebServices
                         if (address != null)
                         {
 
-                        
+
                             if (!loggedContact.DontShowLocalLabels)
                             {
                                 if (!string.IsNullOrEmpty(billToCard.LocalName))
@@ -207,7 +207,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 }
                             }
 
-                       
+
                             paymentDataProvider.BillToAddress = paymentDataProvider.BillToName + DataProviders.General.GetAddress(address);
                         }
 
@@ -217,14 +217,14 @@ namespace WebFreight.Web.ReportsWebServices
                         // accounting card
                         paymentDataProvider.AccountingCard = billToCard.ReceivablesAccountingCard;
                         paymentDataProvider.ReceivedFrom = paymentDataProvider.BillToName + DataProviders.General.GetAddress(address);
-                        paymentDataProvider.ReceivedFromInLocal = billToCard.LocalName+ Environment.NewLine + DataProviders.General.GetAddress(address);
+                        paymentDataProvider.ReceivedFromInLocal = billToCard.LocalName + Environment.NewLine + DataProviders.General.GetAddress(address);
                         if (billToCard.PartnerTypeId == "CS")
                         {
                             CustomerQuery customerQuery = new CustomerQuery(tenant);
                             CustomerPM customer = customerQuery.GetSinglePM(billToCard.Id, tenant);
                             if (customer != null)
                             {
-                              
+
                                 customFieldResolver.SetDataProviderCustomFieldsValues("Customer", tenant, customer, paymentDataProvider);
                             }
                         }
@@ -245,8 +245,8 @@ namespace WebFreight.Web.ReportsWebServices
                     paymentDataProvider.Today = DateTime.Now.Date;
                     // payment method
                     AccountingPaymentMethod paymentMethod = (from a in invoiceCotnext.AccountingPaymentMethods
-                                                     where a.Id == currentPayment.AccountingPaymentMethodId
-                                                     select a).FirstOrDefault();
+                                                             where a.Id == currentPayment.AccountingPaymentMethodId
+                                                             select a).FirstOrDefault();
                     if (paymentMethod != null)
                     {
                         if (paymentMethod.Code == "CC")
@@ -321,7 +321,7 @@ namespace WebFreight.Web.ReportsWebServices
                     ARPaymentQuery aRPaymentQuery = new ARPaymentQuery(tenant);
                     User createByUserId = aRPaymentQuery.getUserByARPayment(currentPayment);
 
-                   
+
                     if (createByUserId != null)
                     {
                         Contact contact = createByUserId.Contact;
@@ -395,7 +395,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                     //Invoice payments
                     double? totalAmount = 0;
-                    List<ARInvoiceTotalVAT> ARInvoiceTotalVATs = new List<ARInvoiceTotalVAT>();                    
+                    List<ARInvoiceTotalVAT> ARInvoiceTotalVATs = new List<ARInvoiceTotalVAT>();
                     paymentDataProvider.PaidInvoicesList = new List<PaymentDataProvider.InvoicePayments>();
                     List<ARInvoicePayment> invoices = invoiceCotnext.ARInvoicePayments.Include("ARInvoice").Where(inv => inv.ARPaymentId == currentPayment.Id && inv.Tenant == currentPayment.Tenant).ToList();
 
@@ -429,7 +429,7 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         PaymentDataProvider.InvoicePayments reportPayments = new PaymentDataProvider.InvoicePayments();
                         ARInvoiceTotalVATs = invoiceCotnext.ARInvoiceTotalVATs.Where(a => a.Tenant == currentPayment.Tenant && a.ARInvoiceId == item.ARInvoiceId).ToList();
-                        
+
                         reportPayments.InvoiceNumber = item.InvoiceNumber == null ? "" : item.InvoiceNumber;
                         reportPayments.Reference = item.Reference == null ? "" : item.Reference;
                         reportPayments.HAWB = item.HouseNumber == null ? "" : item.HouseNumber;
@@ -452,39 +452,41 @@ namespace WebFreight.Web.ReportsWebServices
                     paymentDataProvider.TotalAmount = totalAmount;
 
                     this.PrintTotalAmountInEnglishAndSpanish(paymentDataProvider, paymentCurrencyLocalName);
-                    
+
                     paymentDataProvider.OutstandingBalance = currentPayment.AmountInPaymentCurrency - totalAmount;
                     paymentDataProvider.Logo = DataProviders.General.GetLogo(tenantSettings.Id);
                 }
 
-				if (!string.IsNullOrEmpty(currentPayment.BillToAddressId))
-				{
-					ComputingPartnerTranslationHelper computingPartnerHelper = new ComputingPartnerTranslationHelper(currentPayment.Tenant);
-					AddressRepository addressReposirory = new AddressRepository(currentPayment.Tenant);
-
-					Address billToAddress = addressReposirory.GetSingleAddress(currentPayment.BillToAddressId, currentPayment.Tenant);
-					string billToCountryCode = (billToAddress != null ? (billToAddress.Country != null ? billToAddress.Country.Code : null) : null);
-					if (billToAddress.Country != null)
-					{
-						paymentDataProvider.BillToCountryCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(billToAddress.Country.Code, "G-Profact", "Country");
-					}
-				}
-
-				if (satSetting != null && (satSetting.SATInterfaceCode == "PROF" || satSetting.SATInterfaceCode == "PROF33") && tenantSettings != null)
+                if (!string.IsNullOrEmpty(currentPayment.BillToAddressId))
                 {
-					this.MapPaymentProfact33Fields(currentPayment, paymentDataProvider, tenantSettings, invoiceCotnext, billToCard);
+                    ComputingPartnerTranslationHelper computingPartnerHelper = new ComputingPartnerTranslationHelper(currentPayment.Tenant);
+                    AddressRepository addressReposirory = new AddressRepository(currentPayment.Tenant);
+
+                    Address billToAddress = addressReposirory.GetSingleAddress(currentPayment.BillToAddressId, currentPayment.Tenant);
+                    string billToCountryCode = (billToAddress != null ? (billToAddress.Country != null ? billToAddress.Country.Code : null) : null);
+                    if (billToAddress.Country != null)
+                    {
+                        paymentDataProvider.BillToCountryCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(billToAddress.Country.Code, "G-Profact", "Country");
+                    }
                 }
 
-                paymentDataProvider.AmountInLocalCurrency =  currentPayment.AmountInLocalCurrency;
+                if (satSetting != null && (satSetting.SATInterfaceCode == "PROF" || satSetting.SATInterfaceCode == "PROF33") && tenantSettings != null)
+                {
+                    this.MapPaymentProfact33Fields(currentPayment, paymentDataProvider, tenantSettings, invoiceCotnext, billToCard);
+                }
+
+                paymentDataProvider.AmountInLocalCurrency = currentPayment.AmountInLocalCurrency;
 
             }
 
-             
+            FillARPaymentCheques(paymentId, tenant, paymentDataProvider);
+
             customFieldResolver.SetDataProviderCustomFieldsValues("ARPayment", tenant, currentPayment, paymentDataProvider);
 
             return paymentDataProvider;
         }
 
+  
         private PaymentDataProvider SetBankData(ARPayment payment, PaymentDataProvider paymentDataProvider)
         {
             BankAccountQueryService bankAccountRepository = new BankAccountQueryService(payment.Tenant);
@@ -761,5 +763,48 @@ namespace WebFreight.Web.ReportsWebServices
 
             return value;
         }
+
+        private static void FillARPaymentCheques(string paymentId, int tenant, PaymentDataProvider paymentDataProvider)
+        {
+            List<ARPaymentChequePM> arPaymentCheques = GetAllARPaymentCheques(paymentId, tenant);
+            paymentDataProvider.ARPaymentCheques = new List<PaymentDataProvider.ARPaymentCheque>();
+            CreateARPaymentCheques(paymentDataProvider, arPaymentCheques);
+        }
+
+        private static List<ARPaymentChequePM> GetAllARPaymentCheques(string paymentId, int tenant)
+        {
+            ARPaymentChequeQueryService aRPaymentChequeQuery = new ARPaymentChequeQueryService(tenant);
+            List<ARPaymentChequePM> arPaymentCheques = aRPaymentChequeQuery.GetListByPaymentId(paymentId, tenant);
+            return arPaymentCheques;
+        }
+
+        private static void CreateARPaymentCheques(PaymentDataProvider paymentDataProvider, List<ARPaymentChequePM> arPaymentCheques)
+        {
+            foreach (ARPaymentChequePM cheque in arPaymentCheques)
+            {
+                AddChequeToARPaymentCheques(paymentDataProvider, CreateSingleARPaymentCheques(cheque));
+            }
+        }
+
+        private static void AddChequeToARPaymentCheques(PaymentDataProvider paymentDataProvider, PaymentDataProvider.ARPaymentCheque ChequeFromDataProvider)
+        {
+            paymentDataProvider.ARPaymentCheques.Add(ChequeFromDataProvider);
+        }
+
+        private static PaymentDataProvider.ARPaymentCheque CreateSingleARPaymentCheques(ARPaymentChequePM cheque)
+        {
+            PaymentDataProvider.ARPaymentCheque ChequeFromDataProvider = new PaymentDataProvider.ARPaymentCheque();
+            ChequeFromDataProvider.ChequeOrPaymentRef = cheque.ChequeNumber;
+            ChequeFromDataProvider.Bank = cheque.BankId;
+            ChequeFromDataProvider.Branch = cheque.BankBranch;
+            ChequeFromDataProvider.Account = cheque.BankAccount;
+            ChequeFromDataProvider.ValueDate = cheque.ValueDate.ToShortDateString();
+            ChequeFromDataProvider.CurrencyCode = cheque.CurrencyCode;
+            ChequeFromDataProvider.LocalAmount = cheque.LocalAmount;
+            ChequeFromDataProvider.ForeignAmount = cheque.ForeignAmount;
+            ChequeFromDataProvider.StatusName = cheque.StatusName;
+            return ChequeFromDataProvider;
+        }
+
     }
 }
