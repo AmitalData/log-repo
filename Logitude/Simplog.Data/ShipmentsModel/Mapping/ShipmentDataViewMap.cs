@@ -373,6 +373,8 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.OnCarriageTransportModeId).HasMaxLength(1).IsUnicode(false);
             this.Property(t => t.OnForwardingTransportModeId).HasMaxLength(1).IsUnicode(false);
             this.Property(t => t.PreForwardingFromPortId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.MainCarriageFromPartnerId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.MainCarriageToPartnerId).HasMaxLength(15).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("ShipmentDataView");
@@ -848,8 +850,9 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.OnCarriageTransportModeId).HasColumnName("OnCarriageTransportModeId");
             this.Property(t => t.OnForwardingTransportModeId).HasColumnName("OnForwardingTransportModeId");
             this.Property(t => t.PreForwardingFromPortId).HasColumnName("PreForwardingFromPortId");
-
             this.Property(t => t.IsStandalonePickupDelivery).HasColumnName("IsStandalonePickupDelivery");
+            this.Property(t => t.MainCarriageFromPartnerId).HasColumnName("MainCarriageFromPartnerId");
+            this.Property(t => t.MainCarriageToPartnerId).HasColumnName("MainCarriageToPartnerId");
         }
     }
 }
