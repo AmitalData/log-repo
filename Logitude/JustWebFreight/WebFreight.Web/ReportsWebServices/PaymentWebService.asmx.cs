@@ -764,21 +764,21 @@ namespace WebFreight.Web.ReportsWebServices
             return value;
         }
 
-        private static void FillARPaymentCheques(string paymentId, int tenant, PaymentDataProvider paymentDataProvider)
+        private  void FillARPaymentCheques(string paymentId, int tenant, PaymentDataProvider paymentDataProvider)
         {
             List<ARPaymentChequePM> arPaymentCheques = GetAllARPaymentCheques(paymentId, tenant);
             paymentDataProvider.ARPaymentCheques = new List<PaymentDataProvider.ARPaymentCheque>();
             CreateARPaymentCheques(paymentDataProvider, arPaymentCheques);
         }
 
-        private static List<ARPaymentChequePM> GetAllARPaymentCheques(string paymentId, int tenant)
+        private  List<ARPaymentChequePM> GetAllARPaymentCheques(string paymentId, int tenant)
         {
             ARPaymentChequeQueryService aRPaymentChequeQuery = new ARPaymentChequeQueryService(tenant);
             List<ARPaymentChequePM> arPaymentCheques = aRPaymentChequeQuery.GetListByPaymentId(paymentId, tenant);
             return arPaymentCheques;
         }
 
-        private static void CreateARPaymentCheques(PaymentDataProvider paymentDataProvider, List<ARPaymentChequePM> arPaymentCheques)
+        private  void CreateARPaymentCheques(PaymentDataProvider paymentDataProvider, List<ARPaymentChequePM> arPaymentCheques)
         {
             foreach (ARPaymentChequePM cheque in arPaymentCheques)
             {
@@ -786,12 +786,12 @@ namespace WebFreight.Web.ReportsWebServices
             }
         }
 
-        private static void AddChequeToARPaymentCheques(PaymentDataProvider paymentDataProvider, PaymentDataProvider.ARPaymentCheque ChequeFromDataProvider)
+        private  void AddChequeToARPaymentCheques(PaymentDataProvider paymentDataProvider, PaymentDataProvider.ARPaymentCheque ChequeFromDataProvider)
         {
             paymentDataProvider.ARPaymentCheques.Add(ChequeFromDataProvider);
         }
 
-        private static PaymentDataProvider.ARPaymentCheque CreateSingleARPaymentCheques(ARPaymentChequePM cheque)
+        private  PaymentDataProvider.ARPaymentCheque CreateSingleARPaymentCheques(ARPaymentChequePM cheque)
         {
             PaymentDataProvider.ARPaymentCheque ChequeFromDataProvider = new PaymentDataProvider.ARPaymentCheque();
             ChequeFromDataProvider.ChequeOrPaymentRef = cheque.ChequeNumber;
