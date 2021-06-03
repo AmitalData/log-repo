@@ -23,6 +23,13 @@ namespace Logitude.CargoTrackingTests.Steps
             ShipmentContext = shipmentContext;
         }
 
+        [Given(@"a direct shipment")]
+        public void GivenADirectShipment()
+        {
+            ShipmentPM MasterShipment = GetValidShipmentPM("D", null);
+            ShipmentContext.DirectShipment = CreateAndGetShipment(MasterShipment);
+        }
+
         [Given(@"a master shipment")]
         public void GivenAMasterShipment()
         {

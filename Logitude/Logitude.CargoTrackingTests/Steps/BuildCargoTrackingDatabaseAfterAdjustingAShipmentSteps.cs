@@ -1,4 +1,5 @@
-﻿using Logitude.CargoTracking.BL.CargoTrackingServices.Services;
+﻿using FluentAssertions;
+using Logitude.CargoTracking.BL.CargoTrackingServices.Services;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelper;
 using Logitude.CargoTrackingTests.Models;
 using Logitude.CargoTrackingTests.Services;
@@ -24,20 +25,22 @@ namespace Logitude.CargoTrackingTests.Steps
         [When(@"Updating a shipments GrossWeight and building cargo tables")]
         public void WhenUpdatingAShipmentsGrossWeightAndBuildingCargoTables()
         {
-            ApiResponse<ShipmentPM> response = UpdateShipmentGrossWeight(ShipmentContext.HouseShipment);
+            ApiResponse<ShipmentPM> response = UpdateShipmentGrossWeight(ShipmentContext.DirectShipment);
             CargoTrackingBuildService cargoTrackingBuildService = new CargoTrackingBuildService();
             string sourceConnectionString = "Data Source=.;Initial Catalog=Logitude2-5_Main;Integrated Security=False;Persist Security Info=True;User ID=sa;Password=Saas256;MultipleActiveResultSets=True;Connect Timeout=60";
             string destinationConnectionString = "Data Source=.;Initial Catalog=Logitude2-5_CargoTracking;Integrated Security=False;Persist Security Info=True;User ID=sa;Password=Saas256;MultipleActiveResultSets=True;Connect Timeout=60";
             cargoTrackingBuildService.BuildCargoTrackingTables(sourceConnectionString,destinationConnectionString);
-
+            
         }
 
-        
+      
 
         [Then(@"the GrossWeight of the cargo tracking shipment with the same id will be updated")]
         public void ThenTheGrossWeightOfTheCargoTrackingShipmentWithTheSameIdWillBeUpdated()
         {
-            ScenarioContext.Current.Pending();
+            ApiResponse<CargoTrackingShipmentList> cargoTrackingShipmentResponse = 
+                GetUpdatedCargoTrackingShipment(ShipmentContext.DirectShipment.SecurityKey,ShipmentContext.DirectShipment.Tenant);
+            cargoTrackingShipmentResponse.Data.GrossWeight.Should().Be(200);
         }
 
         private ApiResponse<ShipmentPM> UpdateShipmentGrossWeight(ShipmentPM shipment)
@@ -49,6 +52,11 @@ namespace Logitude.CargoTrackingTests.Steps
         private double? GetNewGrossWeightValue(double? grossWeight)
         {
             return grossWeight + 100;
+        }
+
+        private ApiResponse<CargoTrackingShipmentList> GetUpdatedCargoTrackingShipment(string securityKey,int tenant)
+        {
+            return APICaller.CallGet<CargoTrackingShipmentList>(Urls.CargoTrackingShipmentGetSingleList(securityKey,tenant), UserTenant.Token);
         }
 
 

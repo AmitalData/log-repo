@@ -221,6 +221,30 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         }
 
 
+        [HttpGet]
+        public HttpResponseMessage GetSingleShipmentList(string SecurityKey, int tenant)
+        {
+            try
+            {
+
+
+                ICargoTrackingContext MyContext = CargoTrackingContext.GetContext(tenant);
+                CargoTrackingShipmentListQueryService shipmentsQuery = new CargoTrackingShipmentListQueryService(MyContext);
+
+                CargoTrackingShipmentList shipment = shipmentsQuery.GetShipment(SecurityKey, tenant);
+
+               
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, shipment);
+
+                return reponseMessage;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
     }
 
     public class CargoTrackingSearchArgs

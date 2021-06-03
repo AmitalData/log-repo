@@ -43,5 +43,6 @@ namespace Logitude.CargoTrackingTests.Models
         public string ShipmentReceivableStatusName { get; set; }
         public string ShipmentReceivableStatusCode { get; set; }
         public double? GrossWeight { get; set; }
+        public string SecurityKey { get; set; }
     }
 }

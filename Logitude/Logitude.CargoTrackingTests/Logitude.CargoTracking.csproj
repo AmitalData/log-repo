@@ -113,6 +113,7 @@
   <ItemGroup>
     <Compile Include="Hooks\BeforeTestRun.cs" />
     <Compile Include="Models\Builders\ShipmentBuilder.cs" />
+    <Compile Include="Models\CargoTrackingShipmentList.cs" />
     <Compile Include="Models\PackagePM.cs" />
     <Compile Include="Models\PayablesPM.cs" />
     <Compile Include="Models\ShipmentContext.cs" />
