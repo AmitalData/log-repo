@@ -582,6 +582,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
 
             this.SetLastFreeDate();
             this.PricesChanged = true;
+            this.ComputeGrossWeight_PerStorageDays();
         }
     }
 
