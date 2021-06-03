@@ -313,7 +313,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                         if (r.OrderDate == graterThen_OpenTransactionsFutureDueDate)
                         {
-                            r.OrderAfterOpenrECODueDate = true;
+                            r.OrderAfterOpenRecordDueDate = true;
                         }
                     });
 
@@ -517,7 +517,7 @@ _Param.AgingForDate.Date, false, true, true, false);
                  {
 
                      OrderDate = graterThen_OpenTransactionsFutureDueDate,
-                     OrderAfterOpenrECODueDate = true,
+                     OrderAfterOpenRecordDueDate = true,
                      AccountId = groupByAccCurrr.Key.AccountId,
                      CurrencyId = groupByAccCurrr.Key.CurrencyId,///GLAccount that is not multi Currency Get Foreign 
                      Total = groupByAccCurrr.Sum(rec => (decimal)rec.ForeignAmountDebit - (decimal)rec.ForeignAmountCredit),
@@ -542,7 +542,7 @@ _Param.AgingForDate.Date, false, true, true, false);
                     {
 
                         OrderDate = graterThen_OpenTransactionsFutureDueDate,
-                        OrderAfterOpenrECODueDate = true,
+                        OrderAfterOpenRecordDueDate = true,
                         AccountId = groupByAccCurrr.Key.AccountId,
                         CurrencyId = _AccountingCurrencyId,
                         Total = groupByAccCurrr.Sum(rec => rec.LocalAmountDebit - rec.LocalAmountCredit),
@@ -1016,7 +1016,7 @@ _Param.AgingForDate.Date, false, true, true, false);
                            {
 
                                OrderDate = graterThen_OpenTransactionsFutureDueDate,
-                               OrderAfterOpenrECODueDate = true,
+                               OrderAfterOpenRecordDueDate = true,
                                AccountId = groupByAccCurrr.Key.AccountId,
 
                                Total = groupByAccCurrr.Sum(rec => rec.Total),
