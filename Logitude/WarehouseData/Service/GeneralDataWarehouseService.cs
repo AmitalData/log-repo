@@ -60,7 +60,6 @@ namespace WarehouseData.Helper
         private string GetDataWarehouseSqlFieldType(DWObjectFieldDB field)
         {
             string sqlFieldtype = string.Empty;
-
             if (field.DataTypeCode == "nText") sqlFieldtype += "nvarchar(" + field.MaxLength + ")";
             else if (field.DataTypeCode == "Text") sqlFieldtype += "varchar(" + field.MaxLength + ")";
             else if (field.DataTypeCode == "Boolean") sqlFieldtype += " bit";

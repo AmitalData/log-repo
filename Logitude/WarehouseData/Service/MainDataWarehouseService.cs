@@ -141,6 +141,12 @@ namespace WarehouseData.Helper
         }
 
 
+        public void ExecuteFixedDimensionScripts( string connectionString)
+        {
+            ExecuteScript("BuildWarehouse", "BuildDateDimensionsTable", connectionString);
+            ExecuteScript("BuildWarehouse", "BuildInvoiceFiltersDimensionsTable", connectionString);
+        }
+
         #region Service Method
         public void BuildDataWarehouse(string sourceConnectionString, string destinationConnectionString, int? privateTenant = null, string relatedTenants = null)
         {
@@ -178,8 +184,8 @@ namespace WarehouseData.Helper
                 this.dWDataWarehouseService.UpdateAutomaticLastUpdate(table, sourceConnectionString, destinationConnectionString, privateTenant);
             }
 
-            ExecuteScript("BuildWarehouse", "BuildDateDimensionsTable", destinationConnectionString);
-
+            // ExecuteScript("BuildWarehouse", "BuildDateDimensionsTable", destinationConnectionString);
+            ExecuteFixedDimensionScripts(destinationConnectionString);
             RunAdditionalScripte(destinationConnectionString, tableNameLists);
 
 

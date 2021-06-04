@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<entity Id="&quot;21868cc5-d5c2-4e60-9cc1-497700847542&quot;" Code="&quot;DIM_InvoiceFilters&quot;" Name="&quot;DIM_InvoiceFilters&quot;" TypeCode="&quot;Dimension&quot;" IsClosed="true" DefaultFilterBy="&quot;[Name]&quot;" HasPivotColumn="false" HasCustomFields="false" MaxNumberOfCustomFields="0">
+  <fields>
+    <field Id="&quot;2a69e3e8-da0a-40e4-9fcf-f811bc62a659&quot;" Code="&quot;[Code]&quot;" Name="&quot;Code&quot;" DataTypeCode="&quot;Text&quot;" IsRequired="true" MinLength="0" MaxLength="2" IsPrimaryKey="false" IsMeasurement="false" DisplayInQueryBuilder="true" HideTree="false" CannotFilter="false" IsCustom="false" DontDisplayInView="false" IsMultipleSelection="false" />
+    <field Id="&quot;87a4947e-7ae8-403d-a715-6c05789d5b20&quot;" Code="&quot;[Name]&quot;" Name="&quot;Name&quot;" DataTypeCode="&quot;Text&quot;" IsRequired="true" MinLength="0" MaxLength="15" IsPrimaryKey="true" IsMeasurement="false" DisplayInQueryBuilder="true" HideTree="false" CannotFilter="false" IsCustom="false" DontDisplayInView="false" IsMultipleSelection="false" />
+  </fields>
+</entity>

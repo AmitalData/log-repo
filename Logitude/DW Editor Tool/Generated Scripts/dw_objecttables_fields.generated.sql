@@ -299,6 +299,17 @@ declare @DIM_IncotermsInActiveNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_IncotermsInActiveNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_IncotermsInActiveNewId,0,'DIM_Incoterms','[InActive]','InActive','Boolean','false',0,0,'false','false','true','false','false','false','false','false')  
 ------------------------------------------------------------------------------------
+declare @DIM_InvoiceFiltersNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_InvoiceFiltersNewId OUTPUT,'DWObjectTable' 
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn,HasCustomFields,MaxNumberOfCustomFields) Values(@DIM_InvoiceFiltersNewId,0,'','DIM_InvoiceFilters','DIM_InvoiceFilters','Dimension','true','[Name]','false','false',0)  
+--Fields --
+declare @DIM_InvoiceFiltersCodeNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_InvoiceFiltersCodeNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_InvoiceFiltersCodeNewId,0,'DIM_InvoiceFilters','[Code]','Code','Text','true',0,2,'false','false','true','false','false','false','false','false')  
+declare @DIM_InvoiceFiltersNameNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_InvoiceFiltersNameNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_InvoiceFiltersNameNewId,0,'DIM_InvoiceFilters','[Name]','Name','Text','true',0,15,'true','false','true','false','false','false','false','false')  
+------------------------------------------------------------------------------------
 declare @DIM_InvoiceStatusNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_InvoiceStatusNewId OUTPUT,'DWObjectTable' 
 insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn,HasCustomFields,MaxNumberOfCustomFields) Values(@DIM_InvoiceStatusNewId,0,'','DIM_InvoiceStatus','DIM_InvoiceStatus','Dimension','true','[Name]','false','false',0)  
@@ -1153,9 +1164,6 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_InvoicesShipmentNumberNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_InvoicesShipmentNumberNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@Fact_InvoicesShipmentNumberNewId,0,'Fact_Invoices','[Shipment Number]','Shipment Number','Text','false',0,1000,'false','false','true','General','false','false','false','false','false')  
-declare @Fact_InvoicesAR_APInvoiceNewId varchar(15)
-execute usp_GetNextTableIdValue @Fact_InvoicesAR_APInvoiceNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@Fact_InvoicesAR_APInvoiceNewId,0,'Fact_Invoices','[AR_AP Invoice]','AR_AP Invoice','Text','false',0,15,'false','false','true','General','false','false','false','false','false')  
 declare @Fact_InvoicesMainEntityIdNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_InvoicesMainEntityIdNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@Fact_InvoicesMainEntityIdNewId,0,'Fact_Invoices','[Main Entity Id]','Main Entity Id','Text','false',0,15,'false','false','false','false','false','false','true','false')  
@@ -1165,6 +1173,9 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_InvoicesBillToNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_InvoicesBillToNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_InvoicesBillToNewId,0,'Fact_Invoices','[Bill To]','Bill To','Dimension','false',0,0,'DIM_Partners','false','false','true','Partners','false','false','false','ARInvoice.BillToId','false','false')  
+declare @Fact_InvoicesAR_APInvoiceNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_InvoicesAR_APInvoiceNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@Fact_InvoicesAR_APInvoiceNewId,0,'Fact_Invoices','[AR_AP Invoice]','AR_AP Invoice','Dimension','false',0,0,'DIM_InvoiceFilters','false','false','true','false','false','false','false','false')  
 ------------------------------------------------------------------------------------
 declare @Fact_MasterChargesNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_MasterChargesNewId OUTPUT,'DWObjectTable' 
