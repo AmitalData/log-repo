@@ -17,6 +17,7 @@ import { BaseRequestsSheetMassaging, IRequestsSheetMassagingComponent } from '..
 import { CustomSendOptionsArgs } from '../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import { CustomMessageProgressComponent } from '../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
+import { CargoIdentifireTypeListService } from '../../../../Customs/Services/StandardLists/CargoIdentifireTypeListService';
 
 @Component({
     selector: 'DeclarationStatusComponent',
@@ -32,6 +33,7 @@ export class DeclarationStatusComponent
     public ObjectTableName: string = "Customs.Declaration";
     public IsShowAvailabiltyQuantitiesList: boolean = false;
 
+    _CargoIdentifireTypeListService: CargoIdentifireTypeListService = new CargoIdentifireTypeListService();
     _DeclarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
     _DeclarationMessagesService: DeclarationMessagesService = new DeclarationMessagesService();
 
@@ -74,6 +76,7 @@ export class DeclarationStatusComponent
         }
     }
 
+    isExportDeclaration:boolean = false;
     SetMenuArg(MenuArg) {
         this.OnMassageDisplayMethod();
         this.DeclarationNumber = MenuArg.DeclarationNumber;
@@ -83,6 +86,7 @@ export class DeclarationStatusComponent
                 .subscribe((myResponse: ServiceResponse) => {
                     if (myResponse.Result != null) {
                         if (myResponse.Result.Direction == 'E') {
+                            this.isExportDeclaration = true;
                             this._DeclarationExtendedListService.GetConsignmentListPMByCustomFileNo(this.CustomFileNo)
                                 .subscribe((Response: ServiceResponse) => {
                                     if (Response.Result != null) {
@@ -90,6 +94,7 @@ export class DeclarationStatusComponent
                                         this.ManifestNumber = Response.Result[0].ManifestNumber;
                                         this.SecondCargoID = Response.Result[0].SecondCargoID;
                                         this.ThirdCargoID = Response.Result[0].ThirdCargoID;
+
                                     }
                                 });
                         }
@@ -164,6 +169,24 @@ export class DeclarationStatusComponent
     set CargoTypeCode(value: string) {
         if (this.RequestParams.CargoTypeCode != value) {
             this.RequestParams.CargoTypeCode = value;
+            if (this.isExportDeclaration) {
+                this._CargoIdentifireTypeListService.getSingleFromCache(this.CargoTypeCode)
+                    .subscribe((Response: ServiceResponse) => {
+                        if (Response.Result != null) {
+                            this.UIProperties.SetRequired("ManifestNumber", this.ObjectTableName, true);
+                            if (Response.Result.IsKey2Mandatory) {
+                                this.UIProperties.SetRequired("SecondCargoID", this.ObjectTableName, true);
+                            } else {
+                                this.UIProperties.SetRequired("SecondCargoID", this.ObjectTableName, false);
+                            }
+                            if (Response.Result.IsKey3Mandatory) {
+                                this.UIProperties.SetRequired("ThirdCargoID", this.ObjectTableName, true);
+                            } else {
+                                this.UIProperties.SetRequired("ThirdCargoID", this.ObjectTableName, false);
+                            }
+                        }
+                    });
+            }
         }
     }
 
