@@ -1,0 +1,90 @@
+<div class="MediaFillRelative">
+    <div style="margin:10px" class="MediaFillAbsolute"> 
+        <button style="width:55px;position: relative; margin-bottom: 8px;" class="Button" (click)="OpenUpLoadTemplateFile()">Upload</button>
+        
+        <input [attr.accept]="'.PDF'" [attr.id]="VersionDocumentId" type="file" (change)="UpLoadTemplateFileMethod($event)" style="display:none" class="upload" />
+
+        <table>
+
+            <tr style="height:90%">
+                <td class="CellStretch">
+                    <div class="SimpleGridView">
+                        <div class="SimpleGridViewHeader">
+
+                            <table>
+                                <tr>
+
+                                    <td style="width: 150px; min-width: 150px; max-width: 150px;">Document Field Name</td>
+                                    <td style="width: 60px; min-width: 60px; max-width: 60px;"></td>
+
+
+                                    <td class="LastChild" style="min-width: 20px;">
+                                        <div></div>
+                                    </td>
+
+                                </tr>
+                            </table>
+                        </div>
+
+
+                        <div class="SimpleGridViewBody">
+                            <table>
+                                <tr (click)="TermsofUseSelectedViewModel=item" [class.RowSelected]="item === TermsofUseSelectedViewModel" class="SimpleGridViewRow RowHover" *ngFor="let item of DocumentDefaultExternalAttachments">
+
+                                    <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px; position: relative;">
+                                        <div style="display:inline-block">
+
+                                            <span><a (click)="ViewFile(item)"> {{item.Name}}</a></span>
+
+                                        </div>
+                                    </td>
+
+
+                                    <td class="GridViewCell" style="width: 60px; min-width: 60px; max-width: 60px;">
+                                        <div style="font-size:11px;text-align:left"><a (click)="ViewFile(item)" style="margin-left:0px;color:#0094ff;font-size:12px;text-align:left">Remove</a></div>
+                                    </td>
+
+
+                                    <td class="LastChild" style="min-width: 20px;">
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="2">
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+            <tr style="min-height: 40px;max-height:40px;height:40px">
+                <td>
+                    <table>
+                        <tr>
+                            <td>
+                                <div></div>
+                            </td>
+                            <td style="width: 57px;vertical-align: bottom;">
+                                <button class="Button" (click)="CloseButtonClicked()">{{'General.B.Cancel' |TextCodeTranslationPipe}}</button>
+                            </td>
+                            <td style="width: 10px;"><div></div></td>
+                            <td style="width: 50px;vertical-align: bottom;">
+                                <button class="RedButton" (click)="SaveButtonClicked()">{{'General.B.Ok' |TextCodeTranslationPipe}}</button>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+        </table>
+
+
+    </div>
+</div>

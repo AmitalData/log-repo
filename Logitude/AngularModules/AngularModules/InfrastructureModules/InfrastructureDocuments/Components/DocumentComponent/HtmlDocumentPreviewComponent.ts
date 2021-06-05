@@ -1182,7 +1182,18 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
     }
 
     AddDefultExternalAttachments() {
-
+        // here
+        var windowArgs: any = {};
+        var tableName: string = "";
+        var tableId: string = !AppTool.IsNullOrEmpty(this.ChildObjectTableId) ? this.ChildObjectTableId : this.ObjectTableId;
+        windowArgs.ObjectTableId = tableId;
+        windowArgs.DocumentTypeTemplatePM = this.template;
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Attach External Documents";
+        logWindow.Width = 600;
+        logWindow.Height = 500;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Show("./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocumentDefaultExternalAttachmentsComponent");
     }
 
 }
