@@ -15,7 +15,7 @@ import { DocumentTypeTemplatePM } from '../../../../Common/EntityPMs/DocumentTyp
 import { DocumentExtendedService } from '../../../../Common/Services/ExtendedPMs/DocumentExtendedService';
 import { DocumentPM } from '../../../../Common/EntityPMs/DocumentPM';
 import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
-
+declare var querySelection, StringToBase64, resultToUnitArray: any;
 
 
 @Component({
@@ -33,6 +33,7 @@ export class DocumentDefaultExternalAttachmentsComponent implements OnInit {
     DocumentTypeTemplateId: string;
     AttachedExternalDocumentsIds: string;
     TemplateExternalAttachmentsIds: string[] = [];
+    ExternalDocumentId: string = Guid.NewRandomString();
 
     private documentExtendedService: DocumentExtendedService = new DocumentExtendedService();
     //DocumentExtended
@@ -90,6 +91,53 @@ export class DocumentDefaultExternalAttachmentsComponent implements OnInit {
     }
 
 
+    // Upload New Document
+    OpenUpLoadTemplateFile() {
+        document.getElementById(this.ExternalDocumentId).click();
+
+    }
+
+
+    FileName: string;
+    UpLoadTemplateFileMethod(event: any) {
+
+        var file = querySelection(this.ExternalDocumentId);
+
+        if (file) {
+            var fileExtension = file.name.split('.')[1];
+            this.FileName = file.name.split('.')[0];
+
+            if (fileExtension) { 
+                    this.ConvertArrayBufferToBase64(file, this);
+                }
+             
+        }
+
+    }
+
+    ConvertArrayBufferToBase64(file: any, viewmodel: any) {
+
+        var reader: FileReader = new FileReader();
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            var binary = '';
+            var bytes = new Uint8Array(resultToUnitArray(e));
+            var len = bytes.byteLength;
+            for (var i = 0; i < len; i++) {
+                binary += String.fromCharCode(bytes[i]);
+            }
+            viewmodel.createDocument(window.btoa(binary));
+        };
+
+        reader.onerror = function (e) {
+
+        };
+        reader.readAsArrayBuffer(file);
+
+
+    }
+
+ 
     ViewFile(item: DocumentPM) {
 
         var documentName = item.Id

@@ -76,7 +76,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         public List<DocumentDefultAttachment> DocumentDefultAttachments { get; set; }
 
-
+        [DataMember]
+        public List<Documents> ExternalDocuments { get; set; }
 
         //         this.Property(t => t.CountryCode).IsFixedLength().IsUnicode(false).HasMaxLength(2);
 
