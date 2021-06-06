@@ -54,12 +54,12 @@ namespace Logitude.Accounting.BL.CoreBL
             tenant = _tenant;
         }
 
-        public MatchedReconciliationLines GetMatchedLines(AutoExternalReconcileArgs args)
+        public MatchedReconciliationLines GetMatchedLines(AutoExternalReconcileArgs args, string transferAccountId)
         {
             ValidateParameters(args);
 
             externalPageLines = GetFilteredPageLines(args);
-            ledgerTransactions = GetFilteredLedgerTransactions(args);
+            ledgerTransactions = GetFilteredLedgerTransactions(args, transferAccountId);
 
             if (externalPageLines.Count > 0 && ledgerTransactions.Count > 0)
             {
@@ -609,11 +609,11 @@ namespace Logitude.Accounting.BL.CoreBL
             return pageLinesDTO.ToList();
         }
 
-        List<MyLedgerTransaction> GetFilteredLedgerTransactions(AutoExternalReconcileArgs args)
+        List<MyLedgerTransaction> GetFilteredLedgerTransactions(AutoExternalReconcileArgs args, string transferAccountId)
         {
             var accountingContext = AccountingContext.GetContext(tenant);
             LedgerTransactionListQueryService query = new LedgerTransactionListQueryService(accountingContext);
-            IQueryable<LedgerTransactionList> iQuerableList = query.GetIquerableOpenReconciliationFilterList(args.TransactionQueryOperations, args.GLAccountId, tenant);
+            IQueryable<LedgerTransactionList> iQuerableList = query.GetIquerableOpenReconciliationFilterList(args.TransactionQueryOperations, args.GLAccountId,transferAccountId, tenant);
             IQueryable<MyLedgerTransaction> linesDTO = (from a in iQuerableList
                                                             select new MyLedgerTransaction()
                                                             {

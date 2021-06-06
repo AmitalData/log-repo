@@ -258,7 +258,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 };
 
                 var automaticExternalReconcileService = new AutomaticExternalReconcileService(tenant);
-                MatchedReconciliationLines matchedLines = automaticExternalReconcileService.GetMatchedLines(args );
+                MatchedReconciliationLines matchedLines = automaticExternalReconcileService.GetMatchedLines(args, TransferGlAccountId );
 
                 ServiceResponse response = new ServiceResponse();
                 response.Result = matchedLines;
