@@ -187,7 +187,7 @@ namespace WarehouseData.Helper
                         {
                             field.DataTypeCode = "DateTime";
                         }
-                        else if (field.DimensionTableCode == "DIM_InvoiceFilters")
+                        else if (field.DimensionTableCode == "DIM_InvoiceMainTypes")
                         {
                             field.DataTypeCode = "Text";
                             field.MaxLength = 15;

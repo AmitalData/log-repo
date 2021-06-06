@@ -210,7 +210,7 @@
     <Content Include="WarehouseScript\BuildWarehouse\BuildIncotermDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="WarehouseScript\BuildWarehouse\BuildInvoiceFiltersDimensionsTable.sql" />
+    <Content Include="WarehouseScript\BuildWarehouse\BuildInvoiceMainTypesDimensionsTable.sql" />
     <Content Include="WarehouseScript\BuildWarehouse\BuildInvoiceStatusDimensionTable.sql" />
     <Content Include="WarehouseScript\BuildWarehouse\BuildInvoiceTypesDimensionTable.sql" />
     <Content Include="WarehouseScript\BuildWarehouse\BuildMoveTypeDimensionTable.sql">

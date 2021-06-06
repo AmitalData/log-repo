@@ -144,7 +144,7 @@ namespace WarehouseData.Helper
         public void ExecuteFixedDimensionScripts( string connectionString)
         {
             ExecuteScript("BuildWarehouse", "BuildDateDimensionsTable", connectionString);
-            ExecuteScript("BuildWarehouse", "BuildInvoiceFiltersDimensionsTable", connectionString);
+            ExecuteScript("BuildWarehouse", "BuildInvoiceMainTypesDimensionsTable", connectionString);
         }
 
         #region Service Method
