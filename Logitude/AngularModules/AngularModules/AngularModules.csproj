@@ -2935,6 +2935,7 @@
     <TypeScriptCompile Include="Invoice\EntityPMs\ARInvoiceStockLinePM.ts" />
     <TypeScriptCompile Include="Invoice\EntityPMs\ARInvoiceStockPM.ts" />
     <TypeScriptCompile Include="Invoice\EntityPMs\ARPaymentChequeReplicaPM.ts" />
+    <TypeScriptCompile Include="Invoice\Services\ExtendedPMs\ARInvoiceExtendedService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\AccountingPaymentMethodListService.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\Components\EditTabs\APEditMultiCurrency.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\APPaymentTransferStatusListService.ts" />

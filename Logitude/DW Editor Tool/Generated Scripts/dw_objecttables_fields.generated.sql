@@ -305,10 +305,10 @@ insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,Defa
 --Fields --
 declare @DIM_InvoiceFiltersCodeNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_InvoiceFiltersCodeNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_InvoiceFiltersCodeNewId,0,'DIM_InvoiceFilters','[Code]','Code','Text','true',0,2,'false','false','true','false','false','false','false','false')  
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,LOVAdditionalColumns,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_InvoiceFiltersCodeNewId,0,'DIM_InvoiceFilters','[Code]','Code','Text','true',0,2,'false','false','true','[Name]','false','false','false','false','false')  
 declare @DIM_InvoiceFiltersNameNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_InvoiceFiltersNameNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_InvoiceFiltersNameNewId,0,'DIM_InvoiceFilters','[Name]','Name','Text','true',0,15,'true','false','true','false','false','false','false','false')  
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,LOVAdditionalColumns,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_InvoiceFiltersNameNewId,0,'DIM_InvoiceFilters','[Name]','Name','Text','true',0,15,'true','false','true','[Code]','false','false','false','false','false')  
 ------------------------------------------------------------------------------------
 declare @DIM_InvoiceStatusNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_InvoiceStatusNewId OUTPUT,'DWObjectTable' 
@@ -1066,7 +1066,7 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 ------------------------------------------------------------------------------------
 declare @Fact_InvoicesNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_InvoicesNewId OUTPUT,'DWObjectTable' 
-insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DataViewName,HasPivotColumn,AdditionalFactCode,AdditionalFactForeignKey,RecordType,DisplayName,ObjectTableName,HasCustomFields,MaxNumberOfCustomFields,AdditionalFactRelationType) Values(@Fact_InvoicesNewId,0,'','Fact_Invoices','Fact_Invoices','Fact','false','factInvoices','false','Fact_Shipments','[Main Entity Id]','ARInvoices','Invoices','ARInvoice','false',0,'left')  
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DataViewName,HasPivotColumn,AdditionalFactCode,AdditionalFactForeignKey,RecordType,DisplayName,ObjectTableName,HasCustomFields,MaxNumberOfCustomFields,AdditionalFactRelationType) Values(@Fact_InvoicesNewId,0,'<ArrayOfIndexItem xmlns:i="http://www.w3.org/2001/XMLSchema-instance"><IndexItem> <Columns>[Source Tenant],[Create Date]</Columns></IndexItem><IndexItem> <Columns>[Source Tenant],[Main Entity Id]</Columns></IndexItem></ArrayOfIndexItem>','Fact_Invoices','Fact_Invoices','Fact','false','factInvoices','false','Fact_Shipments','[Main Entity Id]','ARInvoices','Invoices','ARInvoice','false',0,'left')  
 --Fields --
 declare @Fact_InvoicesId_NumberNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_InvoicesId_NumberNewId OUTPUT,'DWObjectField' 

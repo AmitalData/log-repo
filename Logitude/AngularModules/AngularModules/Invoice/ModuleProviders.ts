@@ -41,6 +41,7 @@ import {APPaymentMenuButtonsHandler} from './Components/MenuButtons/APPaymentMen
 import {ARInvoiceMenuButtonsHandler} from './Components/MenuButtons/ARInvoiceMenuButtonsHandler';
 import { ARPaymentMenuButtonsHandler } from './Components/MenuButtons/ARPaymentMenuButtonsHandler';
 import { ARInvoiceStockMenuButtonsHandler } from './Components/MenuButtons/ARInvoiceStockMenuButtonsHandler';
+import { ARInvoiceExtendedService } from './Services/ExtendedPMs/ARInvoiceExtendedService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -85,12 +86,14 @@ export class ModuleProviders {
             case "AccountingPaymentMethodListService": { myResult = new AccountingPaymentMethodListService(); break; }
             case "APPaymentTransferStatusListService": { myResult = new APPaymentTransferStatusListService(); break; }
             case "ARInvoiceStockPMService": { myResult = new ARInvoiceStockPMService(); break; }
+            case "ARInvoiceExtendedService": { myResult = new ARInvoiceExtendedService(); break; }
 
             case "APInvoiceMenuButtonsHandler": { myResult = new APInvoiceMenuButtonsHandler(); break; }
             case "APPaymentMenuButtonsHandler": { myResult = new APPaymentMenuButtonsHandler(); break; }
             case "ARInvoiceMenuButtonsHandler": { myResult = new ARInvoiceMenuButtonsHandler(); break; }
             case "ARPaymentMenuButtonsHandler": { myResult = new ARPaymentMenuButtonsHandler(); break; }
-            case "ARInvoiceStockMenuButtonsHandler": { myResult = new ARInvoiceStockMenuButtonsHandler(); break; }
+            case "ARInvoiceStockMenuButtonsHandler": { myResult = new ARInvoiceStockMenuButtonsHandler(); break; } 
+                 
         }
 
         return myResult;
