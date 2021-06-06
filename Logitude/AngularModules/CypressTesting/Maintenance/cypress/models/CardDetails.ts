@@ -9,5 +9,5 @@ export interface CardDetails {
     State:string,
     Phone : string ,
     Fax :string ,
-    Website:string,
+    Website:string
 }
