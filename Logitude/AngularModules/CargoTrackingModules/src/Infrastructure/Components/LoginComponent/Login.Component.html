@@ -1,12 +1,12 @@
 <div class="limiter">
     <div class="container-login">
-        <div class="container-login-child">
+        <div class="container-login-child" style="background-size: contain;" [style.background-image]="BackGroundImg">
             <div class="wrap-login">
                 <div class="login-form">
                     <div>
                         <img alt="" class="logo-img" src="{{LogoImgSrc}}">
                     </div>
-
+                     
                     <div class="wrap-input">
                         <input #input class="input" placeholder="Email" [(ngModel)]="Email" type="text" name="email">
                     </div>
