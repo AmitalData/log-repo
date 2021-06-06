@@ -11,6 +11,7 @@ import { ShipmentContext } from '../../models/ShipmentContext';
 let MasterShipmentDetails: ShipmentDetails;
 let shipmentDetails: ShipmentDetails;
 let EventNote ; 
+let shipmentNumber: string;
 
 //#endregion
 
@@ -63,7 +64,8 @@ When("cancel the master shipment with {string} Note", (note) => {
     Actions.CancelShipment(note);
   });
   Then("the house should Cancel successfully", () => {
-    //cy.get(BaseSelectors.RowClass).eq(0).click();
+    let HouseNumber = Actions.GetHouseNumber().toString();
+    cy.get('.HyperlinkButtonControl').contains(HouseNumber).Click
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
     Actions.ValidateCancelIconExist(true);
     Actions.ValidateShipmentEventActions(ShipmentSelectors.EventsTab,EventNote);

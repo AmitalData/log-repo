@@ -19,6 +19,7 @@ import { EventTypeDetails } from '../models/EventTypeDetails';
 import { WarehouseStorage } from 'cypress/models/WarehouseStorage';
 import { ShipmentContext } from '../models/ShipmentContext';
 
+let ShipmentNumber = null;
 export function NavigatesToEventsTab() {
     cy.DefineRequestWait(RestAPI.GET, URLs.TraceEventsDomain, RequestAliases.GetTraceEvent);
     cy.Click(ShipmentSelectors.EventsTab, null)
@@ -99,7 +100,13 @@ export function UpdateShipment(saveButtonSelector: string, saveButtonSelectorCon
     cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.ShipmentRequest)
     cy.Click(saveButtonSelector, saveButtonSelectorContains, false)
 }
-export function
+export function GetHouseNumber() : any {
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200).then((interception)=>{
+    ShipmentNumber=interception.response.body.ShipmentNumber;
+    return ShipmentNumber
+    })
+
+}
 
 export function OpenShipment(shipmentNumber: string) {
     cy.DefineRequestWait(RestAPI.GET, BaseURLs.GetMenuButtonGroups, RequestAliases.WaitLoadShipmentMenuButtons);
