@@ -17,5 +17,9 @@ export class Constants {
     public static readonly MoveType = "MoveType"
     public static readonly ShipmentSubType = "ShipmentSubType"
     public static readonly CreditCardType = "CreditCardType"
+    public static readonly BankAccount = "BankAccountLite"
+    public static readonly PackageType = "PackageType"
+    public static readonly Branch = "Branch"
+
 
 }

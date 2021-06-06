@@ -23,6 +23,10 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly MaintenanceItemMoveTypes="#MaintenanceItemMTMT"
      public static readonly MaintenanceItemShipmentSubType = "#MaintenanceItemMTSB"
    public static readonly MaintenanceItemCreditCardTypes = "#MaintenanceItemMTCC"
+   public static readonly MaintenanceItemBankAccount = "#MaintenanceItemMTBL"
+   public static readonly MaintenanceItemPackageType = "#MaintenanceItemMTPK"
+   public static readonly MaintenanceItemBranch = "#MaintenanceItemMTBR"
+   
    //#endregion
 
    public static readonly GeneralEditScreen = ".MediaFillAbsolute .CurvedEditArea";
@@ -163,6 +167,33 @@ export class MaintenanceSelectors extends RegexSelectors {
    //#endregion
 
 
+   //#region  Bank Account
+   public static readonly BankAccountAccountNumber = "#BankAccountLite_AccountNumber"
+   public static readonly BankAccountBankCode = "#BankAccountLite_BankCode"
+   public static readonly BankAccountBranchNumber = "#BankAccountLite_BranchNumber"
+   public static readonly BankAccountCurrency = "#BankAccountLite_CurrencyId"
+   public static readonly BankAccountName = "#BankAccountLite_EnglishName"
+   public static readonly BankAccountLocalName = "#BankAccountLite_LocalName"
+   public static readonly BankAccountSaveButton = "#BankAccountLite-Save"
+   public static readonly InActiveBankAccountCheckBox = "#BankAccountLite_Inactive"
+   public static readonly BankAccountEventsTab = "#BankAccountLiteTHEvents"
+   //#endregion
+
+   //#region  Package Type
+   public static readonly PackageTypeCode = "#PackageType_Code"
+   public static readonly PackageTypeName = "#PackageType_EnglishName"
+   public static readonly PackageTypeLocalName = "#PackageType_LocalName"
+   public static readonly PackageTypeTEU = "#PackageType_TEU"
+   public static readonly PackageTypeContainerSize = "#PackageType_ContainerSize"
+   public static readonly PackageTypeVolume = "#PackageType_Volume"
+   public static readonly PackageTypePrintAs = "#PackageType_PrintAs"
+   public static readonly PackageTypeAirCheckBox = "#PackageType_IsAir"
+   public static readonly InActivePackageTypeCheckBox = "#PackageType_InActive"
+   public static readonly PackageTypeSaveButton = "#PackageType-Save"
+   public static readonly PackageTypeEventsTab = "#PackageTypeTHEvents"
+   public static readonly PackageTypeSaveCloseButton = "#PackageType-SaveClose";
+   //#endregion
+
    //#region  Global Zone
    public static readonly GlobalZoneCode = "#GlobalZone_Code"
    public static readonly GlobalZoneEnglishName = "#GlobalZone_EnglishName"
@@ -171,6 +202,7 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly GlobalZoneSaveButton = "#GlobalZone-Save"
    public static readonly GlobalZoneEventsTab = "#GlobalZoneTHEvents"
    //#endregion
+
    //#region  Commodity
    public static readonly CommodityCode = "#Commodity_Code"
    public static readonly CommodityName = "#Commodity_Name"
