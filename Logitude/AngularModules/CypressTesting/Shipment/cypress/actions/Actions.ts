@@ -99,6 +99,7 @@ export function UpdateShipment(saveButtonSelector: string, saveButtonSelectorCon
     cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.ShipmentRequest)
     cy.Click(saveButtonSelector, saveButtonSelectorContains, false)
 }
+export function
 
 export function OpenShipment(shipmentNumber: string) {
     cy.DefineRequestWait(RestAPI.GET, BaseURLs.GetMenuButtonGroups, RequestAliases.WaitLoadShipmentMenuButtons);
