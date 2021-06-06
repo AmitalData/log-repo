@@ -31,11 +31,11 @@ Feature: Close Master And Connected House Operationally
         And the house should connect successfully
 
     Scenario: Close the master shipment Operationally 
-        When close the master shipment operationally 
+        When close the master shipment Operationally
         Then the master should close operationally successfully
         And the connected house should close operationally successfully
 
     Scenario: Reopen master shipment operationally
-        When reopen master operationally
+        When reopen master operationally with "reopen operationally" Note
         Then the master should reopen successfully
         And the connected house should reopen successfully

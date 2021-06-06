@@ -139,6 +139,13 @@ export function CancelShipment(note: string) {
     cy.FillLogTextBox(ShipmentSelectors.ShipmentEventNote, note)
     UpdateShipment(ShipmentSelectors.ConfirmActionButton);
 }
+export function OperationalCloseShipment() {
+    cy.Click(ShipmentSelectors.ShipmentMoreList, null, true);
+    cy.Click(ShipmentSelectors.OperationalCloseButton, null);
+    
+    UpdateShipment(ShipmentSelectors.ConfirmActionButton);
+}
+
 
 export function ReactiveShipment(note: string) {
     cy.Click(ShipmentSelectors.ShipmentMoreList, null, true);
@@ -146,9 +153,22 @@ export function ReactiveShipment(note: string) {
     cy.FillLogTextBox(ShipmentSelectors.ShipmentEventNote, note)
     UpdateShipment(ShipmentSelectors.ConfirmActionButton);
 }
+export function RepoenShipment(note: string) {
+    cy.Click(ShipmentSelectors.ShipmentMoreList, null, true);
+    cy.Click(ShipmentSelectors.OperationalReopenButton, null);
+    cy.FillLogTextBox(ShipmentSelectors.ShipmentEventNote, note)
+    //UpdateShipment(ShipmentSelectors.ConfirmActionButton);
+}
 
 export function ValidateCancelIconExist(IsCancelled: boolean) {
     if (IsCancelled) {
+        cy.get(ShipmentSelectors.ShortTitleControl).should(BaseSelectors.Exist)
+    } else {
+        cy.get(ShipmentSelectors.ShortTitleControl).should(BaseSelectors.NotExist)
+    }
+}
+export function ValidateCloseIconExist(IsClosed: boolean) {
+    if (IsClosed) {
         cy.get(ShipmentSelectors.ShortTitleControl).should(BaseSelectors.Exist)
     } else {
         cy.get(ShipmentSelectors.ShortTitleControl).should(BaseSelectors.NotExist)
@@ -190,7 +210,30 @@ export function ValidateShipmentFields(IsCanceled: boolean) {
     CheckIfDisable(ShipmentSelectors.PayablesTab, BaseSelectors.AddButton, IsCanceled);
     CheckIfDisable(ShipmentSelectors.ReceivablesTab, BaseSelectors.AddButton, IsCanceled);
 }
-
+export function ValidateCloseShipmentFields(IsClosed: boolean) {
+    cy.Click(ShipmentSelectors.GeneralTab, null);
+    EditGeneralField();
+    if (IsClosed) {
+        BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentValueOfGoods, BaseSelectors.BeEmpty)
+    } else {
+        cy.get(ShipmentSelectors.ShipmentValueOfGoods).then(($shipmentValueOfGoods) => {
+            const shipmentValueOfGoods = $shipmentValueOfGoods.val()
+             expect(shipmentValueOfGoods).to.be.oneOf(['123.00','123'])
+    })
+        
+    }
+    CheckIfDisable(ShipmentSelectors.OrdersTab, ShipmentSelectors.ShipmentBookingNumberOfPackages, IsClosed);
+    CheckIfDisable(ShipmentSelectors.OrdersTab, ShipmentSelectors.ShipmentMainCarriageCarrierId, IsClosed);
+    CheckIfHaveClass(ShipmentSelectors.PartnersTab, ShipmentSelectors.PartnerToggle, "ToggleButtonDisabled", IsClosed);
+    CheckIfDisable(ShipmentSelectors.PartnerEditShipper, BaseSelectors.RedButton, IsClosed);
+    cy.Click(BaseSelectors.Button, BaseSelectors.ContainsClose);
+    CheckIfDisable(ShipmentSelectors.PackagesTab, ShipmentSelectors.AddPackage, IsClosed);
+    CheckIfHaveClass(ShipmentSelectors.RoutingsTab, ShipmentSelectors.RoutingToggle, 'ToggleButtonDisabled', IsClosed)
+    CheckIfDisable(ShipmentSelectors.EditRoutingMainCarriage, BaseSelectors.RedButton, IsClosed);
+    cy.Click(BaseSelectors.Button, BaseSelectors.ContainsClose);
+    CheckIfDisable(ShipmentSelectors.PayablesTab, BaseSelectors.AddButton, IsClosed);
+    CheckIfDisable(ShipmentSelectors.ReceivablesTab, BaseSelectors.AddButton, IsClosed);
+}
 export function ValidatePackageDetails(tabSelector: string, partialSplitDetails: PackagesDetails, grossWeightSelector: string, isPackage: boolean) {
     cy.Navigate(tabSelector)
     if (isPackage) {

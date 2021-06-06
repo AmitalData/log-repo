@@ -1,7 +1,6 @@
-Feature: Close Master And Connected House Operationally 
+Feature: Update the routing tab of master shipment 
     The user creates a Master Export Air shipment, creates a House Export Air shipment from withing the Master shipment,
-    update the routing tab of master shipment to close it operationallay, close the master operationally 
-
+    update the routing tab of master shipment 
     Scenario: Create master export air shipment
         Given the user logged in and navigates to shipments workspace
         And a master Shipment with following details

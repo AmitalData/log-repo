@@ -21,10 +21,10 @@ Feature: Cancel And Reactivate Master And Connected House
         And the house should connect successfully
 
     Scenario: Cancel the master shipment
-        When Cancel the master shipment
+        When cancel the master shipment with "Cancel TheShipment" Note
         Then the house should Cancel successfully
 
 
     Scenario: Reactivate the master shipment
-        When Reactivate the master shipment
+        When reactivate the shipment with "Reactivate The Shipment" Note
         Then the house should Reactivate successfully
