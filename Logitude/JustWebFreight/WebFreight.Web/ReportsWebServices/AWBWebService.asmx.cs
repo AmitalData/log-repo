@@ -2871,6 +2871,7 @@ namespace WebFreight.Web.ReportsWebServices
 
         private byte[] GetUserSignatureImage(int tenant)
         {
+            byte[] signatureImage = null;
             if (!string.IsNullOrEmpty(contactEmail))
             {
                 User currentUser = (from a in myCommonContext.Users
@@ -2879,10 +2880,10 @@ namespace WebFreight.Web.ReportsWebServices
 
                 if (currentUser != null)
                 {
-                    return DataProviders.General.GetUserSignatureImage(currentUser.SignatureImageId, tenant);
+                    signatureImage = DataProviders.General.GetUserSignatureImage(currentUser.SignatureImageId, tenant);
                 }
             }     
-            return null;
+            return signatureImage;
         }
     }
 }
