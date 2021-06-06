@@ -78,6 +78,11 @@ export class CarrierAreasPortPM {
     public set Code(newValue: string) { if (this.code != newValue) { this.code = newValue; this.MarkAsDirty("Code"); } }
        
 	 
+    private combinedCode: string;
+    public get CombinedCode() { return this.combinedCode; }
+    public set CombinedCode(newValue: string) { if (this.combinedCode != newValue) { this.combinedCode = newValue; this.MarkAsDirty("CombinedCode"); } }
+       
+	 
     private countryCode: string;
     public get CountryCode() { return this.countryCode; }
     public set CountryCode(newValue: string) { if (this.countryCode != newValue) { this.countryCode = newValue; this.MarkAsDirty("CountryCode"); } }

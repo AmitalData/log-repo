@@ -406,6 +406,51 @@ namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
             }
         }
 
+        public void TraceProductItems(List<ProductItemPM> dataChangeSet, bool isNewEntity)
+        {
+            List<string> addedItemsTexts = new List<string>();
+            List<string> updatedItemsTexts = new List<string>();
+            List<string> deletedItemsTexts = new List<string>();
+
+            foreach (ProductItemPM itemPM in dataChangeSet)
+            {
+                if (isNewEntity)
+                {
+                    addedItemsTexts.Add(itemPM.Name);
+                }
+
+                else
+                {
+                    switch (itemPM.ChangeSetOp)
+                    {
+                        case ChangeSetOperation.Insert:
+                            {
+                                addedItemsTexts.Add(itemPM.SKU);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Update:
+                            {
+                                updatedItemsTexts.Add(itemPM.SKU);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Delete:
+                            {
+                                deletedItemsTexts.Add(itemPM.SKU);
+                                break;
+                            }
+                    }
+                }
+            }
+
+            if (addedItemsTexts.Count + updatedItemsTexts.Count + deletedItemsTexts.Count > 0)
+            {
+                this.CreateEntityEvent("PIUP", "Customer", entityPM.Id, loggedContactId, entityPM.Tenant, addedItemsTexts, updatedItemsTexts, deletedItemsTexts);
+            }
+        }
+
+
         private void CreateEntityEvent(string myEventCode, string myTableName, string myEntityId, string myLoggedContactId, int myTenant, List<string> myAddedItemsTexts, List<string> myUpdatedItemsTexts, List<string> myDeletedItemsTexts)
         {
             string myEventNotes = null;

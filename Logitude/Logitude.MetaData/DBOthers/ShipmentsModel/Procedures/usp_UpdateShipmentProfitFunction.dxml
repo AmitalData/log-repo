@@ -401,9 +401,6 @@ BEGIN
 			HousesACCTReceivablesInProfit = @HousesACCTReceivablesInProfit
 			Where Id = @ShipmentId AND Tenant = @Tenant
 		END
-    
-    EXECUTE usp_UpdateShipmentPayablesVatAmounts @ShipmentId
-    EXECUTE usp_UpdateShipmentReceivablesVatAmounts @ShipmentId
   
 END
 ]]>

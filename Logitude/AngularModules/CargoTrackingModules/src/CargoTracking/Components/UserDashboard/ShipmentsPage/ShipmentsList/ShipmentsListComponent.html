@@ -43,7 +43,7 @@
         </div>
 
         <div class="actions-buttons hide-mobile">
-            <div (click)="isFiltersSideBarOpened = !isFiltersSideBarOpened"><img
+            <div (click)="OpenAdvancedFiltersSidebar()"><img
                     src="./assets/images/icons/filter@1x.png" alt=" " /></div>
             <div (click)="SortClicked()" ><img src="./assets/images/icons/sort@1x.png" [class.FlipImgVert]="!isSortDescending" alt=" " /></div>
         </div>
@@ -53,14 +53,14 @@
     <div class="clearFix hide-mobile"></div>
 
     <!-- PC: Search Filters -->
-    <div class="selected-filters" *ngIf="SelectedFilters.length > 0 || SelectedCustomers.length > 0 ">
+    <div class="selected-filters" *ngIf="SelectedFilters.length > 0 || SelectedInvitedCustomers.length > 0 ">
         <ul>
             <li *ngFor="let filter of SelectedFilters" (click)="DeselectFilter(filter)">
                 {{filter.Name}}
                 <span class="filter-close-btn">×</span>
             </li>
 
-            <li *ngFor="let customer of SelectedCustomers" (click)="UnselectCustomer(customer)">
+            <li *ngFor="let customer of SelectedInvitedCustomers" (click)="UnselectCustomer(customer)">
                 {{customer.Name}}
                 <span class="filter-close-btn">×</span>
             </li>
@@ -222,7 +222,7 @@
                                 <div class="subtitle hide-mobile"  [attr.src]="SetShipmenTypeForRouting(shipment)">ROUTING</div>
                                 <div class="value truncateText">
                                     {{shipment.FromPortCode}} to {{shipment.ToPortCode}} <br>
-                                    {{ShipmenTypeForRouting}}
+                                  <span style="font-weight:bold">  {{ShipmenTypeForRouting}}</span>
                                 </div>
 
                             </div>
@@ -284,7 +284,7 @@
                                 <div class="value truncateText">{{ shipment.CurrentMilestoneName }}</div>
 
 
-                                <div class="truncateText hide-mobile">Last Updated</div>
+                                <div class="subtitle hide-mobile">Last Updated</div>
                                 <div class="value hide-mobile">{{ shipment.CurrentMilestoneDate | date: "d-MMM-y, h:mm" }}</div>
                             </div>
                         </div>
@@ -296,7 +296,7 @@
                                 <div class="value truncateText">{{ shipment.FutureMilstoneName }}</div>
 
 
-                                <div class="truncateText hide-mobile">Estimated Date</div>
+                                <div class="subtitle hide-mobile">Estimated Date</div>
                                 <div class="value hide-mobile">{{ shipment.FutureMilstoneDate | date: "d-MMM-y, h:mm" }}</div>
                             </div>
                         </div>
@@ -337,8 +337,8 @@
                 <div class="expanded-list" [class.show]="isFilter2Expanded">
 
 
-                    <div class="checkbox-filteritem" *ngFor="let customer of InvitedCustomers">
-                        <CheckBox [Bind]="'IsSelected'" [Value]="customer.IsSelected"
+                    <div class="checkbox-filteritem" *ngFor="let customer of FiltersInvitedCustomers">
+                        <CheckBox [Bind]="'IsSelected'" [Value]="customer.IsSelected" (ValueChanged)="OnCustomerValueChanged($event, customer)"
                             [Text]="customer.Name" [DataContext]="customer"></CheckBox>
                         <!-- <div style="float: right;" class="counter">0</div> -->
                     </div>

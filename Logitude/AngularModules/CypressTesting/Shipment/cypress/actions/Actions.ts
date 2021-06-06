@@ -598,7 +598,7 @@ export function NavigatesTocustomSettingsInMaintenance(maintenanceSearchValue: s
 
 export function UpdateLocalCustomsInterface(localCustomsInterfaceValue: string) {
     cy.get(BaseSelectors.typeCheckbox).check({ force: true });
-    cy.FillLogLov(BaseSelectors.LocalCustomsInterfaceCode, localCustomsInterfaceValue, true);
+    cy.SelectDropDownListItem(BaseSelectors.LogLoveLocalCustomsInterfaceCode, localCustomsInterfaceValue);
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
 }
 
@@ -872,11 +872,11 @@ function FillShipperAndConsignee(shipmentDetails: ShipmentDetails) {
 
 function FillCustomerType(shipmentDetails: ShipmentDetails) { 
     if (Conditions.IsImport(shipmentDetails.Direction)) {
-        cy.FillLogLov(ShipmentSelectors.ShipmentCustomerType, "Consignee", true)
-      //cy.SelectDropDownListItem(ShipmentSelectors.LogLovShipmentCustomer,"Consignee")
+       // cy.FillLogLov(ShipmentSelectors.ShipmentCustomerType, "Consignee", true)
+      cy.SelectDropDownListItem(ShipmentSelectors.LogLovShipmentCustomer,"Consignee")
     } else {
-        cy.FillLogLov(ShipmentSelectors.ShipmentCustomerType, "Shipper", true)
-        //cy.SelectDropDownListItem(ShipmentSelectors.LogLovShipmentCustomer,"Shipper")
+       // cy.FillLogLov(ShipmentSelectors.ShipmentCustomerType, "Shipper", true)
+        cy.SelectDropDownListItem(ShipmentSelectors.LogLovShipmentCustomer,"Shipper")
 
     }
 }

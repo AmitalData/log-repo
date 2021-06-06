@@ -29,168 +29,167 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             string multi = TranslateTextsClass.Translate("GLAccounts.Q.Multi", 0);
             string active = TranslateTextsClass.Translate("GLAccounts.Q.Active", 0);
             string inactive = TranslateTextsClass.Translate("GLAccounts.Q.Inactive", 0);
-            Contact loggedContact = GetLoggedContact(iQueryable.FirstOrDefault().Tenant);
-            GLAccountRepository repository = new GLAccountRepository(context);
-            IQueryable<GLAccountList> query = (from a in iQueryable.Include("ChartOfAccount").Include("ChartOfAccountsType")
+            
+            IQueryable<GLAccountList> query = (from a in iQueryable//.Include("ChartOfAccount").Include("ChartOfAccountsType")
+                                               join chartOfAccount in context.ChartOfAccounts on a.ChartOfAccountsId equals chartOfAccount.Id
+                                               join chartOfAccountsType in context.ChartOfAccountsTypes on a.ChartOfAccountsTypeCode equals chartOfAccountsType.Code
                                                join MoreDatas in context.GLAccountMoreDatas on a.Id equals MoreDatas.AccountId
                                                join AgingDatas in context.GLAccountAgingDatas on a.Id equals AgingDatas.AccountId
                                                join RecocileDatas in context.GLAccountRecocileDatas on a.Id equals RecocileDatas.AccountId
 
-                                               join CardsDatas in context.GLAccountCardsDatas on a.CardsDataId equals CardsDatas.Id 
-                                               into CardsDatasjoin from CardsDatas in CardsDatasjoin.DefaultIfEmpty()
-                                             
+                                               join CardsDatas in context.GLAccountCardsDatas on a.CardsDataId equals CardsDatas.Id
+                                               into CardsDatasjoin
+                                               from CardsDatas in CardsDatasjoin.DefaultIfEmpty()
                                                join FollowUpDatas in context.GLAccountFollowUpDatas on a.Id equals FollowUpDatas.GlAccountId
-                                               into FollowUpDatasjoin from FollowUpDatas in FollowUpDatasjoin.DefaultIfEmpty()
-                                               
+                                               into FollowUpDatasjoin
+                                               from FollowUpDatas in FollowUpDatasjoin.DefaultIfEmpty()
                                                select new GLAccountList()
-                                                    {
-                                                        Id = a.Id,
-                                                        Tenant = a.Tenant,
-                                                        InternalNumber = a.InternalNumber,
-                                                        InterestCreditLimit = a.InterestCreditLimit,
-                                                        AccountTypeCode = a.AccountTypeCode,
-                                                        DisplayNumber = a.DisplayNumber,
-                                                        EnglishName = a.EnglishName,
-                                                        LocalName = a.LocalName,
-                                                        SearchFields = a.SearchFields,
-                                                        IsMultiCurrency = a.IsMultiCurrency,
-                                                        CurrencyId = a.CurrencyId,
-                                                        RevenueExpenseType = a.RevenueExpenseType,
-                                                        IsControlAccount = a.IsControlAccount,
-                                                        ChartOfAccountsId = a.ChartOfAccountsId,
-                                                        Inactive = a.Inactive,
-                                                        ReconcileMethodCode = a.ReconcileMethodCode,
-                                                        ChartOfAccountsTypeCode = a.ChartOfAccountsTypeCode,
-                                                        AccountTypeName = a.GLAccountType != null ? a.GLAccountType.EnglishName : null,
-                                                        RevenueExpenseName = a.RevenueExpense != null ? a.RevenueExpense.EnglishName : null,
-                                                        ReconcileMethodName = a.ReconcileMethod != null ? a.ReconcileMethod.EnglishName : null,
-                                                        ReconcileMethodLocalName = a.ReconcileMethod != null ? a.ReconcileMethod.LocalName : null,
-                                                        CurrencyName = a.Currency != null ? a.Currency.EnglishName : null,
-                                                        ChartOfAccountsTypeName = a.ChartOfAccountsType != null ? a.ChartOfAccountsType.EnglishName : null,
-                                                        ChartOfAccountsTypeEnglishName = a.ChartOfAccountsType != null ? a.ChartOfAccountsType.EnglishName : null,
-                                                        ChartOfAccountsTypeLocalName = a.ChartOfAccountsType != null ? a.ChartOfAccountsType.LocalName : null,
-                                                        
-                                                        CurrencyCode = a.IsMultiCurrency == true ? multi : a.Currency != null ? a.Currency.Code : null,
-                                                        CurrencySign = a.IsMultiCurrency == true ? "" : a.Currency != null ? a.Currency.Sign : null,
-                                                        ControlAccountName = a.ControlAccount != null ? a.ControlAccount.EnglishName : null,
-                                                        ControlAccountId = a.ControlAccountId,
-                                                        ControlAccountNumber = a.ControlAccount != null ? a.ControlAccount.DisplayNumber : null,
-                                                        ChartOfAccountsName = a.ChartOfAccount != null ? a.ChartOfAccount.LocalName : null,
-                                                        ChartOfAccountsEnglishName = a.ChartOfAccount != null ? a.ChartOfAccount.EnglishName : null,
-                                                        ChartOfAccountsLocalName = a.ChartOfAccount != null ? a.ChartOfAccount.LocalName : null,
-                                                        CardsDataId= a.CardsDataId,
-                                                        ActiveStatusName = a.Inactive == false ? active : inactive,
-                                                        AutomaticReconcileId = a.AutomaticReconcileId,
-                                                        AutomaticReconcileName = a.AutomaticReconcile != null ?
-                                                            !String.IsNullOrEmpty(a.AutomaticReconcile.AutomaticReconcile2) ?
-                                                                !String.IsNullOrEmpty(a.AutomaticReconcile.AutomaticReconcile3) ?
-                                                                    a.AutomaticReconcile.AutomaticReconcileField1.EnglishName 
-                                                                    + "+" + a.AutomaticReconcile.AutomaticReconcileField2.EnglishName
-                                                                    + "+" + a.AutomaticReconcile.AutomaticReconcileField3.EnglishName
-                                                                    : a.AutomaticReconcile.AutomaticReconcileField1.EnglishName
-                                                                    + "+" + a.AutomaticReconcile.AutomaticReconcileField2.EnglishName
-                                                                : a.AutomaticReconcile.AutomaticReconcileField1.EnglishName 
-                                                            : null,
+                                               {
+                                                   Id = a.Id,
+                                                   Tenant = a.Tenant,
+                                                   InternalNumber = a.InternalNumber,
+                                                   InterestCreditLimit = a.InterestCreditLimit,
+                                                   AccountTypeCode = a.AccountTypeCode,
+                                                   DisplayNumber = a.DisplayNumber,
+                                                   EnglishName = a.EnglishName,
+                                                   LocalName = a.LocalName,
+                                                   SearchFields = a.SearchFields,
+                                                   IsMultiCurrency = a.IsMultiCurrency,
+                                                   CurrencyId = a.CurrencyId,
+                                                   RevenueExpenseType = a.RevenueExpenseType,
+                                                   IsControlAccount = a.IsControlAccount,
+                                                   ChartOfAccountsId = a.ChartOfAccountsId,
+                                                   Inactive = a.Inactive,
+                                                   ReconcileMethodCode = a.ReconcileMethodCode,
+                                                   ChartOfAccountsTypeCode = a.ChartOfAccountsTypeCode,
+                                                   AccountTypeName = a.GLAccountType != null ? a.GLAccountType.EnglishName : null,
+                                                   RevenueExpenseName = a.RevenueExpense != null ? a.RevenueExpense.EnglishName : null,
+                                                   ReconcileMethodName = a.ReconcileMethod != null ? a.ReconcileMethod.EnglishName : null,
+                                                   ReconcileMethodLocalName = a.ReconcileMethod != null ? a.ReconcileMethod.LocalName : null,
+                                                   CurrencyName = a.Currency != null ? a.Currency.EnglishName : null,
+                                                   ChartOfAccountsTypeName = chartOfAccountsType != null ? chartOfAccountsType.EnglishName : null,
+                                                   ChartOfAccountsTypeEnglishName = chartOfAccountsType != null ? chartOfAccountsType.EnglishName : null,
+                                                   ChartOfAccountsTypeLocalName = chartOfAccountsType != null ? chartOfAccountsType.LocalName : null,
+                                                   CurrencyCode = a.IsMultiCurrency == true ? multi : a.Currency != null ? a.Currency.Code : null,
+                                                   CurrencySign = a.IsMultiCurrency == true ? "" : a.Currency != null ? a.Currency.Sign : null,
+                                                   ControlAccountName = a.ControlAccount != null ? a.ControlAccount.EnglishName : null,
+                                                   ControlAccountId = a.ControlAccountId,
+                                                   ControlAccountNumber = a.ControlAccount != null ? a.ControlAccount.DisplayNumber : null,
+                                                   ChartOfAccountsName = chartOfAccount != null ? chartOfAccount.LocalName : null,
+                                                   ChartOfAccountsEnglishName = chartOfAccount != null ? chartOfAccount.EnglishName : null,
+                                                   ChartOfAccountsLocalName = chartOfAccount != null ? chartOfAccount.LocalName : null,
+                                                   CardsDataId = a.CardsDataId,
+                                                   ActiveStatusName = a.Inactive == false ? active : inactive,
+                                                   AutomaticReconcileId = a.AutomaticReconcileId,
+                                                   AutomaticReconcileName = a.AutomaticReconcile != null ?
+                                               !String.IsNullOrEmpty(a.AutomaticReconcile.AutomaticReconcile2) ?
+                                               !String.IsNullOrEmpty(a.AutomaticReconcile.AutomaticReconcile3) ?
+                                               a.AutomaticReconcile.AutomaticReconcileField1.EnglishName
+                                               + "+" + a.AutomaticReconcile.AutomaticReconcileField2.EnglishName
+                                               + "+" + a.AutomaticReconcile.AutomaticReconcileField3.EnglishName
+                                               : a.AutomaticReconcile.AutomaticReconcileField1.EnglishName
+                                               + "+" + a.AutomaticReconcile.AutomaticReconcileField2.EnglishName
+                                               : a.AutomaticReconcile.AutomaticReconcileField1.EnglishName
+                                               : null,
                                                    AutomaticReconcileLocalName = a.AutomaticReconcile != null ?
-                                                            !String.IsNullOrEmpty(a.AutomaticReconcile.AutomaticReconcile2) ?
-                                                                !String.IsNullOrEmpty(a.AutomaticReconcile.AutomaticReconcile3) ?
-                                                                    a.AutomaticReconcile.AutomaticReconcileField1.LocalName
-                                                                    + "+" + a.AutomaticReconcile.AutomaticReconcileField2.LocalName
-                                                                    + "+" + a.AutomaticReconcile.AutomaticReconcileField3.LocalName
-                                                                    : a.AutomaticReconcile.AutomaticReconcileField1.LocalName
-                                                                    + "+" + a.AutomaticReconcile.AutomaticReconcileField2.LocalName
-                                                                : a.AutomaticReconcile.AutomaticReconcileField1.LocalName
-                                                            : null,
+                                               !String.IsNullOrEmpty(a.AutomaticReconcile.AutomaticReconcile2) ?
+                                               !String.IsNullOrEmpty(a.AutomaticReconcile.AutomaticReconcile3) ?
+                                               a.AutomaticReconcile.AutomaticReconcileField1.LocalName
+                                               + "+" + a.AutomaticReconcile.AutomaticReconcileField2.LocalName
+                                               + "+" + a.AutomaticReconcile.AutomaticReconcileField3.LocalName
+                                               : a.AutomaticReconcile.AutomaticReconcileField1.LocalName
+                                               + "+" + a.AutomaticReconcile.AutomaticReconcileField2.LocalName
+                                               : a.AutomaticReconcile.AutomaticReconcileField1.LocalName
+                                               : null,
                                                    PreviousEnglishName = a.PreviousEnglishName,
-                                                        PreviousEnglishNameChangeDate = a.PreviousEnglishNameChangeDate,
-                                                        PreviousLocalName = a.PreviousLocalName,
-                                                        PreviousLocalNameChangeDate = a.PreviousLocalNameChangeDate,
-                                                        PreviousNumber = a.PreviousNumber,
-                                                        PreviousNumberChangeDate = a.PreviousNumberChangeDate,
-                                                        PreviousChartOfAccountsId = a.PreviousChartOfAccountsId,
-                                                        PreviousChartOfAccountsChangeDate = a.PreviousChartOfAccountsChangeDate,
-                                                        //ClientName = a.Client != null ? a.Client.Card.EnglishName : null,
-                                                        //VendorName = a.Vendor != null ? a.Vendor.Card.EnglishName : null,
-                                                        //ClientId = a.ClientId,
-                                                        //VendorId = a.VendorId,
-                                                        CustomerGLAccountId = a.CustomerGLAccountId,
-                                                        BalanceInLocalCurrency = MoreDatas.BalanceInLocalCurrency,
-                                                        RevaluationEnabled = a.RevaluationEnabled,
-                                                        //ClientCode = a.Client != null ? a.Client.Card.Code : null,
-                                                        //VendorCode = a.Vendor != null ? a.Vendor.Card.Code : null,
-                                                        ParentAccountId = a.ParentAccountId,
-                                                        IsVATExempt = a.IsVATExempt,
-                                                        LocalBalanceInDue = MoreDatas.LocalBalanceInDue,
-                                                        NextDueDate = MoreDatas.NextDueDate,
-                                                        TotalOpenChequesInLocalCur = MoreDatas.TotalOpenChequesInLocalCur,
-                                                        TotFutureOpenChequesInLocalCur = MoreDatas.TotFutureOpenChequesInLocalCur,
-                                                        DeductionFileNumber = a.DeductionFileNumber,
+                                                   PreviousEnglishNameChangeDate = a.PreviousEnglishNameChangeDate,
+                                                   PreviousLocalName = a.PreviousLocalName,
+                                                   PreviousLocalNameChangeDate = a.PreviousLocalNameChangeDate,
+                                                   PreviousNumber = a.PreviousNumber,
+                                                   PreviousNumberChangeDate = a.PreviousNumberChangeDate,
+                                                   PreviousChartOfAccountsId = a.PreviousChartOfAccountsId,
+                                                   PreviousChartOfAccountsChangeDate = a.PreviousChartOfAccountsChangeDate,
+                                                   //ClientName = a.Client != null ? a.Client.Card.EnglishName : null,
+                                                   //VendorName = a.Vendor != null ? a.Vendor.Card.EnglishName : null,
+                                                   //ClientId = a.ClientId,
+                                                   //VendorId = a.VendorId,
+                                                   CustomerGLAccountId = a.CustomerGLAccountId,
+                                                   BalanceInLocalCurrency = MoreDatas.BalanceInLocalCurrency,
+                                                   RevaluationEnabled = a.RevaluationEnabled,
+                                                   //ClientCode = a.Client != null ? a.Client.Card.Code : null,
+                                                   //VendorCode = a.Vendor != null ? a.Vendor.Card.Code : null,
+                                                   ParentAccountId = a.ParentAccountId,
+                                                   IsVATExempt = a.IsVATExempt,
+                                                   LocalBalanceInDue = MoreDatas.LocalBalanceInDue,
+                                                   NextDueDate = MoreDatas.NextDueDate,
+                                                   TotalOpenChequesInLocalCur = MoreDatas.TotalOpenChequesInLocalCur,
+                                                   TotFutureOpenChequesInLocalCur = MoreDatas.TotFutureOpenChequesInLocalCur,
+                                                   DeductionFileNumber = a.DeductionFileNumber,
 
-                                                        //categories
-                                                        Category1Name = a.Category1.EnglishName,
-                                                        Category2Name = a.Category2.EnglishName,
-                                                        Category3Name = a.Category3.EnglishName,
-                                                        Category4Name = a.Category4.EnglishName,
-                                                        Category5Name = a.Category5.EnglishName,
-                                                        Category1LocalName = a.Category1.LocalName,
-                                                        Category2LocalName = a.Category2.LocalName,
-                                                        Category3LocalName = a.Category3.LocalName,
-                                                        Category4LocalName = a.Category4.LocalName,
-                                                        Category5LocalName = a.Category5.LocalName,
+                                                   //categories
+                                                   Category1Name = a.Category1.EnglishName,
+                                                   Category2Name = a.Category2.EnglishName,
+                                                   Category3Name = a.Category3.EnglishName,
+                                                   Category4Name = a.Category4.EnglishName,
+                                                   Category5Name = a.Category5.EnglishName,
+                                                   Category1LocalName = a.Category1.LocalName,
+                                                   Category2LocalName = a.Category2.LocalName,
+                                                   Category3LocalName = a.Category3.LocalName,
+                                                   Category4LocalName = a.Category4.LocalName,
+                                                   Category5LocalName = a.Category5.LocalName,
 
 
+                                                   ActiveForInterest = a.ActiveForInterest,
+                                                   ActiveForInterestCreditInvoice = a.ActiveForInterestCreditInvoice,
+                                                   MinimumInterestInvoiceBilling = a.MinimumInterestInvoiceBilling,
+                                                   InterestCalculationStartDate = a.InterestCalculationStartDate,
 
-                                                   ActiveForInterest =a.ActiveForInterest,
-                                                        ActiveForInterestCreditInvoice = a.ActiveForInterestCreditInvoice,
-                                                        MinimumInterestInvoiceBilling = a.MinimumInterestInvoiceBilling,
-                                                        InterestCalculationStartDate = a.InterestCalculationStartDate,
-                                                       
-                                                         
 
-                                                        // Created & Updated
-                                                        CreateDate = a.CreateDate,
-                                                        CreatedByLocalName =    a.CreatedByUser != null ? a.CreatedByUser.Contact.LocalName : null,
-                                                        CreatedByUserName =     a.CreatedByUser != null ? a.CreatedByUser.Contact.EnglishName : null,
-                                                        UpdateDate = a.UpdateDate,
-                                                        UpdatedByLocalName =    a.UpdatedByUser != null ? a.UpdatedByUser.Contact.LocalName : null,
-                                                        UpdatedByUserName =     a.UpdatedByUser != null ? a.UpdatedByUser.Contact.EnglishName : null,
-                                                        ExcludeFromDeductionReport = a.ExcludeFromDeductionReport,
-                                                        AllowEditChequePayToName = a.AllowEditChequePayToName,
+                                                   // Created & Updated
+                                                   CreateDate = a.CreateDate,
+                                                   CreatedByLocalName = a.CreatedByUser != null ? a.CreatedByUser.Contact.LocalName : null,
+                                                   CreatedByUserName = a.CreatedByUser != null ? a.CreatedByUser.Contact.EnglishName : null,
+                                                   UpdateDate = a.UpdateDate,
+                                                   UpdatedByLocalName = a.UpdatedByUser != null ? a.UpdatedByUser.Contact.LocalName : null,
+                                                   UpdatedByUserName = a.UpdatedByUser != null ? a.UpdatedByUser.Contact.EnglishName : null,
+                                                   ExcludeFromDeductionReport = a.ExcludeFromDeductionReport,
+                                                   AllowEditChequePayToName = a.AllowEditChequePayToName,
 
-                                                        ConsolidationVat = a.ConsolidationVat,
-                                                        IsEquipmentVendor = a.IsEquipmentVendor,
+                                                   ConsolidationVat = a.ConsolidationVat,
+                                                   IsEquipmentVendor = a.IsEquipmentVendor,
                                                    //CustomerGLAccountName = a.CustomerGLAccount.LocalName !=null? a.CustomerGLAccount.LocalName : a.CustomerGLAccount.EnglishName,
                                                    //CustomerGLAccountNumber = a.CustomerGLAccount.DisplayNumber,
                                                    //ParentAccountName = a.ParentAccount.LocalName != null ? a.ParentAccount.LocalName : a.CustomerGLAccount.EnglishName,
                                                    //ParentAccountNumber = a.ParentAccount.DisplayNumber,
 
                                                    // GLaccount Aging Datas
-                                                        Period0 = AgingDatas.Period0,
-                                                        Period1 = AgingDatas.Period1,
-                                                        Period2 = AgingDatas.Period2,
-                                                        Period3 = AgingDatas.Period3,
-                                                        Period4 = AgingDatas.Period4,
-                                                        Period5 = AgingDatas.Period5,
-                                                        PeriodPast = AgingDatas.PeriodPast,
-                                                        PeriodFuture = AgingDatas.PeriodFuture,
-                                                        TotalOpenTransactions = AgingDatas.TotalOpenTransactions,
+                                                   Period0 = AgingDatas.Period0,
+                                                   Period1 = AgingDatas.Period1,
+                                                   Period2 = AgingDatas.Period2,
+                                                   Period3 = AgingDatas.Period3,
+                                                   Period4 = AgingDatas.Period4,
+                                                   Period5 = AgingDatas.Period5,
+                                                   PeriodPast = AgingDatas.PeriodPast,
+                                                   PeriodFuture = AgingDatas.PeriodFuture,
+                                                   TotalOpenTransactions = AgingDatas.TotalOpenTransactions,
 
-                                                    // GLAccount Recocile Datas
-                                                        LastReconciledBy = loggedContact.DontShowLocalLabels ? RecocileDatas.LastReconciledByUser.Contact.EnglishName : RecocileDatas.LastReconciledByUser.Contact.LocalName == null ? RecocileDatas.LastReconciledByUser.Contact.EnglishName: RecocileDatas.LastReconciledByUser.Contact.LocalName,
-                                                        LastReconcileDate = RecocileDatas.LastReconcileDateTime,
+                                                   // GLAccount Recocile Datas
+                                                   LastReconciledBy =  RecocileDatas.LastReconciledByUser.Contact.LocalName == null ? RecocileDatas.LastReconciledByUser.Contact.EnglishName : RecocileDatas.LastReconciledByUser.Contact.LocalName,
+                                                   LastReconcileDate = RecocileDatas.LastReconcileDateTime,
 
                                                    // GLAccount Cards Datas
-                                                        CreditLimit = CardsDatas != null ? CardsDatas.CreditLimit : null,
-                                                        VatNumber = CardsDatas != null ? CardsDatas.VatNumber : null,
-                                                        PaymentTerm = CardsDatas != null ? loggedContact.DontShowLocalLabels ? CardsDatas.PaymentTerm.EnglishName : CardsDatas.PaymentTerm.LocalName == null ? CardsDatas.PaymentTerm.EnglishName : CardsDatas.PaymentTerm.LocalName : null,
-                                                        TotalOpenShipments = CardsDatas != null ? CardsDatas.TotalOpenShipments: null,
-                                                        Phone = CardsDatas != null ? CardsDatas.Phone: null,
-                                                        Salesman = CardsDatas != null ? loggedContact.DontShowLocalLabels ? CardsDatas.SalesmanUser.Contact.EnglishName : CardsDatas.SalesmanUser.Contact.LocalName == null ? CardsDatas.SalesmanUser.Contact.EnglishName : CardsDatas.SalesmanUser.Contact.LocalName: null,
-                                                        Collector = CardsDatas != null ? loggedContact.DontShowLocalLabels ? CardsDatas.CollectorUser.Contact.EnglishName : CardsDatas.CollectorUser.Contact.LocalName == null ? CardsDatas.CollectorUser.Contact.EnglishName : CardsDatas.CollectorUser.Contact.LocalName: null,
+                                                   CreditLimit = CardsDatas != null ? CardsDatas.CreditLimit : null,
+                                                   VatNumber = CardsDatas != null ? CardsDatas.VatNumber : null,
+                                                   PaymentTerm = CardsDatas != null ? CardsDatas.PaymentTerm.LocalName == null ? CardsDatas.PaymentTerm.EnglishName : CardsDatas.PaymentTerm.LocalName : null,
+                                                   TotalOpenShipments = CardsDatas != null ? CardsDatas.TotalOpenShipments : null,
+                                                   Phone = CardsDatas != null ? CardsDatas.Phone : null,
+                                                   Salesman = CardsDatas != null ?  CardsDatas.SalesmanUser.Contact.LocalName == null ? CardsDatas.SalesmanUser.Contact.EnglishName : CardsDatas.SalesmanUser.Contact.LocalName : null,
+                                                   Collector = CardsDatas != null ? CardsDatas.CollectorUser.Contact.LocalName == null ? CardsDatas.CollectorUser.Contact.EnglishName : CardsDatas.CollectorUser.Contact.LocalName : null,
 
                                                    // GLAccount Follow Up Datas
-                                                        FollowupDate = FollowUpDatas != null? FollowUpDatas.FollowUpDate: null,
-                                                        FollowupNotes = FollowUpDatas != null ? FollowUpDatas.FollowUpRemarks: null
+                                                   FollowupDate = FollowUpDatas != null ? FollowUpDatas.FollowUpDate : null,
+                                                   FollowupNotes = FollowUpDatas != null ? FollowUpDatas.FollowUpRemarks : null,
+                                                   InsuredCreditLimit= CardsDatas.InsuredcreditLimit
 
                                                });
             return query;
@@ -200,10 +199,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         {
             string email = AuthenticationUtil.GetLoggedUserEmail(tenant);
             ContactRepository contactRepository = new ContactRepository(tenant);
-            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
+            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, tenant, true);
             return loggedContact;
         }
-
         private IQueryable<GLAccount> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<GLAccount> iQueryable,int tenant)
         {
             GLAccountCustomFilter filters = new GLAccountCustomFilter(tenant);

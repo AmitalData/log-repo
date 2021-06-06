@@ -39,7 +39,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Behaviours.APInvoiceBehaviours
                 this.AddNumberToShipmentsNumbersField(ref shipmentsNumbersField, multipleShipment.ShipmentNumber);
             }
 
-            this.TrimShipmentsNumbersTo1000(shipmentsNumbersField);
+            this.TrimShipmentsNumbersTo1000(ref shipmentsNumbersField);
 
             return shipmentsNumbersField;
         }
@@ -54,7 +54,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Behaviours.APInvoiceBehaviours
                 }
             }
         }
-        private void TrimShipmentsNumbersTo1000(string shipmentsNumbersField)
+        private void TrimShipmentsNumbersTo1000(ref string shipmentsNumbersField)
         {
             if (!string.IsNullOrEmpty(shipmentsNumbersField))
             {

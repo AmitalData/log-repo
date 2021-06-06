@@ -19,6 +19,7 @@ import { PropertyChangedArgs } from '../../Infrastructure/EventEmitterArgs/Prope
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 import { ShipmentAssemblyPM } from './ShipmentAssemblyPM';
 import { ShipmentStoragePricingPM } from './ShipmentStoragePricingPM';
+import { ShipmentProductItemPM } from './ShipmentProductItemPM';
 
 export class ShipmentPM {
     public UIProperties: UIProperties;
@@ -4917,6 +4918,18 @@ export class ShipmentPM {
         }
     }
 
+
+    private documentFilingIds: string;
+    public get DocumentFilingIds() { return this.documentFilingIds; }
+    public set DocumentFilingIds(newValue: string) { if (this.documentFilingIds != newValue) { this.documentFilingIds = newValue; this.MarkAsDirty("DocumentFilingIds"); } }
+
+    private isProductItemsUpdated: boolean;
+    public get IsProductItemsUpdated() { return this.isProductItemsUpdated; }
+    public set IsProductItemsUpdated(newValue: boolean) { if (this.isProductItemsUpdated != newValue) { this.isProductItemsUpdated = newValue; this.MarkAsDirty("IsProductItemsUpdated"); } }
+
+
+
+
     public OldEntityPM: ShipmentPM;
 
     private aWBOCIPMs: AWBOCIPM[];
@@ -5330,6 +5343,7 @@ export class ShipmentPM {
             this.shipmentStoragePricings = newValue;
         }
     }
+    
     public AddShipmentStoragePricing(item: ShipmentStoragePricingPM) {
         if (item != null) {
             var index = this.ShipmentStoragePricings.indexOf(item);
@@ -5345,6 +5359,39 @@ export class ShipmentPM {
             var index = this.ShipmentStoragePricings.indexOf(item);
             if (index > -1) {
                 this.ShipmentStoragePricings.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+
+    private shipmentProductItems: ShipmentProductItemPM[];
+    get ShipmentProductItems() {
+        if (this.shipmentProductItems == null) {
+            this.shipmentProductItems = [];
+        }
+
+        return this.shipmentProductItems;
+    }
+    set ShipmentProductItems(newValue: ShipmentProductItemPM[]) {
+        if (this.shipmentProductItems != newValue) {
+            this.shipmentProductItems = newValue;
+        }
+    }
+    public AddProductItem(item: ShipmentProductItemPM) {
+        if (item != null) {
+            var index = this.ShipmentProductItems.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this.ShipmentProductItems.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveProductItem(item: ShipmentProductItemPM) {
+        if (item != null) {
+            var index = this.ShipmentProductItems.indexOf(item);
+            if (index > -1) {
+                this.ShipmentProductItems.splice(index, 1);
                 this.MarkAsDirty();
             }
         }

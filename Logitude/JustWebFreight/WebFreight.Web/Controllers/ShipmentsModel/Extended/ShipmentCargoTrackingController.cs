@@ -101,26 +101,34 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
 
         }
 
-        private int GetAuthinticatedTenant()
+
+        public HttpResponseMessage GetDocumentsFilingsConnectedToShipment(string id)
         {
-            string token = HttpContext.Current.Request.Headers["Token"];
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            var tenant = authToken.Tenant;
-            SecurityUtility.AuthenticationOnTenant(tenant);
-            return tenant;
+            try
+            {
+                int tenant = GetAuthinticatedTenant();
+                DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(tenant);
+                List<DocumentsFilingPM> documentsFilingPM = documentsFilingQuery.GetInputDocumentsFilingPMsByEntityId(id, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, documentsFilingPM);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
         }
+
 
         public HttpResponseMessage GetShipmentPackages(string id)
         {
             try
             {
                 string logKey = PerformanceLogger.LogCurrentTime();
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                int tenant = GetAuthinticatedTenant();
 
-                ShipmentQuery shipmentQuery = new ShipmentQuery(authToken.Tenant);
-                List<ShipmentPackagePM> shipmentPM = shipmentQuery.GetPackagesOfShipment(authToken.Tenant, id);
+                ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+                List<ShipmentPackagePM> shipmentPM = shipmentQuery.GetPackagesOfShipment(tenant, id);
 
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
@@ -131,6 +139,15 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
 
+        }
+
+        private int GetAuthinticatedTenant()
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            var tenant = authToken.Tenant;
+            SecurityUtility.AuthenticationOnTenant(tenant);
+            return tenant;
         }
 
     }

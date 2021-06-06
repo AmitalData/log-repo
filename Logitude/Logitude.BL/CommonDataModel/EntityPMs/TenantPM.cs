@@ -411,5 +411,11 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public double? FTLRatio { get; set; }
+
+
+        public bool IsQuotesRequestActivatedInShared { get; set; }
+
+
+        
     }
 }

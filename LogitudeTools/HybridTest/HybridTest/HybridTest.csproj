@@ -156,6 +156,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Service References\HybridTenantStateProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\InsertCommTaskProxy\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -547,6 +552,22 @@
     <None Include="Service References\ExternalTasksQueueProxy\ExternalTasksQueueWcfService3.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\HybridTenantStateProxy\HybridTenantStateWcfService.wsdl" />
+    <None Include="Service References\HybridTenantStateProxy\HybridTenantStateWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\HybridTenantStateProxy\HybridTenantStateWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\HybridTenantStateProxy\HybridTenantStateWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\HybridTenantStateProxy\HybridTenantStateWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\HybridTenantStateProxy\HybridTenantStateWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\InsertCommTaskProxy\InsertCommTaskWcfService.wsdl" />
     <None Include="Service References\InsertCommTaskProxy\InsertCommTaskWcfService.xsd">
       <SubType>Designer</SubType>
@@ -904,6 +925,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="HTMLPage1.html" />
+    <None Include="Service References\HybridTenantStateProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\HybridTenantStateProxy\configuration.svcinfo" />
+    <None Include="Service References\HybridTenantStateProxy\configuration91.svcinfo" />
+    <None Include="Service References\HybridTenantStateProxy\HybridTenantStateWcfService.disco" />
     <None Include="Service References\AccountingPartnerProxy\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -1085,6 +1113,7 @@
     <WCFMetadataStorage Include="Service References\DepartmentProxy\" />
     <WCFMetadataStorage Include="Service References\DocumentInProxy\" />
     <WCFMetadataStorage Include="Service References\ExternalTasksQueueProxy\" />
+    <WCFMetadataStorage Include="Service References\HybridTenantStateProxy\" />
     <WCFMetadataStorage Include="Service References\InsertCommTaskProxy\" />
     <WCFMetadataStorage Include="Service References\LoginProxy\" />
     <WCFMetadataStorage Include="Service References\PaymentTermProxy\" />

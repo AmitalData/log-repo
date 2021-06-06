@@ -468,11 +468,6 @@
       Name="&quot;API Update&quot;"
       Description="&quot;Allows tenants to update shipments via API&quot;" />
     <Record
-      Name="&quot;CRM Customer Quick Search&quot;"
-      Code="&quot;CQS&quot;"
-      SearchFields="&quot;CQS,CRM Customer Quick Search,CRM Customer Quick Search&quot;"
-      Description="&quot;CRM Customer Quick Search&quot;" />
-    <Record
       Name="&quot;Charges Types Direction Restrictions&quot;"
       Code="&quot;CTR&quot;"
       SearchFields="&quot;CTR,Charges Types Direction Restrictions,Charges Types Direction Restrictions&quot;"
@@ -492,11 +487,6 @@
       Name="&quot;Export Query Data Via WorkerRole&quot;"
       Description="&quot;Export Query Data to Excel Via WorkerRole&quot;"
       SearchFields="&quot;EQW,Export Query Data Via WorkerRole,Export Query Data to Excel Via WorkerRole&quot;" />
-    <Record
-      Name="&quot; Improved Search in Customers Views&quot;"
-      Code="&quot;SCV&quot;"
-      SearchFields="&quot;SCV, Improved Search in Customers Views, Improved Search in Customers Views&quot;"
-      Description="&quot;Improved Search in Customers Views&quot;" />
     <Record
       Code="&quot;TAR&quot;"
       Name="&quot;All Tariffs&quot;"
@@ -537,6 +527,11 @@
       Name="&quot;Master Pre/On Carriage&quot;"
       SearchFields="&quot;PRE,Master Pre/On Carriage&quot;"
       Description="&quot;Master Pre/On Carriage&quot;" />
+    <Record
+      Name="&quot;Quotes Request Activated In Shared Logistic&quot;"
+      Code="&quot;QRA&quot;"
+      SearchFields="&quot;QRA, Quotes Request Activated In Shared Logistic&quot;"
+      Description="&quot;Quotes Request Activated In Shared Logistic&quot;" />
     <Record
       Code="&quot;BIF&quot;"
       Name="&quot;Invoices DWH&quot;"

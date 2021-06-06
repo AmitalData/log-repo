@@ -31,7 +31,7 @@ import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { BookingWizardPackageItem } from 'Booking/Components/BookingWizard/Packages/PackagesTabComponent';
 
 @Component({
-    
+
     selector: 'FullAccountingSettingsComponent',
     templateUrl: './FullAccountingSettingsComponent.html',
     providers: [ServiceArgs]
@@ -58,14 +58,21 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
         this.CurrentSession.StartBusyIndicatorLoading();
 
-        this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((responseGLAccount: any) => {
-        this._entityResourceService.getEntityResourceByTableName("ChartOfAccount").subscribe((response1: any) => {
-        this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response => {
-            this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => { });
-            });
+        this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((responseGLAccount: any) =>
+        {
+            this._entityResourceService.getEntityResourceByTableName("ChartOfAccount").subscribe((response1: any) =>
+            {
+                this._entityResourceService.getEntityResourceByTableName("FullAccountingSetting").subscribe((response1: any) =>
+                {
+                    this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response =>
+                    {
+                        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => { });
+                    });
 
+                });
             });
         });
+
         this.fullAccountingSettingPMService.get(SessionLocator.Tenant.toString()).subscribe((myResult: any) => {
             this.CurrentSession.StopBusyIndicator();
 
@@ -84,6 +91,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
                 this.AccountingActivationDate = this.EntityPM.AccountingActivationDate;
                 this.SetUIProperties();
+                this.SetSelectedAgingPeriods();
             }
 
         });
@@ -492,6 +500,9 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
 SubmitChanges(ControlAccountId:string) {
     //console.log("EntityPM: ", this.EntityPM);
+
+    this.SetAgingPeriodsFields();
+
     this.fullAccountingSettingPMService.update(this.EntityPM).subscribe(myResult => {
 
         var mm: ServiceResponse = myResult;
@@ -515,6 +526,45 @@ SubmitChanges(ControlAccountId:string) {
             this.ValidationErrorsList.push('Server Error!');
         });
     }
+
+    SetAgingPeriodsFields(){
+        this.EntityPM.FirstPeriodsMonths = this.JoinCodesOfPeriods(this.SelectedPeriods1);
+        this.EntityPM.SecondPeriodsMonths = this.JoinCodesOfPeriods(this.SelectedPeriods2);
+        this.EntityPM.ThirdsPeriodsMonths = this.JoinCodesOfPeriods(this.SelectedPeriods3);
+    }
+
+    ResetAgingPeriodsFields(){
+        if(this.NumberOfPeriods <= 2){
+            this.EntityPM.ThirdsPeriodsMonths = null;
+            this.SelectedPeriods3 = [];
+        }
+
+        if(this.NumberOfPeriods == 1){
+            this.EntityPM.SecondPeriodsMonths = null;
+            this.SelectedPeriods2 = [];
+        }
+    }
+
+    SetSelectedAgingPeriods(){
+
+        this.SelectedPeriods1 = this.SetSelectedPeriods(this.EntityPM.FirstPeriodsMonths);
+        this.SelectedPeriods2 = this.SetSelectedPeriods(this.EntityPM.SecondPeriodsMonths);
+        this.SelectedPeriods3 = this.SetSelectedPeriods(this.EntityPM.ThirdsPeriodsMonths);
+    }
+
+    JoinCodesOfPeriods(periods: any[]){
+        if(periods)
+            return periods.map(d=>d.Code)?.join(',');
+    }
+
+    SetSelectedPeriods(joinedPeriodsCodes: string){
+        if(joinedPeriodsCodes){
+            var codes = joinedPeriodsCodes.split(',');
+            return this.Periods.filter(d=>codes.includes(d.Code));
+        }
+        return [];
+    }
+
 
     ValidateMulticurrencyAccounts() {
         console.log("ValidateMulticurrencyAccounts");
@@ -562,6 +612,11 @@ SubmitChanges(ControlAccountId:string) {
         this.TabsSource.push({ Name: "FullAccoutingSetting", isSelected: true, Header: TextCodeTranslator.Translate("General.O.General") }); //Accounting.O.FullAccountingSettings
         this.TabsSource.push({ Name: "ControlAccounts", isSelected: false, Header: TextCodeTranslator.Translate("Accounting.O.ControlGLAccounts") });
         this.TabsSource.push({ Name: "Logo", isSelected: false, Header: TextCodeTranslator.Translate("Accounting.General.O.Cheques") });
+
+
+        const isAgingDefinitionEnabled = FeatureLocator.HasFeaturePermession("FullAccountingSetting", "AgingDefenetionSettings");
+        if(isAgingDefinitionEnabled)
+            this.TabsSource.push({ Name: "AgingDefinition", isSelected: false, Header: TextCodeTranslator.Translate("FullAccountingSetting.O.AgingDefinition") });
 
     }
     SelectionChanged(tab: any) {
@@ -619,5 +674,33 @@ SubmitChanges(ControlAccountId:string) {
 
     }
 
+
+    public ShowLocals: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
+    isRTL = ObjectsLocator.GlobalSetting ? (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl") : false;
+
+
+    public get NumberOfPeriods() : number {
+        return this.EntityPM.NumberofPeriods;
+    }
+    public set NumberOfPeriods(value : number) {
+        this.EntityPM.NumberofPeriods = value;
+
+        this.ResetAgingPeriodsFields();
+    }
+
+    Periods: any[] = [
+        {EnglishName: 'Period 0', LocalName: 'תקופה גיול 0', Code: 'period0'},
+        {EnglishName: 'Period 1', LocalName: 'תקופה גיול 1', Code: 'period1'},
+        {EnglishName: 'Period 2', LocalName: 'תקופה גיול 2', Code: 'period2'},
+        {EnglishName: 'Period 3', LocalName: 'תקופה גיול 3', Code: 'period3'},
+        {EnglishName: 'Period 4', LocalName: 'תקופה גיול 4', Code: 'period4'},
+        {EnglishName: 'Period 5', LocalName: 'תקופה גיול 5', Code: 'period5'},
+        {EnglishName: 'Period Past', LocalName: 'לפני התקופה', Code: 'period-past'}
+    ];
+
+    // fill these arrays from database
+    SelectedPeriods1: any[] = [];
+    SelectedPeriods2: any[] = [];
+    SelectedPeriods3: any[] = [];
 
 }

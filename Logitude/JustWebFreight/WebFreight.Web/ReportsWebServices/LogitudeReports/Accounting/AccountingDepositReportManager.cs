@@ -12,6 +12,8 @@ using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.Helpers;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.Repositories;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 {
@@ -188,6 +190,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                                                        AccountNumber = d.BankAccountLite != null ? d.BankAccountLite.AccountNumber : null,
                                                                        BranchNumber = d.BankAccountLite != null ? d.BankAccountLite.BranchNumber : null,
                                                                        PaymentStatus = d.Status != null ? d.Status.Name : null,
+                                                                       PaymentBankName = d.Bank,
                                                                    }).OrderBy(o => o.PaymentCurrencyCode).ToList();
 
         }
@@ -213,38 +216,39 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
                 else
                 {
+                    List<HouseMaster> shipments = GetShipmentsByARInvoicesMainEntityReference(APinvoicePayments, tenant);
                     double amountpaidSum = 0;
-                    foreach (ARInvoicePayment apiInvoicePayment in APinvoicePayments)
+                    foreach (ARInvoicePayment ariInvoicePayment in APinvoicePayments)
                     {
                         WebFreight.Web.DataProviders.ARPaymentDataProvider.ReportARInvoicePayments reportAPIPayment = new WebFreight.Web.DataProviders.ARPaymentDataProvider.ReportARInvoicePayments();
-                        apiInvoicePayment.ARInvoice = arInvoiceQuery.GetSingleARInvoice(apiInvoicePayment.ARInvoiceId, tenant);
-                        apiInvoicePayment.ARPayment = arPaymentQuery.GetSingleARPayment(apiInvoicePayment.ARPaymentId, tenant);
+                        ariInvoicePayment.ARInvoice = arInvoiceQuery.GetSingleARInvoice(ariInvoicePayment.ARInvoiceId, tenant);
+                        ariInvoicePayment.ARPayment = arPaymentQuery.GetSingleARPayment(ariInvoicePayment.ARPaymentId, tenant);
 
-                        if (apiInvoicePayment.ARInvoice != null && apiInvoicePayment.ARPayment != null)
+                        if (ariInvoicePayment.ARInvoice != null && ariInvoicePayment.ARPayment != null)
                         {
-                            reportAPIPayment.Reference = apiInvoicePayment.ARInvoice.CustomerRef;
-                            reportAPIPayment.BillTo = apiInvoicePayment.ARInvoice.BillTo.LocalName;
-                            reportAPIPayment.InvoiceNumber = apiInvoicePayment.ARInvoice.InvoiceNumber;
-                            reportAPIPayment.InvocieDate = apiInvoicePayment.ARInvoice.InvoiceDate;
-                            reportAPIPayment.DueDate = apiInvoicePayment.ARInvoice.DueDate;
+                            reportAPIPayment.Reference = ariInvoicePayment.ARInvoice.CustomerRef;
+                            reportAPIPayment.BillTo = ariInvoicePayment.ARInvoice.BillTo.LocalName;
+                            reportAPIPayment.InvoiceNumber = ariInvoicePayment.ARInvoice.InvoiceNumber;
+                            reportAPIPayment.InvocieDate = ariInvoicePayment.ARInvoice.InvoiceDate;
+                            reportAPIPayment.DueDate = ariInvoicePayment.ARInvoice.DueDate;
                             CustomFieldResolver customFieldResolver = new CustomFieldResolver();
-                            customFieldResolver.SetDataProviderCustomFieldsValues("ARInvoice", tenant, apiInvoicePayment.ARInvoice, reportAPIPayment);
+                            customFieldResolver.SetDataProviderCustomFieldsValues("ARInvoice", tenant, ariInvoicePayment.ARInvoice, reportAPIPayment);
                             if (isLocalCurrency)
                             {
-                                reportAPIPayment.OriginalAmount = apiInvoicePayment.ARInvoice.AmountInLocalCurrency;
+                                reportAPIPayment.OriginalAmount = ariInvoicePayment.ARInvoice.AmountInLocalCurrency;
                             }
                             else
                             {
-                                reportAPIPayment.OriginalAmount = apiInvoicePayment.ARInvoice.AmountInInvoiceCurrency;
+                                reportAPIPayment.OriginalAmount = ariInvoicePayment.ARInvoice.AmountInInvoiceCurrency;
                             }
 
                             if (isLocalCurrency)
                             {
-                                reportAPIPayment.AmountPaid = apiInvoicePayment.LocalAmount;
+                                reportAPIPayment.AmountPaid = ariInvoicePayment.LocalAmount;
                             }
                             else
                             {
-                                reportAPIPayment.AmountPaid = apiInvoicePayment.ForeignAmount;
+                                reportAPIPayment.AmountPaid = ariInvoicePayment.ForeignAmount;
                             }
                             if (reportAPIPayment.AmountPaid != null)
                             {
@@ -252,16 +256,28 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                             }
                         }
                       
-                        reportAPIPayment.ShipmentNumber = apiInvoicePayment.ARInvoice.MainEntityReference != null ? apiInvoicePayment.ARInvoice.MainEntityReference : "";
-                        reportAPIPayment.MasterNumber = apiInvoicePayment.ARInvoice.MasterNumber != null ? apiInvoicePayment.ARInvoice.MasterNumber : "";
-
-                        reportAPIPayment.MasterShipmentNumber = shipmentQuery.GetMasterNumberFromHouseShipmentByShipmentNumber(reportAPIPayment.ShipmentNumber, tenant);
+                        reportAPIPayment.ShipmentNumber = ariInvoicePayment.ARInvoice.MainEntityReference != null ? ariInvoicePayment.ARInvoice.MainEntityReference : "";
+                        reportAPIPayment.MasterNumber = ariInvoicePayment.ARInvoice.MasterNumber != null ? ariInvoicePayment.ARInvoice.MasterNumber : "";
+                        reportAPIPayment.MasterShipmentNumber = shipments.Where(d => d.HouseId == ariInvoicePayment.ARInvoice.MainEntityId).Select(a=>a.MasterNumber).FirstOrDefault();
+                        //reportAPIPayment.MasterShipmentNumber = shipmentQuery.GetMasterNumberFromHouseShipmentByShipmentNumber(reportAPIPayment.ShipmentNumber, tenant);
                         item.PaidAPInvoicesList.Add(reportAPIPayment);
                     }
 
                     item.sumInvoices = amountpaidSum;
                 }
             }
+        }
+
+        private List<HouseMaster> GetShipmentsByARInvoicesMainEntityReference(List<ARInvoicePayment> arinvoicePayments, int tenant)
+        {
+            List<string> shipmentsIds = arinvoicePayments.Where(d => d.ARInvoice!= null && d.ARInvoice.MainEntityReference != null).Select(s => s.ARInvoice.MainEntityReference).ToList();
+            List<HouseMaster> shipments = new List<HouseMaster>();
+            if (shipmentsIds.Count > 0)
+            {
+                ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+                shipments = shipmentQuery.GetHouseShipmentsByShipmentNumbers(shipmentsIds, tenant);
+            }
+            return shipments;
         }
     }
 }

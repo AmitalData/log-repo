@@ -16,5 +16,7 @@ export class HybridTenantStateList {
 		TenantName: string;
 		LastUpdateDateTime: Date;
 		LastQueueDateTime: Date;
+		VersionNumber: string;
+		VersionDate: Date;
 	
 }

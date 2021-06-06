@@ -239,6 +239,12 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
                 var gateWayTester = new GateWayTester();
                 var res=gateWayTester.TestIt(operationId, authToken.Tenant, myparams);
+                bool testWithOutToken=false;
+                if (testWithOutToken)
+                {
+                    int tenant = 10;
+                    res = gateWayTester.TestIt(operationId, tenant, myparams);
+                }
 
                 return Request.CreateResponse(HttpStatusCode.OK, res);
             }

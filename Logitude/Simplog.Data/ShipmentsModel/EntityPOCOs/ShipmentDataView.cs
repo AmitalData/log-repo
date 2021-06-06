@@ -332,53 +332,16 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string FromPortId { get; set; }
         public string ToPortId { get; set; }
         public string ForeignPartnerCountryCode { get; set; }
-        public string PreCarriageTransportModeId { get; set; }
-        public string PreCarriageFromPortId { get; set; }
-        public string PreCarriageToPortId { get; set; }
-        public string PreCarriageCarrierId { get; set; }
-        public string PreCarriageCarrierNumber { get; set; }
-        public string PreCarriageCarrierName { get; set; }
-        public string PreCarriageCarrierCode { get; set; }
-        public string PreCarriageFromPortCode { get; set; }
-        public string PreCarriageFromPortName { get; set; }
-        public string PreCarriageFromPortCountryCode { get; set; }
-        public string PreCarriageFromPortCountryName { get; set; }
-        public string PreCarriageToPortCode { get; set; }
-        public string PreCarriageToPortName { get; set; }
-        public string PreCarriageToPortCountryCode { get; set; }
-        public string PreCarriageToPortCountryName { get; set; }
+        
         public DateTime? PreCarriageETD { get; set; }
         public DateTime? PreCarriageATD { get; set; }
         public DateTime? PreCarriageETA { get; set; }
         public DateTime? PreCarriageATA { get; set; }
-        public string PreCarriageVesselId { get; set; }
-        public string PreCarriageCarrierWebSite { get; set; }
-
-
-        public bool CustomConnectToShipment { get; set; }
-
-        public string OnCarriageTransportModeId { get; set; }
-        public string OnCarriageFromPortId { get; set; }
-        public string OnCarriageToPortId { get; set; }
-        public string OnCarriageCarrierId { get; set; }
-        public string OnCarriageCarrierNumber { get; set; }
-        public string OnCarriageCarrierName { get; set; }
-        public string OnCarriageCarrierCode { get; set; }
-        public string OnCarriageFromPortCode { get; set; }
-        public string OnCarriageFromPortName { get; set; }
-        public string OnCarriageFromPortCountryCode { get; set; }
-        public string OnCarriageFromPortCountryName { get; set; }
-        public string OnCarriageToPortCode { get; set; }
-        public string OnCarriageToPortName { get; set; }
-        public string OnCarriageToPortCountryCode { get; set; }
-        public string OnCarriageToPortCountryName { get; set; }
+        public bool CustomConnectToShipment { get; set; }        
         public DateTime? OnCarriageETD { get; set; }
         public DateTime? OnCarriageATD { get; set; }
         public DateTime? OnCarriageETA { get; set; }
         public DateTime? OnCarriageATA { get; set; }
-        public string OnCarriageVesselId { get; set; }
-        public string OnCarriageCarrierWebSite { get; set; }
-
         public string MainCarriageTransportModeId { get; set; }
         public string MainCarriageFromPortId { get; set; }
         public string MainCarriageToPortId { get; set; }
@@ -746,49 +709,24 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string ImportManifest { get; set; }
         public int? WarehouseStorageFreeDays { get; set; }
         public string EmergencyContactId {get;set;}
-
-        public string PreForwardingTransportModeId { get; set; }
-        public string PreForwardingFromPortId { get; set; }
-        public string PreForwardingToPortId { get; set; }
-        public string PreForwardingCarrierId { get; set; }
-        public string PreForwardingCarrierNumber { get; set; }
-        public string PreForwardingCarrierName { get; set; }
-        public string PreForwardingCarrierCode { get; set; }
-        public string PreForwardingFromPortCode { get; set; }
-        public string PreForwardingFromPortName { get; set; }
-        public string PreForwardingFromPortCountryCode { get; set; }
-        public string PreForwardingFromPortCountryName { get; set; }
-        public string PreForwardingToPortCode { get; set; }
-        public string PreForwardingToPortName { get; set; }
-        public string PreForwardingToPortCountryCode { get; set; }
-        public string PreForwardingToPortCountryName { get; set; }
+        
         public DateTime? PreForwardingETD { get; set; }
         public DateTime? PreForwardingATD { get; set; }
         public DateTime? PreForwardingETA { get; set; }
-        public DateTime? PreForwardingATA { get; set; }
-        public string PreForwardingVesselId { get; set; }
-        public string PreForwardingCarrierWebSite { get; set; }
-
-        public string OnForwardingTransportModeId { get; set; }
-        public string OnForwardingFromPortId { get; set; }
-        public string OnForwardingToPortId { get; set; }
-        public string OnForwardingCarrierId { get; set; }
-        public string OnForwardingCarrierNumber { get; set; }
-        public string OnForwardingCarrierName { get; set; }
-        public string OnForwardingCarrierCode { get; set; }
-        public string OnForwardingFromPortCode { get; set; }
-        public string OnForwardingFromPortName { get; set; }
-        public string OnForwardingFromPortCountryCode { get; set; }
-        public string OnForwardingFromPortCountryName { get; set; }
-        public string OnForwardingToPortCode { get; set; }
-        public string OnForwardingToPortName { get; set; }
-        public string OnForwardingToPortCountryCode { get; set; }
-        public string OnForwardingToPortCountryName { get; set; }
+        public DateTime? PreForwardingATA { get; set; }        
         public DateTime? OnForwardingETD { get; set; }
         public DateTime? OnForwardingATD { get; set; }
         public DateTime? OnForwardingETA { get; set; }
         public DateTime? OnForwardingATA { get; set; }
-        public string OnForwardingVesselId { get; set; }
-        public string OnForwardingCarrierWebSite { get; set; }
+
+        public string OnCarriageFromPortId { get; set; }
+        public string OnCarriageToPortId { get; set; }
+        public string PreCarriageFromPortId { get; set; }
+        public string PreCarriageToPortId { get; set; }
+        public string OnForwardingFromPortId { get; set; }
+        public string OnForwardingToPortId { get; set; }
+        public string OnCarriageTransportModeId { get; set; }
+        public string OnForwardingTransportModeId { get; set; }
+        public string PreForwardingFromPortId { get; set; }
     }
 }

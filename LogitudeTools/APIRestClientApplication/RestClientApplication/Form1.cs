@@ -25,7 +25,6 @@ namespace RestClientApplication
         {
             InitializeComponent();
             Application.EnableVisualStyles();
-           
             this.BuildOperationComboBox();
             this.actionCombo.Items.Add("Accept");
             this.actionCombo.Items.Add("Decline");
@@ -38,7 +37,7 @@ namespace RestClientApplication
             if (apiCombo.SelectedItem != null)
             {
                 if (apiCombo.SelectedItem.Equals("Rates Update"))
-                {                 
+                {
                     this.operationCombo.SelectedItem = null;
                     this.operationCombo.Items.Clear();
                     this.operationCombo.Items.Add("Create (POST)");
@@ -63,6 +62,7 @@ namespace RestClientApplication
             this.operationCombo.Items.Add("Get");
             this.operationCombo.Items.Add("Cancel");
         }
+
 
         private bool isConnected;
         private async void LoginWithCredentials()
@@ -114,14 +114,13 @@ namespace RestClientApplication
                 lblMessage.ForeColor = Color.Red;
             }
         }
-
         private async void GetUserTenantAPIsParameters(string token, string AuthURL)
         {
             try
             {
                 using (var client = new HttpClient())
                 {
-                    AuthURL +=  "/" + "?token=" + token;
+                    AuthURL += "/" + "?token=" + token;
                     var result = await client.GetAsync(AuthURL);
                     var responseBody = result.Content.ReadAsStringAsync().Result;
                     responseParameters = JsonConvert.DeserializeObject<APIResponseParameters>(responseBody);
@@ -231,7 +230,7 @@ namespace RestClientApplication
                         {
                             case 0:
                                 {
-                                    requestText = responseParameters.XMLRequestText["PostHouse"] ;
+                                    requestText = responseParameters.XMLRequestText["PostHouse"];
                                     break;
                                 }
 
@@ -295,7 +294,7 @@ namespace RestClientApplication
                         }
 
                         apiName = "customs";
-                        requestText =  responseParameters.XMLRequestText["Customs"];
+                        requestText = responseParameters.XMLRequestText["Customs"];
                         break;
                     }
                 #endregion
@@ -401,8 +400,7 @@ namespace RestClientApplication
                 case "Master":
                     {
                         apiName = "master";
-
-                        requestText  = responseParameters.XMLRequestText["PostMaster"];
+                        requestText = responseParameters.XMLRequestText["PostMaster"];
                         break;
                     }
                 #endregion
@@ -411,7 +409,6 @@ namespace RestClientApplication
                 case "Customer":
                     {
                         apiName = "customer";
-
                         requestText = responseParameters.XMLRequestText["Customer"];
                         break;
                     }
@@ -422,7 +419,6 @@ namespace RestClientApplication
                     {
                         txtParameter2.Visible = true;
                         apiName = "vendorpartner";
-
                         requestText = responseParameters.XMLRequestText["Vendor"];
                         break;
                     }
@@ -477,16 +473,14 @@ namespace RestClientApplication
                 #region ARInvoiceAdditionalData
                 case "ARInvoice Additional Data":
                     {
-
                         apiName = "ARInvoiceAdditionalData";
-
                         break;
                     }
                 #endregion
 
 
                 #region CustomerOpenFilesAmount
-                case "CustomerOpenFilesAmount":
+                case "Customer Open Files Amount":
                     {
 
                         apiName = "CustomerOpenFilesAmount";
@@ -527,14 +521,14 @@ namespace RestClientApplication
                     {
                         lblParameter.Visible = false;
                         txtParameter.Visible = false;
-                        requestText  = responseParameters.XMLRequestText["RatesUpdate"];
+                        requestText = responseParameters.XMLRequestText["RatesUpdate"];
                         apiName = "RatesUpdate";
                         break;
                     }
-                #endregion
+                #endregion 
 
                 #region CargoTrackingShipmentDetails
-                case "CargoTrackingShipmentDetails":
+                case "Cargo Tracking Shipment Details":
                     {
                         lblParameter.Text = "House:";
                         lblParameter.Visible = true;
@@ -600,14 +594,14 @@ namespace RestClientApplication
                             {
                                 response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?id=" + textBox1.Text + "&DisplayNumber=" + textBox2.Text + "&InternalNumber=" + textBox3.Text);
                             }
-                            else if (apiName == "ARInvoice" || apiName == "ARPayment" )
-                            { 
+                            else if (apiName == "ARInvoice" || apiName == "ARPayment")
+                            {
                                 response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?id=" + textBox4.Text + "&number=" + txtParameter2.Text);
                             }
-                            else if ( apiName == "APInvoice")
+                            else if (apiName == "APInvoice")
                             {
-                               
-                                   response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?id=" + textBox4.Text + "&number=" + txtParameter2.Text + "&externalId=" + textBox7.Text + "&internalNumber=" + null);
+
+                                response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?id=" + textBox4.Text + "&number=" + txtParameter2.Text + "&externalId=" + textBox7.Text + "&internalNumber=" + null);
                             }
                             else if (apiName == "Journal")
                             {
@@ -626,7 +620,7 @@ namespace RestClientApplication
                         if (apiName == "APInvoiceCancellation")
                         {
                             client.DefaultRequestHeaders.Add("Accept", "application/xml");
-                            response = await client.GetAsync(txtServerUrl.Text + "/" + api +  "?externalId=" + textBox4.Text);
+                            response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?externalId=" + textBox4.Text);
 
                         }
                         else
@@ -893,7 +887,7 @@ namespace RestClientApplication
 
         private void btnConnect_Click(object sender, EventArgs e)
         {
-          
+
             this.LoginWithCredentials();
         }
         private void groupBox2_Enter(object sender, EventArgs e)

@@ -10,6 +10,7 @@ import { PackagesDetails } from "../../../Shipment/cypress/models/PackagesDetail
 import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
 import * as BaseAssertion from '../../../Base/cypress/actions/Assertion';
 import { EventTypeDetails } from "../../../Base/cypress/models/EventTypeDetails";
+import { BaseURLs } from "../../../Base/cypress/constants/URLs";
 
 //#region Navigate and open
 export function NavigatesToSQuotesWorkspace() {
@@ -70,9 +71,13 @@ function FillShipmentType(ShipmentType: string, TransportMode: string) {
 
 function FillCustomerType(direction: string) {
     if (Conditions.IsImport(direction)) {
-        cy.FillLogLov(QuoteSelectors.QuoteCustomerType, "Consignee", true)
+        //cy.FillLogLov(QuoteSelectors.QuoteCustomerType, "Consignee", true)
+        cy.SelectDropDownListItem(QuoteSelectors.LogLovQuoteCustomerType,"Consignee")
+
     } else {
-        cy.FillLogLov(QuoteSelectors.QuoteCustomerType, "Shipper", true)
+       // cy.FillLogLov(QuoteSelectors.QuoteCustomerType, "Shipper", true)
+       cy.SelectDropDownListItem(QuoteSelectors.LogLovQuoteCustomerType,"Shipper")
+
     }
 }
 
@@ -197,12 +202,12 @@ export function SendQuotationToLoggedInUser() {
 function FillCustomerEmail(email: string) {
     cy.Click(QuoteSelectors.SendOption, null)
     cy.Click(QuoteSelectors.SendToCustomer, null, true)
-    cy.get(QuoteSelectors.EmailSearchTextBox).type(email + '{downarrow}{enter}')
+    cy.get(BaseSelectors.EmailSearchTextBox).type(email + '{downarrow}{enter}')
 }
 
 function SentToCustomer() {
-    cy.DefineRequestWait(RestAPI.POST, QuoteURLs.PostSendhtmlDocument, RequestAliases.SentToCustomer)
-    cy.Click(QuoteSelectors.SendMessageButton, null)
+    cy.DefineRequestWait(RestAPI.POST, BaseURLs.PostSendhtmlDocument, RequestAliases.SentToCustomer)
+    cy.Click(QuoteSelectors.SendMessageButton, null,true)
 }
 //#endregion
 

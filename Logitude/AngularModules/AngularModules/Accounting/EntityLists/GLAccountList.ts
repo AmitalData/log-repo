@@ -147,6 +147,7 @@ export class GLAccountList {
 	Collector: string;
 	FollowupDate: Date;
 	FollowupNotes: string;
+	InsuredCreditLimit: number;
 	
 }
  

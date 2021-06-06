@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.Tools.Behaviours;
 using Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours;
 using Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours.CompositionBehaviours;
 using Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours.Validators;
@@ -78,7 +79,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
         public List<ShipmentCommodityPM> ShipmentCommoditiesChangeSet;
         public List<ShipmentAssemblyPM> ShipmentAssembliesChangeSet;
         public List<ShipmentStoragePricingPM> ShipmentStoragePricingsChangeSet;
-
+        public List<ShipmentProductItemPM> ShipmentProductItemsChangeSet;
         public Customer Customer { get; private set; }
 
         public ShipmentServiceInitializer(IShipmentsContext ShipmentContext, ShipmentPM entityPM, string loggedEmail)
@@ -184,6 +185,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
             serviceBehaviours.Add(new ShipmentQuoteBehaviour());
             serviceBehaviours.Add(new ShipmentConversionBehaviour());
             serviceBehaviours.Add(new ShipmentOperationalDateBehaviour());
+            serviceBehaviours.Add(new UpdateDocumentFilingBehaviour());
 
             foreach (IServiceBehaviour behaviour in serviceBehaviours)
             {

@@ -10,6 +10,7 @@
 import {GLAccountWithholdingTaxPM} from './GLAccountWithholdingTaxPM';
 import {GLAccountInterestPeriodPM} from './GLAccountInterestPeriodPM';
 import {GLAccountCurrencyPM} from './GLAccountCurrencyPM';
+//import {GLAccountPM} from './GLAccountPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -831,6 +832,21 @@ export class GLAccountPM {
     private followupNotes: string;
     public get FollowupNotes() { return this.followupNotes; }
     public set FollowupNotes(newValue: string) { if (this.followupNotes != newValue) { this.followupNotes = newValue; this.MarkAsDirty("FollowupNotes"); } }
+       
+	 
+    private gLAccountFollowUpDate: Date;
+    public get GLAccountFollowUpDate() { return this.gLAccountFollowUpDate; }
+    public set GLAccountFollowUpDate(newValue: Date) { if (this.gLAccountFollowUpDate != newValue) { this.gLAccountFollowUpDate = newValue; this.MarkAsDirty("GLAccountFollowUpDate"); } }
+       
+	 
+    private gLAccountFollowUpRemarks: string;
+    public get GLAccountFollowUpRemarks() { return this.gLAccountFollowUpRemarks; }
+    public set GLAccountFollowUpRemarks(newValue: string) { if (this.gLAccountFollowUpRemarks != newValue) { this.gLAccountFollowUpRemarks = newValue; this.MarkAsDirty("GLAccountFollowUpRemarks"); } }
+       
+	 
+    private insuredCreditLimit: number;
+    public get InsuredCreditLimit() { return this.insuredCreditLimit; }
+    public set InsuredCreditLimit(newValue: number) { if (this.insuredCreditLimit != newValue) { this.insuredCreditLimit = newValue; this.MarkAsDirty("InsuredCreditLimit"); } }
        
 	 
 

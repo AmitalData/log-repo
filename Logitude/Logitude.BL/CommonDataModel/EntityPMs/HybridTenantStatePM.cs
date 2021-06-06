@@ -22,5 +22,9 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public DateTime LastUpdateDateTime { get; set; }
         [DataMember]
         public DateTime? LastQueueDateTime { get; set; }
+        [DataMember]
+        public string VersionNumber { get; set; }
+        [DataMember]
+        public DateTime? VersionDate { get; set; }
     }
 }
