@@ -44,7 +44,7 @@ namespace WebFreight.Web.ReportsWebServices
         private int myTenant;
         private string myCCSTypeCode;
         private bool isRegulatedAgentActivated;
-
+        private string contactEmail;
         [WebMethod]
         public int GetByte()
         {
@@ -83,7 +83,7 @@ namespace WebFreight.Web.ReportsWebServices
             AddressRepository addressRepository = new AddressRepository(tenant);
             ShipmentPM shipmentPM = shipmentQuery.GetSinglePM(shipmentId, tenant);            
             WebServiceHelper myServiceHelper = new WebServiceHelper(tenant);
-
+            this.contactEmail = AuthenticationUtil.GetLoggedUserEmail(tenant);
             this.myCommonContext = CommonDataContext.GetContext(tenant);
 
             if (shipmentPM != null)
@@ -125,6 +125,7 @@ namespace WebFreight.Web.ReportsWebServices
                 awbDp.MainCarriageLeg2_MAWB = shipmentPM.Transshipment1AdditionalMAWBOBLBL;
                 awbDp.AirlineLogo = DataProviders.General.GetCarrierLogo(shipmentPM.MainCarriageCarrierId, tenant);
                 awbDp.CustomerLogo = DataProviders.General.GetCarrierLogo(shipmentPM.CustomerId, tenant);
+                awbDp.UserSignatureImage = GetUserSignatureImage(tenant);
                 if (shipmentPM.BranchId != null)
                 {
                     Branch myBranch = (from d in myCommonContext.Branches where d.Tenant == tenant && d.Id == shipmentPM.BranchId select d).FirstOrDefault();
@@ -248,8 +249,6 @@ namespace WebFreight.Web.ReportsWebServices
 
         private void GetLoggedContactData(AWBDataProvider awbDp, int tenant)
         {
-           string contactEmail =  AuthenticationUtil.GetLoggedUserEmail(tenant);
-
             if (!string.IsNullOrEmpty(contactEmail))
             {
                 ContactQuery contactQuery = new ContactQuery(tenant);
@@ -2868,6 +2867,22 @@ namespace WebFreight.Web.ReportsWebServices
                     awbDp.ConsolidatorName = card.EnglishName;
                 }
             }
+        }
+
+        private byte[] GetUserSignatureImage(int tenant)
+        {
+            if (!string.IsNullOrEmpty(contactEmail))
+            {
+                User currentUser = (from a in myCommonContext.Users
+                                    where a.Contact.Email == contactEmail && a.Tenant == tenant
+                                    select a).FirstOrDefault();
+
+                if (currentUser != null)
+                {
+                    return DataProviders.General.GetUserSignatureImage(currentUser.SignatureImageId, tenant);
+                }
+            }     
+            return null;
         }
     }
 }
