@@ -102,17 +102,25 @@ export function UpdateShipment(saveButtonSelector: string, saveButtonSelectorCon
 }
 export function GetHouseNumber() : any {
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200).then((interception)=>{
-    ShipmentNumber=interception.response.body.ShipmentNumber;
+    //ShipmentNumber=interception.response.body.ShipmentNumber;
+    ShipmentNumber= interception.response.body.House;
     return ShipmentNumber
     })
 
 }
+export function openHouseShipment(){
+    cy.Click(ShipmentSelectors.NewTapItem, null);
+    cy.Click(ShipmentSelectors.ShipmentWorkspace, null)
+   OpenShipment(ShipmentContext.HouseNumber)
 
+}
 export function OpenShipment(shipmentNumber: string) {
     cy.DefineRequestWait(RestAPI.GET, BaseURLs.GetMenuButtonGroups, RequestAliases.WaitLoadShipmentMenuButtons);
 
     var quickSearchDetails = {
         Selector: ShipmentSelectors.ShipmentSearchBar,
+        
+       // ShipmentSearchBar
         Parent: ShipmentSelectors.ShipmentSearchParent,
         ParentClass: ShipmentSelectors.ShipmentSearchParentClass,
         WaitURL: BaseURLs.GetQuickSearch(shipmentNumber),

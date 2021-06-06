@@ -51,12 +51,12 @@ Given("edit main carriage leg with the following details", (dataTable) => {
     cy.Click(ShipmentSelectors.ShipmentSaveButton, null);
 });
 When("update master", () => {
-    //Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
+   // Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
 });
 
 
 Then("the master should update successfully", () => {
-    //  BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
+      //BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
 });
 //#region Create house export air shipment inside the master
 

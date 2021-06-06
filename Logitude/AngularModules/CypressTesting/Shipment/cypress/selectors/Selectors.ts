@@ -16,6 +16,11 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ShipmentShipper = '#Shipment_ShipperId';
   public static readonly ShipmentConsignee = '#Shipment_ConsigneeId';
   public static readonly ShipmentCustomerType = '#Shipment_ShipmentCustomerTypeCode';
+  public static readonly NewTapItem = '.NewTabItem';
+  public static readonly ShipmentWorkspace = '#SHIP_1';
+  public static readonly ShipmentSearch = '#Shipment_Search_1';
+
+  
   
   
   //#endregion
