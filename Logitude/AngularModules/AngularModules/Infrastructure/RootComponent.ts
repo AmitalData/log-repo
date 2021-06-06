@@ -373,7 +373,7 @@ export class RootComponent implements AfterViewInit {
     SessionInfo.Token = "";
 
     this.ClearLocation();
-    document.location.href = ServiceHelper.GetLogitudeURL() + "Login.aspx";
+    this.BackToLoginPage();
 
 
 
@@ -384,5 +384,14 @@ export class RootComponent implements AfterViewInit {
 
     //window.sessionStorage.setItem("Token", "");
 
-  }
+    }
+
+    private BackToLoginPage() {
+        if (window.sessionStorage.getItem("IsSharedLogistics") == "true" && !AppTool.IsNullOrEmpty(SessionInfo.LoggedUserTenant)) {
+            document.location.href = ServiceHelper.GetLogitudeURL() + "?tenant=" + SessionInfo.LoggedUserTenant;
+        }
+        else {
+            document.location.href = ServiceHelper.GetLogitudeURL() + "Login.aspx";
+        }
+    }
 }
