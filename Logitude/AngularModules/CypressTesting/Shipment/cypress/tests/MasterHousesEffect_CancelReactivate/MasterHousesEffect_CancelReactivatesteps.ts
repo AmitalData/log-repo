@@ -63,7 +63,7 @@ When("cancel the master shipment with {string} Note", (note) => {
     Actions.CancelShipment(note);
   });
   Then("the house should Cancel successfully", () => {
-    
+    //cy.get(BaseSelectors.RowClass).eq(0).click();
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
     Actions.ValidateCancelIconExist(true);
     Actions.ValidateShipmentEventActions(ShipmentSelectors.EventsTab,EventNote);
@@ -74,7 +74,7 @@ When("cancel the master shipment with {string} Note", (note) => {
   Actions.ReactiveShipment(note);
 })
 
-Then("the shipment should reactivate successfully",()=>{
+Then("the house should Reactivate successfully",()=>{
   BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
   Actions.ValidateCancelIconExist(false);
   Actions.ValidateShipmentEventActions(ShipmentSelectors.EventsTab,EventNote);

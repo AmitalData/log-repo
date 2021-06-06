@@ -480,7 +480,19 @@ export function EditMainCarriageLegs(Airline: string) {
     cy.Click(ShipmentSelectors.ShipmentDateMaincarriageATD, null)
     cy.Click(BaseSelectors.Button, "Today")
     cy.Click(ShipmentSelectors.MainCarriageOKBtn, null);
+
     //cy.Click(ShipmentSelectors.ShipmentSaveButton, null);
+}
+export function EditMainCarriageLegsFromToport(Gateway :string, Destination :string) {
+    cy.Click(ShipmentSelectors.EditRoutingMainCarriage, null)
+    
+    cy.FillLogLov(ShipmentSelectors.ShipmentMainCarriageFromPort,Gateway, false)
+    cy.FillLogLov(ShipmentSelectors.ShipmentMainCarriageToPort,Destination, false)
+    cy.Click(ShipmentSelectors.MainCarriageOKBtn, null);
+    cy.Click(ShipmentSelectors.ConfirmWindowYes, null);
+
+    
+   
 }
 
 export function AddMainCarriageATDDateAndTime(date: string, time: string) {

@@ -6,6 +6,7 @@ import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliase
 import { ShipmentSelectors } from "../../selectors/Selectors";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { ShipmentContext } from '../../models/ShipmentContext';
+import { MainCarriageLeg } from "cypress/models/MainCarriageLeg";
 
 //#region variables
 let MasterShipmentDetails: ShipmentDetails;
@@ -61,3 +62,11 @@ Given("the user in the master's rounting tab",()=>{
     //Actions.OpenShipment(ShipmentContext.MasterNumber);
     cy.Navigate(ShipmentSelectors.RoutingsTab);
 })
+Given("edit main carriage leg with the following details",(dataTable)=>{
+    let mainCarriageLeg = Assists.CreateInstance<MainCarriageLeg>(dataTable, true);
+    Actions.EditMainCarriageLegsFromToport(mainCarriageLeg.Gateway,mainCarriageLeg.Destination);
+    cy.Click(ShipmentSelectors.ShipmentSaveButton, null);
+});
+When("update master", () => {
+    Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
+});
