@@ -2285,8 +2285,12 @@ export class ShipmentTool {
         shipmentPM.ShipmentNumber = shipment.ShipmentNumber;
         shipmentPM.DepartmentId = shipment.DepartmentId;
         shipmentPM.BranchId = shipment.BranchId;
-        shipmentPM.IncotermId = shipment.IncotermId;      
-        
+        shipmentPM.IncotermId = shipment.IncotermId;
+
+        if (shipment.ShipmentPackages.length) {
+            shipmentPM.ShipmentOrderPackages = shipment.ShipmentOrderPackages.map(packageItem => Object.assign({}, packageItem));
+        }
+
         if (delivery) {
             shipmentPM.StandalonePickupDeliveryId = delivery.Id;
             shipmentPM.StandalonePickupDeliveryNumber = delivery.PickUpDeliveryNumber;            
