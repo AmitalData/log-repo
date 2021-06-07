@@ -33,6 +33,8 @@ export class LoginComponent implements OnInit {
     public ShowbusyIndicator: boolean = false;
     public MainColor: string = null;
     public SecondaryColor: string = null;
+    public BackGroundImg: string;
+
     constructor(private router: Router,
         private route: ActivatedRoute,
         private loginExtendedService: LoginExtendedService,
@@ -52,6 +54,7 @@ export class LoginComponent implements OnInit {
                 this.Tenant = response.Result.Tenant;
                 ServiceHelper.SetCargoTrackingDate(response.Result,baseUrl);
                 this.LogoImgSrc = this.loginServiceHelper.GetLoginLogoImg();
+                this.BackGroundImg = CargoTrackingBrandingData.BackgroundURL;
                 this.MainColor = response.Result.MainColor;
                 this.SecondaryColor = response.Result.SecondaryColor;
             }
