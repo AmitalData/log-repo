@@ -237,6 +237,7 @@ namespace WebFreight.Web
             if (myContact != null)
             {
                 myResult.ContactName = myContact.EnglishName;
+                myResult.ContactId = myContact.Id;
             }
 
             if (myTenant != null)

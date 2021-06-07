@@ -237,24 +237,24 @@ box-shadow: 0px 0px 5px 1px rgba(0,148,118,1);
                                 <tr>
                                     <td style="width:350px">
                                         <label style="display:inline" for="start">From Date:</label>
-                                        <input type="date" id="fromDate" name="fromDate" style="margin-left:5px" value="2018-07-22" />
+                                        <input type="date"   id="FromDate" name="FromDate" style="margin-left:5px"  />
 
                                     </td>
 
                                         <td style="width:350px">
                                          <label style="display:inline" for="start">To Date:</label>
 
-                                        <input type="date" id="toDate" name="toDate" style="margin-left:5px" value="2018-07-22" />
+                                        <input type="date" id="ToDate" name="ToDate" style="margin-left:5px"  />
 
                                     </td>
 
                                     <td style="width:200px">
-                                       <label for="vehicle1" style="display:inline;vertical-align:bottom"> Operationally Closed</label>
+                                       <label for="OperationallyClosed" style="display:inline;vertical-align:bottom"> Operationally Closed</label>
+                                       <input type="checkbox" id="OperationallyClosed" name="OperationallyClosed" />  
 
-                                          <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike"/>  
                                     </td>
                                     <td style="width:100px">
-                                              <button (onclick)="RunReport()" class="greenButton" style="width:90px;height:22px;border:1px solid green;border-radius:3px;">
+                                              <button  id ="RunReport"   class="greenButton" style="width:90px;height:22px;border:1px solid green;border-radius:3px;">
                             <div style="color:black;  text-align:center;vertical-align:central;font-size:12px;">Run Report</div>
                         </button>          
                                     </td>
@@ -274,8 +274,10 @@ box-shadow: 0px 0px 5px 1px rgba(0,148,118,1);
                     <td style="padding:7px;padding-right:10px">
                         <div style="border:1px solid gray;background-color:#D1D6D8;height:100%;width:100%;vertical-align:central">
            <div style="height:47%"></div>
-          <div  style="text-align:center;vertical-align:central;font-size:15px">The report is too large to preview. Please use Print/Save buttons to download it. </div>  
+          <div id="DownLoadReportMessage"  style="text-align:center;vertical-align:central;font-size:15px">The report is too large to preview. Please use Print/Save buttons to download it. </div>  
                         </div>
+                             <div class="BusyIndicator" id="ReportPageBusyIndicator"></div>                                                                               
+
                     </td>
                 </tr>
 
@@ -288,11 +290,13 @@ box-shadow: 0px 0px 5px 1px rgba(0,148,118,1);
 
      <script type="text/javascript">
          function OnDownloadDocument() {             
-             $.SendContactActivity($.CurrentEmail, "Invoice", "Document Download", $.CurrentTenant,$.CurrentCardId);
+             $.SendContactActivity($.CurrentEmail, "Report", "View Report", $.CurrentTenant,$.CurrentCardId);
          }
-    </script>
 
-    <script type="text/javascript" src="InvoicePageViewModel.js"></script>
+      
+     </script>
+
+    <script type="text/javascript" src="ReportViewPage.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {              
