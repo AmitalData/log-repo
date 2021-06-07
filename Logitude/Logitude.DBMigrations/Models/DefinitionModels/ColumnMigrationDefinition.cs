@@ -11,7 +11,7 @@ namespace Logitude.DBMigrations.Models
         public string Name { get; set; }
         public string ShortName { get; set; }
         public string Type { get; set; }
-        public int? Size { get; set; }
+        public int Size { get; set; }
         public int Precision { get; set; }
         public int Scale { get; set; }
         public string DefaultValue { get; set; }
