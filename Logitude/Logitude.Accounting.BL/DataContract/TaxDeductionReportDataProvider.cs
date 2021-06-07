@@ -318,6 +318,7 @@ namespace Logitude.Accounting.BL.DataContract
         }
         List<GLAccountList> transactionsGLAccounts;
         FullAccountingSettingPM setting;
+        List<LedgerTransaction> createdLines;
         public List<TaxDeductionReportLine> FillTaxDeductionReportUsingLedgerTransactions()
         {
             List<TaxDeductionReportLine> lines = new List<TaxDeductionReportLine>();
@@ -325,26 +326,46 @@ namespace Logitude.Accounting.BL.DataContract
             transactionsOppositGLAccounts = GetTransactionsOppositeGLAccounts(transactions);
            
             transactionsGLAccounts = GetTransactionsGLAccounts(transactions);
-       
-        //    transactions = transactions.Where(d => d.AccountId == setting.TaxWithholdingGLAccountId).ToList();// == a.AccountId
+
+            //    transactions = transactions.Where(d => d.AccountId == setting.TaxWithholdingGLAccountId).ToList();// == a.AccountId
+            createdLines = new List<LedgerTransaction>();
             foreach (LedgerTransaction transaction in transactions)
             {
-                TaxDeductionReportLine taxDeductionReportLine = new TaxDeductionReportLine();
-                string vendorId = GetVendorId(transaction);              
-                taxDeductionReportLine.VendorId = vendorId; 
-                taxDeductionReportLine.MonthOfRegisterDate = transaction.AccountingDate.Month;
-                List<LedgerTransaction> oppositeTransactions = oppositeAccountTransactions.Where(d => d.JournalId == transaction.JournalId && d.AccountId == transaction.OppositeAccountId && d.Reference1 == transaction.Reference1).ToList();
-                if(oppositeTransactions != null &&oppositeTransactions.Count > 0)
+                bool LineCreated = CheckIfLineCreated(transaction);
+                if (!LineCreated)
                 {
-                    taxDeductionReportLine.AmountInLocalCurrency = (double?)oppositeTransactions.Sum(d => d.LocalAmountDebit);
+                    UpdateCreatedLinesList(transaction);
+                    TaxDeductionReportLine taxDeductionReportLine = new TaxDeductionReportLine();
+                    string vendorId = GetVendorId(transaction);
+                    taxDeductionReportLine.VendorId = vendorId;
+                    taxDeductionReportLine.MonthOfRegisterDate = transaction.AccountingDate.Month;
+                    List<LedgerTransaction> oppositeTransactions = oppositeAccountTransactions.Where(d => d.JournalId == transaction.JournalId && d.AccountId == transaction.OppositeAccountId && d.Reference1 == transaction.Reference1).ToList();
+                    if (oppositeTransactions != null && oppositeTransactions.Count > 0)
+                    {
+                        taxDeductionReportLine.AmountInLocalCurrency = (double?)oppositeTransactions.Sum(d => d.LocalAmountDebit);
+                    }
+                    taxDeductionReportLine.TaxDeductionLocalAmount = transaction.LocalAmountCredit;
+                    taxDeductionReportLine.TaxDeductionPercentage = (int?)(transaction.LocalAmountCredit == 0 ? 0 : Math.Round(((transaction.LocalAmountCredit / (decimal)taxDeductionReportLine.AmountInLocalCurrency)) * 100, 2));
+                    GLAccountList account = transactionsOppositGLAccounts.Where(d => d.Id == transaction.OppositeAccountId).FirstOrDefault();
+                    taxDeductionReportLine.DeductionType = account != null ? account.DeductionFileTypeCode : null;
+                    if (taxDeductionReportLine.VendorId != null) lines.Add(taxDeductionReportLine);
                 }
-                taxDeductionReportLine.TaxDeductionLocalAmount = transaction.LocalAmountCredit;
-                taxDeductionReportLine.TaxDeductionPercentage =(int?) ( transaction.LocalAmountCredit == 0 ? 0 : Math.Round(( (transaction.LocalAmountCredit / (decimal)taxDeductionReportLine.AmountInLocalCurrency))*100,2));
-                GLAccountList account = transactionsOppositGLAccounts.Where(d => d.Id == transaction.OppositeAccountId).FirstOrDefault();
-                taxDeductionReportLine.DeductionType = account != null ? account.DeductionFileTypeCode : null;
-                if (taxDeductionReportLine.VendorId != null) lines.Add(taxDeductionReportLine);
             }
             return lines;
+        }
+      
+        private bool CheckIfLineCreated(LedgerTransaction transaction)
+        {
+            LedgerTransaction ledgerTransaction = createdLines.Where(d => d.JournalId == transaction.JournalId && d.Reference1 == transaction.Reference1).FirstOrDefault();
+            if (ledgerTransaction == null)
+            {
+                return false;
+            }
+            else return true;           
+        }
+        private void UpdateCreatedLinesList(LedgerTransaction transaction)
+        {
+            createdLines.Add(transaction);
         }
         private string GetVendorId(LedgerTransaction transaction)
         {
