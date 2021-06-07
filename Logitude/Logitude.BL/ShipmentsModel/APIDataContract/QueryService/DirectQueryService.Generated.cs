@@ -432,8 +432,8 @@ using Simplog.Data.ShipmentsModel;
 				   temp.BookingConfirmationNumber = MyEntityPM.BookingConfirmationNumber;
 				   temp.EstimatedFinalArrivalDate = MyEntityPM.EstimatedFinalArrivalDate;
 				   temp.ActualFinalArrivalDate = MyEntityPM.ActualFinalArrivalDate;
-				   temp.HouseNo = MyEntityPM.House;
-				   temp.IsHTSMissing = MyEntityPM.IsHTSMissing;					
+				   temp.HouseNo = MyEntityPM.House; 
+
 			  
 				   if(MyEntityPM.MainCarriageFromPartnerId != null)
 				   {
@@ -453,7 +453,8 @@ using Simplog.Data.ShipmentsModel;
 				   
 				   temp.MainCarriageETA = MyEntityPM.MainCarriageETA;
 				   temp.MainCarriageETD = MyEntityPM.MainCarriageETD;
-				   temp.TruckNumber = MyEntityPM.TruckNumber;					
+				   temp.TruckNumber = MyEntityPM.TruckNumber;
+				   temp.IsHTSMissing = MyEntityPM.IsHTSMissing;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -1467,6 +1468,10 @@ using Simplog.Data.ShipmentsModel;
 					
                     							//throw new ApplicationException("TruckNumber Can't be update"); 
 							temp.TruckNumber = MyEntity.TruckNumber;
+
+					 
+
+					
                     							//throw new ApplicationException("IsHTSMissing Can't be update"); 
 							temp.IsHTSMissing = MyEntity.IsHTSMissing;
 
@@ -1483,4 +1488,4 @@ using Simplog.Data.ShipmentsModel;
         }
 		 
    }
-}
+}
