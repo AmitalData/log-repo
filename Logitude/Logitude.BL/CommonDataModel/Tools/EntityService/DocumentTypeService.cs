@@ -266,9 +266,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 		}
 
 
-        private void RemoveEntityFromCache(DocumentTypePM theEntityPm)
+        private void RemoveEntityFromCache(DocumentTypePM entityPm)
         {
-            var cacheKey = "DocumentTypeByCode,code," + theEntityPm.Code + ",tenant," + theEntityPm.Tenant.ToString();
+            var cacheKey = "DocumentTypeByCode,code," + entityPm.Code + ",tenant," + entityPm.Tenant.ToString();
             if (CacheManager.CacheWrapper.Get(cacheKey) != null)
             {
                 CacheManager.CacheWrapper.Invalidate(cacheKey);
