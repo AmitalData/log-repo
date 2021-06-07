@@ -1,5 +1,5 @@
-@release @all @dev
 Feature: Warehouses Create, Search and Edit from Maintenance
+
     The user creates a warehouse, searches for and edits it from the Maintenance Module.
 
     Scenario: Create new warehouse
@@ -28,6 +28,7 @@ Feature: Warehouses Create, Search and Edit from Maintenance
     Scenario: Search for the warehouse by code
         When search warehouse
         Then the warehouse should appear successfully
+
 
     Scenario: Open the warhouse
         When open warehouse

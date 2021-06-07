@@ -1,4 +1,3 @@
-@release @all @dev
 Feature: Payment Terms Create, Search and Edit from Maintenance
     The user creates a payment term, searches for and edits it from the Maintenance Module.
 

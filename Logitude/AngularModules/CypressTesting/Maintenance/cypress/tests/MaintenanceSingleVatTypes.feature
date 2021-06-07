@@ -1,5 +1,5 @@
-@release @all @dev
 Feature: Single Vat Type Create, Search and Edit from Maintenance
+
     The user creates a single vat type, searches for and edits it from the Maintenance Module.
 
     Scenario: Create new single vat type
@@ -20,6 +20,7 @@ Feature: Single Vat Type Create, Search and Edit from Maintenance
     Scenario: Search for the single vat type by code
         When search single vat type
         Then the single vat type should appear successfully
+
 
     Scenario: Open the single vat type
         When open single vat type
