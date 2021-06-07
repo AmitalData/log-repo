@@ -138,7 +138,12 @@ export class CustomsPartnerFtpListComponent extends BaseComponent implements OnI
 
     _IsNew: boolean = false;
     OkButtonClicked() {
-
+        if (!AppTool.IsNullOrEmpty(this.User)) {
+            this.User = this.User.trim();
+        }
+        if (!AppTool.IsNullOrEmpty(this.Password)) {
+            this.Password = this.Password.trim();
+        }
         this.ValidateCustomsPartnerFtp();
         if (this.ValidationErrorsList != null && this.ValidationErrorsList.length > 0) {
             return;
