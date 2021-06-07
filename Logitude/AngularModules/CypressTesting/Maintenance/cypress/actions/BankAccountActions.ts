@@ -41,27 +41,8 @@ function DefinePostBankAccountRequest() {
 export function AssertCreateBankAccount() {
     let intercept = cy.wait("@" + RequestAliases.PostBankAccount);
     intercept.then((interception) => {
-        if (interception.response.statusCode === 400) {
-            ReCreateBankAccount();
-        }
-        else {
             AssertPostBankAccount(interception.response.statusCode, 200, interception.response.body.BankCode)
-        }
     })
-}
-
-function ReCreateBankAccount() {
-    let RandomBankAccountNumber = GenerateRandomNumber(8);
-    var RandomBankAccountCode = GenerateRandomNumber(8);
-    var RandomBankAccountBranchNumber = GenerateRandomNumber(8);
-    cy.FillLogTextBox(BankAccountSelectors.BankAccountAccountNumber, RandomBankAccountNumber)
-    cy.FillLogTextBox(BankAccountSelectors.BankAccountBankCode, RandomBankAccountCode)
-    cy.FillLogTextBox(BankAccountSelectors.BankAccountBranchNumber, RandomBankAccountBranchNumber)
-    cy.FillLogLov(BankAccountSelectors.BankAccountCurrency, 'USD', true)
-    cy.FillLogTextBox(BankAccountSelectors.BankAccountName, 'TEST')
-    cy.FillLogTextBox(BankAccountSelectors.BankAccountLocalName, 'TEST')
-    CreateBankAccount();
-    AssertCreateBankAccount();
 }
 
 export function AssertPostBankAccount(responseStatusCode: number, expectedStatusCode: number, bankAccountCode: string) {

@@ -1,4 +1,4 @@
-@release @stable @all
+@release @NewDev @all
 Feature: Package Type Create, Search and Edit from Maintenance
     The user creates a Package Type, searches for and edits it from the Maintenance Module.
 

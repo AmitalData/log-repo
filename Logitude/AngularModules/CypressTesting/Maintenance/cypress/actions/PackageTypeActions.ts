@@ -57,15 +57,7 @@ export function AssertCreatePackageType() {
 }
 
 function ReCreatePackageType() {
-    cy.FillLogTextBox(PackageTypeSelectors.PackageTypeCode, '1234')
-    cy.FillLogTextBox(PackageTypeSelectors.PackageTypeName, 'TEST')
-    cy.FillLogTextBox(PackageTypeSelectors.PackageTypeLocalName, 'LocalTEST')
-    cy.FillLogTextBox(PackageTypeSelectors.PackageTypeTEU, '12345')
-    cy.FillLogTextBox(PackageTypeSelectors.PackageTypeContainerSize, '2321')
-    cy.FillLogTextBox(PackageTypeSelectors.PackageTypeVolume, '5432')
-    cy.FillLogTextBox(PackageTypeSelectors.PackageTypePrintAs, 'TESTPrint')
-    FillCheckBoxProcess(PackageTypeSelectors.PackageTypeAirCheckBox, 'Yes')
-    FillCheckBoxProcess(PackageTypeSelectors.InActivePackageTypeCheckBox, 'Yes')
+    cy.FillRandomNumber(PackageTypeSelectors.PackageTypeCode, PackageTypeSelectors.MinRandomNumber, PackageTypeSelectors.MaxRandomNumber)
     CreatePackageType();
     AssertCreatePackageType();
 }

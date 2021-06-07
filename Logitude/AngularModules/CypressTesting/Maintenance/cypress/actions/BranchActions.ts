@@ -63,27 +63,9 @@ function DefinePostBranchRequest() {
 export function AssertCreateBranch() {
     let intercept = cy.wait("@" + RequestAliases.PostBranch);
     intercept.then((interception) => {
-        if (interception.response.statusCode === 400) {
-            ReCreateBranch();
-        }
-        else {
             AssertPostBranch(interception.response.statusCode, 200, interception.response.body.EnglishName)
-        }
+        
     })
-}
-
-function ReCreateBranch() {
-    let MinRandomNumber = 1;
-    let MaxRandomNumber = 1000;
-
-    cy.FillLogTextBox(BranchSelectors.BranchName, 'Test')
-    cy.FillLogTextBox(BranchSelectors.BranchLocalName, 'Test')
-    cy.FillRandomNumber(BranchSelectors.BranchCode, MinRandomNumber, MaxRandomNumber)
-
-    cy.FillLogTextBox(BranchSelectors.BranchSignature, 'Test')
-    cy.FillRandomNumber(BranchSelectors.BranchCounterCode, MinRandomNumber, MaxRandomNumber)
-    ReCreateBranch();
-    AssertCreateBranch();
 }
 
 export function AssertPostBranch(responseStatusCode: number, expectedStatusCode: number, branchName: string) {
