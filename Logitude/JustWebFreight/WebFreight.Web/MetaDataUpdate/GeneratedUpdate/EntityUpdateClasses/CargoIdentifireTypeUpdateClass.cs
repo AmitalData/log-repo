@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CargoIdentifireTypeUpdateClass
    {  		
-		public const string HashString = "000f4ea1726814e78401b389648f5685";
+		public const string HashString = "e444ae7c5f6da626b5c8771ebe377b91";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -502,8 +502,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Is For Declaration Export",
 					  						FullLocalDefaultText =  "עבור יצוא",
 					  						ListFieldLable =  "IsForDeclarationExportListLable",
-					  						ListLableDefaultText =  "עבור יצוא",
-					  						ListLocalDefaultText =  "Is For Declaration Export",
+					  						ListLableDefaultText =  "Is For Declaration Export",
+					  						ListLocalDefaultText =  "עבור יצוא",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
