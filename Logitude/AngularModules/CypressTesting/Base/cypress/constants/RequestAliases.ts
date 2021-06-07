@@ -149,6 +149,12 @@ export class RequestAliases {
     public static readonly PostCreditCardType = "PostCreditCardType"
     public static readonly PutCreditCardType = "PutCreditCardType"
 
+    public static readonly PostPaymentTerm = "PostPaymentTerm"
+    public static readonly PutPaymentTerm = "PutPaymentTerm"    
+
+    public static readonly PostVatType = "PostVatType"
+    public static readonly PutVatType = "PutVatType"
+
     public static readonly GetSignle = "GetSignle"
     public static readonly GetByFilter = "GetByFilter"
     public static readonly GetFilterSearch = "GetFilterSearch"
