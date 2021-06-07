@@ -250,7 +250,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                         if (!string.IsNullOrEmpty(myCard.PrimaryContactId))
                         {
-                            Contact contact = ContactRepository.GetSingleContact(myCard.PrimaryContactId, tenant, true);
+                            Contact contact = ContactRepository.GetSingleContact(myCard.PrimaryContactId, tenant, false);
                             if (contact != null)
                             {
                                 manifestDataProvider.ShipperContactPhone = contact.BusinessPhone;
@@ -273,7 +273,7 @@ namespace WebFreight.Web.ReportsWebServices
                         manifestDataProvider.ConsigneeAddress = GetConsigneAddress(master.ConsigneeAddressId, consignee.Tenant, addressRepository);
                         if (!string.IsNullOrEmpty(consignee.PrimaryContactId))
                         {
-                            Contact contact = ContactRepository.GetSingleContact(consignee.PrimaryContactId, tenant, true);
+                            Contact contact = ContactRepository.GetSingleContact(consignee.PrimaryContactId, tenant, false);
                             if (contact != null)
                             {
                                 manifestDataProvider.ConsigneeContactName = contact.EnglishName;
