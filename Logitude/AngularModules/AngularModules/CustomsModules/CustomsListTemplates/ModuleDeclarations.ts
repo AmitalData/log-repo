@@ -18,6 +18,7 @@ import { ActionListHeaderTemplate } from './Components/ListHeaderTemplates/Actio
 import { ArrivalDateListHeaderTemplate } from './Components/ListHeaderTemplates/ArrivalDateListHeaderTemplate';
 import { TransportModeListHeaderTemplate } from './Components/ListHeaderTemplates/TransportModeListHeaderTemplate';
 import { CustomsContainerizationListTemplate } from './Components/CustomsContainerizationListTemplate';
+import { BlackTransportModeListHeaderTemplate } from './Components/ListHeaderTemplates/BlackTransportModeListHeaderTemplate';
 
 
 export const Components =
@@ -41,7 +42,8 @@ export const Components =
         ActionListHeaderTemplate,
         ArrivalDateListHeaderTemplate,
         TransportModeListHeaderTemplate,
-        CustomsContainerizationListTemplate
+        CustomsContainerizationListTemplate,
+        BlackTransportModeListHeaderTemplate,
  
 
   ];
@@ -72,7 +74,7 @@ export class ModuleDeclarations {
           case "ArrivalDateListHeaderTemplate": { myResult = ArrivalDateListHeaderTemplate; break; }
           case "TransportModeListHeaderTemplate": { myResult = TransportModeListHeaderTemplate; break; }
           case "CustomsContainerizationListTemplate": { myResult = CustomsContainerizationListTemplate; break; }
-
+          case "BlackTransportModeListHeaderTemplate": { myResult = BlackTransportModeListHeaderTemplate; break; }
 
  
 

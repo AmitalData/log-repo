@@ -1,4 +1,7 @@
-import {Component, AfterViewInit, ChangeDetectorRef, OnInit, Input, Output,EventEmitter}  from '@angular/core';
+import { Component, AfterViewInit, ChangeDetectorRef, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { result } from 'cypress/types/lodash';
+import { ContainerizationPM } from '../../../../Customs/EntityPMs/ContainerizationPM';
+import { ContainerizationExtendedListService } from '../../../../Customs/Services/ExtendedLists/ContainerizationExtendedListService';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ApiQueryFilters, FilterItem } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
@@ -6,16 +9,22 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { AppTool } from '../../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
+import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 
 
 @Component({
-    
+
     templateUrl: './NewContainerizationComponent.html',
+    providers: [ContainerizationExtendedListService]
 })
 
 export class NewContainerizationComponent extends BaseComponent {
+    public SelectedRow: any;
     DataContext = this;
     objectTableNameDec: string = "Customs.Declaration";
+    objectTableName: string = "Customs.Containerization";
+    entityPM: ContainerizationPM;
     @Output() onQueryChangeEvent = new EventEmitter();
     entityListService: EntityListService;
     SearchFieldsFilter: FilterItem;
@@ -25,6 +34,11 @@ export class NewContainerizationComponent extends BaseComponent {
     TransportFilter_A: string;
     TransportFilter_O: string;
     TransportFilter_I: string;
+    IsSelectedNot: boolean;
+    IsSelected: boolean;
+    @Output() MenuHeaderchangeevent = new EventEmitter();
+    connectedListIds: ObservableCollection;
+
 
     private selectedValue: string = "All";
     public get SelectedValue() { return this.selectedValue; }
@@ -48,27 +62,55 @@ export class NewContainerizationComponent extends BaseComponent {
             this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
         }
     }
+    
 
+    ViewInitCompleted($event) {
+        this.LoadConnectedDeclarationGrid();
+    }
 
-    constructor(private EntityResourceService: EntityResourceService) {
+    LoadConnectedDeclarationGrid() {
+        this.filterAgrs = new ApiQueryFilters();
+        this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
+    }
+
+    onCheckBoxChecked($event) {
+        this.IsSelected = false;
+        if (!this.entityPM.ConnectedDeclarations) {
+            this.entityPM.ConnectedDeclarations = "";
+        }
+        if ($event.IsChecked) {
+            if (!this.entityPM.ConnectedDeclarations.includes($event.rowData.Id)) {
+                this.entityPM.ConnectedDeclarations = this.entityPM.ConnectedDeclarations + $event.rowData.Id + ",";
+            }
+        }
+        else {
+            if (this.entityPM.ConnectedDeclarations.includes($event.rowData.Id)) {
+                this.entityPM.ConnectedDeclarations = this.entityPM.ConnectedDeclarations.replace($event.rowData.Id + ",", "");
+            }
+        }
+    }
+
+    constructor(public entityArgs: EntityArgs,private EntityResourceService: EntityResourceService, public containerizationExtendedListService: ContainerizationExtendedListService) {
         super();
-
-
+        this.entityPM = new ContainerizationPM();
+        this.connectedListIds = new ObservableCollection([]);
         this.EntityResourceService.getEntityResourceByTableName("Customs.Containerization").subscribe((response: any) => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
-                this.entityListService = new EntityListService();
-                if (this.CurrentSession == null) {
-                    this.TransportFilter_A = "TransportFilter_A_-1_-1";
-                    this.TransportFilter_O = "TransportFilter_O_-1_-1";
-                    this.TransportFilter_I = "TransportFilter_I_-1_-1";
-                } else {
-                    var index_T = this.CurrentSession.GetNewId("ShipmentTransportFilterMenu");
-                    this.TransportFilter_A = "TransportFilter_A" + index_T;
-                    this.TransportFilter_O = "TransportFilter_O" + index_T;
-                    this.TransportFilter_I = "TransportFilter_I" + index_T;
-                }
-                this.BuildColumns();
-                this.isLoad = true;
+                this.EntityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe((response: any) => {
+                    this.entityListService = new EntityListService();
+                    if (this.CurrentSession == null) {
+                        this.TransportFilter_A = "TransportFilter_A_-1_-1";
+                        this.TransportFilter_O = "TransportFilter_O_-1_-1";
+                        this.TransportFilter_I = "TransportFilter_I_-1_-1";
+                    } else {
+                        var index_T = this.CurrentSession.GetNewId("ShipmentTransportFilterMenu");
+                        this.TransportFilter_A = "TransportFilter_A" + index_T;
+                        this.TransportFilter_O = "TransportFilter_O" + index_T;
+                        this.TransportFilter_I = "TransportFilter_I" + index_T;
+                    }
+                    this.BuildColumns();
+                    this.isLoad = true;
+                });
             });
         });
 
@@ -138,7 +180,7 @@ export class NewContainerizationComponent extends BaseComponent {
     };
 
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
-         var filters = new ApiQueryFilters;
+        var filters = new ApiQueryFilters;
         var ExportFilter = new FilterItem("Direction", 'E', null, null, "Equals", false, false, false, "string", false);
         filters.AdditionalFilters.push(ExportFilter);
         var ProcFilter = new FilterItem("ProcedureCurrentName", 'המכלה', null, null, "Contains", false, false, false, "string", false);
@@ -163,27 +205,25 @@ export class NewContainerizationComponent extends BaseComponent {
         filters.SortBy = sortingCol;
         filters.SortDirection = sortingDir;
 
-        //filters.addAdditionalFilter("AccountingDate", true, null, null, "Between", false, false, false, "datetime");
-        //return new Promise((resolve, reject) => {
-        //     var service: DocumentsFilingViewsExtService = new DocumentsFilingViewsExtService();
-        //    resolve(service.getByFilters(filters));
-        //});
-        return this.entityListService.getByFilters(this.objectTableNameDec, filters);//this.ledgerTransactionListExtendedService.getByFilters(filters);
+        var myout = this.entityListService
+            .getExtendedByFilters("Customs.Containerization", filters);
+        myout.then(res => {
+        });
+        return myout;
+
     }
 
     public columns: any[] = null;
     BuildColumns() {
         this.columns = [];
         this.columns.push({
-
-            FieldName: 'IsChecked',
+            FieldName: 'MyConnectedCheckBox',
             DataTypeCode: 'String',//'Number',
             Display: '',
             Styles: { width: '30px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CustomsContainerizationListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsContainerizationListTemplate',
-
         });
 
 
@@ -195,7 +235,7 @@ export class NewContainerizationComponent extends BaseComponent {
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'CreateDateTime',
-                        HtmlListComponentName: 'CustomsContainerizationListTemplate',
+            HtmlListComponentName: 'CustomsContainerizationListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsContainerizationListTemplate',
 
         });
@@ -228,11 +268,9 @@ export class NewContainerizationComponent extends BaseComponent {
             IsCustomTemplate: true,
             HtmlListComponentName: 'CustomsContainerizationListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsContainerizationListTemplate',
-            
-
-
+            ColumnHeaderTemplateName: 'BlackTransportModeListHeaderTemplate',
         });
- 
+
         this.columns.push({
             FieldName: 'CustomFileNo',
             DataTypeCode: 'String',
@@ -311,15 +349,37 @@ export class NewContainerizationComponent extends BaseComponent {
 
     }
 
+
+    OnAllBtnClicked() {
+        this.IsSelected = true;
+        this.containerizationExtendedListService.connectedSelectAll = true;
+        this.LoadConnectedItems();
+
+    }
+
+    filterAgrs: ApiQueryFilters;
+    LoadConnectedItems() {
+        this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
+
+    }
+
+    OnNoneBtnClicked() {
+        this.IsSelected = false;
+        this.containerizationExtendedListService.connectedSelectAll = false;
+        this.entityPM.ConnectedDeclarations = "ALL";
+        this.LoadConnectedItems();
+
+    }
+
     itemClicked(itemValue: string) {
-          if (this.SelectedValue != itemValue) {
+        if (this.SelectedValue != itemValue) {
             this.SelectedValue = itemValue;
         }
 
 
         this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
 
-         this.ApplyTransportSelectedStyle();
+        this.ApplyTransportSelectedStyle();
     }
 
 
@@ -352,7 +412,7 @@ export class NewContainerizationComponent extends BaseComponent {
         }
     }
 
- 
+
     SendButtonClicked() {
 
     }
@@ -386,7 +446,7 @@ export class NewContainerizationComponent extends BaseComponent {
     }
 
 
-    
 
 
- }
+
+}
