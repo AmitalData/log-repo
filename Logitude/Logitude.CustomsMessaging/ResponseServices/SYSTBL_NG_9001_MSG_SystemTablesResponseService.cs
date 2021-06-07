@@ -463,6 +463,67 @@ ID List :
                         break;
 
                     }
+                case "1259":
+                case "CargoIdentifireType":
+                    {
+                        var extList = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt>();
+                        Logitude.CustomsMessaging.Helpers.ClosedTable.
+                                                    ManipulateCustomResponse.
+                                                DataSetToTableData(customResponse,
+                                                (newResponseTableData, dr) =>
+                                                {
+                                                    var newExt =
+                                                        SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt.CreateNew(newResponseTableData);
+                                                    newExt.MyCargoIdentifireType = new Helpers.ClosedTable.CargoIdentifireType();
+                                                    if (!writeHighlight)
+                                                    {
+                                                        writeHighlight = true;
+                                                    }
+                                                    if (dr["IsForDeclarationExport"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyCargoIdentifireType.IsForDeclarationExport = true;
+                                                    }
+                                                    if (dr["IsForDeclarationImport"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyCargoIdentifireType.IsForDeclarationImport = true;
+                                                    }
+                                                    if (dr["IsForManifest"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyCargoIdentifireType.IsForManifest = true;
+                                                    }
+                                                    if (dr["IsKey2Mandatory"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyCargoIdentifireType.IsKey2Mandatory = true;
+                                                    }
+                                                    if (dr["IsKey3Mandatory"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyCargoIdentifireType.IsKey3Mandatory = true;
+                                                    }
+                                                    if (dr["CargoIdentifierKey1Name"].ToString() != null)
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyCargoIdentifireType.CargoIdentifierKey1Name = dr["CargoIdentifierKey1Name"].ToString();
+                                                    }
+                                                    if (dr["CargoIdentifierKey2Name"].ToString() != null)
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyCargoIdentifireType.CargoIdentifierKey2Name = dr["CargoIdentifierKey2Name"].ToString();
+                                                    }
+                                                    if (dr["CargoIdentifierKey3Name"].ToString() != null)
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyCargoIdentifireType.CargoIdentifierKey3Name = dr["CargoIdentifierKey3Name"].ToString();
+                                                    }
+                                                    extList.Add(newExt);
+                                                });
+                        return extList;
+
+                    }
                 case "1423":
                 case "CertificateExemptionType":
                     {

@@ -123,10 +123,10 @@
       <HintPath>..\Unifreight.Data\obj\Debug\Unifreight.Data.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.3.1803.34\lib\Net40\UnifreightIIG.Common.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.3.1803.36\lib\Net40\UnifreightIIG.Common.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.DCA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.3.1803.34\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.3.1803.36\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
     </Reference>
     <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureEventSource.dll</HintPath>
@@ -166,6 +166,7 @@
     <Compile Include="FakeMessagingServices\Fake_DCA_NG_5110_DepositRequestFulfillednfoMsgMessagingService.cs" />
     <Compile Include="FakeMessagingServices\Courier\FAKE_CourierMasterDeclarations.cs" />
     <Compile Include="FakeMessagingServices\Fake_SaveDF_MSG5002_DeclarationCancellationRequestMsg.cs" />
+    <Compile Include="Helpers\ClosedTable\Update1259CargoIdentifireType.cs" />
     <Compile Include="Helpers\ClosedTable\Update1366ContainerType.cs" />
     <Compile Include="Helpers\ClosedTable\Update1423CertificateExemptionType.cs" />
     <Compile Include="Helpers\ClosedTable\Update1998NDMessageActionCode.cs" />

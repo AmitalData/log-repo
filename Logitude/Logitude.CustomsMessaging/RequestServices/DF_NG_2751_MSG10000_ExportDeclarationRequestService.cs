@@ -1071,6 +1071,8 @@ namespace Logitude.CustomsMessaging.RequestServices
                     //   LocationID = SetIDTypeValue<TradeTermsLocationIDType>(supplierInvoicePM.IssueCountryCode)
                 };
                 //    declarationGoodsShipment.CustomsValuation = GetcustomsValuation(supplierInvoicePM).ToArray();
+
+                var declarationConsignmentList = new List<DeclarationGoodsShipmentExportConsignment>();
                 for (int consignmentSeq = 0; consignmentSeq < declarationPM.Consignments.Count(); consignmentSeq++)
                 {
                     string consignmentType = declarationPM.Consignments[consignmentSeq].ConsignmentType;
@@ -1080,9 +1082,10 @@ namespace Logitude.CustomsMessaging.RequestServices
                     }
                     else if (supplierInvoicePM.SequenceNumeric.Value == 1 && !declarationPM.ExcludeConsignment)
                     {
-                        declarationGoodsShipment.ExportConsignment = GetDeclarationExportConsignment(declarationPM.Consignments[consignmentSeq], consignmentSeq).ToArray();
+                        declarationConsignmentList.AddRange(GetDeclarationExportConsignment(declarationPM.Consignments[consignmentSeq], consignmentSeq));
                     }
                 }
+                declarationGoodsShipment.ExportConsignment = declarationConsignmentList.ToArray();
                 declarationGoodsShipment.AdditionalDocument = GetDeclarationGoodsShipmentAdditionalDocument(supplierInvoicePM);
                 declarationGoodsShipment.GovernmentAgencyGoodsItem = GetDeclarationGoodsItems(supplierInvoicePM).ToArray();
 

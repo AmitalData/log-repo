@@ -45,7 +45,6 @@ using Unifreight.Data.AmitalModel;
 using Unifreight.Data.AmitalModel.Repsitories;
 using Simplog.Data.Helpers;
 using Logitude.Customs.BL.BL;
-using System.Text.RegularExpressions;
 
 namespace Logitude.CustomsMessaging.RequestServices
 {

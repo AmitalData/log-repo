@@ -94,6 +94,11 @@ export class ContainerizationPM {
     public set ConnectedDeclarations(newValue: string) { if (this.connectedDeclarations != newValue) { this.connectedDeclarations = newValue; this.MarkAsDirty("ConnectedDeclarations"); } }
        
 	 
+    private notConnectedDeclarations: string;
+    public get NotConnectedDeclarations() { return this.notConnectedDeclarations; }
+    public set NotConnectedDeclarations(newValue: string) { if (this.notConnectedDeclarations != newValue) { this.notConnectedDeclarations = newValue; this.MarkAsDirty("NotConnectedDeclarations"); } }
+       
+	 
 
     public OldEntityPM: ContainerizationPM;
 		

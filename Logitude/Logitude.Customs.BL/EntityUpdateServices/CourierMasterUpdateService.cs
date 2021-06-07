@@ -180,7 +180,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //Task 44476 remove if in order to always create task - in case another field was changed but cfi don't has updated value
             //            if (entityPM.HAWB != entityPOCO.HAWB || entityPM.MAWB != entityPOCO.MAWB || entityPM.AirlineId != entityPOCO.AirlineId)
             //            {
-            if (entityPM.HAWB != entityPOCO.HAWB || entityPM.MAWB != entityPOCO.MAWB || entityPM.AirlineId != entityPOCO.AirlineId || entityPM.TruckerId != entityPOCO.TruckerId || 
+            if (entityPM.HAWB != entityPOCO.HAWB || entityPM.MAWB != entityPOCO.MAWB || entityPM.AirlineId != entityPOCO.AirlineId || 
                 entityPM.IsCancelled != entityPOCO.IsCancelled || entityPM.IsReadyForInvoice != entityPOCO.IsReadyForInvoice || 
                 ((entityPM.EstimatedArrivalDateOnly.HasValue && (!entityPOCO.EstimatedArrivalDate.HasValue || entityPOCO.EstimatedArrivalDate.Value.Date != entityPM.EstimatedArrivalDateOnly)) || 
                 (!entityPM.EstimatedArrivalDateOnly.HasValue && entityPOCO.EstimatedArrivalDate.HasValue)) || 

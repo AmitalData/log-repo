@@ -429,7 +429,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 {
                                     case "1":
                                         {
-                                            declarationPM.TransferImporterId = importer.ID.Value;
+                                            var queryService = new ClientQueryService(context);
+                                            var importerPM = queryService.GetClientByCode(importer.ID.Value, tenant);
+                                            if (importerPM == null)
+                                                declarationPM.TransferImporterCode = importer.ID.Value;
+                                            else
+                                            {
+                                                declarationPM.TransferImporterCode = importerPM.Code;
+                                                declarationPM.TransferImporterId = importerPM.Id;
+
+                                            }
+ 
                                             break;
                                         }
 
@@ -458,8 +468,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 {
                                     case "1":
                                         {
-                                            declarationPM.EntitleImporterId = importer.ID.Value;
-                                            break;
+                                            var queryService = new ClientQueryService(context);
+                                            var importerPM = queryService.GetClientByCode(importer.ID.Value, tenant);
+                                            if (importerPM == null)
+                                                declarationPM.EntitleImporterCode = importer.ID.Value;
+                                            else
+                                            {
+                                                declarationPM.EntitleImporterCode = importerPM.Code;
+                                                declarationPM.EntitleImporterId = importerPM.Id;
+
+                                            }
+
+                                             break;
                                         }
 
                                     case "3":

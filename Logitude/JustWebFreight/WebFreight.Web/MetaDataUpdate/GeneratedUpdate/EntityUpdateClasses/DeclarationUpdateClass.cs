@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "dfe8e0cf010d6aa946ff46c374b46757";
+		public const string HashString = "16ed35d97fca300054f6538af540cfda";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -9596,10 +9596,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CourierSuspentionCode",
 					  						DefaultText =  "Courier Suspention Code",
-					  						FullLocalDefaultText =  "קוד עיכוב",
+					  						FullLocalDefaultText =  "קוד עיכוב מכס",
 					  						ListFieldLable =  "CourierSuspentionCodeListLable",
 					  						ListLableDefaultText =  "Courier Suspention Code",
-					  						ListLocalDefaultText =  "קוד עיכוב",
+					  						ListLocalDefaultText =  "קוד עיכוב מכס",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -9658,10 +9658,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CourierSuspentionName",
 					  						DefaultText =  "Courier Suspention Name",
-					  						FullLocalDefaultText =  "קוד עיכוב",
+					  						FullLocalDefaultText =  "תאור קוד עיכוב מכס",
 					  						ListFieldLable =  "CourierSuspentionNameListLable",
 					  						ListLableDefaultText =  "Courier Suspention Name",
-					  						ListLocalDefaultText =  "קוד עיכוב",
+					  						ListLocalDefaultText =  "תאור קוד עיכוב מכס",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -10270,7 +10270,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullLocalDefaultText =  "קוד PENDING",
 					  						ListFieldLable =  "CourierPendingReasonListListLable",
 					  						ListLableDefaultText =  "Courier Pending Reason List",
-					  						ListLocalDefaultText =  "רשימת קודי עיכובים",
+					  						ListLocalDefaultText =  "קוד PENDING",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -12040,7 +12040,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.Declaration",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,

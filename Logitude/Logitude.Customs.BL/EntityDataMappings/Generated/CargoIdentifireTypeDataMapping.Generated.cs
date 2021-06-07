@@ -26,7 +26,15 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SearchFields, 
 	         LocalName, 
 	         EnglishName, 
-	         Inactive,
+	         Inactive, 
+	         IsForDeclarationExport, 
+	         IsForDeclarationImport, 
+	         IsForManifest, 
+	         IsKey2Mandatory, 
+	         IsKey3Mandatory, 
+	         CargoIdentifierKey1Name, 
+	         CargoIdentifierKey2Name, 
+	         CargoIdentifierKey3Name,
 	      }
 
 
@@ -37,7 +45,15 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SearchFields, 
 	         LocalName, 
 	         EnglishName, 
-	         Inactive,
+	         Inactive, 
+	         IsForDeclarationExport, 
+	         IsForDeclarationImport, 
+	         IsForManifest, 
+	         IsKey2Mandatory, 
+	         IsKey3Mandatory, 
+	         CargoIdentifierKey1Name, 
+	         CargoIdentifierKey2Name, 
+	         CargoIdentifierKey3Name,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -64,6 +80,46 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Inactive))
             {
 				entityPOCO.Inactive = entityPM.Inactive;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsForDeclarationExport))
+            {
+				entityPOCO.IsForDeclarationExport = entityPM.IsForDeclarationExport;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsForDeclarationImport))
+            {
+				entityPOCO.IsForDeclarationImport = entityPM.IsForDeclarationImport;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsForManifest))
+            {
+				entityPOCO.IsForManifest = entityPM.IsForManifest;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsKey2Mandatory))
+            {
+				entityPOCO.IsKey2Mandatory = entityPM.IsKey2Mandatory;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsKey3Mandatory))
+            {
+				entityPOCO.IsKey3Mandatory = entityPM.IsKey3Mandatory;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CargoIdentifierKey1Name))
+            {
+				entityPOCO.CargoIdentifierKey1Name = entityPM.CargoIdentifierKey1Name;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CargoIdentifierKey2Name))
+            {
+				entityPOCO.CargoIdentifierKey2Name = entityPM.CargoIdentifierKey2Name;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CargoIdentifierKey3Name))
+            {
+				entityPOCO.CargoIdentifierKey3Name = entityPM.CargoIdentifierKey3Name;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -97,6 +153,46 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.Inactive = entityPOCO.Inactive;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsForDeclarationExport))
+            {
+					entityPM.IsForDeclarationExport = entityPOCO.IsForDeclarationExport;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsForDeclarationImport))
+            {
+					entityPM.IsForDeclarationImport = entityPOCO.IsForDeclarationImport;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsForManifest))
+            {
+					entityPM.IsForManifest = entityPOCO.IsForManifest;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsKey2Mandatory))
+            {
+					entityPM.IsKey2Mandatory = entityPOCO.IsKey2Mandatory;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsKey3Mandatory))
+            {
+					entityPM.IsKey3Mandatory = entityPOCO.IsKey3Mandatory;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CargoIdentifierKey1Name))
+            {
+					entityPM.CargoIdentifierKey1Name = entityPOCO.CargoIdentifierKey1Name;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CargoIdentifierKey2Name))
+            {
+					entityPM.CargoIdentifierKey2Name = entityPOCO.CargoIdentifierKey2Name;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CargoIdentifierKey3Name))
+            {
+					entityPM.CargoIdentifierKey3Name = entityPOCO.CargoIdentifierKey3Name;
+            }
+
 		}
 
 		public void PMToOldPM(CargoIdentifireTypePM entityPM, CargoIdentifireTypePM oldEntityPM)
@@ -123,6 +219,46 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.Inactive = entityPM.Inactive;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsForDeclarationExport))
+            {
+                oldEntityPM.IsForDeclarationExport = entityPM.IsForDeclarationExport;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsForDeclarationImport))
+            {
+                oldEntityPM.IsForDeclarationImport = entityPM.IsForDeclarationImport;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsForManifest))
+            {
+                oldEntityPM.IsForManifest = entityPM.IsForManifest;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsKey2Mandatory))
+            {
+                oldEntityPM.IsKey2Mandatory = entityPM.IsKey2Mandatory;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsKey3Mandatory))
+            {
+                oldEntityPM.IsKey3Mandatory = entityPM.IsKey3Mandatory;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CargoIdentifierKey1Name))
+            {
+                oldEntityPM.CargoIdentifierKey1Name = entityPM.CargoIdentifierKey1Name;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CargoIdentifierKey2Name))
+            {
+                oldEntityPM.CargoIdentifierKey2Name = entityPM.CargoIdentifierKey2Name;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CargoIdentifierKey3Name))
+            {
+                oldEntityPM.CargoIdentifierKey3Name = entityPM.CargoIdentifierKey3Name;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(CargoIdentifireTypePM entityPM)
@@ -139,6 +275,18 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.LocalName)) //T4 find type == nText 
             {
                 entityPM.LocalName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.LocalName));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.CargoIdentifierKey1Name)) //T4 find type == nText 
+            {
+                entityPM.CargoIdentifierKey1Name = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CargoIdentifierKey1Name));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.CargoIdentifierKey2Name)) //T4 find type == nText 
+            {
+                entityPM.CargoIdentifierKey2Name = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CargoIdentifierKey2Name));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.CargoIdentifierKey3Name)) //T4 find type == nText 
+            {
+                entityPM.CargoIdentifierKey3Name = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CargoIdentifierKey3Name));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

@@ -29,6 +29,22 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string EnglishName { get; set; }
         [Column("Inactive")]
 	    public bool Inactive { get; set; }
+        [Column("IsForDeclarationExport")]
+	    public bool IsForDeclarationExport { get; set; }
+        [Column("IsForDeclarationImport")]
+	    public bool IsForDeclarationImport { get; set; }
+        [Column("IsForManifest")]
+	    public bool IsForManifest { get; set; }
+        [Column("IsKey2Mandatory")]
+	    public bool IsKey2Mandatory { get; set; }
+        [Column("IsKey3Mandatory")]
+	    public bool IsKey3Mandatory { get; set; }
+        [Column("CargoIdentifierKey1Name")]
+	    public string CargoIdentifierKey1Name { get; set; }
+        [Column("CargoIdentifierKey2Name")]
+	    public string CargoIdentifierKey2Name { get; set; }
+        [Column("CargoIdentifierKey3Name")]
+	    public string CargoIdentifierKey3Name { get; set; }
     }
 }
 	 

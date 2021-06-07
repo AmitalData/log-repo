@@ -1,5 +1,5 @@
 declare var window: any;
-import { Component, AfterViewInit, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
+import { Component, AfterViewInit, ChangeDetectorRef, Output, EventEmitter, OnInit } from '@angular/core';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { LogTab } from '../../../../Infrastructure/Components/LogitudeComponents/LogTabsComponent';
 import { AppTool, ArrayTool } from '../../../../Infrastructure/Tools';
@@ -22,13 +22,17 @@ import { INF_MSG_GenericResponseData } from '../../../../Customs/DataContract/Re
 import { CustomMessageProgressComponent } from '../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { DeclarationList } from '../../../../Customs/EntityLists/DeclarationList';
+import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { DeclarationListService } from '../../../../Customs/Services/StandardLists/DeclarationListService';
+
 
 @Component({
 
     templateUrl: './ContainerizationGeneralComponent.html',
 })
 
-export class ContainerizationGeneralComponent extends BaseComponent {
+export class ContainerizationGeneralComponent extends BaseComponent implements AfterViewInit {
     @Output() FillValidationErrorList: EventEmitter<any> = new EventEmitter();
     public EntityPM: ContainerizationPM;
     public ObjectTableName: string = "Customs.Containerization";
@@ -42,7 +46,12 @@ export class ContainerizationGeneralComponent extends BaseComponent {
     ResponseData: INF_MSG_GenericResponseData;
 
 
+    public ContainerizationDeclarationList: ObservableCollection;
+    
     private CurrentSession = SessionLocator.SelectedSession;
+    IsDisplayOnly: boolean = false;
+    visibile: boolean = true;
+    private declarationListService: DeclarationListService = new DeclarationListService();
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService) {
         super();
 
@@ -52,6 +61,9 @@ export class ContainerizationGeneralComponent extends BaseComponent {
                 this.ObjectTableName = this.entityArgs.ObjectTableName;
                 this.Listen();
                 this.SetFieldsEditability();
+                
+                
+                this.getRows(); 
             });
         });
 
@@ -63,7 +75,45 @@ export class ContainerizationGeneralComponent extends BaseComponent {
     public set SelectedTab(tab: LogTab) {
         this.selectedTab = tab;
     }
+    ngAfterViewInit() {
+        //setTimeout(() => {
+        //    let List: DeclarationList[] = [];
+        //    let dec = new DeclarationList();
+        //    dec.Id = "1";
+        //    dec.DeclarationNumber = "11111";
+        //    List.push(dec);
+        //    dec = new DeclarationList();
+        //    dec.Id = "2";
+        //    dec.DeclarationNumber = "222";
+        //    List.push(dec);
+        //    this.ContainerizationDeclarationList.InsertCollection(List);
+        //}, 2000)
+        
+        
+    }
 
+    getRows()//skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
+    {
+
+        let filters = new ApiQueryFilters();
+
+
+        filters.PageSize = 200;
+        filters.PageIndex = 0;
+        filters.GetAll = false;
+        filters.GetCount = true;
+        //filters.SortBy = sortingCol;
+        //filters.SortDirection = sortingDir;
+        //Customs.Declaration.F.ExportContainerizationID
+        filters.addAdditionalFilter("ExportContainerizationID", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
+
+        return this.declarationListService.getByFilters(filters)
+            .subscribe(r => {
+                this.ContainerizationDeclarationList = new ObservableCollection([]);
+                this.ContainerizationDeclarationList.InsertCollection(r.Result);
+            });
+
+    }
     private Listen() {
         if (this.CurrentSession.CurrentEditComponent != null) {
 
@@ -72,6 +122,7 @@ export class ContainerizationGeneralComponent extends BaseComponent {
                 this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.getRows(); 
                     }
                 })
             );
@@ -96,15 +147,15 @@ export class ContainerizationGeneralComponent extends BaseComponent {
     }
 
     //public SetTabArgs(args: any, ValidationErrorsList: any[]) {
-    public SetTabArgs(args: any) {
-        this.EntityPM = args.EntityPM;
-        this.IsNewEntity = args.IsNewEntity;
+    //public SetTabArgs(args: any) {
+    //    this.EntityPM = args.EntityPM;
+    //    //this.IsNewEntity = args.IsNewEntity;
 
-        console.log("EntityPM", this.EntityPM);
+    //    console.log("EntityPM", this.EntityPM);
+        
 
-
-        this.SetFieldsEditability();
-    }
+    //    //this.SetFieldsEditability();
+    //}
 
     RefreshEntity() {
         if (this.CurrentSession.CurrentEditComponent) {
@@ -122,13 +173,37 @@ export class ContainerizationGeneralComponent extends BaseComponent {
     //#endregion
 
 
-
+    
     ///#region Properties
+    DeleteButtonClicked(item) {
+        if (AppTool.IsNullOrEmpty(this.EntityPM.NotConnectedDeclarations)) {
+            this.EntityPM.NotConnectedDeclarations = item.Id;
+        } else {
+            this.EntityPM.NotConnectedDeclarations += "," + item.Id;
+        }
+        
+        this.ContainerizationDeclarationList.Remove(item);
+    }
+    EditButtonClicked(item) {
+
+        //  this.EditEntity("Customs.Declaration", this.rowData.Id, null, "DEGC");
+
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({
+                    EntityId: item.Id,
+                    ObjectTableName: "Customs.Declaration"
+                });
+            });
 
 
+    }
 
     public SendButtonsVisibility: boolean = false;
+    OnRowLoaded($event) {
 
+    }
 
 
     get ContainerizationDate() { return this.EntityPM != null ? this.EntityPM.ContainerizationDate:null; }

@@ -13,6 +13,14 @@ export class CargoIdentifireTypeList {
 	LocalName: string;
 	EnglishName: string;
 	Inactive: boolean;
+	IsForDeclarationExport: boolean;
+	IsForDeclarationImport: boolean;
+	IsForManifest: boolean;
+	IsKey2Mandatory: boolean;
+	IsKey3Mandatory: boolean;
+	CargoIdentifierKey1Name: string;
+	CargoIdentifierKey2Name: string;
+	CargoIdentifierKey3Name: string;
 	
 }
  

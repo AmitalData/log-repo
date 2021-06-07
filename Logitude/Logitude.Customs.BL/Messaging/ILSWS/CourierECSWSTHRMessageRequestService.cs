@@ -80,7 +80,7 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
                 string filename = manifestnumber + "_" + g;
                 if (haveDefinition)
                 {
-                    fTPOutMawbSWSServie.BuildCommunicationLog(bytearray, tenant, declarationId, filename);
+                    fTPOutMawbSWSServie.BuildCommunicationLog(bytearray, tenant, declarationId, CustomsPartnerFtpDetails.InterfaceName_ECSWSTHR_REQUEST, filename);
                 }
                 ///scop.Complete();
                 //output  ftp://192.168.10.88/FTP_MAMAN/  

@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script DBType="Main" Module="Customs" >
+  <Sql Version="1">
+  </Sql>
+
+  <Oracle Version="1">
+    <![CDATA[
+             declare
+ n int := 0;
+begin
+  select count(*) into n
+  from AMENDMENTSTATUSES
+ where code='2';
+  if n = 0 then
+ insert into AMENDMENTSTATUSES values ('1','ממתין לאישור/דחיה','ממתין לאישור/דחיה');
+   insert into AMENDMENTSTATUSES values ('2','שגוי','שגוי');
+ insert into AMENDMENTSTATUSES values ('3','תיקון אושר','תיקון אושר');
+     insert into AMENDMENTSTATUSES values ('4','תיקון נדחה','תיקון נדחה');
+    insert into AMENDMENTSTATUSES values ('6','אושרה חלקית','אושרה חלקית');
+  insert into AMENDMENTSTATUSES values ('5','בוטל','בוטל');
+   insert into AMENDMENTSTATUSES values ('7','הוחלפה','הוחלפה');
+
+            end if;
+end;
+
+    ]]>
+  </Oracle>
+</Script>
