@@ -60,7 +60,6 @@ namespace WarehouseData.Helper
         private string GetDataWarehouseSqlFieldType(DWObjectFieldDB field)
         {
             string sqlFieldtype = string.Empty;
-
             if (field.DataTypeCode == "nText") sqlFieldtype += "nvarchar(" + field.MaxLength + ")";
             else if (field.DataTypeCode == "Text") sqlFieldtype += "varchar(" + field.MaxLength + ")";
             else if (field.DataTypeCode == "Boolean") sqlFieldtype += " bit";
@@ -87,7 +86,6 @@ namespace WarehouseData.Helper
 
             return result;
         }
-
         public void ExecuteSql(string sqlString, string connectionString)
         {
 
@@ -138,10 +136,10 @@ namespace WarehouseData.Helper
            
             tableNameLists.Add(new TableClass() { TableName = "ShipmentPayable", AdditionalIndexes = "ShipmentId", ParentKeyName = "ShipmentId", HasConstraint = true, DBTableName = "ShipmentPayables", DispayInScreen = true, Dw_TableName = "dw_ShipmentPayables", KeyName = "Id", RelatedFactTables = new List<string> { "Fact_Charges" } });
             tableNameLists.Add(new TableClass() { TableName = "APInvoiceLine", DBTableName = "APInvoiceLines", AdditionalIndexes = "EntityPayableId", DispayInScreen = true, Dw_TableName = "dw_APInvoiceLines", FieldsDBName = "EntityPayableId", KeyName = "APInvoiceId", RelatedFactTables = new List<string> { "Fact_Charges" } });
-            tableNameLists.Add(new TableClass() { TableName = "APInvoice", DBTableName = "APInvoices", DispayInScreen = true, Dw_TableName = "dw_APInvoices", KeyName = "Id", RelatedFactTables = new List<string> { "Fact_Charges" } });
+            tableNameLists.Add(new TableClass() { TableName = "APInvoice", HasConstraint = true, DBTableName = "APInvoices", DispayInScreen = true, Dw_TableName = "dw_APInvoices", KeyName = "Id", RelatedFactTables = new List<string> { "Fact_Charges", "Fact_Invoices" } });
             tableNameLists.Add(new TableClass() { TableName = "ShipmentReceivable", AdditionalIndexes = "ShipmentId", ParentKeyName = "ShipmentId", DispayInScreen = true, DBTableName = "ShipmentReceivables", Dw_TableName = "dw_ShipmentReceivables", KeyName = "Id", RelatedFactTables = new List<string> { "Fact_Charges" } });
             tableNameLists.Add(new TableClass() { TableName = "ARInvoiceLine", FieldsDBName = "ARInvoiceId,ReceivableId", DispayInScreen = true, AdditionalIndexes = "ReceivableId", DBTableName = "ARInvoiceLines", Dw_TableName = "dw_ARInvoiceLines", KeyName = "Id", RelatedFactTables = new List<string> { "Fact_Charges" } });
-            tableNameLists.Add(new TableClass() { TableName = "ARInvoice", HasConstraint = true, DispayInScreen = true, DBTableName = "ARInvoices", Dw_TableName = "dw_ARInvoices", KeyName = "Id", RelatedFactTables = new List<string> { "Fact_Charges" } });
+            tableNameLists.Add(new TableClass() { TableName = "ARInvoice", HasConstraint = true, DispayInScreen = true, DBTableName = "ARInvoices", Dw_TableName = "dw_ARInvoices", KeyName = "Id", RelatedFactTables = new List<string> { "Fact_Charges", "Fact_Invoices" } });
             tableNameLists.Add(new TableClass() { TableName = "Shipment", RelatedEntities = tableNameLists.Where(d => d.TableName == "ShipmentPayable" || d.TableName == "ShipmentReceivable").ToList(), KeyName = "Id", DBTableName = "Shipments", Dw_TableName = "dw_Shipments", HasConstraint = true, DispayInScreen = true, RelatedFactTables = new List<string> { "Fact_Charges" , "Fact_Shipments" } });
             
             tableNameLists.Add(new TableClass() { TableName = "Quote", KeyName = "Id", DBTableName = "Quotes", Dw_TableName = "dw_Quotes", HasConstraint = true, DispayInScreen = true ,RelatedFactTables = new List<string> { "Fact_Quotes" } });
@@ -174,11 +172,19 @@ namespace WarehouseData.Helper
             tableNameLists.Add(new TableClass() { IsCloseTable = true, TableName = "ShipmentReceivableStatus", DBTableName = "ShipmentReceivableStatus", DispayInScreen = true, Dw_TableName = "dw_ShipmentReceivableStatuses", KeyName = "Code", HasDimensionTable = true, DWObjectTableCode = "DIM_ShipmentReceivableStatuses", BuildScriptName = "BuildShipmentReceivableStatusDimensionTable", IncrementalScriptName = "UpdateShipmentReceivableStatusDimensionTable", RelatedFactTables = GetAllFactTableLists() });
             tableNameLists.Add(new TableClass() { TableName = "QuoteStage", DBTableName = "QuoteStages", DispayInScreen = true, Dw_TableName = "dw_QuoteStages", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_QuoteStages", BuildScriptName = "BuildQuoteStagesDimensionTable", IncrementalScriptName = "UpdateQuoteStagesDimensionTable", RelatedFactTables = new List<string>() { "Fact_Quotes" } });
             tableNameLists.Add(new TableClass() { TableName = "QuoteClosingReason", DBTableName = "QuoteClosingReasons", DispayInScreen = true, Dw_TableName = "dw_QuoteClosingReasons", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_QuoteClosingReasons", BuildScriptName = "BuildQuoteClosingReasonsDimensionTable", IncrementalScriptName = "UpdateQuoteClosingReasonsDimensionTable", RelatedFactTables = new List<string>() { "Fact_Quotes" } });
+            tableNameLists.Add(new TableClass() { TableName = "PaymentTerm", DBTableName = "PaymentTerms", DispayInScreen = true, Dw_TableName = "dw_PaymentTerms", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_PaymentTerms", BuildScriptName = "BuildPaymentTermsDimensionTable", IncrementalScriptName = "UpdatePaymentTermsDimensionTable", RelatedFactTables = GetAllFactTableLists() });
+            tableNameLists.Add(new TableClass() { IsCloseTable = true, TableName = "APInvoiceType", DBTableName = "APInvoiceTypes", Dw_TableName = "dw_APInvoiceTypes", KeyName = "Name", DispayInScreen = true, HasConstraint = true, RelatedFactTables = GetAllFactTableLists() });
+            tableNameLists.Add(new TableClass() { IsCloseTable = true, TableName = "ARInvoiceType", DBTableName = "ARInvoiceTypes", Dw_TableName = "dw_ARInvoiceTypes", KeyName = "Name", HasDimensionTable = true, HasConstraint = true, DispayInScreen = true, DWObjectTableCode = "DIM_InvoiceTypes", BuildScriptName = "BuildInvoiceTypesDimensionTable", IncrementalScriptName = "UpdateInvoiceTypesDimensionTable", RelatedFactTables = GetAllFactTableLists() });
+
+            tableNameLists.Add(new TableClass() { IsCloseTable = true, TableName = "APInvoiceStatus", DBTableName = "APInvoiceStatus", Dw_TableName = "dw_APInvoiceStatus", KeyName = "Name", DispayInScreen = true, HasConstraint = true, RelatedFactTables = GetAllFactTableLists() });
+            tableNameLists.Add(new TableClass() { IsCloseTable = true, TableName = "ARInvoiceStatus", DBTableName = "ARInvoiceStatus", Dw_TableName = "dw_ARInvoiceStatus", KeyName = "Name", HasDimensionTable = true, HasConstraint = true, DispayInScreen = true, DWObjectTableCode = "DIM_InvoiceStatus", BuildScriptName = "BuildInvoiceStatusDimensionTable", IncrementalScriptName = "UpdateInvoiceStatusDimensionTable", RelatedFactTables = GetAllFactTableLists() });
 
             //Fact Table
             tableNameLists.Add(new TableClass() { TableName = "Shipment", FieldIndexes = "Source Tenant,Parent Tenant,Id,DirectHouse", DWObjectTableCode = "Fact_Shipments", KeyName = "Id", DWTableKeyName = "Id", Dw_TableName = "dw_Shipments", HasFactTable = true, BuildScriptName = "BuildFactShipmentTable", IncrementalScriptName = "UpdateFactShipmentTable", DispayInScreen = true, RelatedFactTables = new List<string>() { "Fact_Shipments" } });
             tableNameLists.Add(new TableClass() { TableName = "Shipment", FieldIndexes = "Source Tenant,Parent Tenant,Shipment Id,DirectHouse", DWObjectTableCode = "Fact_Charges", Dw_TableName = "dw_Shipments", KeyName = "[Shipment Id]", DWTableKeyName = "Id", HasFactTable = true, BuildScriptName = "BuildFactChargesTable", IncrementalScriptName = "UpdateFactChargesTable", DispayInScreen = true, RelatedFactTables = new List<string>() { "Fact_Charges" } });
             tableNameLists.Add(new TableClass() { TableName = "Quote", DWObjectTableCode = "Fact_Quotes", Dw_TableName = "dw_Quotes", KeyName = "Id", DWTableKeyName = "Id", HasFactTable = true, BuildScriptName = "BuildFactQuotesTable", IncrementalScriptName = "UpdateFactQuoteTable", DispayInScreen = true, RelatedFactTables = new List<string> { "Fact_Quotes" } });
+            tableNameLists.Add(new TableClass() { HasMultipleDWTables = true, FieldIndexes = "Main Entity Id",  MultipleDW_TablesNames = new List<string> { "dw_ARInvoices", "dw_APInvoices" }, MultipleTablesNames = new List<string> { "ARInvoice", "APInvoice" }, TableName = "Invoice", DWObjectTableCode = "Fact_Invoices", KeyName = "Id", DWTableKeyName = "Id", HasFactTable = true, BuildScriptName = "BuildFactInvoicesTable", IncrementalScriptName = "UpdateFactInvoicesTable", DispayInScreen = true, RelatedFactTables = new List<string> { "Fact_Invoices" } });
+            // tableNameLists.Add(new TableClass() { TableName = "ARInvoice", FieldIndexes = "Source Tenant,Parent Tenant,Id", DWObjectTableCode = "Fact_Invoices", Dw_TableName = "dw_Invoices", KeyName = "[d]", DWTableKeyName = "Id", HasFactTable = true });
 
             //WaterMark
             tableNameLists.Add(new TableClass() { TableName = "WaterMark", DBTableName = "WaterMarks", Dw_TableName = "dw_WaterMarks", KeyName = "TableName", FieldsDBName = "TableName,LastUpdateDate", RelatedFactTables = GetAllFactTableLists() });
@@ -201,7 +207,7 @@ namespace WarehouseData.Helper
 
         private List<string> GetAllFactTableLists()
         {
-            List<string> factTables = new List<string>() { "Fact_Shipments", "Fact_Charges", "Fact_Quotes" };
+            List<string> factTables = new List<string>() { "Fact_Shipments", "Fact_Charges", "Fact_Quotes", "Fact_Invoices" };
             return factTables;
         }
 

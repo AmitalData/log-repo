@@ -172,7 +172,11 @@ namespace WarehouseData
 
 
                             stepName = "BuildDateDimensionsTable";
-                            mainDataWarehouseService.ExecuteScript("BuildWarehouse", "BuildDateDimensionsTable", destinationConnectionString);
+                            mainDataWarehouseService.ExecuteFixedDimensionScripts(destinationConnectionString);
+
+                            //mainDataWarehouseService.ExecuteScript("BuildWarehouse", "BuildDateDimensionsTable", destinationConnectionString);
+                            //mainDataWarehouseService.ExecuteScript("BuildWarehouse", "BuildInvoiceFiltersDimensionsTable", destinationConnectionString);
+
                             stepName = "RunOtherScripte";
                             mainDataWarehouseService.RunAdditionalScripte(destinationConnectionString, tableNameLists);
 

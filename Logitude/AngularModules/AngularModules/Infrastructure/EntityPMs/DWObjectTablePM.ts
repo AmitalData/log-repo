@@ -115,6 +115,11 @@ export class DWObjectTablePM {
     public set HasCustomFields(newValue: boolean) { if (this.hasCustomFields != newValue) { this.hasCustomFields = newValue; this.MarkAsDirty("HasCustomFields"); } }
        
 	 
+    private additionalFactRelationType: string;
+    public get AdditionalFactRelationType() { return this.additionalFactRelationType; }
+    public set AdditionalFactRelationType(newValue: string) { if (this.additionalFactRelationType != newValue) { this.additionalFactRelationType = newValue; this.MarkAsDirty("AdditionalFactRelationType"); } }
+       
+	 
 
     public OldEntityPM: DWObjectTablePM;
 		

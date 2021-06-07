@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;c5e0&quot;"
+  Code="&quot;aa50&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -532,6 +532,11 @@
       Code="&quot;QRA&quot;"
       SearchFields="&quot;QRA, Quotes Request Activated In Shared Logistic&quot;"
       Description="&quot;Quotes Request Activated In Shared Logistic&quot;" />
+    <Record
+      Code="&quot;BIF&quot;"
+      Name="&quot;Invoices DWH&quot;"
+      SearchFields="&quot;BIF,Invoices DWH,Allow Tenants to Show Invoice Fact on the BI Report Screen&quot;"
+      Description="&quot;Allow Tenants to Show Invoice Fact on the BI Report Screen&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
