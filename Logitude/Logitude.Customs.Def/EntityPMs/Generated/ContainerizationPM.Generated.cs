@@ -319,29 +319,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string notConnectedDeclarations ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string NotConnectedDeclarations  
-	   {
-	    
-	     get
-		{
-		   return notConnectedDeclarations;
-		 }
-		 set
-		 {
-		   if(notConnectedDeclarations != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NotConnectedDeclarations",OldValue=notConnectedDeclarations,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   notConnectedDeclarations=value;
-		   }
-			
-		 }
-	   }
 	  private string connectedDeclarations ;
 	  	  
        
@@ -361,6 +338,29 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ConnectedDeclarations",OldValue=connectedDeclarations,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   connectedDeclarations=value;
+		   }
+			
+		 }
+	   }
+	  private string notConnectedDeclarations ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string NotConnectedDeclarations  
+	   {
+	    
+	     get
+		{
+		   return notConnectedDeclarations;
+		 }
+		 set
+		 {
+		   if(notConnectedDeclarations != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NotConnectedDeclarations",OldValue=notConnectedDeclarations,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   notConnectedDeclarations=value;
 		   }
 			
 		 }
