@@ -35,7 +35,10 @@ function FillSingleVatType(vatTypeDetails) {
 }
 
 function SelectMultiVatTypes() {
-    cy.get(VatTypesSelectors.MultiSimpleGridViewRow).find(VatTypesSelectors.MultiCheckBoxes).first().check({ force: true })
+    cy.get(VatTypesSelectors.MultiSimpleGridViewRow).find(VatTypesSelectors.MultiCheckBoxes).then((checkBox)=> {
+        cy.wrap(checkBox[0]).check({ force: true })
+        cy.wrap(checkBox[1]).check({ force: true })
+    })
 }
 
 export function CreateVatType() {
