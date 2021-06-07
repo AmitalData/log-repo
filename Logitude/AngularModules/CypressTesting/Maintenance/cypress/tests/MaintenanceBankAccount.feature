@@ -5,11 +5,11 @@ Feature: Bank Account Create, Search and Edit from Maintenance
     Scenario: Create new bank account
         Given the user logged in and open "Bank Accounts" in maintenance menu
         And a bank account with the following details
-            | AccountNumber | random        |
+            | AccountNumber | Test          |
             | BankCode      | random        |
-            | BranchNumber  | random        |
+            | BranchNumber  | Test          |
             | Currency      | USD           |
-            | Name          | TestBank      |
+            | Name          | CurrentDate   |
             | LocalName     | TestBankLocal |
         When create bank account
         Then the bank account should create successfully
@@ -28,5 +28,5 @@ Feature: Bank Account Create, Search and Edit from Maintenance
         When edit bank account
         Then the bank account should update successfully
         And following event should appear in events tab
-            | Event                | Notes                   |
+            | Event                | Notes                  |
             | Bank Account Updated | Bank account Activated |

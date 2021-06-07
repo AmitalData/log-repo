@@ -12,4 +12,5 @@ export class BankAccountSelectors extends RegexSelectors {
     public static readonly InActiveBankAccountCheckBox = "#BankAccountLite_Inactive"
     public static readonly BankAccountEventsTab = "#BankAccountTHEvents"
     public static readonly MaintenanceItemBankAccount = "#MaintenanceItemMTBL"
+    public static readonly CodeDigitCount = 10
 }

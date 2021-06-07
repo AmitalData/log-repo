@@ -13,7 +13,10 @@ export class BranchSelectors extends RegexSelectors {
   public static readonly BranchFirstRow = "div[id$='row0']"
   public static readonly InActiveBranchCheckBox = "#Branch_InActive"
   public static readonly BranchEventsTab = "#BranchTHEvents"
-  public static readonly MinRandomNumber = 1
-  public static readonly MaxRandomNumber = 1000
+  public static readonly MinCodeRandomNumber = 1
+  public static readonly MaxCodeRandomNumber = 10000000000
+  public static readonly MinCounterCodeRandomNumber = 1
+  public static readonly MaxCounterCodeRandomNumber = 10000
+  public static readonly CodeDigitCount = 10
 }
 

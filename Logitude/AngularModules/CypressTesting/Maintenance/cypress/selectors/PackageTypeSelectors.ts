@@ -17,4 +17,5 @@ export class PackageTypeSelectors extends RegexSelectors {
     public static readonly MaintenanceItemPackageType = "#MaintenanceItemMTPK"
     public static readonly MinRandomNumber = 1
     public static readonly MaxRandomNumber = 1000
+    public static readonly CodeDigitCount = 4
 }

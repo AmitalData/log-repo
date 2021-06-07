@@ -7,9 +7,9 @@ import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
 import * as gr from '../../../Base/cypress/actions/GenerateRandoms';
 import { BankAccountDetails } from '../models/BankAccountDetails'
+import { GenerateCurrentDatetimeString } from '../../../Base/cypress/actions/GenerateRandoms';
 
-
-let BankAccountCode = null;
+let BankAccountEnglishName = null;
 let inActiveBankAccount = false;
 
 function GenerateRandomNumber(NumberLength: number) {
@@ -18,14 +18,15 @@ function GenerateRandomNumber(NumberLength: number) {
 }
 
 export function FillBankAccountDetails(bankAccountDetails: BankAccountDetails) {
-    var RandomBankAccountNumber = GenerateRandomNumber(8);
-    var RandomBankAccountCode = GenerateRandomNumber(8);
-    var RandomBankAccountBranchNumber = GenerateRandomNumber(8);
-    cy.FillLogTextBox(BankAccountSelectors.BankAccountAccountNumber, bankAccountDetails.AccountNumber.toLowerCase() == "random" ? RandomBankAccountNumber : bankAccountDetails.AccountNumber)
+   
+    let RandomBankAccountCode = GenerateRandomNumber(BankAccountSelectors.CodeDigitCount);
+    let CurrentDateName = GenerateCurrentDatetimeString("_")
+
+    cy.FillLogTextBox(BankAccountSelectors.BankAccountAccountNumber, bankAccountDetails.AccountNumber)
     cy.FillLogTextBox(BankAccountSelectors.BankAccountBankCode, bankAccountDetails.BankCode.toLowerCase() == "random" ? RandomBankAccountCode : bankAccountDetails.BankCode)
-    cy.FillLogTextBox(BankAccountSelectors.BankAccountBranchNumber, bankAccountDetails.BranchNumber.toLowerCase() == "random" ? RandomBankAccountBranchNumber : bankAccountDetails.BranchNumber)
+    cy.FillLogTextBox(BankAccountSelectors.BankAccountBranchNumber, bankAccountDetails.BranchNumber)
     cy.FillLogLov(BankAccountSelectors.BankAccountCurrency, bankAccountDetails.Currency, true)
-    cy.FillLogTextBox(BankAccountSelectors.BankAccountName, bankAccountDetails.Name)
+    cy.FillLogTextBox(BankAccountSelectors.BankAccountName, bankAccountDetails.Name.toLowerCase() == "currentdate" ? CurrentDateName : bankAccountDetails.Name)
     cy.FillLogTextBox(BankAccountSelectors.BankAccountLocalName, bankAccountDetails.LocalName)
 }
 
@@ -41,23 +42,23 @@ function DefinePostBankAccountRequest() {
 export function AssertCreateBankAccount() {
     let intercept = cy.wait("@" + RequestAliases.PostBankAccount);
     intercept.then((interception) => {
-            AssertPostBankAccount(interception.response.statusCode, 200, interception.response.body.BankCode)
+            AssertPostBankAccount(interception.response.statusCode, 200, interception.response.body.EnglishName)
     })
 }
 
-export function AssertPostBankAccount(responseStatusCode: number, expectedStatusCode: number, bankAccountCode: string) {
+export function AssertPostBankAccount(responseStatusCode: number, expectedStatusCode: number, bankAccountEnglishName: string) {
     assert.equal(responseStatusCode, expectedStatusCode)
-    BankAccountCode = bankAccountCode
+    BankAccountEnglishName = bankAccountEnglishName
 }
 
 export function SearchBankAccount() {
-    DefineBankAccountViewsGetByFiltersRequest(BankAccountCode);
-    cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, BankAccountCode);
+    DefineBankAccountViewsGetByFiltersRequest(BankAccountEnglishName);
+    cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, BankAccountEnglishName);
     AssertBankAccountViewsGetByFilters();
 }
 
-export function DefineBankAccountViewsGetByFiltersRequest(BankAccountCode: string) {
-    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(BankAccountCode + "&GetCount=false"), RequestAliases.GetFilterSearch);
+export function DefineBankAccountViewsGetByFiltersRequest(BankAccountEnglishName: string) {
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(BankAccountEnglishName + "&GetCount=false"), RequestAliases.GetFilterSearch);
 }
 
 export function AssertBankAccountViewsGetByFilters() {
@@ -66,7 +67,7 @@ export function AssertBankAccountViewsGetByFilters() {
 
 export function AssertSearchBankAccount() {
     cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
-        expect(text).to.contain(BankAccountCode);
+        expect(text).to.contain(BankAccountEnglishName);
     });
 }
 

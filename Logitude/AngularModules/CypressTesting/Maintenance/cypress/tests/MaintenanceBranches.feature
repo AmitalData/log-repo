@@ -1,15 +1,15 @@
-@release @NewDev @all
+@NewDev
 Feature: Branch Create, Search and Edit from Maintenance
     The user creates a Branch, searches for and edits it from the Maintenance Module.
 
     Scenario: Create new Branch
         Given the user logged in and open "Branches" in maintenance menu
         And a branch with the following details
-            | Name        | random   |
-            | LocalName   | Test   |
-            | Code        | random |
-            | Signature   | Test   |
-            | CounterCode | random |
+            | Name        | CurrentDate |
+            | LocalName   | Test        |
+            | Code        | random      |
+            | Signature   | Test        |
+            | CounterCode | random      |
         When create branch
         Then the branch should create successfully
 
@@ -27,5 +27,5 @@ Feature: Branch Create, Search and Edit from Maintenance
         When edit branch
         Then the branch should update successfully
         And following event should appear in events tab
-            | Event          | Notes            |
+            | Event          | Notes              |
             | Branch Updated | Branch Inactivated |

@@ -8,6 +8,7 @@ import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
 import { constants } from "../../../Base/cypress/constants/constants"
 import { BranchDetails } from 'cypress/models/BranchDetails';
 import * as gr from '../../../Base/cypress/actions/GenerateRandoms';
+import { GenerateCurrentDatetimeString } from '../../../Base/cypress/actions/GenerateRandoms';
 
 let BranchName = null;
 let inActiveBranch = false;
@@ -23,18 +24,14 @@ export function FillCheckBoxProcess(CheckBoxSelector: string, IsCheck: string) {
     }
 }
 
-function GenerateRandomNumber(NumberLength: number) {
-    let NewRandomCode = gr.GenerateRandomNumberAndString(NumberLength)
-    return NewRandomCode;
-}
-
 export function FillBranchDetails(branchDetails: BranchDetails) {
 
-    let RandomBranchName = GenerateRandomNumber(8);
-    cy.FillLogTextBox(BranchSelectors.BranchName, branchDetails.Name.toLowerCase() == "random" ? RandomBranchName : branchDetails.Name)
+    let CurrentDateName = GenerateCurrentDatetimeString("_")
+
+    cy.FillLogTextBox(BranchSelectors.BranchName, branchDetails.Name.toLowerCase() == "currentdate" ? CurrentDateName : branchDetails.Name)
     cy.FillLogTextBox(BranchSelectors.BranchLocalName, branchDetails.LocalName)
     if (branchDetails.Code.toLowerCase() == "random") {
-        cy.FillRandomNumber(BranchSelectors.BranchCode, BranchSelectors.MinRandomNumber, BranchSelectors.MaxRandomNumber)
+        cy.FillRandomNumber(BranchSelectors.BranchCode, BranchSelectors.MinCodeRandomNumber, BranchSelectors.MaxCodeRandomNumber)
     }
     else {
         cy.FillLogTextBox(BranchSelectors.BranchCode, branchDetails.Code)
@@ -42,7 +39,7 @@ export function FillBranchDetails(branchDetails: BranchDetails) {
 
     cy.FillLogTextBox(BranchSelectors.BranchSignature, branchDetails.Signature)
     if (branchDetails.CounterCode.toLowerCase() == "random") {
-        cy.FillRandomNumber(BranchSelectors.BranchCounterCode, BranchSelectors.MinRandomNumber, BranchSelectors.MaxRandomNumber)
+        cy.FillRandomNumber(BranchSelectors.BranchCounterCode, BranchSelectors.MinCounterCodeRandomNumber, BranchSelectors.MaxCounterCodeRandomNumber)
 
     }
     else {

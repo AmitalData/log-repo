@@ -1,4 +1,4 @@
-import {PackageTypeDetails} from '../models/PackageTypeDetails'
+import { PackageTypeDetails } from '../models/PackageTypeDetails'
 import { PackageTypeSelectors } from "../selectors/PackageTypeSelectors";
 import { MaintenanceSelectors } from "../selectors/Selectors";
 import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
@@ -7,6 +7,7 @@ import { RestAPI } from "../../../Base/cypress/constants/RestAPI";
 import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
 import { constants } from "../../../Base/cypress/constants/constants"
+import * as gr from '../../../Base/cypress/actions/GenerateRandoms';
 
 let PackageTypeCode = null;
 let inActivePackageType = false;
@@ -22,14 +23,21 @@ export function FillCheckBoxProcess(CheckBoxSelector: string, IsCheck: string) {
     }
 }
 
+function GenerateRandomNumber(NumberLength: number) {
+    let NewRandomCode = gr.GenerateRandomNumberAndString(NumberLength)
+    return NewRandomCode;
+}
+
 export function FillPackageTypeDetails(packageTypeDetails: PackageTypeDetails) {
 
-    cy.FillRandomNumber(PackageTypeSelectors.PackageTypeCode, PackageTypeSelectors.MinRandomNumber, PackageTypeSelectors.MaxRandomNumber)
+    let RandomNumberCode = GenerateRandomNumber(PackageTypeSelectors.CodeDigitCount)
+
+    cy.FillLogTextBox(PackageTypeSelectors.PackageTypeCode, packageTypeDetails.Code.toLowerCase() == "random" ? RandomNumberCode : packageTypeDetails.Code)
     cy.FillLogTextBox(PackageTypeSelectors.PackageTypeName, packageTypeDetails.Name)
     cy.FillLogTextBox(PackageTypeSelectors.PackageTypeLocalName, packageTypeDetails.LocalName)
-    cy.FillRandomNumber(PackageTypeSelectors.PackageTypeTEU, PackageTypeSelectors.MinRandomNumber, PackageTypeSelectors.MaxRandomNumber)
-    cy.FillRandomNumber(PackageTypeSelectors.PackageTypeContainerSize, PackageTypeSelectors.MinRandomNumber, PackageTypeSelectors.MaxRandomNumber )
-    cy.FillRandomNumber(PackageTypeSelectors.PackageTypeVolume, PackageTypeSelectors.MinRandomNumber, PackageTypeSelectors.MaxRandomNumber )
+    cy.FillLogTextBox(PackageTypeSelectors.PackageTypeTEU, packageTypeDetails.TEU)
+    cy.FillLogTextBox(PackageTypeSelectors.PackageTypeContainerSize, packageTypeDetails.ContainerSize)
+    cy.FillLogTextBox(PackageTypeSelectors.PackageTypeVolume, packageTypeDetails.Volume)
     cy.FillLogTextBox(PackageTypeSelectors.PackageTypePrintAs, packageTypeDetails.PrintAs)
     FillCheckBoxProcess(PackageTypeSelectors.PackageTypeAirCheckBox, packageTypeDetails.Air)
     FillCheckBoxProcess(PackageTypeSelectors.InActivePackageTypeCheckBox, packageTypeDetails.InActive)
@@ -57,7 +65,10 @@ export function AssertCreatePackageType() {
 }
 
 function ReCreatePackageType() {
-    cy.FillRandomNumber(PackageTypeSelectors.PackageTypeCode, PackageTypeSelectors.MinRandomNumber, PackageTypeSelectors.MaxRandomNumber)
+    
+    let RandomNumberCode = GenerateRandomNumber(PackageTypeSelectors.CodeDigitCount)
+
+    cy.FillLogTextBox(PackageTypeSelectors.PackageTypeCode, RandomNumberCode)
     CreatePackageType();
     AssertCreatePackageType();
 }
