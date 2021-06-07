@@ -432,10 +432,10 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
 				temp.BookingConfirmationNumber = MyEntityPM.BookingConfirmationNumber;
 				temp.EstimatedFinalArrivalDate = MyEntityPM.EstimatedFinalArrivalDate;
 				temp.ActualFinalArrivalDate = MyEntityPM.ActualFinalArrivalDate;
-				temp.HouseNo = MyEntityPM.House;
+			    temp.HouseNo = MyEntityPM.House; 
 				temp.IsHTSMissing = MyEntityPM.IsHTSMissing;
 
-				if (MyEntityPM.MainCarriageFromPartnerId != null)
+				if (MyEntityPM.MainCarriageFromPartnerId != null)	
 				{
 					CardQueryService CardService29 = new CardQueryService(Tenant);
 					temp.MainCarriageFromPartner = CardService29.GetCardById(MyEntityPM.MainCarriageFromPartnerId, Tenant, ComputingPartnerName);
@@ -454,7 +454,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
 				temp.MainCarriageETA = MyEntityPM.MainCarriageETA;
 				temp.MainCarriageETD = MyEntityPM.MainCarriageETD;
 				temp.TruckNumber = MyEntityPM.TruckNumber;
-
+				temp.IsHTSMissing = MyEntityPM.IsHTSMissing;					
 				if (MyEntityPM.MainCarriageFromPartnerId != null)
 				{
 					CardQueryService CardService29 = new CardQueryService(Tenant);
@@ -462,18 +462,11 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
 
 				}
 
-
-
 				if (MyEntityPM.MainCarriageToPartnerId != null)
 				{
 					CardQueryService CardService30 = new CardQueryService(Tenant);
 					temp.MainCarriageToPartner = CardService30.GetCardById(MyEntityPM.MainCarriageToPartnerId, Tenant, ComputingPartnerName);
-
 				}
-
-				temp.MainCarriageETA = MyEntityPM.MainCarriageETA;
-				temp.MainCarriageETD = MyEntityPM.MainCarriageETD;
-				temp.TruckNumber = MyEntityPM.TruckNumber;
 				return temp;
 			}
 			catch (Exception ex)
@@ -1486,10 +1479,9 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
 
 
 				//throw new ApplicationException("TruckNumber Can't be update"); 
-				temp.TruckNumber = MyEntity.TruckNumber;
+				temp.TruckNumber = MyEntity.TruckNumber;				 					
 				//throw new ApplicationException("IsHTSMissing Can't be update"); 
 				temp.IsHTSMissing = MyEntity.IsHTSMissing;
-
 
 
 
