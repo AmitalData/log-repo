@@ -22,18 +22,14 @@ export function FillCheckBoxProcess(CheckBoxSelector: string, IsCheck: string) {
     }
 }
 
-//#region package Type
-
 export function FillPackageTypeDetails(packageTypeDetails: PackageTypeDetails) {
-    let MinRandomNumber = 1;
-    let MaxRandomNumber = 1000;
-    cy.FillRandomNumber(PackageTypeSelectors.PackageTypeCode, MinRandomNumber, MaxRandomNumber)
+
+    cy.FillRandomNumber(PackageTypeSelectors.PackageTypeCode, PackageTypeSelectors.MinRandomNumber, PackageTypeSelectors.MaxRandomNumber)
     cy.FillLogTextBox(PackageTypeSelectors.PackageTypeName, packageTypeDetails.Name)
     cy.FillLogTextBox(PackageTypeSelectors.PackageTypeLocalName, packageTypeDetails.LocalName)
-    cy.FillRandomNumber(PackageTypeSelectors.PackageTypeTEU, MinRandomNumber, MaxRandomNumber)
-
-    cy.FillRandomNumber(PackageTypeSelectors.PackageTypeContainerSize, MinRandomNumber, MaxRandomNumber )
-    cy.FillRandomNumber(PackageTypeSelectors.PackageTypeVolume, MinRandomNumber, MaxRandomNumber )
+    cy.FillRandomNumber(PackageTypeSelectors.PackageTypeTEU, PackageTypeSelectors.MinRandomNumber, PackageTypeSelectors.MaxRandomNumber)
+    cy.FillRandomNumber(PackageTypeSelectors.PackageTypeContainerSize, PackageTypeSelectors.MinRandomNumber, PackageTypeSelectors.MaxRandomNumber )
+    cy.FillRandomNumber(PackageTypeSelectors.PackageTypeVolume, PackageTypeSelectors.MinRandomNumber, PackageTypeSelectors.MaxRandomNumber )
     cy.FillLogTextBox(PackageTypeSelectors.PackageTypePrintAs, packageTypeDetails.PrintAs)
     FillCheckBoxProcess(PackageTypeSelectors.PackageTypeAirCheckBox, packageTypeDetails.Air)
     FillCheckBoxProcess(PackageTypeSelectors.InActivePackageTypeCheckBox, packageTypeDetails.InActive)
@@ -61,13 +57,10 @@ export function AssertCreatePackageType() {
 }
 
 function ReCreatePackageType() {
-    let MinRandomNumber = 1;
-    let MaxRandomNumber = 8;
     cy.FillLogTextBox(PackageTypeSelectors.PackageTypeCode, '1234')
     cy.FillLogTextBox(PackageTypeSelectors.PackageTypeName, 'TEST')
     cy.FillLogTextBox(PackageTypeSelectors.PackageTypeLocalName, 'LocalTEST')
     cy.FillLogTextBox(PackageTypeSelectors.PackageTypeTEU, '12345')
-
     cy.FillLogTextBox(PackageTypeSelectors.PackageTypeContainerSize, '2321')
     cy.FillLogTextBox(PackageTypeSelectors.PackageTypeVolume, '5432')
     cy.FillLogTextBox(PackageTypeSelectors.PackageTypePrintAs, 'TESTPrint')
@@ -88,8 +81,8 @@ export function SearchPackageType() {
     AssertPackageTypeViewsGetByFilters();
 }
 
-export function DefinePackageTypeViewsGetByFiltersRequest(PackageTypeName: string) {
-    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(PackageTypeName + "&GetCount=false"), RequestAliases.GetFilterSearch);
+export function DefinePackageTypeViewsGetByFiltersRequest(PackageTypeCode: string) {
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(PackageTypeCode + "&GetCount=false"), RequestAliases.GetFilterSearch);
 }
 export function AssertPackageTypeViewsGetByFilters() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
@@ -142,14 +135,3 @@ export function AssertPutPackageType() {
             inActivePackageType = interception.response.body.InActive;
         });
 }
-
-export function CloseSavePackageType() {
-    DefinePackageTypeViewGetSingleRequest()
-    cy.Click(PackageTypeSelectors.PackageTypeSaveCloseButton, null);
-}
-
-function DefinePackageTypeViewGetSingleRequest() {
-    cy.DefineRequestWait(RestAPI.GET, Urls.PackageTypesGetSingle, RequestAliases.GetSignle);
-}
-
-//#endregion

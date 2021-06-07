@@ -13,7 +13,7 @@ import { Constants } from "../../constants/Constants";
 let branchDetails:BranchDetails;
 
 
-//#region Add Branch
+//#region Create new branch
 Given("the user logged in and open {string} in maintenance menu", (maintenanceItemName) => {
     cy.Login();
     MaintenanceActions.OpenMaintenanceItemFromMaintenanceMenu(maintenanceItemName, MaintenanceSelectors.MaintenanceItemBranch)
@@ -32,9 +32,9 @@ When("create branch", () => {
 Then("the branch should create successfully", () => {
     BranchActions.AssertCreateBranch();
 });
- 
 //#endregion
- 
+
+
 //#region Search for the branch by name
 When("search branch", () => {
     BranchActions.SearchBranch()
@@ -43,9 +43,9 @@ When("search branch", () => {
 Then("the branch should appear successfully", () => {
     BranchActions.AssertSearchBranch() 
 });
- 
 //#endregion
  
+
 //#region Open the branch
 When("open branch", () => {
     BranchActions.OpenBranch();
@@ -54,10 +54,10 @@ When("open branch", () => {
 Then("the branch should open successfully", () => {
     BranchActions.AssertOpenBranch(); 
 });
- 
 //#endregion
  
-//#region Edit the Branch
+
+//#region Edit the branch
 Given("a {string} as branchLocalName", (branchLocalName) => {
     BranchActions.FillBranchLocalName(branchLocalName)
 });
@@ -78,5 +78,4 @@ Then("following event should appear in events tab", (dataTable) => {
     let eventDetailsList = Assists.CreateSet<EventTypeDetails>(dataTable);
     BaseActions.ValidateEventsTab(eventDetailsList, BranchSelectors.BranchEventsTab);
 });
- 
 //#endregion

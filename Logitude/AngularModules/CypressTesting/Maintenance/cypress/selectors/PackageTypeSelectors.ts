@@ -2,7 +2,6 @@ import { RegexSelectors } from '../selectors/RegexSelectors';
 
 export class PackageTypeSelectors extends RegexSelectors {
 
-    //#region  Package Type
     public static readonly PackageTypeCode = "#PackageType_Code"
     public static readonly PackageTypeName = "#PackageType_EnglishName"
     public static readonly PackageTypeLocalName = "#PackageType_LocalName"
@@ -15,10 +14,7 @@ export class PackageTypeSelectors extends RegexSelectors {
     public static readonly PackageTypeSaveButton = "#PackageType-Save"
     public static readonly PackageTypeEventsTab = "#PackageTypeTHEvents"
     public static readonly PackageTypeSaveCloseButton = "#PackageType-SaveClose";
-
     public static readonly MaintenanceItemPackageType = "#MaintenanceItemMTPK"
-
-
-    //#endregion
-
+    public static readonly MinRandomNumber = 1
+    public static readonly MaxRandomNumber = 1000
 }

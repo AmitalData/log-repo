@@ -1,4 +1,3 @@
-
 import { BranchSelectors } from "../selectors/BranchSelectors";
 import { MaintenanceSelectors } from "../selectors/Selectors";
 import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
@@ -24,23 +23,32 @@ export function FillCheckBoxProcess(CheckBoxSelector: string, IsCheck: string) {
     }
 }
 
-//#region package Type
 function GenerateRandomNumber(NumberLength: number) {
     let NewRandomCode = gr.GenerateRandomNumberAndString(NumberLength)
     return NewRandomCode;
 }
 
 export function FillBranchDetails(branchDetails: BranchDetails) {
-    let MinRandomNumber = 1;
-    let MaxRandomNumber = 1000;
-   let RandomBranchName = GenerateRandomNumber(8);
+
+    let RandomBranchName = GenerateRandomNumber(8);
     cy.FillLogTextBox(BranchSelectors.BranchName, branchDetails.Name.toLowerCase() == "random" ? RandomBranchName : branchDetails.Name)
     cy.FillLogTextBox(BranchSelectors.BranchLocalName, branchDetails.LocalName)
-    cy.FillRandomNumber(BranchSelectors.BranchCode, MinRandomNumber, MaxRandomNumber)
+    if (branchDetails.Code.toLowerCase() == "random") {
+        cy.FillRandomNumber(BranchSelectors.BranchCode, BranchSelectors.MinRandomNumber, BranchSelectors.MaxRandomNumber)
+    }
+    else {
+        cy.FillLogTextBox(BranchSelectors.BranchCode, branchDetails.Code)
+    }
 
     cy.FillLogTextBox(BranchSelectors.BranchSignature, branchDetails.Signature)
-    cy.FillRandomNumber(BranchSelectors.BranchCounterCode, MinRandomNumber, MaxRandomNumber )
+    if (branchDetails.CounterCode.toLowerCase() == "random") {
+        cy.FillRandomNumber(BranchSelectors.BranchCounterCode, BranchSelectors.MinRandomNumber, BranchSelectors.MaxRandomNumber)
 
+    }
+    else {
+        cy.FillLogTextBox(BranchSelectors.BranchCounterCode, branchDetails.Code)
+
+    }
 }
 
 export function CreateBranch() {
@@ -67,13 +75,13 @@ export function AssertCreateBranch() {
 function ReCreateBranch() {
     let MinRandomNumber = 1;
     let MaxRandomNumber = 1000;
-   
+
     cy.FillLogTextBox(BranchSelectors.BranchName, 'Test')
     cy.FillLogTextBox(BranchSelectors.BranchLocalName, 'Test')
     cy.FillRandomNumber(BranchSelectors.BranchCode, MinRandomNumber, MaxRandomNumber)
 
     cy.FillLogTextBox(BranchSelectors.BranchSignature, 'Test')
-    cy.FillRandomNumber(BranchSelectors.BranchCounterCode, MinRandomNumber, MaxRandomNumber )
+    cy.FillRandomNumber(BranchSelectors.BranchCounterCode, MinRandomNumber, MaxRandomNumber)
     ReCreateBranch();
     AssertCreateBranch();
 }
@@ -152,5 +160,3 @@ export function CloseSaveBranch() {
 function DefineBranchViewGetSingleRequest() {
     cy.DefineRequestWait(RestAPI.GET, Urls.BranchesGetSingle, RequestAliases.GetSignle);
 }
-
-//#endregion

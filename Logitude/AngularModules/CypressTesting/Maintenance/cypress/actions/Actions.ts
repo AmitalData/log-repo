@@ -42,15 +42,12 @@ import { SpecialServicesTypeDetails } from "../models/SpecialServicesTypeDetails
 import { MoveTypeDetails } from "../models/MoveTypeDetails";
 import { ShipmentSubTypeDetails } from "../models/ShipmentSubTypeDetails";
 import { CreditCardTypeDetails } from "../models/CreditCardTypeDetails";
-import { BankAccountDetails } from '../models/BankAccountDetails'
-import {PackageTypeDetails} from '../models/PackageTypeDetails'
+
 
 //#region variables
 let CityCode = null;
 let StateCode = null;
 let GlobalZoneCode = null;
-let BankAccountCode = null;
-let PackageTypeCode = null;
 let SpecialServicesTypeCode = null;
 let CardCode = null;
 let TruckerCode = null;
@@ -64,10 +61,8 @@ let inActiveCreditCardType = false;
 let inActiveState = false;
 let inActiveCity = false;
 let inActiveGlobalZone = false;
-let inActiveBankAccount = false;
 let inActiveCommodity = false;
 let inActiveRegion = false;
-let inActivePackageType = false;
 //#endregion
 
 //#region General Actions
@@ -134,8 +129,8 @@ function GenerateRandomNumber(NumberLength: number) {
     return NewRandomCode;
 }
 
-function GenerateOnlyRandomNumber(NumberMin: number,NumberMax: number) {
-    let NewRandomCode = gr.GenerateRandomNumber(NumberMin,NumberMax)
+function GenerateOnlyRandomNumber(NumberMin: number, NumberMax: number) {
+    let NewRandomCode = gr.GenerateRandomNumber(NumberMin, NumberMax)
     return NewRandomCode;
 }
 //#endregion
@@ -1402,252 +1397,6 @@ export function AssertPutGlobalZone() {
 
 //#endregion
 
-//#region Bank Account 
-export function FillBankAccountDetails(bankAccountDetails: BankAccountDetails) {
-    var RandomBankAccountNumber = GenerateRandomNumber(8);
-    var RandomBankAccountCode = GenerateRandomNumber(8);
-    var RandomBankAccountBranchNumber = GenerateRandomNumber(8);
-    cy.FillLogTextBox(MaintenanceSelectors.BankAccountAccountNumber, bankAccountDetails.BankAccountAccountNumber.toLowerCase() == "random" ? RandomBankAccountNumber : bankAccountDetails.BankAccountAccountNumber)
-    cy.FillLogTextBox(MaintenanceSelectors.BankAccountBankCode, bankAccountDetails.BankAccountBankCode.toLowerCase() == "random" ? RandomBankAccountCode : bankAccountDetails.BankAccountBankCode)
-    cy.FillLogTextBox(MaintenanceSelectors.BankAccountBranchNumber, bankAccountDetails.BankAccountBranchNumber.toLowerCase() == "random" ? RandomBankAccountBranchNumber : bankAccountDetails.BankAccountBranchNumber)
-    cy.FillLogLov(MaintenanceSelectors.BankAccountCurrency, bankAccountDetails.BankAccountCurrency, true)
-    cy.FillLogTextBox(MaintenanceSelectors.BankAccountName, bankAccountDetails.BankAccountName)
-    cy.FillLogTextBox(MaintenanceSelectors.BankAccountLocalName, bankAccountDetails.BankAccountLocalName)
-}
-
-export function CreateBankAccount() {
-    DefinePostBankAccountRequest()
-    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
-}
-
-function DefinePostBankAccountRequest() {
-    cy.DefineRequestWait(RestAPI.POST, Urls.BankAccounts, RequestAliases.PostBankAccount)
-}
-
-export function AssertCreateBankAccount() {
-    let intercept = cy.wait("@" + RequestAliases.PostBankAccount);
-    intercept.then((interception) => {
-        if (interception.response.statusCode === 400) {
-            ReCreateBankAccount();
-        }
-        else {
-            AssertPostBankAccount(interception.response.statusCode, 200, interception.response.body.Code)
-        }
-    })
-}
-
-function ReCreateBankAccount() {
-    let RandomBankAccountNumber = GenerateRandomNumber(8);
-    var RandomBankAccountCode = GenerateRandomNumber(8);
-    var RandomBankAccountBranchNumber = GenerateRandomNumber(8);
-    cy.FillLogTextBox(MaintenanceSelectors.BankAccountAccountNumber, RandomBankAccountNumber)
-    cy.FillLogTextBox(MaintenanceSelectors.BankAccountBankCode, RandomBankAccountCode)
-    cy.FillLogTextBox(MaintenanceSelectors.BankAccountBranchNumber, RandomBankAccountBranchNumber)
-    cy.FillLogLov(MaintenanceSelectors.BankAccountCurrency, 'USD', true)
-    cy.FillLogTextBox(MaintenanceSelectors.BankAccountName, 'TEST')
-    cy.FillLogTextBox(MaintenanceSelectors.BankAccountLocalName, 'TEST')
-    CreateGlobalZone();
-    AssertCreateGlobalZone();
-}
-
-export function AssertPostBankAccount(responseStatusCode: number, expectedStatusCode: number, bankAccountCode: string) {
-    assert.equal(responseStatusCode, expectedStatusCode)
-    BankAccountCode = bankAccountCode
-}
-export function SearchBankAccount() {
-    DefineBankAccountViewsGetByFiltersRequest(BankAccountCode);
-    cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, BankAccountCode);
-    AssertBankAccountViewsGetByFilters();
-}
-
-export function DefineBankAccountViewsGetByFiltersRequest(BankAccountName: string) {
-    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(BankAccountName + "&GetCount=false"), RequestAliases.GetFilterSearch);
-}
-export function AssertBankAccountViewsGetByFilters() {
-    BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
-}
-
-export function AssertSearchBankAccount() {
-    cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
-        expect(text).to.contain(BankAccountCode);
-    });
-}
-
-export function OpenBankAccount() {
-    DefineBankAccountsGetSingleRequest();
-    cy.get(BaseSelectors.RowClass).eq(0).click();
-}
-
-function DefineBankAccountsGetSingleRequest() {
-    cy.DefineRequestWait(RestAPI.GET, Urls.BankAccountsGetSingle, RequestAliases.GetSignle);
-}
-
-export function AssertOpenBankAccount() {
-    AssertBankAccountGetSingle();
-    BaseAssertion.AssertElementExist(MaintenanceSelectors.GeneralEditScreen)
-}
-
-function AssertBankAccountGetSingle() {
-    BaseAssertion.AssertStatusCode(RequestAliases.GetSignle, 200);
-}
-
-export function FillBankAccountLocalName(LocalName: string) {
-    cy.FillLogTextBox(MaintenanceSelectors.BankAccountLocalName, LocalName)
-}
-
-export function EditBankAccount() {
-    DefinePutBankAccountRequest();
-    cy.Click(MaintenanceSelectors.BankAccountSaveButton, null);
-}
-
-function DefinePutBankAccountRequest() {
-    cy.DefineRequestWait(RestAPI.PUT, Urls.BankAccounts, RequestAliases.PutBankAccount);
-}
-
-export function AssertEditBankAccount() {
-    AssertPutBankAccount();
-}
-
-export function AssertPutBankAccount() {
-    BaseAssertion.AssertStatusCode(RequestAliases.PutBankAccount, 200).
-        then((interception) => {
-            inActiveBankAccount = interception.response.body.InActive;
-        });
-}
-
-//#endregion
-
-//#region package Type
-
-export function FillPackageTypeDetails(packageTypeDetails: PackageTypeDetails) {
-    let MinRandomNumber = 1;
-    let MaxRandomNumber = 1000000;
-    cy.FillRandomNumber(MaintenanceSelectors.PackageTypeCode, MinRandomNumber, MaxRandomNumber)
-    cy.FillLogTextBox(MaintenanceSelectors.PackageTypeName, packageTypeDetails.Name)
-    cy.FillLogTextBox(MaintenanceSelectors.PackageTypeLocalName, packageTypeDetails.LocalName)
-    cy.FillRandomNumber(MaintenanceSelectors.PackageTypeTEU, MinRandomNumber, MaxRandomNumber)
-
-    cy.FillRandomNumber(MaintenanceSelectors.PackageTypeContainerSize, MinRandomNumber, MaxRandomNumber )
-    cy.FillRandomNumber(MaintenanceSelectors.PackageTypeVolume, MinRandomNumber, MaxRandomNumber )
-    cy.FillLogTextBox(MaintenanceSelectors.PackageTypePrintAs, packageTypeDetails.PrintAs)
-    FillCheckBoxProcess(MaintenanceSelectors.PackageTypeAirCheckBox, packageTypeDetails.Air)
-    FillCheckBoxProcess(MaintenanceSelectors.InActivePackageTypeCheckBox, packageTypeDetails.InActive)
-}
-
-export function CreatePackageType() {
-    DefinePostPackageTypeRequest()
-    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
-}
-
-function DefinePostPackageTypeRequest() {
-    cy.DefineRequestWait(RestAPI.POST, Urls.PackageTypes, RequestAliases.PostPackageType)
-}
-
-export function AssertCreatePackageType() {
-    let intercept = cy.wait("@" + RequestAliases.PostPackageType);
-    intercept.then((interception) => {
-        if (interception.response.statusCode === 400) {
-            ReCreatePackageType();
-        }
-        else {
-            AssertPostPackageType(interception.response.statusCode, 200, interception.response.body.Code)
-        }
-    })
-}
-
-function ReCreatePackageType() {
-    let MinRandomNumber = 1;
-    let MaxRandomNumber = 8;
-    cy.FillLogTextBox(MaintenanceSelectors.PackageTypeCode, '1234')
-    cy.FillLogTextBox(MaintenanceSelectors.PackageTypeName, 'TEST')
-    cy.FillLogTextBox(MaintenanceSelectors.PackageTypeLocalName, 'LocalTEST')
-    cy.FillLogTextBox(MaintenanceSelectors.PackageTypeTEU, '12345')
-
-    cy.FillLogTextBox(MaintenanceSelectors.PackageTypeContainerSize, '2321')
-    cy.FillLogTextBox(MaintenanceSelectors.PackageTypeVolume, '5432')
-    cy.FillLogTextBox(MaintenanceSelectors.PackageTypePrintAs, 'TESTPrint')
-    FillCheckBoxProcess(MaintenanceSelectors.PackageTypeAirCheckBox, 'Yes')
-    FillCheckBoxProcess(MaintenanceSelectors.InActivePackageTypeCheckBox, 'Yes')
-    CreatePackageType();
-    AssertCreatePackageType();
-}
-
-export function AssertPostPackageType(responseStatusCode: number, expectedStatusCode: number, packageTypeCode: string) {
-    assert.equal(responseStatusCode, expectedStatusCode)
-    PackageTypeCode = packageTypeCode
-}
-
-export function SearchPackageType() {
-    DefinePackageTypeViewsGetByFiltersRequest(PackageTypeCode);
-    cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, PackageTypeCode);
-    AssertPackageTypeViewsGetByFilters();
-}
-
-export function DefinePackageTypeViewsGetByFiltersRequest(PackageTypeName: string) {
-    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(PackageTypeName + "&GetCount=false"), RequestAliases.GetFilterSearch);
-}
-export function AssertPackageTypeViewsGetByFilters() {
-    BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
-}
-
-export function AssertSearchPackageType() {
-    cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
-        expect(text).to.contain(PackageTypeCode);
-    });
-}
-
-export function OpenPackageType() {
-    DefinePackageTypesGetSingleRequest();
-    cy.get(BaseSelectors.RowClass).eq(0).click();
-}
-
-function DefinePackageTypesGetSingleRequest() {
-    cy.DefineRequestWait(RestAPI.GET, Urls.PackageTypesGetSingle, RequestAliases.GetSignle);
-}
-
-export function AssertOpenPackageType() {
-    AssertPackageTypeGetSingle();
-    BaseAssertion.AssertElementExist(MaintenanceSelectors.GeneralEditScreen)
-}
-
-function AssertPackageTypeGetSingle() {
-    BaseAssertion.AssertStatusCode(RequestAliases.GetSignle, 200);
-}
-
-export function FillPackageTypeLocalName(LocalName: string) {
-    cy.FillLogTextBox(MaintenanceSelectors.PackageTypeLocalName, LocalName)
-}
-
-export function EditPackageType() {
-    DefinePutPackageTypeRequest();
-    cy.Click(MaintenanceSelectors.PackageTypeSaveButton, null);
-}
-
-function DefinePutPackageTypeRequest() {
-    cy.DefineRequestWait(RestAPI.PUT, Urls.PackageTypes, RequestAliases.PutPackageType);
-}
-
-export function AssertEditPackageType() {
-    AssertPutPackageType();
-}
-
-export function AssertPutPackageType() {
-    BaseAssertion.AssertStatusCode(RequestAliases.PutPackageType, 200).
-        then((interception) => {
-            inActivePackageType = interception.response.body.InActive;
-        });
-}
-
-export function CloseSavePackageType() {
-    DefinePackageTypeViewGetSingleRequest()
-    cy.Click(MaintenanceSelectors.PackageTypeSaveCloseButton, null);
-}
-
-function DefinePackageTypeViewGetSingleRequest() {
-    cy.DefineRequestWait(RestAPI.GET, Urls.PackageTypesGetSingle, RequestAliases.GetSignle);
-}
-
-//#endregion
 
 //#region Commodity
 export function FillCommodityCode(CommodityCode: string) {

@@ -2,15 +2,18 @@ import * as Actions from "../../actions/Actions";
 import * as BankAccountActions from "../../actions/BankAccountActions";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
-import {BankAccountDetails} from '../../models/BankAccountDetails'
+import { BankAccountDetails } from '../../models/BankAccountDetails'
 import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetails";
 import { MaintenanceSelectors } from "../../selectors/Selectors";
+import { BankAccountSelectors } from "../../selectors/BankAccountSelectors";
 import { Constants } from '../../../cypress/constants/Constants'
 import * as BaseActions from "../../../../Base/cypress/actions/Actions"
 
+
 let bankAccountDetails: BankAccountDetails
 
-//#region Create new Bank Account
+
+//#region Create new bank account
 Given("the user logged in and open {string} in maintenance menu", (maintenanceItemName) => {
     cy.Login()
     Actions.OpenMaintenanceItemFromMaintenanceMenu(maintenanceItemName, MaintenanceSelectors.MaintenanceItemBankAccount)
@@ -29,49 +32,50 @@ When("create bank account", () => {
 Then("the bank account should create successfully", () => {
     BankAccountActions.AssertCreateBankAccount()
 });
+//#endregion
 
-//#region Search for the bank account by name
+
+//#region Search for the bank account by code
 When("search bank account", () => {
     BankAccountActions.SearchBankAccount()
 });
- 
+
 Then("the bank account should appear successfully", () => {
-    BankAccountActions.AssertSearchBankAccount() 
+    BankAccountActions.AssertSearchBankAccount()
 });
- 
 //#endregion
- 
+
+
 //#region Open the bank account
 When("open bank account", () => {
     BankAccountActions.OpenBankAccount();
 });
- 
+
 Then("the bank account should open successfully", () => {
-    BankAccountActions.AssertOpenBankAccount(); 
+    BankAccountActions.AssertOpenBankAccount();
 });
- 
+
 //#endregion
- 
+
 //#region Edit the bank account
 Given("a {string} as bankAccountLocalName", (bankAccountLocalName) => {
     BankAccountActions.FillBankAccountLocalName(bankAccountLocalName)
 });
- 
+
 Given("the user activate bank account", () => {
-    Actions.ChangeInactiveCheckBoxValue(MaintenanceSelectors.InActiveBankAccountCheckBox)
+    Actions.ChangeInactiveCheckBoxValue(BankAccountSelectors.InActiveBankAccountCheckBox)
 });
- 
+
 When("edit bank account", () => {
-    BankAccountActions.EditBankAccount(); 
+    BankAccountActions.EditBankAccount();
 });
- 
+
 Then("the bank account should update successfully", () => {
-    BankAccountActions.AssertEditBankAccount();  
+    BankAccountActions.AssertEditBankAccount();
 });
- 
+
 Then("following event should appear in events tab", (dataTable) => {
     let eventDetailsList = Assists.CreateSet<EventTypeDetails>(dataTable);
-    BaseActions.ValidateEventsTab(eventDetailsList, MaintenanceSelectors.BankAccountEventsTab);
+    BaseActions.ValidateEventsTab(eventDetailsList, BankAccountSelectors.BankAccountEventsTab);
 });
- 
 //#endregion

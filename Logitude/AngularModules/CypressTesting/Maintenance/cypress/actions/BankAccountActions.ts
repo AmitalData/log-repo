@@ -2,20 +2,15 @@ import { MaintenanceSelectors } from "../selectors/Selectors";
 import { BankAccountSelectors } from "../selectors/BankAccountSelectors";
 import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
 import { Urls } from "../constants/Urls";
-import { Constants } from "../constants/Constants";
 import { RestAPI } from "../../../Base/cypress/constants/RestAPI";
 import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
-
 import * as gr from '../../../Base/cypress/actions/GenerateRandoms';
-
 import { BankAccountDetails } from '../models/BankAccountDetails'
 
 
 let BankAccountCode = null;
 let inActiveBankAccount = false;
-
-//#region Bank Account 
 
 function GenerateRandomNumber(NumberLength: number) {
     let NewRandomCode = gr.GenerateRandomNumberAndString(NumberLength)
@@ -32,7 +27,6 @@ export function FillBankAccountDetails(bankAccountDetails: BankAccountDetails) {
     cy.FillLogLov(BankAccountSelectors.BankAccountCurrency, bankAccountDetails.Currency, true)
     cy.FillLogTextBox(BankAccountSelectors.BankAccountName, bankAccountDetails.Name)
     cy.FillLogTextBox(BankAccountSelectors.BankAccountLocalName, bankAccountDetails.LocalName)
-    bankAccountDetails.SearchFields = 'Test, BankTest1'
 }
 
 export function CreateBankAccount() {
@@ -136,4 +130,4 @@ export function AssertPutBankAccount() {
             inActiveBankAccount = interception.response.body.InActive;
         });
 }
-//#endregion
+
