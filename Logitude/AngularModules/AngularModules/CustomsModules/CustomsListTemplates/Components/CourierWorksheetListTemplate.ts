@@ -374,7 +374,6 @@ export class CourierWorksheetListTemplate {
     get WebAPICourierGWMessageECTHRDataMaman() { return this._CourierWorksheetSharedDataService.WebAPICourierGWMessageECTHRDataMaman }
     //get CourierPendingReasonListToolTip() { return this.CourierPendingReasonListToolTip ; }
     get CourierPendingReasonListToolTip() {
-        debugger;
         if (AppTool.IsNullOrEmpty(this._CourierWorksheet.CourierPendingReasonList)) {
             return "";
         }

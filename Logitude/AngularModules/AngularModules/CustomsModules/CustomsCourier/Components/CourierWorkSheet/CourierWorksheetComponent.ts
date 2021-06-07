@@ -1884,7 +1884,6 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                             this.IsILSWSEnabled = true;
                         }
                         this._CourierWorksheetSharedDataService.WebAPICourierGWMessageECTHRDataMaman = response.Result.DefaultValue;
-                        debugger;
                     } else {
                         console.error("CGO_CUST_MAMAN DefaultValue  is missing !!!")
                     }

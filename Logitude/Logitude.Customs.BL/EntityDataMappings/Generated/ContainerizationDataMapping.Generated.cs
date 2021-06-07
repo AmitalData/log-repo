@@ -49,7 +49,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ExportFile, 
 	         ImporterName, 
 	         ContainerizationStatusName, 
-	         HataraStatusName,
+	         HataraStatusName, 
+	         ConnectedDeclarations,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
