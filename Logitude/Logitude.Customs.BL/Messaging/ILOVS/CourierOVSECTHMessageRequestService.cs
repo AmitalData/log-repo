@@ -3,6 +3,7 @@
 
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+//using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Data;
@@ -11,6 +12,7 @@ using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Utils;
 using Simplog.Server.Infrastructure.Helpers;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -19,6 +21,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.CommonDataModel.Repositories;
 
 namespace Logitude.Customs.BL.Messaging.ILOVS
 {
@@ -202,7 +207,7 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
             }
             string integratorIndexId = null;
 
-            integratorIndexId = GetTranslationP2L("IIGC", "GNDCARD", integratorIndex, tenant);
+            integratorIndexId = GetComputingPartnerCodeTranslation(integratorIndex, "ILOVS", "Card", tenant);
             if(!String.IsNullOrWhiteSpace(integratorIndexId)) return integratorIndexId;
 
             CardQuery cardQuery = new CardQuery(tenant);
@@ -220,42 +225,33 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
             return integratorIndexId;
         }
 
-        private string GetTranslationP2L(string partnerID, string tableID, string partnerCode, int tenant)
+        public string GetComputingPartnerCodeTranslation(string logitudeCode, string computingPartner, string objectTableName, int tenant)
         {
-            if (partnerID == null || tableID == null || partnerCode == null)
-            {
-                return ("");
-            }
-            using (_AmitalContext = AmitalContext.GetContext(tenant))
-            {
-                if (_GTRTRANQueryService == null)
-                {
-                    _GTRTRANQueryService = new GTRTRANQueryService(_AmitalContext);
-                }
-                var myGTRTRANPM = _GTRTRANQueryService.GetSingle(partnerID, tableID, partnerCode, null, true);
+            ICommonDataContext context;
+            ObjectTableRepository myObjectTabelRepository;
+            ComputingPartnerQuery computingPartnerQuery;
+            ComputingPartnerTranslationQuery computingPartnerTranslationQuery;
+            context = CommonDataContext.GetContext(tenant);
+            myObjectTabelRepository = new ObjectTableRepository(tenant);
+            computingPartnerQuery = new ComputingPartnerQuery(new ComputingPartnerRepository(context));
+            computingPartnerTranslationQuery = new ComputingPartnerTranslationQuery(new ComputingPartnerTranslationRepository(context));
 
-                if (myGTRTRANPM == null)
-                {
-                    return ("");
-                }
-                return (myGTRTRANPM.LOCALCODE);
+            ObjectTable objectTable = myObjectTabelRepository.GetObjectTableByName(objectTableName, 0, true);
+            ComputingPartnerPM partner = computingPartnerQuery.GetSinglePMByCode(computingPartner, tenant);
+            if (partner == null)
+            {
+                partner = computingPartnerQuery.GetSinglePMByCode(computingPartner, 0);
             }
+
+            string partnerCode = null;
+            if (partner != null && objectTable != null)
+            {
+                partnerCode = computingPartnerTranslationQuery.GetPartnerCodeTranslation(logitudeCode, partner.Id, objectTable.Id, tenant);
+            }
+
+            return partnerCode;
         }
 
-        public string GetTranslationL2P(string partnerID, string tableID, string localCode, int tenant)
-        {
-            using (_AmitalContext = AmitalContext.GetContext(tenant))
-            {
-                var rec = (from a in _AmitalContext.GTRTRANs
-                           where a.PARTNERID == partnerID && a.TABLEID == tableID && a.LOCALCODE == localCode
-                           select a).FirstOrDefault();
-                if (rec == null)
-                {
-                    return null;
-                }
-                return rec.PARTNERCODE;
-            }
-        }
 
         private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
         {
