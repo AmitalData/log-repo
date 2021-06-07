@@ -29,13 +29,13 @@ export function FillVatTypeDetails(vatTypeDetails: VatTypeDetails, codeDigits: n
 }
 
 function FillSingleVatType(vatTypeDetails) {
-    let CurrentDate = "."
+    let percentageDate = vatTypeDetails.PercentageDate.toLowerCase() == "currentdate" ? "." : vatTypeDetails.PercentageDate
     cy.FillLogTextBox(VatTypesSelectors.Percentage, vatTypeDetails.Percentage);
-    cy.FillLogTextBox(VatTypesSelectors.PercentageDate, vatTypeDetails.PercentageDate.toLowerCase() == "currentdate" ? CurrentDate : vatTypeDetails.PercentageDate)
+    cy.FillLogTextBox(VatTypesSelectors.PercentageDate, percentageDate)
 }
 
 function SelectMultiVatTypes() {
-    cy.get(VatTypesSelectors.MultiSimpleGridViewRow).find(VatTypesSelectors.MultiCheckBoxes).then((checkBox)=> {
+    cy.get(VatTypesSelectors.MultiSimpleGridViewRow).find(VatTypesSelectors.MultiCheckBoxes).then((checkBox) => {
         cy.wrap(checkBox[0]).check({ force: true })
         cy.wrap(checkBox[1]).check({ force: true })
     })
