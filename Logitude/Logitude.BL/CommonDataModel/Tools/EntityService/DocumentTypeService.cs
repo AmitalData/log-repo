@@ -207,8 +207,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             DocumentTypeMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
-
-			TableLastUpdateClass.UpdateTableHistory(theEntityPm.Tenant, "DocumentType");
+            RemoveEntityFromCache(theEntityPm);
+            TableLastUpdateClass.UpdateTableHistory(theEntityPm.Tenant, "DocumentType");
 		}
 
         public void Update(DocumentTypePM theEntityPm, bool mapComposition = false)
