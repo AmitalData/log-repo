@@ -243,7 +243,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 }
                 #endregion
 
-                string TransferGlAccountId = GetAndRemoveFilter(queryOperationsTrans, "DUMMY_TransferAccountId");
+                string transferGlAccountId = GetAndRemoveFilter(queryOperationsTrans, "DUMMY_TransferAccountId");
 
                 var args = new AutoExternalReconcileArgs()
                 {
@@ -253,12 +253,13 @@ namespace WebFreight.Web.Controllers.AccountingModel
                     ObjectTableId = objectTableId,
                     EntityId = entityId,
                     GLAccountId = glAccountId,
+                    TransferGLAccountId = transferGlAccountId,
                     TransactionQueryOperations = queryOperationsTrans,
                     BankPageLineQueryOperations = queryOperationsBankLine
                 };
 
                 var automaticExternalReconcileService = new AutomaticExternalReconcileService(tenant);
-                MatchedReconciliationLines matchedLines = automaticExternalReconcileService.GetMatchedLines(args, TransferGlAccountId );
+                MatchedReconciliationLines matchedLines = automaticExternalReconcileService.GetMatchedLines(args);
 
                 ServiceResponse response = new ServiceResponse();
                 response.Result = matchedLines;

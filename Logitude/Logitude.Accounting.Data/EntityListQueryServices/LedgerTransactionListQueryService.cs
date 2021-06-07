@@ -758,13 +758,14 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             return count;
         }
 
-        public IQueryable<LedgerTransactionList> GetIquerableOpenReconciliationFilterList(QueryOperations queryOperations, string AccountId,string transferAccountId, int tenant)
+        public IQueryable<LedgerTransactionList> GetIquerableOpenReconciliationFilterList(QueryOperations queryOperations, string accountId,string transferAccountId, int tenant)
         {
-            IQueryable<LedgerTransactionList> query2 = GetFilteredList(queryOperations, tenant);
+            IQueryable<LedgerTransactionList> ledgerTransactionsQuery = GetFilteredList(queryOperations, tenant);
 
-            query2 = FilterOpenTransactionsForExternalReconcile(AccountId, transferAccountId, query2);
-
-            return query2;
+            if(transferAccountId == null)
+                return FilterOpenTransactionsForExternalReconcile(accountId, ledgerTransactionsQuery);
+            else
+                return FilterOpenTransactionsForExternalReconcile(accountId, transferAccountId, ledgerTransactionsQuery);
         }
 
         public List<LedgerTransactionList> GetTransactionsByIds(List<string> ids)

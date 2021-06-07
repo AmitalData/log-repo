@@ -54,12 +54,12 @@ namespace Logitude.Accounting.BL.CoreBL
             tenant = _tenant;
         }
 
-        public MatchedReconciliationLines GetMatchedLines(AutoExternalReconcileArgs args, string transferAccountId)
+        public MatchedReconciliationLines GetMatchedLines(AutoExternalReconcileArgs args)
         {
             ValidateParameters(args);
 
             externalPageLines = GetFilteredPageLines(args);
-            ledgerTransactions = GetFilteredLedgerTransactions(args, transferAccountId);
+            ledgerTransactions = GetFilteredLedgerTransactions(args);
 
             if (externalPageLines.Count > 0 && ledgerTransactions.Count > 0)
             {
@@ -609,11 +609,11 @@ namespace Logitude.Accounting.BL.CoreBL
             return pageLinesDTO.ToList();
         }
 
-        List<MyLedgerTransaction> GetFilteredLedgerTransactions(AutoExternalReconcileArgs args, string transferAccountId)
+        List<MyLedgerTransaction> GetFilteredLedgerTransactions(AutoExternalReconcileArgs args)
         {
             var accountingContext = AccountingContext.GetContext(tenant);
             LedgerTransactionListQueryService query = new LedgerTransactionListQueryService(accountingContext);
-            IQueryable<LedgerTransactionList> iQuerableList = query.GetIquerableOpenReconciliationFilterList(args.TransactionQueryOperations, args.GLAccountId,transferAccountId, tenant);
+            IQueryable<LedgerTransactionList> iQuerableList = query.GetIquerableOpenReconciliationFilterList(args.TransactionQueryOperations, args.GLAccountId,args.TransferGLAccountId, tenant);
             IQueryable<MyLedgerTransaction> linesDTO = (from a in iQuerableList
                                                             select new MyLedgerTransaction()
                                                             {
@@ -1175,6 +1175,7 @@ namespace Logitude.Accounting.BL.CoreBL
         public string ObjectTableId { get; set; }
         public string EntityId { get; set; }
         public string GLAccountId { get; set; }
+        public string TransferGLAccountId { get; set; }
         public QueryOperations TransactionQueryOperations { get; set; }
         public QueryOperations BankPageLineQueryOperations { get; set; }
     }
