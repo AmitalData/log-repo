@@ -1,5 +1,5 @@
+@release @all @dev
 Feature: Multi Vat Type Create, Search and Edit from Maintenance
-
     The user creates a multi vat type, searches for and edits it from the Maintenance Module.
 
     Scenario: Create new multi vat type
@@ -17,7 +17,6 @@ Feature: Multi Vat Type Create, Search and Edit from Maintenance
     Scenario: Search for the multi vat type by code
         When search multi vat type
         Then the multi vat type should appear successfully
-
 
     Scenario: Open the multi vat type
         When open multi vat type
