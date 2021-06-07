@@ -12,7 +12,7 @@ import { MainCarriageLeg } from "cypress/models/MainCarriageLeg";
 let MasterShipmentDetails: ShipmentDetails;
 let shipmentDetails: ShipmentDetails;
 let EventNote ; 
-
+let Housenumberopen;
 //#endregion
 
 //#region Create master export air shipment
@@ -51,6 +51,8 @@ When("create house with {string} as Shipper",(Shipper)=>{
 Then("the house should create successfully",()=>{
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200).then((interception) => {
         ShipmentContext.HouseNumber= interception.response.body.House;
+        Housenumberopen=ShipmentContext.HouseNumber
+
     })
 });
 
@@ -59,14 +61,20 @@ Then("the house should connect successfully",()=>{
     Actions.ValidateCheckHouseCheckBox();
 });
 Given("the user in the master's rounting tab",()=>{
-    //Actions.OpenShipment(ShipmentContext.MasterNumber);
     cy.Navigate(ShipmentSelectors.RoutingsTab);
 })
 Given("edit main carriage leg with the following details",(dataTable)=>{
     let mainCarriageLeg = Assists.CreateInstance<MainCarriageLeg>(dataTable, true);
     Actions.EditMainCarriageLegsFromToport(mainCarriageLeg.Gateway,mainCarriageLeg.Destination);
-    cy.Click(ShipmentSelectors.ShipmentSaveButton, null);
+    //cy.Click(ShipmentSelectors.ShipmentSaveButton, null);
 });
 When("update master", () => {
-    Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
+    //Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
+    Actions.UpdateMaster()
 });
+Then('the master should update successfully',()=>{
+
+})
+Then('the connceted house main carriage leg should update with the following',()=>{
+    Actions.openHouseShipment()
+})

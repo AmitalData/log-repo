@@ -26,6 +26,6 @@ Feature: Update the routing tab of master shipment
             | Destination | TLV |
         When update master
         Then the master should update successfully
-        Then the connceted house's main carriage leg should update with the following
+        Then the connceted house main carriage leg should update with the following
             | Gateway     | FRA |
             | Destination | TLV |

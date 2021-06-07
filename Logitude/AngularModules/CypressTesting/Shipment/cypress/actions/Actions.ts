@@ -100,19 +100,27 @@ export function UpdateShipment(saveButtonSelector: string, saveButtonSelectorCon
     cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.ShipmentRequest)
     cy.Click(saveButtonSelector, saveButtonSelectorContains, false)
 }
-export function GetHouseNumber() : any {
-    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200).then((interception)=>{
-    //ShipmentNumber=interception.response.body.ShipmentNumber;
-    ShipmentNumber= interception.response.body.House;
-    return ShipmentNumber
-    })
-
+export function UpdateMaster(){
+    cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.PutShipment)
 }
-export function openHouseShipment(){
-    cy.Click(ShipmentSelectors.NewTapItem, null);
-    cy.Click(ShipmentSelectors.ShipmentWorkspace, null)
-   OpenShipment(ShipmentContext.HouseNumber)
 
+//export function GetHouseNumber() : any {
+    //BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200).then((interception)=>{
+    //ShipmentNumber=interception.response.body.ShipmentNumber;
+    //ShipmentNumber= interception.response.body.House;
+    //return ShipmentNumber
+    ////})
+
+//}
+//export function openHouseShipment(){
+    //cy.Click(ShipmentSelectors.NewTapItem, null);
+    //cy.Click(ShipmentSelectors.ShipmentWorkspace, null)
+   //OpenShipment(ShipmentContext.HouseNumber)
+
+//}
+export function openHouseShipment(){
+    cy.Navigate(ShipmentSelectors.ShipmentsTab);
+    cy.get("hyperlink").find("button").click()
 }
 export function OpenShipment(shipmentNumber: string) {
     cy.DefineRequestWait(RestAPI.GET, BaseURLs.GetMenuButtonGroups, RequestAliases.WaitLoadShipmentMenuButtons);
