@@ -274,7 +274,7 @@ box-shadow: 0px 0px 5px 1px rgba(0,148,118,1);
                     <td style="padding:7px;padding-right:10px">
                         <div style="border:1px solid gray;background-color:#D1D6D8;height:100%;width:100%;vertical-align:central">
            <div style="height:47%"></div>
-          <div id="DownLoadReportMessage"  style="text-align:center;vertical-align:central;font-size:15px">The report is too large to preview. Please use Print/Save buttons to download it. </div>  
+          <div id="DownLoadReportMessage"  style="text-align:center;vertical-align:central;font-size:15px">The report is too large to preview. Please use Print/Save buttons to download it.<a id="ReportDownload">View</a> </div>  
                         </div>
                              <div class="BusyIndicator" id="ReportPageBusyIndicator"></div>                                                                               
 

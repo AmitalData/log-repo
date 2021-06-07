@@ -16,31 +16,15 @@ namespace WebFreight.Web.Controllers.ShardLogistics
     public class SharedLogisticReportController : ApiController
     {
         [HttpPost]
-        public HttpResponseMessage ExportReportToExcelFile(SharedLogisticReportFilters reportFilters)
+        public HttpResponseMessage ExportReportToExcelFile(SharedLogisticReportFilters sharedLogisticReportFilters)
         {
             try
             {
                 AuthenticationToken authenticationToken = GetAuthenticationToken();
                 SecurityUtility.AuthenticationOnTenant(authenticationToken.Tenant);
-                SecurityUtility.CheckSharedContactAuthentication(authenticationToken.Tenant, reportFilters.PartnerId);
-
-
-                QueryOperations queryOperations = new QueryOperations()
-                {
-                    ObjectTableName = reportFilters.ObjectTableName,
-                    SortByColumnName = reportFilters.SortByColumnName,
-                    SortDirectin = reportFilters.SortDirectin,
-                    QuerySection = reportFilters.QuerySection,
-                    QueryFilterItems = reportFilters.QueryFilterItems,
-
-                };
-
-                FilterSerializer serializer = new FilterSerializer();
-                byte[] xmlFilters = serializer.SerializeFilterItems(queryOperations);
-                var  bytes = new ExportToExcelHelper().ExportQueryToExcel(new ExportToExcelArgs() { XmlFilters = xmlFilters, QueryCode = "Shipment.Shipments", Tenant = authenticationToken.Tenant, UserId = reportFilters.ContactId, TypeName = null });
-
-
-
+                SecurityUtility.CheckSharedContactAuthentication(authenticationToken.Tenant, sharedLogisticReportFilters.PartnerId);
+                SharedLogisticReportService sharedLogisticReportService = new SharedLogisticReportService(sharedLogisticReportFilters, authenticationToken.Tenant);
+                sharedLogisticReportService.ExportReportToExcelFile();
                 return Request.CreateResponse(HttpStatusCode.OK, "");
             }
 
@@ -86,6 +70,10 @@ namespace WebFreight.Web.Controllers.ShardLogistics
         public string PartnerId { get; set; }
         public string ContactId { get; set; }
         public int Tenant { get; set; }
+        public string QueryCode { get; set; }
+        public string ReportName { get; set; }
+
+        
         public List<QueryFilterItem> QueryFilterItems { get; set; }
 
 

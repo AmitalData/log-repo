@@ -833,7 +833,7 @@
 
                            <div>
 
-             <a class="Hyperlink" OnClick="ViewReport()" style="padding: 0; margin: 0; cursor: pointer; text-decoration: none;">${Name}   </a>
+             <a class="Hyperlink" OnClick="ViewReport(name)" style="padding: 0; margin: 0; cursor: pointer; text-decoration: none;">${Name}   </a>
            
                </div>
                                                   
@@ -1006,7 +1006,7 @@
             PostFormParams(url, params);
         }
 
-        function ViewReport() {
+        function ViewReport(name) {
             ChangePage("/SharedLogistic/ReportViewPage.aspx");
         }
 

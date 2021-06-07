@@ -6,7 +6,7 @@
 
         $("#DownLoadReportMessage").hide();
 
-
+        $.ReportName = "Shipments";
         $.Token = $("#TokenInput").val();
         var linkQuery = $("#LoginInput").val();
         var linkParameters = null;
@@ -101,7 +101,16 @@
     });
 
 
+    $("#ReportDownload").click(function () {
 
+        var reportDownloadURL = "../WebPages/DawnLoadExcelPage.aspx?fileName=" + $.ReportName + "&tempId=" + $.Token; + "&qname=" + "Shipments";
+        window.open(reportDownloadURL);
+
+
+
+
+
+    });
 
 
     jQuery.SetDefultReportFilterValue = (function () {
@@ -131,7 +140,7 @@
         });
     });
 
-    jQuery.RunReportSsuccess = (function (jqXHR) {
+    jQuery.RunReportSsuccess = (function (result) {
         $("#ReportPageBusyIndicator").hide();
         $("#DownLoadReportMessage").show();
 
@@ -164,6 +173,7 @@ function SharedLogisticReportFilters() {
     this.SortDirectin = "Descending",
     this.QueryCode = "Shipment.Shipments",
     this.QueryFilterItems = BuildQueryFilterItems();
+    this.ReportName = $.ReportName;
 
 
 };
