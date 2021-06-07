@@ -94,8 +94,7 @@ namespace CommunicationWorkerRole.Analyzers
         private void SendContainerStatusRequestToOceanInsightSevice()
         {
             var token = LoginToCloud();
-            // handel token ; throw exception 
-            if (token != null)
+            if (!string.IsNullOrEmpty(token))
             {
                 BasicHttpBinding binding = new BasicHttpBinding(BasicHttpSecurityMode.None);
                 binding.MaxBufferSize = 2147483647;
@@ -114,9 +113,13 @@ namespace CommunicationWorkerRole.Analyzers
                     }
                     else
                     {
-                        // handel error
+                        throw new Exception("Analyzing containetr status request faild, " + oceanInsightResponse.ErrorMessage);
                     }
                 }
+            }
+            else
+            {
+                throw new Exception("Analyzing containetr status request faild, invalid token");
             }
         }
 

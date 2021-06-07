@@ -48,6 +48,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
         private bool CheckIfShipmentMasterDataFieldsUpdated()
         {
+            if (this.initializer.EntityMasterData == null)
+                return false;
             if (this.initializer.EntityPM.MainCarriageCarrierId != this.initializer.EntityMasterData.MainCarriageCarrierId)
                 return true;
             if (this.initializer.EntityPM.MainCarriageCarrierNumber != this.initializer.EntityMasterData.MainCarriageCarrierNumber)

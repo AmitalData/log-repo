@@ -30,8 +30,8 @@ namespace CommunicationWorkerRole
                 {
                     try
                     {
-                        this.GetLogitudeOceanInsightsTenantConfigurations();
-                        this.ReadContainerStatusRequestToOceanInsightSevice();
+                        //this.GetLogitudeOceanInsightsTenantConfigurations();
+                        //this.ReadContainerStatusRequestToOceanInsightSevice();
                     }
                     catch (Exception e)
                     {
@@ -65,8 +65,7 @@ namespace CommunicationWorkerRole
         private void ReadContainerStatusRequestToOceanInsightSevice()
         {
             var token = LoginToCloud();
-            // handel token ; throw exception 
-            if (token != null)
+            if (!string.IsNullOrEmpty(token))
             {
                 BasicHttpBinding binding = new BasicHttpBinding(BasicHttpSecurityMode.None);
                 binding.MaxBufferSize = 2147483647;
@@ -83,7 +82,15 @@ namespace CommunicationWorkerRole
                     {
                         // Read the resopnse to our DB 
                     }
+                    else
+                    {
+
+                    }
                 }
+            }
+            else
+            {
+                throw new Exception("Analyzing containetr status request faild, invalid token");
             }
         }
 
