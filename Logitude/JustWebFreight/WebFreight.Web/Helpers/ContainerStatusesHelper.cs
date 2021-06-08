@@ -74,6 +74,10 @@ namespace WebFreight.Web.Helpers
         }
         private void GetCommuniactionLogObjectTableId()
         {
+            if (this.isContainer)
+            {
+                objectTableName = "Container";
+            }
             ObjectTableRepository myObjectTabelRepository = new ObjectTableRepository(tenant);
             ObjectTable objectTable = myObjectTabelRepository.GetObjectTableByName(objectTableName, 0, true);
             if (objectTable != null)

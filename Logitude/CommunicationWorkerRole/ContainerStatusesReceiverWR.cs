@@ -13,6 +13,11 @@ using System.Transactions;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.Server.Tools;
+using System.IO;
+using System.Xml.Serialization;
+using Simplog.Data.Helpers;
+using Logitude.Server.Tools.Counters;
 
 namespace CommunicationWorkerRole
 {
@@ -21,7 +26,7 @@ namespace CommunicationWorkerRole
         private int logitudeOceanInsightsTenant;
         private string amitalCloudEnvironmentURL;
         private string amitalCloudLogitudeTenantPrimaryKey;
-
+        private int queuePriority = 1;
         public override void Run()
         {
             while (IsRunning)
@@ -30,8 +35,8 @@ namespace CommunicationWorkerRole
                 {
                     try
                     {
-                        //this.GetLogitudeOceanInsightsTenantConfigurations();
-                        //this.ReadContainerStatusRequestToOceanInsightSevice();
+                        this.GetLogitudeOceanInsightsTenantConfigurations();
+                        this.ReadContainerStatusRequestToOceanInsightSevice();
                     }
                     catch (Exception e)
                     {
@@ -77,14 +82,12 @@ namespace CommunicationWorkerRole
                 using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)externalTasksQueueWcfService.InnerChannel))
                 {
                     System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", token);
-                    var oceanInsightResponseXML = externalTasksQueueWcfService.GetTaskFromQueue(1, 1);
+                    var oceanInsightResponseXML = externalTasksQueueWcfService.GetTaskFromQueue(logitudeOceanInsightsTenant, queuePriority);
                     if (!string.IsNullOrEmpty(oceanInsightResponseXML))
                     {
-                        // Read the resopnse to our DB 
-                    }
-                    else
-                    {
-
+                        this.ReadExternalTasksQueueWcfServiceResponse(oceanInsightResponseXML);
+                        this.InsertNewAnalyzeQueue();
+                        externalTasksQueueWcfService.MarkTaskAsDone(communicationId, logitudeOceanInsightsTenant, queuePriority);
                     }
                 }
             }
@@ -92,6 +95,51 @@ namespace CommunicationWorkerRole
             {
                 throw new Exception("Analyzing containetr status request faild, invalid token");
             }
+        }
+
+        private string communicationId;
+        private string oceanInsightsParametersXML;
+        private void ReadExternalTasksQueueWcfServiceResponse(string oceanInsightResponseXML)
+        {
+            var externalTasksQueueEnvelope = LogitudeXmlSerializer.DeserializeObject<Envelope>(oceanInsightResponseXML);
+            this.communicationId = externalTasksQueueEnvelope.CommunicationLogId;
+            var oceanInsightsQueueTask = externalTasksQueueEnvelope.Tasks.Where(a => a.Action == "OceanInsights.PushUpdate").FirstOrDefault();
+            if (oceanInsightsQueueTask != null)
+            {
+                var oceanInsightsParameters = oceanInsightsQueueTask.Parameters.FirstOrDefault();
+                if (oceanInsightsParameters != null)
+                {
+                    this.oceanInsightsParametersXML = oceanInsightsParameters.Value;
+                }
+            }
+        }
+        private void InsertNewAnalyzeQueue()
+        {
+            Type myType = oceanInsightsParametersXML.GetType();
+            MemoryStream myMemoryStream = new MemoryStream();
+            XmlSerializer ser = new XmlSerializer(myType);
+            ser.Serialize(myMemoryStream, oceanInsightsParametersXML);
+            myMemoryStream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(myMemoryStream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = myMemoryStream.ToArray();
+            AnalyzeQueueRepository analyzeQueueReposiory = new AnalyzeQueueRepository();
+            AnalyzeQueue analyzeQueue = new AnalyzeQueue()
+            {
+                CreateDate = TenantServerConfigration.GetCurrentDateTime(0),
+                From = "ContainerStatusesReceiver",
+                Id = IdCounter.GetNumber("AnalyzeQueue", 0),
+                MessageBody = bytearray,
+                Status = "W",
+                Retries = 0,
+                ConnectedToEntity = false,
+                ConnectedToTenant = false,
+                FileSize = bytearray.Length,
+                Tenant = logitudeOceanInsightsTenant,
+            };
+            analyzeQueue.SearchFields = analyzeQueue.From + ',' + analyzeQueue.Status;
+            analyzeQueueReposiory.Add(analyzeQueue);
+            analyzeQueueReposiory.SubmitChanges();
         }
 
         private string LoginToCloud()
@@ -110,7 +158,6 @@ namespace CommunicationWorkerRole
             }
             return token;
         }
-
 
         public override bool OnStart()
         {
