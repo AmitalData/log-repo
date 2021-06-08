@@ -2819,6 +2819,21 @@ namespace Logitude.Customs.Def.ClosedTable
                 ResponseInterfaceCode = "2757",
              });
 
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "2450",
+                InOut = InOutEnum.O.ToString(),
+                Description = "מסר המכלה",
+                DcaPrefixName = "",
+                DefaultSendOptionsCode = Logitude.Customs.Def.ClosedTable.InterfaceSendOptionsDetails.InterfaceSendOptionEnum.WI.ToString(),
+                DefaultPriority = 5,
+                AllowRestore = true,
+                //   NotificationId = "",//NotificationDefinitionDetails.GetAll().FirstOrDefault(rec=> rec.Code="").Code
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "2451",
+                //      NeedSignature = false
+            });
 
             all.Add(new InterfaceManagementDetails()
             {
