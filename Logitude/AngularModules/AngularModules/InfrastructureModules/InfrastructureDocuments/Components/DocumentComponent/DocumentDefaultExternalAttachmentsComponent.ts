@@ -1,21 +1,16 @@
-
 import { Component, OnInit } from '@angular/core';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { Guid } from '../../../../Infrastructure/Utilities/Guid';
-import { DocumentTypeCopyList } from '../../../../Common/EntityLists/DocumentTypeCopyList';
-import { DocumentTypeList } from '../../../../Common/EntityLists/DocumentTypeList';
-import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { DocumentTypeListService } from '../../../../Common/Services/StandardLists/DocumentTypeListService';
-import { DocumentTypeListExtendedService } from '../../../../Common/Services/ExtendedLists/DocumentTypeListExtendedService';
-
-import { DocumentDefultAttachment } from '../../../../Common/DataContracts/DocumentDefultAttachment';
 import { DocumentTypeTemplatePM } from '../../../../Common/EntityPMs/DocumentTypeTemplatePM';
 import { DocumentExtendedService } from '../../../../Common/Services/ExtendedPMs/DocumentExtendedService';
 import { DocumentPM } from '../../../../Common/EntityPMs/DocumentPM';
 import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
-declare var querySelection, StringToBase64, resultToUnitArray: any;
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+import { DocumentFile } from '../../../../Common/DataContracts/DocumentFile';
+import { DocumentFileService } from '../../../../Common/Services/DocumentServices/DocumentFileService';
+import { DocumentTypeTemplatePMService } from '../../../../Common/Services/StandardPMs/DocumentTypeTemplatePMService'; 
+declare var querySelection, resultToUnitArray: any;
 
 
 @Component({
@@ -27,90 +22,90 @@ declare var querySelection, StringToBase64, resultToUnitArray: any;
 export class DocumentDefaultExternalAttachmentsComponent implements OnInit {
     
     DocumentDefaultExternalAttachments: DocumentDefaultExternalAttachments[] = [];
-
-    DocumentTypeTemplatePM: DocumentTypeTemplatePM;
-    ObjectTableId: string;
+    DocumentTypeTemplatePM: DocumentTypeTemplatePM; 
     DocumentTypeTemplateId: string;
     AttachedExternalDocumentsIds: string;
     TemplateExternalAttachmentsIds: string[] = [];
+
     ExternalDocumentId: string = Guid.NewRandomString();
+    FileName: string;
+    Extension: string;
 
     private documentExtendedService: DocumentExtendedService = new DocumentExtendedService();
-    //DocumentExtended
-
+    private documentTypeTemplatePMService: DocumentTypeTemplatePMService = new DocumentTypeTemplatePMService();
+       
+    private documentFileService: DocumentFileService = new DocumentFileService();
     private CurrentSession = SessionLocator.SelectedSession;
-     
-    IsReady: boolean = false;
+      
     constructor() { 
     }
 
-    ngOnInit(
-
-
-    ) {
-
+    ngOnInit() {
 
     }
 
-    SetWindowArgs(args: any) {
-       // this.CurrentSession.StartBusyIndicator("Loading...");
+    SetWindowArgs(args: any) { 
 
         this.DocumentTypeTemplatePM = args.DocumentTypeTemplatePM;
         this.DocumentTypeTemplateId = this.DocumentTypeTemplatePM.Id;
         this.AttachedExternalDocumentsIds = this.DocumentTypeTemplatePM.AttachedExternalDocumentsIds;
-        this.GetTemplateExternalAttachmentsIds(this.AttachedExternalDocumentsIds)
-        this.GetDocumentDefaultExternalAttachment(this.TemplateExternalAttachmentsIds);
-        this.ObjectTableId = args.ObjectTableId;
-      //  this.DocumentDefaultExternalAttachments = this.DocumentTypeTemplatePM.DocumentDefultAttachments;
-          
-       // this.LoadData();
 
+        if (this.hasExternalAttachments()) {
+
+            this.GetTemplateExternalAttachmentsIds(this.AttachedExternalDocumentsIds)
+        }
+
+        this.GetDocumentDefaultExternalAttachment(this.TemplateExternalAttachmentsIds); 
+           
     }
+    private hasExternalAttachments() {
+        return this.AttachedExternalDocumentsIds && this.AttachedExternalDocumentsIds.length > 0;
+    }
+
+
     GetDocumentDefaultExternalAttachment(TemplateExternalAttachmentsIds: string[]) {
-         
-        TemplateExternalAttachmentsIds.forEach((item) => {
-            // this.TermsofUsePMLists.push(new TermsofUsePMViewModel(item));
-            this.documentExtendedService.GetDocumentById(item, this.DocumentTypeTemplatePM.Tenant).subscribe((res: any) => {
 
-                var response: ServiceResponse = res; 
-                if (!response.HasError) {
-                    var result = response.Result;
-                    if (result) {
-                        this.DocumentDefaultExternalAttachments.push(new DocumentDefaultExternalAttachments(result));
+        if (this.TemplateExternalAttachmentsIds.length > 0) {
+
+            TemplateExternalAttachmentsIds.forEach((item) => {
+                this.documentExtendedService.GetDocumentById(item, this.DocumentTypeTemplatePM.Tenant).subscribe((res: any) => {
+
+                    var response: ServiceResponse = res;
+                    if (!response.HasError) {
+                        var result = response.Result;
+                        if (result) {
+                            this.DocumentDefaultExternalAttachments.push(new DocumentDefaultExternalAttachments(result));
+                        }
+                     }
+                    else {
+                        this.HandleServiceError(response)
                     }
-                }
-                //else {
-                //    this.HandleServiceError(response)
-                //}
+                });
             });
-
-        });
-
-      
+        } 
 
     }
 
-
-    // Upload New Document
-    OpenUpLoadTemplateFile() {
+     
+    OpenUpLoadDocumentFile() {
         document.getElementById(this.ExternalDocumentId).click();
 
     }
 
-
-    FileName: string;
-    UpLoadTemplateFileMethod(event: any) {
+    UpLoadDocumentFile(event: any) {
 
         var file = querySelection(this.ExternalDocumentId);
 
         if (file) {
-            var fileExtension = file.name.split('.')[1];
+
+            this.Extension = file.name.split('.')[1];
             this.FileName = file.name.split('.')[0];
 
-            if (fileExtension) { 
-                    this.ConvertArrayBufferToBase64(file, this);
-                }
-             
+            
+            if (this.Extension) { 
+                this.ConvertArrayBufferToBase64(file, this);
+            }
+
         }
 
     }
@@ -126,7 +121,7 @@ export class DocumentDefaultExternalAttachmentsComponent implements OnInit {
             for (var i = 0; i < len; i++) {
                 binary += String.fromCharCode(bytes[i]);
             }
-            viewmodel.createDocument(window.btoa(binary));
+            viewmodel.createDocumentFile(window.btoa(binary));
         };
 
         reader.onerror = function (e) {
@@ -135,11 +130,143 @@ export class DocumentDefaultExternalAttachmentsComponent implements OnInit {
         reader.readAsArrayBuffer(file);
 
 
+    } 
+  
+    createDocumentFile(file: any) {
+
+        var documentFile = new DocumentFile();
+        documentFile.FileData = file;
+        documentFile.CreateDate = new Date(); 
+        documentFile.Tenant = "" + this.DocumentTypeTemplatePM.Tenant;
+        documentFile.FileName = this.FileName;
+        documentFile.Extension = this.Extension;
+        documentFile.Folder = "others";
+
+        this.InsertDocument(documentFile);
+
     }
 
- 
-    ViewFile(item: DocumentPM) {
+    InsertDocument(documentFile: DocumentFile) {
+        this.documentFileService.insert(documentFile).subscribe((res: any) => {
+            var response: ServiceResponse = res;
+            if (!response.HasError) {
+                var result = response.Result;
+                if (result) {
+                    this.DocumentDefaultExternalAttachments.push(new DocumentDefaultExternalAttachments(result));
+                    this.UpdateDocumentDefaultExternalIdsField(result.Id);
+                }
+            }
+            else {
+                this.HandleServiceError(response)
+            }
+        });
+    }
 
+    UpdateDocumentDefaultExternalIdsField(Id: any) {
+        if (this.AttachedExternalDocumentsIds) { 
+            this.AttachedExternalDocumentsIds = this.AttachedExternalDocumentsIds + "," + Id; 
+        } else{
+            this.AttachedExternalDocumentsIds = Id;
+        }
+
+        this.GetTemplateExternalAttachmentsIds(this.AttachedExternalDocumentsIds);
+        this.DocumentTypeTemplatePM.AttachedExternalDocumentsIds = this.AttachedExternalDocumentsIds;
+        this.UpdateDocumentTypeTemplate(this.DocumentTypeTemplatePM);
+
+    }
+
+    UpdateDocumentTypeTemplate(documentTypeTemplatePM: DocumentTypeTemplatePM) {  
+
+        this.documentTypeTemplatePMService.update(documentTypeTemplatePM).subscribe((res: any) => {
+            var response: ServiceResponse = res;
+            if (!response.HasError) {
+                var result = response.Result;
+                if (!result) { 
+                    this.HandleServiceError(response) 
+                }
+            }
+        });
+    }
+
+    HandleServiceError(serviceResponse: ServiceResponse) {
+        if (!serviceResponse.ErrorsArray && serviceResponse.ErrorsArray.length == 0) {
+            return;
+        }
+        var messageWindow: MessageWindow = new MessageWindow();
+        messageWindow.Show(serviceResponse.ErrorsArray[0]); 
+    }
+
+
+    public ShowMessage(message: string) {
+        var messageWindow: MessageWindow = new MessageWindow();
+        messageWindow.Show(message);
+    }
+
+
+    Remove(item: DocumentPM) {
+
+        this.documentFileService.DeleteDocumentFile(item.Id, this.DocumentTypeTemplatePM.Tenant).subscribe((res: any) => {
+
+                var response: ServiceResponse = res;
+                if (!response.HasError) {
+                    var result = response.Result;
+                    if (result) {
+                        this.RemoveDocuemnt(item);
+                    }
+                }
+                else {
+                    this.HandleServiceError(response)
+                }
+            });
+
+    }
+
+    RemoveDocuemnt(documentPM: DocumentPM) {
+         
+        this.RemoveFromExternalAttachemnts(documentPM);
+        this.RemoveFromAttachmentsIdsIds(documentPM);
+         
+        this.Update();
+    }
+
+    private Update() {
+        this.CalculateDefaultExternalAttachmentsIds(this.TemplateExternalAttachmentsIds);
+        this.SetDefalutExternalAttachmentsIds(this.AttachedExternalDocumentsIds);
+        this.UpdateDocumentTypeTemplate(this.DocumentTypeTemplatePM);
+    }
+
+    private RemoveFromAttachmentsIdsIds(documentPM: DocumentPM) {
+        this.TemplateExternalAttachmentsIds.forEach((value, index) => {
+            if (value == documentPM.Id)
+                this.TemplateExternalAttachmentsIds.splice(index, 1);
+        });
+    }
+
+    private RemoveFromExternalAttachemnts(item: DocumentPM) {
+        this.DocumentDefaultExternalAttachments.forEach((value, index) => {
+            if (value.Id == item.Id)
+                this.DocumentDefaultExternalAttachments.splice(index, 1);
+        });
+    }
+
+    SetDefalutExternalAttachmentsIds(AttachedExternalDocumentsIds: string) {
+        this.DocumentTypeTemplatePM.AttachedExternalDocumentsIds = AttachedExternalDocumentsIds;
+    }
+
+    CalculateDefaultExternalAttachmentsIds(TemplateExternalAttachmentsIds: string[]) {
+        this.AttachedExternalDocumentsIds = "";
+
+        for (var i = 0; i < this.TemplateExternalAttachmentsIds.length; i++) {
+            if (i == 0) {
+                this.AttachedExternalDocumentsIds = TemplateExternalAttachmentsIds[i]; 
+            } else {
+                    this.AttachedExternalDocumentsIds = this.AttachedExternalDocumentsIds + "," + TemplateExternalAttachmentsIds[i];
+                   
+                } 
+        } 
+    }
+
+    ViewFile(item: DocumentPM) {
         var documentName = item.Id
         DownloadManager.DownloadPage(documentName);
 
@@ -147,130 +274,30 @@ export class DocumentDefaultExternalAttachmentsComponent implements OnInit {
 
 
     GetTemplateExternalAttachmentsIds(AttachedExternalDocumentsIds: string): any {
-        this.TemplateExternalAttachmentsIds = AttachedExternalDocumentsIds.split(',');
-        console.log("length is " + this.TemplateExternalAttachmentsIds.length);
-    }
-
-     
-    public LoadData() {
-
-        this.LoadDocumentOut();
-        this.LoadDocumentIn();
-
-    }
-
-
-
-    LoadDocumentOut() {
-        var _documentTypeListService: DocumentTypeListExtendedService = new DocumentTypeListExtendedService();
-        _documentTypeListService.GetDocumentTypeCopyLists(this.ObjectTableId).subscribe((res: any) => {
-
-            var pmResponse: ServiceResponse = res;
-            if (!pmResponse.HasError) {
-                var documentTypeCopyLists: DocumentTypeCopyList[] = pmResponse.Result;
-                documentTypeCopyLists.forEach((copy) => {
-                   
-                 //   this.DocOutAttachmentLists.push(item);
-                });
-            }
-
-            //if (this.DocOutAttachmentLists.length == 0) this.IsNotDocumentOutFound = true;
-
-           
-            this.LoadComplete();
-
-        });
-    }
-
-    IsNotDocumentOutFound: boolean = false;
-    IsNotDocumentInFound: boolean = false;
-
-    LoadDocumentIn() {
-
-        var _documentTypeListService: DocumentTypeListService = new DocumentTypeListService();
-        var apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
-        apiQueryFilters.GetAll = true;
-        apiQueryFilters.Tenant = SessionInfo.LoggedUserTenant;
-        _documentTypeListService.getAllFromCache(apiQueryFilters).subscribe((res: any) => {
-
-            var pmResponse: ServiceResponse = res;
-            if (!pmResponse.HasError) {
-
-                var documentTypeList: DocumentTypeList[] = pmResponse.Result;
-                documentTypeList.filter(d => d.ObjectTableId == this.ObjectTableId && d.IsDocIn == true).forEach((doc) => {
-                   
-                 //   this.DocInAttachmentLists.push(item);
-                });
-            }
-          //  if (this.DocInAttachmentLists.length == 0) this.IsNotDocumentInFound = true;
-
-
-            
-            this.LoadComplete();
-        });
-    }
-
-
-
-    LoadComplete() {
-
-    //   if (this.IsLoadDocumentOutDocument && this.IsLoadDocumentInDocument) {
-     //       this.CurrentSession.StopBusyIndicator();
-      //      this.IsReady = true;
-      //  }
+        if (this.TemplateExternalAttachmentsIds != null || this.TemplateExternalAttachmentsIds.length != 0) {
+            this.TemplateExternalAttachmentsIds = AttachedExternalDocumentsIds.split(',');
+        }  
     }
 
 
     CloseButtonClicked() {
-
         this.CurrentSession.CurrentWindow.Close("");
     }
+     
 
-
-    GetDocumentDefultAttachment(doc: DocumentDefaultExternalAttachments) {
-
-        var item = new DocumentDefultAttachment();
-       // i//tem.DocumentTypeId = doc.DocumentTypeId; 
-        //item.DocumentTypeName = doc.DocumentTypeName;
-        return item;
-    }
-
-
-    SaveButtonClicked() {
-
-        this.DocumentTypeTemplatePM.IsDefultAttachmentsXMLChanged = true;
-        this.DocumentTypeTemplatePM.DocumentDefultAttachments = this.BuildDocumentDefultAttachmentLists();
-        this.CloseButtonClicked();
-
-    }
-
-
-    private BuildDocumentDefultAttachmentLists() {
-        var documentDefultAttachments = new Array<DocumentDefultAttachment>();
-      //  this.DocOutAttachmentLists.filter(d => d.IsChecked == true).forEach((doc) => {
-           // documentDefultAttachments.push(this.GetDocumentDefultAttachment(doc));
-       // });
-       // this.DocInAttachmentLists.filter(d => d.IsChecked == true).forEach((doc) => {
-       //     documentDefultAttachments.push(this.GetDocumentDefultAttachment(doc));
-      //  });
-        return documentDefultAttachments;
-    }
 }
 
 
 export class DocumentDefaultExternalAttachments {
     public Name: string;
-    public Extension: string; 
+    public Extension: string;
     public Id: string;
     constructor(item: DocumentPM) {
         this.Id = item.Id;
-        this.Name = item.CalculatedFileName; 
-        this.Extension = item.Extension;  
+        this.Name = item.CalculatedFileName;
+        this.Extension = item.Extension;
 
     }
-     
 }
-
-
-
+ 
 

@@ -962,6 +962,7 @@
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.UserDefinedReport.cs" />
     <Compile Include="AccountingModel\LedgerTransactionService\TransactionsBalanceByFiltersService.cs" />
     <Content Include="App_Code\AngularJS_App_Code\DocumentTypeCopyExtendedController.cs" />
+    <Content Include="App_Code\DocumentFileController.cs" />
     <Compile Include="CommonDataModel\LogitudeGridExportToExcel\LogitudeGridExportToExcelArguments.cs" />
     <Compile Include="CommonDataModel\LogitudeGridExportToExcel\LogitudeGridExportToExcelHelper.cs" />
     <Compile Include="Controllers\AccountingModel\BankCodeController.cs" />
@@ -2598,6 +2599,7 @@
     <Compile Include="Helpers\AdvancedDateResolver.cs" />
     <Compile Include="Helpers\ContainerStatusesAnalyzer.cs" />
     <Compile Include="Helpers\ContainerStatusesHelper.cs" />
+    <Compile Include="Helpers\DocumentFile.cs" />
     <Compile Include="Helpers\ExternalAPITemplatesBuilder.cs" />
     <Compile Include="Helpers\ExternalAPIResponseParameters.cs" />
     <Compile Include="Helpers\APIHelpers\ApiExceptionFilter.cs" />

@@ -927,9 +927,25 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         }
 
 
+        public List<string> GetDefaultExternalAttachmentIds(string id, int tenant)
+        {
+            var attachedExternalDocumentsIds = (from a in repository.context.DocumentTypeTemplates
+                                        where a.Tenant == tenant && a.Id == id
+                                        select a.AttachedExternalDocumentsIds).FirstOrDefault();
 
+            return BuildAttachedExternalDocumentsIdsList(attachedExternalDocumentsIds);
 
+        }
 
+        private List<string> BuildAttachedExternalDocumentsIdsList(string attachedExternalDocumentsIds)
+        {
+            if (string.IsNullOrEmpty(attachedExternalDocumentsIds)) {
+                return null;
+            }
 
+            List<string> DocumentsIds = attachedExternalDocumentsIds.Split(',').ToList(); 
+
+            return DocumentsIds;
+        }
     }
 }

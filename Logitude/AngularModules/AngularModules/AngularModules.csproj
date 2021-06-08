@@ -345,12 +345,14 @@
     <TypeScriptCompile Include="Common\CustomFilters\ChargesTypeCustomFilter.ts" />
     <TypeScriptCompile Include="Common\CustomFilters\ChargesTypeCustomFilter.ts" />
     <TypeScriptCompile Include="Common\CustomFilters\ChargesTypeCustomFilter.ts" />
+    <TypeScriptCompile Include="Common\DataContracts\DocumentFile.ts" />
     <TypeScriptCompile Include="Common\EntityLists\ProductItemList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\ReportExecutionLogList.ts" />
     <TypeScriptCompile Include="Common\EntityPMInitServices\ReportExecutionLogPMInitService.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\HTSCodePM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\ProductItemPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\ReportExecutionLogPM.ts" />
+    <TypeScriptCompile Include="Common\Services\DocumentServices\DocumentFileService.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedPMs\CarrierAreaExtendedPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\ProductItemListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\ReportExecutionLogListService.ts" />

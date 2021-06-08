@@ -127,7 +127,9 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 string extension = reportsTemplatePM.TemplateType == "R" ? "mrt" : "html";
 
                 ReportHelper reportHelper = new ReportHelper();
-                Document newDocument = reportHelper.CreateDocumentAndWriteOnStorage(reportsTemplatePM.Description, reportsTemplatePM.TemplateData, extension , "reports", tenant);
+                DocumentFile documentFile = new DocumentFile() { FileName = reportsTemplatePM.Description, FileData = reportsTemplatePM.TemplateData, Extension = extension, Folder = "reports", Tenant = tenant };
+                Document newDocument = reportHelper.CreateDocumentAndWriteOnStorage(documentFile);
+                 
                 ReportsTemplateRepository reportsTemplateRepository = new ReportsTemplateRepository(tenant);
                 ReportsTemplatesVersionRepository reportsTemplatesVersionRepository = new ReportsTemplatesVersionRepository(tenant);
                 string reportTemplateId=  reportHelper.AddReportTemplate(reportsTemplatePM.ReportId, reportsTemplatePM.Description, reportsTemplatePM.CreatedByUserId, newDocument.Id, tenant, reportsTemplateRepository, reportsTemplatesVersionRepository, null, reportsTemplatePM.IsSystem, reportsTemplatePM.TemplateType);

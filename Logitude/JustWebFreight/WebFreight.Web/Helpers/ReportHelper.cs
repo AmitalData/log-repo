@@ -508,45 +508,48 @@ namespace WebFreight.Web.Helpers
             }
             return reportsTemplatesVersion;
         }
-
-        public Document CreateDocumentAndWriteOnStorage(string fileName, byte[] fileData, string extension, string folder, int tenant)
-        {
-            // test
+ 
+        public Document CreateDocumentAndWriteOnStorage(DocumentFile documentFile)
+        { 
             #region Create Document and Write on Storage
-            DocumentRepository documentRepository = new DocumentRepository(tenant);
+            DocumentRepository documentRepository = new DocumentRepository(documentFile.Tenant);
 
             Document newDocument = new Document
             {
-                Id = IdCounter.GetNumber("Document", tenant).ToString(),
-                Tenant = tenant,
-                CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
-                FileName = fileName,
-                FileSize = fileData.Length,
-                Extension = extension,
+                Id = IdCounter.GetNumber("Document", documentFile.Tenant).ToString(),
+                Tenant = documentFile.Tenant,
+                CreateDate = TenantServerConfigration.GetCurrentDateTime(documentFile.Tenant),
+                FileName = documentFile.FileName,
+                FileSize = documentFile.FileData.Length,
+                Extension = documentFile.Extension,
                 HasFile = true,
-                CalculatedFileName = fileName,
-                Folder = folder,
+                CalculatedFileName = documentFile.FileName,
+                Folder = documentFile.Folder,
 
             };
+
             documentRepository.Add(newDocument);
             documentRepository.SubmitChanges();
+
             IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+
             BlobFileInfo fileInfo = new BlobFileInfo()
             {
                 FileName = newDocument.Id,
-                FolderName = folder,
-                Extension = extension,
-                Tenant = tenant,
+                FolderName = documentFile.Folder,
+                Extension = documentFile.Extension,
+                Tenant = documentFile.Tenant,
                 FileSize = newDocument.FileSize,
 
             };
 
-            storageservice.Write(fileData, fileInfo);
+            storageservice.Write(documentFile.FileData, fileInfo);
 
             #endregion
 
             return newDocument;
         }
+
 
         public void StimulReportSaved(string processType, string reportTemplateId, byte[] fileData, string userId, int tenant)
         {
@@ -579,8 +582,9 @@ namespace WebFreight.Web.Helpers
                 {
 
                     ReportHelper reportHelper = new ReportHelper();
-                    Document newDocument = reportHelper.CreateDocumentAndWriteOnStorage(reportsTemplate.Description, fileData, "mrt", "reports", tenant);
-
+                    DocumentFile documentFile = new DocumentFile() { FileName = reportsTemplate.Description, FileData = fileData, Extension = "mrt", Folder = "reports", Tenant = tenant };
+                    Document newDocument = reportHelper.CreateDocumentAndWriteOnStorage(documentFile);
+                     
                     #region Create Reports Templates Version 
                     ReportsTemplatesVersionRepository reportsTemplatesVersionRepository = new ReportsTemplatesVersionRepository(tenant);
                     ReportsTemplatesVersion reportsTemplatesVersion = new ReportsTemplatesVersion()
