@@ -17,8 +17,7 @@ import {AddEditDeliveryComponent} from '../AddEditDeliveryComponent';
 import { FeatureToggleList } from '../../../../../Infrastructure/EntityLists/FeatureToggleList';
 import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 
-@Component({
-    
+@Component({    
     templateUrl: './DeliveryPackagesTabComponent.html',
 })
 
@@ -37,6 +36,7 @@ export class DeliveryPackagesTabComponent {
     public TypeCode: string = null;
     public IsStandaloneShipmentVisible: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsAddContainerVisible: boolean = false;
     constructor() {
         var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SAS")[0];
         if (featureToggle) {
@@ -104,7 +104,21 @@ export class DeliveryPackagesTabComponent {
 
     public IsEditingEnabled: boolean = true;
     SetUIProperties() {
-        this.IsEditingEnabled = ShipmentTool.IsEditingEnabled(this.ShipmentPM);
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.StandaloneShipmentId)) {
+            this.IsEditingEnabled = false;
+        }
+
+        else {
+            this.IsEditingEnabled = ShipmentTool.IsEditingEnabled(this.ShipmentPM);
+        }
+
+        this.IsAddContainerVisible = false;
+        if (this.IsFCLEntity) {
+            var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SAS")[0];
+            if (featureToggle) {
+                this.IsAddContainerVisible = true;
+            }
+        }
 
         if (this.IsEditingEnabled) {
             if (this.IsConnectedToContainer) {
@@ -139,7 +153,7 @@ export class DeliveryPackagesTabComponent {
 
     CopyfromShipmentPackagesButtonClicked() {
         var logWindow = new LogitudeWindow();
-        logWindow.Title = "Copy from Shipment Packages"; //TextCodeTranslator.Translate("ShipmentPickUpDeliveryPackage.O.ChooseDeliveryPackages");
+        logWindow.Title = "Copy from Shipment Packages";
         logWindow.WindowArgs = this;
         logWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/DeliveryTabs/DeliveryPackagesChooseComponent");
     }
@@ -195,9 +209,7 @@ export class DeliveryPackagesTabComponent {
     }
 
     CopyFromReleasesPackages() {
-
         var windowArgs: any = {};
-
         windowArgs.ShipmentDeliveryPM = this.EntityPM;
         windowArgs.ShipmentPM = this.ShipmentPM;
         windowArgs.FatherComponent = this;
@@ -207,14 +219,10 @@ export class DeliveryPackagesTabComponent {
         logWindow.Title = "Warehouse Releases";
         logWindow.WindowArgs = windowArgs;
         logWindow.Show("./Warehouse/Components/CopyFromReleasesPackagesComponent");
-
-
     }
-
 
     private SaveCompletedEvent: any = null;
     ConnectPackagesButtonClicked() {
-
         if (this.FatherComponent.IsNewEntity) {
             if (this.CurrentSession.CurrentEditComponent) {
                 var isValid = this.FatherComponent.Validate();
@@ -253,6 +261,25 @@ export class DeliveryPackagesTabComponent {
         logWindow.Title = "Connect Packages";
         logWindow.WindowArgs = this;
         logWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/DeliveryTabs/DeliveryPackagesConnectComponent");
+    }
+
+    AddContainerClicked() {
+        var windowArgs: any = {};
+        windowArgs.EntityPM = this.EntityPM;
+        windowArgs.ShipmentPM = this.ShipmentPM;
+        windowArgs.IsLCLEntity = this.IsLCLEntity;
+        windowArgs.IsFCLEntity = this.IsFCLEntity;
+        windowArgs.TransportModeId = this.TransportModeId;
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Add Container";
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/SelectStandalonePackagesComponent");
+        logWindow.WindowClosed.subscribe((s: any) => {
+            if (s) {
+                this.BuildItemsSource();
+            }
+        });
     }
 }
 export class DeliveryPackageItem extends BaseComponent {
@@ -316,7 +343,8 @@ export class DeliveryPackageItem extends BaseComponent {
         this.UIProperties.SetEnabled("ContainerNumber", this.ObjectTableName, this.IsEditingEnabled);        
         this.UIProperties.SetEnabled("Weight", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("ShipperSeal", this.ObjectTableName, this.IsEditingEnabled); 
-        this.UIProperties.SetEnabled("Description", this.ObjectTableName, this.IsEditingEnabled);              
+        this.UIProperties.SetEnabled("Description", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("Harmonize", this.ObjectTableName, this.IsEditingEnabled);
     }
     private SetUIPropertiesOfCars(isEnabled: boolean) {
         this.UIProperties.SetEnabled("Make", this.ObjectTableName, isEnabled);

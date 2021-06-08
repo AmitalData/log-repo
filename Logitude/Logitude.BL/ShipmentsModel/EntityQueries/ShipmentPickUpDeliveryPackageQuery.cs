@@ -55,6 +55,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                                   ChassisNumber = a.ChassisNumber,
                                                                   RegistrationNumber = a.RegistrationNumber,
                                                                   CountryId = a.CountryId,
+                                                                  ContainerEntityId = a.ContainerEntityId,
                                                               }).ToList();
 
             foreach (ShipmentPickUpDeliveryPackagePM package in packages)
@@ -102,6 +103,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                             ChassisNumber = a.ChassisNumber,
                                                             RegistrationNumber = a.RegistrationNumber,
                                                             CountryId = a.CountryId,
+                                                            ContainerEntityId = a.ContainerEntityId,
                                                         }).FirstOrDefault();
 
             myResult.PickUpDeliveryPackageHarmonizes = query.GetPickUpDeliveryPackageHarmonizes(myResult.Id, tenant);
@@ -111,7 +113,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public ShipmentPickUpDeliveryPackagePM GetSinglePM(string id, int tenant)
         {
             return GetSingleShipmentPickUpDeliveryPackagePM( id,  tenant);       
-        }
-            
+        }            
     }
 }

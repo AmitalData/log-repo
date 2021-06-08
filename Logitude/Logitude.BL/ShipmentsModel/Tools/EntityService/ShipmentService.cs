@@ -5886,7 +5886,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
-
         private void CreateConsoleShipment(ConsoleShipmentPM itemPM)
         {
             Shipment houseShipment = entityRepository.GetSingleShipment(itemPM.Id, tenant);
@@ -6872,9 +6871,32 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     shipmentPickUpDelivery.StandaloneShipmentId = entityPM.Id;
                     shipmentPickUpDelivery.StandaloneShipmentNumber = entityPM.ShipmentNumber;
 
+                    IQueryable<ShipmentPickUpDeliveryPackage> pickUpDeliveryPackages = shipmentPickUpDeliveryPackageRepository.GetPackagesByDeliveryId(shipmentPickUpDelivery.Id, tenant);
+                    if(pickUpDeliveryPackages.Count() == 1)
+                    {
+                        this.CreateStandaloneShipmentPackage(pickUpDeliveryPackages.FirstOrDefault());
+                    }
+
                     shipmentPickUpDeliveryRepository.Update(shipmentPickUpDelivery);
                 }
             }
+        }
+        private void CreateStandaloneShipmentPackage(ShipmentPickUpDeliveryPackage pickUpDeliveryPackage)
+        {
+            ShipmentPackagePM shipmentPackage = new ShipmentPackagePM()
+            {
+                ChangeSetOp = ChangeSetOperation.Insert,
+                Tenant = tenant,
+                ContainerEntityId = pickUpDeliveryPackage.ContainerEntityId,
+                ContainerNumber = pickUpDeliveryPackage.ContainerNumber,
+                Description = pickUpDeliveryPackage.Description,
+                PackageTypeId = pickUpDeliveryPackage.PackageTypeId,
+                Quantity = pickUpDeliveryPackage.Quantity,
+                Volume = pickUpDeliveryPackage.Volume,
+                Weight = pickUpDeliveryPackage.Weight,
+            };
+
+            this.CreateShipmentPackage(shipmentPackage);
         }
         private void UpdateShipmentProductItems()
         {
