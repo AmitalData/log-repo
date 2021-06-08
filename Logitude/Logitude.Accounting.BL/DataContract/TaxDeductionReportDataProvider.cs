@@ -375,11 +375,7 @@ namespace Logitude.Accounting.BL.DataContract
         {
             GLAccountPM account = GetSingleGLAccount(accountId);
             if (account == null || account.IsMultiCurrency == true) return null;
-           else
-            {
-                return GetVendorIdForSingleCurrencyAccount(account);
-               
-            }
+                          return GetVendorIdForSingleCurrencyAccount(account);
            
         }
         private string GetVendorIdForSingleCurrencyAccount(GLAccountPM account)
