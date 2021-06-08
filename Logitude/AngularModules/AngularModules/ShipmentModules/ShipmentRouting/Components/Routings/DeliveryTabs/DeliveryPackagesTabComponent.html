@@ -13,13 +13,20 @@
                             </span>
                         </td>
 
+                        <td style="width:5px;" *ngIf="IsAddContainerVisible">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 1px" *ngIf="IsAddContainerVisible">
+                            <button [disabled]="!IsEditingEnabled" class="Button" (click)="AddContainerClicked()">Add Container</button>
+                        </td>
 
                         <td style="width:5px;">
                             <div></div>
                         </td>
 
                         <td *ngIf="IsShowCopyFromReleasesPackages" style="width: 1px">
-                            <button class="Button" (click)="CopyFromReleasesPackages()">Copy from Releases Packages</button>
+                            <button [disabled]="!IsEditingEnabled" class="Button" (click)="CopyFromReleasesPackages()">Copy from Releases Packages</button>
                         </td>
 
                         <td *ngIf="IsShowCopyFromReleasesPackages" style="width:5px;">
@@ -35,7 +42,7 @@
                         </td>
 
                         <td style="width: 1px" *ngIf="IsFCLEntity && IsContainersFUVisible && DirectionId == 'I' && TypeCode != 'EMPT'">
-                            <button class="Button" (click)="ConnectPackagesButtonClicked()">Connect Packages</button>
+                            <button [disabled]="!IsEditingEnabled" class="Button" (click)="ConnectPackagesButtonClicked()">Connect Packages</button>
                         </td>
 
                         <td style="width:5px;">

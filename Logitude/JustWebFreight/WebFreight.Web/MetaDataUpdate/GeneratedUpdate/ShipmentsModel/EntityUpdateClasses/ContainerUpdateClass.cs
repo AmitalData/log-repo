@@ -1185,7 +1185,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DischargeDate",
-					  						DefaultText =  "Discharge Date",
+					  						DefaultText =  "Discharge Date  ",
 					  						ListFieldLable =  "DischargeDateListLable",
 					  						ListLableDefaultText =  "Discharge Date",
 					  						IsMaxLength =  false,

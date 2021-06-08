@@ -1,0 +1,129 @@
+
+<table>
+    <tr class="TabTitleRow">
+        <td>
+            <table>
+                <tr>
+                    <td><div></div></td>
+
+                    <td style="width: 1px">
+                        <IconButton [IsEnabled]="IsAddNewContainerEnabled" [Name]="'Add'" (click)="AddContainerClicked()"></IconButton>
+                    </td>
+
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div class="MediaFill">
+                <div class="SimpleGridView">
+                    <div class="SimpleGridViewHeader">
+                        <table>
+                            <tr>
+                                <td style="width: 25px; min-width: 25px; max-width: 25px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 25px; min-width: 25px; max-width: 25px;">
+                                    <div></div>
+                                </td>
+
+                                <td [style.width.px]="PackageTypeColumnWidth" [style.min-width.px]="PackageTypeColumnWidth" [style.max-width.px]="PackageTypeColumnWidth">{{'ShipmentPickUpDeliveryPackage.O.PackageType' | TextCodeTranslationPipe}}</td>
+                                <td style="width: 110px; min-width: 110px; max-width: 110px;" *ngIf="TransportModeId != 'A'">{{'ShipmentPickUpDeliveryPackage.O.ContainerNumber' | TextCodeTranslationPipe}}</td>
+                                <td style="width: 60px; min-width: 60px; max-width: 60px;">{{'ShipmentPickUpDeliveryPackage.O.Quantity' | TextCodeTranslationPipe}}</td>
+                                <td style="width: 60px; min-width: 60px; max-width: 60px;">{{'ShipmentPickUpDeliveryPackage.O.Volume' | TextCodeTranslationPipe}}</td>
+                                <td style="width: 80px; min-width: 80px; max-width: 80px;">{{'ShipmentPickUpDeliveryPackage.O.GrossWeight' | TextCodeTranslationPipe}}</td>
+                                <td>{{'ShipmentPickUpDeliveryPackage.O.DescriptionOfGoods' | TextCodeTranslationPipe}}</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="SimpleGridViewBody">
+                        <table>
+                            <tr class="SimpleGridViewRow RowHover RowSelected" *ngFor="let item of ItemsSource" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem">
+
+                                <!-- CheckBox -->
+                                <td class="GridViewCell" style="width: 25px; min-width: 25px; max-width: 25px; position: relative">
+                                    <div>
+                                        <CheckBox [IsEnabled]="item.IsSelectNewContainerEnabled" [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event"></CheckBox>
+                                    </div>
+                                </td>
+
+                                <!-- Icons -->
+                                <td class="CellDisabled" style="width: 25px; min-width: 25px; max-width: 25px; position: relative;">
+                                    <img *ngIf="!item.IsContainer" src="./Images/CellIcons/Package.png" class="CenterCenter" />
+                                    <img *ngIf="item.IsContainer" src="./Images/CellIcons/Container.png" class="CenterCenter" />
+                                </td>
+
+                                <!-- PackageType -->
+                                <td class="GridViewCell" [style.width.px]="PackageTypeColumnWidth" [style.min-width.px]="PackageTypeColumnWidth" [style.max-width.px]="PackageTypeColumnWidth">
+                                    {{item.PackageTypeName}}
+                                </td>
+
+
+                                <!-- ContainerNumber -->
+                                <td class="GridViewCell" style="width: 110px; min-width: 110px; max-width: 110px;" *ngIf="TransportModeId != 'A'">
+                                    {{item.ContainerNumber}}
+                                </td>
+
+                                <!-- Quantity -->
+                                <td class="GridViewCell" style="width: 60px; min-width: 60px; max-width: 60px; text-align: right">
+                                    {{item.Quantity | NumbersPipe:'N0'}}
+                                </td>
+
+                                <!-- Volume -->
+                                <td class="GridViewCell" style="width: 60px; min-width: 60px; max-width: 60px; text-align: right">
+                                    {{item.Volume | NumbersPipe:'N2'}}
+                                </td>
+
+                                <!-- GrossWeight -->
+                                <td class="GridViewCell" style="width: 80px; min-width: 80px; max-width: 80px; text-align: right">
+                                    {{item.Weight | NumbersPipe:'N2'}}
+                                </td>
+
+                                <!-- Description -->
+                                <td class="GridViewCell">
+                                    <div class="MediaFill TextTrimming" style="padding-left: 4px; padding-left: 2px; line-height: 26px;">
+                                        {{item.Description}}
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="9">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!IsOkButtonEnabled">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
