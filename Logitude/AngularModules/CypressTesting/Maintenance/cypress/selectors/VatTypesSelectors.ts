@@ -24,4 +24,6 @@ export class VatTypesSelectors {
     public static readonly PercentageEditButton = "button[id^='Edit']"
     public static readonly PercentageTab_Percentage = "#VatTypePercentage_Percentage"
     public static readonly PercentageTab_FromDate = "#date_VatTypePercentage_FromDate"
+    public static readonly EventsTab = "#VatTypeTHEvents"
+
 }

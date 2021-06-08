@@ -1,5 +1,5 @@
+@release @all @dev
 Feature: Multi Vat Type Create, Search and Edit from Maintenance
-
     The user creates a multi vat type, searches for and edits it from the Maintenance Module.
 
     Scenario: Create new multi vat type
@@ -18,7 +18,6 @@ Feature: Multi Vat Type Create, Search and Edit from Maintenance
         When search multi vat type
         Then the multi vat type should appear successfully
 
-
     Scenario: Open the multi vat type
         When open multi vat type
         Then the multi vat type should open successfully
@@ -33,6 +32,9 @@ Feature: Multi Vat Type Create, Search and Edit from Maintenance
             | AccountingPayablesExternalID    | Payables1    |
         When save multi vat type
         Then the multi vat type should update successfully
+        And the following event should appear in events tab
+            | Event            | Notes                |
+            | Vat Type Updated | Vat Type Inactivated |
 
     Scenario: Save and close the multi vat type
         When save and close multi vat type

@@ -66,7 +66,8 @@ export class Urls {
     public static readonly CreditCardTypes = "**/creditcardtypes"
     public static readonly CreditCardTypesGetSingle = "**/creditcardtypes/getsingle?**"
 
-    public static readonly Warehouses = "**/warehouses";
+    public static readonly Warehouses = "**/PartnersDomain";
+    public static readonly PUTWarehouses = "**/warehouses";
     public static readonly WarehousesGetSingle = "**/warehouses/getsingle?**";
     public static readonly WarehouseviewGetSingle = "**/warehouseviews/getsingle/?**";
 
