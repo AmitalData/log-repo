@@ -50,9 +50,11 @@ namespace WebFreight.Web.Monitoring
             {
                 try
                 {
+                    DateTime twoDaysBefore = DateTime.Now.AddDays(-2);
                     ICommonDataContext commonDataContext = CommonDataContext.GetContext(0);
-                    isWaitingStatus = (from d in commonDataContext.ReportExecutionLogs where d.StatusCode == "W" &&
-                                           (EntityFunctions.DiffMinutes(d.CreateDate, DateTime.Now) > 2)select d).Any();
+                    isWaitingStatus = (from d in commonDataContext.ReportExecutionLogs
+                                       where d.CreateDate > twoDaysBefore && d.StatusCode == "W" &&
+                                       (EntityFunctions.DiffMinutes(d.CreateDate, DateTime.Now) > 2)select d).Any();
                 }
                 catch (Exception errorInfo)
                 {
