@@ -73,6 +73,25 @@ export class JournalExtendedListService {
 
 
     }
+
+    GetJournalAdditionalDataByJournalId(entityId: string) {
+
+
+        var url = this._apiUrl + '/GetJournalAdditionalDataByJournalId?JournalId=' + entityId;
+
+        return this.httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(
+            map(response => {
+
+                var allLists = response;
+
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = allLists;
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+
+
+    }
     GetJournalMoreDatasByJournalId(entityId: string) {
 
 

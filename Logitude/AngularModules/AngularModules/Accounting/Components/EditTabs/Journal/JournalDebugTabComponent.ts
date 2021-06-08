@@ -35,6 +35,8 @@ import { InterestTransactionList } from '../../../EntityLists/InterestTransactio
 import { JournalExtendedListService } from '../../../Services/ExtendedLists/JournalExtendedListService';
 import { JournalMoreDataPM } from '../../../EntityPMs/JournalMoreDataPM';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+import { JournalAdditionalDataListService } from '../../../Services/StandardLists/JournalAdditionalDataListService';
+import { JournalAdditionalDataList } from '../../../EntityLists/JournalAdditionalDataList';
 
 
 @Component({
@@ -67,10 +69,12 @@ export class JournalDebugTabComponent extends BaseComponent implements OnInit {
     _AccountingPeriodListService: AccountingPeriodListService = new AccountingPeriodListService();
     ratesTableExtendedListService: RatesTableExtendedListService = new RatesTableExtendedListService();
     private ledgerTransactionListService: LedgerTransactionListService = new LedgerTransactionListService();
-    private interestTransactionListService: InterestTransactionListService= new InterestTransactionListService();
+    private interestTransactionListService: InterestTransactionListService = new InterestTransactionListService();
+    JournalExtendedListService: JournalExtendedListService = new JournalExtendedListService();
+    JournalAdditionalDataListService: JournalAdditionalDataListService=new JournalAdditionalDataListService();
     Load: boolean = false;
 
-public isRTL: boolean = false;
+    public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     LedgerTransactionList: ObservableCollection = new ObservableCollection([]);
     IsCustomerCare: boolean;
@@ -78,6 +82,7 @@ public isRTL: boolean = false;
     JournalExternalReconciles: ObservableCollection = new ObservableCollection([]);
     InterestTransactionList: ObservableCollection = new ObservableCollection([]);
     JournalMoreDataList: ObservableCollection = new ObservableCollection([]);
+    JournalAdditionalDataList: ObservableCollection = new ObservableCollection([]);
     constructor(
         private entityArgs: EntityArgs,
         private CD: ChangeDetectorRef,
@@ -176,7 +181,7 @@ public isRTL: boolean = false;
 
     
    
-    JournalExtendedListService: JournalExtendedListService = new JournalExtendedListService()
+    
     FillGrid() {
 
         // if entity in edit mode
@@ -187,8 +192,14 @@ public isRTL: boolean = false;
             this.JournalExternalReconciles.Clear();
             this.InterestTransactionList.Clear();
             this.JournalMoreDataList.Clear();
+            this.JournalAdditionalDataList.Clear();
 
-
+            
+            this.JournalExtendedListService.GetJournalAdditionalDataByJournalId(this.EntityPM.Id)
+                .subscribe(r => {
+                    let res: JournalAdditionalDataList[] = r.Result;
+                    this.JournalAdditionalDataList.InsertCollection(res);
+                });
             this.JournalExtendedListService.GetJournalMoreDatasByJournalId(this.EntityPM.Id)
                 .subscribe(r => {
                     let res: JournalMoreDataPM[] = r.Result;
@@ -196,6 +207,7 @@ public isRTL: boolean = false;
                 });
             this.LedgerTransactiongetGetRows();
             this.InterestTransactionGetRows()
+            //this.JournalAdditionalDataGetRows();
             this.JournalReconciles.InsertCollection(this.EntityPM.JournalReconciles);
             this.JournalExternalReconciles.InsertCollection(this.EntityPM.JournalExternalReconciles);
         }
@@ -222,7 +234,30 @@ public isRTL: boolean = false;
     //#region Properties
     
     //#endregion
+    JournalAdditionalDataGetRows_notwork() {
+        let filters = new ApiQueryFilters();
 
+
+        filters.PageSize = 200;
+        filters.PageIndex = 0;
+        filters.GetAll = false;
+        filters.GetCount = true;
+        filters.SortBy = "GLAccountId";
+        //InterestEntityTypeCode
+        
+        filters.addAdditionalFilter("JournalId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
+        
+
+        return this.JournalAdditionalDataListService.getByFilters(filters)
+            .subscribe(r => {
+                //this.LedgerTransactionList = new ObservableCollection([]);
+                let res: JournalAdditionalDataList[] = r.Result;
+
+
+                this.JournalAdditionalDataList.InsertCollection(res);
+            });
+
+    }
     
     InterestTransactionGetRows()//skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
     {
@@ -300,7 +335,7 @@ public isRTL: boolean = false;
     }
 
     ResetJournalClicked() {
-
+        
         this.JournalExtendedListService.GetResetJournalByJournalId(this.EntityPM.Id)
             .subscribe(r => {
                 if (!r.HasError) {
