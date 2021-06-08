@@ -88,7 +88,7 @@ export class LoginComponent implements OnInit {
             CardId: "",
             CardType: "",
             IsMobileLogin: false,
-            IsUser: isCargoTrackingSite,
+            IsUser: !isCargoTrackingSite,
             GetToken: true,
             IsAngularLogin: true,
             MobileVersion: "",
@@ -125,7 +125,8 @@ export class LoginComponent implements OnInit {
 
         if (userData.MustChangePassword) {
             //Must Change Password
-            this.errorMessage = "Must Change Password";
+            //this.errorMessage = "Must Change Password";
+            this.router.navigate(["cargo-tracking/changepassword"], { queryParams: { email: this.Email } });
         } else if (userData.PasswordExpirationDateMessage) {
             //Password Expired
             this.errorMessage = "Password Expired";
