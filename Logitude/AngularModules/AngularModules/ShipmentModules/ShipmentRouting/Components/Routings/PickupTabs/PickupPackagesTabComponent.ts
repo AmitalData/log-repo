@@ -30,12 +30,8 @@ export class PickupPackagesTabComponent {
     public ItemsSource: PickupPackageItem[] = [];
     public IsAddContainerVisible: boolean = false;
     public DataContext = this;
-    public IsStandaloneShipmentVisible: boolean = false;
     constructor() {
-        var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SAS")[0];
-        if (featureToggle) {
-            this.IsStandaloneShipmentVisible = true;
-        }
+
     }
 
     InitTab(myEntityPM: ShipmentPickUpPM, myShipmentPM: ShipmentPM) {
@@ -109,7 +105,7 @@ export class PickupPackagesTabComponent {
     }
 
     AddButtonClicked() {
-        if (this.IsStandaloneShipmentVisible) {
+        if (this.IsAddContainerVisible) {
             this.ValidateNumberOfStandAloneShipmentPackages()
         } else {
             this.ViewAddPickupPackagesWindow();

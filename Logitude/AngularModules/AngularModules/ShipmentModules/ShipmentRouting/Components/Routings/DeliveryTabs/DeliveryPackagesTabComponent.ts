@@ -34,14 +34,10 @@ export class DeliveryPackagesTabComponent {
     public ItemsSource: DeliveryPackageItem[] = [];
     public DataContext = this;
     public TypeCode: string = null;
-    public IsStandaloneShipmentVisible: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     public IsAddContainerVisible: boolean = false;
     constructor() {
-        var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SAS")[0];
-        if (featureToggle) {
-            this.IsStandaloneShipmentVisible = true;
-        }
+
     }
 
     public IsConnectedToContainer: boolean = false;
@@ -159,7 +155,7 @@ export class DeliveryPackagesTabComponent {
     }
 
     AddButtonClicked() {
-        if (this.IsStandaloneShipmentVisible) {
+        if (this.IsAddContainerVisible) {
             this.ValidateNumberOfStandAloneShipmentPackages()
         } else {
             this.ViewAddDeliveryPackagesWindow();
