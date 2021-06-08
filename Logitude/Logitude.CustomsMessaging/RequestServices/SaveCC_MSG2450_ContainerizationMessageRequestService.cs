@@ -25,10 +25,10 @@ namespace Logitude.CustomsMessaging.RequestServices
             CustomsSettingQueryService customsSettingQueryService = new CustomsSettingQueryService(customContext);
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(customContext);
             var settings = customsSettingQueryService.GetSingleByTenant(requestParams.Tenant);
-                        var containerization = containerizationQueryService.GetSingle(requestParams.AppicationId, true, false);
+                        var containerization = containerizationQueryService.GetSingle(requestParams.LoggingEntityId, true, false);
 
             var declarationRepository = new DeclarationRepository(requestParams.Tenant);
-            var declarations = declarationRepository.GetByExportContainerizationID(requestParams.AppicationId, requestParams.Tenant);
+            var declarations = declarationRepository.GetByExportContainerizationID(requestParams.LoggingEntityId, requestParams.Tenant);
 
           
 
