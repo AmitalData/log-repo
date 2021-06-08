@@ -9,8 +9,9 @@ using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
 using Logitude.Server.Tools;
+using System.Collections.Generic;
 
-namespace CommunicationWorkerRole.Analyzers
+namespace WebFreight.Web.Helpers.Analyzers
 {
     public class ContainerStatusesConnecterAnalyzer
     {   
@@ -18,7 +19,7 @@ namespace CommunicationWorkerRole.Analyzers
         private AnalyzeQueueRepository analyzeQueueRepository;
         private CommunicationLogRepository myCommunicationLogRepository;
         private int tenant;
-        private Envelope oceanInsightsEnvelope;
+        private List<QueueTask> externalTasksQueueTasks;
 
         public ContainerStatusesConnecterAnalyzer(AnalyzeQueue analyzeQueue, AnalyzeQueueRepository analyzeQueueRepository)
         {
@@ -45,7 +46,7 @@ namespace CommunicationWorkerRole.Analyzers
             {
                 MemoryStream memorystream = new MemoryStream(analyzeQueue.MessageBody);
                 XmlSerializer serializer = new XmlSerializer(typeof(string));
-                oceanInsightsEnvelope = (Envelope)serializer.Deserialize(memorystream);
+                externalTasksQueueTasks = (List<QueueTask>)serializer.Deserialize(memorystream);
             }
 
             catch (Exception ex)
@@ -58,7 +59,7 @@ namespace CommunicationWorkerRole.Analyzers
                 return;
             }
 
-            if (oceanInsightsEnvelope != null)
+            if (externalTasksQueueTasks != null)
             {
                 this.AnalyzeData(analyzeQueue.From);
             }
@@ -103,7 +104,7 @@ namespace CommunicationWorkerRole.Analyzers
 
         private void AnalyzeOceanInsightsParametersXML()
         {
-            var oceanInsightsQueueTask = oceanInsightsEnvelope.Tasks.Where(a => a.Action == "OceanInsights.PushUpdate").FirstOrDefault();
+            var oceanInsightsQueueTask = externalTasksQueueTasks.Where(a => a.Action == "OceanInsights.PushUpdate").FirstOrDefault();
             if (oceanInsightsQueueTask != null)
             {
                 var oceanInsightsParameters = oceanInsightsQueueTask.Parameters.FirstOrDefault();

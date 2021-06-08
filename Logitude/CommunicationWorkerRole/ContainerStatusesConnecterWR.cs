@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading;
+using WebFreight.Web.Helpers.Analyzers;
 using WebFreight.Web.Helpers.TicketAnalyzer;
 
 namespace CommunicationWorkerRole

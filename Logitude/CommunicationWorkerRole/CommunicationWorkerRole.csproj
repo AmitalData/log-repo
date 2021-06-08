@@ -374,7 +374,6 @@
     <Compile Include="AgentsSharedLogisticsWorkerRole.cs" />
     <Compile Include="AirlineStatisticsWorkerRole.cs" />
     <Compile Include="Analyzers\ContainerStatusesAnalyzer.cs" />
-    <Compile Include="Analyzers\ContainerStatusesConnecterAnalyzer.cs" />
     <Compile Include="ArtemusAnalyzerWorkerRole.cs" />
     <Compile Include="AutoSignUpMailWorkerRole.cs" />
     <Compile Include="AutoSignUpWorkerRole.cs" />

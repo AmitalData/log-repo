@@ -2597,6 +2597,7 @@
     </Compile>
     <Compile Include="Helpers\AdvancedDateResolver.cs" />
     <Compile Include="Helpers\ContainerStatusesHelper.cs" />
+    <Compile Include="Helpers\ContainerStatuses\ContainerStatusesConnecterAnalyzer.cs" />
     <Compile Include="Helpers\ExternalAPITemplatesBuilder.cs" />
     <Compile Include="Helpers\ExternalAPIResponseParameters.cs" />
     <Compile Include="Helpers\APIHelpers\ApiExceptionFilter.cs" />

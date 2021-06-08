@@ -98,19 +98,20 @@ namespace CommunicationWorkerRole
         }
 
         private string communicationId;
-        private Envelope externalTasksQueueEnvelope;
+        private List<QueueTask> externalTasksQueueTasksEnvelope;
         private void ReadExternalTasksQueueWcfServiceResponse(string oceanInsightResponseXML)
         {
-            this.externalTasksQueueEnvelope = LogitudeXmlSerializer.DeserializeObject<Envelope>(oceanInsightResponseXML);
+            var externalTasksQueueEnvelope = LogitudeXmlSerializer.DeserializeObject<Envelope>(oceanInsightResponseXML);
             this.communicationId = externalTasksQueueEnvelope.CommunicationLogId;
-            
+            this.externalTasksQueueTasksEnvelope = externalTasksQueueEnvelope.Tasks;
         }
+
         private void InsertNewAnalyzeQueue()
         {
-            Type myType = externalTasksQueueEnvelope.GetType();
+            Type myType = externalTasksQueueTasksEnvelope.GetType();
             MemoryStream myMemoryStream = new MemoryStream();
             XmlSerializer ser = new XmlSerializer(myType);
-            ser.Serialize(myMemoryStream, externalTasksQueueEnvelope);
+            ser.Serialize(myMemoryStream, externalTasksQueueTasksEnvelope);
             myMemoryStream.Seek(0, SeekOrigin.Begin);
             var reader = new StreamReader(myMemoryStream);
             string content = reader.ReadToEnd();

@@ -15,6 +15,7 @@ using System.Transactions;
 using System.Web;
 using System.Web.Http;
 using WebFreight.Web.Helpers;
+using WebFreight.Web.Helpers.Analyzers;
 using WebFreight.Web.Security;
 
 namespace WebFreight.Web.Controllers.WebServices
@@ -27,8 +28,7 @@ namespace WebFreight.Web.Controllers.WebServices
             {
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
-                    INTTRASimulator myResult = new INTTRASimulator();
-
+                    ShipmentContainerSimulator myResult = new ShipmentContainerSimulator();
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     int tenant = authToken.Tenant;
@@ -49,20 +49,18 @@ namespace WebFreight.Web.Controllers.WebServices
 
                             else
                             {
-                                //ContainerStatusesAnalyzer Analyzer = new ContainerStatusesAnalyzer(analyzeQueue, analyzeQueueReposiory);
-                               // Analyzer.Run();
+                                ContainerStatusesConnecterAnalyzer analyzer = new ContainerStatusesConnecterAnalyzer(analyzeQueue, analyzeQueueReposiory);
+                                analyzer.Run();
                             }
                         }
 
                         else if (simulator.XmlString != null)
                         {
                             byte[] fileBytes = null;
-
                             try
                             {
                                 fileBytes = Encoding.ASCII.GetBytes(simulator.XmlString);
                             }
-
                             catch (Exception ex)
                             {
                                 myResult.Success = false;
@@ -71,17 +69,16 @@ namespace WebFreight.Web.Controllers.WebServices
 
                             AnalyzeQueue analyzeQueue = new AnalyzeQueue()
                             {
-                                //Subject = fileName.StartsWith("bl") ? "BL Response" : (fileName.StartsWith("voyage") ? "Voyage Response" : "Artemus Response"),
                                 CreateDate = TenantServerConfigration.GetCurrentDateTime(0),
-                                From = "INTTRA",
+                                From = "ContainerStatusesReceiver",
                                 Id = IdCounter.GetNumber("AnalyzeQueue", 0),
                                 MessageBody = fileBytes,
                                 Status = "W",
                                 Retries = 0,
                                 ConnectedToEntity = false,
                                 ConnectedToTenant = false,
-                                //Tenant = tenant,
                                 FileSize = fileBytes.Length,
+                                Tenant = this.GetLogitudeOceanInsightsTenant(),
                                 FileName = "XmlString Simulator",
                             };
 
@@ -89,8 +86,8 @@ namespace WebFreight.Web.Controllers.WebServices
                             analyzeQueueReposiory.Add(analyzeQueue);
                             analyzeQueueReposiory.SubmitChanges();
 
-                            //ContainerStatusesAnalyzer Analyzer = new ContainerStatusesAnalyzer(analyzeQueue, analyzeQueueReposiory);
-                            //Analyzer.Run();
+                            ContainerStatusesConnecterAnalyzer analyzer = new ContainerStatusesConnecterAnalyzer(analyzeQueue, analyzeQueueReposiory);
+                            analyzer.Run();
                         }
 
                         scope2.Complete();
@@ -105,6 +102,22 @@ namespace WebFreight.Web.Controllers.WebServices
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+        private int GetLogitudeOceanInsightsTenant()
+        {
+            var logitudeOceanInsightsTenant = 0;
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                SettingRepository settingRepository = new SettingRepository();
+                Setting setting = settingRepository.GetSingleSetting("1");
+                if (setting != null)
+                {
+                    logitudeOceanInsightsTenant = setting.OITenantNumber;
+                }
+                scope.Complete();
+            }
+            return logitudeOceanInsightsTenant;
         }
 
         public HttpResponseMessage GetContainerStatusRequest(string shipmentId, string containerId, bool isContainer)
