@@ -1460,7 +1460,7 @@
   <Query
     Code="&quot;CancelledContainerization&quot;"
     TextCode="&quot;Cancelled Containerization&quot;"
-    LocalTextCode="&quot;המכלות שבוטלו&quot;"
+    LocalTextCode="&quot;המכלות מבוטלות&quot;"
     QueryGroupCode="&quot;4ba2&quot;"
     IndexOrder="2"
     ObjectTableName="&quot;Customs.Containerization&quot;"

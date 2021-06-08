@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ContainerizationUpdateClass
    {  		
-		public const string HashString = "c96f5f1262ef9d311b2bc93b4bf29245";
+		public const string HashString = "9303a7ad45ac9bcdbdbef71429adf8da";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1092,7 +1092,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature ContainerizationFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Containerization.Q.ContainerizationWithRelease", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerizationFeatures.ContainerizationWithRelease", NameTextCodeDefaultText = "ContainerizationWithRelease", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerizationObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode ContainerizationTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Containerization.Q.CancelledContainerization", DefaultText = @"Cancelled Containerization",LocalDefaultText = "המכלות שבוטלו", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode ContainerizationTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Containerization.Q.CancelledContainerization", DefaultText = @"Cancelled Containerization",LocalDefaultText = "המכלות מבוטלות", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature ContainerizationFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Containerization.Q.CancelledContainerization", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerizationFeatures.CancelledContainerization", NameTextCodeDefaultText = "CancelledContainerization", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerizationObjectTable, addedFeatures, addedTextCodes);
  
 
