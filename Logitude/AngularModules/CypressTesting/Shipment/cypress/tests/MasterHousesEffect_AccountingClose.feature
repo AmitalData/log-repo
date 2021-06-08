@@ -32,12 +32,13 @@ Feature:   Accounting Close , Accounting Reopen For Master And House Shipment
 
     Scenario: Close the master shipment Operationally 
         When close the master shipment operationally 
-        Then the house should close operationally successfully
+        Then the master should close operationally successfully
+        And the house should close operationally successfully
 
   Scenario: Close master shipment accountly
     When close master Accountly
     Then the master should close successfully
-    And  the connected house should close successfully
+    And the connected house should close successfully
 
   Scenario: Reopen master shipment accountly
     When reopen master Accountly

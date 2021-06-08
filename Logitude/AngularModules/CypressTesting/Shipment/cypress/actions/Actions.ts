@@ -246,6 +246,18 @@ export function ValidateShipmentFields(IsCanceled: boolean) {
     CheckIfDisable(ShipmentSelectors.PayablesTab, BaseSelectors.AddButton, IsCanceled);
     CheckIfDisable(ShipmentSelectors.ReceivablesTab, BaseSelectors.AddButton, IsCanceled);
 }
+export function ValidateCloseAccoutingMaster(IsClosed: boolean){
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200)
+    CheckIfDisable(ShipmentSelectors.PayablesTab, BaseSelectors.AddButton, IsClosed);
+    CheckIfDisable(ShipmentSelectors.ReceivablesTab, BaseSelectors.AddButton, IsClosed);
+}
+export function ValidateCloseAccoutingHouse(IsClosed: boolean){
+    CheckIfDisable(ShipmentSelectors.PayablesTab, BaseSelectors.AddButton, IsClosed);
+    CheckIfDisable(ShipmentSelectors.ReceivablesTab, BaseSelectors.AddButton, IsClosed);
+
+
+}
+
 export function ValidateShipmentHouseFields(IsCanceled: boolean){
     cy.Navigate(ShipmentSelectors.PackagesTabHouse);
    CheckIfDisable(ShipmentSelectors.PackagesTabHouse, ShipmentSelectors.AddPackage, IsCanceled);
