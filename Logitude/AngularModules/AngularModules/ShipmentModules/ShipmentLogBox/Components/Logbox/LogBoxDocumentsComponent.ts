@@ -686,62 +686,28 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     }
 
     ShareWithAgent(EntityPm) {
-        this.IsDeleteClicked = true;
-        if ((EntityPm.IsSharedWithCustomer == false && EntityPm.IsSharedWithForwarder == false)) {
-            if (!EntityPm.IsSharedWithForwarder) {
-                //var window = new ConfirmWindow();
-
-                //window.Title = "Confirm sharing";
-                //window.Width = 450;
-                //window.Height = 190;
-                //window.YesButtonText = "Ok";
-                //window.NoButtonText = "Cancel";
-                //window.Show("Are you sure you want to share this document with agent?");
-                //window.WindowClosed.subscribe((event: any) => {
-                //    if (window.Yes) {
-                       
-                //    }
-
-                //    else {
-
-                //    }
-                //});
-                //this.CurrentSession.StartBusyIndicator("Loading ...");//
-                ServiceLocator.SendTotangoUserActivity("LogBox", "Share Document With Agent");
-                this.StartBusyIndicator("Loading ...");
-                if (EntityPm.IsSharedWithForwarder == true) {
-                    EntityPm.IsSharedWithForwarder = false;
-                    EntityPm.DontAddToQueue = true;
-                    //BlueSharedWithAgentVisibility = Visibility.Visible;
-                    //GraySharedWithAgentVisibility = Visibility.Collapsed;
-                }
-                //&& (!AppTool.IsNullOrEmpty(this.SelectedShipment.ForwarderShipmentNumber) || SessionLocator.PrivateLableSettings)
-                else {
-                    EntityPm.IsSharedWithForwarder = true;
-                    if (AppTool.IsNullOrEmpty(this.SelectedShipment.ForwarderShipmentNumber)) {
-                        EntityPm.DontAddToQueue = true;
-                    }
-                    else {
-                        EntityPm.DontAddToQueue = false;
-                    }
-
-                    //BlueSharedWithAgentVisibility = Visibility.Collapsed;
-                    //GraySharedWithAgentVisibility = Visibility.Visible;
-
-                }
-                this._documentsFilingPMService.update(EntityPm).subscribe((myResult:any) => {
-                    //this.CurrentSession.StopBusyIndicator();//
-                    this.StopBusyIndicator();
-                    //this.IssharedWithAgentButtonEnabled = false;
-                    this.ReloadDocuments();
-                    //this.StopBusyIndicator();
-                });
-
-                        //if (!importerDocumentDataViewModel.EntityPM.IsSharedWithForwarder) {
-                        //    importerDocumentDataViewModel.EntityPM.DontAddToQueue = true;
-                        //}
-            }
+        if (this.SelectedShipment.StatusName == "In Progress") {
+            return;
         }
+
+        this.IsDeleteClicked = true;
+        if (EntityPm.IsSharedWithCustomer || EntityPm.IsSharedWithForwarder) {
+            return;
+        }
+
+        ServiceLocator.SendTotangoUserActivity("LogBox", "Share Document With Agent");
+        EntityPm.IsSharedWithForwarder = true;
+        EntityPm.DontAddToQueue = AppTool.IsNullOrEmpty(this.SelectedShipment.ForwarderShipmentNumber) ? true : false;
+
+        this.UpdateDocumentPM(EntityPm);
+    }
+
+    UpdateDocumentPM(EntityPm: any) {
+        this.StartBusyIndicator("Loading ...");
+        this._documentsFilingPMService.update(EntityPm).subscribe((myResult: any) => {
+            this.StopBusyIndicator();
+            this.ReloadDocuments();
+        });
     }
 
     RefreshBtnClick() {
@@ -817,6 +783,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     }
     SignReqPureDocs: any[] = [];
     DeletedDocsCount: number = 0;
+    AllUnDeletedDocsCount: number = 0;
     ReloadDocuments(ChangeTab: boolean = false) {
         var MyDate: Date = DateTool.GetCurrentDateTimeAsUtc();// new Date();
         if (this.TimerStartDate && (MyDate.getMinutes() > (this.TimerStartDate.getMinutes() + 5))) {
@@ -847,6 +814,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
             var Result = [];
             var ResultSignReq = [];
             this.DeletedDocsCount = res.Result.filter(a => a.IsDeleted == true).length;
+            this.AllUnDeletedDocsCount = res.Result.filter(a => a.IsDeleted == false).length;
             if (!this.ShowDeleted) {
                 if (res.Result){
                     Result = res.Result.filter(a => a.IsDeleted == false);
@@ -996,75 +964,103 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     DisableAddDocumentButton: boolean = true;
 
     ShareDocumentsClick() {
-        if (this.SharedDocs.length > 0) {
-            var window = new ConfirmWindow();
+        if (this.SharedDocs.length <= 0) {
+            this.ShowNoSharedDocumentsWindow();
+            return;
+        }
 
-            window.Title = "Confirm sharing";
-            window.Width = 450;
-            window.Height = 190;
-            window.YesButtonText = "Ok";
-            window.NoButtonText = "Cancel";
-            window.Show("The shared documents will be send to the agent .");
-            window.WindowClosed.subscribe((event: any) => {
-                if (window.Yes) {
-                    var SharedDocsIds = [];
-                    this.CurrentSession.StartBusyIndicator("Sharing ...");
-                    this.SharedDocs.forEach((docin) => {
-                        SharedDocsIds.push(docin.Id);
-                    });
-                    this._documentsFilingExtendedPMService.ShareDocumentsWithAgent(SharedDocsIds).subscribe((myResult:any) => {
-                        if (!myResult.HasError) {
-                            this.DocsSentToAgent = true;
-                            this._EntityStatusExtendedListService.getSingle("INPS").subscribe((Status: ServiceResponse) => {
-                                if (Status.Result) {
-                                    this._ShipmentPMService.get(this.SelectedShipment.Id).subscribe((myShipmentResult:any) => {
-                                        if (!myShipmentResult.HasError) {
-                                            this.ShipmentPM = myShipmentResult.Result;
-                                            this.ShipmentPM.StatusId = Status.Result.Id;
-                                            this.ShipmentPM.ShipperReference1 = this.ShipmentPM.CustomerReference1;
-                                            this.ShipmentPM.ShipperReference2 = this.ShipmentPM.CustomerReference2;
-                                            this.ShipmentPM.ShipperId = this.ShipmentPM.CustomerId;
-                                            this.ShipmentPM.DontAddToForwarderQueue = true;
-                                            this._ShipmentPMService.update(this.ShipmentPM).subscribe((myResult:any) => {
-                                                if (!myResult.HasError) {
-                                                    this.DisableAddDocumentButton = true;
-                                                    this.CurrentSession.SessionEvent.emit({ Name: "ReloadShipments" });
-                                                    this.CurrentSession.StopBusyIndicator();
-                                                }
-                                                //else {
-                                                //    this.ValidationErrorsList = myResult.ErrorsArray;
-                                                //}
-                                            });
-                                        }
-                                    });
-                                }
-                                else {
-                                    this.CurrentSession.StopBusyIndicator();
-                                    this.messageWindow.Width = 300;
-                                    this.messageWindow.Height = 150;
-                                    this.messageWindow.Title = "No Status In progress !";
-                                    this.messageWindow.Show("There are no Status In progress.");
-                              
-                                }
-                            });
-                           
-                        }
-                    });
-                }
+        var window = new ConfirmWindow();
+        this.ShowConfirmSharingDocumentsWindow(window);
+        window.WindowClosed.subscribe((event: any) => {
+            this.OnClosedConfirmSharingDocumentsWindow(window);
+        });
+    }
 
-                else {
+    ShowNoSharedDocumentsWindow() {
+        this.messageWindow.Width = 300;
+        this.messageWindow.Height = 150;
+        this.messageWindow.Title = "No Shared Documents !";
+        this.messageWindow.Show("There are no shared documents, please share the related documents before.");
+    }
 
-                }
-            });
-            
-           
+    ShowConfirmSharingDocumentsWindow(window: ConfirmWindow) {
+        window.Title = "Confirm sharing";
+        window.Width = 450;
+        window.Height = 190;
+        window.YesButtonText = "Ok";
+        window.NoButtonText = "Cancel";
+        let windowMessage = "The shared documents will be send to the agent .";
+        if (this.SharedDocs.length == this.AllUnDeletedDocsCount) {
+            window.Show(windowMessage);
         }
         else {
-            this.messageWindow.Width = 300;
-            this.messageWindow.Height = 150;
-            this.messageWindow.Title = "No Shared Documents !"; 
-            this.messageWindow.Show("There are no shared documents, please share the related documents before.");
+            window.ShowWarningImage = true;
+            windowMessage += "You are about to share the envelope but not all the documents are marked as shared with agent, are you sure?";
+            window.Show(windowMessage);
         }
+    }
+
+    OnClosedConfirmSharingDocumentsWindow(window: ConfirmWindow) {
+        if (window.Yes) {
+            this.StartSharingDocumentsWithAgent();
+        }
+        else {
+        }
+    }
+
+    StartSharingDocumentsWithAgent() {
+        var SharedDocsIds = [];
+        this.CurrentSession.StartBusyIndicator("Sharing ...");
+        this.SharedDocs.forEach((docin) => {
+            SharedDocsIds.push(docin.Id);
+        });
+        this.ShareDocumentsWithAgent(SharedDocsIds);
+    }
+
+    ShareDocumentsWithAgent(SharedDocsIds: any[]) {
+        this._documentsFilingExtendedPMService.ShareDocumentsWithAgent(SharedDocsIds).subscribe((myResult: any) => {
+            if (myResult.HasError) {
+                return;
+            }
+
+            this.DocsSentToAgent = true;
+            this._EntityStatusExtendedListService.getSingle("INPS").subscribe((Status: ServiceResponse) => {
+                if (Status.Result) {
+                    this.UpdateSelectedShipmentPM(Status);
+                }
+                else {
+                    this.ShowNoStatusInProgressWindow();
+                }
+            });
+        });
+    }
+
+    UpdateSelectedShipmentPM(Status: ServiceResponse) {
+        this._ShipmentPMService.get(this.SelectedShipment.Id).subscribe((myShipmentResult: any) => {
+            if (!myShipmentResult.HasError) {
+                this.ShipmentPM = myShipmentResult.Result;
+                this.ShipmentPM.StatusId = Status.Result.Id;
+                this.ShipmentPM.ShipperReference1 = this.ShipmentPM.CustomerReference1;
+                this.ShipmentPM.ShipperReference2 = this.ShipmentPM.CustomerReference2;
+                this.ShipmentPM.ShipperId = this.ShipmentPM.CustomerId;
+                this.ShipmentPM.DontAddToForwarderQueue = true;
+                this._ShipmentPMService.update(this.ShipmentPM).subscribe((myResult: any) => {
+                    if (!myResult.HasError) {
+                        this.DisableAddDocumentButton = true;
+                        this.CurrentSession.SessionEvent.emit({ Name: "ReloadShipments" });
+                        this.CurrentSession.StopBusyIndicator();
+                    }
+                });
+            }
+        });
+    }
+
+    ShowNoStatusInProgressWindow() {
+        this.CurrentSession.StopBusyIndicator();
+        this.messageWindow.Width = 300;
+        this.messageWindow.Height = 150;
+        this.messageWindow.Title = "No Status In progress !";
+        this.messageWindow.Show("There are no Status In progress.");
     }
 
     SignAllClick() {

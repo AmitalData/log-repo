@@ -83,6 +83,8 @@ export class PickupMainTabComponent extends BaseComponent {
         this.UIProperties.SetEnabled("ETA", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("ATD", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("ATA", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("EmptyPickupContainerPartnerId", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("EmptyPickupDepotReference", this.ObjectTableName, this.IsEditingEnabled);
 
         this.SetUIProperties_From();
         this.SetUIProperties_To();        

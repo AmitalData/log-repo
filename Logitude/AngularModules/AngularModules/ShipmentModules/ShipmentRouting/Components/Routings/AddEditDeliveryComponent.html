@@ -96,7 +96,8 @@
     <tr style="height: 1px;" *ngIf="EntityPM.StandaloneShipmentId">
         <td>
             <div class="OrangeInfo" style="margin: 5px;">
-                This delivery is connected to a standalone shipment and can only be updated from there
+                <span>This delivery is connected to a standalone shipment and can only be updated from there  </span>
+                <Hyperlink style="left:5px;" (click)="ViewStandaloneShipmentClicked(item)">{{EntityPM.StandaloneShipmentNumber}}</Hyperlink>
             </div>
         </td>
     </tr>
@@ -177,17 +178,13 @@
                         <div></div>
                     </td>
 
-                    <td style="width: 1px;" *ngIf="IsAddingStandaloneShipmentVisible && EntityPM.StandaloneShipmentId">
-                        <Hyperlink (click)="ViewStandaloneShipmentClicked(item)">{{EntityPM.StandaloneShipmentNumber}}</Hyperlink>
-                    </td>
-
-                    <td style="width:270px" *ngIf="IsAddingStandaloneShipmentVisible && !EntityPM.StandaloneShipmentId">
+                    <td style="width:220px" *ngIf="IsAddingStandaloneShipmentVisible && !EntityPM.StandaloneShipmentId">
                         <div [attr.id]="'printbutton'">
                             <span style="display:inline" class="x-split-button">
                                 <button (click)="StandAloneShipmentButtonClicked('CreateStandalone')"
                                         class="RedButton"
                                         [disabled]="!IsCreateStandaloneShipmentEnabled"
-                                        style="width:220px;border-radius: 0px 5px 5px 0px;float:right">
+                                        style="width:190px;border-radius: 0px 5px 5px 0px;float:right">
                                     Create Standalone Shipment
                                 </button>
                                 <button [attr.id]="'arrow'" class="x-button x-button-drop"
@@ -197,7 +194,7 @@
                                     &#9660;
                                 </button>
                                 <div [attr.id]="'dropdowmenu'" [ngStyle]="{'display': dropdownDisplay  }"
-                                     style="position: fixed;z-index:1 ;background-color : whitesmoke;width:270px; ">
+                                     style="position: fixed;z-index:1 ;background-color : whitesmoke;width:220px; ">
                                     <div>
                                         <ul class="x-button-drop-menu">
                                             <li>

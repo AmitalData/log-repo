@@ -906,11 +906,12 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
         logWindow.Height = 570;
         logWindow.Title = "Shipments Search";
         var args: any = {};
-        args.IsStandAloneSearch = true;
-        args.EntityObjectTableName = "Shipment";
         args.ShipmentType = this.ShipmentPM?.ShipmentTypeId;
+        args.FromPartnerId = this.EntityPM.FromPartnerCardId;
+        args.ToPartnerId = this.EntityPM.ToPartnerCardId;
+        args.CarrierId = this.EntityPM.CarrierId;
         logWindow.WindowArgs = args;
-        logWindow.Show('./CommonModules/CommonFilingInbox/Components/ChooseEntityComponent');
+        logWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/ChooseStandaloneShipmentComponent');
         logWindow.ComponentLoaded.subscribe(s => {
             logWindow.WindowClosed.subscribe(d => {
                 var shipmentList = s.SelectedShipment;

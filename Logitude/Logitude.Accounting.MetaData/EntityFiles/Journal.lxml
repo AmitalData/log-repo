@@ -4203,6 +4203,19 @@
     IndexOrder="1"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
+  <Tab
+    TabName="&quot;Debug&quot;"
+    TabLocalName="&quot;ניהול&quot;"
+    ObjectTableName="&quot;Journal&quot;"
+    Code="&quot;JNDB&quot;"
+    ControlPath="&quot;Logitude.Accounting.Views.Tabs.JRNL.JournalDebugTabControl&quot;"
+    TextCode="&quot;Journal.TH.Debug&quot;"
+    IsPackagable="true"
+    IndexOrder="0"
+    HtmlComponentURL="&quot;./Accounting/Components/EditTabs/Journal/JournalDebugTabComponent&quot;"
+    HtmlComponentName="&quot;JournalDebugTabComponent&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
   <EventTypes>
     <EventType
       Code="&quot;JCL&quot;"

@@ -19,5 +19,9 @@ export class Constants {
     public static readonly CreditCardType = "CreditCardType"
     public static readonly Warehouse="Warehouse"
     public static readonly PaymentTerm="PaymentTerm"
+    public static readonly BankAccount = "BankAccountLite"
+    public static readonly PackageType = "PackageType"
+    public static readonly Branch = "Branch"
+
 
 }

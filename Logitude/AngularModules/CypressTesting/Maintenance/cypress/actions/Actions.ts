@@ -43,6 +43,7 @@ import { MoveTypeDetails } from "../models/MoveTypeDetails";
 import { ShipmentSubTypeDetails } from "../models/ShipmentSubTypeDetails";
 import { CreditCardTypeDetails } from "../models/CreditCardTypeDetails";
 
+
 //#region variables
 let CityCode = null;
 let StateCode = null;
@@ -123,8 +124,14 @@ export function OpenTabInMaintenanceMenu(maintenanceItemNameToSearch: string, ma
 export function OpenNewWizard(tabName: string) {
     cy.Click(MaintenanceSelectors.NewWizardButton(tabName), null);
 }
+
 export function GenerateRandomNumber(NumberLength: number) {
     let NewRandomCode = gr.GenerateRandomNumberAndString(NumberLength)
+    return NewRandomCode;
+}
+
+function GenerateOnlyRandomNumber(NumberMin: number, NumberMax: number) {
+    let NewRandomCode = gr.GenerateRandomNumber(NumberMin, NumberMax)
     return NewRandomCode;
 }
 //#endregion
@@ -1392,6 +1399,7 @@ export function AssertPutGlobalZone() {
 
 //#endregion
 
+
 //#region Commodity
 export function FillCommodityCode(CommodityCode: string) {
     cy.FillLogTextBox(MaintenanceSelectors.CommodityCode, CommodityCode)
@@ -1642,9 +1650,6 @@ export function AssertPostCard(CardType: string) {
         }
         else if (CardType == Constants.Vendor) {
             CardCode = responseBody.Vendor.Code;
-        }
-        else if (CardType == Constants.Warehouse) {
-            CardCode = responseBody.Warehouse.Code;
         }
     });
 }

@@ -46,6 +46,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.Helpers;
 using WebFreight.Web.AccountingModel.DomainServices;
+using Logitude.Accounting.BL.CoreBL.Fix;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
@@ -195,6 +196,66 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
         }
 
+
+        public HttpResponseMessage GetJournalMoreDatasByJournalId(string JournalId)
+        {
+            try
+            {
+                try
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    SecurityUtility.CheckContactFeature("Journal", "READ", authToken.Tenant);
+                    IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
+                    JournalMoreDataListQueryService journalLineQuery = new JournalMoreDataListQueryService(MyContext);
+                    IQueryable<JournalMoreDataList> journalLines = journalLineQuery.GetJournalMoreDatasForJournal(JournalId, authToken.Tenant);
+
+                    return Request.CreateResponse(HttpStatusCode.OK, journalLines);
+                }
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
+        public HttpResponseMessage GetResetJournalByJournalId(string JournalId)
+        {
+            try
+            {
+                try
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    SecurityUtility.CheckContactFeature("Journal", "READ", authToken.Tenant);
+                    
+
+
+                    var fixJournaRecolService = new FixJournaRecolService();
+                    fixJournaRecolService.Fix(JournalId, authToken.Tenant);
+
+
+                    return Request.CreateResponse(HttpStatusCode.OK, new { Success= true });
+                }
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }
 	 

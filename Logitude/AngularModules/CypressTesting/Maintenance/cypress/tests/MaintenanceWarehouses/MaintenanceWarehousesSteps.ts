@@ -7,8 +7,11 @@ import { CardDetails } from "cypress/models/CardDetails";
 import { ContactDetails } from "../../models/ContactDetails";
 import { CardGeneralTabDetails } from "cypress/models/CardGeneralTabDetails";
 import { CardBillingTabDetails } from "cypress/models/CardBillingTabDetails";
+import * as BaseActions from "../../../../Base/cypress/actions/Actions"
+import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetails";
 
 let warehouseDetails: CardDetails
+let code = null
 //#region Create new warehouse
 Given("the user logged in and open {string} in maintenance menu", (maintenanceItemName) => {
     cy.Login()
@@ -41,7 +44,7 @@ When("search warehouse", () => {
 });
 
 Then("the warehouse should appear successfully", () => {
-    WarehouseActions.AssertSearchWarehouse(Actions.getCardCode());
+    WarehouseActions.AssertSearchWarehouse()
 });
 //#endregion
 
@@ -73,6 +76,11 @@ When("save warehouse", () => {
 
 Then("the warehouse should update successfully", () => {
     WarehouseActions.AssertUpdateWarehouse()
+});
+
+Then("the following event should appear in events tab", (dataTable) => {
+    let eventDetailsList = Assists.CreateSet<EventTypeDetails>(dataTable);
+    BaseActions.ValidateEventsTab(eventDetailsList, WarehousesSelectors.EventsTab);
 });
 //#endregion
 

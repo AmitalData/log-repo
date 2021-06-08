@@ -4,6 +4,8 @@ import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { PaymentTermsSelectors } from "../../selectors/PaymentTermsSelectors";
 import { PaymentTermDetails } from "cypress/models/PaymentTermDetails";
+import * as BaseActions from "../../../../Base/cypress/actions/Actions";
+import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetails";
 
 let paymentTermDetails: PaymentTermDetails
 
@@ -30,11 +32,11 @@ Then("the payment term should create successfully", () => {
 
 //#region Search for the payment term
 When("search payment term", () => {
-    paymentTermActions.SearchPaymentTerm(paymentTermDetails.Name)
+    paymentTermActions.SearchPaymentTerm()
 });
 
 Then("the payment term should appear successfully", () => {
-    paymentTermActions.AssertSearchPaymentTerm(paymentTermDetails.Name);
+    paymentTermActions.AssertSearchPaymentTerm();
 });
 //#endregion
 
@@ -66,6 +68,11 @@ When("save payment term", () => {
 
 Then("the payment term should update successfully", () => {
     paymentTermActions.AssertUpdatePaymentTerm()
+});
+
+Then("the following event should appear in events tab", (dataTable) => {
+    let eventDetailsList = Assists.CreateSet<EventTypeDetails>(dataTable);
+    BaseActions.ValidateEventsTab(eventDetailsList, PaymentTermsSelectors.EventsTab);
 });
 //#endregion
 

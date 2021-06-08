@@ -5,6 +5,8 @@ using Logitude.BL.ShipmentsModel.Tools.Initializers;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.Helpers;
 using Simplog.Data.ShipmentsModel;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Interfaces;
 
@@ -127,6 +129,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             ContainerPM containerPM = new ContainerPM();
             MapContainerPMFields(containerPM, shipmentPackage, true);
             containerService.Create(containerPM);
+            UpdateShipmentPackage(containerPM.Id,shipmentPackage.Id);
         }
 
         private void UpdateContainer(ShipmentPackagePM shipmentPackage)
@@ -174,6 +177,22 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         {
             var containerPM = containerQuery.GetContainerByShipmentPackagesId(shipmentPackage.Id, shipmentPackage.Tenant);
             return containerPM;
+        }
+
+        private void UpdateShipmentPackage(string containerId, string shipmentPackageId)
+        {
+            if (containerId != null)
+            {               
+                ShipmentPackageRepository shipmentPackageRepository = new ShipmentPackageRepository(this.initializer.ShipmentContext);
+                ShipmentPackage shipmentPackage = shipmentPackageRepository.GetSingleShipmentPackage(shipmentPackageId, this.initializer.Tenant);
+                if (shipmentPackage != null)
+                {
+                    shipmentPackage.ContainerEntityId = containerId;
+                    shipmentPackageRepository.Update(shipmentPackage);
+                    shipmentPackageRepository.SubmitChanges();
+
+                }
+            }
         }
     }
 }

@@ -1,14 +1,16 @@
 import { VatTypesSelectors } from "../selectors/VatTypesSelectors";
 import { MaintenanceSelectors } from "../selectors/Selectors";
 import * as Actions from "./Actions";
+import * as GeneralActions from "./GeneralActions";
 import { VatTypeDetails } from "../models/VatTypeDetails";
 import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import { RestAPI } from "../../../Base/cypress/constants/RestAPI";
 import { Urls } from "../constants/Urls";
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
 import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
+import { GenerateRandomNumberAndString } from '../../../Base/cypress/actions/GenerateRandoms';
 
-let VatTypeCode = null;
+let SearchFieldValue = null;
 
 export function FillVatTypeDetails(vatTypeDetails: VatTypeDetails, codeDigits: number) {
     if (vatTypeDetails.IsSinglePercentage) {
@@ -19,8 +21,7 @@ export function FillVatTypeDetails(vatTypeDetails: VatTypeDetails, codeDigits: n
         cy.ClickRadio(VatTypesSelectors.MultiPercentageRadio)
         SelectMultiVatTypes()
     }
-    var RandomCode = Actions.GenerateRandomNumber(codeDigits);
-    cy.FillLogTextBox(VatTypesSelectors.Code, vatTypeDetails.Code.toLowerCase() == "random" ? RandomCode : vatTypeDetails.Code)
+    cy.FillLogTextBox(VatTypesSelectors.Code, GenerateRandomNumberAndString(codeDigits));
     cy.FillLogTextBox(VatTypesSelectors.Name, vatTypeDetails.Name);
     Actions.FillCheckBoxProcess(VatTypesSelectors.IsRegionalTaxCheckBox + BaseSelectors.LastElement, vatTypeDetails.IsRegionalTax)
     cy.FillLogTextBox(VatTypesSelectors.LocalName, vatTypeDetails.LocalName);
@@ -57,34 +58,32 @@ export function AssertCreateVatType() {
 }
 
 function AssertPostVatType() {
-    BaseAssertion.AssertStatusCode(RequestAliases.PostVatType, 200).then((interception) => {
-        VatTypeCode = interception.response.body.Code;
-    });
+    let intercept = cy.wait("@" + RequestAliases.PostVatType);
+    intercept.then((interception) => {
+        let statusCode = interception.response.statusCode;
+        if (statusCode === 400) {
+            ReCreateVatType();
+        }
+        else {
+            assert.equal(statusCode, 200)
+            SearchFieldValue = interception.response.body.Code;
+        }
+    })
 }
 
-export function SearchVatType(vatTypeCode) {
-    DefineVatTypeViewsGetByFiltersRequest(vatTypeCode);
-    cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, vatTypeCode);
-    AssertVatTypeViewsGetByFilters();
+function ReCreateVatType() {
+    let RandomCode = Actions.GenerateRandomNumber(4);
+    cy.FillLogTextBox(VatTypesSelectors.Code, RandomCode)
+    CreateVatType();
+    AssertCreateVatType();
 }
 
-function DefineVatTypeViewsGetByFiltersRequest(VatTypeCode: string) {
-    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(VatTypeCode), RequestAliases.GetFilterSearch);
+export function SearchVatType() {
+    GeneralActions.Search(SearchFieldValue)
 }
 
-function AssertVatTypeViewsGetByFilters() {
-    BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
-}
-
-export function getVatTypeCode() {
-    return VatTypeCode
-}
-
-export function AssertSearchVatType(vatTypeCode) {
-    cy.get(BaseSelectors.ListDataLoaded)
-    cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
-        expect(text).to.contain(vatTypeCode);
-    });
+export function AssertSearchVatType() {
+    GeneralActions.AssertSearch(SearchFieldValue)
 }
 
 export function OpenVatType() {

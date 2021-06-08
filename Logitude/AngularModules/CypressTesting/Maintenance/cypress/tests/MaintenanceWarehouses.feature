@@ -1,5 +1,5 @@
+@newdev
 Feature: Warehouses Create, Search and Edit from Maintenance
-
     The user creates a warehouse, searches for and edits it from the Maintenance Module.
 
     Scenario: Create new warehouse
@@ -29,7 +29,6 @@ Feature: Warehouses Create, Search and Edit from Maintenance
         When search warehouse
         Then the warehouse should appear successfully
 
-
     Scenario: Open the warhouse
         When open warehouse
         Then the warehouse should open successfully
@@ -43,6 +42,9 @@ Feature: Warehouses Create, Search and Edit from Maintenance
             | IBANNo    | warehouse IBANNo |
         When save warehouse
         Then the warehouse should update successfully
+        And the following event should appear in events tab
+            | Event             | Notes                 |
+            | Warehouse Updated | Warehouse Inactivated |
 
     Scenario: Save and close the warehouse
         When save and close warehouse

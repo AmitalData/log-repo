@@ -5,12 +5,13 @@ import { CardDetails } from "../models/CardDetails";
 import { ContactDetails } from "../models/ContactDetails";
 import { CardGeneralTabDetails } from "../models/CardGeneralTabDetails";
 import { CardBillingTabDetails } from "../models/CardBillingTabDetails";
-import { Constants } from "../constants/Constants";
 import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import { RestAPI } from "../../../Base/cypress/constants/RestAPI";
 import { Urls } from "../constants/Urls";
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
 import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
+
+let WarehouseCode = null
 
 export function FillWarehouseDetails(warehouseDetails: CardDetails) {
     Actions.FillCardDetails(warehouseDetails, 4)
@@ -22,6 +23,7 @@ export function FillWarehouseContactDetails(conatactDetails: ContactDetails) {
 
 export function FillWarehouseGeneralTab(warehouseGeneralTabDetails: CardGeneralTabDetails) {
     cy.FillLogTextBox(WarehousesSelectors.Notes, warehouseGeneralTabDetails.Notes)
+    cy.ClickCheckBox("#Warehouse_InActive")
 }
 
 export function FillWarehouseBillingTab(warehouseBillingTabDetails: CardBillingTabDetails) {
@@ -31,36 +33,47 @@ export function FillWarehouseBillingTab(warehouseBillingTabDetails: CardBillingT
 }
 
 export function CreateWarehouse() {
-    Actions.CreateCard()
+    DefinePostWarehouseRequest()
+    Actions.DefineGetByFilterRequest()
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
 }
 
-export function UpdateWarehouse() {
-    DefinePutWarehouseRequest()
-    cy.Click(WarehousesSelectors.SaveButton, null)
-}
-
-function DefinePutWarehouseRequest() {
-    cy.DefineRequestWait(RestAPI.PUT, Urls.Warehouses, RequestAliases.PutWarehouses);
+function DefinePostWarehouseRequest() {
+    cy.DefineRequestWait(RestAPI.POST, Urls.Warehouses, RequestAliases.PostWarehouses);
 }
 
 export function AssertCreateWarehouse() {
-    Actions.AssertCreateCard(Constants.Warehouse)
+    AssertPostWarehouse()
+    Actions.AssertGetByFilters()
 }
 
-export function AssertUpdateWarehouse() {
-    AssertPutWarehouse()
+function AssertPostWarehouse() {
+    let intercept = cy.wait("@" + RequestAliases.PostWarehouses);
+    intercept.then((interception) => {
+        let statusCode = interception.response.statusCode;
+        if (statusCode === 400) {
+            ReCreateWarehouse();
+        }
+        else {
+            assert.equal(statusCode, 200)
+            WarehouseCode = interception.response.body.Warehouse.Code;
+        }
+    })
 }
 
-function AssertPutWarehouse() {
-    BaseAssertion.AssertStatusCode(RequestAliases.PutWarehouses, 200);
+function ReCreateWarehouse() {
+    let RandomCode = Actions.GenerateRandomNumber(4);
+    cy.FillLogTextBox(MaintenanceSelectors.CardCode, RandomCode)
+    CreateWarehouse();
+    AssertCreateWarehouse();
 }
 
 export function SearchWarehouse() {
-    Actions.SearchCard()
+    Actions.SearchCardByValue(WarehouseCode)
 }
 
-export function AssertSearchWarehouse(Code: string) {
-    Actions.AssertSearchCard(Code)
+export function AssertSearchWarehouse() {
+    Actions.AssertSearchCard(WarehouseCode)
 }
 
 export function OpenWarehouse() {
@@ -77,6 +90,19 @@ export function AssertOpenWarehouse() {
     BaseAssertion.AssertElementExist(MaintenanceSelectors.GeneralEditScreen);
 }
 
+export function UpdateWarehouse() {
+    DefinePutWarehouseRequest()
+    cy.Click(WarehousesSelectors.SaveButton, null)
+}
+
+function DefinePutWarehouseRequest() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.PUTWarehouses, RequestAliases.PutWarehouses);
+}
+
+export function AssertUpdateWarehouse() {
+    BaseAssertion.AssertStatusCode(RequestAliases.PutWarehouses, 200)
+}
+
 export function CloseSaveWarehouse() {
     DefineWarehouseViewGetSingleRequest()
     cy.Click(WarehousesSelectors.SaveCloseButton, null);
@@ -87,9 +113,5 @@ function DefineWarehouseViewGetSingleRequest() {
 }
 
 export function AssertCloseSaveWarehouse() {
-    AssertWarehouseGetSingle();
-}
-
-function AssertWarehouseGetSingle() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetSignle, 200);
 }
