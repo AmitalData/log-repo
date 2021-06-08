@@ -73,7 +73,8 @@ When("update master", () => {
     Actions.UpdateMaster()
 });
 Then('the master should update successfully',()=>{
-  // Actions.Asserationofeditmaincarrige()
+  //Actions.Asserationofeditmaincarrige()
+  cy.get('.Value').should('have.value','FRA')
   
 })
 Then('the connceted house main carriage leg should update with the following',()=>{

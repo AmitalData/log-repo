@@ -119,9 +119,13 @@ export function UpdateMaster(){
    //OpenShipment(ShipmentContext.HouseNumber)
 
 //}
+export function BacktotheMasterShipment(){
+    cy.Navigate(ShipmentSelectors.BacktoMasterShipment); 
+
+}
 export function openHouseShipment(){
     cy.Navigate(ShipmentSelectors.ShipmentsTab);
-    cy.get("hyperlink").find("button").click()
+    cy.get("hyperlink").find("button").first().click()
 }
 export function OpenShipment(shipmentNumber: string) {
     cy.DefineRequestWait(RestAPI.GET, BaseURLs.GetMenuButtonGroups, RequestAliases.WaitLoadShipmentMenuButtons);
@@ -241,6 +245,15 @@ export function ValidateShipmentFields(IsCanceled: boolean) {
     cy.Click(BaseSelectors.Button, BaseSelectors.ContainsCancel);
     CheckIfDisable(ShipmentSelectors.PayablesTab, BaseSelectors.AddButton, IsCanceled);
     CheckIfDisable(ShipmentSelectors.ReceivablesTab, BaseSelectors.AddButton, IsCanceled);
+}
+export function ValidateShipmentHouseFields(IsCanceled: boolean){
+   // cy.Navigate(ShipmentSelectors.PackagesTabHouse);
+   CheckIfDisable(ShipmentSelectors.PackagesTabHouse, ShipmentSelectors.AddPackage, IsCanceled);
+    cy.Navigate(ShipmentSelectors.OrdersTabHouse);
+    cy.Navigate(ShipmentSelectors.PartnersTabHouse);
+    cy.Navigate(ShipmentSelectors.RoutingsTabHouse);
+
+    
 }
 export function ValidateCloseShipmentFields(IsClosed: boolean) {
     cy.Click(ShipmentSelectors.GeneralTab, null);

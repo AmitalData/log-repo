@@ -64,17 +64,14 @@ When("cancel the master shipment with {string} Note", (note) => {
     Actions.CancelShipment(note);
   });
   Then("the house should Cancel successfully", () => {
-   // let HouseNumber = Actions.GetHouseNumber()
-    //cy.get('.HyperlinkButtonControl').Click
-    //Actions.OpenShipment(ShipmentContext.HouseNumber);
-    //cy.get('.SimpleGridViewRow CellBorder').contains('.HyperlinkButtonControl').click
-    //Actions.openHouseShipment()
-    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
+    Actions.openHouseShipment()
+    //BaseAssertion.AssertStatusCode(RequestAliases.PutShipment, 200);
     Actions.ValidateCancelIconExist(true);
-    Actions.ValidateShipmentEventActions(ShipmentSelectors.EventsTab,EventNote);
-    Actions.ValidateShipmentFields(true);
+    Actions.ValidateShipmentEventActions(ShipmentSelectors.EventsTabHouse,EventNote);
+    Actions.ValidateShipmentHouseFields(true)
   }); 
   When("reactivate the shipment with {string} Note",(note)=>{
+    
   EventNote = note
   Actions.ReactiveShipment(note);
 })
