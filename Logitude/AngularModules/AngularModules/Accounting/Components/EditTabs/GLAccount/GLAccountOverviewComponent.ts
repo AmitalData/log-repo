@@ -259,6 +259,16 @@ export class GLAccountOverviewComponent extends BaseComponent {
                 }
 
             });
+
+        this._GLAccountExtendedPMService.GetARPyamentChequesListAsLedgerTransactions(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
+            var ChequesList = myResponse.Result;
+            if (!myResponse.HasError) {
+            console.log("ChequesList", ChequesList);
+            }
+            else {
+            }
+
+        });
     
  
 

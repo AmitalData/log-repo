@@ -74,6 +74,7 @@ export class LedgerTransactionList {
 	CalculatedLocalAmount: number;
 	CalculatedForeignAmount: number;
 	AccountDisplayNumber: string;
+	ValueDate: Date;
+	ChequeStatus: string;
 	
 }
- 

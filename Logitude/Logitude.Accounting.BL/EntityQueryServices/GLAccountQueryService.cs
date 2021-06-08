@@ -28,6 +28,7 @@ using Logitude.BL.CommonDataModel.CloseTables;
 using Logitude.BL.Resolvers;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Accounting.Data.DataContract;
+using Simplog.Data.Helpers;
 
 namespace Logitude.Accounting.BL.EntityQueryServices
 {
@@ -657,6 +658,80 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                 where c.MainGLAccountId == accountId && a.Tenant == tenant && a.ActiveForInterest ==true
                                                 select a.Id).ToList();
            
+        }
+
+        public List<LedgerTransactionList> GetARPyamentChequesListAsLedgerTransactions(string accountId, int tenant)
+        {
+            List<LedgerTransactionList> arPaymentTransactions = GetARPaymentLedgerTransactions(accountId, tenant);
+            List<LedgerTransactionList> externalTransactions = GetExternalTransactionsForAccount(accountId, tenant);
+
+            arPaymentTransactions.AddRange(externalTransactions);
+
+            return arPaymentTransactions;
+        }
+
+        private List<LedgerTransactionList> GetARPaymentLedgerTransactions(string accountId, int tenant)
+        {
+            IInvoiceContext invoicecontext = InvoiceContext.GetContext(tenant);
+            bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
+
+            List<string> ARPaymentIds = (from a in invoicecontext.ARPayments
+                                       where  a.Tenant == tenant
+                                       select a.Id).ToList();
+
+            const string AccountingEntity_ARPayment = "3";
+            List<LedgerTransactionList> arPaymentTransactions = (from a in context.LedgerTransactions
+                                                                 join journal in context.Journals on a.JournalId equals journal.Id
+                                                                 join arPaymentCheque in context.ARPaymentCheques on 
+                                                                 join arPaymentChequeStatuses in context.ARPaymentChequeStatuses on arPaymentCheque.StatusCode equals arPaymentChequeStatuses.Code
+                                                                 where journal.AccountingEntityCode == AccountingEntity_ARPayment && a.AccountId == accountId && a.Tenant == tenant && ARPaymentIds.Contains(arPaymentCheque.PaymentId)
+                                                                 select new LedgerTransactionList
+                                                                 {
+                                                                     ValueDate = arPaymentCheque != null? arPaymentCheque.ValueDate:null,
+                                                                     JournalNumber = journal != null ? journal.JournalNumber: null,
+                                                                     LocalAmountCredit = a.LocalAmountCredit,
+                                                                     ForeignAmountCredit = a.ForeignAmountCredit,
+                                                                     Reference1 = a.Reference1,
+                                                                     Reference2 = a.Reference2,
+                                                                     Reference3 = a.Reference3,
+                                                                     Notes = a.Notes,
+                                                                     ChequeStatus = arPaymentChequeStatuses != null ? showLocal ? arPaymentChequeStatuses.LocalName : arPaymentChequeStatuses.EnglishName: null,
+
+                                                                 }).ToList();
+            return arPaymentTransactions;
+        }
+
+        private List<LedgerTransactionList> GetExternalTransactionsForAccount(string accountId, int tenant)
+        {
+            DateTime today = GetCurrentDate(tenant);
+
+            return (from trans in context.LedgerTransactions
+                    join jrn in context.Journals on trans.JournalId equals jrn.Id
+                    where
+                        jrn.ExternalSystem != null
+                    && trans.AccountId == accountId
+                    && trans.Tenant == tenant
+                    && trans.DueDate > today
+                    && trans.LocalAmountCredit != 0
+                    select new LedgerTransactionList
+                    {
+                        JournalNumber = jrn.JournalNumber,
+                        LocalAmountCredit = trans.LocalAmountCredit,
+                        ForeignAmountCredit = trans.ForeignAmountCredit,
+                        Reference1 = trans.Reference1,
+                        Reference2 = trans.Reference2,
+                        Reference3 = trans.Reference3,
+                        Notes = trans.Notes,
+
+                    }).ToList();
+
+        }
+
+        private static DateTime GetCurrentDate(int tenant)
+        {
+            DateTime _today = TenantServerConfigration.GetCurrentDateTime(tenant);
+            _today = new DateTime(_today.Year, _today.Month, _today.Day, 11, 59, 59);
+            return _today;
         }
 
         public IQueryable<GLAccountPM> GetChildrenGLAccounts(string accountId, int tenant)

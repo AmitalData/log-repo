@@ -146,6 +146,10 @@ namespace Logitude.Accounting.Data.EntityLists
        public decimal CalculatedForeignAmount  { get; set; }
        [DataMember]
        public string AccountDisplayNumber  { get; set; }
+       [DataMember]
+       public DateTime? ValueDate  { get; set; }
+       [DataMember]
+       public string ChequeStatus  { get; set; }
    }
 
 }
