@@ -54,8 +54,43 @@ export class JournalExtendedListService {
             catchError(ServiceHelper.HandleServiceError)); 
 
     }
-
     
+    GetResetJournalByJournalId(entityId: string) {
+
+
+        var url = this._apiUrl + '/GetResetJournalByJournalId?JournalId=' + entityId;
+
+        return this.httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(
+            map((response,indx) => {
+
+                var allLists = response;
+
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = allLists;
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+
+
+    }
+    GetJournalMoreDatasByJournalId(entityId: string) {
+
+
+        var url = this._apiUrl + '/GetJournalMoreDatasByJournalId?JournalId=' + entityId;
+
+        return this.httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(
+            map(response => {
+
+                var allLists = response;
+
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = allLists;
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+
+
+    }
 
     GetJournalLinesByJournalId(entityId: string) {
   
