@@ -1,4 +1,5 @@
-﻿using Logitude.SystemLogs;
+﻿using CommunicationWorkerRole.Analyzers;
+using Logitude.SystemLogs;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -27,9 +28,8 @@ namespace CommunicationWorkerRole
 
                         if (analyzeQueue != null)
                         {
-                            //ContainerStatusesConnecterAnalyzer analyzer = new ContainerStatusesConnecterAnalyzer(analyzeQueue, analyzeQueueRepository);
-
-                            //analyzer.Run();
+                            ContainerStatusesConnecterAnalyzer analyzer = new ContainerStatusesConnecterAnalyzer(analyzeQueue, analyzeQueueRepository);
+                            analyzer.Run();
                             LogDoneItemInMemory();
                         }
                         else

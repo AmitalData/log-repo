@@ -23,6 +23,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.OceanInsigntId = itemPM.OceanInsigntId;
             itemPoco.UpdateDate = DateTime.Now;
             itemPoco.BLNumber = itemPM.BLNumber;
+            itemPoco.ShipmentId = itemPM.ShipmentId;
         }
     }
 }

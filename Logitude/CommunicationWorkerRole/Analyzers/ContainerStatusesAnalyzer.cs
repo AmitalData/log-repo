@@ -81,14 +81,16 @@ namespace CommunicationWorkerRole.Analyzers
                 this.DoneCommunicationLog();
             }
         }
-        string refrenceNumber;
-        string scacCode;
-        string oceanInsightInsertType; 
+        private string refrenceNumber;
+        private string scacCode;
+        private string oceanInsightInsertType;
+        private string shipmentId;
         private void ReadAdditionalFieldsFromCommunicationLog()
         {
             this.refrenceNumber = communicationLog.EntityReference;
             this.scacCode = communicationLog.AdditionalFields?.Split(',')[0];
             this.oceanInsightInsertType = communicationLog.AdditionalFields?.Split(',')[1];
+            this.shipmentId = communicationLog.AdditionalFields?.Split(',')[2];
         }
 
         private void SendContainerStatusRequestToOceanInsightSevice()
@@ -152,7 +154,8 @@ namespace CommunicationWorkerRole.Analyzers
                 ContainerNumber = this.refrenceNumber,
                 SCACCode = scacCode, 
                 Tenant = this.tenant,
-                Type = this.oceanInsightInsertType
+                Type = this.oceanInsightInsertType,
+                ShipmentId = shipmentId
             };
 
             logitudeOceanInsightsRequestRepository.Add(logitudeOceanInsightsRequest);

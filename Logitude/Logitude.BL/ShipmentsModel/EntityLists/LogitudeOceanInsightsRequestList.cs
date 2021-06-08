@@ -17,5 +17,6 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
         public string BLNumber { get; set; }
+        public string ShipmentId { get; set; }
     }
 }

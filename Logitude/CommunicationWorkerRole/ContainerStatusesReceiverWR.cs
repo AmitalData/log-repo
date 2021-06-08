@@ -98,27 +98,19 @@ namespace CommunicationWorkerRole
         }
 
         private string communicationId;
-        private string oceanInsightsParametersXML;
+        private Envelope externalTasksQueueEnvelope;
         private void ReadExternalTasksQueueWcfServiceResponse(string oceanInsightResponseXML)
         {
-            var externalTasksQueueEnvelope = LogitudeXmlSerializer.DeserializeObject<Envelope>(oceanInsightResponseXML);
+            this.externalTasksQueueEnvelope = LogitudeXmlSerializer.DeserializeObject<Envelope>(oceanInsightResponseXML);
             this.communicationId = externalTasksQueueEnvelope.CommunicationLogId;
-            var oceanInsightsQueueTask = externalTasksQueueEnvelope.Tasks.Where(a => a.Action == "OceanInsights.PushUpdate").FirstOrDefault();
-            if (oceanInsightsQueueTask != null)
-            {
-                var oceanInsightsParameters = oceanInsightsQueueTask.Parameters.FirstOrDefault();
-                if (oceanInsightsParameters != null)
-                {
-                    this.oceanInsightsParametersXML = oceanInsightsParameters.Value;
-                }
-            }
+            
         }
         private void InsertNewAnalyzeQueue()
         {
-            Type myType = oceanInsightsParametersXML.GetType();
+            Type myType = externalTasksQueueEnvelope.GetType();
             MemoryStream myMemoryStream = new MemoryStream();
             XmlSerializer ser = new XmlSerializer(myType);
-            ser.Serialize(myMemoryStream, oceanInsightsParametersXML);
+            ser.Serialize(myMemoryStream, externalTasksQueueEnvelope);
             myMemoryStream.Seek(0, SeekOrigin.Begin);
             var reader = new StreamReader(myMemoryStream);
             string content = reader.ReadToEnd();
