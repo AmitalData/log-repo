@@ -1643,9 +1643,6 @@ export function AssertPostCard(CardType: string) {
         else if (CardType == Constants.Vendor) {
             CardCode = responseBody.Vendor.Code;
         }
-        else if (CardType == Constants.Warehouse) {
-            CardCode = responseBody.Warehouse.Code;
-        }
     });
 }
 

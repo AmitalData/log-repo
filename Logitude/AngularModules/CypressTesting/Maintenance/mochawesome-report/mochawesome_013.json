@@ -1,0 +1,182 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 5,
+    "passes": 5,
+    "pending": 0,
+    "failures": 0,
+    "start": "2021-06-07T11:20:31.942Z",
+    "end": "2021-06-07T11:21:16.913Z",
+    "duration": 44971,
+    "testsRegistered": 5,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "3d1653eb-1a2f-40b7-9fe5-d289c69feb72",
+      "title": "",
+      "fullFile": "cypress\\tests\\MaintenanceLocationsCountries.feature",
+      "file": "cypress\\tests\\MaintenanceLocationsCountries.feature",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "b3577d67-f260-4fc8-914f-de47dbe04145",
+          "title": "Create Country, Edit, inactivate or activate it from Maintenance",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Add CountryCode with lenght more than 2",
+              "fullTitle": "Create Country, Edit, inactivate or activate it from Maintenance Add CountryCode with lenght more than 2",
+              "timedOut": null,
+              "duration": 25855,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "d8634b25-7509-4bfe-95b8-e98772e0a203",
+              "parentUUID": "b3577d67-f260-4fc8-914f-de47dbe04145",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Add Country",
+              "fullTitle": "Create Country, Edit, inactivate or activate it from Maintenance Add Country",
+              "timedOut": null,
+              "duration": 4588,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "353ef698-75a8-4f28-a511-1552694602e1",
+              "parentUUID": "b3577d67-f260-4fc8-914f-de47dbe04145",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Search for the Country by code in filter",
+              "fullTitle": "Create Country, Edit, inactivate or activate it from Maintenance Search for the Country by code in filter",
+              "timedOut": null,
+              "duration": 3171,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "e47e390a-d8c8-4622-aca3-f5cdcc8e5fe3",
+              "parentUUID": "b3577d67-f260-4fc8-914f-de47dbe04145",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Open the country",
+              "fullTitle": "Create Country, Edit, inactivate or activate it from Maintenance Open the country",
+              "timedOut": null,
+              "duration": 303,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "b2da3679-e482-4ac6-92ce-851ea1e49e34",
+              "parentUUID": "b3577d67-f260-4fc8-914f-de47dbe04145",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Edit the country",
+              "fullTitle": "Create Country, Edit, inactivate or activate it from Maintenance Edit the country",
+              "timedOut": null,
+              "duration": 9222,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "8cd6eb2b-da09-4292-a75f-dd51f8475845",
+              "parentUUID": "b3577d67-f260-4fc8-914f-de47dbe04145",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "d8634b25-7509-4bfe-95b8-e98772e0a203",
+            "353ef698-75a8-4f28-a511-1552694602e1",
+            "e47e390a-d8c8-4622-aca3-f5cdcc8e5fe3",
+            "b2da3679-e482-4ac6-92ce-851ea1e49e34",
+            "8cd6eb2b-da09-4292-a75f-dd51f8475845"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 43139,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false
+      },
+      "version": "4.1.0"
+    },
+    "marge": {
+      "options": {
+        "id": "default",
+        "reportDir": "./mochawesome-report",
+        "quite": true,
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "4.0.1"
+    }
+  }
+}

@@ -12,4 +12,6 @@ export class WarehousesSelectors {
    public static readonly VatNumber = "#Warehouse_VatNumber"
    public static readonly IBANNumber = "#Warehouse_IBANNumber"
    public static readonly BillingTab = "#WarehouseTHBilling"
+   public static readonly EventsTab = "#WarehouseTHEvents"
+
 }

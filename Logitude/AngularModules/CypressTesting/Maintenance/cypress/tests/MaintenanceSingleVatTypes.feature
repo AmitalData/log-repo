@@ -1,4 +1,4 @@
-@release @all @dev
+@newdev
 Feature: Single Vat Type Create, Search and Edit from Maintenance
     The user creates a single vat type, searches for and edits it from the Maintenance Module.
 
@@ -38,6 +38,9 @@ Feature: Single Vat Type Create, Search and Edit from Maintenance
             | AccountingPayablesExternalID    | Payables1    |
         When save single vat type
         Then the single vat type should update successfully
+        And the following event should appear in events tab
+            | Event            | Notes                |
+            | Vat Type Updated | Vat Type Inactivated |
 
     Scenario: Save and close the single vat type
         When save and close single vat type

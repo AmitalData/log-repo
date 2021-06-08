@@ -1,11 +1,11 @@
-@release @all @dev
+@NewDev
 Feature: Payment Terms Create, Search and Edit from Maintenance
     The user creates a payment term, searches for and edits it from the Maintenance Module.
 
     Scenario: Create new payment term
         Given the user logged in and open "Payment Terms" in maintenance menu
         And a payment term with the following details
-            | Name             | TestingpaymenttermScenario1    |
+            | Name             | CurrentDatetime                |
             | LocalName        | Testing payment term Scenario  |
             | Code             | Random                         |
             | CurrentMonth     | Yes                            |
@@ -32,6 +32,9 @@ Feature: Payment Terms Create, Search and Edit from Maintenance
             | AccountingExternalID | External1 |
         When save payment term
         Then the payment term should update successfully
+        And the following event should appear in events tab
+            | Event                | Notes                    |
+            | Payment Term Updated | Payment Term Inactivated |
 
     Scenario: Save and close the payment term
         When save and close payment term

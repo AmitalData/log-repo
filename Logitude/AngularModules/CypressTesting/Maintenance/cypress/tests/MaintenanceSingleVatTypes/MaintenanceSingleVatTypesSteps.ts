@@ -4,9 +4,11 @@ import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { VatTypesSelectors } from "../../selectors/VatTypesSelectors";
 import { VatTypeDetails } from "cypress/models/VatTypeDetails";
+import * as BaseActions from "../../../../Base/cypress/actions/Actions"
+import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetails";
 
 let vatTypeDetails: VatTypeDetails
-let vatTypeCode = null
+
 //#region Create new single vat type
 Given("the user logged in and open {string} in maintenance menu", (maintenanceItemName) => {
     cy.Login()
@@ -30,18 +32,17 @@ Then("the single vat type should create successfully", () => {
 
 //#region Search for the single vat type
 When("search single vat type", () => {
-    vatTypeCode = vatTypeActions.getVatTypeCode()
-    vatTypeActions.SearchVatType(vatTypeCode)
+    vatTypeActions.SearchVatType()
 });
 
 Then("the single vat type should appear successfully", () => {
-    vatTypeActions.AssertSearchVatType(vatTypeCode);
+    vatTypeActions.AssertSearchVatType()
 });
 //#endregion
 
 //#region Open the single vat type
 When("open single vat type", () => {
-    vatTypeActions.OpenVatType();
+    vatTypeActions.OpenVatType()
 });
 
 Then("the single vat type should open successfully", () => {
@@ -74,6 +75,11 @@ When("save single vat type", () => {
 
 Then("the single vat type should update successfully", () => {
     vatTypeActions.AssertUpdateVatType()
+});
+
+Then("the following event should appear in events tab", (dataTable) => {
+    let eventDetailsList = Assists.CreateSet<EventTypeDetails>(dataTable);
+    BaseActions.ValidateEventsTab(eventDetailsList, VatTypesSelectors.EventsTab);
 });
 //#endregion
 

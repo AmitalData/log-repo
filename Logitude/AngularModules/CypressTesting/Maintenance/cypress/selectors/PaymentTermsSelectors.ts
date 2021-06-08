@@ -14,4 +14,6 @@ export class PaymentTermsSelectors {
     public static readonly CurrentMonthCheckBox = "#PaymentTerm_CurrentMonth"
     public static readonly InActiveCheckBox = "#PaymentTerm_InActive"
     public static readonly AccountingTab = "#PaymentTermTHAccounting"
+    public static readonly EventsTab = "#PaymentTermTHEvents"
+
 }

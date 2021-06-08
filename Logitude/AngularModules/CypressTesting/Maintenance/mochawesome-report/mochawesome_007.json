@@ -1,0 +1,182 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 5,
+    "passes": 5,
+    "pending": 0,
+    "failures": 0,
+    "start": "2021-06-07T11:13:34.705Z",
+    "end": "2021-06-07T11:14:11.244Z",
+    "duration": 36539,
+    "testsRegistered": 5,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "540ac71c-caab-4d52-ba1b-d7d52e8eaf77",
+      "title": "",
+      "fullFile": "cypress\\tests\\MaintenanceCreditCardTypesWeeklyScenarios.feature",
+      "file": "cypress\\tests\\MaintenanceCreditCardTypesWeeklyScenarios.feature",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "04a34cbc-300c-48f1-a21a-665ffaacc4e6",
+          "title": "Credit Card Type Create and Edit it in Maintenance Module",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Add Credit Card Type Code with lenght more than 2",
+              "fullTitle": "Credit Card Type Create and Edit it in Maintenance Module Add Credit Card Type Code with lenght more than 2",
+              "timedOut": null,
+              "duration": 20633,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "8506f8fd-3b72-410d-9887-084562fd6f61",
+              "parentUUID": "04a34cbc-300c-48f1-a21a-665ffaacc4e6",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Create a new credit card type",
+              "fullTitle": "Credit Card Type Create and Edit it in Maintenance Module Create a new credit card type",
+              "timedOut": null,
+              "duration": 3101,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "d198f619-4b1a-4e40-a52f-1bdbfdc0d22a",
+              "parentUUID": "04a34cbc-300c-48f1-a21a-665ffaacc4e6",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Search for the credit card type by code",
+              "fullTitle": "Credit Card Type Create and Edit it in Maintenance Module Search for the credit card type by code",
+              "timedOut": null,
+              "duration": 3151,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "89507754-59bd-4a8d-9574-00911399144f",
+              "parentUUID": "04a34cbc-300c-48f1-a21a-665ffaacc4e6",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Open the credit card type",
+              "fullTitle": "Credit Card Type Create and Edit it in Maintenance Module Open the credit card type",
+              "timedOut": null,
+              "duration": 222,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "b166ab88-c9cd-4d3f-a9d4-55e5234bd8ec",
+              "parentUUID": "04a34cbc-300c-48f1-a21a-665ffaacc4e6",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Edit the credit card type",
+              "fullTitle": "Credit Card Type Create and Edit it in Maintenance Module Edit the credit card type",
+              "timedOut": null,
+              "duration": 7240,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "dea3e251-ba0d-43c9-914a-843898715000",
+              "parentUUID": "04a34cbc-300c-48f1-a21a-665ffaacc4e6",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "8506f8fd-3b72-410d-9887-084562fd6f61",
+            "d198f619-4b1a-4e40-a52f-1bdbfdc0d22a",
+            "89507754-59bd-4a8d-9574-00911399144f",
+            "b166ab88-c9cd-4d3f-a9d4-55e5234bd8ec",
+            "dea3e251-ba0d-43c9-914a-843898715000"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 34347,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false
+      },
+      "version": "4.1.0"
+    },
+    "marge": {
+      "options": {
+        "id": "default",
+        "reportDir": "./mochawesome-report",
+        "quite": true,
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "4.0.1"
+    }
+  }
+}

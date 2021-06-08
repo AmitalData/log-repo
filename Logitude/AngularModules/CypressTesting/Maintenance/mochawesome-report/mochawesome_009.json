@@ -1,0 +1,163 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 4,
+    "passes": 4,
+    "pending": 0,
+    "failures": 0,
+    "start": "2021-06-07T11:15:20.929Z",
+    "end": "2021-06-07T11:16:22.793Z",
+    "duration": 61864,
+    "testsRegistered": 4,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "06032973-9731-4927-aead-2b70969b97ad",
+      "title": "",
+      "fullFile": "cypress\\tests\\MaintenanceCustomAgentsWeeklyScenarios.feature",
+      "file": "cypress\\tests\\MaintenanceCustomAgentsWeeklyScenarios.feature",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "5aaad81b-062c-4964-8dc5-2e75fead2a2b",
+          "title": "Custom Agent Create and Edit in Maintenance Module",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Create a new custom agent",
+              "fullTitle": "Custom Agent Create and Edit in Maintenance Module Create a new custom agent",
+              "timedOut": null,
+              "duration": 44691,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "d1ff2b8a-28b2-4867-a66a-260dd4768e7a",
+              "parentUUID": "5aaad81b-062c-4964-8dc5-2e75fead2a2b",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Search for the custom agent",
+              "fullTitle": "Custom Agent Create and Edit in Maintenance Module Search for the custom agent",
+              "timedOut": null,
+              "duration": 1727,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "b39c828b-4809-410d-bdad-04646d94aafd",
+              "parentUUID": "5aaad81b-062c-4964-8dc5-2e75fead2a2b",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Open the custom agent",
+              "fullTitle": "Custom Agent Create and Edit in Maintenance Module Open the custom agent",
+              "timedOut": null,
+              "duration": 4169,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "473cdaf5-9912-4fc1-871d-601f2f82056f",
+              "parentUUID": "5aaad81b-062c-4964-8dc5-2e75fead2a2b",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Edit the custom agent",
+              "fullTitle": "Custom Agent Create and Edit in Maintenance Module Edit the custom agent",
+              "timedOut": null,
+              "duration": 8936,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "4281995a-a856-4452-af9e-a8be2483c686",
+              "parentUUID": "5aaad81b-062c-4964-8dc5-2e75fead2a2b",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "d1ff2b8a-28b2-4867-a66a-260dd4768e7a",
+            "b39c828b-4809-410d-bdad-04646d94aafd",
+            "473cdaf5-9912-4fc1-871d-601f2f82056f",
+            "4281995a-a856-4452-af9e-a8be2483c686"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 59523,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false
+      },
+      "version": "4.1.0"
+    },
+    "marge": {
+      "options": {
+        "id": "default",
+        "reportDir": "./mochawesome-report",
+        "quite": true,
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "4.0.1"
+    }
+  }
+}

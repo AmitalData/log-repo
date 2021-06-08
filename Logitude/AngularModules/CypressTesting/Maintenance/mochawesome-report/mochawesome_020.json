@@ -1,0 +1,252 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 8,
+    "passes": 5,
+    "pending": 0,
+    "failures": 3,
+    "start": "2021-06-07T12:08:31.052Z",
+    "end": "2021-06-07T12:25:49.124Z",
+    "duration": 1038072,
+    "testsRegistered": 8,
+    "passPercent": 62.5,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "665a5400-7ee1-42b7-8b52-1d738795b26e",
+      "title": "",
+      "fullFile": "cypress\\tests\\MaintenanceQuotetemplates.feature",
+      "file": "cypress\\tests\\MaintenanceQuotetemplates.feature",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "6d6632c2-a13a-41d6-bbdf-e582a5d8cb11",
+          "title": "Create, Search, Open and Edit a Quote Template from Maintenance",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Create new Quote template",
+              "fullTitle": "Create, Search, Open and Edit a Quote Template from Maintenance Create new Quote template",
+              "timedOut": null,
+              "duration": 42825,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "0a42033d-55a3-4642-ab27-e54597e445a3",
+              "parentUUID": "6d6632c2-a13a-41d6-bbdf-e582a5d8cb11",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Edit the quote template's Page Header",
+              "fullTitle": "Create, Search, Open and Edit a Quote Template from Maintenance Edit the quote template's Page Header",
+              "timedOut": null,
+              "duration": 4358,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "4acae27d-20c1-4b1c-9529-719d60f9d16d",
+              "parentUUID": "6d6632c2-a13a-41d6-bbdf-e582a5d8cb11",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Edit the quote template's Quote Header",
+              "fullTitle": "Create, Search, Open and Edit a Quote Template from Maintenance Edit the quote template's Quote Header",
+              "timedOut": null,
+              "duration": 7796,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "3229764b-c76d-4955-b3e5-ed35d73aeba8",
+              "parentUUID": "6d6632c2-a13a-41d6-bbdf-e582a5d8cb11",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Edit the quote template's Quote Introduction",
+              "fullTitle": "Create, Search, Open and Edit a Quote Template from Maintenance Edit the quote template's Quote Introduction",
+              "timedOut": null,
+              "duration": 8829,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "594cd594-0081-4c43-ac21-17938e81ab5d",
+              "parentUUID": "6d6632c2-a13a-41d6-bbdf-e582a5d8cb11",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Edit the quote template's Quote Details",
+              "fullTitle": "Create, Search, Open and Edit a Quote Template from Maintenance Edit the quote template's Quote Details",
+              "timedOut": null,
+              "duration": 8108,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "0611c49d-8eed-4ff2-9d89-646cd22b9dd9",
+              "parentUUID": "6d6632c2-a13a-41d6-bbdf-e582a5d8cb11",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Edit the quote template's Pricing Packages",
+              "fullTitle": "Create, Search, Open and Edit a Quote Template from Maintenance Edit the quote template's Pricing Packages",
+              "timedOut": null,
+              "duration": 360486,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": "\"screenshots/MaintenanceQuotetemplates.feature/Create, Search, Open and Edit a Quote Template from Maintenance -- Edit the quote template's Pricing Packages (failed).png\"",
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {
+                "message": "CypressError: Timed out retrying after 360000ms: `cy.wait()` timed out waiting `360000ms` for the 1st request to the route: `GetSignle`. No request ever occurred.\n\nhttps://on.cypress.io/wait",
+                "estack": "CypressError: Timed out retrying after 360000ms: `cy.wait()` timed out waiting `360000ms` for the 1st request to the route: `GetSignle`. No request ever occurred.\n\nhttps://on.cypress.io/wait\n    at cypressErr (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:174135:18)\n    at Object.errByPath (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:174186:10)\n    at checkForXhr (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:161229:33)\n    at http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:161252:28\n    at tryCatcher (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:10765:23)\n    at Function.Promise.attempt.Promise.try (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:8039:29)\n    at tryFn (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:167007:21)\n    at whenStable (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:167045:12)\n    at http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:166540:16\n    at tryCatcher (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:10765:23)\n    at Promise._settlePromiseFromHandler (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:8700:31)\n    at Promise._settlePromise (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:8757:18)\n    at Promise._settlePromise0 (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:8802:10)\n    at Promise._settlePromises (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:8882:18)\n    at Promise._fulfill (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:8826:18)\n    at http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:10440:46\nFrom Your Spec Code:\n    at Object.AssertStatusCode (http://test.logitudeworld.com/__cypress/tests?p=cypress\\tests\\MaintenanceQuotetemplates.feature:557:27)\n    at AssertQuoteTemplatetGetSingle (http://test.logitudeworld.com/__cypress/tests?p=cypress\\tests\\MaintenanceQuotetemplates.feature:2072:19)\n    at AssertOpenQuoteTemplate (http://test.logitudeworld.com/__cypress/tests?p=cypress\\tests\\MaintenanceQuotetemplates.feature:2038:5)\n    at Object.ReopenQuoteTemplate (http://test.logitudeworld.com/__cypress/tests?p=cypress\\tests\\MaintenanceQuotetemplates.feature:1992:5)\n    at Context.eval (http://test.logitudeworld.com/__cypress/tests?p=cypress\\tests\\MaintenanceQuotetemplates.feature:4372:13)\n    at Context.resolveAndRunStepDefinition (http://test.logitudeworld.com/__cypress/tests?p=cypress\\tests\\MaintenanceQuotetemplates.feature:12794:9)\n    at Context.eval (http://test.logitudeworld.com/__cypress/tests?p=cypress\\tests\\MaintenanceQuotetemplates.feature:12135:35)\nFrom Your Spec Code:\n    at Object.AssertStatusCode (http://test.logitudeworld.com/__cypress/tests?p=cypress\\tests\\MaintenanceQuotetemplates.feature:557:27)\n    at AssertQuoteTemplatetGetSingle (http://test.logitudeworld.com/__cypress/tests?p=cypress\\tests\\MaintenanceQuotetemplates.feature:2072:19)\n    at AssertOpenQuoteTemplate (http://test.logitudeworld.com/__cypress/tests?p=cypress\\tests\\MaintenanceQuotetemplates.feature:2038:5)\n    at Object.ReopenQuoteTemplate (http://test.logitudeworld.com/__cypress/tests?p=cypress\\tests\\MaintenanceQuotetemplates.feature:1992:5)\n    at Context.eval (http://test.logitudeworld.com/__cypress/tests?p=cypress\\tests\\MaintenanceQuotetemplates.feature:4372:13)\n    at Context.resolveAndRunStepDefinition (http://test.logitudeworld.com/__cypress/tests?p=cypress\\tests\\MaintenanceQuotetemplates.feature:12794:9)\n    at Context.eval (http://test.logitudeworld.com/__cypress/tests?p=cypress\\tests\\MaintenanceQuotetemplates.feature:12135:35)",
+                "diff": null
+              },
+              "uuid": "6b6ac701-fa65-4bcc-9358-38b7e97248a6",
+              "parentUUID": "6d6632c2-a13a-41d6-bbdf-e582a5d8cb11",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Edit the quote template's Pricing Containers",
+              "fullTitle": "Create, Search, Open and Edit a Quote Template from Maintenance Edit the quote template's Pricing Containers",
+              "timedOut": null,
+              "duration": 301395,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": "\"screenshots/MaintenanceQuotetemplates.feature/Create, Search, Open and Edit a Quote Template from Maintenance -- Edit the quote template's Pricing Containers (failed).png\"",
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 300000ms: Expected to find element: `[data-cy='Setting_Pricing Containers']`, but never found it.",
+                "estack": "AssertionError: Timed out retrying after 300000ms: Expected to find element: `[data-cy='Setting_Pricing Containers']`, but never found it.\n    at Context.eval (http://test.logitudeworld.com/__cypress/tests?p=cypress\\support\\index.ts:489:12)",
+                "diff": null
+              },
+              "uuid": "2f5e5ce9-7dc5-435b-a83b-bebc9fae92ad",
+              "parentUUID": "6d6632c2-a13a-41d6-bbdf-e582a5d8cb11",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Edit the quote template's Page Footer",
+              "fullTitle": "Create, Search, Open and Edit a Quote Template from Maintenance Edit the quote template's Page Footer",
+              "timedOut": null,
+              "duration": 301431,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": "\"screenshots/MaintenanceQuotetemplates.feature/Create, Search, Open and Edit a Quote Template from Maintenance -- Edit the quote template's Page Footer (failed).png\"",
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 300000ms: Expected to find element: `[data-cy='Setting_Page Footer']`, but never found it.",
+                "estack": "AssertionError: Timed out retrying after 300000ms: Expected to find element: `[data-cy='Setting_Page Footer']`, but never found it.\n    at Context.eval (http://test.logitudeworld.com/__cypress/tests?p=cypress\\support\\index.ts:489:12)",
+                "diff": null
+              },
+              "uuid": "ae4727d1-b91a-41f0-b46d-5687091de112",
+              "parentUUID": "6d6632c2-a13a-41d6-bbdf-e582a5d8cb11",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "0a42033d-55a3-4642-ab27-e54597e445a3",
+            "4acae27d-20c1-4b1c-9529-719d60f9d16d",
+            "3229764b-c76d-4955-b3e5-ed35d73aeba8",
+            "594cd594-0081-4c43-ac21-17938e81ab5d",
+            "0611c49d-8eed-4ff2-9d89-646cd22b9dd9"
+          ],
+          "failures": [
+            "6b6ac701-fa65-4bcc-9358-38b7e97248a6",
+            "2f5e5ce9-7dc5-435b-a83b-bebc9fae92ad",
+            "ae4727d1-b91a-41f0-b46d-5687091de112"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 1035228,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false
+      },
+      "version": "4.1.0"
+    },
+    "marge": {
+      "options": {
+        "id": "default",
+        "reportDir": "./mochawesome-report",
+        "quite": true,
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "4.0.1"
+    }
+  }
+}
