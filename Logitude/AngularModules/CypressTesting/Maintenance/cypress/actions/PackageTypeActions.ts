@@ -8,7 +8,7 @@ import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
 import { constants } from "../../../Base/cypress/constants/constants"
 import * as gr from '../../../Base/cypress/actions/GenerateRandoms';
-
+import * as GeneralActions from './GeneralActions'
 let PackageTypeCode = null;
 let inActivePackageType = false;
 
@@ -32,7 +32,7 @@ export function FillPackageTypeDetails(packageTypeDetails: PackageTypeDetails) {
 
     let RandomNumberCode = GenerateRandomNumber(PackageTypeSelectors.CodeDigitCount)
 
-    cy.FillLogTextBox(PackageTypeSelectors.PackageTypeCode, packageTypeDetails.Code.toLowerCase() == "random" ? RandomNumberCode : packageTypeDetails.Code)
+    cy.FillLogTextBox(PackageTypeSelectors.PackageTypeCode, RandomNumberCode)
     cy.FillLogTextBox(PackageTypeSelectors.PackageTypeName, packageTypeDetails.Name)
     cy.FillLogTextBox(PackageTypeSelectors.PackageTypeLocalName, packageTypeDetails.LocalName)
     cy.FillLogTextBox(PackageTypeSelectors.PackageTypeTEU, packageTypeDetails.TEU)
@@ -65,7 +65,7 @@ export function AssertCreatePackageType() {
 }
 
 function ReCreatePackageType() {
-    
+
     let RandomNumberCode = GenerateRandomNumber(PackageTypeSelectors.CodeDigitCount)
 
     cy.FillLogTextBox(PackageTypeSelectors.PackageTypeCode, RandomNumberCode)
@@ -79,22 +79,11 @@ export function AssertPostPackageType(responseStatusCode: number, expectedStatus
 }
 
 export function SearchPackageType() {
-    DefinePackageTypeViewsGetByFiltersRequest(PackageTypeCode);
-    cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, PackageTypeCode);
-    AssertPackageTypeViewsGetByFilters();
-}
-
-export function DefinePackageTypeViewsGetByFiltersRequest(PackageTypeCode: string) {
-    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(PackageTypeCode + "&GetCount=false"), RequestAliases.GetFilterSearch);
-}
-export function AssertPackageTypeViewsGetByFilters() {
-    BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
+    GeneralActions.Search(PackageTypeCode)
 }
 
 export function AssertSearchPackageType() {
-    cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
-        expect(text).to.contain(PackageTypeCode);
-    });
+    GeneralActions.AssertSearch(PackageTypeCode)
 }
 
 export function OpenPackageType() {
@@ -129,12 +118,18 @@ function DefinePutPackageTypeRequest() {
 }
 
 export function AssertEditPackageType() {
-    AssertPutPackageType();
+    BaseAssertion.AssertStatusCode(RequestAliases.PutPackageType, 200)
 }
 
-export function AssertPutPackageType() {
-    BaseAssertion.AssertStatusCode(RequestAliases.PutPackageType, 200).
-        then((interception) => {
-            inActivePackageType = interception.response.body.InActive;
-        });
+export function CloseSavePackageType() {
+    DefinePackageTypeViewGetSingleRequest()
+    cy.Click(PackageTypeSelectors.PackageTypeSaveCloseButton, null);
+}
+
+export function AssertCloseSavePackageType() {
+    AssertPackageTypeGetSingle();
+}
+
+function DefinePackageTypeViewGetSingleRequest() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.PackageTypesviewGetSingle, RequestAliases.GetSignle);
 }

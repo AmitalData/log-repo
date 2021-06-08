@@ -23,10 +23,15 @@ Feature: Bank Account Create, Search and Edit from Maintenance
         Then the bank account should open successfully
 
     Scenario: Edit the Bank Account
-        Given a "EditTestBankAccount" as bankAccountLocalName
+       Given the user fill the following bank account details
+            | LocalName | EditBankAccountLocalNameTest |
         And  the user activate bank account
         When edit bank account
         Then the bank account should update successfully
         And following event should appear in events tab
             | Event                | Notes                  |
             | Bank Account Updated | Bank account Activated |
+
+    Scenario: Save and close the bank account
+        When save and close bank account
+        Then the bank account should close successfully

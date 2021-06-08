@@ -26,10 +26,15 @@ Feature: Package Type Create, Search and Edit from Maintenance
         Then the package type should open successfully
 
     Scenario: Edit the package type
-        Given a "EditTestPackageType" as packageTypeLocalName
+        Given the user fill the following package type details
+            | LocalName | EditPackageTypeLocalNameTest |
         And  the user activate package type
         When edit package type
         Then the package type should update successfully
         And following event should appear in events tab
             | Event                | Notes                  |
             | Package Type Updated | Package Type Activated |
+    
+    Scenario: Save and close the package type
+        When save and close package type
+        Then the package type should close successfully

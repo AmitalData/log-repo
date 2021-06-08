@@ -8,25 +8,26 @@ import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
 import * as gr from '../../../Base/cypress/actions/GenerateRandoms';
 import { BankAccountDetails } from '../models/BankAccountDetails'
 import { GenerateCurrentDatetimeString } from '../../../Base/cypress/actions/GenerateRandoms';
+import * as GeneralActions from './GeneralActions'
 
 let BankAccountEnglishName = null;
 let inActiveBankAccount = false;
 
-function GenerateRandomNumber(NumberLength: number) {
-    let NewRandomCode = gr.GenerateRandomNumberAndString(NumberLength)
+function GenerateRandomNumber(numberLength: number) {
+    let NewRandomCode = gr.GenerateRandomNumberAndString(numberLength)
     return NewRandomCode;
 }
 
 export function FillBankAccountDetails(bankAccountDetails: BankAccountDetails) {
-   
+
     let RandomBankAccountCode = GenerateRandomNumber(BankAccountSelectors.CodeDigitCount);
     let CurrentDateName = GenerateCurrentDatetimeString("_")
 
     cy.FillLogTextBox(BankAccountSelectors.BankAccountAccountNumber, bankAccountDetails.AccountNumber)
-    cy.FillLogTextBox(BankAccountSelectors.BankAccountBankCode, bankAccountDetails.BankCode.toLowerCase() == "random" ? RandomBankAccountCode : bankAccountDetails.BankCode)
+    cy.FillLogTextBox(BankAccountSelectors.BankAccountBankCode, RandomBankAccountCode)
     cy.FillLogTextBox(BankAccountSelectors.BankAccountBranchNumber, bankAccountDetails.BranchNumber)
     cy.FillLogLov(BankAccountSelectors.BankAccountCurrency, bankAccountDetails.Currency, true)
-    cy.FillLogTextBox(BankAccountSelectors.BankAccountName, bankAccountDetails.Name.toLowerCase() == "currentdate" ? CurrentDateName : bankAccountDetails.Name)
+    cy.FillLogTextBox(BankAccountSelectors.BankAccountName, CurrentDateName)
     cy.FillLogTextBox(BankAccountSelectors.BankAccountLocalName, bankAccountDetails.LocalName)
 }
 
@@ -42,7 +43,7 @@ function DefinePostBankAccountRequest() {
 export function AssertCreateBankAccount() {
     let intercept = cy.wait("@" + RequestAliases.PostBankAccount);
     intercept.then((interception) => {
-            AssertPostBankAccount(interception.response.statusCode, 200, interception.response.body.EnglishName)
+        AssertPostBankAccount(interception.response.statusCode, 200, interception.response.body.EnglishName)
     })
 }
 
@@ -52,23 +53,11 @@ export function AssertPostBankAccount(responseStatusCode: number, expectedStatus
 }
 
 export function SearchBankAccount() {
-    DefineBankAccountViewsGetByFiltersRequest(BankAccountEnglishName);
-    cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, BankAccountEnglishName);
-    AssertBankAccountViewsGetByFilters();
-}
-
-export function DefineBankAccountViewsGetByFiltersRequest(BankAccountEnglishName: string) {
-    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(BankAccountEnglishName + "&GetCount=false"), RequestAliases.GetFilterSearch);
-}
-
-export function AssertBankAccountViewsGetByFilters() {
-    BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
+    GeneralActions.Search(BankAccountEnglishName)
 }
 
 export function AssertSearchBankAccount() {
-    cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
-        expect(text).to.contain(BankAccountEnglishName);
-    });
+    GeneralActions.AssertSearch(BankAccountEnglishName)
 }
 
 export function OpenBankAccount() {
@@ -103,13 +92,19 @@ function DefinePutBankAccountRequest() {
 }
 
 export function AssertEditBankAccount() {
-    AssertPutBankAccount();
+    BaseAssertion.AssertStatusCode(RequestAliases.PutBankAccount, 200)
 }
 
-export function AssertPutBankAccount() {
-    BaseAssertion.AssertStatusCode(RequestAliases.PutBankAccount, 200).
-        then((interception) => {
-            inActiveBankAccount = interception.response.body.InActive;
-        });
+export function CloseSaveBankAccount() {
+    DefineBankAccountiewGetSingleRequest()
+    cy.Click(BankAccountSelectors.BankAccountSaveCloseButton, null);
+}
+
+export function AssertCloseSaveBankAccount() {
+    AssertBankAccountGetSingle();
+}
+
+function DefineBankAccountiewGetSingleRequest() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.BankAccountsviewGetSingle, RequestAliases.GetSignle);
 }
 

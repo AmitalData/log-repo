@@ -58,8 +58,10 @@ Then("the bank account should open successfully", () => {
 //#endregion
 
 //#region Edit the bank account
-Given("a {string} as bankAccountLocalName", (bankAccountLocalName) => {
-    BankAccountActions.FillBankAccountLocalName(bankAccountLocalName)
+Given("the user fill the following bank account type details", (dataTable) => {
+    bankAccountDetails = Assists.CreateInstance<BankAccountDetails>(dataTable, true);
+    let LocalName = bankAccountDetails.LocalName
+    BankAccountActions.FillBankAccountLocalName(LocalName)
 });
 
 Given("the user activate bank account", () => {
@@ -77,5 +79,13 @@ Then("the bank account should update successfully", () => {
 Then("following event should appear in events tab", (dataTable) => {
     let eventDetailsList = Assists.CreateSet<EventTypeDetails>(dataTable);
     BaseActions.ValidateEventsTab(eventDetailsList, BankAccountSelectors.BankAccountEventsTab);
+});
+
+When("save and close bank account", () => {
+    BankAccountActions.CloseSaveBankAccount(); 
+});
+
+Then("the bank account should close successfully", () => {
+    BankAccountActions.AssertCloseSaveBankAccount();
 });
 //#endregion

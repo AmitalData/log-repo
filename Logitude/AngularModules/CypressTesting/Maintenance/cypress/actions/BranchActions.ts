@@ -7,8 +7,8 @@ import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
 import { constants } from "../../../Base/cypress/constants/constants"
 import { BranchDetails } from 'cypress/models/BranchDetails';
-import * as gr from '../../../Base/cypress/actions/GenerateRandoms';
 import { GenerateCurrentDatetimeString } from '../../../Base/cypress/actions/GenerateRandoms';
+import * as GeneralActions from './GeneralActions'
 
 let BranchName = null;
 let inActiveBranch = false;
@@ -28,24 +28,11 @@ export function FillBranchDetails(branchDetails: BranchDetails) {
 
     let CurrentDateName = GenerateCurrentDatetimeString("_")
 
-    cy.FillLogTextBox(BranchSelectors.BranchName, branchDetails.Name.toLowerCase() == "currentdate" ? CurrentDateName : branchDetails.Name)
+    cy.FillLogTextBox(BranchSelectors.BranchName, CurrentDateName)
     cy.FillLogTextBox(BranchSelectors.BranchLocalName, branchDetails.LocalName)
-    if (branchDetails.Code.toLowerCase() == "random") {
-        cy.FillRandomNumber(BranchSelectors.BranchCode, BranchSelectors.MinCodeRandomNumber, BranchSelectors.MaxCodeRandomNumber)
-    }
-    else {
-        cy.FillLogTextBox(BranchSelectors.BranchCode, branchDetails.Code)
-    }
-
+    cy.FillRandomNumber(BranchSelectors.BranchCode, BranchSelectors.MinCodeRandomNumber, BranchSelectors.MaxCodeRandomNumber)
     cy.FillLogTextBox(BranchSelectors.BranchSignature, branchDetails.Signature)
-    if (branchDetails.CounterCode.toLowerCase() == "random") {
-        cy.FillRandomNumber(BranchSelectors.BranchCounterCode, BranchSelectors.MinCounterCodeRandomNumber, BranchSelectors.MaxCounterCodeRandomNumber)
-
-    }
-    else {
-        cy.FillLogTextBox(BranchSelectors.BranchCounterCode, branchDetails.Code)
-
-    }
+    cy.FillRandomNumber(BranchSelectors.BranchCounterCode, BranchSelectors.MinCounterCodeRandomNumber, BranchSelectors.MaxCounterCodeRandomNumber)
 }
 
 export function CreateBranch() {
@@ -60,8 +47,8 @@ function DefinePostBranchRequest() {
 export function AssertCreateBranch() {
     let intercept = cy.wait("@" + RequestAliases.PostBranch);
     intercept.then((interception) => {
-            AssertPostBranch(interception.response.statusCode, 200, interception.response.body.EnglishName)
-        
+        AssertPostBranch(interception.response.statusCode, 200, interception.response.body.EnglishName)
+
     })
 }
 
@@ -71,22 +58,11 @@ export function AssertPostBranch(responseStatusCode: number, expectedStatusCode:
 }
 
 export function SearchBranch() {
-    DefineBranchViewsGetByFiltersRequest(BranchName);
-    cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, BranchName);
-    AssertBranchViewsGetByFilters();
-}
-
-export function DefineBranchViewsGetByFiltersRequest(BranchName: string) {
-    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(BranchName + "&GetCount=false"), RequestAliases.GetFilterSearch);
-}
-export function AssertBranchViewsGetByFilters() {
-    BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
+    GeneralActions.Search(BranchName)
 }
 
 export function AssertSearchBranch() {
-    cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
-        expect(text).to.contain(BranchName);
-    });
+    GeneralActions.AssertSearch(BranchName)
 }
 
 export function OpenBranch() {
@@ -121,14 +97,7 @@ function DefinePutBranchRequest() {
 }
 
 export function AssertEditBranch() {
-    AssertPutBranch();
-}
-
-export function AssertPutBranch() {
-    BaseAssertion.AssertStatusCode(RequestAliases.PutBranch, 200).
-        then((interception) => {
-            inActiveBranch = interception.response.body.InActive;
-        });
+    BaseAssertion.AssertStatusCode(RequestAliases.PutBranch, 200)
 }
 
 export function CloseSaveBranch() {
@@ -136,6 +105,10 @@ export function CloseSaveBranch() {
     cy.Click(BranchSelectors.BranchSaveCloseButton, null);
 }
 
+export function AssertCloseSaveBranch() {
+    AssertBranchGetSingle();
+}
+
 function DefineBranchViewGetSingleRequest() {
-    cy.DefineRequestWait(RestAPI.GET, Urls.BranchesGetSingle, RequestAliases.GetSignle);
+    cy.DefineRequestWait(RestAPI.GET, Urls.BranchesviewGetSingle, RequestAliases.GetSignle);
 }

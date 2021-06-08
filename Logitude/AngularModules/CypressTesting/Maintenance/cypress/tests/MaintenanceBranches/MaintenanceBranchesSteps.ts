@@ -58,8 +58,10 @@ Then("the branch should open successfully", () => {
  
 
 //#region Edit the branch
-Given("a {string} as branchLocalName", (branchLocalName) => {
-    BranchActions.FillBranchLocalName(branchLocalName)
+Given("the user fill the following branch details", (dataTable) => {
+    branchDetails = Assists.CreateInstance<BranchDetails>(dataTable, true);
+    let LocalName = branchDetails.LocalName
+    BranchActions.FillBranchLocalName(LocalName)
 });
  
 Given("the user activate branch", () => {
@@ -78,4 +80,13 @@ Then("following event should appear in events tab", (dataTable) => {
     let eventDetailsList = Assists.CreateSet<EventTypeDetails>(dataTable);
     BaseActions.ValidateEventsTab(eventDetailsList, BranchSelectors.BranchEventsTab);
 });
+
+When("save and close branch", () => {
+    BranchActions.CloseSaveBranch(); 
+});
+
+Then("the branch should close successfully", () => {
+    BranchActions.AssertCloseSaveBranch();
+});
+
 //#endregion

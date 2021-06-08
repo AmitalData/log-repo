@@ -9,8 +9,6 @@ import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetai
 import * as BaseActions from "../../../../Base/cypress/actions/Actions"
 import { Constants } from "../../constants/Constants";
 
-
-
 let packageTypeDetails: PackageTypeDetails;
 
 
@@ -59,8 +57,10 @@ Then("the package type should open successfully", () => {
 
 
 //#region Edit the package type
-Given("a {string} as packageTypeLocalName", (packageTypeLocalName) => {
-    PackageTypeActions.FillPackageTypeLocalName(packageTypeLocalName)
+Given("the user fill the following package type details", (dataTable) => {
+    packageTypeDetails = Assists.CreateInstance<PackageTypeDetails>(dataTable, true);
+    let LocalName = packageTypeDetails.LocalName
+    PackageTypeActions.FillPackageTypeLocalName(LocalName)
 });
 
 Given("the user activate package type", () => {
@@ -79,4 +79,13 @@ Then("following event should appear in events tab", (dataTable) => {
     let eventDetailsList = Assists.CreateSet<EventTypeDetails>(dataTable);
     BaseActions.ValidateEventsTab(eventDetailsList, PackageTypeSelectors.PackageTypeEventsTab);
 });
+
+When("save and close package type", () => {
+    PackageTypeActions.CloseSavePackageType(); 
+});
+
+Then("the package type should close successfully", () => {
+    PackageTypeActions.AssertCloseSavePackageType();
+});
+
 //#endregion

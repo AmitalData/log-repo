@@ -22,10 +22,15 @@ Feature: Branch Create, Search and Edit from Maintenance
         Then the branch should open successfully
 
     Scenario: Edit the Branch
-        Given a "EditTestBranch" as branchLocalName
+        Given the user fill the following branch details
+            | LocalName | EditBranchLocalNameTest |
         And  the user activate branch
         When edit branch
         Then the branch should update successfully
         And following event should appear in events tab
             | Event          | Notes              |
             | Branch Updated | Branch Inactivated |
+
+    Scenario: Save and close the branch
+        When save and close branch
+        Then the branch should close successfully
