@@ -189,6 +189,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        HorseId = a.HorseId,
                        HorseName = a.Horse == null ? null : a.Horse.Name,
                        LCLContainerTypeId = a.LCLContainerTypeId,
+                       ContainerEntityId = a.ContainerEntityId,
                    }).FirstOrDefault();
 
             myResult.InsideShipmentPackages = insideShipmentPackageQuery.GetInsideShipmentPackages(myResult.Id, tenant);
@@ -310,6 +311,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        HorseId = a.HorseId,
                        HorseName = a.Horse == null ? null : a.Horse.Name,
                        LCLContainerTypeId = a.LCLContainerTypeId,
+                       ContainerEntityId = a.ContainerEntityId,
                    }).ToList();
 
             var commonContext = CommonDataContext.GetContext(tenant);
@@ -482,6 +484,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                 CountryId = a.CountryId,
                                 WarehouseReleaseNumber = a.WarehouseReleaseNumber,
                                 LCLContainerTypeId = a.LCLContainerTypeId,
+                                ContainerEntityId = a.ContainerEntityId,
                             }).ToList();
             }
 

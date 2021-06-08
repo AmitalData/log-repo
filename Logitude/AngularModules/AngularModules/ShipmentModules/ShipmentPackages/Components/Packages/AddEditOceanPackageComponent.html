@@ -995,6 +995,14 @@
                         <div></div>
                     </td>
 
+                    <td *ngIf="IsContainerEntityReferenceVisible" style="width: 70px;">
+                        <Hyperlink (click)="OpenContainerEntityWindow()" [Text]="'View Container'"></Hyperlink>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
                     <td style="width: 57px;">
                         <button class="Button" id="{{'CancelOceanPackage' | IdGeneratorPipe}}" (click)="CancelButtonClicked()">Cancel</button>
                     </td>
