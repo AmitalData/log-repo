@@ -78,3 +78,4 @@ export class LedgerTransactionList {
 	ChequeStatus: string;
 	
 }
+ 

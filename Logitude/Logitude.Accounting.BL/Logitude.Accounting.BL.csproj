@@ -254,6 +254,7 @@
     <Compile Include="CoreBL\ExternalReconcile\Utils\ExternalReconcileTypeService.cs" />
     <Compile Include="CoreBL\Fix\FixJournaRecolService.cs" />
     <Compile Include="CoreBL\GLAccountChequesTotalCalculator.cs" />
+    <Compile Include="CoreBL\GLAccountChequesTransactionsRetreivingService.cs" />
     <Compile Include="CoreBL\GLAccountCounterService.cs" />
     <Compile Include="CoreBL\ExternalReconcile\CreateAutoExternalReconcileWhileStreamingService.cs" />
     <Compile Include="CoreBL\ExternalReconcile\ExternalReconcileDataProvider.cs" />

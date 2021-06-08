@@ -446,7 +446,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 );
         }
 
-
+        public List<LedgerTransactionPM> GetByARPaymentTransactionAccountId(string accountID, int tenant)
+        {
+            List<LedgerTransaction> transactions = repository.GetByARPaymentTransactionAccountId(accountID, tenant).ToList();
+            List<LedgerTransactionPM> transactionPMs = transactions.Select(poco => this.GetEntityPM(poco)).ToList();
+            return transactionPMs;
+        }
         public decimal? GetLedgerTransactionSumFromTo(string gLAccointId, DateTime fromDate, DateTime toDate, int tenant)
         {
             return this.repository.GetLedgerTransactionSumFromTo(gLAccointId, fromDate, toDate, tenant);

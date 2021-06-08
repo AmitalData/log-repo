@@ -53,6 +53,7 @@ using Simplog.Data.InfrastructureModel;
 using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.Accounting.BL.Utils;
 using Logitude.Accounting.BL.CoreBL.BuildTenant;
+using Logitude.Accounting.BL.CoreBL;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
@@ -786,8 +787,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.CheckContactFeature("GLAccount", "READ", tenant);
 
                 IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
-                GLAccountQueryService glAccountQuery = new GLAccountQueryService(MyContext);
-                List<LedgerTransactionList> myResult = glAccountQuery.GetARPyamentChequesListAsLedgerTransactions(accountId, tenant);
+                GLAccountChequesTransactionsRetreivingService ledgerTransactionQuery = new GLAccountChequesTransactionsRetreivingService(tenant,MyContext);
+                List<LedgerTransactionPM> myResult = ledgerTransactionQuery.GetAccountChequesTransactions(accountId);
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }

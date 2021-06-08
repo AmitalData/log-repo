@@ -660,46 +660,46 @@ namespace Logitude.Accounting.BL.EntityQueryServices
            
         }
 
-        public List<LedgerTransactionList> GetARPyamentChequesListAsLedgerTransactions(string accountId, int tenant)
-        {
-            List<LedgerTransactionList> arPaymentTransactions = GetARPaymentLedgerTransactions(accountId, tenant);
-            List<LedgerTransactionList> externalTransactions = GetExternalTransactionsForAccount(accountId, tenant);
+        //public List<LedgerTransactionList> GetARPyamentChequesListAsLedgerTransactions(string accountId, int tenant)
+        //{
+        //   // List<LedgerTransactionList> arPaymentTransactions = GetARPaymentLedgerTransactions(accountId, tenant);
+        //   // List<LedgerTransactionList> externalTransactions = GetExternalTransactionsForAccount(accountId, tenant);
 
-            arPaymentTransactions.AddRange(externalTransactions);
+        // //   arPaymentTransactions.AddRange(externalTransactions);
 
-            return arPaymentTransactions;
-        }
+        //    return arPaymentTransactions;
+        //}
 
-        private List<LedgerTransactionList> GetARPaymentLedgerTransactions(string accountId, int tenant)
-        {
-            IInvoiceContext invoicecontext = InvoiceContext.GetContext(tenant);
-            bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
+        //private List<LedgerTransactionList> GetARPaymentLedgerTransactions(string accountId, int tenant)
+        //{
+        //    IInvoiceContext invoicecontext = InvoiceContext.GetContext(tenant);
+        //    bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
 
-            List<string> ARPaymentIds = (from a in invoicecontext.ARPayments
-                                       where  a.Tenant == tenant
-                                       select a.Id).ToList();
+        //    List<string> ARPaymentIds = (from a in invoicecontext.ARPayments
+        //                               where  a.Tenant == tenant
+        //                               select a.Id).ToList();
 
-            const string AccountingEntity_ARPayment = "3";
-            List<LedgerTransactionList> arPaymentTransactions = (from a in context.LedgerTransactions
-                                                                 join journal in context.Journals on a.JournalId equals journal.Id
-                                                                 join arPaymentCheque in context.ARPaymentCheques on 
-                                                                 join arPaymentChequeStatuses in context.ARPaymentChequeStatuses on arPaymentCheque.StatusCode equals arPaymentChequeStatuses.Code
-                                                                 where journal.AccountingEntityCode == AccountingEntity_ARPayment && a.AccountId == accountId && a.Tenant == tenant && ARPaymentIds.Contains(arPaymentCheque.PaymentId)
-                                                                 select new LedgerTransactionList
-                                                                 {
-                                                                     ValueDate = arPaymentCheque != null? arPaymentCheque.ValueDate:null,
-                                                                     JournalNumber = journal != null ? journal.JournalNumber: null,
-                                                                     LocalAmountCredit = a.LocalAmountCredit,
-                                                                     ForeignAmountCredit = a.ForeignAmountCredit,
-                                                                     Reference1 = a.Reference1,
-                                                                     Reference2 = a.Reference2,
-                                                                     Reference3 = a.Reference3,
-                                                                     Notes = a.Notes,
-                                                                     ChequeStatus = arPaymentChequeStatuses != null ? showLocal ? arPaymentChequeStatuses.LocalName : arPaymentChequeStatuses.EnglishName: null,
+        //    const string AccountingEntity_ARPayment = "3";
+        //    //List<LedgerTransactionList> arPaymentTransactions = (from a in context.LedgerTransactions
+        //    //                                                     join journal in context.Journals on a.JournalId equals journal.Id
+        //    //                                                     join arPaymentCheque in context.ARPaymentCheques on 
+        //    //                                                     join arPaymentChequeStatuses in context.ARPaymentChequeStatuses on arPaymentCheque.StatusCode equals arPaymentChequeStatuses.Code
+        //    //                                                     where journal.AccountingEntityCode == AccountingEntity_ARPayment && a.AccountId == accountId && a.Tenant == tenant && ARPaymentIds.Contains(arPaymentCheque.PaymentId)
+        //    //                                                     select new LedgerTransactionList
+        //    //                                                     {
+        //    //                                                         ValueDate = arPaymentCheque != null? arPaymentCheque.ValueDate:null,
+        //    //                                                         JournalNumber = journal != null ? journal.JournalNumber: null,
+        //    //                                                         LocalAmountCredit = a.LocalAmountCredit,
+        //    //                                                         ForeignAmountCredit = a.ForeignAmountCredit,
+        //    //                                                         Reference1 = a.Reference1,
+        //    //                                                         Reference2 = a.Reference2,
+        //    //                                                         Reference3 = a.Reference3,
+        //    //                                                         Notes = a.Notes,
+        //    //                                                         ChequeStatus = arPaymentChequeStatuses != null ? showLocal ? arPaymentChequeStatuses.LocalName : arPaymentChequeStatuses.EnglishName: null,
 
-                                                                 }).ToList();
-            return arPaymentTransactions;
-        }
+        //    //                                                     }).ToList();
+        //    return arPaymentTransactions;
+        //}
 
         private List<LedgerTransactionList> GetExternalTransactionsForAccount(string accountId, int tenant)
         {
