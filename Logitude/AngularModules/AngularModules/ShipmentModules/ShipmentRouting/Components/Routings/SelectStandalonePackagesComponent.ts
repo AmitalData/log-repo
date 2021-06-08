@@ -64,7 +64,24 @@ export class SelectStandalonePackagesComponent {
         this.SelectedItem = null;
         var myPackageTypeColumnWidth: number = 80;
 
-        this.ShipmentPM.ShipmentPackages.forEach(item => {
+        var pickUpDliveryPackagescontainersIds: string[] = [];
+        if (this.EntityPM instanceof ShipmentPickUpPM) {
+            this.ShipmentPM.ShipmentPickUps.forEach(item => {
+                item.ShipmentPickUpDeliveryPackages.forEach(item1 => {
+                    pickUpDliveryPackagescontainersIds.push(item1.ContainerEntityId);
+                });
+            });
+        }
+
+        else if (this.EntityPM instanceof ShipmentDeliveryPM) {
+            this.ShipmentPM.ShipmentDeliveries.forEach(item => {
+                item.ShipmentPickUpDeliveryPackages.forEach(item1 => {
+                    pickUpDliveryPackagescontainersIds.push(item1.ContainerEntityId);
+                });
+            });
+        }
+
+        this.ShipmentPM.ShipmentPackages.filter(d => d.ContainerEntityId != null && (pickUpDliveryPackagescontainersIds.indexOf(d.ContainerEntityId) == -1)).forEach(item => {
             var widthOfLabel = AppTool.GetTextWidth(item.PackageTypeName);
             if (widthOfLabel > myPackageTypeColumnWidth) {
                 myPackageTypeColumnWidth = widthOfLabel;
