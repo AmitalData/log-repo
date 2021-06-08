@@ -377,7 +377,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
                 newCard.Date = milstone.Done ? milstone.Date : (milstone.EstimationDate || milstone.Date);
                 newCard.Code = 'No. ' + milstone.Id;
                 newCard.Title = milstone.Name;
-                newCard.Description = milstone.Notes || 'This milestone does not have descriptions';
+                newCard.Description = milstone.Notes;
                 newCard.IsDimmed = milstone.IsEstimation && !milstone.Done;
                 newCard.IsActive = milstone.Id + '' == this.Shipment.ShipmentList.CurrentMilestoneCode;
                 newCard.HasWarning = newCard.IsActive;
