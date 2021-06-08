@@ -15,7 +15,5 @@ export class PackageTypeSelectors extends RegexSelectors {
     public static readonly PackageTypeEventsTab = "#PackageTypeTHEvents"
     public static readonly PackageTypeSaveCloseButton = "#PackageType-SaveClose";
     public static readonly MaintenanceItemPackageType = "#MaintenanceItemMTPK"
-    public static readonly MinRandomNumber = 1
-    public static readonly MaxRandomNumber = 1000
     public static readonly CodeDigitCount = 4
 }
