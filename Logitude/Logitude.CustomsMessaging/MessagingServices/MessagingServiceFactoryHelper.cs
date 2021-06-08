@@ -518,6 +518,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
                ((new DCAInUCSBondedDocument_MessagingService()).MainInterfaceCode);
 
 
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+
+          SaveCC_MSG2450_ContainerizationMessageMessagingService>
+          ((new SaveCC_MSG2450_ContainerizationMessageMessagingService()).MainInterfaceCode);
 
 
         }
