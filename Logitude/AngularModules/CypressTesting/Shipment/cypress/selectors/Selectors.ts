@@ -59,8 +59,17 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly OrdersTabHouse = '#ShipmentTHOrders_1';
   public static readonly PartnersTabHouse = '#ShipmentTHPartners_1';
   public static readonly BacktoMasterShipment = '.BackBottonBody';
+  public static readonly EditMainCarrigeHouse = '#Edit-MainCarriage_1';
+  public static readonly MainCarrigeHouse = '#Shipment_MainCarriageFromPortId';
+  public static readonly RoutingRegion= '.MediaFill';
 
- 
+  public static readonly EventsTabHouseA = '#ShipmentTHEvents_2';
+  public static readonly PackageTabHouseA = '#ShipmentTHPackages_2';
+  public static readonly AddPackageTabHouseA = '#AddPackage_2';
+
+  
+  
+
   
   
   //#endregion

@@ -66,19 +66,19 @@ Given("the user in the master's rounting tab",()=>{
 Given("edit main carriage leg with the following details",(dataTable)=>{
     let mainCarriageLeg = Assists.CreateInstance<MainCarriageLeg>(dataTable, true);
     Actions.EditMainCarriageLegsFromToport(mainCarriageLeg.Gateway,mainCarriageLeg.Destination);
-    //cy.Click(ShipmentSelectors.ShipmentSaveButton, null);
+   
 });
 When("update master", () => {
     //Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
     Actions.UpdateMaster()
 });
 Then('the master should update successfully',()=>{
-  //Actions.Asserationofeditmaincarrige()
-  cy.get('.Value').should('have.value','FRA')
+    Actions. AsserationEditMainCarriageLegsFromToport()
   
 })
 Then('the connceted house main carriage leg should update with the following',()=>{
     Actions.openHouseShipment()
-    cy.Navigate(ShipmentSelectors.RoutingsTabHouse);
+   Actions. AsserationUpdateMaincarrigeHouseShipment()
+
     
 })

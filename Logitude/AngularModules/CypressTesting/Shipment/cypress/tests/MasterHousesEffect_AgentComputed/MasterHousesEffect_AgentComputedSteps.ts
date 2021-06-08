@@ -28,7 +28,7 @@ Given("a master Shipment with following details", (dataTable) => {
     Actions.FillShipmentWizardsFields(MasterShipmentDetails);
 });
 
-When("create shipment", () => {
+When("create master", () => {
     Actions.CreateShipment(MasterShipmentDetails.ShipmentLevel);
 });
 
@@ -58,44 +58,7 @@ Then("the house should connect successfully", () => {
     Actions.CheckBusyIndicator()
     Actions.ValidateCheckHouseCheckBox();
 });
+Then(' And the house computedAgent should be TestAgent ',()=>{
+Actions.openHouseShipment()
+})
 //#endregion
-
-When("cancel the master shipment with {string} Note", (note) => {
-    EventNote = note
-    Actions.CancelShipment(note);
-});
-Then('the master should Cancel successfully',()=>{
-  BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
-  Actions.ValidateCancelIconExist(true);
-  Actions.ValidateShipmentEventActions(ShipmentSelectors.EventsTab,EventNote);
-  Actions.ValidateShipmentFields(true);
-})
-
-Then("the house should Cancel successfully", () => {
-    Actions.openHouseShipment()
-    //BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
-    Actions.ValidateCancelIconExist(true);
-    Actions.ValidateShipmentEventActions(ShipmentSelectors.EventsTabHouse, EventNote);
-    Actions.ValidateShipmentHouseFields(true)
-});
-When("reactivate the shipment with {string} Note", (note) => {
-    cy.BackButton('Shipment')
-    EventNote = note
-    Actions.ReactiveShipment(note);
-})
-Then('the master should Reactivate successfully',()=>{
-    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
-    Actions.ValidateCancelIconExist(false);
-    Actions.ValidateShipmentEventActions(ShipmentSelectors.EventsTab, EventNote);
-    Actions.ValidateShipmentFields(false);
-
-})
-
-Then("the house should Reactivate successfully", () => {
-    Actions.openHouseShipment()
-    //BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
-    Actions.ValidateCancelIconExist(false);
-    Actions.ValidateShipmentEventActions(ShipmentSelectors.EventsTabHouseA, EventNote);
-    Actions.ValidateShipmentHouseFieldsReactive(false);
-
-})

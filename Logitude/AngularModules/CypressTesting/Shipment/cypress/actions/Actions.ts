@@ -125,6 +125,7 @@ export function BacktotheMasterShipment(){
 }
 export function openHouseShipment(){
     cy.Navigate(ShipmentSelectors.ShipmentsTab);
+    // ShipmentContext.HouseNumber
     cy.get("hyperlink").find("button").first().click()
 }
 export function OpenShipment(shipmentNumber: string) {
@@ -247,7 +248,7 @@ export function ValidateShipmentFields(IsCanceled: boolean) {
     CheckIfDisable(ShipmentSelectors.ReceivablesTab, BaseSelectors.AddButton, IsCanceled);
 }
 export function ValidateShipmentHouseFields(IsCanceled: boolean){
-   // cy.Navigate(ShipmentSelectors.PackagesTabHouse);
+    cy.Navigate(ShipmentSelectors.PackagesTabHouse);
    CheckIfDisable(ShipmentSelectors.PackagesTabHouse, ShipmentSelectors.AddPackage, IsCanceled);
     cy.Navigate(ShipmentSelectors.OrdersTabHouse);
     cy.Navigate(ShipmentSelectors.PartnersTabHouse);
@@ -255,6 +256,14 @@ export function ValidateShipmentHouseFields(IsCanceled: boolean){
 
     
 }
+export function ValidateShipmentHouseFieldsReactive(IsCanceled: boolean){
+    cy.Navigate(ShipmentSelectors.PackageTabHouseA);
+    CheckIfDisable(ShipmentSelectors.PackageTabHouseA, ShipmentSelectors.AddPackageTabHouseA, IsCanceled);
+
+    
+    
+}
+
 export function ValidateCloseShipmentFields(IsClosed: boolean) {
     cy.Click(ShipmentSelectors.GeneralTab, null);
     EditGeneralField();
@@ -516,6 +525,17 @@ export function FillPickupRouting() {
     BaseAssertion.AssertStatusCode(RequestAliases.AddressViewsRequest, 200)
     cy.Click(ShipmentSelectors.SaveClose, null)
 }
+export function AsserationUpdateMaincarrigeHouseShipment() {
+    cy.Navigate(ShipmentSelectors.RoutingsTabHouse);
+    cy.Navigate(ShipmentSelectors.EditMainCarrigeHouse);
+   // cy.get(ShipmentSelectors.MainCarrigeHouse).should('have.text','FRA Frankfurt am Main')
+    //cy.get(ShipmentSelectors.MainCarrigeHouse).should('be.disabled')
+     BaseAssertion.AssertElementDisabled(ShipmentSelectors.MainCarrigeHouse,BaseSelectors.BeDisabled)
+     BaseAssertion.AssertElementHaveValue(ShipmentSelectors.MainCarrigeHouse,'Frankfurt am Main')
+     BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentMainCarriageToPort,BaseSelectors.BeDisabled)
+     BaseAssertion.AssertElementHaveValue(ShipmentSelectors.ShipmentMainCarriageToPort,'Tel Aviv-Yafo')  
+}
+
 
 export function EditMainCarriageLegs(Airline: string) {
     cy.Click(ShipmentSelectors.EditRoutingMainCarriage, null)
@@ -535,6 +555,21 @@ export function EditMainCarriageLegsFromToport(Gateway :string, Destination :str
     cy.FillLogLov(ShipmentSelectors.ShipmentMainCarriageToPort,Destination, false)
     cy.Click(ShipmentSelectors.MainCarriageOKBtn, null);
     cy.Click(ShipmentSelectors.ConfirmWindowYes, null);
+
+    
+   
+}
+export function AsserationEditMainCarriageLegsFromToport() {
+    //cy.Click(ShipmentSelectors.EditRoutingMainCarriage, null)
+    //BaseAssertion.AssertElementHaveValue(ShipmentSelectors.ShipmentMainCarriageFromPort,'Frankfurt am Main')
+    //BaseAssertion.AssertElementHaveValue(ShipmentSelectors.ShipmentMainCarriageToPort,'Tel Aviv-Yafo')
+  cy.get('.MediaFill').contains('Frankfurt am Main').should('exist')
+  cy.get('.MediaFill').contains('Tel Aviv-Yafo').should('exist')
+ 
+  //cy.Click(ShipmentSelectors.RoutingRegion, null).contains('Frankfurt am Main').should('exist');
+
+    //cy.Click(ShipmentSelectors.MainCarriageOKBtn, null);
+    //cy.Click(ShipmentSelectors.ConfirmWindowYes, null);
 
     
    

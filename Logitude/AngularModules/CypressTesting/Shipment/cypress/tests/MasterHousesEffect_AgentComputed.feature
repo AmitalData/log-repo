@@ -26,5 +26,5 @@ Feature: AgentComputed in house and master
         And the user add partner with following details
            | Agent                | TestAgent1   |
         When update house
-        Then the house should update successfully
-        And the  the house computedAgent should be TestAgent1 
+        Then the master should update successfully
+        And the house computedAgent should be TestAgent1 
