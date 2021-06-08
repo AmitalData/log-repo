@@ -14,6 +14,8 @@ import {ConfirmWindow} from '../../../../../Controls/Windows/ConfirmWindow';
 import {FeatureLocator} from '../../../../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 import {AddEditDeliveryComponent} from '../AddEditDeliveryComponent';
+import { FeatureToggleList } from '../../../../../Infrastructure/EntityLists/FeatureToggleList';
+import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 
 @Component({
     
@@ -33,9 +35,13 @@ export class DeliveryPackagesTabComponent {
     public ItemsSource: DeliveryPackageItem[] = [];
     public DataContext = this;
     public TypeCode: string = null;
+    public IsStandaloneShipmentVisible: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-
+        var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SAS")[0];
+        if (featureToggle) {
+            this.IsStandaloneShipmentVisible = true;
+        }
     }
 
     public IsConnectedToContainer: boolean = false;
@@ -137,7 +143,26 @@ export class DeliveryPackagesTabComponent {
         logWindow.WindowArgs = this;
         logWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/DeliveryTabs/DeliveryPackagesChooseComponent");
     }
+
     AddButtonClicked() {
+        if (this.IsStandaloneShipmentVisible) {
+            this.ValidateNumberOfStandAloneShipmentPackages()
+        } else {
+            this.ViewAddDeliveryPackagesWindow();
+        }
+    }
+
+    ValidateNumberOfStandAloneShipmentPackages() {
+        var numberOfAllowedPackages = 1;
+        if (this.EntityPM.ShipmentPickUpDeliveryPackages.length >= numberOfAllowedPackages && !AppTool.IsNullOrEmpty(this.EntityPM.StandaloneShipmentId)) {
+            var messageWindow: MessageWindow = new MessageWindow();
+            messageWindow.Show("Can't Add Another Container Since Delivery is Connected to a Stand Alone Shipment");
+        } else {
+            this.ViewAddDeliveryPackagesWindow();
+        }
+    }
+
+    ViewAddDeliveryPackagesWindow() {
         var itemPM = new ShipmentPickUpDeliveryPackagePM(null);
         itemPM.Tenant = this.EntityPM.Tenant;
         itemPM.ShipmentPickUpDeliveryId = this.EntityPM.Id;
@@ -149,6 +174,7 @@ export class DeliveryPackagesTabComponent {
         logWindow.DataContext = itemComponent;
         logWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/DeliveryTabs/DeliveryPackagesAddEditComponent");
     }
+
     EditPackageClicked(itemComponent: DeliveryPackageItem) {
         var logWindow = new LogitudeWindow();
         logWindow.Title = TextCodeTranslator.Translate("ShipmentPickUpDeliveryPackage.O.EditDeliveryPackage");

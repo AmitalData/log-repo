@@ -848,25 +848,29 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
 
     private isCreateStandaloneShipmentClicked: boolean = false;
     CreateStandaloneShipmentClicked() {
-        if (this.EntityPM.IsDirty) {
-            this.isCreateStandaloneShipmentClicked = true;
-            this.Save(false);
-        }
+        if (this.ValidationErrorsList.length == 0) {
+            if (this.EntityPM.IsDirty) {
+                this.isCreateStandaloneShipmentClicked = true;
+                this.Save(false);
+            }
 
-        else {
-            this.CreateStandaloneShipment();
-        }
+            else {
+                this.CreateStandaloneShipment();
+            }
+        } 
     }
 
     private isConnctingStandaloneShipmentClicked: boolean = false;
     ConnctingStandaloneShipmentClicked() {
-        if (this.EntityPM.IsDirty) {
-            this.isConnctingStandaloneShipmentClicked = true;
-            this.Save(false);
-        }
+        if (this.ValidationErrorsList.length == 0) {
+            if (this.EntityPM.IsDirty) {
+                this.isConnctingStandaloneShipmentClicked = true;
+                this.Save(false);
+            }
 
-        else {
-            this.ChooseStandAloneShipment();
+            else {
+                this.ChooseStandAloneShipment();
+            }
         }
     }
 
@@ -890,12 +894,23 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
 
     StandAloneShipmentButtonClicked(buttonCode: string) {
         if (buttonCode == "CreateStandalone") {
+            this.ValidateNumberOfDeliveryPackages("Create");            
             this.CreateStandaloneShipmentClicked();
         }
         else if (buttonCode == "ConnectStandalone") {
+            this.ValidateNumberOfDeliveryPackages("Connect");  
             this.ConnctingStandaloneShipmentClicked();
         }
         this.DropdownClose();
+    }
+
+    ValidateNumberOfDeliveryPackages(actionType:string) {
+        var numberOfAllowedPackages = 1;
+        var errors: string[] = [];
+        if (this.EntityPM.ShipmentPickUpDeliveryPackages.length > numberOfAllowedPackages) {
+            errors.push("Can't " + actionType +" a Stand Alone Shipment Since Delivery has more than one Container");
+        }
+        this.ValidationErrorsList = errors;
     }
 
     public ShipmentNumber: string = null;
@@ -910,6 +925,7 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
         args.FromPartnerId = this.EntityPM.FromPartnerCardId;
         args.ToPartnerId = this.EntityPM.ToPartnerCardId;
         args.CarrierId = this.EntityPM.CarrierId;
+        args.NumberOfPackages = this.EntityPM.ShipmentPickUpDeliveryPackages != null ? this.EntityPM.ShipmentPickUpDeliveryPackages.length : 0;
         logWindow.WindowArgs = args;
         logWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/ChooseStandaloneShipmentComponent');
         logWindow.ComponentLoaded.subscribe(s => {

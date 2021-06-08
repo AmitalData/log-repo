@@ -33,6 +33,8 @@ import { CommonDomainService } from '../Common/Services/CommonDomainService';
 import { VatTypeListService } from '../Common/Services/StandardLists/VatTypeListService';
 import { VatTypeList } from '../Common/EntityLists/VatTypeList';
 import { VatTypePercentagePM } from '../Common/EntityPMs/VatTypePercentagePM';
+import { ShipmentPickUpDeliveryPackagePM } from './EntityPMs/ShipmentPickUpDeliveryPackagePM';
+import { ShipmentPackageHarmonizePM } from './EntityPMs/ShipmentPackageHarmonizePM';
 
 export class ShipmentTool {
     private static CurrentSession = SessionLocator.SelectedSession;
@@ -2287,10 +2289,6 @@ export class ShipmentTool {
         shipmentPM.BranchId = shipment.BranchId;
         shipmentPM.IncotermId = shipment.IncotermId;
 
-        if (shipment.ShipmentPackages.length) {
-            shipmentPM.ShipmentOrderPackages = shipment.ShipmentOrderPackages.map(packageItem => Object.assign({}, packageItem));
-        }
-
         if (delivery) {
             shipmentPM.StandalonePickupDeliveryId = delivery.Id;
             shipmentPM.StandalonePickupDeliveryNumber = delivery.PickUpDeliveryNumber;            
@@ -2311,6 +2309,11 @@ export class ShipmentTool {
             shipmentPM.MainCarriageETA = delivery.ETA;
             shipmentPM.MainCarriageATD = delivery.ATD;
             shipmentPM.MainCarriageATA = delivery.ATA;
+            if (delivery.ShipmentPickUpDeliveryPackages.length) {
+                delivery.ShipmentPickUpDeliveryPackages.forEach(deliveryPackage => {
+                    shipmentPM.ShipmentPackages.push(this.CopyStandAlonePackages(deliveryPackage));
+                });
+            }
         }
 
         else if (pickup) {
@@ -2333,10 +2336,42 @@ export class ShipmentTool {
             shipmentPM.MainCarriageETA = pickup.ETA;
             shipmentPM.MainCarriageATD = pickup.ATD;
             shipmentPM.MainCarriageATA = pickup.ATA;
+            if (pickup.ShipmentPickUpDeliveryPackages.length) {
+                pickup.ShipmentPickUpDeliveryPackages.forEach(pickupPackage => {
+                    shipmentPM.ShipmentPackages.push(this.CopyStandAlonePackages(pickupPackage));
+                });
+            }
         }
 
         return shipmentPM;
     }
+
+    private static CopyStandAlonePackages(pickupDeliveryPackage: ShipmentPickUpDeliveryPackagePM) {
+        var shipmentPackage = new ShipmentPackagePM(null);
+        shipmentPackage.Tenant = pickupDeliveryPackage.Tenant;
+        shipmentPackage.ContainerNumber = pickupDeliveryPackage.ContainerNumber;
+        shipmentPackage.Weight = pickupDeliveryPackage.Weight;
+        shipmentPackage.Width = pickupDeliveryPackage.Width;
+        shipmentPackage.Height = pickupDeliveryPackage.Height;
+        shipmentPackage.Length = pickupDeliveryPackage.Length;
+        shipmentPackage.Volume = pickupDeliveryPackage.Volume;
+        shipmentPackage.Quantity = pickupDeliveryPackage.Quantity;
+        shipmentPackage.Description = pickupDeliveryPackage.Description;
+        shipmentPackage.PackageTypeId = pickupDeliveryPackage.PackageTypeId;
+        shipmentPackage.PackageTypeName = pickupDeliveryPackage.PackageTypeName;
+        shipmentPackage.ShipperSeal = pickupDeliveryPackage.ShipperSeal;
+        shipmentPackage.IsMultiHarmonize = pickupDeliveryPackage.IsMultiHarmonize;
+        if (pickupDeliveryPackage.PickUpDeliveryPackageHarmonizes.length) {
+            pickupDeliveryPackage.PickUpDeliveryPackageHarmonizes.forEach(pickupDeliveryHarmonizePackage => {
+                var shipmentHarmonizePackage = new ShipmentPackageHarmonizePM(shipmentPackage);
+                shipmentHarmonizePackage.Tenant = pickupDeliveryHarmonizePackage.Tenant;
+                shipmentHarmonizePackage.Harmonize = pickupDeliveryHarmonizePackage.Harmonize;
+                shipmentPackage.AddShipmentPackageHarmonizePM(shipmentHarmonizePackage);
+            });
+        }
+        return shipmentPackage;
+    }
+
 }
 export class ByPckageType {
     public Quantity: number;

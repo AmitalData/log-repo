@@ -12,6 +12,8 @@ import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/Servi
 import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
 import {ConfirmWindow} from '../../../../../Controls/Windows/ConfirmWindow';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
+import { FeatureToggleList } from '../../../../../Infrastructure/EntityLists/FeatureToggleList';
+import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 
 @Component({
     
@@ -26,9 +28,13 @@ export class PickupPackagesTabComponent {
     public TransportModeId: string;
     public ObjectTableName: string = "ShipmentPickUpDelivery";
     public ItemsSource: PickupPackageItem[] = [];
-    public DataContext = this;    
+    public DataContext = this;
+    public IsStandaloneShipmentVisible: boolean = false;
     constructor() {
-
+        var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SAS")[0];
+        if (featureToggle) {
+            this.IsStandaloneShipmentVisible = true;
+        }
     }
 
     InitTab(myEntityPM: ShipmentPickUpPM, myShipmentPM: ShipmentPM) {
@@ -86,7 +92,26 @@ export class PickupPackagesTabComponent {
         logWindow.WindowArgs = this;
         logWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/PickupTabs/PickupPackagesChooseComponent");
     }
+
     AddButtonClicked() {
+        if (this.IsStandaloneShipmentVisible) {
+            this.ValidateNumberOfStandAloneShipmentPackages()
+        } else {
+            this.ViewAddPickupPackagesWindow();
+        }
+    }
+
+    ValidateNumberOfStandAloneShipmentPackages() {
+        var numberOfAllowedPackages = 1;
+        if (this.EntityPM.ShipmentPickUpDeliveryPackages.length >= numberOfAllowedPackages && !AppTool.IsNullOrEmpty(this.EntityPM.StandaloneShipmentId)) {
+            var messageWindow: MessageWindow = new MessageWindow();
+            messageWindow.Show("Can't Add Another Container Since Pickup is Connected to a Stand Alone Shipment");
+        } else {
+            this.ViewAddPickupPackagesWindow();
+        }
+    }
+
+    ViewAddPickupPackagesWindow() {
         var itemPM = new ShipmentPickUpDeliveryPackagePM(null);
         itemPM.Tenant = this.EntityPM.Tenant;
         itemPM.ShipmentPickUpDeliveryId = this.EntityPM.Id;

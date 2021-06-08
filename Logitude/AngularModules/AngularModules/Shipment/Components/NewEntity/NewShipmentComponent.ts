@@ -3016,12 +3016,16 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
                 this.EntityPM.StandalonePickupDeliveryId = this.SourceEntityPM.StandalonePickupDeliveryId;
                 this.GetStandAloneShipmentPackegas();
             }
+
+            this.OnFiltersChanged();
         }
     }
 
     GetStandAloneShipmentPackegas() {
         if (this.SourceEntityPM.ShipmentPackages.length) {
-            this.EntityPM.ShipmentOrderPackages = this.SourceEntityPM.ShipmentOrderPackages.map(packageItem => Object.assign({}, packageItem));
+            this.SourceEntityPM.ShipmentPackages.forEach(item => {
+                this.EntityPM.AddPackage(item);
+            });
         }
     }
 
