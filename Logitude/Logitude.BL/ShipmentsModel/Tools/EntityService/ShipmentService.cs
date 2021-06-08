@@ -6860,6 +6860,57 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 tariffRepository.SubmitChanges();
             }
         }
+        
+        private void UpdateHouseRoutingFieldsWhenConnectedToMaster(Shipment houseShipment)
+        {
+            if (!string.IsNullOrEmpty(entityPM.PreCarriageFromPortId) && !string.IsNullOrEmpty(entityPM.PreCarriageToPortId)
+                && !string.IsNullOrEmpty(houseShipment.PreForwardingFromPortId) && !string.IsNullOrEmpty(houseShipment.PreForwardingToPortId))
+            {
+                houseShipment.PreForwardingToPortId = entityPM.PreCarriageFromPortId;
+            }
+
+            if (!string.IsNullOrEmpty(entityPM.OnCarriageFromPortId) && !string.IsNullOrEmpty(entityPM.OnCarriageToPortId)
+                && !string.IsNullOrEmpty(houseShipment.OnForwardingFromPortId) && !string.IsNullOrEmpty(houseShipment.OnForwardingToPortId))
+            {
+                houseShipment.OnForwardingFromPortId = entityPM.OnCarriageToPortId;
+            }
+        }
+
+        private void UpdateShipmentProductItems()
+        {
+            if (entityPM.IsProductItemsUpdated)
+            {
+                HTSCodeQuery hTSCodeQuery = new HTSCodeQuery(tenant);
+                foreach (ShipmentProductItemPM productItem in this.entityPM.ShipmentProductItems.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete))
+                {
+                    productItem.ChangeSetOp = ChangeSetOperation.Update;
+                    HTSCodePM hTSCodePM = hTSCodeQuery.GetSingleHTSCodeByProductItemAndCountry(productItem.ProductItemId, entityPM.ToCountryId, tenant);
+                    if (hTSCodePM != null)
+                    {
+                        productItem.HTSCode = hTSCodePM.Code;
+                        productItem.ApprovedByCustomer = hTSCodePM.ApprovedByCustomer;
+                    }
+                    else
+                    {
+                        productItem.HTSCode = null;
+                        productItem.ApprovedByCustomer = false;
+                    }
+                }
+
+                entityPM.IsProductItemsUpdated = false;
+            }
+        }
+        private void ComputeIsHTSMissingField()
+        {
+            List<ShipmentProductItemPM> shipmentProductItem = this.entityPM.ShipmentProductItems.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+
+            entityPM.IsHTSMissing = false;
+
+            if (shipmentProductItem.Count > 0 && shipmentProductItem.Where(d => string.IsNullOrEmpty(d.HTSCode)).Any())
+            {
+                entityPM.IsHTSMissing = true;
+            }
+        }
 
         private void UpdatePickUpDeliveryStandaloneFieldsOnShipmentCreation()
         {
@@ -6898,31 +6949,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             this.CreateShipmentPackage(shipmentPackage);
         }
-        private void UpdateShipmentProductItems()
-        {
-            if (entityPM.IsProductItemsUpdated)
-            {
-                HTSCodeQuery hTSCodeQuery = new HTSCodeQuery(tenant);
-                foreach (ShipmentProductItemPM productItem in this.entityPM.ShipmentProductItems.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete))
-                {
-                    productItem.ChangeSetOp = ChangeSetOperation.Update;
-                    HTSCodePM hTSCodePM = hTSCodeQuery.GetSingleHTSCodeByProductItemAndCountry(productItem.ProductItemId, entityPM.ToCountryId, tenant);
-                    if (hTSCodePM != null)
-                    {
-                        productItem.HTSCode = hTSCodePM.Code;
-                        productItem.ApprovedByCustomer = hTSCodePM.ApprovedByCustomer;
-                    }
-                    else
-                    {
-                        productItem.HTSCode = null;
-                        productItem.ApprovedByCustomer = false;
-                    }
-                }
-
-                entityPM.IsProductItemsUpdated = false;
-            }
-        }    
-        
+                
         private void UpdatePickUpDeliveryStandaloneFieldsOnShipmentUpdate()
         {
             ShipmentPickUpDelivery shipmentPickUpDelivery = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDeliveryByStandaloneShipmentId(entityPM.Id, tenant);
@@ -6944,31 +6971,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 shipmentPickUpDeliveryRepository.Update(shipmentPickUpDelivery);
             }
         }
-        private void ComputeIsHTSMissingField()
-        {
-            List<ShipmentProductItemPM> shipmentProductItem = this.entityPM.ShipmentProductItems.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
-
-            entityPM.IsHTSMissing = false;
-            
-            if (shipmentProductItem.Count > 0 && shipmentProductItem.Where(d => string.IsNullOrEmpty(d.HTSCode)).Any())
-            {
-                entityPM.IsHTSMissing = true;
-            }
-        }
-        private void UpdateHouseRoutingFieldsWhenConnectedToMaster(Shipment houseShipment)
-        {
-            if (!string.IsNullOrEmpty(entityPM.PreCarriageFromPortId) && !string.IsNullOrEmpty(entityPM.PreCarriageToPortId)
-                && !string.IsNullOrEmpty(houseShipment.PreForwardingFromPortId) && !string.IsNullOrEmpty(houseShipment.PreForwardingToPortId))
-            {
-                houseShipment.PreForwardingToPortId = entityPM.PreCarriageFromPortId;
-            }
-
-            if (!string.IsNullOrEmpty(entityPM.OnCarriageFromPortId) && !string.IsNullOrEmpty(entityPM.OnCarriageToPortId)
-                && !string.IsNullOrEmpty(houseShipment.OnForwardingFromPortId) && !string.IsNullOrEmpty(houseShipment.OnForwardingToPortId))
-            {
-                houseShipment.OnForwardingFromPortId = entityPM.OnCarriageToPortId;
-            }
-        }
+        
         private void UpdateStandAloneShipmentOnPickDeliveryConnection(string shipmentId, string standalonePickupDeliveryId)
         {
             ShipmentQuery shipmentQuery = new ShipmentQuery(this.entityRepository);
