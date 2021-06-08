@@ -1390,7 +1390,9 @@
 
             var logindata = userdata.UserName + ":" + userdata.CurrentTenant + ":" + userdata.CardId + ":" + userdata.CardType + ":" + userdata.IsBrandingEnabled;
             //document.location.href = "SharedLogisticPage.aspx?userdata=" + logindata;
-            
+
+            window.sessionStorage.setItem("IsSharedLogistics", true);
+
             var params = [];
             params.push({ name: "Token", value: userdata.Token });
             params.push({ name: "LoginData", value: logindata });
