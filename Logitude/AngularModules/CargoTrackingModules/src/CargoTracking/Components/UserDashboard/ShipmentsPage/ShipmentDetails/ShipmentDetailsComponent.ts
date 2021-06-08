@@ -1,8 +1,4 @@
-import
-    {
-        Component,
-        ViewChild, ElementRef, AfterViewInit, HostListener
-    } from '@angular/core';
+import {Component,ViewChild, ElementRef, AfterViewInit, HostListener, Input, EventEmitter} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { CargoTrackingSearchService } from 'src/CargoTracking/Services/Others/CargoTrackingSearchService';
@@ -23,7 +19,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
 
     @ViewChild('SliderWrapper') SliderWrapperElement: ElementRef;
 
-
+    @Input() DetailsSectionToggleEvent: EventEmitter<any> = new EventEmitter();
 
     isLoading: boolean = false;
     showMoreReferences: boolean = false;
@@ -44,6 +40,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
     InlandTransportMode = 'I';
     OceanTransportMode = 'O';
     AirTransportMode = 'A';
+    ContainersNumbers: string[] = [];
 
     ShipmentCustomsData: CargoTrackingShipmentCustomsData;
     get tenant()
@@ -127,6 +124,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
             if (this.ShipmentWithMilestones) {
                 this.Shipment = result;
                 this.ShipmentReferences = result.ShipmentList.CustomerReference ? result.ShipmentList.CustomerReference.split(',') : null;
+                this.ContainersNumbers = result.ShipmentList.ContainersNumbers ? result.ShipmentList.ContainersNumbers.split(',') : null;
                 this.HasReferences = this.SetHasReferences(); 
                
                 this.SetRoutingVariables();
@@ -886,6 +884,10 @@ export class ShipmentDetailsComponent implements AfterViewInit
 
     DownloadAllClick(entityId: string) {
         this.documentDownloadService.DownloadAllPages(entityId);
+    }
+
+    ShowMoreLinkClicked() {
+        this.DetailsSectionToggleEvent.emit();
     }
 }
 
