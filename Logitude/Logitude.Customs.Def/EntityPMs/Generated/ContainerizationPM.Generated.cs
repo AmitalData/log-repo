@@ -319,6 +319,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string connectedDeclarations ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ConnectedDeclarations  
+	   {
+	    
+	     get
+		{
+		   return connectedDeclarations;
+		 }
+		 set
+		 {
+		   if(connectedDeclarations != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ConnectedDeclarations",OldValue=connectedDeclarations,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   connectedDeclarations=value;
+		   }
+			
+		 }
+	   }
 	  private string notConnectedDeclarations ;
 	  	  
        

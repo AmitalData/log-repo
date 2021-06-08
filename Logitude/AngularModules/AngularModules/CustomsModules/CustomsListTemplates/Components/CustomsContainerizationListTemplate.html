@@ -4,7 +4,7 @@
 
     <div class="TextTrimming RightCenter"
          *ngIf="fieldName == 'PaymentDate'">
-        <div style="text-align:center" *ngIf="CustomsContainerizationRecord.PaymentDate!=null">
+        <div style="text-align:center" *ngIf="rowData.PaymentDate!=null">
             <img  title="הגשה" src="./Images/CheckBoxIcon.png" />
         </div>
         <!--*ngIf="CustomsContainerizationRecord.PaymentDate"-->
@@ -12,30 +12,23 @@
 
     <div class="TextTrimming RightCenter"
          *ngIf="fieldName == 'CreateDateTime'">
-        <span>{{CustomsContainerizationRecord.CreateDateTime  | DateTimeToDatePipe  }}</span>
+        <span>{{rowData.CreateDateTime  | DateTimeToDatePipe  }}</span>
 
     </div>
 
 
-    <div class="TextTrimming RightCenter"
-         *ngIf="fieldName == 'IsChecked'">
-        <div class="TextTrimming" style="cursor:pointer">
-            <div style="width: 16px; height:16px; margin-top:10px">
-                <input class="CenterCenter" style="box-shadow:none ;width: 16px; height:16px; text-align:center"
-                       type="checkbox" (click)="OnCheckedWithSystemEvent($event , CustomsContainerizationRecord.Id)" />
-            </div>
-        </div>
-
+    <div *ngIf="fieldName == 'MyConnectedCheckBox'" style="text-align:right">
+        <CheckBox [IsChecked]="IsConnectedDeclarationChecked" (Checked)="OnConnectedCheckBoxChecked($event)" [IsEnabled]="!IsDisplayOnly"></CheckBox>
     </div>
 
      <div *ngIf="fieldName == 'TransportModeForExport'" style="position:relative;width:100%; height: 100%;">
-                 <div *ngIf="CustomsContainerizationRecord.TransportModeForExport=='A'">
+                 <div *ngIf="rowData.TransportModeForExport=='A'">
                     <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Airline.png" />
                 </div>
-                <div *ngIf="CustomsContainerizationRecord.TransportModeForExport=='L'">
+                <div *ngIf="rowData.TransportModeForExport=='L'">
                     <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Trucker.png" />
                 </div>
-                <div *ngIf="CustomsContainerizationRecord.TransportModeForExport=='O'">
+                <div *ngIf="rowData.TransportModeForExport=='O'">
                     <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Vessel.png" />
                 </div>
       </div>

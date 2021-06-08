@@ -322,7 +322,8 @@ import { SignStationExtendedListService } from './Services/ExtendedLists/SignSta
 import { DeclarationCourierStatusExtendedListService } from './Services/ExtendedLists/DeclarationCourierStatusExtendedListService';
 import { RecallClientsForCutoms } from '../CustomsModules/CustomsGeneralRequests/Components/RecallClientsForCutoms';
 import { CustomsCollateralExtendedListService } from './Services/ExtendedLists/CustomsCollateralExtendedListService';
- import { CourierMasterExtendedListService } from './Services/ExtendedLists/CourierMasterExtendedListService';
+import { CourierMasterExtendedListService } from './Services/ExtendedLists/CourierMasterExtendedListService';
+
  
 //#endregion
 
@@ -401,6 +402,7 @@ import { LogisticsReferenceTypeListService } from './Services/StandardLists/Logi
 import { ReferenceStatusListService } from './Services/StandardLists/ReferenceStatusListService';
 import { ReferenceInputTypeListService } from './Services/StandardLists/ReferenceInputTypeListService';
 import { ContainerizationPMService } from './Services/StandardPMs/ContainerizationPMService';
+import { ContainerizationExtendedListService } from './Services/ExtendedLists/ContainerizationExtendedListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -760,6 +762,8 @@ export class ModuleProviders {
             case "RecallClientsForCutoms": { myResult = new RecallClientsForCutoms(); break; }
             case "CustomsCollateralExtendedListService": { myResult = new CustomsCollateralExtendedListService(); break; }
             case "CourierMasterExtendedListService": { myResult = new CourierMasterExtendedListService(); break; }
+            case "ContainerizationExtendedListService": { myResult = new ContainerizationExtendedListService(); break; }
+
             //#endregion
 
             //#region ExtendedPMs

@@ -6,6 +6,8 @@ import { CustomsCollateralAnswerSharedDataService } from '../../../Customs/Servi
 import { Declaration } from 'typescript';
 import { DeclarationList } from '../../../Customs/EntityLists/DeclarationList';
 import { AppTool } from '../../../Infrastructure/Tools';
+import { ContainerizationExtendedListService } from '../../../Customs/Services/ExtendedLists/ContainerizationExtendedListService';
+import { ContainerizationPM } from '../../../Customs/EntityPMs/ContainerizationPM';
 
 
 @Component({   
@@ -13,53 +15,68 @@ import { AppTool } from '../../../Infrastructure/Tools';
 })
 
 export class CustomsContainerizationListTemplate {
-
+    public rowData: any;
+    public IsDisplayOnly: boolean = false;
     public CustomsContainerizationRecord: DeclarationList;
     public fieldName: any;
     public isAnswer: boolean;
     public isDisable: boolean;
-     TableUpdateButtonIsEnabled: boolean = false;
+    TableUpdateButtonIsEnabled: boolean = false;
     UpdateButtonVisibility: boolean = false;
     TableUpdateButtonOpacity: string = "1";
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
+
+    IsConnectedDeclarationChecked: boolean = true;
+
     //, private _customsCollateralAnswerSharedDataService: CustomsCollateralAnswerSharedDataService
-    constructor(private CD: ChangeDetectorRef) {
+    entityPM: ContainerizationPM;
+    constructor(private CD: ChangeDetectorRef, private _containerizationExtendedListService: ContainerizationExtendedListService) {
+        this.entityPM = new ContainerizationPM();
      }
 
-    setVariables(customsContainerizationRecord: DeclarationList, fieldName: string) {
-        debugger;
-        this.CustomsContainerizationRecord = customsContainerizationRecord;
-
+    setVariables(rowData: any, fieldName: string, additionalData: any ) {
         this.fieldName = fieldName;
-         this.CD.detectChanges();
+        this.rowData = rowData;
+        this.BuildDeclarationsCheckBox();       
+        this.CD.detectChanges();
     }
 
-
-    OnCheckedWithSystemEvent(eventM, id) {
-        //eventM.stopPropagation();
-        //if (!this._customsCollateralAnswerSharedDataService._SelectedItems.Collection.includes(id)) {
-        //    this._customsCollateralAnswerSharedDataService._SelectedItems.Insert(id);
-        //}
-        //else {
-        //    var removedIndex = null;
-        //    for (var i = 0; i < this._customsCollateralAnswerSharedDataService._SelectedItems.Collection.length; i++) {
-        //        if (id == this._customsCollateralAnswerSharedDataService._SelectedItems.Collection[i]) {
-        //            removedIndex = i;
-        //            break;
-        //        }
-        //    }
-        //    if (removedIndex != null) {
-        //        this._customsCollateralAnswerSharedDataService._SelectedItems.Collection.splice(removedIndex, 1);
-        //    }
-
-        //}
-
-
-      //  this._customsCollateralAnswerSharedDataService.IsDisplayButtonSend = (this._customsCollateralAnswerSharedDataService._SelectedItems.Collection.length > 1);
-
+    BuildDeclarationsCheckBox() {
+        let sConnectedDeclarations = this.entityPM.ConnectedDeclarations as string;
+        if (!AppTool.IsNullOrEmpty(sConnectedDeclarations)) {
+            let ConnectedDeclarations = sConnectedDeclarations.split(',')
+            let res = ConnectedDeclarations.filter(r => r == this.rowData.Id)[0];
+        }
+        if (!this.entityPM.ConnectedDeclarations) {
+            this.entityPM.ConnectedDeclarations = "";
+        }
+        if (this._containerizationExtendedListService.connectedSelectAll == true) {
+            this.IsConnectedDeclarationChecked = true;
+        } else {
+            this.IsConnectedDeclarationChecked = false;
+        }
     }
 
+    OnConnectedCheckBoxChecked($event) {
+        if (!this.entityPM.ConnectedDeclarations) {
+            this.entityPM.ConnectedDeclarations = "";
+        }
 
+        this._containerizationExtendedListService.disconnectedSelectAll = false;
+        this.entityPM.ConnectedDeclarations = this.entityPM.ConnectedDeclarations.replace("ALL", "");
+        if ($event) {
+            if (!this.entityPM.ConnectedDeclarations.includes(this.rowData.Id)) {
+                this.entityPM.ConnectedDeclarations = this.entityPM.ConnectedDeclarations + this.rowData.Id + ",";
+            }
+        }
+        else {
+            if (this.entityPM.ConnectedDeclarations.includes(this.rowData.Id)) {
 
+                this.entityPM.ConnectedDeclarations = this.entityPM.ConnectedDeclarations.replace(this.rowData.Id + ",", "");
+            }
+        }
+    }
 }
+
+

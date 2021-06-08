@@ -50,6 +50,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ImporterName, 
 	         ContainerizationStatusName, 
 	         HataraStatusName, 
+	         ConnectedDeclarations, 
 	         NotConnectedDeclarations,
 	      }
 
