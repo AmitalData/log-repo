@@ -51,12 +51,14 @@ Given("edit main carriage leg with the following details", (dataTable) => {
     cy.Click(ShipmentSelectors.ShipmentSaveButton, null);
 });
 When("update master", () => {
-   // Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
+   Actions.UpdateMaster()
+    // Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
 });
 
 
 Then("the master should update successfully", () => {
-      //BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
+   Actions.AsserationMasterUpdateRoutind()
+      
 });
 //#region Create house export air shipment inside the master
 
@@ -83,13 +85,15 @@ Then("the house should connect successfully", () => {
 When("close the master shipment Operationally", () => {
 
     Actions.OperationalCloseShipment();
-   // Actions.UpdateClosedShipment();
+   //Actions.UpdateClosedShipment();
 });
 
 
-// Then the master should close operationally successfully
-// And the connected house should close operationally successfully
+
 Then("the master should close operationally successfully", () => {
+    
+    Actions.ValidateCloseShipmentFields(true);
+
    // BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
    // Actions.ValidateCloseIconExist(true);
     //Actions.ValidateShipmentEventActions(ShipmentSelectors.EventsTab,EventNote);
@@ -98,12 +102,20 @@ Then("the master should close operationally successfully", () => {
 
 });
 Then("the connected house should close operationally successfully",()=>{
-
+    Actions.openHouseShipment()
+    Actions.ValidateShipmentHouseFields(true)
 })
 When("reopen master operationally with {string} Note",(note)=>{
     EventNote = note
     Actions.RepoenShipment(note);
-    
-    //Actions.UpdateClosedShipment();
 
 });
+Then('the master should reopen successfully',()=>{
+    cy.BackButton('Shipment')
+    Actions.ValidateCloseShipmentFields(false);
+})
+Then('the connected house should reopen successfully',()=>{
+    Actions.openHouseShipment()
+    Actions.ValidateShipmentHouseFieldsReactive(false)
+
+})

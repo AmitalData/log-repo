@@ -179,7 +179,6 @@ export function CancelShipment(note: string) {
 export function OperationalCloseShipment() {
     cy.Click(ShipmentSelectors.ShipmentMoreList, null, true);
     cy.Click(ShipmentSelectors.OperationalCloseButton, null);
-    
     UpdateShipment(ShipmentSelectors.ConfirmActionButton);
 }
 
@@ -194,7 +193,7 @@ export function RepoenShipment(note: string) {
     cy.Click(ShipmentSelectors.ShipmentMoreList, null, true);
     cy.Click(ShipmentSelectors.OperationalReopenButton, null);
     cy.FillLogTextBox(ShipmentSelectors.ShipmentEventNote, note)
-    //UpdateShipment(ShipmentSelectors.ConfirmActionButton);
+    UpdateShipment(ShipmentSelectors.ConfirmActionButton);
 }
 
 export function ValidateCancelIconExist(IsCancelled: boolean) {
@@ -259,9 +258,7 @@ export function ValidateShipmentHouseFields(IsCanceled: boolean){
 export function ValidateShipmentHouseFieldsReactive(IsCanceled: boolean){
     cy.Navigate(ShipmentSelectors.PackageTabHouseA);
     CheckIfDisable(ShipmentSelectors.PackageTabHouseA, ShipmentSelectors.AddPackageTabHouseA, IsCanceled);
-
-    
-    
+   
 }
 
 export function ValidateCloseShipmentFields(IsClosed: boolean) {
@@ -277,16 +274,16 @@ export function ValidateCloseShipmentFields(IsClosed: boolean) {
         
     }
     CheckIfDisable(ShipmentSelectors.OrdersTab, ShipmentSelectors.ShipmentBookingNumberOfPackages, IsClosed);
-    CheckIfDisable(ShipmentSelectors.OrdersTab, ShipmentSelectors.ShipmentMainCarriageCarrierId, IsClosed);
+    //CheckIfDisable(ShipmentSelectors.OrdersTab, ShipmentSelectors.ShipmentMainCarriageCarrierId, IsClosed);
     CheckIfHaveClass(ShipmentSelectors.PartnersTab, ShipmentSelectors.PartnerToggle, "ToggleButtonDisabled", IsClosed);
     CheckIfDisable(ShipmentSelectors.PartnerEditShipper, BaseSelectors.RedButton, IsClosed);
-    cy.Click(BaseSelectors.Button, BaseSelectors.ContainsClose);
+    cy.Click(BaseSelectors.Button, BaseSelectors.ContainsCancel);
+
     CheckIfDisable(ShipmentSelectors.PackagesTab, ShipmentSelectors.AddPackage, IsClosed);
     CheckIfHaveClass(ShipmentSelectors.RoutingsTab, ShipmentSelectors.RoutingToggle, 'ToggleButtonDisabled', IsClosed)
     CheckIfDisable(ShipmentSelectors.EditRoutingMainCarriage, BaseSelectors.RedButton, IsClosed);
-    cy.Click(BaseSelectors.Button, BaseSelectors.ContainsClose);
-    CheckIfDisable(ShipmentSelectors.PayablesTab, BaseSelectors.AddButton, IsClosed);
-    CheckIfDisable(ShipmentSelectors.ReceivablesTab, BaseSelectors.AddButton, IsClosed);
+    cy.Click(BaseSelectors.Button, BaseSelectors.ContainsCancel);
+    
 }
 export function ValidatePackageDetails(tabSelector: string, partialSplitDetails: PackagesDetails, grossWeightSelector: string, isPackage: boolean) {
     cy.Navigate(tabSelector)
@@ -559,12 +556,17 @@ export function EditMainCarriageLegsFromToport(Gateway :string, Destination :str
     
    
 }
+export function AsserationMasterUpdateRoutind(){
+cy.get(ShipmentSelectors.RoutingRegion).contains('AA American Airlines').should('exist')
+cy.get(ShipmentSelectors.RoutingRegion).contains('766').should('exist')
+}
+
 export function AsserationEditMainCarriageLegsFromToport() {
     //cy.Click(ShipmentSelectors.EditRoutingMainCarriage, null)
     //BaseAssertion.AssertElementHaveValue(ShipmentSelectors.ShipmentMainCarriageFromPort,'Frankfurt am Main')
     //BaseAssertion.AssertElementHaveValue(ShipmentSelectors.ShipmentMainCarriageToPort,'Tel Aviv-Yafo')
-  cy.get('.MediaFill').contains('Frankfurt am Main').should('exist')
-  cy.get('.MediaFill').contains('Tel Aviv-Yafo').should('exist')
+  cy.get(ShipmentSelectors.RoutingRegion).contains('Frankfurt am Main').should('exist')
+  cy.get(ShipmentSelectors.RoutingRegion).contains('Tel Aviv-Yafo').should('exist')
  
   //cy.Click(ShipmentSelectors.RoutingRegion, null).contains('Frankfurt am Main').should('exist');
 
