@@ -94,7 +94,7 @@ export class JournalPageComponent implements AfterViewInit {
         this.Approved_JournalsVisibility = FeatureLocator.HasFeaturePermession("Journal", "ApprovedJournal") ? true : false;
         this.All_journalsVisibility = FeatureLocator.HasFeaturePermession("Journal", "JOURNAL") ? true : false;
         this.ExternalJournalsVisibility = FeatureLocator.HasFeaturePermession("Journal", "ExternalJournals") ? true : false;
-        this.LoadCVS_JournalsVisibility = FeatureLocator.HasFeaturePermession("Journal", "ExternalJournals") ? true : false;
+        this.LoadCVS_JournalsVisibility = FeatureLocator.HasFeaturePermession("Journal", "LOADJOURNALCSV") ? true : false;
         //this.Auto_Created_JournalsVisibility = FeatureLocator.HasFeaturePermession("Journal", "Auto_Created_Journals") ? true : false;
     }
 
