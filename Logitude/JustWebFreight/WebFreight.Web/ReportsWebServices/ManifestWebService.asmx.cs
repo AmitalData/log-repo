@@ -214,7 +214,7 @@ namespace WebFreight.Web.ReportsWebServices
                 #region Master Shipper
                 if (!string.IsNullOrEmpty(master.ShipperId))
                 {
-                    Card myCard = CardRepository.GetSingleCard(master.ShipperId, tenant, true);
+                    Card myCard = CardRepository.GetSingleCard(master.ShipperId, tenant, false);
                     if (myCard != null)
                     {
                         manifestDataProvider.ShipperName = myCard.EnglishName;
@@ -614,7 +614,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                         if (!string.IsNullOrEmpty(shipper.PrimaryContactId))
                         {
-                            Contact contact = ContactRepository.GetSingleContact(shipper.PrimaryContactId, tenant, true);
+                            Contact contact = ContactRepository.GetSingleContact(shipper.PrimaryContactId, tenant, false);
                             if (contact != null)
                             {
                                 detail.ShipperContactName = contact.EnglishName;
