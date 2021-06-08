@@ -363,7 +363,6 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.SLAC).HasMaxLength(5).IsUnicode(false);
             this.Property(t => t.ShipmentSubTypeId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ShipmentSubTypeName).HasMaxLength(60).IsUnicode(false);
-
             this.Property(t => t.OnCarriageFromPortId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.OnCarriageToPortId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.PreCarriageFromPortId).HasMaxLength(15).IsUnicode(false);
@@ -373,6 +372,7 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.OnCarriageTransportModeId).HasMaxLength(1).IsUnicode(false);
             this.Property(t => t.OnForwardingTransportModeId).HasMaxLength(1).IsUnicode(false);
             this.Property(t => t.PreForwardingFromPortId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.FreightLocationId).HasMaxLength(15).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("ShipmentDataView");
@@ -848,6 +848,7 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.OnCarriageTransportModeId).HasColumnName("OnCarriageTransportModeId");
             this.Property(t => t.OnForwardingTransportModeId).HasColumnName("OnForwardingTransportModeId");
             this.Property(t => t.PreForwardingFromPortId).HasColumnName("PreForwardingFromPortId");
+            this.Property(t => t.FreightLocationId).HasColumnName("FreightLocationId");
         }
     }
 }
