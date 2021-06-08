@@ -52,6 +52,7 @@
     <Content Include="Accounting\Components\EditTabs\InterestReport\GeneralTab\InterestReportLineByDateDetails\InterestReportLineByDateDetailsComponent.html" />
     <Content Include="Accounting\Components\EditTabs\Interest\DetailsTab\AddEditInterestBasesPeriod\AddEditInterestBasesPeriodComponent.html" />
     <Content Include="Accounting\Components\EditTabs\Interest\DetailsTab\InterestBasesTypeDetailsTabComponent.html" />
+    <Content Include="Accounting\Components\EditTabs\Journal\JournalDebugTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\Journal\UpdateJournalLineComponent.html" />
     <Content Include="Accounting\Components\EditTabs\OpenFormatReport\OpenFormatReportLogTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\PaymentCheque\PaymentChequeGeneralTabComponent.html" />
@@ -330,10 +331,12 @@
     <Content Include="_Resources\css\PrimeWebComponent.css" />
     <Content Include="_Resources\js\UnifreightJSBridge.js" />
     <TypeScriptCompile Include="Abstractions\Services\BaseService.ts" />
+    <TypeScriptCompile Include="Accounting\Components\EditTabs\Journal\JournalDebugTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\Journal\UpdateJournalLineComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Maintenance\Tester\AccountingMainTesterComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\NewEntity\JournalCSVLoadComponent.ts" />
     <TypeScriptCompile Include="Accounting\EntityPMs\GLAccountFollowUpDataPM.ts" />
+    <TypeScriptCompile Include="Accounting\EntityPMs\JournalMoreDataPM.ts" />
     <TypeScriptCompile Include="Accounting\Services\ExtendedPMs\GLaccountFollowUpDataExtendedPMService.ts" />
     <TypeScriptCompile Include="App\DynamicLoader\LazyWidgetsLogitude.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\CopyJournalComponent.ts" />
