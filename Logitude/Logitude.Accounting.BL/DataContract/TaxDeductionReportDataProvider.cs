@@ -384,11 +384,50 @@ namespace Logitude.Accounting.BL.DataContract
                 {
                     vendorId= gLAccount.Id;// vendors.Where(d => d.GLAccountId == gLAccount.Id).FirstOrDefault();
                 }
+                else
+                {
+                    vendorId = GetVendorIdByMainAccount(transaction.OppositeAccountId);
+                }
             }
             else vendorId= vendor.GLAccountId;
             return vendorId;
         }
+        private string GetVendorIdByMainAccount(string accountId)
+        {
+            GLAccountPM account = GetSingleGLAccount(accountId);
+            if (account == null || account.IsMultiCurrency == true) return null;
+                          return GetVendorIdForSingleCurrencyAccount(account);
+           
+        }
+        private string GetVendorIdForSingleCurrencyAccount(GLAccountPM account)
+        {
+            GLAccountCurrencyPM gLAccountCurrency = GetGLAccountCurrencyByGLaccountId(account.Id);
+            if (gLAccountCurrency == null)
+            {
+                return null;
 
+            }
+            else
+            {
+                GLAccountPM mainAccount = GetSingleGLAccount(gLAccountCurrency.MainGLAccountId);
+                CardList vendor = transactionsVendors.Where(d => d.GLAccountId == mainAccount.Id).FirstOrDefault();
+                if (vendor == null) { return null; }
+                return vendor.GLAccountId;
+            }
+        }
+
+        private GLAccountCurrencyPM GetGLAccountCurrencyByGLaccountId(string accountId)
+        {
+            GLAccountCurrencyQueryService accountCurrencyQueryService = new GLAccountCurrencyQueryService(Tenant);
+            return accountCurrencyQueryService.GetEntityByGLAccountId(accountId, Tenant);
+        }
+        private GLAccountPM GetSingleGLAccount(string accountId)
+        {
+            GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(Tenant);
+            return gLAccountQueryService.GetSinglePM(accountId, Tenant);
+
+
+        }
         private JournalPM GetJournalPMById(LedgerTransaction transaction)
         {
             JournalQueryService journalQuery = new JournalQueryService(transaction.Tenant);
