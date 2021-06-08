@@ -19,6 +19,9 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly NewTapItem = '.NewTabItem';
   public static readonly ShipmentWorkspace = '#SHIP_1';
   public static readonly ShipmentSearch = '#Shipment_Search_1';
+  public static readonly EditShipmentMaincarrige = '.LogitudeIconButton';
+
+  
 
   
   
@@ -50,6 +53,9 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly EventsTab = '#ShipmentTHEvents';
   public static readonly ConnectionsTab = '#ShipmentTHConnections';
   public static readonly CustomsTab = '#ShipmentTHCustoms';
+  public static readonly RoutingsTabHouse = '#ShipmentTHRoutings_1';
+
+  
   //#endregion
   //#region General tab
   public static readonly ShipmentGrossWeight = '#Shipment_GrossWeightInKG';

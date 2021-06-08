@@ -104,6 +104,7 @@ export function UpdateMaster(){
     cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.PutShipment)
 }
 
+
 //export function GetHouseNumber() : any {
     //BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200).then((interception)=>{
     //ShipmentNumber=interception.response.body.ShipmentNumber;
@@ -139,6 +140,13 @@ export function OpenShipment(shipmentNumber: string) {
     cy.SelectQuickSearchFirstElement(quickSearchDetails);
 
     BaseAssertion.AssertStatusCode(RequestAliases.WaitLoadShipmentMenuButtons, 200);
+}
+export function Asserationofeditmaincarrige(
+
+){
+    cy.Click(ShipmentSelectors.EditRoutingMainCarriage, null)
+    
+    cy.contains('OK').click()
 }
 export function SplitShipment(packageNumber: string) {
     cy.Click(ShipmentSelectors.ShipmentMoreList, null, true);
