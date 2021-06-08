@@ -34,9 +34,7 @@ export class PanelComponent implements OnInit
     ngOnInit()
     {
         this.initPanel();
-        this.DetailsSectionToggleEvent.subscribe(event =>{
-            this.ShowMoreDetails()
-        });
+        this.SubscribeDetailsSectionToggleEvent();
     }
 
 
@@ -46,6 +44,12 @@ export class PanelComponent implements OnInit
         if (width < 470 && this.HaveDetailsSection) {
             this.ShowDetailsSection = true;
         }
+    }
+
+    private SubscribeDetailsSectionToggleEvent() {
+        this.DetailsSectionToggleEvent.subscribe(event => {
+            this.ShowMoreDetails();
+        });
     }
 
     ShowMoreDetails()

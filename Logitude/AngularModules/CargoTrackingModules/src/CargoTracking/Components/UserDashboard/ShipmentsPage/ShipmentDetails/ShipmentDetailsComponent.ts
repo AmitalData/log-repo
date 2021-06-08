@@ -124,7 +124,6 @@ export class ShipmentDetailsComponent implements AfterViewInit
             if (this.ShipmentWithMilestones) {
                 this.Shipment = result;
                 this.ShipmentReferences = result.ShipmentList.CustomerReference ? result.ShipmentList.CustomerReference.split(',') : null;
-                this.ContainersNumbers = result.ShipmentList.ContainersNumbers ? result.ShipmentList.ContainersNumbers.split(',') : null;
                 this.HasReferences = this.SetHasReferences(); 
                
                 this.SetRoutingVariables();
@@ -132,6 +131,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
                 this.GetShipmentCustomsData();
                 this.GetShipmentPackages();
                 this.GetDocumentsFilingsConnectedToShipment();
+                this.SetContainersNumbers(result);
 
             }
 
@@ -143,6 +143,8 @@ export class ShipmentDetailsComponent implements AfterViewInit
             }, 200);
         });
     }
+
+
     SetHasReferences() {
         return this.ShipmentReferences == null ? false : true;
     }
@@ -211,6 +213,11 @@ export class ShipmentDetailsComponent implements AfterViewInit
             }
         });
     }
+
+    private SetContainersNumbers(result: any) {
+        this.ContainersNumbers = result.ShipmentList.ContainersNumbers ? result.ShipmentList.ContainersNumbers.split(',') : null;
+    }
+
     PartnersAddresses: any[] = [];
     GetPartnersAddresses(){
         var partnersIds = this.GetShipmentPMPartnersIds();
