@@ -39,6 +39,18 @@ export class Urls {
     public static readonly GlobalZones = "**/globalzones"
     public static readonly GlobalZonesGetSingle = "**/globalzones/getsingle?**"
     
+    public static readonly BankAccounts = "**/bankaccountlites"
+    public static readonly BankAccountsGetSingle = "**/bankaccountlites/getsingle?**"
+    public static readonly BankAccountsviewGetSingle = "**/bankaccountliteviews/getsingle/?**";
+
+    public static readonly PackageTypes = "**/packagetypes"
+    public static readonly PackageTypesGetSingle = "**/packagetypes/getsingle?**"
+    public static readonly PackageTypesviewGetSingle = "**/packagetypeviews/getsingle/?**";
+    
+    public static readonly Branches = "**/branches"
+    public static readonly BranchesGetSingle = "**/branches/getsingle?**"
+    public static readonly BranchesviewGetSingle = "**/branchviews/getsingle/?**";
+
     public static readonly SpecialServicesTypes = "**/specialservicestypes"
     public static readonly SpecialServicesTypesGetSingle="**/specialservicestypes/getsingle?**"
 

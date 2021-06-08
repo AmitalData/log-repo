@@ -23,6 +23,10 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly MaintenanceItemMoveTypes = "#MaintenanceItemMTMT"
    public static readonly MaintenanceItemShipmentSubType = "#MaintenanceItemMTSB"
    public static readonly MaintenanceItemCreditCardTypes = "#MaintenanceItemMTCC"
+   public static readonly MaintenanceItemBankAccount = "#MaintenanceItemMTBL"
+   public static readonly MaintenanceItemPackageType = "#MaintenanceItemMTPK"
+   public static readonly MaintenanceItemBranch = "#MaintenanceItemMTBR"
+
    //#endregion
 
    public static readonly GeneralEditScreen = ".MediaFillAbsolute .CurvedEditArea";
@@ -162,7 +166,6 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly CitySaveButton = "#CountryCity-Save"
    //#endregion
 
-
    //#region  Global Zone
    public static readonly GlobalZoneCode = "#GlobalZone_Code"
    public static readonly GlobalZoneEnglishName = "#GlobalZone_EnglishName"
@@ -171,6 +174,7 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly GlobalZoneSaveButton = "#GlobalZone-Save"
    public static readonly GlobalZoneEventsTab = "#GlobalZoneTHEvents"
    //#endregion
+
    //#region  Commodity
    public static readonly CommodityCode = "#Commodity_Code"
    public static readonly CommodityName = "#Commodity_Name"

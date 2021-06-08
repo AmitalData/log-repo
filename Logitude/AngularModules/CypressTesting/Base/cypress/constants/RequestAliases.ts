@@ -100,9 +100,19 @@ export class RequestAliases {
     public static readonly PutCountry="PutCountry"
     public static readonly PostState="PostState"
     public static readonly PutState="PutState"
+
     public static readonly PostGlobalZone="PostGlobalZone"
     public static readonly PutGlobalZone="PutGlobalZone"
-   
+
+    public static readonly PostBankAccount="PostBankAccount"
+    public static readonly PutBankAccount="PutBankAccount"
+
+    public static readonly PostPackageType="PostPackageType"
+    public static readonly PutPackageType="PutPackageType"
+
+    public static readonly PostBranch="PostBranch"
+    public static readonly PutBranch="PutBranch"
+
     public static readonly PostSpecialServicesType="PostSpecialServicesType"
     public static readonly PutSpecialServicesType="PutSpecialServicesType"
 
