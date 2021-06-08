@@ -183,6 +183,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                    where ledger.IsExternalReconcile == true
                                           && journal.AccountingEntityCode == "6"
                                           && ledger.Tenant == tenant
+                                          && journal.AccountingEntityReference != journal.JournalNumber
                                    select journal.AccountingEntityId).ToList();
 
             List<string> paymentChequeIds = (from a in context.BankDepositLines
