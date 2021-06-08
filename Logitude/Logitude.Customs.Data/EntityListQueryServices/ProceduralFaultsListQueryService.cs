@@ -44,6 +44,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
              }
 
              IQueryable<ProceduralFaultDeclarationView> castedIqueryable = from a in iQueryable.AsQueryable()
+                                                                           where a.DeclarationId != null
                                                                            select new ProceduralFaultDeclarationView()
                                                                            {
                                                                                Id = a.Id,
@@ -223,6 +224,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ProceduralFaultList> query = (from a in iQueryable.Include("ProceduralFaultStatus").Include("ProceduralFaultInProcessType").Include("ProceduralFaultType").Include("RansomViolationType")
                                                      join d in context.Declarations.Include("CustomerCard")
                                                      on a.DeclarationId equals d.Id
+                                                     where a.DeclarationId != null
                                                      select new ProceduralFaultList()
                                                             {
                                                         Id = a.Id,

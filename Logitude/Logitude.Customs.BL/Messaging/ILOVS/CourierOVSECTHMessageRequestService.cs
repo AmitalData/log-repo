@@ -31,6 +31,8 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
     {
         //private DeclarationPM _DeclarationPM;
         //private CourierMasterPM _CourierMasterPM;
+        private GTRTRANQueryService _GTRTRANQueryService;
+        private AmitalContext _AmitalContext;
 
         public string BuildQueueSendWebAPI(string declarationId, int tenant,  DeclarationPM declarationPM = null, CourierMasterPM courierMasterPM = null)
         {
@@ -152,19 +154,7 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
             DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(myDeclarationPM.Id, true, false);
             if(currentDeclarationCourierStatusPM != null && !String.IsNullOrWhiteSpace(currentDeclarationCourierStatusPM.CrateNumber))crateNumber = currentDeclarationCourierStatusPM.CrateNumber;
 
-            string importerVat = "";
-            if (!String.IsNullOrWhiteSpace(myDeclarationPM.ImporterId))
-            {
-                ClientQueryService clientQueryService = new ClientQueryService(myCourierMasterPM.Tenant);
-
-                var clientPM = clientQueryService.GetSingle(myDeclarationPM.ImporterId, false, true); 
-                if (clientPM != null && !String.IsNullOrWhiteSpace(clientPM.Code)) importerVat = clientPM.Code;
-            }
-            else if(!String.IsNullOrWhiteSpace(myDeclarationPM.ImporterCode))
-            {
-                importerVat = myDeclarationPM.ImporterCode;
-            }
-
+            string importerVat = TranslateIntegratorIndex(myCourierMasterPM.IntegratorCode, myCourierMasterPM.Tenant);
 
             var pm = CustomsSettingQueryService.GetSettingByTenant(myDeclarationPM.Tenant);
 
