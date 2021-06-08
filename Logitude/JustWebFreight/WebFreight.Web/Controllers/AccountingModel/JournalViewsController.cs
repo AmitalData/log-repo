@@ -226,6 +226,34 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         }
 
 
+        public HttpResponseMessage GetJournalAdditionalDataByJournalId(string JournalId)
+        {
+            try
+            {
+                try
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    SecurityUtility.CheckContactFeature("Journal", "READ", authToken.Tenant);
+                    IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
+                    JournalAdditionalDataListQueryService journalXQuery = new JournalAdditionalDataListQueryService(MyContext);
+                    var q = journalXQuery.GetJournalMoreDatasForJournal(JournalId, authToken.Tenant);
+                    var res = q.ToList();
+                    return Request.CreateResponse(HttpStatusCode.OK, res);
+                }
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage GetResetJournalByJournalId(string JournalId)
         {
             try

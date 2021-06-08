@@ -107,6 +107,50 @@
 
                         </tr>
 
+                        <tr *ngIf="JournalMoreDataList.Length>0" class="SectionHeader" style="height:27px">
+                            <td>
+
+                                <label> Journal More Data </label>
+                                <div style="width:250px"><button class="Button" (click)="ResetJournalClicked()">אפס פקודה </button> </div>
+
+                            </td>
+                        </tr>
+                        <tr *ngIf="JournalMoreDataList.Length>0">
+                            <td style="height: 200px;">
+                                <div class="CellContent" style="bottom: 75px;">
+                                    <logitude-edit-grid GridWidth="100%"
+                                                        GridHeight="100%"
+                                                        [ItemSource]="JournalMoreDataList"
+                                                        [UseVirtuallization]="true">
+
+                                        <!--JournalMoreData.F.GeneralData-->
+                                        <log-column [header]="'JournalMoreData.F.GeneralData' | TextCodeTranslationPipe" [width]="'400'" [Alignment]="isRTL ? 'right' : 'left'">
+                                            <ng-template let-item>
+                                                <log-cell-template [IgnoreMods]="true" [TabIndex]="-1" #logcelltemplate>
+                                                    <div class="TextTrimming" text-start>
+                                                        <span>{{item.GeneralData}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+                                        <!--JournalMoreData.F.GeneralData-->
+                                        <log-column [width]="'22'" [Editable]="true" [Alignment]="'right'" [visibility]="'visibile'">
+                                            <ng-template let-item>
+                                                <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                    <div style="width: 18px; float: left; height:20px; padding-top: 2px;">
+                                                        <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="ShowRemark(item.GeneralData)"></IconButton>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+
+                                    </logitude-edit-grid>
+                                </div>
+                            </td>
+
+                        </tr>
+
+
                         <tr class="SectionHeader" style="height:27px">
                             <td>
 
@@ -123,16 +167,7 @@
                                                         [ItemSource]="LedgerTransactionList"
                                                         [UseVirtuallization]="true">
 
-                                        <!-- JournalNumber -->
-                                        <!--<log-column [header]="'LedgerTransaction.F.JournalNumber' | TextCodeTranslationPipe" [width]="'80'" [Alignment]="isRTL ? 'right' : 'left'">
-                        <ng-template let-item>
-                            <log-cell-template [IgnoreMods]="true" [TabIndex]="-1" #logcelltemplate>
-                                <div class="TextTrimming" text-start>
-                                    <span>{{item.JournalNumber}}</span>
-                                </div>
-                            </log-cell-template>
-                        </ng-template>
-                    </log-column>-->
+
                                         <!-- JournalLineNumber -->
                                         <log-column [header]="'LedgerTransaction.F.JournalLineNumber' | TextCodeTranslationPipe" [width]="'70'" [Alignment]="isRTL ? 'right' : 'left'">
                                             <ng-template let-item>
@@ -500,12 +535,11 @@
 
                         </tr>
 
+                        <!--JournalAdditionalDataList-->
 
                         <tr class="SectionHeader" style="height:27px">
                             <td>
-
-                                <label> Journal More Data </label>
-                                <button class="Button" (click)="ResetJournalClicked()">אפס פקודה </button>
+                                <label>Journal Additional Data</label>
                             </td>
                         </tr>
                         <tr>
@@ -513,25 +547,26 @@
                                 <div class="CellContent" style="bottom: 75px;">
                                     <logitude-edit-grid GridWidth="100%"
                                                         GridHeight="100%"
-                                                        [ItemSource]="JournalMoreDataList"
+                                                        [ItemSource]="JournalAdditionalDataList"
                                                         [UseVirtuallization]="true">
 
-                                        <!--JournalMoreData.F.GeneralData-->
-                                        <log-column [header]="'JournalMoreData.F.GeneralData' | TextCodeTranslationPipe" [width]="'400'" [Alignment]="isRTL ? 'right' : 'left'">
+                                        <!--JournalAdditionalData.F.TaxReportId-->
+                                        <log-column [header]="'JournalAdditionalData.F.TaxReportId' | TextCodeTranslationPipe" [width]="'130'" [Alignment]="isRTL ? 'right' : 'left'">
                                             <ng-template let-item>
                                                 <log-cell-template [IgnoreMods]="true" [TabIndex]="-1" #logcelltemplate>
                                                     <div class="TextTrimming" text-start>
-                                                        <span>{{item.GeneralData}}</span>
+                                                        <span>{{item.TaxReportId}}</span>
                                                     </div>
                                                 </log-cell-template>
                                             </ng-template>
                                         </log-column>
-                                        <!--JournalMoreData.F.GeneralData-->
-                                        <log-column [width]="'22'" [Editable]="true" [Alignment]="'right'" [visibility]="'visibile'">
+
+                                        <!--JournalAdditionalData.F.TaxReportTransmitStatusCode-->
+                                        <log-column [header]="'InterestTransaction.F.InterestEntityTypeCode' | TextCodeTranslationPipe" [width]="'120'" [Alignment]="isRTL ? 'right' : 'left'">
                                             <ng-template let-item>
-                                                <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                    <div style="width: 18px; float: left; height:20px; padding-top: 2px;">
-                                                        <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="ShowRemark(item.GeneralData)"></IconButton>
+                                                <log-cell-template [IgnoreMods]="true" [TabIndex]="-1" #logcelltemplate>
+                                                    <div class="TextTrimming" text-start>
+                                                        <span>{{item.TaxReportTransmitStatusCode}}</span>
                                                     </div>
                                                 </log-cell-template>
                                             </ng-template>
