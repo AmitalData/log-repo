@@ -128,7 +128,7 @@ namespace CommunicationWorkerRole
                 ConnectedToEntity = false,
                 ConnectedToTenant = false,
                 FileSize = bytearray.Length,
-                Tenant = logitudeOceanInsightsTenant,
+                Tenant = 0,
             };
             analyzeQueue.SearchFields = analyzeQueue.From + ',' + analyzeQueue.Status;
             analyzeQueueReposiory.Add(analyzeQueue);

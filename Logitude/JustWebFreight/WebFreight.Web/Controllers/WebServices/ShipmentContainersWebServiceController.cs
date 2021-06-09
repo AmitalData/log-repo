@@ -49,8 +49,16 @@ namespace WebFreight.Web.Controllers.WebServices
 
                             else
                             {
-                                ContainerStatusesConnecterAnalyzer analyzer = new ContainerStatusesConnecterAnalyzer(analyzeQueue, analyzeQueueReposiory);
-                                analyzer.Run();
+                                try
+                                {
+                                    ContainerStatusesConnecterAnalyzer analyzer = new ContainerStatusesConnecterAnalyzer(analyzeQueue, analyzeQueueReposiory);
+                                    analyzer.Run();
+                                }
+                                catch (Exception ex)
+                                {
+                                    myResult.Success = false;
+                                    myResult.Errors.Add(ex.Message);
+                                }
                             }
                         }
 
@@ -67,27 +75,34 @@ namespace WebFreight.Web.Controllers.WebServices
                                 myResult.Errors.Add("Xml Text is not valid");
                             }
 
-                            AnalyzeQueue analyzeQueue = new AnalyzeQueue()
+                            try
                             {
-                                CreateDate = TenantServerConfigration.GetCurrentDateTime(0),
-                                From = "ContainerStatusesReceiver",
-                                Id = IdCounter.GetNumber("AnalyzeQueue", 0),
-                                MessageBody = fileBytes,
-                                Status = "W",
-                                Retries = 0,
-                                ConnectedToEntity = false,
-                                ConnectedToTenant = false,
-                                FileSize = fileBytes.Length,
-                                Tenant = this.GetLogitudeOceanInsightsTenant(),
-                                FileName = "XmlString Simulator",
-                            };
+                                AnalyzeQueue analyzeQueue = new AnalyzeQueue()
+                                {
+                                    CreateDate = TenantServerConfigration.GetCurrentDateTime(0),
+                                    From = "ContainerStatusesReceiver",
+                                    Id = IdCounter.GetNumber("AnalyzeQueue", 0),
+                                    MessageBody = fileBytes,
+                                    Status = "W",
+                                    Retries = 0,
+                                    ConnectedToEntity = false,
+                                    ConnectedToTenant = false,
+                                    FileSize = fileBytes.Length,
+                                    Tenant = this.GetLogitudeOceanInsightsTenant(),
+                                    FileName = "XmlString Simulator",
+                                };
 
-                            analyzeQueue.SearchFields = analyzeQueue.From + ',' + analyzeQueue.Status;
-                            analyzeQueueReposiory.Add(analyzeQueue);
-                            analyzeQueueReposiory.SubmitChanges();
-
-                            ContainerStatusesConnecterAnalyzer analyzer = new ContainerStatusesConnecterAnalyzer(analyzeQueue, analyzeQueueReposiory);
-                            analyzer.Run();
+                                analyzeQueue.SearchFields = analyzeQueue.From + ',' + analyzeQueue.Status;
+                                analyzeQueueReposiory.Add(analyzeQueue);
+                                analyzeQueueReposiory.SubmitChanges();
+                                ContainerStatusesConnecterAnalyzer analyzer = new ContainerStatusesConnecterAnalyzer(analyzeQueue, analyzeQueueReposiory);
+                                analyzer.Run();
+                            }
+                            catch (Exception ex)
+                            {
+                                myResult.Success = false;
+                                myResult.Errors.Add(ex.Message);
+                            }
                         }
 
                         scope2.Complete();

@@ -35,7 +35,6 @@ namespace WebFreight.Web.Helpers
         private ContainerPM container;
         private string communicationLogObjectTableId;
         private string loggedContactId;
-        private Document document;
         private string communicationLogTo = "OceanInsightStatusRequest";
         private string communicationLogSubject = "Shipment Containers Statuses";
         private string objectTableName = "Shipment";
@@ -116,53 +115,32 @@ namespace WebFreight.Web.Helpers
 
         public void SendContainerStatusRequest()
         {
-            this.BuildDocument();
             this.BuildCommunicationLog();
             this.SendDBQueueForContainerStatuses();
         }
        
-        private void BuildDocument()
-        {
-            DocumentRepository documentRepository = new DocumentRepository(this.commonContext);
-            document = new Document()
-            {
-                CreateDate = System.DateTime.Now,
-                Extension = "xml",
-                Tenant = Convert.ToInt32(tenant),
-                Id = IdCounter.GetNumber("Document", tenant),
-                HasFile = true,
-                Folder = communicationLogTo.ToLower(),
-            };
-            documentRepository.Add(document);
-            documentRepository.SubmitChanges();
-        }
         private void BuildCommunicationLog()
         {
-            CommunicationLogRepository communicationLogRepository = new CommunicationLogRepository(this.commonContext);
-            communicationLog = new CommunicationLog()
+            CommunicationsParams logParams = new CommunicationsParams()
             {
-                Id = IdCounter.GetNumber("CommunicationLog", tenant),
-                LastStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant),
-                LastStatusDateUTC = System.DateTime.UtcNow,
-                To = communicationLogTo,
-                InOut = "O",
-                EntityId = isContainer ? container.Id : shipment.Id,
-                ObjectTableId = communicationLogObjectTableId,
-                Subject = communicationLogSubject,
                 Tenant = tenant,
-                CommunicationLogTypeCode = "T",
-                CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
-                CommunicationStatusTypeCode = "W",
-                CreatedByUserId = this.loggedContactId,
-                DocumentId = document.Id,
-                EntityReference = entityReference, 
-                SearchFields = this.shipmentId + "," + communicationLogTo + "," + "O" + "," + communicationLogSubject,
-                CreateDateUTC = System.DateTime.UtcNow,
+                From = "Amital",
+                To = communicationLogTo,
+                CommunicationLogTypeCode = "Q",
+                Priority = 1,
+                InOut = "O",
+                Status = "W",
+                LoggingUserId = this.loggedContactId,
+                LoggingObjectTableId = communicationLogObjectTableId,
+                LoggingEntityId = isContainer ? container.Id : shipment.Id,
+                LoggingEntityReference = entityReference,
+                Subject = communicationLogSubject,
+                FolderName = communicationLogTo.ToLower(),
                 QueueName = "ContainerStatusesCommunicationLogQueue",
                 AdditionalFields = communicationLogAdditionalFields,
+               
             };
-            communicationLogRepository.Add(communicationLog);
-            this.commonContext.SaveChanges();
+            Communications.AddCommunicationLog(logParams);
         }
         private void SendDBQueueForContainerStatuses()
         {

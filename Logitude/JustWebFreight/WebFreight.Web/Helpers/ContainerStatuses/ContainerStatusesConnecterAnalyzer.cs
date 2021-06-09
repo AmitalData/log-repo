@@ -10,16 +10,37 @@ using System.Xml;
 using System.Xml.Serialization;
 using Logitude.Server.Tools;
 using System.Collections.Generic;
+using System.Net;
+using Simplog.Data.ShipmentsModel.Repositories;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Logitude.BL.Security;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using System.Transactions;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace WebFreight.Web.Helpers.Analyzers
 {
     public class ContainerStatusesConnecterAnalyzer
-    {   
+    {
         private AnalyzeQueue analyzeQueue;
         private AnalyzeQueueRepository analyzeQueueRepository;
-        private CommunicationLogRepository myCommunicationLogRepository;
+        private CommunicationLogRepository communicationLogRepository;
         private int tenant;
-        private List<QueueTask> externalTasksQueueTasks;
+        private ArrayOfQueueTask externalTasksQueues;
+        private string oceanInsightsId;
+        private string container_number;
+        private string carrier_scac;
+        private LogitudeOceanInsightsRequestRepository logitudeOceanInsightsRequestRepository;
+        private int? logitudeTenant = null;
+        private ICommonDataContext commonContext;
+        private LogitudeOceanInsightsRequest oceanInsight;
+        private string communicationLogTo = "OceanInsightStatusRequest";
+        private string communicationLogSubject = "Shipment Containers Statuses";
+        private string containerObjectTableId;
+        private string loggedContactId;
+        private string containerId;
 
         public ContainerStatusesConnecterAnalyzer(AnalyzeQueue analyzeQueue, AnalyzeQueueRepository analyzeQueueRepository)
         {
@@ -28,7 +49,7 @@ namespace WebFreight.Web.Helpers.Analyzers
                 this.tenant = analyzeQueue.Tenant;
                 this.analyzeQueue = analyzeQueue;
                 this.analyzeQueueRepository = analyzeQueueRepository;
-                this.myCommunicationLogRepository = new CommunicationLogRepository(this.tenant);
+                this.logitudeOceanInsightsRequestRepository = new LogitudeOceanInsightsRequestRepository(this.tenant);
             }
         }
 
@@ -39,14 +60,13 @@ namespace WebFreight.Web.Helpers.Analyzers
                 this.Deserialize();
             }
         }
-
         private void Deserialize()
         {
             try
             {
                 MemoryStream memorystream = new MemoryStream(analyzeQueue.MessageBody);
-                XmlSerializer serializer = new XmlSerializer(typeof(string));
-                externalTasksQueueTasks = (List<QueueTask>)serializer.Deserialize(memorystream);
+                XmlSerializer serializer = new XmlSerializer(typeof(ArrayOfQueueTask));
+                externalTasksQueues = (ArrayOfQueueTask)serializer.Deserialize(memorystream);
             }
 
             catch (Exception ex)
@@ -56,15 +76,14 @@ namespace WebFreight.Web.Helpers.Analyzers
                 analyzeQueue.DoneDate = TenantServerConfigration.GetCurrentDateTime(analyzeQueue.Tenant);
                 analyzeQueueRepository.Update(analyzeQueue);
                 analyzeQueueRepository.SubmitChanges();
-                return;
+                throw ex;
             }
 
-            if (externalTasksQueueTasks != null)
+            if (externalTasksQueues != null)
             {
                 this.AnalyzeData(analyzeQueue.From);
             }
         }
-
         private void AnalyzeData(string from)
         {
             try
@@ -76,24 +95,14 @@ namespace WebFreight.Web.Helpers.Analyzers
                 this.OnCatchAnalyzingError(ex);
             }
         }
-
         private void ConnectAnalyzeQueue()
         {
             try
             {
-                if (!analyzeQueue.ConnectedToTenant)
-                {
-                    analyzeQueue.ConnectedToTenant = true;
-                    analyzeQueueRepository.Update(analyzeQueue);
-                    analyzeQueueRepository.SubmitChanges();
-                }
-                if (!analyzeQueue.ConnectedToEntity)
-                {
-                    analyzeQueue.ConnectedToEntity = true;
-                    analyzeQueueRepository.Update(analyzeQueue);
-                    analyzeQueueRepository.SubmitChanges();
-                }
+                this.ConnectAnalyzeQueueToTenantAndEntity();
                 this.AnalyzeOceanInsightsParametersXML();
+                this.ConnectingOceanInsightRequestToTenant();
+                this.AddContainerStatusCommunicationLog();
                 this.DoneAnalyzeQueue();
             }
             catch (Exception ex)
@@ -101,10 +110,24 @@ namespace WebFreight.Web.Helpers.Analyzers
                 this.OnCatchAnalyzingError(ex);
             }
         }
-
+        private void ConnectAnalyzeQueueToTenantAndEntity()
+        {
+            if (!analyzeQueue.ConnectedToTenant)
+            {
+                analyzeQueue.ConnectedToTenant = true;
+                analyzeQueueRepository.Update(analyzeQueue);
+                analyzeQueueRepository.SubmitChanges();
+            }
+            if (!analyzeQueue.ConnectedToEntity)
+            {
+                analyzeQueue.ConnectedToEntity = true;
+                analyzeQueueRepository.Update(analyzeQueue);
+                analyzeQueueRepository.SubmitChanges();
+            }
+        }
         private void AnalyzeOceanInsightsParametersXML()
         {
-            var oceanInsightsQueueTask = externalTasksQueueTasks.Where(a => a.Action == "OceanInsights.PushUpdate").FirstOrDefault();
+            var oceanInsightsQueueTask = externalTasksQueues.QueueTask.Where(a => a.Action == "OceanInsights.PushUpdate").FirstOrDefault();
             if (oceanInsightsQueueTask != null)
             {
                 var oceanInsightsParameters = oceanInsightsQueueTask.Parameters.FirstOrDefault();
@@ -115,34 +138,134 @@ namespace WebFreight.Web.Helpers.Analyzers
                 }
             }
         }
-
         private void ReadOceanInsightsParametersXMLFields(string oceanInsightsEnvelopeParameters)
         {
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.LoadXml(oceanInsightsEnvelopeParameters);
-            XmlNodeList xnList = xmlDoc.SelectNodes("//event");
+            XmlNodeList xnList = xmlDoc.SelectNodes("//container");
             foreach (XmlNode xn in xnList)
             {
                 foreach (XmlNode item in xn.ChildNodes)
                 {
-                    if (item.Attributes != null)
+                    if (item.ChildNodes != null && item.Name == "event")
                     {
-                        if(item.Attributes["Type"] != null && item.Attributes["Type"].Value == "shipment_id")
-                        {
-                            if(item.Attributes["Type"].Value == "shipment_id")
-                            {
-                                var shipmentId = item.FirstChild.InnerText;
-                            }
-                            if (item.Attributes["Type"].Value == "shipment_id")
-                            {
-                                var shipmentId = item.FirstChild.InnerText;
-                            }
-                        }
+                        oceanInsightsId = item.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "shipment_id").FirstOrDefault()?.InnerText;
+                    }
+                    if (item.ChildNodes != null && item.Name == "shipment")
+                    {
+                        container_number = item.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "container_number").FirstOrDefault()?.InnerText;
+                        carrier_scac = item.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "carrier_scac").FirstOrDefault()?.InnerText;
                     }
                 }
             }
         }
+        private void ConnectingOceanInsightRequestToTenant()
+        {
+            if (!string.IsNullOrEmpty(this.oceanInsightsId))
+            {
+                this.GetLogitudeTenantByOceanInsightsId();
+            }
+            if(string.IsNullOrEmpty( this.oceanInsightsId) || this.oceanInsight == null)
+            {
+                this.GetLogitudeTenantByOceanInsightsContainerNumberAndScac();
+            }
+            this.GetContainerIdByContainerNumber();
+        }
+        private void GetLogitudeTenantByOceanInsightsId()
+        {
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                oceanInsight = this.logitudeOceanInsightsRequestRepository.GetSingleLogitudeOceanInsightsRequestById(this.oceanInsightsId);
+                if (oceanInsight != null)
+                {
+                    this.logitudeTenant = oceanInsight.Tenant;
+                }
 
+                scope.Complete();
+            }
+        }
+        private void GetLogitudeTenantByOceanInsightsContainerNumberAndScac()
+        {
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                oceanInsight = this.logitudeOceanInsightsRequestRepository.GetSingleLogitudeOceanInsightsRequestByContainerNumberAndScac(this.container_number, this.carrier_scac);
+                if (oceanInsight != null)
+                {
+                    this.logitudeTenant = oceanInsight.Tenant;
+                }
+                scope.Complete();
+            }
+        }
+        private void GetContainerIdByContainerNumber()
+        {
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                if (this.logitudeTenant != null)
+                {
+                    var containerNumber = this.oceanInsight?.ContainerNumber;
+                    if (!string.IsNullOrEmpty(containerNumber))
+                    {
+                        ContainerRepository containerRepository = new ContainerRepository(logitudeTenant.Value);
+                        containerId = containerRepository.GetContainerByContainerNumberAndTenant(containerNumber, logitudeTenant.Value)?.Id;
+                    }
+                }
+                scope.Complete();
+            }
+        }
+        private void AddContainerStatusCommunicationLog()
+        {
+            if (this.logitudeTenant != null && !string.IsNullOrEmpty(containerId))
+            {
+                this.commonContext = CommonDataContext.GetContext(this.logitudeTenant.Value);
+                this.communicationLogRepository = new CommunicationLogRepository(this.logitudeTenant.Value);
+                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                {
+                    this.GetCommuniactionLogObjectTableId();
+                    this.GetLoggedContactId();
+                    this.BuildCommunicationLog();
+                    scope.Complete();
+                }
+            }
+        }
+        private void GetCommuniactionLogObjectTableId()
+        {
+            var objectTableName = "Container";
+            ObjectTableRepository myObjectTabelRepository = new ObjectTableRepository(logitudeTenant.Value);
+            ObjectTable objectTable = myObjectTabelRepository.GetObjectTableByName(objectTableName, 0, true);
+            if (objectTable != null)
+            {
+                containerObjectTableId = objectTable.Id;
+            }
+        }
+        private void GetLoggedContactId()
+        {
+            ContactRepository contactRepository = new ContactRepository(this.commonContext);
+            var loggedContact = contactRepository.GetSingleContactByEmail(SecurityUtility.GetAuthenticatedUser(), logitudeTenant.Value);
+            this.loggedContactId = loggedContact.Id;
+        }
+        private void BuildCommunicationLog()
+        {
+            byte[] documentXML = LogitudeXmlSerializer.SerializeObject(externalTasksQueues);
+            CommunicationsParams logParams = new CommunicationsParams()
+            {
+                Tenant = logitudeTenant.Value,
+                From = "Amital",
+                To = "Logitude",
+                CommunicationLogTypeCode = "A",
+                Priority = 1,
+                InOut = "I",
+                Status = "D",
+                LoggingUserId = this.loggedContactId,
+                LoggingObjectTableId = containerObjectTableId,
+                LoggingEntityId = containerId,
+                LoggingEntityReference = container_number,
+                Subject = communicationLogSubject,
+                FolderName = communicationLogTo.ToLower(),
+                ByteData = documentXML,
+            };
+
+            Communications.AddCommunicationLog(logParams);
+        }
         private void DoneAnalyzeQueue()
         {
             analyzeQueue.Status = "D";
@@ -150,7 +273,6 @@ namespace WebFreight.Web.Helpers.Analyzers
             analyzeQueueRepository.Update(analyzeQueue);
             analyzeQueueRepository.SubmitChanges();
         }
-
         private void OnCatchAnalyzingError(Exception ex)
         {
             analyzeQueue.ErrorMessage = ex.Message + (ex.InnerException != null ? Environment.NewLine + "InnerException: " + ex.InnerException.Message : "");
@@ -177,7 +299,8 @@ namespace WebFreight.Web.Helpers.Analyzers
             {
                 if (analyzeQueue.ConnectedToTenant && analyzeQueue.CommunicationLogId != null)
                 {
-                    CommunicationLog commLog = myCommunicationLogRepository.GetSingleCommunicationLog(analyzeQueue.CommunicationLogId, tenant);
+                    this.communicationLogRepository = new CommunicationLogRepository(this.tenant);
+                    CommunicationLog commLog = communicationLogRepository.GetSingleCommunicationLog(analyzeQueue.CommunicationLogId, tenant);
                     if (commLog != null)
                     {
                         commLog.CommunicationStatusTypeCode = "F";
@@ -190,8 +313,8 @@ namespace WebFreight.Web.Helpers.Analyzers
                             commLog.ExceptionMessage = commLog.ExceptionMessage + Environment.NewLine + "Stack Trace: " + analyzeQueue.StackTrace;
                         }
 
-                        myCommunicationLogRepository.Update(commLog);
-                        myCommunicationLogRepository.SubmitChanges();
+                        communicationLogRepository.Update(commLog);
+                        communicationLogRepository.SubmitChanges();
                     }
                 }
             }
@@ -200,5 +323,24 @@ namespace WebFreight.Web.Helpers.Analyzers
             analyzeQueueRepository.Update(analyzeQueue);
             analyzeQueueRepository.SubmitChanges();
         }
+    }
+
+    [XmlRoot("ArrayOfQueueTask")]
+    public class ArrayOfQueueTask
+    {
+        [XmlElement("QueueTask")]
+        public List<QueueTask> QueueTask { get; set; }
+
+        public ArrayOfQueueTask()
+        {
+            this.QueueTask = new List<QueueTask>();
+        }
+    }
+
+    public class QueueTask
+    {
+        [XmlAttribute("action")]
+        public string Action { get; set; }
+        public List<Parameter> Parameters { get; set; }
     }
 }
