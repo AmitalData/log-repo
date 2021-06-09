@@ -175,7 +175,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
-                oceanInsight = this.logitudeOceanInsightsRequestRepository.GetSingleLogitudeOceanInsightsRequestById(this.oceanInsightsId);
+                oceanInsight = this.logitudeOceanInsightsRequestRepository.GetSingleLogitudeOceanInsightsRequestByOceanInsigntId(this.oceanInsightsId);
                 if (oceanInsight != null)
                 {
                     this.logitudeTenant = oceanInsight.Tenant;

@@ -69,9 +69,9 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             throw new NotImplementedException();
         }
 
-        public LogitudeOceanInsightsRequest GetSingleLogitudeOceanInsightsRequestById(string id)
+        public LogitudeOceanInsightsRequest GetSingleLogitudeOceanInsightsRequestByOceanInsigntId(string id)
         {
-            return (from a in Context.LogitudeOceanInsightsRequests where a.Id == id select a).FirstOrDefault();
+            return (from a in Context.LogitudeOceanInsightsRequests where a.OceanInsigntId == id select a).FirstOrDefault();
         }
 
         public LogitudeOceanInsightsRequest GetSingleLogitudeOceanInsightsRequestByContainerNumberAndScac(string container_number, string carrier_scac)
