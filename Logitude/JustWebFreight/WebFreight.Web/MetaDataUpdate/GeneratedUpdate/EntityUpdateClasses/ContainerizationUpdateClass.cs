@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ContainerizationUpdateClass
    {  		
-		public const string HashString = "17ade9ec0cbe2e45de5c5d961d0b85e2";
+		public const string HashString = "9303a7ad45ac9bcdbdbef71429adf8da";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -393,19 +393,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "ContainerizationStatus",
 					  						ObjectTableName =  "Customs.Containerization",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "Customs.ContainerizationStatusCode",
 					  						MinLength =  0,
 					  						MaxLength =  3,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  3,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -435,7 +437,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullLocalDefaultText =  "סטטוס המכלה",
 					  						ListFieldLable =  "ContainerizationStatusListLable",
 					  						ListLableDefaultText =  "Containerization Status",
-					  						ListLocalDefaultText =  "סטטוס המכלה",
+					  						ListLocalDefaultText =  "קוד סטטוס המכלה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -456,19 +458,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "HataraStatus",
 					  						ObjectTableName =  "Customs.Containerization",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "Customs.DeclarationStatusType",
 					  						MinLength =  0,
 					  						MaxLength =  2,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  2,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -498,7 +502,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullLocalDefaultText =  "סטטוס התרה",
 					  						ListFieldLable =  "HataraStatusListLable",
 					  						ListLableDefaultText =  "Hatara Status",
-					  						ListLocalDefaultText =  "סטטוס התרה",
+					  						ListLocalDefaultText =  "קוד סטטוס התרה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -531,7 +535,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  2,
-					  						DisplayInList =  true,
+					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -653,7 +657,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  10,
-					  						DisplayInList =  true,
+					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
@@ -928,7 +932,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "HataraStatusIsNull",
 					  						ListFieldLable =  "HataraStatusIsNullListLable",
 					  						ListLableDefaultText =  "HataraStatusIsNull",
-					  						ListLocalDefaultText =  "HataraStatusIsNull",
+					  						ListLocalDefaultText =  "האם יש תאריך התרה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1088,7 +1092,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature ContainerizationFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Containerization.Q.ContainerizationWithRelease", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerizationFeatures.ContainerizationWithRelease", NameTextCodeDefaultText = "ContainerizationWithRelease", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerizationObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode ContainerizationTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Containerization.Q.CancelledContainerization", DefaultText = @"Cancelled Containerization",LocalDefaultText = "המכלות שבוטלו", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode ContainerizationTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Containerization.Q.CancelledContainerization", DefaultText = @"Cancelled Containerization",LocalDefaultText = "המכלות מבוטלות", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature ContainerizationFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Containerization.Q.CancelledContainerization", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerizationFeatures.CancelledContainerization", NameTextCodeDefaultText = "CancelledContainerization", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerizationObjectTable, addedFeatures, addedTextCodes);
  
 

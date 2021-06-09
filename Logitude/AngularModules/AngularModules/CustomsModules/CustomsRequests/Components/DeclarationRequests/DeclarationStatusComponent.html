@@ -116,7 +116,7 @@
                                     <LogLabel [ObjectFieldName]="'ManifestNumber'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName" [TextCode]="'Customs.SpecialActivityRequest.O.CargoIdentifierKey1'"></LogLabel>
                                 </td>
                                 <td style="width: 160px;">
-                                    <LogTextBox [ObjectFieldName]="'ManifestNumber'" [Text]="ManifestNumber" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                    <LogTextBox [ObjectFieldName]="'ManifestNumber'" (change)="setRequired()" [Text]="ManifestNumber" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                                 </td>
                                 <td>
                                     <div></div>
@@ -128,7 +128,7 @@
                                     <LogLabel [ObjectFieldName]="'SecondCargoID'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName" [TextCode]="'Customs.SpecialActivityRequest.O.CargoIdentifierKey2'"></LogLabel>
                                 </td>
                                 <td style="width: 160px;">
-                                    <LogTextBox [ObjectFieldName]="'SecondCargoID'" [Text]="SecondCargoID" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                    <LogTextBox [ObjectFieldName]="'SecondCargoID'" (change)="setRequired()" [Text]="SecondCargoID" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                 </td>
                                 <td>
                                     <div></div>
@@ -140,7 +140,7 @@
                                     <LogLabel [ObjectFieldName]="'ThirdCargoID'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName" [TextCode]="'Customs.SpecialActivityRequest.O.CargoIdentifierKey3'"></LogLabel>
                                 </td>
                                 <td style="width: 160px;">
-                                    <LogTextBox [ObjectFieldName]="'ThirdCargoID'" [Text]="ManifestNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                    <LogTextBox [ObjectFieldName]="'ThirdCargoID'"  (change)="setRequired()" [Text]="ManifestNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                 </td>
                                 <td>
                                     <div></div>

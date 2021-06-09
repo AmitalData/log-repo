@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <table>
+        <tr>
+            <td width="25%">
+                <div>
+                    <img src="./Images/Warning_icon_24.png" alt="warning" style="width: 18px;" />
+                </div>
+            </td>
+            <td colspan="3">
+                <div>
+                    <span>חובה להצהיר שכל הטובין נקלטו במסוף</span>
+                </div>
+            </td>
+
+        </tr>
+        <tr>
+            <td  colspan="2">
+                <LogLabel [NoObjectField]="true"
+                          [ObjectFieldName]="'AgentStatement'"
+                          [ObjectTableName]="ObjectTableName"
+                          [DataContext]="DataContext"
+                          [Text]="'הצהרת סוכן'">
+
+                </LogLabel>
+            </td>
+            <td>
+                <div>
+
+                </div>
+            </td>
+            <td width="25%">
+                <div>
+                    <CheckBox [IsChecked]="IsSelected == true" (Checked)="IsSelected =$event" [IsEnabled]="true"></CheckBox>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div>
+
+                </div>
+            </td>
+            <td width="25%">
+                <button style="width: 57px;" class="Button" (click)="CancelButtonClicked()">{{'General.B.Close' |TextCodeTranslationPipe}}</button>
+            </td>
+            <td>
+                <div>
+
+                </div>
+            </td>
+            <td width="25%">
+                <div style="float: left;display: inline-block;width: 110px;">
+                    <custom-send-options #MyCustomSendOptionsComponent
+                                         [IsDisabled]="!IsSelected"
+                                         (SendButtonClicked)="SendButtonClicked($event)">
+                    </custom-send-options>
+                </div>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

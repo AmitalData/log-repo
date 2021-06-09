@@ -33,6 +33,7 @@ import { Dictionary } from '../../../../../../Infrastructure/GenericTypes/Dictio
 import { DeclarationCourierStatusList } from '../../../../../../Customs/EntityLists/DeclarationCourierStatusList';
 import { DeclarationCourierStatusListService } from '../../../../../../Customs/Services/StandardLists/DeclarationCourierStatusListService';
 import { EntityResourceService } from '../../../../../../Infrastructure/Services/EntityResourceService';
+import { CargoIdentifireTypeListService } from '../../../../../../Customs/Services/StandardLists/CargoIdentifireTypeListService';
 
 @Component({
     selector: 'ConsigmentTabContent',
@@ -63,13 +64,15 @@ export class ConsigmentTabContentComponent
     ConsimentPackages: ObservableCollection;
 
     SiteList: ConsignmentInternalTransitionModel[] = [];
-
+    _CargoIdentifireTypeListService: CargoIdentifireTypeListService = new CargoIdentifireTypeListService();
     private _DeliverySiteTypeListService: DeliverySiteTypeListService = new DeliverySiteTypeListService();
     private _CouriersVatPMService: CouriersVatPMService = new CouriersVatPMService();
     private _CouriersVatExtendedPMService: CouriersVatExtendedPMService = new CouriersVatExtendedPMService();
     private _DeclarationPMService: DeclarationPMService = new DeclarationPMService();
 
     public WeightValueFilterItems: ApiQueryFilters;
+    public ExportCargoTypeFilterItems: ApiQueryFilters;
+    public ImportCargoTypeFilterItems: ApiQueryFilters;
     private CurrentSession = SessionLocator.SelectedSession;
 
     public ConsignmentTypes: ConsignmentType[] = [{ Id: "E", Value: "יצוא" }, { Id: "I", Value: "יבוא" }];
@@ -79,6 +82,11 @@ export class ConsigmentTabContentComponent
         // this.declarationPM = entityArgs.EntityPM;
         this.WeightValueFilterItems = new ApiQueryFilters();
         this.WeightValueFilterItems.addAdditionalFilter("Code", "CC,CA,NC,PO,PP", null, null, "InListExact", false, false, false, "string", false, true);
+        this.ExportCargoTypeFilterItems = new ApiQueryFilters();
+        this.ExportCargoTypeFilterItems.addAdditionalFilter("IsForDeclarationExport", true, null, null, "Equal", false, false, false, "boolean", false, true);
+        this.ImportCargoTypeFilterItems = new ApiQueryFilters();
+        this.ImportCargoTypeFilterItems.addAdditionalFilter("IsForDeclarationImport", true, null, null, "Equal", false, false, false, "boolean", false, true);
+
         this.UIProperties.SetEnabled("CrateNumber", "Customs.DeclarationCourierStatus", false);
         this.SiteList = [];
         this.LoadingPortFilterItems = new ApiQueryFilters();//38388
@@ -574,66 +582,80 @@ export class ConsigmentTabContentComponent
 
 
     SetTipsInsideCargoIdentifires(value: string) {
-        switch (value) {
-            case '1':
-                {
-                    this.ManifestNumberPlaceholder = "הזן שנת טיסה";
-                    this.SecondCargoIDPlaceholder = "הזן שט”מ ראשי";
-                    this.ThirdCargoIdPlaceholder = "הזן שט”מ פנימי";
-                    break;
-                }
-            case '2':
-                {
-                    this.ManifestNumberPlaceholder = "הזן מספר חבילה";
-                    this.SecondCargoIDPlaceholder = "הזן שנת יצירת מטען";
-                    this.ThirdCargoIdPlaceholder = " ";
-                    break;
-                }
-            case '8':
-                {
-                    this.ManifestNumberPlaceholder = "הזן הצהרת אחסנה";
-                    this.SecondCargoIDPlaceholder = " ";
-                    this.ThirdCargoIdPlaceholder = " ";
-                    break;
-                }
-            case '11':
-                {
-                    this.ManifestNumberPlaceholder = "הזן מצהר";
-                    this.SecondCargoIDPlaceholder = " הזן מזהה עסקה";
-                    this.ThirdCargoIdPlaceholder = " ";
-                    break;
-                }
-            case '17':
-                {
-                    this.ManifestNumberPlaceholder = "הזן ש.מ בלדר";
-                    this.SecondCargoIDPlaceholder = "הזן ח.פ בלדר";
-                    this.ThirdCargoIdPlaceholder = "הזן תאריך הקמה";
-                    break;
-                }
-            case '20':
-                {
-                    this.ManifestNumberPlaceholder = "הזן מזהה עסקה מלא";
-                    this.SecondCargoIDPlaceholder = " ";
-                    this.ThirdCargoIdPlaceholder = " ";
-                    break;
-                }
-            case '16':
-                {
-                    if (this.declarationPM.TransportModeId == 'A' && this.ConsignmentType == 'E') {
-                        this.ManifestNumberPlaceholder = "הזן שנה";
-                        this.SecondCargoIDPlaceholder = "הזן שמ”ר / שמ”פ";
-                        this.ThirdCargoIdPlaceholder = "הזן ח.תעופה/משלח";
+
+         if (this.declarationPM.Direction == 'E') {
+            this._CargoIdentifireTypeListService.getSingleFromCache(value)
+                .subscribe((Response: ServiceResponse) => {
+                    if (Response.Result != null) {
+                        this.ManifestNumberPlaceholder = Response.Result.CargoIdentifierKey1Name;
+                        this.SecondCargoIDPlaceholder = Response.Result.CargoIdentifierKey2Name ?? '';
+                        this.ThirdCargoIdPlaceholder = Response.Result.CargoIdentifierKey3Name ?? '';
+                    }
+                });
+        }
+        else
+        {
+            switch (value) {
+                case '1':
+                    {
+                        this.ManifestNumberPlaceholder = "הזן שנת טיסה";
+                        this.SecondCargoIDPlaceholder = "הזן שט”מ ראשי";
+                        this.ThirdCargoIdPlaceholder = "הזן שט”מ פנימי";
                         break;
                     }
-                
-                }
-            default:
-                {
-                    this.ManifestNumberPlaceholder = " ";
-                    this.SecondCargoIDPlaceholder = " ";
-                    this.ThirdCargoIdPlaceholder = " ";
-                    break;
-                }
+                case '2':
+                    {
+                        this.ManifestNumberPlaceholder = "הזן מספר חבילה";
+                        this.SecondCargoIDPlaceholder = "הזן שנת יצירת מטען";
+                        this.ThirdCargoIdPlaceholder = " ";
+                        break;
+                    }
+                case '8':
+                    {
+                        this.ManifestNumberPlaceholder = "הזן הצהרת אחסנה";
+                        this.SecondCargoIDPlaceholder = " ";
+                        this.ThirdCargoIdPlaceholder = " ";
+                        break;
+                    }
+                case '11':
+                    {
+                        this.ManifestNumberPlaceholder = "הזן מצהר";
+                        this.SecondCargoIDPlaceholder = " הזן מזהה עסקה";
+                        this.ThirdCargoIdPlaceholder = " ";
+                        break;
+                    }
+                case '17':
+                    {
+                        this.ManifestNumberPlaceholder = "הזן ש.מ בלדר";
+                        this.SecondCargoIDPlaceholder = "הזן ח.פ בלדר";
+                        this.ThirdCargoIdPlaceholder = "הזן תאריך הקמה";
+                        break;
+                    }
+                case '20':
+                    {
+                        this.ManifestNumberPlaceholder = "הזן מזהה עסקה מלא";
+                        this.SecondCargoIDPlaceholder = " ";
+                        this.ThirdCargoIdPlaceholder = " ";
+                        break;
+                    }
+                case '16':
+                    {
+                        if (this.declarationPM.TransportModeId == 'A' && this.ConsignmentType == 'E') {
+                            this.ManifestNumberPlaceholder = "הזן שנה";
+                            this.SecondCargoIDPlaceholder = "הזן שמ”ר / שמ”פ";
+                            this.ThirdCargoIdPlaceholder = "הזן ח.תעופה/משלח";
+                            break;
+                        }
+
+                    }
+                default:
+                    {
+                        this.ManifestNumberPlaceholder = " ";
+                        this.SecondCargoIDPlaceholder = " ";
+                        this.ThirdCargoIdPlaceholder = " ";
+                        break;
+                    }
+            }
         }
     }
     AddPackageButtonClicked() {
