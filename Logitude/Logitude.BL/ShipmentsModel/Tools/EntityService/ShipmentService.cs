@@ -531,7 +531,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     if (entityPM.IsStandalonePickupDelivery)
                     {
-                        this.UpdatePickUpDeliveryStandaloneFieldsOnShipmentUpdate();
+                        if (entityPM.IsCancelled)
+                        {
+                            this.CancleStandaloneShipmentConnection();
+                        }
+                        else
+                        {
+                            this.UpdatePickUpDeliveryStandaloneFieldsOnShipmentUpdate();
+                        }
                     }
 
                     ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, myPackagesList, objectContext);
@@ -6957,7 +6964,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             this.CreateShipmentPackage(shipmentPackage,shipmentId);
         }
-                
+
         private void UpdatePickUpDeliveryStandaloneFieldsOnShipmentUpdate()
         {
             ShipmentPickUpDelivery shipmentPickUpDelivery = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDeliveryByStandaloneShipmentId(entityPM.Id, tenant);
@@ -7103,8 +7110,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             ShipmentService shipmentService = new ShipmentService(this.objectContext, stanAloneShipmentPM, "");
             shipmentService.Update();
         }
- 
-
+        private void CancleStandaloneShipmentConnection()
+        {
+            this.entityPM.IsStandalonePickupDelivery = false;
+            this.entityPM.StandalonePickupDeliveryId = null;
+        }
     }
 
     public class NumberOfInsidePackagesHelper
