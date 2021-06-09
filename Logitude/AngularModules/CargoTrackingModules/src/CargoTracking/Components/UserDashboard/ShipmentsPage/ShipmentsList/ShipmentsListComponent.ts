@@ -53,7 +53,9 @@ export class ShipmentsListComponent implements AfterViewInit
     TitleOfEstimationORActualDate: string = "";
     ValueOfEstimationORActualDate: Date;
     ShipmentTypeAndDirectionTooltip: string;
-    SupplierOrClientTitle: string;
+    TitleForSupplierOrClient: string;
+    ValueForSupplierOrClient: string;
+
     ShipmenTypeForRouting: string;
 
 
@@ -124,7 +126,14 @@ export class ShipmentsListComponent implements AfterViewInit
 
     }
 
-    SetSupplierOrClientTitle(shipment: CargoTrackingShipmentList) {
+    SetTitileAndValueForSupplierOrClient(shipment: CargoTrackingShipmentList)
+    {
+        this.SetTitleForSupplierOrClient(shipment);
+        this.SetValueForSupplierOrClient(shipment);
+    }
+
+
+    SetTitleForSupplierOrClient(shipment: CargoTrackingShipmentList) {
         var title;
         switch (shipment.DirectionId) {
             case 'E': {
@@ -138,7 +147,30 @@ export class ShipmentsListComponent implements AfterViewInit
             }
         }
 
-        this.SupplierOrClientTitle = title;
+        this.TitleForSupplierOrClient = title;
+    }
+
+    SetValueForSupplierOrClient(shipment: CargoTrackingShipmentList) {
+        var value;
+        const EntityType_Customs = "C";
+        switch (shipment.DirectionId) {
+            case 'E': {
+                value = shipment.ShipperName;
+                break;
+            }
+
+            case 'I': {
+                value = shipment.ConsigneeName;
+                break;
+            }
+        }
+
+        if (shipment.EntityType == EntityType_Customs)
+        {
+            value = shipment.ConsigneeName;
+        }
+
+        this.ValueForSupplierOrClient = value;
     }
 
     SetShipmenTypeForRouting(shipment: CargoTrackingShipmentList) {
