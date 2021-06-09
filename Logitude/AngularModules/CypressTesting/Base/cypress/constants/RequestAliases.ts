@@ -168,6 +168,9 @@ export class RequestAliases {
     public static readonly PostAccountingPaymentMethod = "PostAccountingPaymentMethod"
     public static readonly PutAccountingPaymentMethod = "PutAccountingPaymentMethod"
 
+    public static readonly PostDepartment = "PostDepartment"
+    public static readonly PutDepartment = "PutDepartment"
+
     public static readonly GetSignle = "GetSignle"
     public static readonly GetByFilter = "GetByFilter"
     public static readonly GetFilterSearch = "GetFilterSearch"
