@@ -14,12 +14,12 @@
 
 
   <tr style="height:32px">
-    <td style="width:60px">
+    <td style="width:100px">
       <LogLabel [ObjectFieldName]="'TaxReportMonth'" [ObjectTableName]="ObjectTableName"
                 [DataContext]="DataContext"></LogLabel>
     </td>
 
-    <td style="width:70px">
+    <td style="width:120px">
       <ComboBox [ItemsSource]="MonthsList" [Binding]="'Name'" [SelectedItem]="SelectedMonth" (SelectedItemChanged)="SelectedMonth=$event"></ComboBox>
     </td>
 
