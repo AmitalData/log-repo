@@ -18,6 +18,7 @@ using WebFreight.Web.Security;
 namespace WebFreight.Web.App_Code.AngularJS_App_Code
 {
     public class TermsofUseController : ApiController
+        // private label id
     {
         public HttpResponseMessage GetCheckIfGoToTermUseComponent(int tenant, string userId)
         {
@@ -36,7 +37,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
                     TenantPM tenantPM = TenantQuery.GetSingleTenantPM(tenant, false);
                     TermsofUsePM termofuse = new TermsofUsePM();
-
+                    // get frin private label
                     termofuse = termsofUseQuery.GetTermOfUseByTenant(tenant);
                     if (!string.IsNullOrEmpty(tenantPM.PrivateLabelId) && termofuse == null)
                     {

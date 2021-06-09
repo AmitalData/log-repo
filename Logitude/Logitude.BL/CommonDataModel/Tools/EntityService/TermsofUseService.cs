@@ -55,6 +55,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private int GetLastVersionNumber()
         {
+            // if private labelid
+            // private label id
             return entityRepository.GetLastTermsofUseVersionNumber( entityPm.Tenant);
         }
     }

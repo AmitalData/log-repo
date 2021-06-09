@@ -72,6 +72,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public int GetLastTermsofUseVersionNumber(int tenant)
         {
+            // private label id 
             return (from record in context.TermsofUses where record.Tenant == tenant select record).OrderByDescending(d => d.VersionNumber).Select(d=>d.VersionNumber).FirstOrDefault();
         }
 

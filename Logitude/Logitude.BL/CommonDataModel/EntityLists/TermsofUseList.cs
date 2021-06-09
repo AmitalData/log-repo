@@ -12,6 +12,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public int Tenant { get; set; }
 
         public string VersionDocumentId { get; set; }
+        public string PrivateLabelId { get; set; }
+
 
 
 
