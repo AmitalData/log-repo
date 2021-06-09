@@ -107,17 +107,40 @@ export class DocumentDefaultExternalAttachmentsComponent implements OnInit {
     }
 
     UpLoadDocumentFile(event: any) { 
-        const file = querySelection(this.ExternalDocumentId);
+        const file = querySelection(this.ExternalDocumentId); 
 
         if (!file) { 
             return;
-        } 
+        }
+
         this.Extension = file.name.split('.')[1];
         this.FileName = file.name.split('.')[0]; 
-            
+
+        if (!this.validateFileSize(this.GetByteFileSize(file.size))) {
+            this.ShowMessage("The maximum size of documents you can attach is 20 MB. Please send the documents in separated emails");
+            return;
+        }  
+
         if (this.Extension) { 
         this.ConvertArrayBufferToBase64(file, this); 
         }
+
+    }
+    GetByteFileSize(size: any) {
+        const Byte = 1024;
+        let fileSize = 0;
+
+        if (size != null) {
+            fileSize = size / (Byte * Byte);
+        }
+        return fileSize;
+    }
+
+    validateFileSize(size: any) { 
+        if (size > 20) {
+            return false;
+        } else
+            return true;
 
     }
 
@@ -143,7 +166,7 @@ export class DocumentDefaultExternalAttachmentsComponent implements OnInit {
   
     createDocumentFile(file: any) {
 
-        let documentFile = this.GetNewDocument(file);
+        let documentFile = this.GetNewDocument(file); 
         this.InsertDocument(documentFile);
 
     }
