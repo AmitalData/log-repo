@@ -414,7 +414,10 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                         responseData.PaymentDateTime = null;
                         responseData.BankCode = creditResponseData.CustomFileCredit[0].BankCode;
                         responseData.PaymentDate = creditResponseData.CustomFileCredit[0].PaymentDate;
-                        responseData.PaymentTime = creditResponseData.CustomFileCredit[0].PaymentTime != null ? creditResponseData.CustomFileCredit[0].PaymentTime.Substring(8, 4) : null;
+                        if (!String.IsNullOrWhiteSpace(responseData.PaymentTime) && creditResponseData.CustomFileCredit[0].PaymentTime.Length >= 12)
+                        {
+                            responseData.PaymentTime = creditResponseData.CustomFileCredit[0].PaymentTime != null ? creditResponseData.CustomFileCredit[0].PaymentTime.Substring(8, 4) : null;
+                        }
                         if (!String.IsNullOrWhiteSpace(responseData.PaymentDate))
                         {
                             responseData.PaymentDateTime = GetUnifreightFormatedDate(responseData.PaymentDate, responseData.PaymentTime, "").GetValueOrDefault();
