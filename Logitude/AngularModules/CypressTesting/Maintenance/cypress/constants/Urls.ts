@@ -91,6 +91,10 @@ export class Urls {
     public static readonly VatTypesGetSingle = "**/vattypes/getsingle?**";
     public static readonly VatTypesviewGetSingle = "**/vattypeviews/getsingle/?**";
 
+    public static readonly AccountingPaymentMethods = "**/accountingpaymentmethods";
+    public static readonly AccountingPaymentMethodsGetSingle = "**/accountingpaymentmethods/getsingle?**";
+    public static readonly AccountingPaymentMethodsviewGetSingle = "**/accountingpaymentmethodviews/getsingle/?**";
+
     public static GetFilterSearch(filterBy: string) {
         return '**/getbyfilters?**' + filterBy + '**'
     }
