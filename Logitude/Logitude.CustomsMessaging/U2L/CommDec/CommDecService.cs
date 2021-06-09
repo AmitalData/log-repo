@@ -826,11 +826,11 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     LogMessagingUtil.Instance.AppendLine("Set Courier Pending Reason Code To " + declarationPendingCode);
                     if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
                 }
-                if (currentDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
-                {
-                    DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
-                    declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
-                }
+                //if (currentDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
+                //{
+                 //   DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+                  //  declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+                //}
             }
         }
 
