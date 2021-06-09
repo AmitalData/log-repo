@@ -48,7 +48,6 @@ function AssertPostPaymentTerm() {
         else {
             assert.equal(statusCode, 200)
             SearchFieldValue = interception.response.body.EnglishName
-            cy.log(SearchFieldValue)
         }
     })
 }

@@ -165,6 +165,9 @@ export class RequestAliases {
     public static readonly PostVatType = "PostVatType"
     public static readonly PutVatType = "PutVatType"
 
+    public static readonly PostAccountingPaymentMethod = "PostAccountingPaymentMethod"
+    public static readonly PutAccountingPaymentMethod = "PutAccountingPaymentMethod"
+
     public static readonly GetSignle = "GetSignle"
     public static readonly GetByFilter = "GetByFilter"
     public static readonly GetFilterSearch = "GetFilterSearch"
