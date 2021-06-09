@@ -27,7 +27,7 @@ namespace WebFreight.Web.Helpers
         private int tenant;
         private string shipmentId;
         private string containerId;
-        private CommunicationLog communicationLog;
+        private CommunicationsParams communicationLogParams;
         private ICommonDataContext commonContext;
         private ShipmentQuery shipmentQuery;
         private ShipmentPM shipment;
@@ -42,6 +42,8 @@ namespace WebFreight.Web.Helpers
         private string communicationLogAdditionalFields;
         private string scacCode;
         private string entityReference;
+        private string communicationLogId; 
+
         public ContainerStatusesHelper(string shipmentId, string containerId, bool isContainer, int tenant)
         {
             this.tenant = tenant;
@@ -121,7 +123,7 @@ namespace WebFreight.Web.Helpers
        
         private void BuildCommunicationLog()
         {
-            CommunicationsParams logParams = new CommunicationsParams()
+            communicationLogParams = new CommunicationsParams()
             {
                 Tenant = tenant,
                 From = "Amital",
@@ -138,17 +140,18 @@ namespace WebFreight.Web.Helpers
                 FolderName = communicationLogTo.ToLower(),
                 QueueName = "ContainerStatusesCommunicationLogQueue",
                 AdditionalFields = communicationLogAdditionalFields,
-               
+                ByteData = new byte[] { }
+
             };
-            Communications.AddCommunicationLog(logParams);
+            communicationLogId = Communications.AddCommunicationLog(communicationLogParams);
         }
         private void SendDBQueueForContainerStatuses()
         {
             try
             {
                 IQueueService queueservice = new DbQueueService();
-                queueservice.InitializeQueue(communicationLog.QueueName, 0);
-                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLog.Id }, { "Tenant", tenant.ToString() } }, tenant);
+                queueservice.InitializeQueue(communicationLogParams.QueueName, 0);
+                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() } }, tenant);
             }
 
             catch (Exception ex)
