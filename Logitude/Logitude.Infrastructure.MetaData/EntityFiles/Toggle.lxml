@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;229b&quot;"
+  Code="&quot;51b6&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -547,6 +547,17 @@
       Code="&quot;OIC&quot;"
       SearchFields="&quot;OIC,Ocean Insights Containers&quot;"
       Description="&quot;Ocean Insights Containers&quot;" />
+      
+      <Record
+      Name="&quot;Reports in Shared Logistics&quot;"
+      Code="&quot;RSL&quot;"
+      SearchFields="&quot;RSL,Reports in Shared Logistics&quot;"
+      Description="&quot;Reports in Shared Logistics&quot;" />
+    <Record
+      Code="&quot;BIF&quot;"
+      Name="&quot;Invoices DWH&quot;"
+      SearchFields="&quot;BIF,Invoices DWH,Allow Tenants to Show Invoice Fact on the BI Report Screen&quot;"
+      Description="&quot;Allow Tenants to Show Invoice Fact on the BI Report Screen&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
