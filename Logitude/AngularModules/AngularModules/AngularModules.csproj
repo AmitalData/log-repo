@@ -272,6 +272,7 @@
     <Content Include="CustomsModules\CustomsClaim\Components\SendClaim\SendClaimComponent.html" />
     <Content Include="CustomsModules\CustomsContainerization\Components\EditTabs\ContainerizationGeneralComponent.html" />
     <Content Include="CustomsModules\CustomsContainerization\Components\NewEntity\NewContainerizationComponent.html" />
+    <Content Include="CustomsModules\CustomsContainerization\Components\Other\AgentStatementContainerization.html" />
     <Content Include="CustomsModules\CustomsControls\Components\TestCase\SendDeclarationTastCaseComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\AutonomyKeyword\AutonomyKeywordComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\CourierPendingReason\AddCourierPendingToUnifreightStatusComponent.html" />
@@ -346,6 +347,7 @@
     <TypeScriptCompile Include="Common\Tools.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsContainerization\Components\EditTabs\ContainerizationGeneralComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsContainerization\Components\NewEntity\NewContainerizationComponent.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsContainerization\Components\Other\AgentStatementContainerization.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsContainerization\ModuleCustomsContainerization.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsContainerization\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\GetUnloadPortCodeComponent.ts" />

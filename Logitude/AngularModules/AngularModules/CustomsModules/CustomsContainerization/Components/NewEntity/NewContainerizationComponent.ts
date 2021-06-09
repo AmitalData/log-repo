@@ -11,6 +11,7 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 
 
 @Component({
@@ -62,7 +63,7 @@ export class NewContainerizationComponent extends BaseComponent {
             this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
         }
     }
-    
+
 
     ViewInitCompleted($event) {
         this.LoadConnectedDeclarationGrid();
@@ -90,7 +91,7 @@ export class NewContainerizationComponent extends BaseComponent {
         }
     }
 
-    constructor(public entityArgs: EntityArgs,private EntityResourceService: EntityResourceService, public containerizationExtendedListService: ContainerizationExtendedListService) {
+    constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService, public containerizationExtendedListService: ContainerizationExtendedListService) {
         super();
         this.entityPM = new ContainerizationPM();
         this.connectedListIds = new ObservableCollection([]);
@@ -414,7 +415,19 @@ export class NewContainerizationComponent extends BaseComponent {
 
 
     SendButtonClicked() {
-
+        var windowArgs: any = {};
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Height = 200;
+        logitudeWindow.Width = 250;
+        logitudeWindow.ShowCloseButton = true;
+        logitudeWindow.Title = "הצהרת סוכן";
+        logitudeWindow.WindowArgs = windowArgs;
+        logitudeWindow.ComponentLoaded.subscribe(comp => {
+            logitudeWindow.WindowClosed.subscribe((toCreateQInvoice: any) => {
+                debugger;
+            });
+        });
+        logitudeWindow.Show('./CustomsModules/CustomsContainerization/Components/Other/AgentStatementContainerization');
     }
     private timerToken: any;
     TextChanged(searchtext: any) {

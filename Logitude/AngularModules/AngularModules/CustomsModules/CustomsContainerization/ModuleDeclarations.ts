@@ -1,13 +1,15 @@
 
 import { ContainerizationGeneralComponent } from './Components/EditTabs/ContainerizationGeneralComponent';
 import { NewContainerizationComponent } from './Components/NewEntity/NewContainerizationComponent';
+import { AgentStatementContainerization } from './Components/Other/AgentStatementContainerization';
 
 
 export const Components =
     [
         
         ContainerizationGeneralComponent,
-        NewContainerizationComponent
+        NewContainerizationComponent,
+        AgentStatementContainerization,
     ];
 
 export class ModuleDeclarations {
@@ -19,6 +21,7 @@ export class ModuleDeclarations {
         
             case "ContainerizationGeneralComponent": { myResult = ContainerizationGeneralComponent; break; }
             case "NewContainerizationComponent": { myResult = NewContainerizationComponent; break; }
+            case "AgentStatementContainerization": { myResult = AgentStatementContainerization; break; }
 
         }
 
