@@ -81,14 +81,14 @@ export class DocumentDefaultExternalAttachmentsComponent implements OnInit {
         this.documentFileService.GetDocumentsByIdsList(TemplateExternalAttachmentsIds).subscribe((res: any) => {
                 let response: ServiceResponse = res;
                 if (this.validResponse(response)) {
-                    this.GetDocumentsList(response.Result) 
+                    this.BuildDocumentsList(response.Result) 
                 } else {
                     this.HandleServiceError(response)
                 }
             });
          
     }
-    GetDocumentsList(Result: any) {
+    BuildDocumentsList(Result: any) {
         this.StopBusyIndicator();
         Result.forEach(item => {  
             this.DocumentDefaultExternalAttachments.push(new DocumentDefaultExternalAttachments(item));

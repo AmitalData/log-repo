@@ -36,30 +36,49 @@ namespace WebFreight.Web.Helpers
 
         private void BuildDefaultExternalAttachment(DocumentTypeTemplateDefultAttachmentArgs defultAttachmentArgs)
         {
-            DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(defultAttachmentArgs.Tenant);
-            DocumentRepository documentRepository = new DocumentRepository(defultAttachmentArgs.Tenant); 
-
-            var attachedExternalDocumentsIds = documentTypeTemplateQuery.GetDefaultExternalAttachmentIds(defultAttachmentArgs.DocumentTypeTemplateId, defultAttachmentArgs.Tenant);
-
-            if (attachedExternalDocumentsIds == null)
+            List<string> attachedExternalDocumentsIds = GetAttachedExternalDocumentsIds();
+            if (attachedExternalDocumentsIds == null || attachedExternalDocumentsIds.Count() == 0)
             {
                 return;
             }
-            var documents = documentRepository.GetDocumentsByIds(attachedExternalDocumentsIds);
-            AppendDocumentsToAttachmentList(documents);
+            List<Document> documents = GetDocumentsByIds(attachedExternalDocumentsIds);
+            AddDocumentsToAttachmentLists(documents);
         }
 
-        private void AppendDocumentsToAttachmentList(List<Document> documents)
+     
+
+        private List<string> GetAttachedExternalDocumentsIds()
         {
-            documents.ForEach(item =>
+            DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(defultAttachmentArgs.Tenant);
+           return documentTypeTemplateQuery.GetDefaultExternalAttachmentIds(defultAttachmentArgs.DocumentTypeTemplateId, defultAttachmentArgs.Tenant);
+
+        }
+
+        private List<Document> GetDocumentsByIds(List<string> documentsIds)
+        {
+            DocumentRepository documentRepository = new DocumentRepository(defultAttachmentArgs.Tenant);
+            return documentRepository.GetDocumentsByIds(documentsIds);
+        }
+
+
+        private void AddDocumentsToAttachmentLists(List<Document> documents)
+        {
+            foreach (Document document in documents)
             {
-                GetNewInstanceFromAttachemntList(item);
-            });
+                attachmentsLists.Add(GetNewInstanceFromAttachemntList(document));
+            }
+     
         }
 
-        private void GetNewInstanceFromAttachemntList(Document item)
+        private AttachmentsList GetNewInstanceFromAttachemntList(Document item)
         {
-            attachmentsLists.Add(new AttachmentsList() { Id = item.Id, DocumentFilingId = "", DocumentTypeCopyNameWithDocumentTypeName = item.FileName, FileSize = item.FileSize, FileExtension = item.Extension, Tenant = item.Tenant });
+          return  new AttachmentsList() { 
+                Id = item.Id,
+                DocumentTypeCopyNameWithDocumentTypeName = item.FileName, 
+                FileSize = item.FileSize,
+                FileExtension = item.Extension,
+                Tenant = item.Tenant 
+            };
         }
 
         private void BuildDefaultAttachemnts(DocumentTypeTemplateDefultAttachmentArgs defultAttachmentArgs)
