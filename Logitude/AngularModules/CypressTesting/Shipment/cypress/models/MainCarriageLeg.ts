@@ -5,4 +5,6 @@ export interface MainCarriageLeg {
     ATD: string,
     Gateway :string,
     Destination :string,
+    MainCarriageETADate :string,
+    MainCarriageATADate:string,
 }

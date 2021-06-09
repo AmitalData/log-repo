@@ -7,10 +7,11 @@ import { ShipmentSelectors } from "../../selectors/Selectors";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { ShipmentContext } from '../../models/ShipmentContext';
 import { MainCarriageLeg } from "cypress/models/MainCarriageLeg";
+//import { when } from "cypress/types/jquery";
 
 //#region variables
 let MasterShipmentDetails: ShipmentDetails;
-let shipmentDetails: ShipmentDetails;
+//let shipmentDetails: ShipmentDetails;
 let EventNote;
 let shipmentNumber: string;
 //#endregion
@@ -22,8 +23,8 @@ Given("the user logged in and navigates to shipments workspace", () => {
 });
 
 Given("a master Shipment with following details", (dataTable) => {
-    const shipmentDetails = Assists.CreateInstance<ShipmentDetails>(dataTable, true);
-    MasterShipmentDetails = shipmentDetails;
+    MasterShipmentDetails = Assists.CreateInstance<ShipmentDetails>(dataTable, true);
+    //MasterShipmentDetails = shipmentDetails;
     Actions.OpenNewShipmentWizard(MasterShipmentDetails.ShipmentLevel);
     Actions.FillShipmentWizardsFields(MasterShipmentDetails);
 });
@@ -103,7 +104,8 @@ Then("the master should close operationally successfully", () => {
 });
 Then("the house should close operationally successfully",()=>{
     Actions.openHouseShipment()
-    Actions.ValidateShipmentHouseFields(true)
+    //Actions.ValidateShipmentHouseFields(true)
+     Actions.ValidateShipmentHouseCloseoperationally(true)
 })
 When('close master Accountly',()=>{
 
@@ -122,4 +124,18 @@ Then('the master should close successfully',()=>{
 Then('the connected house should close successfully',()=>{
     Actions.openHouseShipment()
     Actions.ValidateCloseAccoutingHouse(true)
+})
+
+When('reopen master Accountly',()=>{
+    cy.BackButton('Shipment')
+    cy.Click(ShipmentSelectors.ShipmentMoreList, null,true);
+    cy.Click(ShipmentSelectors.AccountllyReopenButton, null);
+    Actions.UpdateClosedShipment();
+})
+Then('the master should reopen successfully',()=>{
+    Actions.ValidateCloseAccoutingMaster(false)
+})
+Then('the connected house should reopen successfully',()=>{
+    Actions.openHouseShipment()
+    Actions.ValidateCloseAccoutingHouse(false)
 })

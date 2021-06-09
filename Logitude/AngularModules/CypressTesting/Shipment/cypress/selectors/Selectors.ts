@@ -2,6 +2,8 @@ import { RegexSelectors } from '../selectors/RegexSelectors';
 
 export class ShipmentSelectors extends RegexSelectors {
   //#region Shared
+  public static readonly LastElementShipment = ":last";
+
   public static readonly ShipmentMoreList = '#MenuButtons';
   public static readonly ShipmentTab = '#SHIP';
   public static readonly ContainersTab = '#CNFU';
@@ -62,10 +64,13 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly EditMainCarrigeHouse = '#Edit-MainCarriage_1';
   public static readonly MainCarrigeHouse = '#Shipment_MainCarriageFromPortId';
   public static readonly RoutingRegion= '.MediaFill';
+  public static readonly RoutingRegionTEAR= '#Routing_MainCarriageLeg1';
 
+  
   public static readonly EventsTabHouseA = '#ShipmentTHEvents_2';
   public static readonly PackageTabHouseA = '#ShipmentTHPackages_2';
   public static readonly AddPackageTabHouseA = '#AddPackage_2';
+  public static readonly PayablesTaHouse = '#ShipmentTHPayables_2';
 
   
   
@@ -198,6 +203,9 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly OnCarriageOKBtn = '#OnCarriageOKBtn';
   public static readonly MainCarrigeVessel = 'input[id^=Shipment_MainCarriageVesselId_]';
   public static readonly MainCarrigeVoyageNo = 'input[id^=Shipment_MainCarriageCarrierNumber_]';
+  public static readonly MainCarriageETADate = '#date_Shipment_MainCarriageETA';
+
+  date_Shipment_MainCarriageATA
 //Warehouse
 public static readonly ShipmentWarehouseLegExpectedEntryDate="#date_Shipment_WarehouseLegExpectedEntryDate"
 public static readonly ShipmentWarehouseLegActualEntryDate="#date_Shipment_WarehouseLegActualEntryDate"

@@ -252,20 +252,36 @@ export function ValidateCloseAccoutingMaster(IsClosed: boolean){
     CheckIfDisable(ShipmentSelectors.ReceivablesTab, BaseSelectors.AddButton, IsClosed);
 }
 export function ValidateCloseAccoutingHouse(IsClosed: boolean){
-    CheckIfDisable(ShipmentSelectors.PayablesTab, BaseSelectors.AddButton, IsClosed);
-    CheckIfDisable(ShipmentSelectors.ReceivablesTab, BaseSelectors.AddButton, IsClosed);
-
+   // CheckIfDisable(ShipmentSelectors.PayablesTaHouse, BaseSelectors.AddPayabelHouse, IsClosed);
+    //CheckIfDisable(ShipmentSelectors.ReceivablesTab, BaseSelectors.AddButton, IsClosed);
+    //cy.Navigate(ShipmentSelectors.ShipmentPackagesTab+ShipmentSelectors.LastElementShipment)
+    
+    CheckIfDisable(ShipmentSelectors.ShipmenPayablesgTab+ShipmentSelectors.LastElementShipment, ShipmentSelectors.ShipmenAddPayables+ShipmentSelectors.LastElementShipment, IsClosed);
+    CheckIfDisable(ShipmentSelectors.ShipmenReceivablesTab+ShipmentSelectors.LastElementShipment, ShipmentSelectors.ShipmenAddReceivables+ShipmentSelectors.LastElementShipment, IsClosed);
 
 }
 
 export function ValidateShipmentHouseFields(IsCanceled: boolean){
-    cy.Navigate(ShipmentSelectors.PackagesTabHouse);
-   CheckIfDisable(ShipmentSelectors.PackagesTabHouse, ShipmentSelectors.AddPackage, IsCanceled);
-    cy.Navigate(ShipmentSelectors.OrdersTabHouse);
-    cy.Navigate(ShipmentSelectors.PartnersTabHouse);
-    cy.Navigate(ShipmentSelectors.RoutingsTabHouse);
+    //cy.Navigate(ShipmentSelectors.PackagesTabHouse);
+   //CheckIfDisable(ShipmentSelectors.PackagesTabHouse, ShipmentSelectors.AddPackage, IsCanceled);ShipmentPackagesTab
+   cy.Navigate(ShipmentSelectors.ShipmentPackagesTab+ShipmentSelectors.LastElementShipment)
+   CheckIfDisable(ShipmentSelectors.ShipmentPackagesTab+ShipmentSelectors.LastElementShipment, ShipmentSelectors.ShipmentAddPackagesTab+ShipmentSelectors.LastElementShipment, IsCanceled);
+   //cy.Navigate(ShipmentSelectors.OrdersTabHouse);
+    //cy.Navigate(ShipmentSelectors.PartnersTabHouse);
+    //cy.Navigate(ShipmentSelectors.RoutingsTabHouse);
 
     
+}
+export function ValidateShipmentHouseCloseoperationally(IsClosed:boolean){
+   //cy.Navigate(ShipmentSelectors.ShipmentPackagesTab+ShipmentSelectors.LastElementShipment)
+   //CheckIfDisable(ShipmentSelectors.ShipmentPartnersTab+ShipmentSelectors.LastElementShipment, ShipmentSelectors.ShipmentAddPartners+ShipmentSelectors.LastElementShipment, IsClosed);
+    CheckIfDisable(ShipmentSelectors.ShipmentPackagesTab+ShipmentSelectors.LastElementShipment, ShipmentSelectors.ShipmentAddPackagesTab+ShipmentSelectors.LastElementShipment, IsClosed);
+    cy.Navigate(ShipmentSelectors.ShipmenRoutingTab+ShipmentSelectors.LastElementShipment)
+
+    //CheckIfDisable(ShipmentSelectors.ShipmenAddRoute,ShipmentSelectors.LastElementShipment, IsClosed);
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmenAddRoute,BaseSelectors.BeDisabled)
+
+
 }
 export function ValidateShipmentHouseFieldsReactive(IsCanceled: boolean){
     cy.Navigate(ShipmentSelectors.PackageTabHouseA);
@@ -557,6 +573,16 @@ export function EditMainCarriageLegs(Airline: string) {
 
     //cy.Click(ShipmentSelectors.ShipmentSaveButton, null);
 }
+export function EditMainCarriageLegsAddETAandATA(MainCarriageETADate:string,MainCarriageATADate:string){
+    cy.Click(ShipmentSelectors.EditRoutingMainCarriage, null)
+
+    cy.FillLogTextBox(ShipmentSelectors.MainCarriageETADate, MainCarriageETADate, false)
+    cy.FillLogTextBox(ShipmentSelectors.MainCarriageATADate, MainCarriageATADate, false)
+    cy.Click(ShipmentSelectors.MainCarriageOKBtn, null);
+
+   
+    
+}
 export function EditMainCarriageLegsFromToport(Gateway :string, Destination :string) {
     cy.Click(ShipmentSelectors.EditRoutingMainCarriage, null)
     
@@ -587,6 +613,10 @@ export function AsserationEditMainCarriageLegsFromToport() {
 
     
    
+}
+export function AsserationAddMainCarriageETAandATADate(){
+ 
+  cy.get(ShipmentSelectors.RoutingRegionTEAR).contains('2021-05-04').should('exist')
 }
 
 export function AddMainCarriageATDDateAndTime(date: string, time: string) {
