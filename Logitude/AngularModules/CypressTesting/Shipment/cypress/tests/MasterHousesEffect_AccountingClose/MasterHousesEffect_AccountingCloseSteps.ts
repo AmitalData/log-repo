@@ -11,7 +11,6 @@ import { MainCarriageLeg } from "cypress/models/MainCarriageLeg";
 
 //#region variables
 let MasterShipmentDetails: ShipmentDetails;
-//let shipmentDetails: ShipmentDetails;
 let EventNote;
 let shipmentNumber: string;
 //#endregion
@@ -24,7 +23,6 @@ Given("the user logged in and navigates to shipments workspace", () => {
 
 Given("a master Shipment with following details", (dataTable) => {
     MasterShipmentDetails = Assists.CreateInstance<ShipmentDetails>(dataTable, true);
-    //MasterShipmentDetails = shipmentDetails;
     Actions.OpenNewShipmentWizard(MasterShipmentDetails.ShipmentLevel);
     Actions.FillShipmentWizardsFields(MasterShipmentDetails);
 });
@@ -53,7 +51,6 @@ Given("edit main carriage leg with the following details", (dataTable) => {
 });
 When("update master", () => {
    Actions.UpdateMaster()
-    // Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
 });
 
 
@@ -95,16 +92,9 @@ Then("the master should close operationally successfully", () => {
     
     Actions.ValidateCloseShipmentFields(true);
 
-   // BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
-   // Actions.ValidateCloseIconExist(true);
-    //Actions.ValidateShipmentEventActions(ShipmentSelectors.EventsTab,EventNote);
-    //Actions.ValidateCloseShipmentFields(true);
-    //BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200)
-
 });
 Then("the house should close operationally successfully",()=>{
     Actions.openHouseShipment()
-    //Actions.ValidateShipmentHouseFields(true)
      Actions.ValidateShipmentHouseCloseoperationally(true)
 })
 When('close master Accountly',()=>{

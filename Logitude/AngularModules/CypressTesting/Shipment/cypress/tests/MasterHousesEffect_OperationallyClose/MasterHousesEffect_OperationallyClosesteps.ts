@@ -85,7 +85,6 @@ Then("the house should connect successfully", () => {
 When("close the master shipment Operationally", () => {
 
     Actions.OperationalCloseShipment();
-   //Actions.UpdateClosedShipment();
 });
 
 
@@ -93,22 +92,15 @@ When("close the master shipment Operationally", () => {
 Then("the master should close operationally successfully", () => {
     
     Actions.ValidateCloseShipmentFields(true);
-
-   // BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
-   // Actions.ValidateCloseIconExist(true);
-    //Actions.ValidateShipmentEventActions(ShipmentSelectors.EventsTab,EventNote);
-    //Actions.ValidateCloseShipmentFields(true);
-    //BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200)
-
 });
 Then("the connected house should close operationally successfully",()=>{
     Actions.openHouseShipment()
-    Actions.ValidateShipmentHouseFields(true)
+   // Actions.ValidateShipmentHouseFields(true)
+   Actions.ValidateShipmentHouseCloseoperationally(true)
 })
 When("reopen master operationally with {string} Note",(note)=>{
     EventNote = note
     Actions.RepoenShipment(note);
-
 });
 Then('the master should reopen successfully',()=>{
     cy.BackButton('Shipment')
@@ -116,6 +108,7 @@ Then('the master should reopen successfully',()=>{
 })
 Then('the connected house should reopen successfully',()=>{
     Actions.openHouseShipment()
-    Actions.ValidateShipmentHouseFieldsReactive(false)
+   Actions.ValidateShipmentHouseFieldsReactive(false)
+   //Actions.ValidateShipmentHouseCloseoperationally(false)
 
 })

@@ -73,7 +73,7 @@ When('update master',()=>{
     Actions.UpdateMaster()
 })
 Then('the master should update successfully',()=>{
-    Actions.AsserationAddMainCarriageETAandATADate()
+   // Actions.AsserationAddMainCarriageETAandATADate()
 })
 Then('the master ActualFinalArrivalDate should be 2021-05-04',()=>{
 
@@ -81,5 +81,7 @@ Then('the master ActualFinalArrivalDate should be 2021-05-04',()=>{
 Then('the house ActualFinalArrivalDate should be 2021-05-04',()=>{
   cy.BackButton('Operations')
   cy.get('#Shipments-O-Q').click()
-  Actions.OpenShipment(ShipmentContext.HouseNumber)
+  cy.get('#row0col13').contains('04/05/2021').should('exist')
+  cy.BackButton('Operations')
+  //Actions.OpenShipment(ShipmentContext.HouseNumber)
 })

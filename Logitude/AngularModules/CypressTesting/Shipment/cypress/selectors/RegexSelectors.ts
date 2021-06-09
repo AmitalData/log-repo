@@ -9,7 +9,7 @@ export class RegexSelectors {
     public static readonly ShipmentPartnersTab= "li[id^='ShipmentTHPartners_']"
     public static readonly ShipmentAddPartners= "div[id^='PartnerToggle_']"
     public static readonly ShipmenRoutingTab= "li[id^='ShipmentTHRoutings_']"
-    public static readonly ShipmenAddRoute= "[id^='RoutingToggle_']"
+    public static readonly ShipmenAddRoute= "div[id^='RoutingToggle_']"
     public static readonly ShipmenPayablesgTab= "li[id^='ShipmentTHPayables_']"
     public static readonly ShipmenAddPayables= "button[id^='Add_']"
     public static readonly ShipmenReceivablesTab= "li[id^='ShipmentTHReceivables_']"

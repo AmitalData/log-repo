@@ -252,12 +252,10 @@ export function ValidateCloseAccoutingMaster(IsClosed: boolean){
     CheckIfDisable(ShipmentSelectors.ReceivablesTab, BaseSelectors.AddButton, IsClosed);
 }
 export function ValidateCloseAccoutingHouse(IsClosed: boolean){
-   // CheckIfDisable(ShipmentSelectors.PayablesTaHouse, BaseSelectors.AddPayabelHouse, IsClosed);
-    //CheckIfDisable(ShipmentSelectors.ReceivablesTab, BaseSelectors.AddButton, IsClosed);
-    //cy.Navigate(ShipmentSelectors.ShipmentPackagesTab+ShipmentSelectors.LastElementShipment)
-    
-    CheckIfDisable(ShipmentSelectors.ShipmenPayablesgTab+ShipmentSelectors.LastElementShipment, ShipmentSelectors.ShipmenAddPayables+ShipmentSelectors.LastElementShipment, IsClosed);
-    CheckIfDisable(ShipmentSelectors.ShipmenReceivablesTab+ShipmentSelectors.LastElementShipment, ShipmentSelectors.ShipmenAddReceivables+ShipmentSelectors.LastElementShipment, IsClosed);
+ CheckIfDisable(ShipmentSelectors.ShipmenPayablesgTab+ShipmentSelectors.LastElementShipment,
+     ShipmentSelectors.ShipmenAddPayables+ShipmentSelectors.LastElementShipment, IsClosed);
+CheckIfDisable(ShipmentSelectors.ShipmenReceivablesTab+ShipmentSelectors.LastElementShipment, 
+    ShipmentSelectors.ShipmenAddReceivables+ShipmentSelectors.LastElementShipment, IsClosed);
 
 }
 
@@ -266,27 +264,31 @@ export function ValidateShipmentHouseFields(IsCanceled: boolean){
    //CheckIfDisable(ShipmentSelectors.PackagesTabHouse, ShipmentSelectors.AddPackage, IsCanceled);ShipmentPackagesTab
    cy.Navigate(ShipmentSelectors.ShipmentPackagesTab+ShipmentSelectors.LastElementShipment)
    CheckIfDisable(ShipmentSelectors.ShipmentPackagesTab+ShipmentSelectors.LastElementShipment, ShipmentSelectors.ShipmentAddPackagesTab+ShipmentSelectors.LastElementShipment, IsCanceled);
-   //cy.Navigate(ShipmentSelectors.OrdersTabHouse);
-    //cy.Navigate(ShipmentSelectors.PartnersTabHouse);
-    //cy.Navigate(ShipmentSelectors.RoutingsTabHouse);
-
-    
+   cy.Navigate(ShipmentSelectors.ShipmenRoutingTab+BaseSelectors.LastElement)
+    BaseAssertion.AssertElementHaveClass(ShipmentSelectors.ShipmenAddRoute + BaseSelectors.LastElement, "ToggleButtonDisabled")
+    cy.Navigate(ShipmentSelectors.ShipmentPartnersTab+BaseSelectors.LastElement)
+    BaseAssertion.AssertElementHaveClass(ShipmentSelectors.ShipmentAddPartners + BaseSelectors.LastElement, "ToggleButtonDisabled")
+    CheckIfDisable(ShipmentSelectors.ShipmenPayablesgTab+ShipmentSelectors.LastElementShipment,
+        ShipmentSelectors.ShipmenAddPayables+ShipmentSelectors.LastElementShipment, IsCanceled);
+   CheckIfDisable(ShipmentSelectors.ShipmenReceivablesTab+ShipmentSelectors.LastElementShipment, 
+       ShipmentSelectors.ShipmenAddReceivables+ShipmentSelectors.LastElementShipment, IsCanceled);
 }
 export function ValidateShipmentHouseCloseoperationally(IsClosed:boolean){
-   //cy.Navigate(ShipmentSelectors.ShipmentPackagesTab+ShipmentSelectors.LastElementShipment)
-   //CheckIfDisable(ShipmentSelectors.ShipmentPartnersTab+ShipmentSelectors.LastElementShipment, ShipmentSelectors.ShipmentAddPartners+ShipmentSelectors.LastElementShipment, IsClosed);
-    CheckIfDisable(ShipmentSelectors.ShipmentPackagesTab+ShipmentSelectors.LastElementShipment, ShipmentSelectors.ShipmentAddPackagesTab+ShipmentSelectors.LastElementShipment, IsClosed);
-    cy.Navigate(ShipmentSelectors.ShipmenRoutingTab+ShipmentSelectors.LastElementShipment)
-
-    //CheckIfDisable(ShipmentSelectors.ShipmenAddRoute,ShipmentSelectors.LastElementShipment, IsClosed);
-    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmenAddRoute,BaseSelectors.BeDisabled)
-
-
+    CheckIfDisable(ShipmentSelectors.ShipmentPackagesTab+BaseSelectors.LastElement, ShipmentSelectors.ShipmentAddPackagesTab+BaseSelectors.LastElement, IsClosed);
+    cy.Navigate(ShipmentSelectors.ShipmenRoutingTab+BaseSelectors.LastElement)
+    BaseAssertion.AssertElementHaveClass(ShipmentSelectors.ShipmenAddRoute + BaseSelectors.LastElement, "ToggleButtonDisabled")
+    cy.Navigate(ShipmentSelectors.ShipmentPartnersTab+BaseSelectors.LastElement)
+    BaseAssertion.AssertElementHaveClass(ShipmentSelectors.ShipmentAddPartners + BaseSelectors.LastElement, "ToggleButtonDisabled")
 }
 export function ValidateShipmentHouseFieldsReactive(IsCanceled: boolean){
     cy.Navigate(ShipmentSelectors.PackageTabHouseA);
-    CheckIfDisable(ShipmentSelectors.PackageTabHouseA, ShipmentSelectors.AddPackageTabHouseA, IsCanceled);
+    CheckIfDisable(ShipmentSelectors.PackageTabHouseA, ShipmentSelectors.AddPackageTabHouseA, IsCanceled); 
+    cy.Navigate(ShipmentSelectors.ShipmenRoutingTab+BaseSelectors.LastElement) 
    
+ BaseAssertion.AssertElementNotHaveClass(ShipmentSelectors.ShipmenAddRoute + BaseSelectors.LastElement, "ToggleButtonDisabled")  
+ cy.Navigate(ShipmentSelectors.ShipmentPartnersTab+BaseSelectors.LastElement)
+ BaseAssertion.AssertElementNotHaveClass(ShipmentSelectors.ShipmentAddPartners + BaseSelectors.LastElement, "ToggleButtonDisabled")
+                            
 }
 
 export function ValidateCloseShipmentFields(IsClosed: boolean) {
@@ -616,7 +618,7 @@ export function AsserationEditMainCarriageLegsFromToport() {
 }
 export function AsserationAddMainCarriageETAandATADate(){
  
-  cy.get(ShipmentSelectors.RoutingRegionTEAR).contains('2021-05-04').should('exist')
+  cy.get(ShipmentSelectors.RoutingRegionA).contains('2021-05-04').should('exist')
 }
 
 export function AddMainCarriageATDDateAndTime(date: string, time: string) {
