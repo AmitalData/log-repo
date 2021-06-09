@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 import { CustomMessageWrapperComponent } from '../../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent'
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { DeclarationRestoreArgs } from '../../../../Customs/Args';
@@ -18,6 +18,7 @@ import { CustomSendOptionsArgs } from '../../../../Customs/DataContract/RequestP
 import { CustomMessageProgressComponent } from '../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { CargoIdentifireTypeListService } from '../../../../Customs/Services/StandardLists/CargoIdentifireTypeListService';
+import { CargoIdentifireTypePM } from '../../../../Customs/EntityPMs/CargoIdentifireTypePM';
 
 @Component({
     selector: 'DeclarationStatusComponent',
@@ -27,12 +28,13 @@ import { CargoIdentifireTypeListService } from '../../../../Customs/Services/Sta
 
 export class DeclarationStatusComponent
     extends BaseRequestsSheetMassaging
-    implements AfterViewInit, IRequestsSheetMassagingComponent {
+    implements AfterViewInit, OnChanges, IRequestsSheetMassagingComponent {
 
     public DataContext: DeclarationStatusComponent = this;
     public ObjectTableName: string = "Customs.Declaration";
     public IsShowAvailabiltyQuantitiesList: boolean = false;
 
+    _CargoIdentifireTypePM: CargoIdentifireTypePM = new CargoIdentifireTypePM();
     _CargoIdentifireTypeListService: CargoIdentifireTypeListService = new CargoIdentifireTypeListService();
     _DeclarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
     _DeclarationMessagesService: DeclarationMessagesService = new DeclarationMessagesService();
@@ -44,6 +46,12 @@ export class DeclarationStatusComponent
 
         this.AvailabiltyQuantitiesList = [];
     }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        this.setRequired();
+        debugger;
+    }
+
 
     @ViewChild(CustomMessageWrapperComponent)
     SuperCustomMessageWrapperComponent: CustomMessageWrapperComponent = new CustomMessageWrapperComponent();
@@ -94,7 +102,7 @@ export class DeclarationStatusComponent
                                         this.ManifestNumber = Response.Result[0].ManifestNumber;
                                         this.SecondCargoID = Response.Result[0].SecondCargoID;
                                         this.ThirdCargoID = Response.Result[0].ThirdCargoID;
-
+                                        this.setRequired();
                                     }
                                 });
                         }
@@ -165,6 +173,7 @@ export class DeclarationStatusComponent
         }
     }
 
+
     get CargoTypeCode() { return this.RequestParams ? this.RequestParams.CargoTypeCode : null; }
     set CargoTypeCode(value: string) {
         if (this.RequestParams.CargoTypeCode != value) {
@@ -173,23 +182,40 @@ export class DeclarationStatusComponent
                 this._CargoIdentifireTypeListService.getSingleFromCache(this.CargoTypeCode)
                     .subscribe((Response: ServiceResponse) => {
                         if (Response.Result != null) {
-                            this.UIProperties.SetRequired("ManifestNumber", this.ObjectTableName, true);
-                            if (Response.Result.IsKey2Mandatory) {
-                                this.UIProperties.SetRequired("SecondCargoID", this.ObjectTableName, true);
-                            } else {
-                                this.UIProperties.SetRequired("SecondCargoID", this.ObjectTableName, false);
-                            }
-                            if (Response.Result.IsKey3Mandatory) {
-                                this.UIProperties.SetRequired("ThirdCargoID", this.ObjectTableName, true);
-                            } else {
-                                this.UIProperties.SetRequired("ThirdCargoID", this.ObjectTableName, false);
-                            }
+                            this._CargoIdentifireTypePM = Response.Result;
+                            this.setRequired();
                         }
                     });
             }
         }
     }
 
+    setRequired() {
+        debugger;
+        if (this.isExportDeclaration) {
+            this.UIProperties.SetRequired("ManifestNumber", this.ObjectTableName, true);
+            if (this.ManifestNumber != null) {
+                this.UIProperties.SetRequired("ManifestNumber", this.ObjectTableName, false);
+            }
+
+            if (this._CargoIdentifireTypePM.IsKey2Mandatory) {
+                this.UIProperties.SetRequired("SecondCargoID", this.ObjectTableName, true);
+                if (this.SecondCargoID != null) {
+                    this.UIProperties.SetRequired("SecondCargoID", this.ObjectTableName, false);
+                }
+            } else {
+                this.UIProperties.SetRequired("SecondCargoID", this.ObjectTableName, false);
+            }
+            if (this._CargoIdentifireTypePM.IsKey3Mandatory) {
+                this.UIProperties.SetRequired("ThirdCargoID", this.ObjectTableName, true);
+                if (this.ThirdCargoID != null) {
+                    this.UIProperties.SetRequired("ThirdCargoID", this.ObjectTableName, false);
+                }
+            } else {
+                this.UIProperties.SetRequired("ThirdCargoID", this.ObjectTableName, false);
+            }
+        }
+    }
     get ManifestNumber() { return this.RequestParams ? this.RequestParams.ManifestNumber : null; }
     set ManifestNumber(value: string) {
         if (this.RequestParams.ManifestNumber != value) {
