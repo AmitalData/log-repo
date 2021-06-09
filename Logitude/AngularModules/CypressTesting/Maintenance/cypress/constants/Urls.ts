@@ -33,12 +33,12 @@ export class Urls {
     public static readonly States = "**/states"
     public static readonly StatesGetSingle = "**/states/getsingle?**";
 
-    public static readonly CountryCities="**/countrycities"
+    public static readonly CountryCities = "**/countrycities"
     public static readonly CountryCitiesGetSingle = "**/countrycities/getsingle?**";
 
     public static readonly GlobalZones = "**/globalzones"
     public static readonly GlobalZonesGetSingle = "**/globalzones/getsingle?**"
-    
+
     public static readonly BankAccounts = "**/bankaccountlites"
     public static readonly BankAccountsGetSingle = "**/bankaccountlites/getsingle?**"
     public static readonly BankAccountsviewGetSingle = "**/bankaccountliteviews/getsingle/?**";
@@ -46,30 +46,30 @@ export class Urls {
     public static readonly PackageTypes = "**/packagetypes"
     public static readonly PackageTypesGetSingle = "**/packagetypes/getsingle?**"
     public static readonly PackageTypesviewGetSingle = "**/packagetypeviews/getsingle/?**";
-    
+
     public static readonly Branches = "**/branches"
     public static readonly BranchesGetSingle = "**/branches/getsingle?**"
     public static readonly BranchesviewGetSingle = "**/branchviews/getsingle/?**";
 
     public static readonly SpecialServicesTypes = "**/specialservicestypes"
-    public static readonly SpecialServicesTypesGetSingle="**/specialservicestypes/getsingle?**"
+    public static readonly SpecialServicesTypesGetSingle = "**/specialservicestypes/getsingle?**"
 
-    public static readonly Commodities="**/commodities"
+    public static readonly Commodities = "**/commodities"
     public static readonly CommoditiesGetSingle = "**/commodities/getsingle?**"
 
-    public static readonly Regions= "**/regions"
-    public static readonly RegionsGetSingle="**/regions/getsingle?**"
+    public static readonly Regions = "**/regions"
+    public static readonly RegionsGetSingle = "**/regions/getsingle?**"
 
-    public static readonly Shippingagents="**/shippingagents"
-    public static readonly ShippingAgentGetSingle= "**/shippingagents/getsingle?**"
+    public static readonly Shippingagents = "**/shippingagents"
+    public static readonly ShippingAgentGetSingle = "**/shippingagents/getsingle?**"
 
-    public static readonly CustomAgents="**/customagents"
-    public static readonly CustomAgentsGetSingle= "**/customagents/getsingle?**"
+    public static readonly CustomAgents = "**/customagents"
+    public static readonly CustomAgentsGetSingle = "**/customagents/getsingle?**"
 
-    public static readonly Truckers ="**/truckers"
-    public static readonly TruckersGetSingle="**/truckers/getsingle?**"
+    public static readonly Truckers = "**/truckers"
+    public static readonly TruckersGetSingle = "**/truckers/getsingle?**"
 
-    public static readonly MoveTypes ="**/movetypes"
+    public static readonly MoveTypes = "**/movetypes"
     public static readonly MoveTypeGetSingle = "**/movetypes/getsingle?**"
 
     public static readonly ShipmentSubTypes = "**/shipmentsubtypes"
@@ -94,6 +94,10 @@ export class Urls {
     public static readonly AccountingPaymentMethods = "**/accountingpaymentmethods";
     public static readonly AccountingPaymentMethodsGetSingle = "**/accountingpaymentmethods/getsingle?**";
     public static readonly AccountingPaymentMethodsviewGetSingle = "**/accountingpaymentmethodviews/getsingle/?**";
+
+    public static readonly BusinessUnits = "**/businessunits";
+    public static readonly BusinessUnitsGetSingle = "**/businessunits/getsingle?**";
+    public static readonly BusinessUnitsviewGetSingle = "**/businessunitviews/getsingle/?**";
 
     public static GetFilterSearch(filterBy: string) {
         return '**/getbyfilters?**' + filterBy + '**'
