@@ -334,7 +334,7 @@ export class PartnersDomainService {
 
             var mappedEntity: PartnerExternalAccountsServicePM = this.MapJsonToPartnerExternalAccounts(entityPM, false);
 
-            return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+            return this._http.put(this._apiUrl + "/PutPartnerExternalAccounts", JSON.stringify(mappedEntity),ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                 var myJsonResult = res;
 
                 var mappedResult: PartnerExternalAccountsServicePM = this.MapJsonToPartnerExternalAccounts(myJsonResult, true, entityPM);
@@ -342,8 +342,7 @@ export class PartnersDomainService {
                 var myResponse = new ServiceResponse();
                 myResponse.Result = mappedResult;
                 return myResponse;
-
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
         
