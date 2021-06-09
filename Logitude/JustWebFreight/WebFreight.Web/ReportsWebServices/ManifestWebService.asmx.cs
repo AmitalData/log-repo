@@ -107,38 +107,8 @@ namespace WebFreight.Web.ReportsWebServices
                 IncotermQuery incotermQuery = new IncotermQuery(tenant);
                 WebServiceHelper myServiceHelper = new WebServiceHelper(tenant);
                 CustomerQuery customerQuery = new CustomerQuery(tenant);
+
                 manifestDataProvider.ShipmentType = master.ShipmentTypeName != null ? master.ShipmentTypeName : "";
-
-                #region Master Consignee
-                if (!string.IsNullOrEmpty(master.ConsigneeId))
-                {
-                    CardPM consignee = cardQuery.GetSinglePM(master.ConsigneeId, tenant);              
-                    CustomerPM consigneePM = customerQuery.GetSinglePM(master.ConsigneeId, tenant);
-                    
-                    if (consignee != null)
-                    {
-                        manifestDataProvider.ConsigneeVATNumber =  consignee.VatNumber;
-                        manifestDataProvider.ConsigneeName = consignee.EnglishName;
-                        manifestDataProvider.ConsigneeAddress = GetConsigneAddress(master.ConsigneeAddressId,consignee.Tenant,addressRepository);
-                        if (!string.IsNullOrEmpty(consignee.PrimaryContactId))
-                        {
-                            Contact contact = ContactRepository.GetSingleContact(consignee.PrimaryContactId, tenant, true);
-                            if (contact != null)
-                            {
-                                manifestDataProvider.ConsigneeContactName =  contact.EnglishName;
-                                manifestDataProvider.ConsigneeContactEmail =  contact.Email;
-                                manifestDataProvider.ConsigneePhoneNumber =  contact.BusinessPhone;
-                            }
-                        }
-                    }               
-                }
-                if (!string.IsNullOrEmpty(master.SalesmanUserId))
-                {
-                    manifestDataProvider.SalesmanName = master.SalesmanUserName;
-                }
-
-                #endregion
-
                 manifestDataProvider.MasterNumber = master.ShipmentNumber;
                 manifestDataProvider.Notes = master.Notes;
                 manifestDataProvider.BookingNumber = master.BookingConfirmationNumber;
@@ -162,6 +132,7 @@ namespace WebFreight.Web.ReportsWebServices
                 manifestDataProvider.MasterPreCarriageVesselName = master.MasterPreCarriageVesselName;
                 manifestDataProvider.MasterPreCarriageFromPortName = master.MasterPreCarriageFromPortName;
                 manifestDataProvider.HousesNumbers = master.HousesNumbers;
+                                
                 if (master.BranchId != null)
                 {
                     Branch myBranch = (from d in commonContext.Branches where d.Tenant == tenant && d.Id == master.BranchId select d).FirstOrDefault();
@@ -199,6 +170,21 @@ namespace WebFreight.Web.ReportsWebServices
                     manifestDataProvider.TenantVATNumber = myLoggedTenant.VatNumber != null ? myLoggedTenant.VatNumber : "";
                 }
 
+                #region Master Freight Location                
+                if (!string.IsNullOrEmpty(master.FreightLocationId))
+                {
+                    Card freightLocationWarehouse = (from a in commonContext.Cards where a.Id == master.FreightLocationId select a).FirstOrDefault();
+                    Address freightLocationWarehouseAddress = addressRepository.GetMainAddressByCardId(master.FreightLocationId, tenant);
+
+                    if (freightLocationWarehouse != null)
+                    {
+                        manifestDataProvider.FreightLocationName = freightLocationWarehouse.EnglishName;
+                    }
+
+                    manifestDataProvider.FreightLocationAddress = General.GetAddress(freightLocationWarehouseAddress);
+                }
+                #endregion
+
                 #region IssuingCarrierAgent
                 if (!string.IsNullOrEmpty(master.IssuingCarrierAgentId))
                 {
@@ -225,10 +211,10 @@ namespace WebFreight.Web.ReportsWebServices
                 }
                 #endregion
 
-                #region Shipper
+                #region Master Shipper
                 if (!string.IsNullOrEmpty(master.ShipperId))
                 {
-                    Card myCard = CardRepository.GetSingleCard(master.ShipperId, tenant, true);
+                    Card myCard = CardRepository.GetSingleCard(master.ShipperId, tenant, false);
                     if (myCard != null)
                     {
                         manifestDataProvider.ShipperName = myCard.EnglishName;
@@ -261,8 +247,47 @@ namespace WebFreight.Web.ReportsWebServices
                                 }
                             }
                         }
+
+                        if (!string.IsNullOrEmpty(myCard.PrimaryContactId))
+                        {
+                            Contact contact = ContactRepository.GetSingleContact(myCard.PrimaryContactId, tenant, false);
+                            if (contact != null)
+                            {
+                                manifestDataProvider.ShipperContactPhone = contact.BusinessPhone;
+                            }
+                        }
                     }
                 }
+                #endregion
+
+                #region Master Consignee
+                if (!string.IsNullOrEmpty(master.ConsigneeId))
+                {
+                    CardPM consignee = cardQuery.GetSinglePM(master.ConsigneeId, tenant);
+                    CustomerPM consigneePM = customerQuery.GetSinglePM(master.ConsigneeId, tenant);
+
+                    if (consignee != null)
+                    {
+                        manifestDataProvider.ConsigneeVATNumber = consignee.VatNumber;
+                        manifestDataProvider.ConsigneeName = consignee.EnglishName;
+                        manifestDataProvider.ConsigneeAddress = GetConsigneAddress(master.ConsigneeAddressId, consignee.Tenant, addressRepository);
+                        if (!string.IsNullOrEmpty(consignee.PrimaryContactId))
+                        {
+                            Contact contact = ContactRepository.GetSingleContact(consignee.PrimaryContactId, tenant, false);
+                            if (contact != null)
+                            {
+                                manifestDataProvider.ConsigneeContactName = contact.EnglishName;
+                                manifestDataProvider.ConsigneeContactEmail = contact.Email;
+                                manifestDataProvider.ConsigneePhoneNumber = contact.BusinessPhone;
+                            }
+                        }
+                    }
+                }
+                if (!string.IsNullOrEmpty(master.SalesmanUserId))
+                {
+                    manifestDataProvider.SalesmanName = master.SalesmanUserName;
+                }
+
                 #endregion
 
                 #region Consolidator
@@ -494,7 +519,6 @@ namespace WebFreight.Web.ReportsWebServices
                 #endregion
 
                 List<ShipmentDataView> connectedShipments = shipmentRepository.GetShipmentViewsByTenantAndMasterId(masterId, tenant).ToList();
-
                 manifestDataProvider.NumberOfHBLs = connectedShipments.Count;
 
                 #region manifest details region
@@ -590,10 +614,11 @@ namespace WebFreight.Web.ReportsWebServices
 
                         if (!string.IsNullOrEmpty(shipper.PrimaryContactId))
                         {
-                            Contact contact = ContactRepository.GetSingleContact(shipper.PrimaryContactId, tenant, true);
+                            Contact contact = ContactRepository.GetSingleContact(shipper.PrimaryContactId, tenant, false);
                             if (contact != null)
                             {
                                 detail.ShipperContactName = contact.EnglishName;
+                                detail.ShipperContactPhone = newDetail.ShipperContactPhone = contact.BusinessPhone;
                             }
                         }
                     }
@@ -791,6 +816,21 @@ namespace WebFreight.Web.ReportsWebServices
                                 detail.PlaceOfReceipt = newDetail.PlaceOfReceipt = myPartnerAddress.City;
                             }
                         }
+                    }
+                    #endregion
+
+                    #region Freight Location                
+                    if (!string.IsNullOrEmpty(shipmentView.FreightLocationId))
+                    {
+                        Card freightLocationWarehouse = (from a in commonContext.Cards where a.Id == shipmentView.FreightLocationId select a).FirstOrDefault();
+                        Address freightLocationWarehouseAddress = addressRepository.GetMainAddressByCardId(shipmentView.FreightLocationId, tenant);
+
+                        if (freightLocationWarehouse != null)
+                        {
+                            detail.FreightLocationName = newDetail.FreightLocationName = freightLocationWarehouse.EnglishName;
+                        }
+
+                        detail.FreightLocationAddress = newDetail.FreightLocationAddress = General.GetAddress(freightLocationWarehouseAddress);
                     }
                     #endregion
 
@@ -1033,7 +1073,6 @@ namespace WebFreight.Web.ReportsWebServices
                 manifestDataProvider.TotalWeight = totalWeight != 0 ? (String.Format("{0:#,0.00}", totalWeight) + " " + (manifestDataProvider.WeightUnit)) : ""; //KGS 
                 #endregion
 
-
                 #region NEW DESIGN
 
                 if (connectedShipments.Count > 0)
@@ -1218,7 +1257,6 @@ namespace WebFreight.Web.ReportsWebServices
                 manifestDataProvider.PlaceOfDelivery = myServiceHelper.GetPlaceOfDelivery(master, myFirstDelivery);
 
                 #endregion
-
 
                 manifestDataProvider.PortOfDischargeName = master.MainCarriageToPortName != null ? master.MainCarriageToPortName : "";
 

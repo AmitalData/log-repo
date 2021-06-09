@@ -123,7 +123,8 @@ export class AddEditCustomerProductItemComponent extends BaseComponent {
         if (this.DataContext.FatherComponent.ProductItems != null) {
             var sameSKURecordscount: number = this.DataContext.FatherComponent.ProductItems.Collection.filter(a => a.SKU == this.EntityPM.SKU).length;
 
-            if (sameSKURecordscount > 1) {
+            var sameSKURecordsCountForCompare = this.DataContext.IsNewEntity ? 0 : 1;
+            if (sameSKURecordscount > sameSKURecordsCountForCompare) {
                 errors.push("A Product Item with same SKU already exists");
             }
         }

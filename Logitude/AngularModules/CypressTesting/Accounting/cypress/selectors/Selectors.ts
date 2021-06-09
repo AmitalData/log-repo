@@ -83,6 +83,7 @@ export class AccountingSelectors extends RegexSelectors {
     public static readonly ARInvoicePaymentTerm = '#ARInvoice_PaymentTermId';
     public static readonly ARInvoiceInvoiceDate = '#date_ARInvoice_InvoiceDate';
     public static readonly ARInvoiceInvoiceCurrency = '#ARInvoice_InvoiceCurrencyId';
+    public static readonly LogLovARInvoiceInvoiceCurrency ="#LogLov_ARInvoice_InvoiceCurrencyId"
     public static readonly ARInvoicePartner = "#ARInvoice_PartnerId"
     public static readonly CreateCreditNoteARInvoiceButton = '#CreateCreditNote';
     public static readonly CreateARInvoiceButton = '#CreateARInvoice';

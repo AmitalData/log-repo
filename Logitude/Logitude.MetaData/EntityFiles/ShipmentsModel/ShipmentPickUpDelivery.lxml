@@ -36,7 +36,7 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="Shipment"
   DefaultText="&quot;Shipment Pickup Delivery&quot;"
-  Code="&quot;ad85&quot;"
+  Code="&quot;0289&quot;"
   Name="&quot;ShipmentPickUpDelivery&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Shipment&quot;"
@@ -3499,6 +3499,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;BookingConfirmationNumber&quot;"
     ListPropertyPath="&quot;BookingConfirmationNumber&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -3869,7 +3870,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
     </DataContract>
     <DataContract
       Name="&quot;PickUp&quot;"
@@ -4161,7 +4162,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes>

@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class JournalUpdateClass
    {  		
-		public const string HashString = "59685c71e1854f12e7dc4e4fbeff7e65";
+		public const string HashString = "54cfc3398846f735533ef4433604c9a1";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3267,6 +3267,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                  
 			   TextCode JournalEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature JournalEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Journal.Tab.Events", ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "JournalFeatures.JNEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,JournalObjectTable);
+ 
+                 
+			   TextCode JournalDebugTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.TH.Debug", DefaultText = "Debug",LocalDefaultText = "ניהול", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature JournalDebugFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Journal.Tab.Debug", ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "JournalFeatures.JNDB", NameTextCodeDefaultText = "Debug", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,JournalObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -3275,6 +3279,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JNDT",HtmlComponentName = "JournalDetailsTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/Journal/JournalDetailsTabComponent", FeatureId = JournalDetailsFeature_TH0.Id,FeatureUniqeCode = JournalDetailsFeature_TH0.FeatureUniqeCode, ControlPath = "Logitude.Accounting.Views.Tabs.JRNL.JournalDetailsTabControl", ObjectTableId = JournalObjectTable.Id, TabNameTextCodeId = JournalDetailsTextCode_TH0.Id, TabNameTextCodeCode = JournalDetailsTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JNEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = JournalEventsFeature_TH1.Id,FeatureUniqeCode = JournalEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = JournalObjectTable.Id, TabNameTextCodeId = JournalEventsTextCode_TH1.Id, TabNameTextCodeCode = JournalEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JNDB",HtmlComponentName = "JournalDebugTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/Journal/JournalDebugTabComponent", FeatureId = JournalDebugFeature_TH2.Id,FeatureUniqeCode = JournalDebugFeature_TH2.FeatureUniqeCode, ControlPath = "Logitude.Accounting.Views.Tabs.JRNL.JournalDebugTabControl", ObjectTableId = JournalObjectTable.Id, TabNameTextCodeId = JournalDebugTextCode_TH2.Id, TabNameTextCodeCode = JournalDebugTextCode_TH2.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -3487,8 +3493,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "JNUP",
-                EnglishName = "Journal Line Updated",
-                LocalName = "Journal Line Updated",
+                EnglishName =  "Journal Line Updated",
+                LocalName =  "Journal Line Updated",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -3799,7 +3805,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode JournalTextCode_JournalOhaveFutureAccountingorReferenceDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.haveFutureAccountingorReferenceDate", DefaultText = "Can't approve The Journal . Some Lines have Future Accounting or Reference Date.",LocalDefaultText = @"לא ניתן לאשר את פקודת היומן , ישנם שורות עם תאריך חשבונאי/אסמכתא עתידי.", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode JournalTextCode_JournalMEditJournalLine = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.EditJournalLine", DefaultText = "Edit Journal Line", LocalDefaultText = @"ערוך שורה", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode JournalTextCode_JournalMEditJournalLine = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.EditJournalLine", DefaultText = "Edit Journal Line",LocalDefaultText = @"ערוך שורה", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode JournalTextCode_JournalMNote = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.Note", DefaultText = "Note",LocalDefaultText = @"הערת", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

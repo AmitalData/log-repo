@@ -17,7 +17,7 @@ namespace WebFreight.Web.DataProviders
         public string TenantCurrencyCode { get; set; }
         public string TenantCurrencySign { get; set; }
         public decimal ReportLocalBalanceTotal { get; set; }
-
+        
         public List<AgingPeriod> AgingPeriods { get; set; }
     }
 
@@ -42,6 +42,7 @@ namespace WebFreight.Web.DataProviders
         public string CustomerVatNumber { get; set; }
         public string CustomerPaymentTerm { get; set; }
         public decimal CustomerCreditLimit { get; set; }
+        public double? InsuredCreditLimit { get; set; }
         public decimal GLAccountStandardInterestRate { get; set; }
 
         public string AccountSalesmanName { get; set; }

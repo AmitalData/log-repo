@@ -41,9 +41,9 @@ namespace Simplog.Data.ShipmentsModel.Mapping
                 .WithMany()
                 .HasForeignKey(d => d.ProductItemId);
 
-            this.HasRequired(t => t.Shipment)
-                .WithMany()
-                .HasForeignKey(d => d.ShipmentId);
+            //this.HasRequired(t => t.Shipment)
+            //    .WithMany()
+            //    .HasForeignKey(d => d.ShipmentId);
 
         }
     }

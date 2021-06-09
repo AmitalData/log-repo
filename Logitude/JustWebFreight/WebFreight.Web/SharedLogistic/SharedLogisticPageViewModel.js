@@ -1092,7 +1092,8 @@
                 window.localStorage.setItem("Token", "");
                 window.localStorage.setItem("CardId", "");
 
-                document.location.href = "../../Login.aspx";
+                //document.location.href = "../../Login.aspx";
+                document.location.href = "../../?tenant=" + $.CurrentTenant;
 
             },
 
