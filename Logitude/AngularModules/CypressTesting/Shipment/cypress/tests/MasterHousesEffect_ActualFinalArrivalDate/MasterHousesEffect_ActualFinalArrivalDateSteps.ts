@@ -86,3 +86,7 @@ Then('the house ActualFinalArrivalDate should be 2021-05-04',()=>{
   cy.BackButton('Operations')
   Actions.OpenShipment(ShipmentContext.MasterNumber)
 })
+Given('the user in the master rounting tab',()=>{
+    Actions.OpenShipment(ShipmentContext.MasterNumber)
+    cy.Navigate(ShipmentSelectors.ShipmentsTab);
+})
