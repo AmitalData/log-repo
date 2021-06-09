@@ -41,6 +41,8 @@ export class ShipmentDetailsComponent implements AfterViewInit
     OceanTransportMode = 'O';
     AirTransportMode = 'A';
     ContainersNumbers: string[] = [];
+    ShowDetailsSection: boolean = false;
+
 
     ShipmentCustomsData: CargoTrackingShipmentCustomsData;
     get tenant()
@@ -894,6 +896,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
     }
 
     ShowMoreLinkClicked() {
+        this.ShowDetailsSection = !this.ShowDetailsSection;
         this.DetailsSectionToggleEvent.emit();
     }
 }
