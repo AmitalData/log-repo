@@ -121,6 +121,7 @@
                 $.IsShipperShared = result.IsShipperShared;
                 $.IsConsigneeShared = result.IsConsigneeShared;
                 $.SetQuotesRequestsTabVisibility(result.IsQuotesRequestsMenuEnabled);
+                $.SetReportTabVisibility(result.IsReportsMenuEnabled);
                 $.SetTabsHidden($.IsInvoicesMenuEnabled);
                 $.SetSelectedTab();                
             },
@@ -144,6 +145,11 @@
         $('#SavedSelectedTabId').attr("value", $.SelectedTabId);
         $("#mainTabsDiv").data("kendoTabStrip").select($('#' + $.SelectedTabId));
     });
+
+    jQuery.SetReportTabVisibility = (function (isVisibly) {
+        $("#TAB_REPORTS").toggle(isVisibly);
+    });
+
 
     jQuery.LoadInvoices = (function () {
 
@@ -347,22 +353,14 @@
 
     jQuery.LoadReports = (function () {
 
-        let reports =  [{ "Name": "Shipments Reports", "Code": "SHRE" }];
-
+        let reportLists =  [{ "Name": "Shipments Report"}];
         $("#ReportListBox").html("");
         $("#ReportListBox").kendoListView(
             {
-                dataSource: { data: reports },
+                dataSource: { data: reportLists },
                 template: kendo.template($("#ReportListBoxItemDataTemplate").html())
             });
-
     });
-
-    
-
-
-
-
 
 
     jQuery.LoadDataCount = (function () {

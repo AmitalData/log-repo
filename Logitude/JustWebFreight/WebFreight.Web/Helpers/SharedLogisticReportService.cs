@@ -19,34 +19,76 @@ namespace WebFreight.Web.Helpers
 {
     public class SharedLogisticReportService
     {
-        private QueryOperations queryOperations = null;
         private SharedLogisticReportFilters sharedLogisticReportFilters = null;
         private List<QueryColumnPM> queryColumns = null;
         private SharedLogisticsSetting sharedLogisticsSetting = null;
+        private List<QueryFilterItem> queryFilterItems = null;
         private FilterSerializer filterSerializer = new FilterSerializer();
-        public int tenant;
+        private int tenant;
+        private int tenantZero = 0;
+        private string reportExcelFileName = string.Empty;
 
         public SharedLogisticReportService(SharedLogisticReportFilters sharedLogisticReportFilters , int tenant)
         {
-            sharedLogisticReportFilters.PartnerId = "1-11143";
             this.sharedLogisticReportFilters = sharedLogisticReportFilters;
             this.tenant = tenant;
+            reportExcelFileName = sharedLogisticReportFilters.ObjectTableName + "_" + sharedLogisticReportFilters.QueryCode + DateTime.Now.ToString("yyyy-dd-M--HH-mm-ss");
+            queryFilterItems = sharedLogisticReportFilters.QueryFilterItems.Where(d => d.FieldValue != null).ToList();
             sharedLogisticsSetting = GetSharedLogisticsSetting();
-            queryColumns = GetQueryColumnsByQueryCode(sharedLogisticReportFilters, tenant);
-            FilterQueryColumnsBySharedLogisticsSetting();
+            queryColumns = GetQueryColumnsByQueryCode(sharedLogisticReportFilters.QueryCode);
+            FilterQueryColumnsBasedOnSharedLogisticsSetting();
         }
 
-
-   
-        public void ExportReportToExcelFile()
+  
+        public ExportReportResult ExportReportToExcelFileOnStorage()
         {
-            queryOperations = GetNewInStanceFromQueryOperations();
             ExportToExcelArgs exportToExcelArgs = GetExportToExcelArgs();
             byte[] excelfileData = new ExportToExcelHelper().ExportQueryToExcel(exportToExcelArgs);
-            StorageDataService.WriteFileOnStorage(new StorageDataArgs() { FileName = sharedLogisticReportFilters.ReportName, FolderName = "others", Extension = "xls", Tenant = tenant, FileData = excelfileData });
-
+            WriteFileOnStorage(excelfileData);
+            return new ExportReportResult { FileName = reportExcelFileName };
         }
 
+
+        private ExportToExcelArgs GetExportToExcelArgs()
+        {
+            QueryOperations queryOperations = GetNewInStanceFromQueryOperations();
+            return new ExportToExcelArgs()
+            {
+                XmlFilters = filterSerializer.SerializeFilterItems(queryOperations),
+                QueryCode = sharedLogisticReportFilters.QueryCode,
+                QueryColumns = queryColumns,
+                Tenant = tenant,
+                UserId = sharedLogisticReportFilters.ContactId,
+            };
+        }
+
+
+        private QueryOperations GetNewInStanceFromQueryOperations()
+        {
+            return new QueryOperations()
+            {
+                ObjectTableName = sharedLogisticReportFilters.ObjectTableName,
+                SortByColumnName = sharedLogisticReportFilters.SortByColumnName,
+                SortDirectin = sharedLogisticReportFilters.SortDirectin,
+                QuerySection = sharedLogisticReportFilters.QuerySection,
+                QueryFilterItems = queryFilterItems,
+
+            };
+        }
+
+        private void WriteFileOnStorage(byte[] excelfileData)
+        {
+            StorageDataArgs storageDataArgs = new StorageDataArgs()
+            {
+                FileName = reportExcelFileName,
+                FolderName = "others",
+                Extension = "xls",
+                Tenant = tenant,
+                FileData = excelfileData
+            };
+
+            StorageDataService.WriteFileOnStorage(storageDataArgs);
+        }
 
 
         private SharedLogisticsSetting GetSharedLogisticsSetting()
@@ -56,14 +98,14 @@ namespace WebFreight.Web.Helpers
         }
 
 
-        private List<QueryColumnPM> GetQueryColumnsByQueryCode(SharedLogisticReportFilters sharedLogisticReportFilters, int tenant)
+        private List<QueryColumnPM> GetQueryColumnsByQueryCode(string queryCode)
         {
             QueryColumnQuery queryColumnQuery = new QueryColumnQuery(tenant);
-            return queryColumnQuery.GetQueryColumnsByQueryCode(0, sharedLogisticReportFilters.QueryCode).ToList();
+            return queryColumnQuery.GetQueryColumnsByQueryCode(tenantZero, queryCode).OrderBy(q => q.IndexOrder).ToList();
         }
 
 
-        private void FilterQueryColumnsBySharedLogisticsSetting()
+        private void FilterQueryColumnsBasedOnSharedLogisticsSetting()
         {
             if (!sharedLogisticsSetting.IsShipperShared)
             {
@@ -78,29 +120,11 @@ namespace WebFreight.Web.Helpers
         }
 
 
-        private ExportToExcelArgs GetExportToExcelArgs()
-        {
+   
+    }
 
-            return new ExportToExcelArgs() {
-               XmlFilters = filterSerializer.SerializeFilterItems(queryOperations),
-               QueryCode = sharedLogisticReportFilters.QueryCode, 
-               QueryColumns = queryColumns,
-               Tenant = tenant,
-               UserId = sharedLogisticReportFilters.ContactId, 
-           };
-        }
-
-        private QueryOperations GetNewInStanceFromQueryOperations()
-        {
-            return queryOperations = new QueryOperations()
-            {
-                ObjectTableName = sharedLogisticReportFilters.ObjectTableName,
-                SortByColumnName = sharedLogisticReportFilters.SortByColumnName,
-                SortDirectin = sharedLogisticReportFilters.SortDirectin,
-                QuerySection = sharedLogisticReportFilters.QuerySection,
-                QueryFilterItems = sharedLogisticReportFilters.QueryFilterItems,
-
-            };
-        }
+    public class ExportReportResult
+    {
+        public string FileName { get; set; }
     }
 }

@@ -833,7 +833,7 @@
 
                            <div>
 
-             <a class="Hyperlink" OnClick="ViewReport(name)" style="padding: 0; margin: 0; cursor: pointer; text-decoration: none;">${Name}   </a>
+             <a class="Hyperlink"  id="#= Name #" OnClick="ViewReport(id)" style="padding: 0; margin: 0; cursor: pointer; text-decoration: none;">${Name}   </a>
            
                </div>
                                                   
@@ -1007,7 +1007,7 @@
         }
 
         function ViewReport(name) {
-            ChangePage("/SharedLogistic/ReportViewPage.aspx");
+            ChangePage("/SharedLogistic/ReportViewPage.aspx", name);
         }
 
 

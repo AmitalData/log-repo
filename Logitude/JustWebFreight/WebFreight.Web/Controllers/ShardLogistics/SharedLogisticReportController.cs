@@ -24,8 +24,8 @@ namespace WebFreight.Web.Controllers.ShardLogistics
                 SecurityUtility.AuthenticationOnTenant(authenticationToken.Tenant);
                 SecurityUtility.CheckSharedContactAuthentication(authenticationToken.Tenant, sharedLogisticReportFilters.PartnerId);
                 SharedLogisticReportService sharedLogisticReportService = new SharedLogisticReportService(sharedLogisticReportFilters, authenticationToken.Tenant);
-                sharedLogisticReportService.ExportReportToExcelFile();
-                return Request.CreateResponse(HttpStatusCode.OK, "");
+                ExportReportResult exportReportResult =  sharedLogisticReportService.ExportReportToExcelFileOnStorage();
+                return Request.CreateResponse(HttpStatusCode.OK, exportReportResult);
             }
 
             catch (Exception ex)

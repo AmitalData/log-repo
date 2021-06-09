@@ -244,6 +244,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "QRA, Quotes Request Activated In Shared Logistic", 
                 Description = "Quotes Request Activated In Shared Logistic", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Reports in Shared Logistics", 
+                Code = "RSL", 
+                SearchFields = "RSL,Reports in Shared Logistics", 
+                Description = "Reports in Shared Logistics", 
+			});
 			
             return all;
        }

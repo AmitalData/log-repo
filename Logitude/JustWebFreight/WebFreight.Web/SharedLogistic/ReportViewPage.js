@@ -1,70 +1,56 @@
 ﻿(function (jQuery) {
 
-
-
     $(document).ready(function () {
 
-        $("#DownLoadReportMessage").hide();
+        $.SetGeneralVariableData();
+        $.GetLogginData();
+        $.GetCompanyLogo();
+        $.SetPoweredAreaVisibility();
+        $.SetReportPageTitle();
+        $.SetDefultReportFilterValue();
+        $.GetDocumentDownloadToken();
+        $.InitializeDocumentDownloadTokenTimer();
+    });
 
-        $.ReportName = "Shipments";
+
+    jQuery.SetGeneralVariableData = (function () {
         $.Token = $("#TokenInput").val();
-        var linkQuery = $("#LoginInput").val();
-        var linkParameters = null;
-
-        if ($.trim($.Token) == "") {
-            var link = $(location).attr('href');
-            var linkArray = link.split('=')
-            linkQuery = linkArray[1];
-        }
-
-        if (linkQuery && linkQuery.indexOf('%3A') > -1) {
-            linkParameters = linkQuery.split('%3A')
-        }
-
-        else {
-            linkParameters = linkQuery.split(':')
-        }
-
-        $.CurrentEntityId = linkParameters[0];
+        let linkParameters = $.GetLinkParameters();
+        $.ReportName = linkParameters[0];
         $.CurrentCardId = linkParameters[1];
         $.CurrentTenant = linkParameters[2];
         $.CurrentEmail = linkParameters[3];
         $.CurrentCardType = linkParameters[4];
         $.IsBrandingEnabled = linkParameters[5];
 
-        if ($.IsBrandingEnabled == "true" || $.IsBrandingEnabled == "True") {
-            $(".PoweredArea").hide();
-        }
-
-        $.GetLogginData();
-        $.GetCompanyLogo();
-        $.SetDefultReportFilterValue();
-
     });
+
+
+    jQuery.GetLinkParameters = (function () {
+
+        var linkQuery = $.trim($.Token) == "" ? $.GetLinklinkQuery() :  $("#LoginInput").val();
+        if (linkQuery && linkQuery.indexOf('%3A') > -1) {
+            return linkQuery.split('%3A')
+        }
+        return linkQuery.split(':')
+    });
+
+    jQuery.GetLinklinkQuery = (function () {
+        var link = $(location).attr('href');
+        var linkArray = link.split('=')
+       return linkArray[1];
+    });
+
 
     jQuery.GetCompanyLogo = (function () {
 
-        var url = "../api/commondata/?companyId=" + $.CurrentTenant;
-
         $.ajax({
-            url: url,
+            url: "../api/commondata/?companyId=" + $.CurrentTenant,
             type: 'GET',
             contentType: 'application/json',
-            headers: {
-                'Token': $.Token
-            },
-
+            headers: {'Token': $.Token},
             success: function (result) {
-
-                //jQuery("#companyLogo").attr('src', result);
-                var img = new Image();
-                img.onload = function () {
-                    var width = this.width > 200 ? "200px" : (this.width + "px");
-                    jQuery("#companyLogo").attr('src', result);
-                    jQuery("#companyLogo").css('width', width);
-                    jQuery("#companyLogoArea").css('width', width);
-                }
-                img.src = result;
+                $.LoadCompanyLogoSsuccess(result);
             },
 
             error: function (jqXHR, textStatus, errorThrown) {
@@ -72,25 +58,30 @@
             }
         });
     });
+
+
+    jQuery.LoadCompanyLogoSsuccess = (function (result) {
+
+        var img = new Image();
+        img.onload = function () {
+            var width = this.width > 200 ? "200px" : (this.width + "px");
+            jQuery("#companyLogo").attr('src', result);
+            jQuery("#companyLogo").css('width', width);
+            jQuery("#companyLogoArea").css('width', width);
+        }
+        img.src = result;
+    });
+
 
     jQuery.GetLogginData = (function () {
 
-        var url = "../api/commondata/?email=" + $.CurrentEmail + "&tenant=" + $.CurrentTenant + "&cardId=" + $.CurrentCardId;
-
         $.ajax({
-            url: url,
+            url: "../api/commondata/?email=" + $.CurrentEmail + "&tenant=" + $.CurrentTenant + "&cardId=" + $.CurrentCardId,
             type: 'GET',
             contentType: 'application/json',
-            headers: {
-                'Token': $.Token
-            },
-
+            headers: {'Token': $.Token},
             success: function (result) {
-
-                $("#CompanyText").html(result.TenantCompany);
-                $("#MemberText").html(result.ContactName);
-                $("#MemberCardText").html(" (" + result.CardName + ")");
-                $.ContactId = result.ContactId; 
+                $.LoadLogginDataSsuccess(result);
             },
 
             error: function (jqXHR, textStatus, errorThrown) {
@@ -100,18 +91,25 @@
 
     });
 
+    jQuery.LoadLogginDataSsuccess = (function (result) {
 
-    $("#ReportDownload").click(function () {
-
-        var reportDownloadURL = "../WebPages/DawnLoadExcelPage.aspx?fileName=" + $.ReportName + "&tempId=" + $.Token; + "&qname=" + "Shipments";
-        window.open(reportDownloadURL);
-
-
-
-
-
+        $("#CompanyText").html(result.TenantCompany);
+        $("#MemberText").html(result.ContactName);
+        $("#MemberCardText").html(" (" + result.CardName + ")");
+        $.ContactId = result.ContactId;
     });
 
+
+
+
+    jQuery.SetPoweredAreaVisibility = (function () {
+        let isPoweredAreaVisibly = ($.IsBrandingEnabled && $.IsBrandingEnabled.toLowerCase() == "true") ? false : true;
+        $("#PoweredArea").toggle(isPoweredAreaVisibly);
+    });
+
+    jQuery.SetReportPageTitle = (function () {
+        document.getElementById("ReportName").innerHTML = $.ReportName;
+    });
 
     jQuery.SetDefultReportFilterValue = (function () {
         let previousMonthDate = new Date().setMonth(new Date().getMonth() - 1);
@@ -119,11 +117,37 @@
         document.getElementById("ToDate").value = $.format.date(new Date(), "yyyy-MM-dd");
     });
 
-    $("#RunReport").click(function () {
+    jQuery.GetDocumentDownloadToken = (function () {
+
+        $.ajax({
+            url: "../api/DocumentDownloadToken",
+            type: 'GET',
+            contentType: 'application/json',
+            headers: {
+                'Token': $.Token
+            },
+            success: function (documentDownloadToken) {
+                $.DocumentDownloadToken = documentDownloadToken;
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $.CheckUserException(jqXHR);
+            }
+        });
+
+    });
+
+    jQuery.InitializeDocumentDownloadTokenTimer = (function () {
+        let millisecond = 600000;
+        setInterval($.GetDocumentDownloadToken, millisecond);
+    });
+
+
+    $("#RunReportButton").click(function () {
         $("#ReportPageBusyIndicator").show();
-        $("#DownLoadReportMessage").hide();
+        $("#DownloadReportLinkArea").hide();
+        $.ReportExcelFileName = "";
         var reportfilters = new SharedLogisticReportFilters();
-   
         var url = "../api/SharedLogisticReport";
         $.ajax({
             url: url,
@@ -135,16 +159,15 @@
                 $.RunReportSsuccess(result);
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                $.ReportLoadedFailure(jqXHR);
+                $.RunReportFailure(jqXHR);
             }
         });
     });
 
     jQuery.RunReportSsuccess = (function (result) {
+        $.ReportExcelFileName = result.FileName;
         $("#ReportPageBusyIndicator").hide();
-        $("#DownLoadReportMessage").show();
-
-
+        $("#DownloadReportLinkArea").show();
     });
 
     jQuery.RunReportFailure = (function (jqXHR) {
@@ -153,33 +176,32 @@
     });
 
     $("#BackButton").click(function () {
-        //parent.history.back();
         window.history.go(-1);
         return false;
     });
 
+    $("#DownloadReportLink").click(function () {
+
+        var reportDownloadURL = "../WebPages/DawnLoadExcelPage.aspx?fileName=" + $.ReportExcelFileName + "&tempId=" + $.DocumentDownloadToken + "&qname=" + $.ReportName;
+        window.open(reportDownloadURL);
+    });
+
+
 }(jQuery));
 
-
-
-
 function SharedLogisticReportFilters() {
-
+    this.ReportName = $.ReportName;
     this.PartnerId = $.CurrentCardId;
     this.ContactId = $.ContactId;
     this.ObjectTableName = "Shipment";
     this.SortByColumnName = "StatusDate";
-    this.QuerySection = "ShipmentSharedLogistic";
+    this.QuerySection = "SharedLogisticShipment";
     this.SortDirectin = "Descending",
-    this.QueryCode = "Shipment.Shipments",
+    this.QueryCode = "Shipment.SharedLogisticShipment",
     this.QueryFilterItems = BuildQueryFilterItems();
-    this.ReportName = $.ReportName;
 
 
 };
-
-
-
 function BuildQueryFilterItems() {
 
     let queryFilterItems = [];
@@ -189,18 +211,11 @@ function BuildQueryFilterItems() {
     queryFilterItems.push(new QueryFilterItem("IsOperationalClosed", document.getElementById("OperationallyClosed").checked, "Equal"));
     return queryFilterItems;
 
-
-
-
 }
 function QueryFilterItem(fieldName, fieldValue, operator) {
-
     this.FieldName = fieldName;
     this.FieldValue = fieldValue;
     this.Operator = operator;
-
-
-
 }
 
 

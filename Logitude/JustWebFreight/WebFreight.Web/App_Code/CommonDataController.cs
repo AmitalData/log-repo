@@ -248,6 +248,7 @@ namespace WebFreight.Web
                 myResult.TenantDateTimeFormat = myTenant.DateTimeFormat;
                 myResult.DisplayDocumentsAndEvents = myTenant.DisplayDocumentsAndEvents;
                 myResult.IsQuotesRequestsMenuEnabled = myTenant.IsQuotesRequestActivatedInShared;
+
             }
 
             SharedLogisticsSettingRepository sharedLogisticsSettingRepository = new SharedLogisticsSettingRepository(tenant);
@@ -259,6 +260,9 @@ namespace WebFreight.Web
                 myResult.IsShipperShared = sharedLogisticsSetting.IsShipperShared;
                 myResult.IsConsigneeShared = sharedLogisticsSetting.IsConsigneeShared;
             }
+
+            myResult.IsReportsMenuEnabled = FeatureToggleHelper.HasFeatureToggle("RSL", tenant);
+
 
             return myResult;
         }

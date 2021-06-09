@@ -219,7 +219,7 @@ box-shadow: 0px 0px 5px 1px rgba(0,148,118,1);
 
                                 <td style="vertical-align:central;">
                                     <div class="ShowOnDataControl" style="background:#F2F2F2; float:left; padding:2px 10px 2px 2px">
-                                        <span style="font-size:15px; display:inline; color:#1B90CB;"> Shipments Reports</span>
+                                        <span  id="ReportName" style="font-size:15px; display:inline; color:#1B90CB;"></span>
                                     </div>
                                 </td>
 
@@ -254,7 +254,7 @@ box-shadow: 0px 0px 5px 1px rgba(0,148,118,1);
 
                                     </td>
                                     <td style="width:100px">
-                                              <button  id ="RunReport"   class="greenButton" style="width:90px;height:22px;border:1px solid green;border-radius:3px;">
+                                              <button  id ="RunReportButton"   class="greenButton" style="width:90px;height:22px;border:1px solid green;border-radius:3px;">
                             <div style="color:black;  text-align:center;vertical-align:central;font-size:12px;">Run Report</div>
                         </button>          
                                     </td>
@@ -274,8 +274,13 @@ box-shadow: 0px 0px 5px 1px rgba(0,148,118,1);
                     <td style="padding:7px;padding-right:10px">
                         <div style="border:1px solid gray;background-color:#D1D6D8;height:100%;width:100%;vertical-align:central">
            <div style="height:47%"></div>
-          <div id="DownLoadReportMessage"  style="text-align:center;vertical-align:central;font-size:15px">The report is too large to preview. Please use Print/Save buttons to download it.<a id="ReportDownload">View</a> </div>  
-                        </div>
+          <div id="DownloadReportLinkArea"  style="text-align:center;display:none;vertical-align:central;font-size:15px">
+              
+              No preview is available. Please click <a id="DownloadReportLink">here</a> to download.
+
+          </div>   
+              
+              
                              <div class="BusyIndicator" id="ReportPageBusyIndicator"></div>                                                                               
 
                     </td>
