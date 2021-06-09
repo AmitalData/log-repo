@@ -13,7 +13,7 @@ import {ReconcileEventManager} from '../../Utilities/ReconcileEventManager';
 
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 @Component({
-    
+
     templateUrl: "./GlAccountLedgerTransactionsListTemplate.html"
 })
 export class GlAccountLedgerTransactionsListTemplate {
@@ -114,7 +114,7 @@ export class GlAccountLedgerTransactionsListTemplate {
         //console.log("clicked: ", checked);
         //this.rowData['IsChecked'] = checked;
 
-        
+
         ReconcileEventManager.CheckBoxChecked.emit({
             line: this.rowData,
             isChecked: checked,
@@ -205,4 +205,5 @@ export class GlAccountLedgerTransactionsListTemplate {
             });
         });
     }
+
 }

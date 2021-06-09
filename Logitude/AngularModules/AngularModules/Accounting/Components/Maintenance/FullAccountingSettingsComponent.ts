@@ -699,13 +699,14 @@ SubmitChanges(ControlAccountId:string) {
     }
 
     Periods: any[] = [
-        {EnglishName: 'Period 0', LocalName: 'תקופה גיול 0', Code: 'period0'},
-        {EnglishName: 'Period 1', LocalName: 'תקופה גיול 1', Code: 'period1'},
-        {EnglishName: 'Period 2', LocalName: 'תקופה גיול 2', Code: 'period2'},
-        {EnglishName: 'Period 3', LocalName: 'תקופה גיול 3', Code: 'period3'},
-        {EnglishName: 'Period 4', LocalName: 'תקופה גיול 4', Code: 'period4'},
-        {EnglishName: 'Period 5', LocalName: 'תקופה גיול 5', Code: 'period5'},
-        {EnglishName: 'Period Past', LocalName: 'לפני התקופה', Code: 'period-past'}
+        {EnglishName: 'Period 0', LocalName: 'תקופה גיול 0', Code: 'Period0'},
+        {EnglishName: 'Period 1', LocalName: 'תקופה גיול 1', Code: 'Period1'},
+        {EnglishName: 'Period 2', LocalName: 'תקופה גיול 2', Code: 'Period2'},
+        {EnglishName: 'Period 3', LocalName: 'תקופה גיול 3', Code: 'Period3'},
+        {EnglishName: 'Period 4', LocalName: 'תקופה גיול 4', Code: 'Period4'},
+        {EnglishName: 'Period 5', LocalName: 'תקופה גיול 5', Code: 'Period5'},
+        {EnglishName: 'Period Past', LocalName: 'לפני התקופה', Code: 'PeriodPast'}
+        // {EnglishName: 'Period Future', LocalName: 'xxxx התקופה', Code: 'PeriodFuture'}
     ];
 
     // fill these arrays from database
