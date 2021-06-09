@@ -46,30 +46,51 @@ namespace WebFreight.Web.App_Code
             }
         }
 
-
-
-       //  public HttpResponseMessage Delete(string documentId, int tenant)
-       //  {
-       //     try
-       //     {
-       //         Authentication(tenant);
-
-       //         DocumentRepository documentRepository = new DocumentRepository(tenant);
-       //         Document document = documentRepository.GetSingleDocument(tenant, documentId);
-       //         StorageDataArgs storageDataArgs = new StorageDataArgs() { FileName = document.FileName, FolderName = document.Folder, Tenant = tenant };
-
-       //        documentRepository.Remove(document); 
-       //        StorageDataService.DeleteFileFromStorage(storageDataArgs);
+        public HttpResponseMessage GetDocumentsByIdsList(string documentIds)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                int tenant = authToken.Tenant;
+                DocumentRepository documentRepository = new DocumentRepository(tenant);
                  
-       //        documentRepository.SubmitChanges();
+                List<string> documentsIdsList = documentIds.Split(',').ToList(); 
+                List<Document> documentLists = documentRepository.GetDocumentsByIds(documentsIdsList).ToList(); 
 
-       //        return Request.CreateResponse(HttpStatusCode.OK, document);
-       //    }
-       //     catch (Exception ex)
-       //    {
-       //         return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-       //     }
-       // }
+                return Request.CreateResponse(HttpStatusCode.OK, documentLists);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
+        //  public HttpResponseMessage Delete(string documentId, int tenant)
+        //  {
+        //     try
+        //     {
+        //         Authentication(tenant);
+
+        //         DocumentRepository documentRepository = new DocumentRepository(tenant);
+        //         Document document = documentRepository.GetSingleDocument(tenant, documentId);
+        //         StorageDataArgs storageDataArgs = new StorageDataArgs() { FileName = document.FileName, FolderName = document.Folder, Tenant = tenant };
+
+        //        documentRepository.Remove(document); 
+        //        StorageDataService.DeleteFileFromStorage(storageDataArgs);
+
+        //        documentRepository.SubmitChanges();
+
+        //        return Request.CreateResponse(HttpStatusCode.OK, document);
+        //    }
+        //     catch (Exception ex)
+        //    {
+        //         return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+        //     }
+        // }
 
         //private static void Authentication(int tenant)
         //{

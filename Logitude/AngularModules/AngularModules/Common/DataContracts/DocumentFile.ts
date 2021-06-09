@@ -6,9 +6,5 @@ export class DocumentFile {
     public FileData: any;
     public CreateDate: Date;
     public Extension: string;
-    public Folder: string;
-    IsDirty: boolean;
-    OldEntityPM: any;
-     
-
+    public Folder: string; 
 }
