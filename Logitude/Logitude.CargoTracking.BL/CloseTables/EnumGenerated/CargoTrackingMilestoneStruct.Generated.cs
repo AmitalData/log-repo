@@ -10,6 +10,7 @@ namespace Logitude.CargoTracking.BL.CloseTables
 {
     public struct CargoTrackingMilestoneValues
     {
+        public const string NoMilstone = "0";
         public const string Booking = "1";
         public const string Pickup = "2";
         public const string FromWarehouse = "3";

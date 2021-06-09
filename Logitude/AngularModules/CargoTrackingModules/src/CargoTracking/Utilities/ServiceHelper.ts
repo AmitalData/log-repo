@@ -8,7 +8,8 @@ export  class ServiceHelper{
 
 
    public static favIcon: HTMLLinkElement = document.querySelector('#appIcon');
-
+    private static testDomain: string = 'http://52.166.164.179/CargoTracking/';
+    
     constructor(){
 
     }
@@ -39,7 +40,7 @@ export  class ServiceHelper{
         BrandingDataRequest.BrowserIconId = BrowserIconId;
         BrandingDataRequest.ShipmentHeaderImageId = ShipmentHeaderImageId;
 
-        BrandingDataRequest.Domain = baseUrl;
+        BrandingDataRequest.Domain = this.testDomain || baseUrl;
         return BrandingDataRequest;
     }
 
