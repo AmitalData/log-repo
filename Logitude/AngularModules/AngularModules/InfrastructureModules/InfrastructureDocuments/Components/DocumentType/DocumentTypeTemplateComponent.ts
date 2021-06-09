@@ -32,8 +32,8 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
     TemplateTabCode = "";
     public PageType: string;
     IsShowDeflutCoulm: boolean = false;
-    IsShowOriginalTemplateColum: boolean = true; 
-    IsEnableEdit: boolean = true; 
+    IsShowOriginalTemplateColum: boolean = false; 
+    IsEnableEdit: boolean = false; 
     public documentTypeTemplatePMService: DocumentTypeTemplatePMService;
     CurrentDocumentTypeTemplatePM: DocumentTypeTemplateViewModel;
     DocumentTypeTemplates: DocumentTypeTemplatePM[];
