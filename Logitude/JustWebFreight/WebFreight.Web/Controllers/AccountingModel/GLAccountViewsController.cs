@@ -788,7 +788,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
                 GLAccountChequesTransactionsRetreivingService ledgerTransactionQuery = new GLAccountChequesTransactionsRetreivingService(tenant,MyContext);
-                List<LedgerTransactionPM> myResult = ledgerTransactionQuery.GetAccountChequesTransactions(accountId);
+                List<LedgerTransactionList> myResult = ledgerTransactionQuery.GetAccountChequesTransactions(accountId);
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }

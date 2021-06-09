@@ -147,9 +147,9 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public string AccountDisplayNumber  { get; set; }
        [DataMember]
-       public DateTime? ValueDate  { get; set; }
+       public DateTime? PaymentValueDate  { get; set; }
        [DataMember]
-       public string ChequeStatus  { get; set; }
+       public string PaymentChequeStatus  { get; set; }
    }
 
 }
