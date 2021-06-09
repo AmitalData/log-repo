@@ -113,6 +113,10 @@ export class RequestAliases {
     public static readonly PostBranch="PostBranch"
     public static readonly PutBranch="PutBranch"
 
+    public static readonly PostCurrency="PostCurrency"
+    public static readonly PutCurrency="PutCurrency"
+    public static readonly GetCurrenciesCodes="GetCurrenciesCodes"
+
     public static readonly PostSpecialServicesType="PostSpecialServicesType"
     public static readonly PutSpecialServicesType="PutSpecialServicesType"
 
@@ -173,6 +177,7 @@ export class RequestAliases {
     public static readonly GetWarehouseMenuButtonGroups = "GetWarehouseMenuButtonGroups";
     public static readonly ContactViewsGetByFilters = "ContactViewsGetByFilters";
     public static readonly GetCustomersQuickSearch = "GetCustomersQuickSearch"
+    public static readonly GetList = "GetList"
     //#endregion
     public static readonly PostChangePassword="PostChangePassword"
     //

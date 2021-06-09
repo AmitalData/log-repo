@@ -51,6 +51,12 @@ export class Urls {
     public static readonly BranchesGetSingle = "**/branches/getsingle?**"
     public static readonly BranchesviewGetSingle = "**/branchviews/getsingle/?**";
 
+    public static readonly GetTenatCurrencies = "**/GetCopyCurrencyToTenant?**"
+    public static readonly Currencies = "**/currencies"
+    public static readonly CurrenciesGetSingle = "**/currencies/getsingle?**"
+    public static readonly CurrenciesviewGetList = "**/currencyviews/getbyfilters?**";
+    public static readonly CurrenciesviewGetSingle = "**/currencyviews/getsingle/?**";
+
     public static readonly SpecialServicesTypes = "**/specialservicestypes"
     public static readonly SpecialServicesTypesGetSingle="**/specialservicestypes/getsingle?**"
 
