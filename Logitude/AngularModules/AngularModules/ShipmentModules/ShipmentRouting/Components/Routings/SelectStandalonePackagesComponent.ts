@@ -10,6 +10,9 @@ import { PickUpDeliveryPackageHarmonizePM } from '../../../../Shipment/EntityPMs
 import { ShipmentPackageHarmonizePM } from '../../../../Shipment/EntityPMs/ShipmentPackageHarmonizePM';
 import { ShipmentDeliveryPM } from '../../../../Shipment/EntityPMs/ShipmentDeliveryPM';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { ShipmentPackageItem, PackagesTabComponent } from '../../../ShipmentPackages/Components/Packages/PackagesTabComponent';
+import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
     templateUrl: './SelectStandalonePackagesComponent.html',
@@ -146,27 +149,32 @@ export class SelectStandalonePackagesComponent {
     }
 
     AddContainerClicked() {
-        //var logWindow = new LogitudeWindow();
-        //var itemPM = new ShipmentPackagePM(null);
-        //itemPM.NonActiveContainer = false;
+        var newShipmentPackage = new ShipmentPackagePM(null);
+        newShipmentPackage.NonActiveContainer = false;
+        newShipmentPackage.Quantity = 1;
+        newShipmentPackage.IsContainer = true;
+        newShipmentPackage.Tenant = SessionLocator.Tenant;
+        newShipmentPackage.TemperatureUnitCode = SessionLocator.TenantPM.TemperatureUnitCode;
+        newShipmentPackage.FlashPointTemperatureUnitCode = SessionLocator.TenantPM.TemperatureUnitCode;
 
-        //itemPM.Quantity = 1;
-        //itemPM.IsContainer = true;
-        //itemPM.Tenant = SessionLocator.Tenant;
-        //itemPM.TemperatureUnitCode = SessionLocator.TenantPM.TemperatureUnitCode;
-        //itemPM.FlashPointTemperatureUnitCode = SessionLocator.TenantPM.TemperatureUnitCode;
-        //logWindow.Title = TextCodeTranslator.Translate("ShipmentPackage.O.AddContainer");
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = TextCodeTranslator.Translate("ShipmentPackage.O.AddContainer");
 
-        //if (this.TransportModeId == "I") {
-        //    logWindow.Title = TextCodeTranslator.Translate("ShipmentPackage.O.AddFullTruckLoad");
-        //}
+        if (this.TransportModeId == "I") {
+            logWindow.Title = TextCodeTranslator.Translate("ShipmentPackage.O.AddFullTruckLoad");
+        }
 
-        //logWindow.Width = 940;
-        //logWindow.Height = 610;
+        logWindow.Width = 940;
+        logWindow.Height = 610;
 
-        //var itemComponent = new ShipmentPackageItem(itemPM, this, true);
-        //logWindow.DataContext = itemComponent;
-        //logWindow.Show('./ShipmentModules/ShipmentPackages / Components / Packages / AddEditOceanPackageComponent');
+        var entityArgs: EntityArgs = new EntityArgs();
+        entityArgs.EntityPM = this.ShipmentPM;
+        entityArgs.ObjectTableName = "Shipment";
+
+        var packagesTabComponent: PackagesTabComponent = new PackagesTabComponent(entityArgs, new EntityResourceService());
+        var itemComponent = new ShipmentPackageItem(newShipmentPackage, packagesTabComponent, true);
+        logWindow.DataContext = itemComponent;
+        logWindow.Show('./ShipmentModules/ShipmentPackages/Components/Packages/AddEditOceanPackageComponent');
     }
 }
 export class PackagesSelectItem {
