@@ -8,7 +8,7 @@ export  class ServiceHelper{
 
 
    public static favIcon: HTMLLinkElement = document.querySelector('#appIcon');
-    private static testDomain: string = 'http://52.166.164.179/CargoTracking/';
+    private static testDomain: string;
     
     constructor(){
 
