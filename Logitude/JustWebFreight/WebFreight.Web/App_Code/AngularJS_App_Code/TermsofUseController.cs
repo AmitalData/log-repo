@@ -156,7 +156,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 string extension = "pdf";
 
                 ReportHelper reportHelper = new ReportHelper();
-                Document newDocument = reportHelper.CreateDocumentAndWriteOnStorage(termsofUsePM.VersionDocumentName, termsofUsePM.FileData, extension, "termsOfUse", tenant);
+                DocumentFile documentFile = new DocumentFile() { FileName = termsofUsePM.VersionDocumentName, FileData = termsofUsePM.FileData, Extension = extension, Folder = "termsOfUse", Tenant = tenant };
+                Document newDocument = reportHelper.CreateDocumentAndWriteOnStorage(documentFile);
 
                 termsofUsePM.VersionDocumentId = newDocument.Id;
 
