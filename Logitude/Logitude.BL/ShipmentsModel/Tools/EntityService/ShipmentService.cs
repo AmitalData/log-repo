@@ -7041,6 +7041,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     shipmentPickUpDeliveryPackage.Quantity = shipmentPackagePM.Quantity;
                     shipmentPickUpDeliveryPackage.Volume = shipmentPackagePM.Volume;
                     shipmentPickUpDeliveryPackage.Weight = shipmentPackagePM.Weight;
+                    shipmentPickUpDeliveryPackage.ShipperSeal = shipmentPackagePM.ShipperSeal;
                     shipmentPickUpDeliveryPackageRepository.Update(shipmentPickUpDeliveryPackage);
                 }
             }
