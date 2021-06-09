@@ -618,7 +618,7 @@ export function AsserationEditMainCarriageLegsFromToport() {
 }
 export function AsserationAddMainCarriageETAandATADate(){
  
-  cy.get(ShipmentSelectors.RoutingRegionA).contains('2021-05-04').should('exist')
+  cy.get(ShipmentSelectors.RoutingRegion).contains('04/05/2021').should('exist')
 }
 
 export function AddMainCarriageATDDateAndTime(date: string, time: string) {

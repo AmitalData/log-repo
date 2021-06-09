@@ -7,6 +7,7 @@ import { ShipmentSelectors } from "../../selectors/Selectors";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { ShipmentContext } from '../../models/ShipmentContext';
 import { MainCarriageLeg } from "cypress/models/MainCarriageLeg";
+import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors";
 //import { when } from "cypress/types/jquery";
 
 //#region variables
@@ -73,15 +74,15 @@ When('update master',()=>{
     Actions.UpdateMaster()
 })
 Then('the master should update successfully',()=>{
-   // Actions.AsserationAddMainCarriageETAandATADate()
+    //Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
 })
 Then('the master ActualFinalArrivalDate should be 2021-05-04',()=>{
-
+    Actions.AsserationAddMainCarriageETAandATADate()
 })
 Then('the house ActualFinalArrivalDate should be 2021-05-04',()=>{
   cy.BackButton('Operations')
   cy.get('#Shipments-O-Q').click()
   cy.get('#row0col13').contains('04/05/2021').should('exist')
   cy.BackButton('Operations')
-  //Actions.OpenShipment(ShipmentContext.HouseNumber)
+  Actions.OpenShipment(ShipmentContext.MasterNumber)
 })
