@@ -88,7 +88,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     IsBuildDocumentViaWorkerRole: boolean = false;
 
     IsEnableEditDocument: boolean = false; 
-    IsEnableManageDocument: boolean = false;
+    IsEnableManageDocument: boolean = true;
 
     public DisableSendOriginalCopy: boolean = false;
     public SelectedAsDefaultBtnVisible: boolean;

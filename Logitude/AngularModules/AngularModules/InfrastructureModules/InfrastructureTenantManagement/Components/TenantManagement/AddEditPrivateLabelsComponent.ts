@@ -157,8 +157,9 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
         var termsofUsePM = new TermsofUsePM();
         termsofUsePM.FileData = file;
         termsofUsePM.Date = new Date();
-        termsofUsePM.Tenant = this.ParentTenant;
+        termsofUsePM.Tenant = 0;
         termsofUsePM.VersionDocumentName = this.FileName;
+        termsofUsePM.PrivateLabelId = this.EntityPM.Id;
 
         this.InsertTermsOfUse(termsofUsePM);
          
