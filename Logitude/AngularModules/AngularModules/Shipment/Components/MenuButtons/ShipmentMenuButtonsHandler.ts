@@ -62,6 +62,9 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                             else {
                                 button.IsDisabled = false;
                             }
+                            if (this.IsStandAloneFeatureShipment()) {
+                                button.IsDisabled = true;
+                            }
                         }
                         else {
                             button.IsDisabled = true;
@@ -179,10 +182,14 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                             else {
                                 button.IsDisabled = true;
                             }
+                            if (this.IsStandAloneFeatureShipment()) {
+                                button.IsDisabled = true;
+                            }
                         }
                         else {
                             button.IsDisabled = true;
                         }
+
                     }
                     if (button.EventCode == "SendRequest") {
                         if (buttonEnabled) {
@@ -229,6 +236,9 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                         else {
                             button.IsHidden = true;
                         }
+                        if (this.IsStandAloneFeatureShipment()) {
+                            button.IsDisabled = true;
+                        }
                     }
 
                     if (button.EventCode == "ConvertShipmentToLTL") {
@@ -237,13 +247,15 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                                 if (this.EntityPM.IsCancelled) {
                                     button.IsDisabled = true;
                                 }
-
+     
                                 else {
                                     button.IsHidden = false;
                                     button.IsDisabled = false;
                                 }
+                                if (this.IsStandAloneFeatureShipment()) {
+                                    button.IsDisabled = true;
+                                }
                             }
-
                             else {
                                 button.IsHidden = true;
                             }
@@ -330,6 +342,9 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                             else {
                                 button.IsHidden = false;
                                 button.IsDisabled = false;
+                            }
+                            if (this.IsStandAloneFeatureShipment()) {
+                                button.IsDisabled = true;
                             }
 
                             button.IsHidden = false;
@@ -1661,7 +1676,10 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
             }
 
         }
-    }    
+    }
+    private IsStandAloneFeatureShipment() {
+        return this.EntityPM.IsStandalonePickupDelivery;
+    }
 }
 export class ActionValidationArgs {
     public EnttiyPM: any;
