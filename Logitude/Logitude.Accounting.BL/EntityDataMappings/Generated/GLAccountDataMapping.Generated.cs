@@ -226,6 +226,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         FollowupNotes, 
 	         GLAccountFollowUpDate, 
 	         GLAccountFollowUpRemarks, 
+	         CalculatedAgingPeriod1, 
+	         CalculatedAgingPeriod2, 
+	         CalculatedAgingPeriod3,
+	         GLAccountFollowUpRemarks, 
 	         InsuredCreditLimit,
 	      }
 
