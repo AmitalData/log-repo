@@ -252,16 +252,7 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "SAS,Standalone Shipment", 
                 Description = "Standalone Shipment", 
 			});
-
-            all.Add(new ToggleDetails()
-            {    
-                Name = "Ocean Insights Containers", 
-                Code = "OIC", 
-                SearchFields = "OIC,Ocean Insights Containers", 
-                Description = "Ocean Insights Containers", 
-			});
-			
-
+			 
             all.Add(new ToggleDetails()
             {    
                 Name = "Quotes Request Activated In Shared Logistic", 
@@ -269,7 +260,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "QRA, Quotes Request Activated In Shared Logistic", 
                 Description = "Quotes Request Activated In Shared Logistic", 
 			});
-            
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Ocean Insights Containers", 
+                Code = "OIC", 
+                SearchFields = "OIC,Ocean Insights Containers", 
+                Description = "Ocean Insights Containers", 
+			});
 			 
             all.Add(new ToggleDetails()
             {    
@@ -277,13 +275,14 @@ namespace Logitude.Infrastructure.BL
                 Code = "RSL", 
                 SearchFields = "RSL,Reports in Shared Logistics", 
                 Description = "Reports in Shared Logistics", 
-			});
+			}); 
+             
             all.Add(new ToggleDetails()
             {    
-                Code = "BIF", 
-                Name = "Invoices DWH", 
-                SearchFields = "BIF,Invoices DWH,Allow Tenants to Show Invoice Fact on the BI Report Screen", 
-                Description = "Allow Tenants to Show Invoice Fact on the BI Report Screen", 
+                Code = "CTL", 
+                Name = "CollaborationTool", 
+                SearchFields = "CTL,CollaborationTool", 
+                Description = "Collaboration Tool", 
 			});
 			
             return all;
