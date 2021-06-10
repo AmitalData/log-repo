@@ -6,11 +6,9 @@ import * as MaintenanceActions from "../../actions/Actions";
 import { CurrencyDetails } from "../../../cypress/models/CurrencyDetails";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetails";
-import * as BaseActions from "../../../../Base/cypress/actions/Actions"
 import { Constants } from "../../constants/Constants";
 
-let currencyDetails: CurrencyDetails;
-let isActiveCurrency = null
+let currencyDetails = null
 
 //#region Search for the currency by code 
 Given("the user logged in and open {string} in maintenance menu", (maintenanceItemName) => {
@@ -18,9 +16,8 @@ Given("the user logged in and open {string} in maintenance menu", (maintenanceIt
     MaintenanceActions.OpenMaintenanceItemFromMaintenanceMenu(maintenanceItemName, MaintenanceSelectors.MaintenanceItemCurrency)
 });
 
-Given("a currency with following Code", (dataTable) => {
-    currencyDetails = Assists.CreateInstance<CurrencyDetails>(dataTable, true);
-    CurrencyActions.FillSearchFeild(currencyDetails)
+Given("get currency code", () => {
+    CurrencyActions.SelectFirstCurrency()
 });
 
 When("search currency", () => {
@@ -30,19 +27,15 @@ When("search currency", () => {
 Then("the currency should appear successfully", () => {
     CurrencyActions.AssertSearchCurrency()
 });
-//#endregion
 
-
-//#region Open the currency
 When("open currency", () => {
     CurrencyActions.OpenCurrency();
 });
-
 Then("the currency should open successfully", () => {
     CurrencyActions.AssertOpenCurrency();
 });
-//#endregion
 
+//#endregion
 
 //#region Edit the currency
 Given("the user fill the following currency details", (dataTable) => {
@@ -82,11 +75,10 @@ Then("the currency should close successfully", () => {
     CurrencyActions.AssertCloseSaveCurrency();
 });
 
-/*
 Given("a currency with the following details", (dataTable) => {
     currencyDetails = Assists.CreateInstance<CurrencyDetails>(dataTable, true);
-    //MaintenanceActions.OpenNewWizard(Constants.Currency);
-    CurrencyActions.FillCurrencyDetails(currencyDetails)
+    MaintenanceActions.OpenNewWizard(Constants.Currency);
+    CurrencyActions.FillCurrencyDetails(currencyDetails) 
 });
 
 When("create currency", () => {
@@ -96,4 +88,3 @@ When("create currency", () => {
 Then("the currency should not create successfully", () => {
     CurrencyActions.AssertFaildCreateCurrency();
 });
-*/

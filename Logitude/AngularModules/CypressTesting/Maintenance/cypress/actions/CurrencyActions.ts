@@ -9,26 +9,99 @@ import { CurrencyDetails } from "../models/CurrencyDetails";
 import * as GeneralActions from './GeneralActions'
 import { EventTypeDetails } from "../../../Base/cypress/models/EventTypeDetails";
 import * as BaseActions from "../../../Base/cypress/actions/Actions"
+import { GenerateRandomNumber } from '../../../Base/cypress/actions/GenerateRandoms'
 
 let CurrencyCode = null;
 var IsActiveCurrency = null;
+let CurrencyCodeCount = null;
+let RandomCurrency = null
+let searchCurrencyCode = null
 
-/*
+export function FillCurrencyDetails(currencyDetails: CurrencyDetails) {
+    if (currencyDetails.Code == 'random') {
+        SelectCurrencyName()
+    }
+    else {
+        cy.FillLogLov(CurrencySelectors.CurrencyName, searchCurrencyCode, true)
+    }
+
+    cy.FillLogTextBox(CurrencySelectors.CurrencyExchangeRate, currencyDetails.Rate)
+}
+
+function SelectCurrencyName() {
+    cy.get('#searchicon_Tenant_CurrencyId').click().then(() => {
+        cy.get('.cdk-virtual-scroll-content-wrapper').last().find('.tooltip').as('CurrencuListCount').then((listing) => {
+
+            CurrencyCodeCount = Cypress.$(listing).length;
+            RandomCurrency = GenerateRandomNumber(CurrencySelectors.MinRandomNumber, CurrencyCodeCount)
+            cy.get('@CurrencuListCount').eq(RandomCurrency).click()
+        })
+    })
+}
+
+/*export function CreateCurrency() {
+    DefinePostCurrencyRequest()
+    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
+}
+
+function DefinePostCurrencyRequest() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetTenatCurrencies, RequestAliases.PostCurrency)
+}
+
+export function AssertCreateCurrency() {
+
+    let intercept = cy.wait("@" + RequestAliases.PostCurrency);
+    intercept.then((interception) => {
+        if (interception.response.statusCode === 400) {
+            ReCreateCurrency();
+        }
+        else {
+            AssertPostCurrency(interception.response.statusCode, 200, interception.response.body.Code)
+        }
+    })
+}
+
+function ReCreateCurrency() {
+    CreateCurrency();
+    AssertCreateCurrency();
+}
+
+
+export function AssertPostCurrency(responseStatusCode: number, expectedStatusCode: number, currencyCode: string) {
+    assert.equal(responseStatusCode, expectedStatusCode)
+    CurrencyCode = currencyCode
+}
+*/
+export function AssertErrorMessage() {
+    cy.get('.ValidationSummary').should('exist')
+}
+
+
 export function CreateExitingCurrency() {
 
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK)
 }
-*/
+
 export function FillSearchFeild(currencyDetails: CurrencyDetails) {
     CurrencyCode = currencyDetails.Code
 }
 
+export function SelectFirstCurrency() {
+
+    cy.get('.cdk-virtual-scroll-content-wrapper').first().find('div').as('CurrencyList').then(() => {
+        DefineCurrenciesGetSingleRequest();
+        cy.get('@CurrencyList').find('.Row').first().find('#span-row0col0').find('div.TextTrimming').then(($data) => {
+            searchCurrencyCode = $data.text()
+        })
+    })
+}
+
 export function SearchCurrency() {
-    GeneralActions.Search(CurrencyCode)
+    GeneralActions.Search(searchCurrencyCode)
 }
 
 export function AssertSearchCurrency() {
-    GeneralActions.AssertSearch(CurrencyCode)
+    GeneralActions.AssertSearch(searchCurrencyCode)
 }
 
 export function OpenCurrency() {
@@ -105,8 +178,7 @@ export function AssertCloseSaveCurrency() {
 function DefineCurrencyViewGetSingleRequest() {
     cy.DefineRequestWait(RestAPI.GET, Urls.CurrenciesviewGetSingle, RequestAliases.GetSignle);
 }
-/*
+
 export function AssertFaildCreateCurrency() {
     cy.get('.ValidationSummary').should('contain', 'This currency already exists')
 }
-*/
