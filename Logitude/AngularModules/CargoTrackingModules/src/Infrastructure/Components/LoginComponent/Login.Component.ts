@@ -97,7 +97,8 @@ export class LoginComponent implements OnInit {
             MobileVersion: "",
             ClientType: "Web",
             CaptchaKey: this.CaptchaKey,
-            CaptchaCode: this.CaptchaTextValue
+            CaptchaCode: this.CaptchaTextValue,
+            IsCargoTracking: isCargoTrackingSite,
         };
 
         this.loginExtendedService.PostUserValidation(LoginParams).subscribe((userData: any) => {
