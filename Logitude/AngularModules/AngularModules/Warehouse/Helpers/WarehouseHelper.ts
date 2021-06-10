@@ -72,6 +72,7 @@ export class WarehouseHelper {
     private SetStorageDefaults(myWarehouse: CardList, shipmentPM: ShipmentPM) {
         shipmentPM.ChargeStorage = myWarehouse.ChargeStorage;
         shipmentPM.ChargeStorageCurrencyId = myWarehouse.ChargeStorageCurrencyId;
+        shipmentPM.WarehouseStorageFreeDays = myWarehouse.StorageFreeDays;
 
         switch (shipmentPM.TransportModeId) {
             case "A":
