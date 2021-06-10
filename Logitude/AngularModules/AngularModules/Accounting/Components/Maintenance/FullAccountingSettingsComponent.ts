@@ -192,9 +192,20 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
             } else if (value == false) {
                 this.AccountingActivationDate = null;
             }
+
+            this.ToggleAgingDefinitionTab(value);
+
             this.ReloadTenantPM();
             this.SetUIProperties();
         }
+    }
+
+    private ToggleAgingDefinitionTab(value: boolean)
+    {
+        if (value)
+            this.AddAgingDefinitionTab();
+        else
+            this.RemoveAgingDefinitionTab();
     }
 
     get IsPaymentChequesActivated() { return this.EntityPM.IsPaymentChequesActivated; }
@@ -609,9 +620,21 @@ SubmitChanges(ControlAccountId:string) {
         this.TabsSource.push({ Name: "FullAccoutingSetting", isSelected: true, Header: TextCodeTranslator.Translate("General.O.General") }); //Accounting.O.FullAccountingSettings
         this.TabsSource.push({ Name: "ControlAccounts", isSelected: false, Header: TextCodeTranslator.Translate("Accounting.O.ControlGLAccounts") });
         this.TabsSource.push({ Name: "Logo", isSelected: false, Header: TextCodeTranslator.Translate("Accounting.General.O.Cheques") });
-        this.TabsSource.push({ Name: "AgingDefinition", isSelected: false, Header: TextCodeTranslator.Translate("FullAccountingSetting.O.AgingDefinition") });
-
+        if(this.AccountingActivated)
+            this.AddAgingDefinitionTab();
     }
+
+    RemoveAgingDefinitionTab(){
+        var tabIndex = this.TabsSource.findIndex(d=>d.Name == "AgingDefinition");
+        if(tabIndex > 0)
+        this.TabsSource.splice(tabIndex,1);
+    }
+    AddAgingDefinitionTab(){
+        var tabIndex = this.TabsSource.findIndex(d=>d.Name == "AgingDefinition");
+        if(tabIndex < 0)
+            this.TabsSource.push({ Name: "AgingDefinition", isSelected: false, Header: TextCodeTranslator.Translate("FullAccountingSetting.O.AgingDefinition") });
+    }
+
     SelectionChanged(tab: any) {
 
         this.TabsSource.forEach(item => { // reset selection
