@@ -1,7 +1,7 @@
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { MaintenanceSelectors } from "../../../cypress/selectors/Selectors";
-import * as BranchActions from "../../actions/BranchActions";
-import { BranchSelectors } from "../../../cypress/selectors/BranchSelectors";
+import * as FBLStockActions from "../../actions/FBLStockActions";
+import { FBLStockSelectors } from "../../../cypress/selectors/FBLStockSelectors";
 import * as MaintenanceActions from "../../actions/Actions";
 import { FBLStockDetails } from "../../../cypress/models/FBLStockDetails";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
@@ -13,7 +13,7 @@ import { Constants } from "../../constants/Constants";
 let fblStockDetails:FBLStockDetails;
 
 
-//#region Create new branch
+//#region Create new fblStock
 Given("the user logged in and open {string} in maintenance menu", (maintenanceItemName) => {
     cy.Login();
     MaintenanceActions.OpenMaintenanceItemFromMaintenanceMenu(maintenanceItemName, MaintenanceSelectors.MaintenanceItemFBLStock)
@@ -22,7 +22,7 @@ Given("the user logged in and open {string} in maintenance menu", (maintenanceIt
 Given("a fblStock with the following details", (dataTable) => {
     fblStockDetails = Assists.CreateInstance<FBLStockDetails>(dataTable, true);
     MaintenanceActions.OpenNewWizard(Constants.FBLStock);
-    BranchActions.FillBranchDetails(fblStockDetails) 
+    FBLStockActions.FillFBLStockDetails(fblStockDetails) 
 });
  
 When("create branch", () => {
