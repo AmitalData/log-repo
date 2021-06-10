@@ -537,6 +537,11 @@
       Code="&quot;RSL&quot;"
       SearchFields="&quot;RSL,Reports in Shared Logistics&quot;"
       Description="&quot;Reports in Shared Logistics&quot;" />
+    <Record
+      Code="&quot;BIF&quot;"
+      Name="&quot;Invoices DWH&quot;"
+      SearchFields="&quot;BIF,Invoices DWH,Allow Tenants to Show Invoice Fact on the BI Report Screen&quot;"
+      Description="&quot;Allow Tenants to Show Invoice Fact on the BI Report Screen&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

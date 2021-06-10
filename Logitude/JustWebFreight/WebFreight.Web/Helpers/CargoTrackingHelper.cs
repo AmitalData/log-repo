@@ -64,8 +64,7 @@ namespace WebFreight.Web.Helpers
                                               bool isFromPrivateSite)
         {
             if (!string.IsNullOrEmpty(cargoTrackingBrandingData.BackgroundId)&& 
-                                      BrandingDataRequest.BackgroundId!= cargoTrackingBrandingData.BackgroundId && 
-                                      !isFromPrivateSite)
+                                      BrandingDataRequest.BackgroundId!= cargoTrackingBrandingData.BackgroundId)
             {
                 byte[] filedata = GeImageBytesById(cargoTrackingBrandingData.BackgroundId);
                 if (filedata != null)

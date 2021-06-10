@@ -198,7 +198,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         this.Shipments = [];
         this.location.go( 'public-tracking/search/' );
     }
-  
+
     ValidateUser() {
         this.captchaParameters = new CaptchaParameters();
         this.captchaParameters.CaptchaCode = this.CaptchaTextValue;
@@ -208,7 +208,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
     PostUserValidation(CaptchaParameters: CaptchaParameters) {
         this.searchService.PostUserValidation(CaptchaParameters).subscribe(
             (result: any) => {
-                if (result && result.HasError == true  ) {                  
+                if (result && result.HasError == true  ) {
                     this.CaptchaKey = result ? result.CaptchaKey : "";
                     this.errorMessage = "";
                     if (result.InValidCaptcha) {
@@ -236,7 +236,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
             this.ValidateUser();
         }
         else {
-            this.CheckSearchTimes(searchSource);          
+            this.CheckSearchTimes(searchSource);
             if (this.tenant != null && this.SearchText) {
                 // this.router.navigate(['public-tracking/search',  this.SearchText]);
                 // this.router.navigate(['public-tracking/search',  this.SearchText]);
@@ -257,7 +257,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         if (difference <= 100000) {
             if (this.searchCounter == 20) {
                 this.ShowCaptchaImage();
-                this.ResetStorageData();              
+                this.ResetStorageData();
             }
         }
         else {

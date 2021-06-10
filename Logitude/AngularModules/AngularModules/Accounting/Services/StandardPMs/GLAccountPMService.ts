@@ -243,7 +243,7 @@ export class GLAccountPMService {
                 newGLAccountPM.GLAccountWithholdingTaxes = [];
                 for (var k in myGLAccountPM.GLAccountWithholdingTaxes) {
 				    var myGLAccountWithholdingTaxPM =myGLAccountPM.GLAccountWithholdingTaxes[k];
-				   // var newGLAccountWithholdingTaxPM=this.clone(myGLAccountPM.GLAccountWithholdingTaxes[k]);
+				  //  var newGLAccountWithholdingTaxPM=this.clone(myGLAccountPM.GLAccountWithholdingTaxes[k]);
                     newGLAccountPM.GLAccountWithholdingTaxes.push(newGLAccountWithholdingTaxPM);
 
 					                 }

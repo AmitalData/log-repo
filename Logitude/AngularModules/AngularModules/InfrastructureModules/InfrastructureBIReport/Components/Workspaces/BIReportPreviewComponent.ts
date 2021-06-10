@@ -28,15 +28,15 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { BIReportExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/BIReportExtendedPMService';
 import { isNullOrUndefined } from 'util';
 @Component({
-    
+
     templateUrl: 'BIReportPreviewComponent.html',
 })
 
 export class BIReportPreviewComponent extends BaseComponent implements OnInit {
 
-  @ViewChild('agGrid', { static: false }) agGrid: AgGridNg2;
+    @ViewChild('agGrid', { static: false }) agGrid: AgGridNg2;
 
-  public ComponentRef: ComponentRef<BIReportPreviewComponent>;
+    public ComponentRef: ComponentRef<BIReportPreviewComponent>;
     public EntityPM: BIReportPM = null;
     public EntityId: string;
     public DWQueryId: string;
@@ -409,7 +409,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
 
     public methodFromParent(cell) {
         this.StartBusyIndicator("Loading ...");
-        this._ShipmentPMService.getSingleByShipmentNumber(cell).subscribe((myResult:any) => {
+        this._ShipmentPMService.getSingleByShipmentNumber(cell).subscribe((myResult: any) => {
             if (!myResult.HasError) {
                 var Id = myResult.Result;
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)

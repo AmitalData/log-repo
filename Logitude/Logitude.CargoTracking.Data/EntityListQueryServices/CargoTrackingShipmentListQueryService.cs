@@ -20,12 +20,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                            join fromPort in ports on shipment.FromPortId equals fromPort.Id
                                                            join toPort in ports on shipment.ToPortId equals toPort.Id
                                                            join customer in context.CargoTrackingCards on shipment.CustomerId equals customer.Id
-
-                                                           join shipper in context.CargoTrackingCards on shipment.ShipperId equals shipper.Id into shipperJoined
-                                                           from shipper in shipperJoined.DefaultIfEmpty()
-
-                                                           join milestone in context.CargoTrackingMilestones on shipment.CurrentMilestoneCode equals milestone.Code into lm
-                                                           from milestone in lm.DefaultIfEmpty()
+                                                           join shipper in context.CargoTrackingCards on shipment.ShipperId equals shipper.Id 
+                                                           join milestone in context.CargoTrackingMilestones on shipment.CurrentMilestoneCode equals milestone.Code
                                                            
                                                            join transportMode in context.CargoTrackingTransportModes on shipment.TransportModeId equals transportMode.Id
 
@@ -318,6 +314,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         {
             CargoTrackingShipmentRepository repo = new CargoTrackingShipmentRepository(context);
             CargoTrackingShipment shipment = repo.GetCargoTrackingShipmentByEntityId(shipmentId, tenant);
+            if (shipment == null) throw new Exception("No shipment found");
             return CreateCargoTrackingShipmentListInstanceFromPOCO(shipment);
         }
 
