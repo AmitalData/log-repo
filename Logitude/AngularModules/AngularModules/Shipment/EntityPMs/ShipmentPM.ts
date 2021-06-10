@@ -4940,6 +4940,10 @@ export class ShipmentPM {
     public get IsProductItemsUpdated() { return this.isProductItemsUpdated; }
     public set IsProductItemsUpdated(newValue: boolean) { if (this.isProductItemsUpdated != newValue) { this.isProductItemsUpdated = newValue; this.MarkAsDirty("IsProductItemsUpdated"); } }
 
+    private forwarderStandaloneShipmentId: string;
+    public get ForwarderStandaloneShipmentId() { return this.forwarderStandaloneShipmentId; }
+    public set ForwarderStandaloneShipmentId(newValue: string) { if (this.forwarderStandaloneShipmentId != newValue) { this.forwarderStandaloneShipmentId = newValue; this.MarkAsDirty("ForwarderStandaloneShipmentId"); } }      
+
 
     public OldEntityPM: ShipmentPM;
 
