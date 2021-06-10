@@ -84,7 +84,7 @@ export class SelectStandalonePackagesComponent {
             });
         }
 
-        this.ShipmentPM.ShipmentPackages.filter(d => d.ContainerEntityId != null && (pickUpDliveryPackagescontainersIds.indexOf(d.ContainerEntityId) == -1)).forEach(item => {
+        this.ShipmentPM.ShipmentPackages.filter(d => AppTool.IsNullOrEmpty(d.ContainerEntityId) || pickUpDliveryPackagescontainersIds.indexOf(d.ContainerEntityId) == -1).forEach(item => {
             var widthOfLabel = AppTool.GetTextWidth(item.PackageTypeName);
             if (widthOfLabel > myPackageTypeColumnWidth) {
                 myPackageTypeColumnWidth = widthOfLabel;
@@ -129,22 +129,14 @@ export class SelectStandalonePackagesComponent {
             newPackage.Volume = item.Volume;
             newPackage.Weight = item.Weight;            
             newPackage.ShipmentPickUpDeliveryId = this.EntityPM.Id;
-            newPackage.ContainerEntityId = item.ContainerEntityId;
-
-            //newPickUnewPackagepPackPM.IsMultiHarmonize = item.IsMultiHarmonize;
-
-            //item.HarmonizeList.forEach(harmonizeItem => {
-            //    var newHarmonizePM = new PickUpDeliveryPackageHarmonizePM(this.EntityPM);
-            //    newHarmonizePM.Tenant = harmonizeItem.Tenant;
-            //    newHarmonizePM.Harmonize = harmonizeItem.Harmonize;
-
-            //    newPackage.AddPickUpDeliveryPackageHarmonizePM(newHarmonizePM);
-            //});
-
+            newPackage.ContainerEntityId = item.ContainerEntityId;            
             this.EntityPM.AddPackage(newPackage);
+            item.EntityPM.IsPackageAddedManually = true;
+            item.EntityPM.IsPackageAddedManually = false;
         });
 
-        //this.fatherComponent.BuildItemsSource();
+        
+
         this.CurrentSession.CloseCurrentWindowEmit("OK");
     }
 
@@ -156,6 +148,7 @@ export class SelectStandalonePackagesComponent {
         newShipmentPackage.Tenant = SessionLocator.Tenant;
         newShipmentPackage.TemperatureUnitCode = SessionLocator.TenantPM.TemperatureUnitCode;
         newShipmentPackage.FlashPointTemperatureUnitCode = SessionLocator.TenantPM.TemperatureUnitCode;
+        newShipmentPackage.IsPackageAddedManually = true;
 
         var logWindow = new LogitudeWindow();
         logWindow.Title = TextCodeTranslator.Translate("ShipmentPackage.O.AddContainer");
@@ -172,15 +165,20 @@ export class SelectStandalonePackagesComponent {
         entityArgs.ObjectTableName = "Shipment";
 
         var packagesTabComponent: PackagesTabComponent = new PackagesTabComponent(entityArgs, new EntityResourceService());
+        packagesTabComponent.ngOnInit();
         var itemComponent = new ShipmentPackageItem(newShipmentPackage, packagesTabComponent, true);
         logWindow.DataContext = itemComponent;
         logWindow.Show('./ShipmentModules/ShipmentPackages/Components/Packages/AddEditOceanPackageComponent');
-    }
+        logWindow.WindowClosed.subscribe((s: any) => {
+            if (s) {
+                this.BuildItemsSource();
+            }
+        });
+    }    
 }
 export class PackagesSelectItem {
     public EntityPM: ShipmentPackagePM;
     public IsContainer: boolean = false;
-    public HarmonizeList: ShipmentPackageHarmonizePM[];
     constructor(entity: ShipmentPackagePM, private fatherComponent: SelectStandalonePackagesComponent) {
         this.EntityPM = entity;
 
@@ -188,7 +186,9 @@ export class PackagesSelectItem {
             this.IsContainer = this.EntityPM.IsContainer;
         }
 
-        this.HarmonizeList = entity.ShipmentPackageHarmonizes;
+        if (this.EntityPM.IsPackageAddedManually) {
+            this.IsChecked = true;
+        }
     }
 
     private isChecked: boolean = false;

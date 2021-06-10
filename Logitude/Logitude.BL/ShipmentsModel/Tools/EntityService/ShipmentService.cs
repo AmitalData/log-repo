@@ -5486,43 +5486,43 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
-        private void CreateShipmentPickUpDeliveryPackage(ShipmentPickUpDeliveryPackagePM insideItemPM, string pickUpDeliveryId)
+        private void CreateShipmentPickUpDeliveryPackage(ShipmentPickUpDeliveryPackagePM pickUpDeliveryPackagePM, string pickUpDeliveryId)
         {
-            insideItemPM.Id = IdCounter.GetNumber("ShipmentPickUpDeliveryPackage", tenant).ToString();
-            insideItemPM.ShipmentPickUpDeliveryId = pickUpDeliveryId;
-            insideItemPM.Tenant = tenant;
+            pickUpDeliveryPackagePM.Id = IdCounter.GetNumber("ShipmentPickUpDeliveryPackage", tenant).ToString();
+            pickUpDeliveryPackagePM.ShipmentPickUpDeliveryId = pickUpDeliveryId;
+            pickUpDeliveryPackagePM.Tenant = tenant;
 
             ShipmentPickUpDeliveryPackage insideItemPoco = new ShipmentPickUpDeliveryPackage()
             {
-                Id = insideItemPM.Id,
+                Id = pickUpDeliveryPackagePM.Id,
             };
 
-            ShipmentMapping.MapPickUpDeliveryPackage(insideItemPM, insideItemPoco, true);
+            ShipmentMapping.MapPickUpDeliveryPackage(pickUpDeliveryPackagePM, insideItemPoco, true);
             shipmentPickUpDeliveryPackageRepository.Add(insideItemPoco);
 
-            if (insideItemPM.PickUpDeliveryPackageHarmonizes != null)
+            if (pickUpDeliveryPackagePM.PickUpDeliveryPackageHarmonizes != null)
             {
-                foreach (PickUpDeliveryPackageHarmonizePM itemHarmonizePM in insideItemPM.PickUpDeliveryPackageHarmonizes)
+                foreach (PickUpDeliveryPackageHarmonizePM itemHarmonizePM in pickUpDeliveryPackagePM.PickUpDeliveryPackageHarmonizes)
                 {
-                    this.CreatePickUpDeliveryPackageHarmonize(itemHarmonizePM, insideItemPM.Id);
+                    this.CreatePickUpDeliveryPackageHarmonize(itemHarmonizePM, pickUpDeliveryPackagePM.Id);
                 }
             }
         }
-        private void UpdateShipmentPickUpDeliveryPackage(ShipmentPickUpDeliveryPackagePM insideItemPM)
+        private void UpdateShipmentPickUpDeliveryPackage(ShipmentPickUpDeliveryPackagePM pickUpDeliveryPackagePM)
         {
-            ShipmentPickUpDeliveryPackage insideItemPoco = shipmentPickUpDeliveryPackageRepository.GetSingleShipmentPickUpDeliveryPackage(insideItemPM.Id);
-            ShipmentMapping.MapPickUpDeliveryPackage(insideItemPM, insideItemPoco, false);
+            ShipmentPickUpDeliveryPackage insideItemPoco = shipmentPickUpDeliveryPackageRepository.GetSingleShipmentPickUpDeliveryPackage(pickUpDeliveryPackagePM.Id);
+            ShipmentMapping.MapPickUpDeliveryPackage(pickUpDeliveryPackagePM, insideItemPoco, false);
             shipmentPickUpDeliveryPackageRepository.Update(insideItemPoco);
 
-            if (insideItemPM.PickUpDeliveryPackageHarmonizesChangeSet != null)
+            if (pickUpDeliveryPackagePM.PickUpDeliveryPackageHarmonizesChangeSet != null)
             {
-                foreach (PickUpDeliveryPackageHarmonizePM itemHarmonizePM in insideItemPM.PickUpDeliveryPackageHarmonizesChangeSet)
+                foreach (PickUpDeliveryPackageHarmonizePM itemHarmonizePM in pickUpDeliveryPackagePM.PickUpDeliveryPackageHarmonizesChangeSet)
                 {
                     switch (itemHarmonizePM.ChangeSetOp)
                     {
                         case ChangeSetOperation.Insert:
                             {
-                                this.CreatePickUpDeliveryPackageHarmonize(itemHarmonizePM, insideItemPM.Id);
+                                this.CreatePickUpDeliveryPackageHarmonize(itemHarmonizePM, pickUpDeliveryPackagePM.Id);
                                 break;
                             }
 
@@ -5543,12 +5543,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
         }
-        private void DeleteShipmentPickUpDeliveryPackage(ShipmentPickUpDeliveryPackagePM insideItemPM)
+        private void DeleteShipmentPickUpDeliveryPackage(ShipmentPickUpDeliveryPackagePM pickUpDeliveryPackagePM)
         {
-            ShipmentPickUpDeliveryPackage insideItemPoco = shipmentPickUpDeliveryPackageRepository.GetSingleShipmentPickUpDeliveryPackage(insideItemPM.Id);
+            ShipmentPickUpDeliveryPackage insideItemPoco = shipmentPickUpDeliveryPackageRepository.GetSingleShipmentPickUpDeliveryPackage(pickUpDeliveryPackagePM.Id);
 
             PickUpDeliveryPackageHarmonizeQuery pickUpDeliveryPackageHarmonizeQuery = new PickUpDeliveryPackageHarmonizeQuery(pickUpDeliveryPackageHarmonizeRepository);
-            List<PickUpDeliveryPackageHarmonizePM> PickUpDeliveryPackageHarmonize = pickUpDeliveryPackageHarmonizeQuery.GetPickUpDeliveryPackageHarmonizes(insideItemPM.Id, tenant);
+            List<PickUpDeliveryPackageHarmonizePM> PickUpDeliveryPackageHarmonize = pickUpDeliveryPackageHarmonizeQuery.GetPickUpDeliveryPackageHarmonizes(pickUpDeliveryPackagePM.Id, tenant);
             foreach (PickUpDeliveryPackageHarmonizePM harmonizeItemPM in PickUpDeliveryPackageHarmonize)
             {
                 PickUpDeliveryPackageHarmonize harmonizeItem = pickUpDeliveryPackageHarmonizeRepository.GetSinglePickUpDeliveryPackageHarmonize(harmonizeItemPM.Id, tenant);
