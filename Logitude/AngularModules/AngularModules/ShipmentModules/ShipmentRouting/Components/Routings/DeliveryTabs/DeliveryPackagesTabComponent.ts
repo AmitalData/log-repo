@@ -36,6 +36,7 @@ export class DeliveryPackagesTabComponent {
     public TypeCode: string = null;
     private CurrentSession = SessionLocator.SelectedSession;
     public IsAddContainerVisible: boolean = false;
+    public IsAddContainerEnabled: boolean = false;
     constructor() {
 
     }
@@ -106,6 +107,13 @@ export class DeliveryPackagesTabComponent {
 
         else {
             this.IsEditingEnabled = ShipmentTool.IsEditingEnabled(this.ShipmentPM);
+        }
+
+        this.IsAddContainerEnabled = false;
+        if (this.IsEditingEnabled) {
+            if (this.EntityPM.ShipmentPickUpDeliveryPackages.length == 0) {
+                this.IsAddContainerEnabled = true;
+            }
         }
 
         this.IsAddContainerVisible = false;
@@ -183,6 +191,9 @@ export class DeliveryPackagesTabComponent {
         logWindow.Title = TextCodeTranslator.Translate("ShipmentPickUpDeliveryPackage.O.AddDeliveryPackage");
         logWindow.DataContext = itemComponent;
         logWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/DeliveryTabs/DeliveryPackagesAddEditComponent");
+        logWindow.WindowClosed.subscribe((event: any) => {
+            this.SetUIProperties();
+        });
     }
 
     EditPackageClicked(itemComponent: DeliveryPackageItem) {
@@ -199,6 +210,7 @@ export class DeliveryPackagesTabComponent {
                 if (confirmWindow.Yes) {
                     this.EntityPM.RemovePackage(itemComponent.EntityPM);
                     this.BuildItemsSource();
+                    this.SetUIProperties();
                 }
             });
         }

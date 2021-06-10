@@ -111,9 +111,13 @@ export class ChooseStandaloneShipmentComponent {
         if (this.NumberOfPickupDeliveryPackages == 1 && numberOfSelectedShipmentPackages >= 1) {
             messageWindow.Show(" Can't connect to Shipment " + item.ShipmentNumber + " because the number of containers should be one. Please remove the containers either from Shipment "
                 + item.ShipmentNumber + " or this pickup / delivery and try again. ");
-        } else if (numberOfSelectedShipmentPackages > 1 && this.NumberOfPickupDeliveryPackages == 0) {
+        }
+
+        else if (numberOfSelectedShipmentPackages > 1 && this.NumberOfPickupDeliveryPackages == 0) {
             messageWindow.Show("Can't connect to Shipment " + item.ShipmentNumber + " because it has more than one container");
-        } else {
+        }
+
+        else {
             this.ConfirmSelectedShipment(item);
         }
     }

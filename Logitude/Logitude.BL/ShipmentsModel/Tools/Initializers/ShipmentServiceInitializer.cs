@@ -219,6 +219,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
             }
         }
 
+        public void HandleStandalone()
+        {
+            List<IServiceBehaviour> behaviours = new List<IServiceBehaviour>();
+            behaviours.Add(new StandaloneShipmentBehaviour());
+
+            foreach (IServiceBehaviour behaviour in behaviours)
+            {
+                behaviour.Handle(this);
+            }
+        }
+
         internal void SetCustomer(Customer customer)
         {
             this.Customer = customer;

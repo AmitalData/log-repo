@@ -29,6 +29,7 @@ export class PickupPackagesTabComponent {
     public ObjectTableName: string = "ShipmentPickUpDelivery";
     public ItemsSource: PickupPackageItem[] = [];
     public IsAddContainerVisible: boolean = false;
+    public IsAddContainerEnabled: boolean = false;
     public DataContext = this;
     constructor() {
 
@@ -62,6 +63,13 @@ export class PickupPackagesTabComponent {
 
         else {
             this.IsEditingEnabled = ShipmentTool.IsEditingEnabled(this.ShipmentPM);
+        }
+
+        this.IsAddContainerEnabled = false;
+        if (this.IsEditingEnabled) {
+            if (this.EntityPM.ShipmentPickUpDeliveryPackages.length == 0) {
+                this.IsAddContainerEnabled = true;
+            }
         }
 
         this.IsAddContainerVisible = false;
@@ -133,6 +141,9 @@ export class PickupPackagesTabComponent {
         logWindow.Title = TextCodeTranslator.Translate("ShipmentPickUpDeliveryPackage.O.AddPickUpPackage");
         logWindow.DataContext = itemComponent;
         logWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/PickupTabs/PickupPackagesAddEditComponent");
+        logWindow.WindowClosed.subscribe((event: any) => {
+            this.SetUIProperties();
+        });
     }
     EditPackageClicked(itemComponent: PickupPackageItem) {
         var logWindow = new LogitudeWindow();
@@ -148,6 +159,7 @@ export class PickupPackagesTabComponent {
                 if (confirmWindow.Yes) {
                     this.EntityPM.RemovePackage(itemComponent.EntityPM);
                     this.BuildItemsSource();
+                    this.SetUIProperties();
                 }
             });
         }

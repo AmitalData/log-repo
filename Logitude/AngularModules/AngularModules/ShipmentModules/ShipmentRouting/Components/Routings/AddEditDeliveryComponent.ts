@@ -934,7 +934,7 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
                 if (shipmentList != null) {
                     this.EntityPM.StandaloneShipmentId = shipmentList.Id;
                     this.EntityPM.StandaloneShipmentNumber = shipmentList.ShipmentNumber;
-                    this.SaveChangesAndClose();
+                    this.Save(false);
                 }
             });
         });
