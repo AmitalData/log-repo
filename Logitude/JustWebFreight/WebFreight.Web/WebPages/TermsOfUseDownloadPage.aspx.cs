@@ -51,6 +51,10 @@ namespace WebFreight.Web.WebPages
             string documentId = GetTermOfUseDocumentId(privateLabeldId);
             Document termsOfUseDocument = GetDocument(documentId);
 
+            if(termsOfUseDocument == null)
+            {
+                this.ShowExceptionMessage("Document Not Found!");
+            }
             Uploader up = new Uploader();
             datainByte = up.DownloadFile(termsOfUseDocument.Id, termsOfUseDocument.Extension, termsOfUseDocument.Folder, termsOfUseDocument.Tenant);
 
