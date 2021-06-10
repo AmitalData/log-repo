@@ -9,51 +9,40 @@ import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetai
 import * as BaseActions from "../../../../Base/cypress/actions/Actions"
 import { Constants } from "../../constants/Constants";
 
-let currencyDetails:CurrencyDetails;
+let currencyDetails: CurrencyDetails;
+let isActiveCurrency = null
 
-//#region Create new currency
+//#region Search for the currency by code 
 Given("the user logged in and open {string} in maintenance menu", (maintenanceItemName) => {
     cy.Login();
     MaintenanceActions.OpenMaintenanceItemFromMaintenanceMenu(maintenanceItemName, MaintenanceSelectors.MaintenanceItemCurrency)
 });
 
-Given("a currency with the following details", (dataTable) => {
+Given("a currency with following Code", (dataTable) => {
     currencyDetails = Assists.CreateInstance<CurrencyDetails>(dataTable, true);
-    MaintenanceActions.OpenNewWizard(Constants.Currency);
-    CurrencyActions.FillCurrencyDetails(currencyDetails) 
+    CurrencyActions.FillSearchFeild(currencyDetails)
 });
- 
-When("create currency", () => {
-    CurrencyActions.CreateCurrency();
-});
- 
-Then("the currency should create successfully", () => {
-    CurrencyActions.AssertCreateCurrency();
-});
-//#endregion
 
-
-//#region Search for the currency by name
 When("search currency", () => {
     CurrencyActions.SearchCurrency()
 });
- 
+
 Then("the currency should appear successfully", () => {
-    CurrencyActions.AssertSearchCurrency() 
+    CurrencyActions.AssertSearchCurrency()
 });
 //#endregion
- 
+
 
 //#region Open the currency
 When("open currency", () => {
     CurrencyActions.OpenCurrency();
 });
- 
+
 Then("the currency should open successfully", () => {
-    CurrencyActions.AssertOpenCurrency(); 
+    CurrencyActions.AssertOpenCurrency();
 });
 //#endregion
- 
+
 
 //#region Edit the currency
 Given("the user fill the following currency details", (dataTable) => {
@@ -61,9 +50,9 @@ Given("the user fill the following currency details", (dataTable) => {
     let LocalName = currencyDetails.LocalName
     CurrencyActions.FillCurrencyLocalName(LocalName)
 });
- 
-Given("the user activate currency", () => {
-    MaintenanceActions.ChangeInactiveCheckBoxValue(CurrencySelectors.InActiveCurrencyCheckBox)
+
+Given("the user active or inactive currency", () => {
+    CurrencyActions.ChangeInactiveCheckBoxValue(CurrencySelectors.InActiveCurrencyCheckBox)
 });
 
 Given("fill the following currency Accounting External ID", (dataTable) => {
@@ -73,30 +62,31 @@ Given("fill the following currency Accounting External ID", (dataTable) => {
 });
 
 When("edit currency", () => {
-    CurrencyActions.EditCurrency(); 
+    CurrencyActions.EditCurrency();
 });
- 
+
 Then("the currency should update successfully", () => {
-    CurrencyActions.AssertEditCurrency();  
+    CurrencyActions.AssertEditCurrency();
 });
- 
+
 Then("following event should appear in events tab", (dataTable) => {
     let eventDetailsList = Assists.CreateSet<EventTypeDetails>(dataTable);
-    BaseActions.ValidateEventsTab(eventDetailsList, CurrencySelectors.CurrencyEventsTab);
+    CurrencyActions.AssertEventTab(eventDetailsList)
 });
 
 When("save and close currency", () => {
-    CurrencyActions.CloseSaveCurrency(); 
+    CurrencyActions.CloseSaveCurrency();
 });
 
 Then("the currency should close successfully", () => {
     CurrencyActions.AssertCloseSaveCurrency();
 });
 
+/*
 Given("a currency with the following details", (dataTable) => {
     currencyDetails = Assists.CreateInstance<CurrencyDetails>(dataTable, true);
     //MaintenanceActions.OpenNewWizard(Constants.Currency);
-    CurrencyActions.FillCurrencyDetails(currencyDetails) 
+    CurrencyActions.FillCurrencyDetails(currencyDetails)
 });
 
 When("create currency", () => {
@@ -106,6 +96,4 @@ When("create currency", () => {
 Then("the currency should not create successfully", () => {
     CurrencyActions.AssertFaildCreateCurrency();
 });
-
-
-//#endregion
+*/

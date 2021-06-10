@@ -7,74 +7,20 @@ import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
 import { CurrencyDetails } from "../models/CurrencyDetails";
 import * as GeneralActions from './GeneralActions'
-import { GenerateRandomNumber } from '../../../Base/cypress/actions/GenerateRandoms';
+import { EventTypeDetails } from "../../../Base/cypress/models/EventTypeDetails";
+import * as BaseActions from "../../../Base/cypress/actions/Actions"
 
 let CurrencyCode = null;
-let CurrencyCodeCount = null;
-let RandomCurrency = null
-let inActiveBranch = false;
+var IsActiveCurrency = null;
 
-export function FillCurrencyDetails(currencyDetails: CurrencyDetails) {
-    if (currencyDetails.Currency == 'random') {
-        SelectCurrencyName()
-    }
-    else {
-        cy.FillLogLov(CurrencySelectors.CurrencyName, CurrencyCode, true)
-    }
-    
-    cy.FillLogTextBox(CurrencySelectors.CurrencyExchangeRate, currencyDetails.Rate)
-}
-
-function SelectCurrencyName() {
-    cy.get('#searchicon_Tenant_CurrencyId').click().then(() => {
-        cy.get('.cdk-virtual-scroll-content-wrapper').last().find('.tooltip').as('CurrencuListCount').then((listing) => {
-
-            CurrencyCodeCount = Cypress.$(listing).length;
-            RandomCurrency = GenerateRandomNumber(CurrencySelectors.MinRandomNumber, CurrencyCodeCount)
-            cy.get('@CurrencuListCount').eq(RandomCurrency).click()
-        })
-    })
-}
-
-export function CreateCurrency() {
-    DefinePostCurrencyRequest()
-    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
-}
-
-function DefinePostCurrencyRequest() {
-    cy.DefineRequestWait(RestAPI.GET, Urls.GetTenatCurrencies, RequestAliases.PostCurrency)
-}
-
-export function AssertErrorMessage() {
-    cy.get('.ValidationSummary').should('exist')
-}
-
-export function AssertCreateCurrency() {
-
-    let intercept = cy.wait("@" + RequestAliases.PostCurrency);
-    intercept.then((interception) => {
-        if (interception.response.statusCode === 400) {
-            ReCreateCurrency();
-        }
-        else {
-            AssertPostCurrency(interception.response.statusCode, 200, interception.response.body.Code)
-        }
-    })
-}
-
-function ReCreateCurrency() {
-    CreateCurrency();
-    AssertCreateCurrency();
-}
-
+/*
 export function CreateExitingCurrency() {
 
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK)
 }
-
-export function AssertPostCurrency(responseStatusCode: number, expectedStatusCode: number, currencyCode: string) {
-    assert.equal(responseStatusCode, expectedStatusCode)
-    CurrencyCode = currencyCode
+*/
+export function FillSearchFeild(currencyDetails: CurrencyDetails) {
+    CurrencyCode = currencyDetails.Code
 }
 
 export function SearchCurrency() {
@@ -129,6 +75,29 @@ export function CloseSaveCurrency() {
     cy.Click(CurrencySelectors.CurrencySaveCloseButton, null);
 }
 
+export function ChangeInactiveCheckBoxValue(InActivateSelector: string) {
+    cy.get(InActivateSelector).then($InActiveStatesCheckBox => {
+        if ($InActiveStatesCheckBox.is(':checked')) {
+            IsActiveCurrency = true
+            cy.get(InActivateSelector).uncheck({ force: true })
+        }
+        else {
+            IsActiveCurrency = false
+            cy.get(InActivateSelector).check({ force: true })
+        }
+    })
+}
+
+export function AssertEventTab(eventDetailsList: EventTypeDetails[]) {
+    if (IsActiveCurrency) {
+        eventDetailsList[0].Notes = 'Currency Activated'
+    }
+    else {
+        eventDetailsList[0].Notes = 'Currency Inactivated'
+    }
+    BaseActions.ValidateEventsTab(eventDetailsList, CurrencySelectors.CurrencyEventsTab);
+}
+
 export function AssertCloseSaveCurrency() {
     AssertCurrencyGetSingle();
 }
@@ -136,7 +105,8 @@ export function AssertCloseSaveCurrency() {
 function DefineCurrencyViewGetSingleRequest() {
     cy.DefineRequestWait(RestAPI.GET, Urls.CurrenciesviewGetSingle, RequestAliases.GetSignle);
 }
-
+/*
 export function AssertFaildCreateCurrency() {
     cy.get('.ValidationSummary').should('contain', 'This currency already exists')
 }
+*/

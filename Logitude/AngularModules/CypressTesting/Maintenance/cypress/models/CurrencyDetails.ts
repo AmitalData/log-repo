@@ -1,5 +1,5 @@
 export class CurrencyDetails {
-    Currency : string ;
+    Code : string ;
     ExchangeDate : string ;
     Rate : string ;
     LocalName: string;
