@@ -1,0 +1,79 @@
+import * as Actions from "../../actions/Actions";
+import * as DepartmentActions from "../../actions/DepartmentActions";
+import * as Assists from "../../../../Base/cypress/assists/Assists";
+import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
+import { DepartmentSelectors } from "../../selectors/DepartmentSelectors";
+import { DepartmentDetails } from "cypress/models/DepartmentDetails";
+import {ValidateEventsTab} from "../../../../Base/cypress/actions/Actions";
+import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetails";
+
+//#region Create new department
+Given("the user logged in and open {string} in maintenance menu", (maintenanceItemName) => {
+    cy.Login()
+    Actions.OpenMaintenanceItemFromMaintenanceMenu(maintenanceItemName, DepartmentSelectors.MaintenanceItem)
+});
+
+Given("a department with the following details", (dataTable) => {
+    let departmentDetails = Assists.CreateInstance<DepartmentDetails>(dataTable, true);
+    Actions.OpenNewWizard("Department");
+    DepartmentActions.FillDepartmentDetails(departmentDetails, 10);
+});
+
+When("create department", () => {
+    DepartmentActions.CreateDepartment();
+});
+
+Then("the department should create successfully", () => {
+    DepartmentActions.AssertCreateDepartment();
+});
+//#endregion
+
+//#region Search for the department
+When("search department", () => {
+    DepartmentActions.SearchDepartment()
+});
+
+Then("the department should appear successfully", () => {
+    DepartmentActions.AssertSearchDepartment();
+});
+//#endregion
+
+//#region Open the department
+When("open department", () => {
+    DepartmentActions.OpenDepartment();
+});
+
+Then("the department should open successfully", () => {
+    DepartmentActions.AssertOpenDepartment();
+});
+//#endregion
+
+//#region Edit the department
+Given("the user edit the following department details", (dataTable) => {
+    let paymentTermDetails = Assists.CreateInstance<DepartmentDetails>(dataTable, true);
+    DepartmentActions.EditDepartmentGeneralTab(paymentTermDetails)
+});
+
+When("save department", () => {
+    DepartmentActions.UpdateDepartment()
+});
+
+Then("the department should update successfully", () => {
+    DepartmentActions.AssertUpdateDepartment()
+});
+
+Then("the following event should appear in events tab", (dataTable) => {
+    let eventDetailsList = Assists.CreateSet<EventTypeDetails>(dataTable);
+    ValidateEventsTab(eventDetailsList, DepartmentSelectors.EventsTab);
+});
+//#endregion
+
+//#region Save and close the department
+When("save and close department", () => {
+    DepartmentActions.CloseSaveDepartment();
+});
+
+Then("the department should close successfully", () => {
+    DepartmentActions.AssertCloseSaveDepartment();
+});
+ //#endregion

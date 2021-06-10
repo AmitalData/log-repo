@@ -79,7 +79,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "f40b2abb1592dd174315113231a4fbaf";
+
+
+		public const string HashString = "ecbdc98474dea21097e7c557088d3264";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4623,7 +4625,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  15,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
@@ -9722,7 +9724,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						ConverterName =  "Simplog.Infrastructure.Utilities.Converters.DateTimeToDateConverter",
 					  						IsCustomFilter =  false,
 					  						Operator =  "Equals",
@@ -13558,7 +13560,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
@@ -21137,7 +21139,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
@@ -40288,7 +40290,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
-					  						CopyToDW =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
@@ -44058,63 +44060,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "DocumentFilingIds",
-					  						ObjectTableName =  "Shipment",
-					  						FieldsDataType =  "Text",
-					  						MinLength =  0,
-					  						MaxLength =  500,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "DocumentFilingIds",
-					  						ListPropertyPath =  "DocumentFilingIds",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "DocumentFilingIds",
-					  						DefaultText =  "Document Filing Ids",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
+            
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
@@ -44156,67 +44102,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ShipmentProductItems",
-					  						DefaultText =  "Shipment Product Items",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "IsStandalonePickupDelivery",
-					  						ObjectTableName =  "Shipment",
-					  						FieldsDataType =  "Boolean",
-					  						MinLength =  0,
-					  						MaxLength =  0,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						Operator =  "Equals",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "IsStandalonePickupDelivery",
-					  						ListPropertyPath =  "IsStandalonePickupDelivery",
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Shipment",
-					  						ValidForQuerySection2 =  "ShipmentFollowUp",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "IsStandalonePickupDelivery",
-					  						DefaultText =  "Standalone Pickup Delivery",
-					  						ListFieldLable =  "IsStandalonePickupDeliveryListLable",
-					  						ListLableDefaultText =  "Standalone Pickup Delivery",
+					  						DefaultText =  "ShipmentProductItems",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -44286,7 +44172,63 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
-  
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "DocumentFilingIds",
+					  						ObjectTableName =  "Shipment",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  500,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "DocumentFilingIds",
+					  						ListPropertyPath =  "DocumentFilingIds",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "DocumentFilingIds",
+					  						DefaultText =  "Document Filing Ids",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -44386,6 +44328,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			   TextCode ShipmentTextCode_18 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.EBookingInProgress", DefaultText = @"E-Booking - In Progress",LocalDefaultText = "E-Booking - In Progress", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature ShipmentFeature_18 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Shipment.Q.EBookingInProgress", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShipmentFeatures.EBookingInProgress", NameTextCodeDefaultText = "EBookingInProgress", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ShipmentObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode ShipmentTextCode_19 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.SharedLogisticShipment", DefaultText = @"Shipments Report",LocalDefaultText = "Shipments Report", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ShipmentFeature_19 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Shipment.Q.SharedLogisticShipment", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShipmentFeatures.SharedLogisticShipment", NameTextCodeDefaultText = "SharedLogisticShipment", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ShipmentObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
@@ -44977,6 +44923,46 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
              AdvancedQueryFilter EBookingInProgressQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.EBookingInProgress", PredefinedValue = "True",PredefinedValue2 = null, QueryId = EBookingInProgressQuery.Id,QueryCode = EBookingInProgressQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
+  
+	      
+
+			  Query SharedLogisticShipmentQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_19.Id, NameTextCodeCode = ShipmentTextCode_19.Code, ObjectTableName = "Shipment", Code = "SharedLogisticShipment",  QueryGroupCode = "SHIP", IndexOrder = 19, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "SharedLogisticShipment", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ShipmentFeature_19.Id,FeatureUniqeCode= ShipmentFeature_19.FeatureUniqeCode, DefaultSortName = "StatusDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+	
+			 QueryColumn SharedLogisticShipmentQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticShipmentQuery.Id,QueryCode = SharedLogisticShipmentQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Shipment.ShipmentNumber" , ColumnWidth = 106 }, addedQueryColumns);
+
+			 QueryColumn SharedLogisticShipmentQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticShipmentQuery.Id,QueryCode = SharedLogisticShipmentQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Shipment.TransportModeId" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn SharedLogisticShipmentQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticShipmentQuery.Id,QueryCode = SharedLogisticShipmentQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Shipment.DirectionId" , ColumnWidth = 73 }, addedQueryColumns);
+
+			 QueryColumn SharedLogisticShipmentQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticShipmentQuery.Id,QueryCode = SharedLogisticShipmentQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Shipment.Routing" , ColumnWidth = 86 }, addedQueryColumns);
+
+			 QueryColumn SharedLogisticShipmentQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticShipmentQuery.Id,QueryCode = SharedLogisticShipmentQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Shipment.MainCarriageATD" , ColumnWidth = 109 }, addedQueryColumns);
+
+			 QueryColumn SharedLogisticShipmentQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticShipmentQuery.Id,QueryCode = SharedLogisticShipmentQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Shipment.MainCarriageATA" , ColumnWidth = 110 }, addedQueryColumns);
+
+			 QueryColumn SharedLogisticShipmentQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticShipmentQuery.Id,QueryCode = SharedLogisticShipmentQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Shipment.LongMaster" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn SharedLogisticShipmentQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticShipmentQuery.Id,QueryCode = SharedLogisticShipmentQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Shipment.Shipper" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn SharedLogisticShipmentQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticShipmentQuery.Id,QueryCode = SharedLogisticShipmentQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Shipment.Consignee" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn SharedLogisticShipmentQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticShipmentQuery.Id,QueryCode = SharedLogisticShipmentQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Shipment.ShipmentType" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn SharedLogisticShipmentQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticShipmentQuery.Id,QueryCode = SharedLogisticShipmentQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Shipment.StatusName" , ColumnWidth = 80 }, addedQueryColumns);
+
+			 QueryColumn SharedLogisticShipmentQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticShipmentQuery.Id,QueryCode = SharedLogisticShipmentQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Shipment.NumberOfPackages" , ColumnWidth = 118 }, addedQueryColumns);
+
+			 QueryColumn SharedLogisticShipmentQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticShipmentQuery.Id,QueryCode = SharedLogisticShipmentQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "Shipment.GrossWeightInKG" , ColumnWidth = 115 }, addedQueryColumns);
+
+			 QueryColumn SharedLogisticShipmentQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticShipmentQuery.Id,QueryCode = SharedLogisticShipmentQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "Shipment.ChargeableWeightInKG" , ColumnWidth = 140 }, addedQueryColumns);
+
+			 QueryColumn SharedLogisticShipmentQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticShipmentQuery.Id,QueryCode = SharedLogisticShipmentQuery.UniqueCode, IndexOrder = 14, ObjectFieldCode = "Shipment.IncotermCode" , ColumnWidth = 106 }, addedQueryColumns);
+
+			 QueryColumn SharedLogisticShipmentQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticShipmentQuery.Id,QueryCode = SharedLogisticShipmentQuery.UniqueCode, IndexOrder = 15, ObjectFieldCode = "Shipment.VolumeInCBM" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn SharedLogisticShipmentQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticShipmentQuery.Id,QueryCode = SharedLogisticShipmentQuery.UniqueCode, IndexOrder = 16, ObjectFieldCode = "Shipment.ValueOfGoods" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn SharedLogisticShipmentQueryColumn_17 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticShipmentQuery.Id,QueryCode = SharedLogisticShipmentQuery.UniqueCode, IndexOrder = 17, ObjectFieldCode = "Shipment.DescriptionOfGoods" , ColumnWidth = 132 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

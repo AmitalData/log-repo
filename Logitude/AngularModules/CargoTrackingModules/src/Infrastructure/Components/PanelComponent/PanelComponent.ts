@@ -19,6 +19,7 @@ export class PanelComponent implements OnInit
     @Input() HeaderLinkText: string;
     @Input() Title: string = "";
     @Input() TransparentBackground: boolean = false;
+    @Input() DetailsSectionToggleEvent: EventEmitter<any> = new EventEmitter();
 
     constructor() { }
 
@@ -33,6 +34,7 @@ export class PanelComponent implements OnInit
     ngOnInit()
     {
         this.initPanel();
+        this.SubscribeDetailsSectionToggleEvent();
     }
 
 
@@ -42,6 +44,12 @@ export class PanelComponent implements OnInit
         if (width < 470 && this.HaveDetailsSection) {
             this.ShowDetailsSection = true;
         }
+    }
+
+    private SubscribeDetailsSectionToggleEvent() {
+        this.DetailsSectionToggleEvent.subscribe(event => {
+            this.ShowMoreDetails();
+        });
     }
 
     ShowMoreDetails()

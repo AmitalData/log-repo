@@ -1,0 +1,123 @@
+<table>
+    <tr style="height: 1px;">
+        <td>
+            <table>
+                <tr>
+                    <td style="width: 230px;float:left;">
+                        <SearchBox [UseTimer]="true" (TextChanged)="SearchText = $event"></SearchBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 5px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr style="width:100%;height:100%;vertical-align:top;">
+        <td>
+            <table>
+                <tr style="width:100%;height:100%;vertical-align:top;">
+                    <td style="padding: 2px;">
+                        <div class="SimpleGridView" style="min-height:100px;vertical-align:top;">
+                            <div class="SimpleGridViewHeaderDark">
+                                <table>
+                                    <tr>
+                                        <td style="width: 30px;min-width:30px;max-width:30px;">
+                                            <img width="15" class="CenterCenter" height="15" style="vertical-align: middle;" src="./Images/Icons/Directions_White.png" draggable="false" />
+                                        </td>
+                                        <td style="width: 30px;min-width:30px;max-width:30px;">
+                                            <img width="15" height="15" class="CenterCenter" style="vertical-align: middle;" src="./Images/Icons/Transports_White.png" draggable="false" />
+                                        </td>
+                                        <td style="width: 120px;min-width:120px;max-width:120px;">Shipment Number</td>
+                                        <td style="width: 250px;min-width:250px;max-width:250px;">Customer</td>
+                                        <td style="width: 150px;min-width:150px;max-width:150px;">Routing</td>
+                                        <td style="width: 100px;min-width:100px;max-width:100px;">Master</td>
+                                        <td style="width: 90px;min-width:90px;max-width:90px;">House</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="7">
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </div>
+
+                            <div class="SimpleGridViewBody">
+                                <table>
+                                    <tr class="SimpleGridViewRow RowHover" *ngFor="let item of ItemsSource" (click)="Selecting(item)">
+
+                                        <td class="GridViewCell" title="{{item.DirectionName}}" style="width: 30px; min-width: 30px;max-width:30px;">
+                                            <img style="top: 2px;" [attr.src]="'./Images/Directions/' + item.DirectionId + '.png'" />
+                                        </td>
+
+                                        <td class="GridViewCell" title="{{item.TransportModeName}}" style="width: 30px; min-width: 30px;max-width:30px;">
+                                            <img style="top: 2px;" [attr.src]="'./Images/TransportModes/' + item.TransportModeId + '.png'" />
+                                        </td>
+
+                                        <td class="GridViewCell" style="width: 120px; min-width: 120px;max-width:120px;">
+                                            {{item.ShipmentNumber}}
+                                        </td>
+
+                                        <td class="GridViewCell" style="width: 250px; min-width: 250px;max-width:250px;">
+                                            {{item.CustomerName}}
+                                        </td>
+
+                                        <td class="GridViewCell" style="width: 150px; min-width: 150px;max-width:150px;">
+                                            {{item.Routing}}
+                                        </td>
+
+                                        <td class="GridViewCell" style="width: 100px;  min-width: 100px;max-width:100px;">
+                                            {{item.LongMaster}}
+                                        </td>
+
+                                        <td class="GridViewCell" style="width: 90px; min-width: 90px;max-width:90px;">
+                                            {{item.House}}
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="7">
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                </table>
+
+                                <div *ngIf="AllShipmentsCount == 0" style="top:50%;vertical-align:central;" class="NoDataText">
+                                    No Shipments
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CloseButtonClicked()">Close</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

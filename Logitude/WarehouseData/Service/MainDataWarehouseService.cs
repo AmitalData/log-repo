@@ -141,6 +141,12 @@ namespace WarehouseData.Helper
         }
 
 
+        public void ExecuteFixedDimensionScripts( string connectionString)
+        {
+            ExecuteScript("BuildWarehouse", "BuildDateDimensionsTable", connectionString);
+            ExecuteScript("BuildWarehouse", "BuildInvoiceMainTypesDimensionsTable", connectionString);
+        }
+
         #region Service Method
         public void BuildDataWarehouse(string sourceConnectionString, string destinationConnectionString, int? privateTenant = null, string relatedTenants = null)
         {
@@ -178,8 +184,8 @@ namespace WarehouseData.Helper
 
             this.dWDataWarehouseService.CopyDataBase(null, waterMark, sourceConnectionString, destinationConnectionString, privateTenant, relatedTenants);
 
-            ExecuteScript("BuildWarehouse", "BuildDateDimensionsTable", destinationConnectionString);
-
+            // ExecuteScript("BuildWarehouse", "BuildDateDimensionsTable", destinationConnectionString);
+            ExecuteFixedDimensionScripts(destinationConnectionString);
             RunAdditionalScripte(destinationConnectionString, tableNameLists);
 
             Parallel.ForEach(tableNameLists.Where(d => d.HasDimensionTable).ToList(), (table) => {

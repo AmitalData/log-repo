@@ -690,6 +690,9 @@ export class ShipmentPackagePM {
     public get LCLContainerTypeId() { return this.lCLContainerTypeId; }
     public set LCLContainerTypeId(newValue: string) { if (this.lCLContainerTypeId != newValue) { this.lCLContainerTypeId = newValue; this.MarkAsDirty("LCLContainerTypeId"); } }
 
+    private containerEntityId: string;
+    public get ContainerEntityId() { return this.containerEntityId; }
+    public set ContainerEntityId(newValue: string) { if (this.containerEntityId != newValue) { this.containerEntityId = newValue; this.MarkAsDirty("ContainerEntityId"); } }
 
     public OldEntityPM: ShipmentPackagePM;
 

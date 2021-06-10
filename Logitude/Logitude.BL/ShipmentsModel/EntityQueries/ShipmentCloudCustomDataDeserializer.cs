@@ -307,6 +307,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 CustomData.RequestPaymentData = MyPaymentData;
             }
 
+            if(data != null && string.IsNullOrEmpty(data.PaymentRequestXML) && string.IsNullOrEmpty(data.DeclarationXmlData))
+            {
+                return null;
+            }
+
             return CustomData;
         }
     }

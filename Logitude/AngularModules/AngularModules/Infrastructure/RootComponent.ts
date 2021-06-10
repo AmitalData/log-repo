@@ -71,7 +71,7 @@ export class RootComponent implements AfterViewInit {
             this.isDSV = url.indexOf('localhost:4200/?D{%22$id') > -1;
             data = url.split('?' + this.isDSV ? 'D' : 'P')[1];
         }
-        if ((data && data == "SignOut") || (!data && !SessionLocator.IsExternalParams && (url.indexOf('localhost') == -1 && !this.isPrivateLable))) {
+        if ((data && data == "SignOut") || (!data && !SessionLocator.IsExternalParams && url.indexOf('localhost') == -1)) {
             document.location.href = ServiceHelper.GetLogitudeURL() + "Login.aspx";
         }
 
@@ -137,8 +137,7 @@ export class RootComponent implements AfterViewInit {
     LoadLoginPage() {
         this.ClearLocation();
 
-        let userData = window.sessionStorage.getItem('userdata');
-        if (userData && this.isPrivateLable == true) {
+        if (this.isPrivateLable == true) {
             this.LoadPrivateLablePages();
         }
         else {
@@ -374,7 +373,7 @@ export class RootComponent implements AfterViewInit {
     SessionInfo.Token = "";
 
     this.ClearLocation();
-    document.location.href = ServiceHelper.GetLogitudeURL() + "Login.aspx";
+    this.BackToLoginPage();
 
 
 
@@ -385,5 +384,14 @@ export class RootComponent implements AfterViewInit {
 
     //window.sessionStorage.setItem("Token", "");
 
-  }
+    }
+
+    private BackToLoginPage() {
+        if (window.sessionStorage.getItem("IsSharedLogistics") == "true" && !AppTool.IsNullOrEmpty(SessionInfo.LoggedUserTenant)) {
+            document.location.href = ServiceHelper.GetLogitudeURL() + "?tenant=" + SessionInfo.LoggedUserTenant;
+        }
+        else {
+            document.location.href = ServiceHelper.GetLogitudeURL() + "Login.aspx";
+        }
+    }
 }

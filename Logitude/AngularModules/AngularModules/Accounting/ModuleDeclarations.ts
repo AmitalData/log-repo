@@ -54,7 +54,9 @@ import { ExternalPagesTabComponent } from './Components/Others/ReconcileExternal
 import {GLAccountGeneralTabComponent} from './Components/EditTabs/GLAccount/GLAccountGeneralTabComponent';
 import {GLAccountTransactionsTabComponent} from './Components/EditTabs/GLAccount/GLAccountTransactionsTabComponent';
 import {ManageReconciliationsTabComponent} from './Components/EditTabs/GLAccount/ManageReconciliationsTabComponent';
-import {JournalDetailsTabComponent} from './Components/EditTabs/Journal/JournalDetailsTabComponent';
+import { JournalDetailsTabComponent } from './Components/EditTabs/Journal/JournalDetailsTabComponent';
+import { JournalDebugTabComponent } from './Components/EditTabs/Journal/JournalDebugTabComponent';
+
 import {CashBookDetailsTabComponent} from './Components/EditTabs/CashBook/CashBookDetailsTabComponent';
 import {CashBookManageDepoTabComponent} from './Components/EditTabs/CashBook/CashBookManageDepoTabComponent';
 import {ChartOfAccountGeneralTabComponent} from './Components/EditTabs/ChartOfAccount/ChartOfAccountGeneralTabComponent';
@@ -207,6 +209,7 @@ export const Components =
         GLAccountTransactionsTabComponent,
         ManageReconciliationsTabComponent,
         JournalDetailsTabComponent,
+        JournalDebugTabComponent,
         UpdateJournalLineComponent,
         CashBookDetailsTabComponent,
         CashBookManageDepoTabComponent,
@@ -368,6 +371,7 @@ export class ModuleDeclarations {
             case "GLAccountTransactionsTabComponent": { myResult = GLAccountTransactionsTabComponent; break; }
             case "ManageReconciliationsTabComponent": { myResult = ManageReconciliationsTabComponent; break; }
             case "JournalDetailsTabComponent": { myResult = JournalDetailsTabComponent; break; }
+            case "JournalDebugTabComponent": { myResult = JournalDebugTabComponent; break; }
             case "UpdateJournalLineComponent": { myResult = UpdateJournalLineComponent; break; }
             case "CashBookDetailsTabComponent": { myResult = CashBookDetailsTabComponent; break; }
             case "CashBookManageDepoTabComponent": { myResult = CashBookManageDepoTabComponent; break; }

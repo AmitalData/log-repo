@@ -60,7 +60,9 @@ set @APInvoicesAutomaticLastUpdateDate = (select MAX(AutomaticLastUpdateDate) Au
 	declare @PartnerExternalID as nvarchar(25)
 	declare @MainEntityId as varchar(15)
 	declare @StatusCode as varchar(2)
-	declare @DraftNumber as varchar(20)
+	declare @DraftNumber as varchar(20) 
+    declare @Vendor as int
+    declare @BillTo as int
 
 	DECLARE InvoicesCursor CURSOR READ_ONLY
 	FOR
@@ -70,7 +72,8 @@ set @APInvoicesAutomaticLastUpdateDate = (select MAX(AutomaticLastUpdateDate) Au
 			dw_ARInvoices.PrintNotes, dw_ARInvoices.InvoiceDate, dw_ARInvoices.CreateDate, dw_ARInvoices.ApprovedDate, dw_ARInvoices.DueDate, dw_ARInvoices.PrintDate,
 			null, DIM_Branches.Id_Number, DIM_PaymentTerms.Id_Number, LocalCurrency.Id_Number, InvoiceCurrency.Id_Number,
 			SalesmanUser.Id_Number, ApprovedByUser.Id_Number, CreatedByUser.Id_Number, PrintedByUser.Id_Number, dw_ARInvoiceStatus.Name, 'AR Invoice',
-			dw_ARInvoiceTypes.Name, ARPartner.Id_Number, dw_ARInvoices.AccountingExternalCode, dw_ARInvoices.MainEntityId, dw_ARInvoices.StatusCode, dw_ARInvoices.DraftNumber
+			dw_ARInvoiceTypes.Name, ARPartner.Id_Number, dw_ARInvoices.AccountingExternalCode, dw_ARInvoices.MainEntityId, dw_ARInvoices.StatusCode, dw_ARInvoices.DraftNumber,
+			1, BillTo.Id_Number
 		--, @dw_ARInvoices.CustomFieldsVariable
 
     From dw_ARInvoices
@@ -98,6 +101,8 @@ set @APInvoicesAutomaticLastUpdateDate = (select MAX(AutomaticLastUpdateDate) Au
 	
 	inner JOIN DIM_Partners ARPartner ON dw_ARInvoices.PartnerId = ARPartner.Id
 
+	inner JOIN DIM_Partners BillTo ON dw_ARInvoices.BillToId = BillTo.Id
+
 	--inner JOIN dw_CustomObjectFields  ON dw_ARInvoices.Tenant = dw_CustomObjectFields.Tenant and dw_CustomObjectFields.ObjectTableName = 'ARInvoice'
 
 	where dw_ARInvoices.AutomaticLastUpdateDate > @ARInvoicesLastUpdateDate 
@@ -110,7 +115,7 @@ set @APInvoicesAutomaticLastUpdateDate = (select MAX(AutomaticLastUpdateDate) Au
 			null, dw_APInvoices.InvoiceDate, dw_APInvoices.CreateDate, dw_APInvoices.ApprovedDate, dw_APInvoices.DueDate, null,
 			dw_APInvoices.FirstApproveDate, DIM_Branches.Id_Number, DIM_PaymentTerms.Id_Number, LocalCurrency.Id_Number, InvoiceCurrency.Id_Number,
 			1, ApprovedByUser.Id_Number, CreatedByUser.Id_Number, 1, dw_APInvoiceStatus.Name, 'AP Invoice',
-			'Invoice', 1, dw_APInvoices.AccountingExternalCode, dw_APInvoices.MainEntityId, dw_APInvoices.StatusCode, null
+			'Invoice', 1, dw_APInvoices.AccountingExternalCode, dw_APInvoices.MainEntityId, dw_APInvoices.StatusCode, null, Vendor.Id_Number, 1
 			--, @dw_ARInvoices.CustomFieldsVariable
 
     From dw_APInvoices
@@ -132,7 +137,7 @@ set @APInvoicesAutomaticLastUpdateDate = (select MAX(AutomaticLastUpdateDate) Au
 	--inner JOIN DIM_Users PrintedByUser ON dw_APInvoices.PrintByUserId = PrintedByUser.Id
 
 	inner JOIN dw_APInvoiceStatus ON dw_APInvoices.StatusCode = dw_APInvoiceStatus.Code
-	
+	inner JOIN DIM_Partners Vendor ON dw_APInvoices.VendorId = Vendor.Id
 	--inner JOIN dw_APInvoiceTypes ON dw_APInvoices.APInvoiceTypeCode = dw_APInvoiceTypes.Code
 
 	--inner JOIN dw_CustomObjectFields  ON dw_APInvoices.Tenant = dw_CustomObjectFields.Tenant and dw_CustomObjectFields.ObjectTableName = 'APInvoice'
@@ -144,7 +149,7 @@ set @APInvoicesAutomaticLastUpdateDate = (select MAX(AutomaticLastUpdateDate) Au
 		@AmountInLocalCurrency, @AmountInProfitCurrency, @AmountDueInLocalCurrency, @AmountDueInProfitCurrency, @PrintNotes, @InvoiceDate, @CreateDate,
 		@ApprovedDate, @DueDate, @PrintDate, @FirstApproveDate, @Branch, @PaymentTerm, @LocalCurrency, @InvoiceCurrency,
 		@Salesman, @ApprovedBy, @CreatedBy, @PrintedBy, @Status, @AR_APInvoice,
-		@InvoiceType, @Partner, @PartnerExternalID, @MainEntityId, @StatusCode, @DraftNumber
+		@InvoiceType, @Partner, @PartnerExternalID, @MainEntityId, @StatusCode, @DraftNumber, @Vendor, @BillTo
 
 
 	WHILE @@FETCH_STATUS = 0
@@ -170,16 +175,16 @@ set @APInvoicesAutomaticLastUpdateDate = (select MAX(AutomaticLastUpdateDate) Au
 		insert into Fact_Invoices 
 			([Id], [Source Tenant], [Parent Tenant], [Invoice Number], [VAT Number], [Shipment Number], [Subtotal (Local)], [Subtotal (Profit)],
 			[Invoice Amount (Local)], [Invoice Amount (Profit)], [Amount Due (Local)], [Amount Due (Profit)], [Print Note], [Invoice Date], [Create Date],
-			[Approved Date], [Due Date], [Print Date], [First Approve Date], [Branch], [Payment Term], [Local Currency], [Invoice Currency],
-			[Salesman], [Approved By], [Created By], [Printed By], [Status], [AR_AP Invoice],
-			[Invoice Type], [Partner], [Partner External ID], [Main Entity Id])
+			[Approved Date], [Due Date], [Print Date], [First Approve Date], [Branch], [Payment Term], [Invoice Local Currency], [Invoice Currency],
+			[Invoice Salesman], [Approved By], [Created By], [Printed By], [Invoice Status], [AR_AP Invoice],
+			[Invoice Type], [Partner], [Partner External ID], [Main Entity Id], [Vendor], [Bill To])
 	   
 		values (
 			@Id, @SourceTenant, @ParentTenant, @InvoiceNumber, @VATNumber, @ShipmentsNumbers, @SubTotalInLocalCurrency, @SubTotalInInvoiceCurrency,
 			@AmountInLocalCurrency, @AmountInProfitCurrency, @AmountDueInLocalCurrency, @AmountDueInProfitCurrency, @PrintNotes, dbo.GetDateFormateAsNumber(@InvoiceDate), dbo.GetDateFormateAsNumber(@CreateDate),
 			dbo.GetDateFormateAsNumber(@ApprovedDate), dbo.GetDateFormateAsNumber(@DueDate), dbo.GetDateFormateAsNumber(@PrintDate), dbo.GetDateFormateAsNumber(@FirstApproveDate), @Branch, @PaymentTerm, @LocalCurrency, @InvoiceCurrency,
 			@Salesman, @ApprovedBy, @CreatedBy, @PrintedBy, @Status, @AR_APInvoice,
-			@InvoiceType, @Partner, @PartnerExternalID, @MainEntityId
+			@InvoiceType, @Partner, @PartnerExternalID, @MainEntityId, @Vendor, @BillTo
 			)
 
 		END TRY 
@@ -197,7 +202,7 @@ set @APInvoicesAutomaticLastUpdateDate = (select MAX(AutomaticLastUpdateDate) Au
 			@AmountInLocalCurrency, @AmountInProfitCurrency, @AmountDueInLocalCurrency, @AmountDueInProfitCurrency, @PrintNotes, @InvoiceDate, @CreateDate,
 			@ApprovedDate, @DueDate, @PrintDate, @FirstApproveDate, @Branch, @PaymentTerm, @LocalCurrency, @InvoiceCurrency,
 			@Salesman, @ApprovedBy, @CreatedBy, @PrintedBy, @Status, @AR_APInvoice,
-			@InvoiceType, @Partner, @PartnerExternalID, @MainEntityId, @StatusCode, @DraftNumber
+			@InvoiceType, @Partner, @PartnerExternalID, @MainEntityId, @StatusCode, @DraftNumber, @Vendor, @BillTo
 
 	END
 	CLOSE InvoicesCursor

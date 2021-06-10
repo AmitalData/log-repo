@@ -230,6 +230,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="AttachedExternalDocumentsIds"
+    Type="varchar"
+    Size="300">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="LastUpdatedByUserId"
     ReferencedTable="Users"

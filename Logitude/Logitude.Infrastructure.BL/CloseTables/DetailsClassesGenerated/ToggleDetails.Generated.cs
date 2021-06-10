@@ -252,7 +252,15 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "SAS,Standalone Shipment", 
                 Description = "Standalone Shipment", 
 			});
-
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Quotes Request Activated In Shared Logistic", 
+                Code = "QRA", 
+                SearchFields = "QRA, Quotes Request Activated In Shared Logistic", 
+                Description = "Quotes Request Activated In Shared Logistic", 
+			});
+			 
             all.Add(new ToggleDetails()
             {    
                 Name = "Ocean Insights Containers", 
@@ -260,14 +268,21 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "OIC,Ocean Insights Containers", 
                 Description = "Ocean Insights Containers", 
 			});
-			
-
+			 
             all.Add(new ToggleDetails()
             {    
-                Name = "Quotes Request Activated In Shared Logistic", 
-                Code = "QRA", 
-                SearchFields = "QRA, Quotes Request Activated In Shared Logistic", 
-                Description = "Quotes Request Activated In Shared Logistic", 
+                Name = "Reports in Shared Logistics", 
+                Code = "RSL", 
+                SearchFields = "RSL,Reports in Shared Logistics", 
+                Description = "Reports in Shared Logistics", 
+			}); 
+             
+            all.Add(new ToggleDetails()
+            {    
+                Code = "CTL", 
+                Name = "CollaborationTool", 
+                SearchFields = "CTL,CollaborationTool", 
+                Description = "Collaboration Tool", 
 			});
 			
             return all;
