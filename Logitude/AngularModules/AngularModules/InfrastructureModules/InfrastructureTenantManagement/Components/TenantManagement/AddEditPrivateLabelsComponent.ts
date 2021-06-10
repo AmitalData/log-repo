@@ -15,8 +15,7 @@ import {SessionInfo} from '../../../../Infrastructure/Utilities/SessionInfo';
 import {ImageLibraryService} from '../../../../Common/Services/Others/ImageLibraryService';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { TermsofUseService } from '../../../../Infrastructure/Services/WebServices/TermsofUseService';
-import { TermsofUsePM } from '../../../../Common/EntityPMs/TermsofUsePM';
-import { HybridPartnerListService } from '../../../../Common/Services/StandardLists/HybridPartnerListService';
+import { TermsofUsePM } from '../../../../Common/EntityPMs/TermsofUsePM'; 
 import { HybridPartnerPM } from '../../../../Common/EntityPMs/HybridPartnerPM';
 import { getLocaleDateTimeFormat } from '@angular/common';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
@@ -54,10 +53,9 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
     public ForgetPasswordImageId: string;
     public SelectedTabCode: string;
 
-    TermsofUsePMLists: TermsofUsePMViewModel[]; 
+    TermsofUsePMLists: TermsofUsePMViewModel[] = []; 
     TermsofUseSelectedViewModel: TermsofUsePMViewModel;
-    private termsofUseService: TermsofUseService = new TermsofUseService();
-    private hybridPartnerListService: HybridPartnerListService = new HybridPartnerListService();
+    private termsofUseService: TermsofUseService = new TermsofUseService(); 
     private entityResourceService: EntityResourceService = new EntityResourceService();
     IsVisibile: boolean;
     public EntityId: number;
@@ -85,7 +83,7 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
     ngOnInit() {
         this.SelectedTabCode = "TMM";
         this.UIProperties.SetRequired("HybridPartnerId", this.ObjectTableName, true); 
-        this.GetHybridPartnerTermsOfUse();
+        this.GetTermsOfUse();
  
     }
 
@@ -157,8 +155,9 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
         var termsofUsePM = new TermsofUsePM();
         termsofUsePM.FileData = file;
         termsofUsePM.Date = new Date();
-        termsofUsePM.Tenant = this.ParentTenant;
+        termsofUsePM.Tenant = 0;
         termsofUsePM.VersionDocumentName = this.FileName;
+        termsofUsePM.PrivateLabelId = this.EntityPM.Id;
 
         this.InsertTermsOfUse(termsofUsePM);
          
@@ -185,30 +184,9 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
         var messageWindow: MessageWindow = new MessageWindow();
         messageWindow.Show(message);
     }
-
-
-    GetHybridPartnerTermsOfUse() {
-        this.TermsofUsePMLists = [];
-        this.hybridPartnerListService.getSingle(this.EntityPM.HybridPartnerId).subscribe((res: any) => {
-
-            var serviceResponse: ServiceResponse = res;
-            if (!serviceResponse.HasError) {
-                var result = serviceResponse.Result;
-                if (result) {
-                    this.hybridPartner = result
-                    this.ParentTenant = this.hybridPartner.PartnerTenant;
-                    this.GetTermsOfUse(this.ParentTenant);
-                }
-            }
-            else {
-                this.HandleServiceError(serviceResponse)
-            }
-        });
-
-    }
-
-    GetTermsOfUse(PartnerTenant) { 
-        this.termsofUseService.GetTermOfUseByTenant(PartnerTenant).subscribe((res: any) => {
+     
+    GetTermsOfUse() { 
+        this.termsofUseService.GetTermOfUseByPrivateLabeldId(this.EntityPM.Id).subscribe((res: any) => {
 
                 var serviceResponse: ServiceResponse = res;
                 if (!serviceResponse.HasError) {
