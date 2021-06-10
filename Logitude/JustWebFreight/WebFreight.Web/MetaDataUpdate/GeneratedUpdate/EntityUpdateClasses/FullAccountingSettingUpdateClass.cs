@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class FullAccountingSettingUpdateClass
    {  		
-		public const string HashString = "2768edb85560a00110a902f56cbd294b";
+		public const string HashString = "d9aa3984dda4452ad6269650961872b1";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3109,13 +3109,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature FullAccountingSettingFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = FullAccountingSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "FullAccountingSetting.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,FullAccountingSettingObjectTable);
 		   Feature FullAccountingSettingFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = FullAccountingSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "FullAccountingSetting.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,FullAccountingSettingObjectTable);
 		   Feature FullAccountingSettingFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = FullAccountingSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "FullAccountingSetting.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,FullAccountingSettingObjectTable);
-		   Feature FullAccountingSettingFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = FullAccountingSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "FullAccountingSetting.Features.PackageFeature", NameTextCodeDefaultText = "FullAccountingSetting Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,FullAccountingSettingObjectTable); 
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature FullAccountingSettingFeature_AgingDefenetionSettings = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AgingDefenetionSettings", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = FullAccountingSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "FullAccountingSetting.Features.FullAccountingSetting.F.AgingDefenetion", NameTextCodeDefaultText = @"Aging Period Definition Settings" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,FullAccountingSettingObjectTable);
-
-   
+		   Feature FullAccountingSettingFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = FullAccountingSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "FullAccountingSetting.Features.PackageFeature", NameTextCodeDefaultText = "FullAccountingSetting Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,FullAccountingSettingObjectTable);    
 	    
 		}
 
