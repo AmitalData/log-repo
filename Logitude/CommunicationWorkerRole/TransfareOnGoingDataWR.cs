@@ -16,11 +16,10 @@ using System.Threading;
 
 namespace CommunicationWorkerRole
 {
-    class TransfareOnGoingDataWR : WorkerEntryPoint 
+    class TransfareOnGoingDataWR : WorkerEntryPoint
     {
         DbQueueService queueservice;
         string queueName = "CToolLookups";
-        //string URL = ConfigurationManager.AppSettings["CT_URL"];
 
         public override void Run()
         {
@@ -30,21 +29,17 @@ namespace CommunicationWorkerRole
                 {
                     try
                     {
-                        queueservice = new DbQueueService(queueName, 1);
+                        queueservice = new DbQueueService(queueName, 0);
                         var response = queueservice.Receive(new TimeSpan(0, 0, 0, 10));
 
                         if (response.MessageId != null)
                         {
-
                             object entityPM = GetEntityById(response);
                             long messageType = GetMessageType(response);
 
-                            using (var client = new HttpClient())
-                            {
-                                var ShipmentUpdateMessageProducer = new Producer();
-                                var serializedShipmentUpdateMessage = JsonConvert.SerializeObject(entityPM, Formatting.Indented);
-                                ShipmentUpdateMessageProducer.Produce(messageType, serializedShipmentUpdateMessage);
-                            }
+                            var TransfareOnGoingMessageProducer = new Producer();
+                            var serializedObjectUpdateMessage = JsonConvert.SerializeObject(entityPM, Formatting.Indented);
+                            TransfareOnGoingMessageProducer.Produce(messageType, serializedObjectUpdateMessage);
                         }
                     }
                     catch (Exception ex)
@@ -79,7 +74,7 @@ namespace CommunicationWorkerRole
         {
             try
             {
-                queueservice = new DbQueueService(queueName, 1);
+                queueservice = new DbQueueService(queueName, 0);
             }
             catch (Exception ex)
             {
@@ -112,7 +107,7 @@ namespace CommunicationWorkerRole
             }
         }
 
-        private CardPM GetCardById(int Tenant , string Id)
+        private CardPM GetCardById(int Tenant, string Id)
         {
             CardQuery cardQuery = new CardQuery(Tenant);
             CardPM cardPM = cardQuery.GetSinglePM(Id, Tenant);
