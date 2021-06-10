@@ -531,7 +531,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     if (entityPM.IsStandalonePickupDelivery)
                     {
-                        this.UpdatePickUpDeliveryStandaloneFieldsOnShipmentUpdate();
+                        if (entityPM.IsCancelled)
+                        {
+                            this.CancleStandaloneShipmentConnection();
+                        }
+                        else
+                        {
+                            this.UpdatePickUpDeliveryStandaloneFieldsOnShipmentUpdate();
+                        }
                     }
 
                     ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, myPackagesList, objectContext);
@@ -4445,10 +4452,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
 
         public Dictionary<string, string> DummyIdGuidPackages { get; set; }
-        private void CreateShipmentPackage(ShipmentPackagePM itemPM)
+        private void CreateShipmentPackage(ShipmentPackagePM itemPM,string shipmentId = null)
         {
             itemPM.Id = IdCounter.GetNumber("ShipmentPackage", tenant).ToString();
-            itemPM.ShipmentId = entityPM.Id;
+            itemPM.ShipmentId = shipmentId == null ? entityPM.Id: shipmentId;
             itemPM.Tenant = tenant;
 
             if (initializer.IsFCLEntity && itemPM.Quantity == null)
@@ -4519,8 +4526,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
+        private bool standaloneShipmentPackageUpdated = false;
+        private ShipmentPackagePM standaloneShipmentPackage;
         private void UpdateShipmentPackage(ShipmentPackagePM itemPM)
         {
+            standaloneShipmentPackageUpdated = true;
+            standaloneShipmentPackage = itemPM;
             ShipmentPackage itemPoco = shipmentPackageRepository.GetSingleShipmentPackage(itemPM.Id, tenant);
 
             this.UpdateShipmentDeliveryFromPackage(itemPM, itemPoco);
@@ -4697,6 +4708,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
 
                 shipmentPackageRepository.Remove(itemPoco);
+            }
+
+            if (this.entityPM.IsStandalonePickupDelivery)
+            {
+                DeleteStanadAlonePickupDeliveryPackages();
             }
 
             calculateProfit = true;
@@ -5005,7 +5021,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             if (string.IsNullOrEmpty(itemPoco.StandaloneShipmentId) && !string.IsNullOrEmpty(itemPM.StandaloneShipmentId))
             {
-                UpdateStandAloneShipmentOnPickDeliveryConnection(itemPM.StandaloneShipmentId, itemPM.Id);
+                UpdateStandAloneShipmentOnPickDeliveryConnection(itemPM.StandaloneShipmentId, itemPM.Id ,itemPM.ShipmentPickUpDeliveryPackages);
             }
 
             if (!entityPM.IsHybrid)
@@ -5055,7 +5071,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
             if (!string.IsNullOrEmpty(itemPoco.StandaloneShipmentId))
             {
-                DeleteStandAloneShipmentFields(itemPoco.StandaloneShipmentId, itemPoco.Id);
+                DeleteStandAloneShipmentFields(itemPoco.StandaloneShipmentId);
             }
 
             ShipmentPickUpDeliveryPackageQuery shipmentPickUpDeliveryPackageQuery = new ShipmentPickUpDeliveryPackageQuery(shipmentPickUpDeliveryPackageRepository);
@@ -5144,7 +5160,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             if (string.IsNullOrEmpty(itemPoco.StandaloneShipmentId) && !string.IsNullOrEmpty(itemPM.StandaloneShipmentId))
             {
-                UpdateStandAloneShipmentOnPickDeliveryConnection(itemPM.StandaloneShipmentId, itemPM.Id);
+                UpdateStandAloneShipmentOnPickDeliveryConnection(itemPM.StandaloneShipmentId, itemPM.Id, itemPM.ShipmentPickUpDeliveryPackages);
             }
 
             if (!entityPM.IsHybrid)
@@ -5199,7 +5215,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 if (!string.IsNullOrEmpty(itemPoco.StandaloneShipmentId))
                 {
-                    DeleteStandAloneShipmentFields(itemPoco.StandaloneShipmentId, itemPoco.Id);
+                    DeleteStandAloneShipmentFields(itemPoco.StandaloneShipmentId);
                 }
 
                 ShipmentPickUpDeliveryPackageQuery shipmentPickUpDeliveryPackageQuery = new ShipmentPickUpDeliveryPackageQuery(shipmentPickUpDeliveryPackageRepository);
@@ -6925,14 +6941,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     IQueryable<ShipmentPickUpDeliveryPackage> pickUpDeliveryPackages = shipmentPickUpDeliveryPackageRepository.GetPackagesByDeliveryId(shipmentPickUpDelivery.Id, tenant);
                     if(pickUpDeliveryPackages.Count() == 1)
                     {
-                        this.CreateStandaloneShipmentPackage(pickUpDeliveryPackages.FirstOrDefault());
+                        this.CreateStandaloneShipmentPackage(pickUpDeliveryPackages.FirstOrDefault(),entityPM.Id);
                     }
-
                     shipmentPickUpDeliveryRepository.Update(shipmentPickUpDelivery);
                 }
             }
         }
-        private void CreateStandaloneShipmentPackage(ShipmentPickUpDeliveryPackage pickUpDeliveryPackage)
+        private void CreateStandaloneShipmentPackage(dynamic pickUpDeliveryPackage, string shipmentId)
         {
             ShipmentPackagePM shipmentPackage = new ShipmentPackagePM()
             {
@@ -6947,9 +6962,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 Weight = pickUpDeliveryPackage.Weight,
             };
 
-            this.CreateShipmentPackage(shipmentPackage);
+            this.CreateShipmentPackage(shipmentPackage,shipmentId);
         }
-                
+
         private void UpdatePickUpDeliveryStandaloneFieldsOnShipmentUpdate()
         {
             ShipmentPickUpDelivery shipmentPickUpDelivery = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDeliveryByStandaloneShipmentId(entityPM.Id, tenant);
@@ -6968,22 +6983,29 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 shipmentPickUpDelivery.ETA = entityPM.MainCarriageETA;
                 shipmentPickUpDelivery.ATD = entityPM.MainCarriageATD;
                 shipmentPickUpDelivery.ATA = entityPM.MainCarriageATA;
+
+                if (standaloneShipmentPackageUpdated)
+                {
+                    UpdateStanadAlonePickupDeliveryPackages(shipmentPickUpDelivery.Id, standaloneShipmentPackage);
+                    standaloneShipmentPackageUpdated = false;
+                    standaloneShipmentPackage = null;
+                }
+
                 shipmentPickUpDeliveryRepository.Update(shipmentPickUpDelivery);
             }
         }
-        
-        private void UpdateStandAloneShipmentOnPickDeliveryConnection(string shipmentId, string standalonePickupDeliveryId)
+
+        private void UpdateStandAloneShipmentOnPickDeliveryConnection(string shipmentId, string standalonePickupDeliveryId,List<ShipmentPickUpDeliveryPackagePM> standalonePickupDeliveryPackages)
         {
-            ShipmentQuery shipmentQuery = new ShipmentQuery(this.entityRepository);
-            ShipmentPM stanAloneShipmentPM = shipmentQuery.GetSinglePM(shipmentId, this.tenant);
+            ShipmentPM stanAloneShipmentPM = this.GetStandAloneShipmentPM(shipmentId);
             if (stanAloneShipmentPM != null)
             {
-                this.MapStandaloneShipmentFields(stanAloneShipmentPM, standalonePickupDeliveryId);                
-                ShipmentService shipmentService = new ShipmentService(this.objectContext, stanAloneShipmentPM, "");
-                shipmentService.Update();
+                this.MapStandaloneShipmentFields(stanAloneShipmentPM, standalonePickupDeliveryId);
+                this.MapStandAlonePackagesOnPickDeliveryConnection(stanAloneShipmentPM, standalonePickupDeliveryId, standalonePickupDeliveryPackages);
+                this.UpdateConnectedStanadAloneShipmentService(stanAloneShipmentPM);
             }
         }
-        private void DeleteStandAloneShipmentFields(string shipmentId, string StandalonePickupDeliveryId)
+        private void DeleteStandAloneShipmentFields(string shipmentId)
         {
             ShipmentQuery shipmentQuery = new ShipmentQuery(this.entityRepository);
             ShipmentPM stanAloneShipmentPM = shipmentQuery.GetSinglePM(shipmentId, this.tenant);
@@ -6997,16 +7019,101 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
         private void MapStandaloneShipmentFields(ShipmentPM stanAloneShipmentPM, string standalonePickupDeliveryId)
         {
-            stanAloneShipmentPM.IsStandalonePickupDelivery = true;
-            stanAloneShipmentPM.StandalonePickupDeliveryId = standalonePickupDeliveryId;
-            stanAloneShipmentPM.MainCarriageCarrierNumber = null;
-            stanAloneShipmentPM.Driver = null;
-            stanAloneShipmentPM.TruckNumber = null;
-            stanAloneShipmentPM.TrailerNumber = null;
-            stanAloneShipmentPM.MainCarriageETD = null;
-            stanAloneShipmentPM.MainCarriageETA = null;
-            stanAloneShipmentPM.MainCarriageATD = null;
-            stanAloneShipmentPM.MainCarriageATA = null;
+            if (stanAloneShipmentPM != null)
+            {
+                stanAloneShipmentPM.IsStandalonePickupDelivery = true;
+                stanAloneShipmentPM.StandalonePickupDeliveryId = standalonePickupDeliveryId;
+                stanAloneShipmentPM.MainCarriageCarrierNumber = null;
+                stanAloneShipmentPM.Driver = null;
+                stanAloneShipmentPM.TruckNumber = null;
+                stanAloneShipmentPM.TrailerNumber = null;
+                stanAloneShipmentPM.MainCarriageETD = null;
+                stanAloneShipmentPM.MainCarriageETA = null;
+                stanAloneShipmentPM.MainCarriageATD = null;
+                stanAloneShipmentPM.MainCarriageATA = null;
+            }
+        }
+        private void UpdateStanadAlonePickupDeliveryPackages(string pickupDeliveryId, ShipmentPackagePM shipmentPackagePM)
+        {
+            IQueryable<ShipmentPickUpDeliveryPackage> shipmentPickUpDeliveryPackages = shipmentPickUpDeliveryPackageRepository.GetPackagesByDeliveryId(pickupDeliveryId, tenant);
+            if (shipmentPickUpDeliveryPackages != null)
+            {
+                ShipmentPickUpDeliveryPackage shipmentPickUpDeliveryPackage = shipmentPickUpDeliveryPackages.FirstOrDefault();
+                if (shipmentPickUpDeliveryPackage != null)
+                {
+                    shipmentPickUpDeliveryPackage.ContainerEntityId = shipmentPackagePM.ContainerEntityId;
+                    shipmentPickUpDeliveryPackage.ContainerNumber = shipmentPackagePM.ContainerNumber;
+                    shipmentPickUpDeliveryPackage.Description = shipmentPackagePM.Description;
+                    shipmentPickUpDeliveryPackage.PackageTypeId = shipmentPackagePM.PackageTypeId;
+                    shipmentPickUpDeliveryPackage.Quantity = shipmentPackagePM.Quantity;
+                    shipmentPickUpDeliveryPackage.Volume = shipmentPackagePM.Volume;
+                    shipmentPickUpDeliveryPackage.Weight = shipmentPackagePM.Weight;
+                    shipmentPickUpDeliveryPackage.ShipperSeal = shipmentPackagePM.ShipperSeal;
+                    shipmentPickUpDeliveryPackageRepository.Update(shipmentPickUpDeliveryPackage);
+                }
+            }
+        }
+        private void DeleteStanadAlonePickupDeliveryPackages()
+        {
+            ShipmentPickUpDelivery shipmentPickUpDelivery = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDeliveryByStandaloneShipmentId(entityPM.Id, tenant);
+            if (shipmentPickUpDelivery != null)
+            {
+                IQueryable<ShipmentPickUpDeliveryPackage> shipmentPickUpDeliveryPackages = shipmentPickUpDeliveryPackageRepository.GetPackagesByDeliveryId(shipmentPickUpDelivery.Id, tenant);
+                if (shipmentPickUpDeliveryPackages != null)
+                {
+                    ShipmentPickUpDeliveryPackage shipmentPickUpDeliveryPackage = shipmentPickUpDeliveryPackages.FirstOrDefault();
+                    if (shipmentPickUpDeliveryPackage != null)
+                    {
+                        shipmentPickUpDeliveryPackageRepository.Remove(shipmentPickUpDeliveryPackage);
+                    }
+                }
+            }
+        }
+        private void CreateStandaloneShipmentPackage(ShipmentPackagePM shipmentPackagePM, string standalonePickupDeliveryId)
+        {
+            ShipmentPickUpDeliveryPackagePM shipmentPickUpDeliveryPackagePM = new ShipmentPickUpDeliveryPackagePM()
+            {
+                ChangeSetOp = ChangeSetOperation.Insert,
+                Tenant = tenant,
+                ContainerEntityId = shipmentPackagePM.ContainerEntityId,
+                ContainerNumber = shipmentPackagePM.ContainerNumber,
+                Description = shipmentPackagePM.Description,
+                PackageTypeId = shipmentPackagePM.PackageTypeId,
+                Quantity = shipmentPackagePM.Quantity,
+                Volume = shipmentPackagePM.Volume,
+                Weight = shipmentPackagePM.Weight,
+            };
+
+            this.CreateShipmentPickUpDeliveryPackage(shipmentPickUpDeliveryPackagePM, standalonePickupDeliveryId);
+        }
+
+        private ShipmentPM GetStandAloneShipmentPM(string shipmentId)
+        {
+            ShipmentQuery shipmentQuery = new ShipmentQuery(this.entityRepository);
+            ShipmentPM stanAloneShipmentPM = shipmentQuery.GetSinglePM(shipmentId, this.tenant);
+            return stanAloneShipmentPM;
+        }
+        private void MapStandAlonePackagesOnPickDeliveryConnection(ShipmentPM stanAloneShipmentPM,string standalonePickupDeliveryId, List<ShipmentPickUpDeliveryPackagePM> standalonePickupDeliveryPackages)
+        {
+            List<ShipmentPickUpDeliveryPackagePM> shipmentPickUpDeliveryPackages = standalonePickupDeliveryPackages.FindAll(item => item.ChangeSetOp != ChangeSetOperation.Delete);
+            if (shipmentPickUpDeliveryPackages.Count() != 0 && stanAloneShipmentPM.ShipmentPackages.Count == 0)
+            {
+                CreateStandaloneShipmentPackage(shipmentPickUpDeliveryPackages.FirstOrDefault(), stanAloneShipmentPM.Id);
+            }
+            else if (shipmentPickUpDeliveryPackages.Count() == 0 && stanAloneShipmentPM.ShipmentPackages.Count != 0)
+            {
+                CreateStandaloneShipmentPackage(stanAloneShipmentPM.ShipmentPackages.FirstOrDefault(), standalonePickupDeliveryId);
+            }
+        }
+        private void UpdateConnectedStanadAloneShipmentService(ShipmentPM stanAloneShipmentPM)
+        {
+            ShipmentService shipmentService = new ShipmentService(this.objectContext, stanAloneShipmentPM, "");
+            shipmentService.Update();
+        }
+        private void CancleStandaloneShipmentConnection()
+        {
+            this.entityPM.IsStandalonePickupDelivery = false;
+            this.entityPM.StandalonePickupDeliveryId = null;
         }
     }
 
