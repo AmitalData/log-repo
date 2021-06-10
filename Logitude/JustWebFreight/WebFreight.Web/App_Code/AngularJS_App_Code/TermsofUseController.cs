@@ -55,6 +55,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                         result.VersionNumber = termofuse.VersionNumber;
                         result.Id = termofuse.Id;
                         result.VersionDocumentId = termofuse.VersionDocumentId;
+                        result.PrivateLabelId = termofuse.PrivateLabelId;
 
                         TermsofUseSignaturePM termsofUseSignaturePM = termsofUseSignatureQuery.GetByIdAndContactId(termofuse.Id, userId, authToken.Tenant);
 
@@ -93,7 +94,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
         }
 
-        public HttpResponseMessage GetTenantTermsofUse(int tenant)
+        public HttpResponseMessage GetTenantTermsofUse(string privateLabeldId)
         {
             try
             {
@@ -103,7 +104,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                 TermsofUseQuery termsofUseQuery = new TermsofUseQuery(authToken.Tenant);  
-                List<TermsofUsePM> TermsofUsePMLists = termsofUseQuery.GetTermsofUseByTenant(tenant).ToList();
+                List<TermsofUsePM> TermsofUsePMLists = termsofUseQuery.GetByPrivateLabeldId(privateLabeldId).ToList();
 
 
                 return Request.CreateResponse(HttpStatusCode.OK, TermsofUsePMLists);

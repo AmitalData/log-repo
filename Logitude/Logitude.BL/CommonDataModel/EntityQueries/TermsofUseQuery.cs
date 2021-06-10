@@ -99,6 +99,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return termsofUses;
         }
 
+        public string GetLatestTermsOfUseDocumentId(string privateLabeldId)
+        {
+            var documentId = (from a in repository.context.TermsofUses.OrderByDescending(d => d.VersionNumber)
+                              where a.PrivateLabelId == privateLabeldId
+                              select a.VersionDocumentId).FirstOrDefault();
+            return documentId;
+        }
+
         public IQueryable<TermsofUsePM> GetTermsofUsePMsByVersion()
         {
             IQueryable<TermsofUsePM> termsofUses = from a in repository.context.TermsofUses
@@ -153,7 +161,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             }
             return termsofUses;
 
-
         }
 
         public TermsofUsePM GetTermOfUseByPrivateLabel(string privateLabelId)
@@ -191,7 +198,24 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         }
 
 
-         
+
+
+        public IQueryable<TermsofUsePM> GetByPrivateLabeldId(string privatelabeldId)
+        {
+            IQueryable<TermsofUsePM> termsofUse = (from a in repository.context.TermsofUses
+                                                   where a.PrivateLabelId == privatelabeldId
+                                                   select new TermsofUsePM()
+                                                   {
+                                                       Id = a.Id,
+                                                       Date = a.Date,
+                                                       VersionNumber = a.VersionNumber,
+                                                       VersionDocumentId = a.VersionDocumentId,
+                                                       Tenant = a.Tenant,
+                                                       PrivateLabelId = a.PrivateLabelId,
+                                                   });
+            return termsofUse;
+        }
+
 
         public IQueryable<TermsofUsePM> GetTermsofUseByTenant(int tenant)
         {

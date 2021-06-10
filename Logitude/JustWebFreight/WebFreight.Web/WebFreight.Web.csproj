@@ -4936,6 +4936,7 @@
     <Content Include="WebPages\DownloadingPage.aspx" />
     <Content Include="WebPages\DownloadTemplateDocumentPage.aspx" />
     <Content Include="WebPages\ReportPdfDownLoad.aspx" />
+    <Content Include="WebPages\TermsOfUseDownloadPage.aspx" />
     <Content Include="WebPages\xml2HTML.xsl" />
     <Content Include="WebPages\DataBackupDownloadPage.aspx" />
     <Content Include="WebPages\DownloadFileName.aspx" />
@@ -6728,6 +6729,13 @@
     </Compile>
     <Compile Include="WebPages\SharedDownloadPage.aspx.designer.cs">
       <DependentUpon>SharedDownloadPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebPages\TermsOfUseDownloadPage.aspx.cs">
+      <DependentUpon>TermsOfUseDownloadPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebPages\TermsOfUseDownloadPage.aspx.designer.cs">
+      <DependentUpon>TermsOfUseDownloadPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebPages\UpgradeScreen.aspx.cs">
       <DependentUpon>UpgradeScreen.aspx</DependentUpon>

@@ -70,13 +70,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
         }
 
 
-        public int GetLastTermsofUseVersionNumber(string privateLabeldId)
-        {
-            // private label id 
+        public int GetPrivateLabelLatestVersionNumber(string privateLabeldId)
+        { 
             return (from record in context.TermsofUses where record.PrivateLabelId == privateLabeldId select record).OrderByDescending(d => d.VersionNumber).Select(d=>d.VersionNumber).FirstOrDefault();
         }
 
-        public int GetLastTermsofUseVersionNumberForTenantZero()
+        public int GetDefaultLatestVersionNumber()
         {
              
             return (from record in context.TermsofUses where record.Tenant == 0 select record).OrderByDescending(d => d.VersionNumber).Select(d => d.VersionNumber).FirstOrDefault();

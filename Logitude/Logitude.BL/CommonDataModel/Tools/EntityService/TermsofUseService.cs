@@ -57,11 +57,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             int lastVersion; 
             if (string.IsNullOrEmpty(entityPm.PrivateLabelId))
             {
-                lastVersion = entityRepository.GetLastTermsofUseVersionNumberForTenantZero();
+                lastVersion = entityRepository.GetDefaultLatestVersionNumber();
             }
             else
             {
-                lastVersion = entityRepository.GetLastTermsofUseVersionNumber(entityPm.PrivateLabelId);
+                lastVersion = entityRepository.GetPrivateLabelLatestVersionNumber(entityPm.PrivateLabelId);
             }
             return lastVersion;
         }
