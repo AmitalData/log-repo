@@ -37,20 +37,17 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
                     TenantPM tenantPM = TenantQuery.GetSingleTenantPM(tenant, false);
                     TermsofUsePM termofuse = new TermsofUsePM();
-                    
-                    termofuse = termsofUseQuery.GetTermsOfUse(tenantPM);
-
+                    termofuse = termsofUseQuery.GetTermOfUseByPrivateLabel(tenantPM.PrivateLabelId);
                     if (!string.IsNullOrEmpty(tenantPM.PrivateLabelId) && termofuse == null)
                     {
                         throw new Exception("You are unable to login without approving the terms of use, please contact your administrator!");
                     }
+
+                    if (termofuse == null) termofuse = termsofUseQuery.GetTermsofUseDefault();
+
+                    if (termofuse == null) result.IsTermOfUse = false;
                     else
                     {
-                        result.IsTermOfUse = false;
-                    } 
-                     
-                    if(termofuse != null) 
-                    { 
 
                         result.VersionNumber = termofuse.VersionNumber;
                         result.Id = termofuse.Id;

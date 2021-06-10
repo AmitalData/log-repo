@@ -124,8 +124,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         }
 
         public TermsofUsePM GetTermsofUseDefault()
-        {
-            //Default not is from Tenant 0
+        { 
             TermsofUsePM termsofUses = (from a in repository.context.TermsofUses.OrderByDescending(d=>d.VersionNumber)
                                         where a.Tenant == 0 && a.PrivateLabelId == null
                                         select new TermsofUsePM()
@@ -143,25 +142,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
          
 
             return termsofUses;
-        }
-
-
-        public TermsofUsePM GetTermsOfUse(TenantPM tenantPM)
-        {
-            TermsofUsePM termsofUses;
-
-            if (string.IsNullOrEmpty(tenantPM.PrivateLabelId))
-            {
-                termsofUses = GetTermsofUseDefault();
-
-            }
-            else
-            {
-                termsofUses = GetTermOfUseByPrivateLabel(tenantPM.PrivateLabelId);
-            }
-            return termsofUses;
-
-        }
+        } 
+   
 
         public TermsofUsePM GetTermOfUseByPrivateLabel(string privateLabelId)
         {
