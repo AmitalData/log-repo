@@ -119,10 +119,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         myResult.ReleaseNotesURL = mySetting.ReleaseNotesURL;
                         myResult.LogitudeDemoTenants = mySetting.LogitudeDemoTenants;
                         myResult.TMPersonalAccessExpirationDate = mySetting.TMPersonalAccessExpirationDate;
-                        myResult.OITenantNumber = mySetting.OITenantNumber;
-                        myResult.AmitalCloudEnvironmentURL = mySetting.AmitalCloudEnvironmentURL;
-                        myResult.AmitalCloudLogitudeTenantPrimaryKey = mySetting.AmitalCloudLogitudeTenantPrimaryKey;
-
                         
                         if (LogitudeSettings.IsCostomsDeploy)
                         {
@@ -723,10 +719,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
         public string LogitudeDemoTenants { get; set; }
         public DateTime? TMPersonalAccessExpirationDate { get; set; }
-
-        public int OITenantNumber { get; set; }
-        public string AmitalCloudEnvironmentURL { get; set; }
-        public string AmitalCloudLogitudeTenantPrimaryKey { get; set; }
     }
 
     public class TenantManagementJS
