@@ -125,10 +125,22 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     else if(customResponse.Response.Declaration!= null)
                     {
+                        _MyDeclarationPM = myDeclarationQueryService.GetSingleByDecNoAndVersion(customResponse.Response.Declaration.ID.Value, customResponse.Response.Declaration.DMExtensions.VersionID.Value,requestParams.Tenant);
 
-                        string id = myDeclarationQueryService.GetIdByDeclarationNumber(customResponse.Response.Declaration.ID.Value, requestParams.Tenant);
 
-                        _MyDeclarationPM = dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, id, out error, false);
+                        if(_MyDeclarationPM!= null)
+                        {
+                            _MyDeclarationPM = dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, _MyDeclarationPM.Id, out error, false, isUpdateAfterAccept: true);
+
+                        }
+
+                        else
+                        {
+                            string id = myDeclarationQueryService.GetIdByDeclarationNumber(customResponse.Response.Declaration.ID.Value, requestParams.Tenant);
+
+                            _MyDeclarationPM = dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, id, out error, false);
+
+                        }
                         fromMehes = true;
                     }
 
@@ -292,7 +304,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                 _MyDeclarationPM.AmendmentDontDisplayInList = false;
                                                 _MyDeclarationPM.AmendmentStatus = "3";
                                                 UpdateReplacingDeclaration(requestParams, myDeclarationQueryService, myDeclarationUpdateService);
-                                                UpdateParentDec(myDeclarationUpdateService, declarationParent);
+                                                if(_MyDeclarationPM.AmendmentOriginalDeclartation!= declarationParent.AmendmentOriginalDeclartation)
+                                                {
+                                                    UpdateParentDec(myDeclarationUpdateService, declarationParent);
+
+                                                }
                                                 var amitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
                                                 {
                                                     Tenant = _MyDeclarationPM.Tenant,
@@ -387,9 +403,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                 _MyDeclarationPM.AmendmentDontDisplayInList = false;
 
                                                  declarationParent = myDeclarationQueryService.GetAcceptDeclarationAmendment(_MyDeclarationPM.AmendmentOriginalDeclartation, requestParams.Tenant);
+                                                if (_MyDeclarationPM.AmendmentOriginalDeclartation != declarationParent.AmendmentOriginalDeclartation)
+                                                {
+                                                    UpdateParentDec(myDeclarationUpdateService, declarationParent);
 
-                                                UpdateParentDec(myDeclarationUpdateService, declarationParent);
-                                                UpdateReplacingDeclaration(requestParams, myDeclarationQueryService, myDeclarationUpdateService);
+                                                }
+                                                 UpdateReplacingDeclaration(requestParams, myDeclarationQueryService, myDeclarationUpdateService);
 
 
                                                 var myAmitalEventTracerModel4 = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
