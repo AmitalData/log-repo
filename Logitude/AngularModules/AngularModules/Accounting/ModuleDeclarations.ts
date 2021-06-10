@@ -144,7 +144,6 @@ import { UpdateJournalLineComponent } from './Components/EditTabs/Journal/Update
 
 import { JournalCSVLoadComponent } from './Components/NewEntity/JournalCSVLoadComponent';
 
-import { UpdateJournalLineNoteComponent } from './Components/EditTabs/Journal/UpdateJournalLineNoteComponent';
 import { GlAccountListTemplate } from './Components/ListTemplates/GlAccountListTemplate';
 
 
