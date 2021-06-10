@@ -113,6 +113,9 @@ export class RequestAliases {
     public static readonly PostBranch = "PostBranch"
     public static readonly PutBranch = "PutBranch"
 
+    public static readonly GetFBLStock = "GetFBLStock"
+    public static readonly RemoveFBLStock = "DeleteFBLStock"
+
     public static readonly PostSpecialServicesType = "PostSpecialServicesType"
     public static readonly PutSpecialServicesType = "PutSpecialServicesType"
 
@@ -178,7 +181,7 @@ export class RequestAliases {
     public static readonly GetContactMenuButtonGroups = "GetContactMenuButtonGroups";
     public static readonly GetWarehouseMenuButtonGroups = "GetWarehouseMenuButtonGroups";
     public static readonly ContactViewsGetByFilters = "ContactViewsGetByFilters";
-    public static readonly GetCustomersQuickSearch = "GetCustomersQuickSearch"
+    public static readonly GetCustomersQuickSearch = "GetCustomersQuickSearch";
     //#endregion
     public static readonly PostChangePassword = "PostChangePassword"
     //

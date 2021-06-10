@@ -3,4 +3,5 @@ export class FBLStockDetails {
     EndNumber: string;
     ByEndNumber: string;
     ByAmount: string;
+    Amount: string;
 }

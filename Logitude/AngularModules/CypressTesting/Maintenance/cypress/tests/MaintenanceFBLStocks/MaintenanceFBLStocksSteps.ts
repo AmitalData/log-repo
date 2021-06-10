@@ -1,19 +1,13 @@
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { MaintenanceSelectors } from "../../../cypress/selectors/Selectors";
 import * as FBLStockActions from "../../actions/FBLStockActions";
-import { FBLStockSelectors } from "../../../cypress/selectors/FBLStockSelectors";
 import * as MaintenanceActions from "../../actions/Actions";
 import { FBLStockDetails } from "../../../cypress/models/FBLStockDetails";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
-import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetails";
-import * as BaseActions from "../../../../Base/cypress/actions/Actions"
-import { Constants } from "../../constants/Constants";
-
 
 let fblStockDetails:FBLStockDetails;
 
-
-//#region Create new fblStock
+//#region Create new fblStock by End Number
 Given("the user logged in and open {string} in maintenance menu", (maintenanceItemName) => {
     cy.Login();
     MaintenanceActions.OpenMaintenanceItemFromMaintenanceMenu(maintenanceItemName, MaintenanceSelectors.MaintenanceItemFBLStock)
@@ -21,72 +15,60 @@ Given("the user logged in and open {string} in maintenance menu", (maintenanceIt
 
 Given("a fblStock with the following details", (dataTable) => {
     fblStockDetails = Assists.CreateInstance<FBLStockDetails>(dataTable, true);
-    MaintenanceActions.OpenNewWizard(Constants.FBLStock);
+    FBLStockActions.OpenAddWizard();
+    FBLStockActions.FillFBLStockDetails(fblStockDetails) 
+});
+
+When("create fblStock", () => {
+    FBLStockActions.CreateFBLStock();
+});
+ 
+Then("the fblStock should create successfully", () => {
+    FBLStockActions.AssertCreateFBLStock();
+});
+
+//#endregion
+
+
+//#region remove FBLStock 
+When("Remove fblStock", () => {
+    FBLStockActions.RemoveFBLStock()
+});
+ 
+Then("the fblStock should Remove successfully", () => {
+    
+    FBLStockActions.AssertRemoveFBLStock() 
+});
+//#endregion
+
+
+//#region create FBLStock by Amount
+Given("a fblStock with the following details", (dataTable) => {
+    fblStockDetails = Assists.CreateInstance<FBLStockDetails>(dataTable, true);
     FBLStockActions.FillFBLStockDetails(fblStockDetails) 
 });
  
-When("create branch", () => {
-    BranchActions.CreateBranch();
+When("create fblStock", () => {
+    FBLStockActions.CreateFBLStock();
 });
  
-Then("the branch should create successfully", () => {
-    BranchActions.AssertCreateBranch();
+Then("the fblStock should create successfully", () => {
+    FBLStockActions.AssertCreateFBLStock();
+});
+
+
+
+//#region Remove FBLStock seires 
+When("Remove fblStock series", () => {
+    FBLStockActions.RemoveFBLStockSeries();
+});
+ 
+Then("the fblStock series should Remove successfully", () => {
+    FBLStockActions.AssertRemoveFBLStock(); 
 });
 //#endregion
 
 
-//#region Search for the branch by name
-When("search branch", () => {
-    BranchActions.SearchBranch()
-});
- 
-Then("the branch should appear successfully", () => {
-    BranchActions.AssertSearchBranch() 
-});
-//#endregion
- 
 
-//#region Open the branch
-When("open branch", () => {
-    BranchActions.OpenBranch();
-});
- 
-Then("the branch should open successfully", () => {
-    BranchActions.AssertOpenBranch(); 
-});
-//#endregion
- 
 
-//#region Edit the branch
-Given("the user fill the following branch details", (dataTable) => {
-    branchDetails = Assists.CreateInstance<BranchDetails>(dataTable, true);
-    let LocalName = branchDetails.LocalName
-    BranchActions.FillBranchLocalName(LocalName)
-});
- 
-Given("the user activate branch", () => {
-    MaintenanceActions.ChangeInactiveCheckBoxValue(BranchSelectors.InActiveBranchCheckBox)
-});
- 
-When("edit branch", () => {
-    BranchActions.EditBranch(); 
-});
- 
-Then("the branch should update successfully", () => {
-    BranchActions.AssertEditBranch();  
-});
- 
-Then("following event should appear in events tab", (dataTable) => {
-    let eventDetailsList = Assists.CreateSet<EventTypeDetails>(dataTable);
-    BaseActions.ValidateEventsTab(eventDetailsList, BranchSelectors.BranchEventsTab);
-});
 
-When("save and close branch", () => {
-    BranchActions.CloseSaveBranch(); 
-});
-
-Then("the branch should close successfully", () => {
-    BranchActions.AssertCloseSaveBranch();
-});
-
-//#endregion
