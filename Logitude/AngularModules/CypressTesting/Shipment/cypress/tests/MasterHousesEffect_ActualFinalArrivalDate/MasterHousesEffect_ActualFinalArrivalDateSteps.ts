@@ -108,6 +108,7 @@ Then('the master ActualFinalArrivalDate should be null',()=>{
 Then('the house ActualFinalArrivalDate should be null',()=>{
 
   Actions.AsserationHouseshipmentNOActualFinalArrivalDate()
+  cy.wait(5000)
 })
 
 Given('the user in the master rounting tab',()=>{
@@ -122,9 +123,8 @@ Given('edit main carriage leg with the following details',(dataTable)=>{
     //Actions.EditMainCarriageLegsAddETAandATA(mainCarriageLeg.MainCarriageETADate,mainCarriageLeg.MainCarriageATADate);
 
     Actions.FillMainCaarriageofshipmentandtransshipments(mainCarriageLeg.Transshipment1FromPortId,mainCarriageLeg.Transshipment1ETA,
-        mainCarriageLeg.Transshipment1ATA,mainCarriageLeg.MainCarriageETADate,mainCarriageLeg.MainCarriageATADate)
+    mainCarriageLeg.Transshipment1ATA,mainCarriageLeg.MainCarriageETADate,mainCarriageLeg.MainCarriageATADate)
 
-    cy.Click(ShipmentSelectors.MainCarriageOKBtn, null);
 
-    cy.Click(ShipmentSelectors.ShipmentSaveButton, null);
+   // cy.Click(ShipmentSelectors.ShipmentSaveButton, null);
 })

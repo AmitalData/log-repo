@@ -616,6 +616,7 @@ export function FillMainCaarriageofshipmentandtransshipments(Transshipment1FromP
     cy.FillLogTextBox(ShipmentSelectors.Transshipment1ATA, Transshipment1ATA, false)
     cy.FillLogTextBox(ShipmentSelectors.MainCarriageETADate, MainCarriageETADate, false)
     cy.FillLogTextBox(ShipmentSelectors.MainCarriageATADate, MainCarriageATADate, false)
+    cy.Click(ShipmentSelectors.MainCarriageOKBtn, null);
 
     
     
