@@ -21,9 +21,6 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
     {
 
 	    
-	[XmlAttribute]
-    public string Code { get; set; }
-    
     public string Name { get; set; }
     
     public string Id { get; set; }

@@ -1,4 +1,4 @@
-@release @dev @all
+@release @stable @all
 Feature: AMANAC Air Shipment Validations, Marked as Blocked, Marked as Not Blocked, Transfers and Retransfer
 
     The user configures AMANAC customs for the tenant, creates Direct Export Air shipment,

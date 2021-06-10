@@ -168,7 +168,8 @@ namespace WebFreight.Web.WebServices
                              HasFile = true,
                              Folder = "docsin",
                              FileName = TruncateLongString(realFileName, 120),
-                        
+                             CalculatedFileName = TruncateLongString(realFileName, 120),
+
                          };
                          docRepository.Add(document);
                      }
@@ -181,7 +182,7 @@ namespace WebFreight.Web.WebServices
                          document.HasFile = true;
                          document.Folder = "docsin";
                          document.IsEncrypted = true;
-                         document.FileName = TruncateLongString(realFileName, 120);
+                         document.FileName = document.CalculatedFileName = TruncateLongString(realFileName, 120);
                          docRepository.Update(document);
                      }
 

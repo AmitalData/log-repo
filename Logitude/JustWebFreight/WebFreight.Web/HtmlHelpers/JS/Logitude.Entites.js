@@ -144,6 +144,19 @@ var InvoiceListClass = function () {
 
 }
 
+
+var QuotesRequest = function () {
+
+    this.ReferenceNumber = "";
+    this.CreateDate = "";
+    this.QuotationUpdateDate = "";
+    this.QuotationPreparedTickVisibility = "";
+
+    
+}
+
+
+
 var CustomerListClass = function () {
 
     this.EntityId = "";
@@ -1687,6 +1700,31 @@ function BuildInvoicesList(invoices, TenantDateTimeFormat) {
 
     return InvoicesList;
 }
+
+
+function BuildQuotesRequests(quotesRequests, tenantDateTimeFormat) {
+    var results = [];
+    $.each(quotesRequests, function (index, quotesRequest) {
+        var newQuotesRequest = GetNewInStanceFromQuotesRequest(quotesRequest, tenantDateTimeFormat);
+        results.push(newQuotesRequest);
+    });
+
+    return results;
+
+ 
+}
+
+function GetNewInStanceFromQuotesRequest(quotesRequest, tenantDateTimeFormat) {
+
+    var newQuotesRequest = new QuotesRequest();
+    newQuotesRequest.CreateDate = $.Convert.ToShortDate(quotesRequest.CreateDate, tenantDateTimeFormat);
+    newQuotesRequest.ReferenceNumber = $.trim(quotesRequest.ReferenceNumber);
+    newQuotesRequest.QuotationPreparedTickVisibility = quotesRequest.QuotationUpdateDate ? "visible" :"collapse";
+    newQuotesRequest.QuotationUpdateDate = $.Convert.ToShortDate(quotesRequest.QuotationUpdateDate, tenantDateTimeFormat);
+
+    return newQuotesRequest;
+}
+
 
 function BuildCustomersList(entities, TenantDateTimeFormat) {
 

@@ -54,7 +54,9 @@ import { ExternalPagesTabComponent } from './Components/Others/ReconcileExternal
 import {GLAccountGeneralTabComponent} from './Components/EditTabs/GLAccount/GLAccountGeneralTabComponent';
 import {GLAccountTransactionsTabComponent} from './Components/EditTabs/GLAccount/GLAccountTransactionsTabComponent';
 import {ManageReconciliationsTabComponent} from './Components/EditTabs/GLAccount/ManageReconciliationsTabComponent';
-import {JournalDetailsTabComponent} from './Components/EditTabs/Journal/JournalDetailsTabComponent';
+import { JournalDetailsTabComponent } from './Components/EditTabs/Journal/JournalDetailsTabComponent';
+import { JournalDebugTabComponent } from './Components/EditTabs/Journal/JournalDebugTabComponent';
+
 import {CashBookDetailsTabComponent} from './Components/EditTabs/CashBook/CashBookDetailsTabComponent';
 import {CashBookManageDepoTabComponent} from './Components/EditTabs/CashBook/CashBookManageDepoTabComponent';
 import {ChartOfAccountGeneralTabComponent} from './Components/EditTabs/ChartOfAccount/ChartOfAccountGeneralTabComponent';
@@ -137,6 +139,11 @@ import { CargoTrackingIncrementalStatListTemplate } from './Components/ListTempl
 import { InterestReportEditCalculationDateComponent } from './Components/EditTabs/InterestReport/GeneralTab/InterestReportEditCalculationDate/InterestReportEditCalculationDateComponent';
 import { UserDefinedReportGeneralTabComponent } from './Components/EditTabs/UserDefinedReport/UserDefinedReportGeneralTabComponent';
 import { AccountingMainTesterComponent } from './Components/Maintenance/Tester/AccountingMainTesterComponent';
+
+import { UpdateJournalLineComponent } from './Components/EditTabs/Journal/UpdateJournalLineComponent';
+
+import { JournalCSVLoadComponent } from './Components/NewEntity/JournalCSVLoadComponent';
+
 import { UpdateJournalLineNoteComponent } from './Components/EditTabs/Journal/UpdateJournalLineNoteComponent';
 import { GlAccountListTemplate } from './Components/ListTemplates/GlAccountListTemplate';
 
@@ -176,6 +183,8 @@ export const Components =
         NewOpenFormatReportComponent,
         LoadRecoExPageComponent,
         NewUserDefinedReportComponent,
+        JournalCSVLoadComponent,
+        
 
         //Maintenance
         NewCategory1Component,
@@ -203,7 +212,8 @@ export const Components =
         GLAccountTransactionsTabComponent,
         ManageReconciliationsTabComponent,
         JournalDetailsTabComponent,
-        UpdateJournalLineNoteComponent,
+        JournalDebugTabComponent,
+        UpdateJournalLineComponent,
         CashBookDetailsTabComponent,
         CashBookManageDepoTabComponent,
         ChartOfAccountGeneralTabComponent,
@@ -333,6 +343,7 @@ export class ModuleDeclarations {
             case "NewTaxDeductionReportComponent": { myResult = NewTaxDeductionReportComponent; break; }
             case "NewOpenFormatReportComponent": { myResult = NewOpenFormatReportComponent; break; }
             case "LoadRecoExPageComponent": { myResult = LoadRecoExPageComponent; break; }
+            case "JournalCSVLoadComponent": { myResult = JournalCSVLoadComponent; break; }
             case "NewInterestReportComponent": { myResult = NewInterestReportComponent; break; }
             case "NewUserDefinedReportComponent": { myResult = NewUserDefinedReportComponent; break; }
 
@@ -364,7 +375,8 @@ export class ModuleDeclarations {
             case "GLAccountTransactionsTabComponent": { myResult = GLAccountTransactionsTabComponent; break; }
             case "ManageReconciliationsTabComponent": { myResult = ManageReconciliationsTabComponent; break; }
             case "JournalDetailsTabComponent": { myResult = JournalDetailsTabComponent; break; }
-            case "UpdateJournalLineNoteComponent": { myResult = UpdateJournalLineNoteComponent; break; }
+            case "JournalDebugTabComponent": { myResult = JournalDebugTabComponent; break; }
+            case "UpdateJournalLineComponent": { myResult = UpdateJournalLineComponent; break; }
             case "CashBookDetailsTabComponent": { myResult = CashBookDetailsTabComponent; break; }
             case "CashBookManageDepoTabComponent": { myResult = CashBookManageDepoTabComponent; break; }
             case "ChartOfAccountGeneralTabComponent": { myResult = ChartOfAccountGeneralTabComponent; break; }

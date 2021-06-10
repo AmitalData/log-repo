@@ -40,6 +40,8 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.VatNumber).HasColumnName("VatNumber").HasMaxLength(20).IsUnicode(false);
 
             this.Property(t => t.TotalOpenShipments).HasColumnName("TotalOpenShipments").HasPrecision(18, 2);
+
+            this.Property(t => t.InsuredcreditLimit).HasColumnName("InsuredcreditLimit");
         }
     }
 }

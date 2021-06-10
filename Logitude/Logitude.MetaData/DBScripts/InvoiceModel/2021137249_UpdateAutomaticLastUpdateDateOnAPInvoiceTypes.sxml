@@ -1,0 +1,10 @@
+﻿<Script DBType="Main" Module="Invoice"  TargetTableName="APInvoiceTypes">
+
+	<Sql Version="3">
+		<![CDATA[
+    
+update  APInvoiceTypes set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
+
+    ]]>
+	</Sql>
+</Script>

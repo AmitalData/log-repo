@@ -14,6 +14,8 @@
 
     jQuery.SearchText_SHI = null;
     jQuery.SearchText_INV = null;
+    jQuery.SearchText_QUOTESREQUESTS = null;
+
     jQuery.SearchTimer_SHI = null;
     jQuery.SearchTimer_INV = null;
     jQuery.SelectedQuery_SHI = null;
@@ -25,10 +27,16 @@
     jQuery.IsDataCountLoaded = false;
     jQuery.IsShipmentsDataLoaded = false;
     jQuery.IsInvoicesDataLoaded = false;
+    jQuery.IsQuotesRequestsDataLoaded = false;
+    jQuery.IsReportsDataLoaded = false;
 
+    
     jQuery.SelectedTabId = "TAB_SHI";
     jQuery.watermark_SHI = "Search partners / ports / ref.#";
     jQuery.watermark_INV = "Search Inv. # / bill to / ref.#";
+    jQuery.watermark_QUOTESREQUESTS = "Search ref.#";
+
+
 
     jQuery.ResizePage = (function (myFixedHeight) {
         var minHeight = 400;
@@ -86,6 +94,12 @@
         }
     });
 
+    jQuery.SetQuotesRequestsTabVisibility = (function (isVisibly ) {
+        $("#TAB_QUOTESREQUESTS").toggle(isVisibly);
+    });
+
+
+
     jQuery.GetLogginData = (function () {
 
         var url = "api/commondata/?email=" + $.CurrentEmail + "&tenant=" + $.CurrentTenant + "&cardId=" + $.CurrentCardId;
@@ -94,9 +108,7 @@
             url: url,
             type: 'GET',
             contentType: 'application/json',
-            headers: {
-                'Token': $.Token
-            },
+            headers: {'Token': $.Token},
             
             success: function (result) {
                 
@@ -108,7 +120,8 @@
                 $.IsAgentShared = result.IsAgentShared;
                 $.IsShipperShared = result.IsShipperShared;
                 $.IsConsigneeShared = result.IsConsigneeShared;
-
+                $.SetQuotesRequestsTabVisibility(result.IsQuotesRequestsMenuEnabled);
+                $.SetReportTabVisibility(result.IsReportsMenuEnabled);
                 $.SetTabsHidden($.IsInvoicesMenuEnabled);
                 $.SetSelectedTab();                
             },
@@ -132,6 +145,11 @@
         $('#SavedSelectedTabId').attr("value", $.SelectedTabId);
         $("#mainTabsDiv").data("kendoTabStrip").select($('#' + $.SelectedTabId));
     });
+
+    jQuery.SetReportTabVisibility = (function (isVisibly) {
+        $("#TAB_REPORTS").toggle(isVisibly);
+    });
+
 
     jQuery.LoadInvoices = (function () {
 
@@ -269,6 +287,82 @@
         });
     });
 
+
+    jQuery.SetQuotesRequestQueryCount = (function (result) {
+        let quotesRequestQueryCount = (result.length >= $.LoadingCount) ? "(" + ($.LoadingCount - 1) + "+)" : "(" + result.length + ")";
+        $("#QuotesRequestQueryCount").html(quotesRequestQueryCount);
+    });
+
+    jQuery.FullQuotesRequestsListData = (function (result) {
+        $("#QuotesRequestsListBox").html("");
+        $("#QuotesRequestsListBox").kendoListView(
+            {
+                dataSource: { data: BuildQuotesRequests(result, $.TenantDateTimeFormat) },
+                template: kendo.template($("#QuotesRequestsListBoxItemDataTemplate").html())
+            });
+
+    });
+  
+    function QuotesRequstFilters() {
+        this.PartnerId = $.CurrentCardId;
+        this.SearchField = ($.trim($.SearchText_QUOTESREQUESTS) == "" || $.trim($.SearchText_QUOTESREQUESTS) == $.watermark_QUOTESREQUESTS) ? null : $.trim($.SearchText_QUOTESREQUESTS);
+        this.PageSize = jQuery.LoadingCount;
+        this.PageIndex = 0
+        this.Tenant = $.CurrentTenant
+    };
+
+    
+
+    jQuery.LoadQuotesRequsts = (function () {
+
+        $("#QuotesRequestsBusyIndicator").show();
+        var filters = new QuotesRequstFilters();
+        var url = "api/QuotesRequest";
+        $.ajax({
+            url: url,
+            data: JSON.stringify(filters),
+            type: 'POST',
+            contentType: 'application/json',
+            headers: { 'Token': $.Token },
+            success: function (result) {
+                $.QuotesRequstsLoadedSsuccess(result);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $.QuotesRequstsLoadedFailure(jqXHR);
+            }
+        });
+
+    });
+
+
+
+    jQuery.QuotesRequstsLoadedSsuccess = (function (result) {
+        $.SendContactActivity($.CurrentEmail, "QuoteRequsts", "Quote Requsts List", $.CurrentTenant, $.CurrentCardId);
+        $.SetQuotesRequestQueryCount(result);
+        $.FullQuotesRequestsListData(result);
+        $("#QuotesRequestsBusyIndicator").hide();
+    });
+    
+
+    jQuery.QuotesRequstsLoadedFailure = (function (jqXHR) {
+        $.CheckUserException(jqXHR);
+        $("#QuotesRequestQueryCount").html("(0)");
+        $("#QuotesRequestsBusyIndicator").hide();
+    });
+
+
+    jQuery.LoadReports = (function () {
+
+        let reportLists =  [{ "Name": "Shipments Report"}];
+        $("#ReportListBox").html("");
+        $("#ReportListBox").kendoListView(
+            {
+                dataSource: { data: reportLists },
+                template: kendo.template($("#ReportListBoxItemDataTemplate").html())
+            });
+    });
+
+
     jQuery.LoadDataCount = (function () {
 
         $.IsDataCountLoaded = $('#SavedIsDataCountLoaded').val();
@@ -299,6 +393,17 @@
                 $.LoadInvoices();
                 break;
             }
+
+            case "TAB_QUOTESREQUESTS": {
+                $.LoadQuotesRequsts();
+                break;
+            }
+
+            case "TAB_REPORTS": {
+                $.LoadReports();
+                break;
+            }
+
         }
     });
 
@@ -363,6 +468,22 @@
                 }
 
                 $("#InvoicesQueryTitle").html(SelectedQueryLabel);
+            }
+
+
+            case "TAB_QUOTESREQUESTS": {
+
+                $(".HyperLinkQuery_QUOTESREQUESTS").css({
+                    "color": "#45494A",
+                    "background": "transparent",
+                });
+
+                $("#" + $.SelectedQuery_QuotesRequest).css({
+                    "color": "white",
+                    "background": "url('HtmlHelpers/Images/Bars_Images/SelectedQuery.png') repeat-x",
+                });
+
+                $("#QuotesRequestQueryTitle").html("All Quotes Requests");
             }
         }
 
@@ -500,6 +621,40 @@
 
                 break;
             }
+
+            case "TAB_QUOTESREQUESTS": {
+
+                $.SearchText_QUOTESREQUESTS = $('#SavedSearchText_QUOTESREQUESTS').val();
+                $.SelectedQuery_QuotesRequest = $('#SavedSelectedQuery_QUOTESREQUESTS').val();
+                if ($.trim($.SelectedQuery_QUOTESREQUESTS) == "") {
+                    $.SelectedQuery_QuotesRequest = "Query_PRG_QUOTESREQUESTS";
+                    $('#SavedSelectedQuery_QUOTESREQUESTS').attr("value", $.SelectedQuery_QuotesRequest);
+                }
+
+                $.SelectQuery();
+
+                if (!$.IsQuotesRequestsDataLoaded) {
+                    $.IsQuotesRequestsDataLoaded = true;
+                    $.LoadData();
+                }
+
+                break;
+            }
+
+            case "TAB_REPORTS": {
+
+                if (!$.IsReportsDataLoaded) {
+                    $.IsReportsDataLoaded = true;
+                    $.LoadData();
+                }
+
+                break;
+            }
+
+
+
+
+
         }
 
     });
@@ -513,20 +668,23 @@
 	        var clss = $("#" + id).attr('class');
 
 	        var currentTarget = "#" + $.SelectedTabId + " div span .TabImage";
-	        var currentScr = $(currentTarget).attr('src');
-	        var currenttargetSRC = currentScr.replace('S.png', 'N.png');
-	        $(currentTarget).attr("src", currenttargetSRC);
-
+           
+            var currentScr = $(currentTarget).attr('src');
+            if (currentScr) {
+                var currenttargetSRC = currentScr.replace('S.png', 'N.png');
+                $(currentTarget).attr("src", currenttargetSRC);
+            }
 	        var target = "#" + id + " div span .TabImage";
-	        var scr = $(target).attr('src');
-	        var targetSRC = scr.replace('O.png', 'S.png');
-	        if (targetSRC == scr) {
+            var scr = $(target).attr('src');
+            if (scr) {
+                var targetSRC = scr.replace('O.png', 'S.png');
+                if (targetSRC == scr) {
 
-	            targetSRC = scr.replace('N.png', 'S.png');
-	        }
+                    targetSRC = scr.replace('N.png', 'S.png');
+                }
 
-	        $(target).attr("src", targetSRC);
-
+                $(target).attr("src", targetSRC);
+            }
 	        $.SelectedTabId = $(e.item).attr("id");
 	        $('#SavedSelectedTabId').attr("value", $.SelectedTabId);
 	        $.SelectTab($.SelectedTabId);
@@ -580,6 +738,30 @@
 
                 break;
             }
+
+
+            case "SearchBox_QUOTESREQUESTS": {
+
+                if ($("#SearchBox_QUOTESREQUESTS").val().length == 0 || $("#SearchBox_QUOTESREQUESTS").val() == $.watermark_QUOTESREQUESTS) {
+                    $('#SearchDeleteButton_QUOTESREQUESTS').hide();
+                }
+
+                else {
+                    $('#SearchDeleteButton_QUOTESREQUESTS').show();
+                }
+
+                $.SearchText_QUOTESREQUESTS = $("#SearchBox_QUOTESREQUESTS").val();
+                $('#SavedSearchText_QUOTESREQUESTS').attr("value", $.SearchText_QUOTESREQUESTS);
+
+                if ($.SearchTimer_QUOTESREQUESTS != null) {
+                    clearTimeout($.SearchTimer_QUOTESREQUESTS);
+                }
+
+                $.SearchTimer_QUOTESREQUESTS = setTimeout(function () { $.LoadData() }, 500);
+
+                break;
+            }
+
         }
     });
 
@@ -595,9 +777,20 @@
         $.LoadInvoices();
     });
 
+    $("#QuotesRequestRefreshButton").click(function () {
+
+        $("#QuotesRequestsListBox").html("");
+        $.LoadQuotesRequsts();
+    });
+
+
+
+
     $('.SearchDeleteButton').hide();
     $('#SearchBox_SHI').val($.watermark_SHI).addClass('watermark');
     $('#SearchBox_INV').val($.watermark_INV).addClass('watermark');
+    $('#SearchBox_QUOTESREQUESTS').val($.watermark_QUOTESREQUESTS).addClass('watermark');
+
 
     $('.SearchBox').blur(function () {
 
@@ -622,6 +815,17 @@
                     $('#SearchDeleteButton_INV').hide();
                 }
             }
+
+            case "SearchBox_QUOTESREQUESTS": {
+
+                if ($(this).val().length == 0) {
+                    $(this).val($.watermark_QUOTESREQUESTS).addClass('watermark');
+                    $('#SearchIcon_QUOTESREQUESTS').show();
+                    $('#SearchDeleteButton_QUOTESREQUESTS').hide();
+                }
+            }
+
+
         }
     });
     $('.SearchBox').focus(function () {
@@ -645,6 +849,15 @@
                     $('#SearchIcon_INV').hide();
                 }
             }
+
+            case "SearchBox_QUOTESREQUESTS": {
+
+                if ($(this).val() == $.watermark_QUOTESREQUESTS) {
+                    $(this).val('').removeClass('watermark');
+                    $('#SearchIcon_QUOTESREQUESTS').hide();
+                }
+            }
+
         }
     });
     $('.SearchBox').keyup(function () {
@@ -669,6 +882,15 @@
                 $('#SearchBox_INV').val($.watermark_INV).addClass('watermark');
                 $.SearchTextChanged("SearchBox_INV");
             }
+
+            case "SearchDeleteButton_QUOTESREQUESTS": {
+                $('#SearchIcon_QUOTESREQUESTS').show();
+                $('#SearchBox_QUOTESREQUESTS').attr("value", "");
+                $('#SearchBox_QUOTESREQUESTS').val($.watermark_QUOTESREQUESTS).addClass('watermark');
+                $.SearchTextChanged("SearchBox_QUOTESREQUESTS");
+            }
+
+
         }
     });
 
@@ -760,9 +982,12 @@
 
             var target = "#" + id + " div span .TabImage";
             var scr = $(target).attr('src');
-            var targetSRC = scr.replace('N.png', 'O.png');
 
-            $(target).attr("src", targetSRC);
+            if (scr) {
+                var targetSRC = scr.replace('N.png', 'O.png');
+
+                $(target).attr("src", targetSRC);
+            }
         }
     });
     $(".k-tabstrip .k-item").mouseleave(function () {
@@ -774,9 +999,10 @@
 
             var target = "#" + id + " div span .TabImage";
             var scr = $(target).attr('src');
-            var targetSRC = scr.replace('O.png', 'N.png');
-
-            $(target).attr("src", targetSRC);
+            if (scr) {
+                var targetSRC = scr.replace('O.png', 'N.png');
+                $(target).attr("src", targetSRC);
+            }
         }
     });
 
@@ -818,6 +1044,36 @@
         }
     });
 
+
+    $(".HyperLinkQuery_QUOTESREQUESTS").mouseenter(function () {
+        if ($(this).attr('id') != $.SelectedQuery_QuotesRequest) {
+            $(this).css({ "color": "black", "background": "url('HtmlHelpers/Images/Bars_Images/tab-over.png') repeat-x" });
+        }
+    });
+    $(".HyperLinkQuery_QUOTESREQUESTS").mouseleave(function () {
+        if ($(this).attr('id') != $.SelectedQuery_QuotesRequest) {
+            $(this).css({ "color": "#45494A", "background": "transparent" });
+        }
+    });
+
+
+
+    $(".HyperLinkQuery_QUOTESREQUESTS").click(function () {
+        if ($(this).attr('id') != $.SelectedQuery_QuotesRequest) {
+            $.SelectedQuery_QuotesRequest = $(this).attr('id');
+            $("#SavedSelectedQuery_QUOTESREQUESTS").attr("value", $.SelectedQuery_QuotesRequest);
+            $.SelectQuery();
+            $.LoadData();
+        }
+    });
+
+
+
+
+
+
+
+
     $("#SignOutButton").click(function () {
 
 
@@ -836,7 +1092,8 @@
                 window.localStorage.setItem("Token", "");
                 window.localStorage.setItem("CardId", "");
 
-                document.location.href = "../../Login.aspx";
+                //document.location.href = "../../Login.aspx";
+                document.location.href = "../../?tenant=" + $.CurrentTenant;
 
             },
 
@@ -858,7 +1115,9 @@
 
     $(document).ready(function () {
         $("#TAB_INV").hide();
+        $("#TAB_QUOTESREQUESTS").hide();
 
+        
         $.ResizePage(130);
 
         var userdata = null;
@@ -889,3 +1148,5 @@
     });
 
 }(jQuery));
+
+

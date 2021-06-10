@@ -74,7 +74,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                
+
 
 
 
@@ -88,7 +88,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 {
                     objectFieldPMs = GetCustomObjectFields(DWOTId, authToken.Tenant);
                 }
-       
+
 
                 List<DWFieldsGroup> MyGroups = new List<DWFieldsGroup>();
                 foreach (var item in CategoryGroup)
@@ -103,7 +103,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         {
                             MyGroup.Index = FirstItem.CategoryIndex;
                         }
-                       
+
                         MyGroup.FieldsList = item.Select(a => a).OrderBy(a => a.Name).ToList();
 
 
@@ -118,7 +118,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                                     MyGroups.Add(MyGroup);
                                 }
                             }
-                           else MyGroups.Add(MyGroup);
+                            else MyGroups.Add(MyGroup);
 
 
                         }
@@ -126,10 +126,11 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                     }
                 }
                 MyGroups = MyGroups.OrderBy(a => a.Index).ToList();
+                MyGroups = RemoveFactInvoiceCustomFieldsCategory(DWOTId, MyGroups);
 
 
 
-   
+
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                 return Request.CreateResponse(HttpStatusCode.OK, MyGroups);
@@ -140,6 +141,20 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
 
+        }
+
+        private List<DWFieldsGroup> RemoveFactInvoiceCustomFieldsCategory(string factCode, List<DWFieldsGroup> MyGroups)
+        {
+            List<DWFieldsGroup> FactGroups = MyGroups;
+            if (factCode == "Fact_Invoices")
+            {
+                DWFieldsGroup customFieldsCategroy = FactGroups.FirstOrDefault(categroy => categroy.Key == "Custom Fields");
+                if (customFieldsCategroy != null)
+                {
+                    FactGroups.Remove(customFieldsCategroy);
+                }
+            }
+            return FactGroups;
         }
 
         private List<ObjectFieldPM> GetCustomObjectFields(string DWOTId, int tenant)

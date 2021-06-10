@@ -3447,6 +3447,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private double? insuredCreditLimit ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public double? InsuredCreditLimit  
+	   {
+	    
+	     get
+		{
+		   return insuredCreditLimit;
+		 }
+		 set
+		 {
+		   if(insuredCreditLimit != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InsuredCreditLimit",OldValue=insuredCreditLimit,NewValue=value,PropertyType="double?"};
+		    NotifyPropertyChanged(values);
+		   insuredCreditLimit=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

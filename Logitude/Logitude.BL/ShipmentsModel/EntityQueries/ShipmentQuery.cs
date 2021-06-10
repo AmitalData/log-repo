@@ -791,6 +791,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.MainCarriageFromPortId = shipment.FromPortId;
                     shipmentPM.MainCarriageToPortId = shipment.ToPortId;
                     shipmentPM.MainCarriageFinalDestinationPortId = shipment.ToPortId;
+                    shipmentPM.MainCarriageTransportModeId = shipment.TransportModeId;
 
                     PortPM fromPort = portQuery.GetSinglePM(shipment.FromPortId, shipment.Tenant);
                     if (fromPort != null)
@@ -1750,6 +1751,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 }
             }
 
+            shipmentPM.IsHTSMissing = shipment.IsHTSMissing;
             shipmentPM.FirstARInvoiceApprovalDate = shipment.FirstARInvoiceApprovalDate;
             shipmentPM.RegistryDate = shipment.RegistryDate;
             shipmentPM.IsAssembly = shipment.IsAssembly;
@@ -2192,8 +2194,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 #region ShipmentStoragePricings
                 ShipmentStoragePricingRepository shipmentStoragePricingRepository = new ShipmentStoragePricingRepository(repository.context);
                 ShipmentStoragePricingQuery shipmentStoragePricingQuery = new ShipmentStoragePricingQuery(shipmentStoragePricingRepository);
-
                 shipmentPM.ShipmentStoragePricings = shipmentStoragePricingQuery.GetShipmentStoragePricingsByShipmentId(shipment.Id, shipment.Tenant);
+                #endregion
+
+                #region ShipmentProductItems
+                ShipmentProductItemRepository shipmentProductItemRepository = new ShipmentProductItemRepository(repository.context);
+                ShipmentProductItemQuery shipmentProductItemQuery = new ShipmentProductItemQuery(shipmentProductItemRepository);
+
+                shipmentPM.ShipmentProductItems = shipmentProductItemQuery.GetShipmentProductItems(shipment.Id, shipment.Tenant);
                 #endregion
             }
 
@@ -13506,7 +13514,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             var shipmentPM = new ShipmentPM();
 
-            MapShipmentToShipmentPM(shipmentPM, shipment, null, null, false);
+            ShipmentMasterData masterData = (from a in repository.context.ShipmentMasterDatas
+                                             where a.Id == shipment.MasterShipmentDataId
+                                             select a).FirstOrDefault();
+
+            MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, false);
 
             CreateShipmentPMForCargoTracking(tenant, shipment, shipmentPM);
 

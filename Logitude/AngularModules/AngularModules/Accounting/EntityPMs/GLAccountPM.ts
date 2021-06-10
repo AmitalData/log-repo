@@ -858,6 +858,13 @@ export class GLAccountPM {
     public set CalculatedAgingPeriod3(newValue: number) { if (this.calculatedAgingPeriod3 != newValue) { this.calculatedAgingPeriod3 = newValue; this.MarkAsDirty("CalculatedAgingPeriod3"); } }
 
 
+       
+	 
+    private insuredCreditLimit: number;
+    public get InsuredCreditLimit() { return this.insuredCreditLimit; }
+    public set InsuredCreditLimit(newValue: number) { if (this.insuredCreditLimit != newValue) { this.insuredCreditLimit = newValue; this.MarkAsDirty("InsuredCreditLimit"); } }
+       
+	 
 
     public OldEntityPM: GLAccountPM;
 
@@ -886,4 +893,4 @@ export class GLAccountPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

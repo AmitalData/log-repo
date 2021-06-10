@@ -513,7 +513,6 @@ SubmitChanges(ControlAccountId:string) {
     //console.log("EntityPM: ", this.EntityPM);
 
     this.SetAgingPeriodsFields();
-    this.ResetAgingPeriodsFields();
 
     this.fullAccountingSettingPMService.update(this.EntityPM).subscribe(myResult => {
 
@@ -546,11 +545,15 @@ SubmitChanges(ControlAccountId:string) {
     }
 
     ResetAgingPeriodsFields(){
-        if(this.NumberOfPeriods <= 2)
+        if(this.NumberOfPeriods <= 2){
             this.EntityPM.ThirdsPeriodsMonths = null;
+            this.SelectedPeriods3 = [];
+        }
 
-        if(this.NumberOfPeriods == 1)
+        if(this.NumberOfPeriods == 1){
             this.EntityPM.SecondPeriodsMonths = null;
+            this.SelectedPeriods2 = [];
+        }
     }
 
     SetSelectedAgingPeriods(){
@@ -698,8 +701,10 @@ SubmitChanges(ControlAccountId:string) {
     public get NumberOfPeriods() : number {
         return this.EntityPM.NumberofPeriods;
     }
-    public set NumberOfPeriods(v : number) {
-        this.EntityPM.NumberofPeriods = v;
+    public set NumberOfPeriods(value : number) {
+        this.EntityPM.NumberofPeriods = value;
+
+        this.ResetAgingPeriodsFields();
     }
 
     Periods: any[] = [

@@ -718,7 +718,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? OnForwardingATD { get; set; }
         public DateTime? OnForwardingETA { get; set; }
         public DateTime? OnForwardingATA { get; set; }
-
         public string OnCarriageFromPortId { get; set; }
         public string OnCarriageToPortId { get; set; }
         public string PreCarriageFromPortId { get; set; }
@@ -728,5 +727,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string OnCarriageTransportModeId { get; set; }
         public string OnForwardingTransportModeId { get; set; }
         public string PreForwardingFromPortId { get; set; }
+        public string FreightLocationId { get; set; }
     }
 }

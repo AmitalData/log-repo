@@ -1668,7 +1668,7 @@ namespace HypredTest
         private string Login()
         {
             LoginProxy.LoginWcfServiceClient loginService = new LoginProxy.LoginWcfServiceClient();
-            Response loginResponse = loginService.Login("admin@fnarsoft.com", "1");//"tomerp@amital.co.il", "!T123456");  ("islam@logitudeworld.com", "!I123456");//("yaronc@amital.co.il", "!Y123456");//"yaronc@amital.co.il", "!Y123456");//
+            Response loginResponse = loginService.Login("maheera@fnarsoft.com", "0");//"tomerp@amital.co.il", "!T123456");  ("islam@logitudeworld.com", "!I123456");//("yaronc@amital.co.il", "!Y123456");//"yaronc@amital.co.il", "!Y123456");//
             if (!loginResponse.HasError)
             {
                 Token = loginResponse.Result;
@@ -2419,13 +2419,15 @@ namespace HypredTest
                 AccountingPartnerProxy.AccountingPartnerPM newAccountingPartner = new AccountingPartnerProxy.AccountingPartnerPM()
                 {
                     Code = "HEHYBRID6",
-                    EnglishName = "Test hybrid H",
+                    EnglishName = "H Test",
                     Tenant = 1,
                     PartnerTypeId = "AC", 
                     VatNumber = "199996",  
                     CountryCode = "IL",
                     PaymentTermId = paymentTermId,
-                    PrimaryContactName = "H TEst"
+                    PrimaryContactName = "H TEst",
+                    CollectorId = "test1"
+
                 };
                   
                 var response = accountingPartnerservice.Upsert(newAccountingPartner, false); 
@@ -3366,7 +3368,7 @@ namespace HypredTest
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", token);
 
                 Response resultResponse = new Response();
-               AccountingPartnerProxy.AccountingPartnerPM accountingPartnerPM = accountingPartnerservice.GetAccountingPartnerPM(new AccountingPartnerApiFilters() { ByCode = true, SearchCode = "1002" }, 1, ref resultResponse);
+               AccountingPartnerProxy.AccountingPartnerPM accountingPartnerPM = accountingPartnerservice.GetAccountingPartnerPM(new AccountingPartnerApiFilters() { ByCode = true, SearchCode = "HEHYBRID6" }, 1, ref resultResponse);
 
               if(accountingPartnerPM != null)
                 {

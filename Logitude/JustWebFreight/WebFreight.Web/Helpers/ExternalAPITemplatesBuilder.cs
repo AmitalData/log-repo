@@ -16,7 +16,7 @@ namespace WebFreight.Web.Helpers
         private string[] hypridTenantsAPISNames = new[] { "Customs", "Quote", "Customer", "Vendor" };
         private string[] fullAccountingTenantsAPISNames = new[] { "Customer", "Vendor", "ARPayment", "Cancel ARPayment", "APInvoice Cancellation",
                                                                   "ARInvoice", "APInvoice", "ARInvoice Additional Data", "Journal", "GLAccount" , 
-                                                                  "Customer Open Files Amount", "GL Account More Data","CargoTrackingShipmentDetails" };
+                                                                  "Customer Open Files Amount", "GL Account More Data","Cargo Tracking Shipment Details" };
         private Dictionary<string,string> XMLRequestTexts;
 
         public ExternalAPITemplatesBuilder(int tenant)
@@ -150,7 +150,9 @@ namespace WebFreight.Web.Helpers
 
         private void AddHouseAPIsRequestText()
         {
-            this.XMLRequestTexts.Add("PostHouse", @" < House >
+            if (!this.XMLRequestTexts.ContainsKey("PostHouse"))
+            {
+                this.XMLRequestTexts.Add("PostHouse", @" < House >
                                                        < Direction Code = 'E' />
                                                        < TransportMode Code = 'A' />
                                                        < Shipper Code = '70002' />
@@ -196,9 +198,12 @@ namespace WebFreight.Web.Helpers
 
 
                                                     </ House >
-            ");
+               ");
+            }
 
-            this.XMLRequestTexts.Add("PutHouse", @"<House ShipmentNumber='EXP9115'>
+            if (!this.XMLRequestTexts.ContainsKey("PutHouse"))
+            {
+                this.XMLRequestTexts.Add("PutHouse", @"<House ShipmentNumber='EXP9115'>
                <Direction Code='E' />
                <TransportMode Code='A' />
                <Shipper Code='70002' />
@@ -244,12 +249,15 @@ namespace WebFreight.Web.Helpers
                   </AirPackage>
                </AirPackages>              
               </House>
-            ");
+               ");
+            }
         }
 
         private void AddDirectAPIsRequestText()
         {
-            this.XMLRequestTexts.Add("PostDirect", @"<Direct xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
+            if (!this.XMLRequestTexts.ContainsKey("PostDirect"))
+            {
+                this.XMLRequestTexts.Add("PostDirect", @"<Direct xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
                <Direction Code='E' /><!-- E - Export , I - Import , D - Domistic , R - Drop -->
                <TransportMode Code='A' /><!-- A - Air , I - Inland , O - Ocean -->
                <Shipper Code='70002' /><!-- Code or ParnerCode only one Field is requiered-->
@@ -293,13 +301,16 @@ namespace WebFreight.Web.Helpers
                                             <Commodity>653</Commodity>
                   </AirPackage>
                </AirPackages>
-            </Direct>
-            ");
+              </Direct>
+               ");
+            }
         }
 
         private void AddMasterAPIsRequestText()
         {
-            this.XMLRequestTexts.Add("PostMaster", @"<Master xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
+            if (!this.XMLRequestTexts.ContainsKey("PostMaster"))
+            {
+                this.XMLRequestTexts.Add("PostMaster", @"<Master xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
                <Direction Code='E' />
                <TransportMode Code='A' />
                <Shipper Code='10009' />
@@ -342,12 +353,15 @@ namespace WebFreight.Web.Helpers
                     </Payable>
                   </Payables>
             </Master>
-            ");
+              ");
+            }
         }
 
         private void AddRatesAPIsRequestText()
         {
-            this.XMLRequestTexts.Add("RatesUpdate", @"<RatesUpdate xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
+            if (!this.XMLRequestTexts.ContainsKey("RatesUpdate"))
+            {
+                this.XMLRequestTexts.Add("RatesUpdate", @"<RatesUpdate xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
 	                                        <ComputingPartnerCode>AMS</ComputingPartnerCode>
 	                                        <RateUpdate>
 		                                        <Currency Code='USD' PartnerCode='USD'></Currency>
@@ -355,12 +369,15 @@ namespace WebFreight.Web.Helpers
                                                 <Rate>5</Rate>
                                             </RateUpdate>
                                             </RatesUpdate>
-            ");
+              ");
+            }
         }
 
         private void AddCustomsAPIsRequestText()
         {
-            this.XMLRequestTexts.Add("Customs", @"<Customs>
+            if (!this.XMLRequestTexts.ContainsKey("Customs"))
+            {
+                this.XMLRequestTexts.Add("Customs", @"<Customs>
                                             <ShipmentNumber>123456</ShipmentNumber>      
                                             <TransportMode Code='I'/>
                                             <ShipperReference1>SR1</ShipperReference1>              
@@ -407,12 +424,15 @@ namespace WebFreight.Web.Helpers
                                                 </AirPackage>                                                 
                                             </AirPackages>
                                         </Customs>
-            ");
+              ");
+            }
         }
 
         private void AddQuotesStatusAPIsRequestText()
         {
-            this.XMLRequestTexts.Add("AcceptQuote", @"<QuoteStatus xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
+            if (!this.XMLRequestTexts.ContainsKey("AcceptQuote"))
+            {
+                this.XMLRequestTexts.Add("AcceptQuote", @"<QuoteStatus xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
 	                                        <QuoteNumber>1289</QuoteNumber>
 	                                        <QuoteAcceptNote>This quote accepted manually by Samar</QuoteAcceptNote>
 	                                        <QuoteAcceptDate>2017-12-31T00:00:00Z</QuoteAcceptDate>
@@ -421,9 +441,12 @@ namespace WebFreight.Web.Helpers
 		                                        <Name>Accepted</Name>		                                        
 	                                        </Stage>
                                         </QuoteStatus>                
-            ");
+              ");
+            }
 
-            this.XMLRequestTexts.Add("DeclineQuote", @"<QuoteStatus xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
+            if (!this.XMLRequestTexts.ContainsKey("DeclineQuote"))
+            {
+                this.XMLRequestTexts.Add("DeclineQuote", @"<QuoteStatus xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
 	                                        <QuoteNumber>1289</QuoteNumber>	                                        
 	                                        <QuoteDeclineDate>2017-12-31T00:00:00Z</QuoteDeclineDate>
                                             <QuoteDeclineNote>This quote declined manually by Samar</QuoteDeclineNote>
@@ -435,17 +458,23 @@ namespace WebFreight.Web.Helpers
 		                                        <Name>Declined</Name>		                                        
 	                                        </Stage>
                                         </QuoteStatus>                
-            ");
+              ");
+            }
 
-            this.XMLRequestTexts.Add("CancleQuote", @"<QuoteStatus xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
+            if (!this.XMLRequestTexts.ContainsKey("CancleQuote"))
+            {
+                this.XMLRequestTexts.Add("CancleQuote", @"<QuoteStatus xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
 	                                        <QuoteNumber>1289</QuoteNumber>
 	                                        <IsQuoteCancel xsi:nil='true' />
 	                                        <QuoteCancelNote>This quote cancelled by Samar</QuoteCancelNote>
 	                                        <QuoteCancelDate>2017-12-31T00:00:00Z</QuoteCancelDate>
                                         </QuoteStatus>                
-            ");
+              ");
+            }
 
-            this.XMLRequestTexts.Add("DefultQuoteStatus", @"<QuoteStatus xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
+            if (!this.XMLRequestTexts.ContainsKey("DefultQuoteStatus"))
+            {
+                this.XMLRequestTexts.Add("DefultQuoteStatus", @"<QuoteStatus xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
 	                                        <QuoteNumber>1288</QuoteNumber>	                                        <
 	                                        <QuoteAcceptNote>This quote accepted manually by Samar</QuoteAcceptNote>
 	                                        <QuoteAcceptDate>2017-12-31T00:00:00Z</QuoteAcceptDate>	  
@@ -455,7 +484,8 @@ namespace WebFreight.Web.Helpers
 	                                        </Stage>
                                         </QuoteStatus>                
                                         
-            ");
+              ");
+            }
         }
 
         private void AddCustomerAPIsRequestText()
@@ -522,7 +552,9 @@ namespace WebFreight.Web.Helpers
 
         private void AddARInvoiceAPIsRequestText()
         {
-            this.XMLRequestTexts.Add("ARInvoice", @"<ARInvoice xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
+            if (!this.XMLRequestTexts.ContainsKey("ARInvoice"))
+            {
+                this.XMLRequestTexts.Add("ARInvoice", @"<ARInvoice xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
   <InvoiceType Code='IN'>
 
 < Name > Invoice </ Name >
@@ -773,7 +805,8 @@ namespace WebFreight.Web.Helpers
                                           </ ARInvoice >
 
 
-            ");
+                ");
+            }
         }
 
     }

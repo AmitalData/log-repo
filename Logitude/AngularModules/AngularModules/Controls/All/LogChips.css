@@ -15,7 +15,7 @@
     border-radius: 5px;
     background: #e4ebf0;
     cursor: pointer;
-    margin: 0 2px;
+    margin: 0 2px 4px;
     display: inline-block;
     user-select: none;
 }

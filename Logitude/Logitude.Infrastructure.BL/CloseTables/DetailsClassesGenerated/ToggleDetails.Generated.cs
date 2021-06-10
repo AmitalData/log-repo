@@ -236,6 +236,30 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "PRE,Master Pre/On Carriage", 
                 Description = "Master Pre/On Carriage", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Quotes Request Activated In Shared Logistic", 
+                Code = "QRA", 
+                SearchFields = "QRA, Quotes Request Activated In Shared Logistic", 
+                Description = "Quotes Request Activated In Shared Logistic", 
+			});
+            
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Reports in Shared Logistics", 
+                Code = "RSL", 
+                SearchFields = "RSL,Reports in Shared Logistics", 
+                Description = "Reports in Shared Logistics", 
+			});
+            all.Add(new ToggleDetails()
+            {    
+                Code = "BIF", 
+                Name = "Invoices DWH", 
+                SearchFields = "BIF,Invoices DWH,Allow Tenants to Show Invoice Fact on the BI Report Screen", 
+                Description = "Allow Tenants to Show Invoice Fact on the BI Report Screen", 
+			});
 			
             return all;
        }

@@ -138,8 +138,8 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
 
             InterestTransactionPM firstTransaction = interestTransactionPMs.OrderBy(d => d.InterestValueDate).FirstOrDefault();
             DateTime previousInterestReportCalculationDate = GetOpenBalanceInterestValueDate(previousInterestReport);
-            DateTime date = firstTransaction.InterestValueDate.Date;
-            DateTime firstTransactionDate = GetFirstTransactionDate(firstTransaction, previousInterestReport);
+           // DateTime date = firstTransaction? firstTransaction.InterestValueDate.Date;
+            DateTime firstTransactionDate = firstTransaction!=null? GetFirstTransactionDate(firstTransaction, previousInterestReport):new DateTime();
           
             if (OpenBalanceTransaction == null && (firstTransaction == null || previousInterestReportCalculationDate != firstTransactionDate))
             {

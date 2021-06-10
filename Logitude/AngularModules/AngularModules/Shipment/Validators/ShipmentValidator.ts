@@ -23,7 +23,7 @@ export class ShipmentValidator implements IShipmentValidator {
         this.message = TextCodeTranslator.Translate("General.M.FieldIsRequired");
     }
 
-    Validate = (entityPM: ShipmentPM): any[] => {        
+    Validate = (entityPM: ShipmentPM): any[] => {
         this.Errors = [];
         this.entityPM = entityPM;
 
@@ -38,8 +38,8 @@ export class ShipmentValidator implements IShipmentValidator {
                 this.Errors.push("Ratio must be between 1-10");
             }
 
-            this.ValidatePartners(); 
-            this.ValidatePorts();                       
+            this.ValidatePartners();
+            this.ValidatePorts();
             this.ValidateInlandDomestic();
 
             if (AppTool.IsNullOrEmpty(this.entityPM.Id)) {
@@ -58,6 +58,7 @@ export class ShipmentValidator implements IShipmentValidator {
             this.ValidateDeliveries();
             this.ValidatePayables();
             this.ValidateReceivables();
+            this.ValidateProductItems();
             RoutingHelper.ValidateRoutingsActualDates(entityPM, this.Errors);
             RoutingHelper.ValidateRoutingsSeriesDates(entityPM, this.Errors);
         }
@@ -122,7 +123,7 @@ export class ShipmentValidator implements IShipmentValidator {
                 this.Errors.push(this.message.replace("%FieldName", TextCodeTranslator.Translate(textCode)));
             }
         }
-    }   
+    }
     private ValidateInlandDomestic() {
         if (this.IsInlandDomestic) {
             if (this.entityPM.ShipmentLevelCode == "C") {
@@ -211,13 +212,13 @@ export class ShipmentValidator implements IShipmentValidator {
     private ValidatePickups() {
 
         var validator = new ShipmentPickupValidator();
-        
+
         this.entityPM.ShipmentPickUps.forEach(item => {
             var errors: string[] = validator.Validate(item, this.entityPM);
 
             errors.forEach(i => {
                 this.Errors.push(i);
-            }); 
+            });
         });
     }
     private ValidateDeliveries() {
@@ -228,7 +229,7 @@ export class ShipmentValidator implements IShipmentValidator {
 
             errors.forEach(i => {
                 this.Errors.push(i);
-            });            
+            });
         });
 
     }
@@ -270,6 +271,15 @@ export class ShipmentValidator implements IShipmentValidator {
                 if (vatTypesIds.filter(f => f == item.VatTypeId).length == 0) {
                     vatTypesIds.push(item.VatTypeId);
                 }
+            }
+        });
+    }
+    private ValidateProductItems() {
+        this.entityPM.ShipmentProductItems.forEach(item => {
+            Validator.TryValidateObject(item, "ShipmentProductItem", this.Errors);
+
+            if (AppTool.IsNullOrEmpty(item.SKU)) {
+                this.Errors.push("Product Item SKU is required");
             }
         });
     }

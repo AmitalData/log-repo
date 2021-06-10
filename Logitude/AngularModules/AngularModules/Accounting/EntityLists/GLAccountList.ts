@@ -153,6 +153,7 @@ export class GLAccountList {
 	FirstPeriodsMonths: string;
 	SecondPeriodsMonths: string;
 	ThirdPeriodsMonths: string;
+	InsuredCreditLimit: number;
 	
 }
  

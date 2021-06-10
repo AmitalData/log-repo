@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CustomerUpdateClass
    {  		
-		public const string HashString = "ccd8b0c61d5bcdf4d2aa2e9f487c35a7";
+		public const string HashString = "1e3ae72f65dafe58e8a9a847ffcb83ff";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -9467,6 +9467,126 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CustomerProductItems",
+					  						ObjectTableName =  "Customer",
+					  						FieldsDataType =  "List",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CustomerProductItems",
+					  						ListPropertyPath =  "CustomerProductItems",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  true,
+					  						MultiTableName =  "ProductItem",
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CustomerProductItems",
+					  						DefaultText =  "CustomerProductItems",
+					  						FullLocalDefaultText =  "CustomerProductItems",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "InsuredcreditLimit",
+					  						ObjectTableName =  "Customer",
+					  						FieldsDataType =  "Double",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "InsuredcreditLimit",
+					  						ListPropertyPath =  "InsuredcreditLimit",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customer",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						DigitsAfterPoint =  2,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "InsuredcreditLimit",
+					  						DefaultText =  "Insured Credit Limit",
+					  						FullLocalDefaultText =  "מסגרת אשראי מבוטחת",
+					  						ListFieldLable =  "InsuredcreditLimitListLable",
+					  						ListLableDefaultText =  "Insured Credit Limit",
+					  						ListLocalDefaultText =  "מסגרת אשראי מבוטחת",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -9847,7 +9967,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	   		  
 	      
 
-	         Screen CustomerBillingTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customer.BillingTabScreen", Name = "Billing Tab Screen", ObjectTableId = CustomerObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 6, IsReadOnly = false }, screensRepository, tenantScreens);
+	         Screen CustomerBillingTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customer.BillingTabScreen", Name = "Billing Tab Screen", ObjectTableId = CustomerObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 7, IsReadOnly = false }, screensRepository, tenantScreens);
       
              ScreenField CustomerCustomerBillingTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.InvoiceCurrencyId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
@@ -9861,13 +9981,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	          
              ScreenField CustomerCustomerBillingTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.CreditLimitAmount", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField CustomerCustomerBillingTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.BankAddress", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField CustomerCustomerBillingTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.InsuredcreditLimit", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField CustomerCustomerBillingTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.Swift", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField CustomerCustomerBillingTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.BankAddress", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField CustomerCustomerBillingTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.AccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField CustomerCustomerBillingTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.Swift", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField CustomerCustomerBillingTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.IBANNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField CustomerCustomerBillingTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.AccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomerCustomerBillingTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.IBANNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	            
 	      
 
@@ -9937,20 +10059,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   Feature CustomerProductsFeature_TH11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "POTENTIAL", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.Potential", NameTextCodeDefaultText = "Potential", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
  
                  
-			   TextCode CustomerOccasionsTextCode_TH12 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Occasions", DefaultText = "Occasions",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomerOccasionsFeature_TH12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customer.Tab.Occasions", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerFeatures.CSOC", NameTextCodeDefaultText = "Occasions", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
+			   TextCode CustomerProductItemsTextCode_TH12 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.ProductItems", DefaultText = "Product Items",LocalDefaultText = "Product Items", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature CustomerProductItemsFeature_TH12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customer.Tab.ProductItems", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerFeatures.CUPI", NameTextCodeDefaultText = "Product Items", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
  
                  
-			   TextCode CustomerDocsOutTextCode_TH13 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.DocsOut", DefaultText = "Docs Out",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomerDocsOutFeature_TH13 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSOUT", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.DocsOut", NameTextCodeDefaultText = "Docs Out", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
+			   TextCode CustomerOccasionsTextCode_TH13 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Occasions", DefaultText = "Occasions",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature CustomerOccasionsFeature_TH13 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customer.Tab.Occasions", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerFeatures.CSOC", NameTextCodeDefaultText = "Occasions", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
  
                  
-			   TextCode CustomerDocsInTextCode_TH14 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.DocsIn", DefaultText = "Docs In",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomerDocsInFeature_TH14 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
+			   TextCode CustomerDocsOutTextCode_TH14 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.DocsOut", DefaultText = "Docs Out",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature CustomerDocsOutFeature_TH14 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSOUT", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.DocsOut", NameTextCodeDefaultText = "Docs Out", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
  
                  
-			   TextCode CustomerEventsTextCode_TH15 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomerEventsFeature_TH15 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
+			   TextCode CustomerDocsInTextCode_TH15 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.DocsIn", DefaultText = "Docs In",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature CustomerDocsInFeature_TH15 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
+ 
+                 
+			   TextCode CustomerEventsTextCode_TH16 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature CustomerEventsFeature_TH16 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -9980,13 +10106,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CLPO",HtmlComponentName = "",HtmlComponentUrl = "./CommonModules/CommonCustomer/Components/EditTabs/CustomerProductsTabComponent", FeatureId = CustomerProductsFeature_TH11.Id,FeatureUniqeCode = CustomerProductsFeature_TH11.FeatureUniqeCode, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.CustomerCRMTabs.ProductPotentialTabControl", ObjectTableId = CustomerObjectTable.Id, TabNameTextCodeId = CustomerProductsTextCode_TH11.Id, TabNameTextCodeCode = CustomerProductsTextCode_TH11.Code, Tenant = 0, IndexOrder = 11 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CSOC",HtmlComponentName = "",HtmlComponentUrl = "./CommonModules/CommonCustomer/Components/EditTabs/CustomerOccasionsTabComponent", FeatureId = CustomerOccasionsFeature_TH12.Id,FeatureUniqeCode = CustomerOccasionsFeature_TH12.FeatureUniqeCode, ControlPath = "./CommonModules/CommonCustomer/Components/EditTabs/CustomerOccasionsTabComponent", ObjectTableId = CustomerObjectTable.Id, TabNameTextCodeId = CustomerOccasionsTextCode_TH12.Id, TabNameTextCodeCode = CustomerOccasionsTextCode_TH12.Code, Tenant = 0, IndexOrder = 12 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CUPI",HtmlComponentName = "CustomerProductItemsTabComponent",HtmlComponentUrl = "./CommonModules/CommonCustomer/Components/EditTabs/CustomerProductItemsTabComponent", FeatureId = CustomerProductItemsFeature_TH12.Id,FeatureUniqeCode = CustomerProductItemsFeature_TH12.FeatureUniqeCode, ControlPath = "CustomerProductItemsTabComponent", ObjectTableId = CustomerObjectTable.Id, TabNameTextCodeId = CustomerProductItemsTextCode_TH12.Id, TabNameTextCodeCode = CustomerProductItemsTextCode_TH12.Code, Tenant = 0, IndexOrder = 12 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CLDO",HtmlComponentName = "",HtmlComponentUrl = "./CommonModules/CommonCustomer/Components/EditTabs/CustomerDocsOutTabComponent", FeatureId = CustomerDocsOutFeature_TH13.Id,FeatureUniqeCode = CustomerDocsOutFeature_TH13.FeatureUniqeCode, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.CustomerCRMTabs.CustomerDocsOutTabControl", ObjectTableId = CustomerObjectTable.Id, TabNameTextCodeId = CustomerDocsOutTextCode_TH13.Id, TabNameTextCodeCode = CustomerDocsOutTextCode_TH13.Code, Tenant = 0, IndexOrder = 13 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CSOC",HtmlComponentName = "",HtmlComponentUrl = "./CommonModules/CommonCustomer/Components/EditTabs/CustomerOccasionsTabComponent", FeatureId = CustomerOccasionsFeature_TH13.Id,FeatureUniqeCode = CustomerOccasionsFeature_TH13.FeatureUniqeCode, ControlPath = "./CommonModules/CommonCustomer/Components/EditTabs/CustomerOccasionsTabComponent", ObjectTableId = CustomerObjectTable.Id, TabNameTextCodeId = CustomerOccasionsTextCode_TH13.Id, TabNameTextCodeCode = CustomerOccasionsTextCode_TH13.Code, Tenant = 0, IndexOrder = 13 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CLDI",HtmlComponentName = "",HtmlComponentUrl = "./CommonModules/CommonCustomer/Components/EditTabs/CustomerDocsInTabComponent", FeatureId = CustomerDocsInFeature_TH14.Id,FeatureUniqeCode = CustomerDocsInFeature_TH14.FeatureUniqeCode, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.CustomerCRMTabs.CustomerDocsInTabControl", ObjectTableId = CustomerObjectTable.Id, TabNameTextCodeId = CustomerDocsInTextCode_TH14.Id, TabNameTextCodeCode = CustomerDocsInTextCode_TH14.Code, Tenant = 0, IndexOrder = 14 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CLDO",HtmlComponentName = "",HtmlComponentUrl = "./CommonModules/CommonCustomer/Components/EditTabs/CustomerDocsOutTabComponent", FeatureId = CustomerDocsOutFeature_TH14.Id,FeatureUniqeCode = CustomerDocsOutFeature_TH14.FeatureUniqeCode, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.CustomerCRMTabs.CustomerDocsOutTabControl", ObjectTableId = CustomerObjectTable.Id, TabNameTextCodeId = CustomerDocsOutTextCode_TH14.Id, TabNameTextCodeCode = CustomerDocsOutTextCode_TH14.Code, Tenant = 0, IndexOrder = 14 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CSEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CustomerEventsFeature_TH15.Id,FeatureUniqeCode = CustomerEventsFeature_TH15.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CustomerObjectTable.Id, TabNameTextCodeId = CustomerEventsTextCode_TH15.Id, TabNameTextCodeCode = CustomerEventsTextCode_TH15.Code, Tenant = 0, IndexOrder = 15 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CLDI",HtmlComponentName = "",HtmlComponentUrl = "./CommonModules/CommonCustomer/Components/EditTabs/CustomerDocsInTabComponent", FeatureId = CustomerDocsInFeature_TH15.Id,FeatureUniqeCode = CustomerDocsInFeature_TH15.FeatureUniqeCode, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.CustomerCRMTabs.CustomerDocsInTabControl", ObjectTableId = CustomerObjectTable.Id, TabNameTextCodeId = CustomerDocsInTextCode_TH15.Id, TabNameTextCodeCode = CustomerDocsInTextCode_TH15.Code, Tenant = 0, IndexOrder = 15 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CSEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CustomerEventsFeature_TH16.Id,FeatureUniqeCode = CustomerEventsFeature_TH16.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CustomerObjectTable.Id, TabNameTextCodeId = CustomerEventsTextCode_TH16.Id, TabNameTextCodeCode = CustomerEventsTextCode_TH16.Code, Tenant = 0, IndexOrder = 16 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -10480,6 +10608,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
                 LocalName =  "GLAccount was disconnected",
                 IsManualEntry =  false,
                 ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = CustomerObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "PIUP",
+                EnglishName =  "Product Items Updated",
+                LocalName =  "Product Items Updated",
+                IsManualEntry =  false,
+                ShortView =  true,
                 IsAgentView =  false,
                 IsCustomerView =  false,
                 IsSharedLogisticsEnabled =  false,

@@ -324,282 +324,285 @@ namespace WebFreight.Web.Helpers
                 object[] parameters = new object[] { xmlFilters, tenant };
                 int count = (int)getCountMethodInfo.Invoke(context, parameters);
 
-                // Get dataList
-                int pagesize = count;
-                if (pagesize > 65534)
+                if (count > 0)
                 {
-                    queryOperations.GetAll = false;
-                    pagesize = 65000;
-                }
-                queryOperations.PageSize = pagesize;
-                xmlFilters = filterSerializer.SerializeFilterItems(queryOperations);
-
-                parameters = new object[] { xmlFilters, tenant };
-
-                var queryResult = getListMethodInfo.Invoke(context, parameters);
-                querableEntities = queryResult as IQueryable;
-                IEnumerator datalist =null;
-                if (querableEntities == null)
-                {
-                    //var queryResult = getListMethodInfo.Invoke(context, parameters);
-                    if (queryResult != null)
+                    // Get dataList
+                    int pagesize = count;
+                    if (pagesize > 65534)
                     {
-                        IList list = queryResult as IList;
-                        if (list != null)
-                        {
-                            //querableEntities = list.AsQueryable(); 
-                            datalist = list.GetEnumerator();
-                        }
-
+                        queryOperations.GetAll = false;
+                        pagesize = 65000;
                     }
-                }
-                else
-                {
-                     datalist = querableEntities.GetEnumerator();
-                }
-                
+                    queryOperations.PageSize = pagesize;
+                    xmlFilters = filterSerializer.SerializeFilterItems(queryOperations);
 
-                if (datalist != null)
-                {
+                    parameters = new object[] { xmlFilters, tenant };
 
-                    //IEnumerator datalist = querableEntities.GetEnumerator();
-                    xmlData = ConvertDataList2Xml(datalist, query, queryColumns, tenant);
-
-
-                    //New instance of XlsIO is created.[Equivalent to launching MS Excel with no workbooks open].
-                    //The instantiation process consists of two steps.
-
-                    //Step 1 : Instantiate the spreadsheet creation engine.
-                    ExcelEngine excelEngine = new ExcelEngine();
-                    //Step 2 : Instantiate the excel application object.
-                    IApplication application = excelEngine.Excel;
-
-                    //A new workbook is created.[Equivalent to creating a new workbook in MS Excel]
-                    //The new workbook will have 5 worksheets
-                    IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
-                    //The first worksheet object in the worksheets collection is accessed.
-                    IWorksheet sheet = workbook.Worksheets[0];
-                    //****************************** Creating excel from xml string *****************************
-          
-                    //sheet.Range["A2:H2"].Merge();
-                    //sheet.Range["A1:P1"].Merge();
-                    //sheet.Range["A1:H2"].Merge();
-                    //sheet.Range["A2:H2"].CellStyle.FillBackground = ExcelKnownColors.LightGreen;
-
-                    sheet.Range["A2:C2"].Merge();
-                    sheet.Range["A2:C2"].Text =!string.IsNullOrEmpty(query.DisplayText) ? query.DisplayText : TextCodesTranslator.TranslateText(query.NameTextCodeCode, tenant);
-                    sheet.Range["A2:C2"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
-                    sheet.Range["A2:C2"].CellStyle.Font.Bold = true;
-                    sheet.Range["A2:C2"].CellStyle.Font.Color = ExcelKnownColors.Black;
-                    sheet.Range["A2:C2"].CellStyle.Font.Size = 12;
-                    sheet.Range["A2:C2"].CellStyle.Font.FontName = "Thoma";
-                    sheet.Range["A2:Z2"].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
-                    sheet.Range["A3:Z3"].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
-
-
-                    foreach (QueryColumnPM column in queryColumns)
+                    var queryResult = getListMethodInfo.Invoke(context, parameters);
+                    querableEntities = queryResult as IQueryable;
+                    IEnumerator datalist = null;
+                    if (querableEntities == null)
                     {
-                        sheet.AutofitColumn(column.IndexOrder + 1);
+                        //var queryResult = getListMethodInfo.Invoke(context, parameters);
+                        if (queryResult != null)
+                        {
+                            IList list = queryResult as IList;
+                            if (list != null)
+                            {
+                                //querableEntities = list.AsQueryable(); 
+                                datalist = list.GetEnumerator();
+                            }
 
+                        }
+                    }
+                    else
+                    {
+                        datalist = querableEntities.GetEnumerator();
                     }
 
-                    XmlReader reader = XmlReader.Create(new StringReader(xmlData));
-                    XmlDataDocument doc = new XmlDataDocument();
-                    doc.Load(reader);
 
-                    doc.GetElementsByTagName(query.ObjectTableName);
-                    XmlNodeList entitiesList = doc.GetElementsByTagName(query.ObjectTableName);
-
-                    if (entitiesList.Count == 0)
+                    if (datalist != null)
                     {
-                        string ip = "";
-                        if (HttpContext.Current != null && HttpContext.Current.Request != null)
+
+                        //IEnumerator datalist = querableEntities.GetEnumerator();
+                        xmlData = ConvertDataList2Xml(datalist, query, queryColumns, tenant);
+
+
+                        //New instance of XlsIO is created.[Equivalent to launching MS Excel with no workbooks open].
+                        //The instantiation process consists of two steps.
+
+                        //Step 1 : Instantiate the spreadsheet creation engine.
+                        ExcelEngine excelEngine = new ExcelEngine();
+                        //Step 2 : Instantiate the excel application object.
+                        IApplication application = excelEngine.Excel;
+
+                        //A new workbook is created.[Equivalent to creating a new workbook in MS Excel]
+                        //The new workbook will have 5 worksheets
+                        IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
+                        //The first worksheet object in the worksheets collection is accessed.
+                        IWorksheet sheet = workbook.Worksheets[0];
+                        //****************************** Creating excel from xml string *****************************
+
+                        //sheet.Range["A2:H2"].Merge();
+                        //sheet.Range["A1:P1"].Merge();
+                        //sheet.Range["A1:H2"].Merge();
+                        //sheet.Range["A2:H2"].CellStyle.FillBackground = ExcelKnownColors.LightGreen;
+
+                        sheet.Range["A2:C2"].Merge();
+                        sheet.Range["A2:C2"].Text = !string.IsNullOrEmpty(query.DisplayText) ? query.DisplayText : TextCodesTranslator.TranslateText(query.NameTextCodeCode, tenant);
+                        sheet.Range["A2:C2"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
+                        sheet.Range["A2:C2"].CellStyle.Font.Bold = true;
+                        sheet.Range["A2:C2"].CellStyle.Font.Color = ExcelKnownColors.Black;
+                        sheet.Range["A2:C2"].CellStyle.Font.Size = 12;
+                        sheet.Range["A2:C2"].CellStyle.Font.FontName = "Thoma";
+                        sheet.Range["A2:Z2"].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
+                        sheet.Range["A3:Z3"].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
+
+
+                        foreach (QueryColumnPM column in queryColumns)
                         {
-                            string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
-                            if (string.IsNullOrEmpty(currentIP))
-                            {
-                                currentIP = HttpContext.Current.Request.UserHostAddress;
-                            }
-                            ip = currentIP;
+                            sheet.AutofitColumn(column.IndexOrder + 1);
+
                         }
-                        //ExceptionHandler.HandleException(new Exception("Error while building xml file, table columns are empty!"), DateTime.Now, tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "", "ExcelExportService : ExportQueryToExcel Method", ip);
-                        return null;
-                    }
 
-                    int[,] array = new int[,] { { 65, 0 } };
-                    
-                    foreach (XmlNode node in entitiesList.Item(0).ChildNodes)
-                    {
-                        string nodename = TranslateTextsClass.Translate(node.Name, tenant);
-                        QueryColumnPM column = queryColumns.Where(q => q.ObjectFieldListLabelTextCodeCode == node.Name || q.ObjectFieldFullNameTextCodeCode == node.Name).FirstOrDefault();
-                        if (column != null)
+                        XmlReader reader = XmlReader.Create(new StringReader(xmlData));
+                        XmlDataDocument doc = new XmlDataDocument();
+                        doc.Load(reader);
+
+                        doc.GetElementsByTagName(query.ObjectTableName);
+                        XmlNodeList entitiesList = doc.GetElementsByTagName(query.ObjectTableName);
+
+                        if (entitiesList.Count == 0)
                         {
-                            if (!string.IsNullOrEmpty(column.DisplayText))
+                            string ip = "";
+                            if (HttpContext.Current != null && HttpContext.Current.Request != null)
                             {
-
-                                nodename = column.DisplayText;
+                                string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
+                                if (string.IsNullOrEmpty(currentIP))
+                                {
+                                    currentIP = HttpContext.Current.Request.UserHostAddress;
+                                }
+                                ip = currentIP;
                             }
+                            //ExceptionHandler.HandleException(new Exception("Error while building xml file, table columns are empty!"), DateTime.Now, tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "", "ExcelExportService : ExportQueryToExcel Method", ip);
+                            return null;
                         }
 
-                        nodename = nodename != null ? nodename : "";
-                        nodename = nodename.Replace(":", "").Replace("/", "").Replace("\"", "").Replace("?", "").Replace("*", "").Replace("[", "").Replace("]", "").Replace("(", "").Replace(")", "");
-                        int start = 65;
-                        string sheetColumn = "";
-                        if (array[0, 0] <= 90 && array[0, 1] == 0)
+                        int[,] array = new int[,] { { 65, 0 } };
+
+                        foreach (XmlNode node in entitiesList.Item(0).ChildNodes)
                         {
-                            char a = (char)array[0, 0];
-                            sheetColumn = a.ToString();
-                            array[0, 0]++;
-                        }
-                        else
-                        {
-                            if (array[0, 1] == 0)
+                            string nodename = TranslateTextsClass.Translate(node.Name, tenant);
+                            QueryColumnPM column = queryColumns.Where(q => q.ObjectFieldListLabelTextCodeCode == node.Name || q.ObjectFieldFullNameTextCodeCode == node.Name).FirstOrDefault();
+                            if (column != null)
                             {
-                                array[0, 0] = start;
-                                array[0, 1] = 65;
+                                if (!string.IsNullOrEmpty(column.DisplayText))
+                                {
 
-                                sheet.Range["AA2:AZ2"].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
-                                sheet.Range["AA3:AZ3"].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
-
+                                    nodename = column.DisplayText;
+                                }
                             }
-                            if (array[0, 1] <= 90)
+
+                            nodename = nodename != null ? nodename : "";
+                            nodename = nodename.Replace(":", "").Replace("/", "").Replace("\"", "").Replace("?", "").Replace("*", "").Replace("[", "").Replace("]", "").Replace("(", "").Replace(")", "");
+                            int start = 65;
+                            string sheetColumn = "";
+                            if (array[0, 0] <= 90 && array[0, 1] == 0)
                             {
-                                string a = sheetColumn = ((char)array[0, 0]).ToString() + ((char)array[0, 1]).ToString();
-                                array[0, 1]++;
+                                char a = (char)array[0, 0];
+                                sheetColumn = a.ToString();
+                                array[0, 0]++;
                             }
                             else
                             {
-                                start += 1;
-                                array[0, 0] = start;
-                                array[0, 1] = 65;
-                                string a = sheetColumn = ((char)array[0, 0]).ToString() + ((char)array[0, 1]).ToString();
-                                array[0, 1]++;
-                                char startCharacter = Convert.ToChar(start);
-                                sheet.Range["AA2:" + startCharacter + "Z2"].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
-                                sheet.Range["AA3:" + startCharacter + "Z3"].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
-                            }
+                                if (array[0, 1] == 0)
+                                {
+                                    array[0, 0] = start;
+                                    array[0, 1] = 65;
 
-                        };
+                                    sheet.Range["AA2:AZ2"].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
+                                    sheet.Range["AA3:AZ3"].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
 
-                        sheet.Range[sheetColumn.ToString() + "3"].Text = nodename;
-                        IRange range = sheet.Range[sheetColumn + "3"];
-                        //sheet.Range.NumberFormat = "yyyy-mm-dd;@";
-                        range.CellStyle.Font.FontName = "Times New Roman";
-                        range.CellStyle.Font.Bold = true;
-                      
-                    }
-                    //TenantRepository tenantRepoitory = new TenantRepository(tenant);
-                    //var CurTenant = tenantRepoitory.GetSingleByTenant(tenant);
-                    int cellRow = 4;
-                    TenantRepository tenantRepoitory = new TenantRepository(tenant);
-                    var CurTenant = tenantRepoitory.GetSingleByTenant(tenant);
-                    foreach (XmlNode node in entitiesList)
-                    {
-                        int cellCol = 1;
-                        foreach (XmlNode childNode in node.ChildNodes)
-                        {
+                                }
+                                if (array[0, 1] <= 90)
+                                {
+                                    string a = sheetColumn = ((char)array[0, 0]).ToString() + ((char)array[0, 1]).ToString();
+                                    array[0, 1]++;
+                                }
+                                else
+                                {
+                                    start += 1;
+                                    array[0, 0] = start;
+                                    array[0, 1] = 65;
+                                    string a = sheetColumn = ((char)array[0, 0]).ToString() + ((char)array[0, 1]).ToString();
+                                    array[0, 1]++;
+                                    char startCharacter = Convert.ToChar(start);
+                                    sheet.Range["AA2:" + startCharacter + "Z2"].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
+                                    sheet.Range["AA3:" + startCharacter + "Z3"].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
+                                }
 
-                            QueryColumnPM column = queryColumns.Where(q => q.ObjectFieldListLabelTextCodeCode == childNode.Name || q.ObjectFieldFullNameTextCodeCode == childNode.Name).FirstOrDefault();
-                           
-                            switch (column.ObjectFieldDataTypeCode)
-                            {
-                                case "Text":
-                                    {
-                                        sheet.Range[cellRow, cellCol].Text = childNode.InnerText.Trim();
-                                        break;
-                                    }
+                            };
 
-                                case "Boolean":
-                                    {
-                                        Boolean b = false;
-                                        Boolean.TryParse(childNode.InnerText.Trim(), out b);
-                                        sheet.Range[cellRow, cellCol].Boolean = b;
-                                        break;
-                                    }
+                            sheet.Range[sheetColumn.ToString() + "3"].Text = nodename;
+                            IRange range = sheet.Range[sheetColumn + "3"];
+                            //sheet.Range.NumberFormat = "yyyy-mm-dd;@";
+                            range.CellStyle.Font.FontName = "Times New Roman";
+                            range.CellStyle.Font.Bold = true;
 
-                                case "Constant":
-                                    {
-                                        sheet.Range[cellRow, cellCol].Text = childNode.InnerText.Trim();
-                                        break;
-                                    }
-
-                                case "DateTime":
-                                    {
-                                        DateTime date;
-                                        if (DateTime.TryParse(childNode.InnerText.Trim(), out date))
-                                        {
-                                            sheet.Range[cellRow, cellCol].DateTime = date.Date;
-                                            string datetimeformat = @"dd\/MM\/yyyy";
-                                            if (!string.IsNullOrEmpty(CurTenant.DateTimeFormat))
-                                            {
-                                                datetimeformat = CurTenant.DateTimeFormat;
-                                            }
-                                            sheet.Range[cellRow, cellCol].NumberFormat = datetimeformat;
-                                        }
-                                        else
-                                        {
-                                            sheet.Range[cellRow, cellCol].Text = "";
-                                        }
-                                        break;
-                                    }
-
-                                case "Decimal":
-                                    {
-                                        double dex = 0;
-                                        double.TryParse(childNode.InnerText.Trim(), out dex);
-                                        sheet.Range[cellRow, cellCol].Number = dex;
-                                        break;
-                                    }
-
-                                case "SigDouble":
-                                case "Double":
-                                    {
-                                        double d = 0;
-                                        double.TryParse(childNode.InnerText.Trim(), out d);
-                                        sheet.Range[cellRow, cellCol].Number = d;
-                                        break;
-                                    }
-
-                                case "Integer":
-                                    {
-                                        int x = 0;
-                                        int.TryParse(childNode.InnerText.Trim(), out x);
-                                        sheet.Range[cellRow, cellCol].Number = x;
-                                        break;
-                                    }
-
-                                default:
-                                    {
-                                        sheet.Range[cellRow, cellCol].Text = childNode.InnerText.Trim();
-                                        break;
-                                    }
-                            }
-
-                            //sheet.Range[cellRow, cellCol].Text = childNode.InnerText.Trim();
-                            //if (cellCol <= 2)
-                            //    sheet.Range[cellRow, cellCol].ColumnWidth = 30;
-
-
-
-                            cellCol++;
                         }
-                        cellRow++;
-                        
+                        //TenantRepository tenantRepoitory = new TenantRepository(tenant);
+                        //var CurTenant = tenantRepoitory.GetSingleByTenant(tenant);
+                        int cellRow = 4;
+                        TenantRepository tenantRepoitory = new TenantRepository(tenant);
+                        var CurTenant = tenantRepoitory.GetSingleByTenant(tenant);
+                        foreach (XmlNode node in entitiesList)
+                        {
+                            int cellCol = 1;
+                            foreach (XmlNode childNode in node.ChildNodes)
+                            {
 
+                                QueryColumnPM column = queryColumns.Where(q => q.ObjectFieldListLabelTextCodeCode == childNode.Name || q.ObjectFieldFullNameTextCodeCode == childNode.Name).FirstOrDefault();
+
+                                switch (column.ObjectFieldDataTypeCode)
+                                {
+                                    case "Text":
+                                        {
+                                            sheet.Range[cellRow, cellCol].Text = childNode.InnerText.Trim();
+                                            break;
+                                        }
+
+                                    case "Boolean":
+                                        {
+                                            Boolean b = false;
+                                            Boolean.TryParse(childNode.InnerText.Trim(), out b);
+                                            sheet.Range[cellRow, cellCol].Boolean = b;
+                                            break;
+                                        }
+
+                                    case "Constant":
+                                        {
+                                            sheet.Range[cellRow, cellCol].Text = childNode.InnerText.Trim();
+                                            break;
+                                        }
+
+                                    case "DateTime":
+                                        {
+                                            DateTime date;
+                                            if (DateTime.TryParse(childNode.InnerText.Trim(), out date))
+                                            {
+                                                sheet.Range[cellRow, cellCol].DateTime = date.Date;
+                                                string datetimeformat = @"dd\/MM\/yyyy";
+                                                if (!string.IsNullOrEmpty(CurTenant.DateTimeFormat))
+                                                {
+                                                    datetimeformat = CurTenant.DateTimeFormat;
+                                                }
+                                                sheet.Range[cellRow, cellCol].NumberFormat = datetimeformat;
+                                            }
+                                            else
+                                            {
+                                                sheet.Range[cellRow, cellCol].Text = "";
+                                            }
+                                            break;
+                                        }
+
+                                    case "Decimal":
+                                        {
+                                            double dex = 0;
+                                            double.TryParse(childNode.InnerText.Trim(), out dex);
+                                            sheet.Range[cellRow, cellCol].Number = dex;
+                                            break;
+                                        }
+
+                                    case "SigDouble":
+                                    case "Double":
+                                        {
+                                            double d = 0;
+                                            double.TryParse(childNode.InnerText.Trim(), out d);
+                                            sheet.Range[cellRow, cellCol].Number = d;
+                                            break;
+                                        }
+
+                                    case "Integer":
+                                        {
+                                            int x = 0;
+                                            int.TryParse(childNode.InnerText.Trim(), out x);
+                                            sheet.Range[cellRow, cellCol].Number = x;
+                                            break;
+                                        }
+
+                                    default:
+                                        {
+                                            sheet.Range[cellRow, cellCol].Text = childNode.InnerText.Trim();
+                                            break;
+                                        }
+                                }
+
+                                //sheet.Range[cellRow, cellCol].Text = childNode.InnerText.Trim();
+                                //if (cellCol <= 2)
+                                //    sheet.Range[cellRow, cellCol].ColumnWidth = 30;
+
+
+
+                                cellCol++;
+                            }
+                            cellRow++;
+
+
+                        }
+
+
+                        //***************************************************************************
+                        //Inserting sample text into the range of cells of the first worksheet.
+                        //sheet.Range["A1:N30"].Text = "Hello World";
+
+                        //Saving the workbook to disk.
+
+                        workbook.SaveAs(memory, ExcelSaveType.SaveAsXLS);
+
+                        //No exception will be thrown if there are unsaved workbooks.
+                        excelEngine.ThrowNotSavedOnDestroy = false;
+                        excelEngine.Dispose();
                     }
-
-
-                    //***************************************************************************
-                    //Inserting sample text into the range of cells of the first worksheet.
-                    //sheet.Range["A1:N30"].Text = "Hello World";
-
-                    //Saving the workbook to disk.
-
-                    workbook.SaveAs(memory, ExcelSaveType.SaveAsXLS);
-
-                    //No exception will be thrown if there are unsaved workbooks.
-                    excelEngine.ThrowNotSavedOnDestroy = false;
-                    excelEngine.Dispose();
                 }
             }
             //}

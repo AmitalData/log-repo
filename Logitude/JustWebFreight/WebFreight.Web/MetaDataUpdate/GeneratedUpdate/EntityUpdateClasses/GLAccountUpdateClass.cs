@@ -8920,8 +8920,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "LastReconciledBy",
 					  						ObjectTableName =  "GLAccount",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "User",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  false,
@@ -8934,7 +8933,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
-					  						Operator =  "Equals",
+					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -9109,7 +9108,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "PaymentTerm",
 					  						ObjectTableName =  "GLAccount",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  40,
 					  						IsRequired =  false,
@@ -9297,8 +9296,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "Salesman",
 					  						ObjectTableName =  "GLAccount",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "User",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  false,
@@ -9311,6 +9309,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -9359,8 +9358,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "Collector",
 					  						ObjectTableName =  "GLAccount",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "User",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  false,
@@ -9373,6 +9371,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -9991,6 +9990,70 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ThirdPeriodsMonths",
 					  						DefaultText =  "ThirdPeriodsMonths",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "InsuredCreditLimit",
+					  						ObjectTableName =  "GLAccount",
+					  						FieldsDataType =  "Double",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "InsuredCreditLimit",
+					  						ListPropertyPath =  "InsuredCreditLimit",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "GLAccount",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  18,
+					  						DigitsAfterPoint =  2,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "InsuredCreditLimit",
+					  						DefaultText =  "Insured Credit Limit",
+					  						FullLocalDefaultText =  "מסגרת אשראי מבוטחת",
+					  						ListFieldLable =  "InsuredCreditLimitListLable",
+					  						ListLableDefaultText =  "Insured Credit Limit",
+					  						ListLocalDefaultText =  "מסגרת אשראי מבוטחת",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -12127,6 +12190,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode GLAccountTextCode_GLAccountsOParent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.Parent", DefaultText = "Parent",LocalDefaultText = @"אב", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountsOChild = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.Child", DefaultText = "Child",LocalDefaultText = @"בן", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOAmountIsInsured = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.AmountIsInsured", DefaultText = "of this amount is insured",LocalDefaultText = @"מהסכום הוא מבוטח", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
