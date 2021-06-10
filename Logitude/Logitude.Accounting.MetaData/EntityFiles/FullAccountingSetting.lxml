@@ -3870,14 +3870,5 @@
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
-    <Feature
-      Code="&quot;AgingDefenetionSettings&quot;"
-      FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;FullAccountingSetting.Features.FullAccountingSetting.F.AgingDefenetion&quot;"
-      FeatureDefaultText="&quot;Aging Period Definition Settings&quot;"
-      IsPackagable="true"
-      IsOld="false"
-      IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>
