@@ -144,11 +144,11 @@
                      *ngFor="let card of SliderCards"
                      [class.active]="card.IsActive"
                      [class.dim]="card.IsDimmed"
-                     [class.warning]="card.HasWarning">
-                    <div class="code">{{card.Code}}</div>
+                     [class.warning]="false">
                     <div class="date">{{card.Date | date: 'dd'}} <span>{{card.Date | date: 'MMM'}}</span></div>
                     <div class="title">{{card.Title}}</div>
-                    <div class="desc hide-mobile">{{card.Description}}</div>
+                    <div class="desc hide-mobile "  [attr.title]="card.Description"
+                         style="overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">{{card.Description}}</div>
                 </div>
 
             </div>
