@@ -30,7 +30,12 @@
             private versionDocumentName: string;
             public get VersionDocumentName() { return this.versionDocumentName; }
             public set VersionDocumentName(newValue: string) { this.versionDocumentName = newValue; this.MarkAsDirty(); }
-             
+
+            private privateLabelId: string;
+            public get PrivateLabelId() { return this.privateLabelId; }
+            public set PrivateLabelId(newValue: string) { this.privateLabelId = newValue; this.MarkAsDirty(); }
+
+
             private date: Date;
             public get Date() { return this.date; }
             public set Date(newValue: Date) { this.date = newValue; this.MarkAsDirty(); }

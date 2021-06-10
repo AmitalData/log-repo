@@ -109,12 +109,12 @@ namespace WebFreight.Web.Helpers
         {
             if (!sharedLogisticsSetting.IsShipperShared)
             {
-                queryColumns = queryColumns.Where(d => d.ObjectFieldName != "ShipperId").ToList();
+                queryColumns = queryColumns.Where(d => d.ObjectFieldName != "Shipper").ToList();
             }
 
             if (!sharedLogisticsSetting.IsConsigneeShared)
             {
-                queryColumns = queryColumns.Where(d => d.ObjectFieldCode != "ConsigneeId").ToList();
+                queryColumns = queryColumns.Where(d => d.ObjectFieldName != "Consignee").ToList();
             }
 
         }

@@ -590,22 +590,32 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.UpdateExtendedTasksDueDate();
 
                 // Produce shipment update msg
-                ProduceShipmentUpdateKafkaMessage();
+                AddShipmentUpdateKafkaQueueMessage();
 
 
                 scope.Complete();
                 #endregion
             }
         }
-        private void ProduceShipmentUpdateKafkaMessage()
+        private void AddShipmentUpdateKafkaQueueMessage()
         {
-            if (entityPM.Tenant == 1321 || entityPM.Tenant == 951)
+            if (!FeatureToggleHelper.HasFeatureToggle("CTL", entityPM.Tenant))
             {
-                var ShipmentUpdateMessageProducer = new Producer();
-                var serializedShipmentUpdateMessage = JsonConvert.SerializeObject(entityPM, Formatting.Indented);
-                ShipmentUpdateMessageProducer.Produce(MessageType.Shipment, serializedShipmentUpdateMessage);
+                return;
             }
+            AddKafkaQueueMessage();
         }
+
+        private void AddKafkaQueueMessage()
+        {
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("CToolShipments", 0);
+            var queueMessage = new Dictionary<string, string>() {
+                { "ShipmentId", entityPM.Id },
+                { "Tenant", tenant.ToString()}};
+            queueservice.Send(queueMessage,tenant); 
+        }
+
         private void UpdatePayablesLinesVatAmounts()
         {
             if (initializer.ShipmentPayablesChangeSet != null && initializer.ShipmentPayablesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.None).Any())
@@ -6899,8 +6909,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 entityPM.IsProductItemsUpdated = false;
             }
-        }    
-        
+        }
+
         private void UpdatePickUpDeliveryStandaloneFieldsOnShipmentUpdate()
         {
             ShipmentPickUpDelivery shipmentPickUpDelivery = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDeliveryByStandaloneShipmentId(entityPM.Id, tenant);
@@ -6927,7 +6937,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             List<ShipmentProductItemPM> shipmentProductItem = this.entityPM.ShipmentProductItems.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
 
             entityPM.IsHTSMissing = false;
-            
+
             if (shipmentProductItem.Count > 0 && shipmentProductItem.Where(d => string.IsNullOrEmpty(d.HTSCode)).Any())
             {
                 entityPM.IsHTSMissing = true;
@@ -6953,7 +6963,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             ShipmentPM stanAloneShipmentPM = shipmentQuery.GetSinglePM(shipmentId, this.tenant);
             if (stanAloneShipmentPM != null)
             {
-                this.MapStandaloneShipmentFields(stanAloneShipmentPM, standalonePickupDeliveryId);                
+                this.MapStandaloneShipmentFields(stanAloneShipmentPM, standalonePickupDeliveryId);
                 ShipmentService shipmentService = new ShipmentService(this.objectContext, stanAloneShipmentPM, "");
                 shipmentService.Update();
             }

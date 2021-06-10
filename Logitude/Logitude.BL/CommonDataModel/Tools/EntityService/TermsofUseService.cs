@@ -42,10 +42,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.entityPm = entityPM;
             this.Poco = new TermsofUse();
             this.entityPm.Date = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
-            this.entityPm.Tenant = entityPM.Tenant;
-            this.entityPm.VersionNumber = GetLastVersionNumber() + 1; 
-            TermsofUseMapping.MapEntity(entityPM, Poco);
-            
+            this.entityPm.Tenant = entityPM.Tenant; 
+            this.entityPm.VersionNumber = GetLastVersionNumber() + 1;
+            TermsofUseMapping.MapEntity(entityPM, Poco); 
             entityRepository.Add(Poco); 
             entityPM.Id = this.Poco.Id;
             entityRepository.SubmitChanges(); 
@@ -55,7 +54,16 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private int GetLastVersionNumber()
         {
-            return entityRepository.GetLastTermsofUseVersionNumber( entityPm.Tenant);
+            int lastVersion; 
+            if (string.IsNullOrEmpty(entityPm.PrivateLabelId))
+            {
+                lastVersion = entityRepository.GetDefaultLatestVersionNumber();
+            }
+            else
+            {
+                lastVersion = entityRepository.GetPrivateLabelLatestVersionNumber(entityPm.PrivateLabelId);
+            }
+            return lastVersion;
         }
     }
 }

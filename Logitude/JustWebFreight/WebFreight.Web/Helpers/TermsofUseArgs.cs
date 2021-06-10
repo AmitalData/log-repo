@@ -10,7 +10,8 @@ namespace WebFreight.Web.Helpers
         public bool IsTermOfUse { get; set; }
         public int VersionNumber { get; set; }
         public string VersionDocumentId { get; set; }
-        public int Id { get; set; }
+        public int Id { get; set; } 
+        public string PrivateLabelId { get; set; }
 
     }
 }

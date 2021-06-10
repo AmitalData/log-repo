@@ -4,4 +4,5 @@ export class TermsofUseArgs {
     public VersionDocumentId: string;
     public IsTermOfUse: boolean = false;
     public Id: number;
+    public PrivateLabelId: string;
 }

@@ -32,7 +32,9 @@ export class TermsOfUseStartupComponent implements OnInit {
 
     ShowBusyIndicator: boolean;
     BusyIndicatorText: string;
-     
+
+    PrivateLabelId: string;
+
     public LogoURL: string = "./Images/LoginScreen/header.jpg";
     public Name: string = "Logitude";
 
@@ -66,11 +68,11 @@ export class TermsOfUseStartupComponent implements OnInit {
 
     }
 
-    Load(versionDocumentId: string, termsOfUseId: number) {
-  
-        this.VersionDocumentId = versionDocumentId;
-        this.TermsOfUseId = termsOfUseId;
+    Load(privateLabelId: string, termsOfUseId: number) {
 
+        this.PrivateLabelId = privateLabelId; 
+        this.TermsOfUseId = termsOfUseId;
+         
     }
 
     DeclineButtonClicked() {
@@ -114,12 +116,12 @@ export class TermsOfUseStartupComponent implements OnInit {
     }
 
     GetTermsofUseDocument() {
-        if (this.VersionDocumentId == null) {
+        if (this.PrivateLabelId == null) {
             // Tenant 0 terms of use
             var documentId = this.TermsOfUseId + "_termsofuses";
             DownloadManager.DownloadPage(documentId);
-        } else{ 
-            DownloadManager.DownloadPage(this.VersionDocumentId); 
+        } else{  
+            DownloadManager.DownloadTermsOfUse(this.PrivateLabelId);
         } 
     } 
 
