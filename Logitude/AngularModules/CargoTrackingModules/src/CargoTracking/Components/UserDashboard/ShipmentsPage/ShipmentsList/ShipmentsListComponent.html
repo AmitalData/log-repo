@@ -214,9 +214,9 @@
 
                         <!-- Sender -->
                         <div class="column col-md-2 sender" style="width: 12%;">
-                            <div  [attr.src]="SetSupplierOrClientTitle(shipment)">
+                            <div  [attr.src]="SetTitileAndValueForSupplierOrClient(shipment)">
                                 <div class="subtitle">{{SupplierOrClientTitle}}</div>
-                                <div class="value truncateText"></div>
+                                <div class="value truncateText">{{SupplierOrClientValue}}</div>
 
 
                                 <div class="subtitle hide-mobile"  [attr.src]="SetShipmenTypeForRouting(shipment)">ROUTING</div>
