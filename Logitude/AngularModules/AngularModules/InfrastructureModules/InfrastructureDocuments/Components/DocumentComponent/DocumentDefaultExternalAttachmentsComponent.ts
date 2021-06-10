@@ -30,7 +30,10 @@ export class DocumentDefaultExternalAttachmentsComponent implements OnInit {
     ExternalDocumentId: string = Guid.NewRandomString();
     FileName: string;
     Extension: string;
-     
+
+    private DocumentsTotalSize = 0;
+    private  DocumentsMaximumSize = 20;
+
     private documentTypeTemplatePMService: DocumentTypeTemplatePMService = new DocumentTypeTemplatePMService();
        
     private documentFileService: DocumentFileService = new DocumentFileService();
@@ -92,7 +95,7 @@ export class DocumentDefaultExternalAttachmentsComponent implements OnInit {
         this.StopBusyIndicator();
         Result.forEach(item => {  
             this.DocumentDefaultExternalAttachments.push(new DocumentDefaultExternalAttachments(item));
-
+            this.DocumentsTotalSize = this.DocumentsTotalSize + item.FileSize;
         }) 
     }
 
@@ -107,20 +110,42 @@ export class DocumentDefaultExternalAttachmentsComponent implements OnInit {
     }
 
     UpLoadDocumentFile(event: any) { 
-        const file = querySelection(this.ExternalDocumentId);
+        const file = querySelection(this.ExternalDocumentId); 
 
         if (!file) { 
             return;
-        } 
+        }
+         
+        const DocumentsListSize = this.GetByteFileSize(this.DocumentsTotalSize);
+        const FileSize = this.GetByteFileSize(file.size);
+
+        if (this.ValidateFileSize(DocumentsListSize, FileSize)) {
+            this.ShowMessage("The maximum size of documents you can attach is 20 MB. Please send the documents in separated emails");
+            return;
+        }
+        
         this.Extension = file.name.split('.')[1];
-        this.FileName = file.name.split('.')[0]; 
-            
+        this.FileName = file.name.split('.')[0];  
+
         if (this.Extension) { 
         this.ConvertArrayBufferToBase64(file, this); 
         }
 
     }
+    private ValidateFileSize(DocumentsListSize: number, FileSize: number) {
+        return DocumentsListSize + FileSize >= this.DocumentsMaximumSize;
+    }
 
+    GetByteFileSize(size: any) {
+        const Byte = 1024;
+        let fileSize = 0;
+
+        if (size != null) {
+            fileSize = size / (Byte * Byte);
+        }
+        return fileSize;
+    }
+      
     ConvertArrayBufferToBase64(file: any, viewmodel: any) {
 
         this.StartBusyIndicator();
@@ -143,7 +168,7 @@ export class DocumentDefaultExternalAttachmentsComponent implements OnInit {
   
     createDocumentFile(file: any) {
 
-        let documentFile = this.GetNewDocument(file);
+        let documentFile = this.GetNewDocument(file); 
         this.InsertDocument(documentFile);
 
     }
@@ -235,7 +260,8 @@ export class DocumentDefaultExternalAttachmentsComponent implements OnInit {
         }); 
     }
 
-    RemoveDocuemnt(documentPM: DocumentPM) { 
+    RemoveDocuemnt(documentPM: DocumentPM) {
+        this.DocumentsTotalSize = this.DocumentsTotalSize - documentPM.FileSize;
         this.RemoveFromExternalAttachemnts(documentPM);
         this.RemoveFromAttachmentsIdsIds(documentPM);
         this.StopBusyIndicator();
@@ -291,11 +317,12 @@ export class DocumentDefaultExternalAttachments {
     public Name: string;
     public Extension: string;
     public Id: string;
+    public FileSize: any;
     constructor(item: DocumentPM) {
         this.Id = item.Id;
         this.Name = item.CalculatedFileName;
         this.Extension = item.Extension;
-
+        this.FileSize = item.FileSize;
     }
 }
  
