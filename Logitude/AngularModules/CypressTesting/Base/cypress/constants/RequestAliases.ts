@@ -96,34 +96,38 @@ export class RequestAliases {
     public static readonly AccountingSettings = "AccountingSettings"
     public static readonly Tenants = "Tenants"
 
-    public static readonly PostCountry = "PostCountry"
-    public static readonly PutCountry = "PutCountry"
-    public static readonly PostState = "PostState"
-    public static readonly PutState = "PutState"
+    public static readonly PostCountry="PostCountry"
+    public static readonly PutCountry="PutCountry"
+    public static readonly PostState="PostState"
+    public static readonly PutState="PutState"
 
-    public static readonly PostGlobalZone = "PostGlobalZone"
-    public static readonly PutGlobalZone = "PutGlobalZone"
+    public static readonly PostGlobalZone="PostGlobalZone"
+    public static readonly PutGlobalZone="PutGlobalZone"
 
-    public static readonly PostBankAccount = "PostBankAccount"
-    public static readonly PutBankAccount = "PutBankAccount"
+    public static readonly PostBankAccount="PostBankAccount"
+    public static readonly PutBankAccount="PutBankAccount"
 
-    public static readonly PostPackageType = "PostPackageType"
-    public static readonly PutPackageType = "PutPackageType"
+    public static readonly PostPackageType="PostPackageType"
+    public static readonly PutPackageType="PutPackageType"
 
-    public static readonly PostBranch = "PostBranch"
-    public static readonly PutBranch = "PutBranch"
+    public static readonly PostBranch="PostBranch"
+    public static readonly PutBranch="PutBranch"
 
-    public static readonly PostSpecialServicesType = "PostSpecialServicesType"
-    public static readonly PutSpecialServicesType = "PutSpecialServicesType"
+    public static readonly PostCurrency="PostCurrency"
+    public static readonly PutCurrency="PutCurrency"
+    public static readonly GetCurrenciesCodes="GetCurrenciesCodes"
 
-    public static readonly PostCity = "PostCity"
-    public static readonly PutCity = "PutCity"
+    public static readonly PostSpecialServicesType="PostSpecialServicesType"
+    public static readonly PutSpecialServicesType="PutSpecialServicesType"
 
-    public static readonly PostCommodity = "PostCommodity"
-    public static readonly PutCommodity = "PutCommodity"
+    public static readonly PostCity="PostCity"
+    public static readonly PutCity="PutCity"
 
-    public static readonly PostRegions = "PostRegions"
-    public static readonly PutRegions = "PutRegions"
+    public static readonly PostCommodity="PostCommodity"
+    public static readonly PutCommodity="PutCommodity"
+    
+    public static readonly PostRegions="PostRegions"
+    public static readonly PutRegions="PutRegions"
 
     public static readonly PostQuoteTemplate = "PostQuoteTemplate";
     public static readonly PutQuoteTemplate = "PutQuoteTemplate";
@@ -185,6 +189,7 @@ export class RequestAliases {
     public static readonly GetWarehouseMenuButtonGroups = "GetWarehouseMenuButtonGroups";
     public static readonly ContactViewsGetByFilters = "ContactViewsGetByFilters";
     public static readonly GetCustomersQuickSearch = "GetCustomersQuickSearch"
+    public static readonly GetList = "GetList"
     //#endregion
     public static readonly PostChangePassword = "PostChangePassword"
     //
