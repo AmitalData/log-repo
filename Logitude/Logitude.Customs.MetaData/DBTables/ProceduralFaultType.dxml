@@ -15,14 +15,14 @@
   <Column
     Name="EnglishName"
     Type="varchar"
-    Size="100">
+    Size="200">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="LocalName"
     Type="nvarchar"
-    Size="100">
+    Size="200">
     <Constraints
       Nullable="true" />
   </Column>
