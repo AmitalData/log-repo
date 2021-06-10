@@ -237,6 +237,7 @@ namespace WebFreight.Web
             if (myContact != null)
             {
                 myResult.ContactName = myContact.EnglishName;
+                myResult.ContactId = myContact.Id;
             }
 
             if (myTenant != null)
@@ -247,6 +248,7 @@ namespace WebFreight.Web
                 myResult.TenantDateTimeFormat = myTenant.DateTimeFormat;
                 myResult.DisplayDocumentsAndEvents = myTenant.DisplayDocumentsAndEvents;
                 myResult.IsQuotesRequestsMenuEnabled = myTenant.IsQuotesRequestActivatedInShared;
+
             }
 
             SharedLogisticsSettingRepository sharedLogisticsSettingRepository = new SharedLogisticsSettingRepository(tenant);
@@ -258,6 +260,9 @@ namespace WebFreight.Web
                 myResult.IsShipperShared = sharedLogisticsSetting.IsShipperShared;
                 myResult.IsConsigneeShared = sharedLogisticsSetting.IsConsigneeShared;
             }
+
+            myResult.IsReportsMenuEnabled = FeatureToggleHelper.HasFeatureToggle("RSL", tenant);
+
 
             return myResult;
         }
