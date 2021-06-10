@@ -12,7 +12,7 @@ import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
 
 //#region variables
 let MasterShipmentDetails: ShipmentDetails;
-//let shipmentDetails: ShipmentDetails;
+
 let EventNote;
 let shipmentNumber: string;
 //#endregion
@@ -25,7 +25,6 @@ Given("the user logged in and navigates to shipments workspace", () => {
 
 Given("a master Shipment with following details", (dataTable) => {
     MasterShipmentDetails = Assists.CreateInstance<ShipmentDetails>(dataTable, true);
-    //MasterShipmentDetails = shipmentDetails;
     Actions.OpenNewShipmentWizard(MasterShipmentDetails.ShipmentLevel);
     Actions.FillShipmentWizardsFields(MasterShipmentDetails);
 });
@@ -68,6 +67,7 @@ Given("the user in the master's rounting tab", () => {
 Given("edit main carriage leg with the following details", (dataTable) => {
     let mainCarriageLeg = Assists.CreateInstance<MainCarriageLeg>(dataTable, true);
     Actions.EditMainCarriageLegsAddETAandATA(mainCarriageLeg.MainCarriageETADate,mainCarriageLeg.MainCarriageATADate);
+    cy.Click(ShipmentSelectors.MainCarriageOKBtn, null);
     cy.Click(ShipmentSelectors.ShipmentSaveButton, null);
 });
 When('update master',()=>{
@@ -88,5 +88,43 @@ Then('the house ActualFinalArrivalDate should be 2021-05-04',()=>{
 })
 Given('the user in the master rounting tab',()=>{
     Actions.OpenShipment(ShipmentContext.MasterNumber)
-    cy.Navigate(ShipmentSelectors.ShipmentsTab);
+    cy.Navigate(ShipmentSelectors.RoutingsTab);
+})
+Given('edit main carriage leg with the following details',(dataTable)=>{
+    let mainCarriageLeg = Assists.CreateInstance<MainCarriageLeg>(dataTable, true);
+    Actions.EditMainCarriageLegsAddETAandATA(mainCarriageLeg.MainCarriageETADate,mainCarriageLeg.MainCarriageATADate);
+    cy.Click(ShipmentSelectors.ShipmentSaveButton, null);
+})
+When('update master',()=>{
+    Actions.UpdateMaster()
+})
+Then('the master should update successfully',()=>{
+    //Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
+})
+Then('the master ActualFinalArrivalDate should be null',()=>{
+   
+    Actions.AsserationMastershipmentNOActualFinalArrivalDate()
+})
+Then('the house ActualFinalArrivalDate should be null',()=>{
+
+  Actions.AsserationHouseshipmentNOActualFinalArrivalDate()
+})
+
+Given('the user in the master rounting tab',()=>{
+ cy.BackButton('Operations')
+  Actions.OpenShipment(ShipmentContext.MasterNumber)
+  cy.Navigate(ShipmentSelectors.RoutingsTab);
+
+
+})
+Given('edit main carriage leg with the following details',(dataTable)=>{
+    let mainCarriageLeg = Assists.CreateInstance<MainCarriageLeg>(dataTable, true);
+    //Actions.EditMainCarriageLegsAddETAandATA(mainCarriageLeg.MainCarriageETADate,mainCarriageLeg.MainCarriageATADate);
+
+    Actions.FillMainCaarriageofshipmentandtransshipments(mainCarriageLeg.Transshipment1FromPortId,mainCarriageLeg.Transshipment1ETA,
+        mainCarriageLeg.Transshipment1ATA,mainCarriageLeg.MainCarriageETADate,mainCarriageLeg.MainCarriageATADate)
+
+    cy.Click(ShipmentSelectors.MainCarriageOKBtn, null);
+
+    cy.Click(ShipmentSelectors.ShipmentSaveButton, null);
 })

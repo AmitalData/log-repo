@@ -34,19 +34,20 @@ Feature: Compute ActualFinalArrivalDate in Master And Connected Houses
         Given the user in the master's rounting tab
         And edit main carriage leg with the following details
             | MainCarriageETADate | 2021-05-02 |
+            | MainCarriageATADate | 0          |
         When update master
         Then the master should update successfully
         And the master ActualFinalArrivalDate should be null
         And the house ActualFinalArrivalDate should be null
 
     Scenario: Update FinalArrivalDate when there are transshipments
-        Given the user in the master's rounting tab
+        Given the user in the master rounting tab
         And edit main carriage leg with the following details
             | Transshipment1FromPortId | TLV        |
+            | Transshipment1ETA        | 2021-05-04 |
+            | Transshipment1ATA        | 2021-05-05 |
             | MainCarriageETADate      | 2021-05-02 |
-            | MainCarriageATA Date     | 2021-05-03 |
-            | Transshipment1ETADate    | 2021-05-04 |
-            | Transshipment1ATADate    | 2021-05-05 |
+            | MainCarriageATADate      | 2021-05-03 |
         When update master
         Then the master should update successfully
         And the master ActualFinalArrivalDate should be 2021-05-05

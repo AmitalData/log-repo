@@ -22,9 +22,17 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ShipmentWorkspace = '#SHIP_1';
   public static readonly ShipmentSearch = '#Shipment_Search_1';
   public static readonly EditShipmentMaincarrige = '.LogitudeIconButton';
+  public static readonly MasterShipments = '#SHIPMENTS-M-Q';
+  public static readonly AllShipments = '#Shipments-O-Q';
+  public static readonly MasternoActual = '#row0col5';
+  public static readonly HousernoActual = '#row0col13';
+
+  public static readonly Transshipment1FromPortId = '#Shipment_Transshipment1FromPortId';
+  public static readonly Transshipment1ETA = '#date_Shipment_Transshipment1ETA';
+  public static readonly Transshipment1ATA = '#date_Shipment_Transshipment1ATA';
 
   
-
+  
   
   
   

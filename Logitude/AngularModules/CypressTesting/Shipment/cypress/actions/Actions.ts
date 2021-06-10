@@ -210,6 +210,17 @@ export function ValidateCloseIconExist(IsClosed: boolean) {
         cy.get(ShipmentSelectors.ShortTitleControl).should(BaseSelectors.NotExist)
     }
 }
+export function AsserationMastershipmentNOActualFinalArrivalDate(){
+    cy.BackButton('Operations')
+    cy.Navigate(ShipmentSelectors.MasterShipments)
+    BaseAssertion.AssertElementNotExist(ShipmentSelectors.MasternoActual)
+    
+}
+export function AsserationHouseshipmentNOActualFinalArrivalDate(){
+    cy.BackButton('Operations')
+    cy.Navigate(ShipmentSelectors.AllShipments)
+    BaseAssertion. AssertElementNotExist(ShipmentSelectors.HousernoActual) 
+}
 
 export function ValidateShipmentEventActions(eventSelector: string, excpectedMSG: string) {
     cy.DefineRequestWait(RestAPI.GET, URLs.TraceEventsDomain, RequestAliases.GetTraceEvent);
@@ -580,11 +591,12 @@ export function EditMainCarriageLegsAddETAandATA(MainCarriageETADate:string,Main
 
     cy.FillLogTextBox(ShipmentSelectors.MainCarriageETADate, MainCarriageETADate, false)
     cy.FillLogTextBox(ShipmentSelectors.MainCarriageATADate, MainCarriageATADate, false)
-    cy.Click(ShipmentSelectors.MainCarriageOKBtn, null);
-
+    //cy.Click(ShipmentSelectors.MainCarriageOKBtn, null);
+   
    
     
 }
+
 export function EditMainCarriageLegsFromToport(Gateway :string, Destination :string) {
     cy.Click(ShipmentSelectors.EditRoutingMainCarriage, null)
     
@@ -595,6 +607,18 @@ export function EditMainCarriageLegsFromToport(Gateway :string, Destination :str
 
     
    
+}
+export function FillMainCaarriageofshipmentandtransshipments(Transshipment1FromPortId:string,Transshipment1ETA:string,Transshipment1ATA:string,
+    MainCarriageETADate:string,MainCarriageATADate:string){
+    cy.Click(ShipmentSelectors.EditRoutingMainCarriage, null)
+    cy.FillLogLov(ShipmentSelectors.Transshipment1FromPortId,Transshipment1FromPortId, false)
+    cy.FillLogTextBox(ShipmentSelectors.Transshipment1ETA, Transshipment1ETA, false)
+    cy.FillLogTextBox(ShipmentSelectors.Transshipment1ATA, Transshipment1ATA, false)
+    cy.FillLogTextBox(ShipmentSelectors.MainCarriageETADate, MainCarriageETADate, false)
+    cy.FillLogTextBox(ShipmentSelectors.MainCarriageATADate, MainCarriageATADate, false)
+
+    
+    
 }
 export function AsserationMasterUpdateRoutind(){
 cy.get(ShipmentSelectors.RoutingRegion).contains('AA American Airlines').should('exist')
