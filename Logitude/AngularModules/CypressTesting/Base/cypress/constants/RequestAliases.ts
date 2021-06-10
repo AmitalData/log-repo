@@ -170,6 +170,9 @@ export class RequestAliases {
 
     public static readonly PostBusinessUnit = "PostBusinessUnit"
     public static readonly PutBusinessUnit = "PutBusinessUnit"
+    
+    public static readonly PostDepartment = "PostDepartment"
+    public static readonly PutDepartment = "PutDepartment"
 
     public static readonly GetSignle = "GetSignle"
     public static readonly GetByFilter = "GetByFilter"

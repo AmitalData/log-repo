@@ -98,6 +98,9 @@ export class Urls {
     public static readonly BusinessUnits = "**/businessunits";
     public static readonly BusinessUnitsGetSingle = "**/businessunits/getsingle?**";
     public static readonly BusinessUnitsviewGetSingle = "**/businessunitviews/getsingle/?**";
+    public static readonly Departments = "**/departments";
+    public static readonly DepartmentsGetSingle = "**/departments/getsingle?**";
+    public static readonly DepartmentsviewGetSingle = "**/departmentviews/getsingle/?**";
 
     public static GetFilterSearch(filterBy: string) {
         return '**/getbyfilters?**' + filterBy + '**'
