@@ -29,7 +29,7 @@ Feature: Warehouses Create, Search and Edit from Maintenance
         When search warehouse
         Then the warehouse should appear successfully
 
-    Scenario: Open the warhouse
+    Scenario: Open the warehouse
         When open warehouse
         Then the warehouse should open successfully
 
