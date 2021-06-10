@@ -37,7 +37,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
                     TenantPM tenantPM = TenantQuery.GetSingleTenantPM(tenant, false);
                     TermsofUsePM termofuse = new TermsofUsePM();
-                    termofuse = termsofUseQuery.GetTermOfUseByPrivateLabel(termofuse.PrivateLabelId);
+                    termofuse = termsofUseQuery.GetTermOfUseByPrivateLabel(tenantPM.PrivateLabelId);
                     if (!string.IsNullOrEmpty(tenantPM.PrivateLabelId) && termofuse == null)
                     {
                         throw new Exception("You are unable to login without approving the terms of use, please contact your administrator!");

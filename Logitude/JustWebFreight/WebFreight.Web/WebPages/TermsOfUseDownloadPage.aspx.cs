@@ -54,6 +54,7 @@ namespace WebFreight.Web.WebPages
             if(termsOfUseDocument == null)
             {
                 this.ShowExceptionMessage("Document Not Found!");
+
             }
             Uploader up = new Uploader();
             datainByte = up.DownloadFile(termsOfUseDocument.Id, termsOfUseDocument.Extension, termsOfUseDocument.Folder, termsOfUseDocument.Tenant);
