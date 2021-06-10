@@ -17,5 +17,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string VersionDocumentId { get; set; }
         public string VersionDocumentName { get; set; }
         public byte[] FileData { get; set; }
+
+        public string PrivateLabelId { get; set; }
     }
 }

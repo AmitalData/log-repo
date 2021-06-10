@@ -46,5 +46,12 @@
 		<Constraints
 		  Nullable="true" />
 	</Column>
-	 
+	<Column
+Name="PrivateLabelId"
+ShortName="PrivateLabelId"
+ Type="varchar"
+   Size="15">
+		<Constraints
+		  Nullable="true" />
+	</Column>
 </Table>

@@ -12,6 +12,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public int VersionNumber { get; set; }
         public int Tenant { get; set; }
         public string VersionDocumentId { get; set; }
+        public string PrivateLabelId { get; set; }
 
         //public List<TermsofUseSignature> TermsofUseSignatures { get; set; }
     }
