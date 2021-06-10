@@ -590,14 +590,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.UpdateExtendedTasksDueDate();
 
                 // Produce shipment update msg
-                ProduceShipmentUpdateKafkaMessage();
+                AddShipmentUpdateKafkaQueueMessage();
 
 
                 scope.Complete();
                 #endregion
             }
         }
-        private void ProduceShipmentUpdateKafkaMessage()
+        private void AddShipmentUpdateKafkaQueueMessage()
         {
             if (entityPM.Tenant == 1321 || entityPM.Tenant == 951)
             {
