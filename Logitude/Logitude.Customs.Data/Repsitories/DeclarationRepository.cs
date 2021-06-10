@@ -610,6 +610,22 @@ namespace Logitude.Customs.Data.Repsitories
             return dec != null ? dec.CustomFileNo : null;
         }
 
+        public Declaration GetDeclarationByDecNoAndVersion(string decNo,string version ,  int tenant)
+        {
+            if (String.IsNullOrWhiteSpace(decNo)) return null;
+            if (String.IsNullOrWhiteSpace(version)) return null;
+
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
+            return
+                  (
+                  from rec in context.Declarations
+                  where rec.DeclarationNumber == decNo && rec.VersionId == version && rec.Tenant == tenant
+                  select rec
+                  )
+                  .FirstOrDefault();
+        }
+
         public Declaration GetDeclarationByCustomFileNo(string customFileNo, int tenant)
         {
             if (String.IsNullOrWhiteSpace(customFileNo)) return null;
@@ -623,8 +639,6 @@ namespace Logitude.Customs.Data.Repsitories
                   )
                   .FirstOrDefault();
         }
-
-
         public Declaration GetLastDeclarationByDeclarationId(string id, int tenant)
         {
             if (String.IsNullOrWhiteSpace(id)) return null;
