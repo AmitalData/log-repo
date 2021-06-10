@@ -192,9 +192,20 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
             } else if (value == false) {
                 this.AccountingActivationDate = null;
             }
+
+            this.ToggleAgingDefinitionTab(value);
+
             this.ReloadTenantPM();
             this.SetUIProperties();
         }
+    }
+
+    private ToggleAgingDefinitionTab(value: boolean)
+    {
+        if (value)
+            this.AddAgingDefinitionTab();
+        else
+            this.RemoveAgingDefinitionTab();
     }
 
     get IsPaymentChequesActivated() { return this.EntityPM.IsPaymentChequesActivated; }
@@ -622,13 +633,21 @@ SubmitChanges(ControlAccountId:string) {
         this.TabsSource.push({ Name: "FullAccoutingSetting", isSelected: true, Header: TextCodeTranslator.Translate("General.O.General") }); //Accounting.O.FullAccountingSettings
         this.TabsSource.push({ Name: "ControlAccounts", isSelected: false, Header: TextCodeTranslator.Translate("Accounting.O.ControlGLAccounts") });
         this.TabsSource.push({ Name: "Logo", isSelected: false, Header: TextCodeTranslator.Translate("Accounting.General.O.Cheques") });
-
-
-        const isAgingDefinitionEnabled = FeatureLocator.HasFeaturePermession("FullAccountingSetting", "AgingDefenetionSettings");
-        if(isAgingDefinitionEnabled)
-            this.TabsSource.push({ Name: "AgingDefinition", isSelected: false, Header: TextCodeTranslator.Translate("FullAccountingSetting.O.AgingDefinition") });
-
+        if(this.AccountingActivated)
+            this.AddAgingDefinitionTab();
     }
+
+    RemoveAgingDefinitionTab(){
+        var tabIndex = this.TabsSource.findIndex(d=>d.Name == "AgingDefinition");
+        if(tabIndex > 0)
+        this.TabsSource.splice(tabIndex,1);
+    }
+    AddAgingDefinitionTab(){
+        var tabIndex = this.TabsSource.findIndex(d=>d.Name == "AgingDefinition");
+        if(tabIndex < 0)
+            this.TabsSource.push({ Name: "AgingDefinition", isSelected: false, Header: TextCodeTranslator.Translate("FullAccountingSetting.O.AgingDefinition") });
+    }
+
     SelectionChanged(tab: any) {
 
         this.TabsSource.forEach(item => { // reset selection
@@ -699,13 +718,14 @@ SubmitChanges(ControlAccountId:string) {
     }
 
     Periods: any[] = [
-        {EnglishName: 'Period 0', LocalName: 'תקופה גיול 0', Code: 'period0'},
-        {EnglishName: 'Period 1', LocalName: 'תקופה גיול 1', Code: 'period1'},
-        {EnglishName: 'Period 2', LocalName: 'תקופה גיול 2', Code: 'period2'},
-        {EnglishName: 'Period 3', LocalName: 'תקופה גיול 3', Code: 'period3'},
-        {EnglishName: 'Period 4', LocalName: 'תקופה גיול 4', Code: 'period4'},
-        {EnglishName: 'Period 5', LocalName: 'תקופה גיול 5', Code: 'period5'},
-        {EnglishName: 'Period Past', LocalName: 'לפני התקופה', Code: 'period-past'}
+        {EnglishName: 'Period 0', LocalName: 'תקופה גיול 0', Code: 'Period0'},
+        {EnglishName: 'Period 1', LocalName: 'תקופה גיול 1', Code: 'Period1'},
+        {EnglishName: 'Period 2', LocalName: 'תקופה גיול 2', Code: 'Period2'},
+        {EnglishName: 'Period 3', LocalName: 'תקופה גיול 3', Code: 'Period3'},
+        {EnglishName: 'Period 4', LocalName: 'תקופה גיול 4', Code: 'Period4'},
+        {EnglishName: 'Period 5', LocalName: 'תקופה גיול 5', Code: 'Period5'},
+        {EnglishName: 'Period Past', LocalName: 'לפני התקופה', Code: 'PeriodPast'}
+        // {EnglishName: 'Period Future', LocalName: 'xxxx התקופה', Code: 'PeriodFuture'}
     ];
 
     // fill these arrays from database
