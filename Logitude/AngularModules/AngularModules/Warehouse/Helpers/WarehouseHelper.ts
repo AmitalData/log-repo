@@ -52,26 +52,53 @@ export class WarehouseHelper {
                 if (!serviceResponse.HasError) {
                     var result: CardList = serviceResponse.Result;
                     if (result) {
-                        if (result.WarehouseTypeCode == "CFS") {
-                            shipmentPM.IsCFSWarehouse = true;
-                            this.SetStorageDefaults(result, shipmentPM);
-                            this.LoadWarehouseStoragePricing(shipmentPM);
+
+                        if (!AppTool.IsNullOrEmpty(shipmentPM.ConsigneeId)) {
+                            cardListService.getSingle(shipmentPM.ConsigneeId).subscribe((myResponse: ServiceResponse) => {
+                                if (myResponse != null) {
+                                    if (!myResponse.HasError) {
+                                        var myConsignee = myResponse.Result;
+                                        if (myConsignee) {
+                                            if (myConsignee.IsCustomer) {
+                                                shipmentPM.WarehouseStorageFreeDays = myConsignee.StorageFreeDays;
+                                            }
+                                        }
+
+                                        this.SetWarehouseData(result, shipmentPM);
+                                    }
+                                }
+                            });
                         }
 
                         else {
-                            shipmentPM.IsCFSWarehouseChanged = true;
-                            shipmentPM.IsUpdateWarehouseLegData = true;
-                            this.SaveChanges();
-                            this.CurrentSession.FireEvent("RefreshWareHouseLeg");
+                            this.SetWarehouseData(result, shipmentPM);
                         }
                     }                   
                 }
             }            
         });
     }
+    SetWarehouseData(result: CardList, shipmentPM: ShipmentPM) {
+        if (result.WarehouseTypeCode == "CFS") {
+            shipmentPM.IsCFSWarehouse = true;
+            this.SetStorageDefaults(result, shipmentPM);
+            this.LoadWarehouseStoragePricing(shipmentPM);
+        }
+
+        else {
+            shipmentPM.IsCFSWarehouseChanged = true;
+            shipmentPM.IsUpdateWarehouseLegData = true;
+            this.SaveChanges();
+            this.CurrentSession.FireEvent("RefreshWareHouseLeg");
+        }
+    }
     private SetStorageDefaults(myWarehouse: CardList, shipmentPM: ShipmentPM) {
         shipmentPM.ChargeStorage = myWarehouse.ChargeStorage;
         shipmentPM.ChargeStorageCurrencyId = myWarehouse.ChargeStorageCurrencyId;
+
+        if (AppTool.IsNullOrZero(shipmentPM.WarehouseStorageFreeDays)) {
+            shipmentPM.WarehouseStorageFreeDays = myWarehouse.StorageFreeDays;
+        }
 
         switch (shipmentPM.TransportModeId) {
             case "A":
