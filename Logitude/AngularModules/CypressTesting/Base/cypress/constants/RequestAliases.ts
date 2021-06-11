@@ -115,6 +115,7 @@ export class RequestAliases {
 
     public static readonly GetFBLStock = "GetFBLStock"
     public static readonly RemoveFBLStock = "DeleteFBLStock"
+    public static readonly GetAllFBLStock = "GetAllFBLStock"
 
     public static readonly PostSpecialServicesType = "PostSpecialServicesType"
     public static readonly PutSpecialServicesType = "PutSpecialServicesType"

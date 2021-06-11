@@ -1,10 +1,10 @@
 @NewDev
-Feature: FBLStock Create, Search and Edit from Maintenance
+Feature: FBL Stock Add, Remove and Remove Series in Maintenance
     The user creates a FBLStock, searches for and edits it from the Maintenance Module.
 
     Scenario: Create new FBLStock
         Given the user logged in and open "FBL Stocks" in maintenance menu
-        And a fblStock with the following details
+        And the user adds FBL stock with following details
             | StartNumber | random |
             | EndNumber   | random |
             | ByEndNumber | Yes    |
@@ -14,11 +14,11 @@ Feature: FBLStock Create, Search and Edit from Maintenance
         Then the fblStock should create successfully
 
     Scenario: Remove FBLStock
-        When Remove fblStock
+        When user removes one entry
         Then the fblStock should Remove successfully
 
     Scenario: Create new FBLStock by Amount
-        Given a fblStock with the following details
+        Given user adds another FBL stock with the following details
             | StartNumber | random |
             | EndNumber   | random |
             | ByEndNumber | No     |
@@ -28,7 +28,7 @@ Feature: FBLStock Create, Search and Edit from Maintenance
         Then the fblStock should create successfully
 
     Scenario: Remove FBLStock series
-        When Remove fblStock series
+        When user removes a series of entries
         Then the fblStock series should Remove successfully
 
 

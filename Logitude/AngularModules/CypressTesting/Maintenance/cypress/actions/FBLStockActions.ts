@@ -50,14 +50,18 @@ export function FillFBLStockDetails(fblStockDetails: FBLStockDetails) {
     }
 }
 
-export function CreateFBLStock() {
-    DefinePostFBLStockRequest()
-    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK).then(() => {
-        AssertCreateFBLStock()
-    })
+export function DefineGetFBLStockGetAll() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.FBLStocksGetAll, RequestAliases.GetAllFBLStock);
 }
 
-function DefinePostFBLStockRequest() {
+export function CreateFBLStock() {
+    DefinePostFBLStockRequest()
+    DefineGetFBLStockGetAll()
+    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK)
+    
+}
+
+export function DefinePostFBLStockRequest() {
     cy.DefineRequestWait(RestAPI.GET, Urls.FBLStocks, RequestAliases.GetFBLStock)
 }
 
@@ -69,7 +73,6 @@ export function AssertCreateFBLStock() {
         }
         else {
             AssertGetFBLStock(interception.response.statusCode, 200, interception.response.body)
-            console.log(interception.response.body)
         }
     })
 }
@@ -89,6 +92,12 @@ export function ReCreateFBLStock() {
         cy.FillLogTextBox(FBLStockSelectors.FBLStockEndNumber, RandomEndNumber.toString())
     }
     CreateFBLStock()
+    AssertCreateFBLStock()
+}
+
+export function AssertGetAllFBLStock() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetAllFBLStock, 200)
+    BaseAssertion.AssertElementExist(FBLStockSelectors.FBLStockGridBody)
 }
 
 export function AssertGetFBLStock(responseStatusCode: number, expectedStatusCode: number, responseBody: string) {
@@ -97,6 +106,7 @@ export function AssertGetFBLStock(responseStatusCode: number, expectedStatusCode
 
 export function RemoveFBLStock() {
     DefineDeleteFBLStockRequest();
+    DefineGetFBLStockGetAll()
     cy.get(FBLStockSelectors.FBLStockGridBody).find(FBLStockSelectors.FBLStockGridRow).first().click().then(() => {
         cy.Click(FBLStockSelectors.Button, FBLStockSelectors.Remove)
         cy.Click(FBLStockSelectors.ConfirmRemove, FBLStockSelectors.Delete)
@@ -113,7 +123,7 @@ export function AssertRemoveFBLStock() {
 
 export function RemoveFBLStockSeries() {
     DefineDeleteFBLStockRequest();
-    
+    DefineGetFBLStockGetAll()
     cy.get(FBLStockSelectors.FBLStockGridBody).find(FBLStockSelectors.FBLStockGridRow).first().click({force : true}).then(() => {
         cy.Click(FBLStockSelectors.Button, FBLStockSelectors.RemoveSeries)
         cy.Click(FBLStockSelectors.ConfirmRemove, FBLStockSelectors.Delete)

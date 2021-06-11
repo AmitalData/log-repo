@@ -19,6 +19,7 @@ export class FBLStockSelectors extends RegexSelectors {
   public static readonly ConfirmRemove = "#ConfirmWindow_Yes_0"
   public static readonly Delete = "Delete"
   public static readonly RemoveSeries = "Remove Series"
+  public static readonly FBLStockGridView = ".SimpleGridViewBody"
   public static readonly MinRandomNumber = 1
   public static readonly MaxRandomNumber = 10000
   public static readonly MaxAmountRandomNumber = 1000
