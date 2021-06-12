@@ -257,40 +257,65 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             entityPM.StatusCode = "C"; // C- Cancelled מבוטל
 
-            UpdateJournalsForLines(entityPM);
+            ResetJournalAdditionalDatasFields(entityPM);
 
         }
 
-        private void UpdateJournalsForLines(TaxReportPM entityPM)
+        private void ResetJournalAdditionalDatasFields(TaxReportPM entityPM)
+        {
+            List<JournalAdditionalDataPM> journalAdditionalDataPMs = GetJournalAdditionalDataByTaxReportId(entityPM);
+            UpdateJournalAdditionalDatas(journalAdditionalDataPMs);
+
+        }
+        private static List<JournalAdditionalDataPM> GetJournalAdditionalDataByTaxReportId(TaxReportPM taxReport)
         {
 
-            IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
-            JournalQueryService journalQuery = new JournalQueryService(entityPM.Tenant);
-            TaxReportQueryService reportQuery = new TaxReportQueryService(entityPM.Tenant);
-            JournalAdditionalDataQueryService additionalDataQueryService = new JournalAdditionalDataQueryService(entityPM.Tenant);
-            JournalAdditionalDataUpdateService journalAdditionalDataUpdateService = new JournalAdditionalDataUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+            JournalAdditionalDataQueryService additionalDataQueryService = new JournalAdditionalDataQueryService(taxReport.Tenant);
+            return additionalDataQueryService.GetJournalAdditionalDataPMsByTaxReportId(taxReport.Id, taxReport.Tenant);
+        }
 
-
-            // Update lines Journals
-            List<TaxReportLine> lines = reportQuery.GetReportLines(entityPM.Id, entityPM.Tenant).ToList();
-            foreach (TaxReportLine line in lines)
+        private static void UpdateJournalAdditionalDatas(List<JournalAdditionalDataPM> journalAdditionalDataPMs)
+        {
+            foreach (JournalAdditionalDataPM journalAdditionalData in journalAdditionalDataPMs)
             {
-                JournalPM journalPM = journalQuery.GetSingle(line.JournalId, false, false);
-                if (journalPM != null)
-                {
-                    JournalAdditionalDataPM _journalAdPM = additionalDataQueryService.GetSingle(journalPM.Id, false, false);
+                journalAdditionalData.TaxReportTransmitStatusCode = null;
+                journalAdditionalData.TaxReportId = null;
+                journalAdditionalData.ChangeSetOp = ChangeSetOperation.Update;
+                SaveChangesOnJournalAdditionalData(journalAdditionalData);
+            }
 
-                    if (_journalAdPM != null)
-                    {
-                        _journalAdPM.TaxReportTransmitStatusCode = null;
-                        _journalAdPM.TaxReportId = null;
-                        _journalAdPM.ChangeSetOp = ChangeSetOperation.Update;
-                        journalAdditionalDataUpdateService.Update(_journalAdPM, true);
-                    }
-                }
+        }
+        private static void UpdateJournalJournalAdditionalData(TaxReportLinePM taxReportLine)
+        {
+            JournalAdditionalDataPM journalAdditionalDataPM = GetJournalAdditionalDataPM(taxReportLine);
+            if (journalAdditionalDataPM != null)
+            {
+                journalAdditionalDataPM = MapJournalAdditionalDataPM(journalAdditionalDataPM, taxReportLine);
+                SaveChangesOnJournalAdditionalData(journalAdditionalDataPM);
 
             }
         }
+
+        private static void SaveChangesOnJournalAdditionalData(JournalAdditionalDataPM journalAdditionalDataPM)
+        {
+            IAccountingContext MyContext = AccountingContext.GetContext(journalAdditionalDataPM.Tenant);
+            JournalAdditionalDataUpdateService journalAdditionalDataUpdateService = new JournalAdditionalDataUpdateService(MyContext, new Dictionary<string, IContext>(), journalAdditionalDataPM.Tenant);
+            journalAdditionalDataUpdateService.Update(journalAdditionalDataPM, true);
+        }
+
+        private static JournalAdditionalDataPM MapJournalAdditionalDataPM(JournalAdditionalDataPM journalAdditionalDataPM, TaxReportLinePM taxReportLine)
+        {
+            journalAdditionalDataPM.TaxReportTransmitStatusCode = null;
+            journalAdditionalDataPM.TaxReportId = null;
+            journalAdditionalDataPM.ChangeSetOp = ChangeSetOperation.Update;
+            return journalAdditionalDataPM;
+        }
+        private static JournalAdditionalDataPM GetJournalAdditionalDataPM(TaxReportLinePM taxReportLine)
+        {
+            JournalAdditionalDataQueryService additionalDataQueryService = new JournalAdditionalDataQueryService(taxReportLine.Tenant);
+            return additionalDataQueryService.GetSingle(taxReportLine.JournalId, taxReportLine.JournalLineNumber, false, false);
+        }
+  
 
         private void CheckLaterReports(TaxReportPM entityPM)
         {

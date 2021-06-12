@@ -159,6 +159,11 @@ export class TaxReportLinePM {
     public set UpdatedBUserName(newValue: string) { if (this.updatedBUserName != newValue) { this.updatedBUserName = newValue; this.MarkAsDirty("UpdatedBUserName"); } }
        
 	 
+    private journalLineNumber: number;
+    public get JournalLineNumber() { return this.journalLineNumber; }
+    public set JournalLineNumber(newValue: number) { if (this.journalLineNumber != newValue) { this.journalLineNumber = newValue; this.MarkAsDirty("JournalLineNumber"); } }
+       
+	 
 
     public OldEntityPM: TaxReportLinePM;
 		

@@ -660,6 +660,7 @@
     <Compile Include="EntityQueryServices\InterestReportLinesByDateQueryService.cs" />
     <Compile Include="EntityQueryServices\InterestReportQueryService.cs" />
     <Compile Include="EntityQueryServices\InterestTransactionQueryService.cs" />
+    <Compile Include="EntityQueryServices\JournalAdditionalDataQueryService.cs" />
     <Compile Include="EntityQueryServices\JournalLineLedgerTransactionAccDTO.cs" />
     <Compile Include="EntityQueryServices\JournalLineLedgerTransactionDTO.cs" />
     <Compile Include="EntityQueryServices\InterestBasesTypeQueryService.cs" />

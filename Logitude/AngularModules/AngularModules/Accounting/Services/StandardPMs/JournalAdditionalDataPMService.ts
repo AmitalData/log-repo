@@ -32,12 +32,12 @@ export class JournalAdditionalDataPMService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/journaladditionaldatas';      
     }
 
-	get(journalid: string) {       
+	get(journalid: string, journallinenumber: number) {       
 
 		var callTime = new Date();		
 
 		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle?' + 'journalid=' + journalid, ServiceHelper.GetHttpFullHeaders())
+			return this._http.get(this._apiUrl + '/getsingle?' + 'journalid=' + journalid+'&'+'journallinenumber=' + journallinenumber, ServiceHelper.GetHttpFullHeaders())
 				.pipe(
 					map((response: HttpResponse<any>) => {
 						var pm = response.body;
@@ -51,7 +51,7 @@ export class JournalAdditionalDataPMService {
 						serviceResponse.Result = entity;
               
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "JournalAdditionalData", "GetSinglePM", 'journalid=' + journalid);
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "JournalAdditionalData", "GetSinglePM", 'journalid=' + journalid+'&'+'journallinenumber=' + journallinenumber);
 				 
 						return serviceResponse;
 

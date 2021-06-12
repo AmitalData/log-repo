@@ -174,6 +174,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         }
 
                         reportLinesList.Add(line);
+                      //  UpdateJournalAdditionalDataRecord(line, null);
                     }
                 }
             }
@@ -265,7 +266,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     UpdatedBUserName = taxReport.UpdatedByUserName,
                     Tenant = tenant,
                     TransmitStatusCode = transmitStatusCode,
-                    TaxReportDate = taxReport.TaxReportMonth
+                    TaxReportDate = taxReport.TaxReportMonth,                   
+                    JournalLineNumber = transaction.JournalLineNumber,
                 };
 
                 JournalPM journal = journalPMs.Where(d => d.Id == transaction.JournalId && d.TaxReportJournalLineNumber == transaction.JournalLineNumber).FirstOrDefault();
@@ -301,6 +303,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
 
                 reportLinesList.Add(inputReportLine);
+           //     UpdateJournalAdditionalDataRecord(inputReportLine, transaction);
+
             }
 
 
@@ -349,6 +353,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
         }
+
+   
 
         private static bool CheckIfAPInvoiceTaxMonthTransactionIsVoided(TaxReportPM taxReport, List<APInvoicePM> voidedAPInvoices, TaxReportData transaction)
         {
@@ -1036,5 +1042,12 @@ namespace Logitude.Accounting.BL.CoreBL
         public string ReportId { get; set; }
         public int Tenant { get; set; }
         public bool TestingMode { get; set; }
+    }
+    public struct TaxReportLineType
+    {
+        public const string Input = "I";
+        public const string Output = "O";
+
+
     }
 }
