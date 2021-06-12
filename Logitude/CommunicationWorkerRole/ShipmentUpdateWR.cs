@@ -1,17 +1,12 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
-using Logitude.Server.Tools.Constants;
+using Logitude.Server.Tools.KafkaConfigurations;
 using Logitude.Server.Tools.Messages;
 using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
 using Newtonsoft.Json;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel.Repositories;
 using System;
-using System.Configuration;
 using System.Net;
-using System.Net.Http;
-using System.Text;
 using System.Threading;
 
 namespace CommunicationWorkerRole
@@ -38,7 +33,7 @@ namespace CommunicationWorkerRole
 
                             var ShipmentUpdateMessageProducer = new Producer();
                             var serializedShipmentUpdateMessage = JsonConvert.SerializeObject(entityPM, Formatting.Indented);
-                            ShipmentUpdateMessageProducer.Produce(MessageType.Shipment, serializedShipmentUpdateMessage);
+                            ShipmentUpdateMessageProducer.Produce(KafkaTopics.ShipmentsTopic, KakaMessageTypes.Shipment, serializedShipmentUpdateMessage);
                         }
                     }
                     catch (Exception ex)
