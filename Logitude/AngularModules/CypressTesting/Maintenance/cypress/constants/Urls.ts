@@ -51,6 +51,16 @@ export class Urls {
     public static readonly BranchesGetSingle = "**/branches/getsingle?**"
     public static readonly BranchesviewGetSingle = "**/branchviews/getsingle/?**";
 
+    public static readonly ShippingLines = "**/shippinglines"
+    public static readonly ShippingLinesGetSingle = "**/shippinglines/getsingle?**"
+    public static readonly ShippingLinesviewGetSingle = "**/shippinglines/getsingle/?**";
+    public static readonly NewShippingLines = '**/shippinglineviews/getbyfilters?**'
+    public static readonly NewShippingLinesAddress = '**/PartnersDomain/GetAllAddressesPMsbyCardId?**'
+
+    public static readonly ShippingLinesAddress = "**/PartnersDomain"
+    public static readonly ShippingLinesArea = "**/carrierareas"
+    public static readonly ShippingLinesTariffTranslations = "**/tariffcarriertranslations"
+
     public static readonly GetTenatCurrencies = "**/GetCopyCurrencyToTenant?**"
     public static readonly Currencies = "**/currencies"
     public static readonly CurrenciesGetSingle = "**/currencies/getsingle?**"

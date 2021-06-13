@@ -113,6 +113,15 @@ export class RequestAliases {
     public static readonly PostBranch="PostBranch"
     public static readonly PutBranch="PutBranch"
 
+    public static readonly PostShippingLine="PostShippingLine"
+    public static readonly PutShippingLine="PutShippingLine"
+    public static readonly NewShippingLine="NewShippingLine"
+    public static readonly NewShippingLineAddress="NewShippingLineAddress"
+
+    public static readonly PostShippingLineAddress="PostShippingLineAddress"
+    public static readonly PostShippingLineArea="PostShippingLineArea"
+    public static readonly PostShippingLineTariffTranslations="PostShippingLineTariffTranslations"
+
     public static readonly PostCurrency="PostCurrency"
     public static readonly PutCurrency="PutCurrency"
     public static readonly GetCurrenciesCodes="GetCurrenciesCodes"
