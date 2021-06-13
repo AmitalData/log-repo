@@ -50,6 +50,7 @@ export class CustomsContainerizationListTemplate {
         }
         if (!this.entityPM.ConnectedDeclarations) {
             this.entityPM.ConnectedDeclarations = "";
+            this._containerizationExtendedListService.ConnectedDeclarations = "";
         }
         if (this._containerizationExtendedListService.connectedSelectAll == true) {
             this.IsConnectedDeclarationChecked = true;
@@ -59,22 +60,22 @@ export class CustomsContainerizationListTemplate {
     }
 
     OnConnectedCheckBoxChecked($event) {
-        if (!this.entityPM.ConnectedDeclarations) {
-            this.entityPM.ConnectedDeclarations = "";
-        }
-
         this._containerizationExtendedListService.disconnectedSelectAll = false;
-        this.entityPM.ConnectedDeclarations = this.entityPM.ConnectedDeclarations.replace("ALL", "");
+        this._containerizationExtendedListService.ConnectedDeclarations = this._containerizationExtendedListService.ConnectedDeclarations.replace("ALL", "");
         if ($event) {
-            if (!this.entityPM.ConnectedDeclarations.includes(this.rowData.Id)) {
-                this.entityPM.ConnectedDeclarations = this.entityPM.ConnectedDeclarations + this.rowData.Id + ",";
+            if (!this._containerizationExtendedListService.ConnectedDeclarations.includes(this.rowData.Id)) {
+                this._containerizationExtendedListService.ConnectedDeclarations = this._containerizationExtendedListService.ConnectedDeclarations + this.rowData.Id + ",";
             }
         }
         else {
-            if (this.entityPM.ConnectedDeclarations.includes(this.rowData.Id)) {
-
-                this.entityPM.ConnectedDeclarations = this.entityPM.ConnectedDeclarations.replace(this.rowData.Id + ",", "");
+            if (this._containerizationExtendedListService.ConnectedDeclarations.includes(this.rowData.Id)) {
+                this._containerizationExtendedListService.ConnectedDeclarations = this._containerizationExtendedListService.ConnectedDeclarations.replace(this.rowData.Id + ",", "");
             }
+        }
+        if (AppTool.IsNullOrEmpty(this._containerizationExtendedListService.ConnectedDeclarations)) {
+            this._containerizationExtendedListService.SelectedDeclarations = false;
+        } else {
+            this._containerizationExtendedListService.SelectedDeclarations = true;
         }
     }
 }

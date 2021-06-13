@@ -40,7 +40,41 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
 
             }
+            if (!String.IsNullOrWhiteSpace(entityPM.ConnectedDeclarations))
+            {
+                var connectedDeclarations = entityPM.ConnectedDeclarations.Split(',').ToList();
+                var declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
+                var declarationUpdateService = new DeclarationUpdateService(this.MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                var pms = declarationQueryService.GetDeclarationsByIds(connectedDeclarations, entityPM.Tenant);
+                if (pms.Count == 0)
+                {
+                    //throw new Exception("Why ??"); 
+                }
+                else
+                {
+                    foreach (var declaration in pms)
+                    {
+                        declaration.ExportContainerizationID = entityPM.Id;
+                        declaration.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+
+                    }
+                    declarationUpdateService.UpdateMulti(pms, new List<DeclarationPM>(), entityPM, false);
+                }
+
+            }
             base.UpdateComposition(entityPM);
+        }
+
+        protected override void OnCreating(ContainerizationPM entityPM, EntityPM entityParentPM)
+        {
+            entityPM.ContainerizationDate = DateTime.Now;
+            ContainerizationQueryService containerizationQueryService = new ContainerizationQueryService(entityPM.Tenant);
+            if(containerizationQueryService != null)
+            {
+                entityPM.ContainerizationNumber = containerizationQueryService.GetContainerizationNumber(entityPM.Tenant).ToString();
+            }
+            entityPM.OperationMode = "1";
+
         }
     }
 }

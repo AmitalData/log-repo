@@ -46,6 +46,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string OperationMode { get; set; }
 	      
         public virtual NDMessageActionCode NDMessageActionCode { get; set; }
+        [Column("IsChange")]
+	    public bool IsChange { get; set; }
     }
 }
 	 

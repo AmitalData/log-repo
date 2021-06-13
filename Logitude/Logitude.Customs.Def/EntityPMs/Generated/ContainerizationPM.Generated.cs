@@ -365,6 +365,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isChange ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsChange  
+	   {
+	    
+	     get
+		{
+		   return isChange;
+		 }
+		 set
+		 {
+		   if(isChange != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsChange",OldValue=isChange,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isChange=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

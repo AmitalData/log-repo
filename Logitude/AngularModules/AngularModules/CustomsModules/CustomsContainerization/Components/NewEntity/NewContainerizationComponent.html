@@ -93,8 +93,7 @@
 
                                     </td>
                                     <td colspan="6">
-                                        <button style="width: 100px; float: left; " class="GreenButton" (click)="SendButtonClicked()">המשך</button>
-
+                                        <button style="width: 100px; float: left; " class="GreenButton" [disabled]="!containerizationExtendedListService.SelectedDeclarations" (click)="SendButtonClicked()">המשך</button>
                                     </td>
 
                                 </tr>
