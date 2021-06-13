@@ -27,7 +27,7 @@ namespace Logitude.Server.Tools.Messages
                 .SetValueDeserializer(Deserializers.Utf8)
                 .Build();
 
-            if (topics.Count > 0)
+            if (topics != null && topics.Count > 0)
                 consumer.Subscribe(topics);
 
             if (partition != null)
