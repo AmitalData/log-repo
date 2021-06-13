@@ -31,5 +31,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? MainCarriageATA { get; set; }
         public DateTime? MainCarriageATD { get; set; }
         public DateTime? DischargeDate { get; set; }
+        public string ShipmentId { get; set; }
+
     }
 }

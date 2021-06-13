@@ -18,27 +18,34 @@ using System.IO;
 using System.Xml.Serialization;
 using Simplog.Data.Helpers;
 using Logitude.Server.Tools.Counters;
+using Simplog.Server.Infrastructure;
+using System.Threading.Tasks;
 
 namespace CommunicationWorkerRole
 {
     public class ContainerStatusesReceiverWR : WorkerEntryPoint
     {
-        private int logitudeOceanInsightsTenant;
-        private string amitalCloudEnvironmentURL;
-        private string amitalCloudLogitudeTenantPrimaryKey;
         private string token;
         private int queuePriority = 1;
+
         public override void Run()
         {
-            token = LoginToCloud();
-            GetLogitudeOceanInsightsTenantConfigurations();
+            
             while (IsRunning)
             {
                 if (!General.IsUpdating())
                 {
                     try
                     {
-                        this.ReadContainerStatusRequestToOceanInsightSevice();
+                        var loginResponse = LoginToCloud();
+
+                        loginResponse.Wait();
+                        if (loginResponse.Result != null && !loginResponse.Result.HasError)
+                        {
+                            token = loginResponse.Result.Result;
+                            this.ReadContainerStatusRequestToOceanInsightSevice();
+                        }
+
                     }
                     catch (Exception e)
                     {
@@ -52,23 +59,7 @@ namespace CommunicationWorkerRole
                 }
             }
         }
-      
-        
-        private void GetLogitudeOceanInsightsTenantConfigurations()
-        {
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            {
-                SettingRepository settingRepository = new SettingRepository();
-                Setting setting = settingRepository.GetSingleSetting("1");
-                if (setting != null)
-                {
-                    logitudeOceanInsightsTenant = setting.OITenantNumber;
-                    amitalCloudEnvironmentURL = setting.AmitalCloudEnvironmentURL;
-                    amitalCloudLogitudeTenantPrimaryKey = setting.AmitalCloudLogitudeTenantPrimaryKey;
-                }
-                scope.Complete();
-            }
-        }
+
 
         private async void ReadContainerStatusRequestToOceanInsightSevice()
         {
@@ -79,23 +70,25 @@ namespace CommunicationWorkerRole
                 binding.MaxReceivedMessageSize = 2147483647;
                 binding.ReaderQuotas.MaxStringContentLength = 2147483647;
                 binding.ReaderQuotas.MaxArrayLength = 2147483647;
-                var endpoint = new EndpointAddress(amitalCloudEnvironmentURL);
+                var endpoint = new EndpointAddress(LogitudeSettings.AmitalCloudEnvironmentURL + "WcfApi/ExternalTasksQueueWcfService.svc");
                 ExternalTasksQueueWcfServiceClient externalTasksQueueWcfService = new ExternalTasksQueueWcfServiceClient(binding, endpoint);
+                Task<string> oceanInsightResponseTask;
                 using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)externalTasksQueueWcfService.InnerChannel))
                 {
                     System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", token);
-                    var oceanInsightResponseXML =  await externalTasksQueueWcfService.GetTaskFromQueueAsync(logitudeOceanInsightsTenant, queuePriority);
-                    if (!string.IsNullOrEmpty(oceanInsightResponseXML))
-                    {
-                        this.ReadExternalTasksQueueWcfServiceResponse(oceanInsightResponseXML);
-                        this.InsertNewAnalyzeQueue();
-                        externalTasksQueueWcfService.MarkTaskAsDone(communicationId, logitudeOceanInsightsTenant, queuePriority);
-                    }
+                    oceanInsightResponseTask =   externalTasksQueueWcfService.GetTaskFromQueueAsync(LogitudeSettings.OITenantNumber, queuePriority);
+                }
+                var oceanInsightResponseXML = await oceanInsightResponseTask;
+                if (!string.IsNullOrEmpty(oceanInsightResponseXML))
+                {
+                    this.ReadExternalTasksQueueWcfServiceResponse(oceanInsightResponseXML);
+                    this.InsertNewAnalyzeQueue();
+                    externalTasksQueueWcfService.MarkTaskAsDone(communicationId, LogitudeSettings.OITenantNumber, queuePriority);
                 }
             }
             else
             {
-                throw new Exception("Analyzing containetr status request faild, invalid token");
+                //ExceptionHandler.HandleException(new Exception("Analyzing containetr status request faild, invalid token"), DateTime.Now, 0, "", "WorkerRole", "ContainerStatusesReceiverWR : ReadContainerStatusRequestToOceanInsightSevice() Method", null);
             }
         }
 
@@ -137,21 +130,19 @@ namespace CommunicationWorkerRole
             analyzeQueueReposiory.SubmitChanges();
         }
 
-        private string LoginToCloud()
+        private async Task<Logitude.Server.Tools.Response> LoginToCloud()
         {
-            string token = "";
-            LoginWcfServiceClient loginService = new LoginWcfServiceClient();
-            var aPICredentialsParameters = new APICredentialsParameters()
+            if (string.IsNullOrEmpty(token))
             {
-                PrimaryKey = this.amitalCloudLogitudeTenantPrimaryKey,
-                Tenant = this.logitudeOceanInsightsTenant
-            };
-            Logitude.Server.Tools.Response loginResponse = loginService.LoginByCredential(null, aPICredentialsParameters);
-            if (!loginResponse.HasError)
-            {
-                token = loginResponse.Result;
+                LoginWcfServiceClient loginService = new LoginWcfServiceClient();
+                var aPICredentialsParameters = new APICredentialsParameters()
+                {
+                    PrimaryKey = LogitudeSettings.AmitalCloudLogitudeTenantPrimaryKey,
+                    Tenant = LogitudeSettings.OITenantNumber
+                };
+                return  await loginService.LoginByCredentialAsync(null, aPICredentialsParameters);
             }
-            return token;
+            return null;
         }
 
         public override bool OnStart()

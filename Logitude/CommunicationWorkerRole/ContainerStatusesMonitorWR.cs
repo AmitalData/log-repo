@@ -22,14 +22,13 @@ namespace CommunicationWorkerRole
                 {
                     try
                     {
-
-                        DbQueueService queueservice = queueservice = new DbQueueService("ContainerStatusesCommunicationLogQueue", 0);
-                        QueueResponse iQueueResponse = queueservice.Receive(new TimeSpan(0, 0, 0, 10));
-
-                        if (iQueueResponse.MessageId != null)
+                        IQueueService  queueservice = new DbQueueService();
+                        queueservice.InitializeQueue("ContainerStatusesCommunicationLogQueue", 0);
+                        QueueResponse queueResponse = queueservice.Receive(new TimeSpan(0, 0, 0, 10));
+                        if (queueResponse.MessageId != null)
                         {
-                            string communicationLogId = iQueueResponse.MessageValues["CommunicationLogId"].ToString();
-                            int.TryParse(iQueueResponse.MessageValues["Tenant"].ToString(), out tenant);
+                            string communicationLogId = queueResponse.MessageValues["CommunicationLogId"].ToString();
+                            int.TryParse(queueResponse.MessageValues["Tenant"].ToString(), out tenant);
                             ContainerStatusesAnalyzer analyzer = new ContainerStatusesAnalyzer(communicationLogId, tenant);
                             analyzer.Run();
                             queueservice.Complete();

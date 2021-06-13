@@ -125,6 +125,11 @@ export class ContainerPM {
     public set DischargeDate(newValue: Date) { if (this.dischargeDate != newValue) { this.dischargeDate = newValue; this.MarkAsDirty("DischargeDate"); } }
        
 	 
+    private shipmentId: string;
+    public get ShipmentId() { return this.shipmentId; }
+    public set ShipmentId(newValue: string) { if (this.shipmentId != newValue) { this.shipmentId = newValue; this.MarkAsDirty("ShipmentId"); } }
+       
+	 
 
     public OldEntityPM: ContainerPM;
 		

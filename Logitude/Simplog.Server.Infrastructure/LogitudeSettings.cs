@@ -70,7 +70,9 @@ namespace Simplog.Server.Infrastructure
         public static int EmailSendingQuota { get; set; }
         public static string CPUIntensiveWebServicesURL { get; set; }
 
-
+        public static string AmitalCloudEnvironmentURL { get; set; }
+        public static string AmitalCloudLogitudeTenantPrimaryKey { get; set; }
+        public static int OITenantNumber { get; set; }
         public static bool IsCostomsDeploy
         {
             get

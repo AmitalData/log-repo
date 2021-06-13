@@ -1,6 +1,6 @@
 import { Component, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
-import { ShipmentPM } from '../../EntityPMs/ShipmentPM';
+import { ContainerPM } from '../../EntityPMs/ContainerPM';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 import { AppTool } from '../../../Infrastructure/Tools';
@@ -14,7 +14,7 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
 })
 
 export class ContainerHelperComponent implements OnDestroy {
-    public EntityPM: ShipmentPM;
+    public EntityPM: ContainerPM;
     public EntityTitle: string;
     public IsFollowupsVisible: boolean = false;
     public IsAnalyzeChampXMLButtonVisible: boolean = false;
@@ -54,7 +54,7 @@ export class ContainerHelperComponent implements OnDestroy {
     ContainersRequestStatusClicked() {
         this.CurrentSession.StartBusyIndicator("Sending");
         var service = new ShipmentContainersWebService();
-        service.GetContainerStatusResult(null, this.EntityPM.Id, true).subscribe((myResponse: ServiceResponse) => {
+        service.GetContainerStatusResult(null, this.EntityPM.ShipmentId, true).subscribe((myResponse: ServiceResponse) => {
             this.CurrentSession.StopBusyIndicator();
             if (!myResponse.HasError) {
 

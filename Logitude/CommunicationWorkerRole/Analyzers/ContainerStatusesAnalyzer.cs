@@ -14,6 +14,9 @@ using CommunicationWorkerRole.LoginServiceReference;
 using CommunicationWorkerRole.OceanInsightsServiceReference;
 using System.ServiceModel;
 using WebFreight.Web.Helpers;
+using Simplog.Server.Infrastructure;
+using System.Threading.Tasks;
+using Logitude.SystemLogs;
 
 namespace CommunicationWorkerRole.Analyzers
 {
@@ -26,9 +29,8 @@ namespace CommunicationWorkerRole.Analyzers
         private string communicationLogId;
         private string oceanInsightId;
         private LogitudeOceanInsightsRequestRepository logitudeOceanInsightsRequestRepository;
-        private int logitudeOceanInsightsTenant;
-        private string amitalCloudEnvironmentURL;
-        private string amitalCloudLogitudeTenantPrimaryKey;
+        private string amitalLogIntoken;
+
         public ContainerStatusesAnalyzer(string communicationLogId, int tenant)
         {
             this.communicationLogId = communicationLogId;
@@ -42,24 +44,6 @@ namespace CommunicationWorkerRole.Analyzers
             logitudeOceanInsightsRequestRepository = new LogitudeOceanInsightsRequestRepository(this.tenant);
             communicationLogRepository = new CommunicationLogRepository(commonContext);
             communicationLog = communicationLogRepository.GetSingleCommunicationLog(communicationLogId, this.tenant);
-            this.GetLogitudeOceanInsightsTenantConfigurations();
-
-        }
-
-        private void GetLogitudeOceanInsightsTenantConfigurations()
-        {
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            {
-                SettingRepository settingRepository = new SettingRepository();
-                Setting setting = settingRepository.GetSingleSetting("1");
-                if (setting != null)
-                {
-                    logitudeOceanInsightsTenant = setting.OITenantNumber;
-                    amitalCloudEnvironmentURL = setting.AmitalCloudEnvironmentURL;
-                    amitalCloudLogitudeTenantPrimaryKey = setting.AmitalCloudLogitudeTenantPrimaryKey;
-                }
-                scope.Complete();
-            }
         }
 
         public void Run()
@@ -76,9 +60,15 @@ namespace CommunicationWorkerRole.Analyzers
             else
             {
                 this.ReadAdditionalFieldsFromCommunicationLog();
-                this.SendContainerStatusRequestToOceanInsightSevice();
-                this.InsertLogitudeOceanInsightsRequest();
-                this.DoneCommunicationLog();
+                var loginResponse = LoginToCloud();
+                loginResponse.Wait();
+                if (loginResponse.Result != null && !loginResponse.Result.HasError)
+                {
+                    amitalLogIntoken = loginResponse.Result.Result;
+                    this.SendContainerStatusRequestToOceanInsightSevice();
+                    this.InsertLogitudeOceanInsightsRequest();
+                    this.DoneCommunicationLog();
+                }
             }
         }
         private string refrenceNumber;
@@ -95,51 +85,50 @@ namespace CommunicationWorkerRole.Analyzers
 
         private async void SendContainerStatusRequestToOceanInsightSevice()
         {
-            var token = LoginToCloud();
-            if (!string.IsNullOrEmpty(token))
+            if (!string.IsNullOrEmpty(amitalLogIntoken))
             {
                 BasicHttpBinding binding = new BasicHttpBinding(BasicHttpSecurityMode.None);
                 binding.MaxBufferSize = 2147483647;
                 binding.MaxReceivedMessageSize = 2147483647;
                 binding.ReaderQuotas.MaxStringContentLength = 2147483647;
                 binding.ReaderQuotas.MaxArrayLength = 2147483647;
-                var endpoint = new EndpointAddress(amitalCloudEnvironmentURL);
+                var endpoint = new EndpointAddress(LogitudeSettings.AmitalCloudEnvironmentURL + "WcfApi/OceanInsightsWcfService.svc");
                 OceanInsightsWcfServiceClient oceanInsightsWcfService = new OceanInsightsWcfServiceClient(binding, endpoint);
+                Task<Logitude.Server.Tools.Response> oceanInsightResponseTask;
                 using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)oceanInsightsWcfService.InnerChannel))
                 {
-                    System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", token);
-                    var oceanInsightResponse = await oceanInsightsWcfService.InsertAsync(logitudeOceanInsightsTenant, scacCode, refrenceNumber, oceanInsightInsertType);
-                    if (!oceanInsightResponse.HasError)
-                    {
-                        oceanInsightId = oceanInsightResponse.Result;
-                    }
-                    else
-                    {
-                        throw new Exception("Analyzing containetr status request faild, " + oceanInsightResponse.ErrorMessage);
-                    }
+                    System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", amitalLogIntoken);
+                    oceanInsightResponseTask =  oceanInsightsWcfService.InsertAsync(LogitudeSettings.OITenantNumber, scacCode, refrenceNumber, oceanInsightInsertType);
+                }
+                var oceanInsightResponse = await oceanInsightResponseTask;
+                if (!oceanInsightResponse.HasError)
+                {
+                    oceanInsightId = oceanInsightResponse.Result;
+                }
+                else
+                {
+                    //throw new Exception("Analyzing containetr status request faild, " + oceanInsightResponse.ErrorMessage);
                 }
             }
             else
             {
-                throw new Exception("Analyzing containetr status request faild, invalid token");
+                //throw new Exception("Analyzing containetr status request faild, invalid token");
             }
         }
 
-        private string LoginToCloud()
+        private async Task<Logitude.Server.Tools.Response> LoginToCloud()
         {
-            string token = "";
-            LoginWcfServiceClient loginService = new LoginWcfServiceClient();
-            var aPICredentialsParameters = new APICredentialsParameters()
+            if (string.IsNullOrEmpty(amitalLogIntoken))
             {
-                PrimaryKey = this.amitalCloudLogitudeTenantPrimaryKey,
-                Tenant = this.logitudeOceanInsightsTenant
-            };
-            Logitude.Server.Tools.Response loginResponse = loginService.LoginByCredential(null, aPICredentialsParameters);
-            if (!loginResponse.HasError)
-            {
-                token = loginResponse.Result;
+                LoginWcfServiceClient loginService = new LoginWcfServiceClient();
+                var aPICredentialsParameters = new APICredentialsParameters()
+                {
+                    PrimaryKey = LogitudeSettings.AmitalCloudLogitudeTenantPrimaryKey,
+                    Tenant = LogitudeSettings.OITenantNumber
+                };
+                return await loginService.LoginByCredentialAsync(null, aPICredentialsParameters);
             }
-            return token;
+            return null;
         }
 
         private void InsertLogitudeOceanInsightsRequest()

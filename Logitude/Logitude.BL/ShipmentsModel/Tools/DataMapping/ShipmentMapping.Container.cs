@@ -34,6 +34,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             container.Master = containerPM.Master;
             container.ShipmentPackagesId = containerPM.ShipmentPackagesId;
             container.ContainerNumber = containerPM.ContainerNumber;
+            container.ShipmentId = containerPM.ShipmentId;
             BuildSearchField(containerPM, container);
         }
 
