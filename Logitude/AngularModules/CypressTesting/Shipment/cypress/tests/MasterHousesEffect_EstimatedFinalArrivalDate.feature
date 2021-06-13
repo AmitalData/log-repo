@@ -31,7 +31,7 @@ Feature: Compute EstimatedFinalArrivalDate in Master And Connected Houses
         And the house EstimatedFinalArrivalDate should be 2021-05-02
 
     Scenario: Update EstimatedFinalArrivalDate when there are transshipments
-        Given the user in the master's rounting tab
+        Given the user in master rounting tab
         And edit main carriage leg with the following details
             | Transshipment1FromPortId | TLV        |
             | Transshipment1ETA        | 2021-05-04 |

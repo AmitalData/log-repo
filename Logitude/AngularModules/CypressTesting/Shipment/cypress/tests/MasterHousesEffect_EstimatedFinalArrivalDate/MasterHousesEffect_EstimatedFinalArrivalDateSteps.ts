@@ -71,10 +71,26 @@ When('update master',()=>{
 Then('the master should update successfully',()=>{
     Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
 })
-Then('the master ActualFinalArrivalDate should be 2021-05-04',()=>{
-    Actions.AsserationActualFinalArrivalDateinMaster()
+Then('the master EstimatedFinalArrivalDate should be 2021-05-02',()=>{
+    Actions.AsserationEstimatedFinalArrivalDateinMaster()
 })
-Then('the house ActualFinalArrivalDate should be 2021-05-04',()=>{
-   Actions.AsserationActualFinalArrivalinHouse()  
+Then('the house EstimatedFinalArrivalDate should be 2021-05-02',()=>{
+   Actions.AsserationEstimatedFinalArrivalDateinHouse()  
 }) 
+//#endregion
+//#region Update EstimatedFinalArrivalDate when there are transshipments
+
+Given('the user in master rounting tab',()=>{
+    cy.BackButton('Operations')
+    Actions.OpenShipment(ShipmentContext.MasterNumber)
+    cy.Navigate(ShipmentSelectors.RoutingsTab);
+})
+
+Then('the master EstimatedFinalArrivalDate should be 2021-05-04',()=>{
+Actions.AsserationEstimatedFinalArrivalDatesinMaster()
+
+})
+Then('the house EstimatedFinalArrivalDate should be 2021-05-04',()=>{
+    Actions.AsserationEstimatedFinalArrivalDateHousetransshipments()
+})
 //#endregion
