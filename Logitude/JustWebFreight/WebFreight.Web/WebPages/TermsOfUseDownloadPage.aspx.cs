@@ -21,64 +21,76 @@ namespace WebFreight.Web.WebPages
             string privateLabeldId = Request["PrivateLableId"] ?? "";
 
             SecurityDocumentResult securityDocumentResult = SecurityDocumentHelper.ValidationDocumentToken(token);
-            bool isValid = false;
-            string email = securityDocumentResult.Email;
-            string exceptionMessage = securityDocumentResult.ExceptionResult;
+            bool isValid = false; 
             tenant = securityDocumentResult.Tenant;
              
-            isValid = GetIsValidateUser(isValid, email); 
+            isValid = IsValidUser(isValid, securityDocumentResult.Email); 
 
             if (isValid)
             {
-               DownloadTemrsOfUse(privateLabeldId); 
+               DownloadTermsOfUse(privateLabeldId); 
             }
             else
             {
-               ShowExceptionMessage(exceptionMessage);
+               ShowExceptionMessage(securityDocumentResult.ExceptionResult);
             }
         }
          
-        private bool GetIsValidateUser(bool isValid, string email)
+        private bool IsValidUser(bool isValid, string email)
         {
             if (IsUser(email, (int)tenant) && CheckAvailablityTenantsForEmail(email, (int)tenant) || tenant == 0) isValid = true;
             return isValid;
         }
 
-        private byte[] DownloadTemrsOfUse(string privateLabeldId)
+        private byte[] DownloadTermsOfUse(string privateLabeldId)
         {
             byte[] datainByte;
 
             string documentId = GetTermOfUseDocumentId(privateLabeldId);
             Document termsOfUseDocument = GetDocument(documentId);
 
-            if(termsOfUseDocument == null)
+            if (termsOfUseDocument == null)
             {
                 this.ShowExceptionMessage("Document Not Found!");
 
             }
-            Uploader up = new Uploader();
-            datainByte = up.DownloadFile(termsOfUseDocument.Id, termsOfUseDocument.Extension, termsOfUseDocument.Folder, termsOfUseDocument.Tenant);
+            datainByte = DownloadFileFromStorage(termsOfUseDocument);
 
-            if (datainByte != null)
-            {
-                CreateResponse(datainByte, termsOfUseDocument);
-
-                if (GetIsClientConnected())
-                {
-                    CompleteResponse();
-                }
-            }
+            WriteFileToPageResponse(datainByte, termsOfUseDocument);
             return datainByte;
         }
 
-         
+        private static void WriteFileToPageResponse(byte[] datainByte, Document termsOfUseDocument)
+        {
+            if(datainByte == null)
+            {
+                return;
+            }
+ 
+           CreateResponse(datainByte, termsOfUseDocument);
+
+           if (GetIsClientConnected())
+           {
+            CompleteResponse();
+           }
+          
+        }
+
+        private static byte[] DownloadFileFromStorage(Document termsOfUseDocument)
+        {
+            byte[] datainByte;
+            Uploader up = new Uploader();
+            datainByte = up.DownloadFile(termsOfUseDocument.Id, termsOfUseDocument.Extension, termsOfUseDocument.Folder, termsOfUseDocument.Tenant);
+            return datainByte;
+        }
+
         public bool CheckAvailablityTenantsForEmail(string email, int tenant)
         {
             ContactRepository contactRep = new ContactRepository(tenant);
             bool available = contactRep.CheckEmailAvailabilityForTenant(email, tenant);
             if (!available)
             {
-                available = contactRep.CheckEmailAvailabilityForTenant(email, 0);
+                return contactRep.CheckEmailAvailabilityForTenant(email, 0);
             }
             return available;
         }
@@ -93,28 +105,24 @@ namespace WebFreight.Web.WebPages
 
         private string GetTermOfUseDocumentId(string privateLabeldId)
         {
-            TermsofUseQuery termsofUseQuery = new TermsofUseQuery();
-            var documentId = termsofUseQuery.GetLatestTermsOfUseDocumentId(privateLabeldId);
-            return documentId; 
+            TermsofUseQuery termsofUseQuery = new TermsofUseQuery(0);
+            return termsofUseQuery.GetLatestTermsOfUseDocumentId(privateLabeldId); 
         }
          
 
         private static bool GetIsUser(string email, int tenant)
-        {
-            bool isUser;
+        { 
             IGlobalContext globalContext = GlobalContext.GetContext();
-            isUser = globalContext.GlobalContacts.Where(c => c.Email == email && (c.GlobalTenantId == tenant || c.GlobalTenantId == 0) && c.IsUser == true).Any();
-            return isUser;
+            return globalContext.GlobalContacts.Where(c => c.Email == email && (c.GlobalTenantId == tenant || c.GlobalTenantId == 0) && c.IsUser == true).Any();
+       
         }
 
         private static bool IsUser(string email, int tenant)
-        {
-            bool isUser = false;
+        { 
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
-                isUser = GetIsUser(email, tenant);
-            }
-            return isUser;
+                return  GetIsUser(email, tenant);
+            } 
         }
 
 

@@ -147,7 +147,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public TermsofUsePM GetTermOfUseByPrivateLabel(string privateLabelId)
         {
-            TermsofUsePM termsofUses = (from a in repository.context.TermsofUses.OrderByDescending(d => d.VersionNumber)
+            return (from a in repository.context.TermsofUses.OrderByDescending(d => d.VersionNumber)
                                         where a.PrivateLabelId == privateLabelId
                                         select new TermsofUsePM()
                                         {
@@ -157,8 +157,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             VersionDocumentId = a.VersionDocumentId,
                                             Tenant = a.Tenant,
                                             PrivateLabelId = a.PrivateLabelId,
-                                        }).FirstOrDefault();
-            return termsofUses;
+                                        }).FirstOrDefault(); 
         }
 
 
