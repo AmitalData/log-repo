@@ -80,6 +80,8 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
             //this.ImageId = this.EntityPM.PaymentChequesLogoId;
             //this.EntityId = this.EntityPM.Id;
 
+            this.BuildTabs();
+
             if (this.EntityPM == null || this.EntityPM == undefined) {
                 this.InsertIfNotExist();
             } else {
@@ -132,11 +134,11 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
     }
     ngOnInit() {
-        this.BuildTabs();
     }
 
     ngAfterViewInit() {
         //this.SetUIProperties();
+
     }
     ReloadTenantPM(): any {
 
