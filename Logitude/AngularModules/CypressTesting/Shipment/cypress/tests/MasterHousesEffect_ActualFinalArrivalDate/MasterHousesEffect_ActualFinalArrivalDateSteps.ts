@@ -88,9 +88,7 @@ Given('the user in the master rounting tab',()=>{
 })
 
 
-Then('the master should update successfully',()=>{
-    Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
-})
+
 Then('the master ActualFinalArrivalDate should be null',()=>{
     Actions.AsserationMastershipmentNOActualFinalArrivalDate()
 })
@@ -99,16 +97,10 @@ Then('the house ActualFinalArrivalDate should be null',()=>{
 })
 //#endregion
 
-//#region Update FinalArrivalDate when there are transshipments
-Given('the user in the master rounting tab',()=>{
- cy.BackButton('Operations')
-  Actions.OpenShipment(ShipmentContext.MasterNumber)
-  cy.Navigate(ShipmentSelectors.RoutingsTab);
+//#region Update ActualFinalArrivalDat when there are transshipments
 
-
-})
 Then('the master ActualFinalArrivalDate should be 2021-05-05',()=>{
-Actions.FinalArrivalDatewhentherearetransshipmentsinMaster()
+Actions.ActualFinalArrivalDatewhentherearetransshipmentsinMaster()
 
 })
 Then('the house ActualFinalArrivalDate should be 2021-05-05',()=>{

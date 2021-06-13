@@ -21,7 +21,7 @@ Feature: Compute FinalArrivalDate in Master And Connected Houses
         And the house should connect successfully
 
     Scenario: Update FinalArrivalDate when there is actual date
-        Given the user in the master rounting tab
+        Given the user in master rounting tab
         And edit main carriage leg with the following details
             | MainCarriageETADate | 2021-05-02 |
             | MainCarriageATADate | 2021-05-04 |
@@ -31,7 +31,7 @@ Feature: Compute FinalArrivalDate in Master And Connected Houses
         And the house FinalArrivalDate should be 2021-05-04
 
     Scenario: Update FinalArrivalDate when there is no actual date
-        Given the user in the master rounting tab
+        Given the user in master rounting tab
         And edit main carriage leg with the following details
             | MainCarriageETADate | 2021-05-02 |
             | MainCarriageATADate | 0          |
@@ -41,7 +41,7 @@ Feature: Compute FinalArrivalDate in Master And Connected Houses
         And the house FinalArrivalDate should be 2021-05-02
 
     Scenario: Update FinalArrivalDate when there are transshipments
-        Given the user in the master's rounting tab
+        Given the user in master rounting tab
         And edit main carriage leg with the following details
             | Transshipment1FromPortId | TLV        |
             | Transshipment1ETA        | 2021-05-04 |

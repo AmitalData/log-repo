@@ -56,8 +56,7 @@ Then("the house should connect successfully", () => {
     Actions.ValidateCheckHouseCheckBox();
 });
 //#endregion
-
-//#region Update FinalArrivalDate when there is actual date
+//#region Update EstimatedFinalArrivalDate when there is actual date
 Given("the user in the master's rounting tab", () => {
     cy.Navigate(ShipmentSelectors.RoutingsTab);
 });
@@ -72,38 +71,10 @@ When('update master',()=>{
 Then('the master should update successfully',()=>{
     Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
 })
-Then('the master FinalArrivalDate should be 2021-05-04',()=>{
-    Actions.AsserationFinalArrivalDateinMaster()
+Then('the master ActualFinalArrivalDate should be 2021-05-04',()=>{
+    Actions.AsserationActualFinalArrivalDateinMaster()
 })
-Then('the house FinalArrivalDate should be 2021-05-04',()=>{
-   Actions.AsserationFinalArrivalinHouse()  
+Then('the house ActualFinalArrivalDate should be 2021-05-04',()=>{
+   Actions.AsserationActualFinalArrivalinHouse()  
 }) 
-//#endregion
-
-//#region Update FinalArrivalDate when there is no actual date
-Given('the user in master rounting tab',()=>{
-    cy.BackButton('Operations')
-    Actions.OpenShipment(ShipmentContext.MasterNumber)
-    cy.Navigate(ShipmentSelectors.RoutingsTab);
-})
-
-
-
-Then('the master FinalArrivalDate should be 2021-05-02',()=>{
-    Actions.AsserationMastershipmentFinalArrivalnoactualdate()
-})
-Then('the house FinalArrivalDate should be 2021-05-02',()=>{
-  Actions.AsserationHouseshipmentFinalArrivalnoactualdate()
-})
-//#endregion
-
-//#region Update FinalArrivalDate when there are transshipments
-
-Then('the master FinalArrivalDate should be 2021-05-05',()=>{
-Actions.FinalArrivalDatewhentherearetransshipmentsinMaster()
-
-})
-Then('the house FinalArrivalDate should be 2021-05-05',()=>{
-    Actions.FinalArrivalAsserationHouseshipmenttransshipments()
-})
 //#endregion
