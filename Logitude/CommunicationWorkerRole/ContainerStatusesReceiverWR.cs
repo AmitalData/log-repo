@@ -26,22 +26,24 @@ namespace CommunicationWorkerRole
         private int logitudeOceanInsightsTenant;
         private string amitalCloudEnvironmentURL;
         private string amitalCloudLogitudeTenantPrimaryKey;
+        private string token;
         private int queuePriority = 1;
         public override void Run()
         {
+            token = LoginToCloud();
+            GetLogitudeOceanInsightsTenantConfigurations();
             while (IsRunning)
             {
                 if (!General.IsUpdating())
                 {
                     try
                     {
-                        this.GetLogitudeOceanInsightsTenantConfigurations();
                         this.ReadContainerStatusRequestToOceanInsightSevice();
                     }
                     catch (Exception e)
                     {
                         ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "ContainerStatusesReceiverWR : Run() Method", null);
-                        Thread.Sleep(5000);
+                        Thread.Sleep(30000);
                     }
                 }
                 else
@@ -50,7 +52,8 @@ namespace CommunicationWorkerRole
                 }
             }
         }
-
+      
+        
         private void GetLogitudeOceanInsightsTenantConfigurations()
         {
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -67,9 +70,8 @@ namespace CommunicationWorkerRole
             }
         }
 
-        private void ReadContainerStatusRequestToOceanInsightSevice()
+        private async void ReadContainerStatusRequestToOceanInsightSevice()
         {
-            var token = LoginToCloud();
             if (!string.IsNullOrEmpty(token))
             {
                 BasicHttpBinding binding = new BasicHttpBinding(BasicHttpSecurityMode.None);
@@ -82,7 +84,7 @@ namespace CommunicationWorkerRole
                 using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)externalTasksQueueWcfService.InnerChannel))
                 {
                     System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", token);
-                    var oceanInsightResponseXML = externalTasksQueueWcfService.GetTaskFromQueue(logitudeOceanInsightsTenant, queuePriority);
+                    var oceanInsightResponseXML =  await externalTasksQueueWcfService.GetTaskFromQueueAsync(logitudeOceanInsightsTenant, queuePriority);
                     if (!string.IsNullOrEmpty(oceanInsightResponseXML))
                     {
                         this.ReadExternalTasksQueueWcfServiceResponse(oceanInsightResponseXML);

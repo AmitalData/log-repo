@@ -324,6 +324,7 @@
     <Content Include="ShipmentModules\ShipmentTabs\Components\ProductItems\ProductItemsTabComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\ApprovePaymentBaseComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\PrivateLabelApprovePaymentComponent.html" />
+    <Content Include="Shipment\Components\Helpers\ContainerHelperComponent.html" />
     <Content Include="TasksApp\Components\TasksAppComponent.html" />
     <Content Include="TasksApp\Scripts\tasks-app.js" />
     <Content Include="_Resources\css\PrimeWebComponent.css" />
@@ -7432,6 +7433,7 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\ModuleShipmentTabs.ts" />
     <TypeScriptCompile Include="Shipment\Components\Helpers\AnalyzeChampXMLComponent.ts" />
+    <TypeScriptCompile Include="Shipment\Components\Helpers\ContainerHelperComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\ListTemplates\CustomReferenceListTemplate.ts" />
     <TypeScriptCompile Include="Shipment\Components\ListTemplates\RemoveTasksButtonListTemplate.ts" />
     <TypeScriptCompile Include="Shipment\Components\ListTemplates\EditShipmentButtonListTemplate.ts" />

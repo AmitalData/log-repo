@@ -93,7 +93,7 @@ namespace CommunicationWorkerRole.Analyzers
             this.shipmentId = communicationLog.AdditionalFields?.Split(',')[2];
         }
 
-        private void SendContainerStatusRequestToOceanInsightSevice()
+        private async void SendContainerStatusRequestToOceanInsightSevice()
         {
             var token = LoginToCloud();
             if (!string.IsNullOrEmpty(token))
@@ -108,7 +108,7 @@ namespace CommunicationWorkerRole.Analyzers
                 using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)oceanInsightsWcfService.InnerChannel))
                 {
                     System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", token);
-                    var oceanInsightResponse = oceanInsightsWcfService.Insert(logitudeOceanInsightsTenant, scacCode, refrenceNumber, oceanInsightInsertType);
+                    var oceanInsightResponse = await oceanInsightsWcfService.InsertAsync(logitudeOceanInsightsTenant, scacCode, refrenceNumber, oceanInsightInsertType);
                     if (!oceanInsightResponse.HasError)
                     {
                         oceanInsightId = oceanInsightResponse.Result;
