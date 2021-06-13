@@ -228,7 +228,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         GLAccountFollowUpRemarks, 
 	         CalculatedAgingPeriod1, 
 	         CalculatedAgingPeriod2, 
-	         CalculatedAgingPeriod3,
+	         CalculatedAgingPeriod3, 
 	         InsuredCreditLimit,
 	      }
 

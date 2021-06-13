@@ -184,6 +184,7 @@ export const Components =
         NewUserDefinedReportComponent,
         JournalCSVLoadComponent,
         
+
         //Maintenance
         NewCategory1Component,
         NewCategory2Component,
