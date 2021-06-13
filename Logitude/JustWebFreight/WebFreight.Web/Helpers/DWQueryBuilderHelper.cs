@@ -271,6 +271,7 @@ namespace WebFreight.Web.Helpers
                                 else
                                 {
                                     WhereStmt += "( " + fieldName + OperationSimpol;// + " " +;//" = " + "'" + filter.TextValue + "' and ";
+                                    AddNullConditionForNotEqulOperation(OperationSimpol, fieldName);
                                 }
                                 //WhereStmt += AndOr + " " + fieldName + OperationSimpol;// + " " +;//" = " + "'" + filter.TextValue + "' and ";
 
@@ -318,6 +319,14 @@ namespace WebFreight.Web.Helpers
             }
 
             return sqlCommandDefinition;
+        }
+
+        private void AddNullConditionForNotEqulOperation(string OperationSimpol, string fieldName)
+        {
+            if (OperationSimpol != null && OperationSimpol.IndexOf(" not IN ") > -1)
+            {
+                WhereStmt += " or " + fieldName + " is NULL ";
+            }
         }
 
         private SqlCommandDefinition AppendSqlCommandParameters(SqlCommandDefinition sqlCommandDefinition1, SqlCommandDefinition sqlCommandDefinition2)

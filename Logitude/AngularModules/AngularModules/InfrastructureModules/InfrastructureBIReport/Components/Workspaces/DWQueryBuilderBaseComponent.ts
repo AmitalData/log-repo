@@ -156,6 +156,47 @@ export class DWQueryBuilderBaseComponent extends BaseComponent {
         item.FilterItems = tempData;
     }
 
+    public GetSelectedFieldOperators(field: DWObjectFieldsDetails) {
+        this.list = [];
+        if (field.ParentDataTypeCode == "Text" || field.ParentDataTypeCode == "nText") {
+            this.list.push(this.equalsOp);
+            this.list.push(this.startsWithOp);
+            this.list.push(this.IsNullOp);
+            this.list.push(this.IsNotNullOp);
+        }
+        if (field.ParentDataTypeCode == "Integer" || field.ParentDataTypeCode == "UnsInteger"
+            || field.ParentDataTypeCode == "Double" || field.ParentDataTypeCode == "SigDouble"
+            || field.ParentDataTypeCode == "Decimal" || field.ParentDataTypeCode == "UnsDecimal"
+        ) {
+            this.list.push(this.largerThanOp);
+            this.list.push(this.lessThanOp);
+            this.list.push(this.equalsOp);
+            this.list.push(this.greaterThanOrEqualOp);
+            this.list.push(this.lessThanOrEqualOp);
+
+        }
+        if (field.ParentDataTypeCode == "LookUp" || field.ParentDataTypeCode == "Dimension" || field.ParentDataTypeCode == "PickList") {
+            this.list.push(this.equalsOp);
+            this.list.push(this.notEqualsOp);
+            this.list.push(this.IsNullOp);
+            this.list.push(this.IsNotNullOp);
+        }
+        if (field.ParentDataTypeCode == "Boolean") {
+            this.list.push(this.equalsOp);
+            this.list.push(this.notEqualsOp);
+        }
+        if (field.ParentDataTypeCode == "DateTime" || field.ParentDataTypeCode == "Date") {
+            this.list.push(this.afterOp);
+            this.list.push(this.beforeOp);
+            this.list.push(this.previousOp);
+            this.list.push(this.currentOp);
+            this.list.push(this.nextOp);
+            this.list.push(this.BetweenOp);
+        }
+
+        return this.list;
+    }
+
     DeleteDWField(Item: DWObjectFieldsDetails, ListItems: DWObjectFieldsDetails[]) {
         ListItems.forEach((Myfilter) => {
             if (Myfilter.FilterItems.length > 0) {
@@ -1004,46 +1045,5 @@ export class DWObjectFieldsDetails extends DWQueryBuilderBaseComponent
 
     onDeleteFilterClick() {
         this.MyParentClass.DeleteField(this, this.MyParentClass.SelectedFiltersDataSource);
-    }
-
-    private GetSelectedFieldOperators(field: DWObjectFieldsDetails) {
-        this.list = [];
-        if (field.ParentDataTypeCode == "Text" || field.ParentDataTypeCode == "nText") {
-            this.list.push(this.equalsOp);
-            this.list.push(this.startsWithOp);
-            this.list.push(this.IsNullOp);
-            this.list.push(this.IsNotNullOp);
-        }
-        if (field.ParentDataTypeCode == "Integer" || field.ParentDataTypeCode == "UnsInteger"
-            || field.ParentDataTypeCode == "Double" || field.ParentDataTypeCode == "SigDouble"
-            || field.ParentDataTypeCode == "Decimal" || field.ParentDataTypeCode == "UnsDecimal"
-        ) {
-            this.list.push(this.largerThanOp);
-            this.list.push(this.lessThanOp);
-            this.list.push(this.equalsOp);
-            this.list.push(this.greaterThanOrEqualOp);
-            this.list.push(this.lessThanOrEqualOp);
-
-        }
-        if (field.ParentDataTypeCode == "LookUp" || field.ParentDataTypeCode == "Dimension" || field.ParentDataTypeCode == "PickList") {
-            this.list.push(this.equalsOp);
-            this.list.push(this.notEqualsOp);
-            this.list.push(this.IsNullOp);
-            this.list.push(this.IsNotNullOp);
-        }
-        if (field.ParentDataTypeCode == "Boolean") {
-            this.list.push(this.equalsOp);
-            this.list.push(this.notEqualsOp);
-        }
-        if (field.ParentDataTypeCode == "DateTime" || field.ParentDataTypeCode == "Date") {
-            this.list.push(this.afterOp);
-            this.list.push(this.beforeOp);
-            this.list.push(this.previousOp);
-            this.list.push(this.currentOp);
-            this.list.push(this.nextOp);
-            this.list.push(this.BetweenOp);
-        }
-
-        return this.list;
     }
 }
