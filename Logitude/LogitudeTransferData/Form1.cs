@@ -71,7 +71,7 @@ namespace LogitudeTransferData
         private List<ContactPM> GetAllContacts(int tenant)
         {
             ContactQuery contactQuery = new ContactQuery(tenant);
-            List<ContactPM> contactPMs = contactQuery.GetContactPMsByTenant(tenant);
+            List<ContactPM> contactPMs = contactQuery.GetContactPMsWithoutPassWordsByTenant(tenant);
             return contactPMs;
         }
 
@@ -93,6 +93,7 @@ namespace LogitudeTransferData
         {
             try
             {
+                int counter = 0;
                 using (var producer = new ProducerBuilder<long, string>(config)
                     .SetKeySerializer(Serializers.Int64)
                     .SetValueSerializer(Serializers.Utf8)
@@ -100,8 +101,11 @@ namespace LogitudeTransferData
                 {
                     foreach (T PM in PMs)
                     {
+                        counter++;
                         var serializedContact = JsonConvert.SerializeObject(PM, Formatting.Indented);
                         var deliveryReport = producer.ProduceAsync(KafkaTopics.LookupsTopic, new Message<long, string> { Key = kakaMessageTypes, Value = serializedContact });
+                        deliveryReport.Wait();
+                        Console.WriteLine($"Upsert Country: {counter}");
                     }
                 }
             }
