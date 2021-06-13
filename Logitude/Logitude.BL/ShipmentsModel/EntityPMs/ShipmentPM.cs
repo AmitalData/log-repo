@@ -1442,7 +1442,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string Transshipment2ToPortStateCode { get; set; }
         public string Transshipment1ToPortStateCode { get; set; }
 
-        
+        public string StandaloneShipmentId { get; set; }
 
         private List<ShipmentFollowUpPM> followUps;
         [Include]

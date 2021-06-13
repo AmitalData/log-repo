@@ -31,6 +31,12 @@ namespace Simplog.Data.ShipmentsModel.Repositories
                     where a.Id == id
                     select a).FirstOrDefault();
         }
+        public IQueryable<ShipmentPickUpDeliveryPackage> GetSinglePickUpDeliveryPackageByIdsList(List<string> ids, int tenant)
+        {
+            return (from a in context.ShipmentPickUpDeliveryPackages
+                    where ids.Contains(a.ShipmentPickUpDeliveryId) && a.Tenant == tenant
+                    select a);
+        }
 
         public void Add(ShipmentPickUpDeliveryPackage entity)
         {
