@@ -221,4 +221,8 @@ export class DWAskUserFiltersComponent extends DWQueryBuilderBaseComponent imple
 
         return this.list;
     }
+
+    GetFieldOperators(Item) {
+        return this.GetSelectedFieldOperators(Item);
+    }
 }
