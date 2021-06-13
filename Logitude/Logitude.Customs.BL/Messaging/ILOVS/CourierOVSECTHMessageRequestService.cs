@@ -189,7 +189,7 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
                 CustomsSuspention = myDeclarationPM.CourierSuspentionCode??"",
                 Preclearence = myDeclarationPM.CourierCustomStatusCode== "1"  /*released*/,
 
-                ImporterVat = pm.CustomsAgentId,
+                ImporterVat = importerVat,
                 BoxBarcode = crateNumber,
                
 
@@ -205,24 +205,32 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
                 LogMessagingUtil.Instance.AppendLine("integratorIndex is null");
                 return null;
             }
-            string integratorIndexId = null;
-
-            integratorIndexId = GetComputingPartnerCodeTranslation(integratorIndex, "ILOVS", "Card", tenant);
-            if(!String.IsNullOrWhiteSpace(integratorIndexId)) return integratorIndexId;
+            string integratorIndexCode = null;
+            string integratorIndexTranslatedCode = null;
 
             CardQuery cardQuery = new CardQuery(tenant);
-            CardPM cardPM = cardQuery.GetSinglePMByCode(integratorIndex, tenant);
+            CardPM cardPM = cardQuery.GetSinglePM(integratorIndex, tenant);
             if (cardPM != null)
             {
-                integratorIndexId = cardPM.Id;
+                integratorIndexCode = cardPM.Code;
             }
             else
             {
                 LogMessagingUtil.Instance.AppendLine("integratorIndex = " + integratorIndex + " could not translate to Logitude Card Id");
                 return null;
             }
-            LogMessagingUtil.Instance.AppendLine("integratorIndex = " + integratorIndex + " Translated to Card Id" + integratorIndexId);
-            return integratorIndexId;
+
+            integratorIndexTranslatedCode = GetComputingPartnerCodeTranslation(integratorIndexCode, "ILOVS", "Card", tenant);
+            if (!String.IsNullOrWhiteSpace(integratorIndexTranslatedCode))
+            {
+                LogMessagingUtil.Instance.AppendLine("integrator Index = " + integratorIndex + " Translated to (Computing Partner Translate) " + integratorIndexTranslatedCode);
+                return integratorIndexTranslatedCode;
+            }
+
+            integratorIndexTranslatedCode = cardPM.VatNumber;
+            
+            LogMessagingUtil.Instance.AppendLine("integrator Index = " + integratorIndex + " Translated to (Vat Number) " + integratorIndexTranslatedCode);
+            return integratorIndexTranslatedCode;
         }
 
         public string GetComputingPartnerCodeTranslation(string logitudeCode, string computingPartner, string objectTableName, int tenant)
