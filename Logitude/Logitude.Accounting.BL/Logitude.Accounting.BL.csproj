@@ -299,6 +299,7 @@
     <Compile Include="CoreBL\Reconcile\ICreateAutoReconcileWhileStreamingService.cs" />
     <Compile Include="CoreBL\Reconcile\LedgerTransactionsSorter.cs" />
     <Compile Include="CoreBL\Reconcile\MultipleARPaymentReconciliationSplitter.cs" />
+    <Compile Include="CoreBL\Reports\Aging\AgingReportFromAgingData.cs" />
     <Compile Include="CoreBL\Reports\Aging\AgingReportRebulidService.cs" />
     <Compile Include="CoreBL\Reports\Aging\DailyRebuildAgingService.cs" />
     <Compile Include="CoreBL\Reports\Aging\LedgerTransactionsAgingBuilderService.cs" />

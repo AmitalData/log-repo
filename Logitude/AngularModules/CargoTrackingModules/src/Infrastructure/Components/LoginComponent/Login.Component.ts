@@ -33,6 +33,8 @@ export class LoginComponent implements OnInit {
     public ShowbusyIndicator: boolean = false;
     public MainColor: string = null;
     public SecondaryColor: string = null;
+    public BackGroundImg: string;
+
     constructor(private router: Router,
         private route: ActivatedRoute,
         private loginExtendedService: LoginExtendedService,
@@ -52,6 +54,7 @@ export class LoginComponent implements OnInit {
                 this.Tenant = response.Result.Tenant;
                 ServiceHelper.SetCargoTrackingDate(response.Result,baseUrl);
                 this.LogoImgSrc = this.loginServiceHelper.GetLoginLogoImg();
+                this.BackGroundImg = CargoTrackingBrandingData.BackgroundURL;
                 this.MainColor = response.Result.MainColor;
                 this.SecondaryColor = response.Result.SecondaryColor;
             }
@@ -79,6 +82,7 @@ export class LoginComponent implements OnInit {
     public LogInClicked() {
         this.ShowbusyIndicator = true;
         this.errorMessage = "";
+        const isCargoTrackingSite = this.IsCargoTrackingDomain();
 
         let LoginParams = {
             Email: this.Email,
@@ -87,7 +91,7 @@ export class LoginComponent implements OnInit {
             CardId: "",
             CardType: "",
             IsMobileLogin: false,
-            IsUser: true,
+            IsUser: isCargoTrackingSite,
             GetToken: true,
             IsAngularLogin: true,
             MobileVersion: "",
@@ -101,8 +105,18 @@ export class LoginComponent implements OnInit {
                 this.LoginFailed(userData);
                 this.ShowbusyIndicator = false;
             }
-            else this.LoginSucceeded(LoginParams, userData);
+            else this.Login(LoginParams, userData);
         });
+    }
+
+    private IsCargoTrackingDomain() {
+        const cargoTrackingDomainKeyword = "cargo-tracking";
+        const domain = window.location.href;
+        if (domain.indexOf(cargoTrackingDomainKeyword)>-1) {
+            return true;
+        }
+
+        return false;
     }
 
     private LoginFailed(userData: any) {
@@ -148,7 +162,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['Error401']);
     }
 
-    private LoginSucceeded(LoginParams: any, userData: any) {
+    private Login(LoginParams: any, userData: any) {
         this.errorMessage = "";
         let tenantList = userData.CompanyLogins;
         let LogInToTenant  = tenantList.filter(tenan => tenan.Tenant == this.Tenant)[0];

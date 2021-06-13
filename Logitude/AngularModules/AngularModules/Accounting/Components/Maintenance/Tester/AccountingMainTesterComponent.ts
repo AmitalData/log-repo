@@ -18,7 +18,7 @@ declare var attachmentUploader, ResultAsArray: any;
 
     templateUrl: './AccountingMainTesterComponent.html',
 })
-
+    //using gatewaytest
 export class AccountingMainTesterComponent extends BaseComponent {
     public DataContext: AccountingMainTesterComponent = this;
     public ObjectTableName: string = "GLAccount";
@@ -177,6 +177,8 @@ export class AccountingMainTesterComponent extends BaseComponent {
             GroupByDate_Options: 'DueDate;AccountingDate',
             Aging4AccountTypeCode_Options: 'ControlAccountOnly1;Customer2;Vendor3',
             BuildPivot: true,
+            SuppressFromGLAccountAgingData: false,
+            FroceFromGLAccountAgingData:true,
         };
         
         let opr = "Aging_Click";

@@ -3,6 +3,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -32,7 +33,8 @@ namespace Logitude.Server.Tools.Helpers
                         var entity = InjectionUtil.Instance.GetEntityByObjectTableNameAndEntityId(documentPopulateAutomaticDateArgs.ObjectTableName, documentPopulateAutomaticDateArgs.EntityId, documentPopulateAutomaticDateArgs.Tenant);
                         if (entity != null)
                         {
-                            SetPropertyValueToEntity(populateAutomaticDateObjectField, entity, TenantServerConfigration.GetCurrentDateTime(documentPopulateAutomaticDateArgs.Tenant));
+                            object documentPopulateAutomaticValue = GetDocumentPopulateAutomaticValue(documentPopulateAutomaticDateArgs, populateAutomaticDateObjectField);
+                            SetPropertyValueToEntity(populateAutomaticDateObjectField, entity, documentPopulateAutomaticValue);
                             InjectionUtil.Instance.UpdateEntity(entity, documentPopulateAutomaticDateArgs.ObjectTableName, documentPopulateAutomaticDateArgs.Tenant);
                         }
                     }
@@ -49,7 +51,25 @@ namespace Logitude.Server.Tools.Helpers
             return fieldCode;
         }
 
-        private  void SetPropertyValueToEntity(ObjectField objectField, object entity, object fieldValue)
+
+        private object GetDocumentPopulateAutomaticValue(DocumentPopulateAutomaticDateArgs documentPopulateAutomaticDateArgs, ObjectField objectField)
+        {
+            DateTime currentDateTime = TenantServerConfigration.GetCurrentDateTime(documentPopulateAutomaticDateArgs.Tenant);
+            if (objectField.IsCustom)
+            {
+                return new CustomFieldClass(
+                    objectField.FieldName,
+                    documentPopulateAutomaticDateArgs.ObjectTableName,
+                    new CustomFieldClass().SetFieldDataType(objectField.DataTypeCode, currentDateTime)
+                    );
+            }
+            return currentDateTime;
+        }
+
+
+
+
+        private void SetPropertyValueToEntity(ObjectField objectField, object entity, object fieldValue)
         {
             PropertyInfo propInfo = entity.GetType().GetProperty(objectField.FieldName);
             if (propInfo != null) propInfo.SetValue(entity, fieldValue, null);
