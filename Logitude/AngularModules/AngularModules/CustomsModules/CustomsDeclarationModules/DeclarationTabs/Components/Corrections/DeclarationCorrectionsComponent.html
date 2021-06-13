@@ -733,20 +733,34 @@
 
                                                     </log-column>
 
-                                                 
+
                                                     <log-column [header]="'Customs.Declaration.O.Remarks' | TextCodeTranslationPipe"
-                                                                [width]="'120'" [Alignment]="'right'" [binding]="'Remarks'">
+                                                                [width]="'150'" [Alignment]="'right'" [binding]="'Remarks'">
 
                                                         <ng-template let-item>
                                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                                <div style="text-align: right;" class="TextTrimming">
+                                                                <div style="text-align: right;float:right;" class="TextTrimming">
                                                                     <span>{{item.Remarks}}</span>
                                                                 </div>
+
+                                                                <div style="float: left;" *ngIf="item.Remarks != null ">
+                                                                    <button class="Button" (click)="ExpandComment(item , $event)"><img class="CenterCenter" title="לצפייה בהערה" src="./Images/Icons/expand.png" /></button>
+                                                                </div>
                                                             </log-cell-template>
+
                                                         </ng-template>
 
                                                     </log-column>
-
+                                                    
+                                                    <!--<log-column [width]="'30'" [Alignment]="'right'">
+                                                        <ng-template let-item>
+                                                            <log-cell-template #logcelltemplate>
+                                                                <div *ngIf="item.Remarks != null ">
+                                                                    <button class="Button" (click)="ExpandComment(item , $event)"><img class="CenterCenter" title="לצפייה בהערה" src="./Images/Icons/expand.png" /></button>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </ng-template>
+                                                    </log-column>-->
                                                     <log-column [header]="'Customs.Declaration.O.RefernceInputType' | TextCodeTranslationPipe"
                                                                 [width]="'120'" [Alignment]="'right'" [binding]="'RefernceInputTypeName'">
 
