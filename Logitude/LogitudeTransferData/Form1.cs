@@ -1,13 +1,11 @@
 ﻿using Confluent.Kafka;
-using LogitudeTransferData.Constants;
-using LogitudeTransferData.Models;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Server.Tools.KafkaConfigurations;
 using Newtonsoft.Json;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -15,54 +13,95 @@ namespace LogitudeTransferData
 {
     public partial class Form1 : Form
     {
+        static string brokerList = ConfigurationManager.AppSettings["EH_FQDN"];
+        static string connectionString = ConfigurationManager.AppSettings["EH_CONNECTION_STRING"];
+
+        ProducerConfig config = new ProducerConfig
+        {
+            BootstrapServers = brokerList,
+            SecurityProtocol = SecurityProtocol.SaslSsl,
+            SaslMechanism = SaslMechanism.Plain,
+            SaslUsername = "$ConnectionString",
+            SaslPassword = connectionString
+        };
+
         public Form1()
         {
             InitializeComponent();
         }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var tenant = int.Parse(textBox1.Text);
+            List<CardPM> cardPMs = GetAllCards(tenant);
+
+            ProduceKafkaMessages<CardPM>(cardPMs, KakaMessageTypes.Card);
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             var tenant = int.Parse(textBox1.Text);
+            List<ContactPM> contactPMs = GetAllContacts(tenant);
 
-            ContactRepository contactRep = new ContactRepository(tenant);
+            ProduceKafkaMessages<ContactPM>(contactPMs, KakaMessageTypes.Contact);
+        }
 
-            IQueryable<Contact> contacts = contactRep.GetActiveContacts(tenant);
+        private void button3_Click(object sender, EventArgs e)
+        {
+            var tenant = int.Parse(textBox1.Text);
+            List<CountryPM> countryPMs = GetAllCountries(tenant);
 
-            List<CTUser> usersLists = (from c in contacts
-                                                    select new CTUser()
-                                                    {
-                                                        Tenant = c.Tenant,
-                                                        FirstName = c.EnglishName,
-                                                        LastName = c.EnglishName,
-                                                        Email = c.Email,
-                                                        Password = c.Email
-                                                    }).ToList();
+            ProduceKafkaMessages<CountryPM>(countryPMs, KakaMessageTypes.Country);
+        }
 
-            string brokerList = ConfigurationManager.AppSettings["EH_FQDN"];
-            string connectionString = ConfigurationManager.AppSettings["EH_CONNECTION_STRING"];
-            string topic = ConfigurationManager.AppSettings["EH_Topic"];
-            string caCertLocation = ConfigurationManager.AppSettings["CA_CERT_LOCATION"];
+        private void button4_Click(object sender, EventArgs e)
+        {
+            var tenant = int.Parse(textBox1.Text);
+            List<PortPM> portPMs = GetAllPorts(tenant);
 
+            ProduceKafkaMessages<PortPM>(portPMs, KakaMessageTypes.Port);
+        }
+        private List<CardPM> GetAllCards(int tenant)
+        {
+            CardQuery cardQuery = new CardQuery(tenant);
+            List<CardPM> cardPMs = cardQuery.GetAllCardPMsByTenant(tenant);
+            return cardPMs;
+        }
+
+        private List<ContactPM> GetAllContacts(int tenant)
+        {
+            ContactQuery contactQuery = new ContactQuery(tenant);
+            List<ContactPM> contactPMs = contactQuery.GetContactPMsByTenant(tenant);
+            return contactPMs;
+        }
+
+        private List<CountryPM> GetAllCountries(int tenant)
+        {
+            CountryQuery countryQuery = new CountryQuery(tenant);
+            List<CountryPM> countryPMs = countryQuery.GetCountryPMsByTenant(tenant).ToList();
+            return countryPMs;
+        }
+
+        private List<PortPM> GetAllPorts(int tenant)
+        {
+            PortQuery portQuery = new PortQuery(tenant);
+            List<PortPM> portPMs = portQuery.GetPortPMsByTenant(tenant).ToList();
+            return portPMs;
+        }
+
+        private void ProduceKafkaMessages<T>(List<T> PMs, long kakaMessageTypes)
+        {
             try
             {
-                var config = new ProducerConfig
+                using (var producer = new ProducerBuilder<long, string>(config)
+                    .SetKeySerializer(Serializers.Int64)
+                    .SetValueSerializer(Serializers.Utf8)
+                    .Build())
                 {
-                    BootstrapServers = brokerList,
-                    SecurityProtocol = SecurityProtocol.SaslSsl,
-                    SaslMechanism = SaslMechanism.Plain,
-                    SaslUsername = "$ConnectionString",
-                    SaslPassword = connectionString,
-                    SslCaLocation = caCertLocation,
-                };
-                using (var producer = new ProducerBuilder<long, string>(config).SetKeySerializer(Serializers.Int64).SetValueSerializer(Serializers.Utf8).Build())
-                {
-                    foreach (CTUser cTUser in usersLists)
+                    foreach (T PM in PMs)
                     {
-                        if (cTUser.Email != null)
-                        {
-                            var serializedUser = JsonConvert.SerializeObject(cTUser, Formatting.Indented);
-                            var deliveryReport = producer.ProduceAsync(topic, new Message<long, string> { Key = MessageType.User, Value = serializedUser });
-                        }
+                        var serializedContact = JsonConvert.SerializeObject(PM, Formatting.Indented);
+                        var deliveryReport = producer.ProduceAsync(KafkaTopics.LookupsTopic, new Message<long, string> { Key = kakaMessageTypes, Value = serializedContact });
                     }
                 }
             }
