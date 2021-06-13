@@ -16,7 +16,7 @@ Given("the user logged in and open {string} in maintenance menu", (maintenanceIt
 Given("a business unit with the following details", (dataTable) => {
     let businessUnitDetails = Assists.CreateInstance<BusinessUnitDetails>(dataTable, true);
     Actions.OpenNewWizard("BusinessUnit");
-    BusinessUnitsActions.FillBusinessUnitDetails(businessUnitDetails);
+    BusinessUnitsActions.FillFirstBusinessUnitDetails(businessUnitDetails);
 });
 
 When("create business unit", () => {
@@ -24,6 +24,21 @@ When("create business unit", () => {
 });
 
 Then("the business unit should create successfully", () => {
+    BusinessUnitsActions.AssertCreateBusinessUnit();
+});
+//#endregion
+
+//#region Create another business unit
+Given("a new business unit and select the created business unit in the first scenario as a parent", () => {
+    Actions.OpenNewWizard("BusinessUnit");
+    BusinessUnitsActions.FillSecondBusinessUnitDetails();
+});
+
+When("create new business unit", () => {
+    BusinessUnitsActions.CreateBusinessUnit();
+});
+
+Then("the new business unit should create successfully", () => {
     BusinessUnitsActions.AssertCreateBusinessUnit();
 });
 //#endregion

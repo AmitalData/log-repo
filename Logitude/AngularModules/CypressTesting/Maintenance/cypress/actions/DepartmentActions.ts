@@ -10,13 +10,17 @@ import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
 import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
 import * as gr from '../../../Base/cypress/actions/GenerateRandoms';
 
-let SearchFieldValue = null
+let searchFieldValue = null
 
-export function FillDepartmentDetails(DepartmentDetails: DepartmentDetails, codeDigits: number) {
+export function FillCode(code: string) {
+    cy.FillLogTextBox(DepartmentSelectors.Code, code)
+}
+
+export function FillDepartmentDetails(departmentDetails: DepartmentDetails, codeDigits: number) {
     cy.FillLogTextBox(DepartmentSelectors.Name, gr.GenerateCurrentDatetimeString("_"))
-    cy.FillLogTextBox(DepartmentSelectors.LocalName, DepartmentDetails.LocalName);
+    cy.FillLogTextBox(DepartmentSelectors.LocalName, departmentDetails.LocalName);
     cy.FillLogTextBox(DepartmentSelectors.Code, gr.GenerateRandomNumberAndString(codeDigits));
-    cy.FillLogTextBox(DepartmentSelectors.Notes, DepartmentDetails.Notes);
+    cy.FillLogTextBox(DepartmentSelectors.Notes, departmentDetails.Notes);
 }
 
 export function CreateDepartment() {
@@ -39,16 +43,16 @@ function AssertPostDepartment() {
     intercept.then((interception) => {
         let statusCode = interception.response.statusCode;
         assert.equal(statusCode, 200)
-        SearchFieldValue = interception.response.body.EnglishName
+        searchFieldValue = interception.response.body.EnglishName
     })
 }
 
 export function SearchDepartment() {
-    GeneralActions.Search(SearchFieldValue)
+    GeneralActions.Search(searchFieldValue)
 }
 
 export function AssertSearchDepartment() {
-    GeneralActions.AssertSearch(SearchFieldValue);
+    GeneralActions.AssertSearch(searchFieldValue);
 }
 
 export function OpenDepartment() {
@@ -70,9 +74,9 @@ function AssertDepartmentGetSingle() {
 }
 
 export function EditDepartmentGeneralTab(departmentDetails: DepartmentDetails) {
-        cy.FillLogTextBox(DepartmentSelectors.LocalName, departmentDetails.LocalName);
-        cy.FillLogTextBox(DepartmentSelectors.Notes, departmentDetails.Notes);
-        Actions.FillCheckBoxProcess(DepartmentSelectors.InactiveCheckBox, departmentDetails.InActiveCheckBox)
+    cy.FillLogTextBox(DepartmentSelectors.LocalName, departmentDetails.LocalName);
+    cy.FillLogTextBox(DepartmentSelectors.Notes, departmentDetails.Notes);
+    Actions.FillCheckBoxProcess(DepartmentSelectors.InactiveCheckBox, departmentDetails.InActiveCheckBox)
 }
 
 export function UpdateDepartment() {

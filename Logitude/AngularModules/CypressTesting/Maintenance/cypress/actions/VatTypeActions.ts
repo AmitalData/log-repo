@@ -10,15 +10,25 @@ import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
 import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
 import { GenerateRandomNumberAndString } from '../../../Base/cypress/actions/GenerateRandoms';
 
-let SearchFieldValue = null;
+let searchFieldValue = null;
+
+export function FillVatTypeCode(vatTypeCode: string) {
+    cy.FillLogTextBox(VatTypesSelectors.Code, vatTypeCode)
+}
+
+export function ClickMultiRadio() {
+    cy.get(VatTypesSelectors.MultiPercentageRadio).click()
+}
+
+export function ClickSingleRadio() {
+    cy.get(VatTypesSelectors.SinglePercentageRadio).click()
+}
 
 export function FillVatTypeDetails(vatTypeDetails: VatTypeDetails, codeDigits: number) {
     if (vatTypeDetails.IsSinglePercentage) {
-        cy.ClickRadio(VatTypesSelectors.SinglePercentageRadio)
         FillSingleVatType(vatTypeDetails)
     }
     else if (vatTypeDetails.IsMultiPercentage) {
-        cy.ClickRadio(VatTypesSelectors.MultiPercentageRadio)
         SelectMultiVatTypes()
     }
     cy.FillLogTextBox(VatTypesSelectors.Code, GenerateRandomNumberAndString(codeDigits));
@@ -66,7 +76,7 @@ function AssertPostVatType() {
         }
         else {
             assert.equal(statusCode, 200)
-            SearchFieldValue = interception.response.body.Code;
+            searchFieldValue = interception.response.body.Code;
         }
     })
 }
@@ -79,11 +89,11 @@ function ReCreateVatType() {
 }
 
 export function SearchVatType() {
-    GeneralActions.Search(SearchFieldValue)
+    GeneralActions.Search(searchFieldValue)
 }
 
 export function AssertSearchVatType() {
-    GeneralActions.AssertSearch(SearchFieldValue)
+    GeneralActions.AssertSearch(searchFieldValue)
 }
 
 export function OpenVatType() {

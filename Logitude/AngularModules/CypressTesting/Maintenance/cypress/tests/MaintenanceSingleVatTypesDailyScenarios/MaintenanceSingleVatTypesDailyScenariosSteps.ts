@@ -4,39 +4,49 @@ import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { VatTypesSelectors } from "../../selectors/VatTypesSelectors";
 import { VatTypeDetails } from "cypress/models/VatTypeDetails";
-import * as BaseActions from "../../../../Base/cypress/actions/Actions"
+import * as BaseActions from "../../../../Base/cypress/actions/Actions";
 import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetails";
+import * as GeneralActions from "../../actions/GeneralActions";
+import { Urls } from "../../constants/Urls";
 
-let vatTypeDetails: VatTypeDetails
-
-//#region Create new single vat type
+//#region Add single vat type with lenght more than 5
 Given("the user logged in and open {string} in maintenance menu", (maintenanceItemName) => {
     cy.Login()
     Actions.OpenMaintenanceItemFromMaintenanceMenu(maintenanceItemName, VatTypesSelectors.MaintenanceItem)
 });
 
-Given("a single vat type with the following details", (dataTable) => {
-    vatTypeDetails = Assists.CreateInstance<VatTypeDetails>(dataTable, true);
+When("add {string} as single vat type code", (VatTypeCode) => {
     Actions.OpenNewWizard("VatType");
+    vatTypeActions.FillVatTypeCode(VatTypeCode)
+});
+
+Then("a validation message with {string} error should appear", (ValidationMessage) => {
+    Actions.ValidateErrorPopUpMessage(ValidationMessage)
+});
+//#endregion
+
+//#region Create new single vat type
+Given("a single vat type with the following details", (dataTable) => {
+    let vatTypeDetails = Assists.CreateInstance<VatTypeDetails>(dataTable, true);
     vatTypeActions.FillVatTypeDetails(vatTypeDetails, 5);
 });
 
 When("create single vat type", () => {
-    vatTypeActions.CreateVatType();
+    GeneralActions.MockCreate(Urls.VatTypes)
 });
 
 Then("the single vat type should create successfully", () => {
-    vatTypeActions.AssertCreateVatType();
+    GeneralActions.AssertMockCreate()
 });
 //#endregion
 
 //#region Search for the single vat type
-When("search single vat type", () => {
-    vatTypeActions.SearchVatType()
+When("search for {string} single vat type", (SearchFieldValue) => {
+    GeneralActions.Search(SearchFieldValue)
 });
 
-Then("the single vat type should appear successfully", () => {
-    vatTypeActions.AssertSearchVatType()
+Then("the {string} single vat type should appear successfully", (SearchFieldValue) => {
+    GeneralActions.AssertSearch(SearchFieldValue)
 });
 //#endregion
 

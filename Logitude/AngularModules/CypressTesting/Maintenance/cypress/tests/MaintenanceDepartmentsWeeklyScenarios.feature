@@ -1,10 +1,14 @@
-@NewDev
+@NewDev @weekly
 Feature: Department Create, Search and Edit from Maintenance
     The user creates a department, searches for and edits it from the Maintenance Module.
 
-    Scenario: Create new Department
+    Scenario: Add Department Code with lenght more than 10
         Given the user logged in and open "Departments" in maintenance menu
-        And a department with the following details
+        When add "01234567891" as department code
+        Then a validation message with "Code Field must be less than 10" error should appear
+
+    Scenario: Create new Department
+        Given a department with the following details
             | Name      | CurrentDatetime |
             | LocalName | Local Name      |
             | Code      | Random          |

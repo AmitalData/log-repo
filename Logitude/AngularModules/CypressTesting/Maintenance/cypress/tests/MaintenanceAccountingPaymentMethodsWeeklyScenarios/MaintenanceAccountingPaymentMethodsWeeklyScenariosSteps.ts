@@ -5,15 +5,25 @@ import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { AccountingPaymentMethodSelectors } from "../../selectors/AccountingPaymentMethodSelectors";
 import { AccountingPaymentMethodDetails } from "cypress/models/AccountingPaymentMethodDetails";
 
-//#region Create new accounting payment
+//#region Add accounting payment code with lenght more than 2
 Given("the user logged in and open {string} in maintenance menu", (maintenanceItemName) => {
     cy.Login()
     Actions.OpenMaintenanceItemFromMaintenanceMenu(maintenanceItemName, AccountingPaymentMethodSelectors.MaintenanceItem)
 });
 
+When("add {string} as accounting payment code", (accountingPaymentCode) => {
+    Actions.OpenNewWizard("AccountingPaymentMethod");
+    AccountingPaymentMethodActions.FillAccountingPaymentMethodCode(accountingPaymentCode)
+});
+
+Then("a validation message with {string} error should appear", (ValidationMessage) => {
+    Actions.ValidateErrorPopUpMessage(ValidationMessage)
+});
+//#endregion
+
+//#region Create new accounting payment
 Given("an accounting payment with the following details", (dataTable) => {
     let accountingPaymentMethodDetails = Assists.CreateInstance<AccountingPaymentMethodDetails>(dataTable, true);
-    Actions.OpenNewWizard("AccountingPaymentMethod");
     AccountingPaymentMethodActions.FillAccountingPaymentMethodDetails(accountingPaymentMethodDetails, 2);
 });
 

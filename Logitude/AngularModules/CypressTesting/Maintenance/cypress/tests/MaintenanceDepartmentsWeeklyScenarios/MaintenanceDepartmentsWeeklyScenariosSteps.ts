@@ -4,18 +4,28 @@ import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { DepartmentSelectors } from "../../selectors/DepartmentSelectors";
 import { DepartmentDetails } from "cypress/models/DepartmentDetails";
-import {ValidateEventsTab} from "../../../../Base/cypress/actions/Actions";
+import { ValidateEventsTab } from "../../../../Base/cypress/actions/Actions";
 import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetails";
 
-//#region Create new department
+//#region Add payment term code with lenght more than 2
 Given("the user logged in and open {string} in maintenance menu", (maintenanceItemName) => {
     cy.Login()
     Actions.OpenMaintenanceItemFromMaintenanceMenu(maintenanceItemName, DepartmentSelectors.MaintenanceItem)
 });
 
+When("add {string} as department code", (departmentCode) => {
+    Actions.OpenNewWizard("Department")
+    DepartmentActions.FillCode(departmentCode)
+});
+
+Then("a validation message with {string} error should appear", (validationMessage) => {
+    Actions.ValidateErrorPopUpMessage(validationMessage)
+});
+//#endregion
+
+//#region Create new department
 Given("a department with the following details", (dataTable) => {
     let departmentDetails = Assists.CreateInstance<DepartmentDetails>(dataTable, true);
-    Actions.OpenNewWizard("Department");
     DepartmentActions.FillDepartmentDetails(departmentDetails, 10);
 });
 

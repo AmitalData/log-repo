@@ -10,6 +10,12 @@ Feature: Business Unit Create, Search and Edit from Maintenance
         When create business unit
         Then the business unit should create successfully
 
+    Scenario: Create another business unit
+        Given a new business unit and select the created business unit in the first scenario as a parent
+            | Name | CurrentTimeDate |
+        When create new business unit
+        Then the new business unit should create successfully
+
     Scenario: Search for the Business Unit by name
         When search business unit
         Then the business unit should appear successfully

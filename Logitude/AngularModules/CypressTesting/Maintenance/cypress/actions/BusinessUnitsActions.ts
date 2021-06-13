@@ -10,11 +10,19 @@ import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
 import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
 import { GenerateCurrentDatetimeString } from '../../../Base/cypress/actions/GenerateRandoms';
 
-let SearchFieldValue = null
+let searchFieldValue = null
+let firstBusinessUnit = null
 
-export function FillBusinessUnitDetails(BusinessUnitDetails: BusinessUnitDetails) {
+export function FillFirstBusinessUnitDetails(businessUnitDetails: BusinessUnitDetails) {
+    let Name = GenerateCurrentDatetimeString("_")
+    firstBusinessUnit = Name
+    cy.FillLogTextBox(BusinessUnitSelectors.Name, Name)
+    cy.FillLogLov(BusinessUnitSelectors.Parent, businessUnitDetails.Parent, true)
+}
+
+export function FillSecondBusinessUnitDetails() {
     cy.FillLogTextBox(BusinessUnitSelectors.Name, GenerateCurrentDatetimeString("_"))
-    cy.FillLogLov(BusinessUnitSelectors.Parent, BusinessUnitDetails.Parent, true)
+    cy.FillLogLov(BusinessUnitSelectors.Parent, firstBusinessUnit, true)
 }
 
 export function CreateBusinessUnit() {
@@ -37,16 +45,16 @@ function AssertPostBusinessUnit() {
     intercept.then((interception) => {
         let statusCode = interception.response.statusCode;
         assert.equal(statusCode, 200)
-        SearchFieldValue = interception.response.body.Name
+        searchFieldValue = interception.response.body.Name
     })
 }
 
 export function SearchBusinessUnit() {
-    GeneralActions.Search(SearchFieldValue)
+    GeneralActions.Search(searchFieldValue)
 }
 
 export function AssertSearchBusinessUnit() {
-    GeneralActions.AssertSearch(SearchFieldValue);
+    GeneralActions.AssertSearch(searchFieldValue);
 }
 
 export function OpenBusinessUnit() {
