@@ -10,6 +10,7 @@ import { DateSampleComponent } from './Components/Workspaces/DateSampleComponent
 import { BIReportListTemplate } from './Components/ListTemplates/BIReportListTemplate';
 import { ChooseSpecificUserComponent } from './Components/NewEntity/ChooseSpecificUserComponent';
 import { BIExportSettingAdvanceComponent } from './Components/Workspaces/BIExportSettingAdvanceComponent';
+import { DWQueryBuilderBaseComponent } from './Components/Workspaces/DWQueryBuilderBaseComponent'; 
 
 export const Components =
     [
@@ -24,7 +25,8 @@ export const Components =
         DateSampleComponent,
         BIReportListTemplate,
         ChooseSpecificUserComponent,
-        BIExportSettingAdvanceComponent
+        BIExportSettingAdvanceComponent,
+        DWQueryBuilderBaseComponent
     ];
 
 export class ModuleDeclarations {
@@ -42,8 +44,10 @@ export class ModuleDeclarations {
             case "DateSampleComponent": { myResult = DateSampleComponent; break; }
             case "ChooseSpecificUserComponent": { myResult = ChooseSpecificUserComponent; break; }
             case "BIExportSettingAdvanceComponent": { myResult = BIExportSettingAdvanceComponent; break; }
+            case "DWQueryBuilderBaseComponent": { myResult = DWQueryBuilderBaseComponent; break; }
             //Templates
             case "BIReportListTemplate": { myResult = BIReportListTemplate; break; }
+
 
         }
         return myResult;
