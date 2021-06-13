@@ -27,7 +27,10 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly MasternoActual = '#row0col5';
   public static readonly HouserActual = '#row0col13';
   public static readonly MastertransshipmentsActual = '#row0col6';
+  public static readonly HouseFinalDate = '#span-row0col15';
+  public static readonly MastershipmentsfinalArrival = '#span-row0col8';
 
+  
   
   public static readonly Transshipment1FromPortId = '#Shipment_Transshipment1FromPortId';
   public static readonly Transshipment1ETA = '#date_Shipment_Transshipment1ETA';

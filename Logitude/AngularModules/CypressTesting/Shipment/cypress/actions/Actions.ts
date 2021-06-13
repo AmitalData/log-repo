@@ -624,9 +624,17 @@ export function AsserationEditMainCarriageLegsFromToport() {
   cy.get(ShipmentSelectors.RoutingRegion).contains('Tel Aviv-Yafo').should('exist') 
 }
 export function AsserationActualFinalArrivalDateinMaster(){
- 
-  cy.get(ShipmentSelectors.RoutingRegion).contains('04/05/2021').should('exist')
+    cy.BackButton('Operations')
+    cy.Navigate(ShipmentSelectors.MasterShipments)
+    cy.get(ShipmentSelectors.MastertransshipmentsActual).contains('04/05/2021').should('exist')
+
 }
+export function AsserationFinalArrivalDateinMaster(){
+    cy.BackButton('Operations')
+    cy.Navigate(ShipmentSelectors.MasterShipments)
+    cy.get(ShipmentSelectors.MastershipmentsfinalArrival).contains('04/05/2021').should('exist')
+    
+  }
 export function FinalArrivalDatewhentherearetransshipmentsinMaster(){
     cy.BackButton('Operations')
     cy.Navigate(ShipmentSelectors.MasterShipments)
@@ -639,6 +647,12 @@ export function AsserationActualFinalArrivalinHouse(){
     cy.Navigate(ShipmentSelectors.AllShipments)
     cy.get(ShipmentSelectors.HouserActual).contains('04/05/2021').should('exist')
 }
+export function AsserationFinalArrivalinHouse(){
+    cy.BackButton('Operations')
+    cy.Navigate(ShipmentSelectors.AllShipments)
+    cy.get(ShipmentSelectors.HouseFinalDate).contains('04/05/2021').should('exist')
+}
+
 export function AddMainCarriageATDDateAndTime(date: string, time: string) {
     cy.Click(ShipmentSelectors.EditRoutingMainCarriage, null);
     cy.FillDate(ShipmentSelectors.MainCarriageATDDate, date);

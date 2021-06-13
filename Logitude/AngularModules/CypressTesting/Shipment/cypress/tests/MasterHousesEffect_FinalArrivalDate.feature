@@ -12,7 +12,7 @@ Feature: Compute FinalArrivalDate in Master And Connected Houses
             | MainCarriageFromPort | LHR       |
             | MainCarriageToPort   | MIA       |
         When create master
-        Then the master should create successfully 
+        Then the master should create successfully
 
     Scenario: Create house export air shipment inside the master
         Given the user in the master's Shipment tab
@@ -20,33 +20,34 @@ Feature: Compute FinalArrivalDate in Master And Connected Houses
         Then the house should create successfully
         And the house should connect successfully
 
-     Scenario: Update FinalArrivalDate when there is actual date
-        Given the user in the master's rounting tab
+    Scenario: Update FinalArrivalDate when there is actual date
+        Given the user in the master rounting tab
         And edit main carriage leg with the following details
-              | MainCarriageETA      | 2021-05-02 |
-              | MainCarriageATA      | 2021-05-04 |
+            | MainCarriageETADate | 2021-05-02 |
+            | MainCarriageATADate | 2021-05-04 |
         When update master
         Then the master should update successfully
         And the master FinalArrivalDate should be 2021-05-04
         And the house FinalArrivalDate should be 2021-05-04
 
-     Scenario: Update FinalArrivalDate when there is no actual date
-        Given the user in the master's rounting tab
+    Scenario: Update FinalArrivalDate when there is no actual date
+        Given the user in the master rounting tab
         And edit main carriage leg with the following details
-              | MainCarriageETA      | 2021-05-02 |
+            | MainCarriageETADate | 2021-05-02 |
+            | MainCarriageATADate | 0          |
         When update master
         Then the master should update successfully
         And the master FinalArrivalDate should be 2021-05-02
         And the house FinalArrivalDate should be 2021-05-02
 
-     Scenario: Update FinalArrivalDate when there are transshipments 
+    Scenario: Update FinalArrivalDate when there are transshipments
         Given the user in the master's rounting tab
         And edit main carriage leg with the following details
-            | Transshipment1FromPortId   | TLV        |
-            | MainCarriageETA            | 2021-05-02 |
-            | MainCarriageATA            | 2021-05-03 |
-            | Transshipment1ETA          | 2021-05-04 |
-            | Transshipment1ATA          | 2021-05-05 |
+            | Transshipment1FromPortId | TLV        |
+            | Transshipment1ETA        | 2021-05-04 |
+            | Transshipment1ATA        | 2021-05-05 |
+            | MainCarriageETADate      | 2021-05-02 |
+            | MainCarriageATADate      | 2021-05-03 |
         When update master
         Then the master should update successfully
         And the master FinalArrivalDate should be 2021-05-05
