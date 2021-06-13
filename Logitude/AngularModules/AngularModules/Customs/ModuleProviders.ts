@@ -359,6 +359,7 @@ import { VendorMessagesService } from './Services/WebServices/VendorMessagesServ
 import { SupplierInvioceItemCertificatsService } from './Services/WebServices/SupplierInvioceItemCertificatsService';
 import { LoadTestService } from './Services/WebServices/LoadTestService';
 import { InvoiceQueueWebService } from './Services/WebServices/InvoiceQueueWebService';
+import { ContainerizationMessagesService } from './Services/WebServices/ContainerizationMessagesService';
 
 //#endregion
 
@@ -797,7 +798,8 @@ export class ModuleProviders {
             case "SupplierInvioceItemCertificatsService": { myResult = new SupplierInvioceItemCertificatsService(); break; }
             case "LoadTestService": { myResult = new LoadTestService(); break; }
             case "InvoiceQueueWebService": { myResult = new InvoiceQueueWebService(); break; }
-    
+            case "ContainerizationMessagesService": { myResult = new ContainerizationMessagesService(); break; }
+
             //#endregion
 
             //Others

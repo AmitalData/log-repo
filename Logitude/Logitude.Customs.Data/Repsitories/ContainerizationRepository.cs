@@ -20,8 +20,20 @@ namespace Logitude.Customs.Data.Repsitories
             
 			throw new NotImplementedException();
         }
+        public int GetContainerizationNumber(int tenant)
+        {
+            var list = (from a in context.Containerizations
+                        where a.Tenant == tenant && a.ContainerizationNumber != null
+                        select a.ContainerizationNumber).ToList();
 
-   }
+            int max = 0;
+
+            if (list.Count() != 0)
+                max = list.Select(int.Parse).ToList().Max();
+
+            return max;
+        }
+    }
 
 }
    

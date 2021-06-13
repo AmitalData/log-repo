@@ -19,9 +19,10 @@ export class AgentStatementContainerization
 
     remarks: any;
     SetWindowArgs(args: any) {
-        debugger;
+
     }
     SendButtonClicked(event) {
+        this.CurrentSession.CurrentWindow.Close("true");
     }
 
     CancelButtonClicked() {

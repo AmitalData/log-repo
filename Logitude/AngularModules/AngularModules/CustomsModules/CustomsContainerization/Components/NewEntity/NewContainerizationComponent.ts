@@ -12,6 +12,11 @@ import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCod
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { ContainerizationPMService } from '../../../../Customs/Services/StandardPMs/ContainerizationPMService';
+import { Response } from 'selenium-webdriver/http';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { ContainerizationMessagesService } from '../../../../Customs/Services/WebServices/ContainerizationMessagesService';
+import { GenericRequestParams } from '../../../../Customs/DataContract/RequestParams/GenericRequestParams';
 
 
 @Component({
@@ -39,8 +44,8 @@ export class NewContainerizationComponent extends BaseComponent {
     IsSelected: boolean;
     @Output() MenuHeaderchangeevent = new EventEmitter();
     connectedListIds: ObservableCollection;
-
-
+    containerizationPMService: ContainerizationPMService = new ContainerizationPMService();
+    containerizationMessagesService: ContainerizationMessagesService = new ContainerizationMessagesService();
     private selectedValue: string = "All";
     public get SelectedValue() { return this.selectedValue; }
     public set SelectedValue(value: string) {
@@ -94,6 +99,7 @@ export class NewContainerizationComponent extends BaseComponent {
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService, public containerizationExtendedListService: ContainerizationExtendedListService) {
         super();
         this.entityPM = new ContainerizationPM();
+        this.entityPM.Tenant = SessionLocator.Tenant;
         this.connectedListIds = new ObservableCollection([]);
         this.EntityResourceService.getEntityResourceByTableName("Customs.Containerization").subscribe((response: any) => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
@@ -354,6 +360,7 @@ export class NewContainerizationComponent extends BaseComponent {
     OnAllBtnClicked() {
         this.IsSelected = true;
         this.containerizationExtendedListService.connectedSelectAll = true;
+        this.containerizationExtendedListService.SelectedDeclarations = true;
         this.LoadConnectedItems();
 
     }
@@ -368,6 +375,8 @@ export class NewContainerizationComponent extends BaseComponent {
         this.IsSelected = false;
         this.containerizationExtendedListService.connectedSelectAll = false;
         this.entityPM.ConnectedDeclarations = "ALL";
+        this.containerizationExtendedListService.ConnectedDeclarations = "ALL";
+        this.containerizationExtendedListService.SelectedDeclarations = false;
         this.LoadConnectedItems();
 
     }
@@ -413,7 +422,6 @@ export class NewContainerizationComponent extends BaseComponent {
         }
     }
 
-
     SendButtonClicked() {
         var windowArgs: any = {};
         var logitudeWindow = new LogitudeWindow();
@@ -423,11 +431,32 @@ export class NewContainerizationComponent extends BaseComponent {
         logitudeWindow.Title = "הצהרת סוכן";
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.ComponentLoaded.subscribe(comp => {
-            logitudeWindow.WindowClosed.subscribe((toCreateQInvoice: any) => {
-                debugger;
+            logitudeWindow.WindowClosed.subscribe((AgentStatement: boolean) => {
+                this.entityPM.AgentDeclaration = true;
+                this.entityPM.ConnectedDeclarations = this.containerizationExtendedListService.ConnectedDeclarations;
+                if (AgentStatement) {
+                    this.containerizationPMService.insert(this.entityPM).subscribe((response: ServiceResponse) => {
+                        if (!response.HasError) {
+                            this.containerizationMessagesService.SendContainerization(this.getParams(response))
+                                .subscribe(res1 => {
+                                    this.CurrentSession.CurrentWindow.Close("0");
+                                });
+                        }
+                    });
+                }
             });
         });
         logitudeWindow.Show('./CustomsModules/CustomsContainerization/Components/Other/AgentStatementContainerization');
+    }
+
+    getParams(response: ServiceResponse) {
+        var params: GenericRequestParams = new GenericRequestParams();
+        params.Tenant = SessionLocator.Tenant;
+        params.AppicationId = "12345";
+        params.LoggingEnabled = true;
+        params.LoggingEntityId = response.Result.Id;
+        params.LoggingUserId = SessionLocator.LoggedUserId;
+        return params
     }
     private timerToken: any;
     TextChanged(searchtext: any) {

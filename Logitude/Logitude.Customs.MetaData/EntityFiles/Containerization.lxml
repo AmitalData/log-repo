@@ -1355,6 +1355,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;IsChange&quot;"
     ListPropertyPath="&quot;IsChange&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -1735,6 +1736,25 @@
       IsFollowUp="false" />
   </EventTypes>
   <Records />
+  <MenuButtons
+    MenuButtonGroupType="&quot;Customs.ContainerizationEdit&quot;"
+    MenuButtonGroupName="&quot;Customs.ContainerizationEditButtonsGroup&quot;">
+    <MenuButton
+      EventCode="&quot;Actions&quot;"
+      DefaultText="&quot;Actions&quot;"
+      MenuButtonType="&quot;dropdownbutton&quot;"
+      IndexOrder="0"
+      LocalDefaultText="&quot;פעולות&quot;"
+      IsPackagable="true">
+      <MenuItem
+        EventCode="&quot;AddDeclaration&quot;"
+        DefaultText="&quot;Add Declaration&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="0"
+        LocalDefaultText="&quot;הוסף הצהרה&quot;"
+        IsPackagable="true" />
+    </MenuButton>
+  </MenuButtons>
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />
