@@ -34,6 +34,7 @@ namespace CommunicationWorkerRole
                             var ShipmentUpdateMessageProducer = new Producer();
                             var serializedShipmentUpdateMessage = JsonConvert.SerializeObject(entityPM, Formatting.Indented);
                             ShipmentUpdateMessageProducer.Produce(KafkaTopics.ShipmentsTopic, KakaMessageTypes.Shipment, serializedShipmentUpdateMessage);
+                            queueservice.Complete();
                         }
                     }
                     catch (Exception ex)

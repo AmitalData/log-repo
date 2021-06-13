@@ -35,6 +35,7 @@ namespace CommunicationWorkerRole
                             var TransfareOnGoingMessageProducer = new Producer();
                             var serializedObjectUpdateMessage = JsonConvert.SerializeObject(entityPM, Formatting.Indented);
                             TransfareOnGoingMessageProducer.Produce(KafkaTopics.LookupsTopic, messageType, serializedObjectUpdateMessage);
+                            queueservice.Complete();
                         }
                     }
                     catch (Exception ex)
