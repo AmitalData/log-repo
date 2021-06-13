@@ -57,6 +57,10 @@ export class Urls {
     public static readonly CurrenciesviewGetList = "**/currencyviews/getbyfilters?**";
     public static readonly CurrenciesviewGetSingle = "**/currencyviews/getsingle/?**";
 
+    public static readonly FBLStocks = "**/FBLStockExtened/GetCreateFBLStocksOperation?**"
+    public static readonly FBLStocksDelete = "**/FBLStockExtened/GetDeleteFBLStocksOperation?**";
+    public static readonly FBLStocksGetAll= "**/FBLStockExtened/GetAllFBLStockPMsByTenant?**";
+
     public static readonly SpecialServicesTypes = "**/specialservicestypes"
     public static readonly SpecialServicesTypesGetSingle = "**/specialservicestypes/getsingle?**"
 

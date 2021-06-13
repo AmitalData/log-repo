@@ -23,6 +23,6 @@ export class Constants {
     public static readonly PackageType = "PackageType"
     public static readonly Branch = "Branch"
     public static readonly Currency = "Currency"
-
+    public static readonly FBLStock = "FBLStock"
 
 }
