@@ -1,9 +1,17 @@
-@NewDev
+@NewDev @weekly
 Feature: Branch Create, Search and Edit from Maintenance
     The user creates a Branch, searches for and edits it from the Maintenance Module.
 
-    Scenario: Create new Branch
+    Scenario: Add Branch Code with lenght more than 10
         Given the user logged in and open "Branches" in maintenance menu
+        When add "12345678901" as branch code
+        Then a validation message with "Code Field must be less than 10" error should appear
+
+    Scenario: Add Branch Counter Code with lenght more than 5
+        When add "123456" as branch counter code
+        Then a validation message with "Code Field must be less than 5" error should appear
+
+    Scenario: Create new Branch
         And a branch with the following details
             | Name        | CurrentDate |
             | LocalName   | Test        |
@@ -13,7 +21,7 @@ Feature: Branch Create, Search and Edit from Maintenance
         When create branch
         Then the branch should create successfully
 
-    Scenario: Search for the Branch by number
+    Scenario: Search for the Branch by name
         When search branch
         Then the branch should appear successfully
 
@@ -21,13 +29,20 @@ Feature: Branch Create, Search and Edit from Maintenance
         When open branch
         Then the branch should open successfully
 
+    Scenario: Edit the Branch by adding address
+        Given the user create address with the following details
+            | AddressName    | address        |
+            | AddressCountry | United Kingdom |
+            | AddressCity    | Manchester     |
+        When create address
+        Then the address should create successfully
+
     Scenario: Edit the Branch
-        Given the user fill the following branch details
-            | LocalName | EditBranchLocalNameTest |
-        And  the user activate branch
-        When edit branch
+        Given add "external" to External ID in Accounting Tab
+        Given the user Inactivate the Branch
+        When save branch
         Then the branch should update successfully
-        And following event should appear in events tab
+        And the following event should appear in events tab
             | Event          | Notes              |
             | Branch Updated | Branch Inactivated |
 

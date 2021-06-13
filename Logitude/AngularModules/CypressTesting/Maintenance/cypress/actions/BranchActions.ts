@@ -5,34 +5,27 @@ import { Urls } from "../constants/Urls";
 import { RestAPI } from "../../../Base/cypress/constants/RestAPI";
 import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
-import { constants } from "../../../Base/cypress/constants/constants"
 import { BranchDetails } from 'cypress/models/BranchDetails';
-import { GenerateCurrentDatetimeString } from '../../../Base/cypress/actions/GenerateRandoms';
+import * as gr from '../../../Base/cypress/actions/GenerateRandoms';
 import * as GeneralActions from './GeneralActions'
+import * as Actions from './Actions'
 
-let BranchName = null;
-let inActiveBranch = false;
+let searchFieldValue = null;
 
-export function FillCheckBoxProcess(CheckBoxSelector: string, IsCheck: string) {
-    if (IsCheck) {
-        if (IsCheck.toUpperCase() == constants.YES) {
-            cy.get(CheckBoxSelector).check({ force: true })
-        }
-        else {
-            cy.get(CheckBoxSelector).find(BaseSelectors.input).uncheck({ force: true })
-        }
-    }
+export function FillBranchCode(code: string) {
+    cy.FillLogTextBox(BranchSelectors.Code, code)
+}
+
+export function FillBranchCounterCode(counterCode: string) {
+    cy.FillLogTextBox(BranchSelectors.CounterCode, counterCode)
 }
 
 export function FillBranchDetails(branchDetails: BranchDetails) {
-
-    let CurrentDateName = GenerateCurrentDatetimeString("_")
-
-    cy.FillLogTextBox(BranchSelectors.BranchName, CurrentDateName)
-    cy.FillLogTextBox(BranchSelectors.BranchLocalName, branchDetails.LocalName)
-    cy.FillRandomNumber(BranchSelectors.BranchCode, BranchSelectors.MinCodeRandomNumber, BranchSelectors.MaxCodeRandomNumber)
-    cy.FillLogTextBox(BranchSelectors.BranchSignature, branchDetails.Signature)
-    cy.FillRandomNumber(BranchSelectors.BranchCounterCode, BranchSelectors.MinCounterCodeRandomNumber, BranchSelectors.MaxCounterCodeRandomNumber)
+    cy.FillLogTextBox(BranchSelectors.Name, gr.GenerateCurrentDatetimeString("_"))
+    cy.FillLogTextBox(BranchSelectors.LocalName, branchDetails.LocalName)
+    cy.FillLogTextBox(BranchSelectors.Code, gr.GenerateRandomNumberAndString(10))
+    cy.FillLogTextBox(BranchSelectors.Signature, branchDetails.Signature)
+    cy.FillLogTextBox(BranchSelectors.CounterCode, gr.GenerateRandomNumberAndString(5))
 }
 
 export function CreateBranch() {
@@ -47,22 +40,18 @@ function DefinePostBranchRequest() {
 export function AssertCreateBranch() {
     let intercept = cy.wait("@" + RequestAliases.PostBranch);
     intercept.then((interception) => {
-        AssertPostBranch(interception.response.statusCode, 200, interception.response.body.EnglishName)
-
+        let statusCode = interception.response.statusCode;
+        assert.equal(statusCode, 200)
+        searchFieldValue = interception.response.body.EnglishName
     })
 }
 
-export function AssertPostBranch(responseStatusCode: number, expectedStatusCode: number, branchName: string) {
-    assert.equal(responseStatusCode, expectedStatusCode)
-    BranchName = branchName
-}
-
 export function SearchBranch() {
-    GeneralActions.Search(BranchName)
+    GeneralActions.Search(searchFieldValue)
 }
 
 export function AssertSearchBranch() {
-    GeneralActions.AssertSearch(BranchName)
+    GeneralActions.AssertSearch(searchFieldValue)
 }
 
 export function OpenBranch() {
@@ -83,13 +72,61 @@ function AssertBranchGetSingle() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetSignle, 200);
 }
 
-export function FillBranchLocalName(LocalName: string) {
-    cy.FillLogTextBox(BranchSelectors.BranchLocalName, LocalName)
+export function NavigateAddressWizard() {
+    cy.get(BranchSelectors.AddressWizard).click()
+}
+
+export function FillBranchAddressDetails(branchAddressDetails: BranchDetails) {
+    cy.FillLogTextBox(BranchSelectors.AddressName, branchAddressDetails.AddressName)
+    cy.FillLogTextBox(BranchSelectors.AddressCity, branchAddressDetails.AddressCity)
+    cy.FillLogLov(BranchSelectors.AddressCountry, branchAddressDetails.AddressCountry, true)
+}
+
+export function CreateAddress() {
+    DefinePostAddressRequest()
+    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
+}
+
+function DefinePostAddressRequest() {
+    cy.DefineRequestWait(RestAPI.POST, Urls.BrancheAddress, RequestAliases.PostBranchAddress)
+}
+
+export function AssertCreateAddress() {
+    let intercept = cy.wait("@" + RequestAliases.PostBranchAddress);
+    intercept.then((interception) => {
+        let statusCode = interception.response.statusCode;
+        assert.equal(statusCode, 200)
+    })
+}
+
+export function UpdateAddress() {
+    DefinePutAddressRequest()
+    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
+}
+
+function DefinePutAddressRequest() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.BrancheAddress, RequestAliases.PutBranchAddress)
+}
+
+export function AssertUpdateAddress() {
+    let intercept = cy.wait("@" + RequestAliases.PutBranchAddress);
+    intercept.then((interception) => {
+        let statusCode = interception.response.statusCode;
+        assert.equal(statusCode, 200)
+    })
+}
+
+export function FillAccountingExternalID(accountingExternalID) {
+    cy.FillLogTextBox(BranchSelectors.AccountingExternalID, accountingExternalID)
+}
+
+export function CheckInactiveBox() {
+    Actions.FillCheckBoxProcess(BranchSelectors.InActiveBranchCheckBox + BaseSelectors.LastElement, "Yes")
 }
 
 export function EditBranch() {
     DefinePutBranchRequest();
-    cy.Click(BranchSelectors.BranchSaveButton, null);
+    cy.Click(BranchSelectors.SaveButton, null);
 }
 
 function DefinePutBranchRequest() {
@@ -102,13 +139,13 @@ export function AssertEditBranch() {
 
 export function CloseSaveBranch() {
     DefineBranchViewGetSingleRequest()
-    cy.Click(BranchSelectors.BranchSaveCloseButton, null);
-}
-
-export function AssertCloseSaveBranch() {
-    AssertBranchGetSingle();
+    cy.Click(BranchSelectors.SaveCloseButton, null);
 }
 
 function DefineBranchViewGetSingleRequest() {
     cy.DefineRequestWait(RestAPI.GET, Urls.BranchesviewGetSingle, RequestAliases.GetSignle);
+}
+
+export function AssertCloseSaveBranch() {
+    AssertBranchGetSingle();
 }
