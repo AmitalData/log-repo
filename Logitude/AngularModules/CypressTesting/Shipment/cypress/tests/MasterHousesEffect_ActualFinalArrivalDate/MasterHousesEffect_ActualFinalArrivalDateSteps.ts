@@ -38,6 +38,9 @@ Then("the master should create successfully", () => {
         ShipmentContext.MasterNumber = interception.response.body.ShipmentNumber;
     })
 });
+//#endregion
+
+//#region Create house export air shipment inside the master
 Given("the user in the master's Shipment tab", () => {
     Actions.OpenShipment(ShipmentContext.MasterNumber);
 
@@ -59,6 +62,7 @@ Then("the house should connect successfully", () => {
     Actions.ValidateCheckHouseCheckBox();
 });
 //#endregion
+//#region Update ActualFinalArrivalDate when there is actual date
 Given("the user in the master's rounting tab", () => {
     cy.Navigate(ShipmentSelectors.RoutingsTab);
 });
@@ -86,6 +90,9 @@ Then('the house ActualFinalArrivalDate should be 2021-05-04',()=>{
   cy.BackButton('Operations')
   Actions.OpenShipment(ShipmentContext.MasterNumber)
 })
+//#endregion
+
+//#region Update ActualFinalArrivalDate when there is no actual date
 Given('the user in the master rounting tab',()=>{
     Actions.OpenShipment(ShipmentContext.MasterNumber)
     cy.Navigate(ShipmentSelectors.RoutingsTab);
@@ -102,15 +109,14 @@ Then('the master should update successfully',()=>{
     //Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
 })
 Then('the master ActualFinalArrivalDate should be null',()=>{
-   
     Actions.AsserationMastershipmentNOActualFinalArrivalDate()
 })
 Then('the house ActualFinalArrivalDate should be null',()=>{
-
   Actions.AsserationHouseshipmentNOActualFinalArrivalDate()
-  cy.wait(5000)
 })
+//#endregion
 
+//#region Update FinalArrivalDate when there are transshipments
 Given('the user in the master rounting tab',()=>{
  cy.BackButton('Operations')
   Actions.OpenShipment(ShipmentContext.MasterNumber)
@@ -128,3 +134,4 @@ Given('edit main carriage leg with the following details',(dataTable)=>{
 
    // cy.Click(ShipmentSelectors.ShipmentSaveButton, null);
 })
+//#endregion
