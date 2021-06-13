@@ -74,6 +74,13 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly RoutingRegion= '.MediaFill';
   public static readonly RoutingRegionTEAR= '#Routing_MainCarriageLeg1';
   public static readonly RoutingRegionA= '"Routing_MainCarriageLeg1"';
+  public static readonly ShipmentPackagetype= '#ShipmentPackage_PackageTypeId';
+  public static readonly ShipmentPackageprice= '#ShipmentPackage_Quantity';
+  public static readonly ShipmentPackagecrossweight= '#ShipmentPackage_Weight';
+  public static readonly ShipmentPackageContainernumber= '#ShipmentPackage_ContainerNumber';
+
+  
+  public static readonly ShipmentPackageok= '#OkOceanPackage';
 
   
   

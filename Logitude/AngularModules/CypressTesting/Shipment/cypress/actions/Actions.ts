@@ -482,7 +482,18 @@ export function AddInsidePackage(packagesDetails: PackagesDetails[]) {
     cy.Click("#OKInsidePackage", null)
 }
 //#endregion
-
+export function AddHousePackage(packagesDetails: PackagesDetails[]) {
+    
+    for (let i = 0; i < packagesDetails.length; i++) {
+        
+        cy.FillLogLov(ShipmentSelectors.ShipmentPackagetype, packagesDetails[i].PackageType, true)
+        cy.FillLogTextBox(ShipmentSelectors.ShipmentPackageContainernumber, packagesDetails[i].ContainerNumber)
+        cy.FillLogTextBox(ShipmentSelectors.ShipmentPackageprice, packagesDetails[i].Pieces)
+        cy.get(ShipmentSelectors.ShipmentPackagecrossweight).type(packagesDetails[i].GrossWeight.toString())
+    }
+    cy.Click("#OkOceanPackage", null)
+}
+//#endregion
 //#region House Shipment Tab
 export function CreateNewAttachedHouse(Shipper:string){
     cy.Click(ShipmentSelectors.NewAttachedHouse,null);

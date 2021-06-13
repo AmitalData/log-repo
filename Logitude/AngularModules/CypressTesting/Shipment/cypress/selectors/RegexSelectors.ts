@@ -14,8 +14,10 @@ export class RegexSelectors {
     public static readonly ShipmenAddPayables= "button[id^='Add_']"
     public static readonly ShipmenReceivablesTab= "li[id^='ShipmentTHReceivables_']"
     public static readonly ShipmenAddReceivables= "button[id^='Add_']"
+    public static readonly ShipmenAddpackqges= "#AddPackage"
 
-    
+    public static readonly ShipmenSavepackqges= "button[id^='Shipment-Save_']"
+
     
     
     public static readonly ShipmentEventTab= "li[id^='ShipmentTHEvents_']"

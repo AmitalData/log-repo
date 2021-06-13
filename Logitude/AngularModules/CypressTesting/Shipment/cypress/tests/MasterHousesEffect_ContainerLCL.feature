@@ -23,7 +23,7 @@ Feature: LCL Container Number
         And the house should connect successfully
 
     Scenario: Add a package in the house
-        Given the user in the house's package tab
+        Given the user in the house package tab
         And add a package with the following details
             | PackageType | ContainerNumber  | Pieces | GrossWeight |
             | AN          | ABCD1111117      |    5   |   100       |
