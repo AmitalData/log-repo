@@ -499,13 +499,21 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             string toggleFilterExportValue = "EX";
 
             string filterImportValue = "I";
+            string filterCustomImportValue = "C";
             string filterExportValue = "E";
-            List<string> directions = new List<string>() { filterImportValue, filterExportValue };
+            List<string> directions = new List<string>() { filterImportValue, filterCustomImportValue, filterExportValue };
 
             if (!string.IsNullOrEmpty(shipmentFilters.DirectionCodes))
-                directions = shipmentFilters.DirectionCodes
-                                            .Replace(toggleFilterImportValue, filterImportValue)
-                                            .Replace(toggleFilterExportValue, filterExportValue).Split(',').ToList();
+            {
+                directions = new List<string>();
+                if (shipmentFilters.DirectionCodes.Contains(toggleFilterImportValue))
+                    directions.AddRange(new List<string>() { filterImportValue, filterCustomImportValue });
+
+                if (shipmentFilters.DirectionCodes.Contains(toggleFilterExportValue))
+                    directions.AddRange(new List<string>() { filterExportValue });
+
+            }
+
             return directions;
         }
         private IQueryable<CargoTrackingShipmentList> GetShipmentsQuerableByIds(List<string> ShipmentIds, int tenant)
@@ -514,7 +522,6 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             IQueryable<CargoTrackingShipment> shipments = repo.GetByShipmentIds(ShipmentIds, tenant);
 
             IQueryable<CargoTrackingShipmentList> shipmentsListQuerable = GetIqueryableList(shipments);
-
             return shipmentsListQuerable;
         }
 

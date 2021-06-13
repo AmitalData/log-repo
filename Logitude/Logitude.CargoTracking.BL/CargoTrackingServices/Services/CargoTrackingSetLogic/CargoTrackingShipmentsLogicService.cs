@@ -222,7 +222,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
                 tableRow.SetField("CurrentMilestoneDate", tableRow["PickupDate"]);
 
             }
- 
+            else
+            {
+                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.NoMilstone);
+            }
+
         }
         private static void SetForwardingShipmentHeaderId(DataRow tableRow)
         {
