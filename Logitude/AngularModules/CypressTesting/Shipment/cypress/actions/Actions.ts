@@ -18,6 +18,8 @@ import { EventDetails } from '../models/EventDetails';
 import { EventTypeDetails } from '../models/EventTypeDetails';
 import { WarehouseStorage } from 'cypress/models/WarehouseStorage';
 import { ShipmentContext } from '../models/ShipmentContext';
+import { MainCarriageLeg } from '../models/MainCarriageLeg';
+
 
 let ShipmentNumber = null;
 export function NavigatesToEventsTab() {
@@ -219,9 +221,13 @@ export function AsserationMastershipmentNOActualFinalArrivalDate(){
 export function AsserationHouseshipmentNOActualFinalArrivalDate(){
     cy.BackButton('Operations')
     cy.Navigate(ShipmentSelectors.AllShipments)
-    BaseAssertion. AssertElementNotExist(ShipmentSelectors.HousernoActual) 
+    BaseAssertion. AssertElementNotExist(ShipmentSelectors.HouserActual) 
 }
-
+export function AsserationHouseshipmenttransshipments(){
+    cy.BackButton('Operations')
+    cy.Navigate(ShipmentSelectors.AllShipments)
+    cy.get(ShipmentSelectors.HouserActual).contains('05/05/2021').should('exist')
+}
 export function ValidateShipmentEventActions(eventSelector: string, excpectedMSG: string) {
     cy.DefineRequestWait(RestAPI.GET, URLs.TraceEventsDomain, RequestAliases.GetTraceEvent);
     cy.Click(eventSelector, null);
@@ -597,53 +603,16 @@ export function EditMainCarriageLegs(Airline: string) {
 
     //cy.Click(ShipmentSelectors.ShipmentSaveButton, null);
 }
-export function EditMainCarriageLegsAddETAandATA(MainCarriageETADate:string,MainCarriageATADate:string){
-    cy.Click(ShipmentSelectors.EditRoutingMainCarriage, null)
 
-    cy.FillLogTextBox(ShipmentSelectors.MainCarriageETADate, MainCarriageETADate, false)
-    cy.FillLogTextBox(ShipmentSelectors.MainCarriageATADate, MainCarriageATADate, false)
-    //cy.Click(ShipmentSelectors.MainCarriageOKBtn, null);
-   
-   
-    
-}
-let MainCarriageETADate:string
-let MainCarriageATADate:string
-let Transshipment1FromPortId:string
-let Transshipment1ETA:string
-let Transshipment1ATA:string
-export function EditMainCarrigeDetails(){
-    cy.Click(ShipmentSelectors.EditRoutingMainCarriage, null)
-    cy.FillLogTextBox(ShipmentSelectors.MainCarriageETADate, MainCarriageETADate, false)
-    cy.FillLogTextBox(ShipmentSelectors.MainCarriageATADate, MainCarriageATADate, false)
-
-
-
-}
 
 export function EditMainCarriageLegsFromToport(Gateway :string, Destination :string) {
     cy.Click(ShipmentSelectors.EditRoutingMainCarriage, null)
-    
     cy.FillLogLov(ShipmentSelectors.ShipmentMainCarriageFromPort,Gateway, false)
     cy.FillLogLov(ShipmentSelectors.ShipmentMainCarriageToPort,Destination, false)
     cy.Click(ShipmentSelectors.MainCarriageOKBtn, null);
     cy.Click(ShipmentSelectors.ConfirmWindowYes, null);
 
-    
    
-}
-export function FillMainCaarriageofshipmentandtransshipments(Transshipment1FromPortId:string,Transshipment1ETA:string,Transshipment1ATA:string,
-    MainCarriageETADate:string,MainCarriageATADate:string){
-    cy.Click(ShipmentSelectors.EditRoutingMainCarriage, null)
-    cy.FillLogLov(ShipmentSelectors.Transshipment1FromPortId,Transshipment1FromPortId, false)
-    cy.FillLogTextBox(ShipmentSelectors.Transshipment1ETA, Transshipment1ETA, false)
-    cy.FillLogTextBox(ShipmentSelectors.Transshipment1ATA, Transshipment1ATA, false)
-    cy.FillLogTextBox(ShipmentSelectors.MainCarriageETADate, MainCarriageETADate, false)
-    cy.FillLogTextBox(ShipmentSelectors.MainCarriageATADate, MainCarriageATADate, false)
-    cy.Click(ShipmentSelectors.MainCarriageOKBtn, null);
-
-    
-    
 }
 export function AsserationMasterUpdateRoutind(){
 cy.get(ShipmentSelectors.RoutingRegion).contains('AA American Airlines').should('exist')
@@ -651,25 +620,25 @@ cy.get(ShipmentSelectors.RoutingRegion).contains('766').should('exist')
 }
 
 export function AsserationEditMainCarriageLegsFromToport() {
-    //cy.Click(ShipmentSelectors.EditRoutingMainCarriage, null)
-    //BaseAssertion.AssertElementHaveValue(ShipmentSelectors.ShipmentMainCarriageFromPort,'Frankfurt am Main')
-    //BaseAssertion.AssertElementHaveValue(ShipmentSelectors.ShipmentMainCarriageToPort,'Tel Aviv-Yafo')
   cy.get(ShipmentSelectors.RoutingRegion).contains('Frankfurt am Main').should('exist')
-  cy.get(ShipmentSelectors.RoutingRegion).contains('Tel Aviv-Yafo').should('exist')
- 
-  //cy.Click(ShipmentSelectors.RoutingRegion, null).contains('Frankfurt am Main').should('exist');
-
-    //cy.Click(ShipmentSelectors.MainCarriageOKBtn, null);
-    //cy.Click(ShipmentSelectors.ConfirmWindowYes, null);
-
-    
-   
+  cy.get(ShipmentSelectors.RoutingRegion).contains('Tel Aviv-Yafo').should('exist') 
 }
-export function AsserationAddMainCarriageETAandATADate(){
+export function AsserationActualFinalArrivalDateinMaster(){
  
   cy.get(ShipmentSelectors.RoutingRegion).contains('04/05/2021').should('exist')
 }
+export function FinalArrivalDatewhentherearetransshipmentsinMaster(){
+    cy.BackButton('Operations')
+    cy.Navigate(ShipmentSelectors.MasterShipments)
+    cy.get(ShipmentSelectors.MastertransshipmentsActual).contains('05/05/2021').should('exist')
+    
+  }
 
+export function AsserationActualFinalArrivalinHouse(){
+    cy.BackButton('Operations')
+    cy.Navigate(ShipmentSelectors.AllShipments)
+    cy.get(ShipmentSelectors.HouserActual).contains('04/05/2021').should('exist')
+}
 export function AddMainCarriageATDDateAndTime(date: string, time: string) {
     cy.Click(ShipmentSelectors.EditRoutingMainCarriage, null);
     cy.FillDate(ShipmentSelectors.MainCarriageATDDate, date);
@@ -1043,6 +1012,24 @@ function AddPartner(partnerTypeId: string, partnerFieldId: string, partner?: str
     })
 }
 
+ export function EditMainCarriageDetails(MainCarriageLeg:MainCarriageLeg){
+   // EditMainCarriageLegsAddETAandATA()
+   cy.Click(ShipmentSelectors.EditRoutingMainCarriage, null)
+   cy.FillLogTextBox(ShipmentSelectors.MainCarriageETADate,MainCarriageLeg. MainCarriageETADate, false)
+   cy.FillLogTextBox(ShipmentSelectors.MainCarriageATADate, MainCarriageLeg.MainCarriageATADate, false)
+   //cy.FillLogLov(ShipmentSelectors.ShipmentPayableChargesType, payableDetails.ChargesType, true);
+    if(MainCarriageLeg.Transshipment1FromPortId){
+    cy.FillLogLov(ShipmentSelectors.Transshipment1FromPortId,MainCarriageLeg.Transshipment1FromPortId, false)
+    cy.FillLogTextBox(ShipmentSelectors.Transshipment1ETA, MainCarriageLeg.Transshipment1ETA, false)
+    cy.FillLogTextBox(ShipmentSelectors.Transshipment1ATA, MainCarriageLeg.Transshipment1ATA, false)
+    cy.Click(ShipmentSelectors.MainCarriageOKBtn, null);
+
+    }
+    else{
+        cy.Click(ShipmentSelectors.MainCarriageOKBtn, null);
+
+    }
+}
 function FillDirectAndHouseFields(shipmentDetails: ShipmentDetails) {
     FillMainFields(shipmentDetails);
     FillCustomerType(shipmentDetails);

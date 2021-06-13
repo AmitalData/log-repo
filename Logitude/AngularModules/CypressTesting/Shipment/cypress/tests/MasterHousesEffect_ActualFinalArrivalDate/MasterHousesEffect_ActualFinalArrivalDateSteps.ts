@@ -7,14 +7,8 @@ import { ShipmentSelectors } from "../../selectors/Selectors";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { ShipmentContext } from '../../models/ShipmentContext';
 import { MainCarriageLeg } from "cypress/models/MainCarriageLeg";
-import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors";
-//import { when } from "cypress/types/jquery";
-
 //#region variables
 let MasterShipmentDetails: ShipmentDetails;
-
-let EventNote;
-let shipmentNumber: string;
 //#endregion
 
 //#region Create master export air shipment
@@ -62,51 +56,40 @@ Then("the house should connect successfully", () => {
     Actions.ValidateCheckHouseCheckBox();
 });
 //#endregion
+
 //#region Update ActualFinalArrivalDate when there is actual date
 Given("the user in the master's rounting tab", () => {
     cy.Navigate(ShipmentSelectors.RoutingsTab);
 });
 
-
 Given("edit main carriage leg with the following details", (dataTable) => {
-    let mainCarriageLeg = Assists.CreateInstance<MainCarriageLeg>(dataTable, true);
-    Actions.EditMainCarriageLegsAddETAandATA(mainCarriageLeg.MainCarriageETADate,mainCarriageLeg.MainCarriageATADate);
-    cy.Click(ShipmentSelectors.MainCarriageOKBtn, null);
-    cy.Click(ShipmentSelectors.ShipmentSaveButton, null);
-});
+    let MainCarriageLeg = Assists.CreateInstance<MainCarriageLeg>(dataTable, true);
+    Actions.EditMainCarriageDetails(MainCarriageLeg)
+    });
 When('update master',()=>{
     Actions.UpdateMaster()
 })
 Then('the master should update successfully',()=>{
-    //Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
+    Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
 })
 Then('the master ActualFinalArrivalDate should be 2021-05-04',()=>{
-    Actions.AsserationAddMainCarriageETAandATADate()
+    Actions.AsserationActualFinalArrivalDateinMaster()
 })
 Then('the house ActualFinalArrivalDate should be 2021-05-04',()=>{
-  cy.BackButton('Operations')
-  cy.get('#Shipments-O-Q').click()
-  cy.get('#row0col13').contains('04/05/2021').should('exist')
-  cy.BackButton('Operations')
-  Actions.OpenShipment(ShipmentContext.MasterNumber)
-})
+   Actions.AsserationActualFinalArrivalinHouse()  
+}) 
 //#endregion
 
 //#region Update ActualFinalArrivalDate when there is no actual date
 Given('the user in the master rounting tab',()=>{
+    cy.BackButton('Operations')
     Actions.OpenShipment(ShipmentContext.MasterNumber)
     cy.Navigate(ShipmentSelectors.RoutingsTab);
 })
-Given('edit main carriage leg with the following details',(dataTable)=>{
-    let mainCarriageLeg = Assists.CreateInstance<MainCarriageLeg>(dataTable, true);
-    Actions.EditMainCarriageLegsAddETAandATA(mainCarriageLeg.MainCarriageETADate,mainCarriageLeg.MainCarriageATADate);
-    cy.Click(ShipmentSelectors.ShipmentSaveButton, null);
-})
-When('update master',()=>{
-    Actions.UpdateMaster()
-})
+
+
 Then('the master should update successfully',()=>{
-    //Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
+    Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
 })
 Then('the master ActualFinalArrivalDate should be null',()=>{
     Actions.AsserationMastershipmentNOActualFinalArrivalDate()
@@ -124,14 +107,11 @@ Given('the user in the master rounting tab',()=>{
 
 
 })
-Given('edit main carriage leg with the following details',(dataTable)=>{
-    let mainCarriageLeg = Assists.CreateInstance<MainCarriageLeg>(dataTable, true);
-    //Actions.EditMainCarriageLegsAddETAandATA(mainCarriageLeg.MainCarriageETADate,mainCarriageLeg.MainCarriageATADate);
+Then('the master ActualFinalArrivalDate should be 2021-05-05',()=>{
+Actions.FinalArrivalDatewhentherearetransshipmentsinMaster()
 
-    Actions.FillMainCaarriageofshipmentandtransshipments(mainCarriageLeg.Transshipment1FromPortId,mainCarriageLeg.Transshipment1ETA,
-    mainCarriageLeg.Transshipment1ATA,mainCarriageLeg.MainCarriageETADate,mainCarriageLeg.MainCarriageATADate)
-
-
-   // cy.Click(ShipmentSelectors.ShipmentSaveButton, null);
+})
+Then('the house ActualFinalArrivalDate should be 2021-05-05',()=>{
+    Actions.AsserationHouseshipmenttransshipments()
 })
 //#endregion
