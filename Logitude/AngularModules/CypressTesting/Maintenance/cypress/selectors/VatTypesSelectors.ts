@@ -11,7 +11,7 @@ export class VatTypesSelectors {
     public static readonly Percentage = "#VatType_NewEntityPercentage"
     public static readonly PercentageDate = "#date_VatType_NewEntityPercentageDate"
     public static readonly SinglePercentageRadio = "#Single_MultiPercentageRadio"
-    public static readonly MultiPercentageRadio = "#Multi-percentage_MultiPercentageRadio"
+    public static readonly MultiPercentageRadio = "#Multi-percentage_MultiPercentageRadio_LBL"
     public static readonly AccountingTab = "#VatTypeTHAccounting"
     public static readonly AccountingReceivablesExternalId = "#VatType_ReceivablesExternalId"
     public static readonly AccountingPayablesExternalId = "#VatType_PayablesExternalId"

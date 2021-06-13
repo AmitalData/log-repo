@@ -13,5 +13,10 @@ export class WarehousesSelectors {
    public static readonly IBANNumber = "#Warehouse_IBANNumber"
    public static readonly BillingTab = "#WarehouseTHBilling"
    public static readonly EventsTab = "#WarehouseTHEvents"
-
+   public static readonly Type = "#Warehouse_TypeCode"
+   public static readonly TerminalCode = "#Warehouse_FirmCode"
+   public static readonly InactiveCheckBox = "#Warehouse_InActive"
+   public static readonly MyWarehouseCheckBox = "#Warehouse_MyWarehouse"
+   public static readonly Swift = "#Warehouse_Swift"
+   public static readonly BankAddress = "#Warehouse_BankAddress"
 }

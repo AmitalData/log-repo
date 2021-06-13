@@ -10,7 +10,17 @@ import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
 import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
 import * as gr from '../../../Base/cypress/actions/GenerateRandoms';
 
-let SearchFieldValue = null
+let searchFieldValue = null
+
+export function FillCode(code: string) {
+    cy.FillLogTextBox(PaymentTermsSelectors.Code, code)
+}
+
+export function FillRequiredData(code: string) {
+    cy.FillLogTextBox(PaymentTermsSelectors.Code, code)
+    cy.FillLogTextBox(PaymentTermsSelectors.Name, "test")
+    cy.FillLogLov(PaymentTermsSelectors.FromDate, "Invoice Date", true);
+}
 
 export function FillPaymentTermDetails(paymentTermDetails: PaymentTermDetails, codeDigits: number) {
     cy.FillLogTextBox(PaymentTermsSelectors.Name, gr.GenerateCurrentDatetimeString("_"))
@@ -47,7 +57,7 @@ function AssertPostPaymentTerm() {
         }
         else {
             assert.equal(statusCode, 200)
-            SearchFieldValue = interception.response.body.EnglishName
+            searchFieldValue = interception.response.body.EnglishName
         }
     })
 }
@@ -60,11 +70,11 @@ function ReCreatePaymentTerm() {
 }
 
 export function SearchPaymentTerm() {
-    GeneralActions.Search(SearchFieldValue)
+    GeneralActions.Search(searchFieldValue)
 }
 
 export function AssertSearchPaymentTerm() {
-    GeneralActions.AssertSearch(SearchFieldValue);
+    GeneralActions.AssertSearch(searchFieldValue);
 }
 
 export function OpenPaymentTerm() {

@@ -10,13 +10,17 @@ import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
 import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
 import { GenerateRandomNumberAndString } from '../../../Base/cypress/actions/GenerateRandoms';
 
-let SearchFieldValue = null
+let searchFieldValue = null
 
-export function FillAccountingPaymentMethodDetails(AccountingPaymentMethodDetails: AccountingPaymentMethodDetails, codeDigits: number) {
-    cy.FillLogTextBox(AccountingPaymentMethodSelectors.Name, AccountingPaymentMethodDetails.Name)
+export function FillAccountingPaymentMethodCode(accountingPaymentMethodCode: string) {
+    cy.FillLogTextBox(AccountingPaymentMethodSelectors.Code, accountingPaymentMethodCode);
+}
+
+export function FillAccountingPaymentMethodDetails(accountingPaymentMethodDetails: AccountingPaymentMethodDetails, codeDigits: number) {
+    cy.FillLogTextBox(AccountingPaymentMethodSelectors.Name, accountingPaymentMethodDetails.Name)
     cy.FillLogTextBox(AccountingPaymentMethodSelectors.Code, GenerateRandomNumberAndString(codeDigits));
-    Actions.FillCheckBoxProcess(AccountingPaymentMethodSelectors.ARCheckBox, AccountingPaymentMethodDetails.ARCheckBox)
-    Actions.FillCheckBoxProcess(AccountingPaymentMethodSelectors.APCheckBox, AccountingPaymentMethodDetails.APCheckBox)
+    Actions.FillCheckBoxProcess(AccountingPaymentMethodSelectors.ARCheckBox, accountingPaymentMethodDetails.ARCheckBox)
+    Actions.FillCheckBoxProcess(AccountingPaymentMethodSelectors.APCheckBox, accountingPaymentMethodDetails.APCheckBox)
 }
 
 export function CreateAccountingPaymentMethod() {
@@ -43,7 +47,7 @@ function AssertPostAccountingPaymentMethod() {
         }
         else {
             assert.equal(statusCode, 200)
-            SearchFieldValue = interception.response.body.Code
+            searchFieldValue = interception.response.body.Code
         }
     })
 }
@@ -56,11 +60,11 @@ function ReCreateAccountingPaymentMethod() {
 }
 
 export function SearchAccountingPaymentMethod() {
-    GeneralActions.Search(SearchFieldValue)
+    GeneralActions.Search(searchFieldValue)
 }
 
 export function AssertSearchAccountingPaymentMethod() {
-    GeneralActions.AssertSearch(SearchFieldValue);
+    GeneralActions.AssertSearch(searchFieldValue);
 }
 
 export function OpenAccountingPaymentMethod() {
@@ -81,14 +85,14 @@ function AssertAccountingPaymentMethodGetSingle() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetSignle, 200);
 }
 
-export function EditAccountingPaymentMethodGeneralTab(AccountingPaymentMethodDetails: AccountingPaymentMethodDetails) {
-    Actions.FillInputCheckBoxProcess(AccountingPaymentMethodSelectors.InActiveCheckBox, AccountingPaymentMethodDetails.InactiveCheckBox)
-    Actions.FillInputCheckBoxProcess(AccountingPaymentMethodSelectors.APCheckBox, AccountingPaymentMethodDetails.APCheckBox)
+export function EditAccountingPaymentMethodGeneralTab(accountingPaymentMethodDetails: AccountingPaymentMethodDetails) {
+    Actions.FillInputCheckBoxProcess(AccountingPaymentMethodSelectors.InActiveCheckBox, accountingPaymentMethodDetails.InactiveCheckBox)
+    Actions.FillInputCheckBoxProcess(AccountingPaymentMethodSelectors.APCheckBox, accountingPaymentMethodDetails.APCheckBox)
 }
 
-export function FillAccountingPaymentMethodAccountingTab(AccountingPaymentMethodDetails: AccountingPaymentMethodDetails) {
-    cy.FillLogTextBox(AccountingPaymentMethodSelectors.AccountingARExternalID, AccountingPaymentMethodDetails.ARExternalID);
-    cy.FillLogTextBox(AccountingPaymentMethodSelectors.AccountingAPExternalID, AccountingPaymentMethodDetails.APExternalID);
+export function FillAccountingPaymentMethodAccountingTab(accountingPaymentMethodDetails: AccountingPaymentMethodDetails) {
+    cy.FillLogTextBox(AccountingPaymentMethodSelectors.AccountingARExternalID, accountingPaymentMethodDetails.ARExternalID);
+    cy.FillLogTextBox(AccountingPaymentMethodSelectors.AccountingAPExternalID, accountingPaymentMethodDetails.APExternalID);
 }
 
 export function UpdateAccountingPaymentMethod() {

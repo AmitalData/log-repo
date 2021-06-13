@@ -1,11 +1,19 @@
-@NewDev
-Feature: Payment Terms Create, Search and Edit from Maintenance
+@NewDev @daily
+Feature: Payment Terms fake Create, Search and Edit from Maintenance
     The user creates a payment term, searches for and edits it from the Maintenance Module.
 
-    Scenario: Create new payment term
+    Scenario: Add Payment Term Method Code with lenght more than 4
         Given the user logged in and open "Payment Terms" in maintenance menu
-        And a payment term with the following details
-            | Name             | CurrentDatetime                |
+        When add "12345" as payment term code
+        Then a validation message with "Code Field must be less than 4" error should appear
+
+    Scenario: Add Payment Term Method Code already exists
+        Given add another payment term code: "1234"
+        Then this validation message error "Payment Term with Code 1234 already exists" should appear
+
+    Scenario: Create new payment term
+        Given a payment term with the following details
+            | Name             | Testing payment term Scenario  |
             | LocalName        | Testing payment term Scenario  |
             | Code             | Random                         |
             | CurrentMonth     | Yes                            |
@@ -17,8 +25,8 @@ Feature: Payment Terms Create, Search and Edit from Maintenance
         Then the payment term should create successfully
 
     Scenario: Search for the payment term by code
-        When search payment term
-        Then the payment term should appear successfully
+        When search for "11_6_2021_1623415715135" payment term
+        Then the "11_6_2021_1623415715135" payment term should appear successfully
 
     Scenario: Open the payment term
         When open payment term
@@ -33,8 +41,8 @@ Feature: Payment Terms Create, Search and Edit from Maintenance
         When save payment term
         Then the payment term should update successfully
         And the following event should appear in events tab
-            | Event                | Notes                    |
-            | Payment Term Updated | Payment Term Inactivated |
+            | Event                |
+            | Payment Term Updated |
 
     Scenario: Save and close the payment term
         When save and close payment term

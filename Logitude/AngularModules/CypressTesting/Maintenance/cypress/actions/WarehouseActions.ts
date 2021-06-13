@@ -11,7 +11,11 @@ import { Urls } from "../constants/Urls";
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
 import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
 
-let WarehouseCode = null
+let searchFieldValue = null
+
+export function FillWarehouseCode(warehouseCode: string) {
+    cy.FillLogTextBox(WarehousesSelectors.Code, warehouseCode)
+}
 
 export function FillWarehouseDetails(warehouseDetails: CardDetails) {
     Actions.FillCardDetails(warehouseDetails, 4)
@@ -19,17 +23,6 @@ export function FillWarehouseDetails(warehouseDetails: CardDetails) {
 
 export function FillWarehouseContactDetails(conatactDetails: ContactDetails) {
     Actions.FillCardContactDetails(conatactDetails)
-}
-
-export function FillWarehouseGeneralTab(warehouseGeneralTabDetails: CardGeneralTabDetails) {
-    cy.FillLogTextBox(WarehousesSelectors.Notes, warehouseGeneralTabDetails.Notes)
-    cy.ClickCheckBox("#Warehouse_InActive")
-}
-
-export function FillWarehouseBillingTab(warehouseBillingTabDetails: CardBillingTabDetails) {
-    cy.FillLogTextBox(WarehousesSelectors.VatNumber, warehouseBillingTabDetails.VatNumber.toString())
-    cy.FillLogTextBox(WarehousesSelectors.BankName, warehouseBillingTabDetails.BankName)
-    cy.FillLogTextBox(WarehousesSelectors.IBANNumber, warehouseBillingTabDetails.IBANNo)
 }
 
 export function CreateWarehouse() {
@@ -56,7 +49,7 @@ function AssertPostWarehouse() {
         }
         else {
             assert.equal(statusCode, 200)
-            WarehouseCode = interception.response.body.Warehouse.Code;
+            searchFieldValue = interception.response.body.Warehouse.Code;
         }
     })
 }
@@ -69,11 +62,11 @@ function ReCreateWarehouse() {
 }
 
 export function SearchWarehouse() {
-    Actions.SearchCardByValue(WarehouseCode)
+    Actions.SearchCardByValue(searchFieldValue)
 }
 
 export function AssertSearchWarehouse() {
-    Actions.AssertSearchCard(WarehouseCode)
+    Actions.AssertSearchCard(searchFieldValue)
 }
 
 export function OpenWarehouse() {
@@ -88,6 +81,26 @@ function DefineWarehousesGetSingleRequest() {
 export function AssertOpenWarehouse() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetSignle, 200);
     BaseAssertion.AssertElementExist(MaintenanceSelectors.GeneralEditScreen);
+}
+
+export function FillWarehouseTerminalCode(warehouseTerminalCode: string) {
+    cy.FillLogTextBox(WarehousesSelectors.TerminalCode, warehouseTerminalCode)
+}
+
+export function FillWarehouseGeneralTab(warehouseGeneralTabDetails: CardGeneralTabDetails) {
+    cy.FillLogTextBox(WarehousesSelectors.TerminalCode, warehouseGeneralTabDetails.TerminalCode)
+    cy.FillLogTextBox(WarehousesSelectors.Notes, warehouseGeneralTabDetails.Notes)
+    cy.FillLogTextBox(WarehousesSelectors.Type, warehouseGeneralTabDetails.Type)
+    Actions.FillCheckBoxProcess(WarehousesSelectors.MyWarehouseCheckBox, warehouseGeneralTabDetails.MyWarehouseCheckBox)
+    Actions.FillCheckBoxProcess(WarehousesSelectors.InactiveCheckBox, warehouseGeneralTabDetails.InactiveCheckBox)
+}
+
+export function FillWarehouseBillingTab(warehouseBillingTabDetails: CardBillingTabDetails) {
+    cy.FillLogTextBox(WarehousesSelectors.VatNumber, warehouseBillingTabDetails.VatNumber.toString())
+    cy.FillLogTextBox(WarehousesSelectors.BankName, warehouseBillingTabDetails.BankName)
+    cy.FillLogTextBox(WarehousesSelectors.IBANNumber, warehouseBillingTabDetails.IBANNo)
+    cy.FillLogTextBox(WarehousesSelectors.BankAddress, warehouseBillingTabDetails.BankAddress)
+    cy.FillLogTextBox(WarehousesSelectors.Swift, warehouseBillingTabDetails.Swift)
 }
 
 export function UpdateWarehouse() {
