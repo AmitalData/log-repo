@@ -144,11 +144,11 @@
                      *ngFor="let card of SliderCards"
                      [class.active]="card.IsActive"
                      [class.dim]="card.IsDimmed"
-                     [class.warning]="card.HasWarning">
-                    <div class="code">{{card.Code}}</div>
+                     [class.warning]="false">
                     <div class="date">{{card.Date | date: 'dd'}} <span>{{card.Date | date: 'MMM'}}</span></div>
                     <div class="title">{{card.Title}}</div>
-                    <div class="desc hide-mobile">{{card.Description}}</div>
+                    <div class="desc hide-mobile "  [attr.title]="card.Description"
+                         style="overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">{{card.Description}}</div>
                 </div>
 
             </div>
@@ -251,14 +251,18 @@
 
 
     <panel style="order: 4;" [Title]="'Cargo Info'" [Name]="'Cargo'" [HaveDetailsSection]="true"
-           [ShowWhitePanelOnMobile]="true" [DetailsTitle]="'Container List'">
+           [ShowWhitePanelOnMobile]="true" [DetailsTitle]="'Container List'" [DetailsSectionToggleEvent]="DetailsSectionToggleEvent">
 
         <div body>
-            <div class="data-cards" *ngIf="Shipment&& Shipment.ShipmentList">
+            <div class="data-cards" *ngIf="Shipment&& Shipment.ShipmentList"> 
                 <div>
                     <div class="title">Pack Type</div>
                     <div class="description">
-                        <div *ngFor="let package of ShipmentPM?.PackagesTypesNames?.split(';')">{{package}}</div>
+                        <div *ngFor="let package of ShipmentPackages.slice(0,2), let i = index">
+                            {{package.PackageTypeName}}
+                            <a *ngIf="ShipmentPackages.length > 2 && i == 1" (click)="ShowMoreLinkClicked()"
+                               style="cursor: pointer; font-size: 11px;color:var(--MainColor)"> {{ShowDetailsSection?'Show less':'Show more'}}</a>
+                        </div>
                     </div>
                 </div>
                 <div>
@@ -286,7 +290,11 @@
                 <div>
                     <div class="title">containers</div>
                     <div class="description">
-                        {{Shipment.ShipmentList.ContainersNumbers}}
+                        <div *ngFor="let container of ContainersNumbers?.slice(0,2), let i = index">
+                            {{container}}
+                            <a *ngIf="ContainersNumbers?.length > 2 && i == 1" (click)="ShowMoreLinkClicked()"
+                               style="cursor: pointer; font-size: 11px;color:var(--MainColor)"> {{ShowDetailsSection?'Show less':'Show more'}} </a>
+                        </div>
                     </div>
                 </div>
 
