@@ -74,7 +74,7 @@ export class PickupPackagesTabComponent {
 
         this.IsAddContainerVisible = false;
         if (this.IsFCLEntity) {
-            var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SAS")[0];
+            var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0];
             if (featureToggle) {
                 this.IsAddContainerVisible = true;
             }

@@ -125,10 +125,16 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             {
                 stanAloneShipmentPM.IsStandalonePickupDelivery = false;
                 stanAloneShipmentPM.StandalonePickupDeliveryId = null;
-                ShipmentService shipmentService = new ShipmentService(this.shipmentsContext, stanAloneShipmentPM, "");
-                shipmentService.Update();
+                this.UpdateShipment(stanAloneShipmentPM);                
             }
         }
+
+        private void UpdateShipment(ShipmentPM stanAloneShipmentPM)
+        {
+            ShipmentService shipmentService = new ShipmentService(this.shipmentsContext, stanAloneShipmentPM, "");
+            shipmentService.Update();
+        }
+
         private void UpdateStandAloneShipmentOnPickDeliveryConnection(string shipmentId, string pickupDeliveryId, List<ShipmentPickUpDeliveryPackagePM> connectedPickupDeliveryPackages)
         {
             ShipmentPM stanAloneShipmentPM = this.GetStandAloneShipmentPM(shipmentId);
@@ -141,8 +147,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         }
         private void UpdateConnectedStanadAloneShipmentService(ShipmentPM stanAloneShipmentPM)
         {
-            ShipmentService shipmentService = new ShipmentService(this.shipmentsContext, stanAloneShipmentPM, "");
-            shipmentService.Update();
+            this.UpdateShipment(stanAloneShipmentPM);            
         }
         private void MapStandAlonePackagesOnPickDeliveryConnection(ShipmentPM stanAloneShipmentPM, string pickupDeliveryId, List<ShipmentPickUpDeliveryPackagePM> connectedPickupDeliveryPackages)
         {
@@ -275,7 +280,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                     {
                         case ChangeSetOperation.Insert:
                             {
-                                this.UpdateForwarderShipmentOnStandalonePackageCreated(shipmentPickUpDelivery, itemPM);
+                                this.initializer.IsPackageCreatedFromStandaloneShipment = true;
                                 break;
                             }
 
@@ -295,25 +300,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 }
             }
         }
-
-        private void UpdateForwarderShipmentOnStandalonePackageCreated(ShipmentPickUpDelivery connectedPickUpDelivery, ShipmentPackagePM standalonePackage)
-        {
-            ShipmentPM forwarderShipment = this.GetStandAloneShipmentPM(connectedPickUpDelivery.ShipmentId);
-            if(forwarderShipment!= null)
-            {
-                ShipmentPackagePM matchecdPackage = forwarderShipment.ShipmentPackages.Where(d => d.ContainerNumber == standalonePackage.ContainerNumber).FirstOrDefault();
-                if(matchecdPackage != null)
-                {
-
-                }
-
-                else
-                {
-                    
-                }
-            }
-        }
-
         private void CancleStandaloneShipmentConnection()
         {
             ShipmentPickUpDelivery shipmentPickUpDelivery = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDeliveryByStandaloneShipmentId(shipmentPM.Id, tenant);
@@ -321,12 +307,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             {
                 shipmentPickUpDelivery.StandaloneShipmentId = null;
                 shipmentPickUpDelivery.StandaloneShipmentNumber = null;
-
-                //IQueryable<ShipmentPickUpDeliveryPackage> pickUpDeliveryPackages = shipmentPickUpDeliveryPackageRepository.GetPackagesByDeliveryId(shipmentPickUpDelivery.Id, tenant);
-                //if (pickUpDeliveryPackages.Count() == 1)
-                //{
-                //    
-                //}
                 shipmentPickUpDeliveryRepository.Update(shipmentPickUpDelivery);
             }
 
