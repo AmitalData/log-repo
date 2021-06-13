@@ -98,12 +98,16 @@ export function CheckShippingLineINTTRA() {
 
 export function FillShippingLineAddresses(shippingLineDetails: ShippingLineDetails) {
     cy.DefineRequestWait(RestAPI.GET, Urls.NewShippingLinesAddress, RequestAliases.NewShippingLineAddress);
-    cy.wait('@' + RequestAliases.NewShippingLineAddress).then(() => {
-        cy.get('.LogitudeIconButton').first().find('img').invoke('show').click({ force: true }).then(() => {
-            cy.FillLogLov('#Address_CountryId', shippingLineDetails.AddressCountry, true)
-            cy.FillLogTextBox('#Address_City', shippingLineDetails.AddressCity)
-        })
-    })
+    // cy.wait('@' + RequestAliases.NewShippingLineAddress).then(() => {
+    //     cy.get('.LogitudeIconButton').first().find('img').invoke('show').click({ force: true }).then(() => {
+    //         cy.FillLogLov('#Address_CountryId', shippingLineDetails.AddressCountry, true)
+    //         cy.FillLogTextBox('#Address_City', shippingLineDetails.AddressCity)
+    //     })
+    // })
+    cy.get("#Edit").click({ force: true })
+    cy.FillLogLov('#Address_CountryId', shippingLineDetails.AddressCountry, true)
+    cy.FillLogTextBox('#Address_City', shippingLineDetails.AddressCity)
+    cy.FillLogLov('#Address_StateId', "Arkansas", true)
 }
 
 export function CreateShippingLineAddress() {
@@ -129,16 +133,10 @@ export function FillShippingLineAreas(shippingLineDetails: ShippingLineDetails) 
         cy.FillLogTextBox('#CarrierArea_Description', shippingLineDetails.AreaDescription)
         cy.Click('button', 'Country Ports').then(() => {
             cy.FillLogLov('#CarrierAreasPort_CountryId', shippingLineDetails.AreaCountry, true).then(() => {
-                cy.Click('button', 'Add').then(() => {
-                    cy.Click('button', 'Close')
-                })
-            })
-        })
-        cy.Click('button', ' Port ').then(() => {
-            cy.FillLogLov('#CarrierAreasPort_PortId', shippingLineDetails.AreaPort, true).then(() => {
-                cy.Click('button', 'Add').then(() => {
-                    cy.Click('button', 'Close')
-                })
+                cy.get("#LogitudeWindow_0_4").find(".Button").contains("Add").click()
+                cy.FillLogLov('#CarrierAreasPort_CountryId', shippingLineDetails.AreaPort, true)
+                cy.get("#LogitudeWindow_0_4").find(".Button").contains("Add").click()
+                cy.get("#LogitudeWindow_0_4").find(".Button").contains("Close").click()
             })
         })
     })

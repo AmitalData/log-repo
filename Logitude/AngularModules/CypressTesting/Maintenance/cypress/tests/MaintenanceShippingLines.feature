@@ -23,8 +23,8 @@ Feature: Shipping Line Create, Search and Edit from Maintenance
     Scenario: Edit the Shipping Line
         Given check dim input in shipping line INTTRA
         And fill the following Address in Addresses Shipping line
-            | AddressCountry | United State of America |
-            | AddressCity    | NYC                     |
+            | AddressCountry | United States |
+            | AddressCity    | las           |
 
         When create shipping line address
         Then the shipping line address should create successfully
@@ -48,7 +48,7 @@ Feature: Shipping Line Create, Search and Edit from Maintenance
         When edit shipping Line
         Then the shipping Line should update successfully
         And following event should appear in events tab
-            | Event                | Notes                    |
+            | Event                 | Notes                     |
             | Shipping Line Updated | Shipping Line Inactivated |
 
     Scenario: Save and close the shippingLine
