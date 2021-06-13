@@ -54,7 +54,7 @@ export class ContainerHelperComponent implements OnDestroy {
     ContainersRequestStatusClicked() {
         this.CurrentSession.StartBusyIndicator("Sending");
         var service = new ShipmentContainersWebService();
-        service.GetContainerStatusResult(null, this.EntityPM.ShipmentId, true).subscribe((myResponse: ServiceResponse) => {
+        service.GetContainerStatusResult(this.EntityPM.ShipmentId, this.EntityPM.Id, true).subscribe((myResponse: ServiceResponse) => {
             this.CurrentSession.StopBusyIndicator();
             if (!myResponse.HasError) {
 

@@ -161,6 +161,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             container.MainCarriageETD = this.initializer.EntityPM.MainCarriageETD;
             container.Master = this.initializer.EntityPM.Master;
             container.ContainerNumber = shipmentPackage.ContainerNumber;
+            container.ShipmentId = shipmentPackage.ShipmentId;
         }
 
         private void DeleteContainer(ShipmentPackagePM shipmentPackage)
