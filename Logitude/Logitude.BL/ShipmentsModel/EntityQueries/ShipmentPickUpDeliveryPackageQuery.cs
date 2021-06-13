@@ -114,40 +114,5 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             return GetSingleShipmentPickUpDeliveryPackagePM( id,  tenant);       
         }
-
-        public List<ShipmentPickUpDeliveryPackagePM> GetSinglePickUpDeliveryPackageByIdsList(List<string> ids, int tenant)
-        {
-            List<ShipmentPickUpDeliveryPackagePM> packages = (from a in repository.context.ShipmentPickUpDeliveryPackages
-                                                              where ids.Contains(a.ShipmentPickUpDeliveryId) && a.Tenant == tenant
-                                                              select new ShipmentPickUpDeliveryPackagePM()
-                                                              {
-                                                                  ContainerNumber = a.ContainerNumber,
-                                                                  Description = a.Description,
-                                                                  Id = a.Id,
-                                                                  PackageTypeId = a.PackageTypeId,
-                                                                  Quantity = a.Quantity,
-                                                                  Tenant = a.Tenant,
-                                                                  ShipmentPickUpDeliveryId = a.ShipmentPickUpDeliveryId,
-                                                                  Volume = a.Volume,
-                                                                  Weight = a.Weight,
-                                                                  ShipperSeal = a.ShipperSeal,
-                                                                  Harmonize = a.Harmonize,
-                                                                  Width = a.Width,
-                                                                  Height = a.Height,
-                                                                  Length = a.Length,
-                                                                  OriginalShipmentPackageId = a.OriginalShipmentPackageId,
-                                                                  IsMultiHarmonize = a.IsMultiHarmonize,
-                                                                  Make = a.Make,
-                                                                  Year = a.Year,
-                                                                  Model = a.Model,
-                                                                  Color = a.Color,
-                                                                  ChassisNumber = a.ChassisNumber,
-                                                                  RegistrationNumber = a.RegistrationNumber,
-                                                                  CountryId = a.CountryId,
-                                                                  ContainerEntityId = a.ContainerEntityId,
-                                                              }).ToList();
-
-            return packages;
-        }
     }
 }
