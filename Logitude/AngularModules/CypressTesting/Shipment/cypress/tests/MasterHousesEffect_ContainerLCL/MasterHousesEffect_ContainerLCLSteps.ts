@@ -75,11 +75,19 @@ Given("add a package with the following details", (dataTable) => {
     
 });
 When('update shipment',()=>{
-    //Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
+    
    cy.Navigate(ShipmentSelectors.ShipmenSavepackqges+ShipmentSelectors.LastElementShipment)
-   cy.BackButton('Shipment')
+})
+Then('the shipment should update successfully',()=>{
+
+})
+Then('the package should add successfully',()=>{
+
+})
+Given('the user in the master package tab',()=>{
+    cy.BackButton('Shipment')
    cy.Navigate(ShipmentSelectors.PackagesTab)
-   cy.get('#ShipmentPackageMContainNoPackages').click()
-   //cy.contains('Add').click()
-   cy.get('.MediaFixedPadding').contains('Add ').click()
+})
+Given('rebuild master containers by adding new container with the following details',()=>{
+    cy.Navigate(ShipmentSelectors.ShipmentPackagefromhouse)
 })

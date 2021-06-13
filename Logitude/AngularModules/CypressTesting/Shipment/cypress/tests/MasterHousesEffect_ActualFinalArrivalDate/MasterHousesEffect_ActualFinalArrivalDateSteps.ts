@@ -111,14 +111,16 @@ Then('the house ActualFinalArrivalDate should be null',()=>{
   cy.wait(5000)
 })
 
-Given('the user in the master rounting tab',()=>{
+
+
+Given('the user in the master rounting tab NOOR',()=>{
  cy.BackButton('Operations')
   Actions.OpenShipment(ShipmentContext.MasterNumber)
   cy.Navigate(ShipmentSelectors.RoutingsTab);
 
 
 })
-Given('edit main carriage leg with the following details',(dataTable)=>{
+Given('edit main carriage leg with the following details NOOR',(dataTable)=>{
     let mainCarriageLeg = Assists.CreateInstance<MainCarriageLeg>(dataTable, true);
     //Actions.EditMainCarriageLegsAddETAandATA(mainCarriageLeg.MainCarriageETADate,mainCarriageLeg.MainCarriageATADate);
 

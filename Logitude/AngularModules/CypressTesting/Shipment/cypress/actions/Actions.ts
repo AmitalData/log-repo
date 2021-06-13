@@ -607,6 +607,19 @@ export function EditMainCarriageLegsAddETAandATA(MainCarriageETADate:string,Main
    
     
 }
+let MainCarriageETADate:string
+let MainCarriageATADate:string
+let Transshipment1FromPortId:string
+let Transshipment1ETA:string
+let Transshipment1ATA:string
+export function EditMainCarrigeDetails(){
+    cy.Click(ShipmentSelectors.EditRoutingMainCarriage, null)
+    cy.FillLogTextBox(ShipmentSelectors.MainCarriageETADate, MainCarriageETADate, false)
+    cy.FillLogTextBox(ShipmentSelectors.MainCarriageATADate, MainCarriageATADate, false)
+
+
+
+}
 
 export function EditMainCarriageLegsFromToport(Gateway :string, Destination :string) {
     cy.Click(ShipmentSelectors.EditRoutingMainCarriage, null)

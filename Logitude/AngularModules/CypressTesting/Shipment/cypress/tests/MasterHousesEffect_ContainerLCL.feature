@@ -32,8 +32,8 @@ Feature: LCL Container Number
         And the package should add successfully
 
     Scenario: Rebuild master packages in the master
-        Given the user in the master's package tab
-        And rebuild master's containers by adding new container with the following details 
+        Given the user in the master package tab
+        And rebuild master containers by adding new container with the following details 
             | PackageType | ContainerNumber | GrossWeight |
             | PC2         | DDDD88889       | 100         |
         When update shipment
