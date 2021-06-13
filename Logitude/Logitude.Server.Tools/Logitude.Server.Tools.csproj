@@ -242,7 +242,7 @@
     <Compile Include="CloseTablesClasses\FillCloseTable.cs" />
     <Compile Include="CloseTablesClasses\ICloseTable.cs" />
     <Compile Include="Communications.cs" />
-    <Compile Include="Constants\MessageType.cs" />
+    <Compile Include="KafkaConfigurations\KakaMessageTypes.cs" />
     <Compile Include="ContainerAccessor.cs" />
     <Compile Include="Contracts\GenericResponse.cs">
       <DependentUpon>GenericResponse.xsd</DependentUpon>
@@ -338,6 +338,9 @@
     <Compile Include="EntityValidateService.cs" />
     <Compile Include="Interfaces\IIdCounterUtil.cs" />
     <Compile Include="Interfaces\ITranslateTextsClassUtil.cs" />
+    <Compile Include="KafkaConfigurations\KafkaConsumerGroups.cs" />
+    <Compile Include="KafkaConfigurations\KafkaTopics.cs" />
+    <Compile Include="KafkaConfigurations\KakaPartitions.cs" />
     <Compile Include="LogitudeExceptionExt.cs" />
     <Compile Include="LogitudeXmlSerializer.cs" />
     <Compile Include="Messages\Consumer.cs" />

@@ -2,7 +2,7 @@
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
-using Logitude.Server.Tools.Constants;
+using Logitude.Server.Tools.KafkaConfigurations;
 using Logitude.Server.Tools.Messages;
 using Logitude.SystemLogs;
 using Newtonsoft.Json;
@@ -20,7 +20,8 @@ namespace CommunicationWorkerRole
     {
         public override void Run()
         {
-            var LogitudeConsumer = new Consumer();
+            var LogitudeConsumer = new Consumer(KafkaConsumerGroups.UpdateTask, null,
+                                    new TopicPartition(KafkaTopics.TasksTopic, KakaPartitions.TasksTopic_UpdatePartition));
 
             while (IsRunning)
             {
@@ -29,7 +30,7 @@ namespace CommunicationWorkerRole
                     try
                     {   
                         var msg = LogitudeConsumer.Consume();
-                        if (msg.Message.Key == MessageType.Task)
+                        if (msg.Message.Key == KakaMessageTypes.Task)
                         {
                             UpdateShipmentPM(msg.Message.Value);
                         } 

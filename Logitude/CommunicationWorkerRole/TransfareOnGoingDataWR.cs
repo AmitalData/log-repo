@@ -1,17 +1,12 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.Server.Tools.Constants;
+using Logitude.Server.Tools.KafkaConfigurations;
 using Logitude.Server.Tools.Messages;
 using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
 using Newtonsoft.Json;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel.Repositories;
 using System;
-using System.Configuration;
 using System.Net;
-using System.Net.Http;
-using System.Text;
 using System.Threading;
 
 namespace CommunicationWorkerRole
@@ -39,7 +34,7 @@ namespace CommunicationWorkerRole
 
                             var TransfareOnGoingMessageProducer = new Producer();
                             var serializedObjectUpdateMessage = JsonConvert.SerializeObject(entityPM, Formatting.Indented);
-                            TransfareOnGoingMessageProducer.Produce(messageType, serializedObjectUpdateMessage);
+                            TransfareOnGoingMessageProducer.Produce(KafkaTopics.LookupsTopic, messageType, serializedObjectUpdateMessage);
                         }
                     }
                     catch (Exception ex)
@@ -145,13 +140,12 @@ namespace CommunicationWorkerRole
                 case "Contact":
                     return 5;
                 case "Country":
-                    return 6;
-                case "Port":
                     return 7;
+                case "Port":
+                    return 6;
                 default:
                     return 0;
             }
-
         }
 
         #endregion
