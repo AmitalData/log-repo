@@ -243,21 +243,21 @@ export class GLAccountPMService {
                 newGLAccountPM.GLAccountWithholdingTaxes = [];
                 for (var k in myGLAccountPM.GLAccountWithholdingTaxes) {
 				    var myGLAccountWithholdingTaxPM =myGLAccountPM.GLAccountWithholdingTaxes[k];
-				  //  var newGLAccountWithholdingTaxPM=this.clone(myGLAccountPM.GLAccountWithholdingTaxes[k]);
+				    var newGLAccountWithholdingTaxPM=this.clone(myGLAccountPM.GLAccountWithholdingTaxes[k]);
                     newGLAccountPM.GLAccountWithholdingTaxes.push(newGLAccountWithholdingTaxPM);
 
 					                 }
                 newGLAccountPM.GLAccountInterestPeriods = [];
                 for (var k in myGLAccountPM.GLAccountInterestPeriods) {
 				    var myGLAccountInterestPeriodPM =myGLAccountPM.GLAccountInterestPeriods[k];
-				  //  var newGLAccountInterestPeriodPM=this.clone(myGLAccountPM.GLAccountInterestPeriods[k]);
+				    var newGLAccountInterestPeriodPM=this.clone(myGLAccountPM.GLAccountInterestPeriods[k]);
                     newGLAccountPM.GLAccountInterestPeriods.push(newGLAccountInterestPeriodPM);
 
 					                 }
                 newGLAccountPM.GLAccountCurrencies = [];
                 for (var k in myGLAccountPM.GLAccountCurrencies) {
 				    var myGLAccountCurrencyPM =myGLAccountPM.GLAccountCurrencies[k];
-				  //  var newGLAccountCurrencyPM=this.clone(myGLAccountPM.GLAccountCurrencies[k]);
+				    var newGLAccountCurrencyPM=this.clone(myGLAccountPM.GLAccountCurrencies[k]);
                     newGLAccountPM.GLAccountCurrencies.push(newGLAccountCurrencyPM);
 
 					                 }
