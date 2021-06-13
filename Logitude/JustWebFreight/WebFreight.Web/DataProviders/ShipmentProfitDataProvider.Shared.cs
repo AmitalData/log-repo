@@ -3,10 +3,9 @@ using System.Collections.Generic;
 
 namespace WebFreight.Web.DataProviders
 {
-    public class ShipmentProfitDataProvider:BaseDataProvider
+    public class ShipmentProfitDataProvider : BaseDataProvider
     {
         public DateTime IssueDate { get; set; }
-
         public string LocalCurrencyCode { get; set; }
         public string LocalCurrencyName { get; set; }
         public string PayablesInLocalCurrency { get; set; }
@@ -22,10 +21,7 @@ namespace WebFreight.Web.DataProviders
         public string ProfitInProfitCurrency { get; set; }
         public string EstimateProfitInProfitCurrency { get; set; }
         public string DifferenceInProfitCurrency { get; set; }
-
         public List<ProfitDetailsClass> ChargeTypesList { get; set; }
-
-        //****
         public string Notes { get; set; }
         public string ShipmentNumber { get; set; }
         public string DescriptionOfGoods { get; set; }
@@ -52,21 +48,17 @@ namespace WebFreight.Web.DataProviders
         public string PODLable { get; set; }
         public string DestinationCode { get; set; }
         public string DestinationName { get; set; }
-
         public string AgentName { get; set; }
         public string AgentAddress { get; set; }
         public string AgentRef1 { get; set; }
         public string AgentRef2 { get; set; }
-
         public string ShipperName { get; set; }
         public string ConsigneeName { get; set; }
         public string ShipperAddress { get; set; }
         public string ConsigneeAddress { get; set; }
         public string VatType { get; set; }
-
         public string FromLocation { get; set; }
         public string ToLocation { get; set; }
-
         public string ShipmentField1 { get; set; }
         public string ShipmentField2 { get; set; }
         public string ShipmentField3 { get; set; }
@@ -107,24 +99,23 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentField38 { get; set; }
         public string ShipmentField39 { get; set; }
         public string ShipmentField40 { get; set; }
-
         public string MoveTypeCode { get; set; }
         public string MoveTypeName { get; set; }
-
         public double? ShipmentVolume { get; set; }
         public string VolumeUnitCode { get; set; }
-
         public string MasterNumber { get; set; }
-
         public string ShipperReference1 { get; set; }
         public string ShipperReference2 { get; set; }
-
         public DateTime? ATD_DateTime { get; set; }
         public DateTime? ATA_DateTime { get; set; }
         public string BranchName { get; set; }
-
         public bool IsAccrualsApproved { get; set; }
         public DateTime? AccrualsApprovalDate { get; set; }
+        public double? PayablesInLocalCurrency_Double { get; set; }
+        public double? ReceivablesInLocalCurrency_Double { get; set; }
+        public double? ProfitInLocalCurrency_Double { get; set; }
+        public double? EstimateProfitInLocalCurrency_Double { get; set; }
+        public double? DifferenceInLocalCurrency_Double { get; set; }
     }
 
     public class ProfitDetailsClass
@@ -136,22 +127,20 @@ namespace WebFreight.Web.DataProviders
         public string VatTypeCode { get; set; }
         public string VatTypeName { get; set; }
         public string VatTypePercentage { get; set; }
-
         public string PayablesInLocalCurrency { get; set; }
         public string ReceivablesInLocalCurrency { get; set; }
         public string ProfitInLocalCurrency { get; set; }
-
         public string PayablesInProfitCurrency { get; set; }
         public string ReceivablesInProfitCurrency { get; set; }
         public string ProfitInProfitCurrency { get; set; }
-
         public double? OpenPayablesInLocal { get; set; }
         public double? ACCTPayablesInLocal { get; set; }
         public double? OpenPayablesInProfit { get; set; }
         public double? ACCTPayablesInProfit { get; set; }
-
         public string Vendor { get; set; }
-
         public bool? IsExpenseCharge { get; set; }
+        public double? PayablesInLocalCurrency_Double { get; set; }
+        public double? ReceivablesInLocalCurrency_Double { get; set; }
+        public double? ProfitInLocalCurrency_Double { get; set; }
     }
 }
