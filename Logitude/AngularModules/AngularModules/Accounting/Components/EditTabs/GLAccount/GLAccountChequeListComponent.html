@@ -7,11 +7,6 @@
               
                 <table>
 
-
-                    <td style="width:85px; padding-right: 15px;" colspan="6">
-                        <div style="color: #3b95d5;font-size:16px">{{'ARPaymentCheque.O.Cheques'  | TextCodeTranslationPipe}} ({{DataSource.rowCount}})</div>
-                    </td>
-
                     <!-- Transactions Grid -->
                     <tr>
                         <td colspan="5" style="height: 100%;">
@@ -21,7 +16,7 @@
                                                   [autoLoad]="true" [QueryChangeEvent]="onQueryChangeEvent"
                                                   [IsCustomTemplate]="true">
                                 </logitude-grid-v2>
-                                <logitude-grid  GridWidth="100%" GridHeight="100%" [ObjectTable]="ObjectTableName"
+                                <logitude-grid *ngIf="!UsingLogGridV2" GridWidth="100%" GridHeight="100%" [ObjectTable]="ObjectTableName"
                                                   [dataSource]="DataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent" [columns]="columns"
                                                   [autoLoad]="true" [QueryChangeEvent]="onQueryChangeEvent"
                                                   [IsCustomTemplate]="true">
@@ -39,7 +34,7 @@
                     <tr>
                         <td ></td>
                         <td style="width: 80px;">
-                            <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                            <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
                         </td>
 
                     </tr>

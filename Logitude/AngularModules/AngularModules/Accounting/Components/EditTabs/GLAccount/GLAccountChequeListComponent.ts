@@ -45,7 +45,7 @@ export class GLAccountChequeListComponent extends BaseComponent implements OnIni
     constructor( private CD: ChangeDetectorRef){
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
-        this.UsingLogGridV2 =  SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LV2")[0]? true : false;
+        this.UsingLogGridV2 =SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LV2")[0]? true : false;
         this._entityListService = new EntityListService();
     }
     
