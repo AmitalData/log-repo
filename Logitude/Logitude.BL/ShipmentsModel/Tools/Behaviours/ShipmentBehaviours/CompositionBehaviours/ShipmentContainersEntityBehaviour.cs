@@ -248,7 +248,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 List<string> pickupDeliveryIds = pickUpDeliveries.Select(d => d.Id).ToList();
                 if (pickupDeliveryIds != null)
                 {
-                    packages = shipmentPickUpDeliveryPackageRepository.GetSinglePickUpDeliveryPackageByIdsList(pickupDeliveryIds, this.initializer.Tenant);
+                    packages = shipmentPickUpDeliveryPackageRepository.GetPickUpDeliveryPackagesByIdsList(pickupDeliveryIds, this.initializer.Tenant);
                 }
             }
 
