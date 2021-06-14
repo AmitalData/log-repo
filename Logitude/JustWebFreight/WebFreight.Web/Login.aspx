@@ -1393,10 +1393,20 @@
 
             window.sessionStorage.setItem("IsSharedLogistics", true);
 
+            var url = document.location.href;
+
+            if (document.location.href.endsWith('/')) {
+                url += "SharedLogisticPage.aspx";
+            }
+
+            else {
+                url += "/SharedLogisticPage.aspx";
+            }
+
             var params = [];
             params.push({ name: "Token", value: userdata.Token });
             params.push({ name: "LoginData", value: logindata });
-            PostFormParams("/SharedLogisticPage.aspx", params);
+            PostFormParams(url, params);
 
             $("#loginBusyindicator").hide();
         };
