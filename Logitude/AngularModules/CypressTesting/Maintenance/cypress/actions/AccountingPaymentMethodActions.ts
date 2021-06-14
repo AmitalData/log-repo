@@ -53,8 +53,8 @@ function AssertPostAccountingPaymentMethod() {
 }
 
 function ReCreateAccountingPaymentMethod() {
-    let RandomCode = Actions.GenerateRandomNumber(4);
-    cy.FillLogTextBox(AccountingPaymentMethodSelectors.Code, RandomCode)
+    let randomCode = GenerateRandomNumberAndString(4);
+    cy.FillLogTextBox(AccountingPaymentMethodSelectors.Code, randomCode)
     CreateAccountingPaymentMethod();
     AssertCreateAccountingPaymentMethod();
 }
