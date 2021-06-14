@@ -211,7 +211,7 @@ export class GLAccountPMService {
             entityPM.OldEntityPM.GLAccountWithholdingTaxes = [];
             for (var item in entityPM.GLAccountWithholdingTaxes) {
             var myGLAccountWithholdingTaxPM = entityPM.GLAccountWithholdingTaxes[item];
-            var newGLAccountWithholdingTaxPM: GLAccountWithholdingTaxPM = this.clone(myGLAccountWithholdingTaxPM);
+            //var newGLAccountWithholdingTaxPM: GLAccountWithholdingTaxPM = this.clone(myGLAccountWithholdingTaxPM);
 						
 							 
             entityPM.OldEntityPM.GLAccountWithholdingTaxes.push(newGLAccountWithholdingTaxPM);
@@ -220,7 +220,7 @@ export class GLAccountPMService {
             entityPM.OldEntityPM.GLAccountInterestPeriods = [];
             for (var item in entityPM.GLAccountInterestPeriods) {
             var myGLAccountInterestPeriodPM = entityPM.GLAccountInterestPeriods[item];
-            var newGLAccountInterestPeriodPM: GLAccountInterestPeriodPM = this.clone(myGLAccountInterestPeriodPM);
+            //var newGLAccountInterestPeriodPM: GLAccountInterestPeriodPM = this.clone(myGLAccountInterestPeriodPM);
 						
 							 
             entityPM.OldEntityPM.GLAccountInterestPeriods.push(newGLAccountInterestPeriodPM);
@@ -229,7 +229,7 @@ export class GLAccountPMService {
             entityPM.OldEntityPM.GLAccountCurrencies = [];
             for (var item in entityPM.GLAccountCurrencies) {
             var myGLAccountCurrencyPM = entityPM.GLAccountCurrencies[item];
-            var newGLAccountCurrencyPM: GLAccountCurrencyPM = this.clone(myGLAccountCurrencyPM);
+           // var newGLAccountCurrencyPM: GLAccountCurrencyPM = this.clone(myGLAccountCurrencyPM);
 						
 							 
             entityPM.OldEntityPM.GLAccountCurrencies.push(newGLAccountCurrencyPM);
