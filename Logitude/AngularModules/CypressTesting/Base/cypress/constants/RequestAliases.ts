@@ -113,6 +113,8 @@ export class RequestAliases {
 
     public static readonly PostBranch = "PostBranch"
     public static readonly PutBranch = "PutBranch"
+    public static readonly PostBranchAddress = "PostBranchAddress"
+    public static readonly PutBranchAddress = "PutBranchAddress"
 
     public static readonly PostCurrency="PostCurrency"
     public static readonly PutCurrency="PutCurrency"

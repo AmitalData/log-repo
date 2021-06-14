@@ -50,6 +50,7 @@ export class Urls {
     public static readonly Branches = "**/branches"
     public static readonly BranchesGetSingle = "**/branches/getsingle?**"
     public static readonly BranchesviewGetSingle = "**/branchviews/getsingle/?**";
+    public static readonly BrancheAddress = "**/addresses"
 
     public static readonly GetTenatCurrencies = "**/GetCopyCurrencyToTenant?**"
     public static readonly Currencies = "**/currencies"
