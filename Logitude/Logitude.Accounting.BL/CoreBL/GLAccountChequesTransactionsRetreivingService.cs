@@ -2,6 +2,7 @@
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.Utilities;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.Interfaces;
@@ -10,6 +11,7 @@ using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using Simplog.Data.Helpers;
+using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
@@ -24,11 +26,13 @@ namespace Logitude.Accounting.BL.CoreBL
         int tenant;
         IAccountingContext accountingContext;
         bool showLocal;
+        LedgerTransactionHelper ledgerTransactionHelper;
         public GLAccountChequesTransactionsRetreivingService(int Tenant, IAccountingContext context)
         {
             tenant = Tenant;
             this.accountingContext = context;
             this.showLocal = GetLoggedContactShowLocal(tenant);
+            ledgerTransactionHelper = new LedgerTransactionHelper();
         }
 
         public List<LedgerTransactionList> GetAccountChequesTransactions(string accountId)
@@ -43,17 +47,17 @@ namespace Logitude.Accounting.BL.CoreBL
         private List<LedgerTransactionList> GetARPaymentLedgerTransactions(string accountId)
         {
             const string AccountingEntity_ARPayment = "3";
-
             return (from transaction in accountingContext.LedgerTransactions
                     join journal in accountingContext.Journals on
                     transaction.JournalId equals journal.Id
                     join arpaymentcheque in accountingContext.ARPaymentCheques on journal.AccountingEntityId equals arpaymentcheque.PaymentId
                     join arpaymentchequeStatus in accountingContext.ARPaymentChequeStatuses on arpaymentcheque.StatusCode equals arpaymentchequeStatus.Code
-                    where transaction.Tenant == tenant && journal.AccountingEntityCode == AccountingEntity_ARPayment && transaction.AccountId == accountId
+                    where transaction.Tenant == tenant && transaction.AccountId == accountId && journal.AccountingEntityCode == AccountingEntity_ARPayment
+
                     select new LedgerTransactionList()
                     {
                         PaymentValueDate = arpaymentcheque.ValueDate,
-                        PaymentChequeStatus = showLocal ?  arpaymentchequeStatus.LocalName: arpaymentchequeStatus.EnglishName,
+                        PaymentChequeStatus = showLocal ? arpaymentchequeStatus.LocalName : arpaymentchequeStatus.EnglishName,
                         Source = journal.AccountingEntityReference,
                         SourceType = journal.AccountingEntityCode,
                         SourceNumber = journal.AccountingEntityReference,
@@ -63,9 +67,13 @@ namespace Logitude.Accounting.BL.CoreBL
                         Reference2 = transaction.Reference2,
                         Reference3 = transaction.Reference3,
                         JournalNumber = journal.JournalNumber,
-                        Notes = transaction.Notes
+                        Notes = transaction.Notes,
+                        SourceId = journal.AccountingEntityId,
+                        SourceTypeCode = "3",
+                        JournalId = journal.Id,
+                        IconCode = "PY"
 
-                    }).ToList();
+                    }).Distinct().ToList();
         }
 
         private List<LedgerTransactionList> GetExternalTransactionsForAccount(string accountId, int tenant)
@@ -92,6 +100,9 @@ namespace Logitude.Accounting.BL.CoreBL
                         Reference2 = trans.Reference2,
                         Reference3 = trans.Reference3,
                         Notes = trans.Notes,
+                        JournalId = journal.Id,
+                        SourceId = journal.AccountingEntityId,
+                        SourceTypeCode = "3",
 
                     }).ToList();
 

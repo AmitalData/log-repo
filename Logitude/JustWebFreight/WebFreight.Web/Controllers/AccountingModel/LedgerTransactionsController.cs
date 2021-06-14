@@ -127,8 +127,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         private static List<LedgerTransactionList> GetAccountChequesTransactions(int tenant, string accountId)
         {
             IAccountingContext MyContext = AccountingContext.GetContext(tenant);
-            GLAccountChequesTransactionsRetreivingService ledgerTransactionQuery = new GLAccountChequesTransactionsRetreivingService(tenant, MyContext);
-            List<LedgerTransactionList> tranactions = ledgerTransactionQuery.GetAccountChequesTransactions(accountId);
+            GLAccountChequesTransactionsRetreivingService ledgerTransactionRetreivingService = new GLAccountChequesTransactionsRetreivingService(tenant, MyContext);
+            List<LedgerTransactionList> tranactions = ledgerTransactionRetreivingService.GetAccountChequesTransactions(accountId);
             return tranactions;
         }
 

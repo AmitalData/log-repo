@@ -45,7 +45,7 @@ export class GLAccountChequeListComponent extends BaseComponent implements OnIni
     constructor( private CD: ChangeDetectorRef){
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
-        this.UsingLogGridV2 = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LV2")[0]? true : false;
+        this.UsingLogGridV2 =  SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LV2")[0]? true : false;
         this._entityListService = new EntityListService();
     }
     
@@ -92,7 +92,7 @@ export class GLAccountChequeListComponent extends BaseComponent implements OnIni
             FieldName: 'Source',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.Source"), // 'Source',
-            Styles: { width: '80px' }, // TASK 47563
+            Styles: { width: '110px' }, // TASK 47563
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
@@ -104,6 +104,7 @@ export class GLAccountChequeListComponent extends BaseComponent implements OnIni
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.LocalAmountCredit"), // 'Local Amount',
             Styles: { width: '120px' },
+           
             IsCustomTemplate: true
         });
 
@@ -112,6 +113,7 @@ export class GLAccountChequeListComponent extends BaseComponent implements OnIni
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.ForeignAmountCredit"), // 'Foreign Amount',
             Styles: { width: '120px' },
+           
             IsCustomTemplate: true
         });
 
@@ -203,87 +205,6 @@ export class GLAccountChequeListComponent extends BaseComponent implements OnIni
         return this._entityListService.getARPyamentChequesListAsLedgerTransactions("LedgerTransaction", this.filterAgrs);//this.ledgerTransactionListExtendedService.getByFilters(filters);
     }
 
-
-    GetLTB() {
-
-        // Filters
-        var filters = new ApiQueryFilters;
-    
-        if (this.searchFieldFilter) {
-            filters.AdditionalFilters.push(this.searchFieldFilter);
-        }
-    
-        filters.PageSize = 30;
-        filters.GetAll = false;
-        filters.GetCount = true;
-
-        filters.SortBy = "PaymentValueDate";
-        filters.SortDirection = "Descending";
-        filters.addAdditionalFilter("GLAccountId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
-
-        this.MenuHeaderchangeevent.emit({ Filters: filters, IgnoreFilter: false });
-
-    }
-
-    RefreshButtonClicked() {
-        this.LoadAllScreenData();
-        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-    }
-
-    LoadAllScreenData() {
-        this.GetLTB();
-        this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
-    }
-
-
-    //#region ToolTip
-    private isMouseIn: boolean = false;
-    OnMouseOver() {
-        this.isMouseIn = true;
-        //if (this.currencyRate) {
-            this.timerToken = setTimeout(() => {
-                var item = document.getElementById("tooltip-1");
-                if (AppTool.IsNullOrEmpty(item))
-                    return;
-                var itemRect = item.getBoundingClientRect();
-
-                if (this.isMouseIn) {
-                    var i = document.getElementById("tooltip-body-1");
-                    if (AppTool.IsNullOrEmpty(i))
-                        return;
-                    document.getElementById("tooltip-body-1").style.position = "fixed";
-                    document.getElementById("tooltip-body-1").style.top = (itemRect.top - 70) + 'px';
-                    document.getElementById("tooltip-body-1").style.left = (itemRect.left + 22) + 'px';
-                    document.getElementById("tooltip-body-1").style.visibility = "visible";
-                }
-
-            }, 100);
-    }
-
-    OnMouseLeave() {
-        this.isMouseIn = false;
-            this.timerToken = setTimeout(() => {
-                document.getElementById("tooltip-body-1").style.visibility = "hidden";
-
-            }, 400);
-    }
-    //#endregion
-
-    //#region Search + screen dimention
-    private timerToken: any;
-    TextChanged(searchtext) {
-        if (searchtext != null || searchtext != undefined) {
-
-            this.timerToken = setTimeout(() => {
-                this.searchFieldFilter = new FilterItem("SearchFields", searchtext, null, null, "Contains", false, false, false, "string", false);
-                this.RefreshButtonClicked();
-            }, 700);
-
-        } else {
-            this.searchFieldFilter = null;
-            this.RefreshButtonClicked();
-        }
-    }
 
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();

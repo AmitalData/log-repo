@@ -734,8 +734,9 @@ export class GLAccountOverviewComponent extends BaseComponent {
        var windowArgs: any = {};
         windowArgs.EntityPM = this.EntityPM;
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 1000;
+        logWindow.Width = 1100;
         logWindow.Height = 600;
+       
         logWindow.ShowCloseButton = false;
         logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => { });
