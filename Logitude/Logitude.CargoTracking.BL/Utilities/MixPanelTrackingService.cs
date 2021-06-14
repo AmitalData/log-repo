@@ -20,8 +20,8 @@ namespace Logitude.CargoTracking.BL.Utilities
         public async Task TrackSearchActionAsync(MixPanelTrackingEvent trackingEvent)
         {
             Dictionary<string, string> requestParameters = BuildHttpRequestParameters(trackingEvent);
-            var response = await client.PostAsync(trackEventAPIURI, new FormUrlEncodedContent(requestParameters));
-            var responseString = await response.Content.ReadAsStringAsync();
+            var trackEventResponse = await client.PostAsync(trackEventAPIURI, new FormUrlEncodedContent(requestParameters));
+            var trackEventResponseMessage = await trackEventResponse.Content.ReadAsStringAsync();
         }
 
         private static Dictionary<string, string> BuildHttpRequestParameters(MixPanelTrackingEvent trackingEvent)
