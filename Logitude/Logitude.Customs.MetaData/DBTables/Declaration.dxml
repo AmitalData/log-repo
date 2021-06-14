@@ -1220,7 +1220,7 @@
   <Index
     Columns="IsClose" />
   <Index
-  Columns="ExternalDeclarationNumber" />
+    Columns="ExternalDeclarationNumber" />
   <Index
    Columns="VersionId" />
 </Table>

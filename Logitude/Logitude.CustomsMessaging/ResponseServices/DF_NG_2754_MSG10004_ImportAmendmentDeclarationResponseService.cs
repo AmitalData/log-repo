@@ -102,7 +102,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         #endregion
 
-        public DeclarationPM MapResponseToDeclaration(UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration declaration, int tenant, bool FromImporter, string idOrg, out string error, bool isUpdate = false, string user = null, bool isUpdateAfterAccept=false)
+        public DeclarationPM MapResponseToDeclaration(UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration declaration, int tenant, bool FromImporter, string idOrg, out string error, bool isUpdate = false, string user = null, bool isUpdateAfterAccept=false, bool isCopy =false)
         {
             error = "";
             try
@@ -198,8 +198,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     if (isFromAmendment)
                     {
-                        declarationPM.ReplacingRepairRequest = declarationOrg.AmendmentRequestNumber;
-                       declarationPM.AmendmentOriginalDeclartation = declarationOrg.AmendmentOriginalDeclartation;
+                        if(!isCopy)
+                        {
+                            declarationPM.ReplacingRepairRequest = declarationOrg.AmendmentRequestNumber;
+
+                        }
+                        declarationPM.AmendmentOriginalDeclartation = declarationOrg.AmendmentOriginalDeclartation;
                         //declarationPM.AmendmentRequestNumber = declarationOrg.AmendmentRequestNumber;
                     }
                     else

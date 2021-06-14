@@ -399,6 +399,7 @@ import { ExportStorgeListService } from './Services/StandardLists/ExportStorgeLi
 import { LogisticsReferenceTypeListService } from './Services/StandardLists/LogisticsReferenceTypeListService';
 import { ReferenceStatusListService } from './Services/StandardLists/ReferenceStatusListService';
 import { ReferenceInputTypeListService } from './Services/StandardLists/ReferenceInputTypeListService';
+import { DeclarationAmendmentSharedDataService } from './Services/DataChange/DeclarationAmendmentSharedDataService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -806,7 +807,8 @@ export class ModuleProviders {
             case "VehicleEditComponentController": { myResult = new VehicleEditComponentController(); break; }
             case "PhysicalCheckMenuButtonsHandler": { myResult = new PhysicalCheckMenuButtonsHandler(); break; }
             case "VendorCommissionService": { myResult = new VendorCommissionService(); break; }
-          
+            case "DeclarationAmendmentSharedDataService": { myResult = new DeclarationAmendmentSharedDataService(); break; }
+
                 
 
         }
