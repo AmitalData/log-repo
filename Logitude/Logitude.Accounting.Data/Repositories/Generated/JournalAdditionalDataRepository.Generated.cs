@@ -28,10 +28,10 @@ namespace Logitude.Accounting.Data.Repositories
 
 		 
 		
-		public  JournalAdditionalData GetSingle(string journalid, int tenant)
+		public  JournalAdditionalData GetSingle(string journalid, int journallinenumber, int tenant)
         {
             return (from a in context.JournalAdditionalDatas
-                    where a.JournalId == journalid && a.Tenant == tenant
+                    where a.JournalId == journalid && a.JournalLineNumber == journallinenumber && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
@@ -46,7 +46,7 @@ namespace Logitude.Accounting.Data.Repositories
         {
             JournalAdditionalDataKeys keys = entityKeys as JournalAdditionalDataKeys;
             return (from a in context.JournalAdditionalDatas
-                    where a.JournalId == keys.JournalId
+                    where a.JournalId == keys.JournalId && a.JournalLineNumber == keys.JournalLineNumber
                     select a).FirstOrDefault();
         }
 		         
