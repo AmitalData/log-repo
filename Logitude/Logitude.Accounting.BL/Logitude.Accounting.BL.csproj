@@ -198,7 +198,6 @@
     <Compile Include="CoreBL\AccountBalanceByDateCodeService.cs" />
     <Compile Include="CoreBL\AccountBalanceService.cs" />
     <Compile Include="CoreBL\AccountingSettingResolver.cs" />
-    <Compile Include="CoreBL\ARPaymentChequeJournal.cs" />
     <Compile Include="CoreBL\ARPaymentInvoicesTransactionFetcher.cs" />
     <Compile Include="CoreBL\AutomaticExternalReconcileService.cs" />
     <Compile Include="CoreBL\AutomaticReconcileService.cs" />
