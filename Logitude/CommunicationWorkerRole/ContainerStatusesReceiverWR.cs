@@ -38,14 +38,13 @@ namespace CommunicationWorkerRole
                     try
                     {
                         var loginResponse = LoginToCloud();
-
                         loginResponse.Wait();
                         if (loginResponse.Result != null && !loginResponse.Result.HasError)
                         {
                             token = loginResponse.Result.Result;
-                            this.ReadContainerStatusRequestToOceanInsightSevice();
                         }
 
+                        this.ReadContainerStatusRequestToOceanInsightSevice();
                     }
                     catch (Exception e)
                     {

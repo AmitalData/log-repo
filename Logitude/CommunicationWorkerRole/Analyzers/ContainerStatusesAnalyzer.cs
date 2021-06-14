@@ -65,10 +65,10 @@ namespace CommunicationWorkerRole.Analyzers
                 if (loginResponse.Result != null && !loginResponse.Result.HasError)
                 {
                     amitalLogIntoken = loginResponse.Result.Result;
-                    this.SendContainerStatusRequestToOceanInsightSevice();
-                    this.InsertLogitudeOceanInsightsRequest();
-                    this.DoneCommunicationLog();
                 }
+                this.SendContainerStatusRequestToOceanInsightSevice();
+                this.InsertLogitudeOceanInsightsRequest();
+                this.DoneCommunicationLog();
             }
         }
         private string refrenceNumber;
