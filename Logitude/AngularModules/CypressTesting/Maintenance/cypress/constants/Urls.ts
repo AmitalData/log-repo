@@ -66,6 +66,18 @@ export class Urls {
     public static readonly CreditCardTypes = "**/creditcardtypes"
     public static readonly CreditCardTypesGetSingle = "**/creditcardtypes/getsingle?**"
 
+    public static readonly Warehouses = "**/warehouses";
+    public static readonly WarehousesGetSingle = "**/warehouses/getsingle?**";
+    public static readonly WarehouseviewGetSingle = "**/warehouseviews/getsingle/?**";
+
+    public static readonly PaymentTerms = "**/paymentterms";
+    public static readonly PaymentTermsGetSingle = "**/paymentterms/getsingle?**";
+    public static readonly PaymentTermsviewGetSingle = "**/paymenttermviews/getsingle/?**";
+
+    public static readonly VatTypes = "**/vattypes";
+    public static readonly VatTypesGetSingle = "**/vattypes/getsingle?**";
+    public static readonly VatTypesviewGetSingle = "**/vattypeviews/getsingle/?**";
+
     public static GetFilterSearch(filterBy: string) {
         return '**/getbyfilters?**' + filterBy + '**'
     }
