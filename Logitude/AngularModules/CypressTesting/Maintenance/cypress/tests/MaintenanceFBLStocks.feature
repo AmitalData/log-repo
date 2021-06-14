@@ -5,11 +5,9 @@ Feature: FBL Stock Add, Remove and Remove Series in Maintenance
     Scenario: Create new FBLStock
         Given the user logged in and open "FBL Stocks" in maintenance menu
         And the user adds FBL stock with following details
-            | StartNumber | random |
-            | EndNumber   | random |
-            | ByEndNumber | Yes    |
-            | ByAmount    | No     |
-            | Amount      | -      |
+            | StartNumber | random          |
+            | EndNumber   | StartNumber + 2 |
+            | ByEndNumber | Yes             |
         When create fblStock
         Then the fblStock should create successfully
 
@@ -21,17 +19,11 @@ Feature: FBL Stock Add, Remove and Remove Series in Maintenance
         Given user adds another FBL stock with the following details
             | StartNumber | random |
             | EndNumber   | random |
-            | ByEndNumber | No     |
             | ByAmount    | Yes    |
-            | Amount      | random |
+            | Amount      | 2      |
         When create fblStock
         Then the fblStock should create successfully
 
     Scenario: Remove FBLStock series
         When user removes a series of entries
         Then the fblStock series should Remove successfully
-
-
-
-
-

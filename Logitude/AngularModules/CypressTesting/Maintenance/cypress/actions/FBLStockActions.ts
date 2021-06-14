@@ -4,61 +4,37 @@ import { Urls } from "../constants/Urls";
 import { RestAPI } from "../../../Base/cypress/constants/RestAPI";
 import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
-import { constants } from "../../../Base/cypress/constants/constants"
 import { FBLStockDetails } from 'cypress/models/FBLStockDetails';
-import * as gr from '../../../Base/cypress/actions/GenerateRandoms';
 
-let byAmount = null
-export function FillCheckBoxProcess(CheckBoxSelector: string, IsCheck: string) {
-    if (IsCheck) {
-        if (IsCheck.toUpperCase() == constants.YES) {
-            cy.get(CheckBoxSelector).check({ force: true })
-        }
-        else {
-            cy.get(CheckBoxSelector).find(BaseSelectors.input).uncheck({ force: true })
-        }
-    }
-}
-
-function GenerateFourDigitkRandomNumber(MinNumber, MaxNumber) {
-    let NewRandomCode = gr.GenerateRandomNumber(MinNumber, MaxNumber)
-    return NewRandomCode;
-}
+let searchStartNumber = null
 
 export function OpenAddWizard() {
     cy.Click(FBLStockSelectors.Button, FBLStockSelectors.Add);
 }
 
-export function FillFBLStockDetails(fblStockDetails: FBLStockDetails) {
-
-    let RandomNStartNumber = GenerateFourDigitkRandomNumber(FBLStockSelectors.MinRandomNumber, FBLStockSelectors.MaxRandomNumber)
-    console.log(RandomNStartNumber + 1000)
-    let RandomEndNumber = GenerateFourDigitkRandomNumber(RandomNStartNumber, RandomNStartNumber + 1000)
-    let randomAmount = GenerateFourDigitkRandomNumber(FBLStockSelectors.MinRandomNumber, FBLStockSelectors.MaxAmountRandomNumber)
-    byAmount = fblStockDetails.ByAmount
-
-    if (fblStockDetails.ByEndNumber.toLowerCase() == 'yes') {
-        cy.FillLogTextBox(FBLStockSelectors.FBLStockStartNumber, RandomNStartNumber.toString())
-        cy.FillLogTextBox(FBLStockSelectors.FBLStockEndNumber, RandomEndNumber.toString())
-        cy.ClickRadio(FBLStockSelectors.FBLStockByEndNumber)
-    }
-    else if (fblStockDetails.ByAmount.toLowerCase() == 'yes') {
-        cy.FillLogTextBox(FBLStockSelectors.FBLStockStartNumber, RandomNStartNumber.toString())
-        cy.ClickRadio(FBLStockSelectors.FBLStockByAmount).then(() => {
-            cy.FillLogTextBox(FBLStockSelectors.FBLStockAmount, randomAmount.toString())
-        })
-    }
+function GenerateRandomNumber() {
+    return (Math.floor(Math.random() * 100000))
 }
 
-export function DefineGetFBLStockGetAll() {
-    cy.DefineRequestWait(RestAPI.GET, Urls.FBLStocksGetAll, RequestAliases.GetAllFBLStock);
+export function FillFBLStockDetails(fblStockDetails: FBLStockDetails) {
+    let startNumber = GenerateRandomNumber()
+    searchStartNumber = startNumber
+    let endNumber = startNumber + 1
+    cy.FillLogTextBox(FBLStockSelectors.StartNumber, startNumber.toString())
+    if (fblStockDetails.ByAmount) {
+        cy.ClickRadio(FBLStockSelectors.ByAmount).then(() => {
+            cy.FillLogTextBox(FBLStockSelectors.Amount, fblStockDetails.Amount)
+        })
+    }
+    else {
+        cy.FillLogTextBox(FBLStockSelectors.EndNumber, endNumber.toString())
+    }
 }
 
 export function CreateFBLStock() {
     DefinePostFBLStockRequest()
     DefineGetFBLStockGetAll()
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK)
-    
 }
 
 export function DefinePostFBLStockRequest() {
@@ -68,46 +44,33 @@ export function DefinePostFBLStockRequest() {
 export function AssertCreateFBLStock() {
     let intercept = cy.wait("@" + RequestAliases.GetFBLStock);
     intercept.then((interception) => {
-        if (interception.response.statusCode === 400) {
+        let statusCode = interception.response.statusCode
+        if (statusCode === 400) {
             ReCreateFBLStock();
         }
         else {
-            AssertGetFBLStock(interception.response.statusCode, 200, interception.response.body)
+            assert.equal(statusCode, 200)
         }
     })
 }
 
 export function ReCreateFBLStock() {
-
-    let RandomNStartNumber = GenerateFourDigitkRandomNumber(FBLStockSelectors.MinRandomNumber, FBLStockSelectors.MaxRandomNumber)
-    let RandomEndNumber = GenerateFourDigitkRandomNumber(RandomNStartNumber, RandomNStartNumber+ 1000)
-    let randomAmount = GenerateFourDigitkRandomNumber(FBLStockSelectors.MinRandomNumber, FBLStockSelectors.MaxAmountRandomNumber)
-
-    if (byAmount.toLowerCase() == 'yes') {
-        cy.FillLogTextBox(FBLStockSelectors.FBLStockStartNumber, RandomNStartNumber.toString())
-        cy.FillLogTextBox(FBLStockSelectors.FBLStockAmount, randomAmount.toString())
-    }
-    else {
-        cy.FillLogTextBox(FBLStockSelectors.FBLStockStartNumber, RandomNStartNumber.toString())
-        cy.FillLogTextBox(FBLStockSelectors.FBLStockEndNumber, RandomEndNumber.toString())
-    }
+    let startNumber = GenerateRandomNumber()
+    searchStartNumber = startNumber
+    cy.FillLogTextBox(FBLStockSelectors.StartNumber, startNumber.toString())
     CreateFBLStock()
     AssertCreateFBLStock()
 }
 
 export function AssertGetAllFBLStock() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetAllFBLStock, 200)
-    BaseAssertion.AssertElementExist(FBLStockSelectors.FBLStockGridBody)
-}
-
-export function AssertGetFBLStock(responseStatusCode: number, expectedStatusCode: number, responseBody: string) {
-    assert.equal(responseStatusCode, expectedStatusCode)
+    BaseAssertion.AssertElementExist(FBLStockSelectors.GridBody)
 }
 
 export function RemoveFBLStock() {
     DefineDeleteFBLStockRequest();
     DefineGetFBLStockGetAll()
-    cy.get(FBLStockSelectors.FBLStockGridBody).find(FBLStockSelectors.FBLStockGridRow).first().click().then(() => {
+    cy.get(".GridViewCell").contains(searchStartNumber.toString()).click().then(() => {
         cy.Click(FBLStockSelectors.Button, FBLStockSelectors.Remove)
         cy.Click(FBLStockSelectors.ConfirmRemove, FBLStockSelectors.Delete)
     })
@@ -122,10 +85,14 @@ export function AssertRemoveFBLStock() {
 }
 
 export function RemoveFBLStockSeries() {
-    DefineDeleteFBLStockRequest();
+    DefineDeleteFBLStockRequest()
     DefineGetFBLStockGetAll()
-    cy.get(FBLStockSelectors.FBLStockGridBody).find(FBLStockSelectors.FBLStockGridRow).first().click({force : true}).then(() => {
+    cy.get(".GridViewCell").contains(searchStartNumber.toString()).click().then(() => {
         cy.Click(FBLStockSelectors.Button, FBLStockSelectors.RemoveSeries)
         cy.Click(FBLStockSelectors.ConfirmRemove, FBLStockSelectors.Delete)
     })
+}
+
+export function DefineGetFBLStockGetAll() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.FBLStocksGetAll, RequestAliases.GetAllFBLStock);
 }
