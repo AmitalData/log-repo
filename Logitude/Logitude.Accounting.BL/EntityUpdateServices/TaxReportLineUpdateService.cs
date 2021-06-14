@@ -30,7 +30,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         const string LineType_UnidentifiedCustomerTransactions = "L";
         const string LineType_SelfInvoiceTransactions = "M";
         const string StatusCode_VATAmountInTheRecordIsHigherThanThePercentageOfVATAllowed = "9";
-
+        const string TaxReportLineInputType = "I";
 
         protected override void OnCreating(TaxReportLinePM entityPM, EntityPM entityParentPM)
         {
@@ -41,9 +41,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void OnUpdating(TaxReportLinePM entityPM, TaxReportLine entityPOCO)
         {
-            JournalAdditionalDataQueryService additionalDataQueryService = new JournalAdditionalDataQueryService(entityPM.Tenant);
-            IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
-            JournalAdditionalDataUpdateService journalAdditionalDataUpdateService = new JournalAdditionalDataUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+           
             SetTaxReportLineStatusCodeAndLineTypeCode(entityPM);
             Validate(entityPM);
             UpdateStatusByTransmitStatusCode(entityPM,entityPOCO);
@@ -58,16 +56,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 entityPM.IsManuallyChanged = true;
             }
 
-            // Update Journal
-            //JournalPM journalPM = journalQuery.GetSingle(EntityPM.JournalId, false, false);
-            JournalAdditionalDataPM journalAdditionalDataPM = additionalDataQueryService.GetSingle(EntityPM.JournalId, false, false);
-            if (journalAdditionalDataPM != null)
-            {
-                journalAdditionalDataPM.TaxReportTransmitStatusCode = entityPM.TransmitStatusCode;
-                journalAdditionalDataPM.TaxReportId = entityPM.TaxReportId;
-                journalAdditionalDataPM.ChangeSetOp = ChangeSetOperation.Update;
-                journalAdditionalDataUpdateService.Update(journalAdditionalDataPM, true);
-            }
+            UpdateJournalJournalAdditionalData(entityPM);
 
             if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
             {
@@ -77,6 +66,41 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             base.OnUpdating(entityPM, entityPOCO);
         }
 
+        private static void UpdateJournalJournalAdditionalData(TaxReportLinePM taxReportLine)
+        {
+            JournalAdditionalDataPM journalAdditionalDataPM = GetJournalAdditionalDataPM(taxReportLine);
+            if (journalAdditionalDataPM != null)
+            {
+                journalAdditionalDataPM = MapJournalAdditionalDataPM(journalAdditionalDataPM, taxReportLine);
+                SaveChangesOnJournalAdditionalData(journalAdditionalDataPM);
+
+            }
+        }
+        private static void SaveChangesOnJournalAdditionalData(JournalAdditionalDataPM journalAdditionalDataPM)
+        {
+            IAccountingContext MyContext = AccountingContext.GetContext(journalAdditionalDataPM.Tenant);
+            JournalAdditionalDataUpdateService journalAdditionalDataUpdateService = new JournalAdditionalDataUpdateService(MyContext, new Dictionary<string, IContext>(), journalAdditionalDataPM.Tenant);
+            journalAdditionalDataUpdateService.Update(journalAdditionalDataPM, true);
+        }
+        private static JournalAdditionalDataPM MapJournalAdditionalDataPM(JournalAdditionalDataPM journalAdditionalDataPM, TaxReportLinePM taxReportLine)
+        {
+            journalAdditionalDataPM.TaxReportTransmitStatusCode = taxReportLine.TransmitStatusCode;
+            journalAdditionalDataPM.TaxReportId = taxReportLine.TaxReportId;
+            journalAdditionalDataPM.ChangeSetOp = ChangeSetOperation.Update;
+            return journalAdditionalDataPM;
+        }
+        private static JournalAdditionalDataPM GetJournalAdditionalDataPM(TaxReportLinePM taxReportLine)
+        {
+            JournalAdditionalDataQueryService additionalDataQueryService = new JournalAdditionalDataQueryService(taxReportLine.Tenant);
+            if (taxReportLine.OutputOrInput == TaxReportLineInputType)
+            {
+                return additionalDataQueryService.GetSingle(taxReportLine.JournalId, taxReportLine.JournalLineNumber, false, false);
+            }
+            else
+            {
+                return additionalDataQueryService.GetSingle(taxReportLine.JournalId, 1, false, false);
+            }
+        }
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
 
 
@@ -345,4 +369,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
        
     }
+
+   
 }

@@ -18,6 +18,7 @@ using WebFreight.Web.Security;
 namespace WebFreight.Web.App_Code.AngularJS_App_Code
 {
     public class TermsofUseController : ApiController
+        // private label id
     {
         public HttpResponseMessage GetCheckIfGoToTermUseComponent(int tenant, string userId)
         {
@@ -36,8 +37,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
                     TenantPM tenantPM = TenantQuery.GetSingleTenantPM(tenant, false);
                     TermsofUsePM termofuse = new TermsofUsePM();
-
-                    termofuse = termsofUseQuery.GetTermOfUseByTenant(tenant);
+                    termofuse = termsofUseQuery.GetTermOfUseByPrivateLabel(tenantPM.PrivateLabelId);
                     if (!string.IsNullOrEmpty(tenantPM.PrivateLabelId) && termofuse == null)
                     {
                         throw new Exception("You are unable to login without approving the terms of use, please contact your administrator!");
@@ -52,6 +52,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                         result.VersionNumber = termofuse.VersionNumber;
                         result.Id = termofuse.Id;
                         result.VersionDocumentId = termofuse.VersionDocumentId;
+                        result.PrivateLabelId = termofuse.PrivateLabelId;
 
                         TermsofUseSignaturePM termsofUseSignaturePM = termsofUseSignatureQuery.GetByIdAndContactId(termofuse.Id, userId, authToken.Tenant);
 
@@ -90,7 +91,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
         }
 
-        public HttpResponseMessage GetTenantTermsofUse(int tenant)
+        public HttpResponseMessage GetTenantTermsofUse(string privateLabeldId)
         {
             try
             {
@@ -100,7 +101,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                 TermsofUseQuery termsofUseQuery = new TermsofUseQuery(authToken.Tenant);  
-                List<TermsofUsePM> TermsofUsePMLists = termsofUseQuery.GetTermsofUseByTenant(tenant).ToList();
+                List<TermsofUsePM> TermsofUsePMLists = termsofUseQuery.GetByPrivateLabeldId(privateLabeldId).ToList();
 
 
                 return Request.CreateResponse(HttpStatusCode.OK, TermsofUsePMLists);
@@ -156,7 +157,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 string extension = "pdf";
 
                 ReportHelper reportHelper = new ReportHelper();
-                Document newDocument = reportHelper.CreateDocumentAndWriteOnStorage(termsofUsePM.VersionDocumentName, termsofUsePM.FileData, extension, "termsOfUse", tenant);
+                DocumentFile documentFile = new DocumentFile() { FileName = termsofUsePM.VersionDocumentName, FileData = termsofUsePM.FileData, Extension = extension, Folder = "termsOfUse", Tenant = tenant };
+                Document newDocument = reportHelper.CreateDocumentAndWriteOnStorage(documentFile);
 
                 termsofUsePM.VersionDocumentId = newDocument.Id;
 

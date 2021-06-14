@@ -36,7 +36,7 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="Shipment"
   DefaultText="&quot;Shipment PickUp Delivery Package&quot;"
-  Code="&quot;ee58&quot;"
+  Code="&quot;84fe&quot;"
   Name="&quot;ShipmentPickUpDeliveryPackage&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Shipment&quot;"
@@ -2139,7 +2139,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Quantity&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -2155,7 +2155,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;ContainerNumber&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -2171,7 +2171,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Volume&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -2187,7 +2187,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Weight&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -2203,7 +2203,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Description&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -2219,7 +2219,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes>

@@ -1,6 +1,7 @@
 export class CurrencyDetails {
-    Currency : string ;
+    Code : string ;
     ExchangeDate : string ;
-    Rate : string ; 
-    public static IsUpdated:boolean
+    Rate : string ;
+    LocalName: string;
+    AccountingExternalID: string
 }

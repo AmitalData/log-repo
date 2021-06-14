@@ -531,25 +531,67 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 entityPM.StatusCode = journalOldStatusCode;
                 throw;
             }
-
-            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
-            {
-                JournalAdditionalDataUpdateService additionalDataUpdateService = new JournalAdditionalDataUpdateService((IAccountingContext)this.MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-                JournalAdditionalDataPM journalAdditionalDataPM = new JournalAdditionalDataPM()
-                {
-                    JournalId = entityPM.Id,
-                    ChangeSetOp = ChangeSetOperation.Insert,
-                    TaxReportId = null,
-                    TaxReportTransmitStatusCode = null,
-                    Tenant = entityPM.Tenant,
-                };
-
-                additionalDataUpdateService.Update(journalAdditionalDataPM, true);
-            }
+            CreateJournalAdditionalDataWhenApprovingJournal(entityPM);
 
 
         }
+        private void CreateJournalAdditionalDataWhenApprovingJournal(JournalPM journal)
+        {
+            if (journal.StatusCodeEnum == JournalStatusTypePM.StatusCodeEnum.Approved)
+            {
+                CreateJournalAdditionalDataForEachDebitInputLine(journal);
+                CreateJournalAdditionalDataForARInvoiceJournal(journal);
+            }
+        }
 
+        private void CreateJournalAdditionalDataForARInvoiceJournal(JournalPM journal)
+        {
+            if (journal.AccountingEntityCode == JournalAccountingEntities.ARInvoice)
+            {
+                JournalAdditionalDataPM journalAdditionalDataPM = MapJournalAdditionalDataFields(null, journal);
+                SaveJournalAdditionalData(journalAdditionalDataPM);
+            }
+        }
+        private void CreateJournalAdditionalDataForEachDebitInputLine(JournalPM journal)
+        {
+
+            List<JournalLinePM> jourlDebitInputLines = SelectJournalDebitLinesFromJournalLines(journal);
+            foreach (JournalLinePM journalLine in jourlDebitInputLines)
+            {
+                JournalAdditionalDataPM journalAdditionalDataPM = MapJournalAdditionalDataFields(journalLine, journal);
+                SaveJournalAdditionalData(journalAdditionalDataPM);
+
+            }
+        }
+        private List<JournalLinePM> SelectJournalDebitLinesFromJournalLines(JournalPM journal)
+        {
+            FullAccountingSettingPM setting = GetFullAccountingSetting(journal.Tenant);
+
+            return journal.JournalLines.Where(d => d.ActionTypeCode == JournalActionTypes.Debit && d.DebitAccountId == setting.VATInputsGLAccountId).ToList();
+        }
+
+        private JournalAdditionalDataPM MapJournalAdditionalDataFields(JournalLinePM journalLine, JournalPM journal)
+        {
+            return new JournalAdditionalDataPM()
+            {
+                JournalId = journal.Id,
+                ChangeSetOp = ChangeSetOperation.Insert,
+                TaxReportId = null,
+                TaxReportTransmitStatusCode = null,
+                Tenant = journal.Tenant,
+                JournalLineNumber = journalLine != null ? journalLine.Line : 1,
+            };
+        }
+        private void SaveJournalAdditionalData(JournalAdditionalDataPM journalAdditionalDataPM)
+        {
+            JournalAdditionalDataUpdateService additionalDataUpdateService = new JournalAdditionalDataUpdateService((IAccountingContext)this.MainContext, new Dictionary<string, IContext>(), journalAdditionalDataPM.Tenant);
+            additionalDataUpdateService.Update(journalAdditionalDataPM, true);
+        }
+        private FullAccountingSettingPM GetFullAccountingSetting(int tenant)
+        {
+            FullAccountingSettingQueryService settingQueryService = new FullAccountingSettingQueryService(tenant);
+            return settingQueryService.GetSingleFullAccountingSetting(tenant);
+        }
         public virtual void CreateInterestTransactionTo_RegularJournal(JournalPM entityPM)
         {
             var myRegularJournalInterestTransactionService = new RegularJournalInterestTransactionMapping();
@@ -674,7 +716,22 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
     {
         void Update(JournalPM entityPM, bool commit, TimeSpan? transactionTimeout = null);
     }
-    
+
+    public struct JournalActionTypes
+    {
+        public const string Credit = "1";
+        public const string Debit = "2";
+
+
+    }
+
+    public struct JournalAccountingEntities
+    {
+        public const string ARInvoice = "2";
+
+
+
+    }
 }
 
 

@@ -52,6 +52,7 @@
     <Content Include="Accounting\Components\EditTabs\InterestReport\GeneralTab\InterestReportLineByDateDetails\InterestReportLineByDateDetailsComponent.html" />
     <Content Include="Accounting\Components\EditTabs\Interest\DetailsTab\AddEditInterestBasesPeriod\AddEditInterestBasesPeriodComponent.html" />
     <Content Include="Accounting\Components\EditTabs\Interest\DetailsTab\InterestBasesTypeDetailsTabComponent.html" />
+    <Content Include="Accounting\Components\EditTabs\Journal\JournalDebugTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\Journal\UpdateJournalLineComponent.html" />
     <Content Include="Accounting\Components\EditTabs\OpenFormatReport\OpenFormatReportLogTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\PaymentCheque\PaymentChequeGeneralTabComponent.html" />
@@ -299,8 +300,10 @@
     <Content Include="Images\PrivateLabel\MainImage.png" />
     <Content Include="Images\PrivateLabel\LogBoxLogo.png" />
     <Content Include="Images\PrivateLabel\Background.png" />
+    <Content Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\DWQueryBuilderBaseComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureCommunications\Components\ReportExecutionLog\ReportExecutionLogErrorComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureCommunications\Components\ReportExecutionLog\ReportExecutionLogMessageBodyComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentComponent\DocumentDefaultExternalAttachmentsComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureGettingStarted\Components\SystemCurrencies\ChangeCurrencyComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureGettingStarted\Components\SystemDefaults\DefaultRatiosComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureOthers\Components\FeatureToggle\FeatureToggleGeneralTabComponent.html" />
@@ -331,10 +334,12 @@
     <Content Include="_Resources\css\PrimeWebComponent.css" />
     <Content Include="_Resources\js\UnifreightJSBridge.js" />
     <TypeScriptCompile Include="Abstractions\Services\BaseService.ts" />
+    <TypeScriptCompile Include="Accounting\Components\EditTabs\Journal\JournalDebugTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\Journal\UpdateJournalLineComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Maintenance\Tester\AccountingMainTesterComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\NewEntity\JournalCSVLoadComponent.ts" />
     <TypeScriptCompile Include="Accounting\EntityPMs\GLAccountFollowUpDataPM.ts" />
+    <TypeScriptCompile Include="Accounting\EntityPMs\JournalMoreDataPM.ts" />
     <TypeScriptCompile Include="Accounting\Services\ExtendedPMs\GLaccountFollowUpDataExtendedPMService.ts" />
     <TypeScriptCompile Include="App\DynamicLoader\LazyWidgetsLogitude.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\CopyJournalComponent.ts" />
@@ -346,12 +351,14 @@
     <TypeScriptCompile Include="Common\CustomFilters\ChargesTypeCustomFilter.ts" />
     <TypeScriptCompile Include="Common\CustomFilters\ChargesTypeCustomFilter.ts" />
     <TypeScriptCompile Include="Common\CustomFilters\ChargesTypeCustomFilter.ts" />
+    <TypeScriptCompile Include="Common\DataContracts\DocumentFile.ts" />
     <TypeScriptCompile Include="Common\EntityLists\ProductItemList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\ReportExecutionLogList.ts" />
     <TypeScriptCompile Include="Common\EntityPMInitServices\ReportExecutionLogPMInitService.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\HTSCodePM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\ProductItemPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\ReportExecutionLogPM.ts" />
+    <TypeScriptCompile Include="Common\Services\DocumentServices\DocumentFileService.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedPMs\CarrierAreaExtendedPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\ProductItemListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\ReportExecutionLogListService.ts" />
@@ -1758,6 +1765,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\TemplateRenderer\EditShipmentLinkRendererComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\BIReportPreviewComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\DateSampleComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\DWQueryBuilderBaseComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\DWAskUserFiltersComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\BIExportSettingAdvanceComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\ModuleDeclarations.ts" />
@@ -1774,6 +1782,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\RulesComponents\RuleUpdateHistoryComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\SetWorkerRoleName\SetWorkerRoleNameComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentComponent\DocumentDefultAttachmentsComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentComponent\DocumentDefaultExternalAttachmentsComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureGettingStarted\Components\AccountingSettings\AccountingAdvancedAPSettingsComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureGettingStarted\Components\PaymentGateway\PaymentGatewayComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureGettingStarted\Components\SystemCurrencies\ChangeCurrencyComponent.ts" />
@@ -2961,6 +2970,7 @@
     <TypeScriptCompile Include="Invoice\EntityPMs\ARInvoiceStockLinePM.ts" />
     <TypeScriptCompile Include="Invoice\EntityPMs\ARInvoiceStockPM.ts" />
     <TypeScriptCompile Include="Invoice\EntityPMs\ARPaymentChequeReplicaPM.ts" />
+    <TypeScriptCompile Include="Invoice\Services\ExtendedPMs\ARInvoiceExtendedService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\AccountingPaymentMethodListService.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\Components\EditTabs\APEditMultiCurrency.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\APPaymentTransferStatusListService.ts" />

@@ -43,9 +43,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             VersionNumber = a.VersionNumber,
                                             Tenant = a.Tenant,
                                             VersionDocumentId = a.VersionDocumentId,
+                                            PrivateLabelId = a.PrivateLabelId,
                                         }).FirstOrDefault();
             return termsofUses;
         }
+         
 
         public TermsofUsePM GetSingleById(int id)
         {
@@ -58,6 +60,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             VersionNumber = a.VersionNumber,
                                             Tenant = a.Tenant,
                                             VersionDocumentId = a.VersionDocumentId,
+                                            PrivateLabelId = a.PrivateLabelId,
                                         }).FirstOrDefault();
             return termsofUses;
         }
@@ -74,6 +77,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             VersionNumber = a.VersionNumber,
                                             Tenant = a.Tenant,
                                             VersionDocumentId = a.VersionDocumentId,
+                                            PrivateLabelId = a.PrivateLabelId,
                                         }).FirstOrDefault();
             return termsofUses;
         }
@@ -90,8 +94,17 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             VersionNumber = a.VersionNumber,
                                             Tenant = a.Tenant,
                                             VersionDocumentId = a.VersionDocumentId,
+                                            PrivateLabelId = a.PrivateLabelId,
                                         }).FirstOrDefault();
             return termsofUses;
+        }
+
+        public string GetLatestTermsOfUseDocumentId(string privateLabeldId)
+        {
+            var documentId = (from a in repository.context.TermsofUses.OrderByDescending(d => d.VersionNumber)
+                              where a.PrivateLabelId == privateLabeldId
+                              select a.VersionDocumentId).FirstOrDefault();
+            return documentId;
         }
 
         public IQueryable<TermsofUsePM> GetTermsofUsePMsByVersion()
@@ -105,15 +118,15 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                        VersionNumber = a.VersionNumber,
                                                        Tenant = a.Tenant,
                                                        VersionDocumentId = a.VersionDocumentId,
+                                                       PrivateLabelId = a.PrivateLabelId,
                                                    };
             return termsofUses;
         }
 
         public TermsofUsePM GetTermsofUseDefault()
-        {
-            //Default not is from Tenant 0
+        { 
             TermsofUsePM termsofUses = (from a in repository.context.TermsofUses.OrderByDescending(d=>d.VersionNumber)
-                                        where a.Tenant == 0
+                                        where a.Tenant == 0 && a.PrivateLabelId == null
                                         select new TermsofUsePM()
                                         {
                                             Id = a.Id,
@@ -121,7 +134,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             VersionNumber = a.VersionNumber,
                                             Tenant = a.Tenant,
                                             VersionDocumentId = a.VersionDocumentId,
-
+                                            PrivateLabelId = a.PrivateLabelId,
                                         }).FirstOrDefault();
 
 
@@ -129,7 +142,25 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
          
 
             return termsofUses;
+        } 
+   
+
+        public TermsofUsePM GetTermOfUseByPrivateLabel(string privateLabelId)
+        {
+            return (from a in repository.context.TermsofUses.OrderByDescending(d => d.VersionNumber)
+                                        where a.PrivateLabelId == privateLabelId
+                                        select new TermsofUsePM()
+                                        {
+                                            Id = a.Id,
+                                            Date = a.Date,
+                                            VersionNumber = a.VersionNumber,
+                                            VersionDocumentId = a.VersionDocumentId,
+                                            Tenant = a.Tenant,
+                                            PrivateLabelId = a.PrivateLabelId,
+                                        }).FirstOrDefault(); 
         }
+
+
 
         public TermsofUsePM GetTermOfUseByTenant(int tenant)
         { 
@@ -142,13 +173,30 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             VersionNumber = a.VersionNumber,
                                             VersionDocumentId = a.VersionDocumentId,
                                             Tenant = a.Tenant,
-
+                                            PrivateLabelId = a.PrivateLabelId,
                                         }).FirstOrDefault();
             return termsofUses;
         }
 
 
-         
+
+
+        public IQueryable<TermsofUsePM> GetByPrivateLabeldId(string privatelabeldId)
+        {
+            IQueryable<TermsofUsePM> termsofUse = (from a in repository.context.TermsofUses
+                                                   where a.PrivateLabelId == privatelabeldId
+                                                   select new TermsofUsePM()
+                                                   {
+                                                       Id = a.Id,
+                                                       Date = a.Date,
+                                                       VersionNumber = a.VersionNumber,
+                                                       VersionDocumentId = a.VersionDocumentId,
+                                                       Tenant = a.Tenant,
+                                                       PrivateLabelId = a.PrivateLabelId,
+                                                   });
+            return termsofUse;
+        }
+
 
         public IQueryable<TermsofUsePM> GetTermsofUseByTenant(int tenant)
         {
@@ -161,6 +209,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                           VersionNumber = a.VersionNumber,
                                                                           VersionDocumentId = a.VersionDocumentId,
                                                                           Tenant = a.Tenant,
+                                                                          PrivateLabelId = a.PrivateLabelId,
                                                                       });
             return termsofUse;
         }

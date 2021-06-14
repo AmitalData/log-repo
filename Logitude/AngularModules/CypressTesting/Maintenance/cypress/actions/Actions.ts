@@ -26,7 +26,6 @@ import { CountryDetails } from "../models/CountryDetails";
 import { EventTypeDetails } from "../../../Base/cypress/models/EventTypeDetails";
 import { StateDetails } from "../models/StateDetails";
 import { CityDetails } from "../models/CityDetails";
-import { CurrencyDetails } from "../models/CurrencyDetails";
 import { GlobalZoneDetails } from "../models/GlobalZoneDetails"
 import { CommodityDetails } from "../models/CommodityDetails"
 import { QuoteSelectors } from "../../../Quote/cypress/selectors/Selectors";
@@ -42,6 +41,7 @@ import { SpecialServicesTypeDetails } from "../models/SpecialServicesTypeDetails
 import { MoveTypeDetails } from "../models/MoveTypeDetails";
 import { ShipmentSubTypeDetails } from "../models/ShipmentSubTypeDetails";
 import { CreditCardTypeDetails } from "../models/CreditCardTypeDetails";
+
 
 //#region variables
 let CityCode = null;
@@ -62,6 +62,7 @@ let inActiveCity = false;
 let inActiveGlobalZone = false;
 let inActiveCommodity = false;
 let inActiveRegion = false;
+let WarehouseCode = null;
 //#endregion
 
 //#region General Actions
@@ -122,8 +123,14 @@ export function OpenTabInMaintenanceMenu(maintenanceItemNameToSearch: string, ma
 export function OpenNewWizard(tabName: string) {
     cy.Click(MaintenanceSelectors.NewWizardButton(tabName), null);
 }
-function GenerateRandomNumber(NumberLength: number) {
+
+export function GenerateRandomNumber(NumberLength: number) {
     let NewRandomCode = gr.GenerateRandomNumberAndString(NumberLength)
+    return NewRandomCode;
+}
+
+function GenerateOnlyRandomNumber(NumberMin: number, NumberMax: number) {
+    let NewRandomCode = gr.GenerateRandomNumber(NumberMin, NumberMax)
     return NewRandomCode;
 }
 //#endregion
@@ -1161,11 +1168,12 @@ export function FillInputCheckBoxProcess(CheckBoxSelector: string, IsCheck: stri
         }
     }
 }
-function DefineGetByFilterRequest() {
+
+export function DefineGetByFilterRequest() {
     cy.DefineRequestWait(RestAPI.GET, Urls.GetByFilter, RequestAliases.GetByFilter);
 }
 
-function AssertGetByFilters() {
+export function AssertGetByFilters() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetByFilter, 200);
 }
 function FillCodeFilterValue(Code: string) {
@@ -1390,6 +1398,7 @@ export function AssertPutGlobalZone() {
 
 //#endregion
 
+
 //#region Commodity
 export function FillCommodityCode(CommodityCode: string) {
     cy.FillLogTextBox(MaintenanceSelectors.CommodityCode, CommodityCode)
@@ -1586,8 +1595,12 @@ export function AssertPutRegion() {
         });
 }
 //#endregion
+
 //#region card
-function FillCardDetails(cardDetails: CardDetails, codeDigits: number) {
+export function getCardCode() {
+    return CardCode;
+}
+export function FillCardDetails(cardDetails: CardDetails, codeDigits: number) {
     var RandomCardCode = GenerateRandomNumber(codeDigits);
     if (cardDetails.Code) {
         cy.FillLogTextBox(MaintenanceSelectors.CardCode, cardDetails.Code.toLowerCase() == "random" ? RandomCardCode : cardDetails.Code)
@@ -1602,7 +1615,7 @@ function FillCardDetails(cardDetails: CardDetails, codeDigits: number) {
     cy.FillLogLov(MaintenanceSelectors.CardCountry, cardDetails.Country, true);
     cy.FillLogLov(MaintenanceSelectors.CardState, cardDetails.State, true);
 }
-function FillCardContactDetails(cardConatactDetails: ContactDetails) {
+export function FillCardContactDetails(cardConatactDetails: ContactDetails) {
     FillCheckBoxProcess(MaintenanceSelectors.CardContactCheckBox + BaseSelectors.LastElement, cardConatactDetails.AddContact)
     cy.FillLogTextBox(MaintenanceSelectors.CardContactEnglishName, cardConatactDetails.EnglishName);
     cy.FillLogTextBox(MaintenanceSelectors.CardContactPosition, cardConatactDetails.Position);
@@ -1610,19 +1623,22 @@ function FillCardContactDetails(cardConatactDetails: ContactDetails) {
     cy.FillLogTextBox(MaintenanceSelectors.CardContactMobile, cardConatactDetails.Mobile);
     cy.FillLogTextBox(MaintenanceSelectors.CardContactFax, cardConatactDetails.Fax);
 }
-function CreateCard() {
+export function CreateCard() {
     DefinePostCardRequest()
     DefineGetByFilterRequest()
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
 }
+
 function DefinePostCardRequest() {
     cy.DefineRequestWait(RestAPI.POST, Urls.PartnersDomain, RequestAliases.PostCard);
 }
+
 export function AssertCreateCard(CardType: string) {
     AssertPostCard(CardType)
     AssertGetByFilters()
 }
-function AssertPostCard(CardType: string) {
+
+export function AssertPostCard(CardType: string) {
     BaseAssertion.AssertStatusCode(RequestAliases.PostCard, 200).then((interception) => {
         let responseBody = interception.response.body;
         if (CardType == Constants.ShippingAgent) {
@@ -1630,21 +1646,20 @@ function AssertPostCard(CardType: string) {
         }
         else if (CardType == Constants.CustomAgent) {
             CardCode = responseBody.CustomAgent.Code;
-
         }
         else if (CardType == Constants.Vendor) {
             CardCode = responseBody.Vendor.Code;
-
         }
     });
 }
+
 export function CreateCardMockCreate() {
     DefinePostCardMockRequest()
     DefineGetByFilterRequest()
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
 }
 
-function DefinePostCardMockRequest() {
+export function DefinePostCardMockRequest() {
     cy.intercept(RestAPI.POST, Urls.PartnersDomain, [true])
 }
 export function AssertCreateCardMockCreate() {
@@ -1654,10 +1669,12 @@ export function AssertCreateCardMockCreate() {
 export function AssertMockPostCard() {
     BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow)
 }
+
 export function SearchCard() {
     let cardCode = CardCode
     SearchCardByValue(cardCode)
 }
+
 export function SearchCardByValue(Card: string) {
     DefineCardViewsGetByFiltersRequest(Card);
     cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, Card);
@@ -1669,12 +1686,14 @@ function DefineCardViewsGetByFiltersRequest(CardCode: string) {
 function AssertCardViewsGetByFilters() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
 }
+
 export function AssertSearchCard(companyName: string) {
     cy.get(BaseSelectors.ListDataLoaded)
     cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
         expect(text).to.contain(companyName);
     });
 }
+
 export function OpenCard(CardType: string) {
     if (CardType == Constants.ShippingAgent) {
         DefineShippingAgentsGetSingleRequest();
@@ -1696,7 +1715,7 @@ export function AssertOpenCard() {
     AssertGetMenuButtonGroups();
     BaseAssertion.AssertElementExist(MaintenanceSelectors.GeneralEditScreen)
 }
-function AssertCardGetSingle() {
+export function AssertCardGetSingle() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetSignle, 200);
 }
 export function AssertCardAddress(cardDetails: CardDetails) {
@@ -1716,6 +1735,7 @@ export function AssertCardContact(conatactDetails: ContactDetails) {
     BaseAssertion.AssertElementContain(BaseSelectors.TemplateBoxItem, conatactDetails.Position)
 }
 //#endregion
+
 //#region  ShippingAgents
 export function FillShippingAgentsDetails(shippingAgentDetails: CardDetails) {
     FillCardDetails(shippingAgentDetails, null)
@@ -1768,7 +1788,7 @@ export function AssertShippingAgentContact(conatactDetails: ContactDetails) {
     cy.Click(MaintenanceSelectors.ShippingAgentContactsTab, null, true)
     AssertCardContact(conatactDetails)
 }
-export function FillShippingAgentGenaralTabNotes(Notes:string) {
+export function FillShippingAgentGenaralTabNotes(Notes: string) {
     cy.Click(MaintenanceSelectors.ShippingAgentGeneralTab, null, true)
     cy.FillLogTextBox(MaintenanceSelectors.ShippingAgentNotes, Notes)
 }
@@ -1836,7 +1856,7 @@ export function AssertCustomAgentContact(conatactDetails: ContactDetails) {
     cy.Click(MaintenanceSelectors.CustomAgentContactsTab, null, true)
     AssertCardContact(conatactDetails)
 }
-export function FillCustomAgentGeneralTabNotes(Notes:string) {
+export function FillCustomAgentGeneralTabNotes(Notes: string) {
     cy.Click(MaintenanceSelectors.CustomAgentGeneralTab, null, true)
     cy.FillLogTextBox(MaintenanceSelectors.CustomAgentNotes, Notes)
 }
@@ -1926,7 +1946,7 @@ export function AssertTruckerContact(conatactDetails: ContactDetails) {
     cy.Click(MaintenanceSelectors.TruckerContactsTab, null, true)
     AssertCardContact(conatactDetails)
 }
-export function FillTruckerGenaralTabNotes(Notes:string) {
+export function FillTruckerGenaralTabNotes(Notes: string) {
     cy.Click(MaintenanceSelectors.TruckerGeneralTab, null, true)
     cy.FillLogTextBox(MaintenanceSelectors.TruckerNotes, Notes)
 }
@@ -2255,7 +2275,7 @@ export function FillCreditCardTypeDetails(creditCardTypeDetails: CreditCardTypeD
     cy.FillLogTextBox(MaintenanceSelectors.CreditCardTypeCode, creditCardTypeDetails.Code.toLowerCase() == "random" ? RandomCreditCardTypeCode : creditCardTypeDetails.Code)
     FilllCreditCardTypeName(creditCardTypeDetails.EnglishName)
 }
-export function FilllCreditCardTypeName(Name:string){
+export function FilllCreditCardTypeName(Name: string) {
     cy.FillLogTextBox(MaintenanceSelectors.CreditCardTypeName, Name)
 }
 export function CreateCreditCardType() {
@@ -2268,7 +2288,7 @@ function DefinePostCreditCardTypeRequest() {
 export function CreateCreditCardTypeMockCreate() {
     cy.intercept(RestAPI.POST, Urls.CreditCardTypes, [true])
     DefineGetByFilterRequest()
-    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)  
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
 }
 
 export function AssertCreateCreditCardTypeMockCreate() {
@@ -2290,7 +2310,7 @@ export function AssertCreateCreditCardType() {
 
 function ReCreateCreditCardType() {
     var RandomCreditCardTypeCode = gr.GenerateRandomNumberAndString(2);
-    cy.FillLogTextBox(MaintenanceSelectors.CreditCardTypeCode,  RandomCreditCardTypeCode)
+    cy.FillLogTextBox(MaintenanceSelectors.CreditCardTypeCode, RandomCreditCardTypeCode)
     CreateCreditCardType();
     AssertCreateCreditCardType();
 }
@@ -2304,12 +2324,12 @@ export function AssertSearchCreditCardTypeByFilter(companyName: string) {
         expect(text).to.contain(companyName);
     });
 }
-export function SearchCreditCardType(){
-    SearchCardByFilter(CreditCardTypeCode,MaintenanceSelectors.CreditCardTypeCodeFilterCheckBox)
+export function SearchCreditCardType() {
+    SearchCardByFilter(CreditCardTypeCode, MaintenanceSelectors.CreditCardTypeCodeFilterCheckBox)
 }
 
 export function AssertSearchCreditCardType(companyName: string) {
-   AssertSearchCard(companyName)
+    AssertSearchCard(companyName)
 }
 export function OpenCreditCardType() {
     DefineCreditCardTypeGetSingleRequest();
@@ -2334,12 +2354,14 @@ export function AssertUpdateCreditCardType() {
 }
 function AssertPutCreditCardType() {
     BaseAssertion.AssertStatusCode(RequestAliases.PutCreditCardType, 200).
-    then((interception) => {
-        inActiveCreditCardType = interception.response.body.InActive;
-    });
+        then((interception) => {
+            inActiveCreditCardType = interception.response.body.InActive;
+        });
 }
 export function CreditCardTypeConversionEventsMapping(eventDetailsList: EventTypeDetails[]): EventTypeDetails[] {
     ConversionEventsMapping(eventDetailsList, inActiveCreditCardType)
     return eventDetailsList;
 }
 //#endregion
+
+

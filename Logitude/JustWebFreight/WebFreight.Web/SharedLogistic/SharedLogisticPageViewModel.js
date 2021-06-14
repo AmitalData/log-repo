@@ -28,8 +28,9 @@
     jQuery.IsShipmentsDataLoaded = false;
     jQuery.IsInvoicesDataLoaded = false;
     jQuery.IsQuotesRequestsDataLoaded = false;
+    jQuery.IsReportsDataLoaded = false;
 
-
+    
     jQuery.SelectedTabId = "TAB_SHI";
     jQuery.watermark_SHI = "Search partners / ports / ref.#";
     jQuery.watermark_INV = "Search Inv. # / bill to / ref.#";
@@ -120,6 +121,7 @@
                 $.IsShipperShared = result.IsShipperShared;
                 $.IsConsigneeShared = result.IsConsigneeShared;
                 $.SetQuotesRequestsTabVisibility(result.IsQuotesRequestsMenuEnabled);
+                $.SetReportTabVisibility(result.IsReportsMenuEnabled);
                 $.SetTabsHidden($.IsInvoicesMenuEnabled);
                 $.SetSelectedTab();                
             },
@@ -143,6 +145,11 @@
         $('#SavedSelectedTabId').attr("value", $.SelectedTabId);
         $("#mainTabsDiv").data("kendoTabStrip").select($('#' + $.SelectedTabId));
     });
+
+    jQuery.SetReportTabVisibility = (function (isVisibly) {
+        $("#TAB_REPORTS").toggle(isVisibly);
+    });
+
 
     jQuery.LoadInvoices = (function () {
 
@@ -304,7 +311,7 @@
         this.Tenant = $.CurrentTenant
     };
 
-
+    
 
     jQuery.LoadQuotesRequsts = (function () {
 
@@ -344,6 +351,17 @@
     });
 
 
+    jQuery.LoadReports = (function () {
+
+        let reportLists =  [{ "Name": "Shipments Report"}];
+        $("#ReportListBox").html("");
+        $("#ReportListBox").kendoListView(
+            {
+                dataSource: { data: reportLists },
+                template: kendo.template($("#ReportListBoxItemDataTemplate").html())
+            });
+    });
+
 
     jQuery.LoadDataCount = (function () {
 
@@ -380,6 +398,12 @@
                 $.LoadQuotesRequsts();
                 break;
             }
+
+            case "TAB_REPORTS": {
+                $.LoadReports();
+                break;
+            }
+
         }
     });
 
@@ -617,7 +641,15 @@
                 break;
             }
 
-                
+            case "TAB_REPORTS": {
+
+                if (!$.IsReportsDataLoaded) {
+                    $.IsReportsDataLoaded = true;
+                    $.LoadData();
+                }
+
+                break;
+            }
 
 
 
@@ -1060,7 +1092,8 @@
                 window.localStorage.setItem("Token", "");
                 window.localStorage.setItem("CardId", "");
 
-                document.location.href = "../../Login.aspx";
+                //document.location.href = "../../Login.aspx";
+                document.location.href = "../../?tenant=" + $.CurrentTenant;
 
             },
 

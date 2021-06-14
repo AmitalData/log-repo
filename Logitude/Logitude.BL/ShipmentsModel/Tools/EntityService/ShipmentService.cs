@@ -1,63 +1,55 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Logitude.BL.CommonDataModel.DataContracts;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.CommonDataModel.Tools.EmailAlerts;
 using Logitude.BL.CommonDataModel.Tools.Validating;
 using Logitude.BL.DataContracts;
+using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.EntityOtherServices;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.Tools.Behaviours;
 using Logitude.BL.ShipmentsModel.Tools.DataMapping;
+using Logitude.BL.ShipmentsModel.Tools.Initializers;
 using Logitude.BL.ShipmentsModel.Tools.TraceEvents;
 using Logitude.BL.ShipmentsModel.Tools.Validating;
 using Logitude.BookingLib.Data.EntityPOCOs;
 using Logitude.BookingLib.Data.Repositories;
+using Logitude.CRM.Data.EntityPOCOs;
+using Logitude.CRM.Data.Repsitories;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.EntityChanges;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.QueueService;
+using Logitude.Server.Tools.StorageService;
+using Logitude.SystemLogs;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.Data.Repositories;
+using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.QuoteModel.EntityPOCOs;
-using Simplog.Data.QuoteModel.Repositories;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure;
-using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.SystemLogs;
-using System.Web;
-using System.Transactions;
-using Simplog.Server.Infrastructure.Helpers;
-using Logitude.Server.Tools.QueueService;
-using Logitude.BL.Helpers;
-using Logitude.Server.Tools;
-using Microsoft.Practices.Unity;
-using System.Text;
-using Logitude.BL.CommonDataModel.DataContracts;
-using Simplog.Data.InfrastructureModel;
-using System.Reflection;
-using Logitude.Server.Tools.StorageService;
 using Simplog.Server.Infrastructure.Azure;
-using Logitude.CRM.Data.Repsitories;
-using Logitude.CRM.Data.EntityPOCOs;
+using Simplog.Server.Infrastructure.Helpers;
+using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
+using System.Reflection;
+using System.Text;
 using System.Text.RegularExpressions;
-using Logitude.BL.ShipmentsModel.Tools.Behaviours;
-using Logitude.TariffModule.Data.Repositories;
-using Logitude.TariffModule.Data.EntityPOCOs;
-using Logitude.Server.Tools.EntityChanges;
-using Logitude.BL.ShipmentsModel.Tools.Initializers;
-using Logitude.BL.ShipmentsModel.EntityOtherServices;
-using Logitude.Server.Tools.Messages;
-using Logitude.Server.Tools.Constants;
-using Newtonsoft.Json;
-using Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours;
+using System.Transactions;
+using System.Web;
 
 namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 {
@@ -578,22 +570,32 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.UpdateExtendedTasksDueDate();
 
                 // Produce shipment update msg
-                ProduceShipmentUpdateKafkaMessage();
+                AddShipmentUpdateKafkaQueueMessage();
 
 
                 scope.Complete();
                 #endregion
             }
         }
-        private void ProduceShipmentUpdateKafkaMessage()
+        private void AddShipmentUpdateKafkaQueueMessage()
         {
-            if (entityPM.Tenant == 1321 || entityPM.Tenant == 951)
+            if (!FeatureToggleHelper.HasFeatureToggle("CTL", entityPM.Tenant))
             {
-                var ShipmentUpdateMessageProducer = new Producer();
-                var serializedShipmentUpdateMessage = JsonConvert.SerializeObject(entityPM, Formatting.Indented);
-                ShipmentUpdateMessageProducer.Produce(MessageType.Shipment, serializedShipmentUpdateMessage);
+                return;
             }
+            AddKafkaQueueMessage();
         }
+
+        private void AddKafkaQueueMessage()
+        {
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("CToolShipments", 0);
+            var queueMessage = new Dictionary<string, string>() {
+                { "ShipmentId", entityPM.Id },
+                { "Tenant", tenant.ToString()}};
+            queueservice.Send(queueMessage,tenant); 
+        }
+
         private void UpdatePayablesLinesVatAmounts()
         {
             if (initializer.ShipmentPayablesChangeSet != null && initializer.ShipmentPayablesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.None).Any())

@@ -26,8 +26,63 @@ namespace WebFreight.Web.Helpers
         public List<AttachmentsList> GetDefultAttachmentList(DocumentTypeTemplateDefultAttachmentArgs defultAttachmentArgs)
         {
             this.defultAttachmentArgs = defultAttachmentArgs;
-            shipmentObjectId =  GetMasterShipmentObjectTableId(defultAttachmentArgs);
+            shipmentObjectId = GetMasterShipmentObjectTableId(defultAttachmentArgs);
             attachmentsLists = new List<AttachmentsList>();
+            BuildDefaultAttachemnts(defultAttachmentArgs);
+            BuildDefaultExternalAttachment(defultAttachmentArgs);
+            return attachmentsLists;
+
+        }
+
+        private void BuildDefaultExternalAttachment(DocumentTypeTemplateDefultAttachmentArgs defultAttachmentArgs)
+        {
+            List<string> attachedExternalDocumentsIds = GetAttachedExternalDocumentsIds();
+            if (attachedExternalDocumentsIds == null || attachedExternalDocumentsIds.Count() == 0)
+            {
+                return;
+            }
+            List<Document> documents = GetDocumentsByIds(attachedExternalDocumentsIds);
+            AddDocumentsToAttachmentLists(documents);
+        }
+
+     
+
+        private List<string> GetAttachedExternalDocumentsIds()
+        {
+            DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(defultAttachmentArgs.Tenant);
+           return documentTypeTemplateQuery.GetDefaultExternalAttachmentIds(defultAttachmentArgs.DocumentTypeTemplateId, defultAttachmentArgs.Tenant);
+
+        }
+
+        private List<Document> GetDocumentsByIds(List<string> documentsIds)
+        {
+            DocumentRepository documentRepository = new DocumentRepository(defultAttachmentArgs.Tenant);
+            return documentRepository.GetDocumentsByIds(documentsIds);
+        }
+
+
+        private void AddDocumentsToAttachmentLists(List<Document> documents)
+        {
+            foreach (Document document in documents)
+            {
+                attachmentsLists.Add(GetNewInstanceFromAttachemntList(document));
+            }
+     
+        }
+
+        private AttachmentsList GetNewInstanceFromAttachemntList(Document item)
+        {
+          return  new AttachmentsList() { 
+                Id = item.Id,
+                DocumentTypeCopyNameWithDocumentTypeName = item.FileName, 
+                FileSize = item.FileSize,
+                FileExtension = item.Extension,
+                Tenant = item.Tenant 
+            };
+        }
+
+        private void BuildDefaultAttachemnts(DocumentTypeTemplateDefultAttachmentArgs defultAttachmentArgs)
+        {
             DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(defultAttachmentArgs.Tenant);
             var defultAttachmentList = documentTypeTemplateQuery.GetDefultAttachmentLists(defultAttachmentArgs.DocumentTypeTemplateId, defultAttachmentArgs.Tenant);
             if (defultAttachmentList != null && defultAttachmentList.Count() > 0)
@@ -38,8 +93,6 @@ namespace WebFreight.Web.Helpers
                 BuildDocInAttachmentList(defultAttachmentList);
 
             }
-            return attachmentsLists;
-
         }
 
         private string GetMasterShipmentObjectTableId(DocumentTypeTemplateDefultAttachmentArgs defultAttachmentArgs)

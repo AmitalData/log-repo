@@ -20,9 +20,15 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly MaintenanceItemCustomAgents = "#MaintenanceItemMTCU"
    public static readonly MaintenanceItemTrucker = "#MaintenanceItemMTTR"
    public static readonly MaintenanceItemSpecialServicesType = "#MaintenanceItemMTSS"
-   public static readonly MaintenanceItemMoveTypes="#MaintenanceItemMTMT"
-     public static readonly MaintenanceItemShipmentSubType = "#MaintenanceItemMTSB"
+   public static readonly MaintenanceItemMoveTypes = "#MaintenanceItemMTMT"
+   public static readonly MaintenanceItemShipmentSubType = "#MaintenanceItemMTSB"
    public static readonly MaintenanceItemCreditCardTypes = "#MaintenanceItemMTCC"
+   public static readonly MaintenanceItemBankAccount = "#MaintenanceItemMTBL"
+   public static readonly MaintenanceItemPackageType = "#MaintenanceItemMTPK"
+   public static readonly MaintenanceItemBranch = "#MaintenanceItemMTBR"
+   public static readonly MaintenanceItemCurrency ="#MaintenanceItemMTCR"
+   public static readonly MaintenanceItemFBLStock = "#MaintenanceItemMTFS"
+
    //#endregion
 
    public static readonly GeneralEditScreen = ".MediaFillAbsolute .CurvedEditArea";
@@ -136,7 +142,7 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly CardAddFilterBtn = "div[data-cy='AddFilterBtn']";
    public static readonly CountryCodeFilterCheckBox = "input[data-cy='CheckBox_Country.F.Code']"
    public static readonly CardCodeFilterTextValue = "#TextValue"
-   public static readonly MoveTypeCodeFilterCheckBox ="input[data-cy='CheckBox_MoveType.F.Code']"
+   public static readonly MoveTypeCodeFilterCheckBox = "input[data-cy='CheckBox_MoveType.F.Code']"
    //#endregion
 
    //#region State
@@ -162,7 +168,6 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly CitySaveButton = "#CountryCity-Save"
    //#endregion
 
-
    //#region  Global Zone
    public static readonly GlobalZoneCode = "#GlobalZone_Code"
    public static readonly GlobalZoneEnglishName = "#GlobalZone_EnglishName"
@@ -171,6 +176,7 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly GlobalZoneSaveButton = "#GlobalZone-Save"
    public static readonly GlobalZoneEventsTab = "#GlobalZoneTHEvents"
    //#endregion
+
    //#region  Commodity
    public static readonly CommodityCode = "#Commodity_Code"
    public static readonly CommodityName = "#Commodity_Name"
@@ -186,7 +192,7 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly RegionEventsTab = "#RegionTHEvents"
    //#endregion
    //#region card details  
-   public static readonly CardCode= "#Address_CardCode"
+   public static readonly CardCode = "#Address_CardCode"
    public static readonly CardCompanyName = "#Address_Name";
    public static readonly CardLocalName = "#Address_LocalName";
    public static readonly CardAddress1 = "#Address_Address1";
@@ -206,71 +212,71 @@ export class MaintenanceSelectors extends RegexSelectors {
    //#endregion
    //#region shipping agent
    public static readonly ShippingAgentNotes = "#ShippingAgent_Notes"
-   public static readonly ShippingAgentBillingTab= "#ShippingAgentTHBilling"
+   public static readonly ShippingAgentBillingTab = "#ShippingAgentTHBilling"
    public static readonly ShippingAgentBankName = "#ShippingAgent_BankName"
    public static readonly ShippingAgentIBANNumber = "#ShippingAgent_IBANNumber"
    public static readonly ShippingAgentAddressesTab = "#ShippingAgentTHAddresses"
    public static readonly ShippingAgentContactsTab = "#ShippingAgentTHContacts"
-   public static readonly ShippingAgentGeneralTab="#ShippingAgentTHGeneral"
+   public static readonly ShippingAgentGeneralTab = "#ShippingAgentTHGeneral"
    public static readonly ShippingAgentEventsTab = "#ShippingAgentTHEvents"
-   public static readonly ShippingAgentSaveButton="#ShippingAgent-Save"
+   public static readonly ShippingAgentSaveButton = "#ShippingAgent-Save"
 
    //#endregion
-    //#region custom agent
-    public static readonly CustomAgentNotes = "#CustomAgent_Notes"
-    public static readonly CustomAgentGeneralTab="#CustomAgentTHGeneral"
-    public static readonly CustomAgentBillingTab= "#CustomAgentTHBilling"
-    public static readonly CustomAgentAddressesTab = "#CustomAgentTHAddresses"
-    public static readonly CustomAgentContactsTab = "#CustomAgentTHContacts"
-    public static readonly CustomAgentEventsTab = "#CustomAgentTHEvents"
-    public static readonly CustomAgentBankName = "#CustomAgent_BankName"
-    public static readonly CustomAgentIBANNumber = "#CustomAgent_IBANNumber"
-    public static readonly CustomAgentSaveButton="#CustomAgent-Save"
- 
-    //#endregion
-     //#region Trucker
-     public static readonly TruckerNotes = "#Trucker_Remark"
-     public static readonly TruckerGeneralTab="#TruckerTHGeneral"
-     public static readonly TruckerBillingTab= "#TruckerTHBilling"
-     public static readonly TruckerAddressesTab = "#TruckerTHAddresses"
-     public static readonly TruckerContactsTab = "#TruckerTHContacts"
-     public static readonly TruckerEventsTab = "#TruckerTHEvents"
-     public static readonly TruckerBankName = "#Trucker_BankName"
-     public static readonly TruckerIBANNumber = "#Trucker_IBANNumber"
-     public static readonly TruckerSaveButton="#Trucker-Save"
-  
-     //#endregion
-        //#region SpecialServicesType
+   //#region custom agent
+   public static readonly CustomAgentNotes = "#CustomAgent_Notes"
+   public static readonly CustomAgentGeneralTab = "#CustomAgentTHGeneral"
+   public static readonly CustomAgentBillingTab = "#CustomAgentTHBilling"
+   public static readonly CustomAgentAddressesTab = "#CustomAgentTHAddresses"
+   public static readonly CustomAgentContactsTab = "#CustomAgentTHContacts"
+   public static readonly CustomAgentEventsTab = "#CustomAgentTHEvents"
+   public static readonly CustomAgentBankName = "#CustomAgent_BankName"
+   public static readonly CustomAgentIBANNumber = "#CustomAgent_IBANNumber"
+   public static readonly CustomAgentSaveButton = "#CustomAgent-Save"
+
+   //#endregion
+   //#region Trucker
+   public static readonly TruckerNotes = "#Trucker_Remark"
+   public static readonly TruckerGeneralTab = "#TruckerTHGeneral"
+   public static readonly TruckerBillingTab = "#TruckerTHBilling"
+   public static readonly TruckerAddressesTab = "#TruckerTHAddresses"
+   public static readonly TruckerContactsTab = "#TruckerTHContacts"
+   public static readonly TruckerEventsTab = "#TruckerTHEvents"
+   public static readonly TruckerBankName = "#Trucker_BankName"
+   public static readonly TruckerIBANNumber = "#Trucker_IBANNumber"
+   public static readonly TruckerSaveButton = "#Trucker-Save"
+
+   //#endregion
+   //#region SpecialServicesType
    public static readonly SpecialServicesTypeCode = "#SpecialServicesType_Code"
    public static readonly SpecialServicesTypeEnglishName = "#SpecialServicesType_EnglishName"
    public static readonly SpecialServicesTypeLocalName = "#SpecialServicesType_LocalName"
    public static readonly SpecialServicesTypeGeneralTab = "#SpecialServicesTypeTHGeneral"
    public static readonly SpecialServicesTypeEventsTab = "#SpecialServicesTypeTHEvents"
    public static readonly SpecialServicesTypeSaveButton = "#SpecialServicesType-Save"
-        //#endregion
-              //#region SpecialServicesType
+   //#endregion
+   //#region SpecialServicesType
    public static readonly MoveTypeCode = "#MoveType_Code"
    public static readonly MoveTypeEnglishName = "#MoveType_MoveTypeEnglishName"
    public static readonly MoveTypeLocalName = "#MoveType_MoveTypeLocalName"
    public static readonly MoveTypeGeneralTab = "#MoveTypeTHGeneral"
    public static readonly MoveTypeEventsTab = "#MoveTypeTHEvents"
    public static readonly MoveTypeSaveButton = "#MoveType-Save"
-     
-        //#endregion
-     //#region Shipment sub type
-     public static readonly ShipmentSubTypeCode = "#ShipmentSubType_Code"
-     public static readonly ShipmentSubTypeName = "#ShipmentSubType_Name"
-     public static readonly LogLovShipmentSubType = "#LogLov_ShipmentSubType_ShipmentTypeCode"
-     public static readonly ShipmentSubTypeSaveButton = "#ShipmentSubType-Save"
-     public static readonly ShipmentSubTypeEventsTab = "#ShipmentSubTypeTHEvents"
-     public static readonly ShipmentSubTypeCodeFilterCheckBox = '[data-cy="CheckBox_ShipmentSubType.F.Code"]'
-     public static readonly CreditCardTypeCodeFilterCheckBox='input[data-cy="CheckBox_CreditCardType.F.Code"]'
-        //#endregion
+
+   //#endregion
+   //#region Shipment sub type
+   public static readonly ShipmentSubTypeCode = "#ShipmentSubType_Code"
+   public static readonly ShipmentSubTypeName = "#ShipmentSubType_Name"
+   public static readonly LogLovShipmentSubType = "#LogLov_ShipmentSubType_ShipmentTypeCode"
+   public static readonly ShipmentSubTypeSaveButton = "#ShipmentSubType-Save"
+   public static readonly ShipmentSubTypeEventsTab = "#ShipmentSubTypeTHEvents"
+   public static readonly ShipmentSubTypeCodeFilterCheckBox = '[data-cy="CheckBox_ShipmentSubType.F.Code"]'
+   public static readonly CreditCardTypeCodeFilterCheckBox = 'input[data-cy="CheckBox_CreditCardType.F.Code"]'
+   //#endregion
    //#region credit card type 
    public static readonly CreditCardTypeCode = "#CreditCardType_Code"
    public static readonly CreditCardTypeName = "#CreditCardType_Name"
    public static readonly CreditCardTypeSaveButton = "#CreditCardType-Save"
    public static readonly CreditCardTypeEventTab = "#CreditCardTypeTHEvents"
-   public static readonly InActiveCreditCardTypeCheckBox="#CreditCardType_InActive"
+   public static readonly InActiveCreditCardTypeCheckBox = "#CreditCardType_InActive"
    //#endregion
 }

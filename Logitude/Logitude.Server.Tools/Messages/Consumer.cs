@@ -1,27 +1,42 @@
 ﻿using Confluent.Kafka;
+using System.Collections.Generic;
 
 namespace Logitude.Server.Tools.Messages
 {
     public class Consumer
     {
         public IConsumer<long, string> ConsumerSubscription { get; set; }
-        public Consumer()
+        private int Timeout = 30;
+
+        public Consumer(string consumerGroup, List<string> topics, TopicPartition partition)
         {
             KafkaCredentials.SetEventHubConfigurations();
-            ConsumerSubscription = SubscribeToTopic(KafkaCredentials.Topic);
+            ConsumerSubscription = SubscribeToTopic(consumerGroup, topics, partition);
         }
 
-        private IConsumer<long, string> SubscribeToTopic(string topic)
+        public void SetTimeOut(int timeout)
         {
-            ConsumerConfig config = GetConsumerConfigurations();
-            IConsumer<long, string> consumer = new ConsumerBuilder<long, string>(config).SetKeyDeserializer(Deserializers.Int64).SetValueDeserializer(Deserializers.Utf8).Build();
-            //CancellationTokenSource cts = new CancellationTokenSource();
-            //Console.CancelKeyPress += (_, e) => { e.Cancel = true; cts.Cancel(); }; 
-            consumer.Subscribe(topic);
+            Timeout = timeout;
+        }
+
+        private IConsumer<long, string> SubscribeToTopic(string consumerGroup, List<string> topics, TopicPartition partition)
+        {
+            ConsumerConfig config = GetConsumerConfigurations(consumerGroup);
+            IConsumer<long, string> consumer = new ConsumerBuilder<long, string>(config)
+                .SetKeyDeserializer(Deserializers.Int64)
+                .SetValueDeserializer(Deserializers.Utf8)
+                .Build();
+
+            if (topics != null && topics.Count > 0)
+                consumer.Subscribe(topics);
+
+            if (partition != null)
+                consumer.Assign(partition);
+
             return consumer;
         }
 
-        private ConsumerConfig GetConsumerConfigurations()
+        private ConsumerConfig GetConsumerConfigurations(string consumerGroup)
         {
             var config = new ConsumerConfig
             {
@@ -32,17 +47,15 @@ namespace Logitude.Server.Tools.Messages
                 SaslMechanism = SaslMechanism.Plain,
                 SaslUsername = "$ConnectionString",
                 SaslPassword = KafkaCredentials.ConnectionString,
-                //SslCaLocation = caCertLocation,
-                GroupId = KafkaCredentials.ConsumerGroup,
+                GroupId = consumerGroup,
                 AutoOffsetReset = AutoOffsetReset.Latest,
-                //BrokerVersionFallback = "1.0.0"
             };
             return config;
         }
 
         public ConsumeResult<long, string> Consume()
         {
-            return ConsumerSubscription.Consume();
+            return ConsumerSubscription.Consume(Timeout);
         }
     }
 }

@@ -49,7 +49,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 
 
                 //if (transferRecoLines.Count == 1)
-                if (externalRecoPM.ExternalReconciliationLines.Where(r=>!string.IsNullOrWhiteSpace(r.LedgerTransactionId)).ToList().Count== transferRecoLines.Count && transferRecoLines.Count >= 1)
+                if (transferRecoLines.Count == 1)
                 {
                     //MoveTransactionFromTransferGLAccountToBankGLAccount(transferRecoLines.First().LedgerTransactionId);
                     MoveTransactionFromTransferGLAccountToBankGLAccount(transferRecoLines.Select(r=>r.LedgerTransactionId).ToList());

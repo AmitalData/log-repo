@@ -1,4 +1,3 @@
-import { DWObjectFieldsDetails } from '../../../CommonModules/CommonOthers/Components/DWQueryBuilder/DWQueryBuilderComponent';
 import { HttpClient, HttpEvent, HttpResponse } from '@angular/common/http';
 import { CustomFieldClass } from '../../DataContracts/CustomFieldClass';
 import { DWQueryData } from '../../../Common/DataContracts/DWQueryData';
@@ -12,6 +11,7 @@ import { SessionInfo } from '../../Utilities/SessionInfo';
 import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { defer, of } from 'rxjs';
+import { DWObjectFieldsDetails } from '../../../InfrastructureModules/InfrastructureBIReport/Components/Workspaces/DWQueryBuilderBaseComponent';
 
 @Injectable()
 export class DWQueryBuilderService {

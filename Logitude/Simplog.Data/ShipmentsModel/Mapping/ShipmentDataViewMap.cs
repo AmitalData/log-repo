@@ -363,7 +363,6 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.SLAC).HasMaxLength(5).IsUnicode(false);
             this.Property(t => t.ShipmentSubTypeId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ShipmentSubTypeName).HasMaxLength(60).IsUnicode(false);
-
             this.Property(t => t.OnCarriageFromPortId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.OnCarriageToPortId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.PreCarriageFromPortId).HasMaxLength(15).IsUnicode(false);
@@ -375,6 +374,7 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.PreForwardingFromPortId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.MainCarriageFromPartnerId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.MainCarriageToPartnerId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.FreightLocationId).HasMaxLength(15).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("ShipmentDataView");
@@ -853,6 +853,7 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.IsStandalonePickupDelivery).HasColumnName("IsStandalonePickupDelivery");
             this.Property(t => t.MainCarriageFromPartnerId).HasColumnName("MainCarriageFromPartnerId");
             this.Property(t => t.MainCarriageToPartnerId).HasColumnName("MainCarriageToPartnerId");
+            this.Property(t => t.FreightLocationId).HasColumnName("FreightLocationId");
         }
     }
 }
