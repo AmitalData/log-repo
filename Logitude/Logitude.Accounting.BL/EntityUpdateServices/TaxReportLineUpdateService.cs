@@ -30,7 +30,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         const string LineType_UnidentifiedCustomerTransactions = "L";
         const string LineType_SelfInvoiceTransactions = "M";
         const string StatusCode_VATAmountInTheRecordIsHigherThanThePercentageOfVATAllowed = "9";
-
+        const string TaxReportLineInputType = "I";
 
         protected override void OnCreating(TaxReportLinePM entityPM, EntityPM entityParentPM)
         {
@@ -92,7 +92,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         private static JournalAdditionalDataPM GetJournalAdditionalDataPM(TaxReportLinePM taxReportLine)
         {
             JournalAdditionalDataQueryService additionalDataQueryService = new JournalAdditionalDataQueryService(taxReportLine.Tenant);
-            if (taxReportLine.OutputOrInput == "I")
+            if (taxReportLine.OutputOrInput == TaxReportLineInputType)
             {
                 return additionalDataQueryService.GetSingle(taxReportLine.JournalId, taxReportLine.JournalLineNumber, false, false);
             }
