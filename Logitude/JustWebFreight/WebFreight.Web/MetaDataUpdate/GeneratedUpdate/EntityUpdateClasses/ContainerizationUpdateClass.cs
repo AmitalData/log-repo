@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ContainerizationUpdateClass
    {  		
-		public const string HashString = "20febcecba7a9e9e9548085d95159440";
+		public const string HashString = "3605b7a9cd0efcb344fcee7d297fc3bd";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -434,7 +434,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ContainerizationStatus",
 					  						DefaultText =  "Containerization Status",
-					  						FullLocalDefaultText =  "סטטוס המכלה",
+					  						FullLocalDefaultText =  "קוד סטטוס המכלה",
 					  						ListFieldLable =  "ContainerizationStatusListLable",
 					  						ListLableDefaultText =  "Containerization Status",
 					  						ListLocalDefaultText =  "קוד סטטוס המכלה",
@@ -499,7 +499,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "HataraStatus",
 					  						DefaultText =  "Hatara Status",
-					  						FullLocalDefaultText =  "סטטוס התרה",
+					  						FullLocalDefaultText =  "קוד סטטוס התרה",
 					  						ListFieldLable =  "HataraStatusListLable",
 					  						ListLableDefaultText =  "Hatara Status",
 					  						ListLocalDefaultText =  "קוד סטטוס התרה",
@@ -657,7 +657,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  10,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
@@ -685,8 +685,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TransportModeForExport",
 					  						DefaultText =  "Transport Mode",
+					  						FullLocalDefaultText =  "סוג משלוח",
 					  						ListFieldLable =  "TransportModeForExportListLable",
 					  						ListLableDefaultText =  "Transport Mode",
+					  						ListLocalDefaultText =  "סוג משלוח",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -930,9 +932,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "HataraStatusIsNull",
 					  						DefaultText =  "HataraStatusIsNull",
+					  						FullLocalDefaultText =  "התקבלה התרה",
 					  						ListFieldLable =  "HataraStatusIsNullListLable",
 					  						ListLableDefaultText =  "HataraStatusIsNull",
-					  						ListLocalDefaultText =  "האם יש תאריך התרה",
+					  						ListLocalDefaultText =  "התקבלה התרה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
