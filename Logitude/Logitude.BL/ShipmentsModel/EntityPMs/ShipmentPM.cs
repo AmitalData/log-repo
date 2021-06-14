@@ -2683,6 +2683,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string StandalonePickupDeliveryId { get; set; }
         public string StandalonePickupDeliveryNumber { get; set; }
         public string ForwarderStandaloneShipmentId { get; set; }
+        public string ForwarderPickUpDeliveryType { get; set; }
     }
 
     public class TransshipmentLeg

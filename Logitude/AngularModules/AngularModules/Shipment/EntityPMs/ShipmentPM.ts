@@ -4944,6 +4944,9 @@ export class ShipmentPM {
     public get ForwarderStandaloneShipmentId() { return this.forwarderStandaloneShipmentId; }
     public set ForwarderStandaloneShipmentId(newValue: string) { if (this.forwarderStandaloneShipmentId != newValue) { this.forwarderStandaloneShipmentId = newValue; this.MarkAsDirty("ForwarderStandaloneShipmentId"); } }      
 
+    private forwarderPickUpDeliveryType: string;
+    public get ForwarderPickUpDeliveryType() { return this.forwarderPickUpDeliveryType; }
+    public set ForwarderPickUpDeliveryType(newValue: string) { if (this.forwarderPickUpDeliveryType != newValue) { this.forwarderPickUpDeliveryType = newValue; this.MarkAsDirty("forwarderPickUpDeliveryType"); } }
 
     public OldEntityPM: ShipmentPM;
 

@@ -80,6 +80,9 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                     this.GetWarehouseAddress();
                 }
 
+                if (s == "FollowupsChangedMainMenu") {
+                    this.entityArgs.EditComponent.ReloadEntityPM();
+                }
             });
 
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
@@ -460,20 +463,20 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             } else if (s == "Delivery") {
                 this.ViewAddDeliveryWindow();
             } else if (s == "Shipment") {
-                this.CreateStandaloneShipment()
+                this.CreateStandaloneShipment(typeCode)
             }
         });
         
     }
 
-    private CreateStandaloneShipment() {
+    private CreateStandaloneShipment(typeCode: string) {
         var shipmentPM: ShipmentPM = ShipmentTool.BuildStansaloneShipment(null, null, this.EntityPM);
-        shipmentPM.ForwarderStandaloneShipmentId = this.EntityPM.Id;
-
         var args = new NewShipmentComponentArgs();
         args.Shipment = shipmentPM;
         args.IsStandalone = true;
         args.IsNewStandAlonePickupDelivery = true;
+        args.ForwarderStandaloneShipmentId = this.EntityPM.Id;
+        args.ForwarderShipmentPickUpDeliveryTypeCode = typeCode;
 
         var str: string = TextCodeTranslator.Translate("General.O.NewEntity");
         str = str.replace("%Entity", TextCodeTranslator.TranslateTable("Shipment"));
@@ -484,6 +487,9 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         logWindow.WindowArgs = args;
         logWindow.Title = str;
         logWindow.Show('./Shipment/Components/NewShipment/NewShipmentComponent');
+        logWindow.WindowClosed.subscribe(s => {
+            this.BuildItemsCollection();
+        }); 
     }
 
     EditLeg(myRoutingItem: RoutingItem) {
