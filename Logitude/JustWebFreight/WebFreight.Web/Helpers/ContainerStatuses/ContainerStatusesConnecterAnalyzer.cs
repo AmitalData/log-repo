@@ -19,6 +19,7 @@ using Logitude.BL.Security;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using System.Transactions;
 using Simplog.Server.Infrastructure.Helpers;
+using System.Text;
 
 namespace WebFreight.Web.Helpers.Analyzers
 {
@@ -41,6 +42,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         private string containerObjectTableId;
         private string loggedContactId;
         private string containerId;
+        private string oceanInsightsEnvelopeParameters;
 
         public ContainerStatusesConnecterAnalyzer(AnalyzeQueue analyzeQueue, AnalyzeQueueRepository analyzeQueueRepository)
         {
@@ -133,12 +135,12 @@ namespace WebFreight.Web.Helpers.Analyzers
                 var oceanInsightsParameters = oceanInsightsQueueTask.Parameters.FirstOrDefault();
                 if (oceanInsightsParameters != null)
                 {
-                    var oceanInsightsEnvelopeParameters = oceanInsightsParameters.Value;
-                    this.ReadOceanInsightsParametersXMLFields(oceanInsightsEnvelopeParameters);
+                    oceanInsightsEnvelopeParameters = oceanInsightsParameters.Value;
+                    this.ReadOceanInsightsParametersXMLFields();
                 }
             }
         }
-        private void ReadOceanInsightsParametersXMLFields(string oceanInsightsEnvelopeParameters)
+        private void ReadOceanInsightsParametersXMLFields()
         {
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.LoadXml(oceanInsightsEnvelopeParameters);
@@ -245,7 +247,6 @@ namespace WebFreight.Web.Helpers.Analyzers
         }
         private void BuildCommunicationLog()
         {
-            byte[] documentXML = LogitudeXmlSerializer.SerializeObject(externalTasksQueues);
             CommunicationsParams logParams = new CommunicationsParams()
             {
                 Tenant = logitudeTenant.Value,
@@ -261,10 +262,26 @@ namespace WebFreight.Web.Helpers.Analyzers
                 LoggingEntityReference = container_number,
                 Subject = communicationLogSubject,
                 FolderName = communicationLogTo.ToLower(),
-                ByteData = documentXML,
+                ByteData = GetXMLByteDataFromText(),
             };
 
             Communications.AddCommunicationLog(logParams);
+        }
+        private byte[] GetXMLByteDataFromText()
+        {
+            var doc = new XmlDocument();
+            doc.LoadXml(oceanInsightsEnvelopeParameters);
+            var memoryStream = new MemoryStream();
+            var xmlWriter = XmlWriter.Create(memoryStream,
+                        new XmlWriterSettings
+                        {
+                            OmitXmlDeclaration = false,
+                            ConformanceLevel = ConformanceLevel.Document,
+                            Encoding = UTF8Encoding.UTF8
+                        });
+            doc.Save(xmlWriter);
+            byte[] documentXML = memoryStream.ToArray();
+            return documentXML;
         }
         private void DoneAnalyzeQueue()
         {

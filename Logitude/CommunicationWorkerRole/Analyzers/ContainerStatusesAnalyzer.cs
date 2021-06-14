@@ -75,12 +75,14 @@ namespace CommunicationWorkerRole.Analyzers
         private string scacCode;
         private string oceanInsightInsertType;
         private string shipmentId;
+        private string containerNumber;
         private void ReadAdditionalFieldsFromCommunicationLog()
         {
             this.refrenceNumber = communicationLog.EntityReference;
-            this.scacCode = communicationLog.AdditionalFields?.Split(',')[0];
-            this.oceanInsightInsertType = communicationLog.AdditionalFields?.Split(',')[1];
-            this.shipmentId = communicationLog.AdditionalFields?.Split(',')[2];
+            this.scacCode = communicationLog.AdditionalFields?.Split(',')?[0];
+            this.oceanInsightInsertType = communicationLog.AdditionalFields?.Split(',')?[1];
+            this.shipmentId = communicationLog.AdditionalFields?.Split(',')?[2];
+            this.containerNumber = communicationLog.AdditionalFields?.Split(',')?[3];
         }
 
         private async void SendContainerStatusRequestToOceanInsightSevice()
@@ -140,7 +142,7 @@ namespace CommunicationWorkerRole.Analyzers
                 UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                 OceanInsigntId = oceanInsightId,
                 BLNumber = this.refrenceNumber,
-                ContainerNumber = this.refrenceNumber,
+                ContainerNumber = this.containerNumber,
                 SCACCode = scacCode, 
                 Tenant = this.tenant,
                 Type = this.oceanInsightInsertType,

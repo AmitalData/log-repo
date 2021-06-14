@@ -112,7 +112,7 @@ namespace WebFreight.Web.Helpers
             {
                 oceanInsightType = "c_id";
             }
-            this.communicationLogAdditionalFields = scacCode + "," + oceanInsightType + "," + this.shipmentId;
+            this.communicationLogAdditionalFields = scacCode + "," + oceanInsightType + "," + this.shipmentId + "," + container.ContainerNumber;
         }
 
         public void SendContainerStatusRequest()
