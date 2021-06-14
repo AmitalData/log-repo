@@ -3,7 +3,9 @@ import { RegexSelectors } from '../selectors/RegexSelectors';
 export class ShipmentSelectors extends RegexSelectors {
   //#region Shared
   public static readonly LastElementShipment = ":last";
+  public static readonly FirstRowinpackages = '#row0';
 
+  
   public static readonly ShipmentMoreList = '#MenuButtons';
   public static readonly ShipmentTab = '#SHIP';
   public static readonly ContainersTab = '#CNFU';
@@ -38,6 +40,11 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly Transshipment1ETA = '#date_Shipment_Transshipment1ETA';
   public static readonly Transshipment1ATA = '#date_Shipment_Transshipment1ATA';
 
+  public static readonly TEST = '.RedButton';
+  public static readonly Newcontainermaster = '.ToggleButtonMenu';
+  public static readonly Addcontainer = '.GroupageItem';
+
+  
   
   
   

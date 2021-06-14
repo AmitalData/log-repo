@@ -6,20 +6,9 @@ import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliase
 import { ShipmentSelectors } from "../../selectors/Selectors";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { ShipmentContext } from '../../models/ShipmentContext';
-import { MainCarriageLeg } from "cypress/models/MainCarriageLeg";
 import { PackagesDetails } from "cypress/models/PackagesDetails";
-
-import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors";
-//import { when } from "cypress/types/jquery";
-
-//#region variables
 let MasterShipmentDetails: ShipmentDetails;
 let packagesDetails: PackagesDetails[]
-let ShipmentData: ShipmentDetails;
-let shipmentDetails: ShipmentDetails;
-
-let EventNote;
-let shipmentNumber: string;
 //#endregion
 
 //#region Create master export air shipment
@@ -65,23 +54,26 @@ Then("the house should connect successfully", () => {
 Given('the user in the house package tab',()=>{
     Actions.openHouseShipment()
     cy.Navigate(ShipmentSelectors.ShipmentPackagesTab+ShipmentSelectors.LastElementShipment)
-    //cy.Navigate(ShipmentSelectors.ShipmentAddPackagesTab+ShipmentSelectors.LastElementShipment)
+
 
 })
 Given("add a package with the following details", (dataTable) => {
     cy.Navigate(ShipmentSelectors.ShipmenAddpackqges)
     packagesDetails = Assists.CreateSet<PackagesDetails>(dataTable);
     Actions.AddHousePackage( packagesDetails)
-   // cy.Click("#OkOceanPackage", null)
+    cy.Click("#OkOceanPackage", null)
 });
 When('update shipment',()=>{
     
    cy.Navigate(ShipmentSelectors.ShipmenSavepackqges+ShipmentSelectors.LastElementShipment)
 })
 Then('the shipment should update successfully',()=>{
-
+Actions.UpdateMaster()
 })
 Then('the package should add successfully',()=>{
+cy.get(ShipmentSelectors.FirstRowinpackages).contains('Animals').should('exist')
+cy.get(ShipmentSelectors.FirstRowinpackages).contains('100').should('exist')
+cy.get(ShipmentSelectors.FirstRowinpackages).contains('5').should('exist')
 
 })
 Given('the user in the master package tab',()=>{
@@ -90,11 +82,24 @@ Given('the user in the master package tab',()=>{
 })
 Given('rebuild master containers by adding new container with the following details',(dataTable)=>{
     cy.Navigate(ShipmentSelectors.ShipmentPackagefromhouse)
-  //  cy.get('.ToggleButton').click({multiple: true})
-    cy.get('.GroupageItem').find('.ToggleButton').contains('Add').first().click()
-    cy.get('.ToggleButtonMenu').contains('New Container').first().click()
-   
+    cy.Click(ShipmentSelectors.Addcontainer,'Add')
+   cy.Click(ShipmentSelectors.Newcontainermaster,'New Container')
     packagesDetails = Assists.CreateSet<PackagesDetails>(dataTable);
     Actions.AddHousePackage( packagesDetails)
+    cy.Click(ShipmentSelectors.TEST+ShipmentSelectors.LastElementShipment,'OK')
+    
+})
+//edit-log-grid_0_20_3_0
+When('Update the shipment',()=>{
+    cy.Navigate(ShipmentSelectors.ConfirmWindowYes)
+    cy.Click(ShipmentSelectors.TEST+ShipmentSelectors.LastElementShipment,'OK')
+})
+Then('the container should add successfully',()=>{
+cy.get(ShipmentSelectors.FirstRowinpackages).contains('ContainerId').should('exist')
+cy.get(ShipmentSelectors.FirstRowinpackages).contains('100').should('exist')
 
+
+})
+Then('the master container number should be ABCD1111117',()=>{
+    cy.get('#edit-log-grid_0_20_3_0').contains('ABCD1111117').should('exist')
 })

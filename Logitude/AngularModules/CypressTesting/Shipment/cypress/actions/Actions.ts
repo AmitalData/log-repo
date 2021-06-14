@@ -518,8 +518,8 @@ export function AddHousePackage(packagesDetails: PackagesDetails[]) {
         cy.FillLogTextBox(ShipmentSelectors.ShipmentPackageprice, packagesDetails[i].Pieces)
         cy.get(ShipmentSelectors.ShipmentPackagecrossweight).type(packagesDetails[i].GrossWeight.toString())
     }
-    cy.Click("#OkOceanPackage", null)
-    //cy.contains('OK').click()
+    //cy.Click("#OkOceanPackage", null)
+    //cy.contains('Ok').click()
 }
 //#endregion
 //#region House Shipment Tab

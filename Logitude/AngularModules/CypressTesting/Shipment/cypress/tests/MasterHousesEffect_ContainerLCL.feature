@@ -36,7 +36,7 @@ Feature: LCL Container Number
         And rebuild master containers by adding new container with the following details
             | PackageType | GrossWeight |
             | PC2         | 100         |
-        When update shipment
+        When Update the shipment
         Then the shipment should update successfully
         And the container should add successfully
         And the master container number should be ABCD1111117
