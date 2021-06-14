@@ -6,41 +6,46 @@ import { Urls } from "../constants/Urls";
 import { RestAPI } from "../../../Base/cypress/constants/RestAPI";
 import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
-import { constants } from "../../../Base/cypress/constants/constants"
-import * as gr from '../../../Base/cypress/actions/GenerateRandoms';
+import { GenerateRandomNumberAndString } from '../../../Base/cypress/actions/GenerateRandoms';
 import * as GeneralActions from './GeneralActions'
-let PackageTypeCode = null;
-let inActivePackageType = false;
+import * as Actions from './Actions'
 
-export function FillCheckBoxProcess(CheckBoxSelector: string, IsCheck: string) {
-    if (IsCheck) {
-        if (IsCheck.toUpperCase() == constants.YES) {
-            cy.get(CheckBoxSelector).check({ force: true })
-        }
-        else {
-            cy.get(CheckBoxSelector).find(BaseSelectors.input).uncheck({ force: true })
-        }
-    }
+let searchFieldValue = null;
+
+export function FillCode(code: string) {
+    cy.FillLogTextBox(PackageTypeSelectors.Code, code)
 }
 
-function GenerateRandomNumber(NumberLength: number) {
-    let NewRandomCode = gr.GenerateRandomNumberAndString(NumberLength)
-    return NewRandomCode;
+export function FillPrintAs(printAs: string) {
+    cy.FillLogTextBox(PackageTypeSelectors.PrintAs, printAs)
+}
+
+export function FillRequiredData(packageTypeDetails: PackageTypeDetails) {
+    cy.FillLogTextBox(PackageTypeSelectors.Code, packageTypeDetails.Code)
+    cy.FillLogTextBox(PackageTypeSelectors.Name, packageTypeDetails.Name)
+    cy.FillLogTextBox(PackageTypeSelectors.PrintAs, packageTypeDetails.PrintAs)
+    Actions.FillCheckBoxProcess(PackageTypeSelectors.OceanCheckBox, packageTypeDetails.Ocean)
 }
 
 export function FillPackageTypeDetails(packageTypeDetails: PackageTypeDetails) {
+    FillTextBoxes(packageTypeDetails)
+    FillCheckBoxes(packageTypeDetails)
+}
 
-    let RandomNumberCode = GenerateRandomNumber(PackageTypeSelectors.CodeDigitCount)
+function FillTextBoxes(packageTypeDetails: PackageTypeDetails) {
+    cy.FillLogTextBox(PackageTypeSelectors.Code, GenerateRandomNumberAndString(4))
+    cy.FillLogTextBox(PackageTypeSelectors.LocalName, packageTypeDetails.LocalName)
+    cy.FillLogTextBox(PackageTypeSelectors.TEU, packageTypeDetails.TEU)
+    cy.FillLogTextBox(PackageTypeSelectors.ContainerSize, packageTypeDetails.ContainerSize)
+    cy.FillLogTextBox(PackageTypeSelectors.Volume, packageTypeDetails.Volume)
+    cy.FillLogTextBox(PackageTypeSelectors.Notes, packageTypeDetails.Notes)
+}
 
-    cy.FillLogTextBox(PackageTypeSelectors.PackageTypeCode, RandomNumberCode)
-    cy.FillLogTextBox(PackageTypeSelectors.PackageTypeName, packageTypeDetails.Name)
-    cy.FillLogTextBox(PackageTypeSelectors.PackageTypeLocalName, packageTypeDetails.LocalName)
-    cy.FillLogTextBox(PackageTypeSelectors.PackageTypeTEU, packageTypeDetails.TEU)
-    cy.FillLogTextBox(PackageTypeSelectors.PackageTypeContainerSize, packageTypeDetails.ContainerSize)
-    cy.FillLogTextBox(PackageTypeSelectors.PackageTypeVolume, packageTypeDetails.Volume)
-    cy.FillLogTextBox(PackageTypeSelectors.PackageTypePrintAs, packageTypeDetails.PrintAs)
-    FillCheckBoxProcess(PackageTypeSelectors.PackageTypeAirCheckBox, packageTypeDetails.Air)
-    FillCheckBoxProcess(PackageTypeSelectors.InActivePackageTypeCheckBox, packageTypeDetails.InActive)
+function FillCheckBoxes(packageTypeDetails: PackageTypeDetails) {
+    Actions.FillCheckBoxProcess(PackageTypeSelectors.IsContainerCheckBox, packageTypeDetails.IsContainer)
+    Actions.FillCheckBoxProcess(PackageTypeSelectors.RefrigeratedCheckBox, packageTypeDetails.Refrigerated)
+    Actions.FillCheckBoxProcess(PackageTypeSelectors.AirCheckBox, packageTypeDetails.Air)
+    Actions.FillCheckBoxProcess(PackageTypeSelectors.InlandCheckBox, packageTypeDetails.Inland)
 }
 
 export function CreatePackageType() {
@@ -55,35 +60,29 @@ function DefinePostPackageTypeRequest() {
 export function AssertCreatePackageType() {
     let intercept = cy.wait("@" + RequestAliases.PostPackageType);
     intercept.then((interception) => {
-        if (interception.response.statusCode === 400) {
+        let statusCode = interception.response.statusCode;
+        if (statusCode === 400) {
             ReCreatePackageType();
         }
         else {
-            AssertPostPackageType(interception.response.statusCode, 200, interception.response.body.Code)
+            assert.equal(statusCode, 200)
+            searchFieldValue = interception.response.body.Code
         }
     })
 }
 
 function ReCreatePackageType() {
-
-    let RandomNumberCode = GenerateRandomNumber(PackageTypeSelectors.CodeDigitCount)
-
-    cy.FillLogTextBox(PackageTypeSelectors.PackageTypeCode, RandomNumberCode)
+    cy.FillLogTextBox(PackageTypeSelectors.Code, GenerateRandomNumberAndString(4))
     CreatePackageType();
     AssertCreatePackageType();
 }
 
-export function AssertPostPackageType(responseStatusCode: number, expectedStatusCode: number, packageTypeCode: string) {
-    assert.equal(responseStatusCode, expectedStatusCode)
-    PackageTypeCode = packageTypeCode
-}
-
 export function SearchPackageType() {
-    GeneralActions.Search(PackageTypeCode)
+    GeneralActions.Search(searchFieldValue)
 }
 
 export function AssertSearchPackageType() {
-    GeneralActions.AssertSearch(PackageTypeCode)
+    GeneralActions.AssertSearch(searchFieldValue)
 }
 
 export function OpenPackageType() {
@@ -104,13 +103,16 @@ function AssertPackageTypeGetSingle() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetSignle, 200);
 }
 
-export function FillPackageTypeLocalName(LocalName: string) {
-    cy.FillLogTextBox(PackageTypeSelectors.PackageTypeLocalName, LocalName)
+export function EditGeneralTab(packageTypeDetails: PackageTypeDetails) {
+    cy.FillLogTextBox(PackageTypeSelectors.ContainerSize, packageTypeDetails.ContainerSize)
+    cy.FillLogTextBox(PackageTypeSelectors.Volume, packageTypeDetails.Volume)
+    cy.FillLogTextBox(PackageTypeSelectors.Notes, packageTypeDetails.Notes)
+    Actions.FillCheckBoxProcess(PackageTypeSelectors.InActivePackageTypeCheckBox, packageTypeDetails.InActive)
 }
 
 export function EditPackageType() {
     DefinePutPackageTypeRequest();
-    cy.Click(PackageTypeSelectors.PackageTypeSaveButton, null);
+    cy.Click(PackageTypeSelectors.SaveButton, null);
 }
 
 function DefinePutPackageTypeRequest() {
@@ -123,13 +125,13 @@ export function AssertEditPackageType() {
 
 export function CloseSavePackageType() {
     DefinePackageTypeViewGetSingleRequest()
-    cy.Click(PackageTypeSelectors.PackageTypeSaveCloseButton, null);
-}
-
-export function AssertCloseSavePackageType() {
-    AssertPackageTypeGetSingle();
+    cy.Click(PackageTypeSelectors.SaveCloseButton, null);
 }
 
 function DefinePackageTypeViewGetSingleRequest() {
     cy.DefineRequestWait(RestAPI.GET, Urls.PackageTypesviewGetSingle, RequestAliases.GetSignle);
+}
+
+export function AssertCloseSavePackageType() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetSignle, 200);
 }

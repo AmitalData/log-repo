@@ -2,7 +2,6 @@ import { OccasionTypeSelectors } from "../selectors/OccasionTypeSelectors";
 import { MaintenanceSelectors } from "../selectors/Selectors";
 import * as Actions from "./Actions";
 import * as GeneralActions from "./GeneralActions";
-import { OccasionTypeDetails } from "../models/OccasionTypeDetails";
 import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import { RestAPI } from "../../../Base/cypress/constants/RestAPI";
 import { Urls } from "../constants/Urls";
