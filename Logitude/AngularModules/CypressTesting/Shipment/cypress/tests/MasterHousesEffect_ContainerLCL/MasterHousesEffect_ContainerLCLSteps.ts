@@ -90,4 +90,5 @@ Given('the user in the master package tab',()=>{
 })
 Given('rebuild master containers by adding new container with the following details',()=>{
     cy.Navigate(ShipmentSelectors.ShipmentPackagefromhouse)
+    cy.get('.ToggleButton').contains('Add').click()
 })
