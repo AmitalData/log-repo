@@ -1153,7 +1153,7 @@ class JournalLineModel extends BaseComponent {
 
             }
             else {
-                if (this.ForeignAmount && this.LocalAmount && !this.CheckLocalCurrency()) {
+                if (this.ForeignAmount && this.LocalAmount && !this.ChckIfCurrencyIsSameAsTenantCurrency()) {
                     this.SetExchangeRateMnualy();
                 }
             }
@@ -1173,7 +1173,7 @@ class JournalLineModel extends BaseComponent {
         this.isLocalEntered = false;
     //    this.isRateManualy = false;
     }
-    CheckLocalCurrency() {
+    ChckIfCurrencyIsSameAsTenantCurrency() {
         if (this.CurrencyId == SessionLocator.TenantPM.CurrencyId) return true;
     }
     SetExchangeRateMnualy() {
