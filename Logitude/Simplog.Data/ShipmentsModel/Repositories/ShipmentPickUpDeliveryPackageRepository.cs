@@ -84,5 +84,11 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         {
             return context.ShipmentPickUpDeliveryPackages.Where(d => d.Tenant == tenant && d.ShipmentPickUpDeliveryId == deliveryId);
         }
+        public ShipmentPickUpDeliveryPackage GetSingleShipmentPickUpDeliveryPackageByContainerId(string containerId, int tenant)
+        {
+            return (from record in context.ShipmentPickUpDeliveryPackages
+                    where  record.Tenant == tenant && record.ContainerEntityId == containerId
+                    select record).FirstOrDefault();
+        }
     }
 }

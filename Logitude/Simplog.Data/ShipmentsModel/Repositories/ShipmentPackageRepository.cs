@@ -57,6 +57,13 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             return shipments;
         }
 
+        public ShipmentPackage GetSingleShipmentPackageByContainerId(string shipmentId, string containerId,int tenant)
+        {
+            return (from record in context.ShipmentPackages where record.ShipmentId != shipmentId && 
+                    record.Tenant == tenant &&  record.ContainerEntityId == containerId
+                    select record).FirstOrDefault();
+        }
+
         public void Add(ShipmentPackage entity)
         {
             context.ShipmentPackages.Add(entity);

@@ -4643,6 +4643,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
 
+            UpdateConnectedPackages(itemPM);
+
             calculateProfit = true;
             calculatePayables = true;
             calculateReceivables = true;
@@ -7010,6 +7012,42 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         {
             ShipmentQuery shipmenQuery = new ShipmentQuery(initializer.Repository);
             return shipmenQuery.GetSinglePM(forwarderShipmentId, tenant);
+        }
+
+        private void UpdateConnectedPackages(ShipmentPackagePM itemPM)
+        {
+            ShipmentPackage shipmentPackage = this.shipmentPackageRepository.GetSingleShipmentPackageByContainerId(itemPM.ShipmentId,itemPM.ContainerEntityId,tenant);
+            if (shipmentPackage != null)
+            {
+                UpdateConnectedStanadAloneShipmentPackages(itemPM, shipmentPackage);
+            }
+            ShipmentPickUpDeliveryPackage shipmentPickUpDeliveryPackage = this.shipmentPickUpDeliveryPackageRepository.GetSingleShipmentPickUpDeliveryPackageByContainerId(itemPM.ContainerEntityId, tenant);
+            if(shipmentPickUpDeliveryPackage != null)
+            {
+                UpdateConnectedPickupDeliveryPackages(itemPM, shipmentPickUpDeliveryPackage);
+            }
+        }
+        private void UpdateConnectedStanadAloneShipmentPackages(ShipmentPackagePM itemPM, ShipmentPackage shipmentPackage)
+        {
+            shipmentPackage.ContainerNumber = itemPM.ContainerNumber;
+            shipmentPackage.Description = itemPM.Description;
+            shipmentPackage.PackageTypeId = itemPM.PackageTypeId;
+            shipmentPackage.Quantity = itemPM.Quantity;
+            shipmentPackage.Volume = itemPM.Volume;
+            shipmentPackage.Weight = itemPM.Weight;
+            shipmentPackage.ShipperSeal = itemPM.ShipperSeal;
+            this.shipmentPackageRepository.Update(shipmentPackage);
+        }
+        private void UpdateConnectedPickupDeliveryPackages(ShipmentPackagePM itemPM, ShipmentPickUpDeliveryPackage shipmentPickUpDeliveryPackage)
+        {
+            shipmentPickUpDeliveryPackage.ContainerNumber = itemPM.ContainerNumber;
+            shipmentPickUpDeliveryPackage.Description = itemPM.Description;
+            shipmentPickUpDeliveryPackage.PackageTypeId = itemPM.PackageTypeId;
+            shipmentPickUpDeliveryPackage.Quantity = itemPM.Quantity;
+            shipmentPickUpDeliveryPackage.Volume = itemPM.Volume;
+            shipmentPickUpDeliveryPackage.Weight = itemPM.Weight;
+            shipmentPickUpDeliveryPackage.ShipperSeal = itemPM.ShipperSeal;
+            this.shipmentPickUpDeliveryPackageRepository.Update(shipmentPickUpDeliveryPackage);
         }
     }
 

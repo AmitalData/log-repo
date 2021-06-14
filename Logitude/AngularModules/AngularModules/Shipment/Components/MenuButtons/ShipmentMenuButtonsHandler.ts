@@ -255,10 +255,10 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                                 if (this.IsStandAloneFeatureShipment()) {
                                     button.IsDisabled = true;
                                 }
-                            }
+                            }       
                             else {
                                 button.IsHidden = true;
-                            }
+                            }                  
                         }
 
                         else {
@@ -277,8 +277,11 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                                     button.IsHidden = false;
                                     button.IsDisabled = false;
                                 }
+                                if (this.IsStandAloneFeatureShipment()) {
+                                    button.IsDisabled = true;
+                                }
                             }
-
+                 
                             else {
                                 button.IsHidden = true;
                             }
@@ -299,11 +302,14 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                                     button.IsHidden = false;
                                     button.IsDisabled = false;
                                 }
+                                if (this.IsStandAloneFeatureShipment()) {
+                                    button.IsDisabled = true;
+                                }
                             }
-
+                  
                             else {
                                 button.IsHidden = true;
-                            }                           
+                            }
                         }
 
                         else {
@@ -322,11 +328,14 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                                     button.IsHidden = false;
                                     button.IsDisabled = false;
                                 }
+                                if (this.IsStandAloneFeatureShipment()) {
+                                    button.IsDisabled = true;
+                                }
                             }
 
                             else {
                                 button.IsHidden = true;
-                            } 
+                            }
                         }
                         else {
                             button.IsHidden = true;
