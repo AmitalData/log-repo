@@ -9,6 +9,7 @@ using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
@@ -88,6 +89,117 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
 
         }
+
+        [HttpGet]
+        public HttpResponseMessage GetARPyamentChequesListAsLedgerTransactions([FromUri] ApiQueryFilters filters) {
+
+            int tenant = AuthinticateTenant();
+            try
+            {
+                string accountId = GetGLAccountFilterValueFromQueryOperations(filters, tenant);
+
+                List<LedgerTransactionList> tranactions = GetAccountChequesTransactions(tenant, accountId);
+
+                ServiceResponse response = new ServiceResponse();
+                if (filters.GetCount)
+                {
+                    response.Count = tranactions.Count;
+                }
+
+                response.Result = tranactions;
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
+                return reponseMessage;
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        private static string GetGLAccountFilterValueFromQueryOperations(ApiQueryFilters filters, int tenant)
+        {
+            QueryOperations queryOperations = BuildQueryOperationsForLedgerTransactions(filters, tenant);
+            string accountId = GetGLAccountFilterValue(queryOperations);
+            return accountId;
+        }
+
+        private static List<LedgerTransactionList> GetAccountChequesTransactions(int tenant, string accountId)
+        {
+            IAccountingContext MyContext = AccountingContext.GetContext(tenant);
+            GLAccountChequesTransactionsRetreivingService ledgerTransactionQuery = new GLAccountChequesTransactionsRetreivingService(tenant, MyContext);
+            List<LedgerTransactionList> tranactions = ledgerTransactionQuery.GetAccountChequesTransactions(accountId);
+            return tranactions;
+        }
+
+        private static QueryOperations BuildQueryOperationsForLedgerTransactions(ApiQueryFilters filters, int tenant)
+        {
+            QueryOperations queryOperations = new QueryOperations()
+            {
+                ObjectTableName = "LedgerTransaction",
+                PageIndex = filters.PageIndex,
+                PageSize = filters.PageSize,
+                QuerySection = "LedgerTransactions",
+                SortByColumnName = filters.SortBy,
+                SortDirectin = filters.SortDirection,
+                GetAll = filters.GetAll,
+            };
+
+            #region filters
+            List<ObjectField> LedgerTransactionObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("LedgerTransaction", tenant);
+            List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
+       
+
+            if (!string.IsNullOrEmpty(filters.AdditionalFilters))
+            {
+                JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
+                var filters_list = JsonConvert.Deserialize<List<QueryFilterItem>>(filters.AdditionalFilters);
+
+                foreach (QueryFilterItem filter in filters_list)
+                {
+                    ObjectField field = LedgerTransactionObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                    if (field != null)
+                    {
+
+
+                        string valuestring1 = filter.FieldValue != null ? filter.FieldValue.ToString() : null;
+
+                        object value1;
+                        if (valuestring1 == "#today")
+                        {
+                            var today = TenantServerConfigration.GetCurrentDateTime(tenant);
+                            value1 = new DateTime(today.Year, today.Month, today.Day, 0, 0, 0, 0);
+                        }
+                        else
+                        {
+                            value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+
+                        }
+
+
+
+                        string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
+                        object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+
+                        queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
+                    }
+                    else
+                    {
+                        queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
+                    }
+                }
+            }
+            #endregion
+            return queryOperations;
+        }
+
+        private static string GetGLAccountFilterValue(QueryOperations queryOperations)
+        {
+            QueryFilterItem filterItem = queryOperations.QueryFilterItems.Find(d => d.FieldName == "GLAccountId");
+            return filterItem?.FieldValue.ToString();
+
+        }
+
         private static int AuthinticateTenant()
         {
             string token = HttpContext.Current.Request.Headers["Token"];

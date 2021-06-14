@@ -679,7 +679,7 @@
                                             <div class="amount" float-start style="text-align: right;" >
                                                 {{(GLAccountMoreData.TotalOpenChequesInLocalCur?GLAccountMoreData.TotalOpenChequesInLocalCur:0) | NumbersPipe:'N2'}}
                                             </div>
-                                            <a style="font-size: 11px;line-height: 22px;padding: 0 4px;" (click)="DisplayChequelistClicked()" float-start text-start >
+                                            <a style="font-size: 11px;line-height: 22px;padding: 0 4px;" (click)="DisplayChequelistClicked(GLAccountMoreData.AccountId)" float-start text-start >
                                                 {{ 'GLAccounts.O.DisplayChequelist' | TextCodeTranslationPipe }}
                                             </a>
                                         </div>

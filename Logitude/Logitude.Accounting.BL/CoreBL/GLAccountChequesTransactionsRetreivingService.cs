@@ -3,8 +3,12 @@ using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.Interfaces;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
 using Simplog.Data.Helpers;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using System;
@@ -19,10 +23,12 @@ namespace Logitude.Accounting.BL.CoreBL
     {
         int tenant;
         IAccountingContext accountingContext;
+        bool showLocal;
         public GLAccountChequesTransactionsRetreivingService(int Tenant, IAccountingContext context)
         {
             tenant = Tenant;
             this.accountingContext = context;
+            this.showLocal = GetLoggedContactShowLocal(tenant);
         }
 
         public List<LedgerTransactionList> GetAccountChequesTransactions(string accountId)
@@ -47,8 +53,10 @@ namespace Logitude.Accounting.BL.CoreBL
                     select new LedgerTransactionList()
                     {
                         PaymentValueDate = arpaymentcheque.ValueDate,
-                        PaymentChequeStatus = arpaymentchequeStatus.LocalName,
+                        PaymentChequeStatus = showLocal ?  arpaymentchequeStatus.LocalName: arpaymentchequeStatus.EnglishName,
                         Source = journal.AccountingEntityReference,
+                        SourceType = journal.AccountingEntityCode,
+                        SourceNumber = journal.AccountingEntityReference,
                         LocalAmountCredit = transaction.LocalAmountCredit,
                         ForeignAmountCredit = transaction.ForeignAmountCredit,
                         Reference1 = transaction.Reference1,
@@ -74,6 +82,9 @@ namespace Logitude.Accounting.BL.CoreBL
                     && trans.LocalAmountCredit != 0
                     select new LedgerTransactionList
                     {
+                        Source = journal.AccountingEntityReference,
+                        SourceType = journal.AccountingEntityCode,
+                        SourceNumber = journal.AccountingEntityReference,
                         JournalNumber = journal.JournalNumber,
                         LocalAmountCredit = trans.LocalAmountCredit,
                         ForeignAmountCredit = trans.ForeignAmountCredit,
@@ -91,6 +102,15 @@ namespace Logitude.Accounting.BL.CoreBL
             DateTime _today = TenantServerConfigration.GetCurrentDateTime(tenant);
             _today = new DateTime(_today.Year, _today.Month, _today.Day, 11, 59, 59);
             return _today;
+        }
+
+        public static bool GetLoggedContactShowLocal(int tenant)
+        {
+            ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;
+            ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(tenant);
+
+            bool showLocal = !(bool)loggedcontact?.DontShowLocal;
+            return showLocal;
         }
 
     }

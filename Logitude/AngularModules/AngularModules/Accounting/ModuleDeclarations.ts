@@ -80,6 +80,7 @@ import {InterestReportListTemplate} from './Components/ListTemplates/InterestRep
 import {InterestInvoiceListTemplate} from './Components/ListTemplates/InterestInvoiceListTemplate'
 import { InterestBasesTypeDetailsTabComponent } from './Components/EditTabs/Interest/DetailsTab/InterestBasesTypeDetailsTabComponent';
 import {PrintedListHeaderTemplate} from './Components/ListTemplates/PrintedListHeaderTemplate'
+import { GLAccountChequeListComponent } from './Components/EditTabs/GLAccount/GLAccountChequeListComponent';
 
 
 import { CopyJournalComponent } from './Components/Others/CopyJournalComponent';
@@ -232,6 +233,7 @@ export const Components =
         GLAccountInterestComponent,
         InterestInvoiceAutoCreditComponent,
         UserDefinedReportGeneralTabComponent,
+        GLAccountChequeListComponent,
         //Templates
         GlAccountLedgerTransactionsListTemplate,
         ReconcileExternalPageListTemplate,
@@ -366,6 +368,7 @@ export class ModuleDeclarations {
             //case "CashBookGeneralTabComponent": { myResult = CashBookGeneralTabComponent; break; }
             case "GLAccountOverviewComponent": { myResult = GLAccountOverviewComponent; break; }
             case "GLAccountTransactionsTabComponent": { myResult = GLAccountTransactionsTabComponent; break; }
+            case "GLAccountChequeListComponent": { myResult = GLAccountChequeListComponent; break; }
             case "ManageReconciliationsTabComponent": { myResult = ManageReconciliationsTabComponent; break; }
             case "JournalDetailsTabComponent": { myResult = JournalDetailsTabComponent; break; }
             case "UpdateJournalLineComponent": { myResult = UpdateJournalLineComponent; break; }

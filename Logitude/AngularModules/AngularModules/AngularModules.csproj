@@ -47,6 +47,7 @@
     <Content Include="Accounting\Components\EditTabs\GLAccount\GLAccountOverviewComponent.html" />
     <Content Include="Accounting\Components\EditTabs\GLAccount\GLAccountSearchWindowComponent.html" />
     <Content Include="Accounting\Components\EditTabs\GLAccount\GLAccountTaxWithholdingTabComponent.html" />
+    <Content Include="Accounting\Components\EditTabs\GLAccount\GLAccountChequeListComponent.html" />
     <Content Include="Accounting\Components\EditTabs\GLAccount\NewConnectedGLAccountComponent.html" />
     <Content Include="Accounting\Components\EditTabs\InterestReport\GeneralTab\InterestReportGeneralTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\InterestReport\GeneralTab\InterestReportLineByDateDetails\InterestReportLineByDateDetailsComponent.html" />
@@ -329,6 +330,7 @@
     <Content Include="_Resources\css\PrimeWebComponent.css" />
     <Content Include="_Resources\js\UnifreightJSBridge.js" />
     <TypeScriptCompile Include="Abstractions\Services\BaseService.ts" />
+    <TypeScriptCompile Include="Accounting\Components\EditTabs\GLAccount\GLAccountChequeListComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\Journal\UpdateJournalLineComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Maintenance\Tester\AccountingMainTesterComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\NewEntity\JournalCSVLoadComponent.ts" />
