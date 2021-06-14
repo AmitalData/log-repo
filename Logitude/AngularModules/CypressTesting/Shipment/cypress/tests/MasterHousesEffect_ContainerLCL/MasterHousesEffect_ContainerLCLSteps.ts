@@ -72,7 +72,7 @@ Given("add a package with the following details", (dataTable) => {
     cy.Navigate(ShipmentSelectors.ShipmenAddpackqges)
     packagesDetails = Assists.CreateSet<PackagesDetails>(dataTable);
     Actions.AddHousePackage( packagesDetails)
-    
+   // cy.Click("#OkOceanPackage", null)
 });
 When('update shipment',()=>{
     
@@ -88,7 +88,13 @@ Given('the user in the master package tab',()=>{
     cy.BackButton('Shipment')
    cy.Navigate(ShipmentSelectors.PackagesTab)
 })
-Given('rebuild master containers by adding new container with the following details',()=>{
+Given('rebuild master containers by adding new container with the following details',(dataTable)=>{
     cy.Navigate(ShipmentSelectors.ShipmentPackagefromhouse)
-    cy.get('.ToggleButton').contains('Add').click()
+  //  cy.get('.ToggleButton').click({multiple: true})
+    cy.get('.GroupageItem').find('.ToggleButton').contains('Add').first().click()
+    cy.get('.ToggleButtonMenu').contains('New Container').first().click()
+   
+    packagesDetails = Assists.CreateSet<PackagesDetails>(dataTable);
+    Actions.AddHousePackage( packagesDetails)
+
 })

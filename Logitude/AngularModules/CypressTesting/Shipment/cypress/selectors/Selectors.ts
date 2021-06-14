@@ -86,8 +86,6 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ShipmentPackagecrossweight= '#ShipmentPackage_Weight';
   public static readonly ShipmentPackageContainernumber= '#ShipmentPackage_ContainerNumber';
   public static readonly ShipmentPackagefromhouse= '#ShipmentPackageMContainNoPackages';
-
-
   
   public static readonly ShipmentPackageok= '#OkOceanPackage';
 
