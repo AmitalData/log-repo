@@ -59,8 +59,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 try {
                     string error = "";
                 string decId = "";
+                string courierMasterID = "";
                 string moreParams = customResponse.MoreParams;
-                    CommDecService.ProccessGenericRequestReal(customResponse.LOGICOMMDEC, requestParams.Tenant, requestParams.LoggingUserId , ref moreParams, out error, out customFileNo, out decId);
+                    CommDecService.ProccessGenericRequestReal(customResponse.LOGICOMMDEC, requestParams.Tenant, requestParams.LoggingUserId , ref moreParams, out error, out customFileNo, out decId, out courierMasterID);
 
                 if(error!="")
                 {
@@ -78,6 +79,28 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     myConnectDocumentsfilingService.Connect(decId, customFileNo, requestParams);
 
                 }
+
+                var context = CustomContext.GetContext(requestParams.Tenant);
+
+                CustomsRequestsSheetQueryService customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(context);
+                List<CustomsRequestsSheetPM> customsRequestsSheetPMList = customsRequestsSheetQueryService.GetRequestInProgress(requestParams.Tenant, "UCUDO", "", "", null, null, courierMasterID, true);
+
+                if(customsRequestsSheetPMList== null || customsRequestsSheetPMList.Count==0)
+                {
+                    var messagingService = new DCAInUCUDO_UpdateOpenDeclarationsMessagingService();
+                    UpdateOpenDeclarationsRequestParams requestParams2 = new UpdateOpenDeclarationsRequestParams()
+                    {
+
+                        LoggingUserId = requestParams.LoggingUserId,
+                        Tenant = requestParams.Tenant,
+                        LoggingEntityId = courierMasterID,
+
+                    };
+
+                    string message = messagingService.CreateCRS(requestParams.Tenant, requestParams.LoggingUserId, requestParams2);
+
+                }
+
                 this.MyResponseData.ApplicationID = customFileNo;
                      this.MyResponseData.HasException = false;
                     this.MyResponseData.Succeeded = true;

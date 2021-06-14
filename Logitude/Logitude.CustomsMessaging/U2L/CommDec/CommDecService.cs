@@ -84,7 +84,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
         {
             string customFileNo = "";
             string decId = "";
-
+            string courierMasterID = "";
             MessageOut = "";
             _tenant = ResolvedTenant();
             var user = AuthenticationUtil.ResolveUserId(_tenant);
@@ -117,7 +117,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             {
                 AppendLogLine("Default= WS'");
 
-                ProccessGenericRequestReal(xmlLOGICOMMDEC, _tenant, user, ref MoreParams, out MessageOut, out customFileNo, out decId);
+                ProccessGenericRequestReal(xmlLOGICOMMDEC, _tenant, user, ref MoreParams, out MessageOut, out customFileNo, out decId, out courierMasterID);
             }
 
 
@@ -131,12 +131,13 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
         public void ProccessGenericRequestReal(
               string xmlLOGICOMMDEC, int tenant, string Curruser,
               ref string MoreParams,
-              out string MessageOut, out string customFileNo, out string decId)
+              out string MessageOut, out string customFileNo, out string decId, out string courierMasterID)
         {
             _tenant = tenant;
             customFileNo = "";
             MessageOut = "";
             decId = "";
+            courierMasterID = "";
             _Stopwatch = Stopwatch.StartNew();
             MyCommunicationsParams.Subject = "CommDecService ";
             Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.Clear();
@@ -367,6 +368,11 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 AppendLogLine("Declaration has multiple Consignments(" + this._MyDeclarationPM.Consignments.Count.ToString() + ") and Consignment details didn't update");
             }
 
+
+            if(_CourierMasterPM!= null)
+            {
+                courierMasterID = _CourierMasterPM.Id;
+            }
             if (this._LogitudeCommDecFile.INVOICE != null)
             {
                 if (this._LogitudeCommDecFile.INVOICE.Count() > 0)
