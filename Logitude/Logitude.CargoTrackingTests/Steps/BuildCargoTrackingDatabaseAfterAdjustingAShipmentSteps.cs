@@ -30,7 +30,6 @@ namespace Logitude.CargoTrackingTests.Steps
             string sourceConnectionString = "Data Source=.;Initial Catalog=Logitude2-5_Main;Integrated Security=False;Persist Security Info=True;User ID=sa;Password=Saas256;MultipleActiveResultSets=True;Connect Timeout=60";
             string destinationConnectionString = "Data Source=.;Initial Catalog=Logitude2-5_CargoTracking;Integrated Security=False;Persist Security Info=True;User ID=sa;Password=Saas256;MultipleActiveResultSets=True;Connect Timeout=60";
             cargoTrackingBuildService.BuildCargoTrackingTables(sourceConnectionString,destinationConnectionString);
-            
         }
 
       
