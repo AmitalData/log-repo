@@ -80,7 +80,6 @@ export class SpecialActivityRequestComponent
     }
 
     MaxLength(event) {
-        debugger;
         if (this.OtherActivityComment.length == 3) {
             return;
         }

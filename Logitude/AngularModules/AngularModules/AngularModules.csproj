@@ -1320,6 +1320,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\CourierDeclarationWorkspaceListTemplate.ts" />
     <TypeScriptCompile Include="Customs\Components\ListTemplates\EndDateComponent.ts" />
     <TypeScriptCompile Include="Customs\Components\ListTemplates\SupplierInvoiceItemListTemplate.ts" />
+    <TypeScriptCompile Include="Customs\Components\MenuButtons\ContainerizationMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Customs\Components\MenuButtons\PhysicalCheckMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Customs\Components\ShortTitles\ExportStorgeShortTitleComponent.ts" />
     <TypeScriptCompile Include="Customs\Components\Spotlight\ReferantSpotlightDataTemplate.ts" />

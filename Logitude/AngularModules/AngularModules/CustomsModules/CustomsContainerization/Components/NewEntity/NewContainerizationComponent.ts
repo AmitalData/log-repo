@@ -192,7 +192,7 @@ export class NewContainerizationComponent extends BaseComponent {
         filters.AdditionalFilters.push(ExportFilter);
         var ProcFilter = new FilterItem("ProcedureCurrentName", 'המכלה', null, null, "Contains", false, false, false, "string", false);
         filters.AdditionalFilters.push(ProcFilter);
-
+        filters.addAdditionalFilter("IsContainerization", true, null, null, "Equal", true, false, false, "string");
         if (this.selectedValue != 'All') {
             var ModeFilter = new FilterItem("TransportModeId", this.selectedValue, null, null, "Equals", false, false, false, "string", false);
             filters.AdditionalFilters.push(ModeFilter);
@@ -423,30 +423,37 @@ export class NewContainerizationComponent extends BaseComponent {
     }
 
     SendButtonClicked() {
-        var windowArgs: any = {};
-        var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Height = 200;
-        logitudeWindow.Width = 250;
-        logitudeWindow.ShowCloseButton = true;
-        logitudeWindow.Title = "הצהרת סוכן";
-        logitudeWindow.WindowArgs = windowArgs;
-        logitudeWindow.ComponentLoaded.subscribe(comp => {
-            logitudeWindow.WindowClosed.subscribe((AgentStatement: boolean) => {
-                this.entityPM.AgentDeclaration = true;
-                this.entityPM.ConnectedDeclarations = this.containerizationExtendedListService.ConnectedDeclarations;
-                if (AgentStatement) {
-                    this.containerizationPMService.insert(this.entityPM).subscribe((response: ServiceResponse) => {
-                        if (!response.HasError) {
-                            this.containerizationMessagesService.SendContainerization(this.getParams(response))
-                                .subscribe(res1 => {
-                                    this.CurrentSession.CurrentWindow.Close("0");
-                                });
-                        }
-                    });
-                }
+        if (this.entityPM.Id != null) {
+            debugger;
+            this.entityPM.ConnectedDeclarations = this.containerizationExtendedListService.ConnectedDeclarations;
+            SessionLocator.SelectedSession.CurrentEditComponent.EntityPM = this.entityPM;
+            this.CurrentSession.CurrentWindow.Close("0");
+        } else {
+            var windowArgs: any = {};
+            var logitudeWindow = new LogitudeWindow();
+            logitudeWindow.Height = 200;
+            logitudeWindow.Width = 250;
+            logitudeWindow.ShowCloseButton = true;
+            logitudeWindow.Title = "הצהרת סוכן";
+            logitudeWindow.WindowArgs = windowArgs;
+            logitudeWindow.ComponentLoaded.subscribe(comp => {
+                logitudeWindow.WindowClosed.subscribe((AgentStatement: boolean) => {
+                    if (AgentStatement) {
+                        this.entityPM.AgentDeclaration = true;
+                        this.entityPM.ConnectedDeclarations = this.containerizationExtendedListService.ConnectedDeclarations;
+                        this.containerizationPMService.insert(this.entityPM).subscribe((response: ServiceResponse) => {
+                            if (!response.HasError) {
+                                this.containerizationMessagesService.SendContainerization(this.getParams(response))
+                                    .subscribe(res1 => {
+                                        this.CurrentSession.CurrentWindow.Close("0");
+                                    });
+                            }
+                        });
+                    }
+                });
             });
-        });
-        logitudeWindow.Show('./CustomsModules/CustomsContainerization/Components/Other/AgentStatementContainerization');
+            logitudeWindow.Show('./CustomsModules/CustomsContainerization/Components/Other/AgentStatementContainerization');
+        }
     }
 
     getParams(response: ServiceResponse) {
@@ -477,14 +484,9 @@ export class NewContainerizationComponent extends BaseComponent {
     }
 
     SetWindowArgs(windowArgs) {
-
-        //this.EntityResourceService.getEntityResourceByTableName("Customs.Containerization").subscribe((response: any) => {
-        //    this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
-        //        this.entityListService = new EntityListService();
-
-        //    });
-        //});
-
+        if (windowArgs.EntityPM != null) {
+            this.entityPM = windowArgs.EntityPM;
+        } 
     }
 
 

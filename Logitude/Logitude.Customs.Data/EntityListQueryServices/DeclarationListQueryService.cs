@@ -496,6 +496,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 iQueryable = iQueryable.Where(x => x.AmendmentDontDisplayInList != true);
 
             }
+            if (queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "IsContainerization") != null)
+            {
+                iQueryable = iQueryable.Where(x => string.IsNullOrEmpty(x.ExportContainerizationID) == true);
+            }
 
             return iQueryable;
         }
@@ -538,80 +542,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         }
         private IQueryable<DeclarationList> GetIqueryableListForContainerization(IQueryable<Declaration> iQueryable)
         {
-            /*
-            var qCourierPendingReasonCode =
-                (from dp in context.DeclarationPendings
-                 where dp.Status == "A"
-                 group dp by dp.DeclarationID into gDeclarationPendings
-                 select new
-                 {
-                     DeclarationId = gDeclarationPendings.Key,
-                     CourierPendingReasonCode = gDeclarationPendings.Count() == 1 ? gDeclarationPendings.FirstOrDefault().CourierPendingReasonCode : null,
-                 }
-                    );
-            var qCourierPendingReasonLocalName = (
-                from rs in qCourierPendingReasonCode
-                join tablecode in context.CourierPendingReasons on rs.CourierPendingReasonCode equals tablecode.Code
-                into myinnerjoin
-                from tablecode1 in myinnerjoin.DefaultIfEmpty()
-                select new
-                {
-                    DeclarationID = rs.DeclarationId,
-                    CourierPendingReasonName = tablecode1 != null ? tablecode1.LocalName : "רשימה"
-                }
-                   );
-            
-            */
-
-            var qJoin =
-(from p in context.CourierDeclarations
-     //join dec in context.Declarations
-     //                    on p.DeclarationId equals dec.Id
-     //                    into DecJoin
-     //from myDeclarations in DecJoin
-
- join sts1 in context.DeclarationCourierStatuses
-                     on p.DeclarationId equals sts1.DeclarationId
-                     into DeclarationCourierStatusesJoin
-
-
-
- from myDeclarationCourierStatuses in DeclarationCourierStatusesJoin
-
- select new { p.CourierMasterId, p.CourierMaster/*, myDeclarations*/, myDeclarationCourierStatuses }
- );
-
-            var qMyJoin =
-                (
-                from rec in qJoin
-                select new MyDecJoin
-                {
-                    DeclarationId = rec.myDeclarationCourierStatuses.DeclarationId/*myDeclarations.Id*/,
-                    //CourierMasterId = rec.CourierMasterId,
-                    IsClosedForFollowUp = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.IsClosedForFollowUp : false,
-                    //FastIndividualProcessName = "",
-                    FastIndividualProcessCode = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.FastIndividualProcessCode : null,
-                    TotalInvoiceAmountInUSD = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.TotalInvoiceAmountInUSD : null,
-                    IsPending902 = rec.myDeclarationCourierStatuses != null ? (rec.myDeclarationCourierStatuses.CourierPendingReasonList.Contains("902") ? true : false) : false,
-                    IsPending900 = rec.myDeclarationCourierStatuses != null ? (rec.myDeclarationCourierStatuses.CourierPendingReasonList.Contains("900") ? true : false) : false,
-                    CourierPendingReasonList = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.CourierPendingReasonList : null,
-                    MAWB = rec.CourierMaster != null ? rec.CourierMaster.MAWB : null,
-                    IsCourierMissingClassification = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.IsCourierMissingClassification : false,
-                    IsPendingNotNull = rec.myDeclarationCourierStatuses != null ? (rec.myDeclarationCourierStatuses.CourierPendingReasonList != null && rec.myDeclarationCourierStatuses.CourierPendingReasonList.Length > 0 ? true : false) : false,
-                }
-                );
-
-            //        var q1stConsignments =
-            //            (from a in context.Consignments
-            //             group a by a.DeclarationId into gConsignments
-            //             select gConsignments.Take(1))
-            //                 .SelectMany(r => r);
-            //        q1stConsignments =
-            //(from a in context.Consignments
-            // group a by a.DeclarationId into gConsignments
-            // select gConsignments.FirstOrDefault());
-
-
+           
             var qConsignmentNumber = (from a in context.Consignments
                                       group a by a.DeclarationId into gConsignments
                                       select
@@ -628,14 +559,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                  select a
                  );
 
-            var qOriginalDeclarations = context.Declarations.Where(x => x.IsAmendment != true);
+            var qOriginalDeclarations = context.Declarations.Where(x => x.IsAmendment != true && x.ExportContainerizationID == null);
 
 
 
             bool test = false;
             if (test)
             {
-                var myMyJoin = qMyJoin.ToList();
+                //var myMyJoin = qMyJoin.ToList();
                 var s = q1stConsignments.ToList();
                 /*var pr = qCourierPendingReasonLocalName.ToList();*/
             }
@@ -652,29 +583,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                 // throw;
             }
-            bool isCourierEnv = context.CustomsSettings.FirstOrDefault(r => r.Tenant == tenant).CompanyType == "B";
-            if (!isCourierEnv)
-            {
-                qMyJoin = (from rec in context.CourierDeclarations.Where(r => r.DeclarationId == "-1")
-                           select new MyDecJoin()
-                           {
-                               DeclarationId = rec.DeclarationId,
-                               //CourierMasterId = rec.CourierMasterId,
-                               IsClosedForFollowUp = false,
-                               //FastIndividualProcessName = "",
-                               FastIndividualProcessCode = "",
-                               TotalInvoiceAmountInUSD = 1,
-                               IsPending902 = true,
-                               IsPending900 = true,
-                               CourierPendingReasonList = "",
-                               MAWB = "",
-                               IsCourierMissingClassification = true,
-                               IsPendingNotNull = true,
-                           });
-                //qMyJoin = Enumerable.Empty<MyDecJoin>().AsQueryable();
-                // q1stConsignments = context.Consignments.Where(r => r.DeclarationId == "-1");
-                //q1stConsignments = Enumerable.Empty<Consignment>().AsQueryable();
-            }
 
 
             IQueryable<DeclarationList> query = (from a in iQueryable.Include("DeclarationOffice").Include("AutonomyRegionType").Include("CustomerCard").Include("EntitleImporterCountry").Include("ImporterEntitlementType").Include("ImporterPassCountry").Include("ProcedureCurrent").Include("TransferImporterCountry").Include("Department").Include("DeclarationStatusType")
@@ -682,10 +590,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                  .Include("Importer").Include("EntitleImporter").Include("TransferImporter").Include("ImporterType").Include("TransferImporterType").Include("EntitleImporterType").Include("StorageStatus").Include("FreightPaymentMethod")
                                                  .Include("CustomsCountry").Include("CustomsShip")
 
-                                                 join recJoin in qMyJoin
-                                                              on a.Id equals recJoin.DeclarationId
-                                                              into qrecJoin
-                                                 from myJoin in qrecJoin.DefaultIfEmpty()
 
 
                                                  join recConsignment in q1stConsignments
@@ -698,11 +602,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                  into originalDeclarations
                                                  from myJoinOriginalDeclaration in originalDeclarations.DefaultIfEmpty()
 
-                                                     /*
-                                                     join pr in qCourierPendingReasonLocalName
-                                                     on a.Id equals pr.DeclarationID into leftjoinCourierPendingReasonLocalName
-                                                     from mypr in leftjoinCourierPendingReasonLocalName.DefaultIfEmpty()
-                                                     */
 
                                                  select new DeclarationList()
                                                  {
@@ -819,41 +718,20 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      //CustomsFileNo = qJoin != null ? (qJoin.FirstOrDefault().myDeclarations != null ? qJoin.FirstOrDefault().myDeclarations.CustomFileNo : null ) : null,
                                                      //CourierHAWB = qJoin != null ? (qJoin.FirstOrDefault().myDeclarations != null ? qJoin.FirstOrDefault().myDeclarations.CourierHAWB : null) : null,
                                                      AmendmentDontDisplayInList = a.AmendmentDontDisplayInList,
-
-
-
-
-                                                     IsClosedForFollowUp = myJoin != null ? myJoin.IsClosedForFollowUp : false,
-                                                     FastIndividualProcessCode = myJoin != null ? myJoin.FastIndividualProcessCode : null,
-                                                     //FastIndividualProcessName = myJoin != null ? myJoin.FastIndividualProcessName : null,
-                                                     TotalInvoiceAmountInUSD = myJoin != null ? myJoin.TotalInvoiceAmountInUSD : null,
-                                                     IsPending902 = myJoin != null ? myJoin.IsPending902 : false,
-                                                     IsPending900 = myJoin != null ? myJoin.IsPending900 : false,
-                                                     IsPendingNotNull = myJoin != null ? myJoin.IsPendingNotNull : false,
-                                                     CourierPendingReasonList = myJoin != null ? myJoin.CourierPendingReasonList : null,
-                                                     /*CourierPendingReasonList = mypr != null ? mypr.CourierPendingReasonName : null,*/
-                                                     //CourierPendingReasonName = a.CourierPendingReasonName,
-
-                                                     MAWB = myJoin != null ? myJoin.MAWB : null,
-                                                     IsCourierMissingClassification = myJoin != null ? myJoin.IsCourierMissingClassification : false,
                                                      CargoDescription = myJoinConsignment != null ? myJoinConsignment.CargoDescription : null,
-
-
                                                      IsPaymentProtested = a.IsPaymentProtested,
                                                      DeclarationNoAmendment = myJoinOriginalDeclaration.DeclarationNumber,
                                                      CustomFileAmendment = myJoinOriginalDeclaration.CustomFileNo,
                                                      AmendmentStatus = a.AmendmentStatus,
                                                      AmendmentRequestNumber = a.AmendmentRequestNumber,
                                                      AmendmentCorrectedByUserName = a.AmendmentCorrectedByUser != null ? a.AmendmentCorrectedByUser.Code : null,
-                                                     AmendmentissueDate = a.AmendmentissueDate
-                                                     ,
+                                                     AmendmentissueDate = a.AmendmentissueDate,
                                                      Direction = a.Direction,
                                                      ExportFile = a.ExportFile,
                                                      DeclarationDocumentTypeCode = a.DeclarationDocumentTypeCode,
                                                      AgentRoleCode = a.AgentRoleCode,
                                                      DestinationCountryCode = a.DestinationCountryCode,
                                                      DestinationCountryName = a.CustomsCountry != null ? a.CustomsCountry.EnglishName : "",
-
                                                      LoadingDateTime = a.LoadingDateTime,
                                                      ShipCode = a.ShipCode,
                                                      ShipName = a.CustomsShip != null ? a.CustomsShip.EnglishName : "",
@@ -864,7 +742,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      CargoTypeName = myJoinConsignment != null && myJoinConsignment.CargoType != null ? myJoinConsignment.CargoType.LocalName : null,
                                                      SecondCargoID = myJoinConsignment != null ? myJoinConsignment.SecondCargoID : null,
                                                      ThirdCargoID = myJoinConsignment != null ? myJoinConsignment.ThirdCargoID : null,
-                                                     ManifestNumber = myJoinConsignment != null ? myJoinConsignment.ManifestNumber : null
+                                                     ManifestNumber = myJoinConsignment != null ? myJoinConsignment.ManifestNumber : null,
+                                                     ExportContainerizationID=a.ExportContainerizationID,
                                                  });
 
 

@@ -50,7 +50,7 @@
   NoDefaultFeatures="false"
   HasCompactSearch="false"
   ApplyDefaultValues="false"
-  HasMenuButtons="false"
+  HasMenuButtons="true"
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
@@ -1752,7 +1752,8 @@
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="0"
         LocalDefaultText="&quot;הוסף הצהרה&quot;"
-        IsPackagable="true" />
+        IsPackagable="true"
+        HtmlComponentPath="&quot;./CustomsModules/CustomsContainerization/Components/NewEntity/NewContainerizationComponent&quot;" />
     </MenuButton>
   </MenuButtons>
   <DataContracts />

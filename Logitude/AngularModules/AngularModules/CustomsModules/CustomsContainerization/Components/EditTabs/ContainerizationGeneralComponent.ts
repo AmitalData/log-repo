@@ -106,7 +106,7 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
         //filters.SortDirection = sortingDir;
         //Customs.Declaration.F.ExportContainerizationID
         filters.addAdditionalFilter("ExportContainerizationID", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
-
+        debugger;
         return this.declarationListService.getByFilters(filters)
             .subscribe(r => {
                 this.ContainerizationDeclarationList = new ObservableCollection([]);
@@ -115,19 +115,24 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
 
     }
     private Listen() {
+        debugger;
         if (this.CurrentSession.CurrentEditComponent != null) {
 
             this.CurrentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
             this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
                 this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    debugger;
                     if (isSaveSuccess) {
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.getRows(); 
                     }
                 })
             );
+            //this.CurrentSession.CurrentEditComponent.saveco
+           // SessionLocator.SelectedSession.CurrentEditComponent
             this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
                 this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                    debugger;
                     if (isLoadSuccess) {
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         //this.RefreshEntity();
@@ -136,8 +141,10 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
             );
             this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
                 this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                    debugger;
                     if (this.CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
                         if (tabCode == "DEGC") {
+                            debugger;
                             this.RefreshEntity();
                         }
                     }

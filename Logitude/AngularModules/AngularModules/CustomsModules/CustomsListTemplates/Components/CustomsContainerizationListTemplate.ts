@@ -32,10 +32,14 @@ export class CustomsContainerizationListTemplate {
     //, private _customsCollateralAnswerSharedDataService: CustomsCollateralAnswerSharedDataService
     entityPM: ContainerizationPM;
     constructor(private CD: ChangeDetectorRef, private _containerizationExtendedListService: ContainerizationExtendedListService) {
-        this.entityPM = new ContainerizationPM();
+        if (SessionLocator.SelectedSession.CurrentEditComponent != null) {
+            this.entityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM as ContainerizationPM;
+        } else {
+            this.entityPM = new ContainerizationPM();
+        }
      }
 
-    setVariables(rowData: any, fieldName: string, additionalData: any ) {
+    setVariables(rowData: any, fieldName: string, additionalData: any) {
         this.fieldName = fieldName;
         this.rowData = rowData;
         this.BuildDeclarationsCheckBox();       
@@ -47,10 +51,13 @@ export class CustomsContainerizationListTemplate {
         if (!AppTool.IsNullOrEmpty(sConnectedDeclarations)) {
             let ConnectedDeclarations = sConnectedDeclarations.split(',')
             let res = ConnectedDeclarations.filter(r => r == this.rowData.Id)[0];
+            this.IsConnectedDeclarationChecked = !AppTool.IsNullOrEmpty(res);
         }
-        if (!this.entityPM.ConnectedDeclarations) {
+        if (!this.entityPM.ConnectedDeclarations) { 
             this.entityPM.ConnectedDeclarations = "";
             this._containerizationExtendedListService.ConnectedDeclarations = "";
+        } else {
+            this._containerizationExtendedListService.ConnectedDeclarations = this.entityPM.ConnectedDeclarations;
         }
         if (this._containerizationExtendedListService.connectedSelectAll == true) {
             this.IsConnectedDeclarationChecked = true;
