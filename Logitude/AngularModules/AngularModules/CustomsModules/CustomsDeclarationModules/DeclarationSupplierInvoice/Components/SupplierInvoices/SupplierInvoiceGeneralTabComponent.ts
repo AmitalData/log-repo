@@ -1,7 +1,7 @@
 
 declare var window: any;
 declare var document: Document;
-import { Component, ChangeDetectorRef, EventEmitter, Output, OnDestroy } from '@angular/core';
+import { Component, ChangeDetectorRef, EventEmitter, Output, OnInit, OnDestroy } from '@angular/core';
 import { SupplierInvoicePM } from '../../../../../Customs/EntityPMs/SupplierInvoicePM';
 import { CustomsVendorPMService } from '../../../../../Customs/Services/StandardPMs/CustomsVendorPMService';
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -66,7 +66,7 @@ import { CurrencyTypeListService } from '../../../../../Customs/Services/Standar
 })
 
 
-export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements OnDestroy {
+export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements OnInit, OnDestroy {
     public CurrencyTypeCode: any;
     public OriginCountryCode: any;
 
@@ -158,7 +158,19 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         this.IFritz_feature = FeatureLocator.Features.filter(d => d.Code == "IFRITZ")[0];
         console.log("IFritz feature: ", this.IFritz_feature);
 
-
+       
+    }
+    ngOnInit() {
+        if (this.allowExport) {
+            if (AppTool.IsNullOrEmpty(this.BuyerName) && this.AccountTypeCode != "I04")
+                this.UIProperties.SetWarning("BuyerName", this.ObjectTableName, true);
+            else
+                this.UIProperties.SetWarning("BuyerName", this.ObjectTableName, false);
+            if (AppTool.IsNullOrEmpty(this.BuyerAddress) && this.AccountTypeCode != "I04")
+                this.UIProperties.SetWarning("BuyerAddress", this.ObjectTableName, true);
+            else
+                this.UIProperties.SetWarning("BuyerAddress", this.ObjectTableName, false);
+        }
     }
     public SelectInvoiceItemMethod(res) {
         var item: SupplierInvoiceItemLine = this.ItemsSource.Collection.filter(d => d.SequenceNumeric == res.filter)[0];
@@ -833,7 +845,20 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     }
     public FiltersList: string[] = ["Copy Now"];
     public get AccountTypeCode() { return this.EntityPM.AccountTypeCode; }
-    public set AccountTypeCode(newValue: string) { this.EntityPM.AccountTypeCode = newValue; }
+    public set AccountTypeCode(newValue: string) {
+        this.EntityPM.AccountTypeCode = newValue;
+        if (this.allowExport)
+        {
+            if (AppTool.IsNullOrEmpty(this.BuyerName) && newValue != "I04")
+                this.UIProperties.SetWarning("BuyerName", this.ObjectTableName, true);
+            else
+                this.UIProperties.SetWarning("BuyerName", this.ObjectTableName, false);
+            if (AppTool.IsNullOrEmpty(this.BuyerAddress) && newValue != "I04")
+                this.UIProperties.SetWarning("BuyerAddress", this.ObjectTableName, true);
+            else
+                this.UIProperties.SetWarning("BuyerAddress", this.ObjectTableName, false);
+        }
+    }
 
     public get InvoiceNumber() { return this.EntityPM.InvoiceNumber; }
     public set InvoiceNumber(newValue: string) { this.EntityPM.InvoiceNumber = newValue; }
@@ -853,12 +878,22 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
     public get BuyerName() { return this.EntityPM ? this.EntityPM.BuyerName : null; }
     public set BuyerName(newValue: string) {
+        if (AppTool.IsNullOrEmpty(newValue) && this.AccountTypeCode != "I04")
+            this.UIProperties.SetWarning("BuyerName", this.ObjectTableName, true);
+        else
+            this.UIProperties.SetWarning("BuyerName", this.ObjectTableName, false);
+
         this.EntityPM.BuyerName = newValue;
     }
 
     public get BuyerAddress() { return this.EntityPM ? this.EntityPM.BuyerAddress : null; }
     public set BuyerAddress(newValue: string) {
-
+        if (this.allowExport) {
+            if (AppTool.IsNullOrEmpty(newValue) && this.AccountTypeCode != "I04")
+                this.UIProperties.SetWarning("BuyerAddress", this.ObjectTableName, true);
+            else
+                this.UIProperties.SetWarning("BuyerAddress", this.ObjectTableName, false);
+        }
         this.EntityPM.BuyerAddress = newValue;
     }
 
