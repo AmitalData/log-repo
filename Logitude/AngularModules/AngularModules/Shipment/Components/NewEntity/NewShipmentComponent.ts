@@ -3014,12 +3014,12 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
                 this.EntityPM.MainCarriageATD = this.SourceEntityPM.MainCarriageATD;
                 this.EntityPM.MainCarriageATA = this.SourceEntityPM.MainCarriageATA;
                 this.EntityPM.StandalonePickupDeliveryId = this.SourceEntityPM.StandalonePickupDeliveryId;
-
             }
 
             this.OnFiltersChanged();
         }
     }
+
     CopyRoutings() {
         if (this.IsCopyFromShipment) {
             this.EntityPM.AirlinePrefix = this.SourceEntityPM.AirlinePrefix;

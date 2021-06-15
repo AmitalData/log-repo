@@ -33,6 +33,8 @@ import { CommonDomainService } from '../Common/Services/CommonDomainService';
 import { VatTypeListService } from '../Common/Services/StandardLists/VatTypeListService';
 import { VatTypeList } from '../Common/EntityLists/VatTypeList';
 import { VatTypePercentagePM } from '../Common/EntityPMs/VatTypePercentagePM';
+import { ShipmentPickUpDeliveryPackagePM } from './EntityPMs/ShipmentPickUpDeliveryPackagePM';
+import { ShipmentPackageHarmonizePM } from './EntityPMs/ShipmentPackageHarmonizePM';
 
 export class ShipmentTool {
     private static CurrentSession = SessionLocator.SelectedSession;
@@ -2285,8 +2287,8 @@ export class ShipmentTool {
         shipmentPM.ShipmentNumber = shipment.ShipmentNumber;
         shipmentPM.DepartmentId = shipment.DepartmentId;
         shipmentPM.BranchId = shipment.BranchId;
-        shipmentPM.IncotermId = shipment.IncotermId;      
-        
+        shipmentPM.IncotermId = shipment.IncotermId;
+
         if (delivery) {
             shipmentPM.StandalonePickupDeliveryId = delivery.Id;
             shipmentPM.StandalonePickupDeliveryNumber = delivery.PickUpDeliveryNumber;            
@@ -2328,7 +2330,7 @@ export class ShipmentTool {
             shipmentPM.MainCarriageETD = pickup.ETD;
             shipmentPM.MainCarriageETA = pickup.ETA;
             shipmentPM.MainCarriageATD = pickup.ATD;
-            shipmentPM.MainCarriageATA = pickup.ATA;
+            shipmentPM.MainCarriageATA = pickup.ATA;            
         }
 
         return shipmentPM;

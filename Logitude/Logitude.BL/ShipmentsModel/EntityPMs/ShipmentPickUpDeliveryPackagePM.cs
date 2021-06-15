@@ -102,5 +102,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ChassisNumber { get; set; }
         public string RegistrationNumber { get; set; }
         public string CountryId { get; set; }
+        public string ContainerEntityId { get; set; }
     }
 }

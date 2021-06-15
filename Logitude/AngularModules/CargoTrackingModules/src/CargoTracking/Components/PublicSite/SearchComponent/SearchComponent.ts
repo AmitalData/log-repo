@@ -314,6 +314,11 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
                 console.log("[ERROR FOUND]", errorObject);
 
             });
+            this.searchService.TrackSearch(searchText)
+                // .subscribe(arg => {
+
+                // });
+
         } else {
             this.Shipments = [];
         }

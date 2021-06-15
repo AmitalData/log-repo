@@ -9,6 +9,9 @@ using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 {
@@ -97,7 +100,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
                         case ChangeSetOperation.Update:
                             {
-                                this.UpdateContainer(itemPM);
+                                if (string.IsNullOrEmpty(itemPM.ContainerEntityId))
+                                {
+                                    this.CreateContainer(itemPM);
+                                }
+                                else
+                                {
+                                    this.UpdateContainer(itemPM);
+                                }
+
                                 break;
                             }
 
@@ -129,7 +140,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             ContainerPM containerPM = new ContainerPM();
             MapContainerPMFields(containerPM, shipmentPackage, true);
             containerService.Create(containerPM);
-            UpdateShipmentPackage(containerPM.Id,shipmentPackage.Id);
+            UpdateShipmentPackage(containerPM.Id, shipmentPackage.Id);            
         }
 
         private void UpdateContainer(ShipmentPackagePM shipmentPackage)
@@ -182,17 +193,66 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         private void UpdateShipmentPackage(string containerId, string shipmentPackageId)
         {
             if (containerId != null)
-            {               
+            {
                 ShipmentPackageRepository shipmentPackageRepository = new ShipmentPackageRepository(this.initializer.ShipmentContext);
                 ShipmentPackage shipmentPackage = shipmentPackageRepository.GetSingleShipmentPackage(shipmentPackageId, this.initializer.Tenant);
+                
                 if (shipmentPackage != null)
                 {
+                    this.UpdateStandaloneShipmentPackage(containerId);
+                    this.UpdatePickupDeliveryPackage(shipmentPackage, containerId);
                     shipmentPackage.ContainerEntityId = containerId;
                     shipmentPackageRepository.Update(shipmentPackage);
                     shipmentPackageRepository.SubmitChanges();
-
+                }                
+            }
+        }
+        private void UpdateStandaloneShipmentPackage(string containerEntityId)
+        {
+            Shipment standaloneShipment = initializer.Repository.GetSingleShipment(initializer.EntityPM.StandaloneShipmentId, initializer.Tenant);
+            if(standaloneShipment != null)
+            {
+                List<ShipmentPackage> shipmentPackages = initializer.ShipmentPackageRepository.GetShipmentPackagesForShipmentTenant(standaloneShipment.Id, initializer.Tenant).ToList();
+                if(shipmentPackages != null)
+                {
+                    ShipmentPackage shipmentPackage = shipmentPackages.FirstOrDefault();
+                    if(shipmentPackage != null)
+                    {
+                        shipmentPackage.ContainerEntityId = containerEntityId;
+                        initializer.ShipmentPackageRepository.Update(shipmentPackage);
+                    }
                 }
             }
+        }
+
+        private void UpdatePickupDeliveryPackage(ShipmentPackage shipmentPackage, string containerId)
+        {
+            ShipmentPickUpDeliveryPackageRepository shipmentPickUpDeliveryPackageRepository = new ShipmentPickUpDeliveryPackageRepository(this.initializer.ShipmentContext);
+            IQueryable<ShipmentPickUpDeliveryPackage> shipmentPickupDeliveryPackages = this.GetPickupDeliveryPackagesForThisShipment(shipmentPackage.ShipmentId, shipmentPickUpDeliveryPackageRepository);
+
+            ShipmentPickUpDeliveryPackage pickUpDeliveryPackage = shipmentPickupDeliveryPackages.Where(d => d.ContainerNumber == shipmentPackage.ContainerNumber).FirstOrDefault();
+            if (pickUpDeliveryPackage != null)
+            {
+                pickUpDeliveryPackage.ContainerEntityId = containerId;
+                shipmentPickUpDeliveryPackageRepository.Update(pickUpDeliveryPackage);
+            }            
+        }
+        private IQueryable<ShipmentPickUpDeliveryPackage> GetPickupDeliveryPackagesForThisShipment(string shipmentId, ShipmentPickUpDeliveryPackageRepository shipmentPickUpDeliveryPackageRepository)
+        {
+            IQueryable<ShipmentPickUpDeliveryPackage> packages = null;
+            ShipmentPickUpDeliveryRepository shipmentPickUpDeliveryRepository = new ShipmentPickUpDeliveryRepository(this.initializer.ShipmentContext);
+            List<ShipmentPickUpDelivery> pickUpDeliveries = shipmentPickUpDeliveryRepository.GetShipmentPickUpDeliveryForShipment(shipmentId, this.initializer.Tenant);
+
+            if (pickUpDeliveries != null)
+            {
+                List<string> pickupDeliveryIds = pickUpDeliveries.Select(d => d.Id).ToList();
+                if (pickupDeliveryIds != null)
+                {
+                    packages = shipmentPickUpDeliveryPackageRepository.GetPickUpDeliveryPackagesByIdsList(pickupDeliveryIds, this.initializer.Tenant);
+                }
+            }
+
+            return packages;
         }
     }
 }
