@@ -103,9 +103,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         HybridPartnerPM CurrentHybridPartner;
         public ShipmentComputedFields UpdatedShipmentComputedFields;
         private ShipmentServiceInitializer initializer;
-
+        string UpdateByEmail;
         public ShipmentService(IShipmentsContext objectContext, ShipmentPM entityPM, string serviceContextUser)
         {
+            UpdateByEmail = serviceContextUser;
             this.initializer = new ShipmentServiceInitializer(objectContext, entityPM, serviceContextUser);
             this.initializer.Initialize();
             this.tenant = initializer.Tenant;
@@ -570,9 +571,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.UpdateExtendedTasksDueDate();
 
                 // Produce shipment update msg
-                AddShipmentUpdateKafkaQueueMessage();
-
-
+                if (UpdateByEmail != "system@tenant" + entityPM.Tenant + ".com")
+                {
+                    AddShipmentUpdateKafkaQueueMessage();
+                }
+                 
                 scope.Complete();
                 #endregion
             }
