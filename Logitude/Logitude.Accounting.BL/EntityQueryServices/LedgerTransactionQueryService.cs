@@ -446,7 +446,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 );
         }
 
-
         public decimal? GetLedgerTransactionSumFromTo(string gLAccointId, DateTime fromDate, DateTime toDate, int tenant)
         {
             return this.repository.GetLedgerTransactionSumFromTo(gLAccointId, fromDate, toDate, tenant);
