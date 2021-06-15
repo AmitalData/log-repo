@@ -164,6 +164,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 {
                     shipmentPM.WarehouseLegActualReleaseDate = greatestWarehouseRelease.ActualReleaseDate;
                     shipmentPM.WarehouseLegExpectedReleaseDate = greatestWarehouseRelease.ExpectedReleaseDate;
+                    shipmentPM.GrossWeightPerStorageDays = storageCalculater.ComputeGrossWeight_PerStorageDays();
                     isUpdated = true;
                 }
             }
@@ -171,6 +172,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
             {
                 shipmentPM.WarehouseLegActualReleaseDate = null;
                 shipmentPM.WarehouseLegExpectedReleaseDate = null;
+                shipmentPM.GrossWeightPerStorageDays = null;
                 isUpdated = true;
             }
 
@@ -312,7 +314,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
             this.storageDays = this.ComputeStorageDays();
             this.freeDays = this.GetFreeDays();
             this.readyToCalculateStorage = this.CheckIfReadyToCalculateStorage();
-
+            this.ComputeGrossWeight_PerStorageDays();
             if (readyToCalculateStorage)
             {
                 double? amount = this.ComputeReceivableAmount();
@@ -347,6 +349,23 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
 
             return storageDays;
         }
+
+        public double? ComputeGrossWeight_PerStorageDays()
+        {
+            double? weightPerStorageDays;
+            var storageDays = this.ComputeStorageDays();
+            if (shipmentPM.TransportModeId != "A" && shipmentPM.GrossWeightPerTon != null && shipmentPM.WarehouseStorageFreeDays != null)
+            {
+                weightPerStorageDays = Math.Ceiling(shipmentPM.GrossWeightPerTon.Value) * (storageDays - shipmentPM.WarehouseStorageFreeDays.Value);
+            }
+            else
+            {
+                weightPerStorageDays = shipmentPM.ChargeableWeight * (storageDays - shipmentPM.WarehouseStorageFreeDays);
+            }
+            return weightPerStorageDays < 0 ? 0 : weightPerStorageDays;
+        }
+
+
         private int? GetFreeDays()
         {
             int? freeDays = 0;
