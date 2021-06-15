@@ -39,7 +39,7 @@ namespace CommunicationWorkerRole
                     {
                         Console.WriteLine($"Consume error: {e.Error.Reason}");
                         ExceptionHandler.HandleException(e, DateTime.Now, 1, null, "CollaborationToolShipmentUpdate worker role start", null, null);
-                        throw e;
+                        //throw e;
                     }
                     catch (Exception ex)
                     {
@@ -104,7 +104,10 @@ namespace CommunicationWorkerRole
                 ShipmentQuery myQuery = new ShipmentQuery(shipmentRepository);
                 ShipmentPM shipment = myQuery.GetSinglePMByShipmentNumber(LogitudeUpdateMessage.EntityNumber, LogitudeUpdateMessage.Tenant);
 
-
+                if (LogitudeUpdateMessage.EntryFields == null || LogitudeUpdateMessage.EntityNumber == null)
+                {
+                    return;
+                }
                 var entryFields = JsonConvert.DeserializeObject<Dictionary<string, string>>(LogitudeUpdateMessage.EntryFields);
 
                 foreach (KeyValuePair<string, string> entry in entryFields)
