@@ -37,7 +37,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
         public List<LedgerTransactionList> GetAccountChequesTransactions(string accountId)
         {
-            List<LedgerTransactionList> arPaymentTransactions = GetARPaymentLedgerTransactions(accountId);
+            List<LedgerTransactionList> arPaymentTransactions = GetARPaymentLedgerTransactions(accountId).Distinct().ToList();
             List<LedgerTransactionList> externalTransactions = GetExternalTransactionsForAccount(accountId, tenant);
 
             arPaymentTransactions.AddRange(externalTransactions);
@@ -48,11 +48,13 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             const string AccountingEntity_ARPayment = "3";
             return (from transaction in accountingContext.LedgerTransactions
-                    join journal in accountingContext.Journals on
-                    transaction.JournalId equals journal.Id
-                    join arpaymentcheque in accountingContext.ARPaymentCheques on journal.AccountingEntityId equals arpaymentcheque.PaymentId
+                    join journal in accountingContext.Journals on transaction.JournalId equals journal.Id  
+                    join arpaymentcheque in accountingContext.ARPaymentCheques on 
+                      journal.AccountingEntityId equals   arpaymentcheque.PaymentId 
                     join arpaymentchequeStatus in accountingContext.ARPaymentChequeStatuses on arpaymentcheque.StatusCode equals arpaymentchequeStatus.Code
-                    where transaction.Tenant == tenant && transaction.AccountId == accountId && journal.AccountingEntityCode == AccountingEntity_ARPayment
+
+                    where transaction.Tenant == tenant && transaction.AccountId == accountId && journal.AccountingEntityCode == AccountingEntity_ARPayment && 
+                    transaction.Reference2 ==arpaymentcheque.ChequeNumber
 
                     select new LedgerTransactionList()
                     {
