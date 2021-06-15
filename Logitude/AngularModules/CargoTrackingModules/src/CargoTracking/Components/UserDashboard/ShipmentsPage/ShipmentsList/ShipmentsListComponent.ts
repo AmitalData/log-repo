@@ -141,7 +141,8 @@ export class ShipmentsListComponent implements AfterViewInit
                 break;
             }
 
-            case 'I': {
+            case 'I':
+            case 'C': {
                 title = "SUPPLIER"
                 break;
             }
