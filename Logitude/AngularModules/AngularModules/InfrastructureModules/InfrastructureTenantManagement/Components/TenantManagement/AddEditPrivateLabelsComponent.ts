@@ -497,7 +497,7 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
     UploadogoFileSmall(event: any) {
 
         var file: any = UploadLogoFile(this.LogoSmallFileHtmlId);
-        if (file && (file.type == "image/jpeg" || file.type == "image/jpg")) {
+        if (file && this.hasValidImageType(file)) {
             this.IsShowMessageComplate = false;
             this.IsShowProgressLoading = true;
             this.imageParameter = new ImageParameter();
@@ -510,7 +510,7 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
     UploadogoFileMain(event: any) {
 
         var file: any = UploadLogoFile(this.LogoMainFileHtmlId);
-        if (file && (file.type == "image/jpeg" || file.type == "image/jpg")) {
+        if (file && this.hasValidImageType(file)) {
             this.imageParameter = new ImageParameter();
             this.imageParameter.Extension = file.type.split('/')[1];
             this.IsShowMessageComplate = false;
@@ -523,6 +523,10 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
 
     MainLogoData: any;
     SmallLogoData: any;
+
+    private hasValidImageType(file: any) {
+        return (file.type == "image/jpeg" || file.type == "image/jpg" || file.type == "image/png");
+    }
 
     OpenUpLoadMainLogo() {
         document.getElementById(this.LogoMainFileHtmlId).click();
