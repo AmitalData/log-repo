@@ -227,16 +227,14 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
             EntityPM: this.EntityPM,
         }; 
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 850;
-        logWindow.Height = 450;
+        logWindow.Width = 1200;
+        logWindow.Height = 550;
         logWindow.Title = ("עדכון המכלה");
         logWindow.WindowArgs = args;
         logWindow.ShowCloseButton = true;
         logWindow.Show('./CustomsModules/CustomsContainerization/Components/NewEntity/NewContainerizationComponent');
         logWindow.WindowClosed.subscribe(($event: any) => {
-            debugger;
             this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
-           // this.CurrentSession.CurrentEditComponent.();
         });
     }
     DisplayOnlyCheck() {

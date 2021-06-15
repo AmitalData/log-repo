@@ -19,6 +19,25 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             var declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
             var declarationUpdateService = new DeclarationUpdateService(this.MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
             List<DeclarationPM> AllPms=new List<DeclarationPM>();
+            if (!String.IsNullOrWhiteSpace(entityPM.ConnectedDeclarations))
+            {
+                var connectedDeclarations = entityPM.ConnectedDeclarations.Split(',').ToList();
+                var pms = declarationQueryService.GetDeclarationsByIds(connectedDeclarations, entityPM.Tenant);
+                AllPms.AddRange(pms);
+                if (pms.Count == 0)
+                {
+                    //throw new Exception("Why ??"); 
+                }
+                else
+                {
+                    foreach (var declaration in pms)
+                    {
+                        declaration.ExportContainerizationID = entityPM.Id;
+                        declaration.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                    }
+                }
+
+            }
             if (!String.IsNullOrWhiteSpace(entityPM.NotConnectedDeclarations))
             {
                 var disConnectedDeclarations = entityPM.NotConnectedDeclarations.Split(',').ToList();
@@ -38,27 +57,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
 
             }
-            if (!String.IsNullOrWhiteSpace(entityPM.ConnectedDeclarations))
-            {
-                var connectedDeclarations = entityPM.ConnectedDeclarations.Split(',').ToList();
-                var pms = declarationQueryService.GetDeclarationsByIds(connectedDeclarations, entityPM.Tenant);
-                AllPms.AddRange(pms);
-                if (pms.Count == 0)
-                {
-                    //throw new Exception("Why ??"); 
-                }
-                else
-                {
-                    foreach (var declaration in pms)
-                    {
-                        declaration.ExportContainerizationID = entityPM.Id;
-                        declaration.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-
-                    }
-                }
-
-            }
-
             if (!String.IsNullOrWhiteSpace(entityPM.NotConnectedDeclarations) || !String.IsNullOrWhiteSpace(entityPM.ConnectedDeclarations)) {
                 declarationUpdateService.UpdateMulti(AllPms, new List<DeclarationPM>(), entityPM, false); 
             }

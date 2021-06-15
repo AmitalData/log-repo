@@ -196,7 +196,6 @@ export class DeclarationList {
 	RequestedCustomsDocId: number;
 	ExportDeclarationOfficeCode: string;
 	PhysicalCheck: number;
-	ExportContainerizationID: string;
 	CargoTypeName: string;
 	SecondCargoID: string;
 	ThirdCargoID: string;

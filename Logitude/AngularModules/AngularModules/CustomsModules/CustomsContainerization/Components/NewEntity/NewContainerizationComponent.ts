@@ -17,6 +17,7 @@ import { Response } from 'selenium-webdriver/http';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { ContainerizationMessagesService } from '../../../../Customs/Services/WebServices/ContainerizationMessagesService';
 import { GenericRequestParams } from '../../../../Customs/DataContract/RequestParams/GenericRequestParams';
+import { DeclarationEventManager } from '../../../../Customs/Utilities/DeclarationEventManager';
 
 
 @Component({
@@ -424,9 +425,9 @@ export class NewContainerizationComponent extends BaseComponent {
 
     SendButtonClicked() {
         if (this.entityPM.Id != null) {
-            debugger;
             this.entityPM.ConnectedDeclarations = this.containerizationExtendedListService.ConnectedDeclarations;
             SessionLocator.SelectedSession.CurrentEditComponent.EntityPM = this.entityPM;
+            DeclarationEventManager.AddDeclarationToContainerization.emit(null);
             this.CurrentSession.CurrentWindow.Close("0");
         } else {
             var windowArgs: any = {};
@@ -442,10 +443,10 @@ export class NewContainerizationComponent extends BaseComponent {
                         this.entityPM.AgentDeclaration = true;
                         this.entityPM.ConnectedDeclarations = this.containerizationExtendedListService.ConnectedDeclarations;
                         this.containerizationPMService.insert(this.entityPM).subscribe((response: ServiceResponse) => {
+                            this.CurrentSession.CurrentWindow.Close("0");
                             if (!response.HasError) {
                                 this.containerizationMessagesService.SendContainerization(this.getParams(response))
                                     .subscribe(res1 => {
-                                        this.CurrentSession.CurrentWindow.Close("0");
                                     });
                             }
                         });

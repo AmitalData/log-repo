@@ -743,7 +743,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      SecondCargoID = myJoinConsignment != null ? myJoinConsignment.SecondCargoID : null,
                                                      ThirdCargoID = myJoinConsignment != null ? myJoinConsignment.ThirdCargoID : null,
                                                      ManifestNumber = myJoinConsignment != null ? myJoinConsignment.ManifestNumber : null,
-                                                     ExportContainerizationID=a.ExportContainerizationID,
                                                  });
 
 

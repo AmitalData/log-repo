@@ -25,6 +25,7 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { DeclarationList } from '../../../../Customs/EntityLists/DeclarationList';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { DeclarationListService } from '../../../../Customs/Services/StandardLists/DeclarationListService';
+import { DeclarationEventManager } from '../../../../Customs/Utilities/DeclarationEventManager';
 
 
 @Component({
@@ -42,7 +43,8 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
     public SubCountryCodeEnabled: boolean = false;
     IsDelete: boolean = false;
     public CurrentEditComponentId: string;
-
+    AddDeclarationToContainerizationEVENT: any;
+    ;
     ResponseData: INF_MSG_GenericResponseData;
 
 
@@ -106,7 +108,6 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
         //filters.SortDirection = sortingDir;
         //Customs.Declaration.F.ExportContainerizationID
         filters.addAdditionalFilter("ExportContainerizationID", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
-        debugger;
         return this.declarationListService.getByFilters(filters)
             .subscribe(r => {
                 this.ContainerizationDeclarationList = new ObservableCollection([]);
@@ -114,14 +115,26 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
             });
 
     }
+
+    getRowsWithNewAddedDeclarations() {
+        let filters = new ApiQueryFilters();
+        filters.PageSize = 200;
+        filters.PageIndex = 0;
+        filters.GetAll = false;
+        filters.GetCount = true;
+        filters.addAdditionalFilter("Id", this.EntityPM.ConnectedDeclarations, null, null, "InListExact", false, false, false, "string", this.EntityPM.ConnectedDeclarations.length == 0);
+        return this.declarationListService.getByFilters(filters)
+            .subscribe(r => {
+                r.Result.forEach(element => this.ContainerizationDeclarationList.Insert(element));
+                var e=this.ContainerizationDeclarationList;
+            });
+    }
     private Listen() {
-        debugger;
         if (this.CurrentSession.CurrentEditComponent != null) {
 
             this.CurrentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
             this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
                 this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                    debugger;
                     if (isSaveSuccess) {
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.getRows(); 
@@ -132,7 +145,6 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
            // SessionLocator.SelectedSession.CurrentEditComponent
             this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
                 this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
-                    debugger;
                     if (isLoadSuccess) {
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         //this.RefreshEntity();
@@ -141,15 +153,21 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
             );
             this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
                 this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
-                    debugger;
                     if (this.CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
                         if (tabCode == "DEGC") {
-                            debugger;
                             this.RefreshEntity();
                         }
                     }
                 })
             );
+
+
+
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                DeclarationEventManager.AddDeclarationToContainerization.subscribe(data => {
+                    this.getRowsWithNewAddedDeclarations();
+                }));
+
         }
     }
 

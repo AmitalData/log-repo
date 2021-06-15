@@ -31,7 +31,7 @@ namespace Logitude.Customs.Data.Repsitories
             if (list.Count() != 0)
                 max = list.Select(int.Parse).ToList().Max();
 
-            return max;
+            return max+1;
         }
     }
 
