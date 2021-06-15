@@ -18,6 +18,7 @@ import { DeclarationAmendmentComponent } from '../../CustomsDeclarationModules/D
 import { DeclarationPMService } from '../../../Customs/Services/StandardPMs/DeclarationPMService';
  import { DeclarationEventManager } from '../../../Customs/Utilities/DeclarationEventManager';
 import { DeclarationAmendmentSharedDataService } from '../../../Customs/Services/DataChange/DeclarationAmendmentSharedDataService';
+import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 
 @Component({
     templateUrl: './DeclarationAmendmentListTemplate.html',
@@ -46,7 +47,7 @@ export class DeclarationAmendmentListTemplate {
     constructor(private CD: ChangeDetectorRef, 
         private _declarationWebService: DeclarationWebService,
         private EntityResourceService: EntityResourceService,
-        private comp: DeclarationAmendmentComponent, private declarationAmendmentSharedDataService: DeclarationAmendmentSharedDataService
+        private comp: DeclarationAmendmentComponent, public declarationAmendmentSharedDataService: DeclarationAmendmentSharedDataService
           ) {
         
     }
@@ -92,7 +93,16 @@ export class DeclarationAmendmentListTemplate {
  
 
     CopyAmendment(id: string) {
-        this.comp.OpenNewAmendment(id, this.rowData.DeclarationNumber, true);
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = 400;
+        confirmWindow.Show("נא‌ ‌אשר‌ ‌פתיחת‌ ‌תיקון‌ ‌והעתקת‌ ‌נתונים‌ ‌מתיקון‌ ‌הצהרה");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.comp.OpenNewAmendment(id, this.rowData.DeclarationNumber, true);
+
+            }
+        });
+
      }
 
   
