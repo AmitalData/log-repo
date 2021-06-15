@@ -1536,11 +1536,27 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     }
 
     AddPackageClicked() {
+        if (!this.EntityPM.IsStandalonePickupDelivery) {
+            this.ViewAddPackageWindow();
+        } else {
+            this.ValidateNumberOfStandAloneShipmentPackages();
+        }
+    }
 
+    ValidateNumberOfStandAloneShipmentPackages() {
+        var numberOfAllowedPackages = 1;
+        if (this.EntityPM.ShipmentPackages.length >= numberOfAllowedPackages) {
+            var messageWindow: MessageWindow = new MessageWindow();
+            messageWindow.Show("Stand Alone Shipment should have one container");
+        } else {
+            this.ViewAddPackageWindow();
+        }
+    }
+
+    ViewAddPackageWindow() {
         var logWindow = new LogitudeWindow();
         var itemPM = new ShipmentPackagePM(null);
         itemPM.NonActiveContainer = false;
-
         if (this.IsLCLEntity) {
             itemPM.IsContainer = false;
             itemPM.Tenant = SessionLocator.Tenant;
@@ -1575,6 +1591,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         logWindow.DataContext = itemComponent;
         logWindow.Show(myPath);
     }
+
     EditPackageClicked(itemComponent: ShipmentPackageItem) {
 
         var logWindow = new LogitudeWindow();

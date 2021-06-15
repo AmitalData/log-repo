@@ -1482,7 +1482,7 @@
     InActive="false"
     DisplayLongName="false"
     FullFieldLable="&quot;DischargeDate&quot;"
-    DefaultText="&quot;Discharge Date  &quot;"
+    DefaultText="&quot;Discharge Date&quot;"
     ListFieldLable="&quot;DischargeDateListLable&quot;"
     ListLableDefaultText="&quot;Discharge Date&quot;"
     IsNullable="true"

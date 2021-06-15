@@ -6,6 +6,8 @@ import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQue
 import { ShipmentListService } from '../../../../Shipment/Services/StandardLists/ShipmentListService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+import { ShipmentDomainService } from '../../../../Shipment/Services/ShipmentDomainService';
 
 @Component({
     templateUrl: './ChooseStandaloneShipmentComponent.html',
@@ -14,23 +16,28 @@ import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 export class ChooseStandaloneShipmentComponent {
     public EntityPM: any;
     public ItemsSource: ShipmentList[] = [];
-    public AllShipmentsCount: number = 0;    
-    private myShipmentListService: ShipmentListService;
-    public EntityId: string;    
-    private CurrentSession = SessionLocator.SelectedSession;
-    constructor() {
-        this.myShipmentListService = new ShipmentListService();
-    }
-
+    public AllShipmentsCount: number = 0;
     public ShipmentType: string;
     public FromPartnerId: string;
     public ToPartnerId: string;
     public CarrierId: string;
+    public NumberOfPickupDeliveryPackages: number;   
+    public EntityId: string;
+    public shipmentDomainService: ShipmentDomainService;
+    private myShipmentListService: ShipmentListService; 
+    private CurrentSession = SessionLocator.SelectedSession;
+
+    constructor() {
+        this.myShipmentListService = new ShipmentListService();
+        this.shipmentDomainService = new ShipmentDomainService();
+    }
+
     SetWindowArgs(args: any) {
         this.ShipmentType = args.ShipmentType;
         this.FromPartnerId = args.FromPartnerId;
         this.ToPartnerId = args.ToPartnerId;
         this.CarrierId = args.CarrierId;
+        this.NumberOfPickupDeliveryPackages = args.NumberOfPackages;
         this.LoadShipmentsData();
     }
 
@@ -95,6 +102,27 @@ export class ChooseStandaloneShipmentComponent {
     public SelectedShipment: ShipmentList = null;
 
     Selecting(item: ShipmentList) {
+        this.GetNumberOfSelectedShipmentPackages(item);
+    }
+
+    ValidateNumberOfSelectedShipmentPackeges(item: ShipmentList, numberOfSelectedShipmentPackages: number) {
+        var messageWindow: MessageWindow = new MessageWindow();
+        messageWindow.Height = 200;
+        if (this.NumberOfPickupDeliveryPackages == 1 && numberOfSelectedShipmentPackages >= 1) {
+            messageWindow.Show(" Can't connect to Shipment " + item.ShipmentNumber + " because the number of containers should be one. Please remove the containers either from Shipment "
+                + item.ShipmentNumber + " or this pickup / delivery and try again. ");
+        }
+
+        else if (numberOfSelectedShipmentPackages > 1 && this.NumberOfPickupDeliveryPackages == 0) {
+            messageWindow.Show("Can't connect to Shipment " + item.ShipmentNumber + " because it has more than one container");
+        }
+
+        else {
+            this.ConfirmSelectedShipment(item);
+        }
+    }
+
+    ConfirmSelectedShipment(item: ShipmentList) {
         var confirmWindow: ConfirmWindow = new ConfirmWindow();
         confirmWindow.Title = "";
         confirmWindow.Show("Different fields will be cleared from the shipment level when connecting the shipment to this leg");
@@ -105,9 +133,9 @@ export class ChooseStandaloneShipmentComponent {
             }
 
             else if (confirmWindow.No) {
-                
+
             }
-        });        
+        });  
     }
 
     CloseButtonClicked() {
@@ -116,5 +144,20 @@ export class ChooseStandaloneShipmentComponent {
 
     Close() {
         this.CurrentSession.CloseCurrentWindow();
+    }
+
+    GetNumberOfSelectedShipmentPackages(shipment: ShipmentList) {
+        this.CurrentSession.StartBusyIndicatorLoading();
+        var shipmentId = shipment.Id;
+        this.shipmentDomainService.GetNumberOfShipmentPackages(shipmentId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.CurrentSession.StopBusyIndicator();
+                var numberOfSelectedShipmentPackages = myResponse.Result;
+                this.ValidateNumberOfSelectedShipmentPackeges(shipment, numberOfSelectedShipmentPackages)
+            }
+            else {
+                this.CurrentSession.StopBusyIndicator();
+            }
+        });
     }
 }
