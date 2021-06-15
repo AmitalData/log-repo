@@ -1538,6 +1538,52 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private DateTime? paymentValueDate ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? PaymentValueDate  
+	   {
+	    
+	     get
+		{
+		   return paymentValueDate;
+		 }
+		 set
+		 {
+		   if(paymentValueDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PaymentValueDate",OldValue=paymentValueDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   paymentValueDate=value;
+		   }
+			
+		 }
+	   }
+	  private string paymentChequeStatus ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PaymentChequeStatus  
+	   {
+	    
+	     get
+		{
+		   return paymentChequeStatus;
+		 }
+		 set
+		 {
+		   if(paymentChequeStatus != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PaymentChequeStatus",OldValue=paymentChequeStatus,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   paymentChequeStatus=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

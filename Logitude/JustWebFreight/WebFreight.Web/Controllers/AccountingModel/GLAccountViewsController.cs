@@ -53,6 +53,7 @@ using Simplog.Data.InfrastructureModel;
 using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.Accounting.BL.Utils;
 using Logitude.Accounting.BL.CoreBL.BuildTenant;
+using Logitude.Accounting.BL.CoreBL;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
@@ -767,6 +768,31 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 return Request.CreateResponse(HttpStatusCode.OK, externalTransactionsTotal);
 
             }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetARPyamentChequesListAsLedgerTransactions(string accountId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("GLAccount", "READ", tenant);
+
+                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
+                GLAccountChequesTransactionsRetreivingService ledgerTransactionQuery = new GLAccountChequesTransactionsRetreivingService(tenant,MyContext);
+                List<LedgerTransactionList> myResult = ledgerTransactionQuery.GetAccountChequesTransactions(accountId);
+
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+            }
+
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));

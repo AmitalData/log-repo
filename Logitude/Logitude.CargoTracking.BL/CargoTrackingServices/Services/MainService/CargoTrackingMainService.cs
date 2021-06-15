@@ -209,16 +209,20 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         private static void AddDefaultConsignee(CargoTrackingArgs buildCargoArgs)
         {
             var sql = string.Concat(
+                     $"IF NOT EXISTS (SELECT * from [dbo].[CargoTrackingCards] where id='DF-CONSIGNE') {Environment.NewLine} BEGIN  {Environment.NewLine} " +
                      $"INSERT INTO [dbo].[CargoTrackingCards] ([Id] ,[Code] ,[EnglishName] ,[LocalName] ,[Tenant]) ",
-                     $"VALUES ('DF-CONSIGNE', 'no-consignee', 'No Consignee', N'No Consignee', 0)");
+                     $"VALUES ('DF-CONSIGNE', 'no-consignee', 'No Consignee', N'No Consignee', 0)" +
+                     $"END");
             ServiceHelper.ExecuteSql(sql, buildCargoArgs.DestinationConnectionString);
         }
 
         private static void AddDefaultShipper(CargoTrackingArgs buildCargoArgs)
         {
             var sql = string.Concat(
+                                     $"IF NOT EXISTS (SELECT * from [dbo].[CargoTrackingCards] where id='DF-SHIPPER') {Environment.NewLine} BEGIN  {Environment.NewLine} " +
                                      $"INSERT INTO [dbo].[CargoTrackingCards] ([Id] ,[Code] ,[EnglishName] ,[LocalName] ,[Tenant]) ",
-                                     $"VALUES ('DF-SHIPPER', 'no-shipper', 'No Shipper', N'No Shipper', 0)");
+                                     $"VALUES ('DF-SHIPPER', 'no-shipper', 'No Shipper', N'No Shipper', 0) {Environment.NewLine}" +
+                                     $"END");
             ServiceHelper.ExecuteSql(sql, buildCargoArgs.DestinationConnectionString);
         }
 
