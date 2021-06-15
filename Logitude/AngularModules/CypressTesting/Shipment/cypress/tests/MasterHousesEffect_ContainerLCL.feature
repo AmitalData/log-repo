@@ -42,11 +42,11 @@ Feature: LCL Container Number
         And the master container number should be ABCD1111117
 
     Scenario: Change container number from master
-        Given the user in the master package tab
+        Given the user in master package tab
         And edit the continer number in master shipment 
             | ContainerNumber |
             | DDDD88889       |
-        When update shipment
+        When update the master shipment 
         Then the shipment should update successfully
         And the container should change successfully
         And the house container number should be DDDD88889
