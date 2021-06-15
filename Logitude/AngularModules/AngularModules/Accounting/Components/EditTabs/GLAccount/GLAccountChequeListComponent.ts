@@ -188,6 +188,12 @@ export class GLAccountChequeListComponent extends BaseComponent implements OnIni
     @Output() MenuHeaderchangeevent = new EventEmitter();
 
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string,filters:ApiQueryFilters=null) {
+        this.CreateApiQueryFilters(take, skip, sortingCol, sortingDir);
+
+        return this._entityListService.getARPyamentChequesListAsLedgerTransactions("LedgerTransaction", this.filterAgrs);//this.ledgerTransactionListExtendedService.getByFilters(filters);
+    }
+
+    private CreateApiQueryFilters(take: any, skip: any, sortingCol: any, sortingDir: any) {
         this.filterAgrs = new ApiQueryFilters();
         this.filterAgrs.PageSize = take;
         this.filterAgrs.PageIndex = skip;
@@ -199,12 +205,10 @@ export class GLAccountChequeListComponent extends BaseComponent implements OnIni
         if (sortingDir) {
             this.filterAgrs.SortDirection = sortingDir;
         }
+
         this.filterAgrs.addAdditionalFilter("GLAccountId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
- 
 
-        return this._entityListService.getARPyamentChequesListAsLedgerTransactions("LedgerTransaction", this.filterAgrs);//this.ledgerTransactionListExtendedService.getByFilters(filters);
     }
-
 
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();

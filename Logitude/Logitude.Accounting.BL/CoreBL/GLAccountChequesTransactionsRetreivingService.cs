@@ -27,6 +27,10 @@ namespace Logitude.Accounting.BL.CoreBL
         IAccountingContext accountingContext;
         bool showLocal;
         LedgerTransactionHelper ledgerTransactionHelper;
+        const string paymentIconCode = "PY";
+        const string arPaymentSourceTypeCode = "3";
+
+
         public GLAccountChequesTransactionsRetreivingService(int Tenant, IAccountingContext context)
         {
             tenant = Tenant;
@@ -46,14 +50,14 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private List<LedgerTransactionList> GetARPaymentLedgerTransactions(string accountId)
         {
-            const string AccountingEntity_ARPayment = "3";
+            const string arPaymentAccountingEntityCode = "3";
             return (from transaction in accountingContext.LedgerTransactions
                     join journal in accountingContext.Journals on transaction.JournalId equals journal.Id  
                     join arpaymentcheque in accountingContext.ARPaymentCheques on 
                       journal.AccountingEntityId equals   arpaymentcheque.PaymentId 
                     join arpaymentchequeStatus in accountingContext.ARPaymentChequeStatuses on arpaymentcheque.StatusCode equals arpaymentchequeStatus.Code
 
-                    where transaction.Tenant == tenant && transaction.AccountId == accountId && journal.AccountingEntityCode == AccountingEntity_ARPayment && 
+                    where transaction.Tenant == tenant && transaction.AccountId == accountId && journal.AccountingEntityCode == arPaymentAccountingEntityCode && 
                     transaction.Reference2 ==arpaymentcheque.ChequeNumber
 
                     select new LedgerTransactionList()
@@ -71,9 +75,9 @@ namespace Logitude.Accounting.BL.CoreBL
                         JournalNumber = journal.JournalNumber,
                         Notes = transaction.Notes,
                         SourceId = journal.AccountingEntityId,
-                        SourceTypeCode = "3",
+                        SourceTypeCode = arPaymentSourceTypeCode,
                         JournalId = journal.Id,
-                        IconCode = "PY"
+                        IconCode = paymentIconCode
 
                     }).Distinct().ToList();
         }
@@ -104,7 +108,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         Notes = trans.Notes,
                         JournalId = journal.Id,
                         SourceId = journal.AccountingEntityId,
-                        SourceTypeCode = "3",
+                        SourceTypeCode = arPaymentSourceTypeCode,
 
                     }).ToList();
 
@@ -112,9 +116,9 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private static DateTime GetCurrentDate(int tenant)
         {
-            DateTime _today = TenantServerConfigration.GetCurrentDateTime(tenant);
-            _today = new DateTime(_today.Year, _today.Month, _today.Day, 11, 59, 59);
-            return _today;
+            DateTime today = TenantServerConfigration.GetCurrentDateTime(tenant);
+            today = new DateTime(today.Year, today.Month, today.Day, 11, 59, 59);
+            return today;
         }
 
         public static bool GetLoggedContactShowLocal(int tenant)
