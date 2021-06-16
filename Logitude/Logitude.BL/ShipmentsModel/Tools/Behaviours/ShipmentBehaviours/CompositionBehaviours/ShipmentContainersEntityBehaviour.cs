@@ -53,6 +53,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
         private bool CheckIfShipmentMasterDataFieldsUpdated()
         {
+            if (this.initializer.EntityMasterData == null)
+                return false;
             if (this.initializer.EntityPM.MainCarriageCarrierId != this.initializer.EntityMasterData.MainCarriageCarrierId)
                 return true;
             if (this.initializer.EntityPM.MainCarriageCarrierNumber != this.initializer.EntityMasterData.MainCarriageCarrierNumber)
@@ -173,6 +175,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             container.MainCarriageETD = this.initializer.EntityPM.MainCarriageETD;
             container.Master = this.initializer.EntityPM.Master;
             container.ContainerNumber = shipmentPackage.ContainerNumber;
+            container.ShipmentId = shipmentPackage.ShipmentId;
         }
 
         private void DeleteContainer(ShipmentPackagePM shipmentPackage)

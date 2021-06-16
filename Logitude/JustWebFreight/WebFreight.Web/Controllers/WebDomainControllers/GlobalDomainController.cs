@@ -119,7 +119,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         myResult.ReleaseNotesURL = mySetting.ReleaseNotesURL;
                         myResult.LogitudeDemoTenants = mySetting.LogitudeDemoTenants;
                         myResult.TMPersonalAccessExpirationDate = mySetting.TMPersonalAccessExpirationDate;
-                        myResult.OITenantNumber = mySetting.OITenantNumber;
+                        
                         if (LogitudeSettings.IsCostomsDeploy)
                         {
                             myResult.ProductInfo = LogitudeSettings.ProductInfo;//.Replace(Environment.NewLine ,"<br>") ;
@@ -719,8 +719,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
         public string LogitudeDemoTenants { get; set; }
         public DateTime? TMPersonalAccessExpirationDate { get; set; }
-
-        public int OITenantNumber { get; set; }
     }
 
     public class TenantManagementJS

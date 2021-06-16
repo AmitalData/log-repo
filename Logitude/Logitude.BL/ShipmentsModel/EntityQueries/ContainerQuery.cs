@@ -52,6 +52,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Master = entityPoco.Master,
                     CarrierName = entityPoco.CarrierCard != null ? entityPoco.CarrierCard.EnglishName : "",
                     VesselName = entityPoco.VesselCard != null ? entityPoco.VesselCard.EnglishName : "",
+                    ShipmentId = entityPoco.ShipmentId,
                 };
             }
 
@@ -84,6 +85,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         Master = a.Master,
                         CarrierName = a.CarrierCard != null ? a.CarrierCard.EnglishName : "",
                         VesselName = a.VesselCard != null ? a.VesselCard.EnglishName : "",
+                        ShipmentId = a.ShipmentId,
                     }).ToList();
         }
 
@@ -112,6 +114,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                      Master = entity.Master,
                                                      CarrierName = entity.CarrierCard != null ? entity.CarrierCard.EnglishName : "",
                                                      VesselName = entity.VesselCard != null ? entity.VesselCard.EnglishName : "",
+                                                     ShipmentId = entity.ShipmentId,
                                                  };
             return result;
         }
@@ -141,7 +144,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ShipmentPackagesId = container.ShipmentPackagesId,
                     SearchFields = container.SearchFields,
                     DischargeDate = container.DischargeDate,
-                    Master = container.Master
+                    Master = container.Master,
+                    ShipmentId = container.ShipmentId,
                 };
             }
             return containerPM;

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Simplog.Data.ShipmentsModel.Mapping
 {
-    public  class LogitudeOceanInsightsRequestMap : EntityTypeConfiguration<OceanInsightsRequest>
+    public  class LogitudeOceanInsightsRequestMap : EntityTypeConfiguration<LogitudeOceanInsightsRequest>
     {
         public LogitudeOceanInsightsRequestMap()
         {
@@ -19,6 +19,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ContainerNumber).HasMaxLength(250).IsUnicode(false);
             this.Property(t => t.OceanInsigntId).HasMaxLength(500).IsUnicode(false);
             this.Property(t => t.BLNumber).HasMaxLength(18).IsUnicode(false);
+            this.Property(t => t.ShipmentId).HasMaxLength(15).IsUnicode(false);
 
             this.ToTable("LogitudeOceanInsightsRequests");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -28,6 +29,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.CreateDate).HasColumnName("CreateDate");
             this.Property(t => t.UpdateDate).HasColumnName("UpdateDate");
             this.Property(t => t.BLNumber).HasColumnName("BLNumber");
+            this.Property(t => t.ShipmentId).HasColumnName("ShipmentId");
         }
     }
 }

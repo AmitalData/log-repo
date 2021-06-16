@@ -38,5 +38,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? MainCarriageATD { get; set; }
         public DateTime? DischargeDate { get; set; }
 
+        public string ShipmentId { get; set; }
+
     }
 }

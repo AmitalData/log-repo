@@ -21,6 +21,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ContainerNumber).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.MainCarriageCarrierNumber).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Master).HasMaxLength(20).IsUnicode(false);
+            this.Property(t => t.ShipmentId).HasMaxLength(15).IsUnicode(false);
 
             this.ToTable("Containers");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -40,6 +41,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.DischargeDate).HasColumnName("DischargeDate");
             this.Property(t => t.Master).HasColumnName("Master");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
+            this.Property(t => t.ShipmentId).HasColumnName("ShipmentId");
 
             this.HasOptional(t => t.CarrierCard).WithMany().HasForeignKey(d => d.MainCarriageCarrierId).WillCascadeOnDelete(false); ;
             this.HasOptional(t => t.ShipmentPackage).WithMany().HasForeignKey(d => d.ShipmentPackagesId).WillCascadeOnDelete(false);

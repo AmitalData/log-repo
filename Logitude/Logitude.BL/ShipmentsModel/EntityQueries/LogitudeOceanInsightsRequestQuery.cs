@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
-    class LogitudeOceanInsightsRequestQuery
+    public class LogitudeOceanInsightsRequestQuery
     {
     }
 }

@@ -19,5 +19,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime UpdateDate { get; set; }
         public string Type { get; set; }
         public string BLNumber { get; set; }
+        public string ShipmentId { get; set; }
     }
 }
