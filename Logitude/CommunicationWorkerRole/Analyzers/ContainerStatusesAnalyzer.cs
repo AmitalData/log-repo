@@ -5,18 +5,13 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.Repositories;
-using Simplog.Server.Infrastructure.Helpers;
 using System;
-using System.Transactions;
 using CommunicationWorkerRole.LoginServiceReference;
 using CommunicationWorkerRole.OceanInsightsServiceReference;
 using System.ServiceModel;
 using WebFreight.Web.Helpers;
 using Simplog.Server.Infrastructure;
 using System.Threading.Tasks;
-using Logitude.SystemLogs;
 
 namespace CommunicationWorkerRole.Analyzers
 {
@@ -30,6 +25,11 @@ namespace CommunicationWorkerRole.Analyzers
         private string oceanInsightId;
         private LogitudeOceanInsightsRequestRepository logitudeOceanInsightsRequestRepository;
         private string amitalLogIntoken;
+        private string refrenceNumber;
+        private string scacCode;
+        private string oceanInsightInsertType;
+        private string shipmentId;
+        private string containerNumber;
 
         public ContainerStatusesAnalyzer(string communicationLogId, int tenant)
         {
@@ -60,22 +60,13 @@ namespace CommunicationWorkerRole.Analyzers
             else
             {
                 this.ReadAdditionalFieldsFromCommunicationLog();
-                var loginResponse = LoginToCloud();
-                loginResponse.Wait();
-                if (loginResponse.Result != null && !loginResponse.Result.HasError)
-                {
-                    amitalLogIntoken = loginResponse.Result.Result;
-                }
+                this.FillAmitalLogIntoken();
                 this.SendContainerStatusRequestToOceanInsightSevice();
-                this.InsertLogitudeOceanInsightsRequest();
+                this.HandelLogitudeOceanInsightsRequest();
                 this.DoneCommunicationLog();
             }
         }
-        private string refrenceNumber;
-        private string scacCode;
-        private string oceanInsightInsertType;
-        private string shipmentId;
-        private string containerNumber;
+      
         private void ReadAdditionalFieldsFromCommunicationLog()
         {
             this.refrenceNumber = communicationLog.EntityReference;
@@ -83,6 +74,16 @@ namespace CommunicationWorkerRole.Analyzers
             this.oceanInsightInsertType = communicationLog.AdditionalFields?.Split(',')?[1];
             this.shipmentId = communicationLog.AdditionalFields?.Split(',')?[2];
             this.containerNumber = communicationLog.AdditionalFields?.Split(',')?[3];
+        }
+
+        private void FillAmitalLogIntoken()
+        {
+            var loginResponse = LoginToCloud();
+            loginResponse.Wait();
+            if (loginResponse.Result != null && !loginResponse.Result.HasError)
+            {
+                amitalLogIntoken = loginResponse.Result.Result;
+            }
         }
 
         private async void SendContainerStatusRequestToOceanInsightSevice()
@@ -133,23 +134,36 @@ namespace CommunicationWorkerRole.Analyzers
             return null;
         }
 
-        private void InsertLogitudeOceanInsightsRequest()
+        private void HandelLogitudeOceanInsightsRequest()
         {
-            LogitudeOceanInsightsRequest logitudeOceanInsightsRequest = new LogitudeOceanInsightsRequest()
+            LogitudeOceanInsightsRequest logitudeOceanInsightsRequest = logitudeOceanInsightsRequestRepository.GetSingleLogitudeOceanInsightsByOceanInsigntId(oceanInsightId, this.tenant);
+            if (logitudeOceanInsightsRequest == null)
             {
-                Id = IdCounter.GetNumber("LogitudeOceanInsightsRequest", tenant),
-                CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
-                UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
-                OceanInsigntId = oceanInsightId,
-                BLNumber = this.refrenceNumber,
-                ContainerNumber = this.containerNumber,
-                SCACCode = scacCode, 
-                Tenant = this.tenant,
-                Type = this.oceanInsightInsertType,
-                ShipmentId = shipmentId
-            };
-
-            logitudeOceanInsightsRequestRepository.Add(logitudeOceanInsightsRequest);
+                logitudeOceanInsightsRequest = new LogitudeOceanInsightsRequest()
+                {
+                    Id = IdCounter.GetNumber("LogitudeOceanInsightsRequest", tenant),
+                    CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                    UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                    OceanInsigntId = oceanInsightId,
+                    BLNumber = this.refrenceNumber,
+                    ContainerNumber = this.containerNumber,
+                    SCACCode = scacCode,
+                    Tenant = this.tenant,
+                    Type = this.oceanInsightInsertType,
+                    ShipmentId = shipmentId
+                };
+                logitudeOceanInsightsRequestRepository.Add(logitudeOceanInsightsRequest);
+            }
+            else
+            {
+                logitudeOceanInsightsRequest.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                logitudeOceanInsightsRequest.BLNumber = this.refrenceNumber;
+                logitudeOceanInsightsRequest.ContainerNumber = this.containerNumber;
+                logitudeOceanInsightsRequest.SCACCode = scacCode;
+                logitudeOceanInsightsRequest.Type = this.oceanInsightInsertType;
+                logitudeOceanInsightsRequest.ShipmentId = shipmentId;
+                logitudeOceanInsightsRequestRepository.Update(logitudeOceanInsightsRequest);
+            }
             logitudeOceanInsightsRequestRepository.SubmitChanges();
         }
 
