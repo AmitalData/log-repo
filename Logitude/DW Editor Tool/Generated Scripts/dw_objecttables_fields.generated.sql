@@ -1063,6 +1063,12 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_ChargesHousesACCTPayablesInProfitNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ChargesHousesACCTPayablesInProfitNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection,RecordType) Values(@Fact_ChargesHousesACCTPayablesInProfitNewId,0,'Fact_Charges','[Houses ACCT Payables In Profit]','Accounted Payables from houses only (Profit)','Decimal','false',0,0,'false','false','true','Charges','false','false','false','Shipment.HousesACCTPayablesInProfit','false','true','Master')  
+declare @Fact_ChargesInvoiceLineAmountForeignNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ChargesInvoiceLineAmountForeignNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@Fact_ChargesInvoiceLineAmountForeignNewId,0,'Fact_Charges','[Invoice Line Amount (Foreign)]','Invoice Line Amount (Foreign)','Decimal','false',0,0,'false','false','true','Money','false','false','false','false','true')  
+declare @Fact_ChargesInvoiceLineForeignCurrencyNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ChargesInvoiceLineForeignCurrencyNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@Fact_ChargesInvoiceLineForeignCurrencyNewId,0,'Fact_Charges','[Invoice Line Foreign Currency]','Invoice Line Foreign Currency','Dimension','false',0,0,'DIM_Currencies','false','false','true','Money','false','false','false','false','false')  
 ------------------------------------------------------------------------------------
 declare @Fact_InvoicesNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_InvoicesNewId OUTPUT,'DWObjectTable' 
