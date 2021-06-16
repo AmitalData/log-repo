@@ -39,6 +39,13 @@ namespace Logitude.BL.InfrastructureModel.CustomFilters
                             queryableData = queryableData = queryableData.Where(d => string.IsNullOrEmpty(d.RecordType) || d.DisplayInAutomationAsEnitity || (!string.IsNullOrEmpty(d.RecordType) && d.RecordType.Contains(item.FieldValue.ToString())));
                         }
                     }
+                    if (item.FieldName == "CanAutomateSetValue")
+                    {
+                        if (item.FieldValue != null)
+                        {
+                            queryableData = queryableData.Where(d => d.CanAutomateSetValue == true || d.IsCustom == true);
+                        }
+                    }
                 }
             }
 
