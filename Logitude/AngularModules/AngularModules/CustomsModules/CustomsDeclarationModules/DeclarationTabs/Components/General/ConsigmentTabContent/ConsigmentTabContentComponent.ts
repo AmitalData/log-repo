@@ -33,6 +33,7 @@ import { Dictionary } from '../../../../../../Infrastructure/GenericTypes/Dictio
 import { DeclarationCourierStatusList } from '../../../../../../Customs/EntityLists/DeclarationCourierStatusList';
 import { DeclarationCourierStatusListService } from '../../../../../../Customs/Services/StandardLists/DeclarationCourierStatusListService';
 import { EntityResourceService } from '../../../../../../Infrastructure/Services/EntityResourceService';
+import { DeclarationExtendedListService } from '../../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 
 @Component({
     selector: 'ConsigmentTabContent',
@@ -56,7 +57,7 @@ export class ConsigmentTabContentComponent
     IsCourierDeclaration: boolean = false;
     _DeclarationCourierStatus: DeclarationCourierStatusList;
     entityResourceService: EntityResourceService = new EntityResourceService();
-
+    _declarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
     public LoadingPortFilterItems: ApiQueryFilters;//38388
 
     // Edit grid array
@@ -89,6 +90,24 @@ export class ConsigmentTabContentComponent
     }
     private _SubDisplayModeChanged;
     private _SubConsignmentsChanged;
+
+    openKanamDeclaration()
+    {
+        this._declarationExtendedListService.GetSingleDeclarationByNumber(this.ManifestNumber, SessionLocator.Tenant).subscribe((myResult: any) => {
+
+            var mm: ServiceResponse = myResult;
+            if (!mm.HasError) {
+                var entity = mm.Result;
+                if (entity != null) {
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                        .then(cmpRef => {
+                            cmpRef.instance.ComponentRef = cmpRef;
+                            cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: 'Customs.Declaration', BackButtonLabel: "הצהרת שחמ" });
+                        });
+                }
+            }
+        });
+    }
 
     public ConsignmentTypeSelectionChanged(value) {
         this.ConsignmentType = value;
@@ -1099,7 +1118,7 @@ export class ConsignmentInternalTransitionModel extends BaseComponent {
 
     }
 
-
+   
 
 }
 
