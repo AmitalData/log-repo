@@ -107,16 +107,16 @@ export function FillShippingLineAreas(shippingLineDetails: ShippingLineDetails) 
     cy.get('#addArea').click().then(() => {
         cy.FillLogTextBox('#CarrierArea_Name', shippingLineDetails.AreaName)
         cy.FillLogTextBox('#CarrierArea_Description', shippingLineDetails.AreaDescription)
-        cy.Click('button', 'Country Ports').then(() => {
-            cy.FillLogLov('#CarrierAreasPort_CountryId', shippingLineDetails.AreaCountry, true)
-            cy.get("#LogitudeWindow_0_4").find(".Button").contains("Add").click()
-            cy.get("#LogitudeWindow_0_4").find(".Button").contains("Close").click()
-        })
-        cy.Click('button', 'Ports').then(() => {
-            cy.FillLogLov('#CarrierAreasPort_PortId', shippingLineDetails.AreaPort, true)
-            cy.get("#LogitudeWindow_0_4").find(".Button").contains("Add").click()
-            cy.get("#LogitudeWindow_0_4").find(".Button").contains("Close").click()
-        })
+        cy.get("[data-cy='ChooseCountry_CarrierArea']").click()
+        cy.FillLogLov('#CarrierAreasPort_CountryId', shippingLineDetails.AreaCountry, true)
+        cy.get("[data-cy='AddCountry_CarrierAreasPort']").click()
+        cy.get("[data-cy='CloseCountry_CarrierAreasPort']").click()
+
+        cy.get("[data-cy='ChoosePort_CarrierArea']").click()
+        cy.FillLogLov('#CarrierAreasPort_PortId', shippingLineDetails.AreaPort, true)
+        cy.get("[data-cy='Add_CarrierAreasPort']").click()
+        cy.get("[data-cy='Close_CarrierAreasPort']").click()
+
     })
 }
 
