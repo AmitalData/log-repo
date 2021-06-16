@@ -352,10 +352,13 @@ using Simplog.Data.ShipmentsModel;
 					if(item.Packages != null && item.Packages.Count > 0)
 					{
 						PackageQueryService PackageService5 = new PackageQueryService(Tenant);
-						 								//throw new ApplicationException("Packages Can't be update"); 
+						  
+						if(!IsUpdate)
+						{								//throw new ApplicationException("Packages Can't be update"); 
 								temp.ShipmentPickUpDeliveryPackages = PackageService5.PackageDataMappingAndValidatin(item.Packages,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
+						}  
 
 						
 					}
