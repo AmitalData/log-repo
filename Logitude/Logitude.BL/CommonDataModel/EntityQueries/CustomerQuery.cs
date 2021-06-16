@@ -3062,7 +3062,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         UsoCFDICode = a.Card.UsoCFDICode,
                         CreatedByPartner = a.Card.CreatedByPartner,
                         IsAutonomy = a.Card.IsAutonomy,
-                        InsuredcreditLimit = a.InsuredcreditLimit,
 
                     };
 
