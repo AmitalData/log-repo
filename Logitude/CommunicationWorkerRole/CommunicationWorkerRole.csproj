@@ -382,11 +382,6 @@
     <Compile Include="ContainerStatusesConnecterWR.cs" />
     <Compile Include="ContainerStatusesMonitorWR.cs" />
     <Compile Include="ContainerStatusesReceiverWR.cs" />
-    <Compile Include="Service References\ExternalTasksQueueServiceReference\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="Service References\LoginServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -580,19 +575,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\ChampRequestAnswerServiceReference\ChampRequestAnswerWebService.wsdl" />
-    <None Include="Service References\ExternalTasksQueueServiceReference\ExternalTasksQueueWcfService.wsdl" />
-    <None Include="Service References\ExternalTasksQueueServiceReference\ExternalTasksQueueWcfService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ExternalTasksQueueServiceReference\ExternalTasksQueueWcfService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ExternalTasksQueueServiceReference\ExternalTasksQueueWcfService2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ExternalTasksQueueServiceReference\ExternalTasksQueueWcfService3.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Service References\ExternalTasksQueueWcfService\CommunicationWorkerRole.ExternalTasksQueueWcfService.Response.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -842,7 +824,6 @@
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\ChampProxy\" />
     <WCFMetadataStorage Include="Service References\ChampRequestAnswerServiceReference\" />
-    <WCFMetadataStorage Include="Service References\ExternalTasksQueueServiceReference\" />
     <WCFMetadataStorage Include="Service References\ExternalTasksQueueWcfService\" />
     <WCFMetadataStorage Include="Service References\LoginServiceReference\" />
     <WCFMetadataStorage Include="Service References\OceanInsightsServiceReference\" />
@@ -1006,21 +987,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\LoginServiceReference\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ExternalTasksQueueServiceReference\ExternalTasksQueueWcfService.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ExternalTasksQueueServiceReference\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ExternalTasksQueueServiceReference\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ExternalTasksQueueServiceReference\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
