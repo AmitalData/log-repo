@@ -30,9 +30,11 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                     MainInterfaceCode = "2450",
                     InterfaceTypeCode ="2450" , 
                     LoggingEntityReference = requestParams.AppicationId,
-                    LoggingUserId = requestParams.LoggingUserId, 
+                    LoggingUserId = requestParams.LoggingUserId,
+                    RequestVIA=requestParams.RequestVIA,
+                    ForcePersonalSign=requestParams.ForcePersonalSign,
                 };
-                ContainerizationRequest.RequestVIA = SendRequestVIA.WebServiceInteractive; 
+                ContainerizationRequest.RequestVIA = requestParams.RequestVIA; 
                 var myRequestMessagingService = new SaveCC_MSG2450_ContainerizationMessageMessagingService();
                 var resData = myRequestMessagingService.Send(ContainerizationRequest);
                 return Request.CreateResponse(HttpStatusCode.OK, resData);

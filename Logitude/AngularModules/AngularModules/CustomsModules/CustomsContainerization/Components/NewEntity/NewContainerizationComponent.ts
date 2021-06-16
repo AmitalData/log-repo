@@ -441,8 +441,8 @@ export class NewContainerizationComponent extends BaseComponent {
             logitudeWindow.Title = "הצהרת סוכן";
             logitudeWindow.WindowArgs = windowArgs;
             logitudeWindow.ComponentLoaded.subscribe(comp => {
-                logitudeWindow.WindowClosed.subscribe((AgentStatement: boolean) => {
-                    if (AgentStatement) {
+                logitudeWindow.WindowClosed.subscribe((event:any) => {
+                    if (event != null) {
                         this.entityPM.AgentDeclaration = true;
                         this.entityPM.ConnectedDeclarations = this.containerizationExtendedListService.ConnectedDeclarations;
                         this.containerizationPMService.insert(this.entityPM).subscribe((response: ServiceResponse) => {
@@ -456,7 +456,7 @@ export class NewContainerizationComponent extends BaseComponent {
                                     });
                                 });
                             if (!response.HasError) {
-                                this.containerizationMessagesService.SendContainerization(this.getParams(response))
+                                this.containerizationMessagesService.SendContainerization(this.getParams(response,event))
                                     .subscribe(res1 => {
                                     });
                             }
@@ -468,10 +468,12 @@ export class NewContainerizationComponent extends BaseComponent {
         }
     }
 
-    getParams(response: ServiceResponse) {
+    getParams(response: ServiceResponse,event:any) {
         var params: GenericRequestParams = new GenericRequestParams();
         params.Tenant = SessionLocator.Tenant;
         params.AppicationId = "12345";
+        params.RequestVIA = event.RequestVIA;
+        params.ForcePersonalSign = event.ForcePersonalSign;
         params.LoggingEnabled = true;
         params.LoggingEntityId = response.Result.Id;
         params.LoggingUserId = SessionLocator.LoggedUserId;

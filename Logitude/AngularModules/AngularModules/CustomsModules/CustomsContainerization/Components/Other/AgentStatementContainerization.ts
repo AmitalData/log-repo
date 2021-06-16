@@ -22,7 +22,7 @@ export class AgentStatementContainerization
 
     }
     SendButtonClicked(event) {
-        this.CurrentSession.CurrentWindow.Close("true");
+        this.CurrentSession.CurrentWindow.Close(event);
     }
 
     CancelButtonClicked() {
