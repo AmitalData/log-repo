@@ -429,6 +429,7 @@ export class NewContainerizationComponent extends BaseComponent {
         if (this.entityPM.Id != null) {
             this.entityPM.ConnectedDeclarations = this.containerizationExtendedListService.ConnectedDeclarations;
             SessionLocator.SelectedSession.CurrentEditComponent.EntityPM = this.entityPM;
+            SessionLocator.SelectedSession.CurrentEditComponent.EntityPM.OperationMode = "2";
             DeclarationEventManager.AddDeclarationToContainerization.emit(null);
             this.CurrentSession.CurrentWindow.Close("0");
         } else {
