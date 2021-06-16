@@ -165,6 +165,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                     shipmentPM.WarehouseLegActualReleaseDate = greatestWarehouseRelease.ActualReleaseDate;
                     shipmentPM.WarehouseLegExpectedReleaseDate = greatestWarehouseRelease.ExpectedReleaseDate;
                     shipmentPM.GrossWeightPerStorageDays = storageCalculater.ComputeGrossWeight_PerStorageDays();
+                    shipmentPM.WarehouseLegLastFreeDate = storageCalculater.GetWarehouseLegLastFreeDate();
                     isUpdated = true;
                 }
             }
@@ -173,7 +174,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 shipmentPM.WarehouseLegActualReleaseDate = null;
                 shipmentPM.WarehouseLegExpectedReleaseDate = null;
                 shipmentPM.GrossWeightPerStorageDays = null;
-                isUpdated = true;
+                shipmentPM.WarehouseLegLastFreeDate = null;
+               isUpdated = true;
             }
 
             if (isUpdated)
@@ -314,7 +316,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
             this.storageDays = this.ComputeStorageDays();
             this.freeDays = this.GetFreeDays();
             this.readyToCalculateStorage = this.CheckIfReadyToCalculateStorage();
-            this.ComputeGrossWeight_PerStorageDays();
             if (readyToCalculateStorage)
             {
                 double? amount = this.ComputeReceivableAmount();
@@ -364,7 +365,20 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
             }
             return weightPerStorageDays < 0 ? 0 : weightPerStorageDays;
         }
+        public DateTime? GetWarehouseLegLastFreeDate()
+        {
+            DateTime? WarehouseLegLastFreeDate = null;
+            if (shipmentPM.WarehouseLegActualEntryDate != null && shipmentPM.WarehouseStorageFreeDays != null)
+            {
+                var date = shipmentPM.WarehouseLegActualEntryDate.Value.AddDays(shipmentPM.WarehouseStorageFreeDays.Value);
+                if (date != null)
+                {
+                    WarehouseLegLastFreeDate = date;
+                }
+            }
 
+            return WarehouseLegLastFreeDate;
+        }
 
         private int? GetFreeDays()
         {
