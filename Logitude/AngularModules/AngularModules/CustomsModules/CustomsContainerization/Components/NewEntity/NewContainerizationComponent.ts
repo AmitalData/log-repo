@@ -230,7 +230,7 @@ export class NewContainerizationComponent extends BaseComponent {
             FieldName: 'MyConnectedCheckBox',
             DataTypeCode: 'String',//'Number',
             Display: '',
-            Styles: { width: '30px' },
+            Styles: { width: '30px'},
             IsCustomTemplate: true,
             HtmlListComponentName: 'CustomsContainerizationListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsContainerizationListTemplate',
@@ -240,7 +240,7 @@ export class NewContainerizationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'CreateDateTime',
             DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate('Customs.Declaration.F.CreateDateTime'),
+            Display: "תאריך פתיחת הצהרה",
             Styles: { width: '80px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -262,7 +262,7 @@ export class NewContainerizationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'ExportFile',
             DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate('Customs.Declaration.F.ExportFile'),
+            Display: "מס' תיק יצוא",
             Styles: { width: '120px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -284,7 +284,7 @@ export class NewContainerizationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'CustomFileNo',
             DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate('Customs.Declaration.F.CustomFileNo'),
+            Display: "תיק מכס",
             Styles: { width: '80px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -305,7 +305,7 @@ export class NewContainerizationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'ManifestNumber',
             DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate('Customs.Declaration.F.ManifestNumber'),
+            Display: "מזהה מטען 1",
             Styles: { width: '100px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -315,7 +315,7 @@ export class NewContainerizationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'SecondCargoID',
             DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate('Customs.Declaration.F.SecondCargoID'),
+            Display: "מזהה מטען 2",
             Styles: { width: '100px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -325,7 +325,7 @@ export class NewContainerizationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'ThirdCargoID',
             DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate('Customs.Declaration.F.ThirdCargoID'),
+            Display: "מזהה מטען 3",
             Styles: { width: '120px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,

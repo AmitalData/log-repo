@@ -36,6 +36,7 @@
   HasDynamicHeader="false"
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
+  NewWizardControlName="&quot;Logitude.Customs.NewContainerizationControlCommand&quot;"
   LocalDefaultText="&quot;המכלה&quot;"
   DefaultText="&quot;Containerization&quot;"
   Code="&quot;4ba2&quot;"
