@@ -7,11 +7,6 @@ import { ShippingLineDetails } from "../../../cypress/models/ShippingLineDetails
 import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetails";
 import * as BaseActions from "../../../../Base/cypress/actions/Actions"
-import { Constants } from "../../constants/Constants";
-
-
-let shippingLineDetails: ShippingLineDetails;
-
 
 //#region Create new branch
 Given("the user logged in and open {string} in maintenance menu", (maintenanceItemName) => {
@@ -20,7 +15,7 @@ Given("the user logged in and open {string} in maintenance menu", (maintenanceIt
 });
 
 Given("a shippingLine with the following details", (dataTable) => {
-    shippingLineDetails = Assists.CreateInstance<ShippingLineDetails>(dataTable, true);
+    let shippingLineDetails = Assists.CreateInstance<ShippingLineDetails>(dataTable, true);
     ShippingLineActions.FillShippingLineDetails(shippingLineDetails)
 });
 
@@ -77,7 +72,7 @@ Then("the shipping line address should create successfully", () => {
 });
 
 Given("fill the following Area in Areas Shipping line", (dataTable) => {
-    shippingLineDetails = Assists.CreateInstance<ShippingLineDetails>(dataTable, true);
+    let shippingLineDetails = Assists.CreateInstance<ShippingLineDetails>(dataTable, true);
     cy.Navigate(ShippingLineSelectors.AreasTab);
     ShippingLineActions.FillShippingLineAreas(shippingLineDetails)
 });
@@ -86,13 +81,14 @@ When("create shipping line area", () => {
     ShippingLineActions.CreateShippingLineArea()
 });
 
-Then("the shipping line address should create successfully", () => {
+Then("the shipping line area should create successfully", () => {
     ShippingLineActions.AssertCreateShippingLineArea()
 });
 
-Given("fill the following Area in Tariff Shipping line", (dataTable) => {
-    shippingLineDetails = Assists.CreateInstance<ShippingLineDetails>(dataTable, true);
+Given("fill the following Tariff in Tariff Translations Tab", (dataTable) => {
+    let shippingLineDetails = Assists.CreateInstance<ShippingLineDetails>(dataTable, true);
     cy.Navigate(ShippingLineSelectors.TariffTranslations);
+    cy.Navigate("#addTranslation")
     ShippingLineActions.FillShippingLineTariffTranslations(shippingLineDetails)
 });
 
@@ -113,7 +109,7 @@ When("edit shipping line", () => {
     ShippingLineActions.EditShippingLine();
 });
 
-Then("the Shipping Line should update successfully", () => {
+Then("the shipping line should update successfully", () => {
     ShippingLineActions.AssertEditShippingLine();
 });
 

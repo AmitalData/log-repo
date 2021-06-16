@@ -25,7 +25,6 @@ Feature: Shipping Line Create, Search and Edit from Maintenance
         And fill the following Address in Addresses Shipping line
             | AddressCountry | United States |
             | AddressCity    | las           |
-
         When create shipping line address
         Then the shipping line address should create successfully
 
@@ -33,24 +32,23 @@ Feature: Shipping Line Create, Search and Edit from Maintenance
             | AreaName        | Area Shipping Test             |
             | AreaDescription | Area Shipping description Test |
             | AreaCountry     | GB                             |
-            | AreaPort        | Miami                          |
-
+            | AreaPort        | Mi                             |
         When create shipping line area
-        Then the shipping line address should create successfully
+        Then the shipping line area should create successfully
 
-        Given fill the following Tariff in Tariff Shipping line
+        Given fill the following Tariff in Tariff Translations Tab
             | Partner Code | random |
-            | Port         | Miami  |
+            | TariffPort   | Miami  |
         When create shipping line Tariff translation
         Then the shipping line Tariff translation should create successfully
 
-        Given the user activate shipping Line
-        When edit shipping Line
-        Then the shipping Line should update successfully
+        Given the user activate shipping line
+        When edit shipping line
+        Then the shipping line should update successfully
         And following event should appear in events tab
             | Event                 | Notes                     |
             | Shipping Line Updated | Shipping Line Inactivated |
 
     Scenario: Save and close the shippingLine
-        When save and close shipping Line
-        Then the shipping Line should close successfully
+        When save and close shipping line
+        Then the shipping line should close successfully

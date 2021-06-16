@@ -5,25 +5,11 @@ import { Urls } from "../constants/Urls";
 import { RestAPI } from "../../../Base/cypress/constants/RestAPI";
 import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
-import { constants } from "../../../Base/cypress/constants/constants"
 import { ShippingLineDetails } from 'cypress/models/ShippingLineDetails';
 import * as GeneralActions from './GeneralActions'
 import * as gr from '../../../Base/cypress/actions/GenerateRandoms';
 
-let ShippingLineCode = null;
-let inActiveBranch = false;
-let ShippingLineName = null
-
-export function FillCheckBoxProcess(CheckBoxSelector: string, IsCheck: string) {
-    if (IsCheck) {
-        if (IsCheck.toUpperCase() == constants.YES) {
-            cy.get(CheckBoxSelector).check({ force: true })
-        }
-        else {
-            cy.get(CheckBoxSelector).find(BaseSelectors.input).uncheck({ force: true })
-        }
-    }
-}
+let shippingLineCode = null;
 
 export function FillShippingLineDetails(shippingLineDetails: ShippingLineDetails) {
     cy.DefineRequestWait(RestAPI.GET, Urls.NewShippingLines, RequestAliases.NewShippingLine)
@@ -54,23 +40,18 @@ function DefinePostShippingLineRequest() {
 export function AssertCreateShippingLine() {
     let intercept = cy.wait("@" + RequestAliases.PostShippingLine);
     intercept.then((interception) => {
-
-        AssertPostShippingLine(interception.response.statusCode, 200, interception.response.body.Code)
-        ShippingLineName = interception.response.body.Name
+        let status = interception.response.statusCode
+        assert.equal(status, 200)
+        shippingLineCode = interception.response.body.Code
     })
 }
 
-export function AssertPostShippingLine(responseStatusCode: number, expectedStatusCode: number, shippingLineCode: string) {
-    assert.equal(responseStatusCode, expectedStatusCode)
-    ShippingLineCode = shippingLineCode
-}
-
 export function SearchShippingLine() {
-    GeneralActions.Search(ShippingLineCode)
+    GeneralActions.Search(shippingLineCode)
 }
 
 export function AssertSearchShippingLine() {
-    GeneralActions.AssertSearch(ShippingLineCode)
+    GeneralActions.AssertSearch(shippingLineCode)
 }
 
 export function OpenShippingLine() {
@@ -98,12 +79,6 @@ export function CheckShippingLineINTTRA() {
 
 export function FillShippingLineAddresses(shippingLineDetails: ShippingLineDetails) {
     cy.DefineRequestWait(RestAPI.GET, Urls.NewShippingLinesAddress, RequestAliases.NewShippingLineAddress);
-    // cy.wait('@' + RequestAliases.NewShippingLineAddress).then(() => {
-    //     cy.get('.LogitudeIconButton').first().find('img').invoke('show').click({ force: true }).then(() => {
-    //         cy.FillLogLov('#Address_CountryId', shippingLineDetails.AddressCountry, true)
-    //         cy.FillLogTextBox('#Address_City', shippingLineDetails.AddressCity)
-    //     })
-    // })
     cy.get("#Edit").click({ force: true })
     cy.FillLogLov('#Address_CountryId', shippingLineDetails.AddressCountry, true)
     cy.FillLogTextBox('#Address_City', shippingLineDetails.AddressCity)
@@ -118,7 +93,8 @@ export function CreateShippingLineAddress() {
 export function AssertCreateShippingLineAddress() {
     let intercept = cy.wait("@" + RequestAliases.PostShippingLineAddress);
     intercept.then((interception) => {
-        AssertPostShippingLine(interception.response.statusCode, 200, interception.response.body.Name)
+        let status = interception.response.statusCode
+        assert.equal(status, 200)
     })
 }
 
@@ -132,12 +108,14 @@ export function FillShippingLineAreas(shippingLineDetails: ShippingLineDetails) 
         cy.FillLogTextBox('#CarrierArea_Name', shippingLineDetails.AreaName)
         cy.FillLogTextBox('#CarrierArea_Description', shippingLineDetails.AreaDescription)
         cy.Click('button', 'Country Ports').then(() => {
-            cy.FillLogLov('#CarrierAreasPort_CountryId', shippingLineDetails.AreaCountry, true).then(() => {
-                cy.get("#LogitudeWindow_0_4").find(".Button").contains("Add").click()
-                cy.FillLogLov('#CarrierAreasPort_CountryId', shippingLineDetails.AreaPort, true)
-                cy.get("#LogitudeWindow_0_4").find(".Button").contains("Add").click()
-                cy.get("#LogitudeWindow_0_4").find(".Button").contains("Close").click()
-            })
+            cy.FillLogLov('#CarrierAreasPort_CountryId', shippingLineDetails.AreaCountry, true)
+            cy.get("#LogitudeWindow_0_4").find(".Button").contains("Add").click()
+            cy.get("#LogitudeWindow_0_4").find(".Button").contains("Close").click()
+        })
+        cy.Click('button', 'Ports').then(() => {
+            cy.FillLogLov('#CarrierAreasPort_PortId', shippingLineDetails.AreaPort, true)
+            cy.get("#LogitudeWindow_0_4").find(".Button").contains("Add").click()
+            cy.get("#LogitudeWindow_0_4").find(".Button").contains("Close").click()
         })
     })
 }
