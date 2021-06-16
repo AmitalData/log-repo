@@ -1756,6 +1756,13 @@
         LocalDefaultText="&quot;הוסף הצהרה&quot;"
         IsPackagable="true"
         HtmlComponentPath="&quot;./CustomsModules/CustomsContainerization/Components/NewEntity/NewContainerizationComponent&quot;" />
+      <MenuItem
+        EventCode="&quot;CancelContainerization&quot;"
+        DefaultText="&quot;Cancel Containerization&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="1"
+        LocalDefaultText="&quot;ביטול המכלה&quot;"
+        IsPackagable="true" />
     </MenuButton>
   </MenuButtons>
   <DataContracts />
