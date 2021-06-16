@@ -252,6 +252,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
 
         private static bool CheckContainerShipmentSearchPublicity(DataRow searchRecord)
         {
+            if (IsNullOrEmpty(searchRecord, "ShipmentTypeId"))
+                return false;
+
             string shipmentTypeId = (string)searchRecord["ShipmentTypeId"];
 
             return !PrivateShipmentTypes.Contains(shipmentTypeId?.ToUpper());
