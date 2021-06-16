@@ -105,8 +105,28 @@ export function UpdateShipment(saveButtonSelector: string, saveButtonSelectorCon
 export function UpdateMaster(){
     cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.PutShipment)
 }
+export function AsserationthepackageaddsuccessfullyinHouse(){
+    cy.get(ShipmentSelectors.FirstRowinpackages).contains('Animals').should('exist')
+cy.get(ShipmentSelectors.FirstRowinpackages).contains('100').should('exist')
+cy.get(ShipmentSelectors.FirstRowinpackages).contains('5').should('exist')
+}
+export function AsseratincontaineraddsuccessfullyinMaster(){
+cy.get(ShipmentSelectors.FirstRowinpackages).contains('ContainerId').should('exist')
+cy.get(ShipmentSelectors.FirstRowinpackages).contains('100').should('exist')
+}
+export function EditContinerNumberinMaster(){
+    cy.Navigate(ShipmentSelectors.Editcontainernumberfrommaster)
+    cy.Navigate(ShipmentSelectors.ShipmentPackageContainernumber).clear().type('DDDD88889')
+   cy.Click("#OkOceanPackage", null)
 
-
+}
+export function AsserationChangrContinerNumberinHouse(){
+    cy.Navigate(ShipmentSelectors.ShipmentsTab);
+    openHouseShipment()
+    cy.Navigate(ShipmentSelectors.ShipmentPackagesTab+ShipmentSelectors.LastElementShipment)
+    cy.get(ShipmentSelectors.ShipmentcontinernumbereHouse).contains('DDDD88889').should('exist')
+    
+}
 //export function GetHouseNumber() : any {
     //BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200).then((interception)=>{
     //ShipmentNumber=interception.response.body.ShipmentNumber;
