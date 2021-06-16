@@ -34,7 +34,7 @@
     jQuery.SelectedTabId = "TAB_SHI";
     jQuery.watermark_SHI = "Search partners / ports / ref.#";
     jQuery.watermark_INV = "Search Inv. # / bill to / ref.#";
-    jQuery.watermark_QUOTESREQUESTS = "Search ref.#";
+    jQuery.watermark_QUOTESREQUESTS = "Search contact / customer status / ref.#";
 
 
 
