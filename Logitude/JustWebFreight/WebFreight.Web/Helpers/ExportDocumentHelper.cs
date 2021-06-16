@@ -795,6 +795,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                 case "SHCO":
                 case "ABOCO":
                 case "SHCMR":
+                case "NCR":
                     {
                         theT1 = System.DateTime.Now.Ticks;
                         ShippingDeclarationWebService shippingDeclarationWebService = new ShippingDeclarationWebService();
