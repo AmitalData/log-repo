@@ -1,6 +1,7 @@
 ﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -117,7 +118,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                     if (oldValue == null) oldValue = "";
                     if (newValue == null) newValue = "";
 
-                    if (oldValue.ToString().ToLower() != newValue.ToString().ToLower())
+                    if (oldValue.ToString().ToLower() != newValue.ToString().ToLower() || item.IsCustomField)
                     {
                         if ((item.DataTypeCode.Trim() == "DateTime" || item.DataTypeCode.Trim() == "Date") && item.OperatorCode == "SF" && string.IsNullOrEmpty(newValue.ToString()))
                         {
@@ -173,6 +174,10 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
             else if (item.DataTypeCode.Trim() == "Integer")
             {
                 result = !string.IsNullOrEmpty(item.Value) ? Int32.Parse(item.Value) : 0;
+            }
+            else if (item.IsCustomField)
+            {
+                result = new CustomFieldClass("Field1", "Ticket", item.Value);
             }
             else result = item.Value;
 

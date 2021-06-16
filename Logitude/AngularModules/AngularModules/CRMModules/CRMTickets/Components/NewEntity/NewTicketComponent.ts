@@ -53,7 +53,7 @@ export class NewTicketComponent extends BaseComponent implements OnInit, AfterVi
     public EntityList: EntityClass[] = [];
     public EntityNumberTitle = "Shipment Number";
 
-    @ViewChild(ChildDirective) Child: ChildDirective;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityResourceService: EntityResourceService) {
         super();
@@ -81,10 +81,12 @@ export class NewTicketComponent extends BaseComponent implements OnInit, AfterVi
     LoadChildComponent() {
         this.SetUIProperties();
         this.SetUIRequiredProperties();
-        SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.Child.Location)
-            .then(cmpRef => {
-                cmpRef.instance.Run(this.EntityPM, this.ObjectTableName, this.ScreenCode);
-            });
+        if (this.viewContainerRef) {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.Run(this.EntityPM, this.ObjectTableName, this.ScreenCode);
+                });
+        }
     }
 
     public WindowArgs: NewTicketArgs;

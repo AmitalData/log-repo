@@ -1355,6 +1355,9 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 if (objectField.FieldName == "SLAId") {
                     this.AutomationSetSLAValue.ObjectFieldCode = objectField.FieldCode;
                 }
+                if (objectField.IsCustom) {
+                    this.AutomationSetValuebjectFieldLists.push(objectField);
+                }
             }
         });
 
@@ -1618,6 +1621,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         automationSetValue.OperatorCode = "SV";
         automationSetValue.Value = "";
         automationSetValue.FieldName = "";
+        automationSetValue.IsCustomField = false;
         this.AutomationSetValueLists.push(new AutomationSetValueViewModel(automationSetValue, this));
     }
 
