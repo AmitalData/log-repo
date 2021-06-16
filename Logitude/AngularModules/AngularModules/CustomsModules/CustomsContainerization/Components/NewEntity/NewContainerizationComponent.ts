@@ -18,6 +18,7 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { ContainerizationMessagesService } from '../../../../Customs/Services/WebServices/ContainerizationMessagesService';
 import { GenericRequestParams } from '../../../../Customs/DataContract/RequestParams/GenericRequestParams';
 import { DeclarationEventManager } from '../../../../Customs/Utilities/DeclarationEventManager';
+import { DeclarationPM } from '../../../../Customs/EntityPMs/DeclarationPM';
 
 
 @Component({
@@ -32,6 +33,7 @@ export class NewContainerizationComponent extends BaseComponent {
     objectTableNameDec: string = "Customs.Declaration";
     objectTableName: string = "Customs.Containerization";
     entityPM: ContainerizationPM;
+    declarationPM: DeclarationPM;
     @Output() onQueryChangeEvent = new EventEmitter();
     entityListService: EntityListService;
     SearchFieldsFilter: FilterItem;
@@ -427,6 +429,7 @@ export class NewContainerizationComponent extends BaseComponent {
         if (this.entityPM.Id != null) {
             this.entityPM.ConnectedDeclarations = this.containerizationExtendedListService.ConnectedDeclarations;
             SessionLocator.SelectedSession.CurrentEditComponent.EntityPM = this.entityPM;
+            SessionLocator.SelectedSession.CurrentEditComponent.EntityPM.OperationMode = "2";
             DeclarationEventManager.AddDeclarationToContainerization.emit(null);
             this.CurrentSession.CurrentWindow.Close("0");
         } else {
@@ -438,14 +441,22 @@ export class NewContainerizationComponent extends BaseComponent {
             logitudeWindow.Title = "הצהרת סוכן";
             logitudeWindow.WindowArgs = windowArgs;
             logitudeWindow.ComponentLoaded.subscribe(comp => {
-                logitudeWindow.WindowClosed.subscribe((AgentStatement: boolean) => {
-                    if (AgentStatement) {
+                logitudeWindow.WindowClosed.subscribe((event:any) => {
+                    if (event != null) {
                         this.entityPM.AgentDeclaration = true;
                         this.entityPM.ConnectedDeclarations = this.containerizationExtendedListService.ConnectedDeclarations;
                         this.containerizationPMService.insert(this.entityPM).subscribe((response: ServiceResponse) => {
                             this.CurrentSession.CurrentWindow.Close("0");
+                            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
+                                .then(cmpRef => {
+                                    cmpRef.instance.ComponentRef = cmpRef;
+                                    cmpRef.instance.Run({
+                                        EntityId: response.Result.Id,
+                                        ObjectTableName: "Customs.Containerization"
+                                    });
+                                });
                             if (!response.HasError) {
-                                this.containerizationMessagesService.SendContainerization(this.getParams(response))
+                                this.containerizationMessagesService.SendContainerization(this.getParams(response,event))
                                     .subscribe(res1 => {
                                     });
                             }
@@ -457,10 +468,12 @@ export class NewContainerizationComponent extends BaseComponent {
         }
     }
 
-    getParams(response: ServiceResponse) {
+    getParams(response: ServiceResponse,event:any) {
         var params: GenericRequestParams = new GenericRequestParams();
         params.Tenant = SessionLocator.Tenant;
         params.AppicationId = "12345";
+        params.RequestVIA = event.RequestVIA;
+        params.ForcePersonalSign = event.ForcePersonalSign;
         params.LoggingEnabled = true;
         params.LoggingEntityId = response.Result.Id;
         params.LoggingUserId = SessionLocator.LoggedUserId;
@@ -484,9 +497,17 @@ export class NewContainerizationComponent extends BaseComponent {
         this.CurrentSession.CloseCurrentWindowEmit("cancel");
     }
 
+
     SetWindowArgs(windowArgs) {
         if (windowArgs.EntityPM != null) {
-            this.entityPM = windowArgs.EntityPM;
+            if (windowArgs.EntityIsDeclarationPM == "true") {
+                this.declarationPM = windowArgs.EntityPM;
+                this.ExportFile = this.declarationPM.ExportFile;
+                this.containerizationExtendedListService.ConnectedDeclarations = this.declarationPM.Id + ",";
+                this.containerizationExtendedListService.SelectedDeclarations = true;
+            } else {
+                this.entityPM = windowArgs.EntityPM;
+            }
         } 
     }
 

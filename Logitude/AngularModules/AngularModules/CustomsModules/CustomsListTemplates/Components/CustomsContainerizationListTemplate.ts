@@ -47,28 +47,28 @@ export class CustomsContainerizationListTemplate {
     }
 
     BuildDeclarationsCheckBox() {
-        let sConnectedDeclarations = this.entityPM.ConnectedDeclarations as string;
-        if (!AppTool.IsNullOrEmpty(sConnectedDeclarations)) {
-            let ConnectedDeclarations = sConnectedDeclarations.split(',')
-            let res = ConnectedDeclarations.filter(r => r == this.rowData.Id)[0];
-            this.IsConnectedDeclarationChecked = !AppTool.IsNullOrEmpty(res);
-        }
-        if (!this.entityPM.ConnectedDeclarations) { 
+        if (!this.entityPM.ConnectedDeclarations) {
             this.entityPM.ConnectedDeclarations = "";
             this._containerizationExtendedListService.ConnectedDeclarations = "";
         } else {
             this._containerizationExtendedListService.ConnectedDeclarations = this.entityPM.ConnectedDeclarations;
         }
+        this.IsConnectedDeclarationChecked = false;
+        let sConnectedDeclarations = this._containerizationExtendedListService.ConnectedDeclarations as string;
+        if (!AppTool.IsNullOrEmpty(sConnectedDeclarations)) {
+            let ConnectedDeclarations = sConnectedDeclarations.split(',')
+            let res = ConnectedDeclarations.filter(r => r == this.rowData.Id)[0];
+            this.IsConnectedDeclarationChecked = !AppTool.IsNullOrEmpty(res);
+        }
         if (this._containerizationExtendedListService.connectedSelectAll == true) {
             this.IsConnectedDeclarationChecked = true;
-        } else {
-            this.IsConnectedDeclarationChecked = false;
         }
     }
 
     OnConnectedCheckBoxChecked($event) {
         this._containerizationExtendedListService.disconnectedSelectAll = false;
-        this._containerizationExtendedListService.ConnectedDeclarations = this._containerizationExtendedListService.ConnectedDeclarations.replace("ALL", "");
+            this._containerizationExtendedListService.ConnectedDeclarations = this._containerizationExtendedListService.ConnectedDeclarations.replace("ALL", "");
+    
         if ($event) {
             if (!this._containerizationExtendedListService.ConnectedDeclarations.includes(this.rowData.Id)) {
                 this._containerizationExtendedListService.ConnectedDeclarations = this._containerizationExtendedListService.ConnectedDeclarations + this.rowData.Id + ",";
