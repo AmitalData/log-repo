@@ -1,19 +1,19 @@
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
-import { MaintenanceSelectors } from "../../../cypress/selectors/Selectors";
 import * as FBLStockActions from "../../actions/FBLStockActions";
 import * as MaintenanceActions from "../../actions/Actions";
 import { FBLStockDetails } from "../../../cypress/models/FBLStockDetails";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
+import { FBLStockSelectors } from "../../selectors/FBLStockSelectors";
 
 //#region Create new fblStock by End Number
 Given("the user logged in and open {string} in maintenance menu", (maintenanceItemName) => {
     cy.Login();
-    MaintenanceActions.OpenMaintenanceItemFromMaintenanceMenu(maintenanceItemName, MaintenanceSelectors.MaintenanceItemFBLStock)
+    MaintenanceActions.OpenMaintenanceItemFromMaintenanceMenu(maintenanceItemName, FBLStockSelectors.MaintenanceItem)
 });
 
 Given("the user adds FBL stock with following details", (dataTable) => {
     let fblStockDetails = Assists.CreateInstance<FBLStockDetails>(dataTable, true);
-    FBLStockActions.OpenAddWizard();
+    cy.Navigate(FBLStockSelectors.Add);
     FBLStockActions.FillFBLStockDetails(fblStockDetails)
 });
 
@@ -41,7 +41,7 @@ Then("the fblStock should Remove successfully", () => {
 //#region create FBLStock by Amount
 Given("user adds another FBL stock with the following details", (dataTable) => {
     let fblStockDetails = Assists.CreateInstance<FBLStockDetails>(dataTable, true);
-    FBLStockActions.OpenAddWizard();
+    cy.Navigate(FBLStockSelectors.Add);
     FBLStockActions.FillFBLStockDetails(fblStockDetails)
 });
 

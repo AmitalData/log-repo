@@ -27,7 +27,6 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly MaintenanceItemPackageType = "#MaintenanceItemMTPK"
    public static readonly MaintenanceItemBranch = "#MaintenanceItemMTBR"
    public static readonly MaintenanceItemCurrency ="#MaintenanceItemMTCR"
-   public static readonly MaintenanceItemFBLStock = "#MaintenanceItemMTFS"
 
    //#endregion
 
