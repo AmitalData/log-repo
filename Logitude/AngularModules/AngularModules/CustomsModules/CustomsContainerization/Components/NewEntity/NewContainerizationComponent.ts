@@ -18,6 +18,7 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { ContainerizationMessagesService } from '../../../../Customs/Services/WebServices/ContainerizationMessagesService';
 import { GenericRequestParams } from '../../../../Customs/DataContract/RequestParams/GenericRequestParams';
 import { DeclarationEventManager } from '../../../../Customs/Utilities/DeclarationEventManager';
+import { DeclarationPM } from '../../../../Customs/EntityPMs/DeclarationPM';
 
 
 @Component({
@@ -32,6 +33,7 @@ export class NewContainerizationComponent extends BaseComponent {
     objectTableNameDec: string = "Customs.Declaration";
     objectTableName: string = "Customs.Containerization";
     entityPM: ContainerizationPM;
+    declarationPM: DeclarationPM;
     @Output() onQueryChangeEvent = new EventEmitter();
     entityListService: EntityListService;
     SearchFieldsFilter: FilterItem;
@@ -444,6 +446,14 @@ export class NewContainerizationComponent extends BaseComponent {
                         this.entityPM.ConnectedDeclarations = this.containerizationExtendedListService.ConnectedDeclarations;
                         this.containerizationPMService.insert(this.entityPM).subscribe((response: ServiceResponse) => {
                             this.CurrentSession.CurrentWindow.Close("0");
+                            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
+                                .then(cmpRef => {
+                                    cmpRef.instance.ComponentRef = cmpRef;
+                                    cmpRef.instance.Run({
+                                        EntityId: response.Result.Id,
+                                        ObjectTableName: "Customs.Containerization"
+                                    });
+                                });
                             if (!response.HasError) {
                                 this.containerizationMessagesService.SendContainerization(this.getParams(response))
                                     .subscribe(res1 => {
@@ -484,9 +494,17 @@ export class NewContainerizationComponent extends BaseComponent {
         this.CurrentSession.CloseCurrentWindowEmit("cancel");
     }
 
+
     SetWindowArgs(windowArgs) {
         if (windowArgs.EntityPM != null) {
-            this.entityPM = windowArgs.EntityPM;
+            if (windowArgs.EntityIsDeclarationPM == "true") {
+                this.declarationPM = windowArgs.EntityPM;
+                this.ExportFile = this.declarationPM.ExportFile;
+                this.containerizationExtendedListService.ConnectedDeclarations = this.declarationPM.Id + ",";
+                this.containerizationExtendedListService.SelectedDeclarations = true;
+            } else {
+                this.entityPM = windowArgs.EntityPM;
+            }
         } 
     }
 
