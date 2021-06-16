@@ -246,7 +246,9 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
                         while (elements.length > 0) {
                             elements[0].parentNode.removeChild(elements[0]);
                         }
-                        if (this.invoiceItem != null && this.invoiceItem.OcrTop != 0 && this.invoiceItem.OcrHeight != 0 && selectItem) {
+
+                        debugger;
+                        if (this.invoiceItem != null && this.invoiceItem.OcrTop != 0 && this.invoiceItem.OcrTop != undefined && this.invoiceItem.OcrHeight != 0 && this.invoiceItem.OcrHeight != undefined&& selectItem) {
                             var elem = document.getElementsByClassName("grabbable")[0] as HTMLImageElement;;
 
                             let rect = document.createElement('div');
