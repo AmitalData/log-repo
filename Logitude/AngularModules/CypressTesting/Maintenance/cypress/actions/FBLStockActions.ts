@@ -8,10 +8,6 @@ import { FBLStockDetails } from 'cypress/models/FBLStockDetails';
 
 let searchStartNumber = null
 
-export function OpenAddWizard() {
-    cy.Click(FBLStockSelectors.Button, FBLStockSelectors.Add);
-}
-
 function GenerateRandomNumber() {
     return (Math.floor(Math.random() * 100000))
 }
@@ -68,11 +64,11 @@ export function AssertGetAllFBLStock() {
 }
 
 export function RemoveFBLStock() {
-    DefineDeleteFBLStockRequest();
+    DefineDeleteFBLStockRequest()
     DefineGetFBLStockGetAll()
-    cy.get(".GridViewCell").contains(searchStartNumber.toString()).click().then(() => {
-        cy.Click(FBLStockSelectors.Button, FBLStockSelectors.Remove)
-        cy.Click(FBLStockSelectors.ConfirmRemove, FBLStockSelectors.Delete)
+    cy.get(FBLStockSelectors.GridViewCell).contains(searchStartNumber.toString()).click().then(() => {
+        cy.get(FBLStockSelectors.Remove).click()
+        cy.get(FBLStockSelectors.Delete).click()
     })
 }
 
@@ -87,9 +83,9 @@ export function AssertRemoveFBLStock() {
 export function RemoveFBLStockSeries() {
     DefineDeleteFBLStockRequest()
     DefineGetFBLStockGetAll()
-    cy.get(".GridViewCell").contains(searchStartNumber.toString()).click().then(() => {
-        cy.Click(FBLStockSelectors.Button, FBLStockSelectors.RemoveSeries)
-        cy.Click(FBLStockSelectors.ConfirmRemove, FBLStockSelectors.Delete)
+    cy.get(FBLStockSelectors.GridViewCell).contains(searchStartNumber.toString()).click().then(() => {
+        cy.get(FBLStockSelectors.RemoveSeries).click()
+        cy.get(FBLStockSelectors.Delete).click()
     })
 }
 
