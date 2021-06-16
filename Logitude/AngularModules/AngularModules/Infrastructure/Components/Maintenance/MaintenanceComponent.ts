@@ -1520,6 +1520,37 @@ export class MaintenanceComponent {
     
     DoJoker(text: string) {
         switch (text) {
+            case "jokerng1": {
+                var windowArgs: any = {};
+
+                windowArgs.CurrentEntity =
+                    "{\"PropertyChanged\":{\"_isScalar\":false,\"observers\":[],\"closed\":false,\"isStopped\":false,\"hasError\":false,\"thrownError\":null,\"__isAsync\":false},\"DisableMarkAsDirty\":false,\"UIProperties\":{\"UIPropertyList\":[]},\"IsDirty\":false,\"$id\":\"1\",\"id\":\"1-348\",\"tenant\":6,\"createDateTime\":\"2021-06-10T11:15:11.177776\",\"createdByUserId\":\"1-4694\",\"updateDateTime\":\"2021-06-10T11:26:39.4897555\",\"searchFields\":\"20210610,235\",\"createdByUserName\":\"Amital Courier\",\"airlineId\":\"1-6\",\"airlineName\":\"TURKISH\",\"mAWB\":\"20210610\",\"estimatedArrivalDate\":\"2020-02-02T02:02:00\",\"gatewayPortCode\":\"USBOS\",\"gatewayPortName\":\"BOSTON\",\"originPortCode\":\"USBOS\",\"originPortName\":\"BOSTON\",\"isOpen\":true,\"isCancelled\":false,\"updatedByUserId\":\"1-3705\",\"updatedByUserName\":\"עמיטל\",\"airlinePrefix\":\"235\",\"selectedDeclarationChanged\":false,\"mAWBTypeCode\":\"740\",\"packageQuantity\":147,\"grossMassMeasure\":446,\"flightNumber\":\"222\",\"departureDate\":\"2020-02-02T02:02:00\",\"estimatedArrivalDateOnly\":\"2020-02-02T00:00:00\",\"estimatedArrivalTimeOnly\":\"2020-02-02T02:02:00\",\"weightValueCode\":\"PP\",\"weightValueName\":\"(Prepaid (by seller\",\"storageSiteCode\":\"ILMMN\",\"storageSiteName\":\"ממן מסופי מטען וניטול בעמ\",\"integratorCode\":\"1-6047\",\"integratorName\":\"TEST INTEGRATOR\",\"integratorNumber\":\"40002281\",\"isReadyForInvoice\":false,\"isAllDecClosedForFollowUp\":false,\"calcClosedForFollowUp\":0,\"calcMissingClassification\":0,\"calcMissingImporterId\":0,\"calcPendingCustoms\":0,\"calcPending900\":0,\"calcSuspendedDeclarations\":0,\"noOfCourierHawb\":\"7\",\"isAutomaticManifestSent\":true,\"packageQuantityInMAWB\":0,\"unifreightLeadingFile\":\"60023424\",\"openDeclarations\":0,\"ChangeSetOp\":0,\"EncodeBase64NVARCHARFieldsBy\":null,\"OldEntityPM\":{\"DisableMarkAsDirty\":true,\"IsDirty\":false,\"$id\":\"1\",\"id\":\"1-348\",\"tenant\":6,\"createDateTime\":\"2021-06-10T11:15:11.177776\",\"createdByUserId\":\"1-4694\",\"updateDateTime\":\"2021-06-10T11:26:39.4897555\",\"searchFields\":\"20210610,235\",\"createdByUserName\":\"Amital Courier\",\"airlineId\":\"1-6\",\"airlineName\":\"TURKISH\",\"mAWB\":\"20210610\",\"estimatedArrivalDate\":\"2020-02-02T02:02:00\",\"gatewayPortCode\":\"USBOS\",\"gatewayPortName\":\"BOSTON\",\"originPortCode\":\"USBOS\",\"originPortName\":\"BOSTON\",\"isOpen\":true,\"isCancelled\":false,\"updatedByUserId\":\"1-3705\",\"updatedByUserName\":\"עמיטל\",\"airlinePrefix\":\"235\",\"selectedDeclarationChanged\":false,\"mAWBTypeCode\":\"740\",\"packageQuantity\":147,\"grossMassMeasure\":446,\"flightNumber\":\"222\",\"departureDate\":\"2020-02-02T02:02:00\",\"estimatedArrivalDateOnly\":\"2020-02-02T00:00:00\",\"estimatedArrivalTimeOnly\":\"2020-02-02T02:02:00\",\"weightValueCode\":\"PP\",\"weightValueName\":\"(Prepaid (by seller\",\"storageSiteCode\":\"ILMMN\",\"storageSiteName\":\"ממן מסופי מטען וניטול בעמ\",\"integratorCode\":\"1-6047\",\"integratorName\":\"TEST INTEGRATOR\",\"integratorNumber\":\"40002281\",\"isReadyForInvoice\":false,\"isAllDecClosedForFollowUp\":false,\"calcClosedForFollowUp\":0,\"calcMissingClassification\":0,\"calcMissingImporterId\":0,\"calcPendingCustoms\":0,\"calcPending900\":0,\"calcSuspendedDeclarations\":0,\"noOfCourierHawb\":\"7\",\"isAutomaticManifestSent\":true,\"packageQuantityInMAWB\":0,\"unifreightLeadingFile\":\"60023424\",\"openDeclarations\":0,\"ChangeSetOp\":0,\"EncodeBase64NVARCHARFieldsBy\":null}}";
+                var logWindow = new LogitudeWindow();
+                logWindow.Width = 1500;
+                logWindow.Height = 1000;
+                logWindow.WindowArgs = windowArgs;
+                logWindow.ShowCloseButton = true;
+                //logWindow.IsHideHeader = true;
+                logWindow.IsFillScreen = true;
+                AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = true;
+                logWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkspaces//CourierWorksheetNGComponent');
+                
+                //logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkspaces/VirtualScrollNG');
+
+            } break;
+            case "jokerng2": {
+                var windowArgs: any = {};
+                var logitudeWindow = new LogitudeWindow();
+                logitudeWindow.Height = 1000;
+                logitudeWindow.Width = 1224;
+                logitudeWindow.ShowCloseButton = true;
+                logitudeWindow.Title =  "  הערות מסווג  ";
+                logitudeWindow.WindowArgs = windowArgs;
+                
+                logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkspaces/VirtualScrollNGScroll');
+                //logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkspaces/VirtualScrollNG');
+
+            } break;
             case "jokerinv":
                 {
 

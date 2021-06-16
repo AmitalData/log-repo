@@ -1,4 +1,4 @@
-﻿import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
@@ -20,11 +20,13 @@ import { SpecialActivityRequestParams } from '../../DataContract/RequestParams/S
 import { UpdateDeleteVehicleRequestParams } from '../../DataContract/RequestParams/UpdateDeleteVehicleRequestParams';
 import { CH_NG_191_MSG2_ChangingTimeRequestParams } from '../../DataContract/RequestParams/CH_NG_191_MSG2_ChangingTimeRequestParams';
 import { CargoQueryRequestParams } from '../../DataContract/RequestParams/CargoQueryRequestParams';
+import { LazyLoadEvent } from 'primeng/api';
 
 
 @Injectable()
 
 export class IIGGeneralMessagesService {
+    
     private _http: HttpClient
     private _apiUrl: string;
     constructor() {
@@ -196,7 +198,7 @@ export class IIGGeneralMessagesService {
 
         );
     }
-
+    
     GetClientProgressBarIndicatorCurrentStage(tenant: number, CustomsRequestsSheetId: string, BasicResponse: boolean) {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
@@ -586,6 +588,56 @@ export class IIGGeneralMessagesService {
 
         );
     }
+
+
+    //getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
+    GetVirtualCar(getCount: boolean, event: LazyLoadEvent) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
+      
+
+
+        return defer(() => {
+            return this._http
+                //GetClientProgressBarIndicatorCurrentStage(int tenant, string CustomsRequestsSheetId)
+                .get(this._apiUrl + '/GetVirtualCar/?' + '&GetCount=' + getCount + '&first=' + event.first + '&rows=' + event.rows
+                    + '&sortField=' + event.sortField + '&sortOrder=' + event.sortOrder
+
+                    ,
+                    ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+
+                        var serviceResponse: ServiceResponse = new ServiceResponse();
+                        serviceResponse.Result = response;
+
+                        return serviceResponse;
+                    }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    GetVirtualCar__(getCount: boolean, event: LazyLoadEvent) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
+        let newObj
+
+
+        return defer(() => {
+            return this._http
+                //GetClientProgressBarIndicatorCurrentStage(int tenant, string CustomsRequestsSheetId)
+                .get<any>(this._apiUrl + '/GetVirtualCar/?' + '&GetCount=' + getCount + '&first=' + event.first + '&rows=' + event.rows
+                    + '&sortField=' + event.sortField + '&sortOrder=' + event.sortOrder,
+                    ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+
+                        var serviceResponse: ServiceResponse = new ServiceResponse();
+                        serviceResponse.Result = response;
+
+                        return serviceResponse;
+                    }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
     
 }
 ////////////////////////////////////////////////
@@ -597,4 +649,3 @@ export class ResultClientProgressBar {
 
 }
 ////////////////////////////////////////
-   

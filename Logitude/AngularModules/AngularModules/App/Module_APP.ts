@@ -10,8 +10,12 @@ import { ChildDirective } from './Directives/ChildDirective';
 import { AppComponent } from './AppComponent_Cust';
 import { LazyArrayToObjects } from './DynamicLoader/LazyWidgetsCustoms';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 @NgModule({
-  imports: [BrowserModule, HttpClientModule],
+    imports: [BrowserModule, HttpClientModule,
+        BrowserAnimationsModule, // primeng>> npm i @angular/animations@latest --save
+    ],
   declarations: [ChildDirective, AppComponent],
 
   providers: [

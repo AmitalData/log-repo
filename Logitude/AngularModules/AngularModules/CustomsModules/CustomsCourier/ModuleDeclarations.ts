@@ -17,6 +17,9 @@ import { AddEditPendingByKeywordComponent } from './Components/PendingByKeyword/
 import { DeclarationPendingsGeneralComponent } from './Components/CourierPendingReason/DeclarationPendingsGeneralComponent';
 import { CourierDeclarationWorkspaceComponent } from './Components/CourierWorkspaces/CourierDeclarationWorkspaceComponent';
 import { AutonomyKeywordComponent } from './Components/AutonomyKeyword/AutonomyKeywordComponent';
+import { VirtualScrollNG } from './Components/CourierWorkspaces/VirtualScrollNG';
+import { VirtualScrollNGScroll } from './Components/CourierWorkspaces/VirtualScrollNGScroll';
+import { CourierWorksheetNGComponent } from './Components/CourierWorkspaces/CourierWorksheetNGComponent';
 
 export const Components =
     [
@@ -39,6 +42,9 @@ export const Components =
         CourierDeclarationWorkspaceComponent,
         AutonomyKeywordComponent,
         GetUnloadPortCodeComponent,
+        VirtualScrollNG,
+        VirtualScrollNGScroll,
+        CourierWorksheetNGComponent,
     ];
 
 export class ModuleDeclarations {
@@ -67,6 +73,12 @@ export class ModuleDeclarations {
             case "CourierDeclarationWorkspaceComponent": { myResult = CourierDeclarationWorkspaceComponent; break; }
                 
             case "AutonomyKeywordComponent": { myResult = AutonomyKeywordComponent; break; }
+            case "VirtualScrollNG": { myResult = VirtualScrollNG; break; }
+            case "VirtualScrollNGScroll": { myResult = VirtualScrollNGScroll; break; }
+            case "CourierWorksheetNGComponent": { myResult = CourierWorksheetNGComponent; break; }
+                
+                
+                
         }
 
         return myResult;

@@ -1,0 +1,979 @@
+<style>
+    .MyBlue {
+        color: #fff;
+        background-color: #337ab7;
+        border-color: #2e6da4;
+        outline: none;
+        text-align: center;
+        font-size: 11px;
+        height: 22px;
+        border: 1px solid #6A8299;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        text-shadow: 1px 1px white;
+        position: relative;
+        cursor: pointer;
+    }
+
+    .tbl3Label {
+        width: 150px;
+    }
+
+    .dropdown {
+        display: block;
+        outline: none;
+        width: 100%;
+        height: 22px;
+        position: relative;
+        cursor: pointer;
+        background: white;
+    }
+
+    .ValidationSummary {
+        /*height: 100%;
+        width: 95%;
+        border: 1px solid #DA6F6F;
+        */
+        -webkit-text-stroke: 0.5px;
+        border-radius: 5px;
+        background: rgba(247, 227, 227, 1);
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        overflow: hidden;
+        text-align: right;
+        direction: rtl;
+    }
+
+    .CWSTabHeader {
+        width: 150px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+        .CWSTabHeader:hover {
+            background-color: #B3E2FF;
+            /*border-top:0.1px solid #00BCD4;*/
+        }
+
+    .DisbleBox {
+        display: inline-block;
+        border: 1px solid #ffd800;
+        border-radius: 5px;
+        background: #faf5c0;
+        padding: 2px 10px;
+        margin: 5px;
+        color: gray;
+        font-family: sans-serif;
+    }
+
+    .DetailsButton {
+        width: 120px;
+        height: 28px;
+        text-align: center;
+        color: #4db6ea;
+        background-color: white;
+        border: 1px solid black;
+        border-radius: 3px;
+        border-color: #4db6ea;
+        cursor: pointer;
+    }
+
+        .DetailsButton:hover {
+            box-shadow: 0px 0px 6px 0px #4db6ea;
+            text-shadow: 1px 1px white;
+        }
+
+    .x-button-drop-menu {
+        position: absolute;
+        top: 22px;
+        z-index: 1000;
+        text-align: center;
+        padding: 1px;
+        font-size: 15px;
+        list-style: none;
+        background-color: #F2F2F2;
+        background-clip: padding-box;
+        border: .5px solid #45494A;
+    }
+
+        .x-button-drop-menu li span {
+            display: block;
+            clear: both;
+            font-family: arial;
+            color: #444;
+            text-decoration: none;
+            height: 22px;
+            line-height: 23px;
+        }
+
+            .x-button-drop-menu li span:hover {
+                background: #D3D3D3;
+                cursor: pointer;
+            }
+</style>
+
+<span style="visibility:hidden"> CourierWorksheetComponent </span>
+
+<div *ngIf="entityPM" class="MediaFillAbsolute" [ngStyle]="{background: ComponentBackground}">
+    <div class="MarginAbsolute10" style="height:100% ;top: 5px; bottom: 8px;">
+        <table>
+            <tr>
+                <td style="min-width: 1500px;">
+                    <div class="MediaFill">
+                        <table>
+
+
+                            <tr style="height: 20px;">
+                                <td style="vertical-align: top;">
+                                    <table>
+                                        <tr>
+                                            <!--<td style="width: 1px;">
+                                                <BackButton style="width:30px" [Text]="BackButtonLabel" (click)="Close()"></BackButton>
+                                            </td>-->
+
+                                            <td> <div></div></td>
+
+                                            <!--<td style="width: 20px;">
+                                                <div>
+                                                    <img (click)="Close()" class="CenterCenter" src="./Images/WindowIcons/WindowClose.png" style="top: -1px; left: 0px; cursor: pointer;">
+                                                </div>
+                                            </td>-->
+
+                                        </tr>
+
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <!-- Title -->
+                            <tr class="TabTitleRow" style="height:30px;">
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="width: 50px; font-weight:bold; font-size:16px; color: black;">{{'Customs.CourierMaster.O.Flight' | TextCodeTranslationPipe }}</td>
+                                            <td style="width: 30px; font-weight:bold; font-size:16px; color: black;">  >>   </td>
+                                            <td style="width: 100px; font-weight:bold ; font-size:16px;">{{entityPM.AirlinePrefix}}-{{entityPM.MAWB}}</td>
+                                            <td></td>
+                                            <td class="dropdown" style="width: 115px; float:left">
+                                                <div tabindex="-1" class="ToggleButton" style="width:115px;height: 22px; background:white; border:unset">
+                                                    <div>
+                                                        <table>
+                                                            <tr>
+                                                                <td class="LeftCenter" style="width: 80px;">
+                                                                    <label style="width: 80px; font-size:14px; color: #4db6ea;">{{'Customs.CourierMaster.O.MoreActions' | TextCodeTranslationPipe}}</label>
+                                                                    <!--<img src="./Images/Icons/Actions.png" />-->
+                                                                </td>
+                                                                <td class="CenterCenter" style="width: 10px;"></td>
+                                                                <td class="RightCenter" style="width: 10px;">
+                                                                    <img src="./Images/Icons/Dropdown-Arrow.png" />
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+
+                                                    <div class="ToggleButtonMenu" style="width:115px; left: 0px; right: initial ;top:22px;text-align:center">
+                                                        <button style="text-align:right" (click)="OpenCourierMaster('General')">{{'Customs.Declaration.TH.General' | TextCodeTranslationPipe }}</button>
+                                                        <button style="text-align:right" (click)="OpenCourierMaster('ConnectedDeclarations')">{{'General.O.ConnectedDeclarations' |TextCodeTranslationPipe }}</button>
+                                                        <button style="text-align:right" (click)="DeclarationsStatusRequestMethod()" [disabled]="IsDisplayOnly">{{'Customs.Declaration.O.DeclarationStatusRequest' | TextCodeTranslationPipe }}</button>
+                                                        <button style="text-align:right" (click)="GatepassRequestMethod()" [disabled]="IsDisplayOnly">{{'גייטפס העברות' }}</button>
+                                                        <button *ngIf="IsMamanEnabled" style="text-align:right" (click)="SendFTPMamanRequestMethod()" [disabled]="IsDisplayOnly">{{'Customs.Declaration.O.DeclarationMamanRequest' | TextCodeTranslationPipe }}</button>
+                                                        <button style="text-align:right" (click)="ChangeStorageSiteMethod()" [disabled]="IsDisplayOnly">{{'שינוי אתר אחסון' }}</button>
+                                                        <button style="text-align:right" (click)="ChangeUnloadPortSiteMethod()" [disabled]="IsDisplayOnly">{{'שינוי אתר פריקה' }}</button>
+
+                                                        <button *ngIf="isAllowAccounting" style="text-align:right" (click)="IsReadyForInvoiceClick()" [disabled]="IsDisplayOnly">{{'מוכן להכנת חשבונית' }}<img *ngIf="entityPM.IsReadyForInvoice" class="certOkImg" style="position:relative;width:10px;margin-top:10px;opacity: 0.8;" src="./Images/Buttons/EditWithGreenTick.png" /></button>
+                                                        <button style="text-align:right" *ngIf="entityPM.IsCancelled==false" (click)="CancelFlight()">{{'Customs.CourierMaster.O.CancelFlight' | TextCodeTranslationPipe }}</button>
+                                                        <button style="text-align:right" *ngIf="entityPM.IsCancelled==true" (click)="OpenFlight()">{{'Customs.CourierMaster.O.OpenFlight' | TextCodeTranslationPipe }}</button>
+
+                                                        <button style="text-align:right" (click)="Export2Excel()" [disabled]="IsDisplayOnly">{{'יצא לאקסל' }}<img class="CenterCenter" title="Export To Excel" class="certOkImg" style="position:relative;width:10px;margin-top:10px;opacity: 0.8;" src="./Images/Buttons/excelicon.png" /></button>
+                                                        <button style="text-align:right" (click)="SendALLSVG(true)">בקרת סיווגים</button>
+
+                                                    </div>
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr style="height:10px;"></tr>
+                                        <tr>
+                                            <td colspan="3" style="width: 180px;">
+                                                <table>
+                                                    <tr>
+                                                        <!--<td style="width: 48px; font-weight:bold; font-size:16px; color: black;">{{'Customs.CourierMaster.O.TotalFilter' | TextCodeTranslationPipe }}</td>-->
+                                                        <td colspan="2" style="font-weight:bold; font-size:16px; ">{{'סהכ ש.מ.ב '}} {{ DataSource.rowCount }}</td>
+                                                        <td *ngIf="IsFiltered || SearchFilter != null" style="font-weight:bold; font-size:16px; ">&nbsp;{{'מתאימים לחיתוך'}}</td>
+                                                        <td></td>
+                                                    </tr>
+
+                                                </table>
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <!--Disble Alert-->
+                            <tr style="height:30px;">
+                                <td colspan="6">
+                                    <div *ngIf="IsDisplayOnly" style="width: 100%;text-align:center">
+                                        <div class="DisbleBox">
+                                            {{DisplayOnlyMessage}}
+                                            <span style="padding: 0px 16px;">-</span>
+                                            <span class="hyperlink" (click)="RefreshButtonClicked()" style="font-size:12px;">רענן</span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!--filter row-->
+                            <tr style="height:30px;">
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <!--style="width:120px;cursor: pointer;font-size:15px"-->
+                                            <!--Task 40816 [style.opacity]="0.7" (was [style.opacity]="item==_SelectedTabFilter ? 1 : 0.7") -->
+                                            <td class="CWSTabHeader"
+                                                [style.opacity]="0.7"
+                                                (click)="TabFilterClick(item)"
+                                                *ngFor="let item of _TabFilterList; ">
+                                                <table>
+                                                    <tr style="height:2px"><td colspan="2"></td></tr>
+                                                    <tr style="height: 20px;">
+                                                        <!--#008ee6-->
+                                                        <td [style.color]="item==_SelectedTabFilter ? '#4db6ea' : 'gray'"
+                                                            [style.opacity]="item==_SelectedTabFilter ? '1.0' : '0.7'">
+                                                            <div style="text-align:center">
+                                                                <span style="font-size:13px; font-weight:bold;" *ngIf="item.Code != 'HOLD'">{{item.Header}} ({{item.Total}})</span>
+                                                                <span style="font-size:13px;font-weight:bold; text-align:right" dir="ltr" *ngIf="item.Code == 'HOLD'"> ({{item.Total}}) {{item.Header}} </span>
+                                                            </div>
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr style="height:2px"><td colspan="2"></td></tr>
+                                                    <tr style="height:5px">
+                                                        <td colspan="2">
+                                                            <!--<div [style.border-bottom]="item==_SelectedTabFilter ? '5px solid #00BCD4' : '4px solid gray'"></div>-->
+                                                            <div style="opacity: 0.7">
+                                                                <table>
+                                                                    <tr>
+                                                                        <!--#008ee6 == > #00BCD4-->
+                                                                        <!--<td style="width:15px;"  [style.opacity]="item==_SelectedTabFilter ? '0.7' : '1'" ><div style="border-bottom:4px solid gray"></div></td> task 40816-->
+                                                                        <td><div [style.border-bottom]="item==_SelectedTabFilter ? '4px solid #008ee6' : '4px solid gray'"></div></td>
+                                                                        <!--<td style="width:15px;" [style.opacity]="item==_SelectedTabFilter ? '0.7' : '1'"><div style="border-bottom:4px solid gray"></div></td> task 40816-->
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td style="opacity: 0.7">
+                                                <table>
+                                                    <tr style="height:2px"><td colspan="2"></td></tr>
+                                                    <tr style="height: 20px;">
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr style="height:2px"><td colspan="2"></td></tr>
+                                                    <tr style="height:5px">
+                                                        <td colspan="2">
+                                                            <!--<div style="border-bottom:4px solid gray;"></div>-->
+                                                            <div style="opacity: 0.7">
+                                                                <table>
+                                                                    <tr>
+                                                                        <!--#008ee6 == > #00BCD4-->
+                                                                        <td style="width:15px;"><div style="border-bottom:4px solid gray"></div></td>
+                                                                        <td><div style="border-bottom:4px solid gray"></div></td>
+                                                                        <td style="width:15px;"><div style="border-bottom:4px solid gray"></div></td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                </td>
+                            </tr>
+
+                            <!-- Validation Errors -->
+                            <tr class="ValidationSummary" *ngIf="_ValidationErrors2 != null && _ValidationErrors2.length > 0" style="height:1px; border-right:2px solid black ;border-right-color:red">
+                                <td style="vertical-align: top; padding-top: 3px; padding-bottom: 3px; padding-right: 10px; color: #dd1a1a;">
+                                    <div>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <div>
+                                                        <table>
+
+                                                            <tr>
+                                                                <td>
+                                                                    <span style="font-size: 13px">{{_ValidationErrors2}}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr style="height:10px;"><td></td></tr>
+                                                        </table>
+                                                    </div>
+                                                </td>
+
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr class="ValidationSummary" *ngIf="_ValidationErrors != null && _ValidationErrors.length > 0" style="height:1px; border-right:2px solid black ;border-right-color:red">
+                                <td style="vertical-align: top; padding-top: 3px; padding-bottom: 3px; padding-right: 10px; color: #dd1a1a;">
+                                    <div>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <div>
+                                                        <table>
+                                                            <tr style="height:10px;"><td></td></tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <span style="font-size: 13px; font-weight:bold">{{'Customs.CourierMaster.O.ValidationErrors' | TextCodeTranslationPipe }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <span style="font-size: 13px; font-weight:bold">{{_ValidationErrors}}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr style="height:10px;"><td></td></tr>
+                                                        </table>
+                                                    </div>
+                                                </td>
+                                                <td></td>
+                                                <td style="width: 120px;">
+                                                    <button class="DetailsButton" (click)="OpenCourierMaster('General')">{{'Customs.CourierMaster.O.CompleteDetails' | TextCodeTranslationPipe }}</button>
+                                                </td>
+                                                <td style="width: 50px;"></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!--Declaration List-->
+                            <tr style="height:86%;">
+                                <td>
+                                    <div style="margin-top:-3px;" class="MediaFill">
+                                        <table style="margin: 15px 5px 5px 5px;" class="MediaFill">
+
+                                            <!--Action Row-->
+                                            <tr style="height:40px;">
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <!--All-->
+                                                                <table *ngIf="_SelectedTabFilter.Code=='ALL' ">
+                                                                    <tr>
+                                                                        <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems == null || (_CourierWorksheetSharedDataService._SelectedItems != null
+                                                                            && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0)"
+                                                                            style="width:170px">
+
+                                                                            <split-button (DefaultSplitButtonClicked)="SendALLCorrectManifest('R')"
+                                                                                          [ButtonText]=_ReadyMNFToBatchSendButtonText
+                                                                                          [IsDisabled]="IsDisplayOnly"
+                                                                                          [MENUDivExtraTop]="24" [MENUDivExtraLeft]="110">
+
+                                                                                <div class="class-MENUSplitButton-content">
+                                                                                    <div>
+                                                                                        <ul class="x-button-drop-menu" style="width:150px;">
+                                                                                            <li>
+                                                                                                <span (click)="SendALLCorrectManifest('RV')">{{'Customs.CourierMaster.O.ReadyMNFToSendRV' | TextCodeTranslationPipe }} ({{_CorrectMNFToBatchSend}})</span>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                            </split-button>
+                                                                        </td>
+                                                                        <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems != null && _CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0"
+                                                                            style="width:170px">
+                                                                            <split-button (DefaultSplitButtonClicked)="SendALLCorrectManifest('M')"
+                                                                                          [ButtonText]=SelectedMNFToBatchSendButtonText
+                                                                                          [IsDisabled]="IsDisplayOnly"
+                                                                                          [MENUDivExtraTop]="24" [MENUDivExtraLeft]="110">
+
+                                                                                <div class="class-MENUSplitButton-content">
+                                                                                    <div>
+                                                                                        <ul class="x-button-drop-menu" style="width:150px;">
+                                                                                            <li>
+                                                                                                <span (click)="SendALLCorrectManifest('RV')">{{'Customs.CourierMaster.O.ReadyMNFToSendRV' | TextCodeTranslationPipe }} ({{_CorrectMNFToBatchSend}})</span>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                            </split-button>
+                                                                        </td>
+
+                                                                        <td style="width:1px"></td>
+
+                                                                        <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems == null || (_CourierWorksheetSharedDataService._SelectedItems != null
+                                                                            && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0)"
+                                                                            style="width:170px">
+                                                                            <split-button (DefaultSplitButtonClicked)="SendALLCorrectDec('R')"
+                                                                                          [ButtonText]=_ReadyDECToBatchSendButtonText
+                                                                                          [IsDisabled]="IsDisplayOnly"
+                                                                                          [MENUDivExtraTop]="24" [MENUDivExtraLeft]="115">
+
+                                                                                <div class="class-MENUSplitButton-content">
+                                                                                    <div>
+                                                                                        <ul class="x-button-drop-menu" style="width:150px;">
+                                                                                            <li>
+                                                                                                <span (click)="SendALLCorrectDec('RV')">{{'Customs.CourierMaster.O.ReadyDECToSendRV' | TextCodeTranslationPipe }} ({{_CorrectDECToBatchSend}})</span>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <span (click)="SendALLCorrectDec('X')">{{'שדר הצהרה שגויים' }} ({{_InCorrectDECToBatchSend}})</span>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                            </split-button>
+                                                                        </td>
+                                                                        <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems != null && _CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0"
+                                                                            style="width:170px">
+                                                                            <split-button (DefaultSplitButtonClicked)="SendALLCorrectDec('M')"
+                                                                                          [ButtonText]=SelectedDECToBatchSendButtonText
+                                                                                          [IsDisabled]="IsDisplayOnly"
+                                                                                          [MENUDivExtraTop]="24" [MENUDivExtraLeft]="110">
+
+                                                                                <div class="class-MENUSplitButton-content">
+                                                                                    <div>
+                                                                                        <ul class="x-button-drop-menu" style="width:150px;">
+                                                                                            <li>
+                                                                                                <span (click)="SendALLCorrectDec('RV')">{{'Customs.CourierMaster.O.ReadyDECToSendRV' | TextCodeTranslationPipe }} ({{_CorrectDECToBatchSend}})</span>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                            </split-button>
+                                                                        </td>
+                                                                        <td style="width:1px"></td>
+                                                                        <td style="width:200px">
+                                                                            <!--<button class="Button" [disabled]="!(IsILOVLEnabled || IsMamanEnabled)" (click)="SendALLTerminal()">שדר מסר ש.מ.ב למסוף</button>-->
+                                                                            <split-button (DefaultSplitButtonClicked)="SendALLTerminal()"
+                                                                                          [IsDisabled]="(!(IsILOVLEnabled || IsMamanEnabled || IsILSWSEnabled )) || IsDisplayOnly"
+                                                                                          [ButtonText]="'שדר מסר ש.מ.ב למסוף'"
+                                                                                          [AsRegularButton]="'true'"
+                                                                                          [MENUDivExtraTop]="24" [MENUDivExtraLeft]="110">
+
+                                                                                <div class="class-MENUSplitButton-content">
+                                                                                    <div></div>
+                                                                                </div>
+                                                                            </split-button>
+                                                                        </td>
+                                                                        <td></td>
+                                                                    </tr>
+                                                                </table>
+                                                                <!--SVG-->
+                                                                <table *ngIf="_SelectedTabFilter.Code=='SVG' ">
+                                                                    <tr>
+                                                                        <td style="width:100px"><button class="Button" (click)="SendALLSVG(false)" [disabled]="IsDisplayOnly">עבור לסיווג {{' (' +this._SVGTotal + ')' }}</button></td>
+                                                                        <td></td>
+                                                                    </tr>
+                                                                </table>
+                                                                <!--MNF-->
+                                                                <table *ngIf="_SelectedTabFilter.Code=='MNF' ">
+                                                                    <tr>
+                                                                        <td style="width:300px;">
+                                                                            <ul class="FiltersMenu" style="float:right; padding-right: 5px;" [class.FiltersMenuDisabled]="_SelectedMNFTABValue != 'MX'">
+                                                                                <li (click)="MNFFilterClicked('W')" style="width: 140px; height: 25px;" [class.SelectedFilter]="_SelectedMNFValue === 'W'">
+                                                                                    {{'Customs.CourierMaster.MNF.HandleWrong' | TextCodeTranslationPipe }}
+                                                                                    <span> {{' (' +this._MNF_W_Total + ')' }} </span>
+                                                                                </li>
+                                                                                <li (click)="MNFFilterClicked('C')" style="width: 140px; height: 25px;" [class.SelectedFilter]="_SelectedMNFValue === 'C'">
+                                                                                    {{'Customs.CourierMaster.MNF.CompleteMissing' | TextCodeTranslationPipe }}
+                                                                                    <span> {{' (' +this._MNF_C_Total + ')' }} </span>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </td>
+                                                                        <td></td>
+                                                                        <td style="width: 500px;">
+                                                                            <ul class="FiltersMenu" style="float:left; padding-left: 5px;">
+                                                                                <li (click)="MNFTABFilterClicked('I')" style="width:120px; height: 25px;" [class.SelectedFilter]="_SelectedMNFTABValue === 'I'">
+                                                                                    {{'Customs.CourierMaster.O.InProgress' | TextCodeTranslationPipe }}
+                                                                                    <span> {{' (' +this._MNF_I_Total + ')' }} </span>
+                                                                                </li>
+                                                                                <li (click)="MNFTABFilterClicked('R')" style="width:120px; height: 25px;" [class.SelectedFilter]="_SelectedMNFTABValue === 'R'">
+                                                                                    {{'Customs.CourierMaster.O.ReadyToSend' | TextCodeTranslationPipe }}
+                                                                                    <span> {{' (' +this._MNF_R_Total + ')' }} </span>
+                                                                                </li>
+                                                                                <li (click)="MNFTABFilterClicked('MX')" style="width:120px; height: 25px;" [class.SelectedFilter]="_SelectedMNFTABValue === 'MX'">
+                                                                                    {{'Customs.CourierMaster.O.InCorrect' | TextCodeTranslationPipe }}
+                                                                                    <span> {{' (' +this._MNF_MX_Total + ')' }} </span>
+                                                                                </li>
+                                                                                <li (click)="MNFTABFilterClicked('V')" style="width:120px; height: 25px;" [class.SelectedFilter]="_SelectedMNFTABValue === 'V'">
+                                                                                    {{'Customs.CourierMaster.O.Correct' | TextCodeTranslationPipe }}
+                                                                                    <span> {{' (' +this._MNF_V_Total + ')' }} </span>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                                <!--DEC-->
+                                                                <table *ngIf="_SelectedTabFilter.Code=='DEC' ">
+                                                                    <tr>
+                                                                        <td style="width: 300px;">
+                                                                            <ul class="FiltersMenu" style="float:right; padding-right: 5px;" [class.FiltersMenuDisabled]="_SelectedDECTabValue != 'MX'">
+                                                                                <li (click)="DECFilterClicked('W')" style="width:140px; height: 25px;" [class.SelectedFilter]="_SelectedDECValue === 'W'">
+                                                                                    {{'Customs.CourierMaster.MNF.HandleWrong' | TextCodeTranslationPipe }}
+                                                                                    <span> {{' (' +this._DEC_W_Total + ')' }} </span>
+                                                                                </li>
+                                                                                <li (click)="DECFilterClicked('C')" style="width:140px; height: 25px;" [class.SelectedFilter]="_SelectedDECValue === 'C'">
+                                                                                    {{'Customs.CourierMaster.MNF.CompleteMissing' | TextCodeTranslationPipe }}
+                                                                                    <span> {{' (' +this._DEC_C_Total + ')' }} </span>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </td>
+                                                                        <td></td>
+                                                                        <td style="width: 500px;">
+                                                                            <ul class="FiltersMenu" style="float:left; padding-left: 5px;">
+                                                                                <li (click)="DECTabFilterClicked('I')" style="width:120px; height: 25px;" [class.SelectedFilter]="_SelectedDECTabValue === 'I'">
+                                                                                    {{'Customs.CourierMaster.O.InProgress' | TextCodeTranslationPipe }}
+                                                                                    <span> {{' (' +this._DEC_I_Total + ')' }} </span>
+                                                                                </li>
+                                                                                <li (click)="DECTabFilterClicked('R')" style="width:120px; height: 25px;" [class.SelectedFilter]="_SelectedDECTabValue === 'R'">
+                                                                                    {{'Customs.CourierMaster.O.ReadyToSend' | TextCodeTranslationPipe }}
+                                                                                    <span> {{' (' +this._DEC_R_Total + ')' }} </span>
+                                                                                </li>
+                                                                                <li (click)="DECTabFilterClicked('MX')" style="width:120px; height: 25px;" [class.SelectedFilter]="_SelectedDECTabValue === 'MX'">
+                                                                                    {{'Customs.CourierMaster.O.InCorrect' | TextCodeTranslationPipe }}
+                                                                                    <span> {{' (' +this._DEC_MX_Total + ')' }} </span>
+                                                                                </li>
+                                                                                <li (click)="DECTabFilterClicked('V')" style="width:120px; height: 25px;" [class.SelectedFilter]="_SelectedDECTabValue === 'V'">
+                                                                                    {{'Customs.CourierMaster.O.Correct' | TextCodeTranslationPipe }}
+                                                                                    <span> {{' (' +this._DEC_V_Total + ')' }} </span>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                                <!--DOC-->
+                                                                <table *ngIf="_SelectedTabFilter.Code=='DOC' ">
+                                                                    <tr>
+                                                                        <td style="width: 250px;">
+                                                                            <ul class="FiltersMenu" style="float:right; padding-right: 5px;" [class.FiltersMenuDisabled]="_SelectedDOCTabValue != 'MX'">
+                                                                                <li (click)="DOCFilterClicked('U')" style="width:80px; height: 25px;" [class.SelectedFilter]="_SelectedDOCValue === 'U'">
+                                                                                    {{'Customs.CourierMaster.DOC.DocumentCorrectionUploaded' | TextCodeTranslationPipe }}
+                                                                                    <span> {{' (' +this._DOC_U_Total + ')' }} </span>
+                                                                                </li>
+                                                                                <li (click)="DOCFilterClicked('C')" style="width:80px; height: 25px;" [class.SelectedFilter]="_SelectedDOCValue === 'C'">
+                                                                                    {{'Customs.CourierMaster.DOC.DocumentCorrection' | TextCodeTranslationPipe }}
+                                                                                    <span> {{' (' +this._DOC_C_Total + ')' }} </span>
+                                                                                </li>
+                                                                                <li (click)="DOCFilterClicked('A')" style="width:70px; height: 25px;" [class.SelectedFilter]="_SelectedDOCValue === 'A'">
+                                                                                    {{'Customs.General.O.All' | TextCodeTranslationPipe }}
+                                                                                    <span> {{' (' +this._DOCTotal + ')' }} </span>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </td>
+                                                                        <td style="width:1px"></td>
+                                                                        <td style="width:200px">
+                                                                            <!--
+                                    <split-button (DefaultSplitButtonClicked)="SendUncorrectDocuments()"
+                                                  [IsDisabled]="!(_SelectedDOCValue == 'U') || IsDisplayOnly"
+                                                  [ButtonText]="'שדר מסמכים שגויים'"
+                                                  [AsRegularButton]="'true'"
+                                                  [MENUDivExtraTop]="24" [MENUDivExtraLeft]="110">
+
+                                        <div class="class-MENUSplitButton-content">
+                                            <div></div>
+                                        </div>
+                                    </split-button>
+                                        -->
+
+                                                                            <split-button (DefaultSplitButtonClicked)="SendUncorrectDocuments('X')"
+                                                                                          [IsDisabled]="!(_SelectedDOCValue == 'U') || IsDisplayOnly"
+                                                                                          [ButtonText]="'שדר מסמכים שגויים'"
+                                                                                          [MENUDivExtraTop]="24" [MENUDivExtraLeft]="110">
+
+                                                                                <div class="class-MENUSplitButton-content">
+                                                                                    <div>
+                                                                                        <ul class="x-button-drop-menu" style="width:145px;">
+                                                                                            <li>
+                                                                                                <span (click)="SendUncorrectDocuments('VX')">{{'צור גרסה ושדר שגויים' }} </span>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </split-button>
+
+                                                                        </td>
+                                                                        <td></td>
+                                                                        <td style="width: 500px;">
+                                                                            <ul class="FiltersMenu" style="width: 500px; float:left; padding-left: 5px;">
+                                                                                <li (click)="DOCTabFilterClicked('I')" style="width:120px; height: 25px;" [class.SelectedFilter]="_SelectedDOCTabValue === 'I'">
+                                                                                    {{'Customs.CourierMaster.O.InProgress' | TextCodeTranslationPipe }}
+                                                                                    <span> {{' (' +this._DOC_I_Total + ')' }} </span>
+                                                                                </li>
+                                                                                <li (click)="DOCTabFilterClicked('MX')" style="width:120px; height: 25px;" [class.SelectedFilter]="_SelectedDOCTabValue === 'MX'">
+                                                                                    {{'Customs.CourierMaster.O.InCorrect' | TextCodeTranslationPipe }}
+                                                                                    <span> {{' (' +this._DOC_MX_Total + ')' }} </span>
+                                                                                </li>
+                                                                                <li (click)="DOCTabFilterClicked('V')" style="width:120px; height: 25px;" [class.SelectedFilter]="_SelectedDOCTabValue === 'V'">
+                                                                                    {{'Customs.CourierMaster.O.Correct' | TextCodeTranslationPipe }}
+                                                                                    <span> {{' (' +this._DOC_V_Total + ')' }} </span>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                                <!--PAY-->
+                                                                <table *ngIf="_SelectedTabFilter.Code=='PAY' ">
+                                                                    <tr>
+                                                                        <td *ngIf="_SelectedItems == null || (_SelectedItems != null && _SelectedItems.Collection.length == 0)" style="width:100px; text-align:right" dir="ltr"><button class="Button" (click)="SendReadyLOWPAYToBatch()" [disabled]="IsDisplayOnly"> {{ ' (' +this._PAYReadyNotFastindividual + ') ' + 'תשלום תהליך מהיר'}}</button></td>
+                                                                        <td *ngIf="_SelectedItems != null && _SelectedItems.Collection.length > 0" style="width:100px; "><button class="Button" (click)="SendReadyLOWPAYToBatch()" [disabled]="IsDisplayOnly"> {{ 'תשלום תהליך מהיר מסומנים'}}</button></td>
+                                                                        <td style="width:5px"></td>
+                                                                        <td style="width:100px"></td>
+                                                                        <td></td>
+                                                                        <td style="width: 500px;">
+                                                                            <ul class="FiltersMenu" style="float:left; padding-left: 5px;">
+                                                                                <li (click)="PAYFilterClicked('I')" style="width:150px; height: 25px;" [class.SelectedFilter]="_SelectedPAYValue === 'I'">
+                                                                                    {{'Customs.CourierMaster.O.InProgress' | TextCodeTranslationPipe }}
+                                                                                    <span> {{' (' +this._PAY_I_Total + ')' }} </span>
+                                                                                </li>
+                                                                                <li (click)="PAYFilterClicked('R')" style="width:150px; height: 25px;" [class.SelectedFilter]="_SelectedPAYValue === 'R'">
+                                                                                    {{'Customs.CourierMaster.O.ReadyToSend' | TextCodeTranslationPipe }}
+                                                                                    <span> {{' (' +this._PAY_R_Total + ')' }} </span>
+                                                                                </li>
+                                                                                <li (click)="PAYFilterClicked('C')" style="width:150px; height: 25px;" [class.SelectedFilter]="_SelectedPAYValue === 'C'">
+                                                                                    {{'Customs.CourierMaster.O.Correct' | TextCodeTranslationPipe }}
+                                                                                    <span> {{' (' +this._PAY_C_Total + ')' }} </span>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                                <!--ACC-->
+                                                                <table *ngIf="_SelectedTabFilter.Code=='ACC' ">
+                                                                    <tr>
+                                                                        <td style="width: 250px;">
+                                                                            <ul class="FiltersMenu" style="float:right; padding-right: 5px;">
+                                                                                <li (click)="ACCFilterClicked('WS')" style="width:120px; height: 25px;" [class.SelectedFilter]="_SelectedACCValue === 'WS'">
+                                                                                    <!--{{'מיוחדות שגויים'}}-->
+                                                                                    {{'Customs.CourierMaster.ACC.WrongSpecial' | TextCodeTranslationPipe }}
+                                                                                    <span> {{' (' +this._ACC_WS_Total + ')' }} </span>
+                                                                                </li>
+                                                                                <li (click)="ACCFilterClicked('W')" style="width:120px; height: 25px;" [class.SelectedFilter]="_SelectedACCValue === 'W'">
+                                                                                    <!--{{'ש.מ.ב שגויים'}}-->
+                                                                                    {{'Customs.CourierMaster.ACC.Wrong' | TextCodeTranslationPipe }}
+                                                                                    <span> {{' (' +this._ACC_W_Total + ')' }} </span>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </td>
+                                                                        <td></td>
+                                                                    </tr>
+                                                                </table>
+                                                                <!-- HOLD -->
+                                                                <table *ngIf="_SelectedTabFilter.Code=='HOLD' ">
+                                                                    <tr>
+                                                                        <td class="col1Label" style="width:80px; font-size: 13px; font-weight:bold; padding-right: 10px;">
+                                                                            {{'Pending'}}
+                                                                        </td>
+
+                                                                        <td style="width:150px">
+                                                                            <ComboBox [ItemsSource]="_PendingCodes" [Binding]="'Value'" [SelectedItem]="SelectedPendingCodeFilter" (SelectedItemChanged)="HOLDFilterClicked($event)"></ComboBox>
+                                                                        </td>
+
+                                                                        <td></td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+
+                                                            <td style="width:5px; float:left;"></td>
+                                                            <td style="width:150px;">
+                                                                <SearchTextBox [ObjectTableName]="'Customs.CourierMaster'" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)" [SearchText]="SearchFilter" [PlaceHolder]="'תיק/הצהרה/ש.מ.ב/לקוח'"></SearchTextBox>
+                                                            </td>
+                                                            <td style="width:5px;"></td>
+                                                            <!-- DropdownMenuFilter -->
+                                                            <td style="width:40px;">
+                                                                <courier-filter-button #MyDropdownMenuFilterComponent>
+                                                                    <div class="class-filter-content">
+                                                                        <div style="width:40px; height:25px; cursor: pointer;">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <img *ngIf="!IsFiltered" title="Filter" src="./Images/Filter.png" />
+                                                                                        <img *ngIf="IsFiltered" title="Filter" src="./Images/Icons/Filter.png" />
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <span *ngIf="!IsFiltered" style="color: #1B90CB;">{{'Customs.CourierMaster.O.Filter' |TextCodeTranslationPipe}}</span>
+                                                                                        <span *ngIf="IsFiltered" style="color: #6c8a99;">{{'Customs.CourierMaster.O.Filter' |TextCodeTranslationPipe}}</span>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div dir="RTL" class="class-dropdownfilter-content">
+                                                                        <div style="width:240px;height:320px">
+                                                                            <table>
+                                                                                <tr class="FormFieldRow" style="height:20px">
+                                                                                    <td style="width: 240px"></td>
+                                                                                </tr>
+
+                                                                                <tr class="FormFieldRow" style="height:22px">
+                                                                                    <td style="width: 240px">
+                                                                                        <LogLabel [ObjectFieldName]="'CourierBOL'" [DataContext]="DataContext" [TextCode]="'Customs.CourierMaster.CourierBOL.HighLow'"> </LogLabel>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr class="FormFieldRow" style="height:22px">
+                                                                                    <td style="width: 240px; height:20px">
+                                                                                        <ul class="FiltersMenu" style="float:right; padding-right: 10px;">
+                                                                                            <li (click)="SelectedBOLValueClick('L')" style="width:55px;" [class.SelectedFilter]="_SelectedBOLValue === 'L'">
+                                                                                                {{'Customs.CourierMaster.CourierBOL.Low' | TextCodeTranslationPipe }}
+                                                                                            </li>
+                                                                                            <li (click)="SelectedBOLValueClick('H')" style="width:55px;" [class.SelectedFilter]="_SelectedBOLValue === 'H'">
+                                                                                                {{'Customs.CourierMaster.CourierBOL.High' | TextCodeTranslationPipe }}
+                                                                                            </li>
+                                                                                            <li (click)="SelectedBOLValueClick('A')" style="width:55px;" [class.SelectedFilter]="_SelectedBOLValue === 'A'">
+                                                                                                {{'Customs.General.O.All' | TextCodeTranslationPipe }}
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <tr class="FormFieldRow" style="height:22px">
+                                                                                    <td style="width: 240px">
+                                                                                        <LogLabel [ObjectFieldName]="'CourierBOL'" [DataContext]="DataContext" [TextCode]="'Customs.CourierMaster.O.CourierBOL'"> </LogLabel>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr class="FormFieldRow" style="height:22px">
+                                                                                    <td style="width: 240px; height:20px">
+                                                                                        <ul class="FiltersMenu" style="float:right; padding-right: 10px;">
+                                                                                            <li (click)="SelectedTotalInvoiceValue('1000')" style="width:55px;" [class.SelectedFilter]="_SelectedTotalInvoiceValue === '1000'">
+                                                                                                {{'1000'}}
+                                                                                            </li>
+                                                                                            <li (click)="SelectedTotalInvoiceValue('500')" style="width:55px;" [class.SelectedFilter]="_SelectedTotalInvoiceValue === '500'">
+                                                                                                {{'500'}}
+                                                                                            </li>
+                                                                                            <li (click)="SelectedTotalInvoiceValue('75')" style="width:55px;" [class.SelectedFilter]="_SelectedTotalInvoiceValue === '75'">
+                                                                                                {{'75'}}
+                                                                                            </li>
+                                                                                            <li (click)="SelectedTotalInvoiceValue('A')" style="width:55px;" [class.SelectedFilter]="_SelectedTotalInvoiceValue === 'A'">
+                                                                                                {{'Customs.General.O.All' | TextCodeTranslationPipe }}
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <tr class="FormFieldRow" style="height:22px">
+                                                                                    <td style="width: 240px">
+                                                                                        <LogLabel [ObjectFieldName]="'Status'" [DataContext]="DataContext" [TextCode]="'Customs.CourierMaster.O.Status'"> </LogLabel>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr class="FormFieldRow" style="height:22px">
+                                                                                    <td style="width: 240px; ">
+                                                                                        <ul class="FiltersMenu" style="float:right; padding-right: 10px;">
+                                                                                            <li (click)="SelectedStatusValueClick('C')" style="width:55px;" [class.SelectedFilter]="_SelectedStatusValue === 'C'">
+                                                                                                {{'Customs.CourierMaster.Status.Close' | TextCodeTranslationPipe }}
+                                                                                            </li>
+                                                                                            <li (click)="SelectedStatusValueClick('O')" style="width:55px;" [class.SelectedFilter]="_SelectedStatusValue === 'O'">
+                                                                                                {{'Customs.CourierMaster.Status.Open' | TextCodeTranslationPipe }}
+                                                                                            </li>
+                                                                                            <li (click)="SelectedStatusValueClick('A')" style="width:55px;" [class.SelectedFilter]="_SelectedStatusValue === 'A'">
+                                                                                                {{'Customs.General.O.All' | TextCodeTranslationPipe }}
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <tr class="FormFieldRow" style="height:22px">
+                                                                                    <td style="width: 240px">
+                                                                                        <LogLabel [ObjectFieldName]="'Available'" [DataContext]="DataContext" [TextCode]="'Customs.CourierMaster.O.Available'"> </LogLabel>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr class="FormFieldRow" style="height:22px">
+                                                                                    <td style="width: 220px;">
+                                                                                        <ul class="FiltersMenu" style="float:right; padding-right: 10px;">
+                                                                                            <li (click)="SelectedAvailableValueClick('AD')" style="width:55px;" [class.SelectedFilter]="_SelectedAvailableValue === 'AD'">
+                                                                                                {{'Customs.CourierMaster.Available.Additional' | TextCodeTranslationPipe }}
+                                                                                            </li>
+                                                                                            <li (click)="SelectedAvailableValueClick('NAV')" style="width:55px;" [class.SelectedFilter]="_SelectedAvailableValue === 'NAV'">
+                                                                                                {{'Customs.CourierMaster.Available.NotAvailable' | TextCodeTranslationPipe }}
+                                                                                            </li>
+                                                                                            <li (click)="SelectedAvailableValueClick('AV')" style="width:55px;" [class.SelectedFilter]="_SelectedAvailableValue === 'AV'">
+                                                                                                {{'Customs.CourierMaster.Available.Available' | TextCodeTranslationPipe }}
+                                                                                            </li>
+                                                                                            <li (click)="SelectedAvailableValueClick('A')" style="width:55px;" [class.SelectedFilter]="_SelectedAvailableValue === 'A'">
+                                                                                                {{'Customs.General.O.All' | TextCodeTranslationPipe }}
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <tr class="FormFieldRow" style="height:22px">
+                                                                                    <td style="width: 240px">
+                                                                                        <LogLabel [ObjectFieldName]="'Status'" [DataContext]="DataContext" [TextCode]="'Customs.DeclarationCourierStatus.F.FastIndividualProcessCode'"> </LogLabel>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr class="FormFieldRow" style="height:22px">
+                                                                                    <td style="width: 240px; ">
+                                                                                        <ul class="FiltersMenu" style="float:right; padding-right: 10px;">
+                                                                                            <li (click)="SelectedFastIndividualProcessValueClick('I')" style="width:55px;" [class.SelectedFilter]="_SelectedFastIndividualProcessValue === 'I'">
+                                                                                                {{'Customs.CourierMaster.HighLowValue.Low' | TextCodeTranslationPipe }}
+                                                                                            </li>
+                                                                                            <li (click)="SelectedFastIndividualProcessValueClick('F')" style="width:55px;" [class.SelectedFilter]="_SelectedFastIndividualProcessValue === 'F'">
+                                                                                                {{'Customs.CourierMaster.HighLowValue.High' | TextCodeTranslationPipe }}
+                                                                                            </li>
+                                                                                            <li (click)="SelectedFastIndividualProcessValueClick('A')" style="width:55px;" [class.SelectedFilter]="_SelectedFastIndividualProcessValue === 'A'">
+                                                                                                {{'Customs.General.O.All' | TextCodeTranslationPipe }}
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <tr class="FormFieldRow" style="height:22px">
+                                                                                    <td style="width: 240px">
+                                                                                        <LogLabel [ObjectFieldName]="'CourierCustomStatus'" [DataContext]="DataContext" [TextCode]="'Customs.DeclarationCourierStatus.F.CourierCustomStatusName'"> </LogLabel>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr class="FormFieldRow" style="height:22px">
+                                                                                    <td style="width: 240px; height:20px">
+                                                                                        <ul class="FiltersMenu" style="float:right; padding-right: 10px;">
+                                                                                            <li (click)="SelectedCustomStatusValueClick('N')" style="width:55px;" [class.SelectedFilter]="_SelectedCustomStatusValue === 'N'">
+                                                                                                {{'Customs.CourierMaster.CourierCustomStatus.NoValue' | TextCodeTranslationPipe }}
+                                                                                            </li>
+
+                                                                                            <li (click)="SelectedCustomStatusValueClick('S')" style="width:55px;" [class.SelectedFilter]="_SelectedCustomStatusValue === 'S'">
+                                                                                                <!--Suspended-->
+                                                                                                {{'Customs.CourierMaster.CourierCustomStatus.Suspended' | TextCodeTranslationPipe }}
+                                                                                            </li>
+                                                                                            <li (click)="SelectedCustomStatusValueClick('H')" style="width:55px;" [class.SelectedFilter]="_SelectedCustomStatusValue === 'H'">
+                                                                                                <!--Hatara-->
+                                                                                                {{'Customs.CourierMaster.CourierCustomStatus.Hatara' | TextCodeTranslationPipe }}
+                                                                                            </li>
+                                                                                            <li (click)="SelectedCustomStatusValueClick('A')" style="width:55px;" [class.SelectedFilter]="_SelectedCustomStatusValue === 'A'">
+                                                                                                {{'Customs.General.O.All' | TextCodeTranslationPipe }}
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <tr class="FormFieldRow" style="height:15px">
+                                                                                    <td style="width: 240px"></td>
+                                                                                </tr>
+                                                                                <tr class="FormFieldRow" style="height:22px">
+                                                                                    <td style="width: 240px;">
+                                                                                        <table>
+                                                                                            <tr>
+                                                                                                <td style="width: 70px;"><div></div></td>
+                                                                                                <td style="width: 50px; text-align:center">
+                                                                                                    <div class="TextTrimming" style="display: inline-block;">
+                                                                                                        <a href="javascript:;" (click)="FilterCleanButtonClicked()">{{'Customs.CourierMaster.O.Clean' |TextCodeTranslationPipe}}</a>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                                <td style="width: 50px; text-align:center">
+                                                                                                    <div class="TextTrimming" style="display: inline-block;">
+                                                                                                        <a href="javascript:;" (click)="FilterCancelButtonClicked()">{{'Customs.General.B.Close' |TextCodeTranslationPipe}}</a>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                                <td style="width: 70px;"><div></div></td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </td>
+                                                                                    <td><div></div></td>
+                                                                                </tr>
+
+                                                                                <tr><td><div></div></td></tr>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </courier-filter-button>
+                                                            </td>
+
+                                                            <td style="width:15px;"></td>
+                                                            <td style="width:30px;">
+                                                                <div style="width: 30px; float: right; cursor: pointer;">
+                                                                    <!--<IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>-->
+                                                                    <img (click)="RefreshButtonClicked()" title="Refresh" class="DocumentsButton" src="./Images/Buttons/BlueRefresh.png" alt="RefreshButtonClicked" />
+                                                                </div>
+                                                            </td>
+                                                            <td style="width:5px"><!--all other--></td>
+                                                        </tr>
+                                                    </table>
+
+                                                </td>
+                                            </tr>
+                                            <tr style="height:100%;">
+                                                <td colspan="7" style="height: 100%;width:100%; padding: 5px;">
+
+                                                    <div class="GeneratedGridContainer" style="padding:5px;vertical-align:top;top:0;position:absolute">
+
+
+
+                                                        <p-table [columns]="columns" [value]="LazyDataSource" [scrollable]="true" [rows]="22" scrollHeight="620px"
+                                                                 [virtualScroll]="true" [virtualRowHeight]="15" [lazy]="true" (onLazyLoad)="loadLazy($event)"
+                                                                 [loading]="loading">
+
+
+                                                            <ng-template pTemplate="header" let-columns>
+
+
+                                            <tr>
+
+                                                <th *ngFor="let col of columns" [pSortableColumn]="col.FieldName">
+
+                                                    <div class="p-d-flex p-jc-between p-ai-center" style="{{col.Styles}}">
+                                                        {{col.Display}} <p-sortIcon field="{{col.FieldName}}"></p-sortIcon>
+                                                        <!--type="{{col.myType}}"-->
+                                                        <p-columnFilter field="{{col.FieldName}}" display="menu"></p-columnFilter>
+                                                    </div>
+                                                </th>
+                                            </tr>
+
+                                            </ng-template>
+                                            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                                                <tr style="height:34px">
+                                                    <td *ngFor="let col of columns">
+                                                        {{rowData[col.FieldName]}}
+                                                    </td>
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template pTemplate="loadingbody" let-columns="columns">
+                                                <tr style="height:34px">
+                                                    <td *ngFor="let col of columns">
+                                                        <div class="loading-text"></div>
+                                                    </td>
+                                                </tr>
+                                            </ng-template>
+
+                                            <ng-template pTemplate="emptymessage" let-columns>
+                                                <tr>
+                                                    <td [attr.colspan]="columns.length">
+                                                        No records found
+                                                    </td>
+                                                </tr>
+                                            </ng-template>
+                                            </p-table>
+</div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td></td>
+                                            </tr>
+
+
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr></tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

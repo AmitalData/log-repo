@@ -1,0 +1,49 @@
+<div class="card" style="height: calc(100vh - 100px)">
+
+    <h5>Virtual Scroll with Lazy Loading from a Remote Datasource (10000 Rows)</h5>
+    <!--[scrollable]="true"  [virtualScroll]="true" [virtualRowHeight]="34"   scrollHeight="250px" -->
+    <!--[totalRecords]="TotalRecords"-->
+    <!--[globalFilterFields]="['vin', 'CreatAt', 'brand', 'color']"-->
+    <!--[totalRecords]="totalRecords"-->
+    <p-table [columns]="columns" [value]="DataSource" [scrollable]="true" [rows]="22" scrollHeight="750px"
+             [virtualScroll]="true" [virtualRowHeight]="15" [lazy]="true" (onLazyLoad)="loadCarsLazy($event)"
+             [loading]="loading">
+
+        <ng-template pTemplate="header" let-columns>
+
+            <tr>
+                
+                <th *ngFor="let col of columns" [pSortableColumn]="col.FieldName" > 
+
+                    <div class="p-d-flex p-jc-between p-ai-center">
+                        {{col.Display}} <p-sortIcon field="{{col.FieldName}}"></p-sortIcon>
+                        <p-columnFilter type="{{col.myType}}" field="{{col.FieldName}}" display="menu"></p-columnFilter>
+                    </div>
+                </th>
+            </tr>
+
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr style="height:34px">
+                <td *ngFor="let col of columns">
+                    {{rowData[col.FieldName]}}
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="loadingbody" let-columns="columns">
+            <tr style="height:34px">
+                <td *ngFor="let col of columns">
+                    <div class="loading-text"></div>
+                </td>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage" let-columns>
+            <tr>
+                <td [attr.colspan]="columns.length">
+                    No records found
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
