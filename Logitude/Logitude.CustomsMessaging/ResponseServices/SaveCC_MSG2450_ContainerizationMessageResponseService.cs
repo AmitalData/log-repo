@@ -34,7 +34,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
         INF_MSG_Generic,
         GenericRequestParams>
     {
-
+        public override void OnRequestFail(INF_MSG_Generic customResponse, GenericRequestParams requestParams)
+        {
+            base.OnRequestFail(customResponse, requestParams);
+        }
         public override INF_MSG_GenericResponseData GetResponse(
             INF_MSG_Generic customResponse,
             GenericRequestParams requestParams)
@@ -42,25 +45,48 @@ namespace Logitude.CustomsMessaging.ResponseServices
             return this.MyResponseData;
         }
 
-        public override void Update(INF_MSG_Generic customResponse,
-            GenericRequestParams requestParams)
+        public override void Update(INF_MSG_Generic customResponse, GenericRequestParams requestParams)
         {
-            
-            
-            
+            if (customResponse.ResponseContentHeader.Exception == null)
+            {
+                ICustomContext dbContext = CustomContext.GetContext(requestParams.Tenant);
+                var myContainerizationQueryService = new ContainerizationQueryService(dbContext);
+                ContainerizationPM _ContainerizationPM;
+                string containerizationID = requestParams.LoggingEntityId;
 
-
-            this.MyResponseData = new INF_MSG_GenericResponseData();
-            this.MyResponseData.ApplicationID = requestParams.AppicationId;
-
-            MyResponseData.Succeeded = true;
-            MyResponseData.HasException = false;
-            MyResponseData.UserMessage ="המכלה נשלחה בהצלחה";
+                _ContainerizationPM = myContainerizationQueryService.GetSingle(containerizationID, true, false);
+                if (_ContainerizationPM.OperationMode == "3")
+                {
+                    _ContainerizationPM.ContainerizationStatus = "3";
+                    var ContainerizationUpdateService = new ContainerizationUpdateService(dbContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), requestParams.Tenant);
+                    ContainerizationUpdateService.Update(_ContainerizationPM, true);
+                }
+                this.MyResponseData = new INF_MSG_GenericResponseData()
+                {
+                    ApplicationID = requestParams.AppicationId,
+                    Succeeded = true,
+                    HasException = false,
+                    UserMessage = "המכלה נשלחה בהצלחה"
+                };
+            }
+            else
+            {
+                var ExeptionDescription = "";
+                foreach (var rec in customResponse.ResponseContentHeader.Exception)
+                {
+                    if (!String.IsNullOrWhiteSpace(ExeptionDescription))
+                        ExeptionDescription += Environment.NewLine;
+                    ExeptionDescription += rec.ExeptionDescription;
+                }
+                this.MyResponseData = new INF_MSG_GenericResponseData()
+                {
+                    Succeeded = false,
+                    ApplicationID = requestParams.AppicationId,
+                    HasException = true,
+                    UserMessage = ExeptionDescription,
+                };
+            }
 
         }
-
-  
- 
- 
-     }
+    }
 }

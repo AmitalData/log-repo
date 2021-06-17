@@ -38,6 +38,8 @@ import { MenuButtonsComponent } from '../../../Infrastructure/Components/Logitud
 import { GenericRequestParams } from '../../DataContract/RequestParams/GenericRequestParams';
 import { TestCase } from '../../DataContract/RequestParams/RequestParamsBase';
 import { CustomsSettingExtendedListService } from '../../Services/ExtendedLists/CustomsSettingExtendedListService';
+import { ContainerizationMessagesService } from '../../Services/WebServices/ContainerizationMessagesService';
+import { ContainerizationPMService } from '../../Services/StandardPMs/ContainerizationPMService';
 
 
 export class ContainerizationMenuButtonsHandler implements OnDestroy {
@@ -63,6 +65,9 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
     //Services
     private declarationPMService: DeclarationPMService = new DeclarationPMService();
     private declarationWebService: DeclarationWebService = new DeclarationWebService();
+    private containerizationMessagesService: ContainerizationMessagesService = new ContainerizationMessagesService();
+    private containerizationPMService: ContainerizationPMService = new ContainerizationPMService();
+
     private declarationCourierStatusPMService: DeclarationCourierStatusPMService = new DeclarationCourierStatusPMService();
 
     public SetEntityPM(entityArgs: EntityArgs) {
@@ -217,6 +222,11 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
                         this.AddDeclarationMethod();//SaveDeclarationMethod("DeclarationRestore");
                         break;
                     }
+                case "CancelContainerization":
+                    {
+                        this.CancelContainerizationMethod();//SaveDeclarationMethod("DeclarationRestore");
+                        break;
+                    }
 
             }
         }
@@ -237,6 +247,55 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
             this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
         });
     }
+
+    getParams(response: ServiceResponse, event: any) {
+        var params: GenericRequestParams = new GenericRequestParams();
+        params.Tenant = SessionLocator.Tenant;
+        params.AppicationId = "12345";
+        params.RequestVIA = event.RequestVIA;
+        params.ForcePersonalSign = event.ForcePersonalSign;
+        params.LoggingEnabled = true;
+        params.LoggingEntityId = response.Result.Id;
+        params.LoggingUserId = SessionLocator.LoggedUserId;
+        return params
+    }
+    CancelContainerizationMethod() {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = 300;
+        confirmWindow.Show("האם ברצונך לבטל את ההמכלה ?");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes)
+            {
+                this.EntityPM.OperationMode = "3";
+                this.containerizationPMService.update(this.EntityPM).subscribe((response: ServiceResponse) => {
+                    if (!response.HasError)
+                    {
+                        this.containerizationMessagesService.SendContainerization(this.getParams(response, event)).subscribe((response: ServiceResponse) => {
+                            console.log("[response] CancelContainerizationMethod: ", response);
+                            debugger;
+                            if (!response.Result.HasException) {
+                                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                                let messageWindow = new MessageWindow();
+                                messageWindow.Width = 300;
+                                messageWindow.Height = 180;
+                                messageWindow.Show("ההמכלה בוטלה בהצלחה");
+                            }
+                            else {
+                                let messageWindow = new MessageWindow();
+                                messageWindow.Width = 300;
+                                messageWindow.Height = 180;
+                                messageWindow.Title = "שליחה נכשלה";
+                                messageWindow.RTL = true;
+                                messageWindow.ShowErrorIcon = true;
+                                messageWindow.Show(response.Result.UserMessage);
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }
+
     DisplayOnlyCheck() {
     }
 }
