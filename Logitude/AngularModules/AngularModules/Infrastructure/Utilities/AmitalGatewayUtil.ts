@@ -571,7 +571,7 @@ export class AmitalGatewayUtil {
         //CloseEditWindow(false, false);
     }
 
-    CreateQInvoiceUnifreightCallBack(ptoCreateQInvoice: boolean, remark: string) {
+    CreateQInvoiceUnifreightCallBack(ptoCreateQInvoice: string, remark: string, excludeLines : string) {
 
         //Response.InvoiceAction
 
@@ -581,6 +581,9 @@ export class AmitalGatewayUtil {
         
         this._LastUnifreightMessageM.Requset.push(["Remark", remark]);
         this._LastUnifreightMessageM.Response.push(["Remark", remark]);
+
+        this._LastUnifreightMessageM.Requset.push(["ExcludeLines", excludeLines]);
+        this._LastUnifreightMessageM.Response.push(["ExcludeLines", excludeLines]);
 
         this.SendRequestToUnifreightAsync(
             "UnifreightMassageHandler.CreateInvoiceCommandUnifreightCallBack",
@@ -1423,11 +1426,18 @@ export class ShowInvoiceFromUrouterReturnCreateInvoiceCommand {
         };
         AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = true;
         logWindow.ComponentLoaded.subscribe(comp => {
-            logWindow.WindowClosed.subscribe((toCreateQInvoice: any) => {
+            logWindow.WindowClosed.subscribe((toCreateQInvoice: string) => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = false;
-                AmitalGatewayUtil.Instance.CreateQInvoiceUnifreightCallBack(toCreateQInvoice, comp.Remarks);
-
+                let CreateInvoice;
+                let ExcludeLines = "";
+                if (toCreateQInvoice.includes("1")) {
+                    CreateInvoice = 1;
+                    let ExcludeLines = toCreateQInvoice.replace("1;", "");
+                } else {
+                    CreateInvoice = 0;
+                }
+                AmitalGatewayUtil.Instance.CreateQInvoiceUnifreightCallBack(CreateInvoice, comp.Remarks, ExcludeLines );
             });
         });
         logWindow.Show('./CustomsModules/InvoiceQueue/Components/InvoiceQueueComponent');
@@ -1442,8 +1452,7 @@ export class ShowInvoiceFromUrouterReturnCreateInvoiceCommand {
             
         });
         */
-    }
-   
+    }  
 }
 
 
