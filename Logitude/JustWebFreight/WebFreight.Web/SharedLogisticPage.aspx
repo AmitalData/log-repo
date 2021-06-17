@@ -1002,8 +1002,8 @@
 
             var loginData = entityId + ":" + $.CurrentCardId + ":" + $.CurrentTenant + ":" + $.CurrentEmail + ":" + $.CurrentCardType + ":" + $.IsBrandingEnabled;
 
-            var link = document.location.href;
-            var linkArray = link.split('SharedLogisticPage');
+            var link = document.location.href.toLowerCase();;
+            var linkArray = link.split('sharedlogisticpage');
             url = linkArray[0];
 
             if (url.endsWith('/')) {
