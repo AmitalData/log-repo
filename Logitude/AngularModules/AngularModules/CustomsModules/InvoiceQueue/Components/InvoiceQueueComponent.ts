@@ -45,12 +45,13 @@ export class InvoiceQueueComponent
     LabelSumAmountNIS: string;
     _invoiceQueueWebService: InvoiceQueueWebService = new InvoiceQueueWebService();
     RowIndex: any;
+    ExcludeLines: string = "";
     UnifreightMessage: any;
     constructor(private EntityResourceService: EntityResourceService, private _declarationPMService: DeclarationPMService) {
         super();
         this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe(response => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-                //this.GetData();
+               //this.GetData();
             });
         });
     }
@@ -70,7 +71,7 @@ export class InvoiceQueueComponent
     private GetData() {
         this.ResetVariables();
       this._declarationPMService.get(this.UnifreightMessage.LogitudeEntityNumber).subscribe(data => {
-    //      this._declarationPMService.get("1-5362").subscribe(data => {
+        //this._declarationPMService.get("1-211404").subscribe(data => {
             this.declaration = data.Result;
             SessionLocator.SelectedSession.StopBusyIndicator();
             if (this.declaration == null) {
@@ -86,6 +87,7 @@ export class InvoiceQueueComponent
                         x = this.setClientForwarder(x);
                         x.AmountForeign = this.SetFixedValue(x.AmountForeign);
                         x.AmountNIS = this.SetFixedValue(x.AmountNIS);
+                        x.ExcludedLine = true;
                         this.InvoiceLineList.Insert(x);
                     });
                 }
@@ -126,7 +128,7 @@ export class InvoiceQueueComponent
                         if (x.E != null) {
                             this.EMessagesList.Insert(x);
                             this.ErrorMessages = true;
-                            this.CreateQInvoiceButtonDim = true; // מקש חשבוניות ב DIM םם יש שגםיה מסוג ERROR
+                           this.CreateQInvoiceButtonDim = true; // מקש חשבוניות ב DIM םם יש שגםיה מסוג ERROR
                         }
                         if (x.W != null) {
                             this.WMessagesList.Insert(x);
@@ -190,6 +192,19 @@ export class InvoiceQueueComponent
             }
         }
         return value;
+    }
+
+    OnExcludeLineChecked($event, lineNumber: any) {
+        if (!$event) {
+            if (!this.ExcludeLines.includes(lineNumber)) {
+                this.ExcludeLines = this.ExcludeLines + lineNumber + ",";
+             }
+         }
+         else {
+            if (this.ExcludeLines.includes(lineNumber)) {
+                this.ExcludeLines = this.ExcludeLines.replace(lineNumber + ",", "");
+             }
+        }
     }
 
     SetFixedValue(value: string) {
@@ -494,7 +509,8 @@ export class InvoiceQueueComponent
 
 
     CreateQInvoice() {
-        SessionLocator.SelectedSession.CurrentWindow.Close("1");
+        let message = "1" + ";" + this.ExcludeLines;        // send 1 + ExcludeLines seperated by ;
+        SessionLocator.SelectedSession.CurrentWindow.Close("1" + ";" + this.ExcludeLines);
     }
 
 }
