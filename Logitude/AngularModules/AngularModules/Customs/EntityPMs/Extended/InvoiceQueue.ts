@@ -29,6 +29,8 @@ export class InvoiceLine {
     AmountForeign: any;
     Currency: string;
     Wip: string;
+    LineNumber: string;
+    ExcludedLine: boolean;
 }
 
 export class IntegratedInvoice {

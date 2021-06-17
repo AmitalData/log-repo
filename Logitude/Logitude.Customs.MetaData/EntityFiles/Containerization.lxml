@@ -36,6 +36,7 @@
   HasDynamicHeader="false"
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
+  NewWizardControlName="&quot;Logitude.Customs.NewContainerizationControlCommand&quot;"
   LocalDefaultText="&quot;המכלה&quot;"
   DefaultText="&quot;Containerization&quot;"
   Code="&quot;4ba2&quot;"
@@ -1756,6 +1757,13 @@
         LocalDefaultText="&quot;הוסף הצהרה&quot;"
         IsPackagable="true"
         HtmlComponentPath="&quot;./CustomsModules/CustomsContainerization/Components/NewEntity/NewContainerizationComponent&quot;" />
+      <MenuItem
+        EventCode="&quot;CancelContainerization&quot;"
+        DefaultText="&quot;Cancel Containerization&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="1"
+        LocalDefaultText="&quot;ביטול המכלה&quot;"
+        IsPackagable="true" />
     </MenuButton>
   </MenuButtons>
   <DataContracts />

@@ -204,7 +204,6 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         }
                     } 
                     if (button.EventCode == "OpenNewContainerization") {
-                        debugger;
                         button.Width = 100;
                         button.DisplayText = "המכלה";
                         if (this.EntityPM.Direction == "E" && this.EntityPM.ProcedureCurrentName.includes("המכלה לפני התרה")) {
@@ -1266,7 +1265,6 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
     }
 
     private OpenNewContainerizationMethod() {
-        debugger;
         if (AppTool.IsNullOrEmpty(this.EntityPM.ExportContainerizationID)) {
             var args: any = {
                 EntityPM: this.EntityPM,
@@ -1275,7 +1273,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
             var logWindow = new LogitudeWindow();
             logWindow.Width = 1200;
             logWindow.Height = 550;
-            logWindow.Title = ("עדכון המכלה");
+            logWindow.Title = ("המכלה חדשה");
             logWindow.WindowArgs = args;
             logWindow.ShowCloseButton = true;
             logWindow.Show('./CustomsModules/CustomsContainerization/Components/NewEntity/NewContainerizationComponent');

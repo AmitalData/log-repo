@@ -2270,7 +2270,23 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                 });
                             });
                     }
-                    else if (this.ObjectTableName =="Customs.DeclarationReferantData")
+                    else if (myObjectTableName == "Customs.Containerization") {
+                        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
+                            .then(cmpRef => {
+                                cmpRef.instance.ComponentRef = cmpRef;
+                                cmpRef.instance.Run({
+                                    EntityId: $event.rowData.Id,
+                                    ObjectTableName: "Customs.Containerization"
+                                });
+
+                                cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
+                                    this.isEditControlOpened = false;
+                                    this.OnBackFromEdit(selectedEntityId, $event)
+                                    this.RefreshBtnClick();
+                                });
+                            });
+                    }
+                    else if (this.ObjectTableName == "Customs.DeclarationReferantData")
                     {
                         var customFile = "";
                         if ($event != null)customFile = $event.rowData.CustomFileNo;
@@ -2601,7 +2617,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     var GeneralText = TextCodeTranslator.Translate("General.O.NewEntity");
                   
                         var ChangedText = GeneralText.split('%')[0];
-                        var NewText = TextCodeTranslator.TranslateTable(this.ObjectTableName);
+                        var NewText = TextCodeTranslator.TranslateTable(this.ObjectTableName); 
                         var FinalText = NewText + " " + ChangedText;
                     if (this.ObjectTableName == "Customer") {
                         FinalText = "New" + " " + NewText;
@@ -2790,7 +2806,10 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                             this.HaveFeatureNewExportDeclararion) {
                             this.RunNewExportDeclaration();
                         }
-                          
+                        if (this.SelectedQuery.ObjectTableNewWizardControlName == "Logitude.Customs.NewContainerizationControlCommand")
+                        {
+                            this.RunNewContainerization();
+                        }                          
                         else {
                             this.RunNewEntityWizard(this.SelectedQuery.ObjectTableNewWizardControlName);
                         }
@@ -2831,6 +2850,15 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         logWindow.Height = 500;
         logWindow.NewWizardArgs = { IsNewEntity: true };
         logWindow.Show("./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/NewEntity/NewExportDeclarationComponent");
+    }
+
+    RunNewContainerization() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 1200;
+        logWindow.Height = 550;
+        logWindow.Title = ("המכלה חדשה");
+        logWindow.ShowCloseButton = true;
+        logWindow.Show('./CustomsModules/CustomsContainerization/Components/NewEntity/NewContainerizationComponent');
     }
 
     private RunNewEntityWizard(wizardControlName: string) {
