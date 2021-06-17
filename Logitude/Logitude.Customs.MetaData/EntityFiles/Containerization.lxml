@@ -404,10 +404,10 @@
     DisplayLongName="false"
     FullFieldLable="&quot;ContainerizationDate&quot;"
     DefaultText="&quot;Containerization Date&quot;"
-    FullLocalDefaultText="&quot;תאריך המכלה&quot;"
+    FullLocalDefaultText="&quot;תאריך פתיחת המכלה&quot;"
     ListFieldLable="&quot;ContainerizationDateListLable&quot;"
     ListLableDefaultText="&quot;Containerization Date&quot;"
-    ListLocalDefaultText="&quot;תאריך המכלה&quot;"
+    ListLocalDefaultText="&quot;תאריך פתיחת המכלה&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -789,10 +789,10 @@
     DisplayLongName="false"
     FullFieldLable="&quot;ExportFile&quot;"
     DefaultText="&quot;Export File&quot;"
-    FullLocalDefaultText="&quot;מס' תיק יצוא תפעולי&quot;"
+    FullLocalDefaultText="&quot;תיק יצוא&quot;"
     ListFieldLable="&quot;ExportFileListLable&quot;"
     ListLableDefaultText="&quot;Export File&quot;"
-    ListLocalDefaultText="&quot;מס' תיק יצוא תפעולי&quot;"
+    ListLocalDefaultText="&quot;תיק יצוא&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -940,10 +940,10 @@
     DisplayLongName="false"
     FullFieldLable="&quot;ImporterName&quot;"
     DefaultText="&quot;Importer Name&quot;"
-    FullLocalDefaultText="&quot;שם יבואן&quot;"
+    FullLocalDefaultText="&quot;לקוח&quot;"
     ListFieldLable="&quot;ImporterNameListLable&quot;"
     ListLableDefaultText="&quot;Importer Name&quot;"
-    ListLocalDefaultText="&quot;שם יבואן&quot;"
+    ListLocalDefaultText="&quot;לקוח&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -1423,7 +1423,7 @@
         QueryCode="&quot;OpenContainerization&quot;"
         IndexOrder="0"
         ObjectFieldName="&quot;ContainerizationDate&quot;"
-        ColumnWidth="100" />
+        ColumnWidth="150" />
       <QueryColumn
         QueryCode="&quot;OpenContainerization&quot;"
         IndexOrder="1"
@@ -1491,7 +1491,7 @@
         QueryCode="&quot;ContainerizationWithRelease&quot;"
         IndexOrder="0"
         ObjectFieldName="&quot;ContainerizationDate&quot;"
-        ColumnWidth="100" />
+        ColumnWidth="150" />
       <QueryColumn
         QueryCode="&quot;ContainerizationWithRelease&quot;"
         IndexOrder="1"
@@ -1552,7 +1552,7 @@
         QueryCode="&quot;CancelledContainerization&quot;"
         IndexOrder="0"
         ObjectFieldName="&quot;ContainerizationDate&quot;"
-        ColumnWidth="100" />
+        ColumnWidth="150" />
       <QueryColumn
         QueryCode="&quot;CancelledContainerization&quot;"
         IndexOrder="1"
@@ -1613,7 +1613,7 @@
         QueryCode="&quot;AllContainerization&quot;"
         IndexOrder="0"
         ObjectFieldName="&quot;ContainerizationDate&quot;"
-        ColumnWidth="100" />
+        ColumnWidth="150" />
       <QueryColumn
         QueryCode="&quot;AllContainerization&quot;"
         IndexOrder="1"
