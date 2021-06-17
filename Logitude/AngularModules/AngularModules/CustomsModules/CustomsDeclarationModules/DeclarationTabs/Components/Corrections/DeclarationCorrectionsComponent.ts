@@ -119,7 +119,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
                         this.ObjectTableName = this.entityArgs.ObjectTableName;
                         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
                         this.Listen();
-                        this.IsOldAmendment = this.entityArgs.EditComponent.SelectedTab.Code == "DCCO";
+                        this.IsOldAmendment = this.entityArgs.EditComponent.SelectedTab.Code == "DCCO" || !FeatureLocator.HasFeaturePermession("Customs.Declaration", "DECLARATIONAMENDMENT");
                         console.log("Declaration", this.EntityPM);
                         this.BuildTabs();
 
