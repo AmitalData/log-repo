@@ -11,10 +11,10 @@ Feature: Business Unit Create, Search and Edit from Maintenance
         Then the business unit should create successfully
 
     Scenario: Create another business unit
-        Given a new business unit and select the created business unit in the first scenario as a parent
+        Given create new business unit
             | Name | CurrentTimeDate |
-        When create new business unit
-        Then the new business unit should create successfully
+        When create business unit
+        Then the business unit should create successfully
 
     Scenario: Search for the Business Unit by name
         When search business unit
@@ -25,8 +25,7 @@ Feature: Business Unit Create, Search and Edit from Maintenance
         Then the business unit should open successfully
 
     Scenario: Edit the Business Unit
-        Given the user edit the following business unit details and the parent should be dim
-            | InactiveCheckBox | Yes |
+        Given the user edit the business unit and the parent should be dim
         When save business unit
         Then the business unit should update successfully
         And the following event should appear in events tab

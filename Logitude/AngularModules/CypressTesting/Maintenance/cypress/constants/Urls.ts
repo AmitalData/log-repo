@@ -52,7 +52,7 @@ export class Urls {
     public static readonly BranchesviewGetSingle = "**/branchviews/getsingle/?**";
     public static readonly BrancheAddress = "**/addresses"
 
-    public static readonly GetTenatCurrencies = "**/GetCopyCurrencyToTenant?**"
+    public static readonly GetCopyCurrencyToTenant = "**/GetCopyCurrencyToTenant?**"
     public static readonly Currencies = "**/currencies"
     public static readonly CurrenciesGetSingle = "**/currencies/getsingle?**"
     public static readonly CurrenciesviewGetList = "**/currencyviews/getbyfilters?**";
