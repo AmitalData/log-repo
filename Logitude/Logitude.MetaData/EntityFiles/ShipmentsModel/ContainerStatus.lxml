@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Container Status&quot;"
-  Code="&quot;715a&quot;"
+  Code="&quot;d8d5&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -76,7 +76,7 @@
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
     MaxLength="3"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="true"
     DisplayOnLookUpLocal="false"
@@ -322,55 +322,55 @@
   </EventTypes>
   <Records>
     <Record
-      Code="0"
+      Code="&quot;0&quot;"
       Name="&quot;Unknown&quot;"
       SearchFields="&quot;0,Unknown&quot;" />
     <Record
-      Code="10"
+      Code="&quot;10&quot;"
       Name="&quot;Waiting for Pickup&quot;"
       SearchFields="&quot;10,Waiting for Pickup&quot;" />
     <Record
-      Code="11"
+      Code="&quot;11&quot;"
       Name="&quot;Land Transport to POL&quot;"
       SearchFields="&quot;11,Land Transport to POL&quot;" />
     <Record
-      Code="12"
+      Code="&quot;12&quot;"
       Name="&quot;In POL Terminal&quot;"
       SearchFields="&quot;12,In POL Terminal&quot;" />
     <Record
-      Code="13"
+      Code="&quot;13&quot;"
       Name="&quot;Waiting for Departure from POL&quot;"
       SearchFields="&quot;13,Waiting for Departure from POL&quot;" />
     <Record
-      Code="14"
+      Code="&quot;14&quot;"
       Name="&quot;Ocean Transport from POL&quot;"
       SearchFields="&quot;14,Ocean Transport from POL&quot;" />
     <Record
-      Code="15"
+      Code="&quot;15&quot;"
       Name="&quot;In Transshipment&quot;"
       SearchFields="&quot;15,In Transshipment&quot;" />
     <Record
-      Code="16"
+      Code="&quot;16&quot;"
       Name="&quot;Ocean Transport to POD&quot;"
       SearchFields="&quot;16,Ocean Transport to POD&quot;" />
     <Record
-      Code="17"
+      Code="&quot;17&quot;"
       Name="&quot;Waiting for Discharge at POD&quot;"
       SearchFields="&quot;17,Waiting for Discharge at POD&quot;" />
     <Record
-      Code="18"
+      Code="&quot;18&quot;"
       Name="&quot;In POD Terminal&quot;"
       SearchFields="&quot;18,In POD Terminal&quot;" />
     <Record
-      Code="19"
+      Code="&quot;19&quot;"
       Name="&quot;Land Transport to Place of Delivery&quot;"
       SearchFields="&quot;19,Land Transport to Place of Delivery&quot;" />
     <Record
-      Code="20"
-      Name="&quot;Delivered; Returning Container&quot;"
+      Code="&quot;20&quot;"
+      Name="&quot;Delivered, Returning Container&quot;"
       SearchFields="&quot;20,Delivered; Returning Container&quot;" />
     <Record
-      Code="21"
+      Code="&quot;21&quot;"
       Name="&quot;Completed&quot;"
       SearchFields="&quot;21,Completed&quot;" />
   </Records>

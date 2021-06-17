@@ -966,6 +966,7 @@
     <None Include="DBTables\ShipmentsModel\AWBSpecialHandlingCode.dxml" />
     <None Include="DBTables\ShipmentsModel\AWBStatus.dxml" />
     <None Include="DBTables\ShipmentsModel\Container.dxml" />
+    <None Include="DBTables\ShipmentsModel\ContainerStatus.dxml" />
     <None Include="DBTables\ShipmentsModel\CustomsTransferHeader.dxml" />
     <None Include="DBTables\ShipmentsModel\CustomsTransferLine.dxml" />
     <None Include="DBTables\ShipmentsModel\CustomsTransferType.dxml" />
@@ -1126,7 +1127,7 @@
     <None Include="EntityFiles\CommonDataModel\FilingInbox.lxml" />
     <None Include="EntityFiles\CommonDataModel\FilingInboxAttachmentLog.lxml" />
     <None Include="EntityFiles\ShipmentsModel\Container.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\ContainerStatuses.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\ContainerStatus.lxml" />
     <None Include="EntityFiles\ShipmentsModel\OBLType.lxml" />
     <None Include="EntityFiles\CommonDataModel\PaymentGatewayPartner.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteVATsTotal.lxml" />

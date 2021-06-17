@@ -23,91 +23,91 @@ namespace Logitude.BL.ShipmentsModel
 		    var all = new List<ContainerStatusDetails>();  
             all.Add(new ContainerStatusDetails()
             {    
-                Code = 0, 
+                Code = "0", 
                 Name = "Unknown", 
                 SearchFields = "0,Unknown", 
 			});
 			 
             all.Add(new ContainerStatusDetails()
             {    
-                Code = 10, 
+                Code = "10", 
                 Name = "Waiting for Pickup", 
                 SearchFields = "10,Waiting for Pickup", 
 			});
 			 
             all.Add(new ContainerStatusDetails()
             {    
-                Code = 11, 
+                Code = "11", 
                 Name = "Land Transport to POL", 
                 SearchFields = "11,Land Transport to POL", 
 			});
 			 
             all.Add(new ContainerStatusDetails()
             {    
-                Code = 12, 
+                Code = "12", 
                 Name = "In POL Terminal", 
                 SearchFields = "12,In POL Terminal", 
 			});
 			 
             all.Add(new ContainerStatusDetails()
             {    
-                Code = 13, 
+                Code = "13", 
                 Name = "Waiting for Departure from POL", 
                 SearchFields = "13,Waiting for Departure from POL", 
 			});
 			 
             all.Add(new ContainerStatusDetails()
             {    
-                Code = 14, 
+                Code = "14", 
                 Name = "Ocean Transport from POL", 
                 SearchFields = "14,Ocean Transport from POL", 
 			});
 			 
             all.Add(new ContainerStatusDetails()
             {    
-                Code = 15, 
+                Code = "15", 
                 Name = "In Transshipment", 
                 SearchFields = "15,In Transshipment", 
 			});
 			 
             all.Add(new ContainerStatusDetails()
             {    
-                Code = 16, 
+                Code = "16", 
                 Name = "Ocean Transport to POD", 
                 SearchFields = "16,Ocean Transport to POD", 
 			});
 			 
             all.Add(new ContainerStatusDetails()
             {    
-                Code = 17, 
+                Code = "17", 
                 Name = "Waiting for Discharge at POD", 
                 SearchFields = "17,Waiting for Discharge at POD", 
 			});
 			 
             all.Add(new ContainerStatusDetails()
             {    
-                Code = 18, 
+                Code = "18", 
                 Name = "In POD Terminal", 
                 SearchFields = "18,In POD Terminal", 
 			});
 			 
             all.Add(new ContainerStatusDetails()
             {    
-                Code = 19, 
+                Code = "19", 
                 Name = "Land Transport to Place of Delivery", 
                 SearchFields = "19,Land Transport to Place of Delivery", 
 			});
 			 
             all.Add(new ContainerStatusDetails()
             {    
-                Code = 20, 
-                Name = "Delivered; Returning Container", 
+                Code = "20", 
+                Name = "Delivered, Returning Container", 
                 SearchFields = "20,Delivered; Returning Container", 
 			});
 			 
             all.Add(new ContainerStatusDetails()
             {    
-                Code = 21, 
+                Code = "21", 
                 Name = "Completed", 
                 SearchFields = "21,Completed", 
 			});

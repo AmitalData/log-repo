@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ContainerStatusUpdateClass
    {  		
-		public const string HashString = "7f6960bb40da990903a5e42748120c55";
+		public const string HashString = "911f5f6db8871bf72e0461889a4873a6";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -121,7 +121,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Container Status",
-			      				    Code =  "715a",
+			      				    Code =  "d8d5",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
@@ -151,7 +151,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  3,
-					  						IsRequired =  false,
+					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  true,
 					  						DisplayOnLookUpLocal =  false,

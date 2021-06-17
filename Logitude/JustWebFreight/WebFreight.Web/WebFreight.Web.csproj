@@ -3312,6 +3312,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\AWBCustomsInformationUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\AWBInformationUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ContainerFollowUpUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ContainerStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ContainerUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\CustomsTransferHeaderUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\CustomsTransferLineUpdateClass.cs" />
@@ -5812,6 +5813,7 @@
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.AWBMessagingStock.cs" />
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.Container.cs" />
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.ContainerFollowUp.cs" />
+    <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.ContainerStatus.cs" />
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.CustomsTransmissionsStatus.cs" />
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.INTTRADocumentType.cs" />
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.INTTRASIStatus.cs" />
