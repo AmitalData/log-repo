@@ -1,29 +1,53 @@
-import { RegexSelectors } from '../selectors/RegexSelectors';
+export class ShippingLineSelectors {
 
-export class ShippingLineSelectors extends RegexSelectors {
+  public static readonly MaintenanceItem = "#MaintenanceItemMTSL"
+  public static readonly SaveCloseButton = "#ShippingLine-SaveClose";
+  public static readonly SaveButton = "#ShippingLine-Save";
+  public static readonly ImportShippingLine = "[data-cy='Import']"
+  public static readonly AddNewShippingLine = "[data-cy='Add_ShippingLine']"
 
-  public static readonly ShippingLineMaintenanceItem = "#MaintenanceItemMTSL"
-  public static readonly ShippingLineSaveCloseButton = "#ShippingLine-SaveClose";
-  public static readonly ShippingLineSaveButton = "#ShippingLine-Save";
-  public static readonly ShippingLineName = "#ShippingLine_EnglishName";
-  public static readonly ShippingLineLocalName = "#ShippingLine_LocalName";
-  public static readonly ShippingLineCode = "#ShippingLine_Code";
-  public static readonly ShippingLineNotes = "#ShippingLine_Remark";
-  public static readonly ShippingLineSCACCode = "#ShippingLine_SCACCode"
-  public static readonly InActiveShippingLineCheckBox = "#ShippingLine_InActive"
-  public static readonly ShippingLineEventsTab = "#ShippingLineTHEvents"
+  public static readonly Name = "#ShippingLine_EnglishName";
+  public static readonly Code = "#ShippingLine_Code";
+  public static readonly Notes = "#ShippingLine_Remark";
+  public static readonly SCACCode = "#ShippingLine_SCACCode"
+
+  public static readonly INTTRATab = "#ShippingLineTHINTTRA"
+  public static readonly INTTRARegistrationNotes = "#ShippingLine_INTTRARegistrationNotes"
+  public static readonly ImportShippingLine_AddButton = "[data-cy='Import_ShippingLine']"
+
   public static readonly AddressesTab = "#ShippingLineTHAddresses"
-  public static readonly AccountingTab = "#ShippingLineTHAccounting"
-  public static readonly INTTRA = "#ShippingLineTHINTTRA"
+  public static readonly EditAddressButton = "#Edit"
+  public static readonly Address_CountryId = "#Address_CountryId"
+  public static readonly Address_City = "#Address_City"
+  public static readonly Address_StateId = "#Address_StateId"
+
   public static readonly AreasTab = "#ShippingLineTHAreas"
-  public static readonly TariffTranslations = "#ShippingLineTHTariffTranslations"
+  public static readonly AddArea = "#addArea"
+  public static readonly AreaName = "#CarrierArea_Name"
+  public static readonly AreaDescription = "#CarrierArea_Description"
+
+  public static readonly ChoosePortButton = "[data-cy='ChoosePort_CarrierArea']"
+  public static readonly CarrierAreasPort_PortId = "#CarrierAreasPort_PortId"
+  public static readonly Add_CarrierAreasPort = "[data-cy='Add_CarrierAreasPort']"
+  public static readonly Close_CarrierAreasPort = "[data-cy='Close_CarrierAreasPort']"
+
+  public static readonly ChooseCountryPortButton = "[data-cy='ChooseCountry_CarrierArea']"
+  public static readonly CarrierAreasPort_CountryId = "#CarrierAreasPort_CountryId"
+  public static readonly AddCountry_CarrierAreasPort = "[data-cy='AddCountry_CarrierAreasPort']"
+  public static readonly CloseCountry_CarrierAreasPort = "[data-cy='CloseCountry_CarrierAreasPort']"
+
+  public static readonly TariffTranslationsTab = "#ShippingLineTHTariffTranslations"
+  public static readonly AddTranslation = "#addTranslation"
+  public static readonly TariffPartnerCode = "#TariffCarrierTranslation_PartnerCode"
+  public static readonly TariffPort = "#TariffCarrierTranslation_PortId"
+
   public static readonly GeneralTab = "#ShippingLineTHGeneral"
-  public static readonly ShippingLine_IsINTTRA = '#ShippingLine_IsINTTRARegistered'
-  public static readonly ShippingLine_INTTRANotes= '#ShippingLine_INTTRARegistrationNotes'
-  public static readonly MinCodeRandomNumber = 1
-  public static readonly MaxCodeRandomNumber = 10000000000
-  public static readonly MinCounterCodeRandomNumber = 1
-  public static readonly MaxCounterCodeRandomNumber = 10000
+  public static readonly InActiveShippingLineCheckBox = "#ShippingLine_InActive"
+
+  public static readonly IsINTTRACheckBox = '#ShippingLine_IsINTTRARegistered'
+
+  public static readonly EventsTab = "#ShippingLineTHEvents"
+
   public static readonly CodeDigitCount = 4
   public static readonly TariffCodeDigitCount = 10
 }

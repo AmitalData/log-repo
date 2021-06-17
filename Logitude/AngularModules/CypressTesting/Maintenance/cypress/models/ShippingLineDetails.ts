@@ -5,10 +5,11 @@ export interface ShippingLineDetails {
     Notes: string,
     AddressCity: string,
     AddressCountry: string,
+    AddressState: string,
     AreaName: string,
     AreaDescription: string,
     AreaCountry: string,
     AreaPort: string,
     TariffPartenerCode: string,
-    TariffPort: string,
+    TariffPort: string
 }

@@ -7,30 +7,46 @@ import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
 import { ShippingLineDetails } from 'cypress/models/ShippingLineDetails';
 import * as GeneralActions from './GeneralActions'
-import * as gr from '../../../Base/cypress/actions/GenerateRandoms';
+import * as Actions from './Actions'
+import { GenerateRandomNumberAndString } from '../../../Base/cypress/actions/GenerateRandoms';
 
-let shippingLineCode = null;
+let searchValueField = null;
+
+export function MockImport() {
+    cy.intercept(RestAPI.GET, Urls.ImportShippingLine, [true])
+    Actions.DefineGetByFilterRequest()
+    cy.get(ShippingLineSelectors.ImportShippingLine).first().click()
+}
+
+export function AssertMockImport() {
+    Actions.AssertGetByFilters();
+}
+
+export function FillCode(code: string) {
+    cy.FillLogTextBox(ShippingLineSelectors.Code, code)
+}
+
+export function FillSCACCode(SCACCode: string) {
+    cy.FillLogTextBox(ShippingLineSelectors.SCACCode, SCACCode)
+}
 
 export function FillShippingLineDetails(shippingLineDetails: ShippingLineDetails) {
-    cy.DefineRequestWait(RestAPI.GET, Urls.NewShippingLines, RequestAliases.NewShippingLine)
-    cy.Click('button', 'Add').then(() => {
-        cy.wait('@' + RequestAliases.NewShippingLine).then(() => {
-            cy.Click('.Button', 'New Shipping Line').then(() => {
-                let RandomCodeNumber = gr.GenerateRandomNumberAndString(ShippingLineSelectors.CodeDigitCount)
-                let RandomSCACCode = gr.GenerateRandomNumberAndString(ShippingLineSelectors.CodeDigitCount)
-
-                cy.FillLogTextBox(ShippingLineSelectors.ShippingLineCode, RandomCodeNumber)
-                cy.FillLogTextBox(ShippingLineSelectors.ShippingLineSCACCode, RandomSCACCode)
-                cy.FillLogTextBox(ShippingLineSelectors.ShippingLineName, shippingLineDetails.Name)
-                cy.FillLogTextBox(ShippingLineSelectors.ShippingLineNotes, shippingLineDetails.Notes)
-            })
-        })
-    })
+    cy.FillLogTextBox(ShippingLineSelectors.Code, GenerateRandomNumberAndString(ShippingLineSelectors.CodeDigitCount))
+    cy.FillLogTextBox(ShippingLineSelectors.SCACCode, GenerateRandomNumberAndString(ShippingLineSelectors.CodeDigitCount))
+    cy.FillLogTextBox(ShippingLineSelectors.Name, shippingLineDetails.Name)
+    cy.FillLogTextBox(ShippingLineSelectors.Notes, shippingLineDetails.Notes)
 }
 
 export function CreateShippingLine() {
     DefinePostShippingLineRequest()
-    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
+    Actions.DefineGetByFilterRequest()
+    cy.get(BaseSelectors.RedButton).then(($btn) => {
+        if ($btn.is(":disabled")) {
+            ReCreateShippingLine()
+        } else {
+            cy.wrap($btn).click()
+        }
+    })
 }
 
 function DefinePostShippingLineRequest() {
@@ -38,20 +54,30 @@ function DefinePostShippingLineRequest() {
 }
 
 export function AssertCreateShippingLine() {
+    AssertPostShippingLine()
+    Actions.AssertGetByFilters()
+}
+
+export function AssertPostShippingLine() {
     let intercept = cy.wait("@" + RequestAliases.PostShippingLine);
     intercept.then((interception) => {
-        let status = interception.response.statusCode
-        assert.equal(status, 200)
-        shippingLineCode = interception.response.body.Code
+        assert.equal(interception.response.statusCode, 200)
+        searchValueField = interception.response.body.Code
     })
 }
 
+function ReCreateShippingLine() {
+    cy.FillLogTextBox(ShippingLineSelectors.Code, GenerateRandomNumberAndString(ShippingLineSelectors.CodeDigitCount))
+    cy.FillLogTextBox(ShippingLineSelectors.Notes, "ReCreate Shipping Line")
+    CreateShippingLine();
+}
+
 export function SearchShippingLine() {
-    GeneralActions.Search(shippingLineCode)
+    GeneralActions.Search(searchValueField)
 }
 
 export function AssertSearchShippingLine() {
-    GeneralActions.AssertSearch(shippingLineCode)
+    GeneralActions.AssertSearch(searchValueField)
 }
 
 export function OpenShippingLine() {
@@ -64,25 +90,19 @@ function DefineShippingLinesGetSingleRequest() {
 }
 
 export function AssertOpenShippingLine() {
-    AssertShippingLineGetSingle();
+    BaseAssertion.AssertStatusCode(RequestAliases.GetSignle, 200);
     BaseAssertion.AssertElementExist(MaintenanceSelectors.GeneralEditScreen)
 }
 
-function AssertShippingLineGetSingle() {
-    BaseAssertion.AssertStatusCode(RequestAliases.GetSignle, 200);
-}
-
 export function CheckShippingLineINTTRA() {
-    cy.get(ShippingLineSelectors.ShippingLine_IsINTTRA).should('be.disabled')
-    cy.get(ShippingLineSelectors.ShippingLine_INTTRANotes).should('have.class', 'TextAreaDisabled')
+    BaseAssertion.AssertElementDisabled(ShippingLineSelectors.IsINTTRACheckBox, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementHaveClass(ShippingLineSelectors.INTTRARegistrationNotes, 'TextAreaDisabled')
 }
 
 export function FillShippingLineAddresses(shippingLineDetails: ShippingLineDetails) {
-    cy.DefineRequestWait(RestAPI.GET, Urls.NewShippingLinesAddress, RequestAliases.NewShippingLineAddress);
-    cy.get("#Edit").click({ force: true })
-    cy.FillLogLov('#Address_CountryId', shippingLineDetails.AddressCountry, true)
-    cy.FillLogTextBox('#Address_City', shippingLineDetails.AddressCity)
-    cy.FillLogLov('#Address_StateId', "Arkansas", true)
+    cy.FillLogLov(ShippingLineSelectors.Address_CountryId, shippingLineDetails.AddressCountry, true)
+    cy.FillLogTextBox(ShippingLineSelectors.Address_City, shippingLineDetails.AddressCity)
+    cy.FillLogLov(ShippingLineSelectors.Address_StateId, shippingLineDetails.AddressState, true)
 }
 
 export function CreateShippingLineAddress() {
@@ -93,31 +113,47 @@ export function CreateShippingLineAddress() {
 export function AssertCreateShippingLineAddress() {
     let intercept = cy.wait("@" + RequestAliases.PostShippingLineAddress);
     intercept.then((interception) => {
-        let status = interception.response.statusCode
-        assert.equal(status, 200)
+        assert.equal(interception.response.statusCode, 200)
     })
 }
 
-export function AssertPostShippingLineAddress(responseStatusCode: number, expectedStatusCode: number, shippingLineAddressName: string) {
-    assert.equal(responseStatusCode, expectedStatusCode)
-    assert.equal(shippingLineAddressName, shippingLineAddressName)
+export function FillAreaCountryPortName(areaCountryPortName) {
+    cy.FillLogLov(ShippingLineSelectors.CarrierAreasPort_CountryId, areaCountryPortName, true)
 }
 
-export function FillShippingLineAreas(shippingLineDetails: ShippingLineDetails) {
-    cy.get('#addArea').click().then(() => {
-        cy.FillLogTextBox('#CarrierArea_Name', shippingLineDetails.AreaName)
-        cy.FillLogTextBox('#CarrierArea_Description', shippingLineDetails.AreaDescription)
-        cy.get("[data-cy='ChooseCountry_CarrierArea']").click()
-        cy.FillLogLov('#CarrierAreasPort_CountryId', shippingLineDetails.AreaCountry, true)
-        cy.get("[data-cy='AddCountry_CarrierAreasPort']").click()
-        cy.get("[data-cy='CloseCountry_CarrierAreasPort']").click()
+export function AddAreaCountryPort() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.CountryPortviews, RequestAliases.PostShippingLineAreaCountryPort)
+    cy.get(ShippingLineSelectors.AddCountry_CarrierAreasPort).click()
+    cy.get(ShippingLineSelectors.CloseCountry_CarrierAreasPort).click()
+}
 
-        cy.get("[data-cy='ChoosePort_CarrierArea']").click()
-        cy.FillLogLov('#CarrierAreasPort_PortId', shippingLineDetails.AreaPort, true)
-        cy.get("[data-cy='Add_CarrierAreasPort']").click()
-        cy.get("[data-cy='Close_CarrierAreasPort']").click()
-
+export function AssertAddAreaCountryPort() {
+    let intercept = cy.wait("@" + RequestAliases.PostShippingLineAreaCountryPort);
+    intercept.then((interception) => {
+        assert.equal(interception.response.statusCode, 200)
     })
+}
+
+export function FillAreaPortName(areaPortName) {
+    cy.FillLogLov(ShippingLineSelectors.CarrierAreasPort_PortId, areaPortName, true)
+}
+
+export function AddAreaPort() {
+    cy.DefineRequestWait(RestAPI.POST, Urls.PortPostLogsList, RequestAliases.PostShippingLineAreaPort)
+    cy.get(ShippingLineSelectors.Add_CarrierAreasPort).click()
+    cy.get(ShippingLineSelectors.Close_CarrierAreasPort).click()
+}
+
+export function AssertAddAreaPort() {
+    let intercept = cy.wait("@" + RequestAliases.PostShippingLineAreaPort);
+    intercept.then((interception) => {
+        assert.equal(interception.response.statusCode, 200)
+    })
+}
+
+export function FillShippingLineAreaDetails(shippingLineDetails: ShippingLineDetails) {
+    cy.FillLogTextBox(ShippingLineSelectors.AreaName, shippingLineDetails.AreaName)
+    cy.FillLogTextBox(ShippingLineSelectors.AreaDescription, shippingLineDetails.AreaDescription)
 }
 
 export function CreateShippingLineArea() {
@@ -128,18 +164,17 @@ export function CreateShippingLineArea() {
 export function AssertCreateShippingLineArea() {
     let intercept = cy.wait("@" + RequestAliases.PostShippingLineArea);
     intercept.then((interception) => {
-        AssertPostShippingLineArea(interception.response.statusCode, 200, interception.response.body.Name)
+        assert.equal(interception.response.statusCode, 200)
     })
 }
 
-export function AssertPostShippingLineArea(responseStatusCode: number, expectedStatusCode: number, shippingLineAreaName: string) {
-    assert.equal(responseStatusCode, expectedStatusCode)
+export function FillTariffPartnerCode(partnerCode: string) {
+    cy.FillLogTextBox(ShippingLineSelectors.TariffPartnerCode, partnerCode)
 }
 
 export function FillShippingLineTariffTranslations(shippingLineDetails: ShippingLineDetails) {
-    let RandomNumber = gr.GenerateRandomNumberAndString(ShippingLineSelectors.TariffCodeDigitCount)
-    cy.FillLogTextBox('#TariffCarrierTranslation_PartnerCode', RandomNumber)
-    cy.FillLogLov('#TariffCarrierTranslation_PortId', shippingLineDetails.TariffPort, true)
+    cy.FillLogTextBox(ShippingLineSelectors.TariffPartnerCode, GenerateRandomNumberAndString(ShippingLineSelectors.TariffCodeDigitCount))
+    cy.FillLogLov(ShippingLineSelectors.TariffPort, shippingLineDetails.TariffPort, true)
 }
 
 export function CreateShippingLineTariffTranslations() {
@@ -150,17 +185,13 @@ export function CreateShippingLineTariffTranslations() {
 export function AssertCreateShippingLineTariffTranslations() {
     let intercept = cy.wait("@" + RequestAliases.PostShippingLineTariffTranslations);
     intercept.then((interception) => {
-        AssertPostShippingLineTariffTranslations(interception.response.statusCode, 200, interception.response.body.Name)
+        assert.equal(interception.response.statusCode, 200)
     })
-}
-
-export function AssertPostShippingLineTariffTranslations(responseStatusCode: number, expectedStatusCode: number, shippingLineAreaName: string) {
-    assert.equal(responseStatusCode, expectedStatusCode)
 }
 
 export function EditShippingLine() {
     DefinePutShippingLineRequest();
-    cy.Click(ShippingLineSelectors.ShippingLineSaveButton, null);
+    cy.Click(ShippingLineSelectors.SaveButton, null);
 }
 
 function DefinePutShippingLineRequest() {
@@ -173,13 +204,13 @@ export function AssertEditShippingLine() {
 
 export function CloseSaveShippingLine() {
     DefineShippingLineViewGetSingleRequest()
-    cy.Click(ShippingLineSelectors.ShippingLineSaveCloseButton, null);
-}
-
-export function AssertCloseSaveShippingLine() {
-    AssertShippingLineGetSingle();
+    cy.Click(ShippingLineSelectors.SaveCloseButton, null);
 }
 
 function DefineShippingLineViewGetSingleRequest() {
     cy.DefineRequestWait(RestAPI.GET, Urls.ShippingLinesviewGetSingle, RequestAliases.GetSignle);
+}
+
+export function AssertCloseSaveShippingLine() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetSignle, 200);
 }

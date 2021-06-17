@@ -27,8 +27,6 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly MaintenanceItemPackageType = "#MaintenanceItemMTPK"
    public static readonly MaintenanceItemBranch = "#MaintenanceItemMTBR"
    public static readonly MaintenanceItemCurrency ="#MaintenanceItemMTCR"
-   public static readonly MaintenanceItemShippingLine = "#MaintenanceItemMTSL"
-
    //#endregion
 
    public static readonly GeneralEditScreen = ".MediaFillAbsolute .CurvedEditArea";

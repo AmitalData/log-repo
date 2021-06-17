@@ -116,7 +116,6 @@ export class RequestAliases {
     public static readonly PostShippingLine="PostShippingLine"
     public static readonly PutShippingLine="PutShippingLine"
     public static readonly NewShippingLine="NewShippingLine"
-    public static readonly NewShippingLineAddress="NewShippingLineAddress"
 
     public static readonly PostShippingLineAddress="PostShippingLineAddress"
     public static readonly PostShippingLineArea="PostShippingLineArea"
@@ -189,6 +188,9 @@ export class RequestAliases {
 
     public static readonly PostOccasionType = "PostOccasionType"
     public static readonly PutOccasionType = "PutOccasionType"
+
+    public static readonly PostShippingLineAreaPort = "PostShippingLineAreaPort"
+    public static readonly PostShippingLineAreaCountryPort = "PostShippingLineAreaCountryPort"
 
     public static readonly GetSignle = "GetSignle"
     public static readonly GetByFilter = "GetByFilter"
