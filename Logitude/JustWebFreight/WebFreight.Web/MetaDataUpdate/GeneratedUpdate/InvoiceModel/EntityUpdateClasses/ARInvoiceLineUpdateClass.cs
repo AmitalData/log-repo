@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceLineUpdateClass
    {  		
-		public const string HashString = "c9b22ce2b5f5963bdcccbd039e124a0f";
+		public const string HashString = "1591e4e3b93dd9341571a4161983b1f7";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "A/R Invoice Line",
-			      				    Code =  "3502",
+			      				    Code =  "389f",
 			      				    Name =  "ARInvoiceLine",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Invoice",
@@ -1034,7 +1034,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						MinLength =  0,
 					  						MaxLength =  500,
 					  						IsRequired =  false,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
