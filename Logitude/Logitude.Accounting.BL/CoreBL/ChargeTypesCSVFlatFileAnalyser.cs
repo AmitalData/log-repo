@@ -228,7 +228,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             catch (Exception e)
             {
-                string text = TranslateTextsClassTranslate("ChargeTypesCSV.O.FailedWhilePerforming", 0, useLocal);
+                string text = "failed while performing";// TranslateTextsClassTranslate("ChargeTypesCSV.O.FailedWhilePerforming", 0, useLocal);
 
                 throw new ApplicationException($"{text} ", e);
             }
