@@ -116,7 +116,6 @@
     <None Include="Features\Security\GetContactSecurityAccess.feature" />
     <None Include="Features\Security\GetFTPDetailSecurityAccess.feature" />
     <None Include="Features\Security\GetLocalSettingAccess.feature" />
-    <None Include="Features\Security\LocalSettingsAccess.feature" />
     <None Include="Features\Security\TenantSecurityAccess.feature" />
     <None Include="packages.config" />
   </ItemGroup>
