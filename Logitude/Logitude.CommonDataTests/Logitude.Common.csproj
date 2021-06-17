@@ -103,9 +103,11 @@
     <Compile Include="Models\FTPDetailPM.cs" />
     <Compile Include="Models\TenantPM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ExternalService\TenantDataService.cs" />
     <Compile Include="Steps\Security\AddressSettingSecurityAccessSteps.cs" />
     <Compile Include="Steps\Security\GetContactSecurityAccessSteps.cs" />
     <Compile Include="Steps\Security\GetFTPDetailSecurityAccessSteps.cs" />
+    <Compile Include="Steps\Security\GetLocalSettingsAccessSteps.cs" />
     <Compile Include="Steps\Security\TenantSecurityAccessSteps.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -113,6 +115,8 @@
     <None Include="Features\Security\AddressSettingSecurityAccess.feature" />
     <None Include="Features\Security\GetContactSecurityAccess.feature" />
     <None Include="Features\Security\GetFTPDetailSecurityAccess.feature" />
+    <None Include="Features\Security\GetLocalSettingAccess.feature" />
+    <None Include="Features\Security\LocalSettingsAccess.feature" />
     <None Include="Features\Security\TenantSecurityAccess.feature" />
     <None Include="packages.config" />
   </ItemGroup>
