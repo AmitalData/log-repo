@@ -1431,6 +1431,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             }
 
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+            string[] invoiceStatusCodes = { "DR", "LL" };
 
             var result = from entity in iQueryable.Include("BillTo").Include("BillTo.PartnerType").Include("CreatedByUser.Contact").Include("InvoiceCurrency").Include("Status").Include("ARInvoiceType").Include("IssuedByUser.Contact").Include("PrintByUser.Contact").Include("PaymentTerm").Include("ProfitCurrency").Include("LocalCurrency").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("CreditedByARInvoice").Include("SATInvoiceStatus").Include("SATTransferStatus").Include("Branch")
                          select new ARInvoiceList()
@@ -1447,7 +1448,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              InternalNotes = entity.InternalNotes,
                              InvoiceCurrencyId = entity.InvoiceCurrencyId,
                              InvoiceDate = entity.InvoiceDate,
-                             InvoiceNumber = entity.StatusCode == "DR" ? entity.DraftNumber : (entity.StatusCode == "LL" ? (!string.IsNullOrEmpty(entity.InvoiceNumber) ? entity.InvoiceNumber : entity.DraftNumber) : entity.InvoiceNumber),
+                             InvoiceNumber = invoiceStatusCodes.Contains(entity.StatusCode) ? entity.DraftNumber : entity.InvoiceNumber,
                              DraftNumber = !string.IsNullOrEmpty(entity.DraftNumber) ? entity.DraftNumber : entity.Id,
                              StatusCode = entity.StatusCode,
                              StatusName = entity.Status == null ? "" : entity.Status.Name,
