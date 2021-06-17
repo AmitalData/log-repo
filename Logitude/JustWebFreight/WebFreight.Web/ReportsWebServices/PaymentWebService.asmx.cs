@@ -480,17 +480,25 @@ namespace WebFreight.Web.ReportsWebServices
             }
 
             FillARPaymentCheques(paymentId, tenant, paymentDataProvider);
+            SetBankEnglishName(currentPayment,paymentDataProvider);
 
             customFieldResolver.SetDataProviderCustomFieldsValues("ARPayment", tenant, currentPayment, paymentDataProvider);
 
             return paymentDataProvider;
         }
 
-  
+        private void SetBankEnglishName(ARPayment payment, PaymentDataProvider paymentDataProvider)
+        {
+            BankAccountPM bankAccount = GetBankAccountPM(payment);
+            if (bankAccount != null)
+            {
+                paymentDataProvider.BankEnglishName = bankAccount.EnglishName;
+            }
+        }
+
         private PaymentDataProvider SetBankData(ARPayment payment, PaymentDataProvider paymentDataProvider)
         {
-            BankAccountQueryService bankAccountRepository = new BankAccountQueryService(payment.Tenant);
-            BankAccountPM bankAccount = bankAccountRepository.GetSingle(payment.BankAccountId, false, false);
+            BankAccountPM bankAccount = GetBankAccountPM(payment);
             if (bankAccount != null)
             {
                 paymentDataProvider.Branch = bankAccount.BranchNumber;
@@ -500,6 +508,13 @@ namespace WebFreight.Web.ReportsWebServices
             return paymentDataProvider;
 
         }
+        private static BankAccountPM GetBankAccountPM(ARPayment payment)
+        {
+            BankAccountQueryService bankAccountRepository = new BankAccountQueryService(payment.Tenant);
+            BankAccountPM bankAccount = bankAccountRepository.GetSingle(payment.BankAccountId, false, false);
+            return bankAccount;
+        }
+
         private string GetBankName(string id , int tenant)
         {
             BankCodeQueryService bankCodeQueryService = new BankCodeQueryService(tenant);

@@ -150,6 +150,7 @@ namespace WebFreight.Web.DataProviders
         public string DepositBankAccountNumber { get; set; }
         public string SATTransferStatus { get; set; }
         public string BankName { get; set; }
+        public string BankEnglishName { get; set; }
         public string BankAccountNumber { get; set; }
         //        BillToAddress
         //PaymentExchangeRate
