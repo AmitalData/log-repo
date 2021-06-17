@@ -32,7 +32,7 @@ import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 import { DropdownMenuFilterComponent } from '../CourierWorkSheet/DropdownMenuFilterComponent';
-import { LazyLoadEvent } from 'primeng/api';
+import { LazyLoadEvent, MenuItem } from 'primeng/api';
 import { CourierMasterList } from '../../../../Customs/EntityLists/CourierMasterList';
 import { DeclarationCourierStatusList } from '../../../../Customs/EntityLists/DeclarationCourierStatusList';
 
@@ -63,6 +63,15 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
     }
     public set RowsItems(value: any) {
         this._RowsItems = value;
+    }
+    _SelectedNGRows: any;
+    public get SelectedNGRows(): any {
+        return this._SelectedNGRows;
+    }
+    public set SelectedNGRows(value: any) {
+        this._SelectedNGRows = value;
+        this._CourierWorksheetSharedDataService._SelectedItems.Clear();
+        this._CourierWorksheetSharedDataService._SelectedItems.InsertCollection(this._SelectedNGRows);
     }
 
     private _SelectedRow: any;
@@ -155,8 +164,39 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
     ngOnDestroy() {
         //  this.PseventRowSelectEventSubscribe.unSubscribe();
     }
+    SendSplitButtonMenuItems: MenuItem[];
+    MyMenuItem: MenuItem[];
     ngOnInit() {
         this.IsInit = true;
+        this.MyMenuItem = [
+            { label: 'New', icon: 'pi pi-fw pi-plus' },
+            { label: 'Open', icon: 'pi pi-fw pi-download' },
+            { label: 'Undo', icon: 'pi pi-fw pi-refresh' }
+        ];
+        this.SendSplitButtonMenuItems = [
+            {
+                label: 'File',
+                items: [{
+                    label: 'New',
+                    icon: 'pi pi-fw pi-plus',
+                    items: [
+                        { label: 'Project' },
+                        { label: 'Other' },
+                    ]
+                },
+                { label: 'Open' },
+                { label: 'Quit' }
+                ]
+            },
+            {
+                label: 'Edit',
+                icon: 'pi pi-fw pi-pencil',
+                items: [
+                    { label: 'Delete', icon: 'pi pi-fw pi-trash' },
+                    { label: 'Refresh', icon: 'pi pi-fw pi-refresh' }
+                ]
+            }
+        ];
         this.BuildColumns();
         this._CourierWorksheetSharedDataService.CurrentMessage
             .subscribe(message => {
@@ -1041,7 +1081,17 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
             ServerSideSortable: true,
             SortByName: 'SpecialActionStatus'
         });
-
+        this.columns.push({
+            FieldName: 'SendSplitButton',
+            DataTypeCode: 'String',
+            //Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.IsClosedForFollowUp"),
+            Display:'split',
+            Styles: { width: '100px' },
+            IsCustomTemplate: true,
+            HtmlListComponentName: 'CourierWorksheetListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+            ServerSideSortable: false
+        });
         this.columns.push({
             FieldName: 'DeclarationStatusTypeName',
             DataTypeCode: 'String',
@@ -1098,16 +1148,7 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
             ServerSideSortable: false
         });
-        this.columns.push({
-            FieldName: 'SendSplitButton',
-            DataTypeCode: 'String',
-            //Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.IsClosedForFollowUp"),
-            Styles: { width: '100px' },
-            IsCustomTemplate: true,
-            HtmlListComponentName: 'CourierWorksheetListTemplate',
-            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
-            ServerSideSortable: false
-        });
+      
     }
 
     DataSource = {
@@ -2129,7 +2170,47 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
             console.log("LazyLoadEvent is null (starting ...)");
             return;
         }
+
+
+
         console.log($event);
+
+
+        let useCache: boolean = true;
+        if (this.oldEvent) {
+
+            if (
+                this.oldEvent.sortField != $event.sortField || this.oldEvent.sortOrder != $event.sortOrder
+                ||
+                JSON.stringify(this.oldEvent.filters) != JSON.stringify($event.filters)
+                ||
+                JSON.stringify(this.oldEvent.globalFilter) != JSON.stringify($event.globalFilter)
+            ) {
+                console.log('Clear Cache');
+                this.TotalRecords = null;
+                this.LazyDataSource = null; //Array.from({ length: this.TotalRecords });
+                useCache = false;
+            }
+        }
+        if (useCache) {
+            if (this.TotalRecords > 0) {
+
+                for (var i = 0; i < $event.rows; i++) {
+
+                    if (AppTool.IsNullOrEmpty(this.LazyDataSource[$event.first + i])) {
+                        useCache = false;
+                        break;
+                    }
+
+                }
+            } else {
+                useCache = false;
+            }
+        }
+        if (useCache) {
+            return;
+        }
+
         let filters = new ApiQueryFilters();
 
         filters.PageSize = $event.rows;
@@ -2138,14 +2219,31 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
         filters.GetCount = this.TotalRecords==null;
         if (undefined != $event.sortField) {
             filters.SortBy = $event.sortField;
+            //this.columns.push({
+            //    FieldName: 'HighLowValue',
+            //    DataTypeCode: 'String',
+            //    Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.FastIndividualProcessCode"),
+            //    Styles: { width: '68px' },
+            //    IsCustomTemplate: true,
+            //    HtmlListComponentName: 'CourierWorksheetListTemplate',
+            //    HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+            //    ServerSideSortable: true,
+            //    SortByName: 'FastIndividualProcessCode'
+            //});
+            filters.SortBy=this.columns.filter(r => r.FieldName == $event.sortField)[0].SortByName;
 
+            if ($event.sortOrder == 1) {
+                filters.SortDirection = "Ascending";
+            } else {
+                filters.SortDirection = "Descending";
+            }
 
             //filters.SortDirection = sortingDir;
         }
         this.BuildFiltersForQuery(filters);
 
 
-
+        let myOperetorConverter = new OperetorConverter();
         //filters.addAdditionalFilter("HighLowValue", "L", null, null, "Equals", false, false, false, "string");
         for (let property in $event.filters) {
             let propFilter= $event.filters[property];
@@ -2153,14 +2251,20 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
                 let fil = propFilter[key];
                 let val = fil .value;
                 if (!AppTool.IsNullOrZero(val)) {
-                    filters.addAdditionalFilter(fil.matchMode, val, null, null, fil .operator, false, false, false, "string");
+                    
+                    var logiOperetor= myOperetorConverter.Converter(fil.matchMode)
+
+                    if (!AppTool.IsNullOrEmpty(logiOperetor)) {
+
+                        filters.addAdditionalFilter(property, val, null, null, logiOperetor, false, false, false, "string");
+                    }
                 }
             }
             
             
         }
 
-          
+        
 
         var myout = this._EntityListService.getExtendedByFilters("Customs.DeclarationCourierStatus", filters);
         this.loading = true;
@@ -2177,7 +2281,6 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
                             this.TotalRecords = viewResponse.Count;
                             this.LazyDataSource = Array.from({ length: this.TotalRecords });
                         }
-
                         Array.prototype.splice.apply(this.LazyDataSource, [...[$event.first, $event.rows], ...newAry]);
 
                         //trigger change detection
@@ -2194,8 +2297,60 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
                 //    });
             });
     }
+    onRowSelect(event) {
+        //this.messageService.add({ severity: 'info', summary: 'Product Selected', detail: event.data.name });
+        console.log(event);
+    }
+
+    onRowUnselect(event) {
+        //this.messageService.add({ severity: 'info', summary: 'Product Unselected', detail: event.data.name });
+    }
+    onColDataClick(rowData) {
+        console.log(rowData);
+        let event = {
+            rowData: rowData
+        };
+        this.OnRowSelectedBL(event);
+    }
+    SendSplitButtonClick($event) { }
 }
 
+
+
+class OperetorConverter{
+/*
+
+C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(44):                                case "LargerThan":
+C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(88):                                case "GreaterThanOrEqual":
+C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(131):                                case "LessThan":
+C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(173):                                case "LessThanOrEqual":
+C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(215):                                case "StartsWith":
+C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(234):                                case "Contains":
+C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(276):                                case "InList":
+C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(323):                                case "InListExact":
+C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(374):                                //case "InListExact":
+C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(421):                                case "Between":
+C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(566):                                case "NotEqual":
+C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(603):                                case "Exclude":
+C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(647):                                case "IsNotNull":
+C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(666):                                case "IsNull":
+C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(686):                                case "InListInt":
+
+ */
+
+    public Converter(primengOperetor: string): string {
+        const logiOperetorList =
+            ['LargerThan', 'GreaterThanOrEqual', 'LessThan', 'LessThanOrEqual', 'StartsWith', 'Contains', 'InList', 'InListExact', 'Between', 'NotEqual', 'Exclude', 'IsNotNull', 'IsNull', 'InListInt'];
+        var lower = logiOperetorList.map(opr => opr.toLowerCase());
+        var indx = lower.findIndex(logi => logi == primengOperetor.toLowerCase());
+        if (indx == -1) {
+            return ""; 
+        
+        }
+        return logiOperetorList[indx];
+
+    }
+}
 
 
 export class KeyValuePair {

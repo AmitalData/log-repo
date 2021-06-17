@@ -13,13 +13,24 @@ import { DropdownModule } from 'primeng/dropdown';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { InputTextModule } from 'primeng/inputtext';
 import { NgModule } from '@angular/core';
+
+
+
+import { TieredMenuModule } from 'primeng/tieredmenu';
+import { MenuModule } from 'primeng/menu';
+
+
 @NgModule({
     imports: [TableModule, /*MessageService, */ToastModule, CalendarModule, SliderModule, MultiSelectModule, ContextMenuModule,
         DialogModule, ButtonModule, DropdownModule, ProgressBarModule,
+
+
+        TieredMenuModule, MenuModule
     ],
 
     exports: [TableModule, /*MessageService, */ToastModule, CalendarModule, SliderModule, MultiSelectModule, ContextMenuModule,
         DialogModule, ButtonModule, DropdownModule, ProgressBarModule,
+        TieredMenuModule, MenuModule
 ]
 })
 export class ModuleSharedPrimeNG { }

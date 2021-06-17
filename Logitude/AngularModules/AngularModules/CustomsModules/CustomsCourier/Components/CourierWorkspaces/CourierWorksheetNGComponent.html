@@ -201,7 +201,14 @@
                                                 <table>
                                                     <tr>
                                                         <!--<td style="width: 48px; font-weight:bold; font-size:16px; color: black;">{{'Customs.CourierMaster.O.TotalFilter' | TextCodeTranslationPipe }}</td>-->
-                                                        <td colspan="2" style="font-weight:bold; font-size:16px; ">{{'סהכ ש.מ.ב '}} {{ DataSource.rowCount }}</td>
+                                                        <td colspan="2" style="font-weight:bold; font-size:16px; ">
+                                                            {{'סהכ ש.מ.ב '}} {{ DataSource.rowCount }}
+                                                            <div>
+                                                                <!--label="Show"-->
+                                                                <button type="button" pButton  icon="pi pi-bars" (click)="menu123.toggle($event)"></button>
+                                                                <p-menu #menu123 [popup]="true" [model]="MyMenuItem"></p-menu>
+                                                            </div>
+                                                        </td>
                                                         <td *ngIf="IsFiltered || SearchFilter != null" style="font-weight:bold; font-size:16px; ">&nbsp;{{'מתאימים לחיתוך'}}</td>
                                                         <td></td>
                                                     </tr>
@@ -911,22 +918,26 @@
                                                     <div class="GeneratedGridContainer" style="padding:5px;vertical-align:top;top:0;position:absolute">
 
 
-
-                                                        <p-table [columns]="columns" [value]="LazyDataSource" [scrollable]="true" [rows]="22" scrollHeight="620px"
-                                                                 [virtualScroll]="true" [virtualRowHeight]="15" [lazy]="true" (onLazyLoad)="loadLazy($event)"
-                                                                 [loading]="loading">
+                                                        <p-table [columns]="columns" [value]="LazyDataSource" [scrollable]="true" [rows]="22" [virtualScroll]="true"
+                                                                 [virtualRowHeight]="15" [lazy]="true" (onLazyLoad)="loadLazy($event)" [loading]="loading" [resizableColumns]="true"
+                                                                 [reorderableColumns]="true" [(selection)]="SelectedNGRows" (onRowSelect)="onRowSelect($event)"
+                                                                 (onRowUnselect)="onRowUnselect($event)" scrollHeight="600px" scrollWidth="700px">
 
 
                                                             <ng-template pTemplate="header" let-columns>
 
 
                                             <tr>
+                                                <!--<th style="width:3rem"></th>-->
+                                                <th style="width: 3rem">
+                                                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                                                </th>
 
-                                                <th *ngFor="let col of columns" [pSortableColumn]="col.FieldName">
+                                                <th *ngFor="let col of columns" [pSortableColumn]="col.FieldName" pReorderableColumn pResizableColumn>
+
 
                                                     <div class="p-d-flex p-jc-between p-ai-center" style="{{col.Styles}}">
                                                         {{col.Display}} <p-sortIcon field="{{col.FieldName}}"></p-sortIcon>
-                                                        <!--type="{{col.myType}}"-->
                                                         <p-columnFilter field="{{col.FieldName}}" display="menu"></p-columnFilter>
                                                     </div>
                                                 </th>
@@ -935,11 +946,37 @@
                                             </ng-template>
                                             <ng-template pTemplate="body" let-rowData let-columns="columns">
                                                 <tr style="height:34px">
-                                                    <td *ngFor="let col of columns">
-                                                        {{rowData[col.FieldName]}}
+                                                    <td>
+                                                        <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
                                                     </td>
+                                                    <ng-container *ngFor="let col of columns">
+                                                        <ng-container [ngSwitch]="col.FieldName">
+
+                                                            <td *ngSwitchCase="'SendSplitButton'" >
+                                                                <div>
+                                                                    <button type="button" pButton pRipple icon="pi pi-bars" label="Show"
+                                                                            (click)="menu.toggle($event)"></button>
+                                                                    <p-menu #menu [popup]="true" [model]="MyMenuItem"></p-menu>
+                                                                </div>
+
+                                                            </td>
+
+
+                                                            <td *ngSwitchDefault (click)="onColDataClick(rowData)">
+                                                                <div>
+                                                                    {{rowData[col.FieldName]}}
+                                                                </div>
+                                                            </td>
+
+                                                        </ng-container>
+
+
+                                                    </ng-container>
+
                                                 </tr>
                                             </ng-template>
+
+
                                             <ng-template pTemplate="loadingbody" let-columns="columns">
                                                 <tr style="height:34px">
                                                     <td *ngFor="let col of columns">
@@ -955,6 +992,8 @@
                                                     </td>
                                                 </tr>
                                             </ng-template>
+
+
                                             </p-table>
 </div>
                                                 </td>
