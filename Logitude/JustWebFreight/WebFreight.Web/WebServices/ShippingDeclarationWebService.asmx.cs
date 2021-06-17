@@ -418,6 +418,7 @@ namespace WebFreight.Web.WebServices
                     }
                 }
 
+                myDataProvider.ShipmentCreationDate = shipment.CreateDateTime;
                 myDataProvider.Date = todayDate.ToShortDateString();
                 myDataProvider.ShipmentNumber = shipment.ShipmentNumber != null ? shipment.ShipmentNumber : "";
                 myDataProvider.Branch = shipment.BranchName != null ? shipment.BranchName : "";
