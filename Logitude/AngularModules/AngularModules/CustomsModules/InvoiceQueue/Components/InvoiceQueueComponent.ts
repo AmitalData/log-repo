@@ -195,7 +195,6 @@ export class InvoiceQueueComponent
     }
 
     OnExcludeLineChecked($event, lineNumber: any) {
-        debugger;
         if (!$event) {
             if (!this.ExcludeLines.includes(lineNumber)) {
                 this.ExcludeLines = this.ExcludeLines + lineNumber + ",";
