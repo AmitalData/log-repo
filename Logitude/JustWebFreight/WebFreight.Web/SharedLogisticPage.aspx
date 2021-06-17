@@ -987,28 +987,39 @@
     <script type="text/javascript">
 
         function ViewShipment(ShipmentId) {
-            ChangePage("/SharedLogistic/ShipmentPage.aspx", ShipmentId);
-            //document.location.href = "SharedLogistic/ShipmentPage.aspx?id=" + ShipmentId + ":" + $.CurrentCardId + ":" + $.CurrentTenant + ":" + $.CurrentEmail + ":" + $.CurrentCardType + ":" + $.IsBrandingEnabled;
+            ChangePage("SharedLogistic/ShipmentPage.aspx", ShipmentId);
         }
 
         function ViewInvoice(InvoiceId) {
-            ChangePage("/SharedLogistic/InvoicePage.aspx", InvoiceId);
-            //document.location.href = "SharedLogistic/InvoicePage.aspx?id=" + InvoiceId + ":" + $.CurrentCardId + ":" + $.CurrentTenant + ":" + $.CurrentEmail + ":" + $.CurrentCardType + ":" + $.IsBrandingEnabled;
+            ChangePage("SharedLogistic/InvoicePage.aspx", InvoiceId);
         }
 
-        function ChangePage(url, entityId) {
+        function ViewReport(name) {
+            ChangePage("SharedLogistic/ReportViewPage.aspx", name);
+        }
+
+        function ChangePage(pageURL, entityId) {
 
             var loginData = entityId + ":" + $.CurrentCardId + ":" + $.CurrentTenant + ":" + $.CurrentEmail + ":" + $.CurrentCardType + ":" + $.IsBrandingEnabled;
 
+            var link = document.location.href.toLowerCase();;
+            var linkArray = link.split('sharedlogisticpage');
+            url = linkArray[0];
+
+            if (url.endsWith('/')) {
+                url += pageURL;
+            }
+
+            else {
+                url += "/" + pageURL;
+            }
             var params = [];
             params.push({ name: "Token", value: $.Token });
             params.push({ name: "LoginData", value: loginData });
             PostFormParams(url, params);
         }
 
-        function ViewReport(name) {
-            ChangePage("/SharedLogistic/ReportViewPage.aspx", name);
-        }
+
 
 
 
