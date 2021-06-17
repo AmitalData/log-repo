@@ -23,9 +23,9 @@ import { ShipmentPickupValidator } from '../../../../Shipment/Validators/Shipmen
 import { ShipmentTool } from '../../../../Shipment/Tools';
 import { NewShipmentComponentArgs } from '../../../../Shipment/Args';
 import { FeatureToggleList } from '../../../../Infrastructure/EntityLists/FeatureToggleList';
+import { ShipmentDomainService } from '../../../../Shipment/Services/ShipmentDomainService';
 
-@Component({
-    
+@Component({    
     templateUrl: './AddEditPickupComponent.html',
 })
 
@@ -683,6 +683,33 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
         });
     }
 
+    private standaloneAction: string;
+    StandAloneShipmentButtonClicked(buttonCode: string) {
+        this.standaloneAction = buttonCode;
+
+        if (buttonCode == "CreateStandalone") {
+            this.ValidateNumberOfPickupPackages("Create");
+            this.CreateStandaloneShipmentClicked();
+        }
+
+        else if (buttonCode == "ConnectStandalone") {
+            this.ValidateNumberOfPickupPackages("Connect");
+            this.ConnctingStandaloneShipmentClicked();
+        }
+
+        this.DropdownClose();
+    }
+    ValidateNumberOfPickupPackages(actionType: string) {
+        var numberOfAllowedPackages = 1;
+        var errors: string[] = [];
+
+        if (this.EntityPM.ShipmentPickUpDeliveryPackages.length > numberOfAllowedPackages) {
+            errors.push("Can't " + actionType + " a Stand Alone Shipment Since Pickup has more than one Container");
+        }
+
+        this.ValidationErrorsList = errors;
+    }
+
     private isCreateStandaloneShipmentClicked: boolean = false;
     CreateStandaloneShipmentClicked() {
         if (this.ValidationErrorsList.length == 0) {
@@ -692,7 +719,7 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
             }
 
             else {
-                this.CreateStandaloneShipment();
+                this.ValidateStandaloneAddresses();
             }
         }
     }
@@ -706,9 +733,35 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
             }
 
             else {
-                this.ChooseStandAloneShipment();
+                this.ValidateStandaloneAddresses();
             }
         }
+    }
+
+    private ValidateStandaloneAddresses() {
+        this.CurrentSession.StartBusyIndicator("");
+
+        var service: ShipmentDomainService = new ShipmentDomainService();
+        service.GetPickupDeliveryValidForInlandDomestic(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var isValid = myResponse.Result;
+                if (isValid) {
+                    if (this.standaloneAction == "CreateStandalone") {
+                        this.CreateStandaloneShipment();
+                    }
+
+                    else {
+                        this.ChooseStandAloneShipment();
+                    }
+                }
+
+                else {
+                    this.ValidationErrorsList.push("Both Addresses must be in the same country since the direction is Domestic");
+                }
+            }
+
+            this.CurrentSession.StopBusyIndicator();
+        });
     }
 
     private CreateStandaloneShipment() {
@@ -727,28 +780,9 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
         logWindow.WindowArgs = args;
         logWindow.Title = str;
         logWindow.Show('./Shipment/Components/NewShipment/NewShipmentComponent');
-    }
+    }    
 
-    StandAloneShipmentButtonClicked(buttonCode: string) {
-        if (buttonCode == "CreateStandalone") {
-            this.ValidateNumberOfPickupPackages("Create");   
-            this.CreateStandaloneShipmentClicked();
-        }
-        else if (buttonCode == "ConnectStandalone") {
-            this.ValidateNumberOfPickupPackages("Connect");   
-            this.ConnctingStandaloneShipmentClicked();
-        }
-        this.DropdownClose();
-    }
-
-    ValidateNumberOfPickupPackages(actionType: string) {
-        var numberOfAllowedPackages = 1;
-        var errors: string[] = [];
-        if (this.EntityPM.ShipmentPickUpDeliveryPackages.length > numberOfAllowedPackages) {
-            errors.push("Can't " + actionType + " a Stand Alone Shipment Since Pickup has more than one Container");
-        }
-        this.ValidationErrorsList = errors;
-    }
+    
 
     public ShipmentNumber: string = null;
     public ShipmentId: string = null;
@@ -803,7 +837,7 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
                     }
                 });
             });
-    }
+    }    
 
     dropdownDisplay: string = 'none';
     DropdowndisplayToggle() {
