@@ -27,11 +27,11 @@ import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 import { NewEntityArgs} from '../../Args';
 import {ImportEntityArgs} from '../../../Common/Components/Maintenance/TenantImportComponent';
 import {CachedDataManager} from '../../Utilities/CachedDataManager';
-import {MultiSelectedValue, ValueDetails} from '../../../CommonModules/CommonOthers/Components/DWQueryBuilder/DWQueryBuilderComponent';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {ComponentArgs} from '../../../Infrastructure/DataContracts/ComponentArgs';
 import {ParameterComponentArgs} from '../../../Infrastructure/DataContracts/ParameterComponentArgs';
 import { DWObjectFieldExtendedPMService } from '../../Services/ExtendedPMs/DWObjectFieldExtendedPMService';
+import { MultiSelectedValue, ValueDetails } from '../../../InfrastructureModules/InfrastructureBIReport/Components/Workspaces/DWQueryBuilderBaseComponent';
 
 
 @Component({

@@ -465,7 +465,15 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                 ;
             return query2;
         }
-
+        private static IQueryable<LedgerTransactionList> FilterOpenTransactionsForExternalReconcile(string accountId, string transferAccountId, IQueryable<LedgerTransactionList> query2)
+        {
+            query2 = query2
+                .Where(rec => rec.IsExternalReconcile == false)
+                .Where(rec => rec.InProgressExternalReconcile == false)
+                .Where(rec => (rec.AccountId == accountId || rec.AccountId == transferAccountId))
+                ;
+            return query2;
+        }
         private static IQueryable<LedgerTransactionList> ReconciliationFilter(string AccountId, IQueryable<LedgerTransactionList> query2
             )
         {
@@ -750,13 +758,14 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             return count;
         }
 
-        public IQueryable<LedgerTransactionList> GetIquerableOpenReconciliationFilterList(QueryOperations queryOperations, string AccountId, int tenant)
+        public IQueryable<LedgerTransactionList> GetIquerableOpenReconciliationFilterList(QueryOperations queryOperations, string accountId,string transferAccountId, int tenant)
         {
-            IQueryable<LedgerTransactionList> query2 = GetFilteredList(queryOperations, tenant);
+            IQueryable<LedgerTransactionList> ledgerTransactionsQuery = GetFilteredList(queryOperations, tenant);
 
-            query2 = FilterOpenTransactionsForExternalReconcile(AccountId, query2);
-
-            return query2;
+            if(transferAccountId == null)
+                return FilterOpenTransactionsForExternalReconcile(accountId, ledgerTransactionsQuery);
+            else
+                return FilterOpenTransactionsForExternalReconcile(accountId, transferAccountId, ledgerTransactionsQuery);
         }
 
         public List<LedgerTransactionList> GetTransactionsByIds(List<string> ids)

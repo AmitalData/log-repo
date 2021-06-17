@@ -16,7 +16,10 @@ namespace Logitude.Server.Tools.Messages
         private IProducer<long, string> BuildProducer()
         {
             ProducerConfig config = GetProducerConfigurations();
-            return new ProducerBuilder<long, string>(config).SetKeySerializer(Serializers.Int64).SetValueSerializer(Serializers.Utf8).Build();
+            return new ProducerBuilder<long, string>(config)
+                .SetKeySerializer(Serializers.Int64)
+                .SetValueSerializer(Serializers.Utf8)
+                .Build();
         }
 
         private ProducerConfig GetProducerConfigurations()
@@ -32,9 +35,14 @@ namespace Logitude.Server.Tools.Messages
             return config;
         }
 
-        public Task<DeliveryResult<long, string>> Produce(long key, string logitudeUpdateMessage)
+        public Task<DeliveryResult<long, string>> Produce(string topic, long key, string logitudeUpdateMessage)
         {
-            return ProducerBuilder.ProduceAsync(KafkaCredentials.Topic, new Message<long, string> { Key = key, Value = logitudeUpdateMessage });
+            return ProducerBuilder.ProduceAsync(topic, new Message<long, string> { Key = key, Value = logitudeUpdateMessage });
+        }
+
+        public Task<DeliveryResult<long, string>> Produce(TopicPartition topicPartition, long key, string logitudeUpdateMessage)
+        {
+            return ProducerBuilder.ProduceAsync(topicPartition, new Message<long, string> { Key = key, Value = logitudeUpdateMessage });
         }
     }
 }

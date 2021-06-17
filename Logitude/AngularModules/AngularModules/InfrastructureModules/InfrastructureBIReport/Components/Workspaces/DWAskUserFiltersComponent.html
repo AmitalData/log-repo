@@ -118,7 +118,7 @@
                                     <div style="width:7px;"></div>
                                 </td>
                                 <td style="width: 106px;max-width:106px;" class="TextTrimming" [title]="item.DisplayName.replace('[', '').replace(']','')">
-                                    <ComboBox style="width:130px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="OperationValueChanged($event,item)"></ComboBox>
+                                    <ComboBox style="width:130px;" [ItemsSource]="GetFieldOperators(item)" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="OperationValueChanged($event,item)"></ComboBox>
                                 </td>
                                 <td style="width:7px;">
                                     <div style="width:7px;"></div>
@@ -127,7 +127,7 @@
 
                                     <!-- Text -->
                                     <div *ngSwitchCase="'Text'">
-                                        <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
+                                        <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="GetFieldOperators(item)" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
                                         <div *ngIf="item.Operation.Code != 'IsNull' && item.Operation.Code != 'IsNotNull'" style="width:162px;">
                                             <LogTextBox [ObjectFieldName]="'TextValue'" [InputType]="'Text'" [DataContext]="item" [NoValidation]="true" [HideColumns]="true"></LogTextBox>
                                         </div>
@@ -135,7 +135,7 @@
 
                                     <!-- nText -->
                                     <div *ngSwitchCase="'nText'">
-                                        <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
+                                        <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="GetFieldOperators(item)" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
                                         <div *ngIf="item.Operation.Code != 'IsNull' && item.Operation.Code != 'IsNotNull'" style="width:162px;">
                                             <LogTextBox [ObjectFieldName]="'TextValue'" [InputType]="'nText'" [DataContext]="item" [NoValidation]="true" [HideColumns]="true"></LogTextBox>
                                         </div>
@@ -143,7 +143,7 @@
 
                                     <!-- Integer -->
                                     <div *ngSwitchCase="'Integer'">
-                                        <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
+                                        <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="GetFieldOperators(item)" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
                                         <div style="width:162px;">
                                             <LogTextBox [ObjectFieldName]="'TextValue'" [InputType]="'Integer'" [DataContext]="item" [NoValidation]="true" [HideColumns]="true"></LogTextBox>
                                         </div>
@@ -151,7 +151,7 @@
 
                                     <!-- Double -->
                                     <div *ngSwitchCase="'Double'">
-                                        <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
+                                        <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="GetFieldOperators(item)" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
                                         <div style="width:162px;">
                                             <LogTextBox [ObjectFieldName]="'TextValue'" [DataContext]="item" [InputType]="'Double'" [NoValidation]="true" [HideColumns]="true"></LogTextBox>
                                         </div>
@@ -159,7 +159,7 @@
 
                                     <!-- Decimal -->
                                     <div *ngSwitchCase="'Decimal'">
-                                        <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
+                                        <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="GetFieldOperators(item)" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
                                         <div style="width:162px;">
                                             <LogTextBox [ObjectFieldName]="'TextValue'" [DataContext]="item" [InputType]="'Decimal'" [NoValidation]="true" [HideColumns]="true"></LogTextBox>
                                         </div>
@@ -167,7 +167,7 @@
 
                                     <!-- Boolean -->
                                     <div *ngSwitchCase="'Boolean'">
-                                        <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
+                                        <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="GetFieldOperators(item)" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
                                         <div style="width:180px;">
                                             <!--<LogCheckBox (ValueChanged)="item.onTextChange($event)" [ObjectFieldName]="'TextValue'" [DataContext]="item"></LogCheckBox>-->
                                             <ComboBox *ngIf="BooleanValues" (SelectedItemChanged)="item.onTextChange($event)" [ItemsSource]="BooleanValues" [SelectedItem]="item.TextValue ? 'Yes' : item.TextValue == false ? 'No' : 'No Value'"></ComboBox>
@@ -176,7 +176,7 @@
 
                                     <!-- Lookup -->
                                     <div *ngSwitchCase="'LookUp'">
-                                        <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" (SelectedItemChanged)="item.OperationValueChanged($event)" [Binding]="'Name'"></ComboBox>-->
+                                        <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="GetFieldOperators(item)" [SelectedItem]="item.Operation" (SelectedItemChanged)="item.OperationValueChanged($event)" [Binding]="'Name'"></ComboBox>-->
                                         <div *ngIf="item.Operation.Code != 'IsNull' && item.Operation.Code != 'IsNotNull'" style="width:180px;">
                                             <DWLov *ngIf="item.ParentDimTabelName && item.Name"
                                                    [SelectedValue]="item.TextValue"
@@ -192,7 +192,7 @@
                                     </div>
 
                                     <div *ngSwitchCase="'Dimension'">
-                                        <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" (SelectedItemChanged)="item.OperationValueChanged($event)" [Binding]="'Name'"></ComboBox>-->
+                                        <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="GetFieldOperators(item)" [SelectedItem]="item.Operation" (SelectedItemChanged)="item.OperationValueChanged($event)" [Binding]="'Name'"></ComboBox>-->
                                         <div *ngIf="item.Operation.Code != 'IsNull' && item.Operation.Code != 'IsNotNull'" style="width:180px;">
                                             <DWLov *ngIf="item.ParentDimTabelName && item.Name"
                                                    [SelectedValue]="item.TextValue"
@@ -262,7 +262,7 @@
                                         <div style="width:7px;"></div>
                                     </td>
                                     <td style="width: 106px;max-width:106px;" class="TextTrimming" [title]="item.DisplayName.replace('[', '').replace(']','')">
-                                        <ComboBox style="width:130px;" [ItemsSource]="Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="OperationValueChanged($event,item)"></ComboBox>
+                                        <ComboBox style="width:130px;" [ItemsSource]="GetFieldOperators(item)" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="OperationValueChanged($event,item)"></ComboBox>
                                     </td>
                                     <td style="width:7px;">
                                         <div style="width:7px;"></div>
@@ -361,7 +361,7 @@
                                     <div style="width:7px;"></div>
                                 </td>
                                 <td style="width: 106px;max-width:106px;" class="TextTrimming" [title]="item.DisplayName.replace('[', '').replace(']','')">
-                                    <ComboBox style="width:130px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="OperationValueChanged($event,item)"></ComboBox>
+                                    <ComboBox style="width:130px;" [ItemsSource]="GetFieldOperators(item)" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="OperationValueChanged($event,item)"></ComboBox>
                                 </td>
                                 <td style="width:7px;">
                                     <div style="width:7px;"></div>
@@ -370,7 +370,7 @@
 
                                     <!-- Text -->
                                     <div *ngSwitchCase="'Text'">
-                                        <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
+                                        <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="GetFieldOperators(item)" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
                                         <div *ngIf="item.Operation.Code != 'IsNull' && item.Operation.Code != 'IsNotNull'" style="width:162px;">
                                             <LogTextBox [ObjectFieldName]="'TextValue'" [InputType]="'Text'" [DataContext]="item" [NoValidation]="true" [HideColumns]="true"></LogTextBox>
                                         </div>
@@ -378,7 +378,7 @@
 
                                     <!-- nText -->
                                     <div *ngSwitchCase="'nText'">
-                                        <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
+                                        <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="GetFieldOperators(item)" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
                                         <div *ngIf="item.Operation.Code != 'IsNull' && item.Operation.Code != 'IsNotNull'" style="width:162px;">
                                             <LogTextBox [ObjectFieldName]="'TextValue'" [InputType]="'nText'" [DataContext]="item" [NoValidation]="true" [HideColumns]="true"></LogTextBox>
                                         </div>
@@ -386,7 +386,7 @@
 
                                     <!-- Integer -->
                                     <div *ngSwitchCase="'Integer'">
-                                        <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
+                                        <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="GetFieldOperators(item)" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
                                         <div style="width:162px;">
                                             <LogTextBox [ObjectFieldName]="'TextValue'" [InputType]="'Integer'" [DataContext]="item" [NoValidation]="true" [HideColumns]="true"></LogTextBox>
                                         </div>
@@ -394,7 +394,7 @@
 
                                     <!-- Double -->
                                     <div *ngSwitchCase="'Double'">
-                                        <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
+                                        <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="GetFieldOperators(item)" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
                                         <div style="width:162px;">
                                             <LogTextBox [ObjectFieldName]="'TextValue'" [DataContext]="item" [InputType]="'Double'" [NoValidation]="true" [HideColumns]="true"></LogTextBox>
                                         </div>
@@ -402,7 +402,7 @@
 
                                     <!-- Decimal -->
                                     <div *ngSwitchCase="'Decimal'">
-                                        <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
+                                        <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="GetFieldOperators(item)" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
                                         <div style="width:162px;">
                                             <LogTextBox [ObjectFieldName]="'TextValue'" [DataContext]="item" [InputType]="'Decimal'" [NoValidation]="true" [HideColumns]="true"></LogTextBox>
                                         </div>
@@ -410,7 +410,7 @@
 
                                     <!-- Boolean -->
                                     <div *ngSwitchCase="'Boolean'">
-                                        <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
+                                        <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="GetFieldOperators(item)" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
                                         <div style="width:180px;">
                                             <!--<LogCheckBox (ValueChanged)="item.onTextChange($event)" [ObjectFieldName]="'TextValue'" [DataContext]="item"></LogCheckBox>-->
                                             <ComboBox *ngIf="BooleanValues" (SelectedItemChanged)="item.onTextChange($event)" [ItemsSource]="BooleanValues" [SelectedItem]="item.TextValue ? 'Yes' : item.TextValue == false ? 'No' : 'No Value'"></ComboBox>
@@ -419,7 +419,7 @@
 
                                     <!-- Lookup -->
                                     <div *ngSwitchCase="'LookUp'">
-                                        <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" (SelectedItemChanged)="item.OperationValueChanged($event)" [Binding]="'Name'"></ComboBox>-->
+                                        <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="GetFieldOperators(item)" [SelectedItem]="item.Operation" (SelectedItemChanged)="item.OperationValueChanged($event)" [Binding]="'Name'"></ComboBox>-->
                                         <div *ngIf="item.Operation.Code != 'IsNull' && item.Operation.Code != 'IsNotNull'" style="width:180px;">
                                             <DWLov *ngIf="item.ParentDimTabelName && item.Name"
                                                    [SelectedValue]="item.TextValue"
@@ -435,7 +435,7 @@
                                     </div>
 
                                     <div *ngSwitchCase="'Dimension'">
-                                        <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" (SelectedItemChanged)="item.OperationValueChanged($event)" [Binding]="'Name'"></ComboBox>-->
+                                        <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="GetFieldOperators(item)" [SelectedItem]="item.Operation" (SelectedItemChanged)="item.OperationValueChanged($event)" [Binding]="'Name'"></ComboBox>-->
                                         <div *ngIf="item.Operation.Code != 'IsNull' && item.Operation.Code != 'IsNotNull'" style="width:180px;">
                                             <DWLov *ngIf="item.ParentDimTabelName && item.Name"
                                                    [SelectedValue]="item.TextValue"
@@ -505,7 +505,7 @@
                                         <div style="width:7px;"></div>
                                     </td>
                                     <td style="width: 106px;max-width:106px;" class="TextTrimming" [title]="item.DisplayName.replace('[', '').replace(']','')">
-                                        <ComboBox style="width:130px;" [ItemsSource]="Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="OperationValueChanged($event,item)"></ComboBox>
+                                        <ComboBox style="width:130px;" [ItemsSource]="GetFieldOperators(item)" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="OperationValueChanged($event,item)"></ComboBox>
                                     </td>
                                     <td style="width:7px;">
                                         <div style="width:7px;"></div>

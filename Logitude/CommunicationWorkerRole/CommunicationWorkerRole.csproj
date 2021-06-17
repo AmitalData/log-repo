@@ -373,14 +373,34 @@
     <Compile Include="AgentSharedDocumentWR.cs" />
     <Compile Include="AgentsSharedLogisticsWorkerRole.cs" />
     <Compile Include="AirlineStatisticsWorkerRole.cs" />
+    <Compile Include="Analyzers\ContainerStatusesAnalyzer.cs" />
     <Compile Include="ArtemusAnalyzerWorkerRole.cs" />
     <Compile Include="AutoSignUpMailWorkerRole.cs" />
     <Compile Include="AutoSignUpWorkerRole.cs" />
     <Compile Include="CollaborationToolShipmentUpdateWR.cs" />
     <Compile Include="CollaborationToolTaskWR.cs" />
+    <Compile Include="ContainerStatusesConnecterWR.cs" />
     <Compile Include="ContainerStatusesMonitorWR.cs" />
+    <Compile Include="ContainerStatusesReceiverWR.cs" />
+    <Compile Include="Service References\ExternalTasksQueueServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\LoginServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\OceanInsightsServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Services\QuoteSchedulerTaskService.cs" />
+    <Compile Include="ShipmentUpdateWR.cs" />
     <Compile Include="Tasks\ExchangeRateUpdateTask.cs" />
+    <Compile Include="TransfareOnGoingDataWR.cs" />
     <Compile Include="WarmCargoTracking.cs" />
     <Compile Include="BatchTaskExecutionWR.cs" />
     <Compile Include="BIReportsExecutionLogWorkerRole.cs" />
@@ -550,6 +570,8 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\DataSources\Logitude.Server.Tools.Response.datasource" />
+    <None Include="Properties\DataSources\WebFreight.Web.Helpers.TenantInfo.datasource" />
     <None Include="Service References\ChampProxy\service.wsdl" />
     <None Include="Service References\ChampProxy\service.xsd">
       <SubType>Designer</SubType>
@@ -558,6 +580,19 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\ChampRequestAnswerServiceReference\ChampRequestAnswerWebService.wsdl" />
+    <None Include="Service References\ExternalTasksQueueServiceReference\ExternalTasksQueueWcfService.wsdl" />
+    <None Include="Service References\ExternalTasksQueueServiceReference\ExternalTasksQueueWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ExternalTasksQueueServiceReference\ExternalTasksQueueWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ExternalTasksQueueServiceReference\ExternalTasksQueueWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ExternalTasksQueueServiceReference\ExternalTasksQueueWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\ExternalTasksQueueWcfService\CommunicationWorkerRole.ExternalTasksQueueWcfService.Response.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -572,6 +607,38 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\ExternalTasksQueueWcfService\ExternalTasksQueueWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\LoginServiceReference\CommunicationWorkerRole.LoginServiceReference.GetUserTenantsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\LoginServiceReference\LoginWcfService.wsdl" />
+    <None Include="Service References\LoginServiceReference\LoginWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\LoginServiceReference\LoginWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\LoginServiceReference\LoginWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\LoginServiceReference\LoginWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\LoginServiceReference\LoginWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OceanInsightsServiceReference\OceanInsightsWcfService.wsdl" />
+    <None Include="Service References\OceanInsightsServiceReference\OceanInsightsWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OceanInsightsServiceReference\OceanInsightsWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OceanInsightsServiceReference\OceanInsightsWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OceanInsightsServiceReference\OceanInsightsWcfService3.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\ShipmentWcfServiceReference\CommunicationWorkerRole.ShipmentWcfServiceReference.GetShipmentListResponse.datasource">
@@ -775,7 +842,10 @@
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\ChampProxy\" />
     <WCFMetadataStorage Include="Service References\ChampRequestAnswerServiceReference\" />
+    <WCFMetadataStorage Include="Service References\ExternalTasksQueueServiceReference\" />
     <WCFMetadataStorage Include="Service References\ExternalTasksQueueWcfService\" />
+    <WCFMetadataStorage Include="Service References\LoginServiceReference\" />
+    <WCFMetadataStorage Include="Service References\OceanInsightsServiceReference\" />
     <WCFMetadataStorage Include="Service References\ShipmentWcfServiceReference\" />
     <WCFMetadataStorage Include="Service References\WarmServiceReference\" />
     <WCFMetadataStorage Include="Service References\wsReference33\" />
@@ -906,6 +976,51 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\wsReference33\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\OceanInsightsServiceReference\OceanInsightsWcfService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\OceanInsightsServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\OceanInsightsServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\OceanInsightsServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\LoginServiceReference\LoginWcfService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\LoginServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\LoginServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\LoginServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ExternalTasksQueueServiceReference\ExternalTasksQueueWcfService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ExternalTasksQueueServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ExternalTasksQueueServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ExternalTasksQueueServiceReference\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

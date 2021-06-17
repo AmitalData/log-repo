@@ -1,0 +1,590 @@
+
+<style>
+    .tab-footer {
+        background: #f7f7f7;
+        height: 85px;
+        border-radius: 7px;
+        border-bottom-left-radius: unset;
+        margin-right: -1px;
+        padding: 7px 10px;
+        -webkit-box-shadow: 0px -3px 4px -1px rgba(0,0,0,0.31);
+        -moz-box-shadow: 0px -3px 4px -1px rgba(0,0,0,0.31);
+        box-shadow: 0px -3px 4px -1px rgba(0,0,0,0.31);
+    }
+
+    .SimpleGridHeaderRow td, .CellStretched {
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .Disabled {
+        background: red;
+        opacity: 0.5;
+    }
+
+    .footer-title {
+        color: #1692ef;
+        font-size: 15px;
+    }
+
+    .footer-cell {
+        float: left;
+        padding: 5px;
+        margin: 0px 10px;
+        width: 150px;
+        text-align: center;
+        overflow: auto;
+    }
+
+    .footer-summery::before, .footer-summery::after {
+        clear: both;
+    }
+
+    .footer-summery {
+        padding-left: 150px;
+    }
+
+    .border-left {
+        border-left: 1px solid #dadada;
+    }
+
+    .small-tooltip {
+    }
+
+    .small-tooltip-body {
+        transition: 0.1s ease-out;
+        z-index: 999;
+        padding: 2px;
+        width: auto;
+        border-radius: 4px;
+        border: 1px solid #cacaca;
+        background: #f2f2f2;
+        background: -moz-linear-gradient(top, #f2f2f2 0%, #ffffff 100%);
+        background: -webkit-linear-gradient(top, #f2f2f2 0%,#ffffff 100%);
+        background: linear-gradient(to bottom, #f2f2f2 0%,#ffffff 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f2f2', endColorstr='#ffffff',GradientType=0 );
+        -webkit-box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.42);
+        -moz-box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.42);
+        box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.42);
+        visibility: hidden;
+    }
+
+    .popup-arrow {
+        background: url('./Images/LOV/popup-arrow.png') no-repeat center;
+        height: 10px;
+        display: block;
+        position: absolute;
+        width: 12px;
+        bottom: -10px;
+        left: 2px;
+        z-index: 9999;
+        -ms-transform: rotate(180deg); /* IE 9 */
+        -webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
+        transform: rotate(180deg);
+    }
+
+    .tooltip-text {
+        width: auto;
+        padding: 0px 1px;
+        font-size: 11px;
+        color: #4F4F4F;
+    }
+</style>
+<div *ngIf="!IsCustomerCare">מסך ניהול חסום</div>
+
+
+    <table  *ngIf="IsCustomerCare && Load">
+        <tr>
+            <td>
+                <div class="TableHolder">
+                    <table>
+                        <tr class="TabTitleRow">
+                            <td>
+                                <div style="width: 60px; ">
+                                    מסך ניהול
+                                </div>
+                            </td>
+
+                        </tr>
+
+                        <tr *ngIf="JournalMoreDataList.Length>0" class="SectionHeader" style="height:27px">
+                            <td>
+
+                                <label> Journal More Data </label>
+                                <div style="width:250px"><button class="Button" (click)="ResetJournalClicked()">אפס פקודה </button> </div>
+
+                            </td>
+                        </tr>
+                        <tr *ngIf="JournalMoreDataList.Length>0">
+                            <td style="height: 200px;">
+                                <div class="CellContent" style="bottom: 75px;">
+                                    <logitude-edit-grid GridWidth="100%"
+                                                        GridHeight="100%"
+                                                        [ItemSource]="JournalMoreDataList"
+                                                        [UseVirtuallization]="true">
+
+                                        <!--JournalMoreData.F.GeneralData-->
+                                        <log-column [header]="'JournalMoreData.F.GeneralData' | TextCodeTranslationPipe" [width]="'400'" [Alignment]="isRTL ? 'right' : 'left'">
+                                            <ng-template let-item>
+                                                <log-cell-template [IgnoreMods]="true" [TabIndex]="-1" #logcelltemplate>
+                                                    <div class="TextTrimming" text-start>
+                                                        <span>{{item.GeneralData}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+                                        <!--JournalMoreData.F.GeneralData-->
+                                        <log-column [width]="'22'" [Editable]="true" [Alignment]="'right'" [visibility]="'visibile'">
+                                            <ng-template let-item>
+                                                <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                    <div style="width: 18px; float: left; height:20px; padding-top: 2px;">
+                                                        <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="ShowRemark(item.GeneralData)"></IconButton>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+
+                                    </logitude-edit-grid>
+                                </div>
+                            </td>
+
+                        </tr>
+
+
+                        <tr class="SectionHeader" style="height:27px">
+                            <td>
+
+                                <label>תנעות שנצרו</label>
+
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="height: 200px;">
+                                <div class="CellContent" style="bottom: 75px;">
+                                    <logitude-edit-grid GridWidth="100%"
+                                                        GridHeight="100%"
+                                                        [ItemSource]="LedgerTransactionList"
+                                                        [UseVirtuallization]="true">
+
+
+                                        <!-- JournalLineNumber -->
+                                        <log-column [header]="'LedgerTransaction.F.JournalLineNumber' | TextCodeTranslationPipe" [width]="'70'" [Alignment]="isRTL ? 'right' : 'left'">
+                                            <ng-template let-item>
+                                                <log-cell-template [IgnoreMods]="true" [TabIndex]="-1" #logcelltemplate>
+                                                    <div class="TextTrimming" text-start>
+                                                        <span>{{item.JournalLineNumber}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+
+                                        <!--LedgerTransaction.F.AccountDisplayNumber-->
+                                        <log-column [header]="'LedgerTransaction.F.AccountDisplayNumber' | TextCodeTranslationPipe" [width]="'120'" [Alignment]="isRTL ? 'right' : 'left'">
+                                            <ng-template let-item>
+                                                <log-cell-template [IgnoreMods]="true" [TabIndex]="-1" #logcelltemplate>
+                                                    <div class="TextTrimming" text-start>
+                                                        <span>{{item.AccountDisplayNumber}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+
+
+                                        <!--LedgerTransaction.F.CalculatedLocalAmount-->
+                                        <log-column [header]="'LedgerTransaction.F.CalculatedLocalAmount' | TextCodeTranslationPipe" [width]="'120'" [Alignment]="isRTL ? 'right' : 'left'">
+                                            <ng-template let-item>
+                                                <log-cell-template [IgnoreMods]="true" [TabIndex]="-1" #logcelltemplate>
+                                                    <div class="TextTrimming" text-start>
+                                                        <span>{{item.CalculatedLocalAmount | NumbersPipe:'N2'}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+
+                                        <!--LedgerTransaction.F.CurrencyCode-->
+                                        <log-column [header]="'LedgerTransaction.F.CurrencyCode' | TextCodeTranslationPipe" [width]="'120'" [Alignment]="isRTL ? 'right' : 'left'">
+                                            <ng-template let-item>
+                                                <log-cell-template [IgnoreMods]="true" [TabIndex]="-1" #logcelltemplate>
+                                                    <div class="TextTrimming" text-start>
+                                                        <span>{{item.CurrencyCode}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+                                        <!--LedgerTransaction.F.CalculatedForeignAmount-->
+                                        LedgerTransaction.F.
+                                        <log-column [header]="'LedgerTransaction.F.CalculatedForeignAmount' | TextCodeTranslationPipe" [width]="'120'" [Alignment]="isRTL ? 'right' : 'left'">
+                                            <ng-template let-item>
+                                                <log-cell-template [IgnoreMods]="true" [TabIndex]="-1" #logcelltemplate>
+                                                    <div class="TextTrimming" text-start>
+                                                        <span>{{item.CalculatedForeignAmount | NumbersPipe:'N2' }}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+                                        <!--LedgerTransaction.F.InReconcileProgress-->
+                                        <log-column [header]="'LedgerTransaction.F.InReconcileProgress' | TextCodeTranslationPipe" [width]="'80'" [Alignment]="isRTL ? 'right' : 'left'">
+                                            <ng-template let-item>
+                                                <log-cell-template [IgnoreMods]="true" [TabIndex]="-1" #logcelltemplate>
+                                                    <div class="TextTrimming" text-start>
+                                                        <span>{{item.InReconcileProgress}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+
+                                        <!-- IsReconciled -->
+                                        <log-column [header]="'LedgerTransaction.F.IsReconciled' | TextCodeTranslationPipe" [width]="'80'" [Alignment]="isRTL ? 'right' : 'left'">
+                                            <ng-template let-item>
+                                                <log-cell-template [IgnoreMods]="true" [TabIndex]="-1" #logcelltemplate>
+                                                    <div class="TextTrimming" text-start>
+                                                        <span>{{item.IsReconciled}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+
+                                        <!-- LedgerTransaction.F.OpenAmount -->
+                                        <log-column [header]="'LedgerTransaction.F.OpenAmount' | TextCodeTranslationPipe" [width]="'80'" [Alignment]="isRTL ? 'right' : 'left'">
+                                            <ng-template let-item>
+                                                <log-cell-template [IgnoreMods]="true" [TabIndex]="-1" #logcelltemplate>
+                                                    <div class="TextTrimming" text-start>
+                                                        <span>{{item.OpenAmount | NumbersPipe:'N2'}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+
+
+                                        <!-- LedgerTransaction.F.ReconcileMethodCode -->
+                                        <log-column [header]="'LedgerTransaction.F.ReconcileMethodCode' | TextCodeTranslationPipe" [width]="'80'" [Alignment]="isRTL ? 'right' : 'left'">
+                                            <ng-template let-item>
+                                                <log-cell-template [IgnoreMods]="true" [TabIndex]="-1" #logcelltemplate>
+                                                    <div class="TextTrimming" text-start>
+                                                        <span>{{item.ReconcileMethodCode}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+
+                                        <!-- LedgerTransaction.F.RecoNumber -->
+                                        <log-column [header]="'LedgerTransaction.F.RecoNumber' | TextCodeTranslationPipe" [width]="'80'" [Alignment]="isRTL ? 'right' : 'left'">
+                                            <ng-template let-item>
+                                                <log-cell-template [IgnoreMods]="true" [TabIndex]="-1" #logcelltemplate>
+                                                    <div class="TextTrimming" text-start>
+                                                        <span>{{item.RecoNumber}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+
+                                        <!--LedgerTransaction.F.InProgressExternalReconcile-->
+                                        <log-column [header]="'LedgerTransaction.F.InProgressExternalReconcile' | TextCodeTranslationPipe" [width]="'80'" [Alignment]="isRTL ? 'right' : 'left'">
+                                            <ng-template let-item>
+                                                <log-cell-template [IgnoreMods]="true" [TabIndex]="-1" #logcelltemplate>
+                                                    <div class="TextTrimming" text-start>
+                                                        <span>{{item.InProgressExternalReconcile}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+
+                                        <!--LedgerTransaction.F.IsExternalReconcile-->
+                                        <log-column [header]="'LedgerTransaction.F.IsExternalReconcile' | TextCodeTranslationPipe" [width]="'80'" [Alignment]="isRTL ? 'right' : 'left'">
+                                            <ng-template let-item>
+                                                <log-cell-template [IgnoreMods]="true" [TabIndex]="-1" #logcelltemplate>
+                                                    <div class="TextTrimming" text-start>
+                                                        <span>{{item.IsExternalReconcile}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+
+
+                                        <!-- Reference1 -->
+                                        <log-column [header]="'LedgerTransaction.F.Reference1' | TextCodeTranslationPipe" [width]="'120'" [Alignment]="isRTL ? 'right' : 'left'">
+                                            <ng-template let-item>
+                                                <log-cell-template [IgnoreMods]="true" [TabIndex]="-1" #logcelltemplate>
+                                                    <div class="TextTrimming" text-start>
+                                                        <span>{{item.Reference1}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+
+                                    </logitude-edit-grid>
+                                </div>
+                            </td>
+
+                        </tr>
+
+                        <tr class="SectionHeader" style="height:27px">
+                            <td>
+
+                                <label> Journal Reconcile </label>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="height: 200px;">
+                                <div class="CellContent" style="bottom: 75px;">
+                                    <logitude-edit-grid GridWidth="100%"
+                                                        GridHeight="100%"
+                                                        [ItemSource]="JournalReconciles"
+                                                        [UseVirtuallization]="true">
+
+                                        <!-- LedgerTransactionId -->
+                                        <log-column [header]="'JournalReconcile.F.LedgerTransactionId' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="isRTL ? 'right' : 'left'">
+                                            <ng-template let-item>
+                                                <log-cell-template [IgnoreMods]="true" [TabIndex]="-1" #logcelltemplate>
+                                                    <div class="TextTrimming" text-start>
+                                                        <span>{{item.LedgerTransactionId}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+
+                                        <!-- CurrencyId -->
+                                        <log-column [header]="'JournalReconcile.F.CurrencyId' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="isRTL ? 'right' : 'left'">
+                                            <ng-template let-item>
+                                                <log-cell-template [IgnoreMods]="true" [TabIndex]="-1" #logcelltemplate>
+                                                    <div class="TextTrimming" text-start>
+                                                        <span>{{item.CurrencyId}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+
+                                        <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'JournalReconcile.F.ReconciliationAmount' | TextCodeTranslationPipe" [width]="'120'" [binding]="'DocumentDate'">
+                                            <ng-template let-item>
+                                                <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                                    <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                        <span>{{item.ReconciliationAmount | NumbersPipe:'N2'}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+
+
+
+                                    </logitude-edit-grid>
+                                </div>
+                            </td>
+
+                        </tr>
+
+                        <tr class="SectionHeader" style="height:27px">
+                            <td>
+
+                                <label> Journal External Reconciles</label>
+
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td style="height: 200px;">
+                                <div class="CellContent" style="bottom: 75px;">
+                                    <logitude-edit-grid GridWidth="100%"
+                                                        GridHeight="100%"
+                                                        [ItemSource]="JournalExternalReconciles"
+                                                        [UseVirtuallization]="true">
+
+                                        <!-- LedgerTransactionId -->
+                                        <log-column [header]="'JournalExternalReconcile.F.LedgerTransactionId' | TextCodeTranslationPipe" [width]="'50'" [Alignment]="isRTL ? 'right' : 'left'">
+                                            <ng-template let-item>
+                                                <log-cell-template [IgnoreMods]="true" [TabIndex]="-1" #logcelltemplate>
+                                                    <div class="TextTrimming" text-start>
+                                                        <span>{{item.LedgerTransactionId}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+
+                                        <!-- reconcileExternalPageLineId -->
+                                        <log-column [header]="'JournalExternalReconcile.F.ReconcileExternalPageLineId' | TextCodeTranslationPipe" [width]="'50'" [Alignment]="isRTL ? 'right' : 'left'">
+                                            <ng-template let-item>
+                                                <log-cell-template [IgnoreMods]="true" [TabIndex]="-1" #logcelltemplate>
+                                                    <div class="TextTrimming" text-start>
+                                                        <span>{{item.ReconcileExternalPageLineId}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+
+
+
+                                    </logitude-edit-grid>
+                                </div>
+                            </td>
+
+                        </tr>
+
+                        <tr class="SectionHeader" style="height:27px">
+                            <td>
+
+                                <label> Interest Transaction</label>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="height: 200px;">
+                                <div class="CellContent" style="bottom: 75px;">
+                                    <logitude-edit-grid GridWidth="100%"
+                                                        GridHeight="100%"
+                                                        [ItemSource]="InterestTransactionList"
+                                                        [UseVirtuallization]="true">
+
+                                        <!--InterestTransaction.F.InterestReportId-->
+                                        <log-column [header]="'InterestTransaction.F.InterestReportId' | TextCodeTranslationPipe" [width]="'80'" [Alignment]="isRTL ? 'right' : 'left'">
+                                            <ng-template let-item>
+                                                <log-cell-template [IgnoreMods]="true" [TabIndex]="-1" #logcelltemplate>
+                                                    <div class="TextTrimming" text-start>
+                                                        <span>{{item.InterestReportId}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+
+                                        <!--InterestTransaction.F.InterestEntityTypeCode-->
+                                        <log-column [header]="'InterestTransaction.F.InterestEntityTypeCode' | TextCodeTranslationPipe" [width]="'80'" [Alignment]="isRTL ? 'right' : 'left'">
+                                            <ng-template let-item>
+                                                <log-cell-template [IgnoreMods]="true" [TabIndex]="-1" #logcelltemplate>
+                                                    <div class="TextTrimming" text-start>
+                                                        <span>{{item.InterestEntityTypeCode}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+
+                                        <!--InterestTransaction.F.InterestValueDate-->
+                                        <log-column [header]="'InterestTransaction.F.InterestValueDate' | TextCodeTranslationPipe" [width]="'120'" [Alignment]="isRTL ? 'right' : 'left'">
+                                            <ng-template let-item>
+                                                <log-cell-template [IgnoreMods]="true" [TabIndex]="-1" #logcelltemplate>
+                                                    <div class="TextTrimming" text-start>
+                                                        <span>{{item.InterestValueDate}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+
+
+                                        <!--InterestTransaction.F.LocalAmount-->
+                                        <log-column [header]="'InterestTransaction.F.LocalAmount' | TextCodeTranslationPipe" [width]="'120'" [Alignment]="isRTL ? 'right' : 'left'">
+                                            <ng-template let-item>
+                                                <log-cell-template [IgnoreMods]="true" [TabIndex]="-1" #logcelltemplate>
+                                                    <div class="TextTrimming" text-start>
+                                                        <span>{{item.LocalAmount}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+
+
+                                        <!-- InterestTransaction.F.CurrencyCode -->
+                                        <log-column [header]="'InterestTransaction.F.CurrencyCode' | TextCodeTranslationPipe" [width]="'80'" [Alignment]="isRTL ? 'right' : 'left'">
+                                            <ng-template let-item>
+                                                <log-cell-template [IgnoreMods]="true" [TabIndex]="-1" #logcelltemplate>
+                                                    <div class="TextTrimming" text-start>
+                                                        <span>{{item.CurrencyCode}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+
+
+
+                                        <!-- InterestTransaction.F.ForeignAmount -->
+                                        <log-column [header]="'InterestTransaction.F.ForeignAmount' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="isRTL ? 'right' : 'left'">
+                                            <ng-template let-item>
+                                                <log-cell-template [IgnoreMods]="true" [TabIndex]="-1" #logcelltemplate>
+                                                    <div class="TextTrimming" text-start>
+                                                        <span>{{item.ForeignAmount}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+
+                                        <!-- InterestTransaction.F.IsCancelled -->
+                                        <log-column [header]="'InterestTransaction.F.IsCancelled' | TextCodeTranslationPipe" [width]="'80'" [Alignment]="isRTL ? 'right' : 'left'">
+                                            <ng-template let-item>
+                                                <log-cell-template [IgnoreMods]="true" [TabIndex]="-1" #logcelltemplate>
+                                                    <div class="TextTrimming" text-start>
+                                                        <span>{{item.IsCancelled}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+
+                                        <!-- InterestTransaction.F.IsClosed -->
+                                        <log-column [header]="'InterestTransaction.F.IsClosed' | TextCodeTranslationPipe" [width]="'80'" [Alignment]="isRTL ? 'right' : 'left'">
+                                            <ng-template let-item>
+                                                <log-cell-template [IgnoreMods]="true" [TabIndex]="-1" #logcelltemplate>
+                                                    <div class="TextTrimming" text-start>
+                                                        <span>{{item.IsClosed}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+
+
+                                    </logitude-edit-grid>
+                                </div>
+                            </td>
+
+                        </tr>
+
+                        <!--JournalAdditionalDataList-->
+
+                        <tr class="SectionHeader" style="height:27px">
+                            <td>
+                                <label>Journal Additional Data</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="height: 200px;">
+                                <div class="CellContent" style="bottom: 75px;">
+                                    <logitude-edit-grid GridWidth="100%"
+                                                        GridHeight="100%"
+                                                        [ItemSource]="JournalAdditionalDataList"
+                                                        [UseVirtuallization]="true">
+
+                                        <!--JournalAdditionalData.F.TaxReportId-->
+                                        <log-column [header]="'JournalAdditionalData.F.TaxReportId' | TextCodeTranslationPipe" [width]="'130'" [Alignment]="isRTL ? 'right' : 'left'">
+                                            <ng-template let-item>
+                                                <log-cell-template [IgnoreMods]="true" [TabIndex]="-1" #logcelltemplate>
+                                                    <div class="TextTrimming" text-start>
+                                                        <span>{{item.TaxReportId}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+
+                                        <!--JournalAdditionalData.F.TaxReportTransmitStatusCode-->
+                                        <log-column [header]="'InterestTransaction.F.InterestEntityTypeCode' | TextCodeTranslationPipe" [width]="'120'" [Alignment]="isRTL ? 'right' : 'left'">
+                                            <ng-template let-item>
+                                                <log-cell-template [IgnoreMods]="true" [TabIndex]="-1" #logcelltemplate>
+                                                    <div class="TextTrimming" text-start>
+                                                        <span>{{item.TaxReportTransmitStatusCode}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+
+                                    </logitude-edit-grid>
+                                </div>
+                            </td>
+
+                        </tr>
+
+                    </table>
+                </div>
+            </td>
+        </tr>
+
+    </table>
+
+    
+
+

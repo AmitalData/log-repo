@@ -23,6 +23,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         private IAccountingContext _AccountingContext;
         private bool _IsAccountingCurrencyRequested;
         private IQueryable<string> _allIdAccounts;
+        //private IQueryable<string> _ListIdAccounts;
         private string _SearchByFilter;
         private Stopwatch _sw;
 
@@ -89,6 +90,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                     var hashsetallIdAccounts = myGLAccountQueryService.GetQAllIdAccounts(_Param.Tenant, _Param.GLAccountId, _Param.IncludeRelatedCurrenciesAccount, _Param.IncludeChildAccounts);
                     _allIdAccounts = hashsetallIdAccounts;//new List<string>(hashsetallIdAccounts);
+                    _allIdAccounts = _allIdAccounts.ToList().AsQueryable();
                 }
                 IQueryable<Data.EntityPOCOs.LedgerTransaction> qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId = GetQOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId(maxCreateDate, ledgerTransactionRepository);
 

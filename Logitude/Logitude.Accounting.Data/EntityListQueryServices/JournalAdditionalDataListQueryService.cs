@@ -39,14 +39,30 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
 		private IQueryable<JournalAdditionalData> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<JournalAdditionalData> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
+			return iQueryable;
 		}
 				private IQueryable<JournalAdditionalData> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<JournalAdditionalData> iQueryable, int tenant)
         {
 			return iQueryable;
 		}
-		
-			}
+
+
+
+		public IQueryable<JournalAdditionalDataList> GetJournalMoreDatasForJournal(string JournalId, int tenant)
+		{
+			IQueryable<JournalAdditionalDataList> Journallines;
+
+
+
+			IQueryable<JournalAdditionalData> q = (from a in context.JournalAdditionalDatas
+												 where a.JournalId == JournalId && a.Tenant == tenant
+												 select a);
+
+			var res=GetIqueryableList(q);
+
+			return res;
+		}
+	}
 
 
 }

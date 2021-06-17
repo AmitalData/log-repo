@@ -48,9 +48,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             mapping = new JournalAdditionalDataDataMapping();
         }
 		 
-		public  JournalAdditionalDataPM GetSingle(string journalid,bool getComposition, bool getFromCache)
+		public  JournalAdditionalDataPM GetSingle(string journalid, int journallinenumber,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new JournalAdditionalDataKeys(){ JournalId = journalid };
+             EntityKeys = new JournalAdditionalDataKeys(){ JournalId = journalid, JournalLineNumber = journallinenumber };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
@@ -58,7 +58,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
        
 	    protected override EntityKeyFields GetKeys(JournalAdditionalData entityPOCO)
         {
-            JournalAdditionalDataKeys entityKeys = new JournalAdditionalDataKeys() { JournalId = entityPOCO.JournalId,  };
+            JournalAdditionalDataKeys entityKeys = new JournalAdditionalDataKeys() { JournalId = entityPOCO.JournalId, JournalLineNumber = entityPOCO.JournalLineNumber,  };
             return entityKeys;
         }
      

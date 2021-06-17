@@ -31,5 +31,7 @@ namespace Simplog.Data.Helpers
 
         [DataMember]
         public string ObjectFieldCode { get; set; }
+        [DataMember]
+        public bool IsCustomField { get; set; }
     }
 }

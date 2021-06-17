@@ -138,6 +138,11 @@ namespace Logitude.BL.InvoiceModel.Tools
                     isTransferingVoiding = false;
                 }
 
+                if (entityPM.IsConstituentInvoice && string.IsNullOrEmpty(entityPM.ConsolidationInvoiceId))
+                {
+                    isTransferingVoiding = false;
+                }
+
                 if (isTransferingVoiding)
                 {
                     commonContext = CommonContext;

@@ -1,4 +1,4 @@
-﻿import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
+import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 export class DocumentPM {
 
     public UIProperties: UIProperties;
@@ -7,6 +7,10 @@ export class DocumentPM {
         this.IsDirty = false;
     }
 
+
+    private id: string;
+    public get Id() { return this.id; }
+    public set Id(newValue: string) { this.id = newValue; this.MarkAsDirty(); }
 
     private fileName: string;
     public get FileName() { return this.fileName; }

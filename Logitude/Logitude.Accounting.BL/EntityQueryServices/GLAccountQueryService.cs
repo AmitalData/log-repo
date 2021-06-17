@@ -28,6 +28,7 @@ using Logitude.BL.CommonDataModel.CloseTables;
 using Logitude.BL.Resolvers;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Accounting.Data.DataContract;
+using Simplog.Data.Helpers;
 
 namespace Logitude.Accounting.BL.EntityQueryServices
 {

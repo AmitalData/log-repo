@@ -131,6 +131,7 @@
     </EmbeddedResource>
     <None Include="DIM_QuoteStatges.dwml" />
     <None Include="Files\DIM_Countries.dwml" />
+    <None Include="Files\DIM_InvoiceMainTypes.dwml" />
     <None Include="Files\DIM_InvoiceStatus.dwml" />
     <None Include="Files\DIM_InvoiceTypes.dwml" />
     <None Include="Files\DIM_OBLType.dwml" />

@@ -79,6 +79,7 @@ namespace WebFreight.Web.DataProviders
         public double? AmountInLocalCurrency { get; set; }
 
         public List<InvoicePayments> PaidInvoicesList { get; set; }
+        public List<ARPaymentCheque> ARPaymentCheques { get; set; }
 
         public string ARPaymentField1 { get; set; }
         public string ARPaymentField2 { get; set; }
@@ -125,6 +126,20 @@ namespace WebFreight.Web.DataProviders
             //ImpSaldoAnt
             //ImpPagado
             //ImpSaldoInsoluto
+
+        }
+
+        public class ARPaymentCheque
+        {
+            public string ChequeOrPaymentRef { get; set; }
+            public string Bank { get; set; }
+            public string Branch { get; set; }
+            public string Account { get; set; }
+            public string ValueDate { get; set; }
+            public string CurrencyCode { get; set; }
+            public decimal LocalAmount { get; set; }
+            public decimal ForeignAmount { get; set; }
+            public string StatusName { get; set; }
 
         }
 

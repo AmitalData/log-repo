@@ -144,11 +144,11 @@
                      *ngFor="let card of SliderCards"
                      [class.active]="card.IsActive"
                      [class.dim]="card.IsDimmed"
-                     [class.warning]="card.HasWarning">
-                    <div class="code">{{card.Code}}</div>
+                     [class.warning]="false">
                     <div class="date">{{card.Date | date: 'dd'}} <span>{{card.Date | date: 'MMM'}}</span></div>
                     <div class="title">{{card.Title}}</div>
-                    <div class="desc hide-mobile">{{card.Description}}</div>
+                    <div class="desc hide-mobile "  [attr.title]="card.Description"
+                         style="overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">{{card.Description}}</div>
                 </div>
 
             </div>
@@ -251,14 +251,18 @@
 
 
     <panel style="order: 4;" [Title]="'Cargo Info'" [Name]="'Cargo'" [HaveDetailsSection]="true"
-           [ShowWhitePanelOnMobile]="true" [DetailsTitle]="'Container List'">
+           [ShowWhitePanelOnMobile]="true" [DetailsTitle]="'Container List'" [DetailsSectionToggleEvent]="DetailsSectionToggleEvent">
 
         <div body>
             <div class="data-cards" *ngIf="Shipment&& Shipment.ShipmentList">
                 <div>
                     <div class="title">Pack Type</div>
                     <div class="description">
-                        <div *ngFor="let package of ShipmentPM?.PackagesTypesNames?.split(';')">{{package}}</div>
+                        <div *ngFor="let package of ShipmentPackages.slice(0,2), let i = index">
+                            {{package.PackageTypeName}}
+                            <a *ngIf="ShipmentPackages.length > 2 && i == 1" (click)="ShowMoreLinkClicked()"
+                               style="cursor: pointer; font-size: 11px;color:var(--MainColor)"> {{ShowDetailsSection?'Show less':'Show more'}}</a>
+                        </div>
                     </div>
                 </div>
                 <div>
@@ -286,7 +290,11 @@
                 <div>
                     <div class="title">containers</div>
                     <div class="description">
-                        {{Shipment.ShipmentList.ContainersNumbers}}
+                        <div *ngFor="let container of ContainersNumbers?.slice(0,2), let i = index">
+                            {{container}}
+                            <a *ngIf="ContainersNumbers?.length > 2 && i == 1" (click)="ShowMoreLinkClicked()"
+                               style="cursor: pointer; font-size: 11px;color:var(--MainColor)"> {{ShowDetailsSection?'Show less':'Show more'}} </a>
+                        </div>
                     </div>
                 </div>
 
@@ -409,8 +417,8 @@
     <panel style="order: 6;" [Title]="'Routing'" [Name]="'RoutingPanel'">
 
         <div body>
-
-            <div class="routing-timeline">
+            <div *ngIf="ShipmentRouteSteps?.length == 0">No Routing defined for this shipment </div>
+            <div *ngIf="ShipmentRouteSteps?.length > 0" class="routing-timeline">
                 <div class="routing-step" [class.active]="step.IsActive" *ngFor="let step of ShipmentRouteSteps">
                     <div class="routing-banner">
                         <div [ngSwitch]="step.TransportModeCode">
@@ -510,8 +518,9 @@
            [ShowWhitePanelOnMobile]="false">
 
         <div body>
-            <a *ngIf="DocumentsFilings?.length > 0 " href="javascript:;" (click)="DownloadAllClick(Shipment.ShipmentList.EntityId)">Download all</a>
-            <div class="hide-mobile hide-tablet" style="min-width: 720px;width: calc(100% - 100px);">
+            <div *ngIf="DocumentsFilings?.length == 0 ">No Documents defined for this shipment</div>
+            <a *ngIf="DocumentsFilings?.length > 0 " href="javascript:;" style="color: var(--MainColor)" (click)="DownloadAllClick(Shipment.ShipmentList.EntityId)">Download all</a>
+            <div *ngIf="DocumentsFilings?.length > 0 " class="hide-mobile hide-tablet" style="min-width: 720px;width: calc(100% - 100px);">
 
                 <table class="row-hover" style="width: 100%;">
                     <tr class="header">
@@ -529,10 +538,28 @@
                         <td style="width: 450px;">{{item.CreateDate | date:'d-MMM-yyyy, H:mm'}}</td>
                         <td style="width: 450px;">{{item.CustomReference}}</td>
                         <td style="width: 50px;">
-                            <svg [attr.fill]="item.IsDigitallySigned?'var(--MainColor)':'#cecece'" id="Capa_1" enable-background="new 0 0 512 512" height="16" viewBox="0 0 512 512" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m337.903 358.822 23.413-37.992 42.252-14.41 4.681-44.377 31.789-31.295-15.114-42.006 15.114-42.007-31.788-31.295-4.681-44.376-42.252-14.41-23.413-37.993-44.285 5.347-37.619-24.008-37.619 24.01-44.284-5.347-23.413 37.992-42.252 14.41-4.681 44.376-31.789 31.295 15.114 42.007-15.114 42.007 31.788 31.294 4.681 44.377 42.252 14.41 23.413 37.992 44.285-5.346 37.619 24.009 37.619-24.009zm-211.332-170.079c0-71.367 58.062-129.429 129.429-129.429s129.429 58.062 129.429 129.429-58.062 129.429-129.429 129.429-129.429-58.062-129.429-129.429z" /><path d="m256 89.333c-54.815 0-99.41 44.595-99.41 99.41s44.595 99.41 99.41 99.41 99.41-44.595 99.41-99.41-44.595-99.41-99.41-99.41z" /><path d="m211.299 384.568-52.68 6.36-27.833-45.167-9.462-3.226-40.813 127.566 73.475-4.041 57.485 45.94 33.828-105.732z" /><path d="m381.214 345.762-27.834 45.166-52.679-6.36-34 21.7 33.828 105.732 57.485-45.94 73.475 4.041-40.813-127.566z" /></svg>
+                            <svg [attr.fill]="item.IsDigitallySigned?'var(--secondaryColor)':'#cecece'" id="Capa_1" enable-background="new 0 0 512 512" height="16" viewBox="0 0 512 512" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m337.903 358.822 23.413-37.992 42.252-14.41 4.681-44.377 31.789-31.295-15.114-42.006 15.114-42.007-31.788-31.295-4.681-44.376-42.252-14.41-23.413-37.993-44.285 5.347-37.619-24.008-37.619 24.01-44.284-5.347-23.413 37.992-42.252 14.41-4.681 44.376-31.789 31.295 15.114 42.007-15.114 42.007 31.788 31.294 4.681 44.377 42.252 14.41 23.413 37.992 44.285-5.346 37.619 24.009 37.619-24.009zm-211.332-170.079c0-71.367 58.062-129.429 129.429-129.429s129.429 58.062 129.429 129.429-58.062 129.429-129.429 129.429-129.429-58.062-129.429-129.429z" /><path d="m256 89.333c-54.815 0-99.41 44.595-99.41 99.41s44.595 99.41 99.41 99.41 99.41-44.595 99.41-99.41-44.595-99.41-99.41-99.41z" /><path d="m211.299 384.568-52.68 6.36-27.833-45.167-9.462-3.226-40.813 127.566 73.475-4.041 57.485 45.94 33.828-105.732z" /><path d="m381.214 345.762-27.834 45.166-52.679-6.36-34 21.7 33.828 105.732 57.485-45.94 73.475 4.041-40.813-127.566z" /></svg>
                         </td>
                         <th style="width: 50px;" class="hide-mobile" *ngIf="item.DocumentId">
-                            <a href="javascript:;"><img (click)="DownloadDocument(item.DocumentId)" width="16" src="./assets/images/icons/download.png" alt=""></a>
+                            <a (click)="DownloadDocument(item.DocumentId)" href="javascript:;"  >
+                                <svg style="width: 16px height: 16px;" width="20px" height="19px" viewBox="0 0 20 19" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink">
+                                    <title>25C2FAA1-F999-4511-9F5C-294D4EDB7E44</title>
+                                    <g id="Desktop" stroke="none" stroke-width="1" style="fill: var(--secondaryColor);" fill-rule="evenodd">
+                                        <g id="Shipment-page-2" transform="translate(-1296.000000, -2470.000000)" fill="#000000" fill-rule="nonzero">
+                                            <g id="Group-9" transform="translate(291.000000, 884.000000)">
+                                                <g id="Group-8" transform="translate(0.000000, 1428.000000)">
+                                                    <g id="download-icon" transform="translate(1005.000000, 157.000000)">
+                                                        <path style="fill: var(--secondaryColor);"
+                                                            d="M18.325,17.4125005 C18.7668278,17.4125005 19.125,17.7706727 19.125,18.2125005 C19.125,18.6203416 18.8198119,18.9569021 18.4253503,19.0062674 L18.325,19.0125005 L1.675,19.0125005 C1.2331722,19.0125005 0.875,18.6543283 0.875,18.2125005 C0.875,17.8046595 1.18018815,17.468099 1.5746497,17.4187337 L1.675,17.4125005 L18.325,17.4125005 Z M10.2041841,0.987500515 C10.6120246,0.986846005 10.9490753,1.29149277 10.9990745,1.68587446 L11.005469,1.78621461 L11.024,13.1324995 L14.1593146,9.99681511 C14.471734,9.68439568 14.978266,9.68439568 15.2906854,9.99681511 C15.5747031,10.2808328 15.6005229,10.725274 15.3681448,11.0384596 L15.2906854,11.128186 L10.7906854,15.628186 C10.6770784,15.741793 10.5378035,15.8140884 10.3915284,15.8450722 L10.2808011,15.8605641 L10.2808011,15.8605641 L10.1691989,15.8605641 C9.98343814,15.8476542 9.80132341,15.7701948 9.65931458,15.628186 L5.15931458,11.128186 C4.84689514,10.8157665 4.84689514,10.3092345 5.15931458,9.99681511 C5.44333224,9.71279745 5.8877735,9.68697766 6.2009591,9.91935575 L6.29068542,9.99681511 L9.424,13.1304995 L9.40546998,1.78878646 C9.40476084,1.34695923 9.76235685,0.988211767 10.2041841,0.987500515 Z"
+                                                            id="Download"></path>
+                                                    </g>
+                                                </g>
+                                            </g>
+                                        </g>
+                                    </g>
+                                </svg>
+                            </a>
                         </th>
                     </tr>
 

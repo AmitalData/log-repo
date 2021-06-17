@@ -81,5 +81,8 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public string LogitudeDemoTenants { get; set; }
         public DateTime? TMPersonalAccessExpirationDate { get; set; }
         public int OITenantNumber { get; set; }
-    }
+        public string AmitalCloudEnvironmentURL { get; set; }
+
+        public string AmitalCloudLogitudeTenantPrimaryKey { get; set; }
+}
 }

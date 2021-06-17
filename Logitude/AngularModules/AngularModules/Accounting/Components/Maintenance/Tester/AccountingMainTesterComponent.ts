@@ -18,7 +18,7 @@ declare var attachmentUploader, ResultAsArray: any;
 
     templateUrl: './AccountingMainTesterComponent.html',
 })
-
+    //using gatewaytest
 export class AccountingMainTesterComponent extends BaseComponent {
     public DataContext: AccountingMainTesterComponent = this;
     public ObjectTableName: string = "GLAccount";
@@ -177,6 +177,8 @@ export class AccountingMainTesterComponent extends BaseComponent {
             GroupByDate_Options: 'DueDate;AccountingDate',
             Aging4AccountTypeCode_Options: 'ControlAccountOnly1;Customer2;Vendor3',
             BuildPivot: true,
+            SuppressFromGLAccountAgingData: false,
+            FroceFromGLAccountAgingData:true,
         };
         
         let opr = "Aging_Click";
@@ -613,6 +615,17 @@ Line4
 
     ButtonLoadJournals_ISL_Click() {
         let opr = "ButtonLoadJournals_ISL_Click";
+        let str: string =
+            `Please insert page, you can add a header  //Tenant=1071
+Line2
+Line3
+`;
+        this.PostOp(opr, str, () => { });
+    }
+
+
+    ButtonLoadChargeTypes_Click() {
+        let opr = "ButtonLoadChargeTypes_Click";
         let str: string =
             `Please insert page, you can add a header  //Tenant=1071
 Line2

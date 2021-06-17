@@ -87,6 +87,24 @@ export class GLAccountExtendedPMService {
     }
 
 
+    GetARPyamentChequesListAsLedgerTransactions(accountId: string) {
+
+        var api = ServiceHelper.GetLogitudeURL() + 'api/GLAccounts';
+        return this.httpClient.get(this._apiUrl  + '/GetARPyamentChequesListAsLedgerTransactions?accountId=' + accountId, ServiceHelper.GetHttpHeaders()).pipe(
+            map(response => {
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+
+                serviceResponse.Result = response;
+
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+
+
+    }
+
+
+
     MapJsonToEntityPM(jsonPM: any) {
 
         var entityList: GLAccountPM;

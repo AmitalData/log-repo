@@ -62,10 +62,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
         public bool IsUpdatingProfitFromConversion { get; set; }
         public bool IsUpdatingHouses { get; set; }
         public bool IsUpdatingHousesFinalArrivalDate { get; set; }
+        public bool IsPackageCreatedFromStandaloneShipment { get; set; }
+        public bool PackageContainerIdUpdated { get; set; }
+        public ShipmentPackagePM StandalonePackage { get; set; }
         public List<string> DeletedHousesIds { get; set; }
         public List<string> ConnectedHousesIds { get; set; }
 
-        public List<ShipmentPackagePM> ShipmentPackagesChangeSet;
+        public List<ShipmentPackagePM> ShipmentPackagesChangeSet { get; set; }
         public List<ShipmentOrderPackagePM> ShipmentOrderPackagesChangeSet;
         public List<ShipmentPickUpPM> ShipmentPickUpsChangeSet;
         public List<ShipmentDeliveryPM> ShipmentDeliveriesChangeSet;
@@ -216,6 +219,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
             foreach (IServiceValidator behaviour in validators)
             {
                 behaviour.Validate(this);
+            }
+        }
+
+        public void HandleStandalone()
+        {
+            List<IServiceBehaviour> behaviours = new List<IServiceBehaviour>();
+            behaviours.Add(new StandaloneShipmentBehaviour());
+
+            foreach (IServiceBehaviour behaviour in behaviours)
+            {
+                behaviour.Handle(this);
             }
         }
 

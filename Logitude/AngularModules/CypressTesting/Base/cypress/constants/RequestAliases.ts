@@ -1,6 +1,6 @@
 export class RequestAliases {
-    public static readonly ShipmentGetSingle="ShipmentGetSingle"
-    public static readonly performancelogs="performancelogs"
+    public static readonly ShipmentGetSingle = "ShipmentGetSingle"
+    public static readonly performancelogs = "performancelogs"
     public static readonly PartnersDomainRequest = 'PartnersDomainRequest';
     public static readonly ShipmentRequest = 'ShipmentRequest';
     public static readonly SplitShipmentRequest = 'SplitShipmentRequest';
@@ -12,7 +12,7 @@ export class RequestAliases {
     public static readonly ARInvoicesPutRequest = 'ARInvoicesPutRequest';
     public static readonly APInvoiceView = 'APInvoiceView';
     public static readonly ARInvoiceviews = 'ARInvoiceviews';
-    public static readonly ARInvoiceViewsGetByFilters="ARInvoiceViewsGetByFilters"
+    public static readonly ARInvoiceViewsGetByFilters = "ARInvoiceViewsGetByFilters"
     public static readonly APPayments = 'APPayments';
     public static readonly ARPayments = 'ARPayments';
     public static readonly CustomerViews = 'CustomerViews';
@@ -36,7 +36,7 @@ export class RequestAliases {
     public static readonly ShipmentviewsGetbyfilters = 'ShipmentviewsGetbyfilters';
 
     public static readonly GetAll = 'GetAll';
-    public static readonly EntityResourceAccountingPeriod="EntityResource"
+    public static readonly EntityResourceAccountingPeriod = "EntityResource"
     public static readonly ContainerFollowUpViewsGetbyfilters = 'ContainerFollowUpViewsGetbyfilters';
     // Tariff
     public static readonly PostTariff = 'PostTariff';
@@ -63,7 +63,7 @@ export class RequestAliases {
     public static readonly PutTicket = "PutTicket";
     public static readonly PutTicketActivity = "PutTicketActivity";
     public static readonly WailAllLoad = "WailAllLoad";
-   
+
 
     public static readonly WaitLoadShipmentMenuButtons = "WaitLoadShipmentMenuButtons";
 
@@ -93,28 +93,49 @@ export class RequestAliases {
 
     public static readonly PostVessel = "PostVessel";
     public static readonly PutVessel = "PutVessel";
-    public static readonly AccountingSettings="AccountingSettings"
+    public static readonly AccountingSettings = "AccountingSettings"
     public static readonly Tenants = "Tenants"
 
-    public static readonly PostCountry="PostCountry"
-    public static readonly PutCountry="PutCountry"
-    public static readonly PostState="PostState"
-    public static readonly PutState="PutState"
-    public static readonly PostGlobalZone="PostGlobalZone"
-    public static readonly PutGlobalZone="PutGlobalZone"
-   
-    public static readonly PostSpecialServicesType="PostSpecialServicesType"
-    public static readonly PutSpecialServicesType="PutSpecialServicesType"
 
-    public static readonly PostCity="PostCity"
-    public static readonly PutCity="PutCity"
+    public static readonly PostCountry = "PostCountry"
+    public static readonly PutCountry = "PutCountry"
+    public static readonly PostState = "PostState"
+    public static readonly PutState = "PutState"
 
-    public static readonly PostCommodity="PostCommodity"
-    public static readonly PutCommodity="PutCommodity"
-    
-    public static readonly PostRegions="PostRegions"
-    public static readonly PutRegions="PutRegions"
-    
+    public static readonly PostGlobalZone = "PostGlobalZone"
+    public static readonly PutGlobalZone = "PutGlobalZone"
+
+    public static readonly PostBankAccount = "PostBankAccount"
+    public static readonly PutBankAccount = "PutBankAccount"
+
+    public static readonly PostPackageType = "PostPackageType"
+    public static readonly PutPackageType = "PutPackageType"
+
+    public static readonly PostBranch = "PostBranch"
+    public static readonly PutBranch = "PutBranch"
+    public static readonly PostBranchAddress = "PostBranchAddress"
+    public static readonly PutBranchAddress = "PutBranchAddress"
+
+    public static readonly PostCurrency="PostCurrency"
+    public static readonly PutCurrency="PutCurrency"
+    public static readonly GetCurrenciesCodes="GetCurrenciesCodes"
+
+    public static readonly GetFBLStock = "GetFBLStock"
+    public static readonly RemoveFBLStock = "DeleteFBLStock"
+    public static readonly GetAllFBLStock = "GetAllFBLStock"
+
+    public static readonly PostSpecialServicesType = "PostSpecialServicesType"
+    public static readonly PutSpecialServicesType = "PutSpecialServicesType"
+
+    public static readonly PostCity = "PostCity"
+    public static readonly PutCity = "PutCity"
+
+    public static readonly PostCommodity = "PostCommodity"
+    public static readonly PutCommodity = "PutCommodity"
+
+    public static readonly PostRegions = "PostRegions"
+    public static readonly PutRegions = "PutRegions"
+
     public static readonly PostQuoteTemplate = "PostQuoteTemplate";
     public static readonly PutQuoteTemplate = "PutQuoteTemplate";
     public static readonly PutQuoteTemplateHeaderFields = "PutQuoteTemplateHeaderFields";
@@ -123,7 +144,7 @@ export class RequestAliases {
     public static readonly PostCrossdockEntry = "PostCrossdockEntry";
     public static readonly PutCrossdockEntry = "PutCrossdockEntry";
 
-    public static readonly PostCrossdockRelease="PostCrossdockRelease"
+    public static readonly PostCrossdockRelease = "PostCrossdockRelease"
     public static readonly PutCrossdockRelease = "PutCrossdockRelease";
 
     public static readonly PostCurrencyRate = "PostCurrencyRate";
@@ -137,17 +158,35 @@ export class RequestAliases {
     public static readonly PostCustomAgent = "PostCustomAgent";
     public static readonly PutCustomAgent = "PutCustomAgent";
 
-    public static readonly PutTrucker="PostTrucker"
-    public static readonly PostTrucker="PostTrucker"
+    public static readonly PutTrucker = "PostTrucker"
+    public static readonly PostTrucker = "PostTrucker"
 
-    public static readonly PutMoveType="PutMoveType"
-    public static readonly PostMoveType="PostMoveType"
+    public static readonly PutMoveType = "PutMoveType"
+    public static readonly PostMoveType = "PostMoveType"
 
     public static readonly PutShipmentSubType = "PutShipmentSubType"
     public static readonly PostShipmentSubType = "PostShipmentSubType"
 
     public static readonly PostCreditCardType = "PostCreditCardType"
     public static readonly PutCreditCardType = "PutCreditCardType"
+
+    public static readonly PostPaymentTerm = "PostPaymentTerm"
+    public static readonly PutPaymentTerm = "PutPaymentTerm"
+
+    public static readonly PostVatType = "PostVatType"
+    public static readonly PutVatType = "PutVatType"
+
+    public static readonly PostAccountingPaymentMethod = "PostAccountingPaymentMethod"
+    public static readonly PutAccountingPaymentMethod = "PutAccountingPaymentMethod"
+
+    public static readonly PostBusinessUnit = "PostBusinessUnit"
+    public static readonly PutBusinessUnit = "PutBusinessUnit"
+    
+    public static readonly PostDepartment = "PostDepartment"
+    public static readonly PutDepartment = "PutDepartment"
+
+    public static readonly PostOccasionType = "PostOccasionType"
+    public static readonly PutOccasionType = "PutOccasionType"
 
     public static readonly GetSignle = "GetSignle"
     public static readonly GetByFilter = "GetByFilter"
@@ -157,22 +196,24 @@ export class RequestAliases {
     public static readonly GetWarehouseMenuButtonGroups = "GetWarehouseMenuButtonGroups";
     public static readonly ContactViewsGetByFilters = "ContactViewsGetByFilters";
     public static readonly GetCustomersQuickSearch = "GetCustomersQuickSearch"
+    public static readonly GetList = "GetList"
+
     //#endregion
-    public static readonly PostChangePassword="PostChangePassword"
+    public static readonly PostChangePassword = "PostChangePassword"
     //
     public static readonly GetTraceEventsForEntity = "GetTraceEventsForEntity"
     public static readonly GetLastUpdatedTables = "GetLastUpdatedTables"
 
     //Login 
-    public static readonly Authentication="Authentication"
-    public static readonly PasswordResetRequestPage="PasswordResetRequestPage"
+    public static readonly Authentication = "Authentication"
+    public static readonly PasswordResetRequestPage = "PasswordResetRequestPage"
     //Reset Password
-    public static readonly ResetPassword="ResetPassword"
+    public static readonly ResetPassword = "ResetPassword"
 
     //Reports
-    public static readonly ReportsTemplate="ReportsTemplate"
-    public static readonly Report="Report"
-    public static readonly InfoIconImage="InfoIconImage"
+    public static readonly ReportsTemplate = "ReportsTemplate"
+    public static readonly Report = "Report"
+    public static readonly InfoIconImage = "InfoIconImage"
     public static readonly PrintReportWindowOpen = 'PrintReportWindowOpen';
 
 }

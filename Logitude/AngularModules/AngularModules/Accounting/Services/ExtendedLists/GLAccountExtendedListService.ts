@@ -40,6 +40,7 @@ export class GLAccountExtendedListService {
             catchError(ServiceHelper.HandleServiceError));
 
     }
+
     GetInsertControlAccount(ControlAccountId:string , ChartOfAccountsId: string )
     {
 

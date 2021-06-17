@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .SearchBox input::-webkit-input-placeholder {
         font-family: Arial;
@@ -427,7 +427,7 @@
 
                                 <!-- GLAccount -->
                                 <table *ngIf="ObjectTableName == 'CardGLAccount' || ObjectTableName == 'CustomerGLAccount'|| ObjectTableName == 'VendorGLAccount'">
-                                    <tr [style.text-align]="isRTL ? 'right' : 'left'">
+                                    <tr [style.text-align]="isRTL ? 'right' : 'left'" [attr.title]="item.LocalName">
 
                                         <td style="width: 80px; min-width: 80px; max-width: 80px; padding-left: 5px;padding-right: 5px" class="TextTrimming">
                                             <span style="font-size: 10px; color: #919191; " [style.text-align]="isRTL ? 'right' : 'left'" >{{item.DisplayNumber}}</span>

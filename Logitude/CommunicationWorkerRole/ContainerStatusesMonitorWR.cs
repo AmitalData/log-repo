@@ -1,20 +1,12 @@
-﻿using Logitude.Server.Tools.QueueService;
+﻿using CommunicationWorkerRole.Analyzers;
+using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
-using Microsoft.ServiceBus.Messaging;
 using Microsoft.WindowsAzure.ServiceRuntime;
-using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using WebFreight.Web.Helpers;
 
 namespace CommunicationWorkerRole
 {
@@ -30,14 +22,13 @@ namespace CommunicationWorkerRole
                 {
                     try
                     {
-
-                        DbQueueService queueservice = queueservice = new DbQueueService("ContainerStatusesCommunicationLogQueue", 0);
-                        QueueResponse iQueueResponse = queueservice.Receive(new TimeSpan(0, 0, 0, 10));
-
-                        if (iQueueResponse.MessageId != null)
+                        IQueueService  queueservice = new DbQueueService();
+                        queueservice.InitializeQueue("ContainerStatusesCommunicationLogQueue", 0);
+                        QueueResponse queueResponse = queueservice.Receive(new TimeSpan(0, 0, 0, 10));
+                        if (queueResponse.MessageId != null)
                         {
-                            string communicationLogId = iQueueResponse.MessageValues["CommunicationLogId"].ToString();
-                            int.TryParse(iQueueResponse.MessageValues["Tenant"].ToString(), out tenant);
+                            string communicationLogId = queueResponse.MessageValues["CommunicationLogId"].ToString();
+                            int.TryParse(queueResponse.MessageValues["Tenant"].ToString(), out tenant);
                             ContainerStatusesAnalyzer analyzer = new ContainerStatusesAnalyzer(communicationLogId, tenant);
                             analyzer.Run();
                             queueservice.Complete();

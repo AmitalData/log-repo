@@ -110,6 +110,7 @@
     <Compile Include="CloseTables\EnumGenerated\CargoTrackingMilestoneStruct.Generated.cs" />
     <Compile Include="CoreBL\Batch\BuildCargoTrackingShipments.cs" />
     <Compile Include="CoreBL\CargoTrackingUsersShipmentService.cs" />
+    <Compile Include="DataContracts\MixPanelTrackingEvent.cs" />
     <Compile Include="EntityDataMappings\CargoTrackingCardDataMapping.cs" />
     <Compile Include="EntityDataMappings\CargoTrackingCountryDataMapping.cs" />
     <Compile Include="EntityDataMappings\CargoTrackingHeaderEntityTypeDataMapping.cs" />
@@ -164,6 +165,7 @@
     <Compile Include="EntityUpdateServices\Generated\CargoTrackingTransportModeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CargoTrackingWatermarkUpdateService.Generated.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\MixPanelTrackingService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Utils\" />

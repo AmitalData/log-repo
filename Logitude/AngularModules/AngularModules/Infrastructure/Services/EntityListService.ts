@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Injectable} from '@angular/core';
 import {ApiQueryFilters} from '../DataContracts/ApiQueryFilters';
 import {ServiceHelper} from '../Utilities/ServiceHelper';
@@ -148,7 +148,20 @@ export class EntityListService {
             });
         });
     }
-
+    getARPyamentChequesListAsLedgerTransactions(objectTableName: string,  filters: ApiQueryFilters) {
+        var table = window.ObjectTables.filter(d => d.Name === objectTableName)[0];
+        if (objectTableName.indexOf('Customs.') > -1) {
+            objectTableName = objectTableName.split('.')[1];
+        }
+        var moduleName = table.ClientModuleName;
+        var servicename = objectTableName + "ExtendedListService";
+        var servicelink = './' + moduleName + '/Services/ExtendedLists/' + servicename;
+        return new Promise((resolve, reject) => {
+            SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
+                resolve(service.GetARPyamentChequesListAsLedgerTransactions( filters));
+            });
+        });
+    }
 
     getReconciliationsByFilter(objectTableName: string, accountId: string, filters: ApiQueryFilters) {
         var table = window.ObjectTables.filter(d => d.Name === objectTableName)[0];

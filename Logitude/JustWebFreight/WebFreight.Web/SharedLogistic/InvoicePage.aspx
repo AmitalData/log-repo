@@ -353,8 +353,8 @@
                                                             </td>
                                                         </tr>
                                                     </table>
-                                                    
-                                                    <div class="BusyIndicator" id="DetailsPageBusyIndicator"></div>                                                                               
+                                                <div class="BusyIndicator" id="DetailsPageBusyIndicator"></div>                                                                               
+ 
                                                 </div> 
                                                                                                 
                                                 <div class="tabPage" style="padding-left:0px; padding-right:0px;">
@@ -455,6 +455,8 @@
             </tbody>
 
         </table>
+
+
     </div>
 
      <script type="text/javascript">

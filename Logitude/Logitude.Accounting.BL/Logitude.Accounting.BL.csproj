@@ -206,6 +206,7 @@
     <Compile Include="CoreBL\BuildTenant\MumpsOpenReconcile\OpenRecoDataValidationService.cs" />
     <Compile Include="CoreBL\BuildTenant\MumpsOpenReconcile\RealOpenAmountService.cs" />
     <Compile Include="CoreBL\BuildTenant\MumpsOpenReconcile\UpdateOpenReconcileService.cs" />
+    <Compile Include="CoreBL\ChargeTypesCSVFlatFileAnalyser.cs" />
     <Compile Include="CoreBL\DuplicatedJournalsVoidingService.cs" />
     <Compile Include="CoreBL\BankDepositRedeemedChequesVerifyService.cs" />
     <Compile Include="CoreBL\BankDeposit\BankDepositJournalCreator.cs" />
@@ -254,6 +255,7 @@
     <Compile Include="CoreBL\ExternalReconcile\Utils\ExternalReconcileTypeService.cs" />
     <Compile Include="CoreBL\Fix\FixJournaRecolService.cs" />
     <Compile Include="CoreBL\GLAccountChequesTotalCalculator.cs" />
+    <Compile Include="CoreBL\GLAccountChequesTransactionsRetreivingService.cs" />
     <Compile Include="CoreBL\GLAccountCounterService.cs" />
     <Compile Include="CoreBL\ExternalReconcile\CreateAutoExternalReconcileWhileStreamingService.cs" />
     <Compile Include="CoreBL\ExternalReconcile\ExternalReconcileDataProvider.cs" />
@@ -299,6 +301,7 @@
     <Compile Include="CoreBL\Reconcile\ICreateAutoReconcileWhileStreamingService.cs" />
     <Compile Include="CoreBL\Reconcile\LedgerTransactionsSorter.cs" />
     <Compile Include="CoreBL\Reconcile\MultipleARPaymentReconciliationSplitter.cs" />
+    <Compile Include="CoreBL\Reports\Aging\AgingReportFromAgingData.cs" />
     <Compile Include="CoreBL\Reports\Aging\AgingReportRebulidService.cs" />
     <Compile Include="CoreBL\Reports\Aging\DailyRebuildAgingService.cs" />
     <Compile Include="CoreBL\Reports\Aging\LedgerTransactionsAgingBuilderService.cs" />
@@ -659,6 +662,7 @@
     <Compile Include="EntityQueryServices\InterestReportLinesByDateQueryService.cs" />
     <Compile Include="EntityQueryServices\InterestReportQueryService.cs" />
     <Compile Include="EntityQueryServices\InterestTransactionQueryService.cs" />
+    <Compile Include="EntityQueryServices\JournalAdditionalDataQueryService.cs" />
     <Compile Include="EntityQueryServices\JournalLineLedgerTransactionAccDTO.cs" />
     <Compile Include="EntityQueryServices\JournalLineLedgerTransactionDTO.cs" />
     <Compile Include="EntityQueryServices\InterestBasesTypeQueryService.cs" />

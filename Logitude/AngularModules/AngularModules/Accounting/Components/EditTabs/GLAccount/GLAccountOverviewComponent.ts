@@ -1,13 +1,11 @@
 import { DateTool } from './../../../../Infrastructure/Tools';
 import { CardList } from './../../../../Common/EntityLists/CardList';
 import { CardListService } from './../../../../Common/Services/StandardLists/CardListService';
-import { CreditLimitSettingPM } from './../../../../Common/EntityPMs/CreditLimitSettingPM';
 import { AccountingNotePMService } from './../../../Services/StandardPMs/AccountingNotePMService';
 import { AccountingNotePM } from './../../../EntityPMs/AccountingNotePM';
 import { MessageWindow } from './../../../../Controls/Windows/MessageWindow';
 import { AccountingNoteExtendedListService } from './../../../Services/ExtendedLists/AccountingNoteExtendedListService';
 import { AccountingNoteList } from './../../../EntityLists/AccountingNoteList';
-import { RegionList } from './../../../../Common/EntityLists/RegionList';
 import { AccountingEntityHelper } from './../../../Utilities/AccountingEntityHelper';
 import { EntityResourceService } from './../../../../Infrastructure/Services/EntityResourceService';
 import { LedgerTransactionList } from './../../../EntityLists/LedgerTransactionList';
@@ -17,28 +15,22 @@ import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeCompo
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {GLAccountPM} from '../../../EntityPMs/GLAccountPM';
 import { GLAccountMoreDataList } from '../../../EntityLists/GLAccountMoreDataList';
-import {GLAccountValidator} from '../../../Validators/GLAccountValidator';
 import { GLAccountMoreDataListService } from '../../../Services/StandardLists/GLAccountMoreDataListService';
-import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
-import { GLAccountListService } from '../../../Services/StandardLists/GLAccountListService';
 import { GLAccountExtendedListService } from '../../../Services/ExtendedLists/GLAccountExtendedListService';
 import { LedgerTransactionExtendedListService } from '../../../Services/ExtendedLists/LedgerTransactionExtendedListService';
 import { ReconcileEventManager } from '../../../Utilities/ReconcileEventManager';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { GLAccountSummary } from '../../../DataContracts/AccountingSummery';
 import { AgingReportParameters } from '../../../DataContracts/AgingReportParameters';
 import { PeriodM } from '../../../DataContracts/PeriodM';
 import { GLAccountList } from '../../../EntityLists/GLAccountList';
-import { FullAccountingSettingList } from '../../../EntityLists/FullAccountingSettingList';
-import { AccountingNoteListService } from '../../../Services/StandardLists/AccountingNoteListService';
-import { GLAccountExtendedPMService } from 'Accounting/Services/ExtendedPMs/GLAccountExtendedPMService';
 import { GLAccountFollowUpDataPM } from '../../../EntityPMs/GLaccountFollowUpDataPM';
 import { GLaccountFollowUpDataExtendedPMService } from 'Accounting/Services/ExtendedPMs/GLaccountFollowUpDataExtendedPMService';
 import { GLAccountCardsDataPMService } from '../../../Services/StandardPMs/GLAccountCardsDataPMService';
+import { GLAccountExtendedPMService } from '../../../Services/ExtendedPMs/GLAccountExtendedPMService';
 
 @Component({
 
@@ -65,6 +57,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
     public gLAccountFollowUpDataPM: GLAccountFollowUpDataPM;
    
     //Services
+    _GLAccountExtendedPMService: GLAccountExtendedPMService = new GLAccountExtendedPMService();
     _EntityResourceService: EntityResourceService = new EntityResourceService();
     _GLAccountMoreDataListService: GLAccountMoreDataListService = new GLAccountMoreDataListService();
     _LedgerTransactionExtendedListService: LedgerTransactionExtendedListService = new LedgerTransactionExtendedListService();
@@ -72,7 +65,6 @@ export class GLAccountOverviewComponent extends BaseComponent {
     _AccountingNoteExtendedListService: AccountingNoteExtendedListService = new AccountingNoteExtendedListService();
     _AccountingNotePMService: AccountingNotePMService = new AccountingNotePMService();
     _CardListService: CardListService = new CardListService();
-    _GLAccountExtendedPMService: GLAccountExtendedPMService = new GLAccountExtendedPMService();
     private gLAccountFollowUpDataPMService: GLaccountFollowUpDataExtendedPMService = new GLaccountFollowUpDataExtendedPMService();
     private gLAccountCardsDataPMService: GLAccountCardsDataPMService = new GLAccountCardsDataPMService();
     private CurrentSession = SessionLocator.SelectedSession;
@@ -259,6 +251,8 @@ export class GLAccountOverviewComponent extends BaseComponent {
                 }
 
             });
+
+  
     
  
 
@@ -735,9 +729,20 @@ export class GLAccountOverviewComponent extends BaseComponent {
         });
     }
 
-    DisplayChequelistClicked(){
+    DisplayChequelistClicked(id) {
 
+       var windowArgs: any = {};
+        windowArgs.EntityPM = this.EntityPM;
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 1100;
+        logWindow.Height = 600;
+       
+        logWindow.ShowCloseButton = false;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) => { });
+        logWindow.Show('./Accounting/Components/EditTabs/GLAccount/GLAccountChequeListComponent');
     }
+
     CardIndexClicked(){
         this.DisplayTransactionsLinkClicked();
     }

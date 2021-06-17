@@ -962,9 +962,11 @@
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.UserDefinedReport.cs" />
     <Compile Include="AccountingModel\LedgerTransactionService\TransactionsBalanceByFiltersService.cs" />
     <Content Include="App_Code\AngularJS_App_Code\DocumentTypeCopyExtendedController.cs" />
+    <Content Include="App_Code\DocumentFileController.cs" />
     <Compile Include="CommonDataModel\LogitudeGridExportToExcel\LogitudeGridExportToExcelArguments.cs" />
     <Compile Include="CommonDataModel\LogitudeGridExportToExcel\LogitudeGridExportToExcelHelper.cs" />
     <Compile Include="Controllers\AccountingModel\BankCodeController.cs" />
+    <Compile Include="Controllers\AccountingModel\ChargesTypeOpController.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\CalculatedChartsLineTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\CalculatedChartsOfAccountsLineViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\CalculatedChartsOfAccountViewsController.Generated.cs" />
@@ -996,6 +998,7 @@
     <Compile Include="Controllers\CargoTrackingModel\Generated\PMControllers\CargoTrackingTransportModeController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\Generated\PMControllers\CargoTrackingWatermarkController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\CarrierAreaExtendedController.cs" />
+    <Compile Include="Controllers\CommonDataModel\Extended\DocumentDownloadTokenController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\LogitudeGridExportToExcelController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\ReportExecutionLogExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\HorseViewsController.Generated.cs" />
@@ -1037,6 +1040,7 @@
     <Compile Include="Controllers\Integration\Shipment\ShipmentIntegrationVariables.cs" />
     <Compile Include="Controllers\QuoteModel\Generated\PMControllers\QuoteClosingReasonController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingBrandingController.cs" />
+    <Compile Include="Controllers\ShardLogistics\SharedLogisticReportController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\LogboxShipmentExportExcelController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\ShipmentCargoTrackingController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\AccountingInformationIdentifierViewsController.Generated.cs" />
@@ -2596,8 +2600,10 @@
       <DependentUpon>HealthProb.aspx</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AdvancedDateResolver.cs" />
-    <Compile Include="Helpers\ContainerStatusesAnalyzer.cs" />
     <Compile Include="Helpers\ContainerStatusesHelper.cs" />
+    <Compile Include="Helpers\DocumentFile.cs" />
+    <Compile Include="Helpers\DocumentDownloadTokenService.cs" />
+    <Compile Include="Helpers\ContainerStatuses\ContainerStatusesConnecterAnalyzer.cs" />
     <Compile Include="Helpers\ExternalAPITemplatesBuilder.cs" />
     <Compile Include="Helpers\ExternalAPIResponseParameters.cs" />
     <Compile Include="Helpers\APIHelpers\ApiExceptionFilter.cs" />
@@ -2636,6 +2642,7 @@
     <Compile Include="Helpers\DocumentTypeTemplateDefultAttachmentService.cs" />
     <Compile Include="Helpers\PrivateLabelsBrandingDataService.cs" />
     <Compile Include="Helpers\QuotesRequestService.cs" />
+    <Compile Include="Helpers\SharedLogisticReportService.cs" />
     <Compile Include="Helpers\UserViewLinkLimitationService.cs" />
     <Compile Include="Helpers\DWQueryBuilderHelper.cs" />
     <Compile Include="Helpers\AgentSharedManifestHelper.cs" />
@@ -3487,6 +3494,8 @@
     <Content Include="Scripts\jquery.signalR-2.2.0.min.js" />
     <Content Include="SendGridWebPage.aspx" />
     <Content Include="SharedDocuments.aspx" />
+    <Content Include="SharedLogistic\ReportViewPage.js" />
+    <Content Include="SharedLogistic\ReportViewPage.aspx" />
     <Content Include="SharedMasterDocumentsPage.aspx" />
     <Content Include="SharedDocuments\SharedMasterDocumentsPageViewModel.js" />
     <Content Include="SharedDocument\DocumentsApprovalPage.aspx" />
@@ -4934,6 +4943,7 @@
     <Content Include="WebPages\DownloadingPage.aspx" />
     <Content Include="WebPages\DownloadTemplateDocumentPage.aspx" />
     <Content Include="WebPages\ReportPdfDownLoad.aspx" />
+    <Content Include="WebPages\TermsOfUseDownloadPage.aspx" />
     <Content Include="WebPages\xml2HTML.xsl" />
     <Content Include="WebPages\DataBackupDownloadPage.aspx" />
     <Content Include="WebPages\DownloadFileName.aspx" />
@@ -5769,6 +5779,13 @@
     </Compile>
     <Compile Include="EntityExternalUpdate.aspx.designer.cs">
       <DependentUpon>EntityExternalUpdate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SharedLogistic\ReportViewPage.aspx.cs">
+      <DependentUpon>ReportViewPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SharedLogistic\ReportViewPage.aspx.designer.cs">
+      <DependentUpon>ReportViewPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="SharedMasterDocumentsPage.aspx.cs">
       <DependentUpon>SharedMasterDocumentsPage.aspx</DependentUpon>
@@ -6726,6 +6743,13 @@
     </Compile>
     <Compile Include="WebPages\SharedDownloadPage.aspx.designer.cs">
       <DependentUpon>SharedDownloadPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebPages\TermsOfUseDownloadPage.aspx.cs">
+      <DependentUpon>TermsOfUseDownloadPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebPages\TermsOfUseDownloadPage.aspx.designer.cs">
+      <DependentUpon>TermsOfUseDownloadPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebPages\UpgradeScreen.aspx.cs">
       <DependentUpon>UpgradeScreen.aspx</DependentUpon>

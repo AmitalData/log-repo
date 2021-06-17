@@ -145,7 +145,7 @@
 
                                             </tr>
                                               <%--Start Areacaptcha--%>
-                                                 <tr id="Areacaptcha" style ="height:30px;margin-top:5px;display:none;">
+                                                 <tr id="Areacaptcha" style ="height:70px;margin-top:5px;display:none;">
                                                  <td>
                                                <img id="CaptchaImage" style="height:auto;width:auto;float:left"  /> 
                                                 <input oninput="onCaptchaInPutChanged()" style="height:19px;width:260px;margin-bottom:5px;margin-top:5px;float:left;" type="text" placeholder="type the text you see" id="captchaTextBox"/>

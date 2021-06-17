@@ -856,77 +856,38 @@ export class AddEditImporterDocumentComponent implements OnInit {
     ShareWithAgent() {
         this.ValidationErrorsList = [];
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
-        //List < ValidationResult > errors = new List<ValidationResult>();
-        //Validator.TryValidateObject(importerDocumentDataViewModel.EntityPM, new ValidationContext(importerDocumentDataViewModel.EntityPM, null, null), errors);
-
         if (AppTool.IsNullOrEmpty(this.EntityPm.Description)) {
             this.ValidationErrorsList.push(msg.replace("%FieldName", "Discription"));
         }
-        //if (!SessionLocator.PrivateLableSettings && AppTool.IsNullOrEmpty(this.ShipmentList.ForwarderShipmentNumber)) {
-        //    this.ValidationErrorsList.push("This Shipment is not connected to agent .");
-        //}
-        //bool validateEntry = ValidateEntry();
-        //bool hasValidationErrors = CheckValidationErrors();
-
-        //FillErrors(errors);
-
-        if (this.ValidationErrorsList.length == 0) {
-
-            //var window = new ConfirmWindow();
-
-            //window.Title = "Confirm sharing";
-            //window.Width = 450;
-            //window.Height = 190;
-            //window.YesButtonText = "Ok";
-            //window.NoButtonText = "Cancel";
-            //window.Show("Are you sure you want to share this document with agent?");
-            //window.WindowClosed.subscribe((event: any) => {
-            //    if (window.Yes) {
-                   
-            //    }
-
-            //    else {
-
-            //    }
-            //});
-            ServiceLocator.SendTotangoUserActivity("LogBox", "Share Document With Agent");
-            this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading ...");
-            if (this.EntityPm.IsSharedWithForwarder == true) {
-                this.EntityPm.IsSharedWithForwarder = false;
-                this.EntityPm.DontAddToQueue = true;
-                //BlueSharedWithAgentVisibility = Visibility.Visible;
-                //GraySharedWithAgentVisibility = Visibility.Collapsed;
-            }
-
-            else {
-                this.EntityPm.IsSharedWithForwarder = true;
-                if (AppTool.IsNullOrEmpty(this.ShipmentList.ForwarderShipmentNumber)) {
-                    this.EntityPm.DontAddToQueue = true;
-                }
-                else {
-                    this.EntityPm.DontAddToQueue = false;
-                }
-                //BlueSharedWithAgentVisibility = Visibility.Collapsed;
-                //GraySharedWithAgentVisibility = Visibility.Visible;
-
-            }
-            this._documentsFilingPMService.update(this.EntityPm).subscribe((myResult:any) => {
-                this.CurrentSession.CurrentWindow.StopBusyIndicator();
-                this.IssharedWithAgentButtonEnabled = false;
-                //this.ReloadDocuments();
-                //this.StopBusyIndicator();
-            });
-
-                    //if (!importerDocumentDataViewModel.EntityPM.IsSharedWithForwarder) {
-                    //    importerDocumentDataViewModel.EntityPM.DontAddToQueue = true;
-                    //}
-
+        if (this.ValidationErrorsList.length != 0) {
+            return;
+        }
+        ServiceLocator.SendTotangoUserActivity("LogBox", "Share Document With Agent");
+        if (this.EntityPm.IsSharedWithForwarder == true) {
+            this.EntityPm.DontAddToQueue = true;
+        }
+        else {
+            this.EntityPm.DontAddToQueue = AppTool.IsNullOrEmpty(this.ShipmentList.ForwarderShipmentNumber) ? true : false;
         }
 
+        this.EntityPm.IsSharedWithForwarder = !this.EntityPm.IsSharedWithForwarder;
+
+        this.UpdateDocumentPM();
+
     }
+
+    UpdateDocumentPM() {
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading ...");
+        this._documentsFilingPMService.update(this.EntityPm).subscribe((myResult: any) => {
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.IssharedWithAgentButtonEnabled = false;
+        });
+    }
+
     SelectedValue: string = "";
     SelectedName: string = "";
     TypeSelected: boolean = false;
+
     itemClicked(itemValue: string, Name: string) {
         if (this.DocumentTypeId != itemValue) {
             if (itemValue == "O") {

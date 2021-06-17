@@ -613,7 +613,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             var accountingContext = AccountingContext.GetContext(tenant);
             LedgerTransactionListQueryService query = new LedgerTransactionListQueryService(accountingContext);
-            IQueryable<LedgerTransactionList> iQuerableList = query.GetIquerableOpenReconciliationFilterList(args.TransactionQueryOperations, args.GLAccountId, tenant);
+            IQueryable<LedgerTransactionList> iQuerableList = query.GetIquerableOpenReconciliationFilterList(args.TransactionQueryOperations, args.GLAccountId,args.TransferGLAccountId, tenant);
             IQueryable<MyLedgerTransaction> linesDTO = (from a in iQuerableList
                                                             select new MyLedgerTransaction()
                                                             {
@@ -1175,6 +1175,7 @@ namespace Logitude.Accounting.BL.CoreBL
         public string ObjectTableId { get; set; }
         public string EntityId { get; set; }
         public string GLAccountId { get; set; }
+        public string TransferGLAccountId { get; set; }
         public QueryOperations TransactionQueryOperations { get; set; }
         public QueryOperations BankPageLineQueryOperations { get; set; }
     }

@@ -167,6 +167,9 @@ namespace CommunicationWorkerRole
                 LogitudeSettings.EnableHybridQueue = setting.EnableHybridQueue;
                 LogitudeSettings.GLSHKEnv = setting.GLSHKEnv;
                 LogitudeSettings.GLSHKURL = setting.GLSHKURL;
+                LogitudeSettings.AmitalCloudEnvironmentURL = setting.AmitalCloudEnvironmentURL;
+                LogitudeSettings.OITenantNumber = setting.OITenantNumber;
+                LogitudeSettings.AmitalCloudLogitudeTenantPrimaryKey = setting.AmitalCloudLogitudeTenantPrimaryKey;
                 //LogitudeSettings.IsCostomsDeploy = Logitude.Customs.BL.Utils.CustomsSettingUtil.ForceDownloadXapFromIIS();
                 if (LogitudeSettings.IsCostomsDeploy)
                 {

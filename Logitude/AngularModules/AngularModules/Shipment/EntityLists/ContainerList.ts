@@ -27,5 +27,6 @@ export class ContainerList {
 		MainCarriageATA: Date;
 		MainCarriageATD: Date;
 		DischargeDate: Date;
+		ShipmentId: string;
 	
 }

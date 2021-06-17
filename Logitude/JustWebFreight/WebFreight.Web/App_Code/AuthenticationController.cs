@@ -100,8 +100,8 @@ namespace WebFreight.Web
             }
             return userData;
         }
-         
-          
+
+
         public UserData PostTrayLoginUsingAuthenticaionToken(LoginTokenParameter logintokenparam, bool fromTray, bool useTenant)
         {
             UserData userdata;
@@ -828,7 +828,7 @@ namespace WebFreight.Web
                                                          where t.Id == contact.GlobalTenantId
                                                          select t).Include("TenantManagement").FirstOrDefault();
 
-                            if (contact.IsUser)
+                            if (contact.IsUser && !loginParameters.IsCargoTracking)
                             {
                                 bool Licensed = true;
                                 if (globalTenant.TenantManagement.ManageLicencesPerUser)

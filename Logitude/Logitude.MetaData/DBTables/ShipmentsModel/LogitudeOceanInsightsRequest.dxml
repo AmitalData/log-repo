@@ -66,5 +66,11 @@
       <Constraints
         Nullable="false" />
     </Column>
-
+   <Column
+      Name="ShipmentId"
+      Type="varchar"
+      Size="15">
+      <Constraints
+        Nullable="true" />
+    </Column>
 </Table>

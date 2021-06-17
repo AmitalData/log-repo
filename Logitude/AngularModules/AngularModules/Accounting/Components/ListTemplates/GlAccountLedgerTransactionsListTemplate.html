@@ -40,6 +40,8 @@
 
     <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'DocumentDate'">{{ rowData[fieldName] | DateTimePipe:'SD' }}</div>
 
+    <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'PaymentValueDate'">{{ rowData[fieldName] | DateTimePipe:'SD' }}</div>
+
     <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'GroupHash'">{{ rowData[fieldName] }}</div>
 
     <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'JournalNumber'">
@@ -95,6 +97,7 @@
     </div>
 
 
+
     <!-- **** -->
     <!-- Reconcile Window -->
     <div class="TextTrimming" *ngIf="fieldName == 'SelectCheckBox'" style="padding: 4px 7px;">
@@ -107,7 +110,11 @@
 
     </div>
 
-    <div class="TextTrimming" *ngIf="fieldName == 'OpenAmount'" style="text-align: right; padding: 0px 2px;direction: ltr;" >
+    <div class="TextTrimming" *ngIf="fieldName == 'PaymentChequeStatus'" style="text-align: right; padding: 0px 2px;direction: ltr;">
+        {{ rowData[fieldName] }} 
+    </div>
+
+    <div class="TextTrimming" *ngIf="fieldName == 'OpenAmount'" style="text-align: right; padding: 0px 2px;direction: ltr;">
         {{ rowData[fieldName] | NumbersPipe:'N2'  }} <!--{{rowData["OpenAmountCurrencySign"]}}-->
     </div>
     <div class="TextTrimming" *ngIf="fieldName == 'ForeignAmount'" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;" [class.red]='rowData["IsLocalAmountCreditPos"]'>
