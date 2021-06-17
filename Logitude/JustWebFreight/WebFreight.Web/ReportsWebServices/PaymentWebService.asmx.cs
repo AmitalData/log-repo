@@ -480,19 +480,31 @@ namespace WebFreight.Web.ReportsWebServices
             }
 
             FillARPaymentCheques(paymentId, tenant, paymentDataProvider);
-            SetBankEnglishName(currentPayment,paymentDataProvider);
+            SetFullAccountingBankName(currentPayment,paymentDataProvider);
 
             customFieldResolver.SetDataProviderCustomFieldsValues("ARPayment", tenant, currentPayment, paymentDataProvider);
 
             return paymentDataProvider;
         }
 
-        private void SetBankEnglishName(ARPayment payment, PaymentDataProvider paymentDataProvider)
+        private void SetFullAccountingBankName(ARPayment payment, PaymentDataProvider paymentDataProvider)
         {
+            Contact loggedContact = GetLoggedContact(payment.Tenant);
+
             BankAccountPM bankAccount = GetBankAccountPM(payment);
             if (bankAccount != null)
             {
-                paymentDataProvider.BankEnglishName = bankAccount.EnglishName;
+                paymentDataProvider.FullAccountingBankEnglishName = bankAccount.EnglishName;
+                paymentDataProvider.FullAccountingBankLocalName = bankAccount.LocalName;
+
+                if (loggedContact.DontShowLocalLabels)
+                {
+                    paymentDataProvider.FullAccountingBankName = bankAccount.EnglishName;
+                }
+                else
+                {
+                    paymentDataProvider.FullAccountingBankName = bankAccount.LocalName;
+                }
             }
         }
 
