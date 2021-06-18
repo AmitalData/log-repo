@@ -500,10 +500,10 @@ export class GlobalDomainService {
         return entityList;
     }
 
-    UpdateOceanInsightGlobalSetting(oceanInsightGlobalSetting: OceanInsightGlobalSetting) {
+    UpdateOceanInsightGlobalSetting(oITenantNumber: number, amitalCloudEnvironmentURL: string, amitalCloudLogitudeTenantPrimaryKey: string ) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        var url = this._apiUrl + '/GetUpdateOceanInsightGlobalSetting?oceanInsightGlobalSetting=' + oceanInsightGlobalSetting;
+        var url = this._apiUrl + '/GetUpdateOceanInsightGlobalSetting?oITenantNumber=' + oITenantNumber + "&amitalCloudEnvironmentURL=" + amitalCloudEnvironmentURL + "&amitalCloudLogitudeTenantPrimaryKey=" + amitalCloudLogitudeTenantPrimaryKey;
         return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
                 var itemJason: Boolean = response.body;

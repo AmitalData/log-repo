@@ -69,11 +69,14 @@ export class OceanInsightsSettingsComponent extends BaseComponent {
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
             this.CurrentSession.StartBusyIndicatorSaving();
-            this.globalDomainService.UpdateOceanInsightGlobalSetting(this.EntityPM).subscribe((response: ServiceResponse) => {
+            this.globalDomainService.UpdateOceanInsightGlobalSetting(this.EntityPM.OITenantNumber, this.EntityPM.AmitalCloudEnvironmentURL, this.EntityPM.AmitalCloudLogitudeTenantPrimaryKey).subscribe((response: ServiceResponse) => {
+                this.CurrentSession.StopBusyIndicator();
                 if (response.HasError) {
                     this.ValidationErrorsList = response.ErrorsArray;
                 }
-                this.CurrentSession.StopBusyIndicator();
+                else {
+                    this.CurrentSession.CloseCurrentWindow();
+                }
             });
         }
     }

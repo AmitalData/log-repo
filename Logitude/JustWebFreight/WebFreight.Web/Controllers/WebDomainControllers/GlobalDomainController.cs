@@ -701,19 +701,19 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                     SecurityUtility.AuthenticationOnTenant(tenant);
 
-                    OceanInsightGlobalSetting OceanInsightGlobalSetting = new OceanInsightGlobalSetting();
+                    OceanInsightGlobalSetting oceanInsightGlobalSetting = new OceanInsightGlobalSetting();
 
                     SettingRepository mySettingRepository = new SettingRepository();
                     Setting setting = mySettingRepository.GetSingleSetting("1");
                     if (setting != null)
                     {
-                        OceanInsightGlobalSetting.OITenantNumber = setting.OITenantNumber;
-                        OceanInsightGlobalSetting.AmitalCloudEnvironmentURL = setting.AmitalCloudEnvironmentURL;
-                        OceanInsightGlobalSetting.AmitalCloudLogitudeTenantPrimaryKey = setting.AmitalCloudLogitudeTenantPrimaryKey;
+                        oceanInsightGlobalSetting.OITenantNumber = setting.OITenantNumber;
+                        oceanInsightGlobalSetting.AmitalCloudEnvironmentURL = setting.AmitalCloudEnvironmentURL;
+                        oceanInsightGlobalSetting.AmitalCloudLogitudeTenantPrimaryKey = setting.AmitalCloudLogitudeTenantPrimaryKey;
                     }
 
                     scope.Complete();
-                    return Request.CreateResponse(HttpStatusCode.OK, OceanInsightGlobalSetting);
+                    return Request.CreateResponse(HttpStatusCode.OK, oceanInsightGlobalSetting);
                 }
             }
             catch (Exception ex)
@@ -722,7 +722,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
         
-        public HttpResponseMessage GetUpdateOceanInsightGlobalSetting(OceanInsightGlobalSetting oceanInsightGlobalSetting)
+        public HttpResponseMessage GetUpdateOceanInsightGlobalSetting(int oITenantNumber, string amitalCloudEnvironmentURL, string amitalCloudLogitudeTenantPrimaryKey)
         {
             try
             {
@@ -734,20 +734,18 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                     SecurityUtility.AuthenticationOnTenant(tenant);
 
-                    OceanInsightGlobalSetting OceanInsightGlobalSetting = new OceanInsightGlobalSetting();
-
                     SettingRepository mySettingRepository = new SettingRepository();
                     Setting setting = mySettingRepository.GetSingleSetting("1");
                     if (setting != null)
                     {
-                        setting.OITenantNumber = OceanInsightGlobalSetting.OITenantNumber;
-                        setting.AmitalCloudEnvironmentURL = OceanInsightGlobalSetting.AmitalCloudEnvironmentURL;
-                        setting.AmitalCloudLogitudeTenantPrimaryKey = OceanInsightGlobalSetting.AmitalCloudLogitudeTenantPrimaryKey;
+                        setting.OITenantNumber = oITenantNumber;
+                        setting.AmitalCloudEnvironmentURL = amitalCloudEnvironmentURL;
+                        setting.AmitalCloudLogitudeTenantPrimaryKey = amitalCloudLogitudeTenantPrimaryKey;
                         mySettingRepository.Update(setting);
                         mySettingRepository.SubmitChanges();
                     }
                     scope.Complete();
-                    return Request.CreateResponse(HttpStatusCode.OK, OceanInsightGlobalSetting);
+                    return Request.CreateResponse(HttpStatusCode.OK, "");
                 }
             }
             catch (Exception ex)
