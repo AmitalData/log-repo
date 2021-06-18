@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { GlobalDomainService, OceanInsightGlobalSetting } from '../../../../Common/Services/GlobalDomainService';
@@ -9,15 +9,19 @@ import { AppTool } from '../../../../Infrastructure/Tools';
     templateUrl: './OceanInsightsSettingsComponent.html',
 })
 
-export class OceanInsightsSettingsComponent extends BaseComponent {
+export class OceanInsightsSettingsComponent extends BaseComponent implements OnInit {
     public EntityPM: OceanInsightGlobalSetting;
     public DataContext: OceanInsightsSettingsComponent = this;
     public ValidationErrorsList: string[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
     private globalDomainService: GlobalDomainService;
-
+    public IsVisible = false;
+     
     constructor() {
         super();
+    }
+
+    ngOnInit() {
         this.globalDomainService = new GlobalDomainService();
         this.GetOceanInsightGlobalSetting();
     }
@@ -26,6 +30,7 @@ export class OceanInsightsSettingsComponent extends BaseComponent {
         this.globalDomainService.GetOceanInsightGlobalSetting().subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
                 this.EntityPM = response.Result;
+                this.IsVisible = true;
             }
         });
     }
