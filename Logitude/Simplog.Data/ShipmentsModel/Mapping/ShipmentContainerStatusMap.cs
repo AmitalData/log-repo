@@ -34,6 +34,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.ShipmentId).HasColumnName("ShipmentId");
             this.Property(t => t.StatusCode).HasColumnName("StatusCode");
+            this.Property(t => t.StatusSource).HasColumnName("StatusSource");
+            this.Property(t => t.ContainerStatusCode).HasColumnName("ContainerStatusCode");
             this.Property(t => t.ReceivingDate).HasColumnName("ReceivingDate");
             this.Property(t => t.Details).HasColumnName("Details");
             this.Property(t => t.FromPortId).HasColumnName("FromPortId");
@@ -55,6 +57,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.VesselName).HasColumnName("VesselName");
 
             this.HasRequired(t => t.INTTRAStatus).WithMany().HasForeignKey(d => d.StatusCode);
+            this.HasRequired(t => t.ContainerStatusSource).WithMany().HasForeignKey(d => d.StatusSource);
+            this.HasRequired(t => t.ContainerStatus).WithMany().HasForeignKey(d => d.ContainerStatusCode);
             this.HasOptional(t => t.FromPort).WithMany().HasForeignKey(d => d.FromPortId);
             this.HasOptional(t => t.LocationPort).WithMany().HasForeignKey(d => d.Location);
             this.HasOptional(t => t.ToPort).WithMany().HasForeignKey(d => d.ToPortId);

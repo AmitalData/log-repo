@@ -33,6 +33,20 @@
       Nullable="false" />
   </Column>
   <Column
+   Name="StatusSource"
+   Type="varchar"
+   Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+   Name="ContainerStatusCode"
+   Type="varchar"
+   Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="FromPortId"
     Type="varchar"
     Size="15">
@@ -166,6 +180,16 @@
   <Relation
     ForeignKeyColumn="StatusCode"
     ReferencedTable="INTTRAStatuses"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="StatusSource"
+    ReferencedTable="ContainerStatusSources"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ContainerStatusCode"
+    ReferencedTable="ContainerStatuses"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Relation

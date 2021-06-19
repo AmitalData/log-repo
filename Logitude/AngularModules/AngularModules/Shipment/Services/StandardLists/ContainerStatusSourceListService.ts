@@ -19,17 +19,17 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorageManager';
-import {ContainerStatusList} from '../../EntityLists/ContainerStatusList';
+import {ContainerStatusSourceList} from '../../EntityLists/ContainerStatusSourceList';
 
 @Injectable()
 
-export class ContainerStatusListService {
+export class ContainerStatusSourceListService {
 	private _http: HttpClient;
     private _apiUrl: string;   
-	public static CachedData: Array<ContainerStatusList> = [];
+	public static CachedData: Array<ContainerStatusSourceList> = [];
     constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/containerstatusviews';  
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/containerstatussourceviews';  
     }
 
 	getSingle(code: string) {
@@ -42,7 +42,7 @@ export class ContainerStatusListService {
 					map((response: HttpResponse<any>) => {
 
 						var list = response.body;                    
-						var entity: ContainerStatusList;
+						var entity: ContainerStatusSourceList;
 						if (list) {
 							entity = this.MapJsonToEntityList(list);
 						}
@@ -52,7 +52,7 @@ export class ContainerStatusListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ContainerStatus", "GetSingleList", 'code=' + code); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ContainerStatusSource", "GetSingleList", 'code=' + code); 
 
 						return serviceResponse;
 					}),
@@ -71,10 +71,10 @@ export class ContainerStatusListService {
 					map((response: HttpResponse<any>) => {
 
 						var allLists = response.body;
-						var _mappedListsArray: Array<ContainerStatusList> = [];
+						var _mappedListsArray: Array<ContainerStatusSourceList> = [];
 						if (allLists) {
 							for (var key in allLists) {			
-								var entity: ContainerStatusList = this.MapJsonToEntityList(allLists[key]);
+								var entity: ContainerStatusSourceList = this.MapJsonToEntityList(allLists[key]);
 								_mappedListsArray.push(entity);
 							}
 						}
@@ -84,7 +84,7 @@ export class ContainerStatusListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ContainerStatus", "GetAll", ""); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ContainerStatusSource", "GetAll", ""); 
 
 						return serviceResponse;
 					}),
@@ -131,11 +131,11 @@ export class ContainerStatusListService {
 					map((response: HttpResponse<any>) => {
 
 						var serviceResponse: ServiceResponse = response.body;
-						var _mappedListsArray: Array<ContainerStatusList> = [];
+						var _mappedListsArray: Array<ContainerStatusSourceList> = [];
 
 						if (serviceResponse.Result) {
 							for (var key in serviceResponse.Result) {				
-								var entity: ContainerStatusList = this.MapJsonToEntityList(serviceResponse.Result[key]);
+								var entity: ContainerStatusSourceList = this.MapJsonToEntityList(serviceResponse.Result[key]);
 								_mappedListsArray.push(entity);
 							}
 						}   
@@ -144,7 +144,7 @@ export class ContainerStatusListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ContainerStatus", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ContainerStatusSource", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
                  								            
 						return serviceResponse;
 					}),
@@ -163,9 +163,9 @@ export class ContainerStatusListService {
 
         var serviceResponse: ServiceResponse = new ServiceResponse();
 
-		if (ContainerStatusListService.CachedData.length > 0) {
+		if (ContainerStatusSourceListService.CachedData.length > 0) {
 			return defer(() => {
-				var filteredData = ContainerStatusListService.CachedData.filter(a => a.Code === code)[0];
+				var filteredData = ContainerStatusSourceListService.CachedData.filter(a => a.Code === code)[0];
 				serviceResponse.CallTime = callTime;
 				serviceResponse.Result = filteredData; 
                 return of(serviceResponse);
@@ -173,25 +173,25 @@ export class ContainerStatusListService {
         }
 
         else {
-            return CachedDataManager.GetClosedTableData("ContainerStatus").pipe(
+            return CachedDataManager.GetClosedTableData("ContainerStatusSource").pipe(
 				map((cachedJson:any) => {
 
-					var _mappedListsArray: Array<ContainerStatusList> = [];
+					var _mappedListsArray: Array<ContainerStatusSourceList> = [];
 
 					if (cachedJson) {
 						for (var key in cachedJson) {
-							var entity: ContainerStatusList = this.MapJsonToEntityList(cachedJson[key]);
+							var entity: ContainerStatusSourceList = this.MapJsonToEntityList(cachedJson[key]);
 							_mappedListsArray.push(entity);
 						}
 					}
 
-					ContainerStatusListService.CachedData = _mappedListsArray;
+					ContainerStatusSourceListService.CachedData = _mappedListsArray;
 
-					var filteredData = ContainerStatusListService.CachedData.filter(a => a.Code === code)[0];
+					var filteredData = ContainerStatusSourceListService.CachedData.filter(a => a.Code === code)[0];
 					serviceResponse.Result = filteredData; 
 					serviceResponse.CallTime = callTime;
 			     
-					PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "ContainerStatus", "GetSingleListFromCache", 'code=' + code); 
+					PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "ContainerStatusSource", "GetSingleListFromCache", 'code=' + code); 
 
 					return serviceResponse;
 				}),
@@ -222,14 +222,14 @@ export class ContainerStatusListService {
 
         var serviceResponse: ServiceResponse = new ServiceResponse();
 
-        if (ContainerStatusListService.CachedData.length > 0) {
+        if (ContainerStatusSourceListService.CachedData.length > 0) {
             return defer(() => {
                 if (filters.GetAll) {
-					serviceResponse.Result = ContainerStatusListService.CachedData; 
+					serviceResponse.Result = ContainerStatusSourceListService.CachedData; 
 				}
 
 				else {
-					var filteredData = InfraGenericFilter.GetFilteredArray(ContainerStatusListService.CachedData, filters);
+					var filteredData = InfraGenericFilter.GetFilteredArray(ContainerStatusSourceListService.CachedData, filters);
 					serviceResponse.Result = filteredData; 
 					serviceResponse.CallTime = callTime;
 				}
@@ -239,18 +239,18 @@ export class ContainerStatusListService {
         }
 
         else {
-            return CachedDataManager.GetClosedTableData("ContainerStatus").pipe(
+            return CachedDataManager.GetClosedTableData("ContainerStatusSource").pipe(
 				map((cachedJson:any) => {
 
-					var _mappedListsArray: Array<ContainerStatusList> = [];
+					var _mappedListsArray: Array<ContainerStatusSourceList> = [];
 					if (cachedJson) {
 						for (var key in cachedJson) {
-							var entity: ContainerStatusList = this.MapJsonToEntityList(cachedJson[key]);
+							var entity: ContainerStatusSourceList = this.MapJsonToEntityList(cachedJson[key]);
 							_mappedListsArray.push(entity);
 						}
 					}
 
-					ContainerStatusListService.CachedData = _mappedListsArray;
+					ContainerStatusSourceListService.CachedData = _mappedListsArray;
 
 					if (filters.GetAll) {
 						serviceResponse.Result = _mappedListsArray; 
@@ -260,7 +260,7 @@ export class ContainerStatusListService {
 
 						_mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
 
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "ContainerStatus", "GetAllFromCache", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "ContainerStatusSource", "GetAllFromCache", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll); 
                  	
 						serviceResponse.Result = _mappedListsArray; 
 						serviceResponse.CallTime = callTime;
@@ -275,8 +275,8 @@ export class ContainerStatusListService {
 	
 	    MapJsonToEntityList(jsonList: any) {
        
-            var entityList: ContainerStatusList;
-            entityList = new ContainerStatusList();
+            var entityList: ContainerStatusSourceList;
+            entityList = new ContainerStatusSourceList();
             var jsonListKeys = Object.keys(jsonList);
 
             for (var key in jsonListKeys) {

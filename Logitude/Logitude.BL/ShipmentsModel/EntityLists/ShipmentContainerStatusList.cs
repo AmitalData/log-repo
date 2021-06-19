@@ -36,5 +36,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string TimeOfArrivalInfo { get; set; }
         public string ContainerId { get; set; }
         public string ContainerNumber { get; set; }
+        public string StatusSource { get; set; }
+        public string ContainerStatusCode { get; set; }
     }
 }
