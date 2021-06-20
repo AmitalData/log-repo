@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using Logitude.CommonDataTests.DataService;
+using Logitude.CommonDataTests.ExternalServices;
 using Logitude.CommonTests.Models;
 using Logitude.Test.Base.Context;
 using Logitude.Test.Base.Models.Shared;
@@ -14,12 +14,12 @@ namespace Logitude.CommonTests.Steps.Security
     public class TenantSecurityAccessSteps
     {
         private SecurityAccessStepsContext<TenantPM> Context;
-        private TenantDataService tenantDataService;
+        private TenantExternalServices tenantDataService;
 
         public TenantSecurityAccessSteps( SecurityAccessStepsContext<TenantPM> context)
         {
             Context = context;
-            tenantDataService = new TenantDataService();
+            tenantDataService = new TenantExternalServices();
         }
 
         #region Step Region

@@ -85,6 +85,11 @@
             return "Tenants/GetSingle?id=" + id.ToString();
         }
 
+        public static string TenantsUpdate(int id)
+        {
+            return "Tenants/" + id.ToString();
+        }
+
         public static string ContactsGetSingle(string id)
         {
             return "Contacts/GetSingle?id=" + id;
