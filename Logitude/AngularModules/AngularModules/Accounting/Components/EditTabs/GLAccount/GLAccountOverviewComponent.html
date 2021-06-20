@@ -484,7 +484,7 @@
                                         <IconButton [IsSmall]="true" [style.float]="isRTL ? 'left' : 'right'" [Name]="'Add'"
                                             (click)="OpenAccountingNote(null)"></IconButton>
                                     </div>
-                                    <div class="content" style="padding: 5px 0;height: calc(100% - 120px);overflow: auto;">
+                                    <div class="content" style="padding: 5px 0;height: calc(100% - 150px);overflow: scroll ;">
                                         <ul *ngIf="!isNotesLoading && accountingNotesList.length > 0" class="accounting-notes-list">
 
                                             <li *ngFor="let note of accountingNotesList" [attr.title]="GetNoteTitle(note)">
