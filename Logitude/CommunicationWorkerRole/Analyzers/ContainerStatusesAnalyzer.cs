@@ -69,11 +69,14 @@ namespace CommunicationWorkerRole.Analyzers
       
         private void ReadAdditionalFieldsFromCommunicationLog()
         {
-            this.refrenceNumber = communicationLog.EntityReference;
-            this.scacCode = communicationLog.AdditionalFields?.Split(',')?[0];
-            this.oceanInsightInsertType = communicationLog.AdditionalFields?.Split(',')?[1];
-            this.shipmentId = communicationLog.AdditionalFields?.Split(',')?[2];
-            this.containerNumber = communicationLog.AdditionalFields?.Split(',')?[3];
+            if (communicationLog.AdditionalFields?.Split(',').Length > 3)
+            {
+                this.refrenceNumber = communicationLog.EntityReference;
+                this.scacCode = communicationLog.AdditionalFields?.Split(',')?[0];
+                this.oceanInsightInsertType = communicationLog.AdditionalFields?.Split(',')?[1];
+                this.shipmentId = communicationLog.AdditionalFields?.Split(',')?[2];
+                this.containerNumber = communicationLog.AdditionalFields?.Split(',')?[3];
+            }
         }
 
         private void FillAmitalLogIntoken()
