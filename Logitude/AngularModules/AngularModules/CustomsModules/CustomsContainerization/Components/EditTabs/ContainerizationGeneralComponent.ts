@@ -63,8 +63,8 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
                 this.ObjectTableName = this.entityArgs.ObjectTableName;
                 this.Listen();
                 this.SetFieldsEditability();
-                
-                
+
+
                 this.getRows(); 
             });
         });
@@ -112,6 +112,10 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
             .subscribe(r => {
                 this.ContainerizationDeclarationList = new ObservableCollection([]);
                 this.ContainerizationDeclarationList.InsertCollection(r.Result);
+                this.EntityPM.DisableMarkAsDirty = true;
+                this.EntityPM.ConnectedDeclarations = "";
+                r.Result.forEach(x => this.EntityPM.ConnectedDeclarations += x.Id + ",");
+                this.EntityPM.DisableMarkAsDirty = false;
             });
 
     }
@@ -125,7 +129,10 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
         filters.addAdditionalFilter("Id", this.EntityPM.ConnectedDeclarations, null, null, "InListExact", false, false, false, "string", this.EntityPM.ConnectedDeclarations.length == 0);
         return this.declarationListService.getByFilters(filters)
             .subscribe(r => {
-                r.Result.forEach(element => this.ContainerizationDeclarationList.Insert(element));
+                r.Result.forEach(element => {
+                    if (!this.ContainerizationDeclarationList.Collection.filter(x => x.Id == element.Id).length)
+                        this.ContainerizationDeclarationList.Insert(element);
+                });
                 var e=this.ContainerizationDeclarationList;
             });
     }
@@ -147,6 +154,8 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
                 this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.getRows();
+
                         //this.RefreshEntity();
                     }
                 })
