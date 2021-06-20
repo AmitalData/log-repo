@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using Logitude.CommonDataTests.DataService;
+using Logitude.CommonDataTests.ExternalServices;
 using Logitude.CommonTests.Models;
 using Logitude.Test.Base.Context;
 using Logitude.Test.Base.Models.Api;
@@ -10,23 +10,20 @@ using System;
 using System.Collections.Generic;
 using TechTalk.SpecFlow;
 
-namespace Logitude.CommonDataTests.Steps.Security
+
+namespace Logitude.CommonDataTests.Steps.LocalSettings
 {
     [Binding]
     public class GetLocalSettingsAccessSteps
     {
-
         private SecurityAccessStepsContext<TenantPM> Context;
-        private TenantDataService tenantDataService;
+        private TenantExternalServices tenantDataService;
 
         public GetLocalSettingsAccessSteps(SecurityAccessStepsContext<TenantPM> context)
         {
             Context = context;
-            tenantDataService = new TenantDataService();
+            tenantDataService = new TenantExternalServices();
         }
-
-
-        #region Step Region
 
         #region Get local settings for user's tenant
         [When(@"get local settings for user's tenant")]
@@ -41,6 +38,8 @@ namespace Logitude.CommonDataTests.Steps.Security
             Context.FirstUserPMData.Should().NotBeNull();
         }
         #endregion
+
+
 
         #region Get local settings for other tenant
         [When(@"get local settings for other tenant")]
@@ -59,6 +58,6 @@ namespace Logitude.CommonDataTests.Steps.Security
         }
         #endregion
 
-        #endregion
+
     }
 }
