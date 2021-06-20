@@ -230,7 +230,7 @@ export class NewContainerizationComponent extends BaseComponent {
             FieldName: 'MyConnectedCheckBox',
             DataTypeCode: 'String',//'Number',
             Display: '',
-            Styles: { width: '30px'},
+            Styles: { width: '25px'},
             IsCustomTemplate: true,
             HtmlListComponentName: 'CustomsContainerizationListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsContainerizationListTemplate',

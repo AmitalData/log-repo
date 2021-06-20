@@ -199,15 +199,15 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         button.Width = 100;
                         if (this.EntityPM.Direction == "E") {
                             button.IsHidden = false;
-                        } else {
+                        } else { 
                             button.IsHidden = true;
                         }
                     } 
                     if (button.EventCode == "OpenNewContainerization") {
                         button.Width = 100;
                         button.DisplayText = "המכלה";
-                        if (this.EntityPM.Direction == "E" && this.EntityPM.ProcedureCurrentName.includes("המכלה לפני התרה")) {
-                            button.IsHidden = false;
+                        if (this.EntityPM.Direction == "E" && this.EntityPM.ProcedureCurrentCode && this.EntityPM.ProcedureCurrentName && this.EntityPM.ProcedureCurrentName.includes("המכלה לפני התרה")) {
+                                button.IsHidden = false;
                         } else {
                             button.IsHidden = true;
                         }
