@@ -36,7 +36,7 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="Shipment"
   DefaultText="&quot;Shipment PickUp Delivery Package&quot;"
-  Code="&quot;84fe&quot;"
+  Code="&quot;ee58&quot;"
   Name="&quot;ShipmentPickUpDeliveryPackage&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Shipment&quot;"

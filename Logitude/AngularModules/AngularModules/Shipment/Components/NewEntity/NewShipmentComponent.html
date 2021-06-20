@@ -329,7 +329,7 @@
                                                             <td>
                                                                 <div class="MediaFill">
                                                                     <div class="LeftCenter" style="width: 12px; height: 12px;">
-                                                                        <div *ngIf="!IsStandalone" class="GreenAddButton" [class.GreenAddButtonDisabled]="!IsScreenEnabled" (mousedown)="AddPartnerClicked('S')"></div>
+                                                                        <div *ngIf="!IsStandalone || IsNewStandAlonePickupDelivery" class="GreenAddButton" [class.GreenAddButtonDisabled]="!IsScreenEnabled" (mousedown)="AddPartnerClicked('S')"></div>
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -368,7 +368,7 @@
                                                                                     <td>
                                                                                         <div style="margin-left: 2px;">
                                                                                             <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditAddressClicked('S')" [disabled]="!ShipperAddressId || !IsScreenEnabled"></IconButton>
-                                                                                            <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddAddressClicked('S')" [disabled]="!IsScreenEnabled || IsStandalone"></IconButton>
+                                                                                            <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddAddressClicked('S')" [disabled]="!IsScreenEnabled || IsStandalone || !IsNewStandAlonePickupDelivery"></IconButton>
                                                                                         </div>
                                                                                     </td>
                                                                                 </tr>
@@ -479,7 +479,7 @@
                                                             <td>
                                                                 <div class="MediaFill">
                                                                     <div class="LeftCenter" style="width: 12px; height: 12px;">
-                                                                        <div *ngIf="!IsStandalone" class="GreenAddButton" [class.GreenAddButtonDisabled]="!IsScreenEnabled" (mousedown)="AddPartnerClicked('C')"></div>
+                                                                        <div *ngIf="!IsStandalone || IsNewStandAlonePickupDelivery" class="GreenAddButton" [class.GreenAddButtonDisabled]="!IsScreenEnabled" (mousedown)="AddPartnerClicked('C')"></div>
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -519,7 +519,7 @@
                                                                                     <td>
                                                                                         <div style="margin-left: 2px;">
                                                                                             <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditAddressClicked('C')" [disabled]="!ConsigneeAddressId || !IsScreenEnabled"></IconButton>
-                                                                                            <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddAddressClicked('C')" [disabled]="!IsScreenEnabled  || IsStandalone"></IconButton>
+                                                                                            <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddAddressClicked('C')" [disabled]="!IsScreenEnabled  || IsStandalone || !IsNewStandAlonePickupDelivery"></IconButton>
                                                                                         </div>
                                                                                     </td>
                                                                                 </tr>
@@ -644,7 +644,7 @@
                                                                 <td>
                                                                     <div class="MediaFill">
                                                                         <div class="LeftCenter" style="width: 12px; height: 12px;">
-                                                                            <div *ngIf="!IsStandalone" class="GreenAddButton" [class.GreenAddButtonDisabled]="!IsScreenEnabled" (mousedown)="AddPartnerClicked('T')"></div>
+                                                                            <div *ngIf="!IsStandalone || IsNewStandAlonePickupDelivery" class="GreenAddButton" [class.GreenAddButtonDisabled]="!IsScreenEnabled" (mousedown)="AddPartnerClicked('T')"></div>
                                                                         </div>
                                                                     </div>
                                                                 </td>
