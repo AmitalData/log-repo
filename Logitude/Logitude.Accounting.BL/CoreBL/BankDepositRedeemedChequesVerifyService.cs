@@ -180,8 +180,6 @@ namespace Logitude.Accounting.BL.CoreBL
                                                                         && ledger.LocalAmountCredit == 0 
                                                                         && ledger.IsExternalReconcile == true
                                                                         && journal.AccountingEntityReference == cheque.ChequeNumber
-
-                                                                       && cheque.StatusCode == "3"
                                                                  select new ARPaymentChequePM()
                                                                  {
                                                                      Id = cheque.Id,
