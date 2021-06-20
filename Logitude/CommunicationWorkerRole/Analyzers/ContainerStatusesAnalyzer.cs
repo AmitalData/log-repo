@@ -81,7 +81,7 @@ namespace CommunicationWorkerRole.Analyzers
 
         private void FillAmitalLogIntoken()
         {
-            var loginResponse = LoginToCloud();
+            var loginResponse = LoginToCloud();  
             loginResponse.Wait();
             if (loginResponse.Result != null && !loginResponse.Result.HasError)
             {
