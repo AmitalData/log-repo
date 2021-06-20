@@ -28,5 +28,16 @@ export class ContainerList {
 		MainCarriageATD: Date;
 		DischargeDate: Date;
 		ShipmentId: string;
+		EmptyPickupLocation: string;
+		EstimatedEmptyPickupDate: Date;
+		ActualEmptyPickupDate: Date;
+		EstimatedGateInDate: Date;
+		ActualGateInDate: Date;
+		DepartureLocation: string;
+		DestinationLocation: string;
+		CurrentStatus: string;
+		CurrentStatusDate: Date;
+		CurrentLocation: string;
+		HasContainerException: boolean;
 	
 }
