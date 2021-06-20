@@ -13,4 +13,5 @@ export class FBLStockSelectors {
   public static readonly Add = "[data-cy='Add_FBL']"
   public static readonly Delete = "#ConfirmWindow_Yes_0"
   public static readonly RemoveSeries = "[data-cy='RemoveSeries_FBL']"
+  public static readonly CloseButton = ".Button"
 }

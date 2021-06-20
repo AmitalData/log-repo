@@ -2,17 +2,17 @@
 Feature: Currency fake Create, Search and Edit from Maintenance
     The user creates a Currency, searches for and edits it from the Maintenance Module.
 
-    Scenario: Creat Currency already exists
+    Scenario: Create Currency already exists
         Given the user logged in and open "Currencies" in maintenance menu
         And navigate currency wizard
         And  fill the following currency details
-            | Currency         | USD |
+            | Currency         | EUR |
             | ExchangeRate     | 10  |
             | ExchangeRateDate | .   |
         When create currency
         Then this validation message error "This currency already exists" should appear
 
-    Scenario: Creat Currency
+    Scenario: Create Currency
         And fill the following currency details
             | Currency         | DM |
             | ExchangeRate     | 10 |
@@ -21,8 +21,8 @@ Feature: Currency fake Create, Search and Edit from Maintenance
         Then the currency should create successfully
 
     Scenario: Search for the currency by code
-        When search for "USD" currency
-        Then the "USD" currency should appear successfully
+        When search for "EUR" currency
+        Then the "EUR" currency should appear successfully
 
     Scenario: Open the Currency
         When open currency
