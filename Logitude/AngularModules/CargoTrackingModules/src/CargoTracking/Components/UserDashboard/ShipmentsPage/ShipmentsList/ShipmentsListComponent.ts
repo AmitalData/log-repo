@@ -54,6 +54,8 @@ export class ShipmentsListComponent implements AfterViewInit
     ValueOfEstimationORActualDate: Date;
     ShipmentTypeAndDirectionTooltip: string;
     SupplierOrClientTitle: string;
+    SupplierOrClientValue: string;
+
     ShipmenTypeForRouting: string;
 
 
@@ -124,7 +126,14 @@ export class ShipmentsListComponent implements AfterViewInit
 
     }
 
-    SetSupplierOrClientTitle(shipment: CargoTrackingShipmentList) {
+    SetTitileAndValueForSupplierOrClient(shipment: CargoTrackingShipmentList)
+    {
+        this.SetTitleForSupplierOrClient(shipment);
+        this.SetValueForSupplierOrClient(shipment);
+    }
+
+
+    SetTitleForSupplierOrClient(shipment: CargoTrackingShipmentList) {
         var title;
         switch (shipment.DirectionId) {
             case 'E': {
@@ -132,13 +141,45 @@ export class ShipmentsListComponent implements AfterViewInit
                 break;
             }
 
-            case 'I': {
+            case 'I':
+            case 'C': {
                 title = "SUPPLIER"
                 break;
             }
         }
 
         this.SupplierOrClientTitle = title;
+    }
+
+    SetValueForSupplierOrClient(shipment: CargoTrackingShipmentList) {
+        var value;
+        value = this.SetSupplierOrCleintValueByDirection(shipment, value);
+        value = this.SetSupplierOrCleintValueByEntityType(shipment, value);
+
+        this.SupplierOrClientValue = value;
+    }
+
+    private SetSupplierOrCleintValueByDirection(shipment: CargoTrackingShipmentList, value: any) {
+        switch (shipment.DirectionId) {
+            case 'E': {
+                value = shipment.ShipperName;
+                break;
+            }
+
+            case 'I': {
+                value = shipment.ConsigneeName;
+                break;
+            }
+        }
+        return value;
+    }
+
+    private SetSupplierOrCleintValueByEntityType(shipment: CargoTrackingShipmentList, value: any) {
+        const EntityType_Customs = "C";
+        if (shipment.EntityType == EntityType_Customs) {
+            value = shipment.ConsigneeName;
+        }
+        return value;
     }
 
     SetShipmenTypeForRouting(shipment: CargoTrackingShipmentList) {

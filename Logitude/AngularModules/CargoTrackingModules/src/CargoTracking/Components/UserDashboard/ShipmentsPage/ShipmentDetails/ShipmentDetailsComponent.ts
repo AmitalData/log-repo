@@ -1,8 +1,4 @@
-import
-    {
-        Component,
-        ViewChild, ElementRef, AfterViewInit, HostListener
-    } from '@angular/core';
+import {Component,ViewChild, ElementRef, AfterViewInit, HostListener, Input, EventEmitter} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { CargoTrackingSearchService } from 'src/CargoTracking/Services/Others/CargoTrackingSearchService';
@@ -23,7 +19,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
 
     @ViewChild('SliderWrapper') SliderWrapperElement: ElementRef;
 
-
+    @Input() DetailsSectionToggleEvent: EventEmitter<any> = new EventEmitter();
 
     isLoading: boolean = false;
     showMoreReferences: boolean = false;
@@ -44,6 +40,9 @@ export class ShipmentDetailsComponent implements AfterViewInit
     InlandTransportMode = 'I';
     OceanTransportMode = 'O';
     AirTransportMode = 'A';
+    ContainersNumbers: string[] = [];
+    ShowDetailsSection: boolean = false;
+
 
     ShipmentCustomsData: CargoTrackingShipmentCustomsData;
     get tenant()
@@ -134,6 +133,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
                 this.GetShipmentCustomsData();
                 this.GetShipmentPackages();
                 this.GetDocumentsFilingsConnectedToShipment();
+                this.SetContainersNumbers(result);
 
             }
 
@@ -145,6 +145,8 @@ export class ShipmentDetailsComponent implements AfterViewInit
             }, 200);
         });
     }
+
+
     SetHasReferences() {
         return this.ShipmentReferences == null ? false : true;
     }
@@ -213,6 +215,11 @@ export class ShipmentDetailsComponent implements AfterViewInit
             }
         });
     }
+
+    private SetContainersNumbers(result: any) {
+        this.ContainersNumbers = result.ShipmentList.ContainersNumbers ? result.ShipmentList.ContainersNumbers.split(',') : null;
+    }
+
     PartnersAddresses: any[] = [];
     GetPartnersAddresses(){
         var partnersIds = this.GetShipmentPMPartnersIds();
@@ -377,7 +384,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
                 newCard.Date = milstone.Done ? milstone.Date : (milstone.EstimationDate || milstone.Date);
                 newCard.Code = 'No. ' + milstone.Id;
                 newCard.Title = milstone.Name;
-                newCard.Description = milstone.Notes || 'This milestone does not have descriptions';
+                newCard.Description = milstone.Notes;
                 newCard.IsDimmed = milstone.IsEstimation && !milstone.Done;
                 newCard.IsActive = milstone.Id + '' == this.Shipment.ShipmentList.CurrentMilestoneCode;
                 newCard.HasWarning = newCard.IsActive;
@@ -886,6 +893,11 @@ export class ShipmentDetailsComponent implements AfterViewInit
 
     DownloadAllClick(entityId: string) {
         this.documentDownloadService.DownloadAllPages(entityId);
+    }
+
+    ShowMoreLinkClicked() {
+        this.ShowDetailsSection = !this.ShowDetailsSection;
+        this.DetailsSectionToggleEvent.emit();
     }
 }
 

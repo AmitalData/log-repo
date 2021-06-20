@@ -183,7 +183,16 @@ namespace WarehouseData.Helper
                 {
                     foreach (DWObjectFieldDB field in tableClass.DWObjectFieldDBLists.Where(d => d.DataTypeCode == "Dimension").ToList())
                     {
-                        if (field.DimensionTableCode != "DIM_Dates")
+                        if(field.DimensionTableCode== "DIM_Dates")
+                        {
+                            field.DataTypeCode = "DateTime";
+                        }
+                        else if (field.DimensionTableCode == "DIM_InvoiceMainTypes")
+                        {
+                            field.DataTypeCode = "Text";
+                            field.MaxLength = 15;
+                        }
+                        else 
                         {
                             var dimensionTable = tableNameLists.Where(d => d.DWObjectTableCode == field.DimensionTableCode).FirstOrDefault();
                             if (dimensionTable != null)
@@ -199,7 +208,6 @@ namespace WarehouseData.Helper
                                 }
                             }
                         }
-                        else field.DataTypeCode = "DateTime";
                     }
                 }
             }

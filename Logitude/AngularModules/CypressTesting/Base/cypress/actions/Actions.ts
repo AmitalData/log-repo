@@ -133,7 +133,7 @@ function GetMonth(monthNum: string) {
       case "03": return "Mar"; 
       case "04": return "Apr"; 
       case "05": return "May"; 
-      case "06": return "June"; 
+      case "06": return "Jun"; 
       case "07": return "July"; 
       case "08": return "Aug"; 
       case "09": return "Sept"; 

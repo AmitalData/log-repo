@@ -844,6 +844,21 @@ export class GLAccountPM {
     public set GLAccountFollowUpRemarks(newValue: string) { if (this.gLAccountFollowUpRemarks != newValue) { this.gLAccountFollowUpRemarks = newValue; this.MarkAsDirty("GLAccountFollowUpRemarks"); } }
        
 	 
+    private calculatedAgingPeriod1: number;
+    public get CalculatedAgingPeriod1() { return this.calculatedAgingPeriod1; }
+    public set CalculatedAgingPeriod1(newValue: number) { if (this.calculatedAgingPeriod1 != newValue) { this.calculatedAgingPeriod1 = newValue; this.MarkAsDirty("CalculatedAgingPeriod1"); } }
+       
+	 
+    private calculatedAgingPeriod2: number;
+    public get CalculatedAgingPeriod2() { return this.calculatedAgingPeriod2; }
+    public set CalculatedAgingPeriod2(newValue: number) { if (this.calculatedAgingPeriod2 != newValue) { this.calculatedAgingPeriod2 = newValue; this.MarkAsDirty("CalculatedAgingPeriod2"); } }
+       
+	 
+    private calculatedAgingPeriod3: number;
+    public get CalculatedAgingPeriod3() { return this.calculatedAgingPeriod3; }
+    public set CalculatedAgingPeriod3(newValue: number) { if (this.calculatedAgingPeriod3 != newValue) { this.calculatedAgingPeriod3 = newValue; this.MarkAsDirty("CalculatedAgingPeriod3"); } }
+       
+	 
     private insuredCreditLimit: number;
     public get InsuredCreditLimit() { return this.insuredCreditLimit; }
     public set InsuredCreditLimit(newValue: number) { if (this.insuredCreditLimit != newValue) { this.insuredCreditLimit = newValue; this.MarkAsDirty("InsuredCreditLimit"); } }
@@ -877,4 +892,4 @@ export class GLAccountPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

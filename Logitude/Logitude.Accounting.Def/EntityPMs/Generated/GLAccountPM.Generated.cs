@@ -3378,6 +3378,75 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private decimal? calculatedAgingPeriod1 ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? CalculatedAgingPeriod1  
+	   {
+	    
+	     get
+		{
+		   return calculatedAgingPeriod1;
+		 }
+		 set
+		 {
+		   if(calculatedAgingPeriod1 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CalculatedAgingPeriod1",OldValue=calculatedAgingPeriod1,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   calculatedAgingPeriod1=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? calculatedAgingPeriod2 ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? CalculatedAgingPeriod2  
+	   {
+	    
+	     get
+		{
+		   return calculatedAgingPeriod2;
+		 }
+		 set
+		 {
+		   if(calculatedAgingPeriod2 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CalculatedAgingPeriod2",OldValue=calculatedAgingPeriod2,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   calculatedAgingPeriod2=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? calculatedAgingPeriod3 ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? CalculatedAgingPeriod3  
+	   {
+	    
+	     get
+		{
+		   return calculatedAgingPeriod3;
+		 }
+		 set
+		 {
+		   if(calculatedAgingPeriod3 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CalculatedAgingPeriod3",OldValue=calculatedAgingPeriod3,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   calculatedAgingPeriod3=value;
+		   }
+			
+		 }
+	   }
 	  private double? insuredCreditLimit ;
 	  	  
        

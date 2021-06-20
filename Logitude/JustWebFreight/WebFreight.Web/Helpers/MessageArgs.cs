@@ -12,5 +12,9 @@ namespace WebFreight.Web.Helpers
         public string ReplyTo { get; set; }
         public string HtmlTemplate { get; set; }
 
+        public string CC { get; set; }
+        public string BCC { get; set; }
+
+
     }
 }

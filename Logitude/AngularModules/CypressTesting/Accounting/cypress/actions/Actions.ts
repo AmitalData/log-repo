@@ -170,7 +170,7 @@ export function FillARInvoiceDetails(aRInvoiceDetails: ARInvoiceDetails) {
     if (aRInvoiceDetails.Partner) {
         cy.FillLogLov(AccountingSelectors.ARInvoicePartner, aRInvoiceDetails.Partner, false)
     }
-    cy.FillLogLov(AccountingSelectors.ARInvoiceInvoiceCurrency, aRInvoiceDetails.InvoiceCurrency, true)
+    cy.SelectDropDownListItem(AccountingSelectors.LogLovARInvoiceInvoiceCurrency, aRInvoiceDetails.InvoiceCurrency)
     if(aRInvoiceDetails.InvoiceExchangeRate) {
         cy.FillLogTextBox(AccountingSelectors.ARInvoiceExchangeRate, aRInvoiceDetails.InvoiceExchangeRate.toString());
     }

@@ -1,0 +1,10 @@
+﻿<Script DBType="Main" Module="Invoice"  AOT="true" TargetTableName="PaymentTerms">
+
+	<Sql Version="1">
+		<![CDATA[
+    
+update  PaymentTerms set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null and $LastCounterWhere$
+
+    ]]>
+	</Sql>
+</Script>

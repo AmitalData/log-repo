@@ -28,6 +28,9 @@ import {ContactListService} from '../../../../Common/Services/StandardLists/Cont
 })
 
 export class OpportunityGeneralTabComponent extends BaseComponent implements OnInit, AfterViewInit {
+    public LabelWidth: number = 150;
+    public ControlWidth: number = 230;
+
     public ObjectTableName: string = "Opportunity";
     public DataContext: OpportunityGeneralTabComponent = this;
     public EntityPM: OpportunityPM = new OpportunityPM();
@@ -416,10 +419,12 @@ export class OpportunityGeneralTabComponent extends BaseComponent implements OnI
         SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.viewContainerRef)
             .then(cmpRef => {
                 this.GeneratedComponent = cmpRef.instance;
+
                 cmpRef.instance.LoadCompleted.subscribe(s => {
                     this.SetUIProperties_GeneratedComponent();
                 });
 
+                cmpRef.instance.LabelWidth = this.LabelWidth;
                 cmpRef.instance.Run(this.entityArgs.EntityPM, this.entityArgs.ObjectTableName, this.ScreenCode);
             });
     }
