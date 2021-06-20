@@ -336,12 +336,22 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 ValidateGLAccountAccountType(entityPM);
              
             }
-            else if(entityPM.APPaymentId != null && (entityPM.IsCancelled || entityPM.PaymentChequeStatusCode == "4") && !entityPM.CancelledByAPPayment)
+             if( entityPM.IsCancelled || entityPM.PaymentChequeStatusCode == "4")
             {
-                PreventCancellingPaymentCheque(entityPM);
+                ValidateCancellingPaymentCheque(entityPM, EntityPOCO);
             }
           
           
+        }
+        private void  ValidateCancellingPaymentCheque(PaymentChequePM paymentChequePM , PaymentCheque paymentChequePoco)
+        {
+            if(paymentChequePM.IsCancelled && !paymentChequePoco.IsCancelled)
+            {
+                if (paymentChequePM.APPaymentId != null && (paymentChequePM.IsCancelled || paymentChequePM.PaymentChequeStatusCode == "4") && !paymentChequePM.CancelledByAPPayment)
+                {
+                    PreventCancellingPaymentCheque(paymentChequePM);
+                }
+            }
         }
 
         public void PreventCancellingPaymentCheque(PaymentChequePM paymentCheque)
