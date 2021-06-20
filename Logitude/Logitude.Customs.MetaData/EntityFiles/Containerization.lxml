@@ -1764,6 +1764,13 @@
         IndexOrder="1"
         LocalDefaultText="&quot;ביטול המכלה&quot;"
         IsPackagable="true" />
+      <MenuItem
+        EventCode="&quot;DeclarationsStatusRequest&quot;"
+        DefaultText="&quot;Declarations Status Request&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="2"
+        LocalDefaultText="&quot;סטטוס הצהרות בהמכלה&quot;"
+        IsPackagable="true" />
     </MenuButton>
   </MenuButtons>
   <DataContracts />

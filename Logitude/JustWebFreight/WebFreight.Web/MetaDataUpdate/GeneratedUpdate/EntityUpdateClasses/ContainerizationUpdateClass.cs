@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ContainerizationUpdateClass
    {  		
-		public const string HashString = "c50a6851998bc679de8c8012de846775";
+		public const string HashString = "55a72db9c271fb28694b84448e8c6bb6";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -185,12 +185,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
 					  						DefaultText =  "Search ...",
-					  						FullLocalDefaultText =  "תיק יצוא / מזהה מטען",
+					  						FullLocalDefaultText =  "תיק יצום / מזהה מטען",
 					  						ListFieldLable =  "SearchFieldsListLable",
 					  						ListLableDefaultText =  "Search ...",
 					  						ShortFieldLable =  "SearchFields",
-					  						ShortFieldLableDefaultText =  "תיק יצוא / מזהה מטען",
-					  						ShortLocalDefaultText =  "תיק יצוא / מזהה מטען",
+					  						ShortFieldLableDefaultText =  "תיק יצום / מזהה מטען",
+					  						ShortLocalDefaultText =  "תיק יצום / מזהה מטען",
 					  						IsMaxLength =  true,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -309,10 +309,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ContainerizationDate",
 					  						DefaultText =  "Containerization Date",
-					  						FullLocalDefaultText =  "תאריך פתיחת המכלה",
+					  						FullLocalDefaultText =  "תםריך פתיחת המכלה",
 					  						ListFieldLable =  "ContainerizationDateListLable",
 					  						ListLableDefaultText =  "Containerization Date",
-					  						ListLocalDefaultText =  "תאריך פתיחת המכלה",
+					  						ListLocalDefaultText =  "תםריך פתיחת המכלה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -623,10 +623,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExportFile",
 					  						DefaultText =  "Export File",
-					  						FullLocalDefaultText =  "תיק יצוא",
+					  						FullLocalDefaultText =  "תיק יצום",
 					  						ListFieldLable =  "ExportFileListLable",
 					  						ListLableDefaultText =  "Export File",
-					  						ListLocalDefaultText =  "תיק יצוא",
+					  						ListLocalDefaultText =  "תיק יצום",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1106,10 +1106,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsChange",
 					  						DefaultText =  "Is Change",
-					  						FullLocalDefaultText =  "האם יש שינוי בהמכלה",
+					  						FullLocalDefaultText =  "הםם יש שינוי בהמכלה",
 					  						ListFieldLable =  "IsChangeListLable",
 					  						ListLableDefaultText =  "Is Change",
-					  						ListLocalDefaultText =  "האם יש שינוי בהמכלה",
+					  						ListLocalDefaultText =  "הםם יש שינוי בהמכלה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1364,6 +1364,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable ContainerizationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.Containerization" && d.Tenant == 0).FirstOrDefault(); 			   Feature ContainerizationFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AddDeclaration", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Containerization.Features.AddDeclaration", NameTextCodeDefaultText = "Add Declaration", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContainerizationObjectTable);
              			   Feature ContainerizationFeature_MB01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CancelContainerization", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Containerization.Features.CancelContainerization", NameTextCodeDefaultText = "Cancel Containerization", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContainerizationObjectTable);
+             			   Feature ContainerizationFeature_MB02 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationsStatusRequest", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Containerization.Features.DeclarationsStatusRequest", NameTextCodeDefaultText = "Declarations Status Request", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContainerizationObjectTable);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -1433,6 +1434,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  ContainerizationFeature_MB01.FeatureUniqeCode,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
+			   MenuButton ContainerizationMenuButton02 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "DeclarationsStatusRequest",
+						Index = 2, 
+						IsActive = true,
+						LabelTextCodeCode = "Containerization.B.DeclarationsStatusRequest",
+						LabelTextCodeDefaultText = "Declarations Status Request",
+						Tenant = 0,
+						MenuButtonGroupId = ContainerizationMenuButtonGroup.Id,
+						ParentMenuButtonId = ContainerizationMenuButton0.Id,
+						ObjectTableId = ContainerizationObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  ContainerizationFeature_MB02.Id,
+						Style = null,
+						LocalDefaultText = "סטטוס הצהרות בהמכלה",
+                        HtmlComponentPath=null,
+                        Width=0,
+						FeatureUniqeCode=  ContainerizationFeature_MB02.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }
