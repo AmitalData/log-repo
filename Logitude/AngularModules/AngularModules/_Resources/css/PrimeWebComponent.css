@@ -84,8 +84,3 @@ p-dropdown {
 .p-checkbox {
     margin-bottom: 3px !important;
 }
-
-.p-datatable-emptymessage td{
-    position: absolute !important;
-    width: 100% !important;
-}
