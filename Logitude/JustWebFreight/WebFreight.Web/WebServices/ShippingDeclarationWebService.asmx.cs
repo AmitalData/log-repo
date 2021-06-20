@@ -471,6 +471,7 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.Transshipment1ATA = shipment.Transshipment1ATA;
                 myDataProvider.AWBCommodityItemNumber = shipment.AWBCommodityItemNumber;
                 myDataProvider.SCI = shipment.SCI;
+                myDataProvider.MasterDate = shipment.MAWBOBLDate;
 
                 #region MasterAMSBL
                 var aMSBL_FromHouse = "";
@@ -1133,9 +1134,18 @@ namespace WebFreight.Web.WebServices
                         myDataProvider.UserEmail = currentContact.Email != null ? currentContact.Email : "";
                         myDataProvider.UserPhoneNumber = currentContact.BusinessPhone;
                         myDataProvider.UserMobileNumber = currentContact.Mobile;
+
+                        UserRepository userRepository = new UserRepository(commonContext);
+                        User user = userRepository.GetSingleUser(currentContact.Id, tenant);
+                        if (user != null)
+                        {
+                            if (user.Department != null)
+                            {
+                                myDataProvider.UserDepartment = user.Department.EnglishName;
+                            }
+                        }
                     }
                 }
-
                 #endregion
 
                 #region Agent
