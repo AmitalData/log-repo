@@ -13,7 +13,7 @@ Feature: Package Type fake Create, Search and Edit from Maintenance
 
     Scenario: Create new package type with code already exists
         Given a package type with the following required details
-            | Code    | 1234         |
+            | Code    | 20BU         |
             | Name    | package type |
             | PrintAs | Test         |
             | Ocean   | Yes          |
@@ -36,8 +36,8 @@ Feature: Package Type fake Create, Search and Edit from Maintenance
         Then the package type should create successfully
 
     Scenario: Search for the package type by code
-        When search for "1234" package type
-        Then the "1234" package type should appear successfully
+        When search for "20BU" package type
+        Then the "20BU" package type should appear successfully
 
     Scenario: Open the package type
         When open package type

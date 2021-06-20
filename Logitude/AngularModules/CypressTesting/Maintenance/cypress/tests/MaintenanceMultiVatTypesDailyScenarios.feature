@@ -19,8 +19,8 @@ Feature: Multi Vat Type fake Create, Search and Edit from Maintenance
         Then the multi vat type should create successfully
 
     Scenario: Search for the multi vat type by code
-        When search for "6vxl0" multi vat type
-        Then the "6vxl0" multi vat type should appear successfully
+        When search for "ZERO" multi vat type
+        Then the "ZERO" multi vat type should appear successfully
 
     Scenario: Open the multi vat type
         When open multi vat type

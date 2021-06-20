@@ -26,8 +26,8 @@ Feature: Shipping Line fake Create, Search and Edit from Maintenance
         Then the shipping Line should create successfully
 
     Scenario: Search for the Shipping Line by code
-        When search for "8038" shipping Line
-        Then the "8038" shipping Line should appear successfully
+        When search for "MAEU" shipping Line
+        Then the "MAEU" shipping Line should appear successfully
 
     Scenario: Open the Shipping Line
         When open shipping Line
