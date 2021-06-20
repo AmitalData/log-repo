@@ -585,8 +585,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         {
                             this.MyRequestSheetParam = new RequestSheetParam();
                         }
-                        this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-                        this.MyRequestSheetParam.EntityId1 = declarationId;
+                        if(requestParams.LoggingObjectTableId == ObjectTableRepository.GetObjectTableByName("Customs.Containerization"))
+                        {
+                            this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Containerization");
+                            this.MyRequestSheetParam.EntityId1 = requestParams.LoggingEntityId;
+                        }
+                        else
+                        {
+                            this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+                            this.MyRequestSheetParam.EntityId1 = declarationId;
+                        }
                     }
                     // moran 13.1.15 - Task 10089 <--
                 }

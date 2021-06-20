@@ -36,8 +36,9 @@ import { DeclarationEventManager } from '../../Utilities/DeclarationEventManager
 import { DownloadManager } from '../../../Infrastructure/Utilities/DownloadManager';
 import { MenuButtonsComponent } from '../../../Infrastructure/Components/LogitudeComponents/MenuButtonsComponent/MenuButtonsComponent';
 import { GenericRequestParams } from '../../DataContract/RequestParams/GenericRequestParams';
-import { TestCase } from '../../DataContract/RequestParams/RequestParamsBase';
+import { SendRequestVIA, TestCase } from '../../DataContract/RequestParams/RequestParamsBase';
 import { CustomsSettingExtendedListService } from '../../Services/ExtendedLists/CustomsSettingExtendedListService';
+import { DeclarationStatusRequestParams } from '../../DataContract/RequestParams/DeclarationStatusRequestParams';
 
 
 export class ContainerizationMenuButtonsHandler implements OnDestroy {
@@ -217,9 +218,36 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
                         this.AddDeclarationMethod();//SaveDeclarationMethod("DeclarationRestore");
                         break;
                     }
+                case "DeclarationsStatusRequest":
+                    {
+                        this.DeclarationsStatusRequestMethod();
+                        break;
+                    }
 
             }
         }
+    }
+
+    DeclarationsStatusRequestMethod() {
+        var currRequestParams = new DeclarationStatusRequestParams();
+        currRequestParams.LoggingEnabled = true;
+        currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
+        currRequestParams.LoggingObjectTableId = window.ObjectTables.filter(d => d.Name === 'Customs.Containerization')[0].Id;
+        currRequestParams.LoggingEntityId = this.EntityPM.Id;
+        currRequestParams.LoggingEntityId2 = this.EntityPM.ConnectedDeclarations;
+        currRequestParams.RequestVIA = SendRequestVIA.WebServiceInteractive;
+        currRequestParams.Tenant = SessionLocator.Tenant;
+        //currRequestParams.RequestOrigin = "DeclarationStatusRequestViewModel";
+        var _DeclarationMessagesService = new DeclarationMessagesService();
+        this.CurrentSession.StartBusyIndicator("Sending...");
+
+        _DeclarationMessagesService.PostDeclarationStatusRequest(currRequestParams)
+            .subscribe((myServiceResponse: ServiceResponse) => {
+                this.CurrentSession.CurrentEditComponent.LoadCompleted.emit(true);
+                this.CurrentSession.StopBusyIndicator();
+            });
+
+
     }
   
     AddDeclarationMethod() {
