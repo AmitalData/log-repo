@@ -311,6 +311,10 @@ namespace Logitude.Accounting.Data
 				
 			modelBuilder.Entity<GLAccountMoreData>().Property(x => x.TotFutureOpenChequesInLocalCur).HasPrecision(16, 2);
 				
+			modelBuilder.Entity<GLAccountMoreData>().Property(x => x.BalanceInForeignCurrency).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<GLAccountMoreData>().Property(x => x.ForeignBalanceInDue).HasPrecision(16, 2);
+				
 			modelBuilder.Entity<GLAccountTotalByMonth>().Property(x => x.LocalAmountDebit).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<GLAccountTotalByMonth>().Property(x => x.LocalAmountCredit).HasPrecision(16, 2);
