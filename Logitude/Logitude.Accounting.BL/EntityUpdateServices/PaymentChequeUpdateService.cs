@@ -345,9 +345,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
         private void  ValidateCancellingPaymentCheque(PaymentChequePM paymentChequePM , PaymentCheque paymentChequePoco)
         {
-            if(paymentChequePM.IsCancelled && !paymentChequePoco.IsCancelled)
+            if((paymentChequePM.IsCancelled || paymentChequePM.PaymentChequeStatusCode == "4") && !paymentChequePoco.IsCancelled)
             {
-                if (paymentChequePM.APPaymentId != null && (paymentChequePM.IsCancelled || paymentChequePM.PaymentChequeStatusCode == "4") && !paymentChequePM.CancelledByAPPayment)
+                if (paymentChequePM.APPaymentId != null  && !paymentChequePM.CancelledByAPPayment)
                 {
                     PreventCancellingPaymentCheque(paymentChequePM);
                 }
