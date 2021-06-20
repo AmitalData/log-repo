@@ -28,7 +28,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 {
    public partial class PaymentChequeUpdateService
     {
-
+        private const string Cancelled = "4";
         protected override void OnCreating(PaymentChequePM entityPM, EntityPM entityParentPM)
         {
 
@@ -345,7 +345,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
         private void  ValidateCancellingPaymentCheque(PaymentChequePM paymentChequePM , PaymentCheque paymentChequePoco)
         {
-            if((paymentChequePM.IsCancelled || paymentChequePM.PaymentChequeStatusCode == "4") && !paymentChequePoco.IsCancelled)
+            if((paymentChequePM.IsCancelled || paymentChequePM.PaymentChequeStatusCode == Cancelled) && !paymentChequePoco.IsCancelled)
             {
                 if (paymentChequePM.APPaymentId != null  && !paymentChequePM.CancelledByAPPayment)
                 {
