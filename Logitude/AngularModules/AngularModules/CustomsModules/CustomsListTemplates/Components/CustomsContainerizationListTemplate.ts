@@ -47,13 +47,16 @@ export class CustomsContainerizationListTemplate {
     }
 
     BuildDeclarationsCheckBox() {
-        if (!this.entityPM.ConnectedDeclarations) {
-            this.entityPM.ConnectedDeclarations = "";
-            this._containerizationExtendedListService.ConnectedDeclarations = "";
-        } else {
-            this._containerizationExtendedListService.ConnectedDeclarations = this.entityPM.ConnectedDeclarations;
-        }
         this.IsConnectedDeclarationChecked = false;
+        if (!this._containerizationExtendedListService.ConnectedDeclarations) {
+            this._containerizationExtendedListService.ConnectedDeclarations = "";
+        }
+        if (!this._containerizationExtendedListService.AllDeclarations) {
+            this._containerizationExtendedListService.AllDeclarations = "";
+        }
+        if (!this._containerizationExtendedListService.AllDeclarations.includes(this.rowData.Id)) {
+            this._containerizationExtendedListService.AllDeclarations = this._containerizationExtendedListService.AllDeclarations + this.rowData.Id + ",";
+        }
         let sConnectedDeclarations = this._containerizationExtendedListService.ConnectedDeclarations as string;
         if (!AppTool.IsNullOrEmpty(sConnectedDeclarations)) {
             let ConnectedDeclarations = sConnectedDeclarations.split(',')
@@ -67,8 +70,6 @@ export class CustomsContainerizationListTemplate {
 
     OnConnectedCheckBoxChecked($event) {
         this._containerizationExtendedListService.disconnectedSelectAll = false;
-            this._containerizationExtendedListService.ConnectedDeclarations = this._containerizationExtendedListService.ConnectedDeclarations.replace("ALL", "");
-    
         if ($event) {
             if (!this._containerizationExtendedListService.ConnectedDeclarations.includes(this.rowData.Id)) {
                 this._containerizationExtendedListService.ConnectedDeclarations = this._containerizationExtendedListService.ConnectedDeclarations + this.rowData.Id + ",";
@@ -77,6 +78,7 @@ export class CustomsContainerizationListTemplate {
         else {
             if (this._containerizationExtendedListService.ConnectedDeclarations.includes(this.rowData.Id)) {
                 this._containerizationExtendedListService.ConnectedDeclarations = this._containerizationExtendedListService.ConnectedDeclarations.replace(this.rowData.Id + ",", "");
+                this._containerizationExtendedListService.connectedSelectAll = false;
             }
         }
         if (AppTool.IsNullOrEmpty(this._containerizationExtendedListService.ConnectedDeclarations)) {

@@ -1271,7 +1271,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                 EntityIsDeclarationPM: "true",
             };
             var logWindow = new LogitudeWindow();
-            logWindow.Width = 1200;
+            logWindow.Width = 1220;
             logWindow.Height = 550;
             logWindow.Title = ("המכלה חדשה");
             logWindow.WindowArgs = args;

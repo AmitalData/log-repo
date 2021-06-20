@@ -2854,7 +2854,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
     RunNewContainerization() {
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 1200;
+        logWindow.Width = 1220;
         logWindow.Height = 550;
         logWindow.Title = ("המכלה חדשה");
         logWindow.ShowCloseButton = true;

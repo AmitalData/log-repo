@@ -241,7 +241,7 @@ export class NewContainerizationComponent extends BaseComponent {
             FieldName: 'CreateDateTime',
             DataTypeCode: 'String',
             Display: "תאריך פתיחת הצהרה",
-            Styles: { width: '80px' },
+            Styles: { width: '120px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'CreateDateTime',
@@ -352,9 +352,6 @@ export class NewContainerizationComponent extends BaseComponent {
             IsCustomTemplate: true,
             HtmlListComponentName: 'CustomsContainerizationListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsContainerizationListTemplate',
-
-
-
         });
 
     }
@@ -364,6 +361,7 @@ export class NewContainerizationComponent extends BaseComponent {
         this.IsSelected = true;
         this.containerizationExtendedListService.connectedSelectAll = true;
         this.containerizationExtendedListService.SelectedDeclarations = true;
+        this.containerizationExtendedListService.ConnectedDeclarations = this.containerizationExtendedListService.AllDeclarations;
         this.LoadConnectedItems();
 
     }
@@ -377,8 +375,8 @@ export class NewContainerizationComponent extends BaseComponent {
     OnNoneBtnClicked() {
         this.IsSelected = false;
         this.containerizationExtendedListService.connectedSelectAll = false;
-        this.entityPM.ConnectedDeclarations = "ALL";
-        this.containerizationExtendedListService.ConnectedDeclarations = "ALL";
+        this.entityPM.ConnectedDeclarations = "";
+        this.containerizationExtendedListService.ConnectedDeclarations = "";
         this.containerizationExtendedListService.SelectedDeclarations = false;
         this.LoadConnectedItems();
 
