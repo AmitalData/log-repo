@@ -169,28 +169,18 @@ namespace Logitude.Accounting.BL.CoreBL
 
             var context = AccountingContext.GetContext(tenant);
 
-            //var externallyReconciledChequeDepositTransactions
-            //    = from ledger in context.LedgerTransactions
-            //      join journal in context.Journals on ledger.JournalId equals journal.Id
-            //      join cheque in context.ARPaymentCheques on journal.AccountingEntityId equals cheque.Id
-            //      where ledger.IsExternalReconcile == true
-            //             && journal.AccountingEntityCode == "6"
-            //      select ledger;
-
-            List<string> depositIds
-                                = (from ledger in context.LedgerTransactions
-                                   join journal in context.Journals on ledger.JournalId equals journal.Id
-                                   where ledger.IsExternalReconcile == true
-                                          && journal.AccountingEntityCode == "6"
-                                          && ledger.Tenant == tenant
-                                   select journal.AccountingEntityId).ToList();
-
-            List<string> paymentChequeIds = (from a in context.BankDepositLines
-                                             where depositIds.Contains(a.DepositId) && a.Tenant == tenant
-                                             select a.ARPaymentChequeId).ToList();
+            var isInBankStatusCode = "3";
 
             List<ARPaymentChequePM> paymentChequesNotRedeemed = (from cheque in context.ARPaymentCheques
-                                                                 where paymentChequeIds.Contains(cheque.Id) && cheque.Tenant == tenant
+                                                                 join ledger in context.LedgerTransactions on cheque.ChequeNumber equals ledger.Reference2
+                                                                 join journal in context.Journals on ledger.JournalId equals journal.Id
+                                                                 where  cheque.StatusCode == isInBankStatusCode
+                                                                        && cheque.Tenant == tenant
+                                                                        && ledger.Tenant == tenant
+                                                                        && ledger.LocalAmountCredit == 0 
+                                                                        && ledger.IsExternalReconcile == true
+                                                                        && journal.AccountingEntityReference == cheque.ChequeNumber
+
                                                                        && cheque.StatusCode == "3"
                                                                  select new ARPaymentChequePM()
                                                                  {
@@ -211,7 +201,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                                                      ExchangeRate = cheque.ExchangeRate,
                                                                      StatusCode = cheque.StatusCode,
                                                                      CurrencyId = cheque.CurrencyId,
-                                                                 }).OrderBy(d => d.ChequeNumber).ToList();
+                                                                 }).OrderBy(d => d.ChequeNumber).Distinct().ToList();
 
 
             Log("[Tenant " + tenant + "] cheques got, count: " + paymentChequesNotRedeemed.Count());
