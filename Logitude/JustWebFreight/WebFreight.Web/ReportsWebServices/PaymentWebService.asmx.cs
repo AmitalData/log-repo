@@ -477,10 +477,11 @@ namespace WebFreight.Web.ReportsWebServices
 
                 paymentDataProvider.AmountInLocalCurrency = currentPayment.AmountInLocalCurrency;
 
+                SetFullAccountingBankName(currentPayment, paymentDataProvider);
+
             }
 
             FillARPaymentCheques(paymentId, tenant, paymentDataProvider);
-            SetFullAccountingBankName(currentPayment,paymentDataProvider);
 
             customFieldResolver.SetDataProviderCustomFieldsValues("ARPayment", tenant, currentPayment, paymentDataProvider);
 
@@ -489,22 +490,28 @@ namespace WebFreight.Web.ReportsWebServices
 
         private void SetFullAccountingBankName(ARPayment payment, PaymentDataProvider paymentDataProvider)
         {
-            Contact loggedContact = GetLoggedContact(payment.Tenant);
 
             BankAccountPM bankAccount = GetBankAccountPM(payment);
-            if (bankAccount != null)
-            {
-                paymentDataProvider.FullAccountingBankEnglishName = bankAccount.EnglishName;
-                paymentDataProvider.FullAccountingBankLocalName = bankAccount.LocalName;
+            if (bankAccount == null) { return; }
 
-                if (loggedContact.DontShowLocalLabels)
-                {
-                    paymentDataProvider.FullAccountingBankName = bankAccount.EnglishName;
-                }
-                else
-                {
-                    paymentDataProvider.FullAccountingBankName = bankAccount.LocalName;
-                }
+            paymentDataProvider.FullAccountingBankEnglishName = bankAccount.EnglishName;
+            paymentDataProvider.FullAccountingBankLocalName = bankAccount.LocalName;
+
+            SetFullAccountingBankNamesBasedOnLocaliation(payment, paymentDataProvider, bankAccount);
+
+        }
+
+        private void SetFullAccountingBankNamesBasedOnLocaliation(ARPayment payment, PaymentDataProvider paymentDataProvider, BankAccountPM bankAccount)
+        {
+            Contact loggedContact = GetLoggedContact(payment.Tenant);
+
+            if (loggedContact.DontShowLocalLabels)
+            {
+                paymentDataProvider.FullAccountingBankName = bankAccount.EnglishName;
+            }
+            else
+            {
+                paymentDataProvider.FullAccountingBankName = bankAccount.LocalName;
             }
         }
 
