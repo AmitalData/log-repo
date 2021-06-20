@@ -60,7 +60,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             // Update Journal
             //JournalPM journalPM = journalQuery.GetSingle(EntityPM.JournalId, false, false);
-            JournalAdditionalDataPM journalAdditionalDataPM = additionalDataQueryService.GetSingle(EntityPM.JournalId, false, false);
+            JournalAdditionalDataPM journalAdditionalDataPM = additionalDataQueryService.GetSingle(EntityPM.JournalId, false, true);
             if (journalAdditionalDataPM != null)
             {
                 journalAdditionalDataPM.TaxReportTransmitStatusCode = entityPM.TransmitStatusCode;
