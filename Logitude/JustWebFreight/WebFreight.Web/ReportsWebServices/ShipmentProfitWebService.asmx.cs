@@ -45,6 +45,7 @@ namespace WebFreight.Web.ReportsWebServices
         private PortRepository portRepository;
         private CountryRepository countryRepository;
         private ICommonDataContext commonContext;
+        private IWebFreightContext webFreightContext;
 
         [WebMethod]
         public byte[] GetProfitData(string shipmentId, int tenant, string accountingCurrencyId, string currentUser)
@@ -78,7 +79,7 @@ namespace WebFreight.Web.ReportsWebServices
         {
             this.tenant = tenant;
             ShipmentProfitDataProvider provider = new ShipmentProfitDataProvider();
-            IWebFreightContext context = WebFreightContext.GetContext(tenant);
+            webFreightContext = WebFreightContext.GetContext(tenant);
             commonContext = CommonDataContext.GetContext(tenant);
             ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
             ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
@@ -302,6 +303,9 @@ namespace WebFreight.Web.ReportsWebServices
                          ReceivablesInProfitCurrency = String.Format("{0:#,0.00}", g.Sum(s => s.AmountInProfitCurrency)),
                      }).ToList();
 
+                ChargesGroupRepository chargesGroupRepository = new ChargesGroupRepository(webFreightContext);
+                List<ChargesGroup> chargesGroups = chargesGroupRepository.GetChargesGroups(tenant).ToList();
+
                 foreach (ProfitDetailsClass item in payablesGroupByList)
                 {
                     ProfitDetailsClass record = new ProfitDetailsClass();
@@ -348,6 +352,15 @@ namespace WebFreight.Web.ReportsWebServices
                     ChargesType chargesType = ChargesTypeRepository.GetSingleChargesType(item.ChargeTypeId, shipmentPM.Tenant, true);
                     if (chargesType != null)
                     {
+                        if (chargesType.ChargesGroupId != null)
+                        {
+                            ChargesGroup chargesGroup = chargesGroups.Where(d => d.Id == chargesType.ChargesGroupId).FirstOrDefault();
+                            if(chargesGroup != null)
+                            {
+                                record.ChargeGroupName = chargesGroup.Name;
+                            }
+                        }
+                            
                         if (chargesType.VatTypeId != null)
                         {
                             VatTypePM vatTypePM = vatTypeQuery.GetSinglePM(chargesType.VatTypeId, chargesType.Tenant);
@@ -401,6 +414,15 @@ namespace WebFreight.Web.ReportsWebServices
                     ChargesType chargesType = ChargesTypeRepository.GetSingleChargesType(item.ChargeTypeId, shipmentPM.Tenant, true);
                     if (chargesType != null)
                     {
+                        if (chargesType.ChargesGroupId != null)
+                        {
+                            ChargesGroup chargesGroup = chargesGroups.Where(d => d.Id == chargesType.ChargesGroupId).FirstOrDefault();
+                            if (chargesGroup != null)
+                            {
+                                record.ChargeGroupName = chargesGroup.Name;
+                            }
+                        }
+
                         VatTypePM vatTypePM = vatTypeQuery.GetSinglePM(chargesType.VatTypeId, chargesType.Tenant);
                         if (vatTypePM != null)
                         {
@@ -429,7 +451,7 @@ namespace WebFreight.Web.ReportsWebServices
                 provider.Notes = ServiceStringConvertor(shipmentPM.Notes);
                 provider.ShipmentNumber = ServiceStringConvertor(shipmentPM.ShipmentNumber);
                 provider.DescriptionOfGoods = ServiceStringConvertor(shipmentPM.DescriptionOfGoods);
-                provider.Direction = context.Directions.Where(d => d.Id == shipmentPM.DirectionId).FirstOrDefault().Name;
+                provider.Direction = webFreightContext.Directions.Where(d => d.Id == shipmentPM.DirectionId).FirstOrDefault().Name;
                 provider.ATD = ServiceDateConvertor(shipmentPM.MainCarriageATD);
                 provider.ATA = ServiceDateConvertor(shipmentPM.MainCarriageATA);
                 provider.ATD_DateTime = shipmentPM.MainCarriageATD;
@@ -751,7 +773,7 @@ namespace WebFreight.Web.ReportsWebServices
                 #region Move Type
                 if (!string.IsNullOrEmpty(shipmentPM.MoveTypeId))
                 {
-                    MoveType moveType = context.MoveTypes.Where(m => m.Id == shipmentPM.MoveTypeId).FirstOrDefault();
+                    MoveType moveType = webFreightContext.MoveTypes.Where(m => m.Id == shipmentPM.MoveTypeId).FirstOrDefault();
                 
                     if(moveType != null)
                     {
