@@ -69,6 +69,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         private static void UpdateJournalJournalAdditionalData(TaxReportLinePM taxReportLine)
         {
             JournalAdditionalDataPM journalAdditionalDataPM = GetJournalAdditionalDataPM(taxReportLine);
+
+            // Update Journal
+            //JournalPM journalPM = journalQuery.GetSingle(EntityPM.JournalId, false, false);
+            JournalAdditionalDataPM journalAdditionalDataPM = additionalDataQueryService.GetSingle(EntityPM.JournalId, false, true);
             if (journalAdditionalDataPM != null)
             {
                 journalAdditionalDataPM = MapJournalAdditionalDataPM(journalAdditionalDataPM, taxReportLine);

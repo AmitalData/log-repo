@@ -21,7 +21,7 @@ Feature: Currency fake Create, Search and Edit from Maintenance
         Then the currency should create successfully
 
     Scenario: Search for the currency by code
-        When search for "" currency
+        When search for "USD" currency
         Then the "USD" currency should appear successfully
 
     Scenario: Open the Currency
