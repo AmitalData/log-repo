@@ -48,6 +48,9 @@ export class CustomsContainerizationListTemplate {
 
     BuildDeclarationsCheckBox() {
         this.IsConnectedDeclarationChecked = false;
+        if (this.entityPM.ConnectedDeclarations && this.entityPM.Id != null) {
+            this._containerizationExtendedListService.ConnectedDeclarations = this.entityPM.ConnectedDeclarations;
+        }
         if (!this._containerizationExtendedListService.ConnectedDeclarations) {
             this._containerizationExtendedListService.ConnectedDeclarations = "";
         }

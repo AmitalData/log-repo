@@ -49,7 +49,7 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
 
 
     public ContainerizationDeclarationList: ObservableCollection;
-    
+
     private CurrentSession = SessionLocator.SelectedSession;
     IsDisplayOnly: boolean = false;
     visibile: boolean = true;
@@ -63,9 +63,9 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
                 this.ObjectTableName = this.entityArgs.ObjectTableName;
                 this.Listen();
                 this.SetFieldsEditability();
-                
-                
-                this.getRows(); 
+
+
+                this.getRows();
             });
         });
 
@@ -90,8 +90,8 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
         //    List.push(dec);
         //    this.ContainerizationDeclarationList.InsertCollection(List);
         //}, 2000)
-        
-        
+
+
     }
 
     getRows()//skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
@@ -122,13 +122,27 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
         filters.PageIndex = 0;
         filters.GetAll = false;
         filters.GetCount = true;
-        filters.addAdditionalFilter("Id", this.EntityPM.ConnectedDeclarations, null, null, "InListExact", false, false, false, "string", this.EntityPM.ConnectedDeclarations.length == 0);
+        filters.addAdditionalFilter("ExportContainerizationID", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
         return this.declarationListService.getByFilters(filters)
             .subscribe(r => {
-                r.Result.forEach(element => this.ContainerizationDeclarationList.Insert(element));
-                var e=this.ContainerizationDeclarationList;
+                this.ContainerizationDeclarationList = new ObservableCollection([]);
+                let Newfilters = new ApiQueryFilters();
+                Newfilters.PageSize = 200;
+                Newfilters.PageIndex = 0;
+                Newfilters.GetAll = false;
+                Newfilters.GetCount = true;
+                Newfilters.addAdditionalFilter("Id", this.EntityPM.ConnectedDeclarations, null, null, "InListExact", false, false, false, "string", this.EntityPM.ConnectedDeclarations.length == 0);
+                return this.declarationListService.getByFilters(Newfilters)
+                    .subscribe(res => {
+                        this.ContainerizationDeclarationList.InsertCollection(r.Result);
+                        for (let element of res.Result) {
+                            this.ContainerizationDeclarationList.Insert(element);
+                        }
+                    });
             });
     }
+
+
     private Listen() {
         if (this.CurrentSession.CurrentEditComponent != null) {
 
@@ -137,12 +151,12 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
                 this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-                        this.getRows(); 
+                        this.getRows();
                     }
                 })
             );
             //this.CurrentSession.CurrentEditComponent.saveco
-           // SessionLocator.SelectedSession.CurrentEditComponent
+            // SessionLocator.SelectedSession.CurrentEditComponent
             this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
                 this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
@@ -177,7 +191,7 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
     //    //this.IsNewEntity = args.IsNewEntity;
 
     //    console.log("EntityPM", this.EntityPM);
-        
+
 
     //    //this.SetFieldsEditability();
     //}
@@ -193,12 +207,12 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
         //throw new Error('Method not implemented.');
     }
 
-   
+
 
     //#endregion
 
 
-    
+
     ///#region Properties
     DeleteButtonClicked(item) {
         if (AppTool.IsNullOrEmpty(this.EntityPM.NotConnectedDeclarations)) {
@@ -206,7 +220,7 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
         } else {
             this.EntityPM.NotConnectedDeclarations += "," + item.Id;
         }
-        
+
         this.ContainerizationDeclarationList.Remove(item);
     }
     EditButtonClicked(item) {
@@ -231,8 +245,8 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
     }
 
 
-    get ContainerizationDate() { return this.EntityPM != null ? this.EntityPM.ContainerizationDate:null; }
-    set ContainerizationDate(value) { this.EntityPM.ContainerizationDate= value; }
+    get ContainerizationDate() { return this.EntityPM != null ? this.EntityPM.ContainerizationDate : null; }
+    set ContainerizationDate(value) { this.EntityPM.ContainerizationDate = value; }
 
 
     //#endregion
@@ -247,7 +261,7 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
         // validate Containerization
         Validator.TryValidateObject(this.EntityPM, "Customs.Containerization", errors);
 
-        
+
 
         if (errors.length > 0) {
             this.ValidationErrorsList = errors;
@@ -260,7 +274,7 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
     }
 
 
-   
+
     //#endregion
 }
 
