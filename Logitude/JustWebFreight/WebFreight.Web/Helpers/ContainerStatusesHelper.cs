@@ -86,25 +86,25 @@ namespace WebFreight.Web.Helpers
         }
         private void GetShipmentScacCode()
         {
-            string mainCarriageCarrierId = isContainer ? container.MainCarriageCarrierId : this.shipment.MainCarriageCarrierId;
+            string mainCarriageCarrierId = isContainer ? container?.MainCarriageCarrierId : this.shipment?.MainCarriageCarrierId;
             ShippingLineRepository shippingLineRepository = new ShippingLineRepository(tenant);
             var shippingLine = shippingLineRepository.GetSingleShippingLine(mainCarriageCarrierId, tenant);
             this.scacCode = shippingLine != null ? shippingLine.SCACCode : "";
         }
         private void GetentityReference()
         {
-            this.entityReference = this.isContainer ? container.ContainerNumber : shipment.Master;
+            this.entityReference = this.isContainer ? container?.ContainerNumber : shipment?.Master;
         }
 
         private void BuildCommunicationLogAdditionalFields()
         {
             this.communicationLogAdditionalFields = "";
-            var oceanInsightType = "";
+            var oceanInsightType = "m_bl"; //Shipment
             if (this.isContainer)
             {
-                oceanInsightType = "c_id";
+                oceanInsightType = "c_id"; // Container
             }
-            this.communicationLogAdditionalFields = scacCode + "," + oceanInsightType + "," + this.shipmentId + "," + container.ContainerNumber;
+            this.communicationLogAdditionalFields = scacCode + "," + oceanInsightType + "," + this.shipmentId + "," + (container != null? container.ContainerNumber:null);
         }
 
         public void SendContainerStatusRequest()
@@ -126,7 +126,7 @@ namespace WebFreight.Web.Helpers
                 Status = "W",
                 LoggingUserId = this.loggedContactId,
                 LoggingObjectTableId = communicationLogObjectTableId,
-                LoggingEntityId = isContainer ? container.Id : shipment.Id,
+                LoggingEntityId = isContainer ? container?.Id : shipment?.Id,
                 LoggingEntityReference = entityReference,
                 Subject = communicationLogSubject,
                 FolderName = communicationLogTo.ToLower(),
