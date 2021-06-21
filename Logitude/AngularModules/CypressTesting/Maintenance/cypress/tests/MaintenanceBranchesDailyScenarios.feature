@@ -22,8 +22,8 @@ Feature: Branch fake Create, Search and Edit from Maintenance
         Then the branch should create successfully
 
     Scenario: Search for the Branch by name
-        When search for "13_6_2021_1623590776751" branch
-        Then the "13_6_2021_1623590776751" branch should appear successfully
+        When search for "Main" branch
+        Then the "Main Office" branch should appear successfully
 
     Scenario: Open the Branch
         When open branch

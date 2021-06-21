@@ -62,7 +62,7 @@ export class Urls {
     public static readonly ShippingLinesArea = "**/carrierareas"
     public static readonly ShippingLinesTariffTranslations = "**/tariffcarriertranslations"
 
-    public static readonly GetTenatCurrencies = "**/GetCopyCurrencyToTenant?**"
+    public static readonly GetCopyCurrencyToTenant = "**/GetCopyCurrencyToTenant?**"
     public static readonly Currencies = "**/currencies"
     public static readonly CurrenciesGetSingle = "**/currencies/getsingle?**"
     public static readonly CurrenciesviewGetList = "**/currencyviews/getbyfilters?**";

@@ -22,8 +22,8 @@ Feature: Single Vat Type fake Create, Search and Edit from Maintenance
         Then the single vat type should create successfully
 
     Scenario: Search for the single vat type by code
-        When search for "xvctb" single vat type
-        Then the "xvctb" single vat type should appear successfully
+        When search for "ZERO" single vat type
+        Then the "ZERO" single vat type should appear successfully
 
     Scenario: Open the single vat type
         When open single vat type
