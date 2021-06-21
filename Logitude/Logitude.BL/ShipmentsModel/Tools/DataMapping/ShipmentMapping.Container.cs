@@ -42,6 +42,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             container.CurrentStatus = containerPM.CurrentStatus;
             container.CurrentStatusDate = containerPM.CurrentStatusDate;
             container.HasContainerException = containerPM.HasContainerException;
+            container.CurrentLocation = containerPM.CurrentLocation;
+            container.EmptyPickupLocation = containerPM.EmptyPickupLocation;
+            container.DepartureLocation = containerPM.DepartureLocation;
+            container.DestinationLocation = containerPM.DestinationLocation;
             BuildSearchField(containerPM, container);
         }
 

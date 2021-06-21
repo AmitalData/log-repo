@@ -60,6 +60,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     CurrentStatus = entityPoco.CurrentStatus,
                     CurrentStatusDate = entityPoco.CurrentStatusDate,
                     HasContainerException = entityPoco.HasContainerException,
+                    CurrentLocation = entityPoco.CurrentLocation,
+                    EmptyPickupLocation = entityPoco.EmptyPickupLocation,
+                    DepartureLocation = entityPoco.DepartureLocation,
+                    DestinationLocation = entityPoco.DestinationLocation,
                 };
             }
 
@@ -100,6 +104,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         CurrentStatus = a.CurrentStatus,
                         CurrentStatusDate = a.CurrentStatusDate,
                         HasContainerException = a.HasContainerException,
+                        CurrentLocation = a.CurrentLocation,
+                        EmptyPickupLocation = a.EmptyPickupLocation,
+                        DepartureLocation = a.DepartureLocation,
+                        DestinationLocation = a.DestinationLocation,
                     }).ToList();
         }
 
@@ -136,6 +144,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                      CurrentStatus = entity.CurrentStatus,
                                                      CurrentStatusDate = entity.CurrentStatusDate,
                                                      HasContainerException = entity.HasContainerException,
+                                                     CurrentLocation = entity.CurrentLocation,
+                                                     EmptyPickupLocation = entity.EmptyPickupLocation,
+                                                     DepartureLocation = entity.DepartureLocation,
+                                                     DestinationLocation = entity.DestinationLocation,
                                                  };
             return result;
         }
@@ -174,6 +186,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     CurrentStatus = container.CurrentStatus,
                     CurrentStatusDate = container.CurrentStatusDate,
                     HasContainerException = container.HasContainerException,
+                    CurrentLocation = container.CurrentLocation,
+                    EmptyPickupLocation = container.EmptyPickupLocation,
+                    DepartureLocation = container.DepartureLocation,
+                    DestinationLocation = container.DestinationLocation,
                 };
             }
             return containerPM;

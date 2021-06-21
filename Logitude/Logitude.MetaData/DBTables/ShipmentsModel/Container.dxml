@@ -155,6 +155,27 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="EmptyPickupLocation"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DepartureLocation"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DestinationLocation"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="CurrentStatus"
     Type="varchar"
     Size="100">
@@ -164,6 +185,13 @@
   <Column
     Name="CurrentStatusDate"
     Type="date">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CurrentLocation"
+    Type="varchar"
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>

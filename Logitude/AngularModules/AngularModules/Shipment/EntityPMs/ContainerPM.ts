@@ -130,6 +130,61 @@ export class ContainerPM {
     public set ShipmentId(newValue: string) { if (this.shipmentId != newValue) { this.shipmentId = newValue; this.MarkAsDirty("ShipmentId"); } }
        
 	 
+    private emptyPickupLocation: string;
+    public get EmptyPickupLocation() { return this.emptyPickupLocation; }
+    public set EmptyPickupLocation(newValue: string) { if (this.emptyPickupLocation != newValue) { this.emptyPickupLocation = newValue; this.MarkAsDirty("EmptyPickupLocation"); } }
+       
+	 
+    private estimatedEmptyPickupDate: Date;
+    public get EstimatedEmptyPickupDate() { return this.estimatedEmptyPickupDate; }
+    public set EstimatedEmptyPickupDate(newValue: Date) { if (this.estimatedEmptyPickupDate != newValue) { this.estimatedEmptyPickupDate = newValue; this.MarkAsDirty("EstimatedEmptyPickupDate"); } }
+       
+	 
+    private actualEmptyPickupDate: Date;
+    public get ActualEmptyPickupDate() { return this.actualEmptyPickupDate; }
+    public set ActualEmptyPickupDate(newValue: Date) { if (this.actualEmptyPickupDate != newValue) { this.actualEmptyPickupDate = newValue; this.MarkAsDirty("ActualEmptyPickupDate"); } }
+       
+	 
+    private estimatedGateInDate: Date;
+    public get EstimatedGateInDate() { return this.estimatedGateInDate; }
+    public set EstimatedGateInDate(newValue: Date) { if (this.estimatedGateInDate != newValue) { this.estimatedGateInDate = newValue; this.MarkAsDirty("EstimatedGateInDate"); } }
+       
+	 
+    private actualGateInDate: Date;
+    public get ActualGateInDate() { return this.actualGateInDate; }
+    public set ActualGateInDate(newValue: Date) { if (this.actualGateInDate != newValue) { this.actualGateInDate = newValue; this.MarkAsDirty("ActualGateInDate"); } }
+       
+	 
+    private departureLocation: string;
+    public get DepartureLocation() { return this.departureLocation; }
+    public set DepartureLocation(newValue: string) { if (this.departureLocation != newValue) { this.departureLocation = newValue; this.MarkAsDirty("DepartureLocation"); } }
+       
+	 
+    private destinationLocation: string;
+    public get DestinationLocation() { return this.destinationLocation; }
+    public set DestinationLocation(newValue: string) { if (this.destinationLocation != newValue) { this.destinationLocation = newValue; this.MarkAsDirty("DestinationLocation"); } }
+       
+	 
+    private currentStatus: string;
+    public get CurrentStatus() { return this.currentStatus; }
+    public set CurrentStatus(newValue: string) { if (this.currentStatus != newValue) { this.currentStatus = newValue; this.MarkAsDirty("CurrentStatus"); } }
+       
+	 
+    private currentStatusDate: Date;
+    public get CurrentStatusDate() { return this.currentStatusDate; }
+    public set CurrentStatusDate(newValue: Date) { if (this.currentStatusDate != newValue) { this.currentStatusDate = newValue; this.MarkAsDirty("CurrentStatusDate"); } }
+       
+	 
+    private currentLocation: string;
+    public get CurrentLocation() { return this.currentLocation; }
+    public set CurrentLocation(newValue: string) { if (this.currentLocation != newValue) { this.currentLocation = newValue; this.MarkAsDirty("CurrentLocation"); } }
+       
+	 
+    private hasContainerException: boolean;
+    public get HasContainerException() { return this.hasContainerException; }
+    public set HasContainerException(newValue: boolean) { if (this.hasContainerException != newValue) { this.hasContainerException = newValue; this.MarkAsDirty("HasContainerException"); } }
+       
+	 
 
     public OldEntityPM: ContainerPM;
 		
