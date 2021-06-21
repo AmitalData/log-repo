@@ -1,6 +1,9 @@
 ﻿//http://81.218.57.34:9094/Help/Api/POST-api-Courier-UpdateHawbStatus
 //https://docs.google.com/document/d/1bFMdrDnByDpvLcvE9H5eOfCAzbVdeoUypbzhwxbr0Po/edit#
 
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+//using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Data;
@@ -9,6 +12,7 @@ using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Utils;
 using Simplog.Server.Infrastructure.Helpers;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -17,6 +21,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.CommonDataModel.Repositories;
 
 namespace Logitude.Customs.BL.Messaging.ILOVS
 {
@@ -24,6 +31,8 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
     {
         //private DeclarationPM _DeclarationPM;
         //private CourierMasterPM _CourierMasterPM;
+        private GTRTRANQueryService _GTRTRANQueryService;
+        private AmitalContext _AmitalContext;
 
         public string BuildQueueSendWebAPI(string declarationId, int tenant,  DeclarationPM declarationPM = null, CourierMasterPM courierMasterPM = null)
         {
@@ -145,21 +154,22 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
             DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(myDeclarationPM.Id, true, false);
             if(currentDeclarationCourierStatusPM != null && !String.IsNullOrWhiteSpace(currentDeclarationCourierStatusPM.CrateNumber))crateNumber = currentDeclarationCourierStatusPM.CrateNumber;
 
-            string importerVat = "";
-            if (!String.IsNullOrWhiteSpace(myDeclarationPM.ImporterId))
-            {
-                ClientQueryService clientQueryService = new ClientQueryService(myCourierMasterPM.Tenant);
+ 
+            //string importerVat = "";
+            //if (!String.IsNullOrWhiteSpace(myDeclarationPM.ImporterId))
+            //{
+            //    ClientQueryService clientQueryService = new ClientQueryService(myCourierMasterPM.Tenant);
 
-                var clientPM = clientQueryService.GetSingle(myDeclarationPM.ImporterId, false, true); 
-                if (clientPM != null && !String.IsNullOrWhiteSpace(clientPM.Code)) importerVat = clientPM.Code;
-            }
-            else if(!String.IsNullOrWhiteSpace(myDeclarationPM.ImporterCode))
-            {
-                importerVat = myDeclarationPM.ImporterCode;
-            }
+            //    var clientPM = clientQueryService.GetSingle(myDeclarationPM.ImporterId, false, true); 
+            //    if (clientPM != null && !String.IsNullOrWhiteSpace(clientPM.Code)) importerVat = clientPM.Code;
+            //}
+            //else if(!String.IsNullOrWhiteSpace(myDeclarationPM.ImporterCode))
+            //{
+            //    importerVat = myDeclarationPM.ImporterCode;
+            //}
+            string importerVat = TranslateIntegratorIndex(myCourierMasterPM.IntegratorCode, myCourierMasterPM.Tenant);
+ 
 
-
-            var pm = CustomsSettingQueryService.GetSettingByTenant(myDeclarationPM.Tenant);
 
             var courierHawbMamanModel = new CourierOVSHAWBRequest()
             {
@@ -192,7 +202,7 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
                 CustomsSuspention = myDeclarationPM.CourierSuspentionCode??"",
                 Preclearence = myDeclarationPM.CourierCustomStatusCode== "1"  /*released*/,
 
-                ImporterVat = pm.CustomsAgentId,
+                ImporterVat = importerVat,
                 BoxBarcode = crateNumber,
                
 
@@ -200,6 +210,73 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
 
             return courierHawbMamanModel;
         }
+
+        private string TranslateIntegratorIndex(string integratorIndex, int tenant)
+        {
+            if (String.IsNullOrWhiteSpace(integratorIndex))
+            {
+                LogMessagingUtil.Instance.AppendLine("integratorIndex is null");
+                return null;
+            }
+            string integratorIndexCode = null;
+            string integratorIndexTranslatedCode = null;
+
+            CardQuery cardQuery = new CardQuery(tenant);
+            CardPM cardPM = cardQuery.GetSinglePM(integratorIndex, tenant);
+            if (cardPM != null)
+            {
+                integratorIndexCode = cardPM.Code;
+            }
+            else
+            {
+                LogMessagingUtil.Instance.AppendLine("integratorIndex = " + integratorIndex + " could not translate to Logitude Card Id");
+                return null;
+            }
+
+            integratorIndexTranslatedCode = GetComputingPartnerCodeTranslation(integratorIndexCode, "ILOVS", "Card", tenant);
+            if (!String.IsNullOrWhiteSpace(integratorIndexTranslatedCode))
+            {
+                LogMessagingUtil.Instance.AppendLine("integrator Index = " + integratorIndex + " Translated to (Computing Partner Translate) " + integratorIndexTranslatedCode);
+                return integratorIndexTranslatedCode;
+            }
+
+            var pm = CustomsSettingQueryService.GetSettingByTenant(tenant);
+            integratorIndexTranslatedCode = pm.CustomsAgentId;
+
+            //integratorIndexTranslatedCode = cardPM.VatNumber;
+
+            LogMessagingUtil.Instance.AppendLine("integrator Index = " + integratorIndex + " Translated to (Vat Number) " + integratorIndexTranslatedCode);
+            return integratorIndexTranslatedCode;
+        }
+
+        public string GetComputingPartnerCodeTranslation(string logitudeCode, string computingPartner, string objectTableName, int tenant)
+        {
+            ICommonDataContext context;
+            ObjectTableRepository myObjectTabelRepository;
+            ComputingPartnerQuery computingPartnerQuery;
+            ComputingPartnerTranslationQuery computingPartnerTranslationQuery;
+            context = CommonDataContext.GetContext(tenant);
+            myObjectTabelRepository = new ObjectTableRepository(tenant);
+            computingPartnerQuery = new ComputingPartnerQuery(new ComputingPartnerRepository(context));
+            computingPartnerTranslationQuery = new ComputingPartnerTranslationQuery(new ComputingPartnerTranslationRepository(context));
+
+            ObjectTable objectTable = myObjectTabelRepository.GetObjectTableByName(objectTableName, 0, true);
+            ComputingPartnerPM partner = computingPartnerQuery.GetSinglePMByCode(computingPartner, tenant);
+            if (partner == null)
+            {
+                partner = computingPartnerQuery.GetSinglePMByCode(computingPartner, 0);
+            }
+
+            string partnerCode = null;
+            if (partner != null && objectTable != null)
+            {
+                partnerCode = computingPartnerTranslationQuery.GetPartnerCodeTranslation(logitudeCode, partner.Id, objectTable.Id, tenant);
+            }
+
+            return partnerCode;
+        }
+
+
         private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
         {
             var myGDFDATAQueryService = new GDFDATAQueryService(AmitalContext.GetContext(tenant));

@@ -83,7 +83,13 @@ export class SupplierInvoiceMoreTabComponent extends BaseComponent {
                 if (this.declarationPM.Direction == "E" && item.TypeCode != "160") {
                     this.ModificationsList.Insert(new ModificationItemModel(item, this));
                 }
+                else {
+                    this.ModificationsList.Insert(new ModificationItemModel(item, this));
+
+                }
             }
+
+           
 
         }
 

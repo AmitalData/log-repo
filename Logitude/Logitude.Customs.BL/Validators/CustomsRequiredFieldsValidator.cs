@@ -112,7 +112,7 @@ namespace Logitude.Customs.BL.Validators
             {
                 requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { CustomMessageError = error, });
             }
-
+            
             foreach (SupplierInvoicePM supplierInvoice in supplierInvoices)//declaration.SupplierInvoices)//mohammad fix wi 20751
             {
                 foreach (PropertyInfo info in SupplierInvoiceProperties)
@@ -133,8 +133,17 @@ namespace Logitude.Customs.BL.Validators
 
                 //supplierInvoiceArray[supplierInvoice.InvoiceCounterKey] = supplierInvoice.InvoiceNumber;
 
-
-
+                if (declaration.Direction == "E" && supplierInvoice.AccountTypeCode != "I04")
+                {
+                    if (string.IsNullOrEmpty(supplierInvoice.BuyerName))
+                    {
+                        requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = "BuyerName", TableName = "Customs.SupplierInvoice", EntityReference = supplierInvoice.InvoiceNumber, EntityReference2 = "OTHER" });
+                    }
+                    if (string.IsNullOrEmpty(supplierInvoice.BuyerAddress))
+                    {
+                        requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = "BuyerAddress", TableName = "Customs.SupplierInvoice", EntityReference = supplierInvoice.InvoiceNumber, EntityReference2 = "OTHER" });
+                    }
+                }
                 supplierInvoiceItems = allInvoiceItems.Where(d => d.DeclarationId == supplierInvoice.DeclarationId && d.CounterKey == supplierInvoice.InvoiceCounterKey).ToList();//supplierInvoice.SupplierInvoiceItems;//mohammad fix wi 20751
                 supplierInvoiceModifications = supplierInvoice.SupplierInvoiceModifications;
                 supplierInvoicFreightAmounts = supplierInvoice.SupplierInvoiceFreightAmounts;

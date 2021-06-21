@@ -25,7 +25,7 @@ export class DeclarationEditComponentController implements IEditComponentControl
             allTabs[indexOfTab].IndexOrder = -1;
         }
 
-        if (currentEntity.AmendmentDontDisplayInList) {
+         if (currentEntity.AmendmentDontDisplayInList) {
             var indexOfTab = allTabs.findIndex(t => t.Code == "DCDA");
             if (indexOfTab > -1) {
                 allTabs.splice(indexOfTab, 1);
@@ -33,7 +33,7 @@ export class DeclarationEditComponentController implements IEditComponentControl
 
         }
 
-        if (currentEntity.IsAmendment) {
+        if (currentEntity.IsAmendment || !FeatureLocator.HasFeaturePermession("Customs.Declaration", "DECLARATIONAMENDMENT")) {
             var indexOfTab = allTabs.findIndex(t => t.Code == "DCCO");
 
             if (indexOfTab > -1) {
@@ -185,6 +185,9 @@ export class DeclarationEditComponentController implements IEditComponentControl
     }
     OnCloseEditControl(onCallBack?: () => void) {
         if (!this._ControllerOn) {
+            if (!AppTool.IsNullOrEmpty(onCallBack)) {
+                onCallBack();
+            }
             return;
         }
         if (

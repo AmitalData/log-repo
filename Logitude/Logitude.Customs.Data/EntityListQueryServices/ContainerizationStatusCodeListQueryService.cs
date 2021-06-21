@@ -28,7 +28,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 					                          Code = a.Code,
 					
 					                          Name = a.Name,
-					
+				
 					                          SearchFields = a.SearchFields,
 					
 		                    	            });
@@ -37,7 +37,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 		private IQueryable<ContainerizationStatusCode> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<ContainerizationStatusCode> iQueryable)
         {
-			throw new NotImplementedException();
+			return iQueryable;
 		}
 			}
 

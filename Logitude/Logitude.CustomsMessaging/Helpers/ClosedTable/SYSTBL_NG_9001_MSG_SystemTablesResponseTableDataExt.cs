@@ -16,6 +16,7 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
         public ContainerType MyContainerType { get; set; }
         public CertificateExemptionType MyCertificateExemptionType { get; set; }
 
+        public CargoIdentifireType MyCargoIdentifireType { get; set; }
 
         internal static SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt CreateNew(SYSTBL_NG_9001_MSG_SystemTablesResponseTableData item)
         {
@@ -69,4 +70,17 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
 
 
     }
+    public class CargoIdentifireType
+    {
+        public Boolean IsForDeclarationExport { get; set; }
+        public Boolean IsForDeclarationImport { get; set; }
+        public Boolean IsForManifest { get; set; }
+        public Boolean IsKey2Mandatory { get; set; }
+        public Boolean IsKey3Mandatory { get; set; }
+        public string CargoIdentifierKey1Name { get; set; }
+        public string CargoIdentifierKey2Name { get; set; }
+        public string CargoIdentifierKey3Name { get; set; }
+
+    }
+
 }

@@ -30,7 +30,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ContainerizationNumber, 
 	         ContainerizationStatus, 
 	         HataraStatus, 
-	         OperationMode,
+	         OperationMode, 
+	         IsChange,
 	      }
 
 
@@ -49,7 +50,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ExportFile, 
 	         ImporterName, 
 	         ContainerizationStatusName, 
-	         HataraStatusName,
+	         HataraStatusName, 
+	         ConnectedDeclarations, 
+	         NotConnectedDeclarations, 
+	         IsChange,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -96,6 +100,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OperationMode))
             {
 				entityPOCO.OperationMode = entityPM.OperationMode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsChange))
+            {
+				entityPOCO.IsChange = entityPM.IsChange;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -149,6 +158,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.OperationMode = entityPOCO.OperationMode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsChange))
+            {
+					entityPM.IsChange = entityPOCO.IsChange;
+            }
+
 		}
 
 		public void PMToOldPM(ContainerizationPM entityPM, ContainerizationPM oldEntityPM)
@@ -193,6 +207,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OperationMode))
             {
                 oldEntityPM.OperationMode = entityPM.OperationMode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsChange))
+            {
+                oldEntityPM.IsChange = entityPM.IsChange;
             }
 			
 		}

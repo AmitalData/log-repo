@@ -28,6 +28,8 @@ namespace Logitude.Customs.BL.CloseTables
 
         public const string InterfaceName_ECOVSSPCL_REQUEST = "ECOVSSPCL+RQ";//EC = E-Commerce
         public const string InterfaceName_ECOVSSPCL_RESPONE = "ECOVSSPCL+RS";//EC = E-Commerce
+        public const string InterfaceName_ECSWSSPCL_REQUEST = "ECSWSSPCL+RQ";//EC = E-Commerce
+        public const string InterfaceName_ECSWSSPCL_RESPONE = "ECSWSSPCL+RS";//EC = E-Commerce
         public const string InterfaceName_ECSTB = "ECSTB";//EC = E-Commerce
         public const string InterfaceName_ECOVSTB = "ECOVSSTB";//EC = E-Commerce
         public const string InterfaceName_ECSWSSTB = "ECSWSSTB";//EC = E-Commerce
@@ -265,6 +267,31 @@ namespace Logitude.Customs.BL.CloseTables
                 ServerInternalDef= true,
 
             },
+             new InterfaceDetails()
+            {
+                Code = InterfaceName_ECSWSSPCL_REQUEST,
+                Name = "פעולות מיוחדות לסוויספורט",
+                TypeCode = TypeCode_Out,
+                Partner = PartnerCode_ILSWS,
+                ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
+                Subject="פעולות מיוחדות לסוויספורט",
+                ResponseCode =InterfaceName_ECSWSSPCL_RESPONE,
+            }
+             ,
+             new InterfaceDetails()
+            {
+                Code = InterfaceName_ECSWSSPCL_RESPONE,
+                Name = "פעולות מיוחדות מסוויספורט",
+                TypeCode = TypeCode_In,
+                Partner = PartnerCode_ILSWS,
+                ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
+                AnalyzeQueueService = AnalyzeQueueServiceEnum.SWSSpecialActionService,
+                Subject= "פעולות מיוחדות לסוויספורט",
+                ServerInternalDef= true
+
+            }
+             ,
+
 
             };
             ///
@@ -331,6 +358,8 @@ namespace Logitude.Customs.BL.CloseTables
                     return new ILSWSQHAWBService(@interface);
                 case AnalyzeQueueServiceEnum.OVSSpecialActionService:
                     return new CourierOVSSpecialActionQService(@interface);
+                case AnalyzeQueueServiceEnum.SWSSpecialActionService:
+                    return new CourieSWSSpecialActionQService(@interface);
                 case AnalyzeQueueServiceEnum.OVSStatusAvailabilitySpliterService:
                     return new CourierOVSStatusAvailabilitySplitterQService(@interface);
                 case AnalyzeQueueServiceEnum.OVSStatusAvailabilityService:
@@ -395,6 +424,7 @@ namespace Logitude.Customs.BL.CloseTables
         MamanQHAWBService,
         MamanQSPCLService,
         SwissPortQHAWBService,
+        SWSSpecialActionService
     }
     public enum CourierWEBAPICredentialType
     {

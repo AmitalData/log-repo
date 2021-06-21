@@ -138,11 +138,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
 
                 //if ((!Environment.MachineName.Equals("itzik-7-new", StringComparison.OrdinalIgnoreCase)) && (!Environment.MachineName.Equals("yuval-7-new", StringComparison.OrdinalIgnoreCase))) return;
-                if (String.IsNullOrWhiteSpace(_DirtyDeclarationPM.CustomFileNo) && !(_DirtyDeclarationPM.IsCancelled == true && !String.IsNullOrWhiteSpace(_DBOccDeclarationPM.CustomFileNo)))
+                if (_DirtyDeclarationPM.IsCancelled == true)
                 {
-                    logData = $"_DirtyDeclarationPM.CustomFileNo={_DirtyDeclarationPM.CustomFileNo},_DirtyDeclarationPM.IsCancelled={_DirtyDeclarationPM.IsCancelled}"; 
+                    logData = $"_DirtyDeclarationPM.CustomFileNo={_DirtyDeclarationPM.CustomFileNo},_DBOccDeclarationPM.CustomFileNo={_DBOccDeclarationPM.CustomFileNo},_DirtyDeclarationPM.IsCancelled={_DirtyDeclarationPM.IsCancelled}"; 
                     LogitudeSettings.HandleLogMe(logData, false, "UpdateUnifreight_" + _DirtyDeclarationPM.Id, stopLogAt);
-                    return;
+                    //return;
                 }
                 //<--- Yuval Chalup 19.11.2015 TASK-17450
                 if (_DirtyDeclarationPM.IsConvertedDeclaration)
@@ -872,6 +872,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 if (_FromMessaging == true )
                 {
                     var requestData2 = "";
+                    bool isAmendmentRelease = false;
                     var myEventContextTagModel = new EventContextTagModel();
                     myEventContextTagModel = this._DirtyDeclarationPM.CurrentContextTag as EventContextTagModel;
                     if (myEventContextTagModel != null)
@@ -883,6 +884,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         if (myEventContextTagModel.CallProccessID == EventContextTagModel.ProccessEnum.DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageResponseServiceUpdate)
                         {
                             requestData2 = GetMyFUStatusXML(myEventContextTagModel.EventCode, myEventContextTagModel.EventCode, "", "new", myEventContextTagModel.StatusDateTime, false);
+                            if (!(string.IsNullOrEmpty(this._DirtyDeclarationPM.AmendmentOriginalDeclartation) && this._DirtyDeclarationPM.AmendmentDontDisplayInList == false))
+                            {
+                                isAmendmentRelease = true;
+                            }
                         }
                     }
                     //if (myEventContextTagModel.CallProccessID == EventContextTagModel.ProccessEnum.MN_MSG4_SendManifestFeedBack_MessageResponseService)
@@ -900,6 +905,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         {
                             requestData = requestData2;
                         }
+                    }
+                    if (isAmendmentRelease) 
+                    {
+                        requestData = requestData.Replace("</transmission>", string.Concat("<GENERALQUERYMODE>AMENDMENTRELEASE</GENERALQUERYMODE>", "</transmission>"));
                     }
                 }
                 /*

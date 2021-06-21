@@ -94,7 +94,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         public string CreateCRS(int tenant, string LoggingUserId,
             //string DeclarationId, string master,string courierDeclarationStatusCode, List<string> DeclarationsList = null)
-            DocumentsFilingPM documentsFilingPM/*, DeclarationPM declarationPM*/)
+            DocumentsFilingPM documentsFilingPM/*, DeclarationPM declarationPM*/ ,string entityId)
         {
 
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
@@ -129,7 +129,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             var myDCAInUCBUD2LTWithResponseContentHeader = new DCAInUCBUD2LTWithResponseContentHeader()
             {
-                DeclarationId = documentsFilingPM.EntityId,
+                DeclarationId = !string.IsNullOrEmpty(documentsFilingPM.EntityId)? documentsFilingPM.EntityId : entityId,
                 DocumentsFilingId = documentsFilingPM.Id,
                 DocumentsFilingCode = documentsFilingPM.Code,
                 LoggingUserId = LoggingUserId,
@@ -288,7 +288,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 {
                     FixDocumentTypeCodeEmpty(logData);//hd367591
                 }
-                
+
 
                 if (String.IsNullOrWhiteSpace(_DocumentsFilingPM.DocumentTypeCode))
                 {
@@ -307,7 +307,19 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                 bool shouldCreateDCAComm = false;
                 var decQS = new DeclarationQueryService(tenant);
-                declarationPM = decQS.GetSingle(this._DocumentsFilingPM.EntityId, false, false);
+                //if(!string.IsNullOrEmpty(this._DocumentsFilingPM.EntityId))
+                {
+                    declarationPM = decQS.GetSingle(this._DocumentsFilingPM.EntityId, false, false);
+
+                }
+                //else
+                //{
+                //    ///Elisheva ask to revert !!!---  declarationPM = decQS.GetSingleByCustomFileNo(this._DocumentsFilingPM.ExternalEntityReference, _DocumentsFilingPM.Tenant);
+
+                //}
+
+
+
                 logData += $"declarationPM.id={declarationPM.Id},CustomFileNo={declarationPM.CustomFileNo}"; //Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertSerialize(declarationPM);
                 if (declarationPM.PaymentDate.HasValue)
                 {
@@ -409,7 +421,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     )
                 {
                     var myDCAInUCBUD2LT_MsgMessagingService = new DCAInUCBUD2LT_MsgMessagingService();
-                    string crs = myDCAInUCBUD2LT_MsgMessagingService.CreateCRS(tenant, loggingUserId, _DocumentsFilingPM);
+                    string crs = myDCAInUCBUD2LT_MsgMessagingService.CreateCRS(tenant, loggingUserId, _DocumentsFilingPM, declarationPM.Id);
                     LogitudeSettings.HandleLogMe(crs + " " + logData, false, "CreateUD2LTService.OK", stopLogAt);
 
                 }
@@ -528,7 +540,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         private bool IsConnected2Declaration()
         {
-            return (this._DocumentsFilingPM.ObjectTableId == ObjectTableRepository.GetObjectTableByName("Customs.Declaration") && !String.IsNullOrWhiteSpace(this._DocumentsFilingPM.EntityId));
+            return (this._DocumentsFilingPM.ObjectTableId == ObjectTableRepository.GetObjectTableByName("Customs.Declaration") &&  ( !String.IsNullOrWhiteSpace(this._DocumentsFilingPM.EntityId) || !String.IsNullOrWhiteSpace(this._DocumentsFilingPM.ExternalEntityReference)));
         }
     }
 }

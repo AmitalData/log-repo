@@ -1,4 +1,4 @@
-﻿<!-- DeclarationStatusComponent view  -->
+<!-- DeclarationStatusComponent view  -->
 <style>
     .DisbleBox {
         display: inline-block;
@@ -96,13 +96,14 @@
                                 <td style="width: 110px;">
                                     <LogLabel [ObjectFieldName]="'CargoTypeCode'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.CargoIdentifierType'"></LogLabel>
                                 </td>
-                                <td style="width: 160px;">
+                                <td style="width: 160px;" >
                                     <LogLov [ObjectFieldName]="'CargoTypeCode'"
                                             [ObjectTableName]="'Customs.CargoIdentifireType'"
                                             [DataContext]="DataContext"
                                             [LookUpTableName]="'Customs.CargoIdentifireType'"
                                             [HideColumns]="true"
-                                            [HideLastColumn]="true">
+                                            [HideLastColumn]="true"
+                                            [SelectedValue]="CargoTypeCode">
                                     </LogLov>
                                 </td>
                                 <td>
@@ -112,10 +113,10 @@
 
                             <tr class="FormFieldRow">
                                 <td style="width: 110px;">
-                                    <LogLabel [ObjectFieldName]="'ManifestNumber'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.CargoIdentifierKey1'"></LogLabel>
+                                    <LogLabel [ObjectFieldName]="'ManifestNumber'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName" [TextCode]="'Customs.SpecialActivityRequest.O.CargoIdentifierKey1'"></LogLabel>
                                 </td>
                                 <td style="width: 160px;">
-                                    <LogTextBox [ObjectFieldName]="'ManifestNumber'" [Text]="ManifestNumber" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                    <LogTextBox [ObjectFieldName]="'ManifestNumber'" (change)="setRequired()" [Text]="ManifestNumber" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                                 </td>
                                 <td>
                                     <div></div>
@@ -124,10 +125,10 @@
 
                             <tr class="FormFieldRow">
                                 <td style="width: 110px;">
-                                    <LogLabel [ObjectFieldName]="'SecondCargoID'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.CargoIdentifierKey2'"></LogLabel>
+                                    <LogLabel [ObjectFieldName]="'SecondCargoID'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName" [TextCode]="'Customs.SpecialActivityRequest.O.CargoIdentifierKey2'"></LogLabel>
                                 </td>
                                 <td style="width: 160px;">
-                                    <LogTextBox [ObjectFieldName]="'SecondCargoID'" [Text]="SecondCargoID" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                    <LogTextBox [ObjectFieldName]="'SecondCargoID'" (change)="setRequired()" [Text]="SecondCargoID" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                 </td>
                                 <td>
                                     <div></div>
@@ -136,10 +137,10 @@
 
                             <tr class="FormFieldRow">
                                 <td style="width: 110px;">
-                                    <LogLabel [ObjectFieldName]="'ThirdCargoID'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.CargoIdentifierKey3'"></LogLabel>
+                                    <LogLabel [ObjectFieldName]="'ThirdCargoID'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName" [TextCode]="'Customs.SpecialActivityRequest.O.CargoIdentifierKey3'"></LogLabel>
                                 </td>
                                 <td style="width: 160px;">
-                                    <LogTextBox [ObjectFieldName]="'ThirdCargoID'" [Text]="ManifestNumber" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                    <LogTextBox [ObjectFieldName]="'ThirdCargoID'"  (change)="setRequired()" [Text]="ManifestNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                 </td>
                                 <td>
                                     <div></div>

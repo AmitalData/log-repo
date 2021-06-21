@@ -3,8 +3,9 @@
   <Sql Version="1">
   </Sql>
 
-  <Oracle Version="3">
-    <![CDATA[
+  <Oracle Version="4">
+
+     <![CDATA[
 
 
 update declarations 
