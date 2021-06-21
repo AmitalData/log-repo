@@ -292,7 +292,7 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
     CancelContainerizationMethod() {
         var confirmWindow = new ConfirmWindow();
         confirmWindow.Width = 300;
-        confirmWindow.Show("הםם ברצונך לבטל םת ההמכלה ?");
+        confirmWindow.Show("האם ברצונך לבטל את ההמכלה ?");
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes)
             {
