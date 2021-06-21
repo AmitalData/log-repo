@@ -1,4 +1,5 @@
-﻿using Logitude.Test.Base.Models.PartnersPreparation;
+﻿using Logitude.CrossDockTests.ExternalServices;
+using Logitude.Test.Base.Models.PartnersPreparation;
 using Logitude.Test.Base.Models.UserTenantPreparation;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,10 @@ namespace Logitude.CrossDockTests.Models.Builders
     public class CrossDockBuilder
     {
         private CrossDockPM _crossDockPM;
-        private readonly string randomID;
+        private readonly RandomGeneratorExternalService randomGeneratorExternalService;
         public CrossDockBuilder()
         {
-            randomID = "123";
+            randomGeneratorExternalService = new RandomGeneratorExternalService();
             this.Reset();
         }
 
@@ -23,44 +24,44 @@ namespace Logitude.CrossDockTests.Models.Builders
             _crossDockPM = new CrossDockPM();
         }
 
-        public CrossDockBuilder DirectionId(string DirectionId)
+        public CrossDockBuilder DirectionId(string directionId)
         {
-            _crossDockPM.DirectionId = DirectionId;
+            _crossDockPM.DirectionId = directionId;
             return this;
         }
 
-        public CrossDockBuilder TransportModeId(string TransportModeId)
+        public CrossDockBuilder TransportModeId(string transportModeId)
         {
-            _crossDockPM.TransportModeId = TransportModeId;
+            _crossDockPM.TransportModeId = transportModeId;
             return this;
         }
 
-        public CrossDockBuilder ChargeableWeightUnitCode(string ChargeableWeightUnitCode)
+        public CrossDockBuilder ChargeableWeightUnitCode(string chargeableWeightUnitCode)
         {
-            _crossDockPM.ChargeableWeightUnitCode = ChargeableWeightUnitCode;
+            _crossDockPM.ChargeableWeightUnitCode = chargeableWeightUnitCode;
             return this;
         }
-        public CrossDockBuilder GrossWeightUnitCode(string GrossWeightUnitCode)
+        public CrossDockBuilder GrossWeightUnitCode(string grossWeightUnitCode)
         {
-            _crossDockPM.GrossWeightUnitCode = GrossWeightUnitCode;
-            return this;
-        }
-
-        public CrossDockBuilder DimensionsUnitCode(string DimensionsUnitCode)
-        {
-            _crossDockPM.DimensionsUnitCode = DimensionsUnitCode;
+            _crossDockPM.GrossWeightUnitCode = grossWeightUnitCode;
             return this;
         }
 
-        public CrossDockBuilder VolumeUnitCode(string VolumeUnitCode)
+        public CrossDockBuilder DimensionsUnitCode(string dimensionsUnitCode)
         {
-            _crossDockPM.VolumeUnitCode = VolumeUnitCode;
+            _crossDockPM.DimensionsUnitCode = dimensionsUnitCode;
             return this;
         }
 
-        public CrossDockBuilder StatusCode(string StatusCode)
+        public CrossDockBuilder VolumeUnitCode(string volumeUnitCode)
         {
-            _crossDockPM.StatusCode = StatusCode;
+            _crossDockPM.VolumeUnitCode = volumeUnitCode;
+            return this;
+        }
+
+        public CrossDockBuilder StatusCode(string statusCode)
+        {
+            _crossDockPM.StatusCode = statusCode;
             return this;
         }
 
@@ -87,7 +88,7 @@ namespace Logitude.CrossDockTests.Models.Builders
                 CreatedByUserId = UserTenant.UserId,
                 UpdatedByUserId = UserTenant.UserId,
                 WarehouseId = PartnersData.WarehouseId,
-                EntryNumber = randomID
+                EntryNumber = randomGeneratorExternalService.RandomNumber(3).ToString()
             };
             return this;
         }

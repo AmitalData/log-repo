@@ -1,4 +1,5 @@
-﻿using Logitude.Test.Base.Models.UserTenantPreparation;
+﻿using Logitude.CrossDockTests.ExternalServices;
+using Logitude.Test.Base.Models.UserTenantPreparation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,10 @@ namespace Logitude.CrossDockTests.Models.Builders
     public class WarehouseEntryPackageBuilder
     {
         private WarehouseEntryPackagePM _warehouseEntryPackagePM;
-        private readonly string randomID;
+        private readonly RandomGeneratorExternalService randomGeneratorExternalService;
         public WarehouseEntryPackageBuilder()
         {
-            randomID = "123";
+            randomGeneratorExternalService = new RandomGeneratorExternalService();
             this.Reset();
         }
 
@@ -35,32 +36,32 @@ namespace Logitude.CrossDockTests.Models.Builders
             return this;
         }
 
-        public WarehouseEntryPackageBuilder Quantity(int Quantity)
+        public WarehouseEntryPackageBuilder Quantity(int quantity)
         {
-            _warehouseEntryPackagePM.Quantity = Quantity;
+            _warehouseEntryPackagePM.Quantity = quantity;
             return this;
         }
 
-        public WarehouseEntryPackageBuilder Length(int? Length)
+        public WarehouseEntryPackageBuilder Length(int? length)
         {
-            _warehouseEntryPackagePM.Length = Length;
+            _warehouseEntryPackagePM.Length = length;
             return this;
         }
 
-        public WarehouseEntryPackageBuilder Width(int? Width)
+        public WarehouseEntryPackageBuilder Width(int? width)
         {
-            _warehouseEntryPackagePM.Width = Width;
+            _warehouseEntryPackagePM.Width = width;
             return this;
         }
 
-        public WarehouseEntryPackageBuilder Height(int? Height)
+        public WarehouseEntryPackageBuilder Height(int? height)
         {
-            _warehouseEntryPackagePM.Height = Height;
+            _warehouseEntryPackagePM.Height = height;
             return this;
         }
-        public WarehouseEntryPackageBuilder Weight(int? Weight)
+        public WarehouseEntryPackageBuilder Weight(int? weight)
         {
-            _warehouseEntryPackagePM.Weight = Weight;
+            _warehouseEntryPackagePM.Weight = weight;
             return this;
         }
 
@@ -73,7 +74,7 @@ namespace Logitude.CrossDockTests.Models.Builders
                 CreatedByUserId = UserTenant.UserId,
                 UpdatedByUserId = UserTenant.UserId,
                 ChangeSetOp = "Insert",
-                WarehouseEntryId = randomID
+                WarehouseEntryId = randomGeneratorExternalService.RandomNumber(3).ToString()
             };
             return this;
         }

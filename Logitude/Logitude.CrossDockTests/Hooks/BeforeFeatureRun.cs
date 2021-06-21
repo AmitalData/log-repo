@@ -22,7 +22,7 @@ namespace Logitude.CrossDockTests.Hooks
         {
             try
             {
-                CrossDockPM crossDockPM = GetValidaCrossDockPM();
+                CrossDockPM crossDockPM = GetValidCrossDockPM();
                 ApiResponse<CrossDockPM> response = APICaller.CallPost<CrossDockPM>(crossDockPM, Urls.CrossDockController, UserTenant.Token);
                 CrossDockDataMap(response.Data);
             }
@@ -37,7 +37,7 @@ namespace Logitude.CrossDockTests.Hooks
             CrossDockData.Id = quote.Id;
         }
 
-        private static CrossDockPM GetValidaCrossDockPM()
+        private static CrossDockPM GetValidCrossDockPM()
         {
             return new CrossDockBuilder().WithDefualtValues()
              .DirectionId("E")

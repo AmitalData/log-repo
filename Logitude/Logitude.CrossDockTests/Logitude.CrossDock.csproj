@@ -100,6 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExternalServices\CrossDockExternalServices.cs" />
+    <Compile Include="ExternalServices\RandomGeneratorExternalService.cs" />
     <Compile Include="Hooks\BeforeFeatureRun.cs" />
     <Compile Include="Models\Builders\CrossDockBuilder.cs" />
     <Compile Include="Models\Builders\WarehouseEntryPackageBuilder.cs" />
