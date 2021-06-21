@@ -26,3 +26,7 @@ Feature: FBL Stock Add, Remove and Remove Series in Maintenance
     Scenario: Remove FBLStock series
         When user removes a series of entries
         Then the fblStock series should Remove successfully
+
+    Scenario: Close the FBLStock
+        When close FBL
+        Then the FBL should close successfully

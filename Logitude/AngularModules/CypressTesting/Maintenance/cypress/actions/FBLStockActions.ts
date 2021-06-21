@@ -92,3 +92,11 @@ export function RemoveFBLStockSeries() {
 export function DefineGetFBLStockGetAll() {
     cy.DefineRequestWait(RestAPI.GET, Urls.FBLStocksGetAll, RequestAliases.GetAllFBLStock);
 }
+
+export function CloseFBL() {
+    cy.Click(FBLStockSelectors.CloseButton, "Close")
+}
+
+export function AssertCloseFBL() {
+    BaseAssertion.AssertElementExist(FBLStockSelectors.ScrollContent)
+}
