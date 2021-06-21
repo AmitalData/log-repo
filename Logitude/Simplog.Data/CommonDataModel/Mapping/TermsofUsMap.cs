@@ -21,27 +21,25 @@ namespace Simplog.Data.CommonDataModel.Mapping
 
             // Table & Column Mappings
             this.ToTable("TermsofUses");
-
-
+            this.Property(t => t.Id).HasColumnName("Id");
+            this.Property(t => t.VersionNumber).HasColumnName("VersionNumber");
+            this.Property(t => t.VersionDocumentId).HasColumnName("VersionDocumentId");
+            this.Property(t => t.PrivateLabelId).HasColumnName("PrivateLabelId");
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
-                this.Property(t => t.Id).HasColumnName("Id_");
+               
                 this.Property(t => t.Date).HasColumnName("Date_");
-                this.Property(t => t.VersionNumber).HasColumnName("VersionNumber_");
-                this.Property(t => t.VersionDocumentId).HasColumnName("VersionDocumentId_");
-                this.Property(t => t.PrivateLabelId).HasColumnName("PrivateLabelId_");
+             
 
             }
             //#else
             else
             {
-                this.Property(t => t.Id).HasColumnName("Id");
+                
                 this.Property(t => t.Date).HasColumnName("Date");
-                this.Property(t => t.VersionNumber).HasColumnName("VersionNumber");
-                this.Property(t => t.VersionDocumentId).HasColumnName("VersionDocumentId");
-                this.Property(t => t.PrivateLabelId).HasColumnName("PrivateLabelId");
+              
 
             }
             //#endif

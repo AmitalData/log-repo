@@ -136,12 +136,12 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             if (dbms == "oracle")
             {
                 this.Property(t => t.NotificationHubConnectionString).HasColumnName("NotificationHubConnString");
-                this.Property(t => t.NotificationHubConnectionString).HasColumnName("AmitalCloudLogitudeTenantPK");
+                this.Property(t => t.AmitalCloudLogitudeTenantPrimaryKey).HasColumnName("AmitalCloudLogitudeTenantPK");
             }
             else
             {
                 this.Property(t => t.NotificationHubConnectionString).HasColumnName("NotificationHubConnectionString");
-                this.Property(t => t.NotificationHubConnectionString).HasColumnName("AmitalCloudLogitudeTenantPrimaryKey");
+                this.Property(t => t.AmitalCloudLogitudeTenantPrimaryKey).HasColumnName("AmitalCloudLogitudeTenantPrimaryKey");
             }
 
             this.Property(t => t.ForwarderTenantsURL).HasColumnName("ForwarderTenantsURL");
