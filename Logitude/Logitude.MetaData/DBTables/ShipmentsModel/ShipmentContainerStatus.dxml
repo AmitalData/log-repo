@@ -30,7 +30,7 @@
     Type="varchar"
     Size="2">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
    Name="StatusSource"

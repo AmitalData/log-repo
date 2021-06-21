@@ -24,6 +24,7 @@ using Simplog.Data.ShipmentsModel;
 using Logitude.Server.Tools.Counters;
 using System.Security.Cryptography;
 using System.Reflection;
+using System.Globalization;
 
 namespace WebFreight.Web.Helpers.Analyzers
 {
@@ -127,6 +128,7 @@ namespace WebFreight.Web.Helpers.Analyzers
             catch (Exception ex)
             {
                 this.OnCatchAnalyzingError(ex);
+                throw ex;
             }
         }
         private void ConnectAnalyzeQueue()
@@ -300,18 +302,11 @@ namespace WebFreight.Web.Helpers.Analyzers
         }
         private void GetContainerDataByContainerNumber()
         {
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            var containerNumber = this.oceanInsight?.ContainerNumber;
+            if (!string.IsNullOrEmpty(containerNumber))
             {
-                if (this.logitudeTenant != null)
-                {
-                    var containerNumber = this.oceanInsight?.ContainerNumber;
-                    if (!string.IsNullOrEmpty(containerNumber))
-                    {
-                        container = containerRepository.GetContainerByContainerNumberAndTenant(containerNumber, logitudeTenant.Value);
-                        containerId = container?.Id;
-                    }
-                }
-                scope.Complete();
+                container = containerRepository.GetContainerByContainerNumberAndTenant(containerNumber, logitudeTenant.Value);
+                containerId = container?.Id;
             }
         }
         private void AddContainerStatusCommunicationLog()
@@ -320,13 +315,10 @@ namespace WebFreight.Web.Helpers.Analyzers
             {
                 this.commonContext = CommonDataContext.GetContext(this.logitudeTenant.Value);
                 this.communicationLogRepository = new CommunicationLogRepository(this.logitudeTenant.Value);
-                //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-                //{
-                    this.GetCommuniactionLogObjectTableId();
-                    this.GetLoggedContactId();
-                    this.BuildCommunicationLog();
-                    //scope.Complete();
-                //}
+
+                this.GetCommuniactionLogObjectTableId();
+                this.GetLoggedContactId();
+                this.BuildCommunicationLog();
             }
         }
         private void GetCommuniactionLogObjectTableId()
@@ -414,15 +406,7 @@ namespace WebFreight.Web.Helpers.Analyzers
                     DepartureDate = departureDate,
                     ArrivalDate = arrivalDate,
                     TimeOfDepartureInfo = departureDateInfo,
-                    TimeOfArrivalInfo = arrivalDateInfo,
-                    //FromPortId = DeparturePortId,
-                    //ToPortId = ArrivalPortId,
-                    //Pieces = ,
-                    //Partial = ,
-                    //VoyageNumber = ,
-                    //Location = ,
-                    //ShippingLineName = ,
-                    //VesselName = ,                  
+                    TimeOfArrivalInfo = arrivalDateInfo,                
                 };
 
                 shipmentContainerStatusRepository.Add(containerStatus);
@@ -442,7 +426,11 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(createdDate))
             {
-                return Convert.ToDateTime(createdDate);
+                DateTime result;
+                DateTime.TryParse(createdDate, out result);
+                return result;
+                //return DateTime.ParseExact(createdDate, "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture);
+                //return Convert.ToDateTime(createdDate, CultureInfo.InvariantCulture);
             }
 
             return null;
