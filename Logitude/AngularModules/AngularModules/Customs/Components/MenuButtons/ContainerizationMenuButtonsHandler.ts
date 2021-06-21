@@ -292,8 +292,10 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
                 this.containerizationPMService.update(this.EntityPM).subscribe((response: ServiceResponse) => {
                     if (!response.HasError)
                     {
+                        this.CurrentSession.StartBusyIndicator("Sending...");
                         this.containerizationMessagesService.SendContainerization(this.getParams(response, event)).subscribe((response: ServiceResponse) => {
                             console.log("[response] CancelContainerizationMethod: ", response);
+                            this.CurrentSession.StopBusyIndicator();
                             if (!response.Result.HasException) {
                                 this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                                 this.CurrentSession.CurrentEditComponent.LoadCompleted.emit(true);
