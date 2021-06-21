@@ -1265,6 +1265,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
     }
 
     private OpenNewContainerizationMethod() {
+        debugger;
         if (AppTool.IsNullOrEmpty(this.EntityPM.ExportContainerizationID)) {
             var args: any = {
                 EntityPM: this.EntityPM,
@@ -1279,6 +1280,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
             logWindow.Show('./CustomsModules/CustomsContainerization/Components/NewEntity/NewContainerizationComponent');
             logWindow.WindowClosed.subscribe(($event: any) => {
                 this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
             });
         } else {
                 //  this.EditEntity("Customs.Declaration", this.rowData.Id, null, "DEGC");

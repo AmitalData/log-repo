@@ -1686,11 +1686,11 @@
   </Screen>
   <Tab
     TabName="&quot;General Details&quot;"
-    TabLocalName="&quot;פרטים כללים&quot;"
+    TabLocalName="&quot;כללי&quot;"
     ObjectTableName="&quot;Customs.Containerization&quot;"
     Code="&quot;CNGN&quot;"
     ControlPath="&quot;&quot;"
-    TextCode="&quot;Customs.Containerization.TH.GeneralDetails&quot;"
+    TextCode="&quot;Customs.Containerization.TH.General&quot;"
     IsPackagable="true"
     IndexOrder="0"
     HtmlComponentURL="&quot;./CustomsModules/CustomsContainerization/Components/EditTabs/ContainerizationGeneralComponent&quot;"
@@ -1699,7 +1699,7 @@
     HasGeneralFeature="false" />
   <Tab
     TabName="&quot;Request Sheet&quot;"
-    TabLocalName="&quot;גיליון בקשה&quot;"
+    TabLocalName="&quot;גליון בקשות&quot;"
     ObjectTableName="&quot;Customs.Containerization&quot;"
     Code="&quot;CNRS&quot;"
     ControlPath="&quot;&quot;"
@@ -1772,8 +1772,29 @@
         LocalDefaultText="&quot;סטטוס הצהרות בהמכלה&quot;"
         IsPackagable="true" />
     </MenuButton>
+    <MenuButton
+      EventCode="&quot;SendContainerization&quot;"
+      DefaultText="&quot;Send Containerization&quot;"
+      MenuButtonType="&quot;button&quot;"
+      IndexOrder="0"
+      LocalDefaultText="&quot;שלח&quot;"
+      IsPackagable="true"
+      HtmlComponentPath="&quot;./CustomsModules/CustomsContainerization/Components/SendContainerization/SendContainerization&quot;" />
   </MenuButtons>
   <DataContracts />
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;Customs.Containerization.TH.General&quot;"
+      DefaultText="&quot;General&quot;"
+      LocalDefaultText="&quot;כללי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Containerization.TH.RequestSheet&quot;"
+      DefaultText="&quot;RequestSheet&quot;"
+      LocalDefaultText="&quot;גליון בקשות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

@@ -126,23 +126,14 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
         filters.PageIndex = 0;
         filters.GetAll = false;
         filters.GetCount = true;
-        filters.addAdditionalFilter("ExportContainerizationID", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
+        filters.addAdditionalFilter("Id", this.EntityPM.ConnectedDeclarations, null, null, "InListExact", false, false, false, "string", this.EntityPM.ConnectedDeclarations.length == 0);
         return this.declarationListService.getByFilters(filters)
             .subscribe(r => {
-                this.ContainerizationDeclarationList = new ObservableCollection([]);
-                let Newfilters = new ApiQueryFilters();
-                Newfilters.PageSize = 200;
-                Newfilters.PageIndex = 0;
-                Newfilters.GetAll = false;
-                Newfilters.GetCount = true;
-                Newfilters.addAdditionalFilter("Id", this.EntityPM.ConnectedDeclarations, null, null, "InListExact", false, false, false, "string", this.EntityPM.ConnectedDeclarations.length == 0);
-                return this.declarationListService.getByFilters(Newfilters)
-                    .subscribe(res => {
-                        this.ContainerizationDeclarationList.InsertCollection(r.Result);
-                        for (let element of res.Result) {
-                            this.ContainerizationDeclarationList.Insert(element);
-                        }
-                    });
+                r.Result.forEach(element => {
+                    if (!this.ContainerizationDeclarationList.Collection.filter(x => x.Id == element.Id).length)
+                        this.ContainerizationDeclarationList.Insert(element);
+                });
+                var e = this.ContainerizationDeclarationList;
             });
     }
 
@@ -154,6 +145,7 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
             this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
                 this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
+                        this.resetDeletedDeclaration();
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.getRows();
                     }
@@ -166,7 +158,6 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
                     if (isLoadSuccess) {
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.getRows();
-
                         //this.RefreshEntity();
                     }
                 })
@@ -189,6 +180,12 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
                 }));
 
         }
+    }
+
+
+    resetDeletedDeclaration() {
+        this.CurrentSession.CurrentEditComponent.EntityPM.NotConnectedDeclarations = "";
+        this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = false;
     }
 
     //public SetTabArgs(args: any, ValidationErrorsList: any[]) {
@@ -226,7 +223,10 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
         } else {
             this.EntityPM.NotConnectedDeclarations += "," + item.Id;
         }
-
+        debugger;
+        if (this.EntityPM.ConnectedDeclarations.includes(item.Id)) {
+            this.EntityPM.ConnectedDeclarations = this.EntityPM.ConnectedDeclarations.replace(item.Id + ",", "");
+        }
         this.ContainerizationDeclarationList.Remove(item);
     }
     EditButtonClicked(item) {
@@ -260,7 +260,7 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
     line = 0;
 
     //#region Send + Delete
-    SendButtonClicked() {
+    SendButtonClicked() { 
         var errors = [];
         this.FillValidationErrorList.emit(errors); // clear validation msgs
 

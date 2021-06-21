@@ -707,6 +707,10 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             FeaturePM physicalCheckFeature_Actions = features.Where(d => d.Code == "PHYSICALCHECKACTIONS" && d.ObjectTableId == physicalCheckTableId).FirstOrDefault();
             FeaturePM physicalCheckFeature_ClosePhysicalCheck = features.Where(d => d.Code == "CLOSEPHYSICALCHECK" && d.ObjectTableId == physicalCheckTableId).FirstOrDefault();
 
+            string ContainerizationableId = ObjectContext.ObjectTables.Where(f => f.Name == "Customs.Containerization" && f.Tenant == tenant).FirstOrDefault().Id;
+            FeaturePM containerizationFeature_sendContainerization = features.Where(d => d.Code == "SendContainerization" && d.ObjectTableId == ContainerizationableId).FirstOrDefault();
+
+
             #region Declaration Buttons
             MenuButtonGroup declarationMenuButtonGroup = AddMenuButtonGroupAndMenuButtons.AddMenuButtonGroup(new MenuButtonGroupDetails()
             {
@@ -715,6 +719,17 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 ObjectTableId = declarationTableId,
                 Tenant = tenant,
             }, MenuButtonGroupRepository, TenantMenuButtonGroups);
+
+
+            #region Containerization Buttons
+            MenuButtonGroup containerizationMenuButtonGroup = AddMenuButtonGroupAndMenuButtons.AddMenuButtonGroup(new MenuButtonGroupDetails()
+            {
+                MenuButtonGroupType = "Customs.ContainerizationEdit",
+                Name = "Customs.ContainerizationEditButtonsGroup",
+                ObjectTableId = ContainerizationableId,
+                Tenant = tenant,
+            }, MenuButtonGroupRepository, TenantMenuButtonGroups);
+            #endregion
 
             #region forms button
             MenuButton formsButton = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -846,6 +861,26 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 MenuButtonType = "control",
                 ControlPath = "Logitude.Customs.CustomsControls.SendOptionsControl",
                 HtmlComponentPath = "./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/SendDeclaration/SendManifestComponent",
+
+            }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
+            #endregion
+            #region Send Containerization
+            MenuButton sendContainerization = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+            {
+                EventCode = "SendContainerization",
+                Index = 1,
+                IsActive = true,
+                LabelTextCodeCode = "Customs.Declaration.B.SendManifest",
+                LabelTextCodeDefaultText = "Send Containerization",
+                LocalDefaultText = "שלח",
+                ObjectTableId = ContainerizationableId,
+                Tenant = tenant,
+                MenuButtonGroupId = containerizationMenuButtonGroup.Id,
+                ParentMenuButtonId = null,
+                FeatureId = containerizationFeature_sendContainerization.Id,
+                MenuButtonType = "control",
+                ControlPath = "Logitude.Customs.CustomsControls.SendOptionsControl",
+                HtmlComponentPath = "./CustomsModules/CustomsContainerization/Components/SendContainerization/SendContainerization",
 
             }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
             #endregion

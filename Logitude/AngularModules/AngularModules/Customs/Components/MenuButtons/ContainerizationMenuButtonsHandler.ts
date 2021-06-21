@@ -27,7 +27,7 @@ import { CustomFileCreditResponseData } from '../../DataContract/ResponseData/Cu
 import { DeclarationDisplayOnlyChecks, DisplayOnlyCheckResult } from '../../Utilities/DeclarationDisplayOnlyChecks';
 import { VehicleReductionTypeListService } from '../../Services/StandardLists/VehicleReductionTypeListService';
 import { MenuButtonsEvents, MenuButtonsStateChangedEventArgs } from '../../../Infrastructure/Utilities/events/MenuButtonsEvents';
-
+ 
 import { PrintRequestRequestParams } from '../../DataContract/RequestParams/PrintRequestRequestParams';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 
@@ -165,18 +165,7 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
                 } else {
                     myMenuButtonPM[attribut] = myMenuButtonDeclarationsStatusRequest[attribut];
                 }
-            }
-            //myMenuButtonPM.MenuButtonGroupId = myMenuButtonDeclarationsStatusRequest.
-            myMenuButtonPM.Id = "SincroSendDeclarationDCA";
-            myMenuButtonPM.LabelTextCodeCode = null;
-            myMenuButtonPM.LabelTextCodeId = null;
-            myMenuButtonPM.DisplayText = " DCA תרחיש";
-            myMenuButtonPM.EventCode = "SincroSendDeclarationDCA";
-            myMenuButtonPM.ShowMenuButton = true;
-            myMenuButtonPM.IsHidden = false;
-
-            myMenuButtonPM.Index=1000
-            menuButtons.push(myMenuButtonPM);
+            }           
         }
         this.DisplayOnlyCheck();
     }
@@ -185,7 +174,7 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
         let parentButton: MenuButtonPM;
           if (this.EntityPM != null) {
             if (this.CurrentSession.CurrentEditComponent != null) {
-
+                debugger;
                 var table = window.ObjectTables.filter(d => d.Name === 'Customs.Containerization')[0];
 
                 var buttonEnabled: boolean = true;
@@ -193,12 +182,14 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
                 if (!eventsTabFeature) {
                     buttonEnabled = false;
                 }
-
                 for (var i = 0; i < menuButtons.length; i++) {
                     var button = menuButtons[i];
                     if (button.EventCode == "Actions") {
 
                          button.Width = 70;
+                    }
+                    if (button.EventCode == "SendContainerization") {
+                        debugger;
                     }
                 }
                 this.IsDisplayOnlyCheckDone = true;
@@ -263,6 +254,7 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
     
   
     AddDeclarationMethod() {
+        debugger;
         var args: any = {
             EntityPM: this.EntityPM,
         }; 
