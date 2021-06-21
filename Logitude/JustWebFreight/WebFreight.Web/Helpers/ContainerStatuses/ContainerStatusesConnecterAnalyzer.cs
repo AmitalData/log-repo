@@ -20,6 +20,7 @@ using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using System.Transactions;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Text;
+using Logitude.Server.Tools.Helpers;
 
 namespace WebFreight.Web.Helpers.Analyzers
 {
@@ -241,8 +242,17 @@ namespace WebFreight.Web.Helpers.Analyzers
         }
         private void GetLoggedContactId()
         {
+            string email = "";
+            if (AuthenticationUtil.IsAuthenticatedUserExists())
+            {
+                email = AuthenticationUtil.GetAuthenticatedUser();
+            }
+            else
+            {
+                email = "system@tenant" + logitudeTenant.Value + ".com";
+            }
             ContactRepository contactRepository = new ContactRepository(this.commonContext);
-            var loggedContact = contactRepository.GetSingleContactByEmail(SecurityUtility.GetAuthenticatedUser(), logitudeTenant.Value);
+            var loggedContact = contactRepository.GetSingleContactByEmail(email, logitudeTenant.Value);
             this.loggedContactId = loggedContact.Id;
         }
         private void BuildCommunicationLog()

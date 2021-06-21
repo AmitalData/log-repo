@@ -373,14 +373,15 @@
     <Compile Include="AgentSharedDocumentWR.cs" />
     <Compile Include="AgentsSharedLogisticsWorkerRole.cs" />
     <Compile Include="AirlineStatisticsWorkerRole.cs" />
-    <Compile Include="Analyzers\ContainerStatusesAnalyzer.cs" />
+    <Compile Include="Analyzers\ContainerRequestSender.cs" />
+    <Compile Include="Analyzers\ContainerStatusesReceiver.cs" />
     <Compile Include="ArtemusAnalyzerWorkerRole.cs" />
     <Compile Include="AutoSignUpMailWorkerRole.cs" />
     <Compile Include="AutoSignUpWorkerRole.cs" />
     <Compile Include="CollaborationToolShipmentUpdateWR.cs" />
     <Compile Include="CollaborationToolTaskWR.cs" />
     <Compile Include="ContainerStatusesConnecterWR.cs" />
-    <Compile Include="ContainerStatusesMonitorWR.cs" />
+    <Compile Include="ContainerRequestWorkeRole.cs" />
     <Compile Include="ContainerStatusesReceiverWR.cs" />
     <Compile Include="Service References\LoginServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
