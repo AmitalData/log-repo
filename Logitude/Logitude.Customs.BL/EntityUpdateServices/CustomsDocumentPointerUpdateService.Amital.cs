@@ -85,6 +85,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         }
 
                     };
+                    AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, true);
+
                 }
                 else
                 {
@@ -113,9 +115,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             comments = eventContextTagModel.FUStatusRemarks,
                         }
                     };
+                    AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
                 }
-             
-                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel,true);
+
             }
             catch (Exception)
             {

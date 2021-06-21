@@ -559,6 +559,18 @@
                                     </log-cell-template>
                                 </ng-template>
                             </log-column>
+                            <log-column [header]=""
+                                        [width]="'60'" [Alignment]="'Right'"
+                                        [binding]="'ExcludedLine'">
+                                <ng-template let-item>
+                                    <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                        <div class="RightCenter" style="direction: ltr; display: inline-block;">
+                                            <CheckBox [IsChecked]="item.ExcludedLine" (Checked)="OnExcludeLineChecked($event,item.LineNumber)" [IsEnabled]="true"></CheckBox>
+                                        </div>
+                                        <!--[IsChecked]="" (Checked)=""-->
+                                    </log-cell-template>
+                                </ng-template>
+                            </log-column>
                         </logitude-edit-grid>
                     </div>
                 </div>

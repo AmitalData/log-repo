@@ -1622,7 +1622,7 @@ Exception:" + ee.Message
             Logitude.Customs.Def.EntityPMs.InterfaceManagementPM currentDCAInInterfaceManagementPM, int tenant,
             //string selectedFile
             DCAFileModel selectedDCAFile, string fileContents //byte[] messageBytes
-            , bool pseudo = false)
+            , bool pseudo = false ,DateTime? futureSendDateTime = null)
         {
             string customsRequestsSheetPMId = "";
             CommStatusEnum stepStatusEnum = CommStatusEnum.W;
@@ -1678,8 +1678,11 @@ Exception:" + ee.Message
                             ;
 
                     defaultRequestParamsFromCustomsResponse.MainInterfaceCode = this.MainInterfaceCode;
+                    if (futureSendDateTime != null)
+                    {
+                        defaultRequestParamsFromCustomsResponse.FutureSendDateTime = futureSendDateTime;
 
-
+                    }
                     defaultRequestParamsFromCustomsResponse.LoggingEnabled = true;
 
                     defaultRequestParamsFromCustomsResponse.TransmitionDateTime = selectedDCAFile.TimStamp;

@@ -49,7 +49,6 @@ export class DeclarationStatusComponent
 
     ngOnChanges(changes: SimpleChanges): void {
         this.setRequired();
-        debugger;
     }
 
 
@@ -191,7 +190,6 @@ export class DeclarationStatusComponent
     }
 
     setRequired() {
-        debugger;
         if (this.isExportDeclaration) {
             this.UIProperties.SetRequired("ManifestNumber", this.ObjectTableName, true);
             if (this.ManifestNumber != null) {

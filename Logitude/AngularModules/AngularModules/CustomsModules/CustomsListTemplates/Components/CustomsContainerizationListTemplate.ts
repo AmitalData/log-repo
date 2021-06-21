@@ -32,10 +32,14 @@ export class CustomsContainerizationListTemplate {
     //, private _customsCollateralAnswerSharedDataService: CustomsCollateralAnswerSharedDataService
     entityPM: ContainerizationPM;
     constructor(private CD: ChangeDetectorRef, private _containerizationExtendedListService: ContainerizationExtendedListService) {
-        this.entityPM = new ContainerizationPM();
+        if (SessionLocator.SelectedSession.CurrentEditComponent != null) {
+            this.entityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM as ContainerizationPM;
+        } else {
+            this.entityPM = new ContainerizationPM();
+        }
      }
 
-    setVariables(rowData: any, fieldName: string, additionalData: any ) {
+    setVariables(rowData: any, fieldName: string, additionalData: any) {
         this.fieldName = fieldName;
         this.rowData = rowData;
         this.BuildDeclarationsCheckBox();       
@@ -43,25 +47,32 @@ export class CustomsContainerizationListTemplate {
     }
 
     BuildDeclarationsCheckBox() {
-        let sConnectedDeclarations = this.entityPM.ConnectedDeclarations as string;
+        this.IsConnectedDeclarationChecked = false;
+        if (this.entityPM.ConnectedDeclarations && this.entityPM.Id != null) {
+            this._containerizationExtendedListService.ConnectedDeclarations = this.entityPM.ConnectedDeclarations;
+        }
+        if (!this._containerizationExtendedListService.ConnectedDeclarations) {
+            this._containerizationExtendedListService.ConnectedDeclarations = "";
+        }
+        if (!this._containerizationExtendedListService.AllDeclarations) {
+            this._containerizationExtendedListService.AllDeclarations = "";
+        }
+        if (!this._containerizationExtendedListService.AllDeclarations.includes(this.rowData.Id)) {
+            this._containerizationExtendedListService.AllDeclarations = this._containerizationExtendedListService.AllDeclarations + this.rowData.Id + ",";
+        }
+        let sConnectedDeclarations = this._containerizationExtendedListService.ConnectedDeclarations as string;
         if (!AppTool.IsNullOrEmpty(sConnectedDeclarations)) {
             let ConnectedDeclarations = sConnectedDeclarations.split(',')
             let res = ConnectedDeclarations.filter(r => r == this.rowData.Id)[0];
-        }
-        if (!this.entityPM.ConnectedDeclarations) {
-            this.entityPM.ConnectedDeclarations = "";
-            this._containerizationExtendedListService.ConnectedDeclarations = "";
+            this.IsConnectedDeclarationChecked = !AppTool.IsNullOrEmpty(res);
         }
         if (this._containerizationExtendedListService.connectedSelectAll == true) {
             this.IsConnectedDeclarationChecked = true;
-        } else {
-            this.IsConnectedDeclarationChecked = false;
         }
     }
 
     OnConnectedCheckBoxChecked($event) {
         this._containerizationExtendedListService.disconnectedSelectAll = false;
-        this._containerizationExtendedListService.ConnectedDeclarations = this._containerizationExtendedListService.ConnectedDeclarations.replace("ALL", "");
         if ($event) {
             if (!this._containerizationExtendedListService.ConnectedDeclarations.includes(this.rowData.Id)) {
                 this._containerizationExtendedListService.ConnectedDeclarations = this._containerizationExtendedListService.ConnectedDeclarations + this.rowData.Id + ",";
@@ -70,6 +81,7 @@ export class CustomsContainerizationListTemplate {
         else {
             if (this._containerizationExtendedListService.ConnectedDeclarations.includes(this.rowData.Id)) {
                 this._containerizationExtendedListService.ConnectedDeclarations = this._containerizationExtendedListService.ConnectedDeclarations.replace(this.rowData.Id + ",", "");
+                this._containerizationExtendedListService.connectedSelectAll = false;
             }
         }
         if (AppTool.IsNullOrEmpty(this._containerizationExtendedListService.ConnectedDeclarations)) {

@@ -1745,6 +1745,22 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return declarationPMs;
         }
 
+        public List<DeclarationPM> GetDeclarationsByExportContainerizationId(string containerizationId)
+        {
+            List<Declaration> declarations = repository.GetDeclarationsByExportContainerizationId(containerizationId);
+            DeclarationDataMapping mappings = new DeclarationDataMapping();
+            List<DeclarationPM> declarationPMs = new List<DeclarationPM>();
+            foreach (Declaration declaration in declarations)
+            {
+                DeclarationPM declarationPM = new DeclarationPM();
+                mappings.CustomPOCOToPM(declarationPM, declaration);
+                mappings.POCOToPM(declarationPM, declaration);
+                GetComposition(new DeclarationKeys() { Id = declaration.Id, }, declarationPM);
+                declarationPMs.Add(declarationPM);
+            }
+            return declarationPMs;
+        }
+
         public int GetInvoiceItemsWithTradeAgreementCount(string declarationId, int tenant)
         {
             return repository.GetInvoiceItemsWithTradeAgreementCount(declarationId, tenant);

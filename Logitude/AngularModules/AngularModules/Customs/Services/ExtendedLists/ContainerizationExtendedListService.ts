@@ -24,6 +24,7 @@ export class ContainerizationExtendedListService {
     public isNotDirty: boolean;
     public ConnectedDeclarations: string;
     public SelectedDeclarations: boolean;
+    public AllDeclarations: string;
 
     getPromiseByFilters(filters: ApiQueryFilters) {
 

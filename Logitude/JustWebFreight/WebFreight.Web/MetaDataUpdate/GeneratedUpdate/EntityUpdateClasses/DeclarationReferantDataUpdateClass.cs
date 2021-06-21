@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationReferantDataUpdateClass
    {  		
-		public const string HashString = "c912f28206a1d35537a217f5c695c461";
+		public const string HashString = "37892337fbfbe1a0ac29e7989d819af4";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4971,7 +4971,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query TrackingCasesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationReferantDataTextCode_1.Id, NameTextCodeCode = DeclarationReferantDataTextCode_1.Code, ObjectTableName = "Customs.DeclarationReferantData", Code = "TrackingCases",  SpotlightDataTemplate = "ReferantSpotlightDataTemplate",  QueryGroupCode = "5277", IndexOrder = 1, Tenant = 0, ObjectTableId = DeclarationReferantDataObjectTable.Id, QuerySection = "Customs.DeclarationReferantData", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationReferantDataFeature_1.Id,FeatureUniqeCode= DeclarationReferantDataFeature_1.FeatureUniqeCode, DefaultSortName = "SortedColumns", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+			  Query TrackingCasesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationReferantDataTextCode_1.Id, NameTextCodeCode = DeclarationReferantDataTextCode_1.Code, ObjectTableName = "Customs.DeclarationReferantData", Code = "TrackingCases",  QueryGroupCode = "5277", IndexOrder = 1, Tenant = 0, ObjectTableId = DeclarationReferantDataObjectTable.Id, QuerySection = "Customs.DeclarationReferantData", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationReferantDataFeature_1.Id,FeatureUniqeCode= DeclarationReferantDataFeature_1.FeatureUniqeCode, DefaultSortName = "SortedColumns", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
 	
 			 QueryColumn TrackingCasesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrackingCasesQuery.Id,QueryCode = TrackingCasesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.DeclarationReferantData.Favorite" , ColumnWidth = 80 }, addedQueryColumns);
 
@@ -5562,7 +5562,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query AllCasesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationReferantDataTextCode_12.Id, NameTextCodeCode = DeclarationReferantDataTextCode_12.Code, ObjectTableName = "Customs.DeclarationReferantData", Code = "AllCases",  SpotlightDataTemplate = "ReferantSpotlightDataTemplate",  QueryGroupCode = "5277", IndexOrder = 12, Tenant = 0, ObjectTableId = DeclarationReferantDataObjectTable.Id, QuerySection = "Customs.DeclarationReferantData", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationReferantDataFeature_12.Id,FeatureUniqeCode= DeclarationReferantDataFeature_12.FeatureUniqeCode, DefaultSortName = "SortedColumns", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+			  Query AllCasesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationReferantDataTextCode_12.Id, NameTextCodeCode = DeclarationReferantDataTextCode_12.Code, ObjectTableName = "Customs.DeclarationReferantData", Code = "AllCases",  QueryGroupCode = "5277", IndexOrder = 12, Tenant = 0, ObjectTableId = DeclarationReferantDataObjectTable.Id, QuerySection = "Customs.DeclarationReferantData", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationReferantDataFeature_12.Id,FeatureUniqeCode= DeclarationReferantDataFeature_12.FeatureUniqeCode, DefaultSortName = "SortedColumns", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
 	
 			 QueryColumn AllCasesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id,QueryCode = AllCasesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.DeclarationReferantData.Favorite" , ColumnWidth = 80 }, addedQueryColumns);
 

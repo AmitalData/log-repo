@@ -373,6 +373,7 @@ import { GITITEMCacheService } from './Services/Others/GITITEMCacheService';
 import { CacheCourierPendingReasonService } from './Services/Others/CacheCourierPendingReasonService';
 
 import { DeclarationMenuButtonsHandler } from './Components/MenuButtons/DeclarationMenuButtonsHandler';
+import { ContainerizationMenuButtonsHandler } from './Components/MenuButtons/ContainerizationMenuButtonsHandler';
 import { VehicleMenuButtonsHandler } from './Components/MenuButtons/VehicleMenuButtonsHandler';
 import { PaymentOrderMenuButtonsHandler } from './Components/MenuButtons/PaymentOrderMenuButtonsHandler';
 import { ClaimMenuButtonsHandler } from './Components/MenuButtons/ClaimMenuButtonsHandler';
@@ -813,6 +814,7 @@ export class ModuleProviders {
 
             case "DeclarationMenuButtonsHandler": { myResult = new DeclarationMenuButtonsHandler(); break; }
             case "VehicleMenuButtonsHandler": { myResult = new VehicleMenuButtonsHandler(); break; }
+            case "ContainerizationMenuButtonsHandler": { myResult = new ContainerizationMenuButtonsHandler(); break; }
             case "PaymentOrderMenuButtonsHandler": { myResult = new PaymentOrderMenuButtonsHandler(); break; }
             case "ClaimMenuButtonsHandler": { myResult = new ClaimMenuButtonsHandler(); break; }
             case "DeclarationEditComponentController": { myResult = new DeclarationEditComponentController(); break; }

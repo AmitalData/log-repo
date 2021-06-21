@@ -17741,7 +17741,7 @@
     FullFieldLable="&quot;ExportContainerizationID&quot;"
     DefaultText="&quot;Export Containerization ID&quot;"
     FullLocalDefaultText="&quot;מזהה ההמכלה&quot;"
-    IsNullable="false"
+    IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
@@ -20801,6 +20801,14 @@
       MenuButtonType="&quot;button&quot;"
       IndexOrder="3"
       LocalDefaultText="&quot;סגירת הצהרה&quot;"
+      IsPackagable="true" />
+    <MenuButton
+      EventCode="&quot;OpenNewContainerization&quot;"
+      DefaultText="&quot;OpenNewContainerization&quot;"
+      MenuButtonType="&quot;button&quot;"
+      Style="&quot;&quot;"
+      IndexOrder="0"
+      LocalDefaultText="&quot;המכלה חדשה&quot;"
       IsPackagable="true" />
     <MenuButton
       EventCode="&quot;Actions&quot;"

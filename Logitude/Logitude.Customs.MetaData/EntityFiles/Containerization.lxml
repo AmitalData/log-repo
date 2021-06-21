@@ -36,6 +36,7 @@
   HasDynamicHeader="false"
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
+  NewWizardControlName="&quot;Logitude.Customs.NewContainerizationControlCommand&quot;"
   LocalDefaultText="&quot;המכלה&quot;"
   DefaultText="&quot;Containerization&quot;"
   Code="&quot;4ba2&quot;"
@@ -50,7 +51,7 @@
   NoDefaultFeatures="false"
   HasCompactSearch="false"
   ApplyDefaultValues="false"
-  HasMenuButtons="false"
+  HasMenuButtons="true"
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
@@ -404,10 +405,10 @@
     DisplayLongName="false"
     FullFieldLable="&quot;ContainerizationDate&quot;"
     DefaultText="&quot;Containerization Date&quot;"
-    FullLocalDefaultText="&quot;תאריך המכלה&quot;"
+    FullLocalDefaultText="&quot;תאריך פתיחת המכלה&quot;"
     ListFieldLable="&quot;ContainerizationDateListLable&quot;"
     ListLableDefaultText="&quot;Containerization Date&quot;"
-    ListLocalDefaultText="&quot;תאריך המכלה&quot;"
+    ListLocalDefaultText="&quot;תאריך פתיחת המכלה&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -556,7 +557,7 @@
     DisplayLongName="false"
     FullFieldLable="&quot;ContainerizationStatus&quot;"
     DefaultText="&quot;Containerization Status&quot;"
-    FullLocalDefaultText="&quot;סטטוס המכלה&quot;"
+    FullLocalDefaultText="&quot;קוד סטטוס המכלה&quot;"
     ListFieldLable="&quot;ContainerizationStatusListLable&quot;"
     ListLableDefaultText="&quot;Containerization Status&quot;"
     ListLocalDefaultText="&quot;קוד סטטוס המכלה&quot;"
@@ -636,7 +637,7 @@
     DisplayLongName="false"
     FullFieldLable="&quot;HataraStatus&quot;"
     DefaultText="&quot;Hatara Status&quot;"
-    FullLocalDefaultText="&quot;סטטוס התרה&quot;"
+    FullLocalDefaultText="&quot;קוד סטטוס התרה&quot;"
     ListFieldLable="&quot;HataraStatusListLable&quot;"
     ListLableDefaultText="&quot;Hatara Status&quot;"
     ListLocalDefaultText="&quot;קוד סטטוס התרה&quot;"
@@ -789,10 +790,10 @@
     DisplayLongName="false"
     FullFieldLable="&quot;ExportFile&quot;"
     DefaultText="&quot;Export File&quot;"
-    FullLocalDefaultText="&quot;מס' תיק יצוא תפעולי&quot;"
+    FullLocalDefaultText="&quot;תיק יצוא&quot;"
     ListFieldLable="&quot;ExportFileListLable&quot;"
     ListLableDefaultText="&quot;Export File&quot;"
-    ListLocalDefaultText="&quot;מס' תיק יצוא תפעולי&quot;"
+    ListLocalDefaultText="&quot;תיק יצוא&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -837,7 +838,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="10"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
@@ -865,9 +866,10 @@
     DisplayLongName="false"
     FullFieldLable="&quot;TransportModeForExport&quot;"
     DefaultText="&quot;Transport Mode&quot;"
+    FullLocalDefaultText="&quot;סוג משלוח&quot;"
     ListFieldLable="&quot;TransportModeForExportListLable&quot;"
     ListLableDefaultText="&quot;Transport Mode&quot;"
-    ListLocalDefaultText="&quot;&quot;"
+    ListLocalDefaultText="&quot;סוג משלוח&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -939,10 +941,10 @@
     DisplayLongName="false"
     FullFieldLable="&quot;ImporterName&quot;"
     DefaultText="&quot;Importer Name&quot;"
-    FullLocalDefaultText="&quot;שם יבואן&quot;"
+    FullLocalDefaultText="&quot;לקוח&quot;"
     ListFieldLable="&quot;ImporterNameListLable&quot;"
     ListLableDefaultText="&quot;Importer Name&quot;"
-    ListLocalDefaultText="&quot;שם יבואן&quot;"
+    ListLocalDefaultText="&quot;לקוח&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -1163,9 +1165,10 @@
     DisplayLongName="false"
     FullFieldLable="&quot;HataraStatusIsNull&quot;"
     DefaultText="&quot;HataraStatusIsNull&quot;"
+    FullLocalDefaultText="&quot;התקבלה התרה&quot;"
     ListFieldLable="&quot;HataraStatusIsNullListLable&quot;"
     ListLableDefaultText="&quot;HataraStatusIsNull&quot;"
-    ListLocalDefaultText="&quot;האם יש תאריך התרה&quot;"
+    ListLocalDefaultText="&quot;התקבלה התרה&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -1421,7 +1424,7 @@
         QueryCode="&quot;OpenContainerization&quot;"
         IndexOrder="0"
         ObjectFieldName="&quot;ContainerizationDate&quot;"
-        ColumnWidth="100" />
+        ColumnWidth="150" />
       <QueryColumn
         QueryCode="&quot;OpenContainerization&quot;"
         IndexOrder="1"
@@ -1489,7 +1492,7 @@
         QueryCode="&quot;ContainerizationWithRelease&quot;"
         IndexOrder="0"
         ObjectFieldName="&quot;ContainerizationDate&quot;"
-        ColumnWidth="100" />
+        ColumnWidth="150" />
       <QueryColumn
         QueryCode="&quot;ContainerizationWithRelease&quot;"
         IndexOrder="1"
@@ -1550,7 +1553,7 @@
         QueryCode="&quot;CancelledContainerization&quot;"
         IndexOrder="0"
         ObjectFieldName="&quot;ContainerizationDate&quot;"
-        ColumnWidth="100" />
+        ColumnWidth="150" />
       <QueryColumn
         QueryCode="&quot;CancelledContainerization&quot;"
         IndexOrder="1"
@@ -1611,7 +1614,7 @@
         QueryCode="&quot;AllContainerization&quot;"
         IndexOrder="0"
         ObjectFieldName="&quot;ContainerizationDate&quot;"
-        ColumnWidth="100" />
+        ColumnWidth="150" />
       <QueryColumn
         QueryCode="&quot;AllContainerization&quot;"
         IndexOrder="1"
@@ -1752,6 +1755,21 @@
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="0"
         LocalDefaultText="&quot;הוסף הצהרה&quot;"
+        IsPackagable="true"
+        HtmlComponentPath="&quot;./CustomsModules/CustomsContainerization/Components/NewEntity/NewContainerizationComponent&quot;" />
+      <MenuItem
+        EventCode="&quot;CancelContainerization&quot;"
+        DefaultText="&quot;Cancel Containerization&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="1"
+        LocalDefaultText="&quot;ביטול המכלה&quot;"
+        IsPackagable="true" />
+      <MenuItem
+        EventCode="&quot;DeclarationsStatusRequest&quot;"
+        DefaultText="&quot;Declarations Status Request&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="2"
+        LocalDefaultText="&quot;סטטוס הצהרות בהמכלה&quot;"
         IsPackagable="true" />
     </MenuButton>
   </MenuButtons>

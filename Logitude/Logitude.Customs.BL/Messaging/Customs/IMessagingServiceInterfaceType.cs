@@ -28,7 +28,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
         //string DcaReceivedCustomResponseCorrelationCrashIfNotValid(Logitude.Customs.BL.EntityPMs.InterfaceManagementPM messageDCA, int tenant, string selectedFile, byte[] messageBytes, bool pseudo = false);
         string DcaReceivedCustomResponseCorrelation(Logitude.Customs.Def.EntityPMs.InterfaceManagementPM messageDCA, int tenant,
             DCAFileModel selectedDCAFile, string fileContents //byte[] messageBytesbyte[] messageBytes
-            , bool pseudo = false);
+            , bool pseudo = false , DateTime? futureSendDateTime=null);
         string CreateFakeDCA(GenericRequestParams requestParamsData);
 
         string DCAServerUploadStatus(

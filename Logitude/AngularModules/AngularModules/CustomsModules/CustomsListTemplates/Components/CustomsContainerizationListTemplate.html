@@ -17,7 +17,7 @@
     </div>
 
 
-    <div *ngIf="fieldName == 'MyConnectedCheckBox'" style="text-align:right">
+    <div *ngIf="fieldName == 'MyConnectedCheckBox'" style="text-align:right; padding-right:5px;padding-top:8px;">
         <CheckBox [IsChecked]="IsConnectedDeclarationChecked" (Checked)="OnConnectedCheckBoxChecked($event)" [IsEnabled]="!IsDisplayOnly"></CheckBox>
     </div>
 

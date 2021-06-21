@@ -16,36 +16,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void UpdateComposition(ContainerizationPM entityPM)
         {
-
-            if (!String.IsNullOrWhiteSpace(entityPM.NotConnectedDeclarations))
-            {
-                var disConnectedDeclarations = entityPM.NotConnectedDeclarations.Split(',').ToList();
-                var declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
-                var declarationUpdateService = new DeclarationUpdateService(this.MainContext , new Dictionary<string, IContext>(), entityPM.Tenant);
-                var pms=declarationQueryService.GetDeclarationsByIds(disConnectedDeclarations, entityPM.Tenant);
-                if (pms.Count == 0)
-                {
-                    //throw new Exception("Why ??"); 
-                }
-                else
-                {
-                    foreach (var declaration in pms)
-                    {
-                        declaration.ExportContainerizationID = null;
-                        declaration.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-
-
-                    }
-                    declarationUpdateService.UpdateMulti(pms, new List<DeclarationPM>(), entityPM, false);
-                }
-
-            }
+            var declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
+            var declarationUpdateService = new DeclarationUpdateService(this.MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+            List<DeclarationPM> AllPms=new List<DeclarationPM>();
             if (!String.IsNullOrWhiteSpace(entityPM.ConnectedDeclarations))
             {
                 var connectedDeclarations = entityPM.ConnectedDeclarations.Split(',').ToList();
-                var declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
-                var declarationUpdateService = new DeclarationUpdateService(this.MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
                 var pms = declarationQueryService.GetDeclarationsByIds(connectedDeclarations, entityPM.Tenant);
+                AllPms.AddRange(pms);
                 if (pms.Count == 0)
                 {
                     //throw new Exception("Why ??"); 
@@ -56,11 +34,31 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     {
                         declaration.ExportContainerizationID = entityPM.Id;
                         declaration.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-
                     }
-                    declarationUpdateService.UpdateMulti(pms, new List<DeclarationPM>(), entityPM, false);
                 }
 
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.NotConnectedDeclarations))
+            {
+                var disConnectedDeclarations = entityPM.NotConnectedDeclarations.Split(',').ToList();
+                var pms=declarationQueryService.GetDeclarationsByIds(disConnectedDeclarations, entityPM.Tenant);
+                AllPms.AddRange(pms);
+                if (pms.Count == 0)
+                {
+                    //throw new Exception("Why ??"); 
+                }
+                else
+                {
+                    foreach (var declaration in pms)
+                    {
+                        declaration.ExportContainerizationID = null;
+                        declaration.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                    }
+                }
+
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.NotConnectedDeclarations) || !String.IsNullOrWhiteSpace(entityPM.ConnectedDeclarations)) {
+                declarationUpdateService.UpdateMulti(AllPms, new List<DeclarationPM>(), entityPM, false); 
             }
             base.UpdateComposition(entityPM);
         }

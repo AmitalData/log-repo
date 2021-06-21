@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ContainerizationUpdateClass
    {  		
-		public const string HashString = "20febcecba7a9e9e9548085d95159440";
+		public const string HashString = "55a72db9c271fb28694b84448e8c6bb6";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -118,6 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
+			      				    NewWizardControlName =  "Logitude.Customs.NewContainerizationControlCommand",
 			      				    LocalDefaultText =  "המכלה",
 			      				    DefaultText =  "Containerization",
 			      				    Code =  "4ba2",
@@ -127,7 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ServerModuleName =  "Customs",
 			      				    NewWizardComponentPath =  "./CustomsModules/CustomsContainerization/Components/NewEntity/NewContainerizationComponent",
 			      				    NoTS =  false,
-			      				    HasMenuButtons =  false,
+			      				    HasMenuButtons =  true,
 			      				    AllowedForComputingPartners =  false,
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
@@ -184,12 +185,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
 					  						DefaultText =  "Search ...",
-					  						FullLocalDefaultText =  "תיק יצוא / מזהה מטען",
+					  						FullLocalDefaultText =  "תיק יצום / מזהה מטען",
 					  						ListFieldLable =  "SearchFieldsListLable",
 					  						ListLableDefaultText =  "Search ...",
 					  						ShortFieldLable =  "SearchFields",
-					  						ShortFieldLableDefaultText =  "תיק יצוא / מזהה מטען",
-					  						ShortLocalDefaultText =  "תיק יצוא / מזהה מטען",
+					  						ShortFieldLableDefaultText =  "תיק יצום / מזהה מטען",
+					  						ShortLocalDefaultText =  "תיק יצום / מזהה מטען",
 					  						IsMaxLength =  true,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -308,10 +309,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ContainerizationDate",
 					  						DefaultText =  "Containerization Date",
-					  						FullLocalDefaultText =  "תאריך המכלה",
+					  						FullLocalDefaultText =  "תםריך פתיחת המכלה",
 					  						ListFieldLable =  "ContainerizationDateListLable",
 					  						ListLableDefaultText =  "Containerization Date",
-					  						ListLocalDefaultText =  "תאריך המכלה",
+					  						ListLocalDefaultText =  "תםריך פתיחת המכלה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -434,7 +435,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ContainerizationStatus",
 					  						DefaultText =  "Containerization Status",
-					  						FullLocalDefaultText =  "סטטוס המכלה",
+					  						FullLocalDefaultText =  "קוד סטטוס המכלה",
 					  						ListFieldLable =  "ContainerizationStatusListLable",
 					  						ListLableDefaultText =  "Containerization Status",
 					  						ListLocalDefaultText =  "קוד סטטוס המכלה",
@@ -499,7 +500,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "HataraStatus",
 					  						DefaultText =  "Hatara Status",
-					  						FullLocalDefaultText =  "סטטוס התרה",
+					  						FullLocalDefaultText =  "קוד סטטוס התרה",
 					  						ListFieldLable =  "HataraStatusListLable",
 					  						ListLableDefaultText =  "Hatara Status",
 					  						ListLocalDefaultText =  "קוד סטטוס התרה",
@@ -622,10 +623,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExportFile",
 					  						DefaultText =  "Export File",
-					  						FullLocalDefaultText =  "מס' תיק יצוא תפעולי",
+					  						FullLocalDefaultText =  "תיק יצום",
 					  						ListFieldLable =  "ExportFileListLable",
 					  						ListLableDefaultText =  "Export File",
-					  						ListLocalDefaultText =  "מס' תיק יצוא תפעולי",
+					  						ListLocalDefaultText =  "תיק יצום",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -657,7 +658,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  10,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
@@ -685,8 +686,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TransportModeForExport",
 					  						DefaultText =  "Transport Mode",
+					  						FullLocalDefaultText =  "סוג משלוח",
 					  						ListFieldLable =  "TransportModeForExportListLable",
 					  						ListLableDefaultText =  "Transport Mode",
+					  						ListLocalDefaultText =  "סוג משלוח",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -745,10 +748,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ImporterName",
 					  						DefaultText =  "Importer Name",
-					  						FullLocalDefaultText =  "שם יבואן",
+					  						FullLocalDefaultText =  "לקוח",
 					  						ListFieldLable =  "ImporterNameListLable",
 					  						ListLableDefaultText =  "Importer Name",
-					  						ListLocalDefaultText =  "שם יבואן",
+					  						ListLocalDefaultText =  "לקוח",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -930,9 +933,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "HataraStatusIsNull",
 					  						DefaultText =  "HataraStatusIsNull",
+					  						FullLocalDefaultText =  "התקבלה התרה",
 					  						ListFieldLable =  "HataraStatusIsNullListLable",
 					  						ListLableDefaultText =  "HataraStatusIsNull",
-					  						ListLocalDefaultText =  "האם יש תאריך התרה",
+					  						ListLocalDefaultText =  "התקבלה התרה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1102,10 +1106,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsChange",
 					  						DefaultText =  "Is Change",
-					  						FullLocalDefaultText =  "האם יש שינוי בהמכלה",
+					  						FullLocalDefaultText =  "הםם יש שינוי בהמכלה",
 					  						ListFieldLable =  "IsChangeListLable",
 					  						ListLableDefaultText =  "Is Change",
-					  						ListLocalDefaultText =  "האם יש שינוי בהמכלה",
+					  						ListLocalDefaultText =  "הםם יש שינוי בהמכלה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1359,6 +1363,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   //FeatureRepository featureRepository = new FeatureRepository(0); 
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable ContainerizationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.Containerization" && d.Tenant == 0).FirstOrDefault(); 			   Feature ContainerizationFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AddDeclaration", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Containerization.Features.AddDeclaration", NameTextCodeDefaultText = "Add Declaration", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContainerizationObjectTable);
+             			   Feature ContainerizationFeature_MB01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CancelContainerization", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Containerization.Features.CancelContainerization", NameTextCodeDefaultText = "Cancel Containerization", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContainerizationObjectTable);
+             			   Feature ContainerizationFeature_MB02 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationsStatusRequest", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Containerization.Features.DeclarationsStatusRequest", NameTextCodeDefaultText = "Declarations Status Request", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContainerizationObjectTable);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -1405,9 +1411,49 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  ContainerizationFeature_MB00.Id,
 						Style = null,
 						LocalDefaultText = "הוסף הצהרה",
-                        HtmlComponentPath=null,
+                        HtmlComponentPath="./CustomsModules/CustomsContainerization/Components/NewEntity/NewContainerizationComponent",
                         Width=0,
 						FeatureUniqeCode=  ContainerizationFeature_MB00.FeatureUniqeCode,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
+			   MenuButton ContainerizationMenuButton01 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "CancelContainerization",
+						Index = 1, 
+						IsActive = true,
+						LabelTextCodeCode = "Containerization.B.CancelContainerization",
+						LabelTextCodeDefaultText = "Cancel Containerization",
+						Tenant = 0,
+						MenuButtonGroupId = ContainerizationMenuButtonGroup.Id,
+						ParentMenuButtonId = ContainerizationMenuButton0.Id,
+						ObjectTableId = ContainerizationObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  ContainerizationFeature_MB01.Id,
+						Style = null,
+						LocalDefaultText = "ביטול המכלה",
+                        HtmlComponentPath=null,
+                        Width=0,
+						FeatureUniqeCode=  ContainerizationFeature_MB01.FeatureUniqeCode,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
+			   MenuButton ContainerizationMenuButton02 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "DeclarationsStatusRequest",
+						Index = 2, 
+						IsActive = true,
+						LabelTextCodeCode = "Containerization.B.DeclarationsStatusRequest",
+						LabelTextCodeDefaultText = "Declarations Status Request",
+						Tenant = 0,
+						MenuButtonGroupId = ContainerizationMenuButtonGroup.Id,
+						ParentMenuButtonId = ContainerizationMenuButton0.Id,
+						ObjectTableId = ContainerizationObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  ContainerizationFeature_MB02.Id,
+						Style = null,
+						LocalDefaultText = "סטטוס הצהרות בהמכלה",
+                        HtmlComponentPath=null,
+                        Width=0,
+						FeatureUniqeCode=  ContainerizationFeature_MB02.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }
