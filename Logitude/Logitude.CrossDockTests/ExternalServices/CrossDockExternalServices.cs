@@ -11,9 +11,9 @@ namespace Logitude.CrossDockTests.ExternalServices
 {
     public class CrossDockExternalServices
     {
-        public CrossDockPM CreateEntriesCrossInstance(Table DataTable)
+        public CrossDockPM CreateEntriesCrossInstance(Table table)
         {
-            dynamic dataTable = DataTable.CreateDynamicInstance();
+            dynamic dataTable = table.CreateDynamicInstance();
 
             return new CrossDockBuilder().WithDefualtValues()
                 .DirectionId((string)dataTable.Direction)
@@ -26,7 +26,7 @@ namespace Logitude.CrossDockTests.ExternalServices
                 .Build();
         }
 
-        internal CrossDockPM AddWarehouseEntryPackages(CrossDockPM crossDockPM, Table packagesDetailsTable)
+        public CrossDockPM AddWarehouseEntryPackages(CrossDockPM crossDockPM, Table packagesDetailsTable)
         {
             IEnumerable<dynamic> packagesDetails = packagesDetailsTable.CreateDynamicSet();
             List<WarehouseEntryPackagePM> mainCarriageLegsList = new List<WarehouseEntryPackagePM>();

@@ -13,26 +13,25 @@ namespace Logitude.CrossDockTests.Steps
     [Binding]
     public class GetCrossDocksEntryExportAirSteps
     {
-        private readonly CrossDockContext CrossDockContext;
+        private readonly CrossDockContext crossDockContext;
 
         public GetCrossDocksEntryExportAirSteps(CrossDockContext crossDockContext)
         {
-            CrossDockContext = crossDockContext;
+            this.crossDockContext = crossDockContext;
         }
-
 
         [When(@"get cross docks with CrossDockId")]
         public void WhenGetCrossDocksWithCrossDockId()
         {
             string quotesGetSingleUrl = Urls.CrossDockGetSingle(CrossDockData.Id);
             ApiResponse<CrossDockPM> quoteResponse = APICaller.CallGet<CrossDockPM>(quotesGetSingleUrl, UserTenant.Token);
-            CrossDockContext.EntriesCrossDock = quoteResponse.Data;
+            crossDockContext.EntriesCrossDock = quoteResponse.Data;
         }
         
         [Then(@"cross dock should be avaliable")]
         public void ThenCrossDockShouldBeAvaliable()
         {
-            CrossDockContext.EntriesCrossDock.Id.Should().NotBeNull();
+            crossDockContext.EntriesCrossDock.Id.Should().NotBeNull();
         }
 
 
