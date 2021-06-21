@@ -434,7 +434,9 @@ namespace WebFreight.Web.Validators
 
         private List<ObjectTableRule> FilterEntityTableRuleBasedOnEntityId(List<ObjectTableRule> entityTableRules)
         {
-            if (string.IsNullOrEmpty(entityPropertyValueService.Get("Id").ToString()))
+            object propertyValue = entityPropertyValueService.Get("Id");
+
+            if (propertyValue == null ||  string.IsNullOrEmpty(propertyValue.ToString()))
             {
                 return entityTableRules.Where(d => d.ActiveForNew).ToList();
             }
