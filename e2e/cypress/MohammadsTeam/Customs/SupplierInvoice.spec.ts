@@ -19,10 +19,10 @@ describe('New  SupplierInvoice', () => {
       const CustomFileNo= win.sessionStorage.getItem('CustomFileNo')
        cy.get('li[id=GeneralMHDeclarations]').click({force: true} );
    //    LogHelper.QuerySearchAndSelectFirst('91340214');
-cy.get('input[id=SearchFieldsId_0_1]').should('be.visible').then( a=> {
-    cy.get('input[id=SearchFieldsId_0_1]').type(CustomFileNo,{ force: true });
+cy.get('input[id=SearchFieldsId_0_0]').should('be.visible').then( a=> {
+    cy.get('input[id=SearchFieldsId_0_0]').type(CustomFileNo,{ force: true });
     cy.get('div[id=ListDataLoaded]').then( a=> {
-          cy.get('div[id=LogGrid_0_1row0]').click({ force: true });
+          cy.get('div[id=LogGrid_0_0row0]').click({ force: true });
       })});
        cy.get('#CustomsDeclarationTHGeneral').click({force: true} );
        cy.get('#Add_1').should('be.visible').then(a => {         
@@ -74,10 +74,10 @@ cy.get('#Add_2').click({force: true} );
        if (LogHelper.checkIfEleExists('#edit-log-grid_0_3')) {
             cy.get('#Add_4').click({force: true} );
             cy.get('input[id="Customs.SupplierInvoice_ItemCode"]').type('10')
-        if (LogHelper.checkIfEleExists('#edit-log-grid_0_30_2_0')){
+       /* if (LogHelper.checkIfEleExists('#edit-log-grid_0_30_2_0')){
 			cy.get('#edit-log-grid_0_30_2_0').click({force: true} );
-			cy.get('input[id="Customs.SupplierInvoice_ItemDescription"]').type('1A');
-		}
+			cy.get('input[id="Customs.SupplierInvoice_ItemDescription"]').click().type('1A');
+		}*/
         if (LogHelper.checkIfEleExists('#edit-log-grid_0_30_3_0')){
 			 cy.get('#edit-log-grid_0_30_3_0').click({force: true} );
 			 cy.get('input[id="Customs.SupplierInvoiceItem_ClassificationCode"]').type('123456782');
