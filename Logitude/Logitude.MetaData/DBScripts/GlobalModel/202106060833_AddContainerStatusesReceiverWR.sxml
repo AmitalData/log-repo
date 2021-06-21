@@ -1,0 +1,26 @@
+﻿<Script DBType="Global" Module="Global">
+  <Sql Version="1">
+    <![CDATA[
+    
+  INSERT INTO [dbo].[BatchServicesDefinitions]
+             ([Code]
+             ,[ClassName]
+             ,[Parameter1]
+             ,[Parameter2])
+       VALUES
+             ('ContainerStatusesReceiverWR'
+             ,'ContainerStatusesReceiverWR'
+             ,NULL
+             ,NULL)
+
+  INSERT INTO [dbo].[BatchServicesDefinitionMods]
+             ([Code]
+             ,[InActive]
+             ,[NumberOfThreads])
+       VALUES
+             ('ContainerStatusesReceiverWR'
+             ,0
+             ,1)
+    ]]>
+  </Sql>
+</Script>

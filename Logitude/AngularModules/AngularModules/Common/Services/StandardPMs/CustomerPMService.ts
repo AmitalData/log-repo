@@ -39,6 +39,9 @@ import {CustomerCustomsAgentByProductPM} from '../../EntityPMs/CustomerCustomsAg
 import {CustomerForwarderByProductPM} from '../../EntityPMs/CustomerForwarderByProductPM';
 import {CustomerMediatorByProductPM} from '../../EntityPMs/CustomerMediatorByProductPM';
 import {CardExternalCodeByCurrencyPM} from '../../EntityPMs/CardExternalCodeByCurrencyPM';
+import { ProductItemPM } from '../../EntityPMs/ProductItemPM';
+import { HTSCodePM } from '../../EntityPMs/HTSCodePM';
+import { CustomerValidator } from '../../Validators/CustomerValidator';
 
 @Injectable()
 
@@ -147,9 +150,14 @@ export class CustomerPMService {
             var validator: ClassLevelValidator;
 
             validator = new ClassLevelValidator();
+            var entityValidator: CustomerValidator = new CustomerValidator();
 
             var errorsArray = validator.Validate("Customer", entityPM);
+            var entityErrors = entityValidator.Validate(entityPM);
 
+            if (entityErrors) {
+                errorsArray = errorsArray.concat(entityErrors);
+            }
 
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
@@ -157,7 +165,20 @@ export class CustomerPMService {
                 var mappedEntity: CustomerPM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-                return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
+                const getCircularReplacer = () => {
+                    const seen = new WeakSet();
+                    return (key, value) => {
+                        if (typeof value === "object" && value !== null) {
+                            if (seen.has(value)) {
+                                return;
+                            }
+                            seen.add(value);
+                        }
+                        return value;
+                    };
+                };
+
+                return this._http.put(this._apiUrl, JSON.stringify(mappedEntity, getCircularReplacer()), ServiceHelper.GetHttpFullHeaders())
                     .pipe(
                         map((response: HttpResponse<any>) => {
 
@@ -187,8 +208,6 @@ export class CustomerPMService {
         });
 
     }
-
-
 
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: CustomerPM = null) {
 
@@ -237,6 +256,7 @@ export class CustomerPMService {
         this.MapCustomerForwarderByProducts(entityPM, jsonPM, mapParent); // Call composition tables map methods
         this.MapCustomerMediatorByProducts(entityPM, jsonPM, mapParent); // Call composition tables map methods
         this.MapCardExternalCodeByCurrencies(entityPM, jsonPM, mapParent); // Call composition tables map methods
+        this.MapProductItems(entityPM, jsonPM, mapParent);
 
         entityPM.IsDirty = false;
 
@@ -353,8 +373,6 @@ export class CustomerPMService {
             for (var item in entityPM.CustomerForwarderByProducts) {
                 var myCustomerForwarderByProductPM = entityPM.CustomerForwarderByProducts[item];
                 var newCustomerForwarderByProductPM: CustomerForwarderByProductPM = this.clone(myCustomerForwarderByProductPM);
-
-
                 entityPM.OldEntityPM.CustomerForwarderByProducts.push(newCustomerForwarderByProductPM);
             }
 
@@ -362,8 +380,6 @@ export class CustomerPMService {
             for (var item in entityPM.CustomerMediatorByProducts) {
                 var myCustomerMediatorByProductPM = entityPM.CustomerMediatorByProducts[item];
                 var newCustomerMediatorByProductPM: CustomerMediatorByProductPM = this.clone(myCustomerMediatorByProductPM);
-
-
                 entityPM.OldEntityPM.CustomerMediatorByProducts.push(newCustomerMediatorByProductPM);
             }
 
@@ -371,10 +387,23 @@ export class CustomerPMService {
             for (var item in entityPM.CardExternalCodeByCurrencies) {
                 var myCardExternalCodeByCurrencyPM = entityPM.CardExternalCodeByCurrencies[item];
                 var newCardExternalCodeByCurrencyPM: CardExternalCodeByCurrencyPM = this.clone(myCardExternalCodeByCurrencyPM);
-
-
                 entityPM.OldEntityPM.CardExternalCodeByCurrencies.push(newCardExternalCodeByCurrencyPM);
             }
+
+            entityPM.OldEntityPM.CustomerProductItems = [];
+            for (var item in entityPM.CustomerProductItems) {
+                var myProductItemPM = entityPM.CustomerProductItems[item];
+                var newProductItemPM: ProductItemPM = this.clone(myProductItemPM);
+
+                newProductItemPM.HTSCodes = [];
+                for (var k in myProductItemPM.HTSCodes) {
+                    var newHTSCodePM = this.clone(myProductItemPM.HTSCodes[k]);
+                    newProductItemPM.HTSCodes.push(newHTSCodePM);
+                }
+
+                entityPM.OldEntityPM.CustomerProductItems.push(newProductItemPM);
+            }
+
         }
         else {
 
@@ -1324,7 +1353,7 @@ export class CustomerPMService {
                 newCustomerForwarderByProductPM = new CustomerForwarderByProductPM(entityPM);
             }
             else {
-                newCustomerForwarderByProductPM = new CustomerForwarderByProductPM(null);
+                newCustomerForwarderByProductPM = new CustomerForwarderByProductPM(null); 
             }
 
             var pmKeysArray = Object.keys(jItem);
@@ -1583,7 +1612,194 @@ export class CustomerPMService {
             }
         }
     }
-  
+
+    MapProductItems(entityPM: CustomerPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldProductItems: ProductItemPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldProductItems = entityPM.OldEntityPM.CustomerProductItems;
+        }
+
+        entityPM.CustomerProductItems = new Array<ProductItemPM>();
+        for (var item in jsonPM.CustomerProductItems) {
+            var jItem = jsonPM.CustomerProductItems[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newCustomerProductItemPM: ProductItemPM;
+
+            if (mapParent) {
+                newCustomerProductItemPM = new ProductItemPM(entityPM);
+            }
+            else {
+                newCustomerProductItemPM = new ProductItemPM(null);
+            }
+
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newCustomerProductItemPM[pmProperty] = jItem[pmProperty];
+            }
+            newCustomerProductItemPM.IsDirty = false;
+
+            if (mapParent) {
+                newCustomerProductItemPM.UniqueKey = Guid.newGuid();
+                newCustomerProductItemPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newCustomerProductItemPM.OldEntityPM = this.clone(newCustomerProductItemPM);
+
+                this.MapHTSCodes(newCustomerProductItemPM, jItem, mapParent);
+                newCustomerProductItemPM.OldEntityPM.HTSCodes = [];
+                for (var k in newCustomerProductItemPM.HTSCodes) {
+                    var clonedInside = this.clone(newCustomerProductItemPM.HTSCodes[k]);
+                    newCustomerProductItemPM.OldEntityPM.HTSCodes.push(clonedInside);
+                }
+            }
+
+            else {
+                if (newCustomerProductItemPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newCustomerProductItemPM.ChangeSetOp = "Update";
+                }
+                else {
+                    newCustomerProductItemPM.ChangeSetOp = "Insert";
+                }
+
+                this.MapHTSCodes(newCustomerProductItemPM, jItem, mapParent);
+
+                newCustomerProductItemPM.OldEntityPM = null;
+                newCustomerProductItemPM.EntityParentPM = null;
+            }
+
+            newCustomerProductItemPM.IsDirty = false;
+            entityPM.CustomerProductItems.push(newCustomerProductItemPM);
+        }
+        if (oldProductItems) {
+
+            for (var itemKey in oldProductItems) {
+                if (entityPM.CustomerProductItems.filter(p => p.UniqueKey === oldProductItems[itemKey].UniqueKey).length === 0) {
+
+                    if (oldProductItems[itemKey]) {
+                        var oldItemJson = oldProductItems[itemKey];
+                        var deletedPM: ProductItemPM = new ProductItemPM(null);
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+
+                        this.MapHTSCodes(deletedPM, oldItemJson, mapParent);
+                        deletedPM.OldEntityPM = null;
+                        entityPM.CustomerProductItems.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
+    MapHTSCodes(entityPM: ProductItemPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldHTSCodes: HTSCodePM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldHTSCodes = entityPM.OldEntityPM.HTSCodes;
+        }
+
+        entityPM.HTSCodes = new Array<HTSCodePM>();
+        for (var item in jsonPM.HTSCodes) {
+            var jItem = jsonPM.HTSCodes[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newHTSCodePM: HTSCodePM;
+
+            if (mapParent) {
+                newHTSCodePM = new HTSCodePM(entityPM);
+            }
+            else {
+                newHTSCodePM = new HTSCodePM(null);
+            }
+
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newHTSCodePM[pmProperty] = jItem[pmProperty];
+            }
+            newHTSCodePM.IsDirty = false;
+
+            if (mapParent) {
+                newHTSCodePM.UniqueKey = Guid.newGuid();
+                newHTSCodePM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newHTSCodePM.OldEntityPM = this.clone(newHTSCodePM);
+            }
+
+            else {
+                if (entityPM.ChangeSetOp === "Delete") {
+                    newHTSCodePM.ChangeSetOp = "Delete";
+                }
+                else {
+                    if (newHTSCodePM.UniqueKey) {
+
+                        if (jItem.IsDirty)
+                            newHTSCodePM.ChangeSetOp = "Update";
+                    }
+                    else {
+                        newHTSCodePM.ChangeSetOp = "Insert";
+                    }
+                }
+
+                newHTSCodePM.OldEntityPM = null;
+                newHTSCodePM.EntityParentPM = null;
+            }
+
+            newHTSCodePM.IsDirty = false;
+            entityPM.HTSCodes.push(newHTSCodePM);
+        }
+        if (oldHTSCodes) {
+
+            for (var itemKey in oldHTSCodes) {
+                if (entityPM.HTSCodes.filter(p => p.UniqueKey === oldHTSCodes[itemKey].UniqueKey).length === 0) {
+
+                    if (oldHTSCodes[itemKey]) {
+                        var oldItemJson = oldHTSCodes[itemKey];
+                        var deletedPM: HTSCodePM = new HTSCodePM(null);
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+
+                        deletedPM.OldEntityPM = null;
+                        entityPM.HTSCodes.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
+
     public clone(jsonPM: any) {
         var entityPM: any;
         entityPM = {};
@@ -1608,6 +1824,4 @@ export class CustomerPMService {
         entityPM.Tenant = InfraSettings.TenantPM.Id;
         return entityPM;
     }
-
-
 }

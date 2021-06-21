@@ -375,31 +375,52 @@ namespace WebFreight.Web.Helpers
 
         private static string ResolveDocumentFileNameFromDataFields(DocumentFileNameParameter documentFileNameParameter)
         {
-            HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
+            string calculatedDocumentFileName = ResolveMainObjectTableFields(documentFileNameParameter);
+            calculatedDocumentFileName = ResolveDocumentTypeFields(documentFileNameParameter, calculatedDocumentFileName);
+            calculatedDocumentFileName = ResolveDocumentFilingFields(documentFileNameParameter, calculatedDocumentFileName);
 
-            string htmlResolve  = ResolveDocumentFileNameFromMainObjectTable(documentFileNameParameter, htmlEditorHelper);
+            return calculatedDocumentFileName;
+        }
 
-            if (htmlResolve.Contains("[DocumentType"))
+        private static string ResolveDocumentFilingFields(DocumentFileNameParameter documentFileNameParameter, string documentFileName)
+        {
+            string calculatedDocumentFileName = documentFileName;
+            if (calculatedDocumentFileName.Contains("[DocumentsFiling"))
+            {
+                calculatedDocumentFileName = ResolveDocumentFileNameFromDocumentsFilingObjectTable(documentFileNameParameter, calculatedDocumentFileName);
+            }
+
+            return calculatedDocumentFileName;
+        }
+
+        private static string ResolveDocumentTypeFields(DocumentFileNameParameter documentFileNameParameter, string documentFileName)
+        {
+            string calculatedDocumentFileName = documentFileName;
+
+            if (calculatedDocumentFileName.Contains("[DocumentTypeCopyName]"))
+            {
+                calculatedDocumentFileName = calculatedDocumentFileName.Replace("[DocumentTypeCopyName]", documentFileNameParameter?.DocumentTypeCopy?.Name);
+            }
+
+            if (calculatedDocumentFileName.Contains("[DocumentType"))
             {
                 DocumentFileNameFromObjectTableParameter documentFileNameFromObjectTableParameter = new DocumentFileNameFromObjectTableParameter
                 {
                     DocumentFileNameParameter = documentFileNameParameter,
-                    HtmlEditorHelper = htmlEditorHelper,
-                    DocumentFileName = htmlResolve, 
-                    EntityId = documentFileNameParameter.DocumentType.Id, 
+                    DocumentFileName = calculatedDocumentFileName,
+                    EntityId = documentFileNameParameter.DocumentType.Id,
                     ObjectTableName = "DocumentType",
                 };
-                htmlResolve = GetDocumentFileNameFromDataFieldsByObjectTableName(documentFileNameFromObjectTableParameter);
+                calculatedDocumentFileName = GetDocumentFileNameFromDataFieldsByObjectTableName(documentFileNameFromObjectTableParameter);
             }
-            if (htmlResolve.Contains("[DocumentsFiling"))
-            {
-                htmlResolve = ResolveDocumentFileNameFromDocumentsFilingObjectTable(documentFileNameParameter, htmlEditorHelper, htmlResolve);
-            }
-            return htmlResolve;
+
+            return calculatedDocumentFileName;
         }
 
-        private static string ResolveDocumentFileNameFromDocumentsFilingObjectTable(DocumentFileNameParameter documentFileNameParameter, HtmlEditorHelper htmlEditorHelper, string htmlResolve)
+        private static string ResolveDocumentFileNameFromDocumentsFilingObjectTable(DocumentFileNameParameter documentFileNameParameter, string documentFileName)
         {
+            string calculatedDocumentFileName = documentFileName;
+
             string id = documentFileNameParameter.EntityId;
             if (!string.IsNullOrEmpty(documentFileNameParameter.ChildEntityId))
                 id = documentFileNameParameter.ChildEntityId;
@@ -411,20 +432,20 @@ namespace WebFreight.Web.Helpers
                 DocumentFileNameFromObjectTableParameter documentFileNameFromObjectTableParameter = new DocumentFileNameFromObjectTableParameter
                 {
                     DocumentFileNameParameter = documentFileNameParameter,
-                    HtmlEditorHelper = htmlEditorHelper,
-                    DocumentFileName = htmlResolve,
+                    DocumentFileName = calculatedDocumentFileName,
                     EntityId = documentsFilingPM.Id,
                     ObjectTableName = "DocumentsFiling",
                 };
-                htmlResolve = GetDocumentFileNameFromDataFieldsByObjectTableName(documentFileNameFromObjectTableParameter);
+                calculatedDocumentFileName = GetDocumentFileNameFromDataFieldsByObjectTableName(documentFileNameFromObjectTableParameter);
             }
 
-            return htmlResolve;
+            return calculatedDocumentFileName;
         }
 
-        private static string ResolveDocumentFileNameFromMainObjectTable(DocumentFileNameParameter documentFileNameParameter, HtmlEditorHelper htmlEditorHelper)
+        private static string ResolveMainObjectTableFields(DocumentFileNameParameter documentFileNameParameter)
         {
             HtmlEditorResolveArgs htmlResolveArgs = new HtmlEditorResolveArgs();
+            HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
 
             string id = documentFileNameParameter.EntityId;
             if (!string.IsNullOrEmpty(documentFileNameParameter.ChildEntityId))
@@ -443,6 +464,7 @@ namespace WebFreight.Web.Helpers
         private static string GetDocumentFileNameFromDataFieldsByObjectTableName(DocumentFileNameFromObjectTableParameter documentFileNameFromObjectTableParameter)
         {
             HtmlEditorResolveArgs htmlResolveArgs = new HtmlEditorResolveArgs();
+            HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
 
             htmlResolveArgs.EntityId = documentFileNameFromObjectTableParameter.EntityId;
             htmlResolveArgs.ObjectTableId = "";
@@ -451,7 +473,7 @@ namespace WebFreight.Web.Helpers
             htmlResolveArgs.UserId = documentFileNameFromObjectTableParameter.DocumentFileNameParameter.UserId;
             htmlResolveArgs.Tenant = documentFileNameFromObjectTableParameter.DocumentFileNameParameter.Tenant;
 
-            string resolveDocumentFileName = documentFileNameFromObjectTableParameter.HtmlEditorHelper.ResolveHtmlString(htmlResolveArgs);
+            string resolveDocumentFileName = htmlEditorHelper.ResolveHtmlString(htmlResolveArgs);
             return resolveDocumentFileName;
         }
 
@@ -773,6 +795,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                 case "SHCO":
                 case "ABOCO":
                 case "SHCMR":
+                case "NCR":
                     {
                         theT1 = System.DateTime.Now.Ticks;
                         ShippingDeclarationWebService shippingDeclarationWebService = new ShippingDeclarationWebService();
@@ -2441,7 +2464,6 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
     {
         public string EntityId { get; set; }
         public DocumentFileNameParameter DocumentFileNameParameter { get; set; }
-        public HtmlEditorHelper HtmlEditorHelper { get; set; }
         public string DocumentFileName { get; set; }
         public int Tenant { get; set; }
         public string ObjectTableName { get; set; }

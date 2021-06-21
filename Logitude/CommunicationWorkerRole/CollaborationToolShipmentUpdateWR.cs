@@ -1,9 +1,9 @@
-﻿using CommunicationWorkerRole.Constants;
-using CommunicationWorkerRole.Messages;
-using Confluent.Kafka;
+﻿using Confluent.Kafka;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
+using Logitude.Server.Tools.KafkaConfigurations;
+using Logitude.Server.Tools.Messages;
 using Logitude.SystemLogs;
 using Newtonsoft.Json;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
@@ -20,25 +20,26 @@ namespace CommunicationWorkerRole
     {
         public override void Run()
         {
-            var LogitudeConsumer = new Consumer();
+            var LogitudeConsumer = new Consumer(KafkaConsumerGroups.UpdateTask, new List<string> { KafkaTopics.TasksTopic },
+                                    new TopicPartition(KafkaTopics.TasksTopic, KakaPartitions.TasksTopic_UpdatePartition));
 
             while (IsRunning)
             {
                 if (!General.IsUpdating())
                 {
                     try
-                    {   
+                    {
                         var msg = LogitudeConsumer.Consume();
-                        if (msg.Message.Key == MessageType.Task)
+                        if (msg != null && msg.Message.Key == KakaMessageTypes.Task)
                         {
                             UpdateShipmentPM(msg.Message.Value);
-                        } 
+                        }
                     }
                     catch (ConsumeException e)
                     {
                         Console.WriteLine($"Consume error: {e.Error.Reason}");
                         ExceptionHandler.HandleException(e, DateTime.Now, 1, null, "CollaborationToolShipmentUpdate worker role start", null, null);
-                        throw e;
+                        //throw e;
                     }
                     catch (Exception ex)
                     {
@@ -74,7 +75,7 @@ namespace CommunicationWorkerRole
 
                 ShipmentRepository shipmentRepository = new ShipmentRepository(LogitudeUpdateMessage.Tenant);
                 Shipment shipment = shipmentRepository.GetSingleShipmentByShipmentNumber(LogitudeUpdateMessage.EntityNumber, LogitudeUpdateMessage.Tenant);
-                
+
                 var entryFields = JsonConvert.DeserializeObject<Dictionary<string, string>>(LogitudeUpdateMessage.EntryFields);
 
                 foreach (KeyValuePair<string, string> entry in entryFields)
@@ -103,7 +104,10 @@ namespace CommunicationWorkerRole
                 ShipmentQuery myQuery = new ShipmentQuery(shipmentRepository);
                 ShipmentPM shipment = myQuery.GetSinglePMByShipmentNumber(LogitudeUpdateMessage.EntityNumber, LogitudeUpdateMessage.Tenant);
 
-                
+                if (LogitudeUpdateMessage.EntryFields == null || LogitudeUpdateMessage.EntityNumber == null)
+                {
+                    return;
+                }
                 var entryFields = JsonConvert.DeserializeObject<Dictionary<string, string>>(LogitudeUpdateMessage.EntryFields);
 
                 foreach (KeyValuePair<string, string> entry in entryFields)
@@ -114,7 +118,7 @@ namespace CommunicationWorkerRole
                     propertyInfo.SetValue(shipment, safeValue, null);
                 }
 
-                ShipmentService myService = new ShipmentService(shipmentRepository.context, shipment,"system@tenant" + shipment.Tenant + ".com");
+                ShipmentService myService = new ShipmentService(shipmentRepository.context, shipment, "system@tenant" + shipment.Tenant + ".com");
                 myService.Update();
 
             }

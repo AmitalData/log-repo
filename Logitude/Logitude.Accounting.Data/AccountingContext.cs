@@ -142,6 +142,8 @@ namespace Logitude.Accounting.Data
 	
             modelBuilder.Configurations.Add(new GLAccountCurrencyMap());
 	
+            modelBuilder.Configurations.Add(new GLAccountFollowUpDataMap());
+	
             modelBuilder.Configurations.Add(new GLAccountInterestPeriodMap());
 	
             modelBuilder.Configurations.Add(new GLAccountMoreDataMap());
@@ -279,17 +281,17 @@ namespace Logitude.Accounting.Data
 				
 			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.PeriodPast).HasPrecision(16, 2);
 				
-			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.Period0).HasPrecision(16, 2);
-				
-			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.Period1).HasPrecision(16, 2);
-				
-			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.Period2).HasPrecision(16, 2);
-				
-			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.Period3).HasPrecision(16, 2);
+			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.Period5).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.Period4).HasPrecision(16, 2);
 				
-			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.Period5).HasPrecision(16, 2);
+			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.Period3).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.Period2).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.Period1).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.Period0).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.PeriodFuture).HasPrecision(16, 2);
 				
@@ -308,6 +310,10 @@ namespace Logitude.Accounting.Data
 			modelBuilder.Entity<GLAccountMoreData>().Property(x => x.TotalOpenChequesInLocalCur).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<GLAccountMoreData>().Property(x => x.TotFutureOpenChequesInLocalCur).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<GLAccountMoreData>().Property(x => x.BalanceInForeignCurrency).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<GLAccountMoreData>().Property(x => x.ForeignBalanceInDue).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<GLAccountTotalByMonth>().Property(x => x.LocalAmountDebit).HasPrecision(16, 2);
 				
@@ -918,6 +924,12 @@ namespace Logitude.Accounting.Data
 	 }
 	
 	 public IDbSet<GLAccountCurrency> GLAccountCurrencies 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<GLAccountFollowUpData> GLAccountFollowUpDatas 
 	 {
 	      get; set;
 	 

@@ -4,6 +4,8 @@ import {PartnerItem} from './PartnersTabComponent';
 import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 
 @Component({
     
@@ -39,8 +41,9 @@ export class AddEditPartnerComponent implements OnInit {
         this.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
     }
-    OkButtonClicked() {
 
+    private showDeleteProductItemsConfirmWindow: boolean = false;
+    OkButtonClicked() {
         this.ValidationErrorsList = [];
 
         var msg: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
@@ -121,12 +124,33 @@ export class AddEditPartnerComponent implements OnInit {
 
                 if (this.oldCustomerPartnerId != this.EntityPM.CustomerId) {
                     this.DataContext.fatherComponent.OnCustomerChanged();
+
+                    if (this.EntityPM.ShipmentProductItems.length > 0) {
+                        this.showDeleteProductItemsConfirmWindow = true;
+                    }                    
                 }
             }
 
-            this.CurrentSession.CloseCurrentWindowEmit("OK");
-            this.CurrentSession.FireEvent("ShipmentPartnersChanged");
+            if (this.showDeleteProductItemsConfirmWindow) {
+                this.ShowDeleteProductItemsConfirmation();
+            }
+
+            else {
+                this.CurrentSession.CloseCurrentWindowEmit("OK");
+                this.CurrentSession.FireEvent("ShipmentPartnersChanged");
+            }
         }
+    }
+    ShowDeleteProductItemsConfirmation() {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Show("All product items in this shipment will be deleted");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.EntityPM.ShipmentProductItems = [];
+                this.CurrentSession.CloseCurrentWindowEmit("OK");
+                this.CurrentSession.FireEvent("ShipmentPartnersChanged");
+            }
+        });
     }
 
     private myCloner: Cloner;

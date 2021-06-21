@@ -2,21 +2,11 @@ import { Component } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { TenantPM } from '../../../../Common/EntityPMs/TenantPM';
-import { Validator } from '../../../../Infrastructure/Validators/Validator';
 import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
-import { TenantPMService } from '../../../../Common/Services/StandardPMs/TenantPMService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { ShipmentDomainService } from '../../../../Shipment/Services/ShipmentDomainService';
-import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
-import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
-import { InfraSettings } from '../../../../Infrastructure/Utilities/InfraSettings';
-import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
-import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { LastRate, CurrencyRatesService, ChangeCurrencyArgs } from '../../../../Common/Services/CurrencyRatesService';
-import { RatesTablePM } from '../../../../Infrastructure/EntityPMs/RatesTablePM';
 import { CurrencyListService } from '../../../../Common/Services/StandardLists/CurrencyListService';
 import { CurrencyList } from '../../../../Common/EntityLists/CurrencyList';
-import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 
 @Component({
     selector: 'ChangeCurrencyComponent',
@@ -223,8 +213,6 @@ export class ChangeCurrencyComponent extends BaseComponent {
 
                 if (!myResponse.HasError) {
                     this.CurrentSession.CloseCurrentWindowEmit("ok");
-                    var messageWindow: MessageWindow = new MessageWindow();
-                    messageWindow.Show("Please logout and login again to refresh data");
                 }
 
                 else {

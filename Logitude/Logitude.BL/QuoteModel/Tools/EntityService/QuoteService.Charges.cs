@@ -19,7 +19,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
         List<PackageType> AllPackageTypes = new List<PackageType>();
         public void GenerateDefaultCharges()
         {
-            if (IsConvertingQuoteTypeOrTransportMode())
+            if (isNewEntity || IsConvertingQuoteTypeOrTransportMode())
             {
                 if ((entityPM.QuoteCharges.Count() == 0 && !entityPM.IsHybrid))
                 {

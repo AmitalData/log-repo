@@ -145,12 +145,15 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
     ShowImagesLibraryComponent: boolean = false;
     IsResendEmail: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    IsEnableEditTemplate: boolean = false;
+
     constructor(public _communicationLogExtendedPMService: CommunicationLogExtendedPMService, public _communicationAttachmentExtendedPMService: CommunicationAttachmentExtendedPMService, public _documentOutPMService: DocumentOutPMService, public _documentExtendedService: DocumentExtendedService, public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService, public _documentTypeTemplateListExtendedService: DocumentTypeTemplateListExtendedService, public _htmlEditorService: HtmlEditorService, public _documentTypePMService: DocumentTypePMExtendedService, private cd: ChangeDetectorRef, public _documentTypeListService: DocumentTypeListService) {
 
         if (this.documentTypeTemplatePMService == null) {
             this.documentTypeTemplatePMService = new DocumentTypeTemplatePMService();
 
         }
+        this.CheckEditTemplateFeature();
 
 
         if (FeatureLocator.HasFeaturePermession("DocumentTypeTemplate", "UPDATE") && FeatureLocator.HasFeaturePermession("DocumentType", "HTMLEMAIL")) {
@@ -177,6 +180,12 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit() {
         this.FetchAttachmentsLists();
+    }
+
+    CheckEditTemplateFeature() {
+        if (FeatureLocator.HasFeaturePermession("DocumentType", "MANAGEDOCUMENTTEMPLATES")) {
+            this.IsEnableEditTemplate = true;
+        }
     }
 
     FetchAttachmentsLists() {
@@ -1361,7 +1370,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
             item.Id = uploader.CurrentDocument.DocumentId;
             item.Tenant = uploader.CurrentDocument.Tenant;
             item.FileSize = uploader.CurrentDocument.FileSize;
-            item.DocumentTypeCopyNameWithDocumentTypeName = uploader.CurrentDocument.DocumentTypeName;
+            item.DocumentTypeCopyNameWithDocumentTypeName = uploader.CurrentDocument.DirectionCode == "I" ? uploader.FileName : uploader.CurrentDocument.DocumentTypeName;
             item.FileExtension = uploader.CurrentDocument.FileExtension;
             item.ShowRemoveLink = true;
             var attachmentsLists = this.AttachmentsLists;
@@ -1652,7 +1661,8 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                 if (myResult) {
                     this.documentPM = myResult;
                     att.FileSize = this.documentPM.FileSize;
-                    att.FileName = !AppTool.IsNullOrEmpty(this.documentPM.CalculatedFileName) ? this.documentPM.CalculatedFileName : item.DocumentTypeCopyNameWithDocumentTypeName;
+                    att.FileName = (!AppTool.IsNullOrEmpty(this.documentPM.CalculatedFileName) && item.DirectionCode !=  "I") ? this.documentPM.CalculatedFileName : item.DocumentTypeCopyNameWithDocumentTypeName;
+                    
                     this.CreateAttachment(att, this.documentPM, item.ShowRemoveLink, this);
                 }
 

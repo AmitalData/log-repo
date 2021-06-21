@@ -20,6 +20,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
             
         }
 
+        public bool IsQuotationDocumentType(string id , int tenant)
+        {
+            return (from record in context.DocumentTypes where record.Id == id && record.Tenant == tenant && record.Code == "QUOTE" select record).Any();
+        }
+
         public DocumentTypeRepository(int tenant)
         {
             commonDataContext = CommonDataContext.GetContext(tenant);

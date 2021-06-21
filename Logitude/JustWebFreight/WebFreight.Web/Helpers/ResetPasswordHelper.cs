@@ -15,7 +15,7 @@ namespace WebFreight.Web.Helpers
 {
     public class ResetPasswordHelper
     {
-        public UserData ForgetPassword(ResetPasswordParameters resetPasswordParameters)
+        public UserData ForgetPassword(ResetPasswordParameters resetPasswordParameters , bool useCaptcha)
         {
             UserData userData = new UserData();
 
@@ -23,7 +23,7 @@ namespace WebFreight.Web.Helpers
             string tenant = ResolveEmail(ref email);
             resetPasswordParameters.Email = email;
 
-            if (resetPasswordParameters.UseCaptcha)
+            if (useCaptcha)
                 userData = CheckForgotPasswordCaptchaCode(resetPasswordParameters);
 
             if (!userData.InValidCaptcha)

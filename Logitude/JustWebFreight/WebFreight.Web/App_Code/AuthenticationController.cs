@@ -100,8 +100,8 @@ namespace WebFreight.Web
             }
             return userData;
         }
-         
-          
+
+
         public UserData PostTrayLoginUsingAuthenticaionToken(LoginTokenParameter logintokenparam, bool fromTray, bool useTenant)
         {
             UserData userdata;
@@ -828,7 +828,7 @@ namespace WebFreight.Web
                                                          where t.Id == contact.GlobalTenantId
                                                          select t).Include("TenantManagement").FirstOrDefault();
 
-                            if (contact.IsUser)
+                            if (contact.IsUser && !loginParameters.IsCargoTracking)
                             {
                                 bool Licensed = true;
                                 if (globalTenant.TenantManagement.ManageLicencesPerUser)
@@ -906,6 +906,7 @@ namespace WebFreight.Web
                     loginsList = loginsList.Where(s => s.LicensedUser == true || s.IsUser == false).OrderBy(c => c.CompanyName).ToList();
 
                     List<string> logboxAccessiblePrivateLabelTenantsIds = GetLogboxAccessiblePrivateLabelTenantsIds(url);
+                    MapHasLogboxAccessPrivateLabelTenants(loginsList, logboxAccessiblePrivateLabelTenantsIds);
 
                     if (loginsList.Count == 1)
                     {
@@ -930,7 +931,7 @@ namespace WebFreight.Web
                         }
                         else
                         {
-                            if (privatelabel == null && (!string.IsNullOrEmpty(companyAccess.PrivateLabelId) && !logboxAccessiblePrivateLabelTenantsIds.Contains(companyAccess.PrivateLabelId)))
+                            if (privatelabel == null && (!string.IsNullOrEmpty(companyAccess.PrivateLabelId) && !companyAccess.HasLogboxAccess))
                             {
                                 data = new UserData()
                                 {
@@ -993,7 +994,7 @@ namespace WebFreight.Web
                         }
                         else
                         {
-                            temp = loginsList.Where(a => a.PrivateLabelId == null || (a.PrivateLabelId != null && logboxAccessiblePrivateLabelTenantsIds.Contains(a.PrivateLabelId))).ToList();
+                            temp = loginsList.Where(a => a.PrivateLabelId == null || a.HasLogboxAccess).ToList();
                         }
                         if (temp.Count == 1)
                         {
@@ -1178,10 +1179,21 @@ namespace WebFreight.Web
             }
         }
 
+        private void MapHasLogboxAccessPrivateLabelTenants(List<CompanyLogin> loginsList, List<string> logboxAccessiblePrivateLabelTenantsIds)
+        {
+            foreach (CompanyLogin companyLogin in loginsList)
+            {
+                if (companyLogin.PrivateLabelId != null && logboxAccessiblePrivateLabelTenantsIds.Contains(companyLogin.PrivateLabelId))
+                {
+                    companyLogin.HasLogboxAccess = true;
+                }
+            }
+        }
+
         private List<string> GetLogboxAccessiblePrivateLabelTenantsIds(string url)
         {
             List<string> logboxAccessiblePrivateLabelTenantsIds = new List<string>();
-            if (url.Contains("system.logbox.co.il") || url.Contains("test.logitudeworld.com") || url.Contains("localhost"))
+            if (url.Contains("system.logbox.co.il") || url.Contains("pre.logbox.co.il") || url.Contains("test.logitudeworld.com") || url.Contains("localhost"))
             {
                 TenantManagmentPrivateLabelsQuery query = new TenantManagmentPrivateLabelsQuery(0);
                 logboxAccessiblePrivateLabelTenantsIds = query.GetLogboxAccessibleTenantManagmentPrivateLabelsIds();
@@ -1716,7 +1728,9 @@ namespace WebFreight.Web
                     myObjectTableId = objectTable.Id;
                 }
 
-                string body = "Please use the code " + device.AuthenticationCode + " to verify your Logitude Account";
+
+                string environment = IsLogBoxEnvironment() ? "Logbox" : LogitudeSettings.WorkEnvironment == "cloud" ? "Cloud" : "Logitude";
+                string body = "Please use the code " + device.AuthenticationCode + " to verify your " + environment + " Account";
                 byte[] bytearray = Encoding.ASCII.GetBytes(body);
 
                 Document document = new Document()
@@ -1780,6 +1794,11 @@ namespace WebFreight.Web
             }
 
             return null;
+        }
+
+        private bool IsLogBoxEnvironment()
+        {
+            return LogitudeSettings.DeploymentStage != null && (LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1" || LogitudeSettings.DeploymentStage.ToLower() == "test2");
         }
 
         private string GetContactMaskedMobileNumber(Contact loggedContact)
@@ -2222,15 +2241,15 @@ namespace WebFreight.Web
 
                         }
 
-                        string activity = card.PartnerTypeId == "CS" ? "Customer Access" : "Agent Access";
-
+                        
                         if(card != null)
                         {
-                            CreateSharedLogisticsContactLastLogin(via, user, card);
+                            string activity = card.PartnerTypeId == "CS" ? "Customer Access" : "Agent Access";
+                            CreateSharedLogisticsContactLastLogin(via, user, card); 
+                            ActivityLog.SendTotangoContactActivity(contact.Email, "System Login", activity, tenant, true, cardId, via);
 
                         }
 
-                        ActivityLog.SendTotangoContactActivity(contact.Email, "System Login", activity, tenant, true, cardId, via);
                         //Abed    Log
                         ContactLoginLog contactLog = new ContactLoginLog()
                         {
@@ -2540,9 +2559,8 @@ namespace WebFreight.Web
                 Email = email.ToLower(),
                 IsChampLogin = ischamplogin,
                 IsMobile = false,
-                UseCaptcha = false,
             };
-            UserData userData = resetPasswordHelper.ForgetPassword(resetPasswordParameters);
+            UserData userData = resetPasswordHelper.ForgetPassword(resetPasswordParameters,false);
 
             return userData;
         }
@@ -2575,9 +2593,8 @@ namespace WebFreight.Web
                 Email = email.ToLower(),
                 IsChampLogin = false,
                 IsMobile = ismobile,
-                UseCaptcha = false,
             };
-            UserData userData = resetPasswordHelper.ForgetPassword(resetPasswordParameters);
+            UserData userData = resetPasswordHelper.ForgetPassword(resetPasswordParameters , false);
 
             return userData;
         }
@@ -2591,12 +2608,11 @@ namespace WebFreight.Web
                 Email = email.ToLower(),
                 IsChampLogin = false,
                 IsMobile= true,
-                UseCaptcha = false,
                 CaptchaCode = null,
                 CaptchaKey = null,
                 AppEnvironment = appEnvironment,
             };
-            UserData userData = resetPasswordHelper.ForgetPassword(resetPasswordParameters);
+            UserData userData = resetPasswordHelper.ForgetPassword(resetPasswordParameters , false);
 
             return userData;
         }

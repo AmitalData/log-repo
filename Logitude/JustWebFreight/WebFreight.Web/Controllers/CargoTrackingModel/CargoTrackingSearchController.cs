@@ -38,6 +38,12 @@ using Logitude.CargoTracking.BL.EntityQueryServices;
 using System.Threading;
 using Logitude.CargoTracking.Def.DataContracts;
 using Logitude.CargoTracking.BL.CoreBL;
+using WebFreight.Web.DataContracts;
+using Logitude.CargoTracking.BL.Utilities;
+using Logitude.CargoTracking.BL.DataContracts;
+using System.Web.Configuration;
+using System.Collections.Specialized;
+using System.Collections;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code
 {
@@ -48,7 +54,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
 
         [HttpGet]
-        public HttpResponseMessage GetShipments(string searchKey, int tenant)
+        public async Task<HttpResponseMessage> GetShipments(string searchKey, int tenant)
         {
             try
             {
@@ -59,7 +65,18 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
                 List<CargoTrackingShipmentList> shipments = cargoTrackingShipmentSearchQuery.GetShipments(searchKey, tenant).OrderByDescending(s => s.CreateDate).ToList();
 
- 
+                MixPanelTrackingEvent searchTrackingEvent = new MixPanelTrackingEvent()
+                {
+                    SearchKeyword = searchKey,
+                    UserAgent = HttpContext.Current.Request.UserAgent,
+                    Browser = GetBrowserName(),
+                    ResultsCount = shipments.Count(),
+                    IPAddress = HttpContext.Current.Request.UserHostAddress
+                };
+
+                MixPanelTrackingService trackingService = new MixPanelTrackingService();
+                await trackingService.TrackSearchActionAsync(searchTrackingEvent);
+
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, shipments);
 
                 return reponseMessage;
@@ -169,6 +186,80 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
             List<string> references = shipmentsQuery.GetShipmentPublicReferences(SecurityKey, tenant);
             return references;
+        }
+
+        [HttpGet]
+        public HttpResponseMessage GetCaptchaData()
+        {
+            try
+            {
+                CaptchaHelper captchaHelper = new CaptchaHelper();
+                UserData data = new UserData();
+                captchaHelper.AddCaptchaKey(null,data,"Search");
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, data);
+                return reponseMessage;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+       
+        [HttpPut]
+        public HttpResponseMessage PutUserValidation(CaptchaParameters captchaParameters)
+        {
+            try
+            {
+                UserData userData = CheckCaptchaState(captchaParameters);
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, userData);
+                return reponseMessage;
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+        private UserData CheckCaptchaState(CaptchaParameters loginParameters)
+        {
+            CaptchaHelper captchaHelper = new CaptchaHelper();
+            UserData data = new UserData();
+            if (!captchaHelper.CheckCaptchaCodeValidated(loginParameters.CaptchaCode, loginParameters.CaptchaKey, null, false))
+            {
+                captchaHelper.AddCaptchaKey(null, data, "Search");               
+            }
+
+
+            return data;
+        }
+
+        [HttpPost]
+        public async Task<HttpResponseMessage> PostSearchTrackAsync(string searchKey)
+        {
+            try
+            {
+                
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, "ok");
+                return reponseMessage;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+        private static string GetBrowserName()
+        {
+            var userAgent = HttpContext.Current.Request.UserAgent;
+            var userBrowser = new HttpBrowserCapabilities { Capabilities = new Hashtable { { string.Empty, userAgent } } };
+            var factory = new BrowserCapabilitiesFactory();
+            factory.ConfigureBrowserCapabilities(new NameValueCollection(), userBrowser);
+            var browser = userBrowser.Browser;
+            return browser;
         }
     }
 

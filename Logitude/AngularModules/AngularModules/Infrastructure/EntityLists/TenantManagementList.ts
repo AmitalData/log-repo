@@ -155,5 +155,6 @@ export class TenantManagementList {
 		LastWeekCreatedTariffs: number;
 		LastMonthCreatedTariffs: number;
 		ScheduledTasksLimitPerReport: number;
+		IsHybrid: boolean;
 	
 }

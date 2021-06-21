@@ -664,8 +664,54 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             FillForeignFields(entityPM);
             FillSearchFields(entityPM);
+            AddEventForGlAccountFollowUpData(entityPM);        
+            HandleGLAccountFollowUpData(entityPM);
 
-
+        }
+        private void HandleGLAccountFollowUpData(GLAccountPM entityPM)
+        {
+            ContactPM loggedUser = GetLoggedContact(entityPM.Tenant);
+            GLAccountFollowUpDataPM gLAccountFollowUpData = GetGLAccountFollowUpDataPM(entityPM);
+            GLAccountFollowUpDataUpdateService gLAccountFollowUpDataUpdateService = new GLAccountFollowUpDataUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+            if (gLAccountFollowUpData != null)
+            {
+                gLAccountFollowUpData= UpdateGLAccountFollowUpData(entityPM, gLAccountFollowUpData, loggedUser);
+            }
+            else
+            {
+                if(entityPM.GLAccountFollowUpRemarks != null || entityPM.GLAccountFollowUpDate!= null)
+                gLAccountFollowUpData= CreateGLAccountFollowUpData(entityPM, loggedUser);
+            }
+          if( gLAccountFollowUpData != null)
+                gLAccountFollowUpDataUpdateService.Update(gLAccountFollowUpData,true);
+        }
+        private GLAccountFollowUpDataPM CreateGLAccountFollowUpData(GLAccountPM accountPM,ContactPM loggedUser)
+        {         
+            GLAccountFollowUpDataPM gLAccountFollowUpData = new GLAccountFollowUpDataPM();
+             gLAccountFollowUpData= MapGLAccountFollowUpFields(gLAccountFollowUpData, accountPM, loggedUser);
+            gLAccountFollowUpData.ChangeSetOp = ChangeSetOperation.Insert;
+            return gLAccountFollowUpData;
+        }
+        private GLAccountFollowUpDataPM MapGLAccountFollowUpFields(GLAccountFollowUpDataPM gLAccountFollowUpData, GLAccountPM accountPM, ContactPM loggedUser)
+        {
+            gLAccountFollowUpData.FollowUpDate = accountPM.GLAccountFollowUpDate;
+            gLAccountFollowUpData.FollowUpRemarks = accountPM.GLAccountFollowUpRemarks;            
+            gLAccountFollowUpData.UpdatedByUserId = loggedUser?.Id;
+            gLAccountFollowUpData.Tenant = accountPM.Tenant;
+            gLAccountFollowUpData.GlAccountId = accountPM.Id;
+            gLAccountFollowUpData.UpdateDate = TenantServerConfigration.GetCurrentDateTime(accountPM.Tenant);
+            return gLAccountFollowUpData;
+        }
+        private GLAccountFollowUpDataPM UpdateGLAccountFollowUpData(GLAccountPM accountPM, GLAccountFollowUpDataPM gLAccountFollowUpData, ContactPM loggedUser)
+        {
+          gLAccountFollowUpData=  MapGLAccountFollowUpFields(gLAccountFollowUpData, accountPM, loggedUser);
+            gLAccountFollowUpData.ChangeSetOp = ChangeSetOperation.Update;
+            return gLAccountFollowUpData;
+        }
+        private GLAccountFollowUpDataPM GetGLAccountFollowUpDataPM(GLAccountPM entityPM)
+        {
+            GLAccountFollowUpDataQueryService accountFollowUpDataQueryService = new GLAccountFollowUpDataQueryService(entityPM.Tenant);
+            return accountFollowUpDataQueryService.GetSinglePMByAccountId(entityPM.Id, entityPM.Tenant);
         }
         private TenantPM GetTenantPM(int tenantId)
         {
@@ -1669,8 +1715,50 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                     }
                 }
+               
             }
             base.Trace(entityPM, entityPOCO, changesXml);
+        }
+        GLAccountFollowUpDataPM gLAccountFollowUp;
+        private void AddEventForGlAccountFollowUpData(GLAccountPM accountPM)
+        {
+            ContactPM contact = GetLoggedContact(accountPM.Tenant);
+            showLocals = !contact.DontShowLocal;
+            gLAccountFollowUp = GetGLAccountFollowUpDataPM(accountPM);
+            if(gLAccountFollowUp != null)
+            {
+                if(gLAccountFollowUp.FollowUpDate != accountPM.GLAccountFollowUpDate )
+                {
+                    string oldValue = gLAccountFollowUp.FollowUpDate.ToString();
+                    string newValue = accountPM.GLAccountFollowUpDate.ToString();                  
+                    CreateEvent("EVFD", oldValue , newValue);                  
+                }
+              
+                if (gLAccountFollowUp.FollowUpRemarks != accountPM.GLAccountFollowUpRemarks)
+                {
+                    string oldValue = gLAccountFollowUp.FollowUpRemarks;
+                    string newValue = accountPM.GLAccountFollowUpRemarks;                  
+                    CreateEvent( "EVFR",oldValue,newValue);
+                    
+                }
+            }
+        }
+        
+        private void CreateEvent(string eventCode, string oldValue, string newValue)
+        {
+            String notes = TranslateTextsClass.Translate("Accounting.General.O.OldValue", EntityPM.Tenant, showLocals) +
+                           oldValue+TranslateTextsClass.Translate("Accounting.General.O.NewValue", EntityPM.Tenant, showLocals) + newValue;
+            EventTracer.CreateTraceEvent(new EventTracerArgs()
+            {
+                EntityId = EntityPM.Id,
+                Tenant = EntityPM.Tenant,
+                UserId = GetLoggedContact(EntityPM.Tenant).Id,
+                ObjectTableName = "GLAccount",
+                IsAddedManually = false,
+                EventTypeCode = eventCode,
+                Notes = notes,
+
+            });
         }
         protected override void AfterUpdating(GLAccountPM entityPM, EntityPM entityParentPM)
         {

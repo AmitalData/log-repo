@@ -41,6 +41,9 @@ export class NewConnectedGLAccountComponent extends BaseComponent {
     GLAccountPMService: GLAccountPMService = new GLAccountPMService();
     gLAccountCurrencyExtendedPMService: GLAccountCurrencyExtendedPMService = new GLAccountCurrencyExtendedPMService();
     private CurrentSession = SessionLocator.SelectedSession;
+    ReconcileMethod_Local: string = "0";
+    ReconcileMethod_Foreign: string = "1";
+
     constructor() {
         super();
         this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
@@ -132,7 +135,7 @@ export class NewConnectedGLAccountComponent extends BaseComponent {
                                   this.accountPM.IsControlAccount = false;
                                   this.accountPM.ChartOfAccountsId = this.entityPM.ChartOfAccountsId;
                                   this.accountPM.ChartOfAccountsTypeCode = response.Result.ChartOfAccountsTypeCode;
-                                  this.accountPM.ReconcileMethodCode = "1";
+                              this.accountPM.ReconcileMethodCode = SessionLocator.TenantPM.CurrencyId == this.CurrencyId ? this.ReconcileMethod_Local : this.ReconcileMethod_Foreign;
                                   this.accountPM.AutomaticReconcileId = this.entityPM.AutomaticReconcileId;
                                   this.accountPM.ControlAccountId = this.entityPM.ControlAccountId;
                                   this.accountPM.Tenant = this.entityPM.Tenant;

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using TechTalk.SpecFlow;
+using Logitude.Test.Base.Models.BillingsPreparation;
 
 namespace Logitude.Test.Base.Hooks
 {
@@ -24,6 +25,7 @@ namespace Logitude.Test.Base.Hooks
             SetupDefaultUserTenant();
             SetupLocationPreparationVariables();
             SetupPartnerPreparationVariables();
+            SetupBillingPreparationVariables();
         }
 
         public static void PrepareTheData(string email, string password,string url)
@@ -33,6 +35,7 @@ namespace Logitude.Test.Base.Hooks
             SetupDefaultUserTenant();
             SetupLocationPreparationVariables();
             SetupPartnerPreparationVariables();
+            SetupBillingPreparationVariables();
         }
 
         private static void SetupBaseSettings()
@@ -79,6 +82,11 @@ namespace Logitude.Test.Base.Hooks
         {
             PartnersVariables partnersVariables = DataPreparation.GetPartnersVariables();
             PartnersDataMap(partnersVariables);
+        }
+        public static void SetupBillingPreparationVariables()
+        {
+            BillingVariables BillingsVariables = DataPreparation.GetBillingVariables();
+            BillingDataMap(BillingsVariables);
         }
 
         private static Configurations GetConfigurations()
@@ -150,14 +158,11 @@ namespace Logitude.Test.Base.Hooks
 
         private static void SetupDefaultUser()
         {
-            ApiQueryFilters apiQueryFilters = new ApiQueryFilters
-            {
-                PageIndex = 0,
-                PageSize = 1,
-                Filter1Name = "SearchFields",
-                Filter1Operator = "Contains",
-                Filter1Value = Settings.DefaultUserCredentials.Email
-            };
+            ApiQueryFilters apiQueryFilters = new ApiQueryFiltersBuilder().WithDefualtValues()
+                .Filter1Name("SearchFields")
+                .Filter1Operator("Contains")
+                .Filter1Value(Settings.DefaultUserCredentials.Email)
+                .Build(); 
 
             ApiResponse<IEnumerable<User>> usersResponse = APICaller.CallGetByFilters<IEnumerable<User>>(Urls.UserViewsGetByFilters, UserTenant.Token, apiQueryFilters);
 
@@ -209,6 +214,17 @@ namespace Logitude.Test.Base.Hooks
             PartnersData.ShippingLineMAEUId = partnersVariables.ShippingLineMAEUId;
             PartnersData.ShippingLineYMLUId = partnersVariables.ShippingLineYMLUId;
             PartnersData.WarehouseId = partnersVariables.WarehouseId;
+        }
+
+        private static void BillingDataMap(BillingVariables billingVariables)
+        {
+            BillingData.CurrencyEURId = billingVariables.CurrencyEURId;
+            BillingData.MeasurementGRWTId = billingVariables.MeasurementGRWTId;
+            BillingData.ChargeTypeAFTId = billingVariables.ChargeTypeAFTId;
+            BillingData.IncotermLDEId = billingVariables.IncotermLDEId;
+            BillingData.VATTypeZeroId = billingVariables.VATTypeZeroId;
+            BillingData.PaymentTermCashId = billingVariables.PaymentTermCashId;
+            BillingData.CreditCardTSId = billingVariables.CreditCardTSId;
         }
     }
 }

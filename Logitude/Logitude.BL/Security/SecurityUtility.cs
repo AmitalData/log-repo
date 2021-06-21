@@ -121,7 +121,7 @@ namespace Logitude.BL.Security
                 string objectTableLocalName = TextCodesTranslator.TranslateText(objectTableName, tenant, showLocal);
                 //AzureLog.SaveLogsInStorage(errorMessage, "E", DateTime.Now, errorMessage, null, 0, HttpContext.Current.User.Identity.Name, HttpContext.Current.User.Identity.Name, ip);
                 string error = TextCodesTranslator.TranslateText("Accounting.General.O.YouDontHavePermission", tenant, showLocal);
-                throw new Exception(error + " "+ objectTableLocalName);
+                throw new Exception(error + " " + objectTableLocalName + ". Please contact your administrator.");
             }
 
 
@@ -559,6 +559,11 @@ namespace Logitude.BL.Security
             }
 
             throw new AutenticationException("Sorry! this user is not authorized!");
+        }
+
+        public static void AuthenticationOnTenant(int tenant)
+        {
+            throw new NotImplementedException();
         }
     }
 }

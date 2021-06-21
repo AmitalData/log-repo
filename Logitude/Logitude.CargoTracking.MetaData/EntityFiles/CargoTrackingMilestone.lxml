@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;CargoTrackingMilestones&quot;"
-  Code="&quot;a7df&quot;"
+  Code="&quot;2bd5&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;EnglishName&quot;"
@@ -525,6 +525,12 @@
       EnglishName="&quot;Invoiced&quot;"
       SearchFields="&quot;14,Invoiced&quot;"
       LocalName="&quot;Invoiced&quot;" />
+    <Record
+      Code="&quot;0&quot;"
+      EnglishName="&quot;No Current Milestone&quot;"
+      SearchFields="&quot;No Current Milestone&quot;"
+      LocalName="&quot;No Current Milestone&quot;"
+      Inactive="false" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

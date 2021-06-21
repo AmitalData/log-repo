@@ -85,7 +85,7 @@ export class TicketsWorkspaceComponent implements AfterViewInit {
                         break;
                     }
                 }
-                this.CurrentSession.ChangeSessionHeader({ Text: TextCodeTranslator.Translate("General.MH.Ticket") + "\\" + this.GetPageName() });
+                this.CurrentSession.ChangeSessionHeader({ Text: TextCodeTranslator.Translate("General.MH.Ticket")});
             }
         }
 

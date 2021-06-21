@@ -1478,14 +1478,21 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     if (customer.FirstInvoiceDate == null)
                                     {
                                         customer.FirstInvoiceDate = todayDate;
-
-                                        CustomerQuery customerQuery = new CustomerQuery(customerRepository);
-                                        CustomerPM customerpm = customerQuery.GetSinglePM(customer.Id, entityPM.Tenant);
-                                        CustomerEmailAlert customerEmailAlert = new CustomerEmailAlert();
-                                        customerEmailAlert.SendEmailAlert(customerpm, entityPM.Tenant, "GCFI", false);
-
                                         customerRepository.Update(customer);
                                         customerRepository.SubmitChanges();
+
+                                        CustomerPM dummyPM = new CustomerPM()
+                                        {
+                                            CreatedByUserId = card.CreatedByUserId,
+                                            SalesmanUserId = customer.SalesmanUserId,
+                                            EnglishName = card.EnglishName,
+                                            VatNumber = card.VatNumber,
+                                        };
+
+                                        //CustomerQuery customerQuery = new CustomerQuery(customerRepository);
+                                        //CustomerPM customerpm = customerQuery.GetSinglePM(customer.Id, entityPM.Tenant);
+                                        CustomerEmailAlert customerEmailAlert = new CustomerEmailAlert();
+                                        customerEmailAlert.SendEmailAlert(dummyPM, entityPM.Tenant, "GCFI", false);
                                     }
                                 }
                             }
@@ -4003,8 +4010,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         }
                     }
                 }
-
-                UpdateShipmentProfitClass.UpdateShipmentHousesReceivablesVatAmounts(entityPM.MainEntityId, tenant);
             }
         }
         private void AfterServiceFinished()

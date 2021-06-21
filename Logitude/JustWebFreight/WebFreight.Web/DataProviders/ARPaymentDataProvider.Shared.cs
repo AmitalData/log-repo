@@ -7,6 +7,7 @@ namespace WebFreight.Web.DataProviders
 {
     public class ARPaymentDataProvider : BaseDataProvider
     {
+        public string PaymentStatus { get; set; }
         public string PaymentId { get; set; }
 
         public string ARPaymentNo { get; set; }
@@ -65,8 +66,6 @@ namespace WebFreight.Web.DataProviders
         public string BankAccountEnglishName { get; set; }
         public string PaymentMethodRef { get; set; }
 
-
-
         public string BillToAddress { get; set; }
         public string PaymentExchangeRate { get; set; }
         public string DepositBankName { get; set; }
@@ -74,14 +73,10 @@ namespace WebFreight.Web.DataProviders
         public string SATTransferStatus { get; set; }
 		public string BillToCountryCode { get; set; }
 
-		//        BillToAddress
-		//PaymentExchangeRate
-		//DepositBankName  from General tab
-		//DepositBankAccountNumber
-		//SATTransferStatus
+        public string PaymentBankName { get; set; }
 
 
-		private SATPayment sAT;
+        private SATPayment sAT;
         public SATPayment SAT
         {
             get
@@ -207,6 +202,4 @@ namespace WebFreight.Web.DataProviders
 
 
     }
-
-
 }

@@ -23,26 +23,35 @@ namespace Logitude.CargoTracking.Data.Repositories
 
         public IQueryable<CargoTrackingShipment> GetByShipmentIds(List<string> ShipmentIds, int tenant)
         {
-            List<string> shipmentsIsNotMain = (from shipment in currentContext.CargoTrackingShipments
-                                                                    where
+            if (ShipmentIds.Count > 0)
+                return GetFilteredShipmentsByIds(ShipmentIds, tenant);
+            else
+                return GetFilteredShipments(tenant);
+        }
 
-                                                                       shipment.Tenant == tenant
-                                                                       && shipment.IsMainRecord == false
-                                                                       && ShipmentIds.Contains(shipment.EntityId)
-                                                                       
-                                                                    select shipment.CustomsShipmentHeaderId).ToList();
+        private IQueryable<CargoTrackingShipment> GetFilteredShipments(int tenant)
+        {
 
-            IQueryable<CargoTrackingShipment> shipments = (from shipment in currentContext.CargoTrackingShipments
-                                                                 where
-                                                                     ((
-                                                                        shipment.Tenant == tenant 
-                                                                        && shipment.IsMainRecord == true 
-                                                                        && ShipmentIds.Contains(shipment.EntityId)
-                                                                      )
-                                                                     || shipmentsIsNotMain.Contains(shipment.EntityId)
-                                                                     )
-                                                           select shipment);
+            var shipments = (from shipment in currentContext.CargoTrackingShipments // new changes
+                             where (shipment.Tenant == tenant && shipment.IsMainRecord == true) 
+                                    || (shipment.Tenant == tenant &&  shipment.IsMainRecord == false && shipment.CustomsShipmentHeaderId != null) 
 
+                              select shipment);
+            return shipments;
+        }
+
+        public IQueryable<CargoTrackingShipment> GetFilteredShipmentsByIds(List<string> ShipmentIds, int tenant)
+        {
+            List<string> notMainShipments = (from shipment in currentContext.CargoTrackingShipments
+                                             where shipment.Tenant == tenant && shipment.IsMainRecord == false
+                                                 && ShipmentIds.Contains(shipment.EntityId)
+                                             select shipment.CustomsShipmentHeaderId).ToList();
+
+            var shipments = (from shipment in currentContext.CargoTrackingShipments
+                             where ShipmentIds.Contains(shipment.EntityId) && ((shipment.Tenant == tenant && shipment.IsMainRecord == true)
+                                    || (shipment.Tenant == tenant && shipment.IsMainRecord == false && shipment.CustomsShipmentHeaderId != null))
+
+                             select shipment);
             return shipments;
         }
 

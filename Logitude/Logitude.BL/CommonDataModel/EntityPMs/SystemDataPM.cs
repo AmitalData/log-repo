@@ -15,7 +15,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public byte[] Signature { get; set; }
         public byte[] SignatureHtml { get; set; }
         
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
         public string LocalCurrencyId { get; set; }
 
         public string ContactId { get; set; }

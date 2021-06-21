@@ -401,6 +401,7 @@ BEGIN
 			HousesACCTReceivablesInProfit = @HousesACCTReceivablesInProfit
 			Where Id = @ShipmentId AND Tenant = @Tenant
 		END
+  
 END
 ]]>
   </SqlScript>

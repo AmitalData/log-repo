@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TaxReportUpdateClass
    {  		
-		public const string HashString = "5e0325cce7927c860a88da3637d57f93";
+		public const string HashString = "474576ea15434c8f972415bda9eb0656";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -121,7 +121,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NewWizardControlName =  "NewTaxReportComponent",
 			      				    LocalDefaultText =  "דוח מע\"מ",
 			      				    DefaultText =  "Tax Report",
-			      				    NewButtonLocalDefaultText =  "",
+			      				    NewButtonLocalDefaultText =  "דוח מע\"מ חדש",
+			      				    NewButtonDefaultText =  "New Tax Report",
 			      				    Code =  "97c2",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
@@ -2378,6 +2379,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode TaxReportTextCode_TaxReportOCantDownload = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.CantDownload", DefaultText = "Can't download the report, Lines (#lines) has a wrong check digit error. Fix it then try again.",LocalDefaultText = "לא ניתן להוריד את הקובץ. שורה (#lines) , ישנה הודעת שגיאה ''ח.פ שגוי'' .יש לתקן את השורה בטרם השידור", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode TaxReportTextCode_TaxReportOInvoiceErrors = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.InvoiceErrors", DefaultText = "Can't download the report. Lines (#lines) has an invalid invoice number error. Fix it then try again.",LocalDefaultText = ".לא ניתן להוריד את הקובץ שורה (#lines) ישנה הודעת שגיאה ''אסמכתא שגויה .יש לתקן את השורה בטרם השידור", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode TaxReportTextCode_TaxReportONewTaxReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.NewTaxReport", DefaultText = "New Tax Report",LocalDefaultText = "דוח מע''מ חדש", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

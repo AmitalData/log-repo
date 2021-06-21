@@ -44,6 +44,11 @@ export class JournalAdditionalDataPM {
     public set TaxReportTransmitStatusCode(newValue: string) { if (this.taxReportTransmitStatusCode != newValue) { this.taxReportTransmitStatusCode = newValue; this.MarkAsDirty("TaxReportTransmitStatusCode"); } }
        
 	 
+    private journalLineNumber: number;
+    public get JournalLineNumber() { return this.journalLineNumber; }
+    public set JournalLineNumber(newValue: number) { if (this.journalLineNumber != newValue) { this.journalLineNumber = newValue; this.MarkAsDirty("JournalLineNumber"); } }
+       
+	 
 
     public OldEntityPM: JournalAdditionalDataPM;
 		

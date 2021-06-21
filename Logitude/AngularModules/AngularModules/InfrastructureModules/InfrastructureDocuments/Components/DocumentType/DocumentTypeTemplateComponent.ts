@@ -32,7 +32,8 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
     TemplateTabCode = "";
     public PageType: string;
     IsShowDeflutCoulm: boolean = false;
-    IsShowOriginalTemplateColum: boolean = false;
+    IsShowOriginalTemplateColum: boolean = false; 
+    IsEnableEdit: boolean = false; 
     public documentTypeTemplatePMService: DocumentTypeTemplatePMService;
     CurrentDocumentTypeTemplatePM: DocumentTypeTemplateViewModel;
     DocumentTypeTemplates: DocumentTypeTemplatePM[];
@@ -65,6 +66,7 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
 
             this.FillDocumentTypeTemplate();
         }
+        this.CheckManageDocumentFeature();
 
         if (FeatureLocator.HasFeaturePermession("DocumentType", "DOCUMENTTYPEPROPERTIES")) {
             this.IsShowDeflutCoulm = true;
@@ -81,6 +83,13 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
 
     
     }
+
+    CheckManageDocumentFeature() {
+        if (FeatureLocator.HasFeaturePermession("DocumentType", "MANAGEDOCUMENTTEMPLATES")) {
+            this.IsEnableEdit = true;
+        }
+    }
+
 
     FillDocumentTypeTemplate() {
 

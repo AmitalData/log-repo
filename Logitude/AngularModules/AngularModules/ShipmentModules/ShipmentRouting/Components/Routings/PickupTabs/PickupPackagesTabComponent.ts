@@ -12,6 +12,8 @@ import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/Servi
 import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
 import {ConfirmWindow} from '../../../../../Controls/Windows/ConfirmWindow';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
+import { FeatureToggleList } from '../../../../../Infrastructure/EntityLists/FeatureToggleList';
+import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 
 @Component({
     
@@ -26,7 +28,9 @@ export class PickupPackagesTabComponent {
     public TransportModeId: string;
     public ObjectTableName: string = "ShipmentPickUpDelivery";
     public ItemsSource: PickupPackageItem[] = [];
-    public DataContext = this;    
+    public IsAddContainerVisible: boolean = false;
+    public IsAddContainerEnabled: boolean = false;
+    public DataContext = this;
     constructor() {
 
     }
@@ -53,7 +57,28 @@ export class PickupPackagesTabComponent {
 
     public IsEditingEnabled: boolean = true;
     SetUIProperties() {
-        this.IsEditingEnabled = ShipmentTool.IsEditingEnabled(this.ShipmentPM);
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.StandaloneShipmentId)) {
+            this.IsEditingEnabled = false;
+        }
+
+        else {
+            this.IsEditingEnabled = ShipmentTool.IsEditingEnabled(this.ShipmentPM);
+        }
+
+        this.IsAddContainerEnabled = false;
+        if (this.IsEditingEnabled) {
+            if (this.EntityPM.ShipmentPickUpDeliveryPackages.length == 0) {
+                this.IsAddContainerEnabled = true;
+            }
+        }
+
+        this.IsAddContainerVisible = false;
+        if (this.IsFCLEntity) {
+            var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0];
+            if (featureToggle) {
+                this.IsAddContainerVisible = true;
+            }
+        }
     }
 
     public SelectedItem: PickupPackageItem = null;
@@ -82,11 +107,30 @@ export class PickupPackagesTabComponent {
 
     CopyfromShipmentPackagesButtonClicked() {
         var logWindow = new LogitudeWindow();
-        logWindow.Title = "Copy from Shipment Packages";//TextCodeTranslator.Translate("ShipmentPickUpDeliveryPackage.O.ChoosePickUpPackages");
+        logWindow.Title = "Copy from Shipment Packages";
         logWindow.WindowArgs = this;
         logWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/PickupTabs/PickupPackagesChooseComponent");
     }
+
     AddButtonClicked() {
+        if (this.IsAddContainerVisible) {
+            this.ValidateNumberOfStandAloneShipmentPackages()
+        } else {
+            this.ViewAddPickupPackagesWindow();
+        }
+    }
+
+    ValidateNumberOfStandAloneShipmentPackages() {
+        var numberOfAllowedPackages = 1;
+        if (this.EntityPM.ShipmentPickUpDeliveryPackages.length >= numberOfAllowedPackages && !AppTool.IsNullOrEmpty(this.EntityPM.StandaloneShipmentId)) {
+            var messageWindow: MessageWindow = new MessageWindow();
+            messageWindow.Show("Can't Add Another Container Since Pickup is Connected to a Stand Alone Shipment");
+        } else {
+            this.ViewAddPickupPackagesWindow();
+        }
+    }
+
+    ViewAddPickupPackagesWindow() {
         var itemPM = new ShipmentPickUpDeliveryPackagePM(null);
         itemPM.Tenant = this.EntityPM.Tenant;
         itemPM.ShipmentPickUpDeliveryId = this.EntityPM.Id;
@@ -97,6 +141,9 @@ export class PickupPackagesTabComponent {
         logWindow.Title = TextCodeTranslator.Translate("ShipmentPickUpDeliveryPackage.O.AddPickUpPackage");
         logWindow.DataContext = itemComponent;
         logWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/PickupTabs/PickupPackagesAddEditComponent");
+        logWindow.WindowClosed.subscribe((event: any) => {
+            this.SetUIProperties();
+        });
     }
     EditPackageClicked(itemComponent: PickupPackageItem) {
         var logWindow = new LogitudeWindow();
@@ -112,9 +159,29 @@ export class PickupPackagesTabComponent {
                 if (confirmWindow.Yes) {
                     this.EntityPM.RemovePackage(itemComponent.EntityPM);
                     this.BuildItemsSource();
+                    this.SetUIProperties();
                 }
             });
         }
+    }
+
+    AddContainerClicked() {
+        var windowArgs: any = {};
+        windowArgs.EntityPM = this.EntityPM;
+        windowArgs.ShipmentPM = this.ShipmentPM;
+        windowArgs.IsLCLEntity = this.IsLCLEntity;
+        windowArgs.IsFCLEntity = this.IsFCLEntity;
+        windowArgs.TransportModeId = this.TransportModeId;
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Add Container";
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/SelectStandalonePackagesComponent");
+        logWindow.WindowClosed.subscribe((s: any) => {
+            if (s) {
+                this.BuildItemsSource();
+            }
+        });
     }
 }
 export class PickupPackageItem extends BaseComponent {
@@ -167,7 +234,8 @@ export class PickupPackageItem extends BaseComponent {
         this.UIProperties.SetEnabled("ContainerNumber", this.ObjectTableName, this.IsEditingEnabled);        
         this.UIProperties.SetEnabled("Weight", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("ShipperSeal", this.ObjectTableName, this.IsEditingEnabled);
-      
+        this.UIProperties.SetEnabled("Harmonize", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("Description", this.ObjectTableName, this.IsEditingEnabled);
     }
     private SetUIPropertiesOfCars(isEnabled: boolean) {
         this.UIProperties.SetEnabled("Make", this.ObjectTableName, isEnabled);

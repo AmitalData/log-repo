@@ -11,6 +11,7 @@ import {ShipmentDeliveryPM} from '../../../../Shipment/EntityPMs/ShipmentDeliver
 import {ShipmentPickUpDeliveryPackagePM} from '../../../../Shipment/EntityPMs/ShipmentPickUpDeliveryPackagePM';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { PickUpDeliveryPackageHarmonizePM } from '../../../../Shipment/EntityPMs/PickUpDeliveryPackageHarmonizePM';
+import { FeatureToggleList } from '../../../../Infrastructure/EntityLists/FeatureToggleList';
 
 @Component({
     
@@ -25,9 +26,9 @@ export class AddEditOceanPackageComponent {
     public IsFCLEntity: boolean = false;
     public IsLCLEntity: boolean = false; 
     public ValidationErrorsList: string[] = [];
+    public IsContainerEntityReferenceVisible: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-
     }
 
     SetDataContext(dataContext: ShipmentPackageItem) {
@@ -38,6 +39,7 @@ export class AddEditOceanPackageComponent {
         this.IsLCLEntity = dataContext.IsLCLEntity;
         this.SetLabels();
         this.Clone();
+        this.GetContainerEntityReferenceVisiblity();
     }
 
     public TareLabel: string;
@@ -224,6 +226,27 @@ export class AddEditOceanPackageComponent {
             logitudeWindow.Show("./ShipmentModules/ShipmentTabs/Components/Windows/Harmonizes/HarmonizesComponent");
             logitudeWindow.WindowClosed.subscribe(s => {
 
+            });
+        }
+    }
+
+    GetContainerEntityReferenceVisiblity() {
+        var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0];
+        if (featureToggle && !AppTool.IsNullOrEmpty(this.EntityPM?.ContainerEntityId)) {
+            this.IsContainerEntityReferenceVisible = true;
+        }
+    }
+
+    OpenContainerEntityWindow() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Container";
+        logWindow.IsFillScreen = true;
+        var ContainerEntityId = this.EntityPM?.ContainerEntityId;
+        if (!AppTool.IsNullOrEmpty(ContainerEntityId)) {
+            logWindow.ShowEditComponent(ContainerEntityId, "Container");
+            logWindow.ComponentLoaded.subscribe(comp => {
+                logWindow.WindowClosed.subscribe(s => {
+                });
             });
         }
     }

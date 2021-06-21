@@ -29,9 +29,17 @@ namespace Logitude.ShipmentTests.Steps
         [Given(@"a house shipment")]
         public void GivenAHouseShipment()
         {
-            ShipmentPM HouseShipment = GetValidShipmentPM("H", ShipmentContext.MasterShipment.Id); 
+            ShipmentPM HouseShipment = GetValidShipmentPM("H", ShipmentContext.MasterShipment.Id);
             ShipmentContext.HouseShipment = CreateAndGetShipment(HouseShipment);
         }
+
+        [Given(@"a direct shipment")]
+        public void GivenADirectShipment()
+        {
+            ShipmentPM DirectShipment = GetValidShipmentPM("D", null);
+            ShipmentContext.DirectShipment = CreateAndGetShipment(DirectShipment);
+        }
+
         #endregion
 
         #region Private Function Region

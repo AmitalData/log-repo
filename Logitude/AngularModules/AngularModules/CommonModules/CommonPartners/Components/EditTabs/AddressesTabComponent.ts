@@ -388,7 +388,7 @@ export class AddressItemClass extends BaseComponent {
     }
     SetUIProperties_City() {
         var isRequired = false;
-        if (AppTool.IsNullOrEmpty(this.City) && this.fatherComponent.Customer.PartnerTypeId != "PO") {
+        if (AppTool.IsNullOrEmpty(this.City) && this.fatherComponent?.Customer?.PartnerTypeId != "PO") {
             isRequired = true;
         }
         this.UIProperties.SetRequired("City", this.ObjectTableName, isRequired);

@@ -42,6 +42,8 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
     public string ReceivablesAccountingCard { get; set; }
     
     public string PayablesAccountingCard { get; set; }
+    
+    public string ICAO { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

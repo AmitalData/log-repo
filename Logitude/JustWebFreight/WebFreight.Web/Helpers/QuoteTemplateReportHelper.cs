@@ -212,7 +212,7 @@ namespace Logitude.BL.Helpers
                 footerHtmlString += GetBodyString(footerdata);
 
                 double footerTopMargin = (double)setting.SpaceLinesBeforeFooters * 21;
-                float heightFooter = (setting.PageFooterAreaHeight * 29) + (float)footerTopMargin;
+                float heightFooter = (setting.PageFooterAreaHeight * 29) + (float)footerTopMargin + 5;
 
                 footerHtmlString = ResolveHtmlData(tenant, htmlEditorHelper, footerHtmlString, quotePM, template, userId, ref objectTabelRepository, ref objectTable);
                 HtmlToPdfElement footerHtml = new HtmlToPdfElement(0, 0, 0, 0, footerHtmlString, null, 2040, 0);

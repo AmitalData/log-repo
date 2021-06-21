@@ -170,6 +170,15 @@ namespace Logitude.BL.InfrastructureModel
                 Name = "DeleteOldCargoTrackingData", 
                 SearchFields = "DeleteOldCargoTrackingData", 
 			});
+			 
+            all.Add(new SchedulerProcedureDetails()
+            {    
+                Code = "ExchangeRateUpdateTask", 
+                Name = "ExchangeRateUpdateTask", 
+                SearchFields = "ExchangeRateUpdateTask", 
+                Description = "ExchangeRateUpdateTask", 
+                IsInternallyDefined = false, 
+			});
 			
             return all;
        }

@@ -1,4 +1,4 @@
-﻿<style>   
+<style>   
      .disconnectButton 
     {
          visibility:hidden;
@@ -92,7 +92,7 @@
                     <ng-template let-item>
                     <log-cell-template [IgnoreMods]="true"   #logcelltemplate>
                       
-                        <div [style.text-align]="'center'" class="TextTrimming" *ngIf="IsConnectedWithExistGLAccount(item.DisplayNumber)">
+                        <div [style.text-align]="'center'" class="TextTrimming">
                             <button style="height: 18px;margin:auto;margin-top:3px;" class="Button sm" (click)="ConfirmDisConnect(item.entityPM)">
                                 {{'GLAccount.O.Disconnect' | TextCodeTranslationPipe}}
                             </button>

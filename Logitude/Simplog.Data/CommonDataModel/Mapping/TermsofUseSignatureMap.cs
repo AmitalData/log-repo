@@ -28,7 +28,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.SignedDatetime).HasColumnName("SignedDatetime");
             this.Property(t => t.ContactId).HasColumnName("ContactId");
-            this.Property(t => t.TermsofUseVersion).HasColumnName("TermsofUseVersion");
+            this.Property(t => t.TermsofUseId).HasColumnName("TermsofUseId");
 
             // Relationships
             this.HasRequired(t => t.Contact)
@@ -36,7 +36,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 .HasForeignKey(d => d.ContactId);
             this.HasRequired(t => t.TermsofUse)
                 .WithMany()
-                .HasForeignKey(d => d.TermsofUseVersion);
+                .HasForeignKey(d => d.TermsofUseId);
 
         }
     }

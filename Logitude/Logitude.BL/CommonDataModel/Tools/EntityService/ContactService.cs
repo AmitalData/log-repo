@@ -23,6 +23,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.Helpers;
 using Logitude.BL.GlobalModel.Tools.Validating;
 using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.QueueService;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -116,6 +117,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     this.ConnectOldSimilar();
                 }
             }
+
+            AddContactKafkaQueueMessage();
         }
 
         private void ConnectOldSimilar()
@@ -186,6 +189,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.SubmitChanges();
 
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Contact");
+            AddContactKafkaQueueMessage();
         }
 
         private void Initialize()
@@ -646,6 +650,26 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 cardContactAdditionalServiceRepository.Remove(itemPoco);
             }
+        }
+
+        private void AddContactKafkaQueueMessage()
+        {
+            if (!FeatureToggleHelper.HasFeatureToggle("CTL", entityPM.Tenant))
+            {
+                return;
+            }
+            AddKafkaQueueMessage();
+        }
+
+        private void AddKafkaQueueMessage()
+        {
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("CToolLookups", 0);
+            var queueMessage = new Dictionary<string, string>() {
+                { "Entity", "Contact" },
+                { "EntityId", entityPM.Id },
+                { "Tenant", tenant.ToString()}};
+            queueservice.Send(queueMessage, tenant);
         }
     }
 }

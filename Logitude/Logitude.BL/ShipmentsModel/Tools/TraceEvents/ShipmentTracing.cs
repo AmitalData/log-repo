@@ -69,7 +69,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             {
                 if (isNewEntity)
                 {
-                    this.CreateTraceEvent("ORDR");
+                    string notes = null;
+                    if (entityPM.IsStandalonePickupDelivery)
+                    {
+                        notes = this.GetStandaloneShipmentNotes();
+                    }
+
+                    this.CreateTraceEvent("ORDR", notes);
 
                     if (entityPM.IsCopyFromShipment)
                     {
@@ -161,7 +167,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                     if (!entityPM.MarkFollowUpsAsDone)
                     {
-                        this.CreateTraceEvent("USHI");
+                        string notes = null;
+                        if (entityPM.IsStandalonePickupDelivery)
+                        {
+                            notes = this.GetConnectedStandaloneShipmentNotes();
+                        }
+                        this.CreateTraceEvent("USHI", notes);
                     }
 
                     if (entityPM.SalesmanUserId != entityPoco.SalesmanUserId)
@@ -196,6 +207,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                     {
                         this.CreateTraceEvent("UPIC", entityPM.EventNote);
                     }
+
                 }
 
                 this.TraceOtherData();
@@ -207,6 +219,38 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             }
         }
 
+        private string GetStandaloneShipmentNotes()
+        {
+            string eventNotes = null;
+
+            if(!string.IsNullOrEmpty(entityPM.StandalonePickupDeliveryId))
+            {
+                ShipmentPickUpDeliveryRepository shipmentPickUpDeliveryRepository = new ShipmentPickUpDeliveryRepository(tenant);
+                ShipmentPickUpDelivery shipmentPickUpDelivery = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDelivery(tenant, entityPM.StandalonePickupDeliveryId);
+                if (shipmentPickUpDelivery != null)
+                {
+                    eventNotes = "Created from " + (shipmentPickUpDelivery.PickUpDeliveryTypeCode == "PICK" ? "pickup: " : "delivery: ") + shipmentPickUpDelivery.PickUpDeliveryNumber;
+                }
+            }
+
+            return eventNotes;
+        }
+
+        private string GetConnectedStandaloneShipmentNotes()
+        {
+            string eventNotes = null;
+
+            if (!string.IsNullOrEmpty(entityPM.StandalonePickupDeliveryId))
+            {
+                ShipmentPickUpDeliveryRepository shipmentPickUpDeliveryRepository = new ShipmentPickUpDeliveryRepository(tenant);
+                ShipmentPickUpDelivery shipmentPickUpDelivery = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDelivery(tenant, entityPM.StandalonePickupDeliveryId);
+                if (shipmentPickUpDelivery != null)
+                {
+                    eventNotes = "Conncted To " + (shipmentPickUpDelivery.PickUpDeliveryTypeCode == "PICK" ? "pickup: " : "delivery: ") + shipmentPickUpDelivery.PickUpDeliveryNumber;
+                }
+            }
+            return eventNotes;
+        }
         private void TraceAccruals()
         {
             if (!entityPoco.IsAccrualsApproved && entityPM.IsAccrualsApproved)
@@ -986,7 +1030,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 ObjectTableName = objectTableName,
                 OldStatusId = entityPoco.StatusId,
                 EventTypeCode = eventTypeCode,
-                
             });
         }
         private void CreateTraceEvent(string eventTypeCode, string eventNotes)

@@ -17,6 +17,6 @@
         public static string CountryTSId { get; set; }
         public static string CityAnchorageId { get; set; }
         public static string CityManchesterId { get; set; }
-        //public static string GlobalZoneEUId { get; set; }
+        public static string SpecialServicesTypeTSId { get; set; }
     }
 }

@@ -642,6 +642,12 @@ namespace Simplog.Data.ShipmentsModel.Mocks
         {
             get { throw new NotImplementedException(); }
         }
+        public IDbSet<LogitudeOceanInsightsRequest> LogitudeOceanInsightsRequests
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+
         public IDbSet<OceanInsightsRequestsCount> OceanInsightsRequestsCounts
         {
             get { throw new NotImplementedException(); }
@@ -907,5 +913,7 @@ namespace Simplog.Data.ShipmentsModel.Mocks
         public IDbSet<ShipmentSubType> ShipmentSubTypes => throw new NotImplementedException();
 
         public IDbSet<ShipmentStoragePricing> ShipmentStoragePricings { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IDbSet<ShipmentProductItem> ShipmentProductItems { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IDbSet<Container> Containers { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }

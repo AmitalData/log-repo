@@ -52,6 +52,7 @@ namespace Simplog.Data.ShipmentsModel
         IDbSet<AWBAdditionalHandlingInfo> AWBAdditionalHandlingInfos { get; }
         IDbSet<ShipmentComputedFields> ShipmentComputedFields { get; }
         IDbSet<OceanInsightsRequest> OceanInsightsRequests { get; }
+        IDbSet<LogitudeOceanInsightsRequest> LogitudeOceanInsightsRequests { get; }
         IDbSet<OceanInsightsRequestsCount> OceanInsightsRequestsCounts { get; }
         IDbSet<OceanInsightsStatuses> OceanInsightsStatuses { get; }
         IDbSet<OtherParticipantId> OtherParticipantIds { get; }
@@ -77,10 +78,11 @@ namespace Simplog.Data.ShipmentsModel
         IDbSet<CustomsTransferHeader> CustomsTransferHeaders { get; }
         IDbSet<ShipmentSubType> ShipmentSubTypes { get; }
         IDbSet<ShipmentStoragePricing> ShipmentStoragePricings { get; set; }
+        IDbSet<ShipmentProductItem> ShipmentProductItems { get; set; }
+        IDbSet<Container> Containers { get; set; }
 
         IQueryable<TOutput> FunctionTableValue<TOutput>(string functionName, SqlParameter[] parameters);
         IQueryable<ShipmentDataView> ShipmentSearch(string SearchFields);
-
 
         void SetAsModified(object entity);
         void DetectChanges();

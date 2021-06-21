@@ -30,9 +30,9 @@
 
                     <td style="width: 45px; vertical-align:middle; font-size:11px; color : #6E7172;">{{'Accounting.General.O.Search' | TextCodeTranslationPipe}}:</td>
 
-                    <td style="width: 300px;">
+                    <td style="width: 390px;">
                         <!-- ObjectTableName = CardGLAccount to filter items by accountTypeCode in CommonDomainController.cs -->
-                        <SearchBox [Watermark]="'Accounting.General.O.AccountNoName' | TextCodeTranslationPipe" [ObjectTableName]="'VendorGLAccount'" [IsQuickSearch]="true" (ItemClicked)="EditGLAccount($event)"></SearchBox>
+                        <SearchBox [Watermark]="'Accounting.General.O.AccountNoName' | TextCodeTranslationPipe" [DropDownWidth]="390" [ObjectTableName]="'VendorGLAccount'" [IsQuickSearch]="true" (ItemClicked)="EditGLAccount($event)"></SearchBox>
                     </td>
 
                     <td>

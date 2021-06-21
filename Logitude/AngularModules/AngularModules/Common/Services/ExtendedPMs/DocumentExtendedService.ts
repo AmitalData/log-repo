@@ -1,4 +1,4 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 
@@ -40,11 +40,11 @@ export class DocumentExtendedService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         return this._http.delete(this._apiUrl + '?documentId=' + documentId + '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-            var pmresponse: ServiceResponse;
-            pmresponse = new ServiceResponse();
+            var rerviceResponse: ServiceResponse;
+            rerviceResponse = new ServiceResponse();
 
-            pmresponse.Result = response;
-            return pmresponse;
+            rerviceResponse.Result = response;
+            return rerviceResponse;
         }),catchError(ServiceHelper.HandleServiceError));
     }
 

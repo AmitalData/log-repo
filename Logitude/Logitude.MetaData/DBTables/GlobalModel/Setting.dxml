@@ -488,4 +488,26 @@
     <Constraints
       Nullable="true" />
   </Column>
+
+ <Column
+    Name="OITenantNumber"
+    Type="int" DefaultValue="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
+<Column
+    Name="AmitalCloudEnvironmentURL"
+    Type="varchar"
+    Size="1000"
+    DefaultValue="''">
+    <Constraints
+      Nullable="true" />
+  </Column>
+ <Column
+    Name="AmitalCloudLogitudeTenantPrimaryKey"
+    Type="nvarchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>

@@ -1,4 +1,4 @@
-﻿
+
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -6,7 +6,7 @@
         </td>
     </tr>
 
-    <tr style="height:30px;">
+    <tr style="height:30px;" [hidden]="IsSchedulerReport && (ValidationErrorsList != null && ValidationErrorsList.length > 0)">
         <td style="color:#1B90CB;font-size:14px;"> Filter By: </td>
     </tr>
 
@@ -32,7 +32,7 @@
                     <!--run button-->
                     <td style="width:25px;"><div></div></td>
                     <td style="width:80px;">
-                        <button class="GreenButton" (click)="RunReport(true)">Run Report</button>
+                        <button class="GreenButton" (click)="RunReport(true)">{{RunReportTitle}}</button>
                     </td>
 
                     <td><div></div></td>

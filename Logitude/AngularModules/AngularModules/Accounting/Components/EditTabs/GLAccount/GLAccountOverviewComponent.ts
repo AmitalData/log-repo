@@ -1,13 +1,11 @@
 import { DateTool } from './../../../../Infrastructure/Tools';
 import { CardList } from './../../../../Common/EntityLists/CardList';
 import { CardListService } from './../../../../Common/Services/StandardLists/CardListService';
-import { CreditLimitSettingPM } from './../../../../Common/EntityPMs/CreditLimitSettingPM';
 import { AccountingNotePMService } from './../../../Services/StandardPMs/AccountingNotePMService';
 import { AccountingNotePM } from './../../../EntityPMs/AccountingNotePM';
 import { MessageWindow } from './../../../../Controls/Windows/MessageWindow';
 import { AccountingNoteExtendedListService } from './../../../Services/ExtendedLists/AccountingNoteExtendedListService';
 import { AccountingNoteList } from './../../../EntityLists/AccountingNoteList';
-import { RegionList } from './../../../../Common/EntityLists/RegionList';
 import { AccountingEntityHelper } from './../../../Utilities/AccountingEntityHelper';
 import { EntityResourceService } from './../../../../Infrastructure/Services/EntityResourceService';
 import { LedgerTransactionList } from './../../../EntityLists/LedgerTransactionList';
@@ -17,26 +15,22 @@ import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeCompo
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {GLAccountPM} from '../../../EntityPMs/GLAccountPM';
 import { GLAccountMoreDataList } from '../../../EntityLists/GLAccountMoreDataList';
-import {GLAccountValidator} from '../../../Validators/GLAccountValidator';
 import { GLAccountMoreDataListService } from '../../../Services/StandardLists/GLAccountMoreDataListService';
-import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
-import { GLAccountListService } from '../../../Services/StandardLists/GLAccountListService';
 import { GLAccountExtendedListService } from '../../../Services/ExtendedLists/GLAccountExtendedListService';
 import { LedgerTransactionExtendedListService } from '../../../Services/ExtendedLists/LedgerTransactionExtendedListService';
 import { ReconcileEventManager } from '../../../Utilities/ReconcileEventManager';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { GLAccountSummary } from '../../../DataContracts/AccountingSummery';
 import { AgingReportParameters } from '../../../DataContracts/AgingReportParameters';
 import { PeriodM } from '../../../DataContracts/PeriodM';
 import { GLAccountList } from '../../../EntityLists/GLAccountList';
-import { FullAccountingSettingList } from '../../../EntityLists/FullAccountingSettingList';
-import { AccountingNoteListService } from '../../../Services/StandardLists/AccountingNoteListService';
-import { GLAccountExtendedPMService } from 'Accounting/Services/ExtendedPMs/GLAccountExtendedPMService';
-declare var makeAmBarChart;
+import { GLAccountFollowUpDataPM } from '../../../EntityPMs/GLaccountFollowUpDataPM';
+import { GLaccountFollowUpDataExtendedPMService } from 'Accounting/Services/ExtendedPMs/GLaccountFollowUpDataExtendedPMService';
+import { GLAccountCardsDataPMService } from '../../../Services/StandardPMs/GLAccountCardsDataPMService';
+import { GLAccountExtendedPMService } from '../../../Services/ExtendedPMs/GLAccountExtendedPMService';
 
 @Component({
 
@@ -50,16 +44,20 @@ export class GLAccountOverviewComponent extends BaseComponent {
     public ObjectTableName = "GLAccount";
     txtcode_Amount: string = TextCodeTranslator.Translate("Accounting.General.O.Amount");
     txtcode_AgingDetails: string = TextCodeTranslator.Translate("GLAccounts.O.AgingDetails");
-
+    public IsFollowUpVisible: boolean;
     // Variables
-    public AccountPM: GLAccountPM = null;
+    public EntityPM: GLAccountPM = null;
     public GLAccountMoreData: GLAccountMoreDataList = null;
     public isRTL: boolean = false;
     public showLocal: boolean = false;
     public isUsedOutside: boolean = false; // when view tab inside customer ..
     public OpenShipments:number=0;
-    public CreditLimitAmount:number=0;
+    public CreditLimitAmount: number = 0;
+    public InsuredCreditLimit: number = 0;
+    public gLAccountFollowUpDataPM: GLAccountFollowUpDataPM;
+   
     //Services
+    _GLAccountExtendedPMService: GLAccountExtendedPMService = new GLAccountExtendedPMService();
     _EntityResourceService: EntityResourceService = new EntityResourceService();
     _GLAccountMoreDataListService: GLAccountMoreDataListService = new GLAccountMoreDataListService();
     _LedgerTransactionExtendedListService: LedgerTransactionExtendedListService = new LedgerTransactionExtendedListService();
@@ -67,8 +65,8 @@ export class GLAccountOverviewComponent extends BaseComponent {
     _AccountingNoteExtendedListService: AccountingNoteExtendedListService = new AccountingNoteExtendedListService();
     _AccountingNotePMService: AccountingNotePMService = new AccountingNotePMService();
     _CardListService: CardListService = new CardListService();
-    _GLAccountExtendedPMService: GLAccountExtendedPMService = new GLAccountExtendedPMService();
-
+    private gLAccountFollowUpDataPMService: GLaccountFollowUpDataExtendedPMService = new GLaccountFollowUpDataExtendedPMService();
+    private gLAccountCardsDataPMService: GLAccountCardsDataPMService = new GLAccountCardsDataPMService();
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
         super();
@@ -76,14 +74,14 @@ export class GLAccountOverviewComponent extends BaseComponent {
         if (SessionLocator.LoggedUserPM) this.showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
 
         //Resources // Use Less
-        //this._EntityResourceService.getEntityResourceByTableName("AccountingNote").subscribe((response: any) => { });
+        this._EntityResourceService.getEntityResourceByTableName("GLAccountFollowUpData").subscribe((response: any) => { this.IsFollowUpVisible=true});
         //this._EntityResourceService.getEntityResourceByTableName("Reconciliation").subscribe((response: any) => { });
         //this._EntityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe((response: any) => { });
 
         // Set Entity
         if(entityArgs && entityArgs.ObjectTableName == "GLAccount")
         {
-            this.AccountPM = entityArgs.EntityPM;
+            this.EntityPM = entityArgs.EntityPM;
             this.LoadAllData();
         }
         else
@@ -140,14 +138,26 @@ export class GLAccountOverviewComponent extends BaseComponent {
         this.LoadChartData();
         this.SetUIProperties();
         this.LoadCreditDetailsData();
+        //this.LoadGLAccountFollowUpData();
 
     }
+    //LoadGLAccountFollowUpData() {
+    //    this.gLAccountFollowUpDataPMService.getByAccountId(this.EntityPM.Id).subscribe((myResult: any) => {
+         
+    //        var mm: ServiceResponse = myResult;
+    //        if (!mm.HasError) {
+    //            this.gLAccountFollowUpDataPM = mm.Result;             
+    //        }
+    //        else {
+    //        }
+    //    });
 
+    //}
     //#region Properties
-    //get DisplayNumber() { return this.AccountPM.DisplayNumber; }
+    //get DisplayNumber() { return this.EntityPM.DisplayNumber; }
     //set DisplayNumber(value: string) {
-    //    if (this.AccountPM.DisplayNumber != value) {
-    //        this.AccountPM.DisplayNumber = value;
+    //    if (this.EntityPM.DisplayNumber != value) {
+    //        this.EntityPM.DisplayNumber = value;
     //    }
     //}
     //#endregion
@@ -159,7 +169,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
     private LoadExternalTransactionTotal()
     {
-        this._GLAccountExtendedListService.GetGLAccountExternalTransactionsTotal(this.AccountPM.Id).subscribe((myResult: any) =>
+        this._GLAccountExtendedListService.GetGLAccountExternalTransactionsTotal(this.EntityPM.Id).subscribe((myResult: any) =>
         {
             console.log("GetAccountOpenTransactionsCount", myResult);
             var result: ServiceResponse = myResult;
@@ -172,13 +182,13 @@ export class GLAccountOverviewComponent extends BaseComponent {
     }
 
     GetDefaultValues() {
-
+        //if (this.EntityPM.GLAccountFollowUpDate == null) this.EntityPM.GLAccountFollowUpDate = new Date();
         // Get GLAccountMoreData
         this.CurrentSession.StartBusyIndicatorLoading();
-        this._GLAccountMoreDataListService.getSingle(this.AccountPM.Id).subscribe((myResult:any) => {
+        this._GLAccountMoreDataListService.getSingle(this.EntityPM.Id).subscribe((myResult:any) => {
             this.CurrentSession.StopBusyIndicator();
             console.log("_GLAccountMoreDataListService.getSingle", myResult);
-
+         
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
                 this.GLAccountMoreData = mm.Result;
@@ -190,7 +200,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
         });
 
         // Get GLAccount Open Transactions Count
-        this._GLAccountExtendedListService.GetAccountOpenTransactionsCount(this.AccountPM.Id).subscribe((myResult:any) => {
+        this._GLAccountExtendedListService.GetAccountOpenTransactionsCount(this.EntityPM.Id).subscribe((myResult:any) => {
             console.log("GetAccountOpenTransactionsCount", myResult);
             var result: ServiceResponse = myResult;
             if (!result.HasError)
@@ -203,7 +213,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
 
       
-            this._GLAccountExtendedPMService.GetConnectedCardsForGLAccount(this.AccountPM.Id).subscribe((myResponse: ServiceResponse) => {
+            this._GLAccountExtendedPMService.GetConnectedCardsForGLAccount(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
                 var connectedCards = myResponse.Result;
                 this.accountCardlist = connectedCards;
                 if(this.accountCardlist != null && this.accountCardlist.length > 0){
@@ -241,11 +251,13 @@ export class GLAccountOverviewComponent extends BaseComponent {
                 }
 
             });
+
+  
     
  
 
         // Get connect card
-        // this._CardListService.getSingle(this.AccountPM.CardId).subscribe((myResult:any) => {
+        // this._CardListService.getSingle(this.EntityPM.CardId).subscribe((myResult:any) => {
         //     console.log("_CardListService.getSingle", myResult);
         //     var result: ServiceResponse = myResult;
         //     if (!result.HasError)
@@ -267,17 +279,17 @@ export class GLAccountOverviewComponent extends BaseComponent {
     }
 
     SetUIProperties() {
-        //if (!this.AccountPM || this.DisableGLAccount)
+        //if (!this.EntityPM || this.DisableGLAccount)
         //    return;
 
-        //if (this.AccountPM.IsMultiCurrency) {
+        //if (this.EntityPM.IsMultiCurrency) {
         //    this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
         //}
-        //if (this.AccountPM.ChartOfAccountsTypeCode) {
-        //    this.ChartOfAccountsTypeCode = this.AccountPM.ChartOfAccountsTypeCode;
+        //if (this.EntityPM.ChartOfAccountsTypeCode) {
+        //    this.ChartOfAccountsTypeCode = this.EntityPM.ChartOfAccountsTypeCode;
         //}
-        //if (this.AccountPM.ChartOfAccountsId) {
-        //    this.ChartOfAccountsId = this.AccountPM.ChartOfAccountsId;
+        //if (this.EntityPM.ChartOfAccountsId) {
+        //    this.ChartOfAccountsId = this.EntityPM.ChartOfAccountsId;
         //    this.UIProperties.SetValidity("ChartOfAccountsId", this.ObjectTableName, true, "");
         //}
 
@@ -343,7 +355,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
             editWindow.Height = 770;
             editWindow.Width = 1500;
             editWindow.IsHideHeader  = true;
-            editWindow.ShowEditComponent(this.AccountPM.Id, "GLAccount", "GATR");
+            editWindow.ShowEditComponent(this.EntityPM.Id, "GLAccount", "GATR");
             editWindow.WindowClosed.subscribe((res:any) => {
                 this.LoadAllData();
             });
@@ -362,7 +374,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
         this.CurrentSession.StartBusyIndicatorLoading();
         var screenWidth = this.getScreenWidth();
         var screenHeight = this.getScreenHeight();
-        this._LedgerTransactionExtendedListService.GetFirstLedgerTransaction(this.AccountPM.Id).subscribe((serviceResponse: ServiceResponse) => {
+        this._LedgerTransactionExtendedListService.GetFirstLedgerTransaction(this.EntityPM.Id).subscribe((serviceResponse: ServiceResponse) => {
             this.CurrentSession.StopBusyIndicator();
 
             if (serviceResponse.Result) {
@@ -371,12 +383,12 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
                 // original amount currency
                 var originalAmountCurrency;
-                if (this.AccountPM.ReconcileMethodCode == "0") originalAmountCurrency = SessionLocator.TenantPM.CurrencySign;
-                else if (this.AccountPM.ReconcileMethodCode == "1") originalAmountCurrency = transaction.CurrencySign;
+                if (this.EntityPM.ReconcileMethodCode == "0") originalAmountCurrency = SessionLocator.TenantPM.CurrencySign;
+                else if (this.EntityPM.ReconcileMethodCode == "1") originalAmountCurrency = transaction.CurrencySign;
 
 
                 var windowArgs: any = {};
-                windowArgs.GLAccountPM = this.AccountPM;
+                windowArgs.GLAccountPM = this.EntityPM;
                 windowArgs.openAmountCurrency = openAmountCurrency;
                 windowArgs.originalAmountCurrency = originalAmountCurrency;
                 var logitudeWindow = new LogitudeWindow();
@@ -399,7 +411,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
     GetNonReconciledTransactionsCount() {
         this.CurrentSession.StartBusyIndicatorLoading();
-        this._GLAccountExtendedListService.GetAccountReconcilesCount(this.AccountPM.Id).subscribe((myResult:any) => {
+        this._GLAccountExtendedListService.GetAccountReconcilesCount(this.EntityPM.Id).subscribe((myResult:any) => {
 
             if (!AppTool.IsNullOrEmpty(myResult)) {
 
@@ -444,17 +456,30 @@ export class GLAccountOverviewComponent extends BaseComponent {
     }
     //#endregion
 
+    get GLAccountFollowUpRemarks() { return this.EntityPM.GLAccountFollowUpRemarks; }
+    set GLAccountFollowUpRemarks(value: string) {
+        if (this.EntityPM.GLAccountFollowUpRemarks != value) {         
+            this.EntityPM.GLAccountFollowUpRemarks = value;
+        }
+    }
+    get GLAccountFollowUpDate() { return this.EntityPM.GLAccountFollowUpDate; }
+    set GLAccountFollowUpDate(value: Date) {
+        if (this.EntityPM.GLAccountFollowUpDate != value) {
+            this.EntityPM.GLAccountFollowUpDate = value;
+        }
+    }
+
     //#region Accounting Notes
     accountingNotesList: AccountingNoteList[] = [];
     isNotesLoading:boolean = false;
 
     GetAccountingNotes(){
-        if(this.AccountPM.CardId){
+        if(this.EntityPM.CardId){
             this.accountingNotesList = [];
             this.isNotesLoading = true;
             // setTimeout(() => {
 
-            this._AccountingNoteExtendedListService.GetNotesByCard(this.AccountPM.CardId)
+            this._AccountingNoteExtendedListService.GetNotesByCard(this.EntityPM.CardId)
                 .subscribe((res:ServiceResponse) =>
                 {
                         this.isNotesLoading = false;
@@ -476,12 +501,12 @@ export class GLAccountOverviewComponent extends BaseComponent {
     OpenAccountingNote(notePM: AccountingNotePM){
 
         var windowArgs: any = {};
-        windowArgs.AccountPM = this.AccountPM;
+        windowArgs.EntityPM = this.EntityPM;
         windowArgs.AccountingNotePM = notePM;
 
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 450;
-        logitudeWindow.Height = 320;
+        logitudeWindow.Height = 350;
         logitudeWindow.Title = notePM ? '' : TextCodeTranslator.Translate("Accounting.O.NewAccountingNote");
 
         logitudeWindow.WindowArgs = windowArgs;
@@ -569,7 +594,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
     }
 
     GetLastTransactions() {
-        this._LedgerTransactionExtendedListService.getLast10TransactionsForAccount(this.AccountPM.Id).subscribe((myResult: ServiceResponse) => {
+        this._LedgerTransactionExtendedListService.getLast10TransactionsForAccount(this.EntityPM.Id).subscribe((myResult: ServiceResponse) => {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError)
@@ -660,7 +685,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
 
         this.LoadExternalTransactionTotal();
-
+        this.GetInsuredCreditLimit();
         console.log("LoadCreditDetailsData");
 
         // Calculate credit percentage
@@ -695,9 +720,29 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
     }
 
-    DisplayChequelistClicked(){
-
+    GetInsuredCreditLimit() {
+        this.gLAccountCardsDataPMService.get(this.EntityPM.CardsDataId).subscribe((myResult: ServiceResponse) => {
+            var myResult: ServiceResponse ;
+            if (!myResult.HasError) {
+                this.InsuredCreditLimit = myResult.Result.InsuredcreditLimit;
+            }
+        });
     }
+
+    DisplayChequelistClicked(id) {
+
+       var windowArgs: any = {};
+        windowArgs.EntityPM = this.EntityPM;
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 1100;
+        logWindow.Height = 600;
+       
+        logWindow.ShowCloseButton = false;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) => { });
+        logWindow.Show('./Accounting/Components/EditTabs/GLAccount/GLAccountChequeListComponent');
+    }
+
     CardIndexClicked(){
         this.DisplayTransactionsLinkClicked();
     }
@@ -713,6 +758,10 @@ export class GLAccountOverviewComponent extends BaseComponent {
     }
     IsCreditNotDefined(){
         return this.CreditLimitAmount == null;
+    }
+
+    IsInsuredCreditLimitDefined() {
+        return this.InsuredCreditLimit != 0;
     }
     //
 
@@ -779,7 +828,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
             args.AgingForDate = new Date();
         args.NumberOfmonthsbackwards = numberOfmonthsbackwards == null ? 3 : numberOfmonthsbackwards;
         //args.VendorCustomerId = AppTool.IsNullOrEmpty(this.accSettings) ? "" : this.accSettings.CustomerControlAccountId;
-        args.VendorCustomerId = this.AccountPM.Id;
+        args.VendorCustomerId = this.EntityPM.Id;
         //args.Category1Id = "";
         //args.Category2Id = "";
         //args.Category3Id = "";
@@ -892,7 +941,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
         var poisition = this.isRTL == true ? "right" : "left";
 
-        makeAmBarChart(this.chartId, Graphs, DataProvider, max, null, null, null, null, poisition);
+    //    makeAmBarChart(this.chartId, Graphs, DataProvider, max, null, null, null, null, poisition);
 
     }
     //

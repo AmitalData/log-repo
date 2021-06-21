@@ -37,7 +37,6 @@ namespace TestTenantConfiguration
             this.TenantEmailTextBox = new System.Windows.Forms.TextBox();
             this.TenantCompanyTextBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.InProcess = new System.Windows.Forms.Label();
             this.NewPasswordText = new System.Windows.Forms.TextBox();
             this.ValidateCopy = new System.Windows.Forms.Label();
             this.TenantEmailValidation = new System.Windows.Forms.Label();
@@ -45,6 +44,8 @@ namespace TestTenantConfiguration
             this.Timerlbl = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.ValidatePrepareData = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.TenantNumber = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // CreateTenantBtn
@@ -54,7 +55,7 @@ namespace TestTenantConfiguration
             | System.Windows.Forms.AnchorStyles.Right)));
             this.CreateTenantBtn.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.CreateTenantBtn.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CreateTenantBtn.Location = new System.Drawing.Point(177, 281);
+            this.CreateTenantBtn.Location = new System.Drawing.Point(404, 218);
             this.CreateTenantBtn.Name = "CreateTenantBtn";
             this.CreateTenantBtn.Size = new System.Drawing.Size(210, 55);
             this.CreateTenantBtn.TabIndex = 0;
@@ -106,28 +107,18 @@ namespace TestTenantConfiguration
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(36, 188);
+            this.label4.Location = new System.Drawing.Point(36, 192);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(137, 29);
             this.label4.TabIndex = 6;
             this.label4.Text = "Password:";
-            // 
-            // InProcess
-            // 
-            this.InProcess.AutoSize = true;
-            this.InProcess.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.InProcess.Location = new System.Drawing.Point(37, 394);
-            this.InProcess.Name = "InProcess";
-            this.InProcess.Size = new System.Drawing.Size(101, 19);
-            this.InProcess.TabIndex = 7;
-            this.InProcess.Text = "";
             // 
             // NewPasswordText
             // 
             this.NewPasswordText.BackColor = this.BackColor;
             this.NewPasswordText.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.NewPasswordText.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.NewPasswordText.Location = new System.Drawing.Point(301, 192);
+            this.NewPasswordText.Location = new System.Drawing.Point(188, 196);
             this.NewPasswordText.Name = "NewPasswordText";
             this.NewPasswordText.ReadOnly = true;
             this.NewPasswordText.Size = new System.Drawing.Size(243, 25);
@@ -140,7 +131,7 @@ namespace TestTenantConfiguration
             this.ValidateCopy.AutoSize = true;
             this.ValidateCopy.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ValidateCopy.ForeColor = System.Drawing.Color.ForestGreen;
-            this.ValidateCopy.Location = new System.Drawing.Point(301, 220);
+            this.ValidateCopy.Location = new System.Drawing.Point(37, 347);
             this.ValidateCopy.Name = "ValidateCopy";
             this.ValidateCopy.Size = new System.Drawing.Size(0, 19);
             this.ValidateCopy.TabIndex = 9;
@@ -168,7 +159,7 @@ namespace TestTenantConfiguration
             // Timerlbl
             // 
             this.Timerlbl.AutoSize = true;
-            this.Timerlbl.Location = new System.Drawing.Point(407, 317);
+            this.Timerlbl.Location = new System.Drawing.Point(400, 287);
             this.Timerlbl.Name = "Timerlbl";
             this.Timerlbl.Size = new System.Drawing.Size(24, 19);
             this.Timerlbl.TabIndex = 12;
@@ -185,23 +176,47 @@ namespace TestTenantConfiguration
             this.ValidatePrepareData.AutoSize = true;
             this.ValidatePrepareData.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ValidatePrepareData.ForeColor = System.Drawing.Color.Green;
-            this.ValidatePrepareData.Location = new System.Drawing.Point(301, 249);
+            this.ValidatePrepareData.Location = new System.Drawing.Point(37, 378);
             this.ValidatePrepareData.Name = "ValidatePrepareData";
             this.ValidatePrepareData.Size = new System.Drawing.Size(0, 19);
             this.ValidatePrepareData.TabIndex = 13;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(36, 244);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(105, 29);
+            this.label3.TabIndex = 14;
+            this.label3.Text = "Tenant:";
+            // 
+            // TenantNumber
+            // 
+            this.TenantNumber.BackColor = this.BackColor;
+            this.TenantNumber.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.TenantNumber.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TenantNumber.Location = new System.Drawing.Point(188, 250);
+            this.TenantNumber.Name = "TenantNumber";
+            this.TenantNumber.ReadOnly = true;
+            this.TenantNumber.Size = new System.Drawing.Size(181, 25);
+            this.TenantNumber.TabIndex = 15;
+            this.TenantNumber.TabStop = false;
+            this.TenantNumber.Text = "Tenant num";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(713, 440);
+            this.Controls.Add(this.TenantNumber);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.ValidatePrepareData);
             this.Controls.Add(this.Timerlbl);
             this.Controls.Add(this.TenantCompanyValidation);
             this.Controls.Add(this.TenantEmailValidation);
             this.Controls.Add(this.ValidateCopy);
             this.Controls.Add(this.NewPasswordText);
-            this.Controls.Add(this.InProcess);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.TenantCompanyTextBox);
             this.Controls.Add(this.TenantEmailTextBox);
@@ -225,7 +240,6 @@ namespace TestTenantConfiguration
         private System.Windows.Forms.TextBox TenantEmailTextBox;
         private System.Windows.Forms.TextBox TenantCompanyTextBox;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label InProcess;
         private System.Windows.Forms.TextBox NewPasswordText;
         private System.Windows.Forms.Label ValidateCopy;
         private System.Windows.Forms.Label TenantCompanyValidation;
@@ -233,6 +247,8 @@ namespace TestTenantConfiguration
         private System.Windows.Forms.Label Timerlbl;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label ValidatePrepareData;
+        private System.Windows.Forms.TextBox TenantNumber;
+        private System.Windows.Forms.Label label3;
     }
 }
 

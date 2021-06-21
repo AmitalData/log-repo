@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InterestBasesTypeUpdateClass
    {  		
-		public const string HashString = "c87f360c9faa1739484fa4b6a2a16754";
+		public const string HashString = "1a7ae0c05d392a236e70a5aa7a28325d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,6 +125,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "",
 			      				    DefaultText =  "Interest Bases Type",
+			      				    NewButtonLocalDefaultText =  "בסיס ריבית חדש",
+			      				    NewButtonDefaultText =  "New Interest Base",
 			      				    Code =  "a37b",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
@@ -1066,7 +1068,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   ObjectTable InterestBasesTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InterestBasesType" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode InterestBasesTypeTextCode_AccountingGeneralONewInterestBases = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.NewInterestBases", DefaultText = "New Interest Bases",LocalDefaultText = @"חדש  בסיס ריבית", ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode InterestBasesTypeTextCode_AccountingGeneralONewInterestBases = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.NewInterestBases", DefaultText = "New Interest Bases",LocalDefaultText = @"בסיס ריבית חדש", ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

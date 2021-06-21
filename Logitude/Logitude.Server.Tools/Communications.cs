@@ -203,6 +203,7 @@ namespace Logitude.Server.Tools
                     LastStatusDateUTC = DateTime.UtcNow,
                     QueueName = communicationParams.QueueName,
                     Priority = communicationParams.Priority,
+                    AdditionalFields = communicationParams.AdditionalFields
 
                 };
                 communicationLogRepository.Add(commLog);
@@ -680,6 +681,7 @@ namespace Logitude.Server.Tools
         public string FileExtension { get; set; }
 
         public Dictionary<string, string> QueueParameters { get; set; }
+        public string AdditionalFields { get; set; }
 
     }
 

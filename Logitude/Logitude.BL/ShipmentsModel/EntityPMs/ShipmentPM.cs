@@ -1442,7 +1442,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string Transshipment2ToPortStateCode { get; set; }
         public string Transshipment1ToPortStateCode { get; set; }
 
-        
+        public string StandaloneShipmentId { get; set; }
 
         private List<ShipmentFollowUpPM> followUps;
         [Include]
@@ -1872,8 +1872,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
                 }
             }
         }
-
-
 
         public string MainCarriageFromPartnerId { get; set; }
         public string MainCarriageFromAddressId { get; set; }
@@ -2511,6 +2509,10 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsDeclarationApprovalRequest { get; set; }
         public bool CreatedFromDigital { get; set; }
 
+        public string DocumentFilingIds { get; set; }
+
+        
+
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string SLAC { get; set; }
         
@@ -2650,7 +2652,36 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string TotalTax { get; set; }
         public string WarehouseLegLocalName { get; set; }
         public string WarehouseLegEnglishName { get; set; }
+        public bool IsHTSMissing { get; set; }
+        public bool IsProductItemsUpdated { get; set; }
 
+        private List<ShipmentProductItemPM> shipmentProductItems;
+        [Include]
+        [Association("ShipmentProductItemShipment", "Id", "ShipmentId")]
+        [Composition]
+        public virtual List<ShipmentProductItemPM> ShipmentProductItems
+        {
+            get
+            {
+
+                if (this.shipmentProductItems == null)
+                {
+                    shipmentProductItems = new List<ShipmentProductItemPM>();
+                }
+                return this.shipmentProductItems;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    shipmentProductItems = value;
+                }
+            }
+        }
+
+        public bool IsStandalonePickupDelivery { get; set; }
+        public string StandalonePickupDeliveryId { get; set; }
+        public string StandalonePickupDeliveryNumber { get; set; }
     }
 
     public class TransshipmentLeg

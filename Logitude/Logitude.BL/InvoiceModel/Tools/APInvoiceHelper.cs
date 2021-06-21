@@ -58,6 +58,9 @@ namespace Logitude.BL.InvoiceModel.Tools
         private  string AccountingSystemCode;
         private List<APInvoiceLinePM> lines;
         private string OldTransferStatusCode;
+        private Tenant loggedTenant;
+        private AccountingSystemPM accountingSystem;
+
         private void GetObjectTableData()
         {
             ObjectTableRepository myObjectTabelRepository = new ObjectTableRepository(tenant);
@@ -90,14 +93,14 @@ namespace Logitude.BL.InvoiceModel.Tools
             if (IsSetApproved)
             {
                 commonContext = CommonContext;
-                Tenant loggedTenant = (from a in commonContext.Tenants.Include("AccountingSetting") where a.Id == entityPM.Tenant select a).FirstOrDefault();
+                loggedTenant = (from a in commonContext.Tenants.Include("AccountingSetting") where a.Id == entityPM.Tenant select a).FirstOrDefault();
                 tenant = loggedTenant.Id;
                 tenantName = loggedTenant.Company;
                 AccountingSystemCode = loggedTenant.AccountingSetting.AccountingSystemCode;
                 AccountingSystemQuery query = new AccountingSystemQuery(tenant);
-                AccountingSystemPM AccountingSystempm = query.GetSingleAccountingSystemPM(AccountingSystemCode);
+                accountingSystem = query.GetSingleAccountingSystemPM(AccountingSystemCode);
                 if (loggedTenant.AccountingSetting != null)
-                    if ((AccountingSystemCode == "QBO" || AccountingSystemCode=="QBOG") && loggedTenant.AccountingSetting.IsAPInvoicesTransferEnabled && AccountingSystempm.AllowAPInvoicesTransfer)
+                    if (IsQuickBooksAccoutingSystemTransfer(entityPM))
                     {
                         APInvoice = entityPM;
                         APInvoiceId = entityPM.Id;
@@ -284,6 +287,15 @@ namespace Logitude.BL.InvoiceModel.Tools
 
                     }
             }
+        }
+
+        private bool IsQuickBooksAccoutingSystemTransfer(APInvoicePM aPInvoice)
+        {
+            if (!(AccountingSystemCode == "QBO" || AccountingSystemCode == "QBOG")) return false;
+            if (!(loggedTenant.AccountingSetting.IsAPInvoicesTransferEnabled)) return false;
+            if (!(accountingSystem.AllowAPInvoicesTransfer)) return false;
+            if ((loggedTenant.AccountingSetting.APInvoiceTransferStartDate != null && aPInvoice.InvoiceDate < loggedTenant.AccountingSetting.APInvoiceTransferStartDate)) return false;
+            return true;
         }
 
         private  void Run(APInvoicePM invoice)

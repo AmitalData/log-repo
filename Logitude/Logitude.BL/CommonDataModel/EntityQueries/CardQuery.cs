@@ -194,7 +194,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       InvoiceCurrencyId = a.InvoiceCurrencyId,
                                       VatTypeId = a.VatTypeId,
                                       SearchFields = a.SearchFields,
-                                      Prefix = al.Prefix,
+                                      Prefix = al.Prefix,                                     
                                       ImageDetailId = a.ImageDetailId,
                                       AccountNumber = a.AccountNumber,
                                       BankName = a.BankName,
@@ -240,6 +240,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       RankId = a.Customer != null ? (a.Customer.Rank != null ? a.Customer.Rank.Id : null) : null,
                                       IndustryId = a.Customer != null ? (a.Customer.Industry != null ? a.Customer.Industry.Id : null) : null,
                                       BillToId = a.BillToId,
+                                      ICAO = al != null ? al.ICAO : "",
                                   }).FirstOrDefault();
 
 
@@ -333,6 +334,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   IsAutonomy = a.IsAutonomy,
                                   CreatedByPartner = a.CreatedByPartner,
                                   BillToId = a.BillToId,
+                                  ICAO = al != null ? al.ICAO : "",
                               }).FirstOrDefault();
 
                     if (entity != null)
@@ -361,6 +363,21 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return cardLists;
         }
 
+        public List<CardPM> GetAllCardPMsByTenant(int tenant)
+        {
+            List<CardPM> cardPMs = (from a in repository.context.Cards
+                                        where a.Tenant == tenant
+                                        select new CardPM()
+                                        {
+                                            Id = a.Id,
+                                            Tenant = a.Tenant,
+                                            EnglishName = a.EnglishName,
+                                            Code = a.Code,
+                                            PartnerTypeId = a.PartnerTypeId
+
+                                        }).ToList();
+            return cardPMs;
+        }
         public CardPM GetSinglePMByCode(string code, int tenant)
         {
             var cardId = repository.GetCardIdByCode(code,tenant);
@@ -1116,7 +1133,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 VatNumber = card.VatNumber,
                                                 PaymentTermId = card.PaymentTermId,
                                                 PartnerTypeId = card.PartnerTypeId,
-                                                PartnerTypeName = card.PartnerType == null ? null : (card.PartnerType.Id == "CS" && card.Customer != null && card.Customer.IsCustomer == true ? card.PartnerType.Name : "Shipper/Consignee"),
+                                                PartnerTypeName = card.PartnerType == null ? null : (card.PartnerType.Id == "CS" && card.Customer != null && card.Customer.IsCustomer == false ? "Shipper/Consignee" : card.PartnerType.Name),
                                                 PaymentTermName = card.PaymentTerm == null ? null : card.PaymentTerm.EnglishName,
                                                 WebSite = card.Website,
                                                 InvoiceCurrencyId = card.InvoiceCurrencyId,

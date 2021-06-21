@@ -59,6 +59,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.TransportModeCode = itemPM.TransportModeCode;
             itemPoco.ParentPickUpDeliveryId = itemPM.ParentPickUpDeliveryId;
             itemPoco.ChildPickUpIndex = itemPM.ChildPickUpIndex;
+            itemPoco.StandaloneShipmentId = itemPM.StandaloneShipmentId;
+            itemPoco.StandaloneShipmentNumber = itemPM.StandaloneShipmentNumber;
         }
 
         public static void MapDelivery(ShipmentDeliveryPM itemPM, ShipmentPickUpDelivery itemPoco, ICommonDataContext commonContext, bool isNewEntity)
@@ -107,6 +109,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.TransportModeCode = itemPM.TransportModeCode;
             itemPoco.ParentPickUpDeliveryId = itemPM.ParentPickUpDeliveryId;
             itemPoco.ChildDeliveryIndex = itemPM.ChildDeliveryIndex;
+            itemPoco.StandaloneShipmentId = itemPM.StandaloneShipmentId;
+            itemPoco.StandaloneShipmentNumber = itemPM.StandaloneShipmentNumber;
         }
 
         private static void SetPickupAddress(ShipmentPickUpPM itemPM, ICommonDataContext commonContext)

@@ -62,7 +62,7 @@
                                                             <table>
                                                                 <tr>
                                                                     <td style="width: 80px;">
-                                                                        <button style="height:20px;" class="Button" (click)="DataContext.ChooseCountry()">
+                                                                        <button [attr.data-cy]="'ChooseCountry_' + ObjectTableName" style="height:20px;" class="Button" (click)="DataContext.ChooseCountry()">
                                                                             <img style="left:5px;" src="./Images/Buttons/Add.over.png" />
                                                                             Country Ports
                                                                         </button>
@@ -73,7 +73,7 @@
                                                                     </td>
 
                                                                     <td style="width: 50px;">
-                                                                        <button style="height:20px;" class="Button" (click)="DataContext.ChoosePort()">
+                                                                        <button [attr.data-cy]="'ChoosePort_' + ObjectTableName" style="height:20px;" class="Button" (click)="DataContext.ChoosePort()">
                                                                             <img style="left:5px;" src="./Images/Buttons/Add.over.png" />
                                                                             Port
                                                                         </button>

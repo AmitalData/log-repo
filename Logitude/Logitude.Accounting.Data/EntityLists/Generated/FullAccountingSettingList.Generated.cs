@@ -100,6 +100,14 @@ namespace Logitude.Accounting.Data.EntityLists
        public int? NumberOfAgingMonths  { get; set; }
        [DataMember]
        public bool AllowMultiRatesInInvoiceLines  { get; set; }
+       [DataMember]
+       public int? NumberofPeriods  { get; set; }
+       [DataMember]
+       public string FirstPeriodsMonths  { get; set; }
+       [DataMember]
+       public string SecondPeriodsMonths  { get; set; }
+       [DataMember]
+       public string ThirdsPeriodsMonths  { get; set; }
    }
 
 }

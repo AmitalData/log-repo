@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;b6e9&quot;"
+  Code="&quot;2fbc&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -468,11 +468,6 @@
       Name="&quot;API Update&quot;"
       Description="&quot;Allows tenants to update shipments via API&quot;" />
     <Record
-      Name="&quot;CRM Customer Quick Search&quot;"
-      Code="&quot;CQS&quot;"
-      SearchFields="&quot;CQS,CRM Customer Quick Search,CRM Customer Quick Search&quot;"
-      Description="&quot;CRM Customer Quick Search&quot;" />
-    <Record
       Name="&quot;Charges Types Direction Restrictions&quot;"
       Code="&quot;CTR&quot;"
       SearchFields="&quot;CTR,Charges Types Direction Restrictions,Charges Types Direction Restrictions&quot;"
@@ -493,11 +488,6 @@
       Description="&quot;Export Query Data to Excel Via WorkerRole&quot;"
       SearchFields="&quot;EQW,Export Query Data Via WorkerRole,Export Query Data to Excel Via WorkerRole&quot;" />
     <Record
-      Name="&quot; Improved Search in Customers Views&quot;"
-      Code="&quot;SCV&quot;"
-      SearchFields="&quot;SCV, Improved Search in Customers Views, Improved Search in Customers Views&quot;"
-      Description="&quot;Improved Search in Customers Views&quot;" />
-    <Record
       Code="&quot;TAR&quot;"
       Name="&quot;All Tariffs&quot;"
       SearchFields="&quot;TAR,All Tariffs,Hide Tariffs Menu&quot;"
@@ -517,7 +507,6 @@
       Name="&quot;Documents Send Result in AP Invoices Automation&quot;"
       Description="&quot;Documents Send Result in AP Invoices Automation&quot;"
       SearchFields="&quot;DSR,Documents Send Result in AP Invoices Automation&quot;" />
-
     <Record
       Name="&quot;AWB Multiple Commodities&quot;"
       Code="&quot;AMC&quot;"
@@ -538,6 +527,46 @@
       Name="&quot;Master Pre/On Carriage&quot;"
       SearchFields="&quot;PRE,Master Pre/On Carriage&quot;"
       Description="&quot;Master Pre/On Carriage&quot;" />
+    <Record
+      Code="&quot;BIF&quot;"
+      Name="&quot;Invoices DWH&quot;"
+      SearchFields="&quot;BIF,Invoices DWH,Allow Tenants to Show Invoice Fact on the BI Report Screen&quot;"
+      Description="&quot;Allow Tenants to Show Invoice Fact on the BI Report Screen&quot;" />
+    <Record
+      Code="&quot;SAS&quot;"
+      Name="&quot;Standalone Shipment&quot;"
+      SearchFields="&quot;SAS,Standalone Shipment&quot;"
+      Description="&quot;Standalone Shipment&quot;" />
+    <Record
+      Name="&quot;Quotes Request Activated In Shared Logistic&quot;"
+      Code="&quot;QRA&quot;"
+      SearchFields="&quot;QRA, Quotes Request Activated In Shared Logistic&quot;"
+      Description="&quot;Quotes Request Activated In Shared Logistic&quot;" />
+    <Record
+      Name="&quot;Ocean Insights Containers&quot;"
+      Code="&quot;OIC&quot;"
+      SearchFields="&quot;OIC,Ocean Insights Containers&quot;"
+      Description="&quot;Ocean Insights Containers&quot;" />
+    <Record
+      Name="&quot;Reports in Shared Logistics&quot;"
+      Code="&quot;RSL&quot;"
+      SearchFields="&quot;RSL,Reports in Shared Logistics&quot;"
+      Description="&quot;Reports in Shared Logistics&quot;" />
+    <Record
+      Code="&quot;BIF&quot;"
+      Name="&quot;Invoices DWH&quot;"
+      SearchFields="&quot;BIF,Invoices DWH,Allow Tenants to Show Invoice Fact on the BI Report Screen&quot;"
+      Description="&quot;Allow Tenants to Show Invoice Fact on the BI Report Screen&quot;" />
+    <Record
+      Code="&quot;CTL&quot;"
+      Name="&quot;CollaborationTool&quot;"
+      SearchFields="&quot;CTL,CollaborationTool&quot;"
+      Description="&quot;Collaboration Tool&quot;" />
+    <Record
+      Code="&quot;SDE&quot;"
+      Name="&quot;Solve Duplicated Events Code&quot;"
+      SearchFields="&quot;SDE,Duplicated Events code&quot;"
+      Description="&quot;Solve Duplicated Events Code&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

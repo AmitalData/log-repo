@@ -10,6 +10,7 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -206,8 +207,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             DocumentTypeMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
-
-			TableLastUpdateClass.UpdateTableHistory(theEntityPm.Tenant, "DocumentType");
+            RemoveEntityFromCache(theEntityPm);
+            TableLastUpdateClass.UpdateTableHistory(theEntityPm.Tenant, "DocumentType");
 		}
 
         public void Update(DocumentTypePM theEntityPm, bool mapComposition = false)
@@ -260,8 +261,18 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             DocumentTypeMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
-
-			TableLastUpdateClass.UpdateTableHistory(theEntityPm.Tenant, "DocumentType");
+            RemoveEntityFromCache(theEntityPm);
+            TableLastUpdateClass.UpdateTableHistory(theEntityPm.Tenant, "DocumentType");
 		}
+
+
+        private void RemoveEntityFromCache(DocumentTypePM entityPm)
+        {
+            var cacheKey = "DocumentTypeByCode,code," + entityPm.Code + ",tenant," + entityPm.Tenant.ToString();
+            if (CacheManager.CacheWrapper.Get(cacheKey) != null)
+            {
+                CacheManager.CacheWrapper.Invalidate(cacheKey);
+            }
+        }
     }
 }

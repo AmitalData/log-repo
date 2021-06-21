@@ -466,6 +466,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.TruckerId = entityPM.TruckerId;
             entityPoco.AssginedToCustomsAgentDate = entityPM.AssginedToCustomsAgentDate;
             entityPoco.AssginedtoCustomsAgentId = entityPM.AssginedtoCustomsAgentId;
+            entityPoco.IsStandalonePickupDelivery = entityPM.IsStandalonePickupDelivery;
+            entityPoco.IsHTSMissing = entityPM.IsHTSMissing;
 
             BuildSearchField(entityPM, entityPoco, entityMasterData, myPackagesList);
             if (!LBcurrentTenant.IsDocumentsArchive)
@@ -647,6 +649,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                         }
                     }
 
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(preCrriageFromPortCode))
+                        {
+                            myRoutingField = preCrriageFromPortCode + " , " + myRoutingField;
+                        }
+                    }
+
                     if (!string.IsNullOrEmpty(onForwardingToPortCode))
                     {
                         if (!string.IsNullOrEmpty(onCarriageToPortCode))
@@ -657,6 +667,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                         else
                         {
                             myRoutingField = myRoutingField + " , " + onForwardingToPortCode;
+                        }
+                    }
+
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(onCarriageToPortCode))
+                        {
+                            myRoutingField = myRoutingField + " , " + onCarriageToPortCode;
                         }
                     }
                 }

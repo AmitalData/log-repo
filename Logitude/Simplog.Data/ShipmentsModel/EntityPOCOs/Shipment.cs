@@ -680,5 +680,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public virtual Port OnForwardingToPort { get; set; }
         public virtual Card OnForwardingCarrierCard { get; set; }
         public virtual PickUpDeliveryTransportMode OnForwardingAdditionalTransportMode { get; set; }
+        public bool IsStandalonePickupDelivery { get; set; }
+        public bool IsHTSMissing { get; set; }
     }
 }

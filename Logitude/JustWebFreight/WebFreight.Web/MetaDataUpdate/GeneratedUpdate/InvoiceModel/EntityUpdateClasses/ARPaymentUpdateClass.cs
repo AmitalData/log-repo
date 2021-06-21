@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARPaymentUpdateClass
    {  		
-		public const string HashString = "909e4d11c1db99b5c627360897a92575";
+		public const string HashString = "e655cc341309070dcf57243cdaf2586f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2519,7 +2519,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
@@ -2550,6 +2550,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						FullFieldLable =  "Bank",
 					  						DefaultText =  "Bank",
 					  						FullLocalDefaultText =  "בנק",
+					  						ListFieldLable =  "BankListLable",
+					  						ListLableDefaultText =  "Bank",
+					  						ListLocalDefaultText =  "Bank",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -6760,6 +6763,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
  		   TextCode ARPaymentTextCode_ARPaymentOMultiPaymentZeroDifference = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.O.MultiPaymentZeroDifference", DefaultText = "When reconciling multiple payments, the difference must be 0",LocalDefaultText = @"בביצוע התאמה שמכילה יותר מקבלה אחת ההפרש חייב להיות אפס", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ARPaymentTextCode_ARPaymentOAllPaymentsReconciliation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.O.AllPaymentsReconciliation", DefaultText = "Two Payments cannot be reconciled with each other alone",LocalDefaultText = @"לא ניתן להתאים שתי קבלות בלבד ללא חשבונית", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentOCantPerformReconciliation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.O.CantPerformReconciliation", DefaultText = "Can't Perform ARPayment Reconciliation from this screen in multiple Cheques case ",LocalDefaultText = @"לא ניתן לבצע התאמות בקבלה עם ריבוי המחאות", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
