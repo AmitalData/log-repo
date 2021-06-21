@@ -35,7 +35,7 @@ namespace Logitude.CrossDockTests.Steps
         [Given(@"a packages Details")]
         public void GivenAPackagesDetails(Table table)
         {
-            CrossDockContext.EntriesCrossDock = crossDockExternalServices.AddPackagesDetails(CrossDockContext.EntriesCrossDock, table);
+            CrossDockContext.EntriesCrossDock = crossDockExternalServices.AddWarehouseEntryPackages(CrossDockContext.EntriesCrossDock, table);
         }
 
         [When(@"create cross dock")]

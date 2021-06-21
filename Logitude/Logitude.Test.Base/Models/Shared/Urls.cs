@@ -160,5 +160,10 @@
         {
             return "Quoteviews/getsingle/?id=" + id;
         }
+
+        public static string CrossDockGetSingle(string id)
+        {
+            return "warehouseentries/GetSingle?id=" + id;
+        }
     }
 }
