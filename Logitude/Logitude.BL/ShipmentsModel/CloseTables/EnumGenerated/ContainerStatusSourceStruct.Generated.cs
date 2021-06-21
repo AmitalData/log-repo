@@ -11,7 +11,7 @@ namespace Logitude.BL.ShipmentsModel.CloseTables
     public struct ContainerStatusSourceValues
     {   
        public const string INTTRA = "INT";  
-       public const string OceanInsight = "OIN";  
+       public const string OceanInsights = "OIN";  
     }
 }
 

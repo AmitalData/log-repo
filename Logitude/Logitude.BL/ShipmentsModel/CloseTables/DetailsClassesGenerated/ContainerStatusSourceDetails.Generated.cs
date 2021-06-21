@@ -31,8 +31,8 @@ namespace Logitude.BL.ShipmentsModel
             all.Add(new ContainerStatusSourceDetails()
             {    
                 Code = "OIN", 
-                Name = "Ocean Insight", 
-                SearchFields = "OIN,Ocean Insight", 
+                Name = "Ocean Insights", 
+                SearchFields = "OIN,Ocean Insights", 
 			});
 			
             return all;

@@ -23,6 +23,7 @@ using System.Text;
 using Simplog.Data.ShipmentsModel;
 using Logitude.Server.Tools.Counters;
 using System.Security.Cryptography;
+using System.Reflection;
 
 namespace WebFreight.Web.Helpers.Analyzers
 {
@@ -47,6 +48,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         private IShipmentsContext shipmentContext;
         private ShipmentContainerStatusRepository shipmentContainerStatusRepository;
         private ContainerRepository containerRepository;
+        private ContainerStatusRepository containerStatusRepository;
 
         private string oceanInsightsId;
         private string container_number;
@@ -284,6 +286,7 @@ namespace WebFreight.Web.Helpers.Analyzers
                     this.shipmentContext = ShipmentsContext.GetContext(logitudeTenant.Value);
                     this.shipmentContainerStatusRepository = new ShipmentContainerStatusRepository(shipmentContext);
                     this.containerRepository = new ContainerRepository(shipmentContext);
+                    this.containerStatusRepository = new ContainerStatusRepository(shipmentContext);
 
                     this.GetContainerDataByContainerNumber();
                     this.AddContainerStatusCommunicationLog();
@@ -565,29 +568,48 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (container != null)
             {
-                DateTime? mainCarriageETD = this.ComputeMainCarriageETD();
-                DateTime? mainCarriageETA = this.ComputeMainCarriageETA();
-                DateTime? mainCarriageATD = this.ComputeMainCarriageATD();
-                DateTime? mainCarriageATA = this.ComputeMainCarriageATA();
-                DateTime? estimatedEmptyPickupDate = this.ComputeEstimatedEmptyPickupDate();
-                DateTime? actualEmptyPickupDate = this.ComputeActualEmptyPickupDate();
-                DateTime? estimatedGateInDate = this.ComputeEstimatedGateInDate();
-                DateTime? actualGateInDate = this.ComputeActualGateInDate();
-
-                container.MainCarriageETD = mainCarriageETD;
-                container.MainCarriageETA = mainCarriageETA;
-                container.MainCarriageATD = mainCarriageATD;
-                container.MainCarriageATA = mainCarriageATA;
-                //container.EmptyPickupLocation = emptyPickupLocation;
-                container.EstimatedEmptyPickupDate = estimatedEmptyPickupDate;
-                container.ActualEmptyPickupDate = actualEmptyPickupDate;
-                container.EstimatedGateInDate = estimatedGateInDate;
-                container.ActualGateInDate = actualGateInDate;
-                //container.DepartureLocation = departureLocation;
-                // container.DestinationLocation = destinationLocation;
-
-                containerRepository.Update(container);
+                ContainerUpdatedFields containerUpdatedFields = this.BuildContainerUpdatedFields();
+                if (containerUpdatedFields != null)
+                {
+                    this.FillContainerFieldsNewValues("MainCarriageETD", containerUpdatedFields.MainCarriageETD);
+                    this.FillContainerFieldsNewValues("MainCarriageETA", containerUpdatedFields.MainCarriageETA);
+                    this.FillContainerFieldsNewValues("MainCarriageATD", containerUpdatedFields.MainCarriageATD);
+                    this.FillContainerFieldsNewValues("MainCarriageATA", containerUpdatedFields.MainCarriageATA);
+                    this.FillContainerFieldsNewValues("EmptyPickupLocation", containerUpdatedFields.EmptyPickupLocation);
+                    this.FillContainerFieldsNewValues("EstimatedEmptyPickupDate", containerUpdatedFields.EstimatedEmptyPickupDate);
+                    this.FillContainerFieldsNewValues("ActualEmptyPickupDate", containerUpdatedFields.ActualEmptyPickupDate);
+                    this.FillContainerFieldsNewValues("EstimatedGateInDate", containerUpdatedFields.EstimatedGateInDate);
+                    this.FillContainerFieldsNewValues("ActualGateInDate", containerUpdatedFields.ActualGateInDate);
+                    this.FillContainerFieldsNewValues("DepartureLocation", containerUpdatedFields.DepartureLocation);
+                    this.FillContainerFieldsNewValues("DestinationLocation", containerUpdatedFields.DestinationLocation);
+                    container.CurrentStatus = containerUpdatedFields.CurrentStatus;
+                    container.CurrentLocation = containerUpdatedFields.CurrentLocation;
+                    container.CurrentStatusDate = containerUpdatedFields.CurrentStatusDate;
+                    container.HasContainerException = containerUpdatedFields.HasContainerException;
+                    containerRepository.Update(container);
+                }
             }
+        }
+        private ContainerUpdatedFields BuildContainerUpdatedFields()
+        {
+            ContainerUpdatedFields containerUpdatedFields = new ContainerUpdatedFields();
+            containerUpdatedFields.MainCarriageETD = this.ComputeMainCarriageETD();
+            containerUpdatedFields.MainCarriageETA = this.ComputeMainCarriageETA();
+            containerUpdatedFields.MainCarriageATD = this.ComputeMainCarriageATD();
+            containerUpdatedFields.MainCarriageATA = this.ComputeMainCarriageATA();
+            containerUpdatedFields.EstimatedEmptyPickupDate = this.ComputeEstimatedEmptyPickupDate();
+            containerUpdatedFields.ActualEmptyPickupDate = this.ComputeActualEmptyPickupDate();
+            containerUpdatedFields.EstimatedGateInDate = this.ComputeEstimatedGateInDate();
+            containerUpdatedFields.ActualGateInDate = this.ComputeActualGateInDate();
+            containerUpdatedFields.EmptyPickupLocation = this.emptyPickupLocation;
+            containerUpdatedFields.DepartureLocation = this.departureLocation;
+            containerUpdatedFields.DestinationLocation = this.destinationLocation;
+            containerUpdatedFields.CurrentStatusDate = this.GetEventDate();
+            containerUpdatedFields.CurrentStatus = this.GetContainerStatusName();
+            containerUpdatedFields.CurrentLocation = this.ComputeCurrentStatusLocation();
+            //containerUpdatedFields.HasContainerException = "";
+
+            return containerUpdatedFields;
         }
         private DateTime? ComputeMainCarriageETD()
         {
@@ -696,7 +718,36 @@ namespace WebFreight.Web.Helpers.Analyzers
 
             return null;
         }
+        private string GetContainerStatusName()
+        {
+            return containerStatusRepository.GetSingleContainerStatus(this.container_status)?.Name;
+        }
+        private string ComputeCurrentStatusLocation()
+        {
+            if (!string.IsNullOrEmpty(this.destinationLocation))
+            {
+                return this.destinationLocation;
+            }
 
+            else if (!string.IsNullOrEmpty(this.departureLocation))
+            {
+                return this.departureLocation;
+            }
+            
+            else 
+            {
+                return this.emptyPickupLocation;
+            }
+        }
+        private void FillContainerFieldsNewValues(string propertyName, object newValue)
+        {
+            PropertyInfo propertyInfo = this.container.GetType().GetProperty(propertyName);
+
+            if (propertyInfo != null && newValue != null)
+            {
+                propertyInfo.SetValue(this.container, newValue);
+            }
+        }
         private void Save()
         {
             shipmentContext.SaveChanges();
@@ -777,5 +828,24 @@ namespace WebFreight.Web.Helpers.Analyzers
         [XmlAttribute("action")]
         public string Action { get; set; }
         public List<Parameter> Parameters { get; set; }
+    }
+    
+    public class ContainerUpdatedFields
+    {
+        public DateTime? MainCarriageETD { get; set; }
+        public DateTime? MainCarriageETA { get; set; }
+        public DateTime? MainCarriageATD { get; set; }
+        public DateTime? MainCarriageATA { get; set; }
+        public DateTime? EstimatedEmptyPickupDate { get; set; }
+        public DateTime? ActualEmptyPickupDate { get; set; }
+        public DateTime? EstimatedGateInDate { get; set; }
+        public DateTime? ActualGateInDate { get; set; }
+        public string EmptyPickupLocation { get; set; }
+        public string DepartureLocation { get; set; }
+        public string DestinationLocation { get; set; }
+        public string CurrentStatus { get; set; }
+        public string CurrentLocation { get; set; }
+        public DateTime? CurrentStatusDate { get; set; }
+        public bool HasContainerException { get; set; }
     }
 }
