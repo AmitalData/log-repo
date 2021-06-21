@@ -9,6 +9,7 @@ using Logitude.Test.Base.Models.Shared;
 using Logitude.Test.Base.Models.UserTenantPreparation;
 using Logitude.Test.Base.Services;
 using System;
+using System.Configuration;
 using TechTalk.SpecFlow;
 
 namespace Logitude.CargoTrackingTests.Steps
@@ -27,8 +28,8 @@ namespace Logitude.CargoTrackingTests.Steps
         {
             ApiResponse<ShipmentPM> response = UpdateShipmentGrossWeight(ShipmentContext.DirectShipment);
             CargoTrackingBuildService cargoTrackingBuildService = new CargoTrackingBuildService();
-            string sourceConnectionString = "Data Source=.;Initial Catalog=Logitude2-5_Main;Integrated Security=False;Persist Security Info=True;User ID=sa;Password=Saas256;MultipleActiveResultSets=True;Connect Timeout=60";
-            string destinationConnectionString = "Data Source=.;Initial Catalog=Logitude2-5_CargoTracking;Integrated Security=False;Persist Security Info=True;User ID=sa;Password=Saas256;MultipleActiveResultSets=True;Connect Timeout=60";
+            string sourceConnectionString = ConfigurationManager.ConnectionStrings["LogitudeConnectionString"].ConnectionString;//"Data Source=.;Initial Catalog=Logitude2-5_Main;Integrated Security=False;Persist Security Info=True;User ID=sa;Password=Saas256;MultipleActiveResultSets=True;Connect Timeout=60";
+            string destinationConnectionString = ConfigurationManager.ConnectionStrings["CargoTrackingConnectionString"].ConnectionString; //"Data Source=.;Initial Catalog=Logitude2-5_CargoTracking;Integrated Security=False;Persist Security Info=True;User ID=sa;Password=Saas256;MultipleActiveResultSets=True;Connect Timeout=60";
             cargoTrackingBuildService.BuildCargoTrackingTables(sourceConnectionString,destinationConnectionString);
         }
 
