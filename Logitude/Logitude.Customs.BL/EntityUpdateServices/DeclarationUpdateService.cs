@@ -135,7 +135,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (!entityPM.IsCourierDeclaration)
             {
                 CustomsHouseTypePM houseType = houseTypeQuery.GetHouseTypewithAdditional(entityPM.DeclarationOfficeCode, entityPM.Tenant);
-                if (houseType != null)
+                if (houseType != null &&  entityPM.IsAmendment!= true)
                 {
                     entityPM.Consignments[0].UnloadPortCode = houseType.UnloadPortCode;
                 }
@@ -167,6 +167,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
                 // moran 31.5.15 - Task 13325 <--
             }
+            if(entityPM.IsAmendment!=true)
             entityPM.TaxationDateTime = DateTime.Now.Date;
             
         if (entityPM.IsAmendment==true)
@@ -730,8 +731,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             if (entityPM.CasualImporterTel!=null)
             {
-                entityPM.CasualImporterTel = Regex.Replace(entityPM.CasualImporterTel, "[^.0-9]", "");///- יש להוריד את כל התווים הלא נומריים 
+                entityPM.CasualImporterTel = Regex.Replace(entityPM.CasualImporterTel, "[^0-9]", "");///- יש להוריד את כל התווים הלא נומריים 
                 entityPM.CasualImporterTel = Regex.Replace(entityPM.CasualImporterTel, @"\s+", "");///שיהייה
+                if (!string.IsNullOrWhiteSpace( entityPM.CasualImporterTel) && entityPM.CasualImporterTel.StartsWith("5"))//If the number start with 5 add 0 
+                {
+                    entityPM.CasualImporterTel = "0" + entityPM.CasualImporterTel;//Task 139114: בדיקת חוקיות של הזנת מספר טלפון והעלאת PENDING 903- טלפון לא חוקי + טיפול נוסף
+                }
+
             }
             if (entityPM.CasualImporterTel!= entityPOCO.CasualImporterTel)
             {
@@ -764,7 +770,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 return;// not courier !!
             }
             updateDeclarationPending903InvalidPhoneNumberService.Calc(myDeclarationCourierStatusPM);
-            if (myDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
+            if (myDeclarationCourierStatusPM != null && myDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
             {
                 
                 declarationCourierStatusUpdateService.Update(myDeclarationCourierStatusPM, true);
@@ -1254,7 +1260,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             }
                         }
                     }
-
+                    /*
                     if(newDeclarationCourierStatusPM != null && !newDeclarationCourierStatusPM.IsClosedForFollowUp)
                     {
                         if (this._CourierMasterPM == null)
@@ -1275,6 +1281,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             myCourierMasterUpdateService.Update(this._CourierMasterPM, true);
                         }
                     }
+                    */
                 }
                 
             }

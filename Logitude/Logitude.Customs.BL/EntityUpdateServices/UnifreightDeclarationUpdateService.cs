@@ -41,6 +41,7 @@ using Unifreight.Data.AmitalModel.EntityKeys;
 using Unifreight.Data.AmitalModel.Repsitories;
 using Logitude.Customs.Def.Messaging.Customs;
 using Simplog.Data.CommonDataModel;
+using System.Globalization;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -105,6 +106,17 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         internal void Update(Boolean doTask)//eitan h 12/3/15 task 11788
         //internal void Update()
         {
+            DateTime stopLogAt = DateTime.MinValue;
+            string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20210427HD368109.LogUntilDateyyyyMMdd"];
+            if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+            {
+                stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd,
+                                                    "yyyyMMdd",
+                                                    CultureInfo.InvariantCulture,
+                                                    DateTimeStyles.None);
+            }
+            string logData = "";
+
             this._CreateCCUTAXFor105Feature = true; ///ConfigurationManager.AppSettings["20180121.CreateCCUTAXFor105"] == "1";///todo
             this._NoRaiseLD2ULogicFeature = true; ///ConfigurationManager.AppSettings["20180204.NoRaiseLD2ULogicFeature"] == "1";
             var cntxt = RequestSheetContext.Current.GetContextOrDefault();
@@ -126,13 +138,17 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
 
                 //if ((!Environment.MachineName.Equals("itzik-7-new", StringComparison.OrdinalIgnoreCase)) && (!Environment.MachineName.Equals("yuval-7-new", StringComparison.OrdinalIgnoreCase))) return;
-                if (String.IsNullOrWhiteSpace(_DirtyDeclarationPM.CustomFileNo) && !(_DirtyDeclarationPM.IsCancelled == true && !String.IsNullOrWhiteSpace(_DBOccDeclarationPM.CustomFileNo)))
+                if (_DirtyDeclarationPM.IsCancelled == true)
                 {
-                    return;
+                    logData = $"_DirtyDeclarationPM.CustomFileNo={_DirtyDeclarationPM.CustomFileNo},_DBOccDeclarationPM.CustomFileNo={_DBOccDeclarationPM.CustomFileNo},_DirtyDeclarationPM.IsCancelled={_DirtyDeclarationPM.IsCancelled}"; 
+                    LogitudeSettings.HandleLogMe(logData, false, "UpdateUnifreight_" + _DirtyDeclarationPM.Id, stopLogAt);
+                    //return;
                 }
                 //<--- Yuval Chalup 19.11.2015 TASK-17450
                 if (_DirtyDeclarationPM.IsConvertedDeclaration)
                 {
+                    logData = $"_DirtyDeclarationPM.IsConvertedDeclaration={_DirtyDeclarationPM.IsConvertedDeclaration}";
+                    LogitudeSettings.HandleLogMe(logData, false, "UpdateUnifreight_" + _DirtyDeclarationPM.Id, stopLogAt);
                     return;
                 }
                 //Yuval Chalup 19.11.2015 TASK-17450 --->
@@ -195,6 +211,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         int? FILENO = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO);
                         if (FILENO.HasValue)
                         {
+                            LogMessagingUtil.Instance.AppendLine("Update3: GetFILENOByCUSTOMFILENO, file: " + lCUSTOMFILENO);
                             int? FILENO1 = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO_forUpdateNOWAIT(lCUSTOMFILENO);
 
                             //if(file!=null) file.WriteLine("UnifrightDeclarationUpdateService - Updating " + FILENO + ": " + DateTime.Now.ToString());
@@ -202,6 +219,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                             //do not need the composite due we delete all down entities !!!_CCUFILEMPM = myCCUFILEMQueryService.GetSingle(FILENO.Value, true, false);
                             _CCUFILEMPM = myCCUFILEMQueryService.GetSingle(FILENO.Value, false, false);
+                            if(_CCUFILEMPM == null)
+                            {
+                                LogMessagingUtil.Instance.AppendLine("Update4: _CCUFILEMPM GetSingle failed, file no: " + FILENO.Value);
+                            }
+                            else
+                            {
+                                LogMessagingUtil.Instance.AppendLine("Update5: _CCUFILEMPM GetSingle, file: " + _CCUFILEMPM.CUSTOMFILENO);
+                            }
+                            
                             _CCUFILEMPMwithCCUMSHGRP = myCCUFILEMQueryService.GetSingle(FILENO.Value, false, false);
 
                             //CCUFILEMKeys cCUFILEMKeys = new CCUFILEMKeys { FILENO = FILENO.GetValueOrDefault() };
@@ -234,8 +260,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                         // Update for the Delete
                                         myCCUFILEMUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
                                         myCCUFILEMUpdateService.Update(_CCUFILEMPM, true);
+                                        LogMessagingUtil.Instance.AppendLine("Update6: _CCUFILEMPM Update, file: " + _CCUFILEMPM.CUSTOMFILENO);
                                         _AmitalContext.SaveChanges();
-
+                                        LogMessagingUtil.Instance.AppendLine("Update7: _CCUFILEMPM SaveChanges, file: " + _CCUFILEMPM.CUSTOMFILENO);
                                         //Clean up the Supplier Invoices
                                         _CCUFILEMPM.CCUTRANSPVALs = null;
                                         _CCUFILEMPM.DeletedCCUTRANSPVALs = null;
@@ -246,8 +273,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             {
                                 if (_DirtyDeclarationPM.IsCancelled == true) // moran 5.1.16 - AMI-55274 -->
                                 {
+                                    logData = $"before delete ccufilem,_DirtyDeclarationPM.IsCancelled={_DirtyDeclarationPM.IsCancelled}";
+                                    LogitudeSettings.HandleLogMe(logData, false, "UpdateUnifreight_" + _DirtyDeclarationPM.Id, stopLogAt);
                                     myCCUFILEMUpdateService.FastTotalDeleteComposition(_CCUFILEMPM);
                                     _AmitalContext.SaveChanges();
+                                    logData = $"after delete ccufilem,_DirtyDeclarationPM.IsCancelled={_DirtyDeclarationPM.IsCancelled}";
+                                    LogitudeSettings.HandleLogMe(logData, false, "UpdateUnifreight_" + _DirtyDeclarationPM.Id, stopLogAt);
                                 }
                                 else // moran 5.1.16 - AMI-55274 <--
                                 {
@@ -378,6 +409,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             {
                                 try
                                 {
+                                    LogMessagingUtil.Instance.AppendLine("Update1: _CCUFILEMPM Update, file: " + _CCUFILEMPM.CUSTOMFILENO);
                                     myCCUFILEMUpdateService.Update(_CCUFILEMPM, true);
                                 }
                                 catch (Exception eUpdate)
@@ -416,6 +448,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
 
                 ex.ChangeExceptionMessage("UnifrightDeclarationUpdateService Exception");
+                LogMessagingUtil.Instance.AppendLine("Update2: Exception, file: " + _CCUFILEMPM.CUSTOMFILENO + "\n" + ex.Message); 
                 throw;
                 //throw new BusinessErrorException("") ;
             }
@@ -839,6 +872,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 if (_FromMessaging == true )
                 {
                     var requestData2 = "";
+                    bool isAmendmentRelease = false;
                     var myEventContextTagModel = new EventContextTagModel();
                     myEventContextTagModel = this._DirtyDeclarationPM.CurrentContextTag as EventContextTagModel;
                     if (myEventContextTagModel != null)
@@ -850,6 +884,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         if (myEventContextTagModel.CallProccessID == EventContextTagModel.ProccessEnum.DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageResponseServiceUpdate)
                         {
                             requestData2 = GetMyFUStatusXML(myEventContextTagModel.EventCode, myEventContextTagModel.EventCode, "", "new", myEventContextTagModel.StatusDateTime, false);
+                            if (!(string.IsNullOrEmpty(this._DirtyDeclarationPM.AmendmentOriginalDeclartation) && this._DirtyDeclarationPM.AmendmentDontDisplayInList == false))
+                            {
+                                isAmendmentRelease = true;
+                            }
                         }
                     }
                     //if (myEventContextTagModel.CallProccessID == EventContextTagModel.ProccessEnum.MN_MSG4_SendManifestFeedBack_MessageResponseService)
@@ -867,6 +905,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         {
                             requestData = requestData2;
                         }
+                    }
+                    if (isAmendmentRelease) 
+                    {
+                        requestData = requestData.Replace("</transmission>", string.Concat("<GENERALQUERYMODE>AMENDMENTRELEASE</GENERALQUERYMODE>", "</transmission>"));
                     }
                 }
                 /*
@@ -1152,6 +1194,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             _loanAmount = 0; // moran 17.1.16 - Task 19798
             if (_CCUFILEMPM == null)
             {
+                LogMessagingUtil.Instance.AppendLine("DoCustomFile1: _CCUFILEMPM new record");
                 userCode = GetUserCodeByID(_DirtyDeclarationPM.CreatedByUserId);
                 _CCUFILEMPM = new CCUFILEMPM()
                 {
@@ -1163,9 +1206,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     OPENBYUSER = userCode,
                     FROMIIG = "T",
                 };
+                LogMessagingUtil.Instance.AppendLine("DoCustomFile2: _CCUFILEMPM new record created, OPENBYUSER: " + userCode);
             }
             else
             {
+                LogMessagingUtil.Instance.AppendLine("DoCustomFile3: _CCUFILEMPM record exist, file: " + _CCUFILEMPM.CUSTOMFILENO);
                 _CCUFILEMPM.ChangeSetOp = ChangeSetOperation.Update;
             }
 

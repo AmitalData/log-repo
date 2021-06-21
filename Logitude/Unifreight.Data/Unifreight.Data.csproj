@@ -212,11 +212,23 @@
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBSTORAGE.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBTARIFF.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBTAXTYPE.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBTEAM.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBTRANSP.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBTSRUFTYPE.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBUNLOAD.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.DWGNDCARD.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GAQDATA.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GAQDATALOAD.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GAQDEF.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GAQDLOAD.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GAQDOC.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GAQFILEDATA.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GAQMERGE.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GAQQLOAD.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GAQREMARK.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GAQSTRUCTURE.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GAQUSER.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GCBSCRNVWU.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GDFDATA.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GDMENTITY.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GDMFILEVER.cs" />
@@ -232,7 +244,10 @@
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GNDADR.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GNDCARD.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GRTRATE.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GSCUSR.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GTBDOC.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GTBDPTM.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GTBFUSTATU.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GTBITEM.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GTBITMCN.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GTBMANDT.cs" />
@@ -327,6 +342,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBFITYPE.cs" />
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>

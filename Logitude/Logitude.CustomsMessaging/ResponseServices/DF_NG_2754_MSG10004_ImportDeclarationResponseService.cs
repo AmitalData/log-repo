@@ -521,6 +521,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //_MyDeclarationPM.CIFValue = customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.CifValueNIS.Value;
             _MyDeclarationPM.CIFValue = Math.Round(customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.CifValueNIS.Value, 2);
             //_MyDeclarationPM.TotalTax = customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TaxAssessedAmount.Value;
+            var prev_TotalTax = _MyDeclarationPM.TotalTax;
+            bool isSendVPE = false;
             _MyDeclarationPM.TotalTax = Math.Round(customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TaxAssessedAmount.Value, 2);
             _MyDeclarationPM.DealValueWithFactor = Math.Round(customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TotalMADDealValueAmountNIS.Value, 2);
             _MyDeclarationPM.TaxationDateTime = Convert.ToDateTime(customResponse.Response.Declaration.DMExtensions.TaxationDateTime);
@@ -881,11 +883,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     // Pending 900
                     CourierMasterQueryService courierMasterService = new CourierMasterQueryService(requestParams.Tenant);
                     CourierMasterPM courierMaster = courierMasterService.GetSingle(_MyDeclarationPM.CourierMasterId, false, false);
+
+
                     if (courierMaster != null)
                     {
                         var myGDFDATAQueryService = new GDFDATAQueryService(AmitalContext.GetContext(requestParams.Tenant));
                         var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_ACT_COLLECT", "NON", courierMaster.IntegratorNumber, false, true);
                         bool isCollectActive = def.DEFDATA == "Y";
+
+                        
                         if (declarationPendingPM_900 == null)
                         {
                             CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(context);
@@ -894,6 +900,19 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             {
                                 LogMessagingUtil.Instance.AppendLine("לא קיים קוד תהליך גביה- במידה ומופעל בדיקה האם להגדיר גבייה = 900 בטבלת סיבות Pending");
                                 isCollectActive = false;
+                            }
+                        }
+
+                    
+
+                        if (isCollectActive && _MyDeclarationPM.TotalTax > 0 && _MyDeclarationPM.TotalTax != prev_TotalTax)
+                        {
+                            if ((declarationPendingPM_900 != null && declarationPendingPM_900.Status != "S"))
+                            {
+                                if (_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.FirstOrDefault().IncotermCode != "DDP")
+                                {
+                                    isSendVPE = true;
+                                }
                             }
                         }
 
@@ -910,6 +929,33 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             }
                             if (isStatusVPA) isCollectActive = false;
                         }
+
+                        // if (declarationPendingPM_900 == null)
+                        // {
+                        //     CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(context);
+                        //     CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle("900", false, false);
+                        //     if (courierPendingReasonPM == null)
+                        //     {
+                        //         LogMessagingUtil.Instance.AppendLine("לא קיים קוד תהליך גביה- במידה ומופעל בדיקה האם להגדיר גבייה = 900 בטבלת סיבות Pending");
+                        //         isCollectActive = false;
+                        //     }
+                        // }
+
+             
+
+                        // if (isCollectActive)
+                        // {
+                        //     def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_COL_LOW_DIF", "NON", "NON", false, true);
+                        //     string defValue = def.DEFDATA;
+                        //     decimal defaultAmount = 0;
+                        //     var boolvar = (decimal.TryParse(defValue, out defaultAmount));
+                        //     decimal totalTax = _MyDeclarationPM.TotalTax > 0 ? _MyDeclarationPM.TotalTax.Value : 0;
+                        //     decimal prevTotalTax = prev_TotalTax > 0 ? prev_TotalTax.Value : 0;
+                        //     if (defaultAmount > 0 && defaultAmount >= totalTax - prevTotalTax)
+                        //     {
+                        //         isCollectActive = false;
+                        //     }
+                        // }
 
                         if (isCollectActive)
                         {
@@ -942,8 +988,25 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 declarationPendingPM_900.Status = "S";
                                 if (_MyDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) _MyDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
                                 LogMessagingUtil.Instance.AppendLine("Courier Pending Reason Code 900 Set as Solved");
+
                             }
                         }
+ 
+ 
+                        if (isCollectActive && _MyDeclarationPM.TotalTax > 0 && _MyDeclarationPM.TotalTax != prev_TotalTax)
+                        {
+                            if ((declarationPendingPM_900 != null && declarationPendingPM_900.Status != "S") )
+                            {
+                                if (_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.FirstOrDefault().IncotermCode != "DDP")
+                                {
+                                    isSendVPE = true;
+                                }
+                            }
+
+                        }
+
+                      
+
                     }
 
                 }
@@ -1118,6 +1181,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (requestParams.InterfaceTypeCode == "8373")
             {
                 myDeclarationUpdateService.SendDelayedDeclarationStatusRequest(_MyDeclarationPM);
+            }
+            if (isSendVPE)
+            {
+                string xml_status = "new";
+                RaiseStatus(_MyDeclarationPM, "", "VPE", xml_status);
             }
         }
 
@@ -2264,5 +2332,47 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
+        public static void RaiseStatus(DeclarationPM dirtyDeclarationPM, string loggingUserId, string statusId, string xmlStatus)
+        {
+
+            try
+            {
+                if (string.IsNullOrWhiteSpace(loggingUserId)) loggingUserId = AuthenticationUtil.ResolveUserId(dirtyDeclarationPM.Tenant);
+                var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                {
+                    Tenant = dirtyDeclarationPM.Tenant,
+                    objectTableName = "Customs.Declaration",
+                    EventCode = statusId,
+                    notes = "DO_NOT_RAISE_EVENT",
+                    CommunicationLoggingEntityReference = dirtyDeclarationPM.DeclarationNumber,
+                    EntityId = dirtyDeclarationPM.Id,
+                    UserId = loggingUserId,
+
+                    CommunicationSubject = "FU Status " + statusId + " from Logitude",
+                    MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                    {
+                        entname = "CFIFILEM",
+                        primary_number = dirtyDeclarationPM.CustomFileNo,
+                        status = "new",
+                        xml_status = xmlStatus,
+                        status_id = statusId,
+                        status_DateTime = DateTime.Now,
+                        //status_place = "",
+                        //status_save = "no_fail",
+                        comments = "",
+                    }
+                };
+                if (!dirtyDeclarationPM.IsConnectedToUnifreight) myAmitalEventTracerModel.NotConnectedToUniface = true;
+
+                LogMessagingUtil.Instance.AppendLine("AmitalEventTracer.CreateTraceEvent Status " + statusId + "  CustomFileNo = " + dirtyDeclarationPM.CustomFileNo + "   ");
+                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
+
+            }
+            catch (System.Exception)
+            {
+                // TODO: BL Stop Execute or Cuntinue - Ask IHAB
+                throw;
+            }
+        }
     }
 }

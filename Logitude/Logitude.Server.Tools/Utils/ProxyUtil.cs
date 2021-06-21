@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace Logitude.Server.Tools.Utils
 {
@@ -16,6 +18,10 @@ namespace Logitude.Server.Tools.Utils
         public static string JsonConvertSerialize(object obj)
         {
             return JsonConvert.SerializeObject(obj);
+        }
+        public static XmlDocument DeserializeXmlNode(string jsonString)
+        {
+            return JsonConvert.DeserializeXmlNode(jsonString, "CourierHawb");
         }
         public static T JsonConvertDeserializeTyped<T>(string jsonString)
         {

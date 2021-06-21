@@ -601,7 +601,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TotalFOBUSDAmount != null)
 
                 _MyDeclarationPM.FOBValueDollar = Math.Round(customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TotalFOBUSDAmount.Value, 2);
-
+            var prev_TotalTax = _MyDeclarationPM.TotalTax;
+            bool isSendVPE = false;
             _MyDeclarationPM.TotalTax = Math.Round(customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TaxAssessedAmount.Value, 2);
             if (requestParams.GetType() != typeof(DeclarationRestoreRequestParams))//Task 44715
             {
@@ -947,6 +948,31 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                         if (isCollectActive)
                         {
+                            def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_COL_LOW_DIF", "NON", "NON", false, true);
+                            string defValue = def.DEFDATA;
+                            decimal defaultAmount = 0;
+                            var boolvar = (decimal.TryParse(defValue, out defaultAmount));
+                            decimal totalTax = _MyDeclarationPM.TotalTax > 0 ? _MyDeclarationPM.TotalTax.Value : 0;
+                            decimal prevTotalTax = prev_TotalTax > 0 ? prev_TotalTax.Value : 0;
+                            if (defaultAmount > 0 && defaultAmount >= totalTax - prevTotalTax)
+                            {
+                                isCollectActive = false;
+                            }
+                        }
+
+                        if (isCollectActive && _MyDeclarationPM.TotalTax > 0 && _MyDeclarationPM.TotalTax != prev_TotalTax)
+                        {
+                            if (declarationPendingPM_900 != null && declarationPendingPM_900.Status != "S")
+                            {
+                                if (_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.FirstOrDefault().IncotermCode != "DDP")
+                                {
+                                    isSendVPE = true;
+                                }
+                            }
+                        }
+
+                        if (isCollectActive)
+                        {
 
                             LogMessagingUtil.Instance.AppendLine("תהליך גביה- במידה ומופעל בדיקה האם להגדיר גבייה = 900");
                             if (_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.FirstOrDefault().IncotermCode != "DDP" && _MyDeclarationPM.TotalTax > 0)
@@ -1152,6 +1178,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (requestParams.InterfaceTypeCode == "8373")
             {
                 myDeclarationUpdateService.SendDelayedDeclarationStatusRequest(_MyDeclarationPM);
+            }
+            if (isSendVPE)
+            {
+                string xml_status = "new";
+                RaiseStatus(_MyDeclarationPM, "", "VPE", xml_status);
             }
         }
 
@@ -2275,6 +2306,49 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 LogMessagingUtil.Instance.AppendLine("AmitalEventTracer.CreateTraceEvent: eventCode = " + eventCode + " CustomFileNo= " + _MyDeclarationPM.CustomFileNo + "   ");
                 AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, true);
+
+            }
+            catch (System.Exception)
+            {
+                // TODO: BL Stop Execute or Cuntinue - Ask IHAB
+                throw;
+            }
+        }
+
+        public static void RaiseStatus(DeclarationPM dirtyDeclarationPM, string loggingUserId, string statusId, string xmlStatus)
+        {
+
+            try
+            {
+                if (string.IsNullOrWhiteSpace(loggingUserId)) loggingUserId = AuthenticationUtil.ResolveUserId(dirtyDeclarationPM.Tenant);
+                var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                {
+                    Tenant = dirtyDeclarationPM.Tenant,
+                    objectTableName = "Customs.Declaration",
+                    EventCode = statusId,
+                    notes = "DO_NOT_RAISE_EVENT",
+                    CommunicationLoggingEntityReference = dirtyDeclarationPM.DeclarationNumber,
+                    EntityId = dirtyDeclarationPM.Id,
+                    UserId = loggingUserId,
+
+                    CommunicationSubject = "FU Status " + statusId + " from Logitude",
+                    MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                    {
+                        entname = "CFIFILEM",
+                        primary_number = dirtyDeclarationPM.CustomFileNo,
+                        status = "new",
+                        xml_status = xmlStatus,
+                        status_id = statusId,
+                        status_DateTime = DateTime.Now,
+                        //status_place = "",
+                        //status_save = "no_fail",
+                        comments = "",
+                    }
+                };
+                if (!dirtyDeclarationPM.IsConnectedToUnifreight) myAmitalEventTracerModel.NotConnectedToUniface = true;
+
+                LogMessagingUtil.Instance.AppendLine("AmitalEventTracer.CreateTraceEvent Status " + statusId + "  CustomFileNo = " + dirtyDeclarationPM.CustomFileNo + "   ");
+                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
 
             }
             catch (System.Exception)

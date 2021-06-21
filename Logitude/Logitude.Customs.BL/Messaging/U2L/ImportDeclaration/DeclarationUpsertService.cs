@@ -214,11 +214,22 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
                     //Check if Declaration was already paid, constraint in progress or Future payment was done
                     var declarationValidator = new Logitude.Customs.BL.Validators.DeclarationValidator(_MyDeclarationPM);
+                    if (_MyDeclarationPM.IsCourierDeclaration) declarationValidator.ToUpdateWithPaymentDate = true;
                     declarationValidator.DeclarationViewDisplayOnlyChecks();
                     if (declarationValidator.ErrorCode.Count > 0)
                     {
                         MyGenericResponseObj.Message = TranslateTextsClass.Translate(declarationValidator.ErrorCode[0], _MyDeclarationPM.Tenant, true);
                         MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
+                        return;
+                    }
+                    if (_MyDeclarationPM.IsCourierDeclaration && _MyDeclarationPM.PaymentDate.HasValue)
+                    {
+                        UpdateTrucker();
+                        MyGenericResponseObj.Message = "Declaration has already been paid (Payment date " + this._MyDeclarationPM.PaymentDate + "), only Trucker details will be updated";
+                        MyGenericResponseObj.ApplicationId = _MyDeclarationPM.Id;
+                        MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
+                        MyCommunicationsParams.LoggingEntityId = MyGenericResponseObj.ApplicationId;
+                        scope.Complete();
                         return;
                     }
                     //Yuval Chalup 04.03.2015 TASK-11617 --->
@@ -853,11 +864,17 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
             }
         }
- 
+
+
         public void SendClientSearch()
         {
             int.TryParse(_AmitalCustomsFile.Tenant, out int Tenant);
             var loggedUserId = AuthenticationUtil.ResolveUserId(Tenant);
+            string importerId = _AmitalCustomsFile.ImporterId;
+            if (_AmitalCustomsFile.ImporterId.Length > 9)
+            {
+                importerId = _AmitalCustomsFile.ImporterId.Substring(0, 9);
+            }
             var newClientSearchRequestParams = new ClientSearchRequestParams()
             {
                 LoggingEnabled = true,
@@ -869,7 +886,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 LoggingUserId = loggedUserId,
                 RequestVIA = SendRequestVIA.WebServiceBatch,
                 SuppressSplitWR = true,
-                ExternalId = _AmitalCustomsFile.ImporterId.Substring(0, 9),
+                ExternalId = importerId,
             };
 
             try

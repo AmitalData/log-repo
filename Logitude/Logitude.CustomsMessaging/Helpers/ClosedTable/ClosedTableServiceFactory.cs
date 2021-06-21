@@ -274,6 +274,26 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
                          );
                     }
                     break;
+                case "1423":
+                case "CertificateExemptionType":
+                    {
+
+                        closedTableService = new Update1423CertificateExemptionType(customContext, entitySystemTables,
+                         (mycustomContext) =>
+                         {
+                             return new
+                                 CertificateExemptionTypeUpdateService(mycustomContext, new Dictionary<string, IContext>(), tenant);
+                         },
+                         (mycustomContext) =>
+                         {
+                             var qs = new CertificateExemptionTypeQueryService(mycustomContext);
+                             return qs as ICanGetAllClosedTable<CertificateExemptionTypePM>;
+                         }
+                         , tenant
+                         , false
+                         );
+                    }
+                    break;
                 case "1998":
                 case "NDMessageActionCode":
                     {
@@ -306,6 +326,25 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
                         {
                             var qs = new ContainerTypeQueryService(mycustomContext);
                             return qs as ICanGetAllClosedTable<ContainerTypePM>;
+                        }
+                        , tenant
+                        , false
+                        );
+                    }
+                    break;
+                case "1259":
+                case "CargoIdentifireType":
+                    {
+                        closedTableService = new Update1259CargoIdentifireType(customContext, entitySystemTables,
+                          (mycustomContext) =>
+                          {
+                              return new
+                                  CargoIdentifireTypeUpdateService(mycustomContext, new Dictionary<string, IContext>(), tenant);
+                          },
+                        (mycustomContext) =>
+                        {
+                            var qs = new CargoIdentifireTypeQueryService(mycustomContext);
+                            return qs as ICanGetAllClosedTable<CargoIdentifireTypePM>;
                         }
                         , tenant
                         , false

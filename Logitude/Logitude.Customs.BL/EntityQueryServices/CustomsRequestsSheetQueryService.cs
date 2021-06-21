@@ -161,7 +161,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "UCB8212",/// Batch Send Collateral
 "8250",
 "2892",
-
+"2450",
 "UCBNDCD",///  Send bonded filing
 ///"8302", //בקשה לטופס הצהרה
 
@@ -169,6 +169,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
 ,"2757", //הצהרת יצוא - מסר נכנס
 ///"8302" //בקשה לטופס הצהרה
 
+"UCB2715", // שידור מסמכים שגויים ראשי - מפצל
+"UCBCTML", // שידור הגשה בלדר
+"UCBCMSS", //שינוי אתר איחסון לבלדר
+"UCB9999", // ניתוח מחדש
+"8326", // שאילתא לתצהיר יבואן
+"UCTZIP", // Unifreight Table Custom ZIP
+"UCB2750", // שידור הצהרות בלדר
 
             };
 
@@ -294,13 +301,21 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "UCB8212",/// Batch Send Collateral
 "8250",
 "2892",
+"2450",
 
+"UCUDO", 
 "UCBNDCD",///  Send bonded filing
 ///"8302", //בקשה לטופס הצהרה
 
 "2751"//הצהרת יצוא- מסר יוצא
 ,"2757", //הצהרת יצוא - מסר נכנס
 ///"8302" //בקשה לטופס הצהרה
+
+"UCB2715", // שידור מסמכים שגויים ראשי - מפצל
+"UCBCTML", // שידור הגשה בלדר
+"UCBCMSS", //שינוי אתר איחסון לבלדר
+"UCB9999", // ניתוח מחדש
+"8326", // שאילתא לתצהיר יבואן
 
 
             };
@@ -415,12 +430,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "1171", // - מסר תשובה מצהר
 "1172", // - מסר תשובה מצהר - נדחף
 "8373",//"שאילתא לשחזור נתוני הצהרה"
-
+"UCUDO", 
  "UCB8212"
  ,"2892" ,
 "UCB9999",
 "2751",
 "2757",
+
 //"8302" //בקשה לטופס הצהרה
 };
 

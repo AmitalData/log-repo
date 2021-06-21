@@ -170,18 +170,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                 }
             }
-
-            this.MyRequestSheetParam = new RequestSheetParam();
-            this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-            this.MyRequestSheetParam.EntityId1 = _MyDeclarationPM.Id;
-            this.MyRequestSheetParam.RequestDescription = "בקשה לטופס הצהרה " + _MyDeclarationPM.DeclarationNumber; 
+            if (_MyDeclarationPM != null)
+            {
+                this.MyRequestSheetParam = new RequestSheetParam();
+                this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+                this.MyRequestSheetParam.EntityId1 = _MyDeclarationPM.Id;
+                this.MyRequestSheetParam.RequestDescription = "בקשה לטופס הצהרה " + _MyDeclarationPM.DeclarationNumber;
+            }
         }
 
         private void AnalyzePaymentDocument(Attachment attachment, DF_NG_8302_Web03_DeclarationPrintRequestParams requestParams,string MyDeclarationNumVersionId)
         {
             ICommonDataContext dataContext = CommonDataContext.GetContext(requestParams.Tenant);
             var documentsFilingService = new UnifreightDocumentsFilingService(dataContext, requestParams.Tenant,
-                new CustomDocumentsFilingParams() { MainInterfaceCode = "8302" }, MyDeclarationNumVersionId);
+                new CustomDocumentsFilingParams() { MainInterfaceCode = "8302" , IsCourier = IsCourier(requestParams.Tenant) }, MyDeclarationNumVersionId);
             var documentTypeQuery = new DocumentTypeQuery(requestParams.Tenant);
             var documentsFilingQuery = new DocumentsFilingQuery(requestParams.Tenant);
             DocumentsFilingPM documentsFilingPM = null;
@@ -225,7 +227,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private void UpdatePaymentDocument(DocumentsFilingPM documentsFilingPM, Attachment attachment, DF_NG_8302_Web03_DeclarationPrintRequestParams requestParams,string DeclarationNumVersionId)
         {
             ICommonDataContext dataContext = CommonDataContext.GetContext(requestParams.Tenant);
-            var documentsFilingService = new UnifreightDocumentsFilingService(dataContext, requestParams.Tenant, new CustomDocumentsFilingParams() { MainInterfaceCode = "8302" }, DeclarationNumVersionId);
+            var documentsFilingService = new UnifreightDocumentsFilingService(dataContext, requestParams.Tenant, new CustomDocumentsFilingParams() { MainInterfaceCode = "8302", IsCourier = IsCourier(requestParams.Tenant) }, DeclarationNumVersionId);
 
             documentsFilingPM.Description = "טופס הצהרה " + this._MyDeclarationPM.DeclarationNumber + "-" + this._MyDeclarationPM.VersionId;
             documentsFilingPM.Name = "טופס הצהרה " + this._MyDeclarationPM.DeclarationNumber + "-" + this._MyDeclarationPM.VersionId;
@@ -242,7 +244,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private DocumentsFilingPM CreatePaymentDocument(Attachment attachment, DF_NG_8302_Web03_DeclarationPrintRequestParams requestParams, string DeclarationNumVersionId)
         {
             ICommonDataContext dataContext = CommonDataContext.GetContext(requestParams.Tenant);
-            var documentsFilingService = new UnifreightDocumentsFilingService(dataContext, requestParams.Tenant, new CustomDocumentsFilingParams() { MainInterfaceCode = "8302" }, DeclarationNumVersionId);
+            var documentsFilingService = new UnifreightDocumentsFilingService(dataContext, requestParams.Tenant, new CustomDocumentsFilingParams() { MainInterfaceCode = "8302" , IsCourier = IsCourier(requestParams.Tenant) }, DeclarationNumVersionId);
             var documentTypeQuery = new DocumentTypeQuery(requestParams.Tenant);
 
             var documentsFilingPM = new DocumentsFilingPM();
@@ -269,6 +271,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
             return documentsFilingPM;
 
 
+
+        }
+
+        private bool IsCourier(int tenant)
+        {
+            var pm = CustomsSettingQueryService.GetSettingByTenant(tenant);
+            return pm?.CompanyType == "B";//Courier
 
         }
     }

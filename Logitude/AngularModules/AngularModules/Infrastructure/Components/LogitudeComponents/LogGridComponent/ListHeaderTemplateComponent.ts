@@ -52,6 +52,9 @@ export class ListHeaderTemplateComponent implements OnInit {
             if (this.colDef.ColumnHeaderTemplateName === "TransportModeListHeaderTemplate") {
                 SessionLocator.DynamicLoader.Load("./CustomsModules/CustomsListTemplates/Components/ListHeaderTemplates/TransportModeListHeaderTemplate", this._ViewContainerRef);
             }
+            if (this.colDef.ColumnHeaderTemplateName === "BlackTransportModeListHeaderTemplate") {
+                SessionLocator.DynamicLoader.Load("./CustomsModules/CustomsListTemplates/Components/ListHeaderTemplates/BlackTransportModeListHeaderTemplate", this._ViewContainerRef);
+            }
 
             if (this.htmlListHeaderUrl) {
                 SessionLocator.DynamicLoader.Load(this.htmlListHeaderUrl, this._ViewContainerRef)

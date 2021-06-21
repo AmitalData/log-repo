@@ -54,10 +54,12 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
     public IsAmendmentDeficitInitiatedEnabled: boolean=false;
     public IsNoAmendmentsMsgVisible: boolean = false;
     ResponseData: INF_MSG_GenericResponseData;
+    public IsOldAmendment: boolean;
 
     //Grids data
     AdditionalInformationlist: ObservableCollection = new ObservableCollection([]);
     AmendmentViewsList: ObservableCollection = new ObservableCollection([]);
+    ReferenceList: ObservableCollection = new ObservableCollection([]);
 
     //Services
     private declarationWebService: DeclarationWebService = new DeclarationWebService;
@@ -116,9 +118,8 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
                         this.EntityPM = this.entityArgs.EntityPM;
                         this.ObjectTableName = this.entityArgs.ObjectTableName;
                         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
-
                         this.Listen();
-
+                        this.IsOldAmendment = this.entityArgs.EditComponent.SelectedTab.Code == "DCCO";
                         console.log("Declaration", this.EntityPM);
                         this.BuildTabs();
 
@@ -156,7 +157,9 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
     BuildTabs() {
         this.SelectedTab = "Details";
         this.TabsSource.push({ Name: "Details", isSelected: true, Header: TextCodeTranslator.Translate("Customs.Declaration.O.CorrectionStatement") });
+        this.TabsSource.push({ Name: "References", isSelected: false, Header: TextCodeTranslator.Translate("Customs.Declaration.O.References") });
         this.TabsSource.push({ Name: "Errors", isSelected: false, Header: TextCodeTranslator.Translate("Customs.Declaration.O.Errors") });
+
     }
 
 
@@ -261,6 +264,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
 
                     this.GeneralData = [];
                     var amendmentViewsList = [];
+                    var referenceList = [];
 
                     //sort data
                     var data = res.GeneralDataViews ? res.GeneralDataViews.sort((a, b) => { return (a.Version < b.Version) ? 1 : -1 }) : null
@@ -276,9 +280,24 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
                         amendmentViewsList.push(el);
                     });
 
-                    this.AmendmentViewsList.InsertCollection(amendmentViewsList);
+                     this.AmendmentViewsList.InsertCollection(amendmentViewsList);
 
                     this.GetResources(this.AmendmentViewsList.Collection);
+
+
+
+
+                this.ReferenceList = new ObservableCollection([]);
+                    if (!AppTool.IsNullOrEmpty(general.ReferenceViews)) {
+                        general.ReferenceViews.forEach(el => {
+                            referenceList.push(el);
+                        });
+                    }
+                  
+
+                    this.ReferenceList.InsertCollection(referenceList);
+
+ 
 
                     this.BuildSystemMessage(general.SystemMessageViews);
 

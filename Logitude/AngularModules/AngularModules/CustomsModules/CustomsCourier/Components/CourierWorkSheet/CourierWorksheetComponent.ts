@@ -107,6 +107,8 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     IsMamanEnabled: boolean = false;
     isAllowAccounting: boolean = false;
     IsILOVLEnabled: boolean = false;
+    IsILSWSEnabled: boolean = false;
+
 
     @Output() MenuHeaderchangeevent = new EventEmitter();
     @Output() onQueryChangeEvent = new EventEmitter();
@@ -1865,10 +1867,10 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             });
 
     }
-    private GetMamanPUR() {//ILMMN;ILOVL 
+    private GetMamanPUR() {//ILMMN;ILOVL
         var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
         myCustomsSettingExtendedListService.GetDefault("ISRAEL", "CGO_CUST_MAMAN", "NON", "NON", SessionLocator.Tenant)
-            .subscribe((response:any) => {
+            .subscribe((response: any) => {
                 this.IsMamanEnabled = false;
                 if (!response.HasError) {// reEdit this default !!!
                     if (response.Result != null && response.Result.DefaultValue != null) {
@@ -1877,6 +1879,9 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                         }
                         if (response.Result.DefaultValue.includes("ILOVL")) {
                             this.IsILOVLEnabled = true;
+                        }
+                        if (response.Result.DefaultValue.includes("ILSWS")) {
+                            this.IsILSWSEnabled = true;
                         }
                         this._CourierWorksheetSharedDataService.WebAPICourierGWMessageECTHRDataMaman = response.Result.DefaultValue;
                     } else {

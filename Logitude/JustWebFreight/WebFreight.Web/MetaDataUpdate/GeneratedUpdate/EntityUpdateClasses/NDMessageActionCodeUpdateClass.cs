@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class NDMessageActionCodeUpdateClass
    {  		
-		public const string HashString = "7d25713d64c60688e8199858cf6ab9b5";
+		public const string HashString = "24e5f206f6ef50077229c76dd0201185";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -175,7 +175,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "NDMessageActionCodes",
+					  						ValidForQuerySection1 =  "Customs.NDMessageActionCode",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -238,7 +238,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "NDMessageActionCodes",
+					  						ValidForQuerySection1 =  "Customs.NDMessageActionCode",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -301,7 +301,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "NDMessageActionCodes",
+					  						ValidForQuerySection1 =  "Customs.NDMessageActionCode",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -363,7 +363,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "NDMessageActionCodes",
+					  						ValidForQuerySection1 =  "Customs.NDMessageActionCode",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -424,7 +424,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "NDMessageActionCodes",
+					  						ValidForQuerySection1 =  "Customs.NDMessageActionCode",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -486,7 +486,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "NDMessageActionCodes",
+					  						ValidForQuerySection1 =  "Customs.NDMessageActionCode",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -548,7 +548,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "NDMessageActionCodes",
+					  						ValidForQuerySection1 =  "Customs.NDMessageActionCode",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -609,7 +609,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query NDMessageActionCodeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = NDMessageActionCodeTextCode_0.Id, NameTextCodeCode = NDMessageActionCodeTextCode_0.Code, ObjectTableName = "Customs.NDMessageActionCode", Code = "NDMessageActionCode",  QueryGroupCode = "NDA1", IndexOrder = 0, Tenant = 0, ObjectTableId = NDMessageActionCodeObjectTable.Id, QuerySection = "NDMessageActionCodes", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = NDMessageActionCodeFeature_0.Id,FeatureUniqeCode= NDMessageActionCodeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
+			  Query NDMessageActionCodeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = NDMessageActionCodeTextCode_0.Id, NameTextCodeCode = NDMessageActionCodeTextCode_0.Code, ObjectTableName = "Customs.NDMessageActionCode", Code = "NDMessageActionCode",  QueryGroupCode = "NDA1", IndexOrder = 0, Tenant = 0, ObjectTableId = NDMessageActionCodeObjectTable.Id, QuerySection = "Customs.NDMessageActionCode", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = NDMessageActionCodeFeature_0.Id,FeatureUniqeCode= NDMessageActionCodeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
 	
 			 QueryColumn NDMessageActionCodeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NDMessageActionCodeQuery.Id,QueryCode = NDMessageActionCodeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.NDMessageActionCode.Code" , ColumnWidth = 100 }, addedQueryColumns);
 

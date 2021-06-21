@@ -1462,6 +1462,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string exportFreightAmount ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExportFreightAmount  
+	   {
+	    
+	     get
+		{
+		   return exportFreightAmount;
+		 }
+		 set
+		 {
+		   if(exportFreightAmount != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportFreightAmount",OldValue=exportFreightAmount,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   exportFreightAmount=value;
+		   }
+			
+		 }
+	   }
+	  private string exportInsuranceAmount ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExportInsuranceAmount  
+	   {
+	    
+	     get
+		{
+		   return exportInsuranceAmount;
+		 }
+		 set
+		 {
+		   if(exportInsuranceAmount != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportInsuranceAmount",OldValue=exportInsuranceAmount,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   exportInsuranceAmount=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

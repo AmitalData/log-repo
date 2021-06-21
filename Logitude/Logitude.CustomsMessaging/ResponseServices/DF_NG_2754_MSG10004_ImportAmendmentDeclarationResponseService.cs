@@ -429,7 +429,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 {
                                     case "1":
                                         {
-                                            declarationPM.TransferImporterId = importer.ID.Value;
+                                            var queryService = new ClientQueryService(context);
+                                            var importerPM = queryService.GetClientByCode(importer.ID.Value, tenant);
+                                            if (importerPM == null)
+                                                declarationPM.TransferImporterCode = importer.ID.Value;
+                                            else
+                                            {
+                                                declarationPM.TransferImporterCode = importerPM.Code;
+                                                declarationPM.TransferImporterId = importerPM.Id;
+
+                                            }
+ 
                                             break;
                                         }
 
@@ -458,8 +468,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 {
                                     case "1":
                                         {
-                                            declarationPM.EntitleImporterId = importer.ID.Value;
-                                            break;
+                                            var queryService = new ClientQueryService(context);
+                                            var importerPM = queryService.GetClientByCode(importer.ID.Value, tenant);
+                                            if (importerPM == null)
+                                                declarationPM.EntitleImporterCode = importer.ID.Value;
+                                            else
+                                            {
+                                                declarationPM.EntitleImporterCode = importerPM.Code;
+                                                declarationPM.EntitleImporterId = importerPM.Id;
+
+                                            }
+
+                                             break;
                                         }
 
                                     case "3":
@@ -600,6 +620,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         else
                             consignmentPM.IsLastReleaseFromWarehous = "F";
                     }
+                    else
+                    {
+                        consignmentPM.IsLastReleaseFromWarehous = "N";
+
+                    }
                     consignmentPM.OriginCountryCode = GetValueCodeType(consignment.DMExtensions.ExportationCountryCode);
 
                     if (consignment.DMExtensions.RegisteredFacility != null && consignment.DMExtensions.RegisteredFacility.Count() > 0)
@@ -723,7 +748,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 };
                 Customs.BL.EntityQueryServices.SupplierInvoiceQueryService supplierInvoiceQueryService = new Customs.BL.EntityQueryServices.SupplierInvoiceQueryService(tenant);
-                _OrgSupplierInvoicePM = supplierInvoiceQueryService.GetSupplierInvoiceWithSpecificItemBySequenceNumber(decIdOrg, (int)supplierInvoicePM.SequenceNumeric, (int)supplierInvoicePM.SequenceNumeric);
+                _OrgSupplierInvoicePM = supplierInvoiceQueryService.GetSupplierInvoiceWithSpecificItemBySequenceNumber(decIdOrg, (int)supplierInvoicePM.SequenceNumeric, tenant);
 
                 if (_OrgSupplierInvoicePM == null && declarationPMOrg!=null)
                     continue;
@@ -740,7 +765,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     if (item.Invoice.DMExtensions.InvoiceAmount != null) supplierInvoicePM.InvoiceCurrencyTypeCode = item.Invoice.DMExtensions.InvoiceAmount.currencyID.ToString();
                     //SetAmountTypeValue *************
                     //InvoiceCurrencyTypeCode
-                    if (item.Invoice.DMExtensions.ActualPayedAmount != null) supplierInvoicePM.ActualPayedAmount = GetValueAmountType(item.Invoice.DMExtensions.ActualPayedAmount);
+                    if (item.Invoice.DMExtensions.ActualPayedAmount != null)
+                    { supplierInvoicePM.ActualPayedAmount = GetValueAmountType(item.Invoice.DMExtensions.ActualPayedAmount);
+
+                        if(item.Invoice.DMExtensions.ActualPayedAmount.currencyID!=null)
+                        supplierInvoicePM.ActualPayedCurrencyTypeCode = item.Invoice.DMExtensions.ActualPayedAmount.currencyID.ToString();
+
+                    }
                 }
                 //ActualPayedCurrencyTypeCode
                 if (item.Supplier != null) supplierInvoicePM.VendorId = GetVendorId(GetValueIDType(item.Supplier.ID), tenant, context);
@@ -963,44 +994,41 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 if (goodsItemAmount.CustomsValueAmount != null)
                                     switch (GetValueCodeType(goodsItemAmount.AmountType))
                                     {
-                                        case "3":
-                                            {if(!isFromImporter)
-                                                {
-                                                    supplierInvoiceItemPM.ItemPrice = GetValueAmountType(goodsItemAmount.CustomsValueAmount);
-                                                    supplierInvoiceItemPM.ItemPriceCurrencyCode = goodsItemAmount.CustomsValueAmount.currencyID.ToString();
+                                        //case "3":
+                                        //    {
+                                        //        if (!isFromImporter)
+                                        //        {
+                                        //            if (item.Invoice != null && item.Invoice.DMExtensions != null && item.Invoice.DMExtensions.InvoiceAmount != null)
+                                        //            {
+                                        //                if (goodsItemAmount.CustomsValueAmount.currencyID.ToString() == item.Invoice.DMExtensions.InvoiceAmount.currencyID.ToString())
+                                        //                {
+                                        //                    supplierInvoiceItemPM.ItemPrice = GetValueAmountType(goodsItemAmount.CustomsValueAmount);
+                                        //                    supplierInvoiceItemPM.ItemPriceCurrencyCode = goodsItemAmount.CustomsValueAmount.currencyID.ToString();
+                                        //                }
+                                        //            }
+                                        //        }
+                                        //        break;
 
-                                                }
-                                                break;
-
-                                            }
+                                        //    }
                                         case "1":
                                             {
-                                                if (isFromImporter)
-                                                {
-                                                if (item.Invoice!= null && item.Invoice.DMExtensions != null && item.Invoice.DMExtensions.InvoiceAmount!= null )
-                                                {
-                                                if (goodsItemAmount.CustomsValueAmount.currencyID.ToString()== item.Invoice.DMExtensions.InvoiceAmount.currencyID.ToString())
-                                                {
-                                                    supplierInvoiceItemPM.ItemPrice = GetValueAmountType(goodsItemAmount.CustomsValueAmount);
-                                                    supplierInvoiceItemPM.ItemPriceCurrencyCode = goodsItemAmount.CustomsValueAmount.currencyID.ToString();
+                                               
+                                                    if (item.Invoice != null && item.Invoice.DMExtensions != null && item.Invoice.DMExtensions.InvoiceAmount != null)
+                                                    {
+                                                        if (goodsItemAmount.CustomsValueAmount.currencyID.ToString() == item.Invoice.DMExtensions.InvoiceAmount.currencyID.ToString())
+                                                        {
+                                                            supplierInvoiceItemPM.ItemPrice = GetValueAmountType(goodsItemAmount.CustomsValueAmount);
+                                                            supplierInvoiceItemPM.ItemPriceCurrencyCode = goodsItemAmount.CustomsValueAmount.currencyID.ToString();
+                                                        }
                                                     }
-                                                }
-
-                                                }
+                                                 
                                                 break;
-
                                             }
 
                                         case "11":
                                             {
-                                                if (item.Invoice != null && item.Invoice.DMExtensions != null && item.Invoice.DMExtensions.InvoiceAmount != null)
-                                                {
-                                                    if (goodsItemAmount.CustomsValueAmount.currencyID.ToString() == item.Invoice.DMExtensions.InvoiceAmount.currencyID.ToString())
-                                                    {
-                                                        supplierInvoiceItemPM.NonCustomsItemPrice = GetValueAmountType(goodsItemAmount.CustomsValueAmount);
-                                                        supplierInvoiceItemPM.NonCustomsItemPriceCurCode = goodsItemAmount.CustomsValueAmount.currencyID.ToString();
-                                                    }
-                                                }
+                                                supplierInvoiceItemPM.NonCustomsItemPrice = GetValueAmountType(goodsItemAmount.CustomsValueAmount);
+                                                supplierInvoiceItemPM.NonCustomsItemPriceCurCode = goodsItemAmount.CustomsValueAmount.currencyID.ToString();
                                                 break;
 
                                             }
@@ -1008,14 +1036,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                                         case "5":
                                             {
-                                                if (item.Invoice != null && item.Invoice.DMExtensions != null && item.Invoice.DMExtensions.InvoiceAmount != null)
-                                                {
-                                                    if (goodsItemAmount.CustomsValueAmount.currencyID.ToString() == item.Invoice.DMExtensions.InvoiceAmount.currencyID.ToString())
-                                                    {
-                                                        supplierInvoiceItemPM.WholeSaleItemPrice = GetValueAmountType(goodsItemAmount.CustomsValueAmount);
-                                                        supplierInvoiceItemPM.WholeSaleItemPriceCurrencyCode = goodsItemAmount.CustomsValueAmount.currencyID.ToString();
-                                                    }
-                                                }
+                                                supplierInvoiceItemPM.WholeSaleItemPrice = GetValueAmountType(goodsItemAmount.CustomsValueAmount);
+                                                supplierInvoiceItemPM.WholeSaleItemPriceCurrencyCode = goodsItemAmount.CustomsValueAmount.currencyID.ToString();
                                                 break;
 
                                             }

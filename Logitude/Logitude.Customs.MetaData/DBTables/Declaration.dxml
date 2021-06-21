@@ -995,6 +995,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ExportContainerizationID"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CustomerId"
     ReferencedTable="Cards"
@@ -1219,4 +1226,6 @@
     Columns="HatraDate" />
   <Index
     Columns="IsClose" />
+  <Index
+    Columns="ExternalDeclarationNumber" />
 </Table>

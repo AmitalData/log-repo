@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
@@ -128,7 +129,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
             var declarationMamanSpecialActionQueryService = new DeclarationMamanSpecialActionQueryService(context);
             var pmDeclarationMamanSpecialAction = declarationMamanSpecialActionQueryService.GetSingle(myDeclarationPM.Id, ((int)MamanSpecialCode.ReceivingDelayCertificate_DelayIt).ToString(), false, false);
 
-            if(pmDeclarationMamanSpecialAction!= null)
+            if(pmDeclarationMamanSpecialAction!= null && pmDeclarationMamanSpecialAction.MamanSpecialActionStatusCode=="1")
             {
                 isDelay = true;
             }
@@ -196,7 +197,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 DecWeight = DecWeight,
                 DolarValue = DolarValue,
                 StoreTypeReq = "67",//לפי טבלה B1                יש לשלוח תמיד 67
-                Description = myDeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().CargoDescription ?? "",
+                Description =  myDeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().CargoDescription != null ? Regex.Replace(myDeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().CargoDescription, @"(\%)", "") : "" ,
                 CustomerName = myDeclarationPM.ImporterName ?? "",
                 CustomerAddress = myDeclarationPM.ImporterAddress ?? "",
                 CustomerPhone = myDeclarationPM.CasualImporterTel ?? "",

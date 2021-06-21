@@ -151,6 +151,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\CargoTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ClaimReasonTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ClassificationTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ContainerizationStatusCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ContainerTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CoolingReportingMethodDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CustomerIdentificationTypeDetails.Generated.cs" />
@@ -374,6 +375,8 @@
     <Compile Include="EntityDataMappings\ConstraintStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\ConstraintTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ContactRoleTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ContainerizationDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ContainerizationStatusCodeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ContainerTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ContinuousMessagesTypeCodeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ContinuousRequestTypeDataMapping.cs" />
@@ -572,6 +575,8 @@
     <Compile Include="EntityDataMappings\Generated\ConstraintStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ConstraintTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ContactRoleTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ContainerizationDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ContainerizationStatusCodeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ContainerTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ContinuousMessagesTypeCodeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ContinuousRequestTypeDataMapping.Generated.cs" />
@@ -1022,6 +1027,8 @@
     <Compile Include="EntityDataMappings\VendorTransactionTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\VendorTypeDataMapping.cs" />
     <Compile Include="EntityQueryServiceExt\CustomsDocumentQueryServiceExt.cs" />
+    <Compile Include="EntityQueryServices\CargoIdentifireTypeQueryService.cs" />
+    <Compile Include="EntityQueryServices\ContainerizationQueryService.cs" />
     <Compile Include="EntityQueryServices\DeclarationReferantDataQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\AmendCancellRequestInitiatorQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\AmendmentFieldStatusTypeQueryService.Generated.cs" />
@@ -1030,6 +1037,8 @@
     <Compile Include="EntityQueryServices\Generated\CancellationReasonRequestTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CancellationRequestStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CargoTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ContainerizationQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ContainerizationStatusCodeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ContainerTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CoolingReportingMethodQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CustomerIdentificationTypeQueryService.Generated.cs" />
@@ -1058,6 +1067,7 @@
     <Compile Include="EntityQueryServices\Generated\SupplierPartyTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TransportMeansTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\ContainerTypeQueryService.cs" />
+    <Compile Include="EntityQueryServices\CertificateExemptionTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\NDMessageActionCodeQueryService.cs" />
     <Compile Include="EntityQueryServices\ModificationAndDiscountTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\SuppInvoiceItemsAbachStatementQueryService.cs" />
@@ -1517,6 +1527,8 @@
     <Compile Include="EntityUpdateServices\ClientDrivingLicenseTypeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClientDrivingLicenseUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ConsignmentPackDangerUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\ContainerizationUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\CargoIdentifireTypeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CourierPendingReasonUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CurrencyTypeTenantUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CurrencyTypeUpdateService.cs" />
@@ -1557,6 +1569,8 @@
     <Compile Include="EntityUpdateServices\Generated\CargoTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ClaimReasonTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ClassificationTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ContainerizationStatusCodeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ContainerizationUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ContainerTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CoolingReportingMethodUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomerIdentificationTypeUpdateService.Generated.cs" />
@@ -1591,6 +1605,7 @@
     <Compile Include="EntityUpdateServices\Generated\TransactionNatureTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TransportMeansTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\ContainerTypeUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\CertificateExemptionTypeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\NDMessageActionCodeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ModificationAndDiscountTypeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ReferantExceptionUpdateService.amital.cs" />
@@ -2015,9 +2030,13 @@
     <Compile Include="Messaging\Amital\UnifreightTaskService.cs" />
     <Compile Include="Messaging\Amital\UServerCommunicationService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\AnalyzeQueueUtil.cs" />
+    <Compile Include="Messaging\CustomsAnalyzeQueue\CourieSWSSpecialActionQService.cs" />
+    <Compile Include="Messaging\CustomsAnalyzeQueue\CourierSWSStatusAvailabilityQService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\CourierOVSStatusAvailabilityQService.cs" />
+    <Compile Include="Messaging\CustomsAnalyzeQueue\CourierSWSStatusAvailabilitySplitterQService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\CourierOVSStatusAvailabilitySplitterQService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\CustomAnalyzerQueueBase.cs" />
+    <Compile Include="Messaging\CustomsAnalyzeQueue\ILSWSQHAWBService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\MamanQHAWBService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\MamanQSPCLService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\MamanStatusAvailabilityQService.cs" />
@@ -2045,12 +2064,16 @@
     <Compile Include="Messaging\ILOVS\CourierOVSECTHMessageRequestService.cs" />
     <Compile Include="Messaging\ILOVS\CourierOVSECTHMessageResponseService.cs" />
     <Compile Include="Messaging\ILOVS\CourierOVSSpecialActionRequestService.cs" />
+    <Compile Include="Messaging\ILSWS\CourierECSWSTHRMessageRequestService.cs" />
+    <Compile Include="Messaging\ILSWS\CourierECSWSTHRMessageResponseService.cs" />
+    <Compile Include="Messaging\ILSWS\CourierSWSSpecialActionRequestService.cs" />
     <Compile Include="Messaging\L2U\CustomFile\CustomCertificatesService.cs" />
     <Compile Include="Messaging\L2U\CustomFile\CustomFileCreditService.cs" />
     <Compile Include="Messaging\L2U\CustomFile\CustomFileCreditService.Model.cs" />
     <Compile Include="Messaging\L2U\CustomFile\CustomsAGTService.cs" />
     <Compile Include="Messaging\LogitudeClient\ClaimException\ClaimCustomsExceptions.cs" />
     <Compile Include="Messaging\LogitudeClient\ClaimException\CustomsException.cs" />
+    <Compile Include="Messaging\LogitudeClient\DeclarationCorrectionPointer\Reference.cs" />
     <Compile Include="Messaging\LogitudeClient\DeclarationCorrectionPointer\Additional.cs" />
     <Compile Include="Messaging\LogitudeClient\DeclarationCorrectionPointer\Amendment.cs" />
     <Compile Include="Messaging\LogitudeClient\DeclarationCorrectionPointer\DeclarationCorrection.cs" />
@@ -2070,6 +2093,8 @@
     <Compile Include="Messaging\LogitudeClient\DeclarationCorrection\GeneralDataView.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Messaging\LogitudeClient\DeclarationCorrection\ReferenceView.cs" />
+    <Compile Include="Messaging\LogitudeClient\DeclarationCorrection\Reference.cs" />
     <Compile Include="Messaging\LogitudeClient\DeclarationErrorPointer\DBWCO\Class1.cs" />
     <Compile Include="Messaging\LogitudeClient\DeclarationErrorPointer\DBWCO\DBTester.cs" />
     <Compile Include="Messaging\LogitudeClient\DeclarationErrorPointer\DBWCO\LogitudePointerDB.cs" />
@@ -2090,6 +2115,7 @@
     <Compile Include="Messaging\Maman\CourierGWMessageECSpclMamanRequestService.cs" />
     <Compile Include="Messaging\Maman\CourierGWMessageECTHRDataMamanRequestService.cs" />
     <Compile Include="Messaging\Maman\CourierMasterMamanService.cs" />
+    <Compile Include="Messaging\ILSWS\FTPOutMawbSWSService.cs" />
     <Compile Include="Messaging\Maman\FTPOutMaman2470ReleaseGoodService.cs" />
     <Compile Include="Messaging\Maman\FTPOutMamanSubManifestService.cs" />
     <Compile Include="Messaging\Maman\ICourierGWMessageECSpcRequestService.cs" />

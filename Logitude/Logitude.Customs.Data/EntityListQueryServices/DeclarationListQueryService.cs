@@ -221,11 +221,12 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                       new
                                       {
                                           DeclarationId = gConsignments.Key,
-                                          ConsignmentNumber = gConsignments.Min(r => r.ConsignmentNumber)
+                                          ConsignmentNumber = gConsignments.Min(r => r.ConsignmentNumber),
+
                                       });
 
             var q1stConsignments =
-                (from a in context.Consignments
+                (from a in context.Consignments.Include("CargoType")
                  join c in qConsignmentNumber
                  on new { a.DeclarationId, a.ConsignmentNumber } equals new { c.DeclarationId, c.ConsignmentNumber }
                  select a
@@ -275,7 +276,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                IsPendingNotNull = true,
                            });
                 //qMyJoin = Enumerable.Empty<MyDecJoin>().AsQueryable();
-                q1stConsignments = context.Consignments.Where(r => r.DeclarationId == "-1");
+               q1stConsignments = context.Consignments.Where(r => r.DeclarationId == "-1");
                 //q1stConsignments = Enumerable.Empty<Consignment>().AsQueryable();
             }
 
@@ -441,6 +442,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      IsCourierMissingClassification = myJoin != null ? myJoin.IsCourierMissingClassification : false,
                                                      CargoDescription = myJoinConsignment != null ? myJoinConsignment.CargoDescription : null,
 
+                                                     //ManifestNumber = myJoinConsignment != null ? myJoinConsignment.ManifestNumber : null,
+                                                     //SecondCargoID = myJoinConsignment != null ? myJoinConsignment.SecondCargoID : null,
+                                                     //ThirdCargoID = myJoinConsignment != null ? myJoinConsignment.ThirdCargoID : null,
+
 
                                                      IsPaymentProtested = a.IsPaymentProtested,
                                                      DeclarationNoAmendment = myJoinOriginalDeclaration.DeclarationNumber,
@@ -464,6 +469,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      CreateDateForExport = a.CreateDateTime,
                                                      TransportModeForExport = a.TransportModeId,
                                                      CustomFileForExport = a.CustomFileNo,
+                                                     CargoTypeName = myJoinConsignment != null && myJoinConsignment.CargoType  != null ? myJoinConsignment.CargoType.LocalName : null,
+                                                     SecondCargoID= myJoinConsignment != null ? myJoinConsignment.SecondCargoID : null,
+                                                     ThirdCargoID= myJoinConsignment != null ? myJoinConsignment.ThirdCargoID : null,
+                                                     ManifestNumber = myJoinConsignment != null ? myJoinConsignment.ManifestNumber :null
                                                  });
 
 
@@ -471,6 +480,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
             return query;
         }
+
+
 
         private IQueryable<Declaration> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<Declaration> iQueryable, int tenant)
         {
@@ -480,7 +491,15 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
             iQueryable = filters.GetFreelancerDeclarations(queryOperations, iQueryable, tenant);
 
-            iQueryable = iQueryable.Where(x => x.AmendmentDontDisplayInList != true);
+            if(queryOperations.QueryFilterItems.FirstOrDefault(x=>x.FieldName== "IsAmendment") == null)
+            {
+                iQueryable = iQueryable.Where(x => x.AmendmentDontDisplayInList != true);
+
+            }
+            if (queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "IsContainerization") != null)
+            {
+                iQueryable = iQueryable.Where(x => string.IsNullOrEmpty(x.ExportContainerizationID) == true);
+            }
 
             return iQueryable;
         }
@@ -520,6 +539,191 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 }
             }
             return fastIndividualProcessCode;
+        }
+        private IQueryable<DeclarationList> GetIqueryableListForContainerization(IQueryable<Declaration> iQueryable)
+        {
+           
+            var qConsignmentNumber = (from a in context.Consignments
+                                      group a by a.DeclarationId into gConsignments
+                                      select
+                                      new
+                                      {
+                                          DeclarationId = gConsignments.Key,
+                                          ConsignmentNumber = gConsignments.Min(r => r.ConsignmentNumber)
+                                      });
+
+            var q1stConsignments =
+                (from a in context.Consignments.Include("CargoType")
+                 join c in qConsignmentNumber
+                 on new { a.DeclarationId, a.ConsignmentNumber } equals new { c.DeclarationId, c.ConsignmentNumber }
+                 select a
+                 );
+
+            var qOriginalDeclarations = context.Declarations.Where(x => x.IsAmendment != true && x.ExportContainerizationID == null);
+
+
+
+            bool test = false;
+            if (test)
+            {
+                //var myMyJoin = qMyJoin.ToList();
+                var s = q1stConsignments.ToList();
+                /*var pr = qCourierPendingReasonLocalName.ToList();*/
+            }
+            int tenant = 1;
+            try
+            {
+
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                tenant = authToken.Tenant;
+            }
+            catch (Exception)
+            {
+
+                // throw;
+            }
+
+
+            IQueryable<DeclarationList> query = (from a in iQueryable.Include("ProcedureCurrent")
+                                                 join recConsignment in q1stConsignments
+                                                 on a.Id equals recConsignment.DeclarationId into qjoinConsignments
+                                                 from myJoinConsignment in qjoinConsignments.DefaultIfEmpty()
+
+
+                                                 join recOriginalDeclarations in qOriginalDeclarations
+                                                 on a.AmendmentOriginalDeclartation equals recOriginalDeclarations.Id
+                                                 into originalDeclarations
+                                                 from myJoinOriginalDeclaration in originalDeclarations.DefaultIfEmpty()
+
+
+                                                 select new DeclarationList()
+                                                 {
+                                                     Id = a.Id,
+                                                     DeclarationNumber = a.DeclarationNumber,
+                                                     Tenant = a.Tenant,
+                                                     CreateDateTime = a.CreateDateTime,
+                                                     CustomFileNo = a.CustomFileNo,
+                                                     SearchFields = a.SearchFields,
+                                                     DeclarationStatusTypeName = a.DeclarationStatusType == null ? null : a.DeclarationStatusType.LocalName,
+                                                     TransportModeForExport = a.TransportModeId,
+                                                     DeclarationStatusTypeCode = a.DeclarationStatusTypeCode,
+                                                     TransportModeName = a.CustomsTransportMode == null ? null : a.CustomsTransportMode.LocalName,
+                                                     ExportFile = a.ExportFile,
+                                                     PaymentDate = a.PaymentDate,
+                                                     CargoTypeName = myJoinConsignment != null && myJoinConsignment.CargoType != null ? myJoinConsignment.CargoType.LocalName : null,
+                                                     SecondCargoID = myJoinConsignment != null ? myJoinConsignment.SecondCargoID : null,
+                                                     ThirdCargoID = myJoinConsignment != null ? myJoinConsignment.ThirdCargoID : null,
+                                                     ManifestNumber = myJoinConsignment != null ? myJoinConsignment.ManifestNumber : null,
+                                                     Direction = a.Direction,
+                                                     ProcedureCurrentName = a.GovernmentProcedureCurrent.LocalName,
+                                                     TaxationDateTime = a.TaxationDateTime,
+                                                 });
+
+
+
+
+            return query;
+        }
+        public List<DeclarationList> GetListForContainerization(QueryOperations queryOperations, int tenant)
+        {
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+
+            IQueryable<Declaration> iQueryable = (from a in context.Declarations
+
+                                                  where a.Tenant == tenant
+                                                  select a);
+            iQueryable = ApplyCustomFilters(queryOperations, iQueryable, tenant);
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+            iQueryable = filter.GetFilteredQuery<Declaration>(nonListQueryOperation, iQueryable);
+
+            int skippedPorts = queryOperations.PageIndex;
+
+            IQueryable<DeclarationList> query2 = GetIqueryableListForContainerization(iQueryable);
+
+            query2 = filter.GetFilteredQuery<DeclarationList>(listQueryOperation, query2);
+
+            if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
+            {
+                PropertyInfo propInfo = typeof(DeclarationList).GetProperty(queryOperations.SortByColumnName);
+                List<ObjectField> DeclarationObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.Declaration", tenant).ToList();
+
+                ObjectField objectField = (from a in DeclarationObjectFields
+                                           where a.FieldName == queryOperations.SortByColumnName
+                                           select a).FirstOrDefault();
+
+                if (objectField != null)
+                {
+                    if (objectField.IsCustom)
+                    {
+                        query2 = sortClass.GetSorterQuery<DeclarationList, string>(queryOperations, query2);
+                    }
+                    else
+                    {
+                        switch (objectField.DataTypeCode.ToLower())
+                        {
+                            case "ntext":
+                            case "text":
+                                {
+                                    query2 = sortClass.GetSorterQuery<DeclarationList, string>(queryOperations, query2);
+                                    break;
+                                }
+                            case "sigdouble":
+                            case "double":
+                                {
+                                    query2 = sortClass.GetSorterQuery<DeclarationList, double>(queryOperations, query2);
+                                    break;
+                                }
+                            case "date":
+                            case "datetime":
+                                {
+                                    query2 = sortClass.GetSorterQuery<DeclarationList, DateTime>(queryOperations, query2);
+                                    break;
+                                }
+                            case "unsinteger":
+                            case "integer":
+                                {
+                                    query2 = sortClass.GetSorterQuery<DeclarationList, int>(queryOperations, query2);
+                                    break;
+                                }
+                            case "boolean":
+                                {
+                                    query2 = sortClass.GetSorterQuery<DeclarationList, bool>(queryOperations, query2);
+                                    break;
+                                }
+                            case "unsdecimal":
+                            case "decimal":
+                                {
+                                    query2 = sortClass.GetSorterQuery<DeclarationList, decimal>(queryOperations, query2);
+                                    break;
+                                }
+                            default:
+                                {
+                                    query2 = query2.OrderByDescending(d => d.TaxationDateTime);
+                                    break;
+                                }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                query2 = query2.OrderByDescending(d => d.TaxationDateTime);
+            }
+            if (!queryOperations.GetAll)
+            {
+                query2 = query2.Skip(skippedPorts);
+                query2 = query2.Take(queryOperations.PageSize);
+            }
+            return query2.ToList();
+
+
         }
 
     }

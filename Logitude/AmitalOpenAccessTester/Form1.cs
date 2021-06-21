@@ -23,7 +23,7 @@ namespace AmitalOpenAccessTester
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            string myDESC = "Please change //#define reserveword >> #define reserveword in all solution";
+            string myDESC = "Please change //#define reserveword >> //#define reserveword in all solution";
             using (var cntxt = AmitalDbContextUtil.GetContext())
             {
                 var poco = cntxt.CCUCARLs.FirstOrDefault();
@@ -31,7 +31,15 @@ namespace AmitalOpenAccessTester
                 var pocoGGGQ = cntxt.GGGQs.FirstOrDefault();
                 myDESC = pocoGGGQ.DESC;
 #endif
+
+                var pocoGAQDATA = cntxt.GAQDATAs.FirstOrDefault();
+                
                 MessageBox.Show(myDESC);
+
+
+                String statusShort = pocoGAQDATA.STATUS;
+
+                String PRIORITY = pocoGAQDATA.PRIORITY;
             }
         }
     }

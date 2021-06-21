@@ -120,7 +120,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         BuyerCountryName, 
 	         ItemFOBAmountForeign, 
 	         ItemFOBAmountNIS, 
-	         InsruanceCurrencyTypeCodeName,
+	         InsruanceCurrencyTypeCodeName, 
+	         ExportFreightAmount, 
+	         ExportInsuranceAmount,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

@@ -1047,16 +1047,20 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
     }
 
     
-    OnCTRL_S_HotKeyPressed(){
-        this.OkButtonClicked();
+    OnCTRL_S_HotKeyPressed() {
+        if (!this.IsDisplayOnly) {
+            this.OkButtonClicked();
+        }
     }
 
     OnEscHotKeyPressed(){
-        this.CancelButtonClicked();
+            this.CancelButtonClicked();
     }
 
     OnCTRL_Shift_S_HotKeyPressed(){
-        this.OkButtonClicked();
+        if (!this.IsDisplayOnly) {
+            this.OkButtonClicked();
+        }
     }
 
 
@@ -1589,16 +1593,17 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
             errors.push(this.GetRequierdFieldErrorText("Customs.SupplierInvoice.F.InsruanceCurrencyTypeCode"));
         }
 
+        let ExportCommonInvoiceModifications:string[] = ['67', '144', '160']; // הובלה ביטוח והוצאות נוספות
         // SupplierInvoiceModifications
         for (let item of this.EntityPM.SupplierInvoiceModifications) {
-            //Validator.TryValidateObject(item, new ValidationContext(item, null, null), errors);
-            if (this.declarationPM.Direction == "E" && item.TypeCode == "160") {
+            if (this.declarationPM.Direction == "E" && ExportCommonInvoiceModifications.includes(item.TypeCode)) {
+                this.DeleteModificationWithoutAmountOrTypeCode(item);
                 if (!(AppTool.IsNullOrEmpty(item.CurrencyTypeCode) && AppTool.IsNullOrEmpty(item.Amount))) {
                     if (AppTool.IsNullOrEmpty(item.CurrencyTypeCode)) {
-                        errors.push(this.GetRequierdFieldErrorText("Customs.SupplierInvoiceModification.F.CurrencyTypeCode") + "- הוצאות נוספות ");
+                        errors.push(this.GetRequierdFieldErrorText("Customs.SupplierInvoiceModification.F.CurrencyTypeCode"));
                     }
                     if (AppTool.IsNullOrEmpty(item.Amount)) {
-                        errors.push(this.GetRequierdFieldErrorText("Customs.SupplierInvoiceModification.F.Amount") + " -  הוצאות נוספות");
+                        errors.push(this.GetRequierdFieldErrorText("Customs.SupplierInvoiceModification.F.Amount"));
                     }
                 }
             } else {
@@ -1641,7 +1646,11 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
         return this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate(fieldName));
     }
 
-
+    DeleteModificationWithoutAmountOrTypeCode(supplierInvoiceModificationPM: SupplierInvoiceModificationPM) {
+        if (!supplierInvoiceModificationPM.CurrencyTypeCode && !supplierInvoiceModificationPM.Amount) {
+            this.EntityPM.SupplierInvoiceModifications=this.EntityPM.SupplierInvoiceModifications.filter(item => item.TypeCode != supplierInvoiceModificationPM.TypeCode);
+        }
+    }
 
 
     private UnifreightInsuranceCallbackAction(unifreightMessageM: UnifreightMessageM) {

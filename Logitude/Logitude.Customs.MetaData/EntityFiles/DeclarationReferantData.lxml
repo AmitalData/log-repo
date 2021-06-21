@@ -1018,10 +1018,10 @@
     DisplayLongName="false"
     FullFieldLable="&quot;IsClosedForFollowUp&quot;"
     DefaultText="&quot;Is Closed For FollowUp&quot;"
-    FullLocalDefaultText="&quot;סגור /פתוח&quot;"
+    FullLocalDefaultText="&quot;סגור/פתוח&quot;"
     ListFieldLable="&quot;IsClosedForFollowUpListLable&quot;"
     ListLableDefaultText="&quot;Is Closed For FollowUp&quot;"
-    ListLocalDefaultText="&quot;סגור /פתוח&quot;"
+    ListLocalDefaultText="&quot;סגור/פתוח&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -2353,7 +2353,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
-    ValidForQuerySection1="&quot;Customs.Declaration&quot;"
+    ValidForQuerySection1="&quot;Customs.DeclarationReferantData&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -2364,6 +2364,7 @@
     DisplayLongName="false"
     FullFieldLable="&quot;AvailabilityDate&quot;"
     DefaultText="&quot;Availability Date&quot;"
+    FullLocalDefaultText="&quot;תאריך זמינות&quot;"
     ListFieldLable="&quot;AvailabilityDateListLable&quot;"
     ListLableDefaultText="&quot;Availability Date&quot;"
     ListLocalDefaultText="&quot;תאריך זמינות&quot;"
@@ -5927,7 +5928,6 @@
     IsPackagable="true"
     DefaultSortName="&quot;SortedColumns&quot;"
     DefaultSortDirection="&quot;Ascending&quot;"
-    SpotlightDataTemplate="&quot;ReferantSpotlightDataTemplate&quot;"
     IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn
@@ -7483,7 +7483,6 @@
     IsPackagable="true"
     DefaultSortName="&quot;SortedColumns&quot;"
     DefaultSortDirection="&quot;Ascending&quot;"
-    SpotlightDataTemplate="&quot;ReferantSpotlightDataTemplate&quot;"
     IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn

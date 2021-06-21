@@ -346,7 +346,7 @@ export class DeclarationValidator {
     public TaxationDateTimeCheck() {
         var errorMessage = "";
         if (this._DeclarationPM != null) {
-            
+            if (this._DeclarationPM.IsAmendment == true) return "";
             if (!this._DeclarationPM.TaxationDateTime) {
                 errorMessage = "Customs.General.O.TaxationDateTimeNotToday";
             }

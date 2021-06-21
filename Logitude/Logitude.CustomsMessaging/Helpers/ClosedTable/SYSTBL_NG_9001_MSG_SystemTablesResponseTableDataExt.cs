@@ -14,7 +14,9 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
         public ModificationAndDiscountType MyModificationAndDiscountType { get; set; }
         public NDMessageActionCode MyNDMessageActionCode { get; set; }
         public ContainerType MyContainerType { get; set; }
+        public CertificateExemptionType MyCertificateExemptionType { get; set; }
 
+        public CargoIdentifireType MyCargoIdentifireType { get; set; }
 
         internal static SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt CreateNew(SYSTBL_NG_9001_MSG_SystemTablesResponseTableData item)
         {
@@ -61,4 +63,24 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
         public Boolean IsAerial { get; set; }
 
     }
+    public class CertificateExemptionType
+    {
+        public Boolean IsImportDeclaration { get; set; }
+        public Boolean IsExportDeclaration { get; set; }
+
+
+    }
+    public class CargoIdentifireType
+    {
+        public Boolean IsForDeclarationExport { get; set; }
+        public Boolean IsForDeclarationImport { get; set; }
+        public Boolean IsForManifest { get; set; }
+        public Boolean IsKey2Mandatory { get; set; }
+        public Boolean IsKey3Mandatory { get; set; }
+        public string CargoIdentifierKey1Name { get; set; }
+        public string CargoIdentifierKey2Name { get; set; }
+        public string CargoIdentifierKey3Name { get; set; }
+
+    }
+
 }

@@ -1,7 +1,7 @@
 
 declare var window: any;
 declare var document: Document;
-import { Component, ChangeDetectorRef, EventEmitter, Output, OnDestroy } from '@angular/core';
+import { Component, ChangeDetectorRef, EventEmitter, Output, OnInit, OnDestroy } from '@angular/core';
 import { SupplierInvoicePM } from '../../../../../Customs/EntityPMs/SupplierInvoicePM';
 import { CustomsVendorPMService } from '../../../../../Customs/Services/StandardPMs/CustomsVendorPMService';
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -66,7 +66,7 @@ import { CurrencyTypeListService } from '../../../../../Customs/Services/Standar
 })
 
 
-export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements OnDestroy {
+export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements OnInit, OnDestroy {
     public CurrencyTypeCode: any;
     public OriginCountryCode: any;
 
@@ -158,7 +158,19 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         this.IFritz_feature = FeatureLocator.Features.filter(d => d.Code == "IFRITZ")[0];
         console.log("IFritz feature: ", this.IFritz_feature);
 
-
+       
+    }
+    ngOnInit() {
+        if (this.allowExport) {
+            if (AppTool.IsNullOrEmpty(this.BuyerName) && this.AccountTypeCode != "I04")
+                this.UIProperties.SetWarning("BuyerName", this.ObjectTableName, true);
+            else
+                this.UIProperties.SetWarning("BuyerName", this.ObjectTableName, false);
+            if (AppTool.IsNullOrEmpty(this.BuyerAddress) && this.AccountTypeCode != "I04")
+                this.UIProperties.SetWarning("BuyerAddress", this.ObjectTableName, true);
+            else
+                this.UIProperties.SetWarning("BuyerAddress", this.ObjectTableName, false);
+        }
     }
     public SelectInvoiceItemMethod(res) {
         var item: SupplierInvoiceItemLine = this.ItemsSource.Collection.filter(d => d.SequenceNumeric == res.filter)[0];
@@ -621,35 +633,53 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     //}
 
     FillGridData() {
-        this.AdjustmentsList = new ObservableCollection([]);
         var paymentCounter = 0;
         if (this.EntityPM.SupplierInvoiceModifications.length > 0) {
             paymentCounter = this.getMax(this.EntityPM.SupplierInvoiceModifications, "SequenceNumeric");
         }
-        paymentCounter += 1;
-        this.AdjustmentsList.Insert(new ModificationItemModel(this.GetInsuranceAsModificationItemModel(), this, "67"));
-        this.AdjustmentsList.Insert(new ModificationItemModel(this.GetFreightAsModificationItemModel(), this, "144"));
+
+        let Insurance67: any = this.FindModificationByCode("67");
+        let Freight144: any = this.FindModificationByCode("144");
         let ExtraPayments160: any = this.FindModificationByCode("160");
+
+        this.AdjustmentsList = new ObservableCollection([]);
+        if (Insurance67 == null) {
+            paymentCounter += 1;
+            this.AddModification("67", paymentCounter, "ביטוח");
+        } else {
+            Insurance67.TypeName = "ביטוח"
+            this.AdjustmentsList.Insert(new ModificationItemModel(Insurance67, this, "67"));
+        }
+
+        if (Freight144 == null) {
+            paymentCounter += 1;
+            this.AddModification("144", paymentCounter, "הובלה");
+        } else {
+            Freight144.TypeName = "הובלה"
+            this.AdjustmentsList.Insert(new ModificationItemModel(Freight144, this, "144"));
+        }
+
         if (ExtraPayments160 == null) {
-            paymentCounter = this.getMax(this.EntityPM.SupplierInvoiceModifications, "SequenceNumeric");
             paymentCounter += 1;
             this.AddModification("160", paymentCounter, "הוצאות נוספות");
         } else {
             ExtraPayments160.TypeName = "הוצאות נוספות"
             this.AdjustmentsList.Insert(new ModificationItemModel(ExtraPayments160, this, "160"));
         }
+
+
         this.ExportModificationCurrency = this.EntityPM.InvoiceCurrencyTypeCode;
         this.EntityPM.IsDirty = false;
     }
 
     GetInsuranceAsModificationItemModel() {
-        var item = new SupplierInvoiceModificationPM(this.EntityPM);
+        /*var item = new SupplierInvoiceModificationPM(this.EntityPM);
         item.TypeName = "ביטוח";
         item.Amount = this.EntityPM.InsuranceAmount;
         item.CurrencyTypeCode = this.EntityPM.InsruanceCurrencyTypeCode;
         item.CurrencyTypeName = this.EntityPM.InsruanceCurrencyTypeCodeName;
         item.IsDirty = false;
-        return item;
+        return item;*/
     }
 
     GetFreightAsModificationItemModel() {
@@ -815,7 +845,20 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     }
     public FiltersList: string[] = ["Copy Now"];
     public get AccountTypeCode() { return this.EntityPM.AccountTypeCode; }
-    public set AccountTypeCode(newValue: string) { this.EntityPM.AccountTypeCode = newValue; }
+    public set AccountTypeCode(newValue: string) {
+        this.EntityPM.AccountTypeCode = newValue;
+        if (this.allowExport)
+        {
+            if (AppTool.IsNullOrEmpty(this.BuyerName) && newValue != "I04")
+                this.UIProperties.SetWarning("BuyerName", this.ObjectTableName, true);
+            else
+                this.UIProperties.SetWarning("BuyerName", this.ObjectTableName, false);
+            if (AppTool.IsNullOrEmpty(this.BuyerAddress) && newValue != "I04")
+                this.UIProperties.SetWarning("BuyerAddress", this.ObjectTableName, true);
+            else
+                this.UIProperties.SetWarning("BuyerAddress", this.ObjectTableName, false);
+        }
+    }
 
     public get InvoiceNumber() { return this.EntityPM.InvoiceNumber; }
     public set InvoiceNumber(newValue: string) { this.EntityPM.InvoiceNumber = newValue; }
@@ -835,12 +878,22 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
     public get BuyerName() { return this.EntityPM ? this.EntityPM.BuyerName : null; }
     public set BuyerName(newValue: string) {
+        if (AppTool.IsNullOrEmpty(newValue) && this.AccountTypeCode != "I04")
+            this.UIProperties.SetWarning("BuyerName", this.ObjectTableName, true);
+        else
+            this.UIProperties.SetWarning("BuyerName", this.ObjectTableName, false);
+
         this.EntityPM.BuyerName = newValue;
     }
 
     public get BuyerAddress() { return this.EntityPM ? this.EntityPM.BuyerAddress : null; }
     public set BuyerAddress(newValue: string) {
-
+        if (this.allowExport) {
+            if (AppTool.IsNullOrEmpty(newValue) && this.AccountTypeCode != "I04")
+                this.UIProperties.SetWarning("BuyerAddress", this.ObjectTableName, true);
+            else
+                this.UIProperties.SetWarning("BuyerAddress", this.ObjectTableName, false);
+        }
         this.EntityPM.BuyerAddress = newValue;
     }
 
@@ -3982,6 +4035,7 @@ export class ModificationItemModel extends BaseComponent {
             this.parent.CalculateExportModificationAmount();
             this.DeleteButton = true;
         }
+        this.EntityPM.IsDirty = false;
     }
 
     setSupplierInvoiceFreightAmountPM() {
@@ -4067,7 +4121,7 @@ export class ModificationItemModel extends BaseComponent {
         if (this.currencyType != value && !AppTool.IsNullOrEmpty(value)) {
             this.DeleteButton = true;
             this.currencyType = value;
-            if (this.code == "67") {
+           /* if (this.code == "67") {
                 this.parent.InsruanceCurrencyTypeCode = value.Code;
             }
             if (this.code == "144") {
@@ -4081,7 +4135,7 @@ export class ModificationItemModel extends BaseComponent {
                     this.parent.EntityPM.SupplierInvoiceFreightAmounts.find(d => d.DeclarationId == this.parent.EntityPM.DeclarationId).CurrencyTypeCode = value.Code;
                 }
                 this.parent.FreightCurrencyTypeCode = value.Code;
-            }
+            }*/
             this.CurrencyTypeCode = value.Code;
             this.CurrencyTypeName = value.LocalName;
             this.parent.CalculateExportModificationAmount();
@@ -4122,7 +4176,7 @@ export class ModificationItemModel extends BaseComponent {
             this.DeleteButton = true;
             this.EntityPM.Amount = value;
             this.parent.CalculateExportModificationAmount();
-            if (this.code == "67") {
+            /*if (this.code == "67") {
                 this.parent.InsuranceAmount = value;
             }
             if (this.code == "144") {
@@ -4134,7 +4188,7 @@ export class ModificationItemModel extends BaseComponent {
                     this.parent.EntityPM.SupplierInvoiceFreightAmounts[0].Amount = value;
                     this.parent.AmountList.Collection[0].Amount = value;
                 }
-            }
+            }*/
         }
         if (AppTool.IsNullOrEmpty(value)) {
             this.EntityPM.Amount = null;
@@ -4207,7 +4261,7 @@ export class ModificationItemModel extends BaseComponent {
             this.Amount = null;
             this.CurrencyType = null;
             switch (item.code) {
-                case "67":
+                /*case "67":
                     this.parent.InsuranceAmount = null;
                     this.parent.InsruanceCurrencyTypeCode = null;
                     break;
@@ -4216,7 +4270,7 @@ export class ModificationItemModel extends BaseComponent {
                     this.parent.EntityPM.TotalFreightInFreightCurrency = null;
                     var SupplierInvoiceFreightAmount = this.parent.EntityPM.SupplierInvoiceFreightAmounts.find(d => d.DeclarationId == this.parent.EntityPM.DeclarationId);
                     this.deletSupplierInvoiceFreightAmountPMWithCode(SupplierInvoiceFreightAmount.CurrencyTypeCode);
-                    break;
+                    break;*/
             }
             this.DeleteButton = false;
         }

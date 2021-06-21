@@ -244,6 +244,7 @@ export class SupplierInvoiceLine {
     public get InvoiceCurrencyTypeCode() { return this.entity.InvoiceCurrencyTypeCode; }
     public get TotalFreightInInvoiceCurrencyText() { return this.entity.TotalFreightInFreightCurrency; }
     public get IsAccumalated() { return this.entity.IsAccumalated; }
+    public get ExportFreightInInvoiceCurrencyText() { return "5";}
 
     private isSelected: boolean;
     public get IsSelected() { return this.isSelected };

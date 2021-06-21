@@ -246,6 +246,8 @@ import { CancelRequestRejectReasonTypeListService } from './Services/StandardLis
 import { SecurityClearenceTypeCodeListService } from './Services/StandardLists/SecurityClearenceTypeCodeListService';
 import { CargoTypeListService } from './Services/StandardLists/CargoTypeListService';
 
+import { ContainerizationListService } from './Services/StandardLists/ContainerizationListService';
+import { ContainerizationStatusCodeListService } from './Services/StandardLists/ContainerizationStatusCodeListService';
 
 //#endregion
 
@@ -321,7 +323,8 @@ import { SignStationExtendedListService } from './Services/ExtendedLists/SignSta
 import { DeclarationCourierStatusExtendedListService } from './Services/ExtendedLists/DeclarationCourierStatusExtendedListService';
 import { RecallClientsForCutoms } from '../CustomsModules/CustomsGeneralRequests/Components/RecallClientsForCutoms';
 import { CustomsCollateralExtendedListService } from './Services/ExtendedLists/CustomsCollateralExtendedListService';
- import { CourierMasterExtendedListService } from './Services/ExtendedLists/CourierMasterExtendedListService';
+import { CourierMasterExtendedListService } from './Services/ExtendedLists/CourierMasterExtendedListService';
+
  
 //#endregion
 
@@ -356,6 +359,7 @@ import { VendorMessagesService } from './Services/WebServices/VendorMessagesServ
 import { SupplierInvioceItemCertificatsService } from './Services/WebServices/SupplierInvioceItemCertificatsService';
 import { LoadTestService } from './Services/WebServices/LoadTestService';
 import { InvoiceQueueWebService } from './Services/WebServices/InvoiceQueueWebService';
+import { ContainerizationMessagesService } from './Services/WebServices/ContainerizationMessagesService';
 
 //#endregion
 
@@ -369,6 +373,7 @@ import { GITITEMCacheService } from './Services/Others/GITITEMCacheService';
 import { CacheCourierPendingReasonService } from './Services/Others/CacheCourierPendingReasonService';
 
 import { DeclarationMenuButtonsHandler } from './Components/MenuButtons/DeclarationMenuButtonsHandler';
+import { ContainerizationMenuButtonsHandler } from './Components/MenuButtons/ContainerizationMenuButtonsHandler';
 import { VehicleMenuButtonsHandler } from './Components/MenuButtons/VehicleMenuButtonsHandler';
 import { PaymentOrderMenuButtonsHandler } from './Components/MenuButtons/PaymentOrderMenuButtonsHandler';
 import { ClaimMenuButtonsHandler } from './Components/MenuButtons/ClaimMenuButtonsHandler';
@@ -399,6 +404,8 @@ import { ExportStorgeListService } from './Services/StandardLists/ExportStorgeLi
 import { LogisticsReferenceTypeListService } from './Services/StandardLists/LogisticsReferenceTypeListService';
 import { ReferenceStatusListService } from './Services/StandardLists/ReferenceStatusListService';
 import { ReferenceInputTypeListService } from './Services/StandardLists/ReferenceInputTypeListService';
+import { ContainerizationPMService } from './Services/StandardPMs/ContainerizationPMService';
+import { ContainerizationExtendedListService } from './Services/ExtendedLists/ContainerizationExtendedListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -678,7 +685,10 @@ export class ModuleProviders {
             case "AmendCancellRequestInitiatorListService": { myResult = new AmendCancellRequestInitiatorListService(); break; }
             case "FclLclCodeListService": { myResult = new FclLclCodeListService(); break; }
             case "CancelRequestRejectReasonTypeListService": { myResult = new CancelRequestRejectReasonTypeListService(); break; }
+            case "ContainerizationListService": { myResult = new ContainerizationListService(); break; }
+            case "ContainerizationStatusCodeListService": { myResult = new ContainerizationStatusCodeListService(); break; }
 
+                
              //#endregion                
 
             //#region StandardPMs
@@ -737,6 +747,7 @@ export class ModuleProviders {
             case "CurrencyTypePMService": { myResult = new CurrencyTypePMService(); break; }
             case "ReferantTeamPMService": { myResult = new ReferantTeamPMService(); break; }
             case "ExportStorgePMService": { myResult = new ExportStorgePMService(); break; }
+            case "ContainerizationPMService": { myResult = new ContainerizationPMService(); break; }
 
             //#endregion
 
@@ -755,6 +766,8 @@ export class ModuleProviders {
             case "RecallClientsForCutoms": { myResult = new RecallClientsForCutoms(); break; }
             case "CustomsCollateralExtendedListService": { myResult = new CustomsCollateralExtendedListService(); break; }
             case "CourierMasterExtendedListService": { myResult = new CourierMasterExtendedListService(); break; }
+            case "ContainerizationExtendedListService": { myResult = new ContainerizationExtendedListService(); break; }
+
             //#endregion
 
             //#region ExtendedPMs
@@ -786,7 +799,8 @@ export class ModuleProviders {
             case "SupplierInvioceItemCertificatsService": { myResult = new SupplierInvioceItemCertificatsService(); break; }
             case "LoadTestService": { myResult = new LoadTestService(); break; }
             case "InvoiceQueueWebService": { myResult = new InvoiceQueueWebService(); break; }
-    
+            case "ContainerizationMessagesService": { myResult = new ContainerizationMessagesService(); break; }
+
             //#endregion
 
             //Others
@@ -800,6 +814,7 @@ export class ModuleProviders {
 
             case "DeclarationMenuButtonsHandler": { myResult = new DeclarationMenuButtonsHandler(); break; }
             case "VehicleMenuButtonsHandler": { myResult = new VehicleMenuButtonsHandler(); break; }
+            case "ContainerizationMenuButtonsHandler": { myResult = new ContainerizationMenuButtonsHandler(); break; }
             case "PaymentOrderMenuButtonsHandler": { myResult = new PaymentOrderMenuButtonsHandler(); break; }
             case "ClaimMenuButtonsHandler": { myResult = new ClaimMenuButtonsHandler(); break; }
             case "DeclarationEditComponentController": { myResult = new DeclarationEditComponentController(); break; }

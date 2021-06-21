@@ -207,6 +207,8 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string CourierHAWB  { get; set; }
        [DataMember]
+       public string ManifestNumber  { get; set; }
+       [DataMember]
        public string StorageStatusName  { get; set; }
        [DataMember]
        public bool ExcludeConsignment  { get; set; }
@@ -388,6 +390,12 @@ namespace Logitude.Customs.Data.EntityLists
        public string ExportDeclarationOfficeCode  { get; set; }
        [DataMember]
        public int? PhysicalCheck  { get; set; }
+       [DataMember]
+       public string CargoTypeName  { get; set; }
+       [DataMember]
+       public string SecondCargoID  { get; set; }
+       [DataMember]
+       public string ThirdCargoID  { get; set; }
    }
 
 }

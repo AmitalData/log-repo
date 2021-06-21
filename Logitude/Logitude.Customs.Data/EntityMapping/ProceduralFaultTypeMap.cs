@@ -25,9 +25,9 @@ namespace Logitude.Customs.Data.EntityMapping
 	 
             this.Property(t => t.Code).HasColumnName("Code").IsRequired().HasMaxLength(3).IsUnicode(false);
 
-            this.Property(t => t.EnglishName).HasColumnName("EnglishName").HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.EnglishName).HasColumnName("EnglishName").HasMaxLength(200).IsUnicode(false);
 
-            this.Property(t => t.LocalName).HasColumnName("LocalName").HasMaxLength(100).IsUnicode(true);
+            this.Property(t => t.LocalName).HasColumnName("LocalName").HasMaxLength(200).IsUnicode(true);
 
             this.Property(t => t.SearchFields).HasColumnName("SearchFields").HasMaxLength(1000).IsUnicode(true);
 

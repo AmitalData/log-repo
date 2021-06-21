@@ -1,0 +1,91 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.EntityKeys;
+using Simplog.Server.Infrastructure;
+
+namespace Logitude.Customs.Data.Repsitories
+{
+   public partial class ContainerizationRepository:IRepository<Containerization>
+   {
+   
+        private ICustomContext currentContext;
+        public ContainerizationRepository(int tenant)
+        {
+            currentContext = CustomContext.GetContext(tenant);
+        }
+
+        public ContainerizationRepository(ICustomContext context)
+        {
+            currentContext = context;
+        }
+
+		 
+		
+		public  Containerization GetSingle(string id, int tenant)
+        {
+            return (from a in context.Containerizations
+                    where a.Id == id && a.Tenant == tenant
+                    select a).FirstOrDefault();
+        }
+
+        public IQueryable<Containerization> GetAll(int tenant)
+        {
+            return from a in context.Containerizations  
+                   where a.Tenant == tenant
+                   select a;
+        }
+				 
+        public Containerization GetSingle(EntityKeyFields entityKeys)
+        {
+            ContainerizationKeys keys = entityKeys as ContainerizationKeys;
+            return (from a in context.Containerizations
+                    where a.Id == keys.Id
+                    select a).FirstOrDefault();
+        }
+		         
+        partial void onAdd();//Partial Methods Definition in Generated
+        public void Add(Containerization entity)
+        {
+            onAdd();
+            context.Containerizations.Add(entity);
+        }
+
+        public void Remove(Containerization entity)
+        {
+            context.Containerizations.Attach(entity);
+            context.Containerizations.Remove(entity);
+        }
+
+        partial void onUpdate();//Partial Methods Definition in Generated
+        public void Update(Containerization entity)
+        {
+            onUpdate();
+            context.Containerizations.Attach(entity);
+            context.SetAsModified(entity);
+        }
+
+        public List<Containerization> All()
+        {
+            return context.Containerizations.ToList();
+        }
+
+        private ICustomContext context
+        {
+            get { return currentContext; }
+        }
+
+        public void SubmitChanges()
+        {
+            context.SaveChanges();
+        }
+	 
+   }
+   }
+	 

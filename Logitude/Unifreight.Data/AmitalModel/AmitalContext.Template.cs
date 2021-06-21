@@ -28,15 +28,8 @@ namespace Unifreight.Data.AmitalModel
         public static DbModelBuilder GetBuilder()//protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             DbModelBuilder modelBuilder = new DbModelBuilder(DbModelBuilderVersion.V4_1);
-            bool its4Grant = true;
-            if (its4Grant)
-            {
 
-                modelBuilder.Entity<CFIFILEM>()
-                    .HasKey(p => new { p.FILE_NO })
-                    .ToTable("CFIFILEM", "AMITESTM");
-
-            }
+            
 
 
             #region YCULPROCESS
@@ -5664,6 +5657,1847 @@ namespace Unifreight.Data.AmitalModel
 
             #endregion
 
+            #region CFIFILEM
+
+
+
+            modelBuilder.Entity<CFIFILEM>()
+                .HasKey(p => p.FILENO)
+                .ToTable("CFIFILEM", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.FILENO)
+                    .HasColumnName(@"FILE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int64");
+#if reserveword
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.FILEPREFIX)
+                    .HasColumnName(@"FILE_PREFIX")
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.BRANCHID)
+                    .HasColumnName(@"BRANCH_ID")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.CUSTOMERID)
+                    .HasColumnName(@"CUSTOMER_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.SUPPLIERID)
+                    .HasColumnName(@"SUPPLIER_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.CUSSUPPLIERID)
+                    .HasColumnName(@"CUS_SUPPLIER_ID")
+                    .HasMaxLength(30)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.CUSTOMSBRANCHID)
+                    .HasColumnName(@"CUSTOMS_BRANCH_ID")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.DEPARTID)
+                    .HasColumnName(@"DEPART_ID")
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.OPENDATE)
+                    .HasColumnName(@"OPEN_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.USERID)
+                    .HasColumnName(@"USER_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.PACKTYPEID)
+                    .HasColumnName(@"PACK_TYPE_ID")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.FILETYPE)
+                    .HasColumnName(@"FILE_TYPE")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.QUANTITY)
+                    .HasColumnType("int64");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.WEIGHT)
+                    .HasColumnType("double");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.VOLUME)
+                    .HasColumnType("double");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.AWBCARRIER)
+                    .HasColumnName(@"AWB_CARRIER")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.VESSEL)
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.FLIGHTNUM)
+                    .HasColumnName(@"FLIGHT_NUM")
+                    .HasMaxLength(9)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.FREIGHT)
+                    .HasColumnType("double");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.ORIGINID)
+                    .HasColumnName(@"ORIGIN_ID")
+                    .HasMaxLength(10)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.DESTINATIONID)
+                    .HasColumnName(@"DESTINATION_ID")
+                    .HasMaxLength(10)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.MAWB)
+                    .HasMaxLength(20)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.HAWB)
+                    .HasMaxLength(35)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.HAWBDATE)
+                    .HasColumnName(@"HAWB_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.ARRIVALDATE)
+                    .HasColumnName(@"ARRIVAL_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.ISKA)
+                    .HasMaxLength(16)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.FORWARDERID)
+                    .HasColumnName(@"FORWARDER_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.MANIFESTNO)
+                    .HasColumnName(@"MANIFEST_NO")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.TRUCKERID)
+                    .HasColumnName(@"TRUCKER_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.MVZONE)
+                    .HasColumnName(@"MV_ZONE")
+                    .HasMaxLength(15)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.CONTACTID)
+                    .HasColumnName(@"CONTACT_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.TRANSPORTATIONTYPE)
+                    .HasColumnName(@"TRANSPORTATION_TYPE")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.INSURANCE)
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.HAWBSHORT)
+                    .HasColumnName(@"HAWB_SHORT")
+                    .HasMaxLength(8)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.WTVAL)
+                    .HasMaxLength(1)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.PAYMENTTERM)
+                    .HasColumnName(@"PAYMENT_TERM")
+                    .HasMaxLength(3)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.GUSH)
+                    .HasMaxLength(7)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.FILECLOSED)
+                    .HasColumnName(@"FILE_CLOSED")
+                    .HasColumnType("bool");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.STATUSID)
+                    .HasColumnName(@"STATUS_ID")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.STATUSDATE)
+                    .HasColumnName(@"STATUS_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.LSTSTATUSID)
+                    .HasColumnName(@"LST_STATUS_ID")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.LSTSTATUSDATE)
+                    .HasColumnName(@"LST_STATUS_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.CUSTPACK)
+                    .HasColumnName(@"CUST_PACK")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.CUSTPORT)
+                    .HasColumnName(@"CUST_PORT")
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.OLDCCFILE)
+                    .HasColumnName(@"OLD_CC_FILE")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.ENTRYFILENO)
+                    .HasColumnName(@"ENTRY_FILE_NO")
+                    .HasColumnType("int");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.RELEASEFILENO)
+                    .HasColumnName(@"RELEASE_FILE_NO")
+                    .HasColumnType("int64");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.RESHIMONNO)
+                    .HasColumnName(@"RESHIMON_NO")
+                    .HasMaxLength(35)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.RESHIMONDATE)
+                    .HasColumnName(@"RESHIMON_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.RESHIMONTYPE)
+                    .HasColumnName(@"RESHIMON_TYPE")
+                    .HasMaxLength(7)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.ORIGINCOUNTRY)
+                    .HasColumnName(@"ORIGIN_COUNTRY")
+                    .HasMaxLength(4)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.COMMODITYID)
+                    .HasColumnName(@"COMMODITY_ID")
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.MAWBDATE)
+                    .HasColumnName(@"MAWB_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.PTERMID)
+                    .HasColumnName(@"PTERM_ID")
+                    .HasMaxLength(3)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.CHARGWT)
+                    .HasColumnName(@"CHARG_WT")
+                    .HasColumnType("double");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.ETA)
+                    .HasColumnType("date");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.FUCLOSE)
+                    .HasColumnName(@"FU_CLOSE")
+                    .HasColumnType("bool");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.ACCOUNTINGCLOSE)
+                    .HasColumnName(@"ACCOUNTING_CLOSE")
+                    .HasColumnType("bool");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.GRANTDATE)
+                    .HasColumnName(@"GRANT_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.OPENBYUSER)
+                    .HasColumnName(@"OPEN_BY_USER")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.PROFILEID)
+                    .HasColumnName(@"PROFILE_ID")
+                    .HasMaxLength(8)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.IMPORTTYPE)
+                    .HasColumnName(@"IMPORT_TYPE")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.FILECLASS)
+                    .HasColumnName(@"FILE_CLASS")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.CANCELLED)
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.MEDIATORID)
+                    .HasColumnName(@"MEDIATOR_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.FCL)
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.SACREDIT)
+                    .HasColumnName(@"SA_CREDIT")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.TEAMID)
+                    .HasColumnName(@"TEAM_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.PROFITCLOSE)
+                    .HasColumnName(@"PROFIT_CLOSE")
+                    .HasColumnType("bool");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.TRACKINGNO)
+                    .HasColumnName(@"TRACKING_NO")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.BANKID)
+                    .HasColumnName(@"BANK_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.BUYERID)
+                    .HasColumnName(@"BUYER_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.IIGTYPE)
+                    .HasColumnName(@"IIG_TYPE")
+                    .HasMaxLength(2)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.LOGITUDEFILE)
+                    .HasColumnName(@"LOGITUDE_FILE")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.CIFVALUE)
+                    .HasColumnName(@"CIF_VALUE")
+                    .HasColumnType("decimal")
+                    .HasPrecision(18, 2);
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.TOTALTAX)
+                    .HasColumnName(@"TOTAL_TAX")
+                    .HasColumnType("decimal")
+                    .HasPrecision(18, 2);
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.DECLARSTSCODE)
+                    .HasColumnName(@"DECLAR_STS_CODE")
+                    .HasMaxLength(2)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.PACKSFLAG)
+                    .HasColumnName(@"PACKS_FLAG")
+                    .HasColumnType("bool");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.INSCOMPANY)
+                    .HasColumnName(@"INS_COMPANY")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.POLICYNO)
+                    .HasColumnName(@"POLICY_NO")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.INSBYUS)
+                    .HasColumnName(@"INS_BY_US")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.WAREHOUSEID)
+                    .HasColumnName(@"WAREHOUSE_ID")
+                    .HasMaxLength(10)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.UNLOADPORTID)
+                    .HasColumnName(@"UNLOADPORT_ID")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.BALDARHAWB)
+                    .HasColumnName(@"BALDAR_HAWB")
+                    .HasMaxLength(35)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.BALDARHAWBDATE)
+                    .HasColumnName(@"BALDAR_HAWB_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.SHIPUSDVAL)
+                    .HasColumnName(@"SHIP_USD_VAL")
+                    .HasColumnType("double");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.ARRIVALTIME)
+                    .HasColumnName(@"ARRIVAL_TIME")
+                    .HasColumnType("date");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.ESTARRIVALTIME)
+                    .HasColumnName(@"EST_ARRIVAL_TIME")
+                    .HasColumnType("date");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.LASTUPDATETIME)
+                    .HasColumnName(@"LAST_UPDATE_TIME")
+                    .HasColumnType("date");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.OLDCUSTPACKTYPEID)
+                    .HasColumnName(@"OLDCUST_PACK_TYPE_ID")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.COUWTVAL)
+                    .HasColumnName(@"COU_WTVAL")
+                    .HasMaxLength(2)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.UNIQUECHECK)
+                    .HasColumnName(@"UNIQUE_CHECK")
+                    .HasMaxLength(128)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.INTEGRATORID)
+                    .HasColumnName(@"INTEGRATOR_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.SHOPID)
+                    .HasColumnName(@"SHOP_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.LEADFILE)
+                    .HasColumnName(@"LEAD_FILE")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.SERVLEVELID)
+                    .HasColumnName(@"SERVLEVEL_ID")
+                    .HasMaxLength(4)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CFIFILEM>()
+                .Property(p => p.WITHPAPER)
+                    .HasColumnName(@"WITH_PAPER")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+#endif
+            #endregion
+
+            #region CTBFITYPE
+
+            modelBuilder.Entity<CTBFITYPE>()
+                .HasKey(p => p.TYPEID)
+                .ToTable("CTBFITYPE", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<CTBFITYPE>()
+                .Property(p => p.TYPEID)
+                    .HasColumnName(@"TYPE_ID")
+                    .IsRequired()
+                    .HasMaxLength(3)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CTBFITYPE>()
+                .Property(p => p.SEARCHENG)
+                    .HasColumnName(@"SEARCH_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CTBFITYPE>()
+                .Property(p => p.NAMEHEB)
+                    .HasColumnName(@"NAME_HEB")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CTBFITYPE>()
+                .Property(p => p.NAMEENG)
+                    .HasColumnName(@"NAME_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CTBFITYPE>()
+                .Property(p => p.BLOCKRECORD)
+                    .HasColumnName(@"BLOCK_RECORD")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+
+            #endregion
+
+            #region GTBFUSTATU
+
+            modelBuilder.Entity<GTBFUSTATU>()
+                .HasKey(p => new { p.ENTNAME, p.STATUSCODE })
+                .ToTable("GTBFUSTATUS", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<GTBFUSTATU>()
+                .Property(p => p.ENTNAME)
+                    .IsRequired()
+                    .HasMaxLength(32)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GTBFUSTATU>()
+                .Property(p => p.STATUSCODE)
+                    .HasColumnName(@"STATUS_CODE")
+                    .IsRequired()
+                    .HasMaxLength(3)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GTBFUSTATU>()
+                .Property(p => p.NAMEHEB)
+                    .HasColumnName(@"NAME_HEB")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GTBFUSTATU>()
+                .Property(p => p.NAMEENG)
+                    .HasColumnName(@"NAME_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GTBFUSTATU>()
+                .Property(p => p.SEQUENCE)
+                    .HasColumnType("int");
+            modelBuilder.Entity<GTBFUSTATU>()
+                .Property(p => p.CLOSEACTION)
+                    .HasColumnName(@"CLOSE_ACTION")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GTBFUSTATU>()
+                .Property(p => p.CLIENTSTATUS)
+                    .HasColumnName(@"CLIENT_STATUS")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GTBFUSTATU>()
+                .Property(p => p.AGENTSTATUS)
+                    .HasColumnName(@"AGENT_STATUS")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GTBFUSTATU>()
+                .Property(p => p.BLOCKRECORD)
+                    .HasColumnName(@"BLOCK_RECORD")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GTBFUSTATU>()
+                .Property(p => p.SEARCHENG)
+                    .HasColumnName(@"SEARCH_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GTBFUSTATU>()
+                .Property(p => p.MESSFORCLIENT)
+                    .HasColumnName(@"MESS_FOR_CLIENT")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GTBFUSTATU>()
+                .Property(p => p.MESSFORAGENT)
+                    .HasColumnName(@"MESS_FOR_AGENT")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GTBFUSTATU>()
+                .Property(p => p.NEXTSTATUS)
+                    .HasColumnName(@"NEXT_STATUS")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GTBFUSTATU>()
+                .Property(p => p.OFDAYNEXTST)
+                    .HasColumnName(@"OF_DAY_NEXT_ST")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GTBFUSTATU>()
+                .Property(p => p.OFDAYFOLLUP)
+                    .HasColumnName(@"OF_DAY_FOLL_UP")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GTBFUSTATU>()
+                .Property(p => p.OFDAYACTIVEA)
+                    .HasColumnName(@"OF_DAY_ACTIVE_A")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GTBFUSTATU>()
+                .Property(p => p.SHOSTATUS)
+                    .HasColumnName(@"SHO_STATUS")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GTBFUSTATU>()
+                .Property(p => p.PRIORITY)
+                    .HasColumnType("int");
+            modelBuilder.Entity<GTBFUSTATU>()
+                .Property(p => p.VERBYOWNER)
+                    .HasColumnName(@"VER_BY_OWNER")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GTBFUSTATU>()
+                .Property(p => p.EXCEPTION)
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GTBFUSTATU>()
+                .Property(p => p.STANDALONE)
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GTBFUSTATU>()
+                .Property(p => p.OFTIMEFOLLUP)
+                    .HasColumnName(@"OF_TIME_FOLL_UP")
+                    .HasColumnType("date");
+            modelBuilder.Entity<GTBFUSTATU>()
+                .Property(p => p.STATUSSAVE)
+                    .HasColumnName(@"STATUS_SAVE")
+                    .HasMaxLength(5)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GTBFUSTATU>()
+                .Property(p => p.BATCHMODE)
+                    .HasColumnName(@"BATCH_MODE")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GTBFUSTATU>()
+                .Property(p => p.DEVELOPERMODE)
+                    .HasColumnName(@"DEVELOPER_MODE")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GTBFUSTATU>()
+                .Property(p => p.AUTOSTATUS)
+                    .HasColumnName(@"AUTO_STATUS")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GTBFUSTATU>()
+                .Property(p => p.NOAPPLLOCK)
+                    .HasColumnName(@"NO_APPL_LOCK")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GTBFUSTATU>()
+                .Property(p => p.STATUSINF)
+                    .HasColumnName(@"STATUS_INF")
+                    .HasColumnType("long");
+
+            #endregion
+
+            #region GAQSTRUCTURE
+
+            modelBuilder.Entity<GAQSTRUCTURE>()
+                .HasKey(p => new { p.USERCODE, p.ENTNAME })
+                .ToTable("GAQSTRUCTURE", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<GAQSTRUCTURE>()
+                .Property(p => p.USERCODE)
+                    .HasColumnName(@"USER_CODE")
+                    .IsRequired()
+                    .HasMaxLength(15)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQSTRUCTURE>()
+                .Property(p => p.ENTNAME)
+                    .IsRequired()
+                    .HasMaxLength(2)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQSTRUCTURE>()
+                .Property(p => p.ROLETYPE)
+                    .HasColumnName(@"ROLE_TYPE")
+                    .HasMaxLength(32)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQSTRUCTURE>()
+                .Property(p => p.DEPARTID)
+                    .HasColumnName(@"DEPART_ID")
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GAQSTRUCTURE>()
+                .Property(p => p.TEAMID)
+                    .HasColumnName(@"TEAM_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQSTRUCTURE>()
+                .Property(p => p.BLOCKRECORD)
+                    .HasColumnName(@"BLOCK_RECORD")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GAQSTRUCTURE>()
+                .Property(p => p.QUEUEACTIVE)
+                    .HasColumnName(@"QUEUE_ACTIVE")
+                    .HasMaxLength(1024)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQSTRUCTURE>()
+                .Property(p => p.QUEUEALL)
+                    .HasColumnName(@"QUEUE_ALL")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+
+            #endregion
+
+            #region GAQREMARK
+
+            modelBuilder.Entity<GAQREMARK>()
+                .HasKey(p => p.COUNTER)
+                .ToTable("GAQREMARK", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<GAQREMARK>()
+                .Property(p => p.COUNTER)
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<GAQREMARK>()
+                .Property(p => p.REMARK)
+                    .HasMaxLength(1024)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQREMARK>()
+                .Property(p => p.APPQID)
+                    .HasColumnName(@"APPQ_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQREMARK>()
+                .Property(p => p.REJECTION)
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GAQREMARK>()
+                .Property(p => p.APPROVAL)
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GAQREMARK>()
+                .Property(p => p.NEWTASK)
+                    .HasColumnName(@"NEW_TASK")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GAQREMARK>()
+                .Property(p => p.SUSPEND)
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+
+            #endregion
+
+            #region GAQQLOAD
+
+            modelBuilder.Entity<GAQQLOAD>()
+                .HasKey(p => p.APPQID)
+                .ToTable("GAQQLOAD", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<GAQQLOAD>()
+                .Property(p => p.APPQID)
+                    .HasColumnName(@"APPQ_ID")
+                    .IsRequired()
+                    .HasMaxLength(15)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQQLOAD>()
+                .Property(p => p.LOAD)
+                    .HasColumnType("bool");
+            modelBuilder.Entity<GAQQLOAD>()
+                .Property(p => p.QCOUNT)
+                    .HasColumnName(@"Q_COUNT")
+                    .HasColumnType("int");
+            modelBuilder.Entity<GAQQLOAD>()
+                .Property(p => p.QTIMEH)
+                    .HasColumnName(@"Q_TIMEH")
+                    .HasColumnType("double");
+            modelBuilder.Entity<GAQQLOAD>()
+                .Property(p => p.REMARK)
+                    .HasMaxLength(1024)
+                    .HasColumnType("varchar2");
+
+            #endregion
+
+            #region GAQMERGE
+
+            modelBuilder.Entity<GAQMERGE>()
+                .HasKey(p => p.COUNTER)
+                .ToTable("GAQMERGE", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<GAQMERGE>()
+                .Property(p => p.COUNTER)
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<GAQMERGE>()
+                .Property(p => p.APPQID)
+                    .HasColumnName(@"APPQ_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQMERGE>()
+                .Property(p => p.RSPID)
+                    .HasColumnName(@"RSP_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQMERGE>()
+                .Property(p => p.DEPARTID)
+                    .HasColumnName(@"DEPART_ID")
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GAQMERGE>()
+                .Property(p => p.CREATEDATE)
+                    .HasColumnName(@"CREATE_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<GAQMERGE>()
+                .Property(p => p.CLOSEDATE)
+                    .HasColumnName(@"CLOSE_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<GAQMERGE>()
+                .Property(p => p.CREATEBY)
+                    .HasColumnName(@"CREATE_BY")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQMERGE>()
+                .Property(p => p.UPDATEBY)
+                    .HasColumnName(@"UPDATE_BY")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQMERGE>()
+                .Property(p => p.ENTNAME)
+                    .HasMaxLength(32)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQMERGE>()
+                .Property(p => p.PRIMARYNUM)
+                    .HasColumnName(@"PRIMARY_NUM")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQMERGE>()
+                .Property(p => p.REFERANTID)
+                    .HasColumnName(@"REFERANT_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQMERGE>()
+                .Property(p => p.CLIENTID)
+                    .HasColumnName(@"CLIENT_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQMERGE>()
+                .Property(p => p.STATUS)
+                    .HasColumnType("bool");
+            modelBuilder.Entity<GAQMERGE>()
+                .Property(p => p.GROSSTIMEH)
+                    .HasColumnName(@"GROSS_TIMEH")
+                    .HasColumnType("double");
+            modelBuilder.Entity<GAQMERGE>()
+                .Property(p => p.NETTIMEH)
+                    .HasColumnName(@"NET_TIMEH")
+                    .HasColumnType("double");
+            modelBuilder.Entity<GAQMERGE>()
+                .Property(p => p.REMARK)
+                    .HasMaxLength(1024)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQMERGE>()
+                .Property(p => p.LOAD)
+                    .HasColumnType("bool");
+            modelBuilder.Entity<GAQMERGE>()
+                .Property(p => p.LOADREMARK)
+                    .HasColumnName(@"LOAD_REMARK")
+                    .HasMaxLength(1024)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQMERGE>()
+                .Property(p => p.FLAG)
+                    .HasColumnType("bool");
+            modelBuilder.Entity<GAQMERGE>()
+                .Property(p => p.TEAMID)
+                    .HasColumnName(@"TEAM_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQMERGE>()
+                .Property(p => p.CALCDATE)
+                    .HasColumnName(@"CALC_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<GAQMERGE>()
+                .Property(p => p.GDATE1)
+                    .HasColumnName(@"G_DATE1")
+                    .HasColumnType("date");
+            modelBuilder.Entity<GAQMERGE>()
+                .Property(p => p.PRIORITY)
+                    .HasColumnType("bool");
+            modelBuilder.Entity<GAQMERGE>()
+                .Property(p => p.DATAQUEID)
+                    .HasColumnName(@"DATA_QUE_ID")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQMERGE>()
+                .Property(p => p.PENDINGDATE)
+                    .HasColumnName(@"PENDING_DATE")
+                    .HasColumnType("date");
+
+            #endregion
+
+            #region GAQDLOAD
+
+            modelBuilder.Entity<GAQDLOAD>()
+                .HasKey(p => new { p.APPQID, p.DEPARTID })
+                .ToTable("GAQDLOAD", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<GAQDLOAD>()
+                .Property(p => p.APPQID)
+                    .HasColumnName(@"APPQ_ID")
+                    .IsRequired()
+                    .HasMaxLength(15)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQDLOAD>()
+                .Property(p => p.DEPARTID)
+                    .HasColumnName(@"DEPART_ID")
+                    .IsRequired()
+                    .HasMaxLength(5)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GAQDLOAD>()
+                .Property(p => p.LOAD)
+                    .HasColumnType("bool");
+            modelBuilder.Entity<GAQDLOAD>()
+                .Property(p => p.QCOUNT)
+                    .HasColumnName(@"Q_COUNT")
+                    .HasColumnType("int");
+            modelBuilder.Entity<GAQDLOAD>()
+                .Property(p => p.QTIMEH)
+                    .HasColumnName(@"Q_TIMEH")
+                    .HasColumnType("double");
+            modelBuilder.Entity<GAQDLOAD>()
+                .Property(p => p.REMARK)
+                    .HasMaxLength(1024)
+                    .HasColumnType("varchar2");
+
+            #endregion
+
+            #region GAQDEF
+
+            modelBuilder.Entity<GAQDEF>()
+                .HasKey(p => p.APPQID)
+                .ToTable("GAQDEF", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.APPQID)
+                    .HasColumnName(@"APPQ_ID")
+                    .IsRequired()
+                    .HasMaxLength(15)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.NAMEENG)
+                    .HasColumnName(@"NAME_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.SEARCHENG)
+                    .HasColumnName(@"SEARCH_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.ENTNAME)
+                    .HasMaxLength(32)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.CREATEDATE)
+                    .HasColumnName(@"CREATE_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.UPDATEDATE)
+                    .HasColumnName(@"UPDATE_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.CREATEBY)
+                    .HasColumnName(@"CREATE_BY")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.UPDATEBY)
+                    .HasColumnName(@"UPDATE_BY")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.BLOCKRECORD)
+                    .HasColumnName(@"BLOCK_RECORD")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.QGCOUNT)
+                    .HasColumnName(@"Q_GCOUNT")
+                    .HasColumnType("int");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.QYCOUNT)
+                    .HasColumnName(@"Q_YCOUNT")
+                    .HasColumnType("int");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.QRCOUNT)
+                    .HasColumnName(@"Q_RCOUNT")
+                    .HasColumnType("int");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.QGTIMEH)
+                    .HasColumnName(@"Q_GTIMEH")
+                    .HasColumnType("double");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.QYTIMEH)
+                    .HasColumnName(@"Q_YTIMEH")
+                    .HasColumnType("double");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.QRTIMEH)
+                    .HasColumnName(@"Q_RTIMEH")
+                    .HasColumnType("double");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.DGCOUNT)
+                    .HasColumnName(@"D_GCOUNT")
+                    .HasColumnType("decimal")
+                    .HasPrecision(20, 0);
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.DYCOUNT)
+                    .HasColumnName(@"D_YCOUNT")
+                    .HasColumnType("int");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.DRCOUNT)
+                    .HasColumnName(@"D_RCOUNT")
+                    .HasColumnType("int");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.DGTIMEH)
+                    .HasColumnName(@"D_GTIMEH")
+                    .HasColumnType("double");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.DYTIMEH)
+                    .HasColumnName(@"D_YTIMEH")
+                    .HasColumnType("double");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.DRTIMEH)
+                    .HasColumnName(@"D_RTIMEH")
+                    .HasColumnType("double");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.UGCOUNT)
+                    .HasColumnName(@"U_GCOUNT")
+                    .HasColumnType("int");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.UYCOUNT)
+                    .HasColumnName(@"U_YCOUNT")
+                    .HasColumnType("int");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.URCOUNT)
+                    .HasColumnName(@"U_RCOUNT")
+                    .HasColumnType("int");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.UGTIMEH)
+                    .HasColumnName(@"U_GTIMEH")
+                    .HasColumnType("double");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.UYTIMEH)
+                    .HasColumnName(@"U_YTIMEH")
+                    .HasColumnType("double");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.URTIMEH)
+                    .HasColumnName(@"U_RTIMEH")
+                    .HasColumnType("double");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.FRTIMEH)
+                    .HasColumnName(@"F_RTIMEH")
+                    .HasColumnType("double");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.FYTIMEH)
+                    .HasColumnName(@"F_YTIMEH")
+                    .HasColumnType("double");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.FGTIMEH)
+                    .HasColumnName(@"F_GTIMEH")
+                    .HasColumnType("double");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.REMARKS)
+                    .HasColumnType("clob");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.SERVICENAME)
+                    .HasColumnName(@"SERVICE_NAME")
+                    .HasMaxLength(16)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.TGCOUNT)
+                    .HasColumnName(@"T_GCOUNT")
+                    .HasColumnType("int");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.TYCOUNT)
+                    .HasColumnName(@"T_YCOUNT")
+                    .HasColumnType("int");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.TRCOUNT)
+                    .HasColumnName(@"T_RCOUNT")
+                    .HasColumnType("int");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.TGTIMEH)
+                    .HasColumnName(@"T_GTIMEH")
+                    .HasColumnType("double");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.TYTIMEH)
+                    .HasColumnName(@"T_YTIMEH")
+                    .HasColumnType("double");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.TRTIMEH)
+                    .HasColumnName(@"T_RTIMEH")
+                    .HasColumnType("double");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.REFERENCE)
+                    .HasMaxLength(64)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.STATUSID)
+                    .HasColumnName(@"STATUS_ID")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.SUCCESSSTATUSID)
+                    .HasColumnName(@"SUCCESS_STATUS_ID")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.FAILEDSTATUSID)
+                    .HasColumnName(@"FAILED_STATUS_ID")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.OPENSTATUSID)
+                    .HasColumnName(@"OPEN_STATUS_ID")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.POOLUSRID)
+                    .HasColumnName(@"POOL_USR_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.ROLETYPE)
+                    .HasColumnName(@"ROLE_TYPE")
+                    .HasMaxLength(32)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQDEF>()
+                .Property(p => p.ACTIONBUTTONNAME)
+                    .HasColumnName(@"ACTION_BUTTON_NAME")
+                    .HasMaxLength(50)
+                    .HasColumnType("varchar2");
+
+            #endregion
+
+            #region GAQDATALOAD
+
+            modelBuilder.Entity<GAQDATALOAD>()
+                .HasKey(p => p.DATAQUEID)
+                .ToTable("GAQDATALOAD", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<GAQDATALOAD>()
+                .Property(p => p.DATAQUEID)
+                    .HasColumnName(@"DATA_QUE_ID")
+                    .IsRequired()
+                    .HasMaxLength(30)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQDATALOAD>()
+                .Property(p => p.APPQID)
+                    .HasColumnName(@"APPQ_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQDATALOAD>()
+                .Property(p => p.ENTNAME)
+                    .HasMaxLength(32)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQDATALOAD>()
+                .Property(p => p.PRIMARYNUM)
+                    .HasColumnName(@"PRIMARY_NUM")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQDATALOAD>()
+                .Property(p => p.LOAD)
+                    .HasColumnType("bool");
+            modelBuilder.Entity<GAQDATALOAD>()
+                .Property(p => p.LOADREMARK)
+                    .HasColumnName(@"LOAD_REMARK")
+                    .HasMaxLength(1024)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQDATALOAD>()
+                .Property(p => p.CALCDATE)
+                    .HasColumnName(@"CALC_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<GAQDATALOAD>()
+                .Property(p => p.GROSSTIMEH)
+                    .HasColumnName(@"GROSS_TIMEH")
+                    .HasColumnType("double");
+            modelBuilder.Entity<GAQDATALOAD>()
+                .Property(p => p.NETTIMEH)
+                    .HasColumnName(@"NET_TIMEH")
+                    .HasColumnType("double");
+            modelBuilder.Entity<GAQDATALOAD>()
+                .Property(p => p.DEPARTID)
+                    .HasColumnName(@"DEPART_ID")
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GAQDATALOAD>()
+                .Property(p => p.RSPID)
+                    .HasColumnName(@"RSP_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQDATALOAD>()
+                .Property(p => p.REFERANTID)
+                    .HasColumnName(@"REFERANT_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQDATALOAD>()
+                .Property(p => p.CLIENTID)
+                    .HasColumnName(@"CLIENT_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQDATALOAD>()
+                .Property(p => p.TEAMID)
+                    .HasColumnName(@"TEAM_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+
+            #endregion
+
+            #region GAQDATA
+
+            modelBuilder.Entity<GAQDATA>()
+                .HasKey(p => p.DATAQUEID)
+                .ToTable("GAQDATA", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<GAQDATA>()
+                .Property(p => p.DATAQUEID)
+                    .HasColumnName(@"DATA_QUE_ID")
+                    .IsRequired()
+                    .HasMaxLength(30)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQDATA>()
+                .Property(p => p.APPQID)
+                    .HasColumnName(@"APPQ_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQDATA>()
+                .Property(p => p.RSPID)
+                    .HasColumnName(@"RSP_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQDATA>()
+                .Property(p => p.DEPARTID)
+                    .HasColumnName(@"DEPART_ID")
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GAQDATA>()
+                .Property(p => p.CREATEDATE)
+                    .HasColumnName(@"CREATE_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<GAQDATA>()
+                .Property(p => p.CLOSEDATE)
+                    .HasColumnName(@"CLOSE_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<GAQDATA>()
+                .Property(p => p.CREATEBY)
+                    .HasColumnName(@"CREATE_BY")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQDATA>()
+                .Property(p => p.UPDATEBY)
+                    .HasColumnName(@"UPDATE_BY")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQDATA>()
+                .Property(p => p.STATUS)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQDATA>()
+                .Property(p => p.ENTNAME)
+                    .HasMaxLength(32)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQDATA>()
+                .Property(p => p.PRIMARYNUM)
+                    .HasColumnName(@"PRIMARY_NUM")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQDATA>()
+                .Property(p => p.REFERANTID)
+                    .HasColumnName(@"REFERANT_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQDATA>()
+                .Property(p => p.REMARK)
+                    .HasMaxLength(1024)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQDATA>()
+                .Property(p => p.LINECLOSE)
+                    .HasColumnName(@"LINE_CLOSE")
+                    .HasColumnType("bool");
+            modelBuilder.Entity<GAQDATA>()
+                .Property(p => p.CLIENTID)
+                    .HasColumnName(@"CLIENT_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQDATA>()
+                .Property(p => p.FLAG)
+                    .HasColumnType("bool");
+            modelBuilder.Entity<GAQDATA>()
+                .Property(p => p.TEAMID)
+                    .HasColumnName(@"TEAM_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQDATA>()
+                .Property(p => p.GDATE1)
+                    .HasColumnName(@"G_DATE1")
+                    .HasColumnType("date");
+            modelBuilder.Entity<GAQDATA>()
+                .Property(p => p.PRIORITY)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQDATA>()
+                .Property(p => p.PENDINGDATE)
+                    .HasColumnName(@"PENDING_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<GAQDATA>()
+                .Property(p => p.PENDING)
+                    .HasColumnType("bool");
+            modelBuilder.Entity<GAQDATA>()
+                .Property(p => p.CLOSETYPE)
+                    .HasColumnName(@"CLOSE_TYPE")
+                    .HasMaxLength(2)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQDATA>()
+                .Property(p => p.MANUALPROCESS)
+                    .HasColumnName(@"MANUAL_PROCESS")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+
+            #endregion
+
+            #region DWGNDCARD
+
+            modelBuilder.Entity<DWGNDCARD>()
+                .HasKey(p => p.DWCOUNTER)
+                .ToTable("DW_GNDCARD", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.DWCOUNTER)
+                    .HasColumnName(@"DW_COUNTER")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.ENVID)
+                    .HasColumnName(@"ENV_ID")
+                    .HasMaxLength(32)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.CARDID)
+                    .HasColumnName(@"CARD_ID")
+                    .HasMaxLength(16)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.NAMEHEB)
+                    .HasColumnName(@"NAME_HEB")
+                    .HasMaxLength(64)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.NAMEENG)
+                    .HasColumnName(@"NAME_ENG")
+                    .HasMaxLength(64)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.SHNAMEHEB)
+                    .HasColumnName(@"SHNAME_HEB")
+                    .HasMaxLength(32)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.GROUPID)
+                    .HasColumnName(@"GROUP_ID")
+                    .HasColumnType("int");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.SHNAMEENG)
+                    .HasColumnName(@"SHNAME_ENG")
+                    .HasMaxLength(32)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.OLDCARD)
+                    .HasColumnName(@"OLD_CARD")
+                    .HasMaxLength(16)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.APPLE)
+                    .HasMaxLength(8)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.APPLI)
+                    .HasMaxLength(8)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.APPLM)
+                    .HasMaxLength(8)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.APPLR)
+                    .HasMaxLength(8)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.APPLH)
+                    .HasMaxLength(8)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.APPLT)
+                    .HasMaxLength(8)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.APPLQ)
+                    .HasMaxLength(8)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.APPLC)
+                    .HasMaxLength(8)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.APPLS)
+                    .HasMaxLength(8)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.APPLF)
+                    .HasMaxLength(8)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.APPLJ)
+                    .HasMaxLength(8)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.APPLK)
+                    .HasMaxLength(8)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.APPLL)
+                    .HasMaxLength(8)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.COMPANYID)
+                    .HasColumnName(@"COMPANY_ID")
+                    .HasMaxLength(32)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.REMARKS)
+                    .HasMaxLength(1024)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.FIRSTSECTION)
+                    .HasColumnName(@"FIRST_SECTION")
+                    .HasColumnType("int64");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.SECTIONS)
+                    .HasMaxLength(1024)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.DWUPDATEDATE)
+                    .HasColumnName(@"DW_UPDATE_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.DWDELETE)
+                    .HasColumnName(@"DW_DELETE")
+                    .HasColumnType("int");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.ACOUNTBALANCE)
+                    .HasColumnName(@"ACOUNT_BALANCE")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.POSTDATEDCHECK)
+                    .HasColumnName(@"POSTDATED_CHECK")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.CREDIT)
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.CURRMONTHAGING)
+                    .HasColumnName(@"CURR_MONTH_AGING")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.MONTH2AGING)
+                    .HasColumnName(@"MONTH2_AGING")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.MONTH3AGING)
+                    .HasColumnName(@"MONTH3_AGING")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.OBLIGOCREDIT)
+                    .HasColumnName(@"OBLIGO_CREDIT")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.EXCESSRATE)
+                    .HasColumnName(@"EXCESS_RATE")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.INTERESTCREDIT)
+                    .HasColumnName(@"INTEREST_CREDIT")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.INTERESTPRC)
+                    .HasColumnName(@"INTEREST_PRC")
+                    .HasMaxLength(255)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.SYSTEM)
+                    .HasMaxLength(256)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.STR1)
+                    .HasColumnName(@"STR_1")
+                    .HasMaxLength(256)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.STR2)
+                    .HasColumnName(@"STR_2")
+                    .HasMaxLength(256)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.STR3)
+                    .HasColumnName(@"STR_3")
+                    .HasMaxLength(256)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.STR4)
+                    .HasColumnName(@"STR_4")
+                    .HasMaxLength(256)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.STR5)
+                    .HasColumnName(@"STR_5")
+                    .HasMaxLength(256)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.STR6)
+                    .HasColumnName(@"STR_6")
+                    .HasMaxLength(256)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.STR7)
+                    .HasColumnName(@"STR_7")
+                    .HasMaxLength(256)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.STR8)
+                    .HasColumnName(@"STR_8")
+                    .HasMaxLength(256)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.STR9)
+                    .HasColumnName(@"STR_9")
+                    .HasMaxLength(256)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.STR10)
+                    .HasColumnName(@"STR_10")
+                    .HasMaxLength(256)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.STR11)
+                    .HasColumnName(@"STR_11")
+                    .HasMaxLength(256)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.STR12)
+                    .HasColumnName(@"STR_12")
+                    .HasMaxLength(256)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.STR13)
+                    .HasColumnName(@"STR_13")
+                    .HasMaxLength(256)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.STR14)
+                    .HasColumnName(@"STR_14")
+                    .HasMaxLength(256)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.STR15)
+                    .HasColumnName(@"STR_15")
+                    .HasMaxLength(256)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.STR16)
+                    .HasColumnName(@"STR_16")
+                    .HasMaxLength(256)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.STR17)
+                    .HasColumnName(@"STR_17")
+                    .HasMaxLength(256)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.STR18)
+                    .HasColumnName(@"STR_18")
+                    .HasMaxLength(256)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.STR19)
+                    .HasColumnName(@"STR_19")
+                    .HasMaxLength(256)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.STR20)
+                    .HasColumnName(@"STR_20")
+                    .HasMaxLength(256)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.DATE1)
+                    .HasColumnName(@"DATE_1")
+                    .HasColumnType("date");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.DATE2)
+                    .HasColumnName(@"DATE_2")
+                    .HasColumnType("date");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.DATE3)
+                    .HasColumnName(@"DATE_3")
+                    .HasColumnType("date");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.DATE4)
+                    .HasColumnName(@"DATE_4")
+                    .HasColumnType("date");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.DATE5)
+                    .HasColumnName(@"DATE_5")
+                    .HasColumnType("date");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.DATE6)
+                    .HasColumnName(@"DATE_6")
+                    .HasColumnType("date");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.DATE7)
+                    .HasColumnName(@"DATE_7")
+                    .HasColumnType("date");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.DATE8)
+                    .HasColumnName(@"DATE_8")
+                    .HasColumnType("date");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.DATE9)
+                    .HasColumnName(@"DATE_9")
+                    .HasColumnType("date");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.DATE10)
+                    .HasColumnName(@"DATE_10")
+                    .HasColumnType("date");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.NUM1)
+                    .HasColumnName(@"NUM_1")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.NUM2)
+                    .HasColumnName(@"NUM_2")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.NUM3)
+                    .HasColumnName(@"NUM_3")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.NUM4)
+                    .HasColumnName(@"NUM_4")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.NUM5)
+                    .HasColumnName(@"NUM_5")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.NUM6)
+                    .HasColumnName(@"NUM_6")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.NUM7)
+                    .HasColumnName(@"NUM_7")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.NUM8)
+                    .HasColumnName(@"NUM_8")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.NUM9)
+                    .HasColumnName(@"NUM_9")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.NUM10)
+                    .HasColumnName(@"NUM_10")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.BOOL1)
+                    .HasColumnName(@"BOOL_1")
+                    .HasColumnType("bool");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.BOOL2)
+                    .HasColumnName(@"BOOL_2")
+                    .HasColumnType("bool");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.BOOL3)
+                    .HasColumnName(@"BOOL_3")
+                    .HasColumnType("bool");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.BOOL4)
+                    .HasColumnName(@"BOOL_4")
+                    .HasColumnType("bool");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.BOOL5)
+                    .HasColumnName(@"BOOL_5")
+                    .HasColumnType("bool");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.BOOL6)
+                    .HasColumnName(@"BOOL_6")
+                    .HasColumnType("bool");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.BOOL7)
+                    .HasColumnName(@"BOOL_7")
+                    .HasColumnType("bool");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.BOOL8)
+                    .HasColumnName(@"BOOL_8")
+                    .HasColumnType("bool");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.BOOL9)
+                    .HasColumnName(@"BOOL_9")
+                    .HasColumnType("bool");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.BOOL10)
+                    .HasColumnName(@"BOOL_10")
+                    .HasColumnType("bool");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.RESTRICTEDI)
+                    .HasColumnName(@"RESTRICTED_I")
+                    .HasColumnType("int64");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.RESTRICTEDR)
+                    .HasColumnName(@"RESTRICTED_R")
+                    .HasColumnType("int64");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.RESTRICTEDM)
+                    .HasColumnName(@"RESTRICTED_M")
+                    .HasColumnType("int64");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.RESTRICTEDE)
+                    .HasColumnName(@"RESTRICTED_E")
+                    .HasColumnType("int64");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.RESTRICTEDC)
+                    .HasColumnName(@"RESTRICTED_C")
+                    .HasColumnType("int64");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.SECTIONNAME)
+                    .HasColumnName(@"SECTION_NAME")
+                    .HasMaxLength(1024)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.OPENDATE)
+                    .HasColumnName(@"OPEN_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.REFERANTE)
+                    .HasColumnName(@"REFERANT_E")
+                    .HasColumnType("int64");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.REFERANTI)
+                    .HasColumnName(@"REFERANT_I")
+                    .HasColumnType("int64");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.REFERANTC)
+                    .HasColumnName(@"REFERANT_C")
+                    .HasColumnType("int64");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.REFERANTR)
+                    .HasColumnName(@"REFERANT_R")
+                    .HasColumnType("int64");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.REFERANTM)
+                    .HasColumnName(@"REFERANT_M")
+                    .HasColumnType("int64");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.SALESMANC)
+                    .HasColumnName(@"SALESMAN_C")
+                    .HasColumnType("int64");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.SALESMANE)
+                    .HasColumnName(@"SALESMAN_E")
+                    .HasColumnType("int64");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.SALESMANI)
+                    .HasColumnName(@"SALESMAN_I")
+                    .HasColumnType("int64");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.SALESMANM)
+                    .HasColumnName(@"SALESMAN_M")
+                    .HasColumnType("int64");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.SALESMANR)
+                    .HasColumnName(@"SALESMAN_R")
+                    .HasColumnType("int64");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.SALESMANS)
+                    .HasColumnName(@"SALESMAN_S")
+                    .HasColumnType("int64");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.BLOCKRECORD)
+                    .HasColumnName(@"BLOCK_RECORD")
+                    .HasColumnType("int");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.DEFSECTIONID)
+                    .HasColumnName(@"DEF_SECTION_ID")
+                    .HasColumnType("int64");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.SECTID)
+                    .HasColumnName(@"SECT_ID")
+                    .HasColumnType("int64");
+            modelBuilder.Entity<DWGNDCARD>()
+                .Property(p => p.MULTIENV)
+                    .HasColumnName(@"MULTI_ENV")
+                    .HasColumnType("bool");
+
+            #endregion
+
+            #region CTBTEAM
+
+            modelBuilder.Entity<CTBTEAM>()
+                .HasKey(p => p.TEAMID)
+                .ToTable("CTBTEAM", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<CTBTEAM>()
+                .Property(p => p.TEAMID)
+                    .HasColumnName(@"TEAM_ID")
+                    .IsRequired()
+                    .HasMaxLength(15)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CTBTEAM>()
+                .Property(p => p.LEADERID)
+                    .HasColumnName(@"LEADER_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CTBTEAM>()
+                .Property(p => p.SEARCHENG)
+                    .HasColumnName(@"SEARCH_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CTBTEAM>()
+                .Property(p => p.NAMEHEB)
+                    .HasColumnName(@"NAME_HEB")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CTBTEAM>()
+                .Property(p => p.NAMEENG)
+                    .HasColumnName(@"NAME_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CTBTEAM>()
+                .Property(p => p.BLOCKRECORD)
+                    .HasColumnName(@"BLOCK_RECORD")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CTBTEAM>()
+                .Property(p => p.APPLICATION)
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+
+            #endregion
+
+
             #region GITITEMCR
 
             modelBuilder.Entity<GITITEMCR>()
@@ -5687,9 +7521,9 @@ namespace Unifreight.Data.AmitalModel
                 .Property(p => p.REMARKS)
                     .HasColumnType("clob");
 
-            #endregion
+#endregion
 
-            #region GDMLOCK
+#region GDMLOCK
 
             modelBuilder.Entity<GDMLOCK>()
                 .HasKey(p => p.COMID)
@@ -5721,6 +7555,210 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnType("int");
 
             #endregion
+
+
+
+            #region GTBDPTM
+
+            modelBuilder.Entity<GTBDPTM>()
+                .HasKey(p => p.DEPARTID)
+                .ToTable("GTBDPTM", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<GTBDPTM>()
+                .Property(p => p.DEPARTID)
+                    .HasColumnName(@"DEPART_ID")
+                    .IsRequired()
+                    .HasMaxLength(5)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GTBDPTM>()
+                .Property(p => p.NAMEENG)
+                    .HasColumnName(@"NAME_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GTBDPTM>()
+                .Property(p => p.NAMEHEB)
+                    .HasColumnName(@"NAME_HEB")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GTBDPTM>()
+                .Property(p => p.SEARCHENG)
+                    .HasColumnName(@"SEARCH_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GTBDPTM>()
+                .Property(p => p.BLOCKRECORD)
+                    .HasColumnName(@"BLOCK_RECORD")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GTBDPTM>()
+                .Property(p => p.TELEPHONE)
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GTBDPTM>()
+                .Property(p => p.FAX)
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GTBDPTM>()
+                .Property(p => p.SYSTEM)
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+
+            #endregion
+
+            #region GSCUSR
+
+            modelBuilder.Entity<GSCUSR>()
+                .HasKey(p => p.USRCODE)
+                .ToTable("GSCUSR", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<GSCUSR>()
+                .Property(p => p.USRCODE)
+                    .HasColumnName(@"USR_CODE")
+                    .IsRequired()
+                    .HasMaxLength(15)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GSCUSR>()
+                .Property(p => p.USRPASS)
+                    .HasColumnName(@"USR_PASS")
+                    .HasMaxLength(32)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GSCUSR>()
+                .Property(p => p.USRNAMEE)
+                    .HasColumnName(@"USR_NAME_E")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GSCUSR>()
+                .Property(p => p.USRNAMEH)
+                    .HasColumnName(@"USR_NAME_H")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GSCUSR>()
+                .Property(p => p.USRGRP)
+                    .HasColumnName(@"USR_GRP")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GSCUSR>()
+                .Property(p => p.USRSUPER)
+                    .HasColumnName(@"USR_SUPER")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GSCUSR>()
+                .Property(p => p.USRBRANCH)
+                    .HasColumnName(@"USR_BRANCH")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GSCUSR>()
+                .Property(p => p.DEPARTMENT)
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GSCUSR>()
+                .Property(p => p.BLOCKRECORD)
+                    .HasColumnName(@"BLOCK_RECORD")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GSCUSR>()
+                .Property(p => p.SEARCHENG)
+                    .HasColumnName(@"SEARCH_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GSCUSR>()
+                .Property(p => p.USERTYPE)
+                    .HasColumnName(@"USER_TYPE")
+                    .HasColumnType("bool");
+            modelBuilder.Entity<GSCUSR>()
+                .Property(p => p.ACCESSTYPE)
+                    .HasColumnName(@"ACCESS_TYPE")
+                    .HasColumnType("bool");
+            modelBuilder.Entity<GSCUSR>()
+                .Property(p => p.UPDATEPASS)
+                    .HasColumnName(@"UPDATE_PASS")
+                    .HasColumnType("date");
+            modelBuilder.Entity<GSCUSR>()
+                .Property(p => p.USETOKEN)
+                    .HasColumnName(@"USE_TOKEN")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GSCUSR>()
+                .Property(p => p.ACCOUNTLOCK)
+                    .HasColumnName(@"ACCOUNT_LOCK")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GSCUSR>()
+                .Property(p => p.USERID)
+                    .HasColumnName(@"USER_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+
+            #endregion
+
+            #region GCBSCRNVWU
+
+            modelBuilder.Entity<GCBSCRNVWU>()
+                .HasKey(p => new { p.SCREENID, p.SCREENVIEWID, p.USRCODE })
+                .ToTable("GCBSCRNVWU", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<GCBSCRNVWU>()
+                .Property(p => p.SCREENID)
+                    .HasColumnName(@"SCREEN_ID")
+                    .IsRequired()
+                    .HasMaxLength(9)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GCBSCRNVWU>()
+                .Property(p => p.SCREENVIEWID)
+                    .HasColumnName(@"SCREEN_VIEW_ID")
+                    .IsRequired()
+                    .HasMaxLength(9)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GCBSCRNVWU>()
+                .Property(p => p.USRCODE)
+                    .HasColumnName(@"USR_CODE")
+                    .IsRequired()
+                    .HasMaxLength(15)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GCBSCRNVWU>()
+                .Property(p => p.DEFAULTLAYOUT)
+                    .HasColumnName(@"DEFAULT_LAYOUT")
+                    .HasColumnType("clob");
+
+            #endregion
+
+            #region GAQUSER
+
+            modelBuilder.Entity<GAQUSER>()
+                .HasKey(p => new { p.USERCODE, p.ENTNAME })
+                .ToTable("GAQUSERS", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<GAQUSER>()
+                .Property(p => p.USERCODE)
+                    .HasColumnName(@"USER_CODE")
+                    .IsRequired()
+                    .HasMaxLength(15)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQUSER>()
+                .Property(p => p.ENTNAME)
+                    .IsRequired()
+                    .HasMaxLength(2)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQUSER>()
+                .Property(p => p.USERLIST)
+                    .HasColumnName(@"USER_LIST")
+                    .HasMaxLength(1024)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQUSER>()
+                .Property(p => p.BLOCKRECORD)
+                    .HasColumnName(@"BLOCK_RECORD")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+
+            #endregion
+
             #region Disabled conventions
 
 
@@ -5729,395 +7767,104 @@ namespace Unifreight.Data.AmitalModel
         }
 
 
-        /// <summary>
-        /// There are no comments for YCULPROCESS in the schema.
-        /// </summary>
-        public DbSet<YCULPROCESS> YCULPROCESSES { get; set; }
 
-        /// <summary>
-        /// There are no comments for GGGQ in the schema.
-        /// </summary>
-        public DbSet<GGGQ> GGGQs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CCUACCSUP in the schema.
-        /// </summary>
-        public DbSet<CCUACCSUP> CCUACCSUPs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CCUMSHGR in the schema.
-        /// </summary>
-        public DbSet<CCUMSHGR> CCUMSHGRs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CCUPAYHAND in the schema.
-        /// </summary>
-        public DbSet<CCUPAYHAND> CCUPAYHANDs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CCUSUPITEM in the schema.
-        /// </summary>
-        public DbSet<CCUSUPITEM> CCUSUPITEMs { get; set; }
-
-        /// <summary>
-        /// There are no comments for GDFDATA in the schema.
-        /// </summary>
-        public DbSet<GDFDATA> GDFDATAs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CCUCRREQ in the schema.
-        /// </summary>
-        public DbSet<CCUCRREQ> CCUCRREQs { get; set; }
-
-        /// <summary>
-        /// There are no comments for GTRTRAN in the schema.
-        /// </summary>
-        public DbSet<GTRTRAN> GTRTRANs { get; set; }
-
-        /// <summary>
-        /// There are no comments for GRTRATE in the schema.
-        /// </summary>
-        public DbSet<GRTRATE> GRTRATEs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CCUCUSTITEM in the schema.
-        /// </summary>
-        public DbSet<CCUCUSTITEM> CCUCUSTITEMs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CCUQUELOCK in the schema.
-        /// </summary>
-        public DbSet<CCUQUELOCK> CCUQUELOCKs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CCUPAYLINEF in the schema.
-        /// </summary>
-        public DbSet<CCUPAYLINEF> CCUPAYLINEFs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CCUTAX in the schema.
-        /// </summary>
-        public DbSet<CCUTAX> CCUTAXES { get; set; }
-
-        /// <summary>
-        /// There are no comments for CCUFILEM in the schema.
-        /// </summary>
-        public DbSet<CCUFILEM> CCUFILEMs { get; set; }
-
-        /// <summary>
-        /// There are no comments for GTBMANDT in the schema.
-        /// </summary>
-        public DbSet<GTBMANDT> GTBMANDTs { get; set; }
-
-        /// <summary>
-        /// There are no comments for GNDCARD in the schema.
-        /// </summary>
-        public DbSet<GNDCARD> GNDCARDs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CTBPACKTYPE in the schema.
-        /// </summary>
-        public DbSet<CTBPACKTYPE> CTBPACKTYPEs { get; set; }
-
-        /// <summary>
-        /// There are no comments for GAQFILEDATA in the schema.
-        /// </summary>
-        public DbSet<GAQFILEDATA> GAQFILEDATAs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CTBBONDED in the schema.
-        /// </summary>
-        public DbSet<CTBBONDED> CTBBONDEDs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CTBCOUNTRY in the schema.
-        /// </summary>
-        public DbSet<CTBCOUNTRY> CTBCOUNTRIES { get; set; }
-
-        /// <summary>
-        /// There are no comments for CTBIDNTP in the schema.
-        /// </summary>
-        public DbSet<CTBIDNTP> CTBIDNTPs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CTBIMPORT in the schema.
-        /// </summary>
-        public DbSet<CTBIMPORT> CTBIMPORTs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CTBMISHGUR in the schema.
-        /// </summary>
-        public DbSet<CTBMISHGUR> CTBMISHGURs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CTBRESHTYPE in the schema.
-        /// </summary>
-        public DbSet<CTBRESHTYPE> CTBRESHTYPEs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CTBRGOWN in the schema.
-        /// </summary>
-        public DbSet<CTBRGOWN> CTBRGOWNs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CTBSTORAGE in the schema.
-        /// </summary>
-        public DbSet<CTBSTORAGE> CTBSTORAGEs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CTBTRANSP in the schema.
-        /// </summary>
-        public DbSet<CTBTRANSP> CTBTRANSPs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CTBUNLOAD in the schema.
-        /// </summary>
-        public DbSet<CTBUNLOAD> CTBUNLOADs { get; set; }
-
-        /// <summary>
-        /// There are no comments for ATBPTIL in the schema.
-        /// </summary>
-        public DbSet<ATBPTIL> ATBPTILs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CTBLOAD in the schema.
-        /// </summary>
-        public DbSet<CTBLOAD> CTBLOADs { get; set; }
-
-        /// <summary>
-        /// There are no comments for GNDADR in the schema.
-        /// </summary>
-        public DbSet<GNDADR> GNDADRs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CTBPART in the schema.
-        /// </summary>
-        public DbSet<CTBPART> CTBPARTs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CTBPKDT in the schema.
-        /// </summary>
-        public DbSet<CTBPKDT> CTBPKDTs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CTBAPPROV in the schema.
-        /// </summary>
-        public DbSet<CTBAPPROV> CTBAPPROVs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CTBAPPROVTYPE in the schema.
-        /// </summary>
-        public DbSet<CTBAPPROVTYPE> CTBAPPROVTYPEs { get; set; }
-
-        /// <summary>
-        /// There are no comments for GTBREQCERT in the schema.
-        /// </summary>
-        public DbSet<GTBREQCERT> GTBREQCERTs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CCUTRANSPVAL in the schema.
-        /// </summary>
-        public DbSet<CCUTRANSPVAL> CCUTRANSPVALs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CTBCURRENCY in the schema.
-        /// </summary>
-        public DbSet<CTBCURRENCY> CTBCURRENCIES { get; set; }
-
-        /// <summary>
-        /// There are no comments for CTBINCOTERM in the schema.
-        /// </summary>
-        public DbSet<CTBINCOTERM> CTBINCOTERMs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CTBTARIFF in the schema.
-        /// </summary>
-        public DbSet<CTBTARIFF> CTBTARIFFs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CCUMESSAGE in the schema.
-        /// </summary>
-        public DbSet<CCUMESSAGE> CCUMESSAGEs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CTBERROR in the schema.
-        /// </summary>
-        public DbSet<CTBERROR> CTBERRORs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CCUCARL in the schema.
-        /// </summary>
-        public DbSet<CCUCARL> CCUCARLs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CTBMEMIRTYPE in the schema.
-        /// </summary>
-        public DbSet<CTBMEMIRTYPE> CTBMEMIRTYPEs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CCUTSRUFOT in the schema.
-        /// </summary>
-        public DbSet<CCUTSRUFOT> CCUTSRUFOTs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CTBTSRUFTYPE in the schema.
-        /// </summary>
-        public DbSet<CTBTSRUFTYPE> CTBTSRUFTYPEs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CTBTAXTYPE in the schema.
-        /// </summary>
-        public DbSet<CTBTAXTYPE> CTBTAXTYPEs { get; set; }
-
-        /// <summary>
-        /// There are no comments for ITBPCKTY in the schema.
-        /// </summary>
-        public DbSet<ITBPCKTY> ITBPCKTIES { get; set; }
-
-        /// <summary>
-        /// There are no comments for GDMFILING in the schema.
-        /// </summary>
-        public DbSet<GDMFILING> GDMFILINGs { get; set; }
-
-        /// <summary>
-        /// There are no comments for GDMFLDRTR in the schema.
-        /// </summary>
-        public DbSet<GDMFLDRTR> GDMFLDRTRs { get; set; }
-
-        /// <summary>
-        /// There are no comments for GDMFILEVER in the schema.
-        /// </summary>
-        public DbSet<GDMFILEVER> GDMFILEVERs { get; set; }
-
-        /// <summary>
-        /// There are no comments for YCULTASK in the schema.
-        /// </summary>
-        public DbSet<YCULTASK> YCULTASKs { get; set; }
-
-        /// <summary>
-        /// There are no comments for YTBCUSTTB in the schema.
-        /// </summary>
-        public DbSet<YTBCUSTTB> YTBCUSTTBs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CTBCUSTSUP in the schema.
-        /// </summary>
-        public DbSet<CTBCUSTSUP> CTBCUSTSUPs { get; set; }
-
-        /// <summary>
-        /// There are no comments for GTBITEM in the schema.
-        /// </summary>
-        public DbSet<GTBITEM> GTBITEMs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CCUCAR in the schema.
-        /// </summary>
-        public DbSet<CCUCAR> CCUCARs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CCUCARSC in the schema.
-        /// </summary>
-        public DbSet<CCUCARSC> CCUCARSCs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CFIGOODDESC in the schema.
-        /// </summary>
-        public DbSet<CFIGOODDESC> CFIGOODDESCs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CCUSIGNUM in the schema.
-        /// </summary>
-        public DbSet<CCUSIGNUM> CCUSIGNUMs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CFIMSVLINE in the schema.
-        /// </summary>
-        public DbSet<CFIMSVLINE> CFIMSVLINEs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CFIMSVDOC in the schema.
-        /// </summary>
-        public DbSet<CFIMSVDOC> CFIMSVDOCs { get; set; }
-
-        /// <summary>
-        /// There are no comments for GTBDOC in the schema.
-        /// </summary>
-        public DbSet<GTBDOC> GTBDOCs { get; set; }
-
-        /// <summary>
-        /// There are no comments for GDMENTITY in the schema.
-        /// </summary>
-        public DbSet<GDMENTITY> GDMENTITIES { get; set; }
-
-        /// <summary>
-        /// There are no comments for GDMREF in the schema.
-        /// </summary>
-        public DbSet<GDMREF> GDMREFs { get; set; }
-
-        /// <summary>
-        /// There are no comments for GAQDOC in the schema.
-        /// </summary>
-        public DbSet<GAQDOC> GAQDOCs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CFIMSVFILE in the schema.
-        /// </summary>
-        public DbSet<CFIMSVFILE> CFIMSVFILEs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CFIMSVPAGE in the schema.
-        /// </summary>
-        public DbSet<CFIMSVPAGE> CFIMSVPAGEs { get; set; }
-
-        /// <summary>
-        /// There are no comments for GTBITMCN in the schema.
-        /// </summary>
-        public DbSet<GTBITMCN> GTBITMCNs { get; set; }
-
-        /// <summary>
-        /// There are no comments for GITITEM in the schema.
-        /// </summary>
-        public DbSet<GITITEM> GITITEMs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CFICONN in the schema.
-        /// </summary>
-        public DbSet<CFICONN> CFICONNs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CFIPACK in the schema.
-        /// </summary>
-        public DbSet<CFIPACK> CFIPACKs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CCUSUPITEMSI in the schema.
-        /// </summary>
-        public DbSet<CCUSUPITEMSI> CCUSUPITEMSIs { get; set; }
-
-        /// <summary>
-        /// There are no comments for VRELEASE2ENTRY in the schema.
-        /// </summary>
-        public DbSet<VRELEASE2ENTRY> VRELEASE2ENTRIES { get; set; }
-
-        /// <summary>
-        /// There are no comments for YTBTABLE in the schema.
-        /// </summary>
-        public DbSet<YTBTABLE> YTBTABLEs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CFIMSVREM in the schema.
-        /// </summary>
-        public DbSet<CFIMSVREM> CFIMSVREMs { get; set; }
-
-        /// <summary>
-        /// There are no comments for CFIMSVFLINE in the schema.
-        /// </summary>
+        public virtual DbSet<YCULPROCESS> YCULPROCESSES { get; set; }
+        public virtual DbSet<GGGQ> GGGQs { get; set; }
+        public virtual DbSet<CCUACCSUP> CCUACCSUPs { get; set; }
+        public virtual DbSet<CCUMSHGR> CCUMSHGRs { get; set; }
+        public virtual DbSet<CCUPAYHAND> CCUPAYHANDs { get; set; }
+        public virtual DbSet<CCUSUPITEM> CCUSUPITEMs { get; set; }
+        public virtual DbSet<GDFDATA> GDFDATAs { get; set; }
+        public virtual DbSet<CCUCRREQ> CCUCRREQs { get; set; }
+        public virtual DbSet<GTRTRAN> GTRTRANs { get; set; }
+        public virtual DbSet<GRTRATE> GRTRATEs { get; set; }
+        public virtual DbSet<CCUCUSTITEM> CCUCUSTITEMs { get; set; }
+        public virtual DbSet<CCUQUELOCK> CCUQUELOCKs { get; set; }
+        public virtual DbSet<CCUPAYLINEF> CCUPAYLINEFs { get; set; }
+        public virtual DbSet<CCUTAX> CCUTAXES { get; set; }
+        public virtual DbSet<CCUFILEM> CCUFILEMs { get; set; }
+        public virtual DbSet<GTBMANDT> GTBMANDTs { get; set; }
+        public virtual DbSet<GNDCARD> GNDCARDs { get; set; }
+        public virtual DbSet<CTBPACKTYPE> CTBPACKTYPEs { get; set; }
+        public virtual DbSet<GAQFILEDATA> GAQFILEDATAs { get; set; }
+        public virtual DbSet<CTBBONDED> CTBBONDEDs { get; set; }
+        public virtual DbSet<CTBCOUNTRY> CTBCOUNTRIES { get; set; }
+        public virtual DbSet<CTBIDNTP> CTBIDNTPs { get; set; }
+        public virtual DbSet<CTBIMPORT> CTBIMPORTs { get; set; }
+        public virtual DbSet<CTBMISHGUR> CTBMISHGURs { get; set; }
+        public virtual DbSet<CTBRESHTYPE> CTBRESHTYPEs { get; set; }
+        public virtual DbSet<CTBRGOWN> CTBRGOWNs { get; set; }
+        public virtual DbSet<CTBSTORAGE> CTBSTORAGEs { get; set; }
+        public virtual DbSet<CTBTRANSP> CTBTRANSPs { get; set; }
+        public virtual DbSet<CTBUNLOAD> CTBUNLOADs { get; set; }
+        public virtual DbSet<ATBPTIL> ATBPTILs { get; set; }
+        public virtual DbSet<CTBLOAD> CTBLOADs { get; set; }
+        public virtual DbSet<GNDADR> GNDADRs { get; set; }
+        public virtual DbSet<CTBPART> CTBPARTs { get; set; }
+        public virtual DbSet<CTBPKDT> CTBPKDTs { get; set; }
+        public virtual DbSet<CTBAPPROV> CTBAPPROVs { get; set; }
+        public virtual DbSet<CTBAPPROVTYPE> CTBAPPROVTYPEs { get; set; }
+        public virtual DbSet<GTBREQCERT> GTBREQCERTs { get; set; }
+        public virtual DbSet<CCUTRANSPVAL> CCUTRANSPVALs { get; set; }
+        public virtual DbSet<CTBCURRENCY> CTBCURRENCIES { get; set; }
+        public virtual DbSet<CTBINCOTERM> CTBINCOTERMs { get; set; }
+        public virtual DbSet<CTBTARIFF> CTBTARIFFs { get; set; }
+        public virtual DbSet<CCUMESSAGE> CCUMESSAGEs { get; set; }
+        public virtual DbSet<CTBERROR> CTBERRORs { get; set; }
+        public virtual DbSet<CCUCARL> CCUCARLs { get; set; }
+        public virtual DbSet<CTBMEMIRTYPE> CTBMEMIRTYPEs { get; set; }
+        public virtual DbSet<CCUTSRUFOT> CCUTSRUFOTs { get; set; }
+        public virtual DbSet<CTBTSRUFTYPE> CTBTSRUFTYPEs { get; set; }
+        public virtual DbSet<CTBTAXTYPE> CTBTAXTYPEs { get; set; }
+        public virtual DbSet<ITBPCKTY> ITBPCKTIES { get; set; }
+        public virtual DbSet<GDMFILING> GDMFILINGs { get; set; }
+        public virtual DbSet<GDMFLDRTR> GDMFLDRTRs { get; set; }
+        public virtual DbSet<GDMFILEVER> GDMFILEVERs { get; set; }
+        public virtual DbSet<YCULTASK> YCULTASKs { get; set; }
+        public virtual DbSet<YTBCUSTTB> YTBCUSTTBs { get; set; }
+        public virtual DbSet<CTBCUSTSUP> CTBCUSTSUPs { get; set; }
+        public virtual DbSet<GTBITEM> GTBITEMs { get; set; }
+        public virtual DbSet<CCUCAR> CCUCARs { get; set; }
+        public virtual DbSet<CCUCARSC> CCUCARSCs { get; set; }
+        public virtual DbSet<CFIGOODDESC> CFIGOODDESCs { get; set; }
+        public virtual DbSet<CCUSIGNUM> CCUSIGNUMs { get; set; }
+        public virtual DbSet<CFIMSVLINE> CFIMSVLINEs { get; set; }
+        public virtual DbSet<CFIMSVDOC> CFIMSVDOCs { get; set; }
+        public virtual DbSet<GTBDOC> GTBDOCs { get; set; }
+        public virtual DbSet<GDMENTITY> GDMENTITIES { get; set; }
+        public virtual DbSet<GDMREF> GDMREFs { get; set; }
+        public virtual DbSet<GAQDOC> GAQDOCs { get; set; }
+        public virtual DbSet<CFIMSVFILE> CFIMSVFILEs { get; set; }
+        public virtual DbSet<CFIMSVPAGE> CFIMSVPAGEs { get; set; }
+        public virtual DbSet<GTBITMCN> GTBITMCNs { get; set; }
+        public virtual DbSet<GITITEM> GITITEMs { get; set; }
+        public virtual DbSet<CFICONN> CFICONNs { get; set; }
+        public virtual DbSet<CFIPACK> CFIPACKs { get; set; }
+        public virtual DbSet<CCUSUPITEMSI> CCUSUPITEMSIs { get; set; }
+        public virtual DbSet<VRELEASE2ENTRY> VRELEASE2ENTRIES { get; set; }
+        public virtual DbSet<YTBTABLE> YTBTABLEs { get; set; }
+        public virtual DbSet<CFIMSVREM> CFIMSVREMs { get; set; }
         public virtual DbSet<CFIMSVFLINE> CFIMSVFLINEs { get; set; }
-
+        public virtual DbSet<GDMQUEST> GDMQUESTs { get; set; }
+        public virtual DbSet<CFIFILEM> CFIFILEMs { get; set; }
+        public virtual DbSet<CTBFITYPE> CTBFITYPEs { get; set; }
+        public virtual DbSet<GTBFUSTATU> GTBFUSTATUs { get; set; }
+        public virtual DbSet<GAQSTRUCTURE> GAQSTRUCTUREs { get; set; }
+        public virtual DbSet<GAQREMARK> GAQREMARKs { get; set; }
+        public virtual DbSet<GAQQLOAD> GAQQLOADs { get; set; }
+        public virtual DbSet<GAQMERGE> GAQMERGEs { get; set; }
+        public virtual DbSet<GAQDLOAD> GAQDLOADs { get; set; }
+        public virtual DbSet<GAQDEF> GAQDEFs { get; set; }
+        public virtual DbSet<GAQDATALOAD> GAQDATALOADs { get; set; }
+        public virtual DbSet<GAQDATA> GAQDATAs { get; set; }
+        public virtual DbSet<DWGNDCARD> DWGNDCARDs { get; set; }
+        public virtual DbSet<CTBTEAM> CTBTEAMs { get; set; }
+        public virtual DbSet<GITITEMCR> GITITEMCRs { get; set; }
         public virtual DbSet<GDMLOCK> GDMLOCKs { get; set; }
 
-        public virtual DbSet<GDMQUEST> GDMQUESTs { get; set; }
-        public virtual DbSet<GITITEMCR> GITITEMCRs { get; set; }
-
+        public virtual DbSet<GTBDPTM> GTBDPTMs { get; set; }
+        public virtual DbSet<GSCUSR> GSCUSRs { get; set; }
+        public virtual DbSet<GCBSCRNVWU> GCBSCRNVWUs { get; set; }
+        public virtual DbSet<GAQUSER> GAQUSERs { get; set; }
     }
 }

@@ -87,7 +87,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                     else
                     {
-                        listPoco = listPoco.Where(r => (r.CourierPaymentStatusCode == "R" || string.IsNullOrWhiteSpace(r.CourierPaymentStatusCode))).ToList();
+                        //listPoco = listPoco.Where(r => (r.CourierPaymentStatusCode == "R" || string.IsNullOrWhiteSpace(r.CourierPaymentStatusCode))).ToList();
                     }
                         
                     if (listPoco.Count == 0)

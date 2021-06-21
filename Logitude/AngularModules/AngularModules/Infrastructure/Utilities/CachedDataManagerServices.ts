@@ -115,6 +115,10 @@ import { AutonomyRegionTypeListService } from '../../Customs/Services/StandardLi
  import { CancellationRequestStatusListService } from '../../Customs/Services/StandardLists/CancellationRequestStatusListService';
 import { CancellationReasonRequestTypeListService } from '../../Customs/Services/StandardLists/CancellationReasonRequestTypeListService';
 import { ReferantTeamListService } from '../../Customs/Services/StandardLists/ReferantTeamListService';
+import { ReferenceStatusListService } from '../../Customs/Services/StandardLists/ReferenceStatusListService';
+import { ReferenceInputTypeListService } from '../../Customs/Services/StandardLists/ReferenceInputTypeListService';
+import { LogisticsReferenceTypeListService } from '../../Customs/Services/StandardLists/LogisticsReferenceTypeListService';
+import { CancelRequestRejectReasonTypeListService } from '../../Customs/Services/StandardLists/CancelRequestRejectReasonTypeListService';
 
 
 export class CachedDataManagerServices {
@@ -232,9 +236,14 @@ export class CachedDataManagerServices {
             case "Customs.CustomerRoleTypeListService": { myResult = new CustomerRoleTypeListService() ; break; }
             case "Customs.AutonomyRegionTypeListService": { myResult = new AutonomyRegionTypeListService(); break; }
             case "Customs.CustomerRoleTypeListService": { myResult = new CustomerRoleTypeListService(); break; }
-            case "Customs.CancellationReasonRequestTypeListService ": { myResult = new CancellationReasonRequestTypeListService(); break; }
-            case "Customs.CancellationRequestStatusListService ": { myResult = new CancellationRequestStatusListService(); break; }
+            case "Customs.CancellationReasonRequestTypeListService": { myResult = new CancellationReasonRequestTypeListService(); break; }
+            case "Customs.CancellationRequestStatusListService": { myResult = new CancellationRequestStatusListService(); break; }
             case "Customs.ReferantTeamListService": { myResult = new ReferantTeamListService(); break; }
+            case "Customs.CancelRequestRejectReasonTypeListService": { myResult = new CancelRequestRejectReasonTypeListService(); break; }
+            case "Customs.LogisticsReferenceTypeListService": { myResult = new LogisticsReferenceTypeListService(); break; }
+            case "Customs.ReferenceInputTypeListService": { myResult = new ReferenceInputTypeListService(); break; }
+            case "Customs.ReferenceStatusListService": { myResult = new ReferenceStatusListService(); break; }
+
 
             case "AWBAdditionalHandlingInfoListService": { myResult = new AWBAdditionalHandlingInfoListService(); break; }
  
