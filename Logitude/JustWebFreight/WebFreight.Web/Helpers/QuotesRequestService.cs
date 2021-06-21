@@ -95,15 +95,15 @@ namespace WebFreight.Web.Helpers
             QuotesRequest quotesRequest = new QuotesRequest() { CreateDate = ticketList.CreateDate, ReferenceNumber = ticketList.TicketNumber };
             if (documentsFilings.Where(d => d.EntityId == ticketList.Id).Any())
             {
-                quotesRequest.QuotationUpdateDate = GetLatestCreatedDocumentsFilingDateByEntityId(ticketList.Id);
+                quotesRequest.QuotationDocumentFiling = GetLatestCreatedDocumentsFilingByEntityId(ticketList.Id);
             }
             return quotesRequest;
 
         }
 
-        private DateTime GetLatestCreatedDocumentsFilingDateByEntityId(string entityId)
+        private DocumentsFilingList GetLatestCreatedDocumentsFilingByEntityId(string entityId)
         {
-            return documentsFilings.Where(d => d.EntityId == entityId).OrderByDescending(d => d.CreateDate).Select(d => d.CreateDate).FirstOrDefault();
+            return documentsFilings.Where(d => d.EntityId == entityId).OrderByDescending(d => d.CreateDate).FirstOrDefault();
         }
     }
 
@@ -111,7 +111,7 @@ namespace WebFreight.Web.Helpers
     {
         public string ReferenceNumber { get; set; }
         public DateTime? CreateDate { get; set; }
-        public DateTime? QuotationUpdateDate { get; set; }
+        public DocumentsFilingList QuotationDocumentFiling { get; set; }
 
     }
 
