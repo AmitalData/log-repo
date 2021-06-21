@@ -584,7 +584,7 @@ namespace WebFreight.Web.Helpers.Analyzers
                 container.EstimatedGateInDate = estimatedGateInDate;
                 container.ActualGateInDate = actualGateInDate;
                 //container.DepartureLocation = departureLocation;
-                //container.DestinationLocation = destinationLocation;
+                // container.DestinationLocation = destinationLocation;
 
                 containerRepository.Update(container);
             }
