@@ -32,6 +32,10 @@ using Simplog.Data.Helpers;
 using Logitude.BL.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.Validating;
+using Logitude.Infrastructure.Data;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityListQueryServices;
+using Logitude.Infrastructure.Data.EntityPOCOs;
 
 namespace WebFreight.Web.ExternalAPIs.V1
 {
@@ -328,6 +332,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             APITransshipmentHelper aPITransshipmentHelper = new APITransshipmentHelper(entityPM, authToken.Tenant);
                             aPITransshipmentHelper.ValidateTransshipments();
                             aPITransshipmentHelper.MapTransshipments();
+                        }
+
+                        if ((IsShipmentHasPickup(entityPM) || IsShipmentHasDelivery(entityPM)) && IsOceanInsightFeatureToggleExistInTenant(authToken.Tenant))
+                        {
+                            ValidatePickupDeliveryPackages(entityPM);
                         }
 
                         if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
@@ -1186,6 +1195,56 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 }
             }
             return currency;
+        }
+
+        private bool IsOceanInsightFeatureToggleExistInTenant(int tenant)
+        {
+            string ocaenInsightFeatureToggleCode = "OIC";
+            IInfrastructureContext context = InfrastructureContext.GetContext(tenant);
+            FeatureToggleRepository repository = new FeatureToggleRepository(context);
+            IQueryable<FeatureToggle> featureToggles = repository.GetAll(tenant);
+            List<FeatureToggle> featureTogglesList = featureToggles.ToList();
+            FeatureToggle ocaenInsightFeatureToggle = null;
+            if (featureTogglesList != null)
+            {
+                ocaenInsightFeatureToggle = featureTogglesList.Find(a => a.ToggleCode == ocaenInsightFeatureToggleCode);
+            }
+
+            return (ocaenInsightFeatureToggle != null ? true : false);
+        }
+
+        private void ValidatePickupDeliveryPackages(ShipmentPM shipmentPM)
+        {
+            if (IsShipmentHasPickup(shipmentPM))
+            {
+                foreach (ShipmentPickUpPM pickUp in shipmentPM.ShipmentPickUps)
+                {
+                    if (pickUp.ShipmentPickUpDeliveryPackages != null && pickUp.ShipmentPickUpDeliveryPackages.Count > 0)
+                    {
+                        throw new ApplicationException("Creating Pickup package details is not permitted from the API");
+                    }
+                }
+            }
+            if (IsShipmentHasDelivery(shipmentPM))
+            {
+                foreach (ShipmentDeliveryPM delivery in shipmentPM.ShipmentDeliveries)
+                {
+                    if (delivery.ShipmentPickUpDeliveryPackages != null && delivery.ShipmentPickUpDeliveryPackages.Count > 0)
+                    {
+                        throw new ApplicationException("Creating Delivery package details is not permitted from the API");
+                    }
+                }
+            }
+        }
+
+        private bool IsShipmentHasPickup(ShipmentPM shipmentPM)
+        {
+            return shipmentPM.ShipmentPickUps != null && shipmentPM.ShipmentPickUps.Count > 0;
+        }
+
+        private bool IsShipmentHasDelivery(ShipmentPM shipmentPM)
+        {
+            return shipmentPM.ShipmentDeliveries != null && shipmentPM.ShipmentDeliveries.Count > 0;
         }
     }
 }

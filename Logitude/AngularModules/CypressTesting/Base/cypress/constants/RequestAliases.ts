@@ -116,6 +116,14 @@ export class RequestAliases {
     public static readonly PostBranchAddress = "PostBranchAddress"
     public static readonly PutBranchAddress = "PutBranchAddress"
 
+    public static readonly PostShippingLine="PostShippingLine"
+    public static readonly PutShippingLine="PutShippingLine"
+    public static readonly NewShippingLine="NewShippingLine"
+
+    public static readonly PostShippingLineAddress="PostShippingLineAddress"
+    public static readonly PostShippingLineArea="PostShippingLineArea"
+    public static readonly PostShippingLineTariffTranslations="PostShippingLineTariffTranslations"
+
     public static readonly PostCurrency="PostCurrency"
     public static readonly PutCurrency="PutCurrency"
     public static readonly GetCurrenciesCodes="GetCurrenciesCodes"
@@ -187,6 +195,9 @@ export class RequestAliases {
 
     public static readonly PostOccasionType = "PostOccasionType"
     public static readonly PutOccasionType = "PutOccasionType"
+
+    public static readonly PostShippingLineAreaPort = "PostShippingLineAreaPort"
+    public static readonly PostShippingLineAreaCountryPort = "PostShippingLineAreaCountryPort"
 
     public static readonly GetSignle = "GetSignle"
     public static readonly GetByFilter = "GetByFilter"

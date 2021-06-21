@@ -75,15 +75,16 @@ namespace CommunicationWorkerRole
                 using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)externalTasksQueueWcfService.InnerChannel))
                 {
                     System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", token);
-                    oceanInsightResponseTask =   externalTasksQueueWcfService.GetTaskFromQueueAsync(LogitudeSettings.OITenantNumber, queuePriority);
+                    oceanInsightResponseTask = externalTasksQueueWcfService.GetTaskFromQueueAsync(LogitudeSettings.OITenantNumber, queuePriority);
                 }
                 var oceanInsightResponseXML = await oceanInsightResponseTask;
                 if (!string.IsNullOrEmpty(oceanInsightResponseXML))
                 {
                     this.ReadExternalTasksQueueWcfServiceResponse(oceanInsightResponseXML);
                     this.InsertNewAnalyzeQueue();
-                    externalTasksQueueWcfService.MarkTaskAsDone(communicationId, LogitudeSettings.OITenantNumber, queuePriority);
+                    await externalTasksQueueWcfService.MarkTaskAsDoneAsync(communicationId, LogitudeSettings.OITenantNumber, queuePriority);
                 }
+                externalTasksQueueWcfService.Close();
             }
             else
             {
