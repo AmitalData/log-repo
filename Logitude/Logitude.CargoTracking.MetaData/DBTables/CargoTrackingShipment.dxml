@@ -508,6 +508,9 @@
     Columns="EntityId" />
   <Index
     Columns="Tenant,SecurityKey" />
+  <Index
+    Columns="CustomerId" />
+    
   <UniqueConstraint
     Columns="EntityType,EntityId,Tenant" />
 </Table>

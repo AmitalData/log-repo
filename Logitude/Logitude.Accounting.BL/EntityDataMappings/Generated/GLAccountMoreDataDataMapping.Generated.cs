@@ -28,7 +28,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         LocalBalanceInDue, 
 	         NextDueDate, 
 	         TotalOpenChequesInLocalCur, 
-	         TotFutureOpenChequesInLocalCur,
+	         TotFutureOpenChequesInLocalCur, 
+	         BalanceInForeignCurrency, 
+	         ForeignBalanceInDue,
 	      }
 
 
@@ -41,7 +43,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         LocalBalanceInDue, 
 	         NextDueDate, 
 	         TotalOpenChequesInLocalCur, 
-	         TotFutureOpenChequesInLocalCur,
+	         TotFutureOpenChequesInLocalCur, 
+	         BalanceInForeignCurrency, 
+	         ForeignBalanceInDue,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -78,6 +82,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TotFutureOpenChequesInLocalCur))
             {
 				entityPOCO.TotFutureOpenChequesInLocalCur = entityPM.TotFutureOpenChequesInLocalCur;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BalanceInForeignCurrency))
+            {
+				entityPOCO.BalanceInForeignCurrency = entityPM.BalanceInForeignCurrency;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForeignBalanceInDue))
+            {
+				entityPOCO.ForeignBalanceInDue = entityPM.ForeignBalanceInDue;
 			}
 			}
 
@@ -119,6 +133,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.TotFutureOpenChequesInLocalCur = entityPOCO.TotFutureOpenChequesInLocalCur;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.BalanceInForeignCurrency))
+            {
+					entityPM.BalanceInForeignCurrency = entityPOCO.BalanceInForeignCurrency;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ForeignBalanceInDue))
+            {
+					entityPM.ForeignBalanceInDue = entityPOCO.ForeignBalanceInDue;
+            }
+
 		}
 
 		public void PMToOldPM(GLAccountMoreDataPM entityPM, GLAccountMoreDataPM oldEntityPM)
@@ -153,6 +177,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TotFutureOpenChequesInLocalCur))
             {
                 oldEntityPM.TotFutureOpenChequesInLocalCur = entityPM.TotFutureOpenChequesInLocalCur;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BalanceInForeignCurrency))
+            {
+                oldEntityPM.BalanceInForeignCurrency = entityPM.BalanceInForeignCurrency;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForeignBalanceInDue))
+            {
+                oldEntityPM.ForeignBalanceInDue = entityPM.ForeignBalanceInDue;
             }
 			
 		}

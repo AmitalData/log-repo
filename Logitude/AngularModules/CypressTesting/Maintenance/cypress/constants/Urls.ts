@@ -52,7 +52,17 @@ export class Urls {
     public static readonly BranchesviewGetSingle = "**/branchviews/getsingle/?**";
     public static readonly BrancheAddress = "**/addresses"
 
-    public static readonly GetTenatCurrencies = "**/GetCopyCurrencyToTenant?**"
+    public static readonly ShippingLines = "**/shippinglines"
+    public static readonly ShippingLinesGetSingle = "**/shippinglines/getsingle?**"
+    public static readonly ShippingLinesviewGetSingle = "**/shippinglineviews/getsingle/?**";
+    public static readonly ImportShippingLine = "**/PartnersDomain/GetCarrierCopyToCurrentTenant?**"
+    public static readonly CountryPortviews = "**/portviews/getbyfilters?**"
+    public static readonly PortPostLogsList = "**/PostLogsList"
+    public static readonly ShippingLinesAddress = "**/PartnersDomain"
+    public static readonly ShippingLinesArea = "**/carrierareas"
+    public static readonly ShippingLinesTariffTranslations = "**/tariffcarriertranslations"
+
+    public static readonly GetCopyCurrencyToTenant = "**/GetCopyCurrencyToTenant?**"
     public static readonly Currencies = "**/currencies"
     public static readonly CurrenciesGetSingle = "**/currencies/getsingle?**"
     public static readonly CurrenciesviewGetList = "**/currencyviews/getbyfilters?**";

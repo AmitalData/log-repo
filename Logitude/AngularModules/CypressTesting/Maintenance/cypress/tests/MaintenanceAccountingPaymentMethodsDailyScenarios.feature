@@ -17,8 +17,8 @@ Feature: Accounting Payment Method fake Create, Search and Edit from Maintenance
         Then the accounting payment should create successfully
 
     Scenario: Search for the accounting payment method by code
-        When search for "kf" accounting payment
-        Then the "kf" accounting payment should appear successfully
+        When search for "CH" accounting payment
+        Then the "Ch" accounting payment should appear successfully
 
     Scenario: Open the accounting payment method
         When open accounting payment

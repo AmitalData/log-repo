@@ -25,6 +25,7 @@ using Logitude.Server.Tools.Counters;
 using System.Security.Cryptography;
 using System.Reflection;
 using System.Globalization;
+using Logitude.Server.Tools.Helpers;
 
 namespace WebFreight.Web.Helpers.Analyzers
 {
@@ -333,8 +334,17 @@ namespace WebFreight.Web.Helpers.Analyzers
         }
         private void GetLoggedContactId()
         {
+            string email = "";
+            if (AuthenticationUtil.IsAuthenticatedUserExists())
+            {
+                email = AuthenticationUtil.GetAuthenticatedUser();
+            }
+            else
+            {
+                email = "system@tenant" + logitudeTenant.Value + ".com";
+            }
             ContactRepository contactRepository = new ContactRepository(this.commonContext);
-            var loggedContact = contactRepository.GetSingleContactByEmail(SecurityUtility.GetAuthenticatedUser(), logitudeTenant.Value);
+            var loggedContact = contactRepository.GetSingleContactByEmail(email, logitudeTenant.Value);
             this.loggedContactId = loggedContact.Id;
         }
         private void BuildCommunicationLog()

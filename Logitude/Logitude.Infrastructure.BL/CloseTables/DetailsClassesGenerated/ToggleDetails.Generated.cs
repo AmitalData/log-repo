@@ -275,14 +275,22 @@ namespace Logitude.Infrastructure.BL
                 Code = "RSL", 
                 SearchFields = "RSL,Reports in Shared Logistics", 
                 Description = "Reports in Shared Logistics", 
-			}); 
-             
+			});
+			 
             all.Add(new ToggleDetails()
             {    
                 Code = "CTL", 
                 Name = "CollaborationTool", 
                 SearchFields = "CTL,CollaborationTool", 
                 Description = "Collaboration Tool", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "SDE", 
+                Name = "Solve Duplicated Events Code", 
+                SearchFields = "SDE,Duplicated Events code", 
+                Description = "Solve Duplicated Events Code", 
 			});
 			
             return all;
