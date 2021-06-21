@@ -58,8 +58,19 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (_ContainerizationPM.OperationMode == "3")
                 {
                     _ContainerizationPM.ContainerizationStatus = "3";
-                    var ContainerizationUpdateService = new ContainerizationUpdateService(dbContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), requestParams.Tenant);
+                    _ContainerizationPM.ChangeSetOp = ChangeSetOperation.Update;
+                     var ContainerizationUpdateService = new ContainerizationUpdateService(dbContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), requestParams.Tenant);
                     ContainerizationUpdateService.Update(_ContainerizationPM, true);
+                    
+                    var myDeclarationQueryService = new DeclarationQueryService(dbContext);
+                    var declarationPMs = myDeclarationQueryService.GetDeclarationsByExportContainerizationId(containerizationID);
+                    foreach (var item in declarationPMs)
+                    {
+                        item.ExportContainerizationID = null;
+                        item.ChangeSetOp = ChangeSetOperation.Update;
+                        var DeclarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), requestParams.Tenant);
+                        DeclarationUpdateService.Update(item, true);
+                    }
                 }
                 this.MyResponseData = new INF_MSG_GenericResponseData()
                 {
