@@ -26,7 +26,7 @@ namespace Logitude.CrossDockTests.ExternalServices
                 .Build();
         }
 
-        internal CrossDockPM AddWarehouseEntrypackages(CrossDockPM crossDockPM, Table packagesDetailsTable)
+        internal CrossDockPM AddWarehouseEntryPackages(CrossDockPM crossDockPM, Table packagesDetailsTable)
         {
             IEnumerable<dynamic> packagesDetails = packagesDetailsTable.CreateDynamicSet();
             List<WarehouseEntryPackagePM> mainCarriageLegsList = new List<WarehouseEntryPackagePM>();
