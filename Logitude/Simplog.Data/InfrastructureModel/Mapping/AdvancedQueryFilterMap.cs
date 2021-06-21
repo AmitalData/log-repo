@@ -41,7 +41,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
 
             this.Property(t => t.PredefinedValue2)
                 .HasMaxLength(100)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             this.Property(t => t.Operator)
                 .HasMaxLength(40)
