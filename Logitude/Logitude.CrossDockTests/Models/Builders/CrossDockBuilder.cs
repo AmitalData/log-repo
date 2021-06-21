@@ -1,4 +1,5 @@
 ﻿using Logitude.CrossDockTests.ExternalServices;
+using Logitude.Test.Base.Models.Infrastructure;
 using Logitude.Test.Base.Models.PartnersPreparation;
 using Logitude.Test.Base.Models.UserTenantPreparation;
 using System;
@@ -12,10 +13,10 @@ namespace Logitude.CrossDockTests.Models.Builders
     public class CrossDockBuilder
     {
         private CrossDockPM _crossDockPM;
-        private readonly RandomGeneratorExternalService randomGeneratorExternalService;
+        private readonly RandomGeneratorService randomGeneratorService;
         public CrossDockBuilder()
         {
-            randomGeneratorExternalService = new RandomGeneratorExternalService();
+            randomGeneratorService = new RandomGeneratorService();
             this.Reset();
         }
 
@@ -88,7 +89,7 @@ namespace Logitude.CrossDockTests.Models.Builders
                 CreatedByUserId = UserTenant.UserId,
                 UpdatedByUserId = UserTenant.UserId,
                 WarehouseId = PartnersData.WarehouseId,
-                EntryNumber = randomGeneratorExternalService.RandomNumber(3).ToString()
+                EntryNumber = randomGeneratorService.RandomNumber(3).ToString()
             };
             return this;
         }

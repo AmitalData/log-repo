@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logitude.CrossDockTests.ExternalServices
+namespace Logitude.Test.Base.Models.Infrastructure
 {
-    public class RandomGeneratorExternalService
+    public class RandomGeneratorService
     {
-
         private readonly Random getrandom;
-        public RandomGeneratorExternalService()
+        public RandomGeneratorService()
         {
             getrandom = new Random();
         }

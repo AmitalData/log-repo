@@ -1,4 +1,5 @@
 ﻿using Logitude.CrossDockTests.ExternalServices;
+using Logitude.Test.Base.Models.Infrastructure;
 using Logitude.Test.Base.Models.UserTenantPreparation;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,10 @@ namespace Logitude.CrossDockTests.Models.Builders
     public class WarehouseEntryPackageBuilder
     {
         private WarehouseEntryPackagePM _warehouseEntryPackagePM;
-        private readonly RandomGeneratorExternalService randomGeneratorExternalService;
+        private readonly RandomGeneratorService randomGeneratorService;
         public WarehouseEntryPackageBuilder()
         {
-            randomGeneratorExternalService = new RandomGeneratorExternalService();
+            randomGeneratorService = new RandomGeneratorService();
             this.Reset();
         }
 
@@ -74,7 +75,7 @@ namespace Logitude.CrossDockTests.Models.Builders
                 CreatedByUserId = UserTenant.UserId,
                 UpdatedByUserId = UserTenant.UserId,
                 ChangeSetOp = "Insert",
-                WarehouseEntryId = randomGeneratorExternalService.RandomNumber(3).ToString()
+                WarehouseEntryId = randomGeneratorService.RandomNumber(3).ToString()
             };
             return this;
         }
