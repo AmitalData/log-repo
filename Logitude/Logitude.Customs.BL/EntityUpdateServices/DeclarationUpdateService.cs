@@ -334,7 +334,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 var eventContextTagModel = entityPM.CurrentContextTag as EventContextTagModel;
 
 
-                if (entityPM.IsAmendment==true  && eventContextTagModel.CallProccessID == EventContextTagModel.ProccessEnum.DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageResponseServiceUpdate)
+                if (entityPM.IsAmendment==true && eventContextTagModel != null  && eventContextTagModel.CallProccessID == EventContextTagModel.ProccessEnum.DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageResponseServiceUpdate)
                 {
                     var declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
 
