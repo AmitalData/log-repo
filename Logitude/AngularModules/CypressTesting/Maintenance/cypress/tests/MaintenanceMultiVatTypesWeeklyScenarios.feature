@@ -2,8 +2,14 @@
 Feature: Multi Vat Type Create, Search and Edit from Maintenance
     The user creates a multi vat type, searches for and edits it from the Maintenance Module.
 
+    Scenario: Enable Multi-percentage
+        Given the user logged in and open "Accounting Settings" in maintenance menu
+        And navigate AR advanced settings
+        When enable multi-percentage VAT Types
+        Then the accounting settings should update successfully
+
     Scenario: Add Multi Vat Type Code with lenght more than 5
-        Given the user logged in and open "VatTypes" in maintenance menu
+        Given the user open "VatTypes" in maintenance menu
         When add "123456" as multi vat type code
         Then a validation message with "Code Field must be less than 5" error should appear
 

@@ -183,6 +183,7 @@ export class RequestAliases {
 
     public static readonly PostVatType = "PostVatType"
     public static readonly PutVatType = "PutVatType"
+    public static readonly PutAccountingSettings = "PutAccountingSettings"
 
     public static readonly PostAccountingPaymentMethod = "PostAccountingPaymentMethod"
     public static readonly PutAccountingPaymentMethod = "PutAccountingPaymentMethod"
