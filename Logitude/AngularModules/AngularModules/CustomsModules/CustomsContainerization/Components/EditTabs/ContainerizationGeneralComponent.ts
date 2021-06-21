@@ -112,6 +112,10 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
             .subscribe(r => {
                 this.ContainerizationDeclarationList = new ObservableCollection([]);
                 this.ContainerizationDeclarationList.InsertCollection(r.Result);
+                this.EntityPM.DisableMarkAsDirty = true;
+                this.EntityPM.ConnectedDeclarations = "";
+                r.Result.forEach(x => this.EntityPM.ConnectedDeclarations += x.Id + ",");
+                this.EntityPM.DisableMarkAsDirty = false;
             });
 
     }
@@ -161,6 +165,8 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
                 this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.getRows();
+
                         //this.RefreshEntity();
                     }
                 })
