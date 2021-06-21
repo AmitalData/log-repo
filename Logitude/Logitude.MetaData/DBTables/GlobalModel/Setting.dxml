@@ -505,6 +505,7 @@
   </Column>
  <Column
     Name="AmitalCloudLogitudeTenantPrimaryKey"
+    ShortName="AmitalCloudLogitudeTenantPK"
     Type="nvarchar"
     Size="50">
     <Constraints

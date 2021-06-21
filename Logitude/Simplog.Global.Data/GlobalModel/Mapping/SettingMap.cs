@@ -130,16 +130,18 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.TMPersonalAccessExpirationDate).HasColumnName("TMPersonalAccessExpirationDate");
             this.Property(t => t.OITenantNumber).HasColumnName("OITenantNumber");
             this.Property(t => t.AmitalCloudEnvironmentURL).HasColumnName("AmitalCloudEnvironmentURL");
-            this.Property(t => t.AmitalCloudLogitudeTenantPrimaryKey).HasColumnName("AmitalCloudLogitudeTenantPrimaryKey");
+            
             
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
                 this.Property(t => t.NotificationHubConnectionString).HasColumnName("NotificationHubConnString");
+                this.Property(t => t.NotificationHubConnectionString).HasColumnName("AmitalCloudLogitudeTenantPK");
             }
             else
             {
                 this.Property(t => t.NotificationHubConnectionString).HasColumnName("NotificationHubConnectionString");
+                this.Property(t => t.NotificationHubConnectionString).HasColumnName("AmitalCloudLogitudeTenantPrimaryKey");
             }
 
             this.Property(t => t.ForwarderTenantsURL).HasColumnName("ForwarderTenantsURL");
