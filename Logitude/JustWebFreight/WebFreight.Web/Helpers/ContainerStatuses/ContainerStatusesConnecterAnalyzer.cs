@@ -20,6 +20,9 @@ using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using System.Transactions;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Text;
+using Simplog.Data.ShipmentsModel;
+using Logitude.Server.Tools.Counters;
+using System.Security.Cryptography;
 
 namespace WebFreight.Web.Helpers.Analyzers
 {
@@ -29,20 +32,47 @@ namespace WebFreight.Web.Helpers.Analyzers
         private AnalyzeQueueRepository analyzeQueueRepository;
         private CommunicationLogRepository communicationLogRepository;
         private int tenant;
-        private ArrayOfQueueTask externalTasksQueues;
-        private string oceanInsightsId;
-        private string container_number;
-        private string carrier_scac;
+        private ArrayOfQueueTask externalTasksQueues;        
         private LogitudeOceanInsightsRequestRepository logitudeOceanInsightsRequestRepository;
         private int? logitudeTenant = null;
         private ICommonDataContext commonContext;
         private LogitudeOceanInsightsRequest oceanInsight;
+        private Container container;
         private string communicationLogTo = "OceanInsightStatusRequest";
         private string communicationLogSubject = "Shipment Containers Statuses";
         private string containerObjectTableId;
         private string loggedContactId;
         private string containerId;
         private string oceanInsightsEnvelopeParameters;
+        private IShipmentsContext shipmentContext;
+        private ShipmentContainerStatusRepository shipmentContainerStatusRepository;
+        private ContainerRepository containerRepository;
+
+        private string oceanInsightsId;
+        private string container_number;
+        private string carrier_scac;
+        private string container_status;
+        private string details;
+        private string weight;
+        private string createdDate;
+        private string ETD_initial;
+        private string ETD_last;
+        private string ATD_actual;
+        private string ATD_detected;
+        private string ETA_initial;
+        private string ETA_last;
+        private string ETA_predection;
+        private string ATA_actual;
+        private string ATA_detected;
+        private string emptyPickup_last;
+        private string emptyPickup_initial;
+        private string emptyPickup_actual;
+        private string emptyPickupLocation;
+        private string gateInDate_last;
+        private string gateInDate_initial;
+        private string gateInDate_actual;
+        private string departureLocation;
+        private string destinationLocation;
 
         public ContainerStatusesConnecterAnalyzer(AnalyzeQueue analyzeQueue, AnalyzeQueueRepository analyzeQueueRepository)
         {
@@ -51,7 +81,7 @@ namespace WebFreight.Web.Helpers.Analyzers
                 this.tenant = analyzeQueue.Tenant;
                 this.analyzeQueue = analyzeQueue;
                 this.analyzeQueueRepository = analyzeQueueRepository;
-                this.logitudeOceanInsightsRequestRepository = new LogitudeOceanInsightsRequestRepository(this.tenant);
+                this.logitudeOceanInsightsRequestRepository = new LogitudeOceanInsightsRequestRepository(this.tenant);                
             }
         }
 
@@ -104,9 +134,10 @@ namespace WebFreight.Web.Helpers.Analyzers
                 this.ConnectAnalyzeQueueToTenantAndEntity();
                 this.AnalyzeOceanInsightsParametersXML();
                 this.ConnectingOceanInsightRequestToTenant();
-                this.AddContainerStatusCommunicationLog();
+                this.ProcessLogitudeTenant(); // choose more suitable name later                
                 this.DoneAnalyzeQueue();
             }
+
             catch (Exception ex)
             {
                 this.OnCatchAnalyzingError(ex);
@@ -149,15 +180,61 @@ namespace WebFreight.Web.Helpers.Analyzers
             {
                 foreach (XmlNode item in xn.ChildNodes)
                 {
-                    if (item.ChildNodes != null && item.Name == "event")
-                    {
-                        oceanInsightsId = item.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "shipment_id").FirstOrDefault()?.InnerText;
-                    }
-                    if (item.ChildNodes != null && item.Name == "shipment")
-                    {
-                        container_number = item.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "container_number").FirstOrDefault()?.InnerText;
-                        carrier_scac = item.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "carrier_scac").FirstOrDefault()?.InnerText;
-                    }
+                    this.ReadEventSectionFields(item);
+                    this.ReadShipmentSectionFields(item); 
+                }
+            }
+        }
+        private void ReadEventSectionFields(XmlNode node)
+        {
+            if (node.ChildNodes != null && node.Name == "event")
+            {
+                oceanInsightsId = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "shipment_id").FirstOrDefault()?.InnerText;
+                details = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "details").FirstOrDefault()?.InnerText;
+                createdDate = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "created").FirstOrDefault()?.InnerText;
+            }
+        }
+        private void ReadShipmentSectionFields(XmlNode node)
+        {
+            if (node.ChildNodes != null && node.Name == "shipment")
+            {
+                container_number = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "container_number").FirstOrDefault()?.InnerText;
+                carrier_scac = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "carrier_scac").FirstOrDefault()?.InnerText;
+                container_status = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "status").FirstOrDefault()?.InnerText;
+                weight = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "weight").FirstOrDefault()?.InnerText;
+                ETD_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "Pol_vsldeparture_planned_initial").FirstOrDefault()?.InnerText;
+                ETD_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "Pol_vsldeparture_planned_last").FirstOrDefault()?.InnerText;
+                ATD_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "Pol_vsldeparture_actual").FirstOrDefault()?.InnerText;
+                ATD_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "Pol_vsldeparture_detected").FirstOrDefault()?.InnerText;
+                ETA_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_vslarrival_planned_initial").FirstOrDefault()?.InnerText;
+                ETA_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_vslarrival_planned_last").FirstOrDefault()?.InnerText;
+                ETA_predection = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_vslarrival_predection").FirstOrDefault()?.InnerText;
+                ATA_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_vslarrival_actual").FirstOrDefault()?.InnerText;
+                ATA_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_vslarrival_detected").FirstOrDefault()?.InnerText;
+                emptyPickup_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_pickup_planned_last").FirstOrDefault()?.InnerText;
+                emptyPickup_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_pickup_planned_initial").FirstOrDefault()?.InnerText;
+                emptyPickup_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_pickup_actual").FirstOrDefault()?.InnerText;
+                gateInDate_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_arrival_planned_last").FirstOrDefault()?.InnerText;
+                gateInDate_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_arrival_planned_initial").FirstOrDefault()?.InnerText;
+                gateInDate_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_arrival_actual").FirstOrDefault()?.InnerText;
+
+                XmlElement emptyPickupLocationElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_pickup_loc").FirstOrDefault();
+                XmlElement departureLocationElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_loc").FirstOrDefault();
+                XmlElement destinationLocationElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_loc").FirstOrDefault();
+
+                if (emptyPickupLocationElement != null)
+                {
+                    emptyPickupLocation = emptyPickupLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "name").FirstOrDefault()?.InnerText;
+                }
+
+                if (departureLocationElement != null)
+                {
+                    departureLocation = departureLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "name").FirstOrDefault()?.InnerText;
+                }
+
+                if (destinationLocationElement != null)
+                {
+                    destinationLocation = destinationLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "name").FirstOrDefault()?.InnerText;
                 }
             }
         }
@@ -167,11 +244,11 @@ namespace WebFreight.Web.Helpers.Analyzers
             {
                 this.GetLogitudeTenantByOceanInsightsId();
             }
+
             if(string.IsNullOrEmpty( this.oceanInsightsId) || this.oceanInsight == null)
             {
                 this.GetLogitudeTenantByOceanInsightsContainerNumberAndScac();
-            }
-            this.GetContainerIdByContainerNumber();
+            }            
         }
         private void GetLogitudeTenantByOceanInsightsId()
         {
@@ -198,7 +275,27 @@ namespace WebFreight.Web.Helpers.Analyzers
                 scope.Complete();
             }
         }
-        private void GetContainerIdByContainerNumber()
+        private void ProcessLogitudeTenant()
+        {
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                if (this.logitudeTenant != null)
+                {
+                    this.shipmentContext = ShipmentsContext.GetContext(logitudeTenant.Value);
+                    this.shipmentContainerStatusRepository = new ShipmentContainerStatusRepository(shipmentContext);
+                    this.containerRepository = new ContainerRepository(shipmentContext);
+
+                    this.GetContainerDataByContainerNumber();
+                    this.AddContainerStatusCommunicationLog();
+                    this.CreateShipmentContainerStatus();
+                    this.UpdateContainer();
+                    this.Save();
+                }
+
+                scope.Complete();
+            }
+        }
+        private void GetContainerDataByContainerNumber()
         {
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
@@ -207,8 +304,8 @@ namespace WebFreight.Web.Helpers.Analyzers
                     var containerNumber = this.oceanInsight?.ContainerNumber;
                     if (!string.IsNullOrEmpty(containerNumber))
                     {
-                        ContainerRepository containerRepository = new ContainerRepository(logitudeTenant.Value);
-                        containerId = containerRepository.GetContainerByContainerNumberAndTenant(containerNumber, logitudeTenant.Value)?.Id;
+                        container = containerRepository.GetContainerByContainerNumberAndTenant(containerNumber, logitudeTenant.Value);
+                        containerId = container?.Id;
                     }
                 }
                 scope.Complete();
@@ -216,17 +313,17 @@ namespace WebFreight.Web.Helpers.Analyzers
         }
         private void AddContainerStatusCommunicationLog()
         {
-            if (this.logitudeTenant != null && !string.IsNullOrEmpty(containerId))
+            if (!string.IsNullOrEmpty(containerId))
             {
                 this.commonContext = CommonDataContext.GetContext(this.logitudeTenant.Value);
                 this.communicationLogRepository = new CommunicationLogRepository(this.logitudeTenant.Value);
-                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-                {
+                //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                //{
                     this.GetCommuniactionLogObjectTableId();
                     this.GetLoggedContactId();
                     this.BuildCommunicationLog();
-                    scope.Complete();
-                }
+                    //scope.Complete();
+                //}
             }
         }
         private void GetCommuniactionLogObjectTableId()
@@ -282,6 +379,327 @@ namespace WebFreight.Web.Helpers.Analyzers
             doc.Save(xmlWriter);
             byte[] documentXML = memoryStream.ToArray();
             return documentXML;
+        }
+        private void CreateShipmentContainerStatus()
+        {
+            string iHash = this.GetHashedData(oceanInsight.ShipmentId);
+
+            if (!shipmentContainerStatusRepository.DoesRecordExist(iHash))
+            {
+                DateTime logDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                DateTime? eventDate = this.GetEventDate();
+                double containerWeight = this.GetContainerWeight();
+                DateTime? departureDate = this.ComputeDepartureDate();
+                DateTime? arrivalDate = this.ComputeArrivalDate();
+                string departureDateInfo = this.ComputeDepartureDateInfo();
+                string arrivalDateInfo = this.ComputeArrivalDateInfo();
+
+                ShipmentContainerStatus containerStatus = new ShipmentContainerStatus()
+                {
+                    Id = IdCounter.GetNumber("ShipmentContainerStatus", this.tenant),
+                    Tenant = this.logitudeTenant.Value,
+                    ShipmentId = this.oceanInsight.ShipmentId,
+                    StatusSource = "OIN",
+                    ContainerStatusCode = this.container_status,
+                    Details = this.details,
+                    RecordHash = iHash,
+                    Weight = containerWeight,
+                    ReceivingDate = logDate,
+                    EventDate = eventDate,
+                    ContainerId = this.containerId,
+                    ContainerNumber = this.container_number,
+                    DepartureDate = departureDate,
+                    ArrivalDate = arrivalDate,
+                    TimeOfDepartureInfo = departureDateInfo,
+                    TimeOfArrivalInfo = arrivalDateInfo,
+                    //FromPortId = DeparturePortId,
+                    //ToPortId = ArrivalPortId,
+                    //Pieces = ,
+                    //Partial = ,
+                    //VoyageNumber = ,
+                    //Location = ,
+                    //ShippingLineName = ,
+                    //VesselName = ,                  
+                };
+
+                shipmentContainerStatusRepository.Add(containerStatus);
+            }
+        }
+        private double GetContainerWeight()
+        {
+            double containerWeight = 0;
+            if (!string.IsNullOrEmpty(weight))
+            {
+                Double.TryParse(weight, out containerWeight);
+            }
+
+            return containerWeight;
+        }
+        private DateTime? GetEventDate()
+        {
+            if (!string.IsNullOrEmpty(createdDate))
+            {
+                return Convert.ToDateTime(createdDate);
+            }
+
+            return null;
+        }
+        private DateTime? ComputeDepartureDate()
+        {
+            if (!string.IsNullOrEmpty(ATD_detected))
+            {
+                return Convert.ToDateTime(ATD_detected);
+            }
+
+            else if (!string.IsNullOrEmpty(ATD_actual))
+            {
+                return Convert.ToDateTime(ATD_actual);
+            }
+
+            else if (!string.IsNullOrEmpty(ETD_last))
+            {
+                return Convert.ToDateTime(ETD_last);
+            }
+
+            else if (!string.IsNullOrEmpty(ETD_initial))
+            {
+                return Convert.ToDateTime(ETD_initial);
+            }
+
+            return null;
+        }
+        private DateTime? ComputeArrivalDate()
+        {
+            if (!string.IsNullOrEmpty(ATA_detected))
+            {
+                return Convert.ToDateTime(ATA_detected);
+            }
+
+            else if (!string.IsNullOrEmpty(ATA_actual))
+            {
+                return Convert.ToDateTime(ATA_actual);
+            }
+
+            else if (!string.IsNullOrEmpty(ETA_last))
+            {
+                return Convert.ToDateTime(ETA_last);
+            }
+
+            else if (!string.IsNullOrEmpty(ETA_initial))
+            {
+                return Convert.ToDateTime(ETA_initial);
+            }
+
+            else if (!string.IsNullOrEmpty(ETA_predection))
+            {
+                return Convert.ToDateTime(ETA_predection);
+            }
+
+            return null;
+        }
+        private string ComputeDepartureDateInfo()
+        {
+            if (!string.IsNullOrEmpty(ATD_detected))
+            {
+                return "A";
+            }
+
+            else if (!string.IsNullOrEmpty(ATD_actual))
+            {
+                return "A";
+            }
+
+            else if (!string.IsNullOrEmpty(ETD_last))
+            {
+                return "E";
+            }
+
+            else if (!string.IsNullOrEmpty(ETD_initial))
+            {
+                return "E";
+            }
+
+            return "";
+        }
+        private string ComputeArrivalDateInfo()
+        {
+            if (!string.IsNullOrEmpty(ATA_detected))
+            {
+                return "A";
+            }
+
+            else if (!string.IsNullOrEmpty(ATA_actual))
+            {
+                return "A";
+            }
+
+            else if (!string.IsNullOrEmpty(ETA_last))
+            {
+                return "E";
+            }
+
+            else if (!string.IsNullOrEmpty(ETA_initial))
+            {
+                return "E";
+            }
+
+            else if (!string.IsNullOrEmpty(ETA_predection))
+            {
+                return "E";
+            }
+
+            return "";
+        }
+        private string GetHashedData(string shipmentId)
+        {
+            string information = shipmentId + tenant.ToString(); //+ this.DeparturePortId + this.ArrivalPortId + this.container_number + this.EventLocationCode + this.EventLocationDateString;
+            byte[] byteRepresentation = UnicodeEncoding.UTF8.GetBytes(information);
+            byte[] hashedTextInBytes = null;
+            MD5CryptoServiceProvider myMd5 = new MD5CryptoServiceProvider();
+            hashedTextInBytes = myMd5.ComputeHash(byteRepresentation);
+            string hashedText = Convert.ToBase64String(hashedTextInBytes);
+
+            return hashedText;
+        }
+        private void UpdateContainer()
+        {
+            if (container != null)
+            {
+                DateTime? mainCarriageETD = this.ComputeMainCarriageETD();
+                DateTime? mainCarriageETA = this.ComputeMainCarriageETA();
+                DateTime? mainCarriageATD = this.ComputeMainCarriageATD();
+                DateTime? mainCarriageATA = this.ComputeMainCarriageATA();
+                DateTime? estimatedEmptyPickupDate = this.ComputeEstimatedEmptyPickupDate();
+                DateTime? actualEmptyPickupDate = this.ComputeActualEmptyPickupDate();
+                DateTime? estimatedGateInDate = this.ComputeEstimatedGateInDate();
+                DateTime? actualGateInDate = this.ComputeActualGateInDate();
+
+                container.MainCarriageETD = mainCarriageETD;
+                container.MainCarriageETA = mainCarriageETA;
+                container.MainCarriageATD = mainCarriageATD;
+                container.MainCarriageATA = mainCarriageATA;
+                //container.EmptyPickupLocation = emptyPickupLocation;
+                container.EstimatedEmptyPickupDate = estimatedEmptyPickupDate;
+                container.ActualEmptyPickupDate = actualEmptyPickupDate;
+                container.EstimatedGateInDate = estimatedGateInDate;
+                container.ActualGateInDate = actualGateInDate;
+                //container.DepartureLocation = departureLocation;
+                //container.DestinationLocation = destinationLocation;
+
+                containerRepository.Update(container);
+            }
+        }
+        private DateTime? ComputeMainCarriageETD()
+        {
+            if (!string.IsNullOrEmpty(ETD_last))
+            {
+                return Convert.ToDateTime(ETD_last);
+            }
+
+            else if (!string.IsNullOrEmpty(ETD_initial))
+            {
+                return Convert.ToDateTime(ETD_initial);
+            }
+
+            return null;
+        }
+        private DateTime? ComputeMainCarriageETA()
+        {
+            if (!string.IsNullOrEmpty(ETA_last))
+            {
+                return Convert.ToDateTime(ETA_last);
+            }
+
+            else if (!string.IsNullOrEmpty(ETA_initial))
+            {
+                return Convert.ToDateTime(ETA_initial);
+            }
+
+            else if (!string.IsNullOrEmpty(ETA_predection))
+            {
+                return Convert.ToDateTime(ETA_predection);
+            }
+
+            return null;
+        }
+        private DateTime? ComputeMainCarriageATD()
+        {
+            if (!string.IsNullOrEmpty(ATD_detected))
+            {
+                return Convert.ToDateTime(ATD_detected);
+            }
+
+            else if (!string.IsNullOrEmpty(ATD_actual))
+            {
+                return Convert.ToDateTime(ATD_actual);
+            }
+
+            return null;
+        }
+        private DateTime? ComputeMainCarriageATA()
+        {
+            if (!string.IsNullOrEmpty(ATA_detected))
+            {
+                return Convert.ToDateTime(ATA_detected);
+            }
+
+            else if (!string.IsNullOrEmpty(ATA_actual))
+            {
+                return Convert.ToDateTime(ATA_actual);
+            }
+
+            return null;
+        }
+        private DateTime? ComputeEstimatedEmptyPickupDate()
+        {
+            if (!string.IsNullOrEmpty(emptyPickup_last))
+            {
+                return Convert.ToDateTime(emptyPickup_last);
+            }
+
+            else if (!string.IsNullOrEmpty(emptyPickup_initial))
+            {
+                return Convert.ToDateTime(emptyPickup_initial);
+            }
+
+            return null;
+        }
+        private DateTime? ComputeActualEmptyPickupDate()
+        {
+            if (!string.IsNullOrEmpty(emptyPickup_actual))
+            {
+                return Convert.ToDateTime(emptyPickup_actual);
+            }            
+
+            return null;
+        }
+        private DateTime? ComputeEstimatedGateInDate()
+        {
+            if (!string.IsNullOrEmpty(gateInDate_last))
+            {
+                return Convert.ToDateTime(gateInDate_last);
+            }
+
+            else if (!string.IsNullOrEmpty(gateInDate_initial))
+            {
+                return Convert.ToDateTime(gateInDate_initial);
+            }
+
+            return null;
+        }
+        private DateTime? ComputeActualGateInDate()
+        {
+            if (!string.IsNullOrEmpty(gateInDate_actual))
+            {
+                return Convert.ToDateTime(gateInDate_actual);
+            }
+
+            return null;
+        }
+
+        private void Save()
+        {
+            shipmentContext.SaveChanges();
         }
         private void DoneAnalyzeQueue()
         {
@@ -339,7 +757,7 @@ namespace WebFreight.Web.Helpers.Analyzers
             analyzeQueue.DoneDate = TenantServerConfigration.GetCurrentDateTime(analyzeQueue.Tenant);
             analyzeQueueRepository.Update(analyzeQueue);
             analyzeQueueRepository.SubmitChanges();
-        }
+        }        
     }
 
     [XmlRoot("ArrayOfQueueTask")]
