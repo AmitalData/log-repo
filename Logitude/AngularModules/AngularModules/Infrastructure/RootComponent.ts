@@ -289,7 +289,7 @@ export class RootComponent implements AfterViewInit {
     this._FinishLogin = true;
     var termsofUseService = new TermsofUseService();
     termsofUseService.GetCheckIfGoToTermUseComponent(SessionLocator.Tenant, SessionLocator.LoggedUserId).subscribe((res: ServiceResponse) => {
-      var pmResponse: ServiceResponse = res;
+        var pmResponse: ServiceResponse = res;
         if (!pmResponse.HasError) {
             var myResult: TermsofUseArgs = pmResponse.Result;
             if (myResult) {
@@ -335,12 +335,25 @@ export class RootComponent implements AfterViewInit {
         }
      else {
             if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
-                window.alert(pmResponse.ErrorsArray[0]);
-            }
-        }​​​​​​​
-
+                this.LoadTermsOfUseErrorMessage(pmResponse);    
+            }  
+        }​​​​​​​ 
     });
   }
+    private LoadTermsOfUseErrorMessage(pmResponse: ServiceResponse) {
+        this.ClearLocation();
+        SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureOthers/Components/TermsOfUse/TermsOfUseStartupComponent", this.Child.Location)
+            .then(cmpRef => {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.LoadErrorMessage(pmResponse.ErrorsArray[0]);
+                cmpRef.instance.TermsOfUseCompleted.subscribe(($event: any) => {
+                    if ($event == "Decline") {
+                        this.SignOutCompleted();
+                    }
+                });
+            });
+    }
+
     LoadPrivateLableTermsOfUseComponent(myResult: TermsofUseArgs) {
         SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureOthers/Components/TermsOfUse/CustomTermsOfUse/DSVTermsOfUseStartupComponent", this.Child.Location)
             .then(cmpRef => {
