@@ -174,7 +174,6 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
         let parentButton: MenuButtonPM;
           if (this.EntityPM != null) {
             if (this.CurrentSession.CurrentEditComponent != null) {
-                debugger;
                 var table = window.ObjectTables.filter(d => d.Name === 'Customs.Containerization')[0];
 
                 var buttonEnabled: boolean = true;
@@ -187,9 +186,6 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
                     if (button.EventCode == "Actions") {
 
                          button.Width = 70;
-                    }
-                    if (button.EventCode == "SendContainerization") {
-                        debugger;
                     }
                 }
                 this.IsDisplayOnlyCheckDone = true;
@@ -254,7 +250,6 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
     
   
     AddDeclarationMethod() {
-        debugger;
         var args: any = {
             EntityPM: this.EntityPM,
         }; 

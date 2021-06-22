@@ -357,6 +357,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\DeclarationCancellation\DeclarationCancellationComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\DeclarationCancellation\Documents\DeclarationCancellationCustomsDocumentsController.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\NewEntity\NewExportDeclarationComponent.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsContainerization\ModuleProviders.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ConsigmentTabContent\ExportConsigmentContentComponent.ts" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ExportDeclarationComponent.html" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationSupplierInvoice\Components\SupplierInvoices\SupplierInvoiceItem\ExporterInvoiceItemComponent.ts" />

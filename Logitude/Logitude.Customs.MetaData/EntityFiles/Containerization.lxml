@@ -1743,6 +1743,14 @@
     MenuButtonGroupType="&quot;Customs.ContainerizationEdit&quot;"
     MenuButtonGroupName="&quot;Customs.ContainerizationEditButtonsGroup&quot;">
     <MenuButton
+      EventCode="&quot;SendContainerization&quot;"
+      DefaultText="&quot;Send Containerization&quot;"
+      MenuButtonType="&quot;control&quot;"
+      IndexOrder="0"
+      LocalDefaultText="&quot;שלח&quot;"
+      IsPackagable="true"
+      HtmlComponentPath="&quot;./CustomsModules/CustomsContainerization/Components/SendContainerization/SendContainerization&quot;" />
+    <MenuButton
       EventCode="&quot;Actions&quot;"
       DefaultText="&quot;Actions&quot;"
       MenuButtonType="&quot;dropdownbutton&quot;"
@@ -1772,14 +1780,6 @@
         LocalDefaultText="&quot;סטטוס הצהרות בהמכלה&quot;"
         IsPackagable="true" />
     </MenuButton>
-    <MenuButton
-      EventCode="&quot;SendContainerization&quot;"
-      DefaultText="&quot;Send Containerization&quot;"
-      MenuButtonType="&quot;button&quot;"
-      IndexOrder="0"
-      LocalDefaultText="&quot;שלח&quot;"
-      IsPackagable="true"
-      HtmlComponentPath="&quot;./CustomsModules/CustomsContainerization/Components/SendContainerization/SendContainerization&quot;" />
   </MenuButtons>
   <DataContracts />
   <AdditionalTextCodes>

@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ContainerizationUpdateClass
    {  		
-		public const string HashString = "1f4633bcd85397439a2786f4329a2c05";
+		public const string HashString = "a4727adba4c951c61c096cb27b1a4b3e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1362,14 +1362,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   //FeatureRepository featureRepository = new FeatureRepository(0); 
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
-		   ObjectTable ContainerizationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.Containerization" && d.Tenant == 0).FirstOrDefault(); 			   Feature ContainerizationFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AddDeclaration", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Containerization.Features.AddDeclaration", NameTextCodeDefaultText = "Add Declaration", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContainerizationObjectTable);
-             			   Feature ContainerizationFeature_MB01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CancelContainerization", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Containerization.Features.CancelContainerization", NameTextCodeDefaultText = "Cancel Containerization", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContainerizationObjectTable);
-             			   Feature ContainerizationFeature_MB02 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationsStatusRequest", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Containerization.Features.DeclarationsStatusRequest", NameTextCodeDefaultText = "Declarations Status Request", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContainerizationObjectTable);
-                   
+		   ObjectTable ContainerizationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.Containerization" && d.Tenant == 0).FirstOrDefault();       
     
-			   Feature ContainerizationFeature_MB1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendContainerization", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Containerization.Features.SendContainerization", NameTextCodeDefaultText = "Send Containerization", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContainerizationObjectTable);
+			   Feature ContainerizationFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendContainerization", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Containerization.Features.SendContainerization", NameTextCodeDefaultText = "Send Containerization", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContainerizationObjectTable);
 
- 
+			   Feature ContainerizationFeature_MB10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AddDeclaration", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Containerization.Features.AddDeclaration", NameTextCodeDefaultText = "Add Declaration", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContainerizationObjectTable);
+             			   Feature ContainerizationFeature_MB11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CancelContainerization", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Containerization.Features.CancelContainerization", NameTextCodeDefaultText = "Cancel Containerization", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContainerizationObjectTable);
+             			   Feature ContainerizationFeature_MB12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationsStatusRequest", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Containerization.Features.DeclarationsStatusRequest", NameTextCodeDefaultText = "Declarations Status Request", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContainerizationObjectTable);
+              
 
 		   TextCodeRepository.SubmitChanges();
 		   FeaturesRepository.SubmitChanges();
@@ -1382,6 +1382,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 				}, menuButtonGroupRepository, tenantMenuButtonGroups);        
    
 			   MenuButton ContainerizationMenuButton0 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "SendContainerization",
+						Index = 0, 
+						IsActive = true,
+						LabelTextCodeCode = "Containerization.B.SendContainerization",
+						LabelTextCodeDefaultText = "Send Containerization",
+						Tenant = 0,
+						MenuButtonGroupId = ContainerizationMenuButtonGroup.Id,
+						ObjectTableId = ContainerizationObjectTable.Id,
+						MenuButtonType = "control",
+						FeatureId = ContainerizationFeature_MB0.Id,
+						Style = null,
+						LocalDefaultText = "שלח",
+						FeatureUniqeCode = ContainerizationFeature_MB0.FeatureUniqeCode,
+						HtmlComponentPath = "./CustomsModules/CustomsContainerization/Components/SendContainerization/SendContainerization",
+						Width = 0,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+       
+   
+			   MenuButton ContainerizationMenuButton1 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "Actions",
 						Index = 0, 
@@ -1400,7 +1420,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
-			   MenuButton ContainerizationMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton ContainerizationMenuButton10 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "AddDeclaration",
 						Index = 0, 
@@ -1409,18 +1429,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						LabelTextCodeDefaultText = "Add Declaration",
 						Tenant = 0,
 						MenuButtonGroupId = ContainerizationMenuButtonGroup.Id,
-						ParentMenuButtonId = ContainerizationMenuButton0.Id,
+						ParentMenuButtonId = ContainerizationMenuButton1.Id,
 						ObjectTableId = ContainerizationObjectTable.Id,
 						MenuButtonType = "menuitem",
-						FeatureId=  ContainerizationFeature_MB00.Id,
+						FeatureId=  ContainerizationFeature_MB10.Id,
 						Style = null,
 						LocalDefaultText = "הוסף הצהרה",
                         HtmlComponentPath="./CustomsModules/CustomsContainerization/Components/NewEntity/NewContainerizationComponent",
                         Width=0,
-						FeatureUniqeCode=  ContainerizationFeature_MB00.FeatureUniqeCode,
+						FeatureUniqeCode=  ContainerizationFeature_MB10.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
-			   MenuButton ContainerizationMenuButton01 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton ContainerizationMenuButton11 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "CancelContainerization",
 						Index = 1, 
@@ -1429,18 +1449,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						LabelTextCodeDefaultText = "Cancel Containerization",
 						Tenant = 0,
 						MenuButtonGroupId = ContainerizationMenuButtonGroup.Id,
-						ParentMenuButtonId = ContainerizationMenuButton0.Id,
+						ParentMenuButtonId = ContainerizationMenuButton1.Id,
 						ObjectTableId = ContainerizationObjectTable.Id,
 						MenuButtonType = "menuitem",
-						FeatureId=  ContainerizationFeature_MB01.Id,
+						FeatureId=  ContainerizationFeature_MB11.Id,
 						Style = null,
 						LocalDefaultText = "ביטול המכלה",
                         HtmlComponentPath=null,
                         Width=0,
-						FeatureUniqeCode=  ContainerizationFeature_MB01.FeatureUniqeCode,
+						FeatureUniqeCode=  ContainerizationFeature_MB11.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
-			   MenuButton ContainerizationMenuButton02 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton ContainerizationMenuButton12 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "DeclarationsStatusRequest",
 						Index = 2, 
@@ -1449,37 +1469,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						LabelTextCodeDefaultText = "Declarations Status Request",
 						Tenant = 0,
 						MenuButtonGroupId = ContainerizationMenuButtonGroup.Id,
-						ParentMenuButtonId = ContainerizationMenuButton0.Id,
+						ParentMenuButtonId = ContainerizationMenuButton1.Id,
 						ObjectTableId = ContainerizationObjectTable.Id,
 						MenuButtonType = "menuitem",
-						FeatureId=  ContainerizationFeature_MB02.Id,
+						FeatureId=  ContainerizationFeature_MB12.Id,
 						Style = null,
 						LocalDefaultText = "סטטוס הצהרות בהמכלה",
                         HtmlComponentPath=null,
                         Width=0,
-						FeatureUniqeCode=  ContainerizationFeature_MB02.FeatureUniqeCode,
+						FeatureUniqeCode=  ContainerizationFeature_MB12.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
-	          
-   
-			   MenuButton ContainerizationMenuButton1 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
-					{
-						EventCode = "SendContainerization",
-						Index = 0, 
-						IsActive = true,
-						LabelTextCodeCode = "Containerization.B.SendContainerization",
-						LabelTextCodeDefaultText = "Send Containerization",
-						Tenant = 0,
-						MenuButtonGroupId = ContainerizationMenuButtonGroup.Id,
-						ObjectTableId = ContainerizationObjectTable.Id,
-						MenuButtonType = "button",
-						FeatureId = ContainerizationFeature_MB1.Id,
-						Style = null,
-						LocalDefaultText = "שלח",
-						FeatureUniqeCode = ContainerizationFeature_MB1.FeatureUniqeCode,
-						HtmlComponentPath = "./CustomsModules/CustomsContainerization/Components/SendContainerization/SendContainerization",
-						Width = 0,
-					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
-
+	   
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)

@@ -3,6 +3,8 @@ import { LogitudeWindow } from "../../../../Controls/Windows/LogitudeWindow";
 import { GenericRequestParams } from "../../../../Customs/DataContract/RequestParams/GenericRequestParams";
 import { CustomSendOptionsArgs, SendRequestVIA } from "../../../../Customs/DataContract/RequestParams/RequestParamsBase";
 import { ContainerizationPM } from "../../../../Customs/EntityPMs/ContainerizationPM";
+import { ContainerizationMessagesService } from "../../../../Customs/Services/WebServices/ContainerizationMessagesService";
+import { ServiceResponse } from "../../../../Infrastructure/DataContracts/ServiceResponse";
 import { ObjectTablePM } from "../../../../Infrastructure/EntityPMs/ObjectTablePM";
 import { SessionLocator } from "../../../../Infrastructure/Utilities/SessionLocator";
 import { TextCodeTranslator } from "../../../../Infrastructure/Utilities/TextCodeTranslator";
@@ -28,23 +30,16 @@ export class SendContainerization implements OnDestroy {
     LoadCompletedEvent: any;
     _WorkWithService: boolean = true;
     private CurrentSession = SessionLocator.SelectedSession;
-    SendContainerizationService: SendContainerizationService;
+    SendContainerizationService: SendContainerizationService = new SendContainerizationService();
 
     constructor() {
-        debugger;
     }
 
     Run(args: any) {
-        debugger;
         this.EntityPM = args.EntityPM;
         this.ButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Send");
-        /*else {
-            this.ButtonText = "שלח הצהרה"; // TextCodeTranslator.Translate("Customs.Declaration.O.SendDeclaration");
-        }*/
-        /*if (this._WorkWithService) {
-           // this._SendDeclarationService.Run(args);
-            return;
-        }*/
+        this.SendContainerizationService.Run(args);
+        return;
     }
 
     Listen() {
@@ -106,6 +101,7 @@ export class SendContainerizationService implements OnDestroy {
     SaveCompletedEvent: any;
     LoadCompletedEvent: any;
     private CurrentSession = SessionLocator.SelectedSession;
+    containerizationMessagesService: ContainerizationMessagesService = new ContainerizationMessagesService();
     constructor() {
 
     }
@@ -141,8 +137,22 @@ export class SendContainerizationService implements OnDestroy {
     }
 
     OnCustomSendOptionsButtonClick(event) {
-
+        this.containerizationMessagesService.SendContainerization(this.getParams(event))
+            .subscribe(res1 => {
+            });
     }
+
+    getParams(event: any) {
+        var params: GenericRequestParams = new GenericRequestParams();
+        params.Tenant = SessionLocator.Tenant;
+        params.RequestVIA = event.RequestVIA;
+        params.ForcePersonalSign = event.ForcePersonalSign;
+        params.LoggingEnabled = true;
+        params.LoggingEntityId = this.EntityPM.Id;
+        params.LoggingUserId = SessionLocator.LoggedUserId;
+        return params
+    }
+
 
     public OnSuccessSendMethod: (response: any) => void;
 
