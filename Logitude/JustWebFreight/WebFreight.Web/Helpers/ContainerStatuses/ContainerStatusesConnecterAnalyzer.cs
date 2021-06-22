@@ -26,6 +26,8 @@ using System.Security.Cryptography;
 using System.Reflection;
 using System.Globalization;
 using Logitude.Server.Tools.Helpers;
+using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.EntityPMs;
 
 namespace WebFreight.Web.Helpers.Analyzers
 {
@@ -53,6 +55,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         private ContainerStatusRepository containerStatusRepository;
         private ShipmentRepository shipmentRepository;
         private ShipmentPackageRepository shipmentPackageRepository;
+        private ShipmentQuery shipmentQuery;
 
         private string oceanInsightsId;
         private string container_number;
@@ -295,15 +298,20 @@ namespace WebFreight.Web.Helpers.Analyzers
                     this.containerRepository = new ContainerRepository(shipmentContext);
                     this.containerStatusRepository = new ContainerStatusRepository(shipmentContext);
                     this.shipmentRepository = new ShipmentRepository(shipmentContext);
+                    this.shipmentQuery = new ShipmentQuery(shipmentRepository);
                     this.shipmentPackageRepository = new ShipmentPackageRepository(shipmentContext);
 
                     this.GetContainerDataByContainerNumber();
                     this.AddContainerStatusCommunicationLog();
-                    this.CreateShipmentContainerStatus();
-                    ContainerUpdatedFields containerUpdatedFields = this.BuildContainerUpdatedFields();
-                    this.UpdateContainer(containerUpdatedFields);
-                    this.UpdateShipment(containerUpdatedFields);
-                    this.Save();
+
+                    if (this.eventCode == "0")
+                    {
+                        this.CreateShipmentContainerStatus();
+                        ContainerUpdatedFields containerUpdatedFields = this.BuildContainerUpdatedFields();
+                        this.UpdateContainer(containerUpdatedFields);
+                        this.UpdateShipment(containerUpdatedFields);
+                        this.Save();
+                    }
                 }
 
                 scope.Complete();
@@ -397,38 +405,35 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             string iHash = this.GetHashedData(oceanInsight.ShipmentId);
 
-            if (this.eventCode == "0")
+            DateTime logDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+            DateTime? eventDate = this.GetEventDate();
+            double containerWeight = this.GetContainerWeight();
+            DateTime? departureDate = this.ComputeDepartureDate();
+            DateTime? arrivalDate = this.ComputeArrivalDate();
+            string departureDateInfo = this.ComputeDepartureDateInfo();
+            string arrivalDateInfo = this.ComputeArrivalDateInfo();
+
+            ShipmentContainerStatus containerStatus = new ShipmentContainerStatus()
             {
-                DateTime logDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                DateTime? eventDate = this.GetEventDate();
-                double containerWeight = this.GetContainerWeight();
-                DateTime? departureDate = this.ComputeDepartureDate();
-                DateTime? arrivalDate = this.ComputeArrivalDate();
-                string departureDateInfo = this.ComputeDepartureDateInfo();
-                string arrivalDateInfo = this.ComputeArrivalDateInfo();
+                Id = IdCounter.GetNumber("ShipmentContainerStatus", this.tenant),
+                Tenant = this.logitudeTenant.Value,
+                ShipmentId = this.oceanInsight.ShipmentId,
+                StatusSource = "OIN",
+                ContainerStatusCode = this.container_status,
+                Details = this.details,
+                RecordHash = iHash,
+                Weight = containerWeight,
+                ReceivingDate = logDate,
+                EventDate = eventDate,
+                ContainerId = this.container.ShipmentPackagesId,
+                ContainerNumber = this.container_number,
+                DepartureDate = departureDate,
+                ArrivalDate = arrivalDate,
+                TimeOfDepartureInfo = departureDateInfo,
+                TimeOfArrivalInfo = arrivalDateInfo,
+            };
 
-                ShipmentContainerStatus containerStatus = new ShipmentContainerStatus()
-                {
-                    Id = IdCounter.GetNumber("ShipmentContainerStatus", this.tenant),
-                    Tenant = this.logitudeTenant.Value,
-                    ShipmentId = this.oceanInsight.ShipmentId,
-                    StatusSource = "OIN",
-                    ContainerStatusCode = this.container_status,
-                    Details = this.details,
-                    RecordHash = iHash,
-                    Weight = containerWeight,
-                    ReceivingDate = logDate,
-                    EventDate = eventDate,
-                    ContainerId = this.container.ShipmentPackagesId,
-                    ContainerNumber = this.container_number,
-                    DepartureDate = departureDate,
-                    ArrivalDate = arrivalDate,
-                    TimeOfDepartureInfo = departureDateInfo,
-                    TimeOfArrivalInfo = arrivalDateInfo,                
-                };
-
-                shipmentContainerStatusRepository.Add(containerStatus);
-            }
+            shipmentContainerStatusRepository.Add(containerStatus);
         }
         private double GetContainerWeight()
         {
@@ -570,17 +575,17 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (container != null && containerUpdatedFields != null)
             {
-                this.FillContainerFieldsNewValues("MainCarriageETD", containerUpdatedFields.MainCarriageETD);
-                this.FillContainerFieldsNewValues("MainCarriageETA", containerUpdatedFields.MainCarriageETA);
-                this.FillContainerFieldsNewValues("MainCarriageATD", containerUpdatedFields.MainCarriageATD);
-                this.FillContainerFieldsNewValues("MainCarriageATA", containerUpdatedFields.MainCarriageATA);
-                this.FillContainerFieldsNewValues("EmptyPickupLocation", containerUpdatedFields.EmptyPickupLocation);
-                this.FillContainerFieldsNewValues("EstimatedEmptyPickupDate", containerUpdatedFields.EstimatedEmptyPickupDate);
-                this.FillContainerFieldsNewValues("ActualEmptyPickupDate", containerUpdatedFields.ActualEmptyPickupDate);
-                this.FillContainerFieldsNewValues("EstimatedGateInDate", containerUpdatedFields.EstimatedGateInDate);
-                this.FillContainerFieldsNewValues("ActualGateInDate", containerUpdatedFields.ActualGateInDate);
-                this.FillContainerFieldsNewValues("DepartureLocation", containerUpdatedFields.DepartureLocation);
-                this.FillContainerFieldsNewValues("DestinationLocation", containerUpdatedFields.DestinationLocation);
+                this.FillFieldsNewValues("MainCarriageETD", containerUpdatedFields.MainCarriageETD, container);
+                this.FillFieldsNewValues("MainCarriageETA", containerUpdatedFields.MainCarriageETA, container);
+                this.FillFieldsNewValues("MainCarriageATD", containerUpdatedFields.MainCarriageATD, container);
+                this.FillFieldsNewValues("MainCarriageATA", containerUpdatedFields.MainCarriageATA, container);
+                this.FillFieldsNewValues("EmptyPickupLocation", containerUpdatedFields.EmptyPickupLocation, container);
+                this.FillFieldsNewValues("EstimatedEmptyPickupDate", containerUpdatedFields.EstimatedEmptyPickupDate, container);
+                this.FillFieldsNewValues("ActualEmptyPickupDate", containerUpdatedFields.ActualEmptyPickupDate, container);
+                this.FillFieldsNewValues("EstimatedGateInDate", containerUpdatedFields.EstimatedGateInDate, container);
+                this.FillFieldsNewValues("ActualGateInDate", containerUpdatedFields.ActualGateInDate, container);
+                this.FillFieldsNewValues("DepartureLocation", containerUpdatedFields.DepartureLocation, container);
+                this.FillFieldsNewValues("DestinationLocation", containerUpdatedFields.DestinationLocation, container);
                 container.CurrentStatus = containerUpdatedFields.CurrentStatus;
                 container.CurrentLocation = containerUpdatedFields.CurrentLocation;
                 container.CurrentStatusDate = containerUpdatedFields.CurrentStatusDate;
@@ -738,51 +743,45 @@ namespace WebFreight.Web.Helpers.Analyzers
                 return this.emptyPickupLocation;
             }
         }
-        private void FillContainerFieldsNewValues(string propertyName, object newValue)
-        {
-            PropertyInfo propertyInfo = this.container.GetType().GetProperty(propertyName);
-
-            if (propertyInfo != null && newValue != null)
-            {
-                propertyInfo.SetValue(this.container, newValue);
-            }
-        }
         private void UpdateShipment(ContainerUpdatedFields containerUpdatedFields)
         {
-            Shipment shipment = this.shipmentRepository.GetSingleShipment(oceanInsight.ShipmentId, logitudeTenant.Value);
-            if (shipment != null && containerUpdatedFields != null)
+            ShipmentPM shipmentPM = shipmentQuery.GetSinglePM(oceanInsight.ShipmentId, logitudeTenant.Value);
+
+            if (shipmentPM == null)
             {
-                int? packagesCount = shipmentPackageRepository.GetShipmentPackagesForShipmentTenant(oceanInsight.ShipmentId, logitudeTenant.Value)?.Count();
-                if(packagesCount != null)
+                throw new Exception("Analyzing shipment faild, shipment not found");
+            }
+
+            else
+            {
+                int? packagesCount = shipmentPM.ShipmentPackages.Count;
+                if (packagesCount == 1)
                 {
-                    if(packagesCount == 1)
-                    {
-                        this.UpdateShipmentDates(containerUpdatedFields, shipment);
-                        this.CreateEvent();
-                    }
+                    this.UpdateShipmentDates(containerUpdatedFields, shipmentPM);
+                    this.CreateEvent();
+                }
 
-                    else
-                    {
+                else
+                {
 
-                    }
                 }
             }
         }
-        private void UpdateShipmentDates(ContainerUpdatedFields containerUpdatedFields, Shipment shipment)
+        private void UpdateShipmentDates(ContainerUpdatedFields containerUpdatedFields, ShipmentPM shipment)
         {
-            this.FillShipmentFieldsNewValues("MainCarriageETD", containerUpdatedFields.MainCarriageETD, shipment);
-            this.FillShipmentFieldsNewValues("MainCarriageETA", containerUpdatedFields.MainCarriageETA, shipment);
-            this.FillShipmentFieldsNewValues("MainCarriageATD", containerUpdatedFields.MainCarriageATD, shipment);
-            this.FillShipmentFieldsNewValues("MainCarriageATA", containerUpdatedFields.MainCarriageATA, shipment);
-            shipmentRepository.Update(shipment);
+            this.FillFieldsNewValues("MainCarriageETD", containerUpdatedFields.MainCarriageETD, shipment);
+            this.FillFieldsNewValues("MainCarriageETA", containerUpdatedFields.MainCarriageETA, shipment);
+            this.FillFieldsNewValues("MainCarriageATD", containerUpdatedFields.MainCarriageATD, shipment);
+            this.FillFieldsNewValues("MainCarriageATA", containerUpdatedFields.MainCarriageATA, shipment);
+            //shipmentRepository.Update(shipment);
         }
-        private void FillShipmentFieldsNewValues(string propertyName, object newValue, Shipment shipment)
+        private void FillFieldsNewValues(string propertyName, object newValue, object entity)
         {
-            PropertyInfo propertyInfo = shipment.GetType().GetProperty(propertyName);
+            PropertyInfo propertyInfo = entity.GetType().GetProperty(propertyName);
 
             if (propertyInfo != null && newValue != null)
             {
-                propertyInfo.SetValue(shipment, newValue);
+                propertyInfo.SetValue(entity, newValue);
             }
         }
         private void CreateEvent()
