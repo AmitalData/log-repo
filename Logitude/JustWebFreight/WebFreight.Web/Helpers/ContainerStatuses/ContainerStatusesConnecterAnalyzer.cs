@@ -568,33 +568,31 @@ namespace WebFreight.Web.Helpers.Analyzers
 
             return hashedText;
         }
-        private void UpdateContainer()
+
+        private void UpdateContainer(ContainerUpdatedFields containerUpdatedFields)
         {
-            if (container != null)
+            if (container != null && containerUpdatedFields != null)
             {
-                ContainerUpdatedFields containerUpdatedFields = this.BuildContainerUpdatedFields();
-                if (containerUpdatedFields != null)
-                {
-                    this.FillContainerFieldsNewValues("MainCarriageETD", containerUpdatedFields.MainCarriageETD);
-                    this.FillContainerFieldsNewValues("MainCarriageETA", containerUpdatedFields.MainCarriageETA);
-                    this.FillContainerFieldsNewValues("MainCarriageATD", containerUpdatedFields.MainCarriageATD);
-                    this.FillContainerFieldsNewValues("MainCarriageATA", containerUpdatedFields.MainCarriageATA);
-                    this.FillContainerFieldsNewValues("EmptyPickupLocation", containerUpdatedFields.EmptyPickupLocation);
-                    this.FillContainerFieldsNewValues("EstimatedEmptyPickupDate", containerUpdatedFields.EstimatedEmptyPickupDate);
-                    this.FillContainerFieldsNewValues("ActualEmptyPickupDate", containerUpdatedFields.ActualEmptyPickupDate);
-                    this.FillContainerFieldsNewValues("EstimatedGateInDate", containerUpdatedFields.EstimatedGateInDate);
-                    this.FillContainerFieldsNewValues("ActualGateInDate", containerUpdatedFields.ActualGateInDate);
-                    this.FillContainerFieldsNewValues("DepartureLocation", containerUpdatedFields.DepartureLocation);
-                    this.FillContainerFieldsNewValues("DestinationLocation", containerUpdatedFields.DestinationLocation);
-                    container.CurrentStatus = containerUpdatedFields.CurrentStatus;
-                    container.CurrentLocation = containerUpdatedFields.CurrentLocation;
-                    container.CurrentStatusDate = containerUpdatedFields.CurrentStatusDate;
-                    container.HasContainerException = containerUpdatedFields.HasContainerException;
-                    container.UpdateDate = TenantServerConfigration.GetCurrentDateTime(logitudeTenant.Value);
-                    containerRepository.Update(container);
-                }
+                this.FillContainerFieldsNewValues("MainCarriageETD", containerUpdatedFields.MainCarriageETD);
+                this.FillContainerFieldsNewValues("MainCarriageETA", containerUpdatedFields.MainCarriageETA);
+                this.FillContainerFieldsNewValues("MainCarriageATD", containerUpdatedFields.MainCarriageATD);
+                this.FillContainerFieldsNewValues("MainCarriageATA", containerUpdatedFields.MainCarriageATA);
+                this.FillContainerFieldsNewValues("EmptyPickupLocation", containerUpdatedFields.EmptyPickupLocation);
+                this.FillContainerFieldsNewValues("EstimatedEmptyPickupDate", containerUpdatedFields.EstimatedEmptyPickupDate);
+                this.FillContainerFieldsNewValues("ActualEmptyPickupDate", containerUpdatedFields.ActualEmptyPickupDate);
+                this.FillContainerFieldsNewValues("EstimatedGateInDate", containerUpdatedFields.EstimatedGateInDate);
+                this.FillContainerFieldsNewValues("ActualGateInDate", containerUpdatedFields.ActualGateInDate);
+                this.FillContainerFieldsNewValues("DepartureLocation", containerUpdatedFields.DepartureLocation);
+                this.FillContainerFieldsNewValues("DestinationLocation", containerUpdatedFields.DestinationLocation);
+                container.CurrentStatus = containerUpdatedFields.CurrentStatus;
+                container.CurrentLocation = containerUpdatedFields.CurrentLocation;
+                container.CurrentStatusDate = containerUpdatedFields.CurrentStatusDate;
+                container.HasContainerException = containerUpdatedFields.HasContainerException;
+                container.UpdateDate = TenantServerConfigration.GetCurrentDateTime(logitudeTenant.Value);
+                containerRepository.Update(container);
             }
         }
+
         private ContainerUpdatedFields BuildContainerUpdatedFields()
         {
             ContainerUpdatedFields containerUpdatedFields = new ContainerUpdatedFields();
