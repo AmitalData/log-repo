@@ -1,0 +1,305 @@
+
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr *ngIf="ValidationWarningsList != null && ValidationWarningsList.length > 0" style="height:1px;">
+        <td>
+            <WarningSummary [ItemsSource]="ValidationWarningsList"></WarningSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table *ngIf="IsResourcesReady">
+
+                <!-- VendorId -->
+                <tr class="FormFieldRow">
+                    <td style="width:140px;">
+                        <LogLabel [ObjectFieldName]="'VendorId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td style="width:230px;">
+                        <LogLov [ObjectFieldName]="'VendorId'"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [SelectedValue]="VendorId"
+                                [LookUpTableName]="'Card'"
+                                [DependencyFilter1Value]="VendorDependencyProperty1"
+                                [DependencyFilter1IsList]="true"
+                                [DisplayFieldsFromList]="DisplayFieldsFromList"
+                                [DisplayLocalFieldsFromList]="DisplayLocalFieldsFromList"
+                                [CustomizedWidth]="VendorLovSizeForFullAccounting">
+                        </LogLov>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- InvoiceNumber -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'InvoiceNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogTextBox [InputType]="'text'" [ObjectFieldName]="'InvoiceNumber'" [Text]="InvoiceNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- AmountInInvoiceCurrency -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'AmountInInvoiceCurrency'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogTextBox [InputType]="'sigdouble'" [ObjectFieldName]="'AmountInInvoiceCurrency'" [Text]="AmountInInvoiceCurrency" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- InvoiceCurrencyId -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'InvoiceCurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogLov [ObjectFieldName]="'InvoiceCurrencyId'"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [SelectedValue]="InvoiceCurrencyId"
+                                [LookUpTableName]="'Currency'"
+                                [DependencyFilter1Value]="VendorDependencyProperty1" [DependencyFilter1IsList]="true">
+                        </LogLov>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- InvoiceCurrencyExchangeRate -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'InvoiceCurrencyExchangeRate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td [style.text-align]="isRTL ? 'right' : 'left'" colspan="2">
+                        <table class="FixedTable">
+                            <tr>
+                                <td style="width: 194px">
+                                    <LogTextBox [HideColumns]="true" [ObjectFieldName]="'InvoiceCurrencyExchangeRate'" [Text]="InvoiceCurrencyExchangeRate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [DigitsAfterPoint]="5"></LogTextBox>
+                                </td>
+
+                                <td style="width: 20px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 18px;" *ngIf="IsEditExchangeRateVisible">
+                                    <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="UpdateCurrencyRateClicked()" [disabled]="true"></IconButton>
+                                </td>
+
+                                <td style="width: 5px;">
+                                    <div></div>
+                                </td>
+
+                                <td [style.text-align]="isRTL ? 'right' : 'left'" style="font-size:10px; color:#1B90CB;">
+                                    {{RelativeRateDate}}
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <!-- InvoiceDate -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'InvoiceDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogDatePicker [ObjectFieldName]="'InvoiceDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="InvoiceDate" [InputType]="'date'" [DataContext]="DataContext"></LogDatePicker>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- AccountingDate -->
+                <tr *ngIf="IsAccountingActivated" class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'AccountingDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogDatePicker [ObjectFieldName]="'AccountingDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="AccountingDate" [InputType]="'date'" [DataContext]="DataContext"></LogDatePicker>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- PaymentTermId -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'PaymentTermId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogLov [ObjectFieldName]="'PaymentTermId'"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'PaymentTerm'"
+                                [SelectedValue]="PaymentTermId"
+                                [DependencyFilter1Value]="PaymentTermDisplayInLOV">
+                        </LogLov>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+
+                </tr>
+
+                <!-- DueDate -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'DueDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogDatePicker [ObjectFieldName]="'DueDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="DueDate" [InputType]="'date'" [DataContext]="DataContext"></LogDatePicker>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- VATNumber -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'VATNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'VATNumber'" [Text]="VATNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!--InternalNotes-->
+                <tr class="FormFieldRow">
+                    <td>
+                        <table>
+                            <tr style="height:5px"></tr>
+                            <tr>
+                                <td style="vertical-align:top;">
+                                    <LogLabel [ObjectFieldName]="'InternalNotes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td>
+                        <table>
+                            <tr style="height:10px"></tr>
+                            <tr>
+                                <td style="width:50px">
+                                    <LogTextBox [ObjectFieldName]="'InternalNotes'" [IsMultiline]="true" [InputType]="'ntext'" [Text]="InternalNotes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="false"></LogTextBox>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- BranchId -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'BranchId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogLov [ObjectFieldName]="'BranchId'"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [SelectedValue]="BranchId"
+                                [LookUpTableName]="'Branch'">
+                        </LogLov>
+                    </td>
+                </tr>
+
+                <tr class="FormFieldRow" style="height:70px">
+                    <td colspan="3">
+                        <div>
+                            <div float-start style="width: 140px;">{{'APInvoice.O.CopyLines' | TextCodeTranslationPipe}}</div>
+                            <div float-start style="width: 20px;margin-right:50px">
+                                <CheckBox [IsChecked]="IsCopyLinesChecked" (Checked)="IsCopyLinesChecked = $event"></CheckBox>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div float-start style="width: 120px;">{{'APInvoice.O.CopyAmounts' | TextCodeTranslationPipe}}</div>
+                            <div float-start style="width: 20px;">
+                                <CheckBox [IsChecked]="IsCopyAmountsChecked" (Checked)="IsCopyAmountsChecked = $event" [IsEnabled]="!disableCopyAmounts"></CheckBox>
+                            </div>
+                        </div>
+                    </td>
+               </tr>
+
+                <tr>
+                    <td colspan="3">
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button id="{{'cancel-DontAddAPInvoice' | IdGeneratorPipe}}" class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button id="{{'Ok-AddAPInvoice' | IdGeneratorPipe}}" class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
