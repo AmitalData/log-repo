@@ -244,6 +244,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
         }
 
+        public IQueryable<DeclarationCourierStatusList> GetVirtual(int tenant)
+        {
+            IQueryable<DeclarationCourierStatus> DeclarationCourierStatusQuery = (from a in context.DeclarationCourierStatuses
+                                                                                  where a.Tenant == tenant
+                                                                                  select a);
+            IQueryable<DeclarationCourierStatusList> q = GetIqueryableList(DeclarationCourierStatusQuery);
+            return q;
+        }
     }
 
     public class MyJoin

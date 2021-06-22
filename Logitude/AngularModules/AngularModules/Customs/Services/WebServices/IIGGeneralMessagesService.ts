@@ -588,7 +588,52 @@ export class IIGGeneralMessagesService {
 
         );
     }
+    GetVirtualDeclarationCourierStatus(jsonAmitalLazyLoadEvent: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        
 
+
+
+        return defer(() => {
+            return this._http
+                //GetClientProgressBarIndicatorCurrentStage(int tenant, string CustomsRequestsSheetId)
+                .post(this._apiUrl + '/PostVirtualDeclarationCourierStatus/',
+                    jsonAmitalLazyLoadEvent,
+
+                    ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+
+                        var serviceResponse: ServiceResponse = new ServiceResponse();
+                        serviceResponse.Result = response;
+
+                        return serviceResponse;
+                    }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+    GetVirtualDeclarationCourierStatusOld(getCount: boolean, lazyLoadEvent: LazyLoadEvent) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        let AmitalLazyLoadEvent = { GetCount: getCount, MyLazyLoadEvent: lazyLoadEvent };
+
+
+
+        return defer(() => {
+            return this._http
+                //GetClientProgressBarIndicatorCurrentStage(int tenant, string CustomsRequestsSheetId)
+                .post(this._apiUrl + '/PostVirtualDeclarationCourierStatus/' ,
+                    JSON.stringify(AmitalLazyLoadEvent),
+
+                    ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+
+                        var serviceResponse: ServiceResponse = new ServiceResponse();
+                        serviceResponse.Result = response;
+
+                        return serviceResponse;
+                    }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 
     //getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
     GetVirtualCar(getCount: boolean, event: LazyLoadEvent) {
