@@ -123,6 +123,7 @@ namespace WebFreight.Web.DataProviders
         public string ChargeTypeId { get; set; }
         public string ChargeTypeCode { get; set; }
         public string ChargeTypeName { get; set; }
+        public string ChargeGroupName { get; set; }
 
         public string VatTypeCode { get; set; }
         public string VatTypeName { get; set; }
