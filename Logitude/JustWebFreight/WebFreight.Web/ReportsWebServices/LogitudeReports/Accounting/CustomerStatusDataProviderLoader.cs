@@ -26,12 +26,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         private int tenant;
         private CustomerStatusDataProvider dataProvider;
         public List<LedgerTransactionList> ExternalTransactions;
-
+        IAccountingContext accountingContext;
+        List<string> splitAccountsIds;
         public CustomerStatusDataProviderLoader(int _tenant)
         {
             tenant = _tenant;
             showLocals = LoggedContactResolver.GetLoggedContactShowLocal(_tenant);
             dataProvider = new CustomerStatusDataProvider();
+             accountingContext = AccountingContext.GetContext(tenant);
+          splitAccountsIds = new List<string>();
         }
         public CustomerStatusDataProvider LoadFromXML(byte[] xmlFilters)
         {
@@ -66,12 +69,17 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         private void GetExternalTransactionsForPeriodsAccounts(List<PeriodMExtended> agingPeriods)
         {
             List<string> accountsIds = agingPeriods.Select(p => p.AccountId).Distinct().ToList();
-
-            IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
+            splitAccountsIds = GetSplitAccountIds(accountsIds);
+          
             LedgerTransactionListQueryService ledgerQuery = new LedgerTransactionListQueryService(accountingContext);
             ExternalTransactions = ledgerQuery.GetExternalTransactionsForAccounts(accountsIds, tenant).ToList();
         }
-
+        private List<string> GetSplitAccountIds(List<string> accountIds)
+        {
+            return (from glaccountCurrrency in accountingContext.GLAccountCurrencies
+                    where accountIds.Contains(glaccountCurrrency.GLAccountId)
+                    select glaccountCurrrency.GLAccountId).ToList();
+        }
         private void CreateCustomerStatusesByAgingPeriods(List<PeriodMExtended> resultedPeriods)
         {
             var customersPeriods = GroupPeriodsByCustomers(resultedPeriods);
@@ -221,7 +229,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 CustomerPhone = customerPeriods.First().AccountPhone,
                 CurrencyCode = customerPeriods.First().CurrencyCode,
                 ChartOfAccountLocalName = customerPeriods.First().ChartOfAccountLocalName,
-
+                IsSplit = splitAccountsIds.Contains(customerPeriods.First().AccountId) ? 1 : 0,
 
 
                 //credit details
