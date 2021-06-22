@@ -65,6 +65,15 @@
                         </ng-template>
                     </log-column>
 
+                    <!-- Source -->
+                    <log-column [width]="'250'" [header]="'Source'">
+                        <ng-template let-item>
+                            <log-cell-template #logcelltemplate [IsEnabled]="false">
+                                {{item.VesselName}} / {{item.VoyageNumber}}
+                            </log-cell-template>
+                        </ng-template>
+                    </log-column>
+
                 </logitude-edit-grid>
             </div>
         </td>

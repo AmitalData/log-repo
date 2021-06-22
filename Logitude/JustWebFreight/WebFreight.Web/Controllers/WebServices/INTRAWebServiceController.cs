@@ -286,6 +286,7 @@ namespace WebFreight.Web.Controllers.WebServices
                                     LocationCode = d.LocationPort == null ? "" : d.LocationPort.CombinedCode,
                                     LocationName = d.LocationPort == null ? "" : d.LocationPort.EnglishName,
                                     Location = d.Location,
+                                    StatusSource = d.StatusSource,
                                 }).ToList();
 
 

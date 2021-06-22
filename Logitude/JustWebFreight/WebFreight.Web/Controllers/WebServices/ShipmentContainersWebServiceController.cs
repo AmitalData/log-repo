@@ -88,7 +88,7 @@ namespace WebFreight.Web.Controllers.WebServices
                                     ConnectedToEntity = false,
                                     ConnectedToTenant = false,
                                     FileSize = fileBytes.Length,
-                                    Tenant = this.GetLogitudeOceanInsightsTenant(),
+                                    Tenant = tenant,
                                     FileName = "XmlString Simulator",
                                 };
 
@@ -117,22 +117,6 @@ namespace WebFreight.Web.Controllers.WebServices
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-        }
-
-        private int GetLogitudeOceanInsightsTenant()
-        {
-            var logitudeOceanInsightsTenant = 0;
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            {
-                SettingRepository settingRepository = new SettingRepository();
-                Setting setting = settingRepository.GetSingleSetting("1");
-                if (setting != null)
-                {
-                    logitudeOceanInsightsTenant = setting.OITenantNumber;
-                }
-                scope.Complete();
-            }
-            return logitudeOceanInsightsTenant;
         }
 
         public HttpResponseMessage GetContainerStatusRequest(string shipmentId, string containerId, bool isContainer)

@@ -7,6 +7,7 @@ using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
+using System;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -353,21 +354,38 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                            select d.EnglishName).FirstOrDefault();
 
                 }
-                if (!string.IsNullOrEmpty(package.LastStatusCode))
-                {
-                    package.LastStatusName = (from d in repository.context.INTTRAStatuses
+                
 
-                                              where d.Code == package.LastStatusCode
-
-                                              select d.Name).FirstOrDefault();
-
-
-                }
+                this.MapTheLastStatusCode(package);
 
             }
 
             return shipmentPackages;
         }
+
+        private void MapTheLastStatusCode(ShipmentPackagePM package)
+        {
+            if (!string.IsNullOrEmpty(package.LastStatusCode))
+            {
+                package.LastStatusName = (from d in repository.context.INTTRAStatuses
+
+                                          where d.Code == package.LastStatusCode
+
+                                          select d.Name).FirstOrDefault();
+
+
+            }
+
+            if(!string.IsNullOrEmpty(package.ContainerEntityId))
+            {
+                package.LastStatusName = (from d in repository.context.Containers
+
+                                          where d.Id == package.ContainerEntityId
+
+                                          select d.CurrentStatus).FirstOrDefault();
+            }
+        }
+
         public List<ShipmentPackagePM> GetShipmentPackages(List<string> shipmentIds, int tenant)
         {
             List<ShipmentPackagePM> myResult = new List<ShipmentPackagePM>();

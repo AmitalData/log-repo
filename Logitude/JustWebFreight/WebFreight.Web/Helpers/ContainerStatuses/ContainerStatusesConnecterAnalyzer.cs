@@ -436,9 +436,9 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(createdDate))
             {
-                DateTime result;
-                DateTime.TryParse(createdDate, out result);
-                return result;
+                
+                //DateTime.TryParse(createdDate, out result);
+                return TryParseNullable(createdDate);
                 //return DateTime.ParseExact(createdDate, "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture);
                 //return Convert.ToDateTime(createdDate, CultureInfo.InvariantCulture);
             }
@@ -449,22 +449,22 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(ATD_detected))
             {
-                return Convert.ToDateTime(ATD_detected);
+                return TryParseNullable(ATD_detected);
             }
 
             else if (!string.IsNullOrEmpty(ATD_actual))
             {
-                return Convert.ToDateTime(ATD_actual);
+                return TryParseNullable(ATD_actual);
             }
 
             else if (!string.IsNullOrEmpty(ETD_last))
             {
-                return Convert.ToDateTime(ETD_last);
+                return TryParseNullable(ETD_last);
             }
 
             else if (!string.IsNullOrEmpty(ETD_initial))
             {
-                return Convert.ToDateTime(ETD_initial);
+                return TryParseNullable(ETD_initial);
             }
 
             return null;
@@ -473,27 +473,27 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(ATA_detected))
             {
-                return Convert.ToDateTime(ATA_detected);
+                return TryParseNullable(ATA_detected);
             }
 
             else if (!string.IsNullOrEmpty(ATA_actual))
             {
-                return Convert.ToDateTime(ATA_actual);
+                return TryParseNullable(ATA_actual);
             }
 
             else if (!string.IsNullOrEmpty(ETA_last))
             {
-                return Convert.ToDateTime(ETA_last);
+                return TryParseNullable(ETA_last);
             }
 
             else if (!string.IsNullOrEmpty(ETA_initial))
             {
-                return Convert.ToDateTime(ETA_initial);
+                return TryParseNullable(ETA_initial);
             }
 
             else if (!string.IsNullOrEmpty(ETA_predection))
             {
-                return Convert.ToDateTime(ETA_predection);
+                return TryParseNullable(ETA_predection);
             }
 
             return null;
@@ -584,6 +584,7 @@ namespace WebFreight.Web.Helpers.Analyzers
                     container.CurrentLocation = containerUpdatedFields.CurrentLocation;
                     container.CurrentStatusDate = containerUpdatedFields.CurrentStatusDate;
                     container.HasContainerException = containerUpdatedFields.HasContainerException;
+                    container.UpdateDate = TenantServerConfigration.GetCurrentDateTime(logitudeTenant.Value);
                     containerRepository.Update(container);
                 }
             }
@@ -613,12 +614,12 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(ETD_last))
             {
-                return Convert.ToDateTime(ETD_last);
+                return TryParseNullable(ETD_last);
             }
 
             else if (!string.IsNullOrEmpty(ETD_initial))
             {
-                return Convert.ToDateTime(ETD_initial);
+                return TryParseNullable(ETD_initial);
             }
 
             return null;
@@ -627,17 +628,17 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(ETA_last))
             {
-                return Convert.ToDateTime(ETA_last);
+                return TryParseNullable(ETA_last);
             }
 
             else if (!string.IsNullOrEmpty(ETA_initial))
             {
-                return Convert.ToDateTime(ETA_initial);
+                return TryParseNullable(ETA_initial);
             }
 
             else if (!string.IsNullOrEmpty(ETA_predection))
             {
-                return Convert.ToDateTime(ETA_predection);
+                return TryParseNullable(ETA_predection);
             }
 
             return null;
@@ -646,12 +647,12 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(ATD_detected))
             {
-                return Convert.ToDateTime(ATD_detected);
+                return TryParseNullable(ATD_detected);
             }
 
             else if (!string.IsNullOrEmpty(ATD_actual))
             {
-                return Convert.ToDateTime(ATD_actual);
+                return TryParseNullable(ATD_actual);
             }
 
             return null;
@@ -660,12 +661,12 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(ATA_detected))
             {
-                return Convert.ToDateTime(ATA_detected);
+                return TryParseNullable(ATA_detected);
             }
 
             else if (!string.IsNullOrEmpty(ATA_actual))
             {
-                return Convert.ToDateTime(ATA_actual);
+                return TryParseNullable(ATA_actual);
             }
 
             return null;
@@ -674,12 +675,12 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(emptyPickup_last))
             {
-                return Convert.ToDateTime(emptyPickup_last);
+                return TryParseNullable(emptyPickup_last);
             }
 
             else if (!string.IsNullOrEmpty(emptyPickup_initial))
             {
-                return Convert.ToDateTime(emptyPickup_initial);
+                return TryParseNullable(emptyPickup_initial);
             }
 
             return null;
@@ -688,7 +689,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(emptyPickup_actual))
             {
-                return Convert.ToDateTime(emptyPickup_actual);
+                return TryParseNullable(emptyPickup_actual);
             }            
 
             return null;
@@ -697,12 +698,12 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(gateInDate_last))
             {
-                return Convert.ToDateTime(gateInDate_last);
+                return TryParseNullable(gateInDate_last);
             }
 
             else if (!string.IsNullOrEmpty(gateInDate_initial))
             {
-                return Convert.ToDateTime(gateInDate_initial);
+                return TryParseNullable(gateInDate_initial);
             }
 
             return null;
@@ -711,7 +712,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(gateInDate_actual))
             {
-                return Convert.ToDateTime(gateInDate_actual);
+                return TryParseNullable(gateInDate_actual);
             }
 
             return null;
@@ -806,7 +807,13 @@ namespace WebFreight.Web.Helpers.Analyzers
             analyzeQueue.DoneDate = TenantServerConfigration.GetCurrentDateTime(analyzeQueue.Tenant);
             analyzeQueueRepository.Update(analyzeQueue);
             analyzeQueueRepository.SubmitChanges();
-        }        
+        }
+
+        public  DateTime? TryParseNullable(string val)
+        {
+            DateTime outValue;
+            return DateTime.TryParse(val, out outValue) ? (DateTime?)outValue : null;
+        }
     }
 
     [XmlRoot("ArrayOfQueueTask")]
