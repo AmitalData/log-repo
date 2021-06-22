@@ -396,12 +396,12 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
 
             if (this.isCreateStandaloneShipmentClicked) {
                 this.isCreateStandaloneShipmentClicked = false;
-                this.CreateStandaloneShipment();
+                this.ValidateStandaloneAddresses();
             }
 
             if (this.isConnctingStandaloneShipmentClicked) {
                 this.isConnctingStandaloneShipmentClicked = false;
-                this.ChooseStandAloneShipment();
+                this.ValidateStandaloneAddresses();
             }
 
             this.Clone();
@@ -781,8 +781,6 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
         logWindow.Title = str;
         logWindow.Show('./Shipment/Components/NewShipment/NewShipmentComponent');
     }    
-
-    
 
     public ShipmentNumber: string = null;
     public ShipmentId: string = null;
