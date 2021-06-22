@@ -13,6 +13,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { InputTextModule } from 'primeng/inputtext';
 import { NgModule } from '@angular/core';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 
 
 
@@ -22,7 +23,7 @@ import { MenuModule } from 'primeng/menu';
 
 @NgModule({
     imports: [TableModule, /*MessageService, */ToastModule, CalendarModule, SliderModule, MultiSelectModule, ContextMenuModule,
-        DialogModule, ButtonModule, DropdownModule, ProgressBarModule,
+        DialogModule, ButtonModule, DropdownModule, ProgressBarModule, AutoCompleteModule, 
 
 
         TieredMenuModule, MenuModule
@@ -30,7 +31,7 @@ import { MenuModule } from 'primeng/menu';
 
     exports: [TableModule, /*MessageService, */ToastModule, CalendarModule, SliderModule, MultiSelectModule, ContextMenuModule,
         DialogModule, ButtonModule, DropdownModule, ProgressBarModule,
-        TieredMenuModule, MenuModule
+        TieredMenuModule, MenuModule, AutoCompleteModule
 ]
 })
 export class ModuleSharedPrimeNG { }
