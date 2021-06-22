@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "6e4f92e5d7d91e22269d5a91575bbf24";
+		public const string HashString = "fcb072f91a3127dcc0555a3633318c02";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "c964",
+			      				    Code =  "d068",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2017,6 +2017,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_GeneralMHReferantWorkspace = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.ReferantWorkspace", DefaultText = "Referant Workspace",LocalDefaultText = @"מסך רפרנט", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_GeneralMHExportStorage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.ExportStorage", DefaultText = "Storages",LocalDefaultText = @"Storages", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsDeclarationOCancelRequestSent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CancelRequestSent", DefaultText = "Cancel Request was sent",LocalDefaultText = @"נשלח מסר ביטול הצהרה - ממתין לטיפול", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
