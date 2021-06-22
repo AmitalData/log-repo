@@ -54,11 +54,11 @@ export class JournalExtendedListService {
             catchError(ServiceHelper.HandleServiceError)); 
 
     }
-    
-    GetResetJournalByJournalId(entityId: string) {
+
+    GetResetJournalByJournalId(entityId: string, clearIt: boolean) {
 
 
-        var url = this._apiUrl + '/GetResetJournalByJournalId?JournalId=' + entityId;
+        var url = this._apiUrl + '/GetResetJournalByJournalId?JournalId=' + entityId + '&clearIt=' + clearIt;
 
         return this.httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(
             map((response,indx) => {

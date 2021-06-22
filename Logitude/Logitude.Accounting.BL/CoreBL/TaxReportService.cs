@@ -64,7 +64,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private static List<GLAccountCurrencyPM> gLAccountCurrencies;
         private static List<GLAccountPM> parentGLAccounts;
         const string StatusCode_VATAmountInTheRecordIsHigherThanThePercentageOfVATAllowed = "9";
-
+        const int maxAllowedLinesCount = 3000;
         public static List<TaxReportLinePM> CreateTaxReportLines(TaxReportPM taxReport, int tenant)
         {
 
@@ -315,39 +315,73 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
             // saving report
-            taxReport.ChangeSetOp = ChangeSetOperation.Update;
+            UpdateTaxReport(taxReport);
+            reportLinesList = HandleTaxReportLines(taxReport, reportLinesList);
+            return reportLinesList;
+        }
 
+        private static void UpdateTaxReport(TaxReportPM taxReport)
+        {
+            taxReport.ChangeSetOp = ChangeSetOperation.Update;
+            IAccountingContext accountingContext = AccountingContext.GetContext(taxReport.Tenant);
+            TaxReportUpdateService updateService = new TaxReportUpdateService(accountingContext, new Dictionary<string, IContext>(), taxReport.Tenant);
+            updateService.Update(taxReport, true, TimeSpan.FromMinutes(60));
+        }
+        private static List<TaxReportLinePM> HandleTaxReportLines(TaxReportPM taxReport, List<TaxReportLinePM> taxReportLines)
+        {
+            if (taxReportLines.Count > maxAllowedLinesCount)
+            {
+                return InsertMoreThanMaxAllowedLinesCount(taxReportLines,taxReport);
+            }
+            else
+            {
+                return InsertTaxReportLines(taxReport, taxReportLines,0);
+            }
+        }
+        private static List<TaxReportLinePM> InsertTaxReportLines(TaxReportPM taxReport, List<TaxReportLinePM> taxReportLines, int startIndex)
+        {
             using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(60)))
             {
-
-                IAccountingContext MyContext = AccountingContext.GetContext(taxReport.Tenant);
-                TaxReportUpdateService updateService = new TaxReportUpdateService(MyContext, new Dictionary<string, IContext>(), taxReport.Tenant);
-                TaxReportLineUpdateService lineUpdateService = new TaxReportLineUpdateService(MyContext, new Dictionary<string, IContext>(), taxReport.Tenant);
-                updateService.Update(taxReport, true, TimeSpan.FromMinutes(60));
-
-                // saving lines
-                int count = 0;
-                //int submitChangesCounter
-                foreach (TaxReportLinePM linePM in reportLinesList)
+                int count = startIndex;
+                foreach (TaxReportLinePM linePM in taxReportLines)
                 {
-                    linePM.Line = ++count;
-                    linePM.ChangeSetOp = ChangeSetOperation.Insert;
-                    linePM.UpdatedByUserId = taxReport.UpdatedByUserId;
-
-                    bool isTotalInvoiceAmountAndVatAmountHaveOppositeSigns = (linePM.TotalInvoiceAmount > 0 && linePM.VatAmount < 0) || (linePM.TotalInvoiceAmount < 0 && linePM.VatAmount > 0);
-                    if (isTotalInvoiceAmountAndVatAmountHaveOppositeSigns)
-                        linePM.StatusCode = StatusCode_VATAmountInTheRecordIsHigherThanThePercentageOfVATAllowed;
-                    lineUpdateService.Update(linePM, true, TimeSpan.FromMinutes(60));//the problem is here it loops on more than 3000  lines and updates them one by one ,each update will have to get single tenant and get single currency along with multible db gets which make the db to time out for the opened transaction
+                    ++count;
+                    MapTaxReportLinePMFields(linePM, taxReport, count);
+                    SaveTaxReportLine(linePM);
                 }
-
-
                 scope.Complete();
-
-                return reportLinesList;
+                return taxReportLines;
 
             }
-
-
+        }
+        private static void SaveTaxReportLine(TaxReportLinePM taxReportLine)
+        {
+            IAccountingContext accountingContext = AccountingContext.GetContext(taxReportLine.Tenant);
+            TaxReportLineUpdateService lineUpdateService = new TaxReportLineUpdateService(accountingContext, new Dictionary<string, IContext>(), taxReportLine.Tenant);
+            lineUpdateService.Update(taxReportLine, true, TimeSpan.FromMinutes(60));//the problem is here it loops on more than 3000  lines and updates them one by one ,each update will have to get single tenant and get single currency along with multible db gets which make the db to time out for the opened transaction
+        }
+        private static List<TaxReportLinePM> InsertMoreThanMaxAllowedLinesCount(List<TaxReportLinePM> taxReportLines, TaxReportPM taxReport)
+        {
+            List<TaxReportLinePM> createdLines = new List<TaxReportLinePM>();
+          
+            for (int i = 0; i < taxReportLines.Count; i += maxAllowedLinesCount)
+            {
+                createdLines = createdLines.Concat(InsertTaxReportLinesInMaxAllowedListRange(taxReportLines, i, taxReport)).ToList();
+            }
+            return createdLines;
+        }
+        private static List<TaxReportLinePM> InsertTaxReportLinesInMaxAllowedListRange(List<TaxReportLinePM> taxReportLines, int startIndex, TaxReportPM taxReport)
+        {
+            return InsertTaxReportLines(taxReport, taxReportLines.GetRange(startIndex, Math.Min(maxAllowedLinesCount, taxReportLines.Count - startIndex)), startIndex);
+        }
+        private static void MapTaxReportLinePMFields(TaxReportLinePM reportLinePM, TaxReportPM taxReport, int count)
+        {
+            reportLinePM.Line = count;
+            reportLinePM.ChangeSetOp = ChangeSetOperation.Insert;
+            reportLinePM.UpdatedByUserId = taxReport.UpdatedByUserId;
+            bool isTotalInvoiceAmountAndVatAmountHaveOppositeSigns = (reportLinePM.TotalInvoiceAmount > 0 && reportLinePM.VatAmount < 0) || (reportLinePM.TotalInvoiceAmount < 0 && reportLinePM.VatAmount > 0);
+            if (isTotalInvoiceAmountAndVatAmountHaveOppositeSigns)
+                reportLinePM.StatusCode = StatusCode_VATAmountInTheRecordIsHigherThanThePercentageOfVATAllowed;
         }
 
         private static bool CheckIfAPInvoiceTaxMonthTransactionIsVoided(TaxReportPM taxReport, List<APInvoicePM> voidedAPInvoices, TaxReportData transaction)
