@@ -860,7 +860,7 @@
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:130px; color:\\#1B90CB;">${ReferenceNumber}</div>
                         <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:130px;">Quotation Prepared:</div>
 
-                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:120px; visibility: #= QuotationPreparedTickVisibility #;"><img src="HtmlHelpers/Images/Icons/Tick.png" style="width: 20px; height: 20px; position:relative; margin-top:-3px;" /><a style="cursor: pointer;position: fixed;padding-left: 15px;" id="#= DocumentSecurityId #" OnClick="ViewQuotationDocument(id)">View Quotation</a></div>
+                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:140px; visibility: #= QuotationPreparedTickVisibility #;"><img src="HtmlHelpers/Images/Icons/Tick.png" style="width: 20px; height: 20px; position:relative; margin-top:-3px;" /><a style="cursor: pointer;padding-left: 15px;" id="#= DocumentSecurityId #" OnClick="ViewQuotationDocument(id)">View Quotation</a></div>
 
                     </div>
                     <div style="height:25px; vertical-align:central;">
@@ -1003,7 +1003,7 @@
 
             var sharedDownloadURL = "WebPages/DownloadPage.aspx?securityId=" + QuotationDocumentSecurityId + "&tempId=";
             $.ajax({
-                url: "../api/DocumentDownloadToken",
+                url: "api/DocumentDownloadToken",
                 type: 'GET',
                 contentType: 'application/json',
                 headers: {
