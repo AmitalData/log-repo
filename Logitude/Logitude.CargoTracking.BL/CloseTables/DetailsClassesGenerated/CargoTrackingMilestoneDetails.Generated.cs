@@ -132,15 +132,6 @@ namespace Logitude.CargoTracking.BL
                 SearchFields = "14,Invoiced", 
                 LocalName = "Invoiced", 
 			});
-			 
-            all.Add(new CargoTrackingMilestoneDetails()
-            {    
-                Code = "0", 
-                EnglishName = "No Current Milestone", 
-                SearchFields = "No Current Milestone", 
-                LocalName = "No Current Milestone", 
-                Inactive = false, 
-			});
 			
             return all;
        }
