@@ -85,4 +85,6 @@ export class ShipmentContainerSimulator {
     public FilesCount: number;
     public Success: boolean;
     public Errors: string[] = [];
+    public IsFromContainer: boolean;
+    public ShipmentId: string;
 }

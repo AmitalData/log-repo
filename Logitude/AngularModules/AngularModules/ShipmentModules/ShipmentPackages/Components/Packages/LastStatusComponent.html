@@ -66,10 +66,10 @@
                     </log-column>
 
                     <!-- Source -->
-                    <log-column [width]="'250'" [header]="'Source'">
+                    <log-column [width]="'200'" [header]="'Source'">
                         <ng-template let-item>
                             <log-cell-template #logcelltemplate [IsEnabled]="false">
-                                {{item.VesselName}} / {{item.VoyageNumber}}
+                                {{item.StatusSourceName}}
                             </log-cell-template>
                         </ng-template>
                     </log-column>

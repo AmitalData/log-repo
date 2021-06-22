@@ -13,8 +13,18 @@ import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 export class ContainersStatusesSimulatorComponent {
     public ValidationErrorsList: string[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
+    private isFromContainer = false;
+    private shipmentId: string;
+
     constructor() {
 
+    }
+
+    SetWindowArgs(args: any) {
+        if (args) {
+            this.isFromContainer = args.IsFromContainer;
+            this.shipmentId = args.ShipmentId;
+        }
     }
 
     public AnalyzeQueueId: string = null;
@@ -51,7 +61,8 @@ export class ContainersStatusesSimulatorComponent {
             var simulator = new ShipmentContainerSimulator();
             simulator.AnalyzeQueueId = this.AnalyzeQueueId;
             simulator.XmlString = this.XML_Text;
-
+            simulator.IsFromContainer = this.isFromContainer;
+            simulator.ShipmentId = this.shipmentId;
             var myService = new ShipmentContainersWebService();
 
             myService.Simulate(simulator).subscribe((myResponse: ServiceResponse) => {

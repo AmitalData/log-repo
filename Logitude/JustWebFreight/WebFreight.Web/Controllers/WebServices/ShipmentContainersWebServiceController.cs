@@ -1,22 +1,32 @@
-﻿using Logitude.Server.Tools.Counters;
+﻿using Logitude.Server.Tools;
+using Logitude.Server.Tools.Counters;
 using Logitude.XSD.Analyzers.INTTRAAnalyzer;
+using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Transactions;
 using System.Web;
 using System.Web.Http;
+using System.Xml;
+using System.Xml.Serialization;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Helpers.Analyzers;
 using WebFreight.Web.Security;
+using WebFreight.Web.WcfApi;
 
 namespace WebFreight.Web.Controllers.WebServices
 {
@@ -26,75 +36,164 @@ namespace WebFreight.Web.Controllers.WebServices
         {
             try
             {
-                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                ShipmentContainerSimulator shipmentContainerSimulator = new ShipmentContainerSimulator();
+                if (simulator.IsFromContainer)
                 {
-                    ShipmentContainerSimulator myResult = new ShipmentContainerSimulator();
-                    string token = HttpContext.Current.Request.Headers["Token"];
-                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    int tenant = authToken.Tenant;
-                    SecurityUtility.AuthenticationOnTenant(tenant);
+                    shipmentContainerSimulator = this.RunFullContainerStatusSimulator(simulator);
+                }
+                else
+                {
+                    shipmentContainerSimulator = RunContainerStatusResponseSimulator(simulator);
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, shipmentContainerSimulator);
+            }
 
-                    using (TransactionScope scope2 = TransactionFactory.GetTransaction())
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        string type = "c_id";
+        string scacCode = "Test";
+        string refrenceNumber;
+
+        private ShipmentContainerSimulator RunFullContainerStatusSimulator(ShipmentContainerSimulator simulator)
+        {
+            ShipmentContainerSimulator shipmentContainerSimulator = new ShipmentContainerSimulator();
+            ShipmentContainerSimulator myResult = new ShipmentContainerSimulator();
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            int tenant = authToken.Tenant;
+            SecurityUtility.AuthenticationOnTenant(tenant);
+
+            OceanInsightsWcfService oceanInsightsWcfService = new OceanInsightsWcfService();
+            refrenceNumber = ReadOceanInsightsParametersXMLFields(simulator.XmlString, "container_number", "shipment");
+            Response oceanInsightsWcfServiceResponse = oceanInsightsWcfService.Insert(tenant, scacCode, refrenceNumber, type);
+            var oceanInsightId = oceanInsightsWcfServiceResponse?.Result;
+            this.CreateLogitudeOceanInsightsRequest(oceanInsightId, simulator, tenant);
+            var updatedOceanInsightsResponse = this.ReplaceOceanInsightTagInXML(simulator.XmlString, oceanInsightId);
+            this.SendRequestToContainerPushService(updatedOceanInsightsResponse);
+            return shipmentContainerSimulator;
+        }
+
+        private string ReadOceanInsightsParametersXMLFields(string xmlText, string tag, string root)
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.LoadXml(xmlText);
+            XmlNodeList xnList = xmlDoc.SelectNodes("//Root//container");
+            var tagValue = "";
+            foreach (XmlNode xn in xnList)
+            {
+                foreach (XmlNode item in xn.ChildNodes)
+                {
+                    if (item.ChildNodes != null && item.Name == root)
                     {
-                        AnalyzeQueueRepository analyzeQueueReposiory = new AnalyzeQueueRepository();
+                        tagValue = item.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == tag).FirstOrDefault()?.InnerText;
+                    }
+                }
+            }
+            return tagValue;
+        }
+        private string ReplaceOceanInsightTagInXML(string xmlText,string tagNewValue)
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.LoadXml(xmlText);
+            xmlDoc.DocumentElement.SelectSingleNode("//Root//container//shipment//shipmentsubscription_id").InnerText = tagNewValue;
+            xmlDoc.DocumentElement.SelectSingleNode("//Root//container//event//shipment_id").InnerText = tagNewValue;
+            return xmlDoc.OuterXml;
+        }
 
-                        if (simulator.AnalyzeQueueId != null)
+        private void CreateLogitudeOceanInsightsRequest(string oceanInsightId, ShipmentContainerSimulator simulator, int tenant)
+        {
+            LogitudeOceanInsightsRequestRepository logitudeOceanInsightsRequestRepository = new LogitudeOceanInsightsRequestRepository(tenant);
+            LogitudeOceanInsightsRequest logitudeOceanInsightsRequest = logitudeOceanInsightsRequestRepository.GetSingleLogitudeOceanInsightsByOceanInsigntId(oceanInsightId, tenant);
+            if (logitudeOceanInsightsRequest == null)
+            {
+                logitudeOceanInsightsRequest = new LogitudeOceanInsightsRequest()
+                {
+                    Id = IdCounter.GetNumber("LogitudeOceanInsightsRequest", tenant),
+                    CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                    UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                    OceanInsigntId = oceanInsightId,
+                    ContainerNumber = refrenceNumber,
+                    SCACCode = scacCode,
+                    Tenant = tenant,
+                    Type = type,
+                    ShipmentId = simulator.ShipmentId
+                };
+                logitudeOceanInsightsRequestRepository.Add(logitudeOceanInsightsRequest);
+            }
+            else
+            {
+                logitudeOceanInsightsRequest.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                logitudeOceanInsightsRequest.ContainerNumber = refrenceNumber;
+                logitudeOceanInsightsRequest.SCACCode = scacCode;
+                logitudeOceanInsightsRequest.Type = type;
+                logitudeOceanInsightsRequest.ShipmentId = simulator.ShipmentId;
+                logitudeOceanInsightsRequestRepository.Update(logitudeOceanInsightsRequest);
+            }
+            logitudeOceanInsightsRequestRepository.SubmitChanges();
+        }
+
+        private void SendRequestToContainerPushService(string xmlString)
+        {
+            byte[] byteArray = GetXMLByteDataFromText(xmlString);
+            string url = LogitudeSettings.LogitudeURL + "/ContainerPush.aspx";
+            WebRequest request = WebRequest.Create(url);
+            request.Method = "POST";
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.ContentLength = byteArray.Length;
+            Stream dataStream = request.GetRequestStream();
+            dataStream.Write(byteArray, 0, byteArray.Length);
+            dataStream.Close();
+
+            // Get the response.
+            WebResponse webResponse = request.GetResponse();
+            Console.WriteLine(((HttpWebResponse)webResponse).StatusDescription);
+            dataStream = webResponse.GetResponseStream();
+            StreamReader reader = new StreamReader(dataStream);
+            string responseFromServer = reader.ReadToEnd();
+            Console.WriteLine(responseFromServer);
+            reader.Close();
+            dataStream.Close();
+            webResponse.Close();
+        }
+        private byte[] GetXMLByteDataFromText(string xmlString)
+        {
+            var doc = new XmlDocument();
+            doc.LoadXml(xmlString);
+            string jsonText = JsonConvert.SerializeXmlNode(doc);
+            byte[] documentXML = Encoding.ASCII.GetBytes(jsonText);
+            return documentXML;
+        }
+        private ShipmentContainerSimulator RunContainerStatusResponseSimulator(ShipmentContainerSimulator simulator)
+        {
+            using (TransactionScope scope = TransactionFactory.GetTransaction())
+            {
+                ShipmentContainerSimulator myResult = new ShipmentContainerSimulator();
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                using (TransactionScope scope2 = TransactionFactory.GetTransaction())
+                {
+                    AnalyzeQueueRepository analyzeQueueReposiory = new AnalyzeQueueRepository();
+
+                    if (simulator.AnalyzeQueueId != null)
+                    {
+                        AnalyzeQueue analyzeQueue = analyzeQueueReposiory.GetSingleAnalyzeQueue(simulator.AnalyzeQueueId);
+                        if (analyzeQueue == null)
                         {
-                            AnalyzeQueue analyzeQueue = analyzeQueueReposiory.GetSingleAnalyzeQueue(simulator.AnalyzeQueueId);
-                            if (analyzeQueue == null)
-                            {
-                                myResult.Success = false;
-                                myResult.Errors.Add("The Analyze Queue does not exists");
-                            }
-
-                            else
-                            {
-                                try
-                                {
-                                    ContainerStatusesConnecterAnalyzer analyzer = new ContainerStatusesConnecterAnalyzer(analyzeQueue, analyzeQueueReposiory);
-                                    analyzer.Run();
-                                }
-                                catch (Exception ex)
-                                {
-                                    myResult.Success = false;
-                                    myResult.Errors.Add(ex.Message);
-                                }
-                            }
+                            myResult.Success = false;
+                            myResult.Errors.Add("The Analyze Queue does not exists");
                         }
 
-                        else if (simulator.XmlString != null)
+                        else
                         {
-                            byte[] fileBytes = null;
                             try
                             {
-                                fileBytes = Encoding.ASCII.GetBytes(simulator.XmlString);
-                            }
-                            catch (Exception ex)
-                            {
-                                myResult.Success = false;
-                                myResult.Errors.Add("Xml Text is not valid");
-                            }
-
-                            try
-                            {
-                                AnalyzeQueue analyzeQueue = new AnalyzeQueue()
-                                {
-                                    CreateDate = TenantServerConfigration.GetCurrentDateTime(0),
-                                    From = "ContainerStatusesReceiver",
-                                    Id = IdCounter.GetNumber("AnalyzeQueue", 0),
-                                    MessageBody = fileBytes,
-                                    Status = "W",
-                                    Retries = 0,
-                                    ConnectedToEntity = false,
-                                    ConnectedToTenant = false,
-                                    FileSize = fileBytes.Length,
-                                    Tenant = tenant,
-                                    FileName = "XmlString Simulator",
-                                };
-
-                                analyzeQueue.SearchFields = analyzeQueue.From + ',' + analyzeQueue.Status;
-                                analyzeQueueReposiory.Add(analyzeQueue);
-                                analyzeQueueReposiory.SubmitChanges();
                                 ContainerStatusesConnecterAnalyzer analyzer = new ContainerStatusesConnecterAnalyzer(analyzeQueue, analyzeQueueReposiory);
                                 analyzer.Run();
                             }
@@ -104,18 +203,56 @@ namespace WebFreight.Web.Controllers.WebServices
                                 myResult.Errors.Add(ex.Message);
                             }
                         }
-
-                        scope2.Complete();
                     }
 
-                    scope.Complete();
-                    return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                }
-            }
+                    else if (simulator.XmlString != null)
+                    {
+                        byte[] fileBytes = null;
+                        try
+                        {
+                            fileBytes = Encoding.ASCII.GetBytes(simulator.XmlString);
+                        }
+                        catch (Exception ex)
+                        {
+                            myResult.Success = false;
+                            myResult.Errors.Add("Xml Text is not valid");
+                        }
 
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                        try
+                        {
+                            AnalyzeQueue analyzeQueue = new AnalyzeQueue()
+                            {
+                                CreateDate = TenantServerConfigration.GetCurrentDateTime(0),
+                                From = "ContainerStatusesReceiver",
+                                Id = IdCounter.GetNumber("AnalyzeQueue", 0),
+                                MessageBody = fileBytes,
+                                Status = "W",
+                                Retries = 0,
+                                ConnectedToEntity = false,
+                                ConnectedToTenant = false,
+                                FileSize = fileBytes.Length,
+                                Tenant = tenant,
+                                FileName = "XmlString Simulator",
+                            };
+
+                            analyzeQueue.SearchFields = analyzeQueue.From + ',' + analyzeQueue.Status;
+                            analyzeQueueReposiory.Add(analyzeQueue);
+                            analyzeQueueReposiory.SubmitChanges();
+                            ContainerStatusesConnecterAnalyzer analyzer = new ContainerStatusesConnecterAnalyzer(analyzeQueue, analyzeQueueReposiory);
+                            analyzer.Run();
+                        }
+                        catch (Exception ex)
+                        {
+                            myResult.Success = false;
+                            myResult.Errors.Add(ex.Message);
+                        }
+                    }
+
+                    scope2.Complete();
+                }
+
+                scope.Complete();
+                return myResult;
             }
         }
 
@@ -148,6 +285,7 @@ namespace WebFreight.Web.Controllers.WebServices
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
     }
 
     public class ShipmentContainerSimulator
@@ -157,6 +295,8 @@ namespace WebFreight.Web.Controllers.WebServices
         public int FilesCount { get; set; }
         public bool Success { get; set; }
         public List<string> Errors { get; set; }
+        public bool IsFromContainer { get; set; }
+        public string ShipmentId { get; set; }
         public ShipmentContainerSimulator()
         {
             this.Success = true;

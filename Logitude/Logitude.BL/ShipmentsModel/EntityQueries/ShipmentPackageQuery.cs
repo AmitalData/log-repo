@@ -368,21 +368,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (!string.IsNullOrEmpty(package.LastStatusCode))
             {
                 package.LastStatusName = (from d in repository.context.INTTRAStatuses
-
                                           where d.Code == package.LastStatusCode
-
                                           select d.Name).FirstOrDefault();
-
-
-            }
-
-            if(!string.IsNullOrEmpty(package.ContainerEntityId))
-            {
-                package.LastStatusName = (from d in repository.context.Containers
-
-                                          where d.Id == package.ContainerEntityId
-
-                                          select d.CurrentStatus).FirstOrDefault();
             }
         }
 

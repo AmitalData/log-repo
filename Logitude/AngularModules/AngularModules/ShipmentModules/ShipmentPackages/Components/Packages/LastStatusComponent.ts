@@ -70,7 +70,7 @@ class LastStatusItem {
     public DepartureDateInfo: string;
     public ArrivalDateInfo: string;
     public DepartureArrivalDateInfo: string;
-    public Source: string;
+    public StatusSourceName: string;
 
     constructor(item:any) {
         if (item) {
@@ -82,7 +82,7 @@ class LastStatusItem {
             this.ArrivalDate = item.ArrivalDate;
             this.VesselName = item.VesselName;
             this.VoyageNumber = item.VoyageNumber;
-            this.Source = item.StatusSource;
+            this.StatusSourceName = item.StatusSourceName;
 
             if (this.DepartureDate) {
                 this.DepartureDateInfo = item.TimeOfDepartureInfo == "E" ? "ETD" : "ATD";
