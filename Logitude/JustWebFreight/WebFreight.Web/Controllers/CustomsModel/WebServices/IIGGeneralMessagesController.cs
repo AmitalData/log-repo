@@ -1,5 +1,5 @@
 ﻿using Logitude.AmitalMessaging.Customs.CustomFile;
-using Logitude.BL.Security;
+//using Logitude.BL.Security;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
@@ -25,6 +25,12 @@ using WebFreight.Web.Helpers;
 using WebFreight.Web.DataContracts;
 using System.Linq.Expressions;
 using System.Text;
+using WebFreight.Web.Security;
+using Logitude.Server.Tools.Helpers;
+using System.Web;
+using Simplog.Data.CommonDataModel.Repositories;
+using Logitude.Customs.Data;
+using Logitude.Customs.Data.EntityListQueryServices;
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
@@ -724,6 +730,52 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
 
         }
+        public HttpResponseMessage PostVirtualDeclarationCourierStatus
+                   (AmitalLazyLoadEvent amitalLazyLoadEvent)
+        {
+            try
+            {
+               string logKey = PerformanceLogger.LogCurrentTime();
+                string token = HttpContext.Current.Request.Headers["Token"];
+                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                int tenant = authToken.Tenant;
+
+                ICustomContext MyContext = CustomContext.GetContext(tenant);
+                DeclarationCourierStatusListQueryService declarationCourierStatusQuery = new DeclarationCourierStatusListQueryService(MyContext);
+                var q =declarationCourierStatusQuery.GetVirtual(tenant);
+                //var myLazyLoadEvent = amitalLazyLoadEvent.MyLazyLoadEvent as LazyLoadEvent;
+                q=q.LazyFilters(amitalLazyLoadEvent , 
+                    ()=> { return declarationCourierStatusQuery.GetVirtual(tenant); } 
+                    );
+
+                ServiceResponse response = new ServiceResponse();
+                if (amitalLazyLoadEvent.GetCount)
+                {
+                    int count = q.Count();
+                    response.Count = count;
+                }
+
+                amitalLazyLoadEvent.sortField = amitalLazyLoadEvent.sortField ?? "DeclarationId";
+                q = q.LazyOrderBy(amitalLazyLoadEvent);
+                
+                q = q.LazySkipTake(amitalLazyLoadEvent);
+
+                response.Result = q.ToList(); ;
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                return reponseMessage;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
+
         static Car[] _Cars = null;
         public HttpResponseMessage GetVirtualCar
            (bool GetCount, int first, int rows,  string sortField/*: "CreatAt"*/, int  sortOrder/*: 1*/)
@@ -758,7 +810,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                     int count = max;
                     response.Count = count;
                 }
-                var lazyLoadEvent = new LazyLoadEvent() {
+                var lazyLoadEvent = new AmitalLazyLoadEvent() {
                     first = first,
                     rows = rows,
                     sortField = sortField,
@@ -919,7 +971,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
         /// <param name="lle">PrimeNG lazy loading event (LazyLoadEvent) structure</param>
         /// <returns>IQueryable query of T (with ascending or descending sort applied)</returns>
         public static IQueryable<T> LazyOrderBy<T>(
-                this IQueryable<T> qry, LazyLoadEvent lle)
+                this IQueryable<T> qry, AmitalLazyLoadEvent lle)
         {
             if (string.IsNullOrWhiteSpace(lle.sortField) || lle.sortField == "undefined")
             {
@@ -959,11 +1011,15 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
         /// <param name="lle">PrimeNG lazy loading event (LazyLoadEvent) structure</param>
         /// <returns>IQueryable query of T (with skip/take applied)</returns>
         public static IQueryable<T> LazySkipTake<T>(
-                this IQueryable<T> qry, LazyLoadEvent lle)
+                this IQueryable<T> qry, AmitalLazyLoadEvent lle)
         {
-            if (lle.rows > 0)
+            int first = (int)lle.first;
+            int rows = (int)lle.rows;
+
+            if (rows > 0)
             {
-                qry = qry.Skip((int)lle.first).Take((int)lle.rows);
+                qry = qry.Skip(first);
+                qry = qry.Take(rows);
             }
             return qry;
         }
@@ -988,23 +1044,102 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
         /// <param name="lle">PrimeNG lazy loading event (LazyLoadEvent) structure</param>
         /// <returns>IQueryable query of T (with where filters applied)</returns>
         public static IQueryable<T> LazyFilters<T>(
-                this IQueryable<T> qry, LazyLoadEvent lle)
+                this IQueryable<T> qry, AmitalLazyLoadEvent lle , Func<IQueryable<T>> getBasic)
         {
             if (lle.filters != null)
             {
-                foreach (var _o in lle.filters)
+                foreach (var filterField in lle.filters)
                 {
-                    PropertyInfo _propertyInfo = typeof(T).GetProperty(_o.Key);
+                    PropertyInfo _propertyInfo = typeof(T).GetProperty(filterField.key);
                     Type _type = _propertyInfo.PropertyType;
-                    Dictionary<string, Object> _value =
-                            ((Dictionary<string, Object>)_o.Value);
-                    var whereClause = LazyDynamicFilterExpression<T>(_o.Key,
-                            (string)_value["matchMode"], _value["value"].ToString(), _type);
-                    qry = qry.Where(whereClause);
+                    IQueryable<T> qry1 = getBasic();
+                    bool useQ = false;
+                    Expression<Func<T, bool>> expressionPerField = null;
+                    foreach (var item in filterField.value)
+                    {
+
+
+
+                        dynamic filterMetadata = (item as dynamic) ;
+                        string matchMode = (string)filterMetadata.matchMode;
+                        string @operator = (string)filterMetadata.@operator;
+
+                        string filtervalue = filterMetadata.value.ToString();
+                        if (!string.IsNullOrWhiteSpace(filtervalue))
+                        {
+                            useQ = true;
+                            var whereClause1 = LazyDynamicFilterExpression<T>(
+                                filterField.key, matchMode, filtervalue, _type
+                                );
+                            if (expressionPerField == null)
+                            {
+                                expressionPerField = whereClause1;
+                            }
+                            else
+                            {
+                                if (@operator == "or")
+                                {
+
+                                    expressionPerField = expressionPerField.Or(whereClause1);
+
+                                }
+                                else
+                                {
+                                    expressionPerField = expressionPerField.And(whereClause1);
+
+                                }
+
+                            }
+
+                            //qry1 =qry1.Where(whereClause1);
+
+
+                           
+
+                        }
+
+                       
+                    }
+                    if (useQ)
+                    {
+                        //qry = qry.Intersect(qry1);
+                        qry = qry.Where(expressionPerField);
+                    }
+
+                    //Dictionary<string, Object> _value =
+                    //        ((Dictionary<string, Object>)filterField.value);
+                    //var whereClause = LazyDynamicFilterExpression<T>(filterField.key,
+                    //        (string)_value["matchMode"], _value["value"].ToString(), _type);
+
+
                 }
             }
             return qry;
         }
+        public static Expression<Func<T, bool>> And<T>(this Expression<Func<T, bool>> a, Expression<Func<T, bool>> b)
+        {
+
+            ParameterExpression p = a.Parameters[0];
+
+            SubstExpressionVisitor visitor = new SubstExpressionVisitor();
+            visitor.subst[b.Parameters[0]] = p;
+
+            Expression body = Expression.AndAlso(a.Body, visitor.Visit(b.Body));
+            return Expression.Lambda<Func<T, bool>>(body, p);
+        }
+
+        public static Expression<Func<T, bool>> Or<T>(this Expression<Func<T, bool>> a, Expression<Func<T, bool>> b)
+        {
+
+            ParameterExpression p = a.Parameters[0];
+
+            SubstExpressionVisitor visitor = new SubstExpressionVisitor();
+            visitor.subst[b.Parameters[0]] = p;
+
+            Expression body = Expression.OrElse(a.Body, visitor.Visit(b.Body));
+            return Expression.Lambda<Func<T, bool>>(body, p);
+        }
+
         //
         // PrimeNG:
         //  "contains", "startsWith", "endsWith", "equals", "notEquals", "in", "lt", "lte", "gt" and "gte".
@@ -1149,8 +1284,28 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
     ///    "globalFilter":null}
     /// </example>
     /// </summary>
-    public class LazyLoadEvent
+    //public class AmitalLazyLoadEvent
+    //{
+    //    public bool GetCount;
+    //    public LazyLoadEvent MyLazyLoadEvent;
+
+    //}
+    public  class AmitaFilterMetadata
     {
+        public string key;
+        public Object[] value;
+
+}
+    public class FilterMetadata
+    {
+        public string @value;
+        public string @matchMode;
+        public string @operator;
+    }
+
+    public class AmitalLazyLoadEvent
+    {
+        public bool GetCount;
         // {"first":0,"rows":3,"sortOrder":1,
         // "filters":{"ServerId":{"value":1,"matchMode":"eq"},"Mailed":{"value":"false","matchMode":"eq"},"Closed":{"value":"false","matchMode":"eq"},"Special":{"value":"false","matchMode":"eq"}},
         // "globalFilter":null}
@@ -1186,7 +1341,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
         ///     "Closed":{"value":"false","matchMode":"eq"},
         ///     "Special":{"value":"false","matchMode":"eq"}},
         /// </example>
-        public Dictionary<string, Dictionary<string, Object>> filters;
+        public Dictionary<string, Dictionary<string, Object>> filters_old;
+        public AmitaFilterMetadata[] filters;
         /// <summary>
         /// globalFilter, not implemented.
         /// </summary>
@@ -1208,6 +1364,52 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             _return.AppendFormat("filters: {0}, ", filters.ToString());
             _return.AppendFormat("globalFilter: {0}]", globalFilter.ToString());
             return _return.ToString();
+        }
+    }
+
+    internal class SubstExpressionVisitor : System.Linq.Expressions.ExpressionVisitor
+    {
+        public Dictionary<Expression, Expression> subst = new Dictionary<Expression, Expression>();
+
+        protected override Expression VisitParameter(ParameterExpression node)
+        {
+            Expression newValue;
+            if (subst.TryGetValue(node, out newValue))
+            {
+                return newValue;
+            }
+            return node;
+        }
+    }
+    public enum SortingEnumeration
+    {
+        OrderByAsc = 1,
+        OrderByDesc = -1
+    }
+
+    public enum OperatorEnumeration
+    {
+        And = 1,
+        Or = 2,
+        None = 3
+    }
+
+    public static class OperatorConstant
+    {
+        private const string And = "and";
+        private const string Or = "or";
+
+        public static OperatorEnumeration ConvertOperatorEnumeration(string value)
+        {
+            switch (value.ToLower())
+            {
+                case And:
+                    return OperatorEnumeration.And;
+                case Or:
+                    return OperatorEnumeration.Or;
+                default:
+                    return OperatorEnumeration.None;
+            }
         }
     }
 }

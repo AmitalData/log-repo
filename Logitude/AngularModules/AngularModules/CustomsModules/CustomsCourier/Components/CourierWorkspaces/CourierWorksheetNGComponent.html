@@ -595,17 +595,17 @@
                                                                         <td style="width:1px"></td>
                                                                         <td style="width:200px">
                                                                             <!--
-                                    <split-button (DefaultSplitButtonClicked)="SendUncorrectDocuments()"
-                                                  [IsDisabled]="!(_SelectedDOCValue == 'U') || IsDisplayOnly"
-                                                  [ButtonText]="'שדר מסמכים שגויים'"
-                                                  [AsRegularButton]="'true'"
-                                                  [MENUDivExtraTop]="24" [MENUDivExtraLeft]="110">
+                                            <split-button (DefaultSplitButtonClicked)="SendUncorrectDocuments()"
+                                                          [IsDisabled]="!(_SelectedDOCValue == 'U') || IsDisplayOnly"
+                                                          [ButtonText]="'שדר מסמכים שגויים'"
+                                                          [AsRegularButton]="'true'"
+                                                          [MENUDivExtraTop]="24" [MENUDivExtraLeft]="110">
 
-                                        <div class="class-MENUSplitButton-content">
-                                            <div></div>
-                                        </div>
-                                    </split-button>
-                                        -->
+                                                <div class="class-MENUSplitButton-content">
+                                                    <div></div>
+                                                </div>
+                                            </split-button>
+                                                -->
 
                                                                             <split-button (DefaultSplitButtonClicked)="SendUncorrectDocuments('X')"
                                                                                           [IsDisabled]="!(_SelectedDOCValue == 'U') || IsDisplayOnly"
@@ -925,48 +925,72 @@
 
                                                     <div class="GeneratedGridContainer" style="padding:5px;vertical-align:top;top:0;position:absolute">
 
+                                                        <div *ngIf="entityPM">
 
-                                                        <p-table [columns]="columns" [value]="LazyDataSource" [scrollable]="true" [rows]="22" [virtualScroll]="true"
-                                                                 [virtualRowHeight]="15" [lazy]="true" (onLazyLoad)="loadLazy($event)" [loading]="loading" [resizableColumns]="true"
-                                                                 [reorderableColumns]="true" [(selection)]="SelectedNGRows" (onRowSelect)="onRowSelect($event)"
-                                                                 (onRowUnselect)="onRowUnselect($event)" scrollHeight="600px" scrollWidth="700px">
+                                                            <!--[columns]="scrollableCols" [frozenColumns]="frozenCols" frozenWidth="300px"-->
+                                                            <!--  scrollWidth="700px" scrollHeight="600px" -->
+                                                            <p-table [value]="LazyDataSource"
+                                                                     [scrollable]="true" [rows]="22" [virtualScroll]="true" [virtualRowHeight]="15"
+                                                                     [lazy]="true" (onLazyLoad)="loadLazy($event)" [loading]="loading" [resizableColumns]="true"
+                                                                     [reorderableColumns]="true"
+                                                                     [(selection)]="SelectedNGRows" (onRowSelect)="onRowSelect($event)"
+                                                                     (onRowUnselect)="onRowUnselect($event)" scrollHeight="600px"
+                                                                     [columns]="columns">
+
+                                                                <ng-template pTemplate="colgroup" let-columns>
+                                                                    <colgroup>
+
+                                                                        <!--style="{{col.Styles}}" style="width:250px" -->
+                                                                        <col *ngFor="let col of columns">
+                                                                    </colgroup>
+                                                                </ng-template>
+
+                                                                <ng-template pTemplate="header" let-columns>
 
 
-                                                            <ng-template pTemplate="header" let-columns>
 
 
                                             <tr>
                                                 <!--<th style="width:3rem"></th>-->
-                                                <th style="width: 3rem">
-                                                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                                                </th>
+                                                <!--<th style="width: 3rem">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>-->
+                                                <!--<ng-container *ngFor="let col of columns" >
+                    <ng-container [ngSwitch]="col.FieldName">
+                    </ng-container>
+                </ng-container>-->
 
                                                 <th *ngFor="let col of columns" [pSortableColumn]="col.FieldName" pReorderableColumn pResizableColumn>
 
+                                                    <ng-container [ngSwitch]="col.FieldName">
+                                                        <div *ngSwitchCase="'MyDeclarationCheckBox'">
+                                                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                                                        </div>
+                                                        <div *ngSwitchDefault class="p-d-flex p-jc-between p-ai-center">
+                                                            {{col.Display}} <p-sortIcon field="{{col.FieldName}}"></p-sortIcon>
+                                                            <p-columnFilter field="{{col.FieldName}}" display="menu"></p-columnFilter>
+                                                        </div>
 
-                                                    <div class="p-d-flex p-jc-between p-ai-center" style="{{col.Styles}}">
-                                                        {{col.Display}} <p-sortIcon field="{{col.FieldName}}"></p-sortIcon>
-                                                        <p-columnFilter field="{{col.FieldName}}" display="menu"></p-columnFilter>
-                                                    </div>
+                                                    </ng-container>
                                                 </th>
                                             </tr>
 
                                             </ng-template>
                                             <ng-template pTemplate="body" let-rowData let-columns="columns">
                                                 <tr style="height:34px">
-                                                    <td>
-                                                        <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
-                                                    </td>
                                                     <ng-container *ngFor="let col of columns">
                                                         <ng-container [ngSwitch]="col.FieldName">
 
-                                                            <td *ngSwitchCase="'SendSplitButton'" >
+                                                            <td *ngSwitchCase="'MyDeclarationCheckBox'">
+                                                                <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+                                                            </td>
+
+                                                            <td *ngSwitchCase="'SendSplitButton'">
                                                                 <div>
                                                                     <button type="button" pButton pRipple icon="pi pi-bars" label="Show"
                                                                             (click)="menu.toggle($event)"></button>
                                                                     <p-menu #menu [popup]="true" [model]="MyMenuItem"></p-menu>
                                                                 </div>
-
                                                             </td>
 
 
@@ -1003,6 +1027,8 @@
 
 
                                             </p-table>
+                                    </div>
+
 </div>
                                                 </td>
                                             </tr>

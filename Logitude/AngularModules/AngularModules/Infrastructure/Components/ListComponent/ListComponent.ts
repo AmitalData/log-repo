@@ -1913,7 +1913,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                                     //logWindow.IsHideHeader = true;
                                                     logWindow.IsFillScreen = true;
                                                     AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = true;
-                                                    ///logWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/CourierWorksheetComponent');
+                                                    //logWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/CourierWorksheetComponent');
                                                     logWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkspaces/CourierWorksheetNGComponent');
                                                     logWindow.WindowClosed.subscribe(($event1: any) => {
                                                         AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = false;
