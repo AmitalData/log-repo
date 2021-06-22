@@ -43,6 +43,7 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
     public SubCountryCodeEnabled: boolean = false;
     IsDelete: boolean = false;
     public CurrentEditComponentId: string;
+    public Counter: number = 0;
     AddDeclarationToContainerizationEVENT: any;
     ;
     ResponseData: INF_MSG_GenericResponseData;
@@ -111,8 +112,13 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
         return this.declarationListService.getByFilters(filters)
             .subscribe(r => {
                 this.ContainerizationDeclarationList = new ObservableCollection([]);
+                for (let item of r.Result) {
+                    this.Counter += +1;
+                    item.RowNumber = this.Counter;
+                }
                 this.ContainerizationDeclarationList.InsertCollection(r.Result);
                 this.EntityPM.DisableMarkAsDirty = true;
+                this.getRowNumbers();
                 this.EntityPM.ConnectedDeclarations = "";
                 r.Result.forEach(x => this.EntityPM.ConnectedDeclarations += x.Id + ",");
                 this.EntityPM.DisableMarkAsDirty = false;
@@ -133,8 +139,10 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
                     if (!this.ContainerizationDeclarationList.Collection.filter(x => x.Id == element.Id).length)
                         this.ContainerizationDeclarationList.Insert(element);
                 });
-                var e = this.ContainerizationDeclarationList;
+                this.getRowNumbers();
+
             });
+ 
     }
 
 
@@ -214,7 +222,13 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
 
     //#endregion
 
-
+    getRowNumbers() {
+        this.Counter = 0;
+        for (let item of this.ContainerizationDeclarationList.Collection) {
+            this.Counter += +1;
+            item.RowNumber = this.Counter;
+        }
+    }
 
     ///#region Properties
     DeleteButtonClicked(item) {
@@ -228,6 +242,7 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
             this.EntityPM.ConnectedDeclarations = this.EntityPM.ConnectedDeclarations.replace(item.Id + ",", "");
         }
         this.ContainerizationDeclarationList.Remove(item);
+        this.getRowNumbers();
     }
     EditButtonClicked(item) {
 
@@ -260,7 +275,7 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
     line = 0;
 
     //#region Send + Delete
-    SendButtonClicked() { 
+    SendButtonClicked() {
         var errors = [];
         this.FillValidationErrorList.emit(errors); // clear validation msgs
 

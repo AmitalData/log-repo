@@ -361,7 +361,7 @@ export class NewContainerizationComponent extends BaseComponent {
         this.IsSelected = true;
         this.containerizationExtendedListService.connectedSelectAll = true;
         this.containerizationExtendedListService.SelectedDeclarations = true;
-        this.containerizationExtendedListService.ConnectedDeclarations = this.containerizationExtendedListService.AllDeclarations;
+        this.containerizationExtendedListService.ConnectedDeclarations = this.containerizationExtendedListService.AllDeclarations + this.entityPM.ConnectedDeclarations;
         this.LoadConnectedItems();
 
     }
@@ -379,7 +379,6 @@ export class NewContainerizationComponent extends BaseComponent {
         this.containerizationExtendedListService.ConnectedDeclarations = "";
         this.containerizationExtendedListService.SelectedDeclarations = false;
         this.LoadConnectedItems();
-
     }
 
     itemClicked(itemValue: string) {

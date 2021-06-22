@@ -199,6 +199,7 @@ export class DeclarationList {
 	CargoTypeName: string;
 	SecondCargoID: string;
 	ThirdCargoID: string;
+	RowNumber: number;
 	
 }
  

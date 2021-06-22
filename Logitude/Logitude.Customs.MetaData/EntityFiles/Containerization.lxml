@@ -1795,6 +1795,42 @@
       LocalDefaultText="&quot;גליון בקשות&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Containerization.O.RowNumber&quot;"
+      DefaultText="&quot;RowNumber&quot;"
+      LocalDefaultText="&quot;מס'&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Containerization.O.ExportFile&quot;"
+      DefaultText="&quot;ExportFile&quot;"
+      LocalDefaultText="&quot;תיק יצוא&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Containerization.O.ImporterName&quot;"
+      DefaultText="&quot;ImporterName&quot;"
+      LocalDefaultText="&quot;לקוח&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Containerization.O.PaymentDate&quot;"
+      DefaultText="&quot;PaymentDate&quot;"
+      LocalDefaultText="&quot;הגשה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Containerization.O.CargoTypeName&quot;"
+      DefaultText="&quot;CargoTypeName&quot;"
+      LocalDefaultText="&quot;מזהה מטען&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Containerization.O.ManifestNumber&quot;"
+      DefaultText="&quot;ManifestNumber&quot;"
+      LocalDefaultText="&quot;מזהה מטען ראשון &quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

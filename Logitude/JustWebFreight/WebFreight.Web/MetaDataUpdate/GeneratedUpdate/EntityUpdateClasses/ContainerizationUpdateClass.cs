@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ContainerizationUpdateClass
    {  		
-		public const string HashString = "a4727adba4c951c61c096cb27b1a4b3e";
+		public const string HashString = "ba88ef390b89e245a91aa93bfb4f08c8";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1492,6 +1492,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode ContainerizationTextCode_CustomsContainerizationTHGeneral = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.TH.General", DefaultText = "General",LocalDefaultText = @"כללי", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ContainerizationTextCode_CustomsContainerizationTHRequestSheet = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.TH.RequestSheet", DefaultText = "RequestSheet",LocalDefaultText = @"גליון בקשות", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationORowNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.RowNumber", DefaultText = "RowNumber",LocalDefaultText = @"מס'", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationOExportFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.ExportFile", DefaultText = "ExportFile",LocalDefaultText = @"תיק יצוא", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationOImporterName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.ImporterName", DefaultText = "ImporterName",LocalDefaultText = @"לקוח", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationOPaymentDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.PaymentDate", DefaultText = "PaymentDate",LocalDefaultText = @"הגשה", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationOCargoTypeName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.CargoTypeName", DefaultText = "CargoTypeName",LocalDefaultText = @"מזהה מטען", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationOManifestNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.ManifestNumber", DefaultText = "ManifestNumber",LocalDefaultText = @"מזהה מטען ראשון ", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

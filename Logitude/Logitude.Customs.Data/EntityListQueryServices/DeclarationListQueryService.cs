@@ -276,7 +276,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                IsPendingNotNull = true,
                            });
                 //qMyJoin = Enumerable.Empty<MyDecJoin>().AsQueryable();
-               q1stConsignments = context.Consignments.Where(r => r.DeclarationId == "-1");
+              // q1stConsignments = context.Consignments.Where(r => r.DeclarationId == "-1");
                 //q1stConsignments = Enumerable.Empty<Consignment>().AsQueryable();
             }
 
@@ -559,17 +559,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                  select a
                  );
 
-            var qOriginalDeclarations = context.Declarations.Where(x => x.IsAmendment != true && x.ExportContainerizationID == null);
 
-
-
-            bool test = false;
-            if (test)
-            {
-                //var myMyJoin = qMyJoin.ToList();
-                var s = q1stConsignments.ToList();
-                /*var pr = qCourierPendingReasonLocalName.ToList();*/
-            }
             int tenant = 1;
             try
             {
@@ -583,18 +573,13 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                 // throw;
             }
+            q1stConsignments = context.Consignments.Where(r => r.DeclarationId == "-1");
 
 
             IQueryable<DeclarationList> query = (from a in iQueryable.Include("ProcedureCurrent")
                                                  join recConsignment in q1stConsignments
                                                  on a.Id equals recConsignment.DeclarationId into qjoinConsignments
                                                  from myJoinConsignment in qjoinConsignments.DefaultIfEmpty()
-
-
-                                                 join recOriginalDeclarations in qOriginalDeclarations
-                                                 on a.AmendmentOriginalDeclartation equals recOriginalDeclarations.Id
-                                                 into originalDeclarations
-                                                 from myJoinOriginalDeclaration in originalDeclarations.DefaultIfEmpty()
 
 
                                                  select new DeclarationList()
