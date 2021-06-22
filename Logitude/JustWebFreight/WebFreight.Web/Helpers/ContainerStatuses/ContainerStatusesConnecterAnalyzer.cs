@@ -61,6 +61,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         private string details;
         private string weight;
         private string createdDate;
+        private string eventCode;
         private string ETD_initial;
         private string ETD_last;
         private string ATD_actual;
@@ -199,6 +200,7 @@ namespace WebFreight.Web.Helpers.Analyzers
                 oceanInsightsId = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "shipment_id").FirstOrDefault()?.InnerText;
                 details = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "details").FirstOrDefault()?.InnerText;
                 createdDate = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "created").FirstOrDefault()?.InnerText;
+                eventCode = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "code").FirstOrDefault()?.InnerText;
             }
         }
         private void ReadShipmentSectionFields(XmlNode node)
@@ -395,7 +397,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             string iHash = this.GetHashedData(oceanInsight.ShipmentId);
 
-            if (!shipmentContainerStatusRepository.DoesRecordExist(iHash))
+            if (this.eventCode == "0")
             {
                 DateTime logDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                 DateTime? eventDate = this.GetEventDate();
@@ -442,11 +444,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(createdDate))
             {
-                
-                //DateTime.TryParse(createdDate, out result);
-                return TryParseNullable(createdDate);
-                //return DateTime.ParseExact(createdDate, "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture);
-                //return Convert.ToDateTime(createdDate, CultureInfo.InvariantCulture);
+                return ConvertStringToDateTime(createdDate);
             }
 
             return null;
@@ -455,22 +453,22 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(ATD_detected))
             {
-                return TryParseNullable(ATD_detected);
+                return ConvertStringToDateTime(ATD_detected);
             }
 
             else if (!string.IsNullOrEmpty(ATD_actual))
             {
-                return TryParseNullable(ATD_actual);
+                return ConvertStringToDateTime(ATD_actual);
             }
 
             else if (!string.IsNullOrEmpty(ETD_last))
             {
-                return TryParseNullable(ETD_last);
+                return ConvertStringToDateTime(ETD_last);
             }
 
             else if (!string.IsNullOrEmpty(ETD_initial))
             {
-                return TryParseNullable(ETD_initial);
+                return ConvertStringToDateTime(ETD_initial);
             }
 
             return null;
@@ -479,27 +477,27 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(ATA_detected))
             {
-                return TryParseNullable(ATA_detected);
+                return ConvertStringToDateTime(ATA_detected);
             }
 
             else if (!string.IsNullOrEmpty(ATA_actual))
             {
-                return TryParseNullable(ATA_actual);
+                return ConvertStringToDateTime(ATA_actual);
             }
 
             else if (!string.IsNullOrEmpty(ETA_last))
             {
-                return TryParseNullable(ETA_last);
+                return ConvertStringToDateTime(ETA_last);
             }
 
             else if (!string.IsNullOrEmpty(ETA_initial))
             {
-                return TryParseNullable(ETA_initial);
+                return ConvertStringToDateTime(ETA_initial);
             }
 
             else if (!string.IsNullOrEmpty(ETA_predection))
             {
-                return TryParseNullable(ETA_predection);
+                return ConvertStringToDateTime(ETA_predection);
             }
 
             return null;
@@ -559,7 +557,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         }
         private string GetHashedData(string shipmentId)
         {
-            string information = shipmentId + tenant.ToString(); //+ this.DeparturePortId + this.ArrivalPortId + this.container_number + this.EventLocationCode + this.EventLocationDateString;
+            string information = shipmentId + tenant.ToString() + this.container_number;
             byte[] byteRepresentation = UnicodeEncoding.UTF8.GetBytes(information);
             byte[] hashedTextInBytes = null;
             MD5CryptoServiceProvider myMd5 = new MD5CryptoServiceProvider();
@@ -568,7 +566,6 @@ namespace WebFreight.Web.Helpers.Analyzers
 
             return hashedText;
         }
-
         private void UpdateContainer(ContainerUpdatedFields containerUpdatedFields)
         {
             if (container != null && containerUpdatedFields != null)
@@ -592,7 +589,6 @@ namespace WebFreight.Web.Helpers.Analyzers
                 containerRepository.Update(container);
             }
         }
-
         private ContainerUpdatedFields BuildContainerUpdatedFields()
         {
             ContainerUpdatedFields containerUpdatedFields = new ContainerUpdatedFields();
@@ -618,12 +614,12 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(ETD_last))
             {
-                return TryParseNullable(ETD_last);
+                return ConvertStringToDateTime(ETD_last);
             }
 
             else if (!string.IsNullOrEmpty(ETD_initial))
             {
-                return TryParseNullable(ETD_initial);
+                return ConvertStringToDateTime(ETD_initial);
             }
 
             return null;
@@ -632,17 +628,17 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(ETA_last))
             {
-                return TryParseNullable(ETA_last);
+                return ConvertStringToDateTime(ETA_last);
             }
 
             else if (!string.IsNullOrEmpty(ETA_initial))
             {
-                return TryParseNullable(ETA_initial);
+                return ConvertStringToDateTime(ETA_initial);
             }
 
             else if (!string.IsNullOrEmpty(ETA_predection))
             {
-                return TryParseNullable(ETA_predection);
+                return ConvertStringToDateTime(ETA_predection);
             }
 
             return null;
@@ -651,12 +647,12 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(ATD_detected))
             {
-                return TryParseNullable(ATD_detected);
+                return ConvertStringToDateTime(ATD_detected);
             }
 
             else if (!string.IsNullOrEmpty(ATD_actual))
             {
-                return TryParseNullable(ATD_actual);
+                return ConvertStringToDateTime(ATD_actual);
             }
 
             return null;
@@ -665,12 +661,12 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(ATA_detected))
             {
-                return TryParseNullable(ATA_detected);
+                return ConvertStringToDateTime(ATA_detected);
             }
 
             else if (!string.IsNullOrEmpty(ATA_actual))
             {
-                return TryParseNullable(ATA_actual);
+                return ConvertStringToDateTime(ATA_actual);
             }
 
             return null;
@@ -679,12 +675,12 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(emptyPickup_last))
             {
-                return TryParseNullable(emptyPickup_last);
+                return ConvertStringToDateTime(emptyPickup_last);
             }
 
             else if (!string.IsNullOrEmpty(emptyPickup_initial))
             {
-                return TryParseNullable(emptyPickup_initial);
+                return ConvertStringToDateTime(emptyPickup_initial);
             }
 
             return null;
@@ -693,7 +689,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(emptyPickup_actual))
             {
-                return TryParseNullable(emptyPickup_actual);
+                return ConvertStringToDateTime(emptyPickup_actual);
             }            
 
             return null;
@@ -702,12 +698,12 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(gateInDate_last))
             {
-                return TryParseNullable(gateInDate_last);
+                return ConvertStringToDateTime(gateInDate_last);
             }
 
             else if (!string.IsNullOrEmpty(gateInDate_initial))
             {
-                return TryParseNullable(gateInDate_initial);
+                return ConvertStringToDateTime(gateInDate_initial);
             }
 
             return null;
@@ -716,7 +712,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(gateInDate_actual))
             {
-                return TryParseNullable(gateInDate_actual);
+                return ConvertStringToDateTime(gateInDate_actual);
             }
 
             return null;
@@ -856,11 +852,38 @@ namespace WebFreight.Web.Helpers.Analyzers
             analyzeQueueRepository.Update(analyzeQueue);
             analyzeQueueRepository.SubmitChanges();
         }
-
-        public  DateTime? TryParseNullable(string val)
+        public  DateTime? ConvertStringToDateTime(string XMLValue)
         {
-            DateTime outValue;
-            return DateTime.TryParse(val, out outValue) ? (DateTime?)outValue : null;
+            string dateTimeString = this.GetCorrectDateTimeString(XMLValue);
+
+            if(!string.IsNullOrEmpty(dateTimeString))
+            {
+                return Convert.ToDateTime(dateTimeString);
+            }
+
+            else
+            {
+                return null;
+            }            
+        }
+        private string GetCorrectDateTimeString(string XMLValue)
+        {
+            string dateTimeString = "";
+
+            if (!string.IsNullOrEmpty(XMLValue))
+            {
+                if(XMLValue.Length > 16)
+                {
+                    dateTimeString = XMLValue.Substring(0, 16);
+                }
+
+                else
+                {
+                    dateTimeString = XMLValue;
+                }
+            }
+
+            return dateTimeString;
         }
     }
 
