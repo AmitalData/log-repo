@@ -19,9 +19,9 @@ namespace Logitude.Accounting.BL.CoreBL.Fix
         {
             var repo = new JournalRepository(tenant);
             var poco=repo.GetSingleJournalByNumber(journalNumber, tenant);
-            Fix(poco.Id, tenant);
+            Fix(poco.Id, tenant,false);
         }
-        public void Fix(string journalId ,int tenant)
+        public void Fix(string journalId ,int tenant,bool  clearIt)
         {
 #if true
 
@@ -38,12 +38,16 @@ namespace Logitude.Accounting.BL.CoreBL.Fix
                 {
                     throw new Exception("IsVoided not check ");
                 }
-                //10	התאמה	Adjustment
-                //12	התאמת בנק	Bank Adjustment 
-                bool whileStreming = (journalPM.AccountingEntityCode == "10" || journalPM.AccountingEntityCode == "12");
-                if (!whileStreming)
+                bool allowedFixAR = true;
+                if (!allowedFixAR)
                 {
-                    throw new Exception("AccountingEntityCode =10Adjustment/12 Bank Adjustment ");
+                    //10	התאמה	Adjustment
+                    //12	התאמת בנק	Bank Adjustment 
+                    bool whileStreming = (journalPM.AccountingEntityCode == "10" || journalPM.AccountingEntityCode == "12");
+                    if (!whileStreming)
+                    {
+                        throw new Exception("AccountingEntityCode =10Adjustment/12 Bank Adjustment ");
+                    }
                 }
                 int sum = journalPM.JournalReconciles.Count + journalPM.JournalExternalReconciles.Count();
                 if (sum==0)
@@ -89,8 +93,12 @@ namespace Logitude.Accounting.BL.CoreBL.Fix
                 journalPM.JournalReconciles.ForEach(r => r.ChangeSetOp = ChangeSetOperation.Delete);
                 journalPM.JournalExternalReconciles.ForEach(r => r.ChangeSetOp = ChangeSetOperation.Delete);
                 journalPM.ChangeSetOp = ChangeSetOperation.Update;
-                journalPM.StatusCode = "0";
-                journalPM.AccountingEntityCode = "1";
+                if (clearIt)
+                {
+                    journalPM.StatusCode = "0";
+                    journalPM.AccountingEntityCode = "1";
+
+                }
                 var journalUpdateService= new JournalUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), journalPM.Tenant);
                 journalUpdateService.Update(journalPM,false);
                 accountingContext.SaveChanges();

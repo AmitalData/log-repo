@@ -270,16 +270,50 @@ export class JournalDebugTabComponent extends BaseComponent implements OnInit {
         filters.GetCount = true;
         filters.SortBy = "GLAccountId";
         //InterestEntityTypeCode
-        let journalEntityId="3"
+        let journalEntityId = "3"
+        /*
+1	פקודת יומן	Journal
+10	התאמה	Adjustment
+11	העברת שנה	Year Transfer
+12	התאמת בנק	Bank Adjustment
+2	חשבונית לקוח	ARInvoice
+3	קבלה לקוח	ARPayment
+4	חשבונית ספק	APInvoice
+5	תשלום לספק	APPayment
+6	הפקדת המחאות	Cheque Deposit
+7	הפקדת מזומן	Cash Deposit
+8	שערוך	Revaluation
+9	מערכת המחאות	Payment Cheque
+
+>>>>
+
+1	ARInvoice
+2	ARPayment
+3	Journal
+4	Open Balance
+
+
+
+         */
+        let EntityPMId = this.EntityPM.Id;
+        switch (this.EntityPM.AccountingEntityCode) {
+
+            case "2": { journalEntityId = "1"; EntityPMId = this.EntityPM.AccountingEntityId } break;//	חשבונית ספקARInvoice
+            case "3": { journalEntityId = "2"; EntityPMId = this.EntityPM.AccountingEntityId } break;//	תשלום לספקARPayment
+            default:
+                { journalEntityId = "3"; } break;
+
+        }
         //filters.addAdditionalFilter("JournalId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
         filters.addAdditionalFilter("InterestEntityTypeCode", journalEntityId, null, null, "Equals", false, false, false, "string");
-        filters.addAdditionalFilter("EntityId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
+        filters.addAdditionalFilter("EntityId", EntityPMId, null, null, "Equals", false, false, false, "string");
+        filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
 
         return this.interestTransactionListService.getByFilters(filters)
             .subscribe(r => {
                 //this.LedgerTransactionList = new ObservableCollection([]);
                 let res: InterestTransactionList[] = r.Result;
-
+                
                 
                 this.InterestTransactionList.InsertCollection(res);
             });
@@ -334,9 +368,9 @@ export class JournalDebugTabComponent extends BaseComponent implements OnInit {
         myMessageWindow.Show(generalData);
     }
 
-    ResetJournalClicked() {
+    ResetJournalClicked(clearIt: boolean) {
         
-        this.JournalExtendedListService.GetResetJournalByJournalId(this.EntityPM.Id)
+        this.JournalExtendedListService.GetResetJournalByJournalId(this.EntityPM.Id, clearIt)
             .subscribe(r => {
                 if (!r.HasError) {
                     var myMessageWindow = new MessageWindow();

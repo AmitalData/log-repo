@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentPickUpDeliveryUpdateClass
    {  		
-		public const string HashString = "a95f8f1e53c6a0139f04ff84ce1a2826";
+		public const string HashString = "0d2492546e91c714b2cb752780860cd6";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Shipment Pickup Delivery",
-			      				    Code =  "0289",
+			      				    Code =  "ea73",
 			      				    Name =  "ShipmentPickUpDelivery",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Shipment",

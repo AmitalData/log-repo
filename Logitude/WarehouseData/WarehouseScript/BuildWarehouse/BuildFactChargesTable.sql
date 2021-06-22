@@ -185,7 +185,7 @@
  --   inner JOIN NewDIM_Partners billToPartners ON ShipmentPayablesReceivables.BillTo = billToPartners.Id
 	--inner JOIN NewDIM_Partners VendoroPartners ON ShipmentPayablesReceivables.Vendor = VendoroPartners.Id
 
-	 inner JOIN NewDIM_Currencies ForiegnCurrencyId ON ShipmentPayablesReceivables.ForiegnCurrencyId = ForiegnCurrencyId.Id
+	 left JOIN NewDIM_Currencies ForiegnCurrencyId ON ShipmentPayablesReceivables.ForiegnCurrencyId = ForiegnCurrencyId.Id
 
 	where dw_Shipments.IsCancelled = 0 and dw_Shipments.ShipmentLevelCode in ('H','D','C') 
 

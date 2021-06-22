@@ -1,6 +1,6 @@
-﻿
+
 <div style="text-align:center;margin-top:5px;margin-bottom:5px;" *ngIf="!InUseVisibile">
-    <button style="width:60px;position:relative;" class="Button" (click)="DoItClick()">Add</button>
+    <button [attr.data-cy]="'Import'" style="width:60px;position:relative;" class="Button" (click)="DoItClick()">Add</button>
 </div>
 
 <div style="text-align:center" *ngIf="InUseVisibile">

@@ -31,7 +31,10 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         {
             return (from a in Context.LogitudeOceanInsightsRequests where a.Id == id && a.Tenant == tenant select a).FirstOrDefault();
         }
-
+        public LogitudeOceanInsightsRequest GetSingleLogitudeOceanInsightsByOceanInsigntId(string oceanInsigntId, int tenant)
+        {
+            return (from a in Context.LogitudeOceanInsightsRequests where a.OceanInsigntId == oceanInsigntId && a.Tenant == tenant select a).FirstOrDefault();
+        }
         public IQueryable<LogitudeOceanInsightsRequest> GetLogitudeOceanInsightsRequests()
         {
             return (from a in Context.LogitudeOceanInsightsRequests select a);

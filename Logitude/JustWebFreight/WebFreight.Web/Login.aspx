@@ -1393,9 +1393,11 @@
 
             window.sessionStorage.setItem("IsSharedLogistics", true);
 
-            var url = document.location.href;
+            var link = document.location.href.toLowerCase();
+            var linkArray = link.split('login');
+            url = linkArray[0];
 
-            if (document.location.href.endsWith('/')) {
+            if (url.endsWith('/')) {
                 url += "SharedLogisticPage.aspx";
             }
 

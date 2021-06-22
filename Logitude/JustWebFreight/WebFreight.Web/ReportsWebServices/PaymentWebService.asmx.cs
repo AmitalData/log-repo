@@ -477,6 +477,8 @@ namespace WebFreight.Web.ReportsWebServices
 
                 paymentDataProvider.AmountInLocalCurrency = currentPayment.AmountInLocalCurrency;
 
+                SetFullAccountingBankName(currentPayment, paymentDataProvider);
+
             }
 
             FillARPaymentCheques(paymentId, tenant, paymentDataProvider);
@@ -486,11 +488,36 @@ namespace WebFreight.Web.ReportsWebServices
             return paymentDataProvider;
         }
 
-  
+        private void SetFullAccountingBankName(ARPayment payment, PaymentDataProvider paymentDataProvider)
+        {
+
+            BankAccountPM bankAccount = GetBankAccountPM(payment);
+            if (bankAccount == null) { return; }
+
+            paymentDataProvider.FullAccountingBankEnglishName = bankAccount.EnglishName;
+            paymentDataProvider.FullAccountingBankLocalName = bankAccount.LocalName;
+
+            SetFullAccountingBankNamesBasedOnLocaliation(payment, paymentDataProvider, bankAccount);
+
+        }
+
+        private void SetFullAccountingBankNamesBasedOnLocaliation(ARPayment payment, PaymentDataProvider paymentDataProvider, BankAccountPM bankAccount)
+        {
+            Contact loggedContact = GetLoggedContact(payment.Tenant);
+
+            if (loggedContact.DontShowLocalLabels)
+            {
+                paymentDataProvider.FullAccountingBankName = bankAccount.EnglishName;
+            }
+            else
+            {
+                paymentDataProvider.FullAccountingBankName = bankAccount.LocalName;
+            }
+        }
+
         private PaymentDataProvider SetBankData(ARPayment payment, PaymentDataProvider paymentDataProvider)
         {
-            BankAccountQueryService bankAccountRepository = new BankAccountQueryService(payment.Tenant);
-            BankAccountPM bankAccount = bankAccountRepository.GetSingle(payment.BankAccountId, false, false);
+            BankAccountPM bankAccount = GetBankAccountPM(payment);
             if (bankAccount != null)
             {
                 paymentDataProvider.Branch = bankAccount.BranchNumber;
@@ -500,6 +527,13 @@ namespace WebFreight.Web.ReportsWebServices
             return paymentDataProvider;
 
         }
+        private static BankAccountPM GetBankAccountPM(ARPayment payment)
+        {
+            BankAccountQueryService bankAccountRepository = new BankAccountQueryService(payment.Tenant);
+            BankAccountPM bankAccount = bankAccountRepository.GetSingle(payment.BankAccountId, false, false);
+            return bankAccount;
+        }
+
         private string GetBankName(string id , int tenant)
         {
             BankCodeQueryService bankCodeQueryService = new BankCodeQueryService(tenant);

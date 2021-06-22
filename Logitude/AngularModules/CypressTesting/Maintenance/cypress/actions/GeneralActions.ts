@@ -8,7 +8,6 @@ import * as Actions from "./Actions"
 export function Search(searchFieldValue) {
     DefineViewsGetByFiltersRequest(searchFieldValue);
     cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, searchFieldValue);
-    AssertViewsGetByFilters();
 }
 
 function DefineViewsGetByFiltersRequest(searchFieldValue: string) {
@@ -20,6 +19,7 @@ function AssertViewsGetByFilters() {
 }
 
 export function AssertSearch(searchFieldValue) {
+    AssertViewsGetByFilters();
     cy.get(BaseSelectors.ListDataLoaded)
     cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
         expect(text).to.contain(searchFieldValue);

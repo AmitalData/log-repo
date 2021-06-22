@@ -2241,15 +2241,14 @@ namespace WebFreight.Web
 
                         }
 
-                        string activity = card.PartnerTypeId == "CS" ? "Customer Access" : "Agent Access";
 
-                        if(card != null)
+                        if (card != null)
                         {
-                            CreateSharedLogisticsContactLastLogin(via, user, card);
-
+                            string activity = card.PartnerTypeId == "CS" ? "Customer Access" : "Agent Access";
+                            CreateSharedLogisticsContactLastLogin(via, user, card); 
+                            ActivityLog.SendTotangoContactActivity(contact.Email, "System Login", activity, tenant, true, cardId, via);
                         }
 
-                        ActivityLog.SendTotangoContactActivity(contact.Email, "System Login", activity, tenant, true, cardId, via);
                         //Abed    Log
                         ContactLoginLog contactLog = new ContactLoginLog()
                         {

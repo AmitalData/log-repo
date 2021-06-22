@@ -254,7 +254,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
         }
 
-        public HttpResponseMessage GetResetJournalByJournalId(string JournalId)
+        public HttpResponseMessage GetResetJournalByJournalId(string JournalId, bool clearIt)
         {
             try
             {
@@ -268,7 +268,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
 
                     var fixJournaRecolService = new FixJournaRecolService();
-                    fixJournaRecolService.Fix(JournalId, authToken.Tenant);
+                    fixJournaRecolService.Fix(JournalId, authToken.Tenant, clearIt);
 
 
                     return Request.CreateResponse(HttpStatusCode.OK, new { Success= true });
