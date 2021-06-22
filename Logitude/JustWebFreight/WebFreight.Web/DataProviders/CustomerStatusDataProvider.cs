@@ -61,7 +61,7 @@ namespace WebFreight.Web.DataProviders
 
         public decimal TotalLocal { get; set; } = 0;
         public decimal TotalForeign { get; set; } = 0;
-        public int IsSplit { get; set; }
+        public int IsSplitAccount { get; set; }
         public List<StatusPeriod> Periods { get; set; } = new List<StatusPeriod>();
 
 

@@ -229,7 +229,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 CustomerPhone = customerPeriods.First().AccountPhone,
                 CurrencyCode = customerPeriods.First().CurrencyCode,
                 ChartOfAccountLocalName = customerPeriods.First().ChartOfAccountLocalName,
-                IsSplit = splitAccountsIds.Contains(customerPeriods.First().AccountId) ? 1 : 0,
+                IsSplitAccount = splitAccountsIds.Contains(customerPeriods.First().AccountId) ? 1 : 0,
 
 
                 //credit details
