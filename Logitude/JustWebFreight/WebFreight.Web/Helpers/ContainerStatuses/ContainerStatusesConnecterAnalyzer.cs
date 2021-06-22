@@ -417,7 +417,7 @@ namespace WebFreight.Web.Helpers.Analyzers
                     Weight = containerWeight,
                     ReceivingDate = logDate,
                     EventDate = eventDate,
-                    ContainerId = this.containerId,
+                    ContainerId = this.container.ShipmentPackagesId,
                     ContainerNumber = this.container_number,
                     DepartureDate = departureDate,
                     ArrivalDate = arrivalDate,
