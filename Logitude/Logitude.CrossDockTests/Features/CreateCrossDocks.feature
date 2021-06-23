@@ -1,8 +1,8 @@
 ﻿Feature: Create Cross Docks
-	We want to create entries cross docks.
+	We want to create cross docks.
 
-Scenario: Create cross dock
-	Given a entries cross dock with the following properties
+Scenario: Create entry cross dock
+	Given an entry cross dock with the following properties
 		| property                 | Value  |
 		| Direction                | Export |
 		| TransportMode            | Air    |
@@ -11,9 +11,9 @@ Scenario: Create cross dock
 		| DimensionsUnitCode       | Cm     |
 		| VolumeUnitCode           | CBM    |
 		| StatusCode               | CREA   |
-	And a packages Details
+	And packages details
 		| Quantity | Length | Width | Height | Weight |
 		| 70       | 10     | 20    | 30     | 40     |
 		| 50       |        |       |        |        |
-	When create cross dock
-	Then the cross dock should create successfully
+	When create entry cross dock
+	Then the entry cross dock should create successfully

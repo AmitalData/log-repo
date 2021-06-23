@@ -24,14 +24,14 @@ namespace Logitude.CrossDockTests.Steps
         public void WhenGetCrossDocksWithCrossDockId()
         {
             string quotesGetSingleUrl = Urls.CrossDockGetSingle(CrossDockData.Id);
-            ApiResponse<CrossDockPM> quoteResponse = APICaller.CallGet<CrossDockPM>(quotesGetSingleUrl, UserTenant.Token);
-            crossDockContext.EntriesCrossDock = quoteResponse.Data;
+            ApiResponse<CrossDockEntryPM> quoteResponse = APICaller.CallGet<CrossDockEntryPM>(quotesGetSingleUrl, UserTenant.Token);
+            crossDockContext.CrossDockEntry = quoteResponse.Data;
         }
-        
+
         [Then(@"cross dock should be avaliable")]
         public void ThenCrossDockShouldBeAvaliable()
         {
-            crossDockContext.EntriesCrossDock.Id.Should().NotBeNull();
+            crossDockContext.CrossDockEntry.Id.Should().NotBeNull();
         }
 
 

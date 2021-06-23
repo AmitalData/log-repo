@@ -11,7 +11,7 @@ namespace Logitude.CrossDockTests.Models.Builders
 {
     public class WarehouseEntryPackageBuilder
     {
-        private WarehouseEntryPackagePM _warehouseEntryPackagePM;
+        private WarehouseEntryPackagePM _warehouseEntryPackage;
         private readonly RandomGeneratorService randomGeneratorService;
         public WarehouseEntryPackageBuilder()
         {
@@ -21,55 +21,55 @@ namespace Logitude.CrossDockTests.Models.Builders
 
         private void Reset()
         {
-            _warehouseEntryPackagePM = new WarehouseEntryPackagePM();
+            _warehouseEntryPackage = new WarehouseEntryPackagePM();
         }
 
         public WarehouseEntryPackagePM Build()
         {
-            WarehouseEntryPackagePM result = _warehouseEntryPackagePM;
+            WarehouseEntryPackagePM result = _warehouseEntryPackage;
             this.Reset();
             return result;
         }
 
-        public WarehouseEntryPackageBuilder WithModel(WarehouseEntryPackagePM quotePM)
+        public WarehouseEntryPackageBuilder WithModel(WarehouseEntryPackagePM warehouseEntryPackage)
         {
-            _warehouseEntryPackagePM = quotePM;
+            _warehouseEntryPackage = warehouseEntryPackage;
             return this;
         }
 
         public WarehouseEntryPackageBuilder Quantity(int quantity)
         {
-            _warehouseEntryPackagePM.Quantity = quantity;
+            _warehouseEntryPackage.Quantity = quantity;
             return this;
         }
 
-        public WarehouseEntryPackageBuilder Length(int? length)
+        public WarehouseEntryPackageBuilder Length(double? length)
         {
-            _warehouseEntryPackagePM.Length = length;
+            _warehouseEntryPackage.Length = length;
             return this;
         }
 
-        public WarehouseEntryPackageBuilder Width(int? width)
+        public WarehouseEntryPackageBuilder Width(double? width)
         {
-            _warehouseEntryPackagePM.Width = width;
+            _warehouseEntryPackage.Width = width;
             return this;
         }
 
-        public WarehouseEntryPackageBuilder Height(int? height)
+        public WarehouseEntryPackageBuilder Height(double? height)
         {
-            _warehouseEntryPackagePM.Height = height;
+            _warehouseEntryPackage.Height = height;
             return this;
         }
-        public WarehouseEntryPackageBuilder Weight(int? weight)
+        public WarehouseEntryPackageBuilder Weight(double? weight)
         {
-            _warehouseEntryPackagePM.Weight = weight;
+            _warehouseEntryPackage.Weight = weight;
             return this;
         }
 
 
         public WarehouseEntryPackageBuilder WithDefualtValues()
         {
-            _warehouseEntryPackagePM = new WarehouseEntryPackagePM
+            _warehouseEntryPackage = new WarehouseEntryPackagePM
             {
                 Tenant = UserTenant.Tenant,
                 CreatedByUserId = UserTenant.UserId,

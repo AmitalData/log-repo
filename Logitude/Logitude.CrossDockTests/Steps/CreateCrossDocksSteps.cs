@@ -15,38 +15,37 @@ namespace Logitude.CrossDockTests.Steps
     public class CreateCrossDocksSteps
     {
         private readonly CrossDockContext crossDockContext;
-        private readonly CrossDockExternalServices crossDockExternalServices;
+        private readonly CrossDockEntryServices crossDockEntryServices;
 
-        public CreateCrossDocksSteps(CrossDockContext crossDockContext, CrossDockExternalServices crossDockExternalServices)
+        public CreateCrossDocksSteps(CrossDockContext crossDockContext, CrossDockEntryServices crossDockEntryServices)
         {
             this.crossDockContext = crossDockContext;
-            this.crossDockExternalServices = crossDockExternalServices;
+            this.crossDockEntryServices = crossDockEntryServices;
         }
 
         #region create entries cross dock
-        [Given(@"a entries cross dock with the following properties")]
+        [Given(@"an entry cross dock with the following properties")]
         public void GivenAEntriesCrossDockWithTheFollowingProperties(Table table)
         {
-            crossDockContext.EntriesCrossDock = crossDockExternalServices.CreateEntriesCrossInstance(table);
+            crossDockContext.CrossDockEntry = crossDockEntryServices.CreateInstance(table);
         }
 
-        [Given(@"a packages Details")]
+        [Given(@"packages details")]
         public void GivenAPackagesDetails(Table table)
         {
-            crossDockContext.EntriesCrossDock = crossDockExternalServices.AddWarehouseEntryPackages(crossDockContext.EntriesCrossDock, table);
+            crossDockContext.CrossDockEntry.WarehouseEntryPackages = crossDockEntryServices.BuildPackages(table);
         }
 
-        [When(@"create cross dock")]
+        [When(@"create entry cross dock")]
         public void WhenCreateCrossDock()
         {
-            ApiResponse<CrossDockPM> response = APICaller.CallPost<CrossDockPM>(crossDockContext.EntriesCrossDock, Urls.CrossDockController, UserTenant.Token);
-            crossDockContext.EntriesCrossDock = response?.Data;
+            crossDockContext.CrossDockEntry = APICaller.CallPost<CrossDockEntryPM>(crossDockContext.CrossDockEntry, Urls.CrossDockController, UserTenant.Token)?.Data;
         }
 
-        [Then(@"the cross dock should create successfully")]
+        [Then(@"the entry cross dock should create successfully")]
         public void ThenTheCrossDockShouldCreateSuccessfully()
         {
-            crossDockContext.EntriesCrossDock.Id.Should().NotBeNull();
+            crossDockContext.CrossDockEntry.Id.Should().NotBeNull();
         }
         #endregion
 

@@ -22,8 +22,8 @@ namespace Logitude.CrossDockTests.Hooks
         {
             try
             {
-                CrossDockPM crossDockPM = GetValidCrossDockPM();
-                ApiResponse<CrossDockPM> response = APICaller.CallPost<CrossDockPM>(crossDockPM, Urls.CrossDockController, UserTenant.Token);
+                CrossDockEntryPM crossDockEntry = GetValidCrossDockPM();
+                ApiResponse<CrossDockEntryPM> response = APICaller.CallPost<CrossDockEntryPM>(crossDockEntry, Urls.CrossDockController, UserTenant.Token);
                 CrossDockDataMap(response.Data);
             }
             catch (Exception)
@@ -32,12 +32,12 @@ namespace Logitude.CrossDockTests.Hooks
             }
         }
 
-        private static void CrossDockDataMap(CrossDockPM quote)
+        private static void CrossDockDataMap(CrossDockEntryPM crossDockEntry)
         {
-            CrossDockData.Id = quote.Id;
+            CrossDockData.Id = crossDockEntry.Id;
         }
 
-        private static CrossDockPM GetValidCrossDockPM()
+        private static CrossDockEntryPM GetValidCrossDockPM()
         {
             return new CrossDockBuilder().WithDefualtValues()
              .DirectionId("E")

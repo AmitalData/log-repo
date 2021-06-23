@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.CrossDockTests.Models
 {
-    public class CrossDockPM
+    public class CrossDockEntryPM
     {
         public int Tenant { get; set; }
         public string CreatedByUserId { get; set; }
