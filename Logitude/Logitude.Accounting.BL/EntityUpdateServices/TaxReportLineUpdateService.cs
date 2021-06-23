@@ -94,11 +94,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             JournalAdditionalDataQueryService additionalDataQueryService = new JournalAdditionalDataQueryService(taxReportLine.Tenant);
             if (taxReportLine.OutputOrInput == TaxReportLineInputType)
             {
-                return additionalDataQueryService.GetSingle(taxReportLine.JournalId, taxReportLine.JournalLineNumber, false, false);
+                return additionalDataQueryService.GetSingle(taxReportLine.JournalId, taxReportLine.JournalLineNumber, false, true);
             }
             else
             {
-                return additionalDataQueryService.GetSingle(taxReportLine.JournalId, 1, false, false);
+                return additionalDataQueryService.GetSingle(taxReportLine.JournalId, 1, false, true);
             }
         }
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }

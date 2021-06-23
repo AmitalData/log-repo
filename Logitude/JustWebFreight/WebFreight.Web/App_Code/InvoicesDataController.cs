@@ -152,6 +152,7 @@ namespace WebFreight.Web.App_Code
             IQueryable<ARInvoice> invoices = aRInvoiceRepository.GetIQueryableInvoices(tenant);
 
             invoices = customfilters.GetFilteredQuery(queryOperations, invoices);
+            List<ARInvoice> xx = invoices.ToList();
 
             QueryOperations nonListQueryOperation = new QueryOperations();
             nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
@@ -160,6 +161,7 @@ namespace WebFreight.Web.App_Code
 
             invoices = filter.GetFilteredQuery<ARInvoice>(nonListQueryOperation, invoices);
             int skippedShipments = queryOperations.PageIndex;
+            xx = invoices.ToList(); 
 
             var query2 = from entity in invoices
                          select new ARInvoiceList()
@@ -242,6 +244,8 @@ namespace WebFreight.Web.App_Code
             {
                 query2 = query2.Where(d => d.StatusCode != "DR" && d.StatusCode != "VD" && !d.IsAutoCredit && !d.IsCancelled && d.IsClosed == false);
             }
+
+            var xx1 = query2.ToList();
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
@@ -371,20 +375,23 @@ namespace WebFreight.Web.App_Code
             ARInvoiceQuery entityQuery = new ARInvoiceQuery(tenant);
             ARInvoicePM entityPM = entityQuery.GetSinglePM(invoiceId, tenant);
 
+            string documentTypeCode = this.GetDocumentTypeCodeByInvoiceType(entityPM.ARInvoiceTypeCode);
             DocumentOutQuery documentOutQuery = new DocumentOutQuery(tenant);
             DocumentTypeQuery query = new DocumentTypeQuery(tenant);
-            DocumentTypePM docType = query.GetSinglePMByCodeAndTenant("999S", tenant);
+            DocumentTypePM docType = query.GetSinglePMByCodeAndTenant(documentTypeCode, tenant);
 
-
-
+            string docId = "";
             DocumentOutPM docsOutData = documentOutQuery.GetDocumentOutByDocumentTypeEntityAndChild(entityPM.MainEntityId, entityPM.Id, docType.Id, tenant);
-            string docId = docsOutData.Id;
-            if (docsOutData.DocumentOutCopies.Count() > 0)
+            if (docsOutData != null)
             {
-                docId = docsOutData.DocumentOutCopies.FirstOrDefault().DocumentId;
-            }
+                docId = docsOutData.Id;
+                if (docsOutData.DocumentOutCopies.Count() > 0)
+                {
+                    docId = docsOutData.DocumentOutCopies.FirstOrDefault().DocumentId;
+                }
+            }            
+            
             string documentName = tenant + "_" + docId;
-            //string url = "../WebPages/Downloadpage.aspx?id=" + documentName;
             string url = "../WebPages/SharedDownloadPage.aspx?id=" + tenant + ":" + docId + ":invc:" + entityPM.Id;
             entityPM.ReportUrl = url;
             entityPM.IsShowAmountLocalCurrencyColumnInSharedLogistics = GetIsShowAmountLocalCurrencyColumnInSharedLogistics(tenant);
@@ -392,6 +399,22 @@ namespace WebFreight.Web.App_Code
             CheckSharedContactAuthenticationForInvoice(entityPM.BillToId, tenant);
           
             return entityPM;
+        }
+        private string GetDocumentTypeCodeByInvoiceType(string aRInvoiceTypeCode)
+        {
+            string code = "";
+
+            if(aRInvoiceTypeCode == "CI")
+            {
+                code = "999CI";
+            }
+
+            else
+            {
+                code = "999S";
+            }
+
+            return code;
         }
 
         private  bool GetIsShowAmountLocalCurrencyColumnInSharedLogistics(int tenant)

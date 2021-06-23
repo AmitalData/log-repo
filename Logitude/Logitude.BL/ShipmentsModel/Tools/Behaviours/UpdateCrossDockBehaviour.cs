@@ -164,6 +164,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 {
                     shipmentPM.WarehouseLegActualReleaseDate = greatestWarehouseRelease.ActualReleaseDate;
                     shipmentPM.WarehouseLegExpectedReleaseDate = greatestWarehouseRelease.ExpectedReleaseDate;
+                    shipmentPM.GrossWeightPerStorageDays = storageCalculater.ComputeGrossWeight_PerStorageDays();
+                    shipmentPM.WarehouseLegLastFreeDate = storageCalculater.GetWarehouseLegLastFreeDate();
                     isUpdated = true;
                 }
             }
@@ -171,7 +173,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
             {
                 shipmentPM.WarehouseLegActualReleaseDate = null;
                 shipmentPM.WarehouseLegExpectedReleaseDate = null;
-                isUpdated = true;
+                shipmentPM.GrossWeightPerStorageDays = null;
+                shipmentPM.WarehouseLegLastFreeDate = null;
+               isUpdated = true;
             }
 
             if (isUpdated)
@@ -312,7 +316,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
             this.storageDays = this.ComputeStorageDays();
             this.freeDays = this.GetFreeDays();
             this.readyToCalculateStorage = this.CheckIfReadyToCalculateStorage();
-
             if (readyToCalculateStorage)
             {
                 double? amount = this.ComputeReceivableAmount();
@@ -347,6 +350,36 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
 
             return storageDays;
         }
+
+        public double? ComputeGrossWeight_PerStorageDays()
+        {
+            double? weightPerStorageDays;
+            var storageDays = this.ComputeStorageDays();
+            if (shipmentPM.TransportModeId != "A" && shipmentPM.GrossWeightPerTon != null && shipmentPM.WarehouseStorageFreeDays != null)
+            {
+                weightPerStorageDays = Math.Ceiling(shipmentPM.GrossWeightPerTon.Value) * (storageDays - shipmentPM.WarehouseStorageFreeDays.Value);
+            }
+            else
+            {
+                weightPerStorageDays = shipmentPM.ChargeableWeight * (storageDays - shipmentPM.WarehouseStorageFreeDays);
+            }
+            return weightPerStorageDays < 0 ? 0 : weightPerStorageDays;
+        }
+        public DateTime? GetWarehouseLegLastFreeDate()
+        {
+            DateTime? WarehouseLegLastFreeDate = null;
+            if (shipmentPM.WarehouseLegActualEntryDate != null && shipmentPM.WarehouseStorageFreeDays != null)
+            {
+                var date = shipmentPM.WarehouseLegActualEntryDate.Value.AddDays(shipmentPM.WarehouseStorageFreeDays.Value);
+                if (date != null)
+                {
+                    WarehouseLegLastFreeDate = date;
+                }
+            }
+
+            return WarehouseLegLastFreeDate;
+        }
+
         private int? GetFreeDays()
         {
             int? freeDays = 0;

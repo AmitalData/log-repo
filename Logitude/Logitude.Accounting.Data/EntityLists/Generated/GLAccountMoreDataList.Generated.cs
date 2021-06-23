@@ -28,6 +28,10 @@ namespace Logitude.Accounting.Data.EntityLists
        public decimal? TotalOpenChequesInLocalCur  { get; set; }
        [DataMember]
        public decimal? TotFutureOpenChequesInLocalCur  { get; set; }
+       [DataMember]
+       public decimal? BalanceInForeignCurrency  { get; set; }
+       [DataMember]
+       public decimal? ForeignBalanceInDue  { get; set; }
    }
 
 }

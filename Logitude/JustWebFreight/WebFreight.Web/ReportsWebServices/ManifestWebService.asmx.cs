@@ -254,6 +254,7 @@ namespace WebFreight.Web.ReportsWebServices
                             if (contact != null)
                             {
                                 manifestDataProvider.ShipperContactPhone = contact.BusinessPhone;
+                                manifestDataProvider.ShipperContactName = contact.EnglishName;
                             }
                         }
                     }

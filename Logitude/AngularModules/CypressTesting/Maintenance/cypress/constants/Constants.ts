@@ -22,6 +22,7 @@ export class Constants {
     public static readonly BankAccount = "BankAccountLite"
     public static readonly PackageType = "PackageType"
     public static readonly Branch = "Branch"
+    public static readonly ShippingLine = "ShippingLine"
     public static readonly Currency = "Currency"
     public static readonly FBLStock = "FBLStock"
 

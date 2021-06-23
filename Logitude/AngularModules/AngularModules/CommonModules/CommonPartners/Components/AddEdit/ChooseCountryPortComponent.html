@@ -54,13 +54,13 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="CloseButtonClicked()">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
+                        <button [attr.data-cy]="'CloseCountry_' + ObjectTableName" class="Button" (click)="CloseButtonClicked()">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width:5px;"><div></div></td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="AddButtonClicked()">{{'General.B.Add' | TextCodeTranslationPipe}}</button>
+                        <button [attr.data-cy]="'AddCountry_' + ObjectTableName" class="Button" (click)="AddButtonClicked()">{{'General.B.Add' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

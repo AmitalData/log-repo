@@ -364,7 +364,7 @@ export class JournalPageComponent implements AfterViewInit {
 
         var useLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
         if (useLocal) {
-            var GeneralText = TextCodeTranslator.Translate("General.O.NewEntity");
+            var GeneralText = TextCodeTranslator.TranslateTable("Accounting.General.O.New");
             var ChangedText = GeneralText.split('%')[0];
             var NewText = TextCodeTranslator.TranslateTable('Revaluation');
             var FinalText = NewText + " " + ChangedText;

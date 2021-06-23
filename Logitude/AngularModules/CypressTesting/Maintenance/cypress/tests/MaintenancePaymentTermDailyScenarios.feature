@@ -8,8 +8,8 @@ Feature: Payment Terms fake Create, Search and Edit from Maintenance
         Then a validation message with "Code Field must be less than 4" error should appear
 
     Scenario: Add Payment Term Method Code already exists
-        Given add another payment term code: "1234"
-        Then this validation message error "Payment Term with Code 1234 already exists" should appear
+        Given add another payment term code: "Cash"
+        Then this validation message error "Payment Term with Code Cash already exists" should appear
 
     Scenario: Create new payment term
         Given a payment term with the following details
@@ -25,8 +25,8 @@ Feature: Payment Terms fake Create, Search and Edit from Maintenance
         Then the payment term should create successfully
 
     Scenario: Search for the payment term by code
-        When search for "11_6_2021_1623415715135" payment term
-        Then the "11_6_2021_1623415715135" payment term should appear successfully
+        When search for "Cash" payment term
+        Then the "Cash" payment term should appear successfully
 
     Scenario: Open the payment term
         When open payment term

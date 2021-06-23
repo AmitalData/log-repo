@@ -860,7 +860,7 @@
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:130px; color:\\#1B90CB;">${ReferenceNumber}</div>
                         <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:130px;">Quotation Prepared:</div>
 
-                       <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:120px; visibility: #= QuotationPreparedTickVisibility #;"><img src="../HtmlHelpers/Images/Icons/Tick.png" style="width: 20px; height: 20px; position:relative; margin-top:-3px;" /></div>
+                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:140px; visibility: #= QuotationPreparedTickVisibility #;"><img src="HtmlHelpers/Images/Icons/Tick.png" style="width: 20px; height: 20px; position:relative; margin-top:-3px;" /><a style="cursor: pointer;padding-left: 15px;" id="#= DocumentSecurityId #" OnClick="ViewQuotationDocument(id)">View Quotation</a></div>
 
                     </div>
                     <div style="height:25px; vertical-align:central;">
@@ -987,28 +987,59 @@
     <script type="text/javascript">
 
         function ViewShipment(ShipmentId) {
-            ChangePage("/SharedLogistic/ShipmentPage.aspx", ShipmentId);
-            //document.location.href = "SharedLogistic/ShipmentPage.aspx?id=" + ShipmentId + ":" + $.CurrentCardId + ":" + $.CurrentTenant + ":" + $.CurrentEmail + ":" + $.CurrentCardType + ":" + $.IsBrandingEnabled;
+            ChangePage("SharedLogistic/ShipmentPage.aspx", ShipmentId);
         }
 
         function ViewInvoice(InvoiceId) {
-            ChangePage("/SharedLogistic/InvoicePage.aspx", InvoiceId);
-            //document.location.href = "SharedLogistic/InvoicePage.aspx?id=" + InvoiceId + ":" + $.CurrentCardId + ":" + $.CurrentTenant + ":" + $.CurrentEmail + ":" + $.CurrentCardType + ":" + $.IsBrandingEnabled;
+            ChangePage("SharedLogistic/InvoicePage.aspx", InvoiceId);
+        }
+
+        function ViewReport(name) {
+            ChangePage("SharedLogistic/ReportViewPage.aspx", name);
+        }
+
+
+        function ViewQuotationDocument(QuotationDocumentSecurityId) {
+
+            var sharedDownloadURL = "WebPages/DownloadPage.aspx?securityId=" + QuotationDocumentSecurityId + "&tempId=";
+            $.ajax({
+                url: "api/DocumentDownloadToken",
+                type: 'GET',
+                contentType: 'application/json',
+                headers: {
+                    'Token': $.Token
+                },
+                success: function (documentDownloadToken) {
+                    window.open(sharedDownloadURL + documentDownloadToken);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    window.open(sharedDownloadURL);
+                }
+            });
         }
 
         function ChangePage(url, entityId) {
 
             var loginData = entityId + ":" + $.CurrentCardId + ":" + $.CurrentTenant + ":" + $.CurrentEmail + ":" + $.CurrentCardType + ":" + $.IsBrandingEnabled;
 
+            var link = document.location.href.toLowerCase();;
+            var linkArray = link.split('sharedlogisticpage');
+            url = linkArray[0];
+
+            if (url.endsWith('/')) {
+                url += pageURL;
+            }
+
+            else {
+                url += "/" + pageURL;
+            }
             var params = [];
             params.push({ name: "Token", value: $.Token });
             params.push({ name: "LoginData", value: loginData });
             PostFormParams(url, params);
         }
 
-        function ViewReport(name) {
-            ChangePage("/SharedLogistic/ReportViewPage.aspx", name);
-        }
+
 
 
 

@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class JournalMoreDataUpdateClass
    {  		
-		public const string HashString = "73a68cc15af65732438dc25cfb974a88";
+		public const string HashString = "7b0df992a3975b5be20546f54b759e76";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -120,7 +120,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "פ יומן תנעות להתאמה",
 			      				    DefaultText =  "Journal More Data",
-			      				    Code =  "a962",
+			      				    Code =  "e40d",
 			      				    Name =  "JournalMoreData Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -307,7 +307,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullLocalDefaultText =  "נתונים כלליים",
 					  						ListFieldLable =  "GeneralDataListLable",
 					  						ListLableDefaultText =  "General Data",
-					  						ListLocalDefaultText =  "מידע",
+					  						ListLocalDefaultText =  "נתונים כלליים",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
