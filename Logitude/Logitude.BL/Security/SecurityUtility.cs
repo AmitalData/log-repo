@@ -560,5 +560,41 @@ namespace Logitude.BL.Security
 
             throw new AutenticationException("Sorry! this user is not authorized!");
         }
+
+        public static bool CheckSharedContactAuthentication(int tenant, string partnerId)
+        {
+            if (tenant != 0)
+            {
+                bool exists = false;
+                if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+                {
+                    ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
+                    string email = HttpContext.Current.User.Identity.Name;
+
+                    ContactRepository contactrep = new ContactRepository(commonDataContext);
+                    Contact contact = contactrep.GetSingleContactByEmail(email, tenant);
+
+                    if (contact != null)
+                    {
+                        CardContact cardContact = commonDataContext.CardContacts.Where(d => d.ContactId == contact.Id && d.CardId == partnerId).FirstOrDefault();
+                        if (cardContact != null)
+                        {
+                            //Card card = commonDataContext.Cards.Where(d => d.Id == partnerId).FirstOrDefault();
+                            //if (card.PartnerTypeId == partnerTypeId)
+                            //{
+                            exists = true;
+                            //}
+                        }
+                    }
+                }
+                if (!exists)
+                {
+                    throw new AutenticationException("Sorry! you are not authorized to read data!");
+                }
+                return exists;
+            }
+            return true;
+        }
+
     }
 }
