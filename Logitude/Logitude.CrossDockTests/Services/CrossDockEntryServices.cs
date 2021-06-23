@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Logitude.CrossDockTests.ExternalServices
+namespace Logitude.CrossDockTests.Services
 {
     public class CrossDockEntryServices
     {
@@ -15,7 +15,7 @@ namespace Logitude.CrossDockTests.ExternalServices
         {
             dynamic dataTable = crossDockTable.CreateDynamicInstance();
 
-            return new CrossDockBuilder().WithDefualtValues()
+            return new CrossDockEntryBuilder().WithDefualtValues()
                 .DirectionId((string)dataTable.Direction)
                 .TransportModeId((string)dataTable.TransportMode)
                 .ChargeableWeightUnitCode((string)dataTable.ChargeableWeightUnitCode)

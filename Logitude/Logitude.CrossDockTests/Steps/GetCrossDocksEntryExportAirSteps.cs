@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using Logitude.CrossDockTests.ExternalServices;
+using Logitude.CrossDockTests.Services;
 using Logitude.CrossDockTests.Models;
 using Logitude.Test.Base.Models.Api;
 using Logitude.Test.Base.Models.Shared;

@@ -30,6 +30,7 @@
         public static string QuoteViewsGetByFilters = "Quoteviews/Getbyfilters";
 
         public static string CrossDockController = "warehouseentries";
+        public static string CrossReleaseController = "WarehouseReleaseExtended/postwarehousereleasepm";
 
         //public static string QuotesGetSingle(string id)
         //{

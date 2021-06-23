@@ -19,14 +19,14 @@ namespace Logitude.CrossDockTests.Features
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [Xunit.TraitAttribute("Category", "Pre-Prepare")]
+    [Xunit.TraitAttribute("Category", "Pre-Prepare-Entry")]
     public partial class UpdateCrossDocksFeature : object, Xunit.IClassFixture<UpdateCrossDocksFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
         private string[] _featureTags = new string[] {
-                "Pre-Prepare"};
+                "Pre-Prepare-Entry"};
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
@@ -43,7 +43,7 @@ namespace Logitude.CrossDockTests.Features
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
             TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Update Cross Docks", "\tWe want to update cross docks.", ProgrammingLanguage.CSharp, new string[] {
-                        "Pre-Prepare"});
+                        "Pre-Prepare-Entry"});
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -111,20 +111,20 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
                             "Quantity",
                             "Length",
                             "Width",
                             "Height",
                             "Weight"});
-                table3.AddRow(new string[] {
+                table4.AddRow(new string[] {
                             "70",
                             "10",
                             "20",
                             "30",
                             "40"});
 #line 6
- testRunner.Given("a packages with the following properties", ((string)(null)), table3, "Given ");
+ testRunner.Given("a packages with the following properties", ((string)(null)), table4, "Given ");
 #line hidden
 #line 9
  testRunner.And("entry cross dock", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");

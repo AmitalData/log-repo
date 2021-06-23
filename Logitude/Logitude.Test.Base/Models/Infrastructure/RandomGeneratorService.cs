@@ -8,13 +8,8 @@ namespace Logitude.Test.Base.Models.Infrastructure
 {
     public class RandomGeneratorService
     {
-        private readonly Random getrandom;
-        public RandomGeneratorService()
-        {
-            getrandom = new Random();
-        }
 
-        public int RandomNumber(int digitCount)
+        public static int RandomNumber(int digitCount)
         {
             if (digitCount <= 0)
                 return 0;
@@ -23,10 +18,8 @@ namespace Logitude.Test.Base.Models.Infrastructure
             if (digitCount > 9)
                 digitCount = 9;
 
-            lock (getrandom)
-            {
-                return getrandom.Next(Convert.ToInt32(Math.Pow(10, (digitCount - 1))), Convert.ToInt32(Math.Pow(10, (digitCount))));
-            }
+            return new Random().Next(Convert.ToInt32(Math.Pow(10, (digitCount - 1))), Convert.ToInt32(Math.Pow(10, (digitCount))));
+
         }
 
         public string RandomGuid()

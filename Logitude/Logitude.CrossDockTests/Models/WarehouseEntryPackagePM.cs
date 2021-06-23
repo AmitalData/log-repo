@@ -8,6 +8,7 @@ namespace Logitude.CrossDockTests.Models
 {
     public class WarehouseEntryPackagePM
     {
+        public string Id { get; set; }
         public int Tenant { get; set; }
         public string CreatedByUserId { get; set; }
         public string UpdatedByUserId { get; set; }

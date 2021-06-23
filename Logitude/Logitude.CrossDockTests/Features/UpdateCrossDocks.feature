@@ -1,4 +1,4 @@
-﻿@Pre-Prepare
+﻿@Pre-Prepare-Entry
 Feature: Update Cross Docks
 	We want to update cross docks.
 

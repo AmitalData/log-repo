@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using Logitude.CrossDockTests.ExternalServices;
+using Logitude.CrossDockTests.Services;
 using Logitude.CrossDockTests.Models;
 using Logitude.CrossDockTests.Models.Builders;
 using Logitude.Test.Base.Models.Api;
@@ -41,7 +41,7 @@ namespace Logitude.CrossDockTests.Steps
         [When(@"update entry cross dock")]
         public void WhenUpdateEntryCrossDock()
         {
-            crossDockContext.CrossDockEntry = new CrossDockBuilder()
+            crossDockContext.CrossDockEntry = new CrossDockEntryBuilder()
                 .WithModel(crossDockContext.CrossDockEntry)
                 .WarehouseEntryPackages(warehouseEntryPackages).Build();
 

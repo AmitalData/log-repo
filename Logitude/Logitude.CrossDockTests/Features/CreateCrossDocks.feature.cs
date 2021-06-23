@@ -19,12 +19,14 @@ namespace Logitude.CrossDockTests.Features
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    [Xunit.TraitAttribute("Category", "Pre-Prepare-Entry")]
     public partial class CreateCrossDocksFeature : object, Xunit.IClassFixture<CreateCrossDocksFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-        private string[] _featureTags = ((string[])(null));
+        private string[] _featureTags = new string[] {
+                "Pre-Prepare-Entry"};
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
@@ -40,7 +42,9 @@ namespace Logitude.CrossDockTests.Features
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Create Cross Docks", "\tWe want to create cross docks.", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Create Cross Docks", "    With pre-prepared entry data\r\n\tWe want to create entry and release cross dock" +
+                    "s.", ProgrammingLanguage.CSharp, new string[] {
+                        "Pre-Prepare-Entry"});
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -88,7 +92,7 @@ namespace Logitude.CrossDockTests.Features
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create entry cross dock", null, tagsOfScenario, argumentsOfScenario);
-#line 4
+#line 6
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -132,7 +136,7 @@ this.ScenarioInitialize(scenarioInfo);
                 table1.AddRow(new string[] {
                             "StatusCode",
                             "CREA"});
-#line 5
+#line 7
  testRunner.Given("an entry cross dock with the following properties", ((string)(null)), table1, "Given ");
 #line hidden
                 TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
@@ -153,14 +157,76 @@ this.ScenarioInitialize(scenarioInfo);
                             "",
                             "",
                             ""});
-#line 14
+#line 16
  testRunner.And("packages details", ((string)(null)), table2, "And ");
 #line hidden
-#line 18
+#line 20
  testRunner.When("create entry cross dock", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 19
+#line 21
  testRunner.Then("the entry cross dock should create successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Create release cross dock")]
+        [Xunit.TraitAttribute("FeatureTitle", "Create Cross Docks")]
+        [Xunit.TraitAttribute("Description", "Create release cross dock")]
+        public virtual void CreateReleaseCrossDock()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create release cross dock", null, tagsOfScenario, argumentsOfScenario);
+#line 23
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+                TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                            "property",
+                            "Value"});
+                table3.AddRow(new string[] {
+                            "ChargeableWeightUnitCode",
+                            "KG"});
+                table3.AddRow(new string[] {
+                            "GrossWeightUnitCode",
+                            "KG"});
+                table3.AddRow(new string[] {
+                            "DimensionsUnitCode",
+                            "Cm"});
+                table3.AddRow(new string[] {
+                            "VolumeUnitCode",
+                            "CBM"});
+                table3.AddRow(new string[] {
+                            "StatusCode",
+                            "CREA"});
+#line 24
+ testRunner.Given("a release cross dock with the following properties", ((string)(null)), table3, "Given ");
+#line hidden
+#line 31
+ testRunner.And("an entry cross dock", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 32
+ testRunner.When("create release cross dock", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 33
+ testRunner.Then("the release cross dock should create successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
