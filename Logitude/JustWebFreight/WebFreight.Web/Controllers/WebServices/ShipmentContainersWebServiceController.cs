@@ -1,10 +1,14 @@
-﻿using Logitude.Server.Tools;
+﻿using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.XSD.Analyzers.INTTRAAnalyzer;
 using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
@@ -32,6 +36,11 @@ namespace WebFreight.Web.Controllers.WebServices
 {
     public class ShipmentContainersWebServiceController : ApiController
     {
+        string type = "c_id";
+        string scacCode;
+        string containerNumber;
+        string oceanInsightId;
+
         public HttpResponseMessage Post(ShipmentContainerSimulator simulator)
         {
             try
@@ -53,28 +62,48 @@ namespace WebFreight.Web.Controllers.WebServices
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
-        string type = "c_id";
-        string scacCode = "Test";
-        string refrenceNumber;
-
         private ShipmentContainerSimulator RunFullContainerStatusSimulator(ShipmentContainerSimulator simulator)
         {
-            ShipmentContainerSimulator shipmentContainerSimulator = new ShipmentContainerSimulator();
-            ShipmentContainerSimulator myResult = new ShipmentContainerSimulator();
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             int tenant = authToken.Tenant;
             SecurityUtility.AuthenticationOnTenant(tenant);
-
-            OceanInsightsWcfService oceanInsightsWcfService = new OceanInsightsWcfService();
-            refrenceNumber = ReadOceanInsightsParametersXMLFields(simulator.XmlString, "container_number", "shipment");
-            Response oceanInsightsWcfServiceResponse = oceanInsightsWcfService.Insert(tenant, scacCode, refrenceNumber, type);
-            var oceanInsightId = oceanInsightsWcfServiceResponse?.Result;
+            this.SetContainerFields(simulator);
+            this.CreateOceanInsightsWcfServiceResponse(tenant);
             this.CreateLogitudeOceanInsightsRequest(oceanInsightId, simulator, tenant);
-            var updatedOceanInsightsResponse = this.ReplaceOceanInsightTagInXML(simulator.XmlString, oceanInsightId);
+            var updatedOceanInsightsResponse = this.ReplaceOceanInsightTagInXML(simulator.XmlString, oceanInsightId, simulator.ContainerNumber);
             this.SendRequestToContainerPushService(updatedOceanInsightsResponse);
-            return shipmentContainerSimulator;
+            return simulator;
+        }
+        private void SetContainerFields(ShipmentContainerSimulator simulator)
+        {
+            containerNumber = simulator.ContainerNumber;
+            scacCode = ReadOceanInsightsParametersXMLFields(simulator.XmlString, "carrier_scac", "shipment");
+        }
+        private void CreateOceanInsightsWcfServiceResponse(int tenant)
+        {
+            IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
+            OceanInsightsRequestQuery oceanInsightsRequestQuery = new OceanInsightsRequestQuery(tenant);
+            OceanInsightsRequestService service = new OceanInsightsRequestService(shipmentsContext, tenant);
+            OceanInsightsRequestPM oceanInsightsRequest;
+            oceanInsightsRequest = oceanInsightsRequestQuery.GetSinglePMByOceanInsightsByScacCodeContainerNoTenant(scacCode, containerNumber, tenant);
+            if (oceanInsightsRequest == null)
+            {
+                oceanInsightsRequest = new OceanInsightsRequestPM();
+                oceanInsightsRequest.ContainerNumber = containerNumber;
+                oceanInsightsRequest.SCACCode = scacCode;
+                oceanInsightsRequest.Tenant = tenant;
+                oceanInsightsRequest.OceanInsigntId = GetEightDigitssRandomNumber();
+                oceanInsightsRequest.Type = type;
+                service.Create(oceanInsightsRequest);
+            }
+            this.oceanInsightId = oceanInsightsRequest.OceanInsigntId;
+        }
+        private string GetEightDigitssRandomNumber()
+        {
+            Random random = new Random();
+            int randomNo = random.Next(10000000, 99999999);
+            return randomNo.ToString();
         }
 
         private string ReadOceanInsightsParametersXMLFields(string xmlText, string tag, string root)
@@ -95,15 +124,15 @@ namespace WebFreight.Web.Controllers.WebServices
             }
             return tagValue;
         }
-        private string ReplaceOceanInsightTagInXML(string xmlText,string tagNewValue)
+        private string ReplaceOceanInsightTagInXML(string xmlText,string oceanInsightId, string containerNumber)
         {
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.LoadXml(xmlText);
-            xmlDoc.DocumentElement.SelectSingleNode("//Root//container//shipment//shipmentsubscription_id").InnerText = tagNewValue;
-            xmlDoc.DocumentElement.SelectSingleNode("//Root//container//event//shipment_id").InnerText = tagNewValue;
+            xmlDoc.DocumentElement.SelectSingleNode("//Root//container//shipment//shipmentsubscription_id").InnerText = oceanInsightId;
+            xmlDoc.DocumentElement.SelectSingleNode("//Root//container//event//shipment_id").InnerText = oceanInsightId;
+            xmlDoc.DocumentElement.SelectSingleNode("//Root//container//shipment//container_number").InnerText = containerNumber;
             return xmlDoc.OuterXml;
         }
-
         private void CreateLogitudeOceanInsightsRequest(string oceanInsightId, ShipmentContainerSimulator simulator, int tenant)
         {
             LogitudeOceanInsightsRequestRepository logitudeOceanInsightsRequestRepository = new LogitudeOceanInsightsRequestRepository(tenant);
@@ -116,7 +145,7 @@ namespace WebFreight.Web.Controllers.WebServices
                     CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                     UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                     OceanInsigntId = oceanInsightId,
-                    ContainerNumber = refrenceNumber,
+                    ContainerNumber = containerNumber,
                     SCACCode = scacCode,
                     Tenant = tenant,
                     Type = type,
@@ -127,7 +156,7 @@ namespace WebFreight.Web.Controllers.WebServices
             else
             {
                 logitudeOceanInsightsRequest.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                logitudeOceanInsightsRequest.ContainerNumber = refrenceNumber;
+                logitudeOceanInsightsRequest.ContainerNumber = containerNumber;
                 logitudeOceanInsightsRequest.SCACCode = scacCode;
                 logitudeOceanInsightsRequest.Type = type;
                 logitudeOceanInsightsRequest.ShipmentId = simulator.ShipmentId;
@@ -135,7 +164,6 @@ namespace WebFreight.Web.Controllers.WebServices
             }
             logitudeOceanInsightsRequestRepository.SubmitChanges();
         }
-
         private void SendRequestToContainerPushService(string xmlString)
         {
             byte[] byteArray = GetXMLByteDataFromText(xmlString);
@@ -255,7 +283,6 @@ namespace WebFreight.Web.Controllers.WebServices
                 return myResult;
             }
         }
-
         public HttpResponseMessage GetContainerStatusRequest(string shipmentId, string containerId, bool isContainer)
         {
             try
@@ -285,7 +312,6 @@ namespace WebFreight.Web.Controllers.WebServices
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
     }
 
     public class ShipmentContainerSimulator
@@ -297,6 +323,7 @@ namespace WebFreight.Web.Controllers.WebServices
         public List<string> Errors { get; set; }
         public bool IsFromContainer { get; set; }
         public string ShipmentId { get; set; }
+        public string ContainerNumber { get; set; }
         public ShipmentContainerSimulator()
         {
             this.Success = true;
