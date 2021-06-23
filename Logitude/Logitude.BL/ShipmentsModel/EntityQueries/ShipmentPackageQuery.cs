@@ -190,6 +190,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        HorseName = a.Horse == null ? null : a.Horse.Name,
                        LCLContainerTypeId = a.LCLContainerTypeId,
                        ContainerEntityId = a.ContainerEntityId,
+                       ContainerStatusSourceCode = a.ContainerStatusSourceCode,
                    }).FirstOrDefault();
 
             myResult.InsideShipmentPackages = insideShipmentPackageQuery.GetInsideShipmentPackages(myResult.Id, tenant);
@@ -312,6 +313,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        HorseName = a.Horse == null ? null : a.Horse.Name,
                        LCLContainerTypeId = a.LCLContainerTypeId,
                        ContainerEntityId = a.ContainerEntityId,
+                       ContainerStatusSourceCode = a.ContainerStatusSourceCode,
                    }).ToList();
 
             var commonContext = CommonDataContext.GetContext(tenant);
@@ -370,7 +372,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 }
                 else if (package.ContainerStatusSourceCode == "OIN")
                 {
-                    package.LastStatusName = (from d in repository.context.ContainerStatusSources
+                    package.LastStatusName = (from d in repository.context.ContainerStatuses
                                               where d.Code == package.LastStatusCode
                                               select d.Name).FirstOrDefault();
                 }
@@ -494,6 +496,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                 WarehouseReleaseNumber = a.WarehouseReleaseNumber,
                                 LCLContainerTypeId = a.LCLContainerTypeId,
                                 ContainerEntityId = a.ContainerEntityId,
+                                ContainerStatusSourceCode = a.ContainerStatusSourceCode,
                             }).ToList();
             }
 

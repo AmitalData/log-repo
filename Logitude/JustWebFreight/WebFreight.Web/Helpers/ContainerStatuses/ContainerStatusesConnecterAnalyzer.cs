@@ -308,7 +308,7 @@ namespace WebFreight.Web.Helpers.Analyzers
                     if (this.eventCode == "0")
                     {
                         this.CreateShipmentContainerStatus();                        
-                        this.UpdateContainer();                        
+                        this.UpdateContainer();
                         this.UpdateShipment();
                     }
                 }
@@ -316,6 +316,7 @@ namespace WebFreight.Web.Helpers.Analyzers
                 scope.Complete();
             }
         }
+       
         private void GetContainerDataByContainerNumber()
         {
             var containerNumber = this.oceanInsight?.ContainerNumber;
@@ -596,6 +597,35 @@ namespace WebFreight.Web.Helpers.Analyzers
                 this.SaveContainer();
             }
         }
+        private void UpdatePackage(ShipmentPM shipment)
+        {
+            DateTime todatDate = TenantServerConfigration.GetCurrentDateTime(logitudeTenant.Value);
+            DateTime? eventData = this.GetEventDate();
+            ShipmentPackagePM package = shipment.ShipmentPackages.Where(a=>a.Id == this.container.ShipmentPackagesId).FirstOrDefault();
+            string oceanInsightsSource = "OIN";
+            if (package != null)
+            {
+                if (eventData == null)
+                {
+                    eventData = todatDate;
+                }
+                if (package.LastStatusDate == null)
+                {
+                    package.LastStatusCode = container_status;
+                    package.LastStatusDate = eventData;
+                    package.ContainerStatusSourceCode = oceanInsightsSource;
+                    package.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                }
+                else if (eventData > package.LastStatusDate)
+                {
+                    package.LastStatusCode = container_status;
+                    package.LastStatusDate = eventData;
+                    package.ContainerStatusSourceCode = oceanInsightsSource;
+                    package.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                }
+            }
+        }
+
         private ContainerUpdatedFields BuildContainerUpdatedFields()
         {
             ContainerUpdatedFields containerUpdatedFields = new ContainerUpdatedFields();
@@ -756,6 +786,7 @@ namespace WebFreight.Web.Helpers.Analyzers
 
             else
             {
+                this.UpdatePackage(shipmentPM);
                 bool isSavingShipment = false;
                 List<Container> shipmentContainers = containerRepository.GetContainesrByShipmentId(shipmentPM.Id, logitudeTenant.Value).ToList();
                 if (shipmentContainers.Count() == 1)
@@ -861,7 +892,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             string systemEmail = "system@tenant" + this.logitudeTenant.Value + ".com";
             ShipmentService service = new ShipmentService(shipmentContext, shipmentPM, systemEmail);
-            service.Update();
+            service.Update(true);
         }
         private void DoneAnalyzeQueue()
         {
