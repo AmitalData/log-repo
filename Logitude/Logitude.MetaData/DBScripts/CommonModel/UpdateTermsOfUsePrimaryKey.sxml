@@ -1,5 +1,5 @@
-﻿<Script DBType="Main">
-	<Sql Version="2">
+﻿<Script DBType="Main"  Module="Common">
+	<Sql Version="3">
 		<![CDATA[
 
       ALTER TABLE TermsofUseSignatures
@@ -10,8 +10,7 @@ Alter TABLE [dbo].[TermsofUses] drop column [Id]
 Alter TABLE [dbo].[TermsofUses]
 add  [id] [int] PRIMARY KEY IDENTITY(1,1) NOT NULL
 ALTER TABLE [dbo].[TermsofUseSignatures]  WITH CHECK ADD  CONSTRAINT [FK_TermsofUseSignatures_TermsofUses_TermsofUseId] FOREIGN KEY([TermsofUseId])
-REFERENCES [dbo].[TermsofUses] ([Id])
-GO
+REFERENCES [dbo].[TermsofUses] ([Id]) 
      
     ]]>
 	</Sql>
