@@ -30,7 +30,8 @@
     jQuery.IsQuotesRequestsDataLoaded = false;
     jQuery.IsReportsDataLoaded = false;
 
-    
+
+    jQuery.AllQuotesRequests = null;
     jQuery.SelectedTabId = "TAB_SHI";
     jQuery.watermark_SHI = "Search partners / ports / ref.#";
     jQuery.watermark_INV = "Search Inv. # / bill to / ref.#";
@@ -294,10 +295,11 @@
     });
 
     jQuery.FullQuotesRequestsListData = (function (result) {
+        $.AllQuotesRequests = BuildQuotesRequests(result, $.TenantDateTimeFormat)
         $("#QuotesRequestsListBox").html("");
         $("#QuotesRequestsListBox").kendoListView(
             {
-                dataSource: { data: BuildQuotesRequests(result, $.TenantDateTimeFormat) },
+                dataSource: { data: $.AllQuotesRequests },
                 template: kendo.template($("#QuotesRequestsListBoxItemDataTemplate").html())
             });
 
@@ -317,7 +319,7 @@
 
         $("#QuotesRequestsBusyIndicator").show();
         var filters = new QuotesRequstFilters();
-        var url = "api/QuotesRequest";
+        var url = "api/QuotesRequest/GetQuotesRequestsByFilters";
         $.ajax({
             url: url,
             data: JSON.stringify(filters),

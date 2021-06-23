@@ -2590,6 +2590,52 @@ namespace Logitude.CRM.BL.EntityPMs
 			
 		 }
 	   }
+	  private string quoteRequestFeedback ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string QuoteRequestFeedback  
+	   {
+	    
+	     get
+		{
+		   return quoteRequestFeedback;
+		 }
+		 set
+		 {
+		   if(quoteRequestFeedback != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="QuoteRequestFeedback",OldValue=quoteRequestFeedback,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   quoteRequestFeedback=value;
+		   }
+			
+		 }
+	   }
+	  private string quoteRequestComments ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string QuoteRequestComments  
+	   {
+	    
+	     get
+		{
+		   return quoteRequestComments;
+		 }
+		 set
+		 {
+		   if(quoteRequestComments != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="QuoteRequestComments",OldValue=quoteRequestComments,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   quoteRequestComments=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

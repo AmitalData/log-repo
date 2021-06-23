@@ -147,11 +147,18 @@ var InvoiceListClass = function () {
 
 var QuotesRequest = function () {
 
+    this.Id = "";
     this.ReferenceNumber = "";
     this.CreateDate = "";
     this.QuotationUpdateDate = "";
     this.QuotationPreparedTickVisibility = "";
     this.DocumentSecurityId = "";
+    this.Feedback = "";
+    this.Comments = "";
+    this.CommentId = "";
+    this.DocumentId = "";
+    this.IsRejected = false;
+    this.IsApproved = false;
 
 
 }
@@ -1718,12 +1725,20 @@ function BuildQuotesRequests(quotesRequests, tenantDateTimeFormat) {
 function GetNewInStanceFromQuotesRequest(quotesRequest, tenantDateTimeFormat) {
 
     var newQuotesRequest = new QuotesRequest();
+    newQuotesRequest.Id = quotesRequest.Id;
+    newQuotesRequest.Feedback = quotesRequest.Feedback;
+    newQuotesRequest.CommentId = "Comment" + quotesRequest.Id;
+    newQuotesRequest.Comments = quotesRequest.Comments == null ? "" : quotesRequest.Comments;
     newQuotesRequest.CreateDate = $.Convert.ToShortDate(quotesRequest.CreateDate, tenantDateTimeFormat);
     newQuotesRequest.ReferenceNumber = $.trim(quotesRequest.ReferenceNumber);
+    newQuotesRequest.IsApproved = quotesRequest.Feedback == "Approved";
+    newQuotesRequest.IsRejected = quotesRequest.Feedback == "Rejected";
     if (quotesRequest.QuotationDocumentFiling) {
+        newQuotesRequest.QuotationDocumentFiling = quotesRequest.QuotationDocumentFiling;
         newQuotesRequest.QuotationPreparedTickVisibility = "visible";
         newQuotesRequest.QuotationUpdateDate = $.Convert.ToShortDate(quotesRequest.QuotationDocumentFiling.CreateDate, tenantDateTimeFormat);
         newQuotesRequest.DocumentSecurityId = quotesRequest.QuotationDocumentFiling.SecurityId;
+        newQuotesRequest.DocumentId = quotesRequest.QuotationDocumentFiling.DocumentId;
     }
     else
     {
