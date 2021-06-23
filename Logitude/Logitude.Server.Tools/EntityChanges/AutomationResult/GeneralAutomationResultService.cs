@@ -200,10 +200,9 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                 {
                     if (string.IsNullOrEmpty(automationConditionvalue) || string.IsNullOrEmpty(automationConditionFieldValue))
                     {
-                        isValid = false;
+                        SetConditionValidate(automationCondition, false);
+                        return false;
                     }
-                    SetConditionValidate(automationCondition, isValid);
-                    return isValid;
                 }
 
                 if (automationCondition.OperatorCode == "=" || automationCondition.OperatorCode == "=F")
