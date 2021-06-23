@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "c1b75d6a538b097f3d8ddaa79dcbc2dd";
+		public const string HashString = "8b57d47326f8dcba3796fb0592d3e8df";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -47765,6 +47765,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
                 IsFollowUp =  false,
                 ObjectTableId = ShipmentObjectTable.Id,
                 EntityStatusId = AllEntityStatuses.Where(d => d.Tenant == 0 && d.Code == "ORFA").FirstOrDefault().Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "OISU",
+                EnglishName =  "Ocean Insight Shipment Update",
+                LocalName =  "Ocean Insight Shipment Update",
+                IsManualEntry =  false,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = ShipmentObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
