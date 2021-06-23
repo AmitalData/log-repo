@@ -208,6 +208,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                         this.CreateTraceEvent("UPIC", entityPM.EventNote);
                     }
 
+                    if (entityPM.IsUpdatedOceanInsightsAnalyzer)
+                    {
+                        string notes = this.BuildOceanInsightsEventNotes();
+                        this.CreateTraceEvent("OISU", notes);
+                    }
                 }
 
                 this.TraceOtherData();
@@ -235,6 +240,42 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
             return eventNotes;
         }
+        private string BuildOceanInsightsEventNotes()
+        {
+            string notes = "";
+
+            if (entityMasterData != null)
+            {
+                if (RoutingDate.IsDateAddedOrModified(entityPM.MainCarriageETD, entityMasterData.MainCarriageETD))
+                {
+                    AddDateToEventNotes(ref notes, entityPM.MainCarriageETD);
+                }
+
+                if (RoutingDate.IsDateAddedOrModified(entityPM.MainCarriageATD, entityMasterData.MainCarriageATD))
+                {
+                    AddDateToEventNotes(ref notes, entityPM.MainCarriageATD);
+                }
+
+                if (RoutingDate.IsDateAddedOrModified(entityPM.MainCarriageETA, entityMasterData.MainCarriageETA))
+                {
+                    AddDateToEventNotes(ref notes, entityPM.MainCarriageETA);
+                }
+
+                if (RoutingDate.IsDateAddedOrModified(entityPM.MainCarriageATA, entityMasterData.MainCarriageATA))
+                {
+                    AddDateToEventNotes(ref notes, entityPM.MainCarriageATA);
+                }
+            }
+
+            return notes;
+        }
+        private static void AddDateToEventNotes(ref string myNotes, DateTime? myDate)
+        {
+            if (myDate != null)
+            {
+                myNotes = string.IsNullOrEmpty(myNotes) ? myDate.ToString() : myNotes + "," + myDate.ToString();
+            }
+        }
 
         private string GetConnectedStandaloneShipmentNotes()
         {
@@ -259,7 +300,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 this.CreateTraceEvent("CCPP", entityPM.EventNote);
             }
         }
-
         private void TraceCustomsData()
         {
             if ((entityPoco.CustomsClearanceDate == null || entityPoco.FreightRelease == null || entityPoco.TerminalAvailable == null) && (entityPM.CustomsClearanceDate != null && entityPM.FreightRelease != null && entityPM.TerminalAvailable != null))
@@ -279,7 +319,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             }
 
         }
-
         private void TraceOtherData()
         {
             if (entityPM.QuoteId != null)
@@ -437,8 +476,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 DataBasePortId = entityMasterData.MainCarriageToPortId
             });
         }
-
-
         private void TraceMasterDataTR1()
         {
             this.TraceRoutingDateLocation(new RoutingDateArgs()
@@ -567,7 +604,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 EventNotes = "To " + entityPM.OnCarriageToPortName
             });
         }
-
         private void TraceRoutingDataPreForwarding()
         {
             this.TraceRoutingDateLocation(new RoutingDateArgs()
@@ -616,7 +652,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 EventNotes = "To " + entityPM.OnForwardingToPortName
             });
         }
-
         private DateTime? GetFinalETA()
         {
             DateTime? myResult = entityPM.MainCarriageETA;
@@ -647,7 +682,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
             return myResult;
         }
-
         public void TracePickUp(ShipmentPickUpPM itemPM, ShipmentPickUpDelivery itemPOCO, ShipmentPM shipmentPM)
         {
             //if (!entityPM.IsHybrid)

@@ -91,5 +91,12 @@ namespace Simplog.Data.ShipmentsModel.Repositories
                     where container.Tenant == tenant && container.ContainerNumber == containerNumber
                     select container).FirstOrDefault();
         }
+
+        public IQueryable<Container> GetContainesrByShipmentId(string shipmentId, int tenant)
+        {
+            return from container in context.Containers
+                   where container.Tenant == tenant && container.ShipmentId == shipmentId
+                   select container;
+        }
     }
 }

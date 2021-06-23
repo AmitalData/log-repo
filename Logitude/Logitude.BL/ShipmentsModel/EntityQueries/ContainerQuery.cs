@@ -194,5 +194,54 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
             return containerPM;
         }
+
+        public ContainerPM GetContainerByContainerNumberAndTenant(string containerNumber, int tenant)
+        {
+            ContainerPM result = null;
+            Container entityPoco = (from container in repository.context.Containers
+                                    where container.Tenant == tenant && container.ContainerNumber == containerNumber
+                                    select container).FirstOrDefault();
+
+            if(entityPoco != null)
+            {
+                result = new ContainerPM()
+                {
+                    Id = entityPoco.Id,
+                    Tenant = entityPoco.Tenant,
+                    CreateDate = entityPoco.CreateDate,
+                    CreatedByUserId = entityPoco.CreatedByUserId,
+                    UpdateDate = entityPoco.UpdateDate,
+                    UpdatedByUserId = entityPoco.UpdatedByUserId,
+                    MainCarriageCarrierId = entityPoco.MainCarriageCarrierId,
+                    MainCarriageCarrierNumber = entityPoco.MainCarriageCarrierNumber,
+                    MainCarriageATA = entityPoco.MainCarriageATA,
+                    MainCarriageATD = entityPoco.MainCarriageATD,
+                    MainCarriageETA = entityPoco.MainCarriageETA,
+                    MainCarriageETD = entityPoco.MainCarriageETD,
+                    ContainerNumber = entityPoco.ContainerNumber,
+                    MainCarriageVesselId = entityPoco.MainCarriageVesselId,
+                    ShipmentPackagesId = entityPoco.ShipmentPackagesId,
+                    SearchFields = entityPoco.SearchFields,
+                    DischargeDate = entityPoco.DischargeDate,
+                    Master = entityPoco.Master,
+                    CarrierName = entityPoco.CarrierCard != null ? entityPoco.CarrierCard.EnglishName : "",
+                    VesselName = entityPoco.VesselCard != null ? entityPoco.VesselCard.EnglishName : "",
+                    ShipmentId = entityPoco.ShipmentId,
+                    ActualEmptyPickupDate = entityPoco.ActualEmptyPickupDate,
+                    EstimatedEmptyPickupDate = entityPoco.EstimatedEmptyPickupDate,
+                    EstimatedGateInDate = entityPoco.EstimatedGateInDate,
+                    ActualGateInDate = entityPoco.ActualGateInDate,
+                    CurrentStatus = entityPoco.CurrentStatus,
+                    CurrentStatusDate = entityPoco.CurrentStatusDate,
+                    HasContainerException = entityPoco.HasContainerException,
+                    CurrentLocation = entityPoco.CurrentLocation,
+                    EmptyPickupLocation = entityPoco.EmptyPickupLocation,
+                    DepartureLocation = entityPoco.DepartureLocation,
+                    DestinationLocation = entityPoco.DestinationLocation,
+                };
+            }
+
+            return result;
+        }
     }
 }
