@@ -375,30 +375,36 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (taxreportLine.Reference != null)
             {
                 taxreportLine.Reference = RemoveSpecialChars(taxreportLine.Reference);
-                Regex isMatche = new Regex("([A-Za-z])");
-                bool containsLetters = isMatche.IsMatch(taxreportLine.Reference);
+                Regex alphabet = new Regex("([A-Za-z])");
+                bool containsLetters = alphabet.IsMatch(taxreportLine.Reference);
                 if (containsLetters)
                 {
-                    taxreportLine.ReferecneGroup = null;                      
-                    for (int i = 0; i < taxreportLine.Reference.Length; i++)
-                    {
-                        string referenceChar = taxreportLine.Reference.Substring(i, 1);
-                        MatchCollection chars = Regex.Matches(referenceChar, @"^[a-zA-Z]*$");
-                        if (chars.Count != 0)
-                        {
-                            taxreportLine.ReferecneGroup = taxreportLine.ReferecneGroup + referenceChar;
-                        }
-                        else
-                        {
-                            taxreportLine.Reference = taxreportLine.Reference.Substring(i, taxreportLine.Reference.Length - i);
-                            break;
-                        }
-
-                    }
+                    taxreportLine.ReferecneGroup = null;
+                    SetReferenceGroupForReferencesWithPrefex(taxreportLine);
+                   
                 }
                 else taxreportLine.ReferecneGroup = "0000";
                 TrimMoreThan9Chars(taxreportLine);               
             }                    
+        }
+        private static void SetReferenceGroupForReferencesWithPrefex(TaxReportLinePM taxreportLine)
+        {
+
+            for (int i = 0; i < taxreportLine.Reference.Length; i++)
+            {
+                string referenceChar = taxreportLine.Reference.Substring(i, 1);
+                MatchCollection prefix = Regex.Matches(referenceChar, @"^[a-zA-Z]*$");
+                if (prefix.Count != 0)
+                {
+                    taxreportLine.ReferecneGroup = taxreportLine.ReferecneGroup + referenceChar;
+                }
+                else
+                {
+                    taxreportLine.Reference = taxreportLine.Reference.Substring(i, taxreportLine.Reference.Length - i);
+                    break;
+                }
+
+            }
         }
         private static string RemoveSpecialChars(string reference)
         {
