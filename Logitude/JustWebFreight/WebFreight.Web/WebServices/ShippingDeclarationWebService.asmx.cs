@@ -1135,15 +1135,12 @@ namespace WebFreight.Web.WebServices
                         myDataProvider.UserPhoneNumber = currentContact.BusinessPhone;
                         myDataProvider.UserMobileNumber = currentContact.Mobile;
 
-                        UserRepository userRepository = new UserRepository(commonContext);
-                        User user = userRepository.GetSingleUser(currentContact.Id, tenant);
-                        if (user != null)
-                        {
-                            if (user.Department != null)
-                            {
-                                myDataProvider.UserDepartment = user.Department.EnglishName;
-                            }
-                        }
+                        myDataProvider.UserDepartment = (from user in commonContext.Users
+                                                         join department in commonContext.Departments
+                                                         on user.DepartmentId equals department.Id into userDepartments
+                                                         from userDepartment in userDepartments.DefaultIfEmpty()
+                                                         where user.Id == currentContact.Id
+                                                         select userDepartment.EnglishName).FirstOrDefault();
                     }
                 }
                 #endregion
