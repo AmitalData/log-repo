@@ -166,5 +166,10 @@
         {
             return "warehouseentries/GetSingle?id=" + id;
         }
+
+        public static string CrossDockReleaseGetSingle(string id)
+        {
+            return "warehousereleases/GetSingle?id=" + id;
+        }
     }
 }

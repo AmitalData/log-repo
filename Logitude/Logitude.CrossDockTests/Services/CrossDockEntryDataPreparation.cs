@@ -20,7 +20,7 @@ namespace Logitude.CrossDockTests.Services
             }
             catch (Exception e)
             {
-                throw new InvalidOperationException("Failed Creating cross dock Before Feature Run");
+                throw new InvalidOperationException("Failed Creating cross dock Before Feature Run :" + e.InnerException);
             }
         }
 

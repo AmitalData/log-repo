@@ -19,14 +19,14 @@ namespace Logitude.CrossDockTests.Features
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [Xunit.TraitAttribute("Category", "Pre-Prepare-Entry")]
+    [Xunit.TraitAttribute("Category", "Pre-Prepare-release")]
     public partial class CreateCrossDocksFeature : object, Xunit.IClassFixture<CreateCrossDocksFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
         private string[] _featureTags = new string[] {
-                "Pre-Prepare-Entry"};
+                "Pre-Prepare-release"};
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
@@ -44,7 +44,7 @@ namespace Logitude.CrossDockTests.Features
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
             TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Create Cross Docks", "    With pre-prepared entry data\r\n\tWe want to create entry and release cross dock" +
                     "s.", ProgrammingLanguage.CSharp, new string[] {
-                        "Pre-Prepare-Entry"});
+                        "Pre-Prepare-release"});
             testRunner.OnFeatureStart(featureInfo);
         }
         

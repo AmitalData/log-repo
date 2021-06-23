@@ -20,5 +20,11 @@ namespace Logitude.CrossDockTests.Hooks
             new CrossDockEntryDataPreparation().Prepar();
         }
 
+        [BeforeFeature("Pre-Prepare-release")]
+        public static void SetUpPrepareDataBeforeFeatureRunRelease()
+        {
+            new CrossDockEntryDataPreparation().Prepar();
+        }
+
     }
 }

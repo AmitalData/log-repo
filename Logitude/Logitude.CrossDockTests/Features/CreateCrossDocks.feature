@@ -1,4 +1,4 @@
-﻿@Pre-Prepare-Entry
+﻿@Pre-Prepare-release
 Feature: Create Cross Docks
     With pre-prepared entry data
 	We want to create entry and release cross docks.
