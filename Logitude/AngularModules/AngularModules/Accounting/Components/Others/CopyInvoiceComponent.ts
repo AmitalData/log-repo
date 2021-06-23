@@ -19,6 +19,7 @@ import { CurrencyList } from '../../../Common/EntityLists/CurrencyList';
 import { CurrencyListService } from '../../../Common/Services/StandardLists/CurrencyListService';
 import { CardPMService } from '../../../Common/Services/StandardPMs/CardPMService';
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
+import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 
 
 @Component({
@@ -36,6 +37,7 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
     public ValidationWarningsList: string[] = [];
     public IsAccountingActivated = false;
     public IsEditExchangeRateVisible: boolean = false;
+    public isRTL: boolean = false;
 
     // services
     private paymentTermListService: PaymentTermListService = new PaymentTermListService();
@@ -51,6 +53,7 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
     constructor() {
         super();
         this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
         }
@@ -72,7 +75,7 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
     }
 
     SetDefaultValues() {
-        this.SetVendorIfActive(this.EntityPM.VendorId);
+        this.SetVendorIdForActiveCard(this.EntityPM.VendorId);
         this.AmountInInvoiceCurrency = this.EntityPM.AmountInInvoiceCurrency;
         this.BranchId = this.EntityPM.BranchId;
         this.InternalNotes = this.EntityPM.InternalNotes;
@@ -99,6 +102,10 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
             loadingDate = DateTool.GetCurrentDateAsUtc();
         }
 
+        this.GetCurrencyExchangeRate(myCurrencyRatesService, loadingDate, myCommonDomainService);
+    }
+
+    private GetCurrencyExchangeRate(myCurrencyRatesService: CurrencyRatesService, loadingDate: Date, myCommonDomainService: CommonDomainService) {
         myCurrencyRatesService.GetCurrenciesExchangeRateByValueDate(SessionLocator.LocalCurrencyId, loadingDate).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.LastRatesList = myResponse.Result;
@@ -119,7 +126,7 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
         });
     }
 
-    private SetVendorIfActive(id: string) {
+    private SetVendorIdForActiveCard(id: string) {
         this.cardPMService.get(id).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 var card = myResponse.Result;
@@ -130,24 +137,24 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
     }
 
     SetCurrencyRateData() {
-        var myRate: number = null;
+        var rate: number = null;
         var myRateDate: Date = null;
 
         if (!AppTool.IsNullOrEmpty(this.InvoiceCurrencyId)) {
             if (this.InvoiceCurrencyId == SessionLocator.TenantPM.CurrencyId) {
-                myRate = 1;
+                rate = 1;
             }
 
             else {
                 var lastRate: LastRate = this.LastRatesList.filter(d => d.ForeignCurrencyId == this.InvoiceCurrencyId)[0];
                 if (lastRate != null) {
-                    myRate = lastRate.Rate;
+                    rate = lastRate.Rate;
                     myRateDate = lastRate.ValueDate;
                 }
             }
         }
 
-        this.InvoiceCurrencyExchangeRate = myRate;
+        this.InvoiceCurrencyExchangeRate = rate;
         this.ExchangeRateDate = myRateDate;
     }
  
@@ -195,71 +202,36 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
             this.CheckDuplication();
 
             if (AppTool.IsNullOrEmpty(value)) {
-                this.VATNumber = null;
-                this.VendorName = null;
-                this.vendorPartnerTypeId = null;
-                this.InvoiceCurrencyId = SessionLocator.AccountingCurrencyId;
-                this.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
-                this.vendorGLAccountId = null;
+                this.SetVendorData(null);
             }
 
             else {
-                this.cardListService.getSingle(value).subscribe((myResponse: ServiceResponse) => {
-                    if (!myResponse.HasError) {
-                        var list: CardList = myResponse.Result;
-                        if (list != null) {
-                            this.VATNumber = list.VatNumber;
-                            this.VendorName = list.EnglishName;
-                            this.VendorLocalName = list.LocalName || list.EnglishName;
-                            this.VendorPartnerTypeId = list.PartnerTypeId;
-                            this.SetInvoiceCurrency(list);
-                            if (!AppTool.IsNullOrEmpty(list.InvoiceCurrencyId)) {
-                                this.InvoiceCurrencyId = list.InvoiceCurrencyId;
-                            }
-
-                            if (!AppTool.IsNullOrEmpty(list.PaymentTermId)) {
-                                this.PaymentTermId = list.PaymentTermId;
-                            }
-
-                            else {
-                                this.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
-                            }
-
-                            if (!AppTool.IsNullOrEmpty(list.GLAccountId)) {
-                                this.gLAccountPMService.get(list.GLAccountId).subscribe((myResponse: ServiceResponse) => {
-                                    if (!myResponse.HasError) {
-                                        var glaccount = myResponse.Result;
-                                        if (glaccount != null) {
-                                            this.VendorGLAccountId = glaccount.Id;
-                                        }
-                                    }
-                                });
-                            }
-                        }
-                    }
-                });
+                this.SetVendorDataFromConnectedCard(value);
             }
         }
     }
 
-    CheckDuplication() {
-        var warnings: string[] = [];
-        this.FillWarnings(warnings);
-
-        if (!AppTool.IsNullOrEmpty(this.VendorId) && !AppTool.IsNullOrEmpty(this.InvoiceNumber)) {
-
-            this.invoiceDomainService.CheckVendor_NumberDuplication(this.VendorId, this.InvoiceNumber, this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
-                if (!myResponse.HasError) {
-
-                    var isDuplicated: boolean = myResponse.Result;
-
-                    if (isDuplicated) {
-                        warnings.push(TextCodeTranslator.Translate("APInvoice.M.SameInvoiceNumber"));
-                        this.FillWarnings(warnings);
-                    }
+    private SetVendorDataFromConnectedCard(value: string) {
+        this.cardListService.getSingle(value).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var list: CardList = myResponse.Result;
+                if (list != null) {
+                    this.SetVendorData(list);
+                    this.SetInvoiceCurrency(list);
+                    this.SetVendorGLAccount(list);
                 }
-            });
-        }
+            }
+        });
+    }
+
+    private SetVendorData(card: CardList) {
+        this.VATNumber = card == null ? null : card.VatNumber;
+        this.VendorName = card == null ? null : card.EnglishName;
+        this.VendorLocalName = card == null ? null : card.LocalName || card.EnglishName;
+        this.VendorPartnerTypeId = card == null ? null : card.PartnerTypeId;
+        this.InvoiceCurrencyId = card == null ? SessionLocator.AccountingCurrencyId : card.InvoiceCurrencyId;
+        this.PaymentTermId = card == null ? SessionLocator.TenantPM.PaymentTermId : card.PaymentTermId == null ? SessionLocator.TenantPM.PaymentTermId : card.PaymentTermId;
+        this.VendorGLAccountId = null;
     }
 
     SetInvoiceCurrency(card: CardList) {
@@ -273,6 +245,43 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
         }
     }
 
+    private SetVendorGLAccount(list: CardList) {
+        if (!AppTool.IsNullOrEmpty(list.GLAccountId)) {
+            this.gLAccountPMService.get(list.GLAccountId).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    var glaccount = myResponse.Result;
+                    if (glaccount != null) {
+                        this.VendorGLAccountId = glaccount.Id;
+                    }
+                }
+            });
+        }
+    }
+
+    CheckDuplication() {
+        var warnings: string[] = [];
+        this.FillWarnings(warnings);
+
+        if (!AppTool.IsNullOrEmpty(this.VendorId) && !AppTool.IsNullOrEmpty(this.InvoiceNumber)) {
+
+            this.CheckIfInvoiceNumberDuplicated(warnings);
+        }
+    }
+
+    private CheckIfInvoiceNumberDuplicated(warnings: string[]) {
+        this.invoiceDomainService.CheckVendor_NumberDuplication(this.VendorId, this.InvoiceNumber, this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+
+                var isDuplicated: boolean = myResponse.Result;
+
+                if (isDuplicated) {
+                    warnings.push(TextCodeTranslator.Translate("APInvoice.M.SameInvoiceNumber"));
+                    this.FillWarnings(warnings);
+                }
+            }
+        });
+    }
+ 
     // Commands
     FillWarnings(warnings: string[]) {
         this.ValidationWarningsList = [];
@@ -326,16 +335,20 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
             }
 
             else {
-                this.currencyListService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
-                    if (!myResponse.HasError) {
-                        var list: CurrencyList = myResponse.Result;
-                        if (list != null) {
-                            this.InvoiceCurrencyCode = list.Code;
-                        }
-                    }
-                });
+                this.SetInvoiceCurrencyCode(value);
             }
         }
+    }
+
+    private SetInvoiceCurrencyCode(value: string) {
+        this.currencyListService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var list: CurrencyList = myResponse.Result;
+                if (list != null) {
+                    this.InvoiceCurrencyCode = list.Code;
+                }
+            }
+        });
     }
 
     private invoiceCurrencyCode: string;
@@ -396,18 +409,21 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
             }
 
             else {
-                this.paymentTermListService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
-                    if (!myResponse.HasError) {
-                        var list: PaymentTermList = myResponse.Result;
-                        if (list != null) {
-                            this.paymentTermName = list.EnglishName;
-                        }
-                    }
-                });
+                this.SetPaymentTermName(value);
             }
-
             this.ComputeAPInvoiceDueDate();
         }
+    }
+
+    private SetPaymentTermName(value: string) {
+        this.paymentTermListService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var list: PaymentTermList = myResponse.Result;
+                if (list != null) {
+                    this.paymentTermName = list.EnglishName;
+                }
+            }
+        });
     }
 
     private paymentTermName: string;
@@ -497,50 +513,54 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
                         }
 
                         else {
-                            var myComparativeDate: Date = null;
-
-                            if (this.EntityPM.IsMultipleEntities) {
-                                myComparativeDate = DateTool.GetDateParts(this.InvoiceDate).DateObject;
-                            }
-
-                            else {
-                                if (list.FromDateTypeCode == "SHI") {
-                                    myComparativeDate = DateTool.GetDateParts(this.EntityPM.OperationalDate).DateObject;
-
-                                    if (myComparativeDate == null) {
-                                        myComparativeDate = DateTool.GetDateParts(this.InvoiceDate).DateObject;
-                                    }
-                                }
-
-                                else {
-                                    myComparativeDate = DateTool.GetDateParts(this.InvoiceDate).DateObject;
-                                }
-                            }
-
-                            if (myComparativeDate != null) {
-                                var dateYear = myComparativeDate.getUTCFullYear();
-                                var dateMonth = myComparativeDate.getUTCMonth() + 1;
-                                var dateDay = myComparativeDate.getUTCDate();
-
-                                if (list.CurrentMonth) {
-                                    dateMonth += 1;
-                                    dateDay = 1;
-                                }
-
-                                myComparativeDate = this.SetDateProperties(dateYear, dateMonth, dateDay);
-
-                                if (!AppTool.IsNullOrZero(list.Days)) {
-                                    myComparativeDate.setUTCDate(myComparativeDate.getUTCDate() + list.Days);
-                                }
-
-                                if (this.DueDate != myComparativeDate) {
-                                    this.DueDate = myComparativeDate;
-                                }
-                            }
+                            this.SetDueDateAccordingToPaymentTerm(list);
                         }
                     }
                 }
             });
+        }
+    }
+
+    private SetDueDateAccordingToPaymentTerm(list: PaymentTermList) {
+        var myComparativeDate: Date = null;
+
+        if (this.EntityPM.IsMultipleEntities) {
+            myComparativeDate = DateTool.GetDateParts(this.InvoiceDate).DateObject;
+        }
+
+        else {
+            if (list.FromDateTypeCode == "SHI") {
+                myComparativeDate = DateTool.GetDateParts(this.EntityPM.OperationalDate).DateObject;
+
+                if (myComparativeDate == null) {
+                    myComparativeDate = DateTool.GetDateParts(this.InvoiceDate).DateObject;
+                }
+            }
+
+            else {
+                myComparativeDate = DateTool.GetDateParts(this.InvoiceDate).DateObject;
+            }
+        }
+
+        if (myComparativeDate != null) {
+            var dateYear = myComparativeDate.getUTCFullYear();
+            var dateMonth = myComparativeDate.getUTCMonth() + 1;
+            var dateDay = myComparativeDate.getUTCDate();
+
+            if (list.CurrentMonth) {
+                dateMonth += 1;
+                dateDay = 1;
+            }
+
+            myComparativeDate = this.SetDateProperties(dateYear, dateMonth, dateDay);
+
+            if (!AppTool.IsNullOrZero(list.Days)) {
+                myComparativeDate.setUTCDate(myComparativeDate.getUTCDate() + list.Days);
+            }
+
+            if (this.DueDate != myComparativeDate) {
+                this.DueDate = myComparativeDate;
+            }
         }
     }
 
@@ -564,7 +584,11 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
     }
 
     OkButtonClicked() {
+        var errors: string[] = this.ValidateInvoiceFields();
+        this.ValidationErrorsList = errors;
+    }
 
+    private ValidateInvoiceFields() {
         var errors: string[] = [];
 
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
@@ -618,8 +642,7 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
         if (AppTool.IsNullOrEmpty(this.BranchId)) {
             errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.BranchId")));
         }
-
-        this.ValidationErrorsList = errors;
+        return errors;
     }
 
     CheckSpecialCharacters() {

@@ -20,6 +20,7 @@ export class APInvoiceMenuButtonsHandler {
     public EntityPM: APInvoicePM;
     public entityArgs: EntityArgs
     isFullAccounting: boolean = false;
+    public approvedStatusCode: string = "AD";
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
@@ -164,17 +165,8 @@ export class APInvoiceMenuButtonsHandler {
                         }
 
                         case "CopyInvoice": {
-
-                            const approvedStatusCode: string = "AD";
-                            if (!AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) && this.EntityPM.StatusCode != approvedStatusCode) {
-                                myButtonIsDisabled = true;
-                            }
-
-                            if (this.EntityPM != null && this.EntityPM.IsExternalEntity) {
-                                myButtonIsDisabled = true;
-                            }
+                            myButtonIsDisabled = this.SetEnableForCopyInvoiceButton(myButtonIsDisabled);
                             break;
-
                         }
                     }
 
@@ -184,6 +176,17 @@ export class APInvoiceMenuButtonsHandler {
             }
         }
     }
+    private SetEnableForCopyInvoiceButton(myButtonIsDisabled: boolean) {
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) && this.EntityPM.StatusCode != this.approvedStatusCode) {
+            myButtonIsDisabled = true;
+        }
+
+        if (this.EntityPM != null && this.EntityPM.IsExternalEntity) {
+            myButtonIsDisabled = true;
+        }
+        return myButtonIsDisabled;
+    }
+
     public MenuButtonClick(menuButton: MenuButtonPM) {
         if (!this.isButtonClicked) {
 
@@ -780,7 +783,7 @@ if (response != null) {
         windowArgs.APInvoicePM = this.EntityPM;
         var logWindow = new LogitudeWindow();
         logWindow.Width = 700;
-        logWindow.Height = 570;
+        logWindow.Height = 600;
         logWindow.Title = windowTitle;
         logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => {
