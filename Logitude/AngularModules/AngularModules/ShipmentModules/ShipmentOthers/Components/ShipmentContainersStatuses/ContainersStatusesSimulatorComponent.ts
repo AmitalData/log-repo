@@ -15,6 +15,7 @@ export class ContainersStatusesSimulatorComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     private isFromContainer = false;
     private shipmentId: string;
+    private containerNumber: string;
 
     constructor() {
 
@@ -24,6 +25,7 @@ export class ContainersStatusesSimulatorComponent {
         if (args) {
             this.isFromContainer = args.IsFromContainer;
             this.shipmentId = args.ShipmentId;
+            this.containerNumber = args.ContainerNumber;
         }
     }
 
@@ -63,6 +65,7 @@ export class ContainersStatusesSimulatorComponent {
             simulator.XmlString = this.XML_Text;
             simulator.IsFromContainer = this.isFromContainer;
             simulator.ShipmentId = this.shipmentId;
+            simulator.ContainerNumber = this.containerNumber;
             var myService = new ShipmentContainersWebService();
 
             myService.Simulate(simulator).subscribe((myResponse: ServiceResponse) => {

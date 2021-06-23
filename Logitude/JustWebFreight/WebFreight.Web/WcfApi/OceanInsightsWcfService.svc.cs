@@ -84,27 +84,23 @@ namespace WebFreight.Web.WcfApi
                     //Table.Add("REQ_ID","142707");
                     bool UseOIV2 = FeatureToggleHelper.HasFeatureToggle("OI2", 0);
                     ContainerTasks Task = new ContainerTasks(UseOIV2);
-                    string Result = "";
+                    string Result;
                     string Status;
-                    string Errors = "";
+                    string Errors;
                     object Temp = null;//STARTMONITOR
                     if (OceanInsightsRequestPm == null)
                     {
                         OceanInsightsRequestPm = new OceanInsightsRequestPM();
-                        if (!IsTextRequest(ScacCode))
+                        if (Type == "c_id")
                         {
-                            if (Type == "c_id")
-                            {
-                                Task.StartMonitor(ScacCode, ReferenceNo, OIToken, out Result, out Status, out Errors);//ActivateOperation("STARTMONITOR", ref Table, ref Temp, out Result, out Status, out Errors);
+                            Task.StartMonitor(ScacCode, ReferenceNo, OIToken, out Result, out Status, out Errors);//ActivateOperation("STARTMONITOR", ref Table, ref Temp, out Result, out Status, out Errors);
 
-                            }
-                            else
-                            {
-                                Task.StartMonitor(ScacCode, ReferenceNo, OIToken, out Result, out Status, out Errors, false);
-                            }
                         }
-
-                        if ((!string.IsNullOrEmpty(Errors) || !string.IsNullOrWhiteSpace(Errors)) && !IsTextRequest(ScacCode))
+                        else
+                        {
+                            Task.StartMonitor(ScacCode, ReferenceNo, OIToken, out Result, out Status, out Errors, false);
+                        }
+                        if (!string.IsNullOrEmpty(Errors) || !string.IsNullOrWhiteSpace(Errors))
                         {
                             string SearchErrors;
                             Task.StartMonitorForExistedRequest(ReferenceNo, OIToken, out Result, out Status, out SearchErrors);
@@ -142,24 +138,16 @@ namespace WebFreight.Web.WcfApi
                                 service.Create(OceanInsightsRequestPm);
                             }
                         }
-
                         else
                         {
+                            XmlDocument xmldoc = new XmlDocument();
+                            xmldoc.LoadXml(Result);
+                            XmlNodeList nodeList = xmldoc.GetElementsByTagName("id");
                             string Id = string.Empty;
-
-                            if (IsTextRequest(ScacCode)) 
-                                Id = GetEightDigitssRandomNumber();
-                            else
+                            foreach (XmlNode item in nodeList)
                             {
-                                XmlDocument xmldoc = new XmlDocument();
-                                xmldoc.LoadXml(Result);
-                                XmlNodeList nodeList = xmldoc.GetElementsByTagName("id");
-                                foreach (XmlNode item in nodeList)
-                                {
-                                    Id = item.InnerText;
-                                }
+                                Id = item.InnerText;
                             }
-
                             OceanInsightsRequestService service = new OceanInsightsRequestService(objectContext, Tenant);
                             if (Type == "c_id")
                             {
@@ -177,7 +165,7 @@ namespace WebFreight.Web.WcfApi
                             service.Create(OceanInsightsRequestPm);
                         }
                     }
-                    if (string.IsNullOrEmpty(OceanInsightsRequestPm.OceanInsigntId) && !IsTextRequest(ScacCode))
+                    if (string.IsNullOrEmpty(OceanInsightsRequestPm.OceanInsigntId))
                     {
                         Task.StartMonitorForExistedRequest(ReferenceNo, OIToken, out Result, out Status, out Errors);
                         if (!string.IsNullOrEmpty(Errors) || !string.IsNullOrWhiteSpace(Errors))
@@ -244,17 +232,6 @@ namespace WebFreight.Web.WcfApi
             }
         }
 
-        private string GetEightDigitssRandomNumber()
-        {
-            Random random = new Random();
-            int randomNo = random.Next(10000000, 99999999);
-            return randomNo.ToString();
-        }
-
-        private bool IsTextRequest(string scacCode)
-        {
-            return scacCode == "Test" ? true : false;
-        }
 
         public Response GetStatus(string RequestId, string Type)
         {

@@ -169,7 +169,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        OnCarriageETD = a.OnCarriageETD,
                        LastStatusCode = a.LastStatusCode,
                        LastStatusDate = a.LastStatusDate,
-                       LastStatusName = a.LastStatus == null ? null : a.LastStatus.Name,
                        DeliveryTransportModeCode = a.DeliveryTransportModeCode,
                        ECRTransportModeCode = a.ECRTransportModeCode,
                        IsMultiHarmonize = a.IsMultiHarmonize,
@@ -196,7 +195,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             myResult.InsideShipmentPackages = insideShipmentPackageQuery.GetInsideShipmentPackages(myResult.Id, tenant);
             myResult.ShipmentPackageItems = shipmentPackageItemQuery.GetShipmentPackageItems(myResult.Id, tenant);
             myResult.ShipmentPackageHarmonizes = shipmentPackageHarmonizeQuery.GetShipmentPackageHarmonizes(myResult.Id, tenant);
-
+            this.MapTheLastStatusName(myResult);
             return myResult;
         }
 
@@ -354,22 +353,27 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                            select d.EnglishName).FirstOrDefault();
 
                 }
-                
-
-                this.MapTheLastStatusCode(package);
-
+                this.MapTheLastStatusName(package);
             }
-
             return shipmentPackages;
         }
 
-        private void MapTheLastStatusCode(ShipmentPackagePM package)
+        private void MapTheLastStatusName(ShipmentPackagePM package)
         {
             if (!string.IsNullOrEmpty(package.LastStatusCode))
             {
-                package.LastStatusName = (from d in repository.context.INTTRAStatuses
-                                          where d.Code == package.LastStatusCode
-                                          select d.Name).FirstOrDefault();
+                if(package.ContainerStatusSourceCode == "INT")
+                {
+                    package.LastStatusName = (from d in repository.context.INTTRAStatuses
+                                              where d.Code == package.LastStatusCode
+                                              select d.Name).FirstOrDefault();
+                }
+                else if (package.ContainerStatusSourceCode == "OIN")
+                {
+                    package.LastStatusName = (from d in repository.context.ContainerStatusSources
+                                              where d.Code == package.LastStatusCode
+                                              select d.Name).FirstOrDefault();
+                }
             }
         }
 
@@ -379,7 +383,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             if (shipmentIds.Count > 0)
             {
-                myResult = (from a in repository.context.ShipmentPackages.Include("PackageType").Include("LastStatus")
+                myResult = (from a in repository.context.ShipmentPackages.Include("PackageType")
                             where a.Tenant == tenant && shipmentIds.Contains(a.ShipmentId)
                             select new ShipmentPackagePM()
                             {
@@ -470,7 +474,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                 OnCarriageETD = a.OnCarriageETD,
                                 LastStatusCode = a.LastStatusCode,
                                 LastStatusDate = a.LastStatusDate,
-                                LastStatusName = a.LastStatus == null ? null : a.LastStatus.Name,
+                                //LastStatusName = a.LastStatus == null ? null : a.LastStatus.Name,
                                 DeliveryTransportModeCode = a.DeliveryTransportModeCode,
                                 ECRTransportModeCode = a.ECRTransportModeCode,
                                 IsMultiHarmonize = a.IsMultiHarmonize,
