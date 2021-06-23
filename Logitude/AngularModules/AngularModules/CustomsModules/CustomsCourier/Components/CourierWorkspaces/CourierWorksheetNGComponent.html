@@ -380,6 +380,14 @@
                                                                 <!--All-->
                                                                 <table *ngIf="_SelectedTabFilter.Code=='ALL' ">
                                                                     <tr>
+                                                                        <td>
+
+
+                                                                            <!--[virtualScroll]="true" [itemSize]="34"-->
+
+                                                                            <p-autoComplete field="LocalName" [(ngModel)]="text" [suggestions]="results" (completeMethod)="search($event)" [dropdown]="true"></p-autoComplete>
+
+                                                                        </td>
                                                                         <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems == null || (_CourierWorksheetSharedDataService._SelectedItems != null
                                                                             && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0)"
                                                                             style="width:170px">

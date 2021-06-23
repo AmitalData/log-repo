@@ -38,10 +38,13 @@ import { DeclarationCourierStatusList } from '../../../../Customs/EntityLists/De
 import { IIGGeneralMessagesService } from '../../../../Customs/Services/WebServices/IIGGeneralMessagesService';
 import { match } from 'cypress/types/sinon';
 
+import { CustomsAirlineListService } from '../../../../Customs/Services/StandardLists/CustomsAirlineListService';
+import { CustomsAirlinePM } from '../../../../Customs/EntityPMs/CustomsAirlinePM';
+import { CustomsAirlineList } from '../../../../Customs/EntityLists/CustomsAirlineList';
 @Component({
 
     templateUrl: './CourierWorksheetNGComponent.html',
-    providers: [CourierWorksheetSharedDataService],
+    providers: [CourierWorksheetSharedDataService, CustomsAirlineListService],
 })
 
 
@@ -83,6 +86,26 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
     public set SelectedRow(value: any) {
         this._SelectedRow = value;
     }
+
+
+
+    text: string;
+
+    results: CustomsAirlineList[];
+
+    search(event) {
+        debugger;
+        var filters: ApiQueryFilters = new ApiQueryFilters(true); 
+        filters.addAdditionalFilter("LocalName", event.query, null, null, "StartsWith", false, false, false, "string");
+
+
+        this.customsAirlineListService.getByFilters(filters).subscribe(data => {
+            this.results = data.Result;
+        });
+    }
+
+
+
     _CourierMasterValidator: CourierMasterValidator = new CourierMasterValidator();
     _CourierMasterService: CourierMasterService = new CourierMasterService();
     _DeclarationCourierStatusListService: DeclarationCourierStatusListService = new DeclarationCourierStatusListService();
@@ -141,7 +164,7 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
     private currentSession = SessionLocator.SelectedSession;
     private ChangedUnloadPortSite: boolean;
     //constructor(public entityArgs: EntityArgs) {
-    constructor(public _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
+    constructor(public _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService, private customsAirlineListService: CustomsAirlineListService) {
         super();
         //this.entityPM = entityArgs.EntityPM;
         this._TabFilterList.push(new TabFilter("ALL", "כל הש.מ.ב ", null, null));
