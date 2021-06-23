@@ -70,7 +70,7 @@ namespace Cloud_Rest_Client
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.xmlBrowser1.Location = new System.Drawing.Point(17, 486);
-            this.xmlBrowser1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.xmlBrowser1.Margin = new System.Windows.Forms.Padding(4);
             this.xmlBrowser1.MinimumSize = new System.Drawing.Size(27, 25);
             this.xmlBrowser1.Name = "xmlBrowser1";
             this.xmlBrowser1.Size = new System.Drawing.Size(1040, 400);
@@ -82,7 +82,7 @@ namespace Cloud_Rest_Client
             // btnCopyResponseBody
             // 
             this.btnCopyResponseBody.Location = new System.Drawing.Point(1065, 486);
-            this.btnCopyResponseBody.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCopyResponseBody.Margin = new System.Windows.Forms.Padding(4);
             this.btnCopyResponseBody.Name = "btnCopyResponseBody";
             this.btnCopyResponseBody.Size = new System.Drawing.Size(141, 28);
             this.btnCopyResponseBody.TabIndex = 75;
@@ -115,7 +115,7 @@ namespace Cloud_Rest_Client
             // 
             this.btnCallApi.Enabled = false;
             this.btnCallApi.Location = new System.Drawing.Point(505, 290);
-            this.btnCallApi.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCallApi.Margin = new System.Windows.Forms.Padding(4);
             this.btnCallApi.Name = "btnCallApi";
             this.btnCallApi.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnCallApi.Size = new System.Drawing.Size(137, 53);
@@ -127,11 +127,11 @@ namespace Cloud_Rest_Client
             // txtServerUrl
             // 
             this.txtServerUrl.Location = new System.Drawing.Point(180, 25);
-            this.txtServerUrl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtServerUrl.Margin = new System.Windows.Forms.Padding(4);
             this.txtServerUrl.Name = "txtServerUrl";
             this.txtServerUrl.Size = new System.Drawing.Size(292, 22);
             this.txtServerUrl.TabIndex = 62;
-            this.txtServerUrl.Text = "http://localhost:9996/api/";
+            this.txtServerUrl.Text = "https://test.logitudeworld.com/test/api/";
             // 
             // label3
             // 
@@ -148,7 +148,7 @@ namespace Cloud_Rest_Client
             // 
             this.txtEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txtEmail.Location = new System.Drawing.Point(111, 42);
-            this.txtEmail.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtEmail.Margin = new System.Windows.Forms.Padding(4);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(335, 23);
             this.txtEmail.TabIndex = 21;
@@ -161,9 +161,9 @@ namespace Cloud_Rest_Client
             this.groupBox2.Controls.Add(this.txtEmail);
             this.groupBox2.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.Location = new System.Drawing.Point(16, 70);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox2.Size = new System.Drawing.Size(476, 126);
             this.groupBox2.TabIndex = 69;
             this.groupBox2.TabStop = false;
@@ -173,7 +173,7 @@ namespace Cloud_Rest_Client
             // 
             this.txtPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txtPassword.Location = new System.Drawing.Point(111, 81);
-            this.txtPassword.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtPassword.Margin = new System.Windows.Forms.Padding(4);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Size = new System.Drawing.Size(335, 23);
             this.txtPassword.TabIndex = 25;
@@ -204,7 +204,7 @@ namespace Cloud_Rest_Client
             // btnConnect
             // 
             this.btnConnect.Location = new System.Drawing.Point(505, 21);
-            this.btnConnect.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnConnect.Margin = new System.Windows.Forms.Padding(4);
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(137, 28);
             this.btnConnect.TabIndex = 71;
@@ -215,7 +215,7 @@ namespace Cloud_Rest_Client
             // txtReponseCode
             // 
             this.txtReponseCode.Location = new System.Drawing.Point(203, 420);
-            this.txtReponseCode.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtReponseCode.Margin = new System.Windows.Forms.Padding(4);
             this.txtReponseCode.Name = "txtReponseCode";
             this.txtReponseCode.ReadOnly = true;
             this.txtReponseCode.Size = new System.Drawing.Size(303, 22);
@@ -236,7 +236,7 @@ namespace Cloud_Rest_Client
             // 
             this.cbxLatestStatusOnly.AutoSize = true;
             this.cbxLatestStatusOnly.Location = new System.Drawing.Point(180, 322);
-            this.cbxLatestStatusOnly.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbxLatestStatusOnly.Margin = new System.Windows.Forms.Padding(4);
             this.cbxLatestStatusOnly.Name = "cbxLatestStatusOnly";
             this.cbxLatestStatusOnly.Size = new System.Drawing.Size(150, 21);
             this.cbxLatestStatusOnly.TabIndex = 102;
@@ -246,7 +246,7 @@ namespace Cloud_Rest_Client
             // txtHouseNumber
             // 
             this.txtHouseNumber.Location = new System.Drawing.Point(180, 290);
-            this.txtHouseNumber.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtHouseNumber.Margin = new System.Windows.Forms.Padding(4);
             this.txtHouseNumber.Name = "txtHouseNumber";
             this.txtHouseNumber.Size = new System.Drawing.Size(284, 22);
             this.txtHouseNumber.TabIndex = 101;
@@ -269,7 +269,7 @@ namespace Cloud_Rest_Client
             this.cmbOperations.Items.AddRange(new object[] {
             "GET"});
             this.cmbOperations.Location = new System.Drawing.Point(180, 236);
-            this.cmbOperations.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbOperations.Margin = new System.Windows.Forms.Padding(4);
             this.cmbOperations.Name = "cmbOperations";
             this.cmbOperations.Size = new System.Drawing.Size(292, 24);
             this.cmbOperations.TabIndex = 99;
@@ -280,7 +280,7 @@ namespace Cloud_Rest_Client
             this.cmbAPI.Items.AddRange(new object[] {
             "ShipmentStatuses"});
             this.cmbAPI.Location = new System.Drawing.Point(180, 203);
-            this.cmbAPI.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbAPI.Margin = new System.Windows.Forms.Padding(4);
             this.cmbAPI.Name = "cmbAPI";
             this.cmbAPI.Size = new System.Drawing.Size(292, 24);
             this.cmbAPI.TabIndex = 98;
