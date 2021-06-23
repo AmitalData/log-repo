@@ -35,7 +35,9 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="APInvoice"
   DefaultText="&quot;A/P Invoice Line&quot;"
-  Code="&quot;6e43&quot;"
+
+  Code="&quot;1a78&quot;"
+
   Name="&quot;APInvoiceLine&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Invoice&quot;"
@@ -754,7 +756,7 @@
     MinLength="0"
     MaxLength="250"
     IsRequired="false"
-    CopyToDW="false"
+    CopyToDW="true"
     DisplayOnLookUp="true"
     DisplayOnLookUpLocal="false"
     CanFilter="false"

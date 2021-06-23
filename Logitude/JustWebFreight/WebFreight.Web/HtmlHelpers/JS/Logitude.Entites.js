@@ -151,8 +151,9 @@ var QuotesRequest = function () {
     this.CreateDate = "";
     this.QuotationUpdateDate = "";
     this.QuotationPreparedTickVisibility = "";
+    this.DocumentSecurityId = "";
 
-    
+
 }
 
 
@@ -1719,8 +1720,15 @@ function GetNewInStanceFromQuotesRequest(quotesRequest, tenantDateTimeFormat) {
     var newQuotesRequest = new QuotesRequest();
     newQuotesRequest.CreateDate = $.Convert.ToShortDate(quotesRequest.CreateDate, tenantDateTimeFormat);
     newQuotesRequest.ReferenceNumber = $.trim(quotesRequest.ReferenceNumber);
-    newQuotesRequest.QuotationPreparedTickVisibility = quotesRequest.QuotationUpdateDate ? "visible" :"collapse";
-    newQuotesRequest.QuotationUpdateDate = $.Convert.ToShortDate(quotesRequest.QuotationUpdateDate, tenantDateTimeFormat);
+    if (quotesRequest.QuotationDocumentFiling) {
+        newQuotesRequest.QuotationPreparedTickVisibility = "visible";
+        newQuotesRequest.QuotationUpdateDate = $.Convert.ToShortDate(quotesRequest.QuotationDocumentFiling.CreateDate, tenantDateTimeFormat);
+        newQuotesRequest.DocumentSecurityId = quotesRequest.QuotationDocumentFiling.SecurityId;
+    }
+    else
+    {
+        newQuotesRequest.QuotationPreparedTickVisibility = "collapse";
+    }
 
     return newQuotesRequest;
 }

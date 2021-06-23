@@ -12,16 +12,32 @@ import { GenerateRandomNumberAndString } from '../../../Base/cypress/actions/Gen
 
 let searchFieldValue = null;
 
+export function EnableMultiPercentage() {
+    DefinePUtAccountingSettingsRequest()
+    Actions.FillInputCheckBoxProcess(VatTypesSelectors.AccountingSetting_EnableMultiPercentageVATTypes, "No")
+    Actions.FillInputCheckBoxProcess(VatTypesSelectors.AccountingSetting_EnableMultiPercentageVATTypes, "Yes")
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+}
+
+function DefinePUtAccountingSettingsRequest() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.AccountingSettings, RequestAliases.PutAccountingSettings);
+}
+
+export function AssertEnableMultiPercentage() {
+    let intercept = cy.wait("@" + RequestAliases.PutAccountingSettings);
+    intercept.then((interception) => {
+        let statusCode = interception.response.statusCode
+        assert.equal(statusCode, 200)
+    })
+}
+
 export function FillVatTypeCode(vatTypeCode: string) {
     cy.FillLogTextBox(VatTypesSelectors.Code, vatTypeCode)
 }
 
 export function ClickMultiRadio() {
     cy.get(VatTypesSelectors.MultiPercentageRadio).click()
-}
-
-export function ClickSingleRadio() {
-    cy.get(VatTypesSelectors.SinglePercentageRadio).click()
 }
 
 export function FillVatTypeDetails(vatTypeDetails: VatTypeDetails, codeDigits: number) {

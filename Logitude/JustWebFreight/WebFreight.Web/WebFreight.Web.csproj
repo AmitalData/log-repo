@@ -963,6 +963,7 @@
     <Compile Include="AccountingModel\LedgerTransactionService\TransactionsBalanceByFiltersService.cs" />
     <Content Include="App_Code\AngularJS_App_Code\DocumentTypeCopyExtendedController.cs" />
     <Content Include="App_Code\DocumentFileController.cs" />
+    <Content Include="App_Code\AuthnController.cs" />
     <Compile Include="CommonDataModel\LogitudeGridExportToExcel\LogitudeGridExportToExcelArguments.cs" />
     <Compile Include="CommonDataModel\LogitudeGridExportToExcel\LogitudeGridExportToExcelHelper.cs" />
     <Compile Include="Controllers\AccountingModel\BankCodeController.cs" />
@@ -1081,6 +1082,7 @@
     <Compile Include="Controllers\WebDomainControllers\PotentialAddressController.cs" />
     <Compile Include="Controllers\WebServices\ShipmentContainersWebServiceController.cs" />
     <Compile Include="DataContracts\AccountingPartnerApiFilters.cs" />
+    <Compile Include="DataContracts\UserCredentials.cs" />
     <Compile Include="DataContracts\CargoTrackingBrandingDataRequest.cs" />
     <Compile Include="DataContracts\CargoTrackingBrandingData.cs" />
     <Compile Include="DataContracts\CreateDocumentOutArgs.cs" />
@@ -1104,6 +1106,7 @@
     <Compile Include="ExternalAPIs\ShipmentNumbersController.cs" />
     <Compile Include="ExternalAPIs\V1\GLAccountChequeDetailsController.cs" />
     <Compile Include="ExternalAPIs\V1\CargoTrackingShipmentDetailsController.cs" />
+    <Compile Include="ExternalAPIs\V1\ShipmentStatusesController.cs" />
     <Compile Include="FileNotFound.aspx.cs">
       <DependentUpon>FileNotFound.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -5821,6 +5824,7 @@
     <Compile Include="SendGridWebPage.aspx.designer.cs">
       <DependentUpon>SendGridWebPage.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Services\LogitudeAuthenticationService.cs" />
     <Compile Include="SharedDocuments.aspx.cs">
       <DependentUpon>SharedDocuments.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -17,6 +17,7 @@ export class BaseSelectors extends RegexSelectors {
     //#region Maintenance
     public static readonly SystemSettings = "#CMS"
     public static readonly CustomsSettings = "#MaintenanceItemCISE"
+    public static readonly AccountingSettings = "#MaintenanceItemACSE"
     public static readonly Warehouse = "#MaintenanceItemMTWH"
     public static readonly Vendor = "#MaintenanceItemMTVD"
     //#endregion

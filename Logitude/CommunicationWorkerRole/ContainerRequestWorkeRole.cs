@@ -10,10 +10,11 @@ using System.Threading;
 
 namespace CommunicationWorkerRole
 {
-    public class ContainerStatusesMonitorWR : WorkerEntryPoint
+    public class ContainerRequestWorkeRole : WorkerEntryPoint
     {
 
         private int tenant;
+        IQueueService queueservice;
         public override void Run()
         {
             while (IsRunning)
@@ -22,15 +23,15 @@ namespace CommunicationWorkerRole
                 {
                     try
                     {
-                        IQueueService  queueservice = new DbQueueService();
+                        queueservice = new DbQueueService();
                         queueservice.InitializeQueue("ContainerStatusesCommunicationLogQueue", 0);
                         QueueResponse queueResponse = queueservice.Receive(new TimeSpan(0, 0, 0, 10));
                         if (queueResponse.MessageId != null)
                         {
                             string communicationLogId = queueResponse.MessageValues["CommunicationLogId"].ToString();
                             int.TryParse(queueResponse.MessageValues["Tenant"].ToString(), out tenant);
-                            ContainerStatusesAnalyzer analyzer = new ContainerStatusesAnalyzer(communicationLogId, tenant);
-                            analyzer.Run();
+                            ContainerRequestSender analyzer = new ContainerRequestSender(communicationLogId, tenant);
+                            analyzer.Send();
                             queueservice.Complete();
                             LogDoneItemInMemory();
                         }
@@ -39,6 +40,7 @@ namespace CommunicationWorkerRole
                     catch (Exception e)
                     {
                         ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "ContainerStatusesMonitorWorkerRole : Run() Method", null);
+                        queueservice.CompleteAsFailed();
                         Thread.Sleep(5000);
                     }
                 }
@@ -55,7 +57,7 @@ namespace CommunicationWorkerRole
             ServicePointManager.DefaultConnectionLimit = 12;
 
             ThreadId = Guid.NewGuid().ToString();
-            BatchServiceCode = "ContainerStatusesMonitorWR";
+            BatchServiceCode = "ContainerRequestWorkeRole";
             DoneItemsInRange = new Dictionary<DateTime, int>();
 
             RoleEnvironment.Changing += RoleEnvironmentChanging;

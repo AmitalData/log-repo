@@ -64,3 +64,13 @@ Then("the fblStock series should Remove successfully", () => {
     FBLStockActions.AssertGetAllFBLStock();
 });
 //#endregion
+
+//#region close the FBLStock
+When("close FBL", () => {
+    FBLStockActions.CloseFBL();
+});
+
+Then("the FBL should close successfully", () => {
+    FBLStockActions.AssertCloseFBL();
+});
+ //#endregion

@@ -29,6 +29,8 @@
         public static string QuoteController = "Quotes";
         public static string QuoteViewsGetByFilters = "Quoteviews/Getbyfilters";
 
+        public static string CrossDockController = "warehouseentries";
+
         //public static string QuotesGetSingle(string id)
         //{
         //    return "Quotes/GetSingle?id=" + id;
@@ -157,6 +159,11 @@
         public static string QuoteGetSingleList(string id)
         {
             return "Quoteviews/getsingle/?id=" + id;
+        }
+
+        public static string CrossDockGetSingle(string id)
+        {
+            return "warehouseentries/GetSingle?id=" + id;
         }
     }
 }

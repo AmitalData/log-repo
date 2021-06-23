@@ -1200,17 +1200,30 @@ namespace WebFreight.Web.ExternalAPIs.V1
         private bool IsOceanInsightFeatureToggleExistInTenant(int tenant)
         {
             string ocaenInsightFeatureToggleCode = "OIC";
-            IInfrastructureContext context = InfrastructureContext.GetContext(tenant);
+            IInfrastructureContext context = InfrastructureContext.GetContext(0);
             FeatureToggleRepository repository = new FeatureToggleRepository(context);
-            IQueryable<FeatureToggle> featureToggles = repository.GetAll(tenant);
+            IQueryable<FeatureToggle> featureToggles = repository.GetAll(0);
             List<FeatureToggle> featureTogglesList = featureToggles.ToList();
-            FeatureToggle ocaenInsightFeatureToggle = null;
             if (featureTogglesList != null)
             {
-                ocaenInsightFeatureToggle = featureTogglesList.Find(a => a.ToggleCode == ocaenInsightFeatureToggleCode);
+                return IsFeatureToggleExistInMultiOrSingleTenant(featureTogglesList.Find(a => a.ToggleCode == ocaenInsightFeatureToggleCode), tenant);
             }
+            return false;
+        }
+        
+        private bool IsFeatureToggleExistInMultiOrSingleTenant(FeatureToggle ocaenInsightFeatureToggle,int tenant)
+        {
+            if (ocaenInsightFeatureToggle == null)
+                return false;
 
-            return (ocaenInsightFeatureToggle != null ? true : false);
+            if (ocaenInsightFeatureToggle.IsMultiTenant)
+            {
+                return ((tenant >= ocaenInsightFeatureToggle.FromTenantNumber) && (ocaenInsightFeatureToggle.ToTenantNumber <= tenant));
+            }
+            else
+            {
+                return (tenant == ocaenInsightFeatureToggle.TenantNumber);
+            }
         }
 
         private void ValidatePickupDeliveryPackages(ShipmentPM shipmentPM)
