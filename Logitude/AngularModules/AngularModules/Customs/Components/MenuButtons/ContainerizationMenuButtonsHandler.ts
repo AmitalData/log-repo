@@ -226,6 +226,17 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
     }
 
     DeclarationsStatusRequestMethod() {
+
+        if (this.EntityPM.IsDirty)
+        {
+            let messageWindow = new MessageWindow();
+            messageWindow.Width = 300;
+            messageWindow.Height = 180;
+            messageWindow.RTL = true;
+            messageWindow.ShowWarningIcon = true;
+            messageWindow.Show("בוצעו שינויים במסך, יש לבצע שמירה");
+            return;
+        }
         var currRequestParams = new DeclarationStatusRequestParams();
         currRequestParams.LoggingEnabled = true;
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
