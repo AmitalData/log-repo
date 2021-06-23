@@ -869,7 +869,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     supplierInvoiceItemPM.SequenceNumeric = (int)governmentAgencyGoodsItem.SequenceNumeric;
                     supplierInvoiceItemPM.OriginCountryCode = GetValueCodeType(governmentAgencyGoodsItem.Origin.CountryCode);
                     if (item.Invoice.DMExtensions.InvoiceAmount != null) supplierInvoiceItemPM.ItemPriceCurrencyCode = item.Invoice.DMExtensions.InvoiceAmount.currencyID.ToString();
-
+                      
                     supplierInvoiceItemPM.Tenant = tenant;
                     if (governmentAgencyGoodsItem.Commodity.DMExtensions != null)
                     {
@@ -1062,14 +1062,25 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             SupplierInvoiceItemVehicleQueryService supplierInvoiceItemVehicleQueryService = new SupplierInvoiceItemVehicleQueryService(context);
 
                             SupplierInvoiceItemQueryService supplierInvoiceItemQueryService = new SupplierInvoiceItemQueryService(context);
+                              if(invoiceItem!= null)
+                            {
                             var invoiceItem = supplierInvoiceItemQueryService.GetSingleSupplierInvoicePMBySequence(decIdOrg, Convert.ToInt32(supplierInvoicePM.InvoiceCounterKey), Convert.ToInt32(supplierInvoiceItemPM.SequenceNumeric));
                             //supplierInvoiceItemPM.SupplierInvoiceItemVehicles = invoiceItem.SupplierInvoiceItemVehicles;
 
                             supplierInvoiceItemPM.SupplierInvoiceItemVehicles  =supplierInvoiceItemVehicleQueryService.GetSupplierInvoiceItemVehiclesForSupplierInvoiceItem(invoiceItem.DeclarationId, Convert.ToInt32(invoiceItem.CounterKey), invoiceItem.LineNumber, tenant);
-                            foreach (var supplierInvoiceItemVehicle in supplierInvoiceItemPM.SupplierInvoiceItemVehicles)
-                            {
-                                supplierInvoiceItemVehicle.ChangeSetOp = ChangeSetOperation.Insert;
+                          
+                                foreach (var supplierInvoiceItemVehicle in supplierInvoiceItemPM.SupplierInvoiceItemVehicles)
+                                {
+                                    supplierInvoiceItemVehicle.ChangeSetOp = ChangeSetOperation.Insert;
+                                }
+
+
+                                supplierInvoiceItemPM.CatalogNumber = invoiceItem.CatalogNumber;
+                                supplierInvoiceItemPM.ItemCode = invoiceItem.ItemCode;
+                                supplierInvoiceItemPM.ItemDescription = invoiceItem.ItemDescription;
+
                             }
+                            
                         }
                         else
                         {
