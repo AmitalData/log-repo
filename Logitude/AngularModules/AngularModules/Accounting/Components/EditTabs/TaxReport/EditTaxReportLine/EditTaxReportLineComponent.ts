@@ -37,6 +37,7 @@ export class EditTaxReportLineComponent extends BaseComponent {
     _TaxReportPMService: TaxReportPMService = new TaxReportPMService();
     _TaxReportLinePMService: TaxReportLinePMService = new TaxReportLinePMService();
     private CurrentSession = SessionLocator.SelectedSession;
+   
     constructor() {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -132,15 +133,15 @@ export class EditTaxReportLineComponent extends BaseComponent {
             else {
                 this.UIProperties.SetEnabled("TransmitStatusCode", this.ObjectTableName, false);
             }
-           
+    
             this.UIProperties.SetEnabled("Reference", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("ReferecneGroup", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("ReferenceDate", this.ObjectTableName, false);
 
         }
         else {
-
-            this.UIProperties.SetEnabled("Reference", this.ObjectTableName, false);
+            this.SetEnabledForReferenceField();
+           
             this.UIProperties.SetEnabled("ReferecneGroup", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("ReferenceDate", this.ObjectTableName, false);
 
@@ -159,7 +160,11 @@ export class EditTaxReportLineComponent extends BaseComponent {
 
 
     }
-
+    SetEnabledForReferenceField() {
+        if (this.TaxReportLinePM.StatusCode == TaxReportLineStatuse.InvoiceNumberNotValid) {
+            this.UIProperties.SetEnabled("Reference", this.ObjectTableName, true);
+        } else this.UIProperties.SetEnabled("Reference", this.ObjectTableName, false);
+    }
     //#region Buttons
     OkButtonClicked() {
 
@@ -230,4 +235,9 @@ export class EditTaxReportLineComponent extends BaseComponent {
     }
     //#endregion
 
+}
+
+enum TaxReportLineStatuse {
+    InvoiceNumberNotValid = "3",
+  
 }

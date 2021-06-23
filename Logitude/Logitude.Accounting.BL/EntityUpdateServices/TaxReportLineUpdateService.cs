@@ -45,6 +45,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             SetTaxReportLineStatusCodeAndLineTypeCode(entityPM);
             Validate(entityPM);
             UpdateStatusByTransmitStatusCode(entityPM,entityPOCO);
+            SetReferenceFields(entityPM);
             // TASK 43057
             if (this.EntityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
@@ -367,8 +368,56 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
            
             base.Validate(entityPM);
         }
-       
+    
+        private static void SetReferenceFields(TaxReportLinePM taxreportLine)
+        {
+            if (taxreportLine.Reference == null) taxreportLine.ReferecneGroup = "0000";
+            if (taxreportLine.Reference != null)
+            {
+                taxreportLine.Reference = RemoveSpecialChars(taxreportLine.Reference);
+                Regex isMatche = new Regex("([A-Za-z])");
+                bool containsLetters = isMatche.IsMatch(taxreportLine.Reference);
+                if (containsLetters)
+                {
+                    taxreportLine.ReferecneGroup = null;                      
+                    for (int i = 0; i < taxreportLine.Reference.Length; i++)
+                    {
+                        string referenceChar = taxreportLine.Reference.Substring(i, 1);
+                        MatchCollection chars = Regex.Matches(referenceChar, @"^[a-zA-Z]*$");
+                        if (chars.Count != 0)
+                        {
+                            taxreportLine.ReferecneGroup = taxreportLine.ReferecneGroup + referenceChar;
+                        }
+                        else
+                        {
+                            taxreportLine.Reference = taxreportLine.Reference.Substring(i, taxreportLine.Reference.Length - i);
+                            break;
+                        }
+
+                    }
+                }
+                else taxreportLine.ReferecneGroup = "0000";
+                TrimMoreThan9Chars(taxreportLine);               
+            }                    
+        }
+        private static string RemoveSpecialChars(string reference)
+        {
+            char[] charsToRemove = { '-', '/', '.', '*', '\\' };
+            foreach (char c in charsToRemove)
+            {
+                reference = reference.Replace(c.ToString(), String.Empty);
+            }
+
+            return reference;
+        }
+       private static void  TrimMoreThan9Chars(TaxReportLinePM taxreportLine)
+        {
+            if (taxreportLine.Reference.Length > 9)
+            {
+                taxreportLine.Reference= taxreportLine.Reference.Substring(taxreportLine.Reference.Length - 9);
+            }
+        }
     }
 
-   
+
 }
