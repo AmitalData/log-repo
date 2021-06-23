@@ -914,62 +914,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
     }
 
 
-    /// <summary>
-    /// The <see cref="NSG.PrimeNG.LazyLoading"/> namespace contains a class
-    /// used by lazy loading feature and filter features.
-    /// 
-    /// The lazy loading feature allows one to return a page of data
-    /// and combined with the filtering and sorting features gives
-    /// a rich feature of transferring large set of data efficiently.
-    /// </summary>
-    /// <example>
-    /// A full example as follows:
-    /// <code>
-    /// string _jsonString =
-    ///     "{\"first\":0,\"rows\":3," +
-    ///     "\"sortOrder\":-1,\"sortField\":\"NoteTypeSortOrder\"," +
-    ///     "\"filters\":{\"NoteTypeDesc\":{\"value\":\"SO\",\"matchMode\":\"StartsWith\"}}}";
-    /// JavaScriptSerializer _js_slzr = new JavaScriptSerializer();
-    /// LazyLoadEvent _loadEvent = (LazyLoadEvent)_js_slzr.Deserialize(_jsonString, typeof(LazyLoadEvent));
-    /// List&lt;NoteType&gt; _rows = NoteTypes.AsQueryable()
-    ///     .LazyOrderBy(_loadEvent)
-    ///     .LazyFilters(_loadEvent)
-    ///     .LazySkipTake(_loadEvent).ToList();
-    /// </code>
-    /// </example>
-    [System.Runtime.CompilerServices.CompilerGenerated]
-    class NamespaceDoc
+    public static partial class AmitalPrimeNgUtil
     {
-    }
-    //
-    /// <summary>
-    /// Set of static helper methods, meant to be used as extension methods.
-    /// </summary>
-    public static partial class Helpers
-    {
-        //
-        /// <summary>
-        /// Sort this IQueryable, with:
-        ///  sortField and
-        ///  sortOrder 1=ascending
-        ///           -1=descending
-        /// <example> 
-        /// This sample shows how to call this method, where _incidentQuery
-        /// is IQueryable of Incident:
-        /// <code>
-        ///   JavaScriptSerializer _jsSlzr = new JavaScriptSerializer();
-        ///   _loadEvent = (LazyLoadEvent) _jsSlzr.Deserialize( jsonString, typeof(LazyLoadEvent) );
-        ///   _incidentQuery = _incidentQuery.LazyOrderBy( _loadEvent );
-        /// </code>
-        /// </example>
-        /// <note type="note">
-        ///  'OrderBy' must be called before the method 'Skip'.
-        /// </note>
-        /// </summary>
-        /// <typeparam name="T">Some class (database)</typeparam>
-        /// <param name="qry">IQueryable query of T (above class)</param>
-        /// <param name="lle">PrimeNG lazy loading event (LazyLoadEvent) structure</param>
-        /// <returns>IQueryable query of T (with ascending or descending sort applied)</returns>
+       
         public static IQueryable<T> LazyOrderBy<T>(
                 this IQueryable<T> qry, AmitalLazyLoadEvent lle)
         {
@@ -990,26 +937,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             //
             return qry.Provider.CreateQuery<T>(orderBy);
         }
-        //
-        /// <summary>
-        ///  Skip forward in the database and take n # of rows
-        /// <example> 
-        /// This sample shows how to call this method, where _incidentQuery
-        /// is IQueryable of Incident:
-        /// <code>
-        ///   JavaScriptSerializer _jsSlzr = new JavaScriptSerializer();
-        ///   _loadEvent = (LazyLoadEvent) _jsSlzr.Deserialize( jsonString, typeof(LazyLoadEvent) );
-        ///   _incidentQuery = _incidentQuery.LazySkipTake( _loadEvent );
-        /// </code>
-        /// </example>
-        /// <note type="note">
-        ///  'OrderBy' must be called before the method 'Skip'.
-        /// </note>
-        /// </summary>
-        /// <typeparam name="T">Some class (database)</typeparam>
-        /// <param name="qry">IQueryable query of T (above class)</param>
-        /// <param name="lle">PrimeNG lazy loading event (LazyLoadEvent) structure</param>
-        /// <returns>IQueryable query of T (with skip/take applied)</returns>
+       
         public static IQueryable<T> LazySkipTake<T>(
                 this IQueryable<T> qry, AmitalLazyLoadEvent lle)
         {
@@ -1023,26 +951,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
             return qry;
         }
-        //
-        /// <summary>
-        ///  Apply filter to an IQueryable from PrimeNG request.
-        ///  Filter:
-        ///   key of the dictionary is the field name,
-        ///   object is value(s) and match mode
-        /// <example> 
-        /// This sample shows how to call this method, where _incidentQuery
-        /// is IQueryable of Incident:
-        /// <code>
-        ///   JavaScriptSerializer _jsSlzr = new JavaScriptSerializer();
-        ///   _loadEvent = (LazyLoadEvent) _jsSlzr.Deserialize( jsonString, typeof(LazyLoadEvent) );
-        ///   _incidentQuery = _incidentQuery.LazyFilters( _loadEvent );
-        /// </code>
-        /// </example>
-        /// </summary>
-        /// <typeparam name="T">Some class (database)</typeparam>
-        /// <param name="qry">IQueryable query of T (above class)</param>
-        /// <param name="lle">PrimeNG lazy loading event (LazyLoadEvent) structure</param>
-        /// <returns>IQueryable query of T (with where filters applied)</returns>
+     
         public static IQueryable<T> LazyFilters<T>(
                 this IQueryable<T> qry, AmitalLazyLoadEvent lle , Func<IQueryable<T>> getBasic)
         {
@@ -1140,47 +1049,6 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             return Expression.Lambda<Func<T, bool>>(body, p);
         }
 
-        //
-        // PrimeNG:
-        //  "contains", "startsWith", "endsWith", "equals", "notEquals", "in", "lt", "lte", "gt" and "gte".
-        /// <summary>
-        ///  A method to create an expression dynamically given a generic entity,
-        ///  and a propertyName, operator and value.
-        ///  <list type="bullet">
-        ///   <listheader><description>Operators</description></listheader>
-        ///   <item><description>contains</description></item>
-        ///   <item><description>startsWith</description></item>
-        ///   <item><description>endsWith</description></item>
-        ///   <item><description>equals</description></item>
-        ///   <item><description>notEquals</description></item>
-        ///   <item><description>lt</description></item>
-        ///   <item><description>lte</description></item>
-        ///   <item><description>gt</description></item>
-        ///   <item><description>gte</description></item>
-        /// </list>
-        ///  <note type="note">
-        ///   The following code mostly come from:
-        ///   https://stackoverflow.com/questions/2497303/how-to-specify-dynamic-field-names-in-a-linq-where-clause
-        ///  </note>
-        ///  <note type="note">
-        ///   The 'in' operator is not handled and will throw an exception:
-        ///   <exception cref="ArgumentOutOfRangeException">Unhandled or invalid operators</exception>
-        ///  </note>
-        /// </summary>
-        /// <typeparam name="TEntity">
-        ///  The class to create the expression for. Most commonly an entity framework
-        ///  entity that is used for a DbSet.
-        /// </typeparam>
-        /// <param name="propertyName">A string value of the property name.</param>
-        /// <param name="op">
-        ///  A string representing an operator (see above list of operators).
-        /// </param>
-        /// <param name="value">A string representation of the value.</param>
-        /// <param name="valueType">The underlying type of the value</param>
-        /// <returns>
-        ///  An expression that can be used for querying data sets
-        ///  (Expression&lt;Func&lt;TEntity, bool&gt;&gt;)
-        /// </returns>
         private static Expression<Func<TEntity, bool>>
             LazyDynamicFilterExpression<TEntity>(
                 string propertyName, string op, string value, Type valueType)
@@ -1238,13 +1106,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             //
             return Expression.Lambda<Func<TEntity, bool>>(q, p);
         }
-        //
-        /// <summary>
-        ///  Extract this string value as the passed in object type (convert/cast).
-        /// </summary>
-        /// <param name="value">The value, as a string</param>
-        /// <param name="type">The desired type</param>
-        /// <returns>The value, as the specified type</returns>
+
         private static object AsType(string value, Type type)
         {
             //TODO: This method needs to be expanded to include all appropriate use cases
@@ -1264,26 +1126,13 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             if (type == typeof(byte) || type == typeof(byte?)) return byte.Parse(v);
             if (type == typeof(bool) || type == typeof(bool?)) return bool.Parse(v);
             //
-            throw new ArgumentException("NSG.PrimeNG.LazyLoading.Helpers.AsType: " +
+            throw new ArgumentException("ItzikPrimeNG.LazyLoading.Helpers.AsType: " +
                 "A filter was attempted for a field with value '" + value + "' and type '" +
                 type + "' however this type is not currently supported");
         }
     }
     //
-    /// <summary>
-    /// PrimeNG structure, used by lazy loading feature.
-    /// Class LazyLoadEvent ported from PrimeNG to this library.
-    /// Generally, populated by the PrimeNG filter feature.
-    /// <example>
-    /// An example of the JSON:
-    /// {"first":0,"rows":3,"sortOrder":1,
-    ///   "filters":{"ServerId":{"value":1,"matchMode":"eq"},
-    ///     "Mailed":{"value":"false","matchMode":"eq"},
-    ///     "Closed":{"value":"false","matchMode":"eq"},
-    ///     "Special":{"value":"false","matchMode":"eq"}},
-    ///    "globalFilter":null}
-    /// </example>
-    /// </summary>
+   
     //public class AmitalLazyLoadEvent
     //{
     //    public bool GetCount;
@@ -1306,55 +1155,22 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
     public class AmitalLazyLoadEvent
     {
         public bool GetCount;
-        // {"first":0,"rows":3,"sortOrder":1,
-        // "filters":{"ServerId":{"value":1,"matchMode":"eq"},"Mailed":{"value":"false","matchMode":"eq"},"Closed":{"value":"false","matchMode":"eq"},"Special":{"value":"false","matchMode":"eq"}},
-        // "globalFilter":null}
-        /// <summary>
-        /// First record #.
-        /// </summary>
+       
         public long first;
-        /// <summary>
-        /// # of rows to return (page size).
-        /// </summary>
+       
         public long rows;
-        /// <summary>
-        /// Sort field.
-        /// </summary>
+       
         public string sortField;
-        /// <summary>
-        /// Ascending or desending sort order.
-        /// </summary>
-        /// <value> 1 = asc, -1 = desc</value>
+       
         public int sortOrder;
-        /// <summary>
-        /// multiSortMeta, not implemented.
-        /// </summary>
+       
         public object multiSortMeta;
-        /// <summary>
-        /// A dictionary of filters.
-        /// Key of the dictionary is the field name, object is value(s)
-        /// and match mode.
-        /// </summary>
-        /// <example>
-        /// "filters":{"ServerId":{"value":1,"matchMode":"eq"},
-        ///     "Mailed":{"value":"false","matchMode":"eq"},
-        ///     "Closed":{"value":"false","matchMode":"eq"},
-        ///     "Special":{"value":"false","matchMode":"eq"}},
-        /// </example>
+       
         public Dictionary<string, Dictionary<string, Object>> filters_old;
         public AmitaFilterMetadata[] filters;
-        /// <summary>
-        /// globalFilter, not implemented.
-        /// </summary>
+       
         public object globalFilter;
-        //
-        /// <summary>
-        /// Returns a string that represents of the current object.
-        /// This method overrides the default 'to string' method.
-        /// </summary>
-        /// <returns>
-        /// A formatted string of the object's values.
-        /// </returns>
+      
         public override string ToString()
         {
             StringBuilder _return = new StringBuilder("record:[");
