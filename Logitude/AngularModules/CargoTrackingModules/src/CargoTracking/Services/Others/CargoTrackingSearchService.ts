@@ -55,7 +55,7 @@ export class CargoTrackingSearchService {
 
 
 		return defer(() => {
-            return this._http.get(this._apiUrl + '/GetUserShipments/?' + urlparameters 
+            return this._http.get(this._apiUrl + '/GetUserShipments/?' + urlparameters
             + '&pageIndex=' + pageIndex
             + '&pageSize=' + pageSize,
              {headers: authHeaders})
@@ -96,7 +96,7 @@ export class CargoTrackingSearchService {
         });
     }
     PostUserValidation(captchaParameters: CaptchaParameters) {
-     
+
         var url = '/PutUserValidation/?';
         var callUrl = this._apiUrl.concat(url);
         return this._http.put(callUrl, captchaParameters, { headers: ServiceHelper.GetHeaders() }).pipe(
@@ -108,7 +108,7 @@ export class CargoTrackingSearchService {
             catchError(null));
     }
 
-  
+
 
     private ParseFiltersIntoURL(shipmentFilters: CargoTrackingShipmentFilters)
     {
@@ -158,6 +158,18 @@ export class CargoTrackingSearchService {
 					})));
 		});
 	}
+
+    TrackSearch(searchKey) {
+
+        // var callUrl = this._apiUrl.concat('/PostSearchTrackAsync/?searchKey=' + searchKey);
+        // return this._http.post(callUrl, null, { headers: ServiceHelper.GetHeaders() }).pipe(
+        //     map((response: ServiceResponse) => {
+        //         var serviceResponse: ServiceResponse = new ServiceResponse();
+        //         serviceResponse = response;
+        //         return serviceResponse;
+        //     }),
+        //     catchError(null));
+    }
 
 
 }

@@ -48,8 +48,8 @@ namespace Logitude.CargoTracking.Data.Repositories
                                              select shipment.CustomsShipmentHeaderId).ToList();
 
             var shipments = (from shipment in currentContext.CargoTrackingShipments
-                             where (shipment.Tenant == tenant && shipment.IsMainRecord == true && ShipmentIds.Contains(shipment.EntityId))
-                                    || notMainShipments.Contains(shipment.EntityId)
+                             where ShipmentIds.Contains(shipment.EntityId) && ((shipment.Tenant == tenant && shipment.IsMainRecord == true)
+                                    || (shipment.Tenant == tenant && shipment.IsMainRecord == false && shipment.CustomsShipmentHeaderId != null))
 
                              select shipment);
             return shipments;

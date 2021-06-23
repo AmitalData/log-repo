@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace WebFreight.Web.DataProviders
 {
-    public class ManifestDataProvider:BaseDataProvider
+    public class ManifestDataProvider : BaseDataProvider
     {
         public ManifestDataProvider()
         {
@@ -162,6 +162,11 @@ namespace WebFreight.Web.DataProviders
         public string ConsigneeVATNumber { get; set; }
         public string SalesmanName { get; set; }
         public string HousesNumbers { get; set; }
+        public string FreightLocationName { get; set; }
+        public string FreightLocationAddress { get; set; }
+        public string ShipperContactPhone { get; set; }
+        public string ShipperContactName { get; set; }
+
         public List<ManifestDetailsClass> ManifestDetails { get; set; }
         public List<NewManifestDetailsClass> NewManifestDetails { get; set; }
         public List<GroupedContainersClass> GroupedManifestDetailsList { get; set; }
@@ -193,18 +198,15 @@ namespace WebFreight.Web.DataProviders
         public string PC { get; set; } // for ocean
         public string VolumeUnit { get; set; }
         public string WeightUnit { get; set; }
-
         public string Incoterm { get; set; }
         public string House { get; set; }
         public string DestinationPortName { get; set; }
         public string NotifyName { get; set; }
         public string NotifyAddress { get; set; }
         public string PlaceOfDelivery { get; set; }
-
         public string ShipperVAT { get; set; }
         public string ConsigneeVAT { get; set; }
         public string Direction { get; set; }
-
         public string ShipperField1 { get; set; }
         public string ShipperField2 { get; set; }
         public string ShipperField3 { get; set; }
@@ -215,7 +217,6 @@ namespace WebFreight.Web.DataProviders
         public string ShipperField8 { get; set; }
         public string ShipperField9 { get; set; }
         public string ShipperField10 { get; set; }
-
         public string ConsigneeField1 { get; set; }
         public string ConsigneeField2 { get; set; }
         public string ConsigneeField3 { get; set; }
@@ -226,10 +227,8 @@ namespace WebFreight.Web.DataProviders
         public string ConsigneeField8 { get; set; }
         public string ConsigneeField9 { get; set; }
         public string ConsigneeField10 { get; set; }
-
         public double? OpenPayablesInLocalCurrency { get; set; }
         public double? OpenPayablesInProfitCurrency { get; set; }
-
         public string ShipmentField1 { get; set; }
         public string ShipmentField2 { get; set; }
         public string ShipmentField3 { get; set; }
@@ -270,15 +269,12 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentField38 { get; set; }
         public string ShipmentField39 { get; set; }
         public string ShipmentField40 { get; set; }
-
         public string FMCNumber { get; set; }
         public string ENSNumber { get; set; }
         public DateTime? ENSDate { get; set; }
-
         public string OBLType { get; set; }
         public DateTime? DocumentsClosingDate { get; set; }
         public string AWBHandlingInformation { get; set; }
-
         public string ShipperContactName { get; set; } // (main contact English name for the shipper) 
         public string ConsigneeContactName { get; set; }// (main contact English name for the consignee ) 
         public string ConsigneeContactEmail { get; set; }
@@ -291,8 +287,10 @@ namespace WebFreight.Web.DataProviders
         public string ShipperRefernce1 { get; set; }
         public string PlaceOfReceipt { get; set; }
         public string Dimensions { get; set; }
+        public string FreightLocationName { get; set; }
+        public string FreightLocationAddress { get; set; }
+        public string ShipperContactPhone { get; set; }
         public List<ShipmentAssemblyLine> Assemblies { get; set; }
-
     }
 
     public class NewManifestDetailsClass
@@ -329,7 +327,6 @@ namespace WebFreight.Web.DataProviders
         public string NotifyAddress { get; set; }
         public string PlaceOfDelivery { get; set; }
         public string PlaceOfReceipt { get; set; }
-
         public int? Quantity { get; set; }
         public double? Volume { get; set; }
         public double? Weight { get; set; }        
@@ -352,7 +349,6 @@ namespace WebFreight.Web.DataProviders
         public string ShipperVAT { get; set; }
         public string ConsigneeVAT { get; set; }
         public string Direction { get; set; }
-
         public string ShipperField1 { get; set; }
         public string ShipperField2 { get; set; }
         public string ShipperField3 { get; set; }
@@ -363,7 +359,6 @@ namespace WebFreight.Web.DataProviders
         public string ShipperField8 { get; set; }
         public string ShipperField9 { get; set; }
         public string ShipperField10 { get; set; }
-
         public string ConsigneeField1 { get; set; }
         public string ConsigneeField2 { get; set; }
         public string ConsigneeField3 { get; set; }
@@ -374,10 +369,8 @@ namespace WebFreight.Web.DataProviders
         public string ConsigneeField8 { get; set; }
         public string ConsigneeField9 { get; set; }
         public string ConsigneeField10 { get; set; }
-
         public double? OpenPayablesInLocalCurrency { get; set; }
         public double? OpenPayablesInProfitCurrency { get; set; }
-
         public string ShipmentField1 { get; set; }
         public string ShipmentField2 { get; set; }
         public string ShipmentField3 { get; set; }
@@ -421,7 +414,6 @@ namespace WebFreight.Web.DataProviders
         public string FMCNumber { get; set; }
         public string ENSNumber { get; set; }
         public DateTime? ENSDate { get; set; }
-
         public string OBLType { get; set; }
         public DateTime? DocumentsClosingDate { get; set; }
         public string AWBHandlingInformation { get; set; }
@@ -429,13 +421,10 @@ namespace WebFreight.Web.DataProviders
         public double? ValueOfGoods { get; set; }
         public string ValueOfGoodsCurrency { get; set; }
         public string ShipperRefernce1 { get; set; }
-        public List<ShipmentAssemblyLine> Assemblies { get; set; }
-
-        //public string MarksAndNumbers { get; set; }  //new
-        //public string PackageQtyKind { get; set; } //new
-        //public string Weight { get; set; } //new
-        //public string Volume { get; set; } //new
-        //public string DescriptionOfGoods { get; set; } //new
+        public string FreightLocationName { get; set; }
+        public string FreightLocationAddress { get; set; }
+        public string ShipperContactPhone { get; set; }
+        public List<ShipmentAssemblyLine> Assemblies { get; set; }        
     }
 
     public class PackageDetails

@@ -413,6 +413,7 @@ export class ARInvoiceMenuButtonsHandler {
                 else {
                     if (response.Result) {
                         var messageText: string = "Please note that any connected Transferred payments will be resend after the successful transfer of this invoice";
+                        var myConfirmWindow = new ConfirmWindow();
                         myConfirmWindow.Width = 400;
                         myConfirmWindow.Show(messageText);
                         myConfirmWindow.WindowClosed.subscribe(s => {

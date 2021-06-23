@@ -253,6 +253,24 @@ namespace WebFreight.Web.DataProviders
 
             return output;
         }
+
+        public static byte[] GetUserSignatureImage(string imageDetailId, int tenant)
+        {
+            byte[] output = null;
+            if (!string.IsNullOrEmpty(imageDetailId))
+            {
+                IWebFreightContext webfreightContext = WebFreightContext.GetContext(tenant);
+                ImageDetailRepository imageDetailsRepository = new ImageDetailRepository(webfreightContext);
+                ImageDetail imageDetail = imageDetailsRepository.GetSingleImageDetail(imageDetailId, tenant);
+
+                if (imageDetail != null)
+                {
+                    output = GetFile(imageDetail.Id, imageDetail.Extension, "images", tenant);
+                }
+            }
+            return output;
+        }
+
         private static byte[] GetFile(string fileid, string extention, string location, int tenant)
         {
             try

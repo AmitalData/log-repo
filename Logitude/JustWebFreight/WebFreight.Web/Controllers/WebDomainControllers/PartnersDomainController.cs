@@ -1954,7 +1954,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
         }
 
-        public HttpResponseMessage Put(PartnerExternalAccountsServicePM args)
+        public HttpResponseMessage PutPartnerExternalAccounts(PartnerExternalAccountsServicePM args)
         {
             try
             {

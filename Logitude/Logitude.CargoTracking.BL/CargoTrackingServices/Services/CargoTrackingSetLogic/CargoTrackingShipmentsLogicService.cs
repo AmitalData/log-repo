@@ -12,6 +12,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
     {
         const int ShipmentTable_GetAllCustomsShipmentsThatContainForwardingShipments = 1;
         const int ShipmentTable_GetAllNonCustomShipmentsThatContainForwardingShipments = 2;
+        const string defaultShipperId = "DF-SHIPPER";
+        const string defaultConsigneeId = "DF-CONSIGNE";
+
         public static void SetTableLogic(DataRow tableRow, int conditionNumber)
         {
 
@@ -27,9 +30,15 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             SetGrossWeightUnit(tableRow);
             SetCurrentMilestone(tableRow);
             SetShipmentTypeCode(tableRow);
+
         }
 
-       
+        private static void SetDefaultFields(DataRow tableRow)
+        {
+            SetDefaultShipper(tableRow);
+            SetDefaultConsignee(tableRow);
+        }
+
 
         private static void SetCreateDate(DataRow tableRow)
         {
@@ -212,7 +221,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
                 tableRow.SetField("CurrentMilestoneDate", tableRow["PickupDate"]);
 
             }
- 
+
         }
         private static void SetForwardingShipmentHeaderId(DataRow tableRow)
         {
@@ -485,6 +494,18 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         private static void SetShipmentTypeCode(DataRow tableRow)
         {
             tableRow.SetField("ShipmentTypeCode", tableRow["ShipmentTypeId"]);
+        }
+        private static void SetDefaultShipper(DataRow tableRow)
+        {
+            var shipperId = tableRow["ShipperId"]?.ToString();
+            if (string.IsNullOrWhiteSpace(shipperId))
+                tableRow.SetField("ShipperId", defaultShipperId);
+        }
+        private static void SetDefaultConsignee(DataRow tableRow)
+        {
+            var consigneeId = tableRow["ConsigneeId"]?.ToString();
+            if (string.IsNullOrWhiteSpace(consigneeId))
+                tableRow.SetField("ConsigneeId", defaultConsigneeId);
         }
 
     }

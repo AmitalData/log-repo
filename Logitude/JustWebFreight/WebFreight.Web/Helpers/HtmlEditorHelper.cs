@@ -7029,8 +7029,8 @@ namespace WebFreight.Web.Helpers
                         UserId = GetLoggedUserId(tenant),
                         ObjectTableId = objectTableId, 
                         Tenant = tenant , 
-                        DocumentTemplateId = template.Id , 
-                         
+                        DocumentTemplateId = template.Id ,
+
                     };
 
 
@@ -7042,7 +7042,15 @@ namespace WebFreight.Web.Helpers
 
             }
 
-            return new MessageArgs() {From = htmlEditorResolveResult.From, ReplyTo = htmlEditorResolveResult.ReplyTo, Subject = htmlEditorResolveResult.Subject, HtmlTemplate = htmlEditorResolveResult.HtmlString };
+            return new MessageArgs() {
+                From = htmlEditorResolveResult.From,
+                ReplyTo = htmlEditorResolveResult.ReplyTo, 
+                Subject = htmlEditorResolveResult.Subject,
+                HtmlTemplate = htmlEditorResolveResult.HtmlString ,
+                BCC = htmlEditorResolveResult.Bcc,
+                CC = htmlEditorResolveResult.Cc
+   
+            };
         }
 
         private static string GetLoggedUserId(int tenant)
@@ -7232,6 +7240,7 @@ namespace WebFreight.Web.Helpers
         public DocumentTypeTemplate DocumentTypeTemplate { get; set; }
         public string ObjectTableName { get; set; }
         public string HtmlString { get; set; }
+
     }
 
 

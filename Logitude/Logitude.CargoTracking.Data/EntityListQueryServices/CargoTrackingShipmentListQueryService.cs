@@ -21,12 +21,15 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                            join toPort in ports on shipment.ToPortId equals toPort.Id
                                                            join customer in context.CargoTrackingCards on shipment.CustomerId equals customer.Id
 
+                                                           join consignee in context.CargoTrackingCards on shipment.ConsigneeId equals consignee.Id into consigneeJoined
+                                                           from consignee in consigneeJoined.DefaultIfEmpty()
+
                                                            join shipper in context.CargoTrackingCards on shipment.ShipperId equals shipper.Id into shipperJoined
                                                            from shipper in shipperJoined.DefaultIfEmpty()
 
                                                            join milestone in context.CargoTrackingMilestones on shipment.CurrentMilestoneCode equals milestone.Code into lm
                                                            from milestone in lm.DefaultIfEmpty()
-                                                           
+
                                                            join transportMode in context.CargoTrackingTransportModes on shipment.TransportModeId equals transportMode.Id
 
                                                            select new CargoTrackingShipmentList()
@@ -93,7 +96,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                AssignedTruckerNotes = shipment.AssignedTruckerNotes,
                                                                NumberOfPackages = shipment.PackagesQuantity,
                                                                PackagesQuantity = shipment.PackagesQuantity,
-
+                                                               ConsigneeName = consignee == null ? null : consignee.EnglishName,
                                                                // port fields
                                                                ToPortCountryCode = toPort.CountryCode,
                                                                FromPortCountryCode = fromPort.CountryCode,
@@ -318,6 +321,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         {
             CargoTrackingShipmentRepository repo = new CargoTrackingShipmentRepository(context);
             CargoTrackingShipment shipment = repo.GetCargoTrackingShipmentByEntityId(shipmentId, tenant);
+            if (shipment == null) throw new Exception("No shipment found");
             return CreateCargoTrackingShipmentListInstanceFromPOCO(shipment);
         }
 
@@ -502,13 +506,21 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             string toggleFilterExportValue = "EX";
 
             string filterImportValue = "I";
+            string filterCustomImportValue = "C";
             string filterExportValue = "E";
-            List<string> directions = new List<string>() { filterImportValue, filterExportValue };
+            List<string> directions = new List<string>() { filterImportValue, filterCustomImportValue, filterExportValue };
 
             if (!string.IsNullOrEmpty(shipmentFilters.DirectionCodes))
-                directions = shipmentFilters.DirectionCodes
-                                            .Replace(toggleFilterImportValue, filterImportValue)
-                                            .Replace(toggleFilterExportValue, filterExportValue).Split(',').ToList();
+            {
+                directions = new List<string>();
+                if (shipmentFilters.DirectionCodes.Contains(toggleFilterImportValue))
+                    directions.AddRange(new List<string>() { filterImportValue, filterCustomImportValue });
+
+                if (shipmentFilters.DirectionCodes.Contains(toggleFilterExportValue))
+                    directions.AddRange(new List<string>() { filterExportValue });
+
+            }
+
             return directions;
         }
         private IQueryable<CargoTrackingShipmentList> GetShipmentsQuerableByIds(List<string> ShipmentIds, int tenant)
@@ -517,7 +529,6 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             IQueryable<CargoTrackingShipment> shipments = repo.GetByShipmentIds(ShipmentIds, tenant);
 
             IQueryable<CargoTrackingShipmentList> shipmentsListQuerable = GetIqueryableList(shipments);
-
             return shipmentsListQuerable;
         }
 
