@@ -1048,6 +1048,17 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             Expression body = Expression.OrElse(a.Body, visitor.Visit(b.Body));
             return Expression.Lambda<Func<T, bool>>(body, p);
         }
+        public static Expression<Func<T, bool>> Not<T>(this Expression<Func<T, bool>> a, Expression<Func<T, bool>> b)
+        {
+
+            ParameterExpression p = a.Parameters[0];
+
+            SubstExpressionVisitor visitor = new SubstExpressionVisitor();
+            visitor.subst[b.Parameters[0]] = p;
+
+            Expression body = Expression.Not(a.Body);
+            return Expression.Lambda<Func<T, bool>>(body, p);
+        }
 
         private static Expression<Func<TEntity, bool>>
             LazyDynamicFilterExpression<TEntity>(
@@ -1083,10 +1094,18 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 case "notequals":
                     q = Expression.NotEqual(member, valueExpression);
                     break;
+                case "notcontains":
                 case "contains":
                     method = typeof(string).GetMethod("Contains", new[] { typeof(string) });
                     q = Expression.Call(member, method ?? throw new InvalidOperationException(),
-                        Expression.Constant(_stringValue, typeof(string)));
+                        Expression.Constant(_stringValue, typeof(string)));    
+                    if(op.ToLower()== "notcontains")
+                    {
+                        Expression notExpr = Expression.Not(q);
+                        q = notExpr;
+
+
+                    }
                     break;
                 case "startswith":
                     method = typeof(string).GetMethod("StartsWith", new[] { typeof(string) });

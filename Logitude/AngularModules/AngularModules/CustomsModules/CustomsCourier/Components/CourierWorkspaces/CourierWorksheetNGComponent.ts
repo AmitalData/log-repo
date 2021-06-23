@@ -2372,7 +2372,7 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
             //myLazyLoadEvent.filters["CourierMasterId"] = idFilterMetadata;
 
 
-            
+            amitalLazyLoadEvent.GetCount = this.TotalRecords == null;
             amitalLazyLoadEvent.first = $event.first;
             amitalLazyLoadEvent.rows = $event.rows;
             amitalLazyLoadEvent.sortField = $event.sortField;
