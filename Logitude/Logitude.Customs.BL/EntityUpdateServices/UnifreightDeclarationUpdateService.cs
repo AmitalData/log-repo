@@ -103,7 +103,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //}
         }
 
-        internal void Update(Boolean doTask)//eitan h 12/3/15 task 11788
+        internal void Update(Boolean doTask  )//eitan h 12/3/15 task 11788
         //internal void Update()
         {
             DateTime stopLogAt = DateTime.MinValue;
@@ -1175,7 +1175,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             return mytransmission;
         }
 
-        private void DoCustomFile()
+        private void DoCustomFile(bool fromAmendment = false )
         {
             var clientRepository = new ClientRepository(_DirtyDeclarationPM.Tenant);
             var cardRepository = new CardRepository(_DirtyDeclarationPM.Tenant);
@@ -1203,6 +1203,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 LogMessagingUtil.Instance.AppendLine("DoCustomFile3: _CCUFILEMPM record exist, file: " + _CCUFILEMPM.CUSTOMFILENO);
                 _CCUFILEMPM.ChangeSetOp = ChangeSetOperation.Update;
+            }
+
+
+            if(fromAmendment)
+            {
+
             }
 
             _CCUFILEM4L2UPM_Before = CCUFILEM_4L2U_Mapping(_CCUFILEMPMwithCCUMSHGRP);
