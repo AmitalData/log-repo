@@ -959,6 +959,22 @@ export class ShipmentDomainService extends BaseService  {
             }), catchError(ServiceHelper.HandleServiceError));
         });
     }
+
+    GetIfShipmentPackageConnectedToPickUpDeliveryPackage(containerId: string) {
+
+        var url = this._apiUrl + '/GetIfShipmentPackageConnectedToPickUpDeliveryPackage?containerId=' + containerId;
+        return defer(() => {
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                var result = response;
+
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = result;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+    
 }
 
 export class ShipmentsSummary {

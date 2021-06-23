@@ -32,6 +32,7 @@ import { ShipmentReceivablePM } from '../../../../Shipment/EntityPMs/ShipmentRec
 import { HorseList } from '../../../../Common/EntityLists/HorseList';
 import { ShipmentSubTypeListService } from '../../../../shipment/services/standardlists/shipmentsubtypelistservice';
 import { ShipmentContainersWebService } from '../../../../Shipment/Services/ShipmentContainersWebService';
+import { FeatureToggleList } from '../../../../Infrastructure/EntityLists/FeatureToggleList';
 
 
 declare var ResultAsArray: any;
@@ -57,6 +58,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     public IsShippingInstructionsVisible: boolean = false;
     public IsDeletePackagesButtonVisible: boolean = false;
     public IsDownloadUploadPackagesVisible: boolean = false;
+    public IsContainerFeatureToggleVisible: boolean = false;
     public HorseFieldIsVisible: boolean = false;
     private warehouseReleasePMExtendedService: WarehouseReleasePMExtendedService;
     @Output() ReloadDetails = new EventEmitter();
@@ -384,6 +386,12 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             this.IsEditingEnabled = ShipmentTool.IsEditingEnabled(this.EntityPM);
         }
 
+        this.IsContainerFeatureToggleVisible = false;
+        var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0];
+        if (featureToggle) {
+            this.IsContainerFeatureToggleVisible = true;
+        }
+        
         this.UIProperties.SetEnabled("DimensionsUnitCode", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("GrossWeightUnitCode", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("ChargeableWeightUnitCode", this.ObjectTableName, this.IsEditingEnabled);
@@ -1623,6 +1631,31 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         logWindow.Show(myPath);
     }
     DeletePackageClicked(itemComponent: ShipmentPackageItem) {
+        if (this.IsContainerFeatureToggleVisible && !this.EntityPM.IsStandalonePickupDelivery) {
+            this.CurrentSession.StartBusyIndicatorLoading();
+            var shipmentDomainService = new ShipmentDomainService();
+            var containerId = itemComponent.EntityPM.ContainerEntityId;
+            shipmentDomainService.GetIfShipmentPackageConnectedToPickUpDeliveryPackage(containerId).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    this.CurrentSession.StopBusyIndicator();
+                    var numberOfSelectedShipmentPackages = myResponse.Result;
+                    if (numberOfSelectedShipmentPackages) {
+                        this.PreventDeleteShipmetPackage()
+                    } else {
+                        this.ViewDeletePackageConfirmation(itemComponent);
+                    }
+                }
+                else {
+                    this.CurrentSession.StopBusyIndicator();
+                }
+            });
+            
+        } else {
+            this.ViewDeletePackageConfirmation(itemComponent);
+        }
+    }
+
+    ViewDeletePackageConfirmation(itemComponent: ShipmentPackageItem) {
         var message: string = "";
 
         if (this.IsLCLEntity) {
@@ -1656,6 +1689,11 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                 this.SetGenerateData();
             }
         });
+    }
+
+    PreventDeleteShipmetPackage() {
+        var messageWindow: MessageWindow = new MessageWindow();
+        messageWindow.Show("Can't Delete Connected Container With Pickup/Delivery");
     }
 
     ContainersRequestStatusClicked() {
