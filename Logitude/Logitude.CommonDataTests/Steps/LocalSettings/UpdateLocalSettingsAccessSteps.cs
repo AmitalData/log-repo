@@ -15,13 +15,13 @@ namespace Logitude.CommonDataTests.Steps.LocalSettings
     public class UpdateLocalSettingsAccessSteps
     {
 
-        private readonly SecurityAccessStepsContext<TenantPM> Context;
-        private readonly TenantExternalServices tenantExternalServices;
+        private readonly SecurityAccessStepsContext<TenantPM> securityAccessStepsContext;
+        private readonly TenantServices tenantServices;
 
         public UpdateLocalSettingsAccessSteps(SecurityAccessStepsContext<TenantPM> context)
         {
-            Context = context;
-            tenantExternalServices = new TenantExternalServices();
+            securityAccessStepsContext = context;
+            tenantServices = new TenantServices();
         }
 
 
@@ -30,19 +30,19 @@ namespace Logitude.CommonDataTests.Steps.LocalSettings
         [Given(@"local settings for user's tenant")]
         public void GivenLocalSettingsForUserSTenant()
         {
-            Context.FirstUserPMData = tenantExternalServices.GetTenantByToken(UserTenant.Token, UserTenant.Tenant);
+            securityAccessStepsContext.FirstUserPMData = tenantServices.GetByToken(UserTenant.Token);
         }
 
         [When(@"update Local settings for user's tenant")]
         public void WhenUpdateLocalSettingsForUserSTenant()
         {
-            Context.FirstUserPMData = tenantExternalServices.UpdateUsersLocalSettings(UserTenant.Token, Context.FirstUserPMData);
+            securityAccessStepsContext.FirstUserPMData = tenantServices.UpdateByToken(UserTenant.Token, securityAccessStepsContext.FirstUserPMData);
         }
 
         [Then(@"Local settings should update successfully")]
         public void ThenLocalSettingsShouldUpdateSuccessfully()
         {
-            Context.FirstUserPMData.Should().NotBeNull();
+            securityAccessStepsContext.FirstUserPMData.Should().NotBeNull();
         }
         #endregion
 
@@ -51,20 +51,20 @@ namespace Logitude.CommonDataTests.Steps.LocalSettings
         [Given(@"local settings for the user's tenant")]
         public void GivenLocalSettingsForOtherTenant()
         {
-            Context.FirstUserPMData = tenantExternalServices.GetTenantByToken(UserTenant.Token, UserTenant.Tenant);
+            securityAccessStepsContext.FirstUserPMData = tenantServices.GetByToken(UserTenant.Token);
         }
 
         [When(@"update Local settings for other tenant")]
         public void WhenUpdateLocalSettingsForOtherTenant()
         {
-            Context.act = () => tenantExternalServices.UpdateUsersLocalSettings(UserOtherTenant.Token, Context.FirstUserPMData);
+            securityAccessStepsContext.act = () => tenantServices.UpdateByToken(UserOtherTenant.Token, securityAccessStepsContext.FirstUserPMData);
         }
 
 
         [Then(@"should receive error message")]
         public void ThenShouldReceiveErrorMessage()
         {
-            Context.act.Should().ThrowExactly<AggregateException>()
+            securityAccessStepsContext.act.Should().ThrowExactly<AggregateException>()
                 .And.InnerExceptions[0].Message.Should().Contain("You are not authorized to do this operation");
         }
         #endregion

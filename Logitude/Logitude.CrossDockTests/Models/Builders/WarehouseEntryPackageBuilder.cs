@@ -43,24 +43,24 @@ namespace Logitude.CrossDockTests.Models.Builders
             return this;
         }
 
-        public WarehouseEntryPackageBuilder Length(int? length)
+        public WarehouseEntryPackageBuilder Length(double? length)
         {
             _warehouseEntryPackagePM.Length = length;
             return this;
         }
 
-        public WarehouseEntryPackageBuilder Width(int? width)
+        public WarehouseEntryPackageBuilder Width(double? width)
         {
             _warehouseEntryPackagePM.Width = width;
             return this;
         }
 
-        public WarehouseEntryPackageBuilder Height(int? height)
+        public WarehouseEntryPackageBuilder Height(double? height)
         {
             _warehouseEntryPackagePM.Height = height;
             return this;
         }
-        public WarehouseEntryPackageBuilder Weight(int? weight)
+        public WarehouseEntryPackageBuilder Weight(double? weight)
         {
             _warehouseEntryPackagePM.Weight = weight;
             return this;

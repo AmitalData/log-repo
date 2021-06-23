@@ -18,10 +18,10 @@ namespace Logitude.CrossDockTests.Models
         public int Quantity { get; set; }
         public int Instock { get; set; }
         public string ChangeSetOp { get; set; }
-        public int? Length { get; set; }
-        public int? Width { get; set; }
-        public int? Height { get; set; }
-        public int? Weight { get; set; }
+        public double? Length { get; set; }
+        public double? Width { get; set; }
+        public double? Height { get; set; }
+        public double? Weight { get; set; }
 
     }
 }

@@ -99,7 +99,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExternalServices\CrossDockExternalServices.cs" />
+    <Compile Include="ExternalServices\CrossDockEntryServices.cs" />
     <Compile Include="Hooks\BeforeFeatureRun.cs" />
     <Compile Include="Models\Builders\CrossDockBuilder.cs" />
     <Compile Include="Models\Builders\WarehouseEntryPackageBuilder.cs" />
@@ -110,11 +110,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Steps\CreateCrossDocksSteps.cs" />
     <Compile Include="Steps\GetCrossDocksEntryExportAirSteps.cs" />
+    <Compile Include="Steps\UpdateCrossDocksSteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Features\CreateCrossDocks.feature" />
     <None Include="Features\GetCrossDocksEntryExportAir.feature" />
+    <None Include="Features\UpdateCrossDocks.feature" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

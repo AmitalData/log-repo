@@ -66,6 +66,17 @@ namespace Logitude.CrossDockTests.Models.Builders
             return this;
         }
 
+        public CrossDockBuilder WarehouseEntryPackages(WarehouseEntryPackagePM warehouseEntryPackage)
+        {
+            if (_crossDockPM.WarehouseEntryPackages == null)
+            {
+                _crossDockPM.WarehouseEntryPackages = new List<WarehouseEntryPackagePM>();
+            }
+            _crossDockPM.WarehouseEntryPackages.Add(warehouseEntryPackage);
+            return this;
+        }
+
+
         public CrossDockPM Build()
         {
             CrossDockPM result = _crossDockPM;

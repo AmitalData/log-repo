@@ -27,7 +27,7 @@ namespace Logitude.CrossDockTests.Steps
             ApiResponse<CrossDockPM> quoteResponse = APICaller.CallGet<CrossDockPM>(quotesGetSingleUrl, UserTenant.Token);
             crossDockContext.EntriesCrossDock = quoteResponse.Data;
         }
-        
+
         [Then(@"cross dock should be avaliable")]
         public void ThenCrossDockShouldBeAvaliable()
         {

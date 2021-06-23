@@ -19,19 +19,21 @@ namespace Logitude.CrossDockTests.Features
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class CreateCrossDocksFeature : object, Xunit.IClassFixture<CreateCrossDocksFeature.FixtureData>, System.IDisposable
+    [Xunit.TraitAttribute("Category", "Pre-Prepare")]
+    public partial class UpdateCrossDocksFeature : object, Xunit.IClassFixture<UpdateCrossDocksFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-        private string[] _featureTags = ((string[])(null));
+        private string[] _featureTags = new string[] {
+                "Pre-Prepare"};
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "CreateCrossDocks.feature"
+#line 1 "UpdateCrossDocks.feature"
 #line hidden
         
-        public CreateCrossDocksFeature(CreateCrossDocksFeature.FixtureData fixtureData, Logitude_CrossDockTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public UpdateCrossDocksFeature(UpdateCrossDocksFeature.FixtureData fixtureData, Logitude_CrossDockTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -40,7 +42,8 @@ namespace Logitude.CrossDockTests.Features
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Create Cross Docks", "\tWe want to create cross docks.", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Update Cross Docks", "\tWe want to update cross docks.", ProgrammingLanguage.CSharp, new string[] {
+                        "Pre-Prepare"});
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -80,15 +83,15 @@ namespace Logitude.CrossDockTests.Features
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Create entry cross dock")]
-        [Xunit.TraitAttribute("FeatureTitle", "Create Cross Docks")]
-        [Xunit.TraitAttribute("Description", "Create entry cross dock")]
-        public virtual void CreateEntryCrossDock()
+        [Xunit.SkippableFactAttribute(DisplayName="update entry cross dock")]
+        [Xunit.TraitAttribute("FeatureTitle", "Update Cross Docks")]
+        [Xunit.TraitAttribute("Description", "update entry cross dock")]
+        public virtual void UpdateEntryCrossDock()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create entry cross dock", null, tagsOfScenario, argumentsOfScenario);
-#line 4
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("update entry cross dock", null, tagsOfScenario, argumentsOfScenario);
+#line 5
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -108,59 +111,35 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
                             "property",
                             "Value"});
-                table1.AddRow(new string[] {
-                            "Direction",
-                            "Export"});
-                table1.AddRow(new string[] {
-                            "TransportMode",
-                            "Air"});
-                table1.AddRow(new string[] {
-                            "ChargeableWeightUnitCode",
-                            "KG"});
-                table1.AddRow(new string[] {
-                            "GrossWeightUnitCode",
-                            "KG"});
-                table1.AddRow(new string[] {
-                            "DimensionsUnitCode",
-                            "Cm"});
-                table1.AddRow(new string[] {
-                            "VolumeUnitCode",
-                            "CBM"});
-                table1.AddRow(new string[] {
-                            "StatusCode",
-                            "CREA"});
-#line 5
- testRunner.Given("an entry cross dock with the following properties", ((string)(null)), table1, "Given ");
-#line hidden
-                TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                table3.AddRow(new string[] {
                             "Quantity",
+                            "200"});
+                table3.AddRow(new string[] {
                             "Length",
+                            "100"});
+                table3.AddRow(new string[] {
                             "Width",
+                            "100"});
+                table3.AddRow(new string[] {
+                            "Weight",
+                            "200"});
+                table3.AddRow(new string[] {
                             "Height",
-                            "Weight"});
-                table2.AddRow(new string[] {
-                            "70",
-                            "10",
-                            "20",
-                            "30",
-                            "40"});
-                table2.AddRow(new string[] {
-                            "50",
-                            "",
-                            "",
-                            "",
-                            ""});
+                            "100"});
+#line 6
+ testRunner.Given("a package with the following properties", ((string)(null)), table3, "Given ");
+#line hidden
+#line 13
+ testRunner.And("entry cross dock", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
 #line 14
- testRunner.And("packages details", ((string)(null)), table2, "And ");
+ testRunner.When("update entry cross dock", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 18
- testRunner.When("create entry cross dock", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 19
- testRunner.Then("the entry cross dock should create successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 15
+ testRunner.Then("the entry cross dock should update successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -173,12 +152,12 @@ this.ScenarioInitialize(scenarioInfo);
             
             public FixtureData()
             {
-                CreateCrossDocksFeature.FeatureSetup();
+                UpdateCrossDocksFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                CreateCrossDocksFeature.FeatureTearDown();
+                UpdateCrossDocksFeature.FeatureTearDown();
             }
         }
     }

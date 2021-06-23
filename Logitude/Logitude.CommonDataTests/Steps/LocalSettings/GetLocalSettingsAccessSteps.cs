@@ -16,26 +16,26 @@ namespace Logitude.CommonDataTests.Steps.LocalSettings
     [Binding]
     public class GetLocalSettingsAccessSteps
     {
-        private SecurityAccessStepsContext<TenantPM> Context;
-        private TenantExternalServices tenantDataService;
+        private readonly SecurityAccessStepsContext<TenantPM> securityAccessStepsContext;
+        private readonly TenantServices tenantServices;
 
         public GetLocalSettingsAccessSteps(SecurityAccessStepsContext<TenantPM> context)
         {
-            Context = context;
-            tenantDataService = new TenantExternalServices();
+            securityAccessStepsContext = context;
+            tenantServices = new TenantServices();
         }
 
         #region Get local settings for user's tenant
         [When(@"get local settings for user's tenant")]
         public void WhenGetLocalSettingsForUserSTenant()
         {
-            Context.FirstUserPMData = tenantDataService.GetUserTenantByToken(UserTenant.Token);
+            securityAccessStepsContext.FirstUserPMData = tenantServices.GetByToken(UserTenant.Token);
         }
 
         [Then(@"local settings should available")]
         public void ThenLocalSettingsShouldAvailable()
         {
-            Context.FirstUserPMData.Should().NotBeNull();
+            securityAccessStepsContext.FirstUserPMData.Should().NotBeNull();
         }
         #endregion
 
@@ -45,14 +45,14 @@ namespace Logitude.CommonDataTests.Steps.LocalSettings
         [When(@"get local settings for other tenant")]
         public void WhenGetLocalSettingsForOtherTenant()
         {
-            Context.act = () => tenantDataService.GetUserTenantByToken(UserOtherTenant.Token);
+            securityAccessStepsContext.act = () => tenantServices.GetByToken(UserOtherTenant.Token);
         }
 
 
         [Then(@"local settings should not available")]
         public void ThenLocalSettingsShouldNotAvailable()
         {
-            Context.act.Should().ThrowExactly<AggregateException>()
+            securityAccessStepsContext.act.Should().ThrowExactly<AggregateException>()
                          .And.InnerExceptions[0].Message.Should().Contain("Sorry you’re not authenticated to view company info");
 
         }
