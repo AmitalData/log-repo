@@ -618,6 +618,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ContainerStatusSourceCode"
+    Type="varchar"
+    Size="3" DefaultValue="0">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ShipmentId"
     ReferencedTable="Shipments"
@@ -646,11 +653,6 @@
   <Relation
     ForeignKeyColumn="TemperatureUnitCode"
     ReferencedTable="TemperatureUnits"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="LastStatusCode"
-    ReferencedTable="INTTRAStatuses"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Relation
@@ -683,6 +685,12 @@
     ReferencedTable="PackageTypes"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ContainerStatusSourceCode"
+    ReferencedTable="ContainerStatusSources"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant,CommodityId" />
+
 </Table>

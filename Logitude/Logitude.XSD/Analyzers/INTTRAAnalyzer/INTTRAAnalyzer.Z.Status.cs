@@ -727,6 +727,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
             {
                 iContainer.LastStatusCode = lastStatusCode;
                 iContainer.LastStatusDate = lastStatusDate;
+                iContainer.ContainerStatusSourceCode = "INT";
                 iContainer.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
             }
 
@@ -734,6 +735,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
             {
                 iContainer.LastStatusCode = lastStatusCode;
                 iContainer.LastStatusDate = lastStatusDate;
+                iContainer.ContainerStatusSourceCode = "INT";
                 iContainer.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
             }
         }
