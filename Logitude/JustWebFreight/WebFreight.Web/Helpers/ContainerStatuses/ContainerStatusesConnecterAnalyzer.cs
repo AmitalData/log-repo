@@ -756,51 +756,63 @@ namespace WebFreight.Web.Helpers.Analyzers
 
             else
             {
+                bool isSavingShipment = false;
                 List<Container> shipmentContainers = containerRepository.GetContainesrByShipmentId(shipmentPM.Id, logitudeTenant.Value).ToList();
                 if (shipmentContainers.Count() == 1)
                 {
                     shipmentPM.IsUpdatedOceanInsightsAnalyzer = true;
                     this.UpdateShipmentDates(shipmentContainers.FirstOrDefault(), shipmentPM);
+                    isSavingShipment = true;
                 }
 
                 else
                 {
-                    //shipmentContainers = shipmentContainers.Where(d => d.MainCarriageATA != null && d.MainCarriageATD != null && d.MainCarriageETA != null && d.MainCarriageETD != null
-                    //&& !string.IsNullOrEmpty(d.DepartureLocation) && !string.IsNullOrEmpty(d.DestinationLocation))).ToList();
-                    //List<Container> shipmentContainers_grouped = (from s in shipmentContainers
-                    //                      group s by new
-                    //                      {
-                    //                          s.DepartureLocation,
-                    //                          s.DestinationLocation,
-                    //                          s.MainCarriageETD,
-                    //                          s.MainCarriageETA,
-                    //                          s.MainCarriageATD,
-                    //                          s.MainCarriageATA,
-                    //                      } into m
-                    //                      select new Container()
-                    //                      {
-                    //                          MainCarriageETD = m.Key.MainCarriageETD,
-                    //                          MainCarriageETA = m.Key.MainCarriageETA,
-                    //                          MainCarriageATD = m.Key.MainCarriageATD,
-                    //                          MainCarriageATA = m.Key.MainCarriageATA,
-                    //                      }).ToList();
+                    List<Container> nullValuesContainers = shipmentContainers.Where(d => d.MainCarriageATA == null && d.MainCarriageATD == null 
+                    && d.MainCarriageETA == null && d.MainCarriageETD == null
+                    && string.IsNullOrEmpty(d.DepartureLocation) && string.IsNullOrEmpty(d.DestinationLocation)).ToList();
+                    
+                    shipmentContainers = shipmentContainers.Except(nullValuesContainers).ToList();
 
-                //    if (shipmentContainers_grouped != null)
-                //    {
-                //        if (shipmentContainers_grouped.Count() == 1)
-                //        {
-                //            this.UpdateShipmentDates(shipmentContainers_grouped.FirstOrDefault(), shipmentPM);
-                //            this.UpdateContainersException(shipmentContainers, true);
-                //        }
+                    List<Container> shipmentContainers_grouped = (from s in shipmentContainers
+                                                                  group s by new
+                                                                  {
+                                                                      s.DepartureLocation,
+                                                                      s.DestinationLocation,
+                                                                      s.MainCarriageETD,
+                                                                      s.MainCarriageETA,
+                                                                      s.MainCarriageATD,
+                                                                      s.MainCarriageATA,
+                                                                  } into m
+                                                                  select new Container()
+                                                                  {
+                                                                      MainCarriageETD = m.Key.MainCarriageETD,
+                                                                      MainCarriageETA = m.Key.MainCarriageETA,
+                                                                      MainCarriageATD = m.Key.MainCarriageATD,
+                                                                      MainCarriageATA = m.Key.MainCarriageATA,
+                                                                  }).ToList();
 
-                //        else
-                //        {
-                //            this.UpdateContainersException(shipmentContainers, false);
-                //        }
-                //    }
+                    if (shipmentContainers_grouped != null)
+                    {
+                        if (shipmentContainers_grouped.Count() == 1)
+                        {
+                            shipmentPM.IsUpdatedOceanInsightsAnalyzer = true;
+                            this.UpdateShipmentDates(shipmentContainers_grouped.FirstOrDefault(), shipmentPM);
+                            this.UpdateContainersException(shipmentContainers, true);
+                            isSavingShipment = true;
+                        }
+
+                        else
+                        {
+                            this.UpdateContainersException(shipmentContainers, false);
+                            containerRepository.SubmitChanges();
+                        }
+                    }
                 }
 
-                this.SaveShipment(shipmentPM);
+                if (isSavingShipment)
+                {
+                    this.SaveShipment(shipmentPM);
+                }
             }
         }
         private void UpdateContainersException(List<Container> shipmentContainers, bool sameConatiner)
