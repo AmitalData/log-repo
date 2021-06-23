@@ -55,7 +55,7 @@ namespace WebFreight.Web.App_Code
 
         private UserData GetUserDataByTenant(UserCredentials credentials, UserData userData)
         {
-            var companyLogin = userData.CompanyLogins.FirstOrDefault(c => c.Tenant == userData.Tenant);
+            var companyLogin = userData.CompanyLogins.FirstOrDefault(c => c.Tenant == credentials.Tenant);
             companyLogin = companyLogin ?? userData.CompanyLogins.FirstOrDefault();
 
             if (companyLogin != null)
