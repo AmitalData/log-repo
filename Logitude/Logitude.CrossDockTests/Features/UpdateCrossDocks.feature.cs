@@ -112,33 +112,27 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
                 TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
-                            "property",
-                            "Value"});
-                table3.AddRow(new string[] {
                             "Quantity",
-                            "200"});
-                table3.AddRow(new string[] {
                             "Length",
-                            "100"});
-                table3.AddRow(new string[] {
                             "Width",
-                            "100"});
-                table3.AddRow(new string[] {
-                            "Weight",
-                            "200"});
-                table3.AddRow(new string[] {
                             "Height",
-                            "100"});
+                            "Weight"});
+                table3.AddRow(new string[] {
+                            "70",
+                            "10",
+                            "20",
+                            "30",
+                            "40"});
 #line 6
- testRunner.Given("a package with the following properties", ((string)(null)), table3, "Given ");
+ testRunner.Given("a packages with the following properties", ((string)(null)), table3, "Given ");
 #line hidden
-#line 13
+#line 9
  testRunner.And("entry cross dock", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 14
+#line 10
  testRunner.When("update entry cross dock", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 15
+#line 11
  testRunner.Then("the entry cross dock should update successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

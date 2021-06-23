@@ -12,7 +12,7 @@ namespace Logitude.CrossDockTests.Models.Builders
 {
     public class CrossDockBuilder
     {
-        private CrossDockPM _crossDockPM;
+        private CrossDockEntryPM _crossDockEntry;
         private readonly RandomGeneratorService randomGeneratorService;
         public CrossDockBuilder()
         {
@@ -22,77 +22,81 @@ namespace Logitude.CrossDockTests.Models.Builders
 
         private void Reset()
         {
-            _crossDockPM = new CrossDockPM();
+            _crossDockEntry = new CrossDockEntryPM();
         }
 
         public CrossDockBuilder DirectionId(string directionId)
         {
-            _crossDockPM.DirectionId = directionId;
+            _crossDockEntry.DirectionId = directionId;
             return this;
         }
 
         public CrossDockBuilder TransportModeId(string transportModeId)
         {
-            _crossDockPM.TransportModeId = transportModeId;
+            _crossDockEntry.TransportModeId = transportModeId;
             return this;
         }
 
         public CrossDockBuilder ChargeableWeightUnitCode(string chargeableWeightUnitCode)
         {
-            _crossDockPM.ChargeableWeightUnitCode = chargeableWeightUnitCode;
+            _crossDockEntry.ChargeableWeightUnitCode = chargeableWeightUnitCode;
             return this;
         }
         public CrossDockBuilder GrossWeightUnitCode(string grossWeightUnitCode)
         {
-            _crossDockPM.GrossWeightUnitCode = grossWeightUnitCode;
+            _crossDockEntry.GrossWeightUnitCode = grossWeightUnitCode;
             return this;
         }
 
         public CrossDockBuilder DimensionsUnitCode(string dimensionsUnitCode)
         {
-            _crossDockPM.DimensionsUnitCode = dimensionsUnitCode;
+            _crossDockEntry.DimensionsUnitCode = dimensionsUnitCode;
             return this;
         }
 
         public CrossDockBuilder VolumeUnitCode(string volumeUnitCode)
         {
-            _crossDockPM.VolumeUnitCode = volumeUnitCode;
+            _crossDockEntry.VolumeUnitCode = volumeUnitCode;
             return this;
         }
 
         public CrossDockBuilder StatusCode(string statusCode)
         {
-            _crossDockPM.StatusCode = statusCode;
+            _crossDockEntry.StatusCode = statusCode;
             return this;
         }
 
-        public CrossDockBuilder WarehouseEntryPackages(WarehouseEntryPackagePM warehouseEntryPackage)
+        public CrossDockBuilder WarehouseEntryPackages(List<WarehouseEntryPackagePM> warehouseEntryPackages)
         {
-            if (_crossDockPM.WarehouseEntryPackages == null)
+            _crossDockEntry.WarehouseEntryPackages = warehouseEntryPackages;
+            return this;
+        }
+        public CrossDockBuilder WarehouseEntryPackage(WarehouseEntryPackagePM warehouseEntryPackage)
+        {
+            if (_crossDockEntry.WarehouseEntryPackages == null)
             {
-                _crossDockPM.WarehouseEntryPackages = new List<WarehouseEntryPackagePM>();
+                _crossDockEntry.WarehouseEntryPackages = new List<WarehouseEntryPackagePM>();
             }
-            _crossDockPM.WarehouseEntryPackages.Add(warehouseEntryPackage);
+            _crossDockEntry.WarehouseEntryPackages.Add(warehouseEntryPackage);
             return this;
         }
 
-
-        public CrossDockPM Build()
+        public CrossDockEntryPM Build()
         {
-            CrossDockPM result = _crossDockPM;
+            CrossDockEntryPM result = _crossDockEntry;
             this.Reset();
             return result;
         }
 
-        public CrossDockBuilder WithModel(CrossDockPM quotePM)
+        public CrossDockBuilder WithModel(CrossDockEntryPM crossDockEntry)
         {
-            _crossDockPM = quotePM;
+            _crossDockEntry = crossDockEntry;
             return this;
         }
 
         public CrossDockBuilder WithDefualtValues()
         {
-            _crossDockPM = new CrossDockPM
+            _crossDockEntry = new CrossDockEntryPM
             {
                 Tenant = UserTenant.Tenant,
                 CustomerId = PartnersData.CustomerId,

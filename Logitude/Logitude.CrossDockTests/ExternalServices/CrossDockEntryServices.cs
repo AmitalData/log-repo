@@ -11,9 +11,9 @@ namespace Logitude.CrossDockTests.ExternalServices
 {
     public class CrossDockEntryServices
     {
-        public CrossDockPM Create(Table table)
+        public CrossDockEntryPM CreateInstance(Table crossDockTable)
         {
-            dynamic dataTable = table.CreateDynamicInstance();
+            dynamic dataTable = crossDockTable.CreateDynamicInstance();
 
             return new CrossDockBuilder().WithDefualtValues()
                 .DirectionId((string)dataTable.Direction)
@@ -25,22 +25,8 @@ namespace Logitude.CrossDockTests.ExternalServices
                 .StatusCode((string)dataTable.StatusCode)
                 .Build();
         }
- 
 
-        public WarehouseEntryPackagePM CreatePackage(Table table)
-        {
-            dynamic dataTable = table.CreateDynamicInstance();
-
-            return new WarehouseEntryPackageBuilder().WithDefualtValues()
-               .Quantity((int)dataTable.Quantity)
-               .Length((Convert.ToString(dataTable.Length)).Length == 0 ? null : (double?)dataTable.Length)
-               .Width((Convert.ToString(dataTable.Width)).Length == 0 ? null : (double?)dataTable.Width)
-               .Height((Convert.ToString(dataTable.Height)).Length == 0 ? null : (double?)dataTable.Height)
-               .Weight((Convert.ToString(dataTable.Weight)).Length == 0 ? null : (double?)dataTable.Weight)
-               .Build();
-        }
-
-        public List<WarehouseEntryPackagePM> CreatePackages(Table packagesDetailsTable)
+        public List<WarehouseEntryPackagePM> BuildPackages(Table packagesDetailsTable)
         {
             List<WarehouseEntryPackagePM> warehouseEntryPackages = new List<WarehouseEntryPackagePM>();
             packagesDetailsTable.CreateDynamicSet().ToList().ForEach(packagesDetail =>
@@ -58,7 +44,7 @@ namespace Logitude.CrossDockTests.ExternalServices
             return new List<WarehouseEntryPackagePM>(warehouseEntryPackages);
         }
 
-
+    
 
     }
 }

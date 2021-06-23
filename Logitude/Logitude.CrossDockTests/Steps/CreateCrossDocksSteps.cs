@@ -27,25 +27,25 @@ namespace Logitude.CrossDockTests.Steps
         [Given(@"an entry cross dock with the following properties")]
         public void GivenAEntriesCrossDockWithTheFollowingProperties(Table table)
         {
-            crossDockContext.EntriesCrossDock = crossDockEntryServices.Create(table);
+            crossDockContext.CrossDockEntry = crossDockEntryServices.CreateInstance(table);
         }
 
         [Given(@"packages details")]
         public void GivenAPackagesDetails(Table table)
         {
-            crossDockContext.EntriesCrossDock.WarehouseEntryPackages = crossDockEntryServices.CreatePackages(table);
+            crossDockContext.CrossDockEntry.WarehouseEntryPackages = crossDockEntryServices.BuildPackages(table);
         }
 
         [When(@"create entry cross dock")]
         public void WhenCreateCrossDock()
         {
-            crossDockContext.EntriesCrossDock = APICaller.CallPost<CrossDockPM>(crossDockContext.EntriesCrossDock, Urls.CrossDockController, UserTenant.Token)?.Data;
+            crossDockContext.CrossDockEntry = APICaller.CallPost<CrossDockEntryPM>(crossDockContext.CrossDockEntry, Urls.CrossDockController, UserTenant.Token)?.Data;
         }
 
         [Then(@"the entry cross dock should create successfully")]
         public void ThenTheCrossDockShouldCreateSuccessfully()
         {
-            crossDockContext.EntriesCrossDock.Id.Should().NotBeNull();
+            crossDockContext.CrossDockEntry.Id.Should().NotBeNull();
         }
         #endregion
 
