@@ -79,7 +79,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class APInvoiceLineUpdateClass
    {  		
-		public const string HashString = "4a7c3fc137d4dfde9189a70e9dc23096";
+
+		public const string HashString = "a2d62419208d260c94c815f31f7a6001";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -117,7 +118,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "A/P Invoice Line",
-			      				    Code =  "6e43",
+
+			      				    Code =  "1a78",
 			      				    Name =  "APInvoiceLine",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Invoice",
@@ -527,7 +529,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						MinLength =  0,
 					  						MaxLength =  250,
 					  						IsRequired =  false,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  true,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
@@ -889,7 +891,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "VatPercentage",
 					  						DefaultText =  "VAT Percentage",
-					  						FullLocalDefaultText =  "אחוז מע''מ",
+					  						FullLocalDefaultText =  "םחוז מע''מ",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1145,10 +1147,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Description",
 					  						DefaultText =  "Description",
-					  						FullLocalDefaultText =  "תיאור",
+					  						FullLocalDefaultText =  "תיםור",
 					  						ListFieldLable =  "DescriptionListLable",
 					  						ListLableDefaultText =  "Description",
-					  						ListLocalDefaultText =  "תיאור",
+					  						ListLocalDefaultText =  "תיםור",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1211,7 +1213,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LocalDescription",
 					  						DefaultText =  "Local Description",
-					  						FullLocalDefaultText =  "תיאור ",
+					  						FullLocalDefaultText =  "תיםור ",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1859,7 +1861,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
  		   TextCode APInvoiceLineTextCode_APInvoiceLineOExpectedAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoiceLine.O.ExpectedAmount", DefaultText = "Expected Amount",LocalDefaultText = @"סכום צפוי", ObjectTableId = APInvoiceLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode APInvoiceLineTextCode_APInvoiceLineOOtherInvoices = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoiceLine.O.OtherInvoices", DefaultText = "Other Invoices",LocalDefaultText = @"חשבוניות אחרות", ObjectTableId = APInvoiceLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode APInvoiceLineTextCode_APInvoiceLineOOtherInvoices = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoiceLine.O.OtherInvoices", DefaultText = "Other Invoices",LocalDefaultText = @"חשבוניות םחרות", ObjectTableId = APInvoiceLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode APInvoiceLineTextCode_APInvoiceLineOOpenAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoiceLine.O.OpenAmount", DefaultText = "Open Amount",LocalDefaultText = @"סכום פתוח", ObjectTableId = APInvoiceLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
