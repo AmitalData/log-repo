@@ -202,9 +202,14 @@ namespace WebFreight.Web.Helpers.Analyzers
             if (node.ChildNodes != null && node.Name == "event")
             {
                 oceanInsightsId = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "shipment_id").FirstOrDefault()?.InnerText;
-                details = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "details").FirstOrDefault()?.InnerText;
                 createdDate = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "created").FirstOrDefault()?.InnerText;
                 eventCode = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "code").FirstOrDefault()?.InnerText;
+
+                XmlElement detailsElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "details").FirstOrDefault();
+                if (detailsElement != null)
+                {
+                    details = detailsElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "message").FirstOrDefault()?.InnerText;
+                }
             }
         }
         private void ReadShipmentSectionFields(XmlNode node)
@@ -215,10 +220,10 @@ namespace WebFreight.Web.Helpers.Analyzers
                 carrier_scac = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "carrier_scac").FirstOrDefault()?.InnerText;
                 container_status = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "status").FirstOrDefault()?.InnerText;
                 weight = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "weight").FirstOrDefault()?.InnerText;
-                ETD_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "Pol_vsldeparture_planned_initial").FirstOrDefault()?.InnerText;
-                ETD_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "Pol_vsldeparture_planned_last").FirstOrDefault()?.InnerText;
-                ATD_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "Pol_vsldeparture_actual").FirstOrDefault()?.InnerText;
-                ATD_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "Pol_vsldeparture_detected").FirstOrDefault()?.InnerText;
+                ETD_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_vsldeparture_planned_initial").FirstOrDefault()?.InnerText;
+                ETD_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_vsldeparture_planned_last").FirstOrDefault()?.InnerText;
+                ATD_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_vsldeparture_actual").FirstOrDefault()?.InnerText;
+                ATD_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_vsldeparture_detected").FirstOrDefault()?.InnerText;
                 ETA_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_vslarrival_planned_initial").FirstOrDefault()?.InnerText;
                 ETA_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_vslarrival_planned_last").FirstOrDefault()?.InnerText;
                 ETA_predection = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_vslarrival_predection").FirstOrDefault()?.InnerText;
@@ -412,6 +417,7 @@ namespace WebFreight.Web.Helpers.Analyzers
             DateTime? arrivalDate = this.ComputeArrivalDate();
             string departureDateInfo = this.ComputeDepartureDateInfo();
             string arrivalDateInfo = this.ComputeArrivalDateInfo();
+            string statusDetails = this.GetStatusDetails();
 
             ShipmentContainerStatus containerStatus = new ShipmentContainerStatus()
             {
@@ -420,7 +426,7 @@ namespace WebFreight.Web.Helpers.Analyzers
                 ShipmentId = this.oceanInsight.ShipmentId,
                 StatusSource = "OIN",
                 ContainerStatusCode = this.container_status,
-                Details = this.details,
+                Details = statusDetails,
                 RecordHash = iHash,
                 Weight = containerWeight,
                 ReceivingDate = logDate,
@@ -435,6 +441,25 @@ namespace WebFreight.Web.Helpers.Analyzers
 
             shipmentContainerStatusRepository.Add(containerStatus);
             shipmentContainerStatusRepository.SubmitChanges();
+        }
+        private string GetStatusDetails()
+        {
+            string statusDetails = null;
+
+            if(!string.IsNullOrEmpty(this.details))
+            {
+                if(this.details.Length > 250)
+                {
+                    statusDetails = this.details.Substring(0, 250);
+                }
+
+                else
+                {
+                    statusDetails = this.details;
+                }
+            }
+
+            return statusDetails;
         }
         private double GetContainerWeight()
         {
@@ -625,7 +650,6 @@ namespace WebFreight.Web.Helpers.Analyzers
                 }
             }
         }
-
         private ContainerUpdatedFields BuildContainerUpdatedFields()
         {
             ContainerUpdatedFields containerUpdatedFields = new ContainerUpdatedFields();
@@ -643,7 +667,6 @@ namespace WebFreight.Web.Helpers.Analyzers
             containerUpdatedFields.CurrentStatusDate = this.GetEventDate();
             containerUpdatedFields.CurrentStatus = this.GetContainerStatusName();
             containerUpdatedFields.CurrentLocation = this.ComputeCurrentStatusLocation();
-            //containerUpdatedFields.HasContainerException = "";
 
             return containerUpdatedFields;
         }

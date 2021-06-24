@@ -248,32 +248,52 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             {
                 if (RoutingDate.IsDateAddedOrModified(entityPM.MainCarriageETD, entityMasterData.MainCarriageETD))
                 {
-                    AddDateToEventNotes(ref notes, entityPM.MainCarriageETD);
+                    AddDateToEventNotes(ref notes, entityPM.MainCarriageETD, entityMasterData.MainCarriageETD, "Main Carriage ETD");
                 }
 
                 if (RoutingDate.IsDateAddedOrModified(entityPM.MainCarriageATD, entityMasterData.MainCarriageATD))
                 {
-                    AddDateToEventNotes(ref notes, entityPM.MainCarriageATD);
+                    AddDateToEventNotes(ref notes, entityPM.MainCarriageATD, entityMasterData.MainCarriageATD, "Main Carriage ATD");
                 }
 
                 if (RoutingDate.IsDateAddedOrModified(entityPM.MainCarriageETA, entityMasterData.MainCarriageETA))
                 {
-                    AddDateToEventNotes(ref notes, entityPM.MainCarriageETA);
+                    AddDateToEventNotes(ref notes, entityPM.MainCarriageETA, entityMasterData.MainCarriageETA, "Main Carriage ETA");
                 }
 
                 if (RoutingDate.IsDateAddedOrModified(entityPM.MainCarriageATA, entityMasterData.MainCarriageATA))
                 {
-                    AddDateToEventNotes(ref notes, entityPM.MainCarriageATA);
+                    AddDateToEventNotes(ref notes, entityPM.MainCarriageATA, entityMasterData.MainCarriageATA, "Main Carriage ATA");
                 }
             }
 
             return notes;
         }
-        private static void AddDateToEventNotes(ref string myNotes, DateTime? myDate)
+        private static void AddDateToEventNotes(ref string myNotes, DateTime? newDate, DateTime? oldDate, string dateLabel)
         {
-            if (myDate != null)
+            if (newDate != null)
             {
-                myNotes = string.IsNullOrEmpty(myNotes) ? myDate.ToString() : myNotes + "," + myDate.ToString();
+                string newNote;
+
+                if(oldDate != null)
+                {
+                    newNote = dateLabel + " was updated from " + oldDate.ToString()  + " to " + newDate.ToString();
+                }
+
+                else
+                {
+                    newNote = dateLabel + " was updated to " + newDate.ToString();
+                }
+
+                if (string.IsNullOrEmpty(myNotes))
+                {
+                    myNotes = newNote;
+                }
+
+                else
+                {
+                    myNotes = myNotes + ", " + newNote;
+                }
             }
         }
 
