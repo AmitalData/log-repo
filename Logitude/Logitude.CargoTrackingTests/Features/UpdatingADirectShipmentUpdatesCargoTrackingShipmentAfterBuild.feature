@@ -3,7 +3,7 @@
 	Update a Shipment and Build Cargo Tracking Data
 
 
-Scenario: Updating a house shipment gross weight and building cargo tracking
+Scenario: Updating a direct shipment gross weight and building cargo tracking
 	Given a direct shipment
 	When Updating a shipments GrossWeight and building cargo tables 
 	Then the GrossWeight of the cargo tracking shipment with the same id will be updated 
