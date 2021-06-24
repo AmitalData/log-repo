@@ -116,17 +116,24 @@ export class RequestAliases {
     public static readonly PostBranchAddress = "PostBranchAddress"
     public static readonly PutBranchAddress = "PutBranchAddress"
 
-    public static readonly PostShippingLine="PostShippingLine"
-    public static readonly PutShippingLine="PutShippingLine"
-    public static readonly NewShippingLine="NewShippingLine"
+    public static readonly PostShippingLine = "PostShippingLine"
+    public static readonly PutShippingLine = "PutShippingLine"
+    public static readonly NewShippingLine = "NewShippingLine"
 
-    public static readonly PostShippingLineAddress="PostShippingLineAddress"
-    public static readonly PostShippingLineArea="PostShippingLineArea"
-    public static readonly PostShippingLineTariffTranslations="PostShippingLineTariffTranslations"
+    public static readonly PostAirLine = "PostAirLine"
+    public static readonly PutAirLinee = "PutAirLinee"
+    public static readonly PostAirLineAddress = "PostAirLineAddress"
+    public static readonly PostSurchargeTariff = "PostSurchargeTariff"
+    public static readonly PostSpecialHandlingCodes = "PostSpecialHandlingCodes"
+    public static readonly PostAirLineTariffTranslations = "PostAirLineTariffTranslations"
 
-    public static readonly PostCurrency="PostCurrency"
-    public static readonly PutCurrency="PutCurrency"
-    public static readonly GetCurrenciesCodes="GetCurrenciesCodes"
+    public static readonly PostShippingLineAddress = "PostShippingLineAddress"
+    public static readonly PostShippingLineArea = "PostShippingLineArea"
+    public static readonly PostShippingLineTariffTranslations = "PostShippingLineTariffTranslations"
+
+    public static readonly PostCurrency = "PostCurrency"
+    public static readonly PutCurrency = "PutCurrency"
+    public static readonly GetCurrenciesCodes = "GetCurrenciesCodes"
 
     public static readonly GetFBLStock = "GetFBLStock"
     public static readonly RemoveFBLStock = "DeleteFBLStock"
@@ -190,7 +197,7 @@ export class RequestAliases {
 
     public static readonly PostBusinessUnit = "PostBusinessUnit"
     public static readonly PutBusinessUnit = "PutBusinessUnit"
-    
+
     public static readonly PostDepartment = "PostDepartment"
     public static readonly PutDepartment = "PutDepartment"
 

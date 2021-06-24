@@ -1,6 +1,6 @@
 import * as Actions from "../../actions/Actions";
 import * as WarehouseActions from "../../actions/WarehouseActions";
-import * as GeneralActions from "../../actions/GeneralActions";
+import * as GeneralActions from "../../actions/BaseActions";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { WarehousesSelectors } from "../../selectors/WarehousesSelectors";

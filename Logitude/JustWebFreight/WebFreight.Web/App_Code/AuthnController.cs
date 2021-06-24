@@ -37,7 +37,7 @@ namespace WebFreight.Web.App_Code
 
                 var userData = authenticationAPI.PostUserValidation(loginParameters);
 
-                if (userData.CompanyLogins.Count > 1)
+                if (userData.CompanyLogins != null && userData.CompanyLogins.Count > 1)
                     userData = GetUserDataByTenant(credentials, userData);
 
 

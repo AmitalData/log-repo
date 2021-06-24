@@ -7,7 +7,7 @@ import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
 import { BranchDetails } from 'cypress/models/BranchDetails';
 import * as gr from '../../../Base/cypress/actions/GenerateRandoms';
-import * as GeneralActions from './GeneralActions'
+import * as GeneralActions from './BaseActions'
 import * as Actions from './Actions'
 
 let searchFieldValue = null;

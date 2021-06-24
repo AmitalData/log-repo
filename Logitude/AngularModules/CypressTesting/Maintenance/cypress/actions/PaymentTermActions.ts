@@ -1,7 +1,7 @@
 import { PaymentTermsSelectors } from "../selectors/PaymentTermsSelectors";
 import { MaintenanceSelectors } from "../selectors/Selectors";
 import * as Actions from "./Actions";
-import * as GeneralActions from "./GeneralActions";
+import * as GeneralActions from "./BaseActions";
 import { PaymentTermDetails } from "../models/PaymentTermDetails";
 import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import { RestAPI } from "../../../Base/cypress/constants/RestAPI";

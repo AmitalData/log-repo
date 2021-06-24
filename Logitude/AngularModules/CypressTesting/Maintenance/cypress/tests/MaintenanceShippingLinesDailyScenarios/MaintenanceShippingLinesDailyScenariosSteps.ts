@@ -1,6 +1,6 @@
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import * as ShippingLineActions from "../../actions/ShippingLinesActions";
-import * as GeneralActions from "../../actions/GeneralActions";
+import * as GeneralActions from "../../actions/BaseActions";
 import { ShippingLineSelectors } from "../../selectors/ShippingLineSelectors";
 import * as MaintenanceActions from "../../actions/Actions";
 import { ShippingLineDetails } from "../../models/ShippingLineDetails";
@@ -17,11 +17,11 @@ Given("the user logged in and open {string} in maintenance menu", (maintenanceIt
 
 When("fake import shipping Line", () => {
     cy.Navigate(ShippingLineSelectors.ImportShippingLine_AddButton)
-    ShippingLineActions.MockImport();
+    GeneralActions.MockImport();
 });
 
 Then("the shipping Line should import successfully", () => {
-    ShippingLineActions.AssertMockImport();
+    GeneralActions.AssertMockImport();
 });
 //#endregion
 

@@ -6,6 +6,8 @@ import { ShippingLineDetails } from "../../models/ShippingLineDetails";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetails";
 import * as BaseActions from "../../../../Base/cypress/actions/Actions"
+import * as GeneralActions from "../../actions/BaseActions";
+import { Urls } from "../../constants/Urls";
 
 //#region import new shipping line
 Given("the user logged in and open {string} in maintenance menu", (maintenanceItemName) => {
@@ -15,11 +17,11 @@ Given("the user logged in and open {string} in maintenance menu", (maintenanceIt
 
 When("fake import shipping Line", () => {
     cy.Navigate(ShippingLineSelectors.ImportShippingLine_AddButton)
-    ShippingLineActions.MockImport();
+    GeneralActions.MockImport();
 });
 
 Then("the shipping Line should import successfully", () => {
-    ShippingLineActions.AssertMockImport();
+    GeneralActions.AssertMockImport();
 });
 //#endregion
 
