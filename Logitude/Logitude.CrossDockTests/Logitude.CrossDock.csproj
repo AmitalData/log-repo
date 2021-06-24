@@ -99,7 +99,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\CrossDockReleaseData.cs" />
     <Compile Include="Services\CrossDockEntryDataPreparation.cs" />
     <Compile Include="Services\CrossDockEntryServices.cs" />
     <Compile Include="Hooks\BeforeFeatureRun.cs" />

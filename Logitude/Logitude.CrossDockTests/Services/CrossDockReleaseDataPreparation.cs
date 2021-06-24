@@ -40,7 +40,7 @@ namespace Logitude.CrossDockTests.Services
 
         private void CrossDockDataMap(CrossDockReleasePM crossDockRelease)
         {
-            CrossDockReleaseData.Id = crossDockRelease.Id;
+            CrossDockData.CrossDockReleaseId = crossDockRelease.Id;
         }
 
     }

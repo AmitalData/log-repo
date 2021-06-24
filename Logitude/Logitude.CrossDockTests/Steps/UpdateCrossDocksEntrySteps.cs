@@ -27,7 +27,7 @@ namespace Logitude.CrossDockTests.Steps
         [Given(@"entry cross dock")]
         public void GivenEntryCrossDock()
         {
-            crossDockContext.CrossDockEntry = APICaller.CallGet<CrossDockEntryPM>(Urls.CrossDockGetSingle(CrossDockData.Id), UserTenant.Token).Data;
+            crossDockContext.CrossDockEntry = APICaller.CallGet<CrossDockEntryPM>(Urls.CrossDockGetSingle(CrossDockData.CrossDockEntryId), UserTenant.Token).Data;
         }
 
         [Given(@"a packages with the following properties")]

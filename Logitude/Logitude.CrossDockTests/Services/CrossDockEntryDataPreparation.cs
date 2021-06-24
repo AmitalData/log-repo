@@ -35,11 +35,11 @@ namespace Logitude.CrossDockTests.Services
                  .DimensionsUnitCode("Cm")
                  .VolumeUnitCode("CBM")
                  .StatusCode("CREA")
-                 .WarehouseEntryPackage(WarehouseEntryPackagePrepar())
+                 .WarehouseEntryPackage(GetWarehouseEntryPackage())
                  .Build();
         }
 
-        private WarehouseEntryPackagePM WarehouseEntryPackagePrepar()
+        private WarehouseEntryPackagePM GetWarehouseEntryPackage()
         {
             return new WarehouseEntryPackageBuilder()
                          .WithDefualtValues()
@@ -51,7 +51,7 @@ namespace Logitude.CrossDockTests.Services
 
         private void CrossDockDataMap(CrossDockEntryPM crossDockEntry)
         {
-            CrossDockData.Id = crossDockEntry.Id;
+            CrossDockData.CrossDockEntryId = crossDockEntry.Id;
             CrossDockData.WarehouseEntryPackages = crossDockEntry.WarehouseEntryPackages;
         }
 
