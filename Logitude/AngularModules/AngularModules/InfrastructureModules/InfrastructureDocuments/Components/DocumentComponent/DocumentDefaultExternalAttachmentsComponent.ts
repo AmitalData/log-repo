@@ -120,7 +120,7 @@ export class DocumentDefaultExternalAttachmentsComponent implements OnInit {
         const FileSize = this.GetByteFileSize(file.size);
 
         if (this.ValidateFileSize(DocumentsListSize, FileSize)) {
-            this.ShowMessage("The maximum size of documents you can attach is 20 MB. Please send the documents in separated emails");
+            this.ShowMessage("The maximum size of documents you can attach is 20 MB.");
             return;
         }
         
