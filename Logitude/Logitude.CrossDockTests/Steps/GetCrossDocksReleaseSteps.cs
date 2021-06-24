@@ -7,6 +7,7 @@ using Logitude.Test.Base.Models.UserTenantPreparation;
 using Logitude.Test.Base.Services;
 using System;
 using TechTalk.SpecFlow;
+using System.Collections.Generic;
 
 namespace Logitude.CrossDockTests.Steps
 {
@@ -24,14 +25,17 @@ namespace Logitude.CrossDockTests.Steps
         [When(@"get release cross docks with CrossDockId")]
         public void WhenGetReleaseCrossDocksWithCrossDockId()
         {
-            ApiResponse<CrossDockReleasePM> quoteResponse = APICaller.CallGet<CrossDockReleasePM>(Urls.CrossDockGetSingle(CrossDockReleaseData.Id), UserTenant.Token);
+            ApiResponse<CrossDockReleasePM> quoteResponse = APICaller.CallGet<CrossDockReleasePM>(Urls.CrossDockReleaseGetSingle(CrossDockReleaseData.Id), UserTenant.Token);
             crossDockContext.CrossDockRelease = quoteResponse.Data;
         }
-        
+
         [Then(@"release cross dock should be avaliable")]
         public void ThenReleaseCrossDockShouldBeAvaliable()
         {
+            crossDockContext.CrossDockRelease.Should().NotBeNull();
             crossDockContext.CrossDockRelease.Id.Should().NotBeNull();
         }
+
+
     }
 }

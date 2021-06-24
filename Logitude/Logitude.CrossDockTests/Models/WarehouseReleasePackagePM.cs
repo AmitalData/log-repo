@@ -8,6 +8,7 @@ namespace Logitude.CrossDockTests.Models
 {
     public class WarehouseReleasePackagePM
     {
+        public string Id { get; set; }
         public int Tenant { get; set; }
         public DateTime CreateDate { get; set; }
         public string CreatedByUserId { get; set; }
@@ -31,7 +32,7 @@ namespace Logitude.CrossDockTests.Models
         public object ActualReleaseDate { get; set; }
         public object DimensionUnitCode { get; set; }
         public object VolumeUnitCode { get; set; }
-        public double? GrossWeightUnitCode { get; set; }
+        public object GrossWeightUnitCode { get; set; }
         public double? VolumetricWeight { get; set; }
         public object ChargeableWeightUnitCode { get; set; }
         public string ChangeSetOp { get; set; }

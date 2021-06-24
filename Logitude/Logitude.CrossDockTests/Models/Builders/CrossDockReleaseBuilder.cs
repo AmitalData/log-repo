@@ -51,6 +51,20 @@ namespace Logitude.CrossDockTests.Models.Builders
             return this;
         }
 
+        public CrossDockReleaseBuilder CustomerRef1(string customerRef1)
+        {
+            _crossDockRelease.CustomerRef1 = customerRef1;
+            return this;
+        }
+
+
+        public CrossDockReleaseBuilder HouseNumber(string houseNumber)
+        {
+            _crossDockRelease.HouseNumber = houseNumber;
+            return this;
+        }
+
+
         public CrossDockReleaseBuilder WarehouseReleasePackages(List<WarehouseReleasePackagePM> warehouseReleasePackages)
         {
             _crossDockRelease.WarehouseReleasePackages = warehouseReleasePackages;

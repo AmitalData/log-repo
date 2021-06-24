@@ -10,5 +10,8 @@ namespace Logitude.CrossDockTests.Models
     {
         public CrossDockEntryPM CrossDockEntry { get; set; }
         public CrossDockReleasePM CrossDockRelease { get; set; }
+        public string CustomerRef1 { get; set; }
+        public string House { get; set; }
+        public List<WarehouseEntryPackagePM> WarehouseEntryPackages { get; set; }
     }
 }

@@ -18,11 +18,11 @@ namespace Logitude.CrossDockTests.Steps
         private readonly CrossDockEntryServices crossDockEntryService;
         private readonly CrossDockReleaseServices crossDockReleaseServices;
 
-        public CreateCrossDocksSteps(CrossDockContext crossDockContext)
+        public CreateCrossDocksSteps(CrossDockContext crossDockContext, CrossDockEntryServices crossDockEntryService, CrossDockReleaseServices crossDockReleaseServices)
         {
             this.crossDockContext = crossDockContext;
-            this.crossDockEntryService = new CrossDockEntryServices();
-            this.crossDockReleaseServices = new CrossDockReleaseServices();
+            this.crossDockEntryService = crossDockEntryService;
+            this.crossDockReleaseServices = crossDockReleaseServices;
         }
 
 
@@ -75,7 +75,7 @@ namespace Logitude.CrossDockTests.Steps
         [Then(@"the release cross dock should create successfully")]
         public void ThenTheReleaseCrossDockShouldCreateSuccessfully()
         {
-            crossDockContext.CrossDockRelease?.Id.Should().NotBeNull();
+            crossDockContext.CrossDockRelease.Id.Should().NotBeNull();
         }
         #endregion
 

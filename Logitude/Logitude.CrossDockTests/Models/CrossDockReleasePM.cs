@@ -29,5 +29,9 @@ namespace Logitude.CrossDockTests.Models
         public int TotalVolumetricWeight { get; set; }
         public string FromPortId { get; set; }
         public string ToTypeCode { get; set; }
+        public string CustomerRef1 { get; set; }
+        public string CustomerRef2 { get; set; }
+        public string HouseNumber { get; set; }
+        public string MasterNumber { get; set; }
     }
 }
