@@ -164,6 +164,11 @@ export class TaxReportLinePM {
     public set JournalLineNumber(newValue: number) { if (this.journalLineNumber != newValue) { this.journalLineNumber = newValue; this.MarkAsDirty("JournalLineNumber"); } }
        
 	 
+    private previousReference: string;
+    public get PreviousReference() { return this.previousReference; }
+    public set PreviousReference(newValue: string) { if (this.previousReference != newValue) { this.previousReference = newValue; this.MarkAsDirty("PreviousReference"); } }
+       
+	 
 
     public OldEntityPM: TaxReportLinePM;
 		

@@ -751,7 +751,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
                 if (!AppTool.IsNullOrEmpty(Myfilter.TextValue)) {
                     var filter = Myfilter;
                     var OperationSimpol = "";
-                    if (filter.Operation.Code == filter.equalsOp.Code) {
+                    if (filter.Operation.Code == filter.MyParentClass.equalsOp.Code) {
                         if (filter.DataTypeCode == 'Integer' || filter.DataTypeCode == 'Double' || filter.DataTypeCode == 'Decimal') {
                             OperationSimpol = " = @@ ";
                         }
@@ -761,7 +761,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
                             isHaveMultiSelect = true;
                         }
                     }
-                    else if (filter.Operation.Code == filter.notEqualsOp.Code) {
+                    else if (filter.Operation.Code == filter.MyParentClass.notEqualsOp.Code) {
                         if (filter.DataTypeCode == 'Integer' || filter.DataTypeCode == 'Double' || filter.DataTypeCode == 'Decimal') {
                             OperationSimpol = " <> @@ ";
                         }
@@ -771,31 +771,31 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
                             isHaveMultiSelect = true;
                         }
                     }
-                    else if (filter.Operation.Code == filter.startsWithOp.Code) {
+                    else if (filter.Operation.Code == filter.MyParentClass.startsWithOp.Code) {
                         OperationSimpol = " like '@@%' ";
                     }
-                    else if (filter.Operation.Code == filter.IsNullOp.Code) {
+                    else if (filter.Operation.Code == filter.MyParentClass.IsNullOp.Code) {
                         OperationSimpol = " is null ";
                     }
-                    else if (filter.Operation.Code == filter.IsNotNullOp.Code) {
+                    else if (filter.Operation.Code == filter.MyParentClass.IsNotNullOp.Code) {
                         OperationSimpol = " is not null ";
                     }
-                    else if (filter.Operation.Code == filter.greaterThanOrEqualOp.Code) {
+                    else if (filter.Operation.Code == filter.MyParentClass.greaterThanOrEqualOp.Code) {
                         OperationSimpol = " >= @@ ";
                     }
-                    else if (filter.Operation.Code == filter.largerThanOp.Code) {
+                    else if (filter.Operation.Code == filter.MyParentClass.largerThanOp.Code) {
                         OperationSimpol = " > @@ ";
                     }
-                    else if (filter.Operation.Code == filter.lessThanOp.Code) {
+                    else if (filter.Operation.Code == filter.MyParentClass.lessThanOp.Code) {
                         OperationSimpol = " < @@ ";
                     }
-                    else if (filter.Operation.Code == filter.lessThanOrEqualOp.Code) {
+                    else if (filter.Operation.Code == filter.MyParentClass.lessThanOrEqualOp.Code) {
                         OperationSimpol = " <= @@ ";
                     }
-                    if (filter.Operation.Code == filter.IsNullOp.Code) {
+                    if (filter.Operation.Code == filter.MyParentClass.IsNullOp.Code) {
                         this.WhereStmt += (filter.ParentDimTabelName ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " is null or " + (filter.ParentDimTabelName ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " = '' " + " " + AndOr + " ";
                     }
-                    else if (filter.Operation.Code == filter.IsNotNullOp.Code) {
+                    else if (filter.Operation.Code == filter.MyParentClass.IsNotNullOp.Code) {
                         this.WhereStmt += (filter.ParentDimTabelName ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " is not null and " + (filter.ParentDimTabelName ? filter.ParentDimTabelName : filter.DWObjectTableCode) + "." + filter.Code + " <> '' " + " " + AndOr + " ";
                     }
                     else {

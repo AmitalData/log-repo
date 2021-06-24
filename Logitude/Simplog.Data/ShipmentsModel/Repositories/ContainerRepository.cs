@@ -45,7 +45,9 @@ namespace Simplog.Data.ShipmentsModel.Repositories
 
         public IQueryable<Container> GetContainers(int tenant)
         {
-            return context.Containers;
+            return (from container in context.Containers
+                    where  container.Tenant == tenant
+                    select container);
         }
 
         public void Remove(Container entity)
@@ -90,6 +92,13 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             return (from container in context.Containers
                     where container.Tenant == tenant && container.ContainerNumber == containerNumber
                     select container).FirstOrDefault();
+        }
+
+        public IQueryable<Container> GetContainesrByShipmentId(string shipmentId, int tenant)
+        {
+            return from container in context.Containers
+                   where container.Tenant == tenant && container.ShipmentId == shipmentId
+                   select container;
         }
     }
 }

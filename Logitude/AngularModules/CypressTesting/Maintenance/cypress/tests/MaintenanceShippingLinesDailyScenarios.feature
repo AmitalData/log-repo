@@ -40,7 +40,7 @@ Feature: Shipping Line fake Create, Search and Edit from Maintenance
     Scenario: Create shipping line address
         Given fill the following Address in Addresses Shipping line
             | AddressCountry | United States |
-            | AddressCity    | las           |
+            | AddressCity    | Anchorage     |
             | AddressState   | Arkansas      |
         When create shipping line address
         Then the shipping line address should create successfully

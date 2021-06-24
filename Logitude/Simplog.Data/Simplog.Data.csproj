@@ -660,6 +660,8 @@
     <Compile Include="QuoteModel\Repositories\QuoteSettingRepository.cs" />
     <Compile Include="QuoteModel\Repositories\QuoteComputedFieldRepository.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\Container.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\ContainerStatus.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\ContainerStatusSource.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\CustomsTransferHeader.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\CustomsTransferLine.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\CustomsTransferType.cs" />
@@ -683,6 +685,8 @@
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentStoragePricing.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentSubType.cs" />
     <Compile Include="ShipmentsModel\Mapping\ContainerMap.cs" />
+    <Compile Include="ShipmentsModel\Mapping\ContainerStatusMap.cs" />
+    <Compile Include="ShipmentsModel\Mapping\ContainerStatusSourceMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\CustomsTransferHeaderMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\CustomsTransferLineMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\CustomsTransferTypeMap.cs" />
@@ -706,6 +710,8 @@
     <Compile Include="ShipmentsModel\Mapping\ShipmentStoragePricingMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentSubTypeMap.cs" />
     <Compile Include="ShipmentsModel\Repositories\ContainerRepository.cs" />
+    <Compile Include="ShipmentsModel\Repositories\ContainerStatusRepository.cs" />
+    <Compile Include="ShipmentsModel\Repositories\ContainerStatusSourceRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\CustomsTransferHeaderRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\CustomsTransferLineRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\CustomsTransferTypeRepository.cs" />

@@ -42,6 +42,18 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Master).HasColumnName("Master");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             this.Property(t => t.ShipmentId).HasColumnName("ShipmentId");
+            this.Property(t => t.EstimatedEmptyPickupDate).HasColumnName("EstimatedEmptyPickupDate");
+            this.Property(t => t.EstimatedGateInDate).HasColumnName("EstimatedGateInDate");
+            this.Property(t => t.ActualEmptyPickupDate).HasColumnName("ActualEmptyPickupDate");
+            this.Property(t => t.ActualGateInDate).HasColumnName("ActualGateInDate");
+            this.Property(t => t.CurrentStatus).HasColumnName("CurrentStatus");
+            this.Property(t => t.CurrentStatusDate).HasColumnName("CurrentStatusDate");
+            this.Property(t => t.HasContainerException).HasColumnName("HasContainerException");
+            this.Property(t => t.EmptyPickupLocation).HasColumnName("EmptyPickupLocation");
+            this.Property(t => t.CurrentLocation).HasColumnName("CurrentLocation");
+            this.Property(t => t.DestinationLocation).HasColumnName("DestinationLocation");
+            this.Property(t => t.DepartureLocation).HasColumnName("DepartureLocation");
+
 
             this.HasOptional(t => t.CarrierCard).WithMany().HasForeignKey(d => d.MainCarriageCarrierId).WillCascadeOnDelete(false); ;
             this.HasOptional(t => t.ShipmentPackage).WithMany().HasForeignKey(d => d.ShipmentPackagesId).WillCascadeOnDelete(false);

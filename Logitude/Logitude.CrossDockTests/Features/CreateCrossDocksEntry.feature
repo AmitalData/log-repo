@@ -1,5 +1,5 @@
-﻿Feature: Create Cross Docks
-	We want to create cross docks.
+﻿Feature: Create Cross Docks Entry
+	We want to create entry cross docks.
 
 Scenario: Create entry cross dock
 	Given an entry cross dock with the following properties

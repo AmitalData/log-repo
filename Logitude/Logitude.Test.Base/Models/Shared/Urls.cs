@@ -30,6 +30,8 @@
         public static string QuoteViewsGetByFilters = "Quoteviews/Getbyfilters";
 
         public static string CrossDockController = "warehouseentries";
+        public static string CrossReleaseGetController = "warehousereleases";
+        public static string CrossReleaseController = "WarehouseReleaseExtended/postwarehousereleasepm";
 
         //public static string QuotesGetSingle(string id)
         //{
@@ -164,6 +166,11 @@
         public static string CrossDockGetSingle(string id)
         {
             return "warehouseentries/GetSingle?id=" + id;
+        }
+
+        public static string CrossDockReleaseGetSingle(string id)
+        {
+            return "warehousereleases/getsingle?id=" + id;
         }
     }
 }

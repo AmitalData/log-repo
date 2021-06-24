@@ -609,6 +609,7 @@ export class ShipmentHelperComponent implements OnDestroy {
 
     ShipmentContainersSimulatorClicked() {
         var logWindow = new LogitudeWindow();
+        logWindow.WindowArgs = { ShipmentId: this.EntityPM.Id, IsFromContainer: false, ContainerNumber: null};
         logWindow.Title = "Shipment Containers Statuses Simulator";
         logWindow.Show('./ShipmentModules/ShipmentOthers/Components/ShipmentContainersStatuses/ContainersStatusesSimulatorComponent');
     }

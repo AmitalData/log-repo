@@ -14,6 +14,7 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { DWObjectFieldPM } from '../../../../Infrastructure/EntityPMs/DWObjectFieldPM';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { UIProperties } from '../../../../Infrastructure/Components/LogitudeComponents/UIProperties';
 
 @Component({
     selector: 'DWQueryBuilderBaseComponent',
@@ -315,7 +316,7 @@ export class DWFieldsGroup {
     }
 }
 
-export class DWObjectFieldsDetails extends DWQueryBuilderBaseComponent
+export class DWObjectFieldsDetails
 {
     public MyParentClass: DWQueryBuilderComponent;
     public BaseDWObjectField: any;
@@ -328,14 +329,15 @@ export class DWObjectFieldsDetails extends DWQueryBuilderBaseComponent
     public IsHaveTranslation: boolean = false;
     public TranslationText: string;
     public MultiSelectedDisplayName: string;
+    public UIProperties: UIProperties;
 
     @Output() ShowSampleDateCommand = new EventEmitter();
     constructor(DWObjectField: any = null, ParentClass: DWQueryBuilderComponent = null) {
-        super(null);
         var idIndex = this.CurrentSession.GetNewId("Tooltip");
         this.TooltipId = "Tooltip_" + idIndex;
         this.TooltipContentId = "TooltipContent_" + idIndex;
         this.BaseDWObjectField = DWObjectField;
+        this.UIProperties = new UIProperties;
         this.FilterTypes = [];
         this.FilterTypes.push(new ObjectFieldOperator("Fixed Filter", "Fixed Filter"));
         this.FilterTypes.push(new ObjectFieldOperator("Ask User", "Dynamic Filter"));
@@ -588,7 +590,7 @@ export class DWObjectFieldsDetails extends DWQueryBuilderBaseComponent
     public set DimensionTableCode(newValue: string) { if (this.dimensionTableCode != newValue) { this.dimensionTableCode = newValue; } }
 
     private operators: ObjectFieldOperator[];
-    public get Operators() { return this.GetSelectedFieldOperators(this); }
+    public get Operators() { return this.MyParentClass.GetSelectedFieldOperators(this); }
     public set Operators(newValue: ObjectFieldOperator[]) {
         this.operators = newValue;
     }
@@ -833,19 +835,19 @@ export class DWObjectFieldsDetails extends DWQueryBuilderBaseComponent
     DontSaveChanges: boolean = false;
 
     OperationValueChanged(operation) {
-        if (operation.Code == this.currentOp.Code || operation.Code == this.beforeOp.Code || operation.Code == this.afterOp.Code || operation.Code == this.previousOp.Code || operation.Code == this.nextOp.Code || operation.Code == this.currentOp.Code || operation.Code == this.BetweenOp.Code) {
+        if (operation.Code == this.MyParentClass.currentOp.Code || operation.Code == this.MyParentClass.beforeOp.Code || operation.Code == this.MyParentClass.afterOp.Code || operation.Code == this.MyParentClass.previousOp.Code || operation.Code == this.MyParentClass.nextOp.Code || operation.Code == this.MyParentClass.currentOp.Code || operation.Code == this.MyParentClass.BetweenOp.Code) {
             this.DontSaveChanges = true;
             this.Operation = operation;
         } else {
-            if (this.Operation.Code == this.IsNullOp.Code || this.Operation.Code == this.IsNotNullOp.Code) {
+            if (this.Operation.Code == this.MyParentClass.IsNullOp.Code || this.Operation.Code == this.MyParentClass.IsNotNullOp.Code) {
                 this.TextValue = "";
                 this.MultiSelectedValueLists = [];
             }
             this.Operation = operation;
-            if (operation.Code == this.IsNullOp.Code || operation.Code == this.IsNotNullOp.Code) {
+            if (operation.Code == this.MyParentClass.IsNullOp.Code || operation.Code == this.MyParentClass.IsNotNullOp.Code) {
                 this.TextValue = operation.Code;
             }
-            if (operation.Code == this.IsNullOp.Code || operation.Code == this.IsNotNullOp.Code || !AppTool.IsNullOrEmpty(this.TextValue)) {
+            if (operation.Code == this.MyParentClass.IsNullOp.Code || operation.Code == this.MyParentClass.IsNotNullOp.Code || !AppTool.IsNullOrEmpty(this.TextValue)) {
                 this.MyParentClass.ClearData();
             }
         }
@@ -1030,7 +1032,7 @@ export class DWObjectFieldsDetails extends DWQueryBuilderBaseComponent
 
             this.ParentDimTabelName = DWObjectField.ParentDimTabelName;
         }
-        this.Operators = this.GetSelectedFieldOperators(this);
+        this.Operators = this.MyParentClass.GetSelectedFieldOperators(this);
 
         if ((this.ParentDataTypeCode == "Text" || this.ParentDataTypeCode == "nText")) {
             this.Operation = new ObjectFieldOperator("StartsWith", "Starts With");
