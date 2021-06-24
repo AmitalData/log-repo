@@ -770,6 +770,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.OnForwardingAdditionalTransportModeCode).HasColumnName("OnForwardingAdditionalTransportModeCode");
             this.Property(t => t.IsStandalonePickupDelivery).HasColumnName("IsStandalonePickupDelivery");
             this.Property(t => t.IsHTSMissing).HasColumnName("IsHTSMissing");
+            this.Property(t => t.ForwarderStandaloneShipmentId).HasColumnName("ForwarderStandaloneShipmentId");
 
             if (dbms == "oracle")
             {

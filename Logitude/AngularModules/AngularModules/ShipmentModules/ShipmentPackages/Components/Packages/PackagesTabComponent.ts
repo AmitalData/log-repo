@@ -33,6 +33,7 @@ import { HorseList } from '../../../../Common/EntityLists/HorseList';
 import { ShipmentSubTypeListService } from '../../../../shipment/services/standardlists/shipmentsubtypelistservice';
 import { ShipmentContainersWebService } from '../../../../Shipment/Services/ShipmentContainersWebService';
 import { FeatureToggleList } from '../../../../Infrastructure/EntityLists/FeatureToggleList';
+import { ShipmentPMService } from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
 
 
 declare var ResultAsArray: any;
@@ -1546,7 +1547,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     AddPackageClicked() {
         if (!this.EntityPM.IsStandalonePickupDelivery) {
             this.ViewAddPackageWindow();
-        } else {
+        } else  {
             this.ValidateNumberOfStandAloneShipmentPackages();
         }
     }
@@ -1557,7 +1558,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             var messageWindow: MessageWindow = new MessageWindow();
             messageWindow.Show("Stand Alone Shipment should have one container");
         } else {
-            this.ViewAddPackageWindow();
+            this.AddStandAloneContainerClicked();
         }
     }
 
@@ -1600,6 +1601,61 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         logWindow.Show(myPath);
     }
 
+    AddStandAloneContainerClicked() {
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.ForwarderStandaloneShipmentId)) {
+            var windowArgs: any = {};
+            var shipmentPMService = new ShipmentPMService();
+            var forwarderShipmentPM = null;
+            this.CurrentSession.StartBusyIndicatorLoading();
+            shipmentPMService.get(this.EntityPM.ForwarderStandaloneShipmentId).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    this.CurrentSession.StopBusyIndicator();
+                    forwarderShipmentPM = myResponse.Result;
+                    windowArgs.ShipmentPM = forwarderShipmentPM;
+                    windowArgs.IsLCLEntity = this.IsLCLEntity;
+                    windowArgs.IsFCLEntity = this.IsFCLEntity;
+                    windowArgs.TransportModeId = this.TransportModeId;
+                    windowArgs.IsFromShipmentPackageTab = true;
+
+                    var logWindow = new LogitudeWindow();
+                    logWindow.Title = "Add Container";
+                    logWindow.WindowArgs = windowArgs;
+                    logWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/SelectStandalonePackagesComponent");
+                    logWindow.ComponentLoaded.subscribe(component => {
+                        logWindow.WindowClosed.subscribe(result => {
+                            if (result) {
+                                if (component.ItemsSource != null) {
+                                    this.AddStandAloneShipmentPackagePM(component.ItemsSource);
+                                }
+                                this.BuildItemsSource();
+                            }
+                        });
+                    });
+                }
+                else {
+                    this.CurrentSession.StopBusyIndicator();
+                }
+            });
+
+        }
+    }
+    AddStandAloneShipmentPackagePM(ItemsSource:any) {
+        ItemsSource.filter(f => f.IsChecked).forEach(item => {
+            var newPackage = new ShipmentPackagePM(this.EntityPM);
+            newPackage.Tenant = this.EntityPM.Tenant;
+            newPackage.ContainerNumber = item.ContainerNumber;
+            newPackage.Description = item.Description;
+            newPackage.PackageTypeId = item.PackageTypeId;
+            newPackage.PackageTypeName = item.PackageTypeName;
+            newPackage.Quantity = item.Quantity;
+            newPackage.Volume = item.Volume;
+            newPackage.Weight = item.Weight;
+            newPackage.ShipmentId = this.EntityPM.Id;
+            newPackage.ContainerEntityId = item.ContainerEntityId;
+            this.EntityPM.AddPackage(newPackage);
+        });
+    }
+
     EditPackageClicked(itemComponent: ShipmentPackageItem) {
 
         var logWindow = new LogitudeWindow();
@@ -1638,9 +1694,9 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             shipmentDomainService.GetIfShipmentPackageConnectedToPickUpDeliveryPackage(containerId).subscribe((myResponse: ServiceResponse) => {
                 if (!myResponse.HasError) {
                     this.CurrentSession.StopBusyIndicator();
-                    var numberOfSelectedShipmentPackages = myResponse.Result;
-                    if (numberOfSelectedShipmentPackages) {
-                        this.PreventDeleteShipmetPackage()
+                    var isConnectedWithPickupDeliveryPackage = myResponse.Result;
+                    if (isConnectedWithPickupDeliveryPackage) {
+                        this.ValidateDeleteConnectedShipmetPackage()
                     } else {
                         this.ViewDeletePackageConfirmation(itemComponent);
                     }
@@ -1691,9 +1747,9 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         });
     }
 
-    PreventDeleteShipmetPackage() {
+    ValidateDeleteConnectedShipmetPackage() {
         var messageWindow: MessageWindow = new MessageWindow();
-        messageWindow.Show("Can't Delete Connected Container With Pickup/Delivery");
+        messageWindow.Show("Can't Delete a Container that is Connected to a Pickup/Delivery");
     }
 
     ContainersRequestStatusClicked() {

@@ -13,7 +13,6 @@ import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { ShipmentPackageItem, PackagesTabComponent } from '../../../ShipmentPackages/Components/Packages/PackagesTabComponent';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
-
 @Component({
     templateUrl: './SelectStandalonePackagesComponent.html',
 })
@@ -27,42 +26,62 @@ export class SelectStandalonePackagesComponent {
     public TransportModeId: string;
     public ItemsSource: PackagesSelectItem[] = [];
     public IsOkButtonEnabled: boolean = false;
-    private CurrentSession = SessionLocator.SelectedSession;    
-    constructor() {
+    public IsFromShipmentPackageTab: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
+    public IsVisible = false;
+
+    constructor(private _entityResourceService: EntityResourceService) {
 
     }
 
     SetWindowArgs(args: any) {
-        this.EntityPM = args.EntityPM;
-        this.ShipmentPM = args.ShipmentPM;
-        this.IsLCLEntity = args.IsLCLEntity;
-        this.IsFCLEntity = args.IsFCLEntity;
-        this.TransportModeId = args.TransportModeId;
-
-        this.SetLabels();
-        this.BuildItemsSource();
+        this._entityResourceService.getEntityResourceByTableName("ShipmentPickUpDeliveryPackage", 0).subscribe((response: any) => {
+            this.IsVisible = true;
+            this.EntityPM = args.EntityPM;
+            this.ShipmentPM = args.ShipmentPM;
+            this.IsLCLEntity = args.IsLCLEntity;
+            this.IsFCLEntity = args.IsFCLEntity;
+            this.TransportModeId = args.TransportModeId;
+            this.IsFromShipmentPackageTab = args.IsFromShipmentPackageTab;
+            if (this.IsFromShipmentPackageTab) {
+                this.SetShipmentLabels();
+                this.BuildShipmetItemsSource();
+            } else {
+                this.SetPickupDeliveryLabels();
+                this.BuildPickupDeliveryItemsSource();
+            }
+        });
     }
 
     public VolumeLabel: string;
     public GrossWeightLabel: string;
-    SetLabels() {
+    SetShipmentLabels() {
+        this.VolumeLabel = TextCodeTranslator.Translate('Shipment.O.Packages.Volume').replace('%UnitCode', this.ShipmentPM.VolumeUnitCode);
+        this.GrossWeightLabel = TextCodeTranslator.Translate('Shipment.O.Packages.GrossWeight').replace('%UnitCode', this.ShipmentPM.GrossWeightUnitCode);
+    }
+
+    SetPickupDeliveryLabels() {
         this.VolumeLabel = TextCodeTranslator.Translate('ShipmentPickUpDeliveryPackage.O.Packages.Volume').replace('%UnitCode', this.ShipmentPM.VolumeUnitCode);
         this.GrossWeightLabel = TextCodeTranslator.Translate('ShipmentPickUpDeliveryPackage.O.Packages.GrossWeight').replace('%UnitCode', this.ShipmentPM.GrossWeightUnitCode);
     }
 
     get IsAddNewContainerEnabled() {
         var myResult: boolean = true;
-
-        if (this.ItemsSource.filter(f => f.IsChecked).length > 0) {
-            myResult = false;
+        if (this.IsFromShipmentPackageTab) {
+            myResult = this.ItemsSource.filter(f => f.IsChecked).length > 0 ? false : myResult;
+        } else {
+            if (this.EntityPM != null && AppTool.IsNullOrEmpty(this.EntityPM.standaloneShipmentId)) {
+                myResult = true;
+            } else {
+                myResult = this.ItemsSource.filter(f => f.IsChecked).length > 0 ? false : myResult;
+            }
         }
-
         return myResult;
     }
 
     public SelectedItem: PackagesSelectItem = null;
     public PackageTypeColumnWidth: number = 80;
-    BuildItemsSource() {
+    BuildPickupDeliveryItemsSource() {
         this.ItemsSource = [];
         this.SelectedItem = null;
         var myPackageTypeColumnWidth: number = 80;
@@ -80,6 +99,51 @@ export class SelectStandalonePackagesComponent {
             this.ShipmentPM.ShipmentDeliveries.forEach(item => {
                 item.ShipmentPickUpDeliveryPackages.forEach(item1 => {
                     pickUpDliveryPackagescontainersIds.push(item1.ContainerEntityId);
+                });
+            });
+        }
+
+        if (this.EntityPM.ShipmentPickUpDeliveryPackages != null) {
+            this.EntityPM.ShipmentPickUpDeliveryPackages.forEach(item => {
+                pickUpDliveryPackagescontainersIds.push(item.ContainerEntityId);
+            });
+        }
+
+        this.ShipmentPM.ShipmentPackages.filter(d => AppTool.IsNullOrEmpty(d.ContainerEntityId) || pickUpDliveryPackagescontainersIds.indexOf(d.ContainerEntityId) == -1).forEach(item => {
+            var widthOfLabel = AppTool.GetTextWidth(item.PackageTypeName);
+            if (widthOfLabel > myPackageTypeColumnWidth) {
+                myPackageTypeColumnWidth = widthOfLabel;
+            }
+
+            this.ItemsSource.push(new PackagesSelectItem(item, this));
+        });
+
+        if (myPackageTypeColumnWidth > 190) {
+            myPackageTypeColumnWidth = 190;
+        }
+
+        this.PackageTypeColumnWidth = myPackageTypeColumnWidth;
+        this.OnItemsChecked();
+    }
+
+    BuildShipmetItemsSource() {
+        this.ItemsSource = [];
+        this.SelectedItem = null;
+        var myPackageTypeColumnWidth: number = 80;
+
+        var pickUpDliveryPackagescontainersIds: string[] = [];
+        if (this.ShipmentPM.ShipmentPickUps != null ) {
+            this.ShipmentPM.ShipmentPickUps.forEach(pickUp => {
+                pickUp.ShipmentPickUpDeliveryPackages.forEach(item => {
+                    pickUpDliveryPackagescontainersIds.push(item.ContainerEntityId);
+                });
+            });
+        }
+
+        if (this.ShipmentPM.ShipmentDeliveries != null) {
+            this.ShipmentPM.ShipmentDeliveries.forEach(delivery => {
+                delivery.ShipmentPickUpDeliveryPackages.forEach(item => {
+                    pickUpDliveryPackagescontainersIds.push(item.ContainerEntityId);
                 });
             });
         }
@@ -103,13 +167,15 @@ export class SelectStandalonePackagesComponent {
 
     OnItemsChecked() {
         var isChecked: boolean = false;
-
-        if (this.ItemsSource) {
-            if (this.ItemsSource.filter(f => f.IsChecked)[0]) {
+        if (this.IsFromShipmentPackageTab) {
+            isChecked = this.ItemsSource.filter(f => f.IsChecked)[0] ? false : isChecked;
+        } else {
+            if (this.EntityPM != null && AppTool.IsNullOrEmpty(this.EntityPM.standaloneShipmentId)) {
                 isChecked = true;
+            } else {
+                isChecked = this.ItemsSource.filter(f => f.IsChecked)[0] ? false : isChecked;
             }
         }
-
         this.IsOkButtonEnabled = isChecked;
     }
 
@@ -118,6 +184,14 @@ export class SelectStandalonePackagesComponent {
     }
 
     OkButtonClicked() {
+        if (!this.IsFromShipmentPackageTab) {
+            this.AddShipmentPickUpDeliveryPackagePM();
+        }
+
+        this.CurrentSession.CloseCurrentWindowEmit("OK");
+    }
+
+    AddShipmentPickUpDeliveryPackagePM() {
         this.ItemsSource.filter(f => f.IsChecked).forEach(item => {
             var newPackage = new ShipmentPickUpDeliveryPackagePM(this.EntityPM);
             newPackage.Tenant = this.EntityPM.Tenant;
@@ -127,17 +201,13 @@ export class SelectStandalonePackagesComponent {
             newPackage.PackageTypeName = item.PackageTypeName;
             newPackage.Quantity = item.Quantity;
             newPackage.Volume = item.Volume;
-            newPackage.Weight = item.Weight;            
+            newPackage.Weight = item.Weight;
             newPackage.ShipmentPickUpDeliveryId = this.EntityPM.Id;
-            newPackage.ContainerEntityId = item.ContainerEntityId;            
+            newPackage.ContainerEntityId = item.ContainerEntityId;
             this.EntityPM.AddPackage(newPackage);
             item.EntityPM.IsPackageAddedManually = true;
             item.EntityPM.IsPackageAddedManually = false;
         });
-
-        
-
-        this.CurrentSession.CloseCurrentWindowEmit("OK");
     }
 
     AddContainerClicked() {
@@ -171,7 +241,7 @@ export class SelectStandalonePackagesComponent {
         logWindow.Show('./ShipmentModules/ShipmentPackages/Components/Packages/AddEditOceanPackageComponent');
         logWindow.WindowClosed.subscribe((s: any) => {
             if (s) {
-                this.BuildItemsSource();
+                this.BuildPickupDeliveryItemsSource();
             }
         });
     }    
@@ -202,11 +272,15 @@ export class PackagesSelectItem {
 
     get IsSelectNewContainerEnabled() {
         var myResult: boolean = true;
-
-        if (this.fatherComponent.ItemsSource.filter(f => f.IsChecked).length > 0 && !this.IsChecked) {
-            myResult = false;
+        if (this.fatherComponent.IsFromShipmentPackageTab) {
+            myResult = this.fatherComponent.ItemsSource.filter(f => f.IsChecked).length > 0 && !this.IsChecked ? false : myResult;
+        } else {
+            if (this.EntityPM != null && AppTool.IsNullOrEmpty(this.fatherComponent.EntityPM.standaloneShipmentId)) {
+                myResult = true;
+            } else {
+                myResult = this.fatherComponent.ItemsSource.filter(f => f.IsChecked).length > 0 && !this.IsChecked ? false : myResult;
+            }
         }
-
         return myResult;
     }
 
