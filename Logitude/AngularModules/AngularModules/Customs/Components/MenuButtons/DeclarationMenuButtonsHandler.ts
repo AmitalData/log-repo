@@ -1334,11 +1334,20 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         };
         var logWindow = new LogitudeWindow();
         logWindow.Width = 1000;
-        logWindow.Height = 700;
-        logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.Payments");
         logWindow.WindowArgs = args;
         logWindow.ShowCloseButton = true;
-        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationPayment/DeclarationPaymentComponent');
+        if (this.EntityPM.Direction == "E")
+        {
+            logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.PaymentsExport");
+            logWindow.Height = 500;
+            logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationPayment/DeclarationPaymentExportComponent');
+        }
+        else
+        {
+            logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.Payments");
+            logWindow.Height = 700;
+            logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationPayment/DeclarationPaymentComponent');
+        }
         logWindow.WindowClosed.subscribe(($event: any) => {
             this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         });
