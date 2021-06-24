@@ -45,7 +45,9 @@ namespace Simplog.Data.ShipmentsModel.Repositories
 
         public IQueryable<Container> GetContainers(int tenant)
         {
-            return context.Containers;
+            return (from container in context.Containers
+                    where  container.Tenant == tenant
+                    select container);
         }
 
         public void Remove(Container entity)
