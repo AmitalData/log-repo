@@ -2278,7 +2278,6 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                     EntityId: $event.rowData.Id,
                                     ObjectTableName: "Customs.Containerization"
                                 });
-
                                 cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
                                     this.isEditControlOpened = false;
                                     this.OnBackFromEdit(selectedEntityId, $event)

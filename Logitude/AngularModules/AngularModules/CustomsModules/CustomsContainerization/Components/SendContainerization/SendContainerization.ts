@@ -2,13 +2,15 @@ import { Component, OnDestroy } from "@angular/core";
 import { LogitudeWindow } from "../../../../Controls/Windows/LogitudeWindow";
 import { GenericRequestParams } from "../../../../Customs/DataContract/RequestParams/GenericRequestParams";
 import { CustomSendOptionsArgs, SendRequestVIA } from "../../../../Customs/DataContract/RequestParams/RequestParamsBase";
+import { ContainerizationResponseData } from "../../../../Customs/DataContract/ResponseData/ContainerizationResponseData";
 import { ContainerizationPM } from "../../../../Customs/EntityPMs/ContainerizationPM";
+import { ContainerizationPMService } from "../../../../Customs/Services/StandardPMs/ContainerizationPMService";
 import { ContainerizationMessagesService } from "../../../../Customs/Services/WebServices/ContainerizationMessagesService";
 import { ServiceResponse } from "../../../../Infrastructure/DataContracts/ServiceResponse";
 import { ObjectTablePM } from "../../../../Infrastructure/EntityPMs/ObjectTablePM";
 import { SessionLocator } from "../../../../Infrastructure/Utilities/SessionLocator";
 import { TextCodeTranslator } from "../../../../Infrastructure/Utilities/TextCodeTranslator";
-import { ShowProgressBarParams } from "../../../CustomsControls/Components/CustomMessageProgressComponent";
+import { CustomMessageProgressComponent, ShowProgressBarParams } from "../../../CustomsControls/Components/CustomMessageProgressComponent";
 
 
 @Component({
@@ -31,7 +33,6 @@ export class SendContainerization implements OnDestroy {
     _WorkWithService: boolean = true;
     private CurrentSession = SessionLocator.SelectedSession;
     SendContainerizationService: SendContainerizationService = new SendContainerizationService();
-
     constructor() {
     }
 
@@ -102,6 +103,9 @@ export class SendContainerizationService implements OnDestroy {
     LoadCompletedEvent: any;
     private CurrentSession = SessionLocator.SelectedSession;
     containerizationMessagesService: ContainerizationMessagesService = new ContainerizationMessagesService();
+    ResponseData: ContainerizationResponseData;
+    containerizationPMService: ContainerizationPMService = new ContainerizationPMService();
+
     constructor() {
 
     }
@@ -136,13 +140,9 @@ export class SendContainerizationService implements OnDestroy {
 
     }
 
-    OnCustomSendOptionsButtonClick(event) {
-        this.containerizationMessagesService.SendContainerization(this.getParams(event))
-            .subscribe(res1 => {
-            });
-    }
 
-    getParams(event: any) {
+
+    OnCustomSendOptionsButtonClick(event) {
         var params: GenericRequestParams = new GenericRequestParams();
         params.Tenant = SessionLocator.Tenant;
         params.RequestVIA = event.RequestVIA;
@@ -150,8 +150,28 @@ export class SendContainerizationService implements OnDestroy {
         params.LoggingEnabled = true;
         params.LoggingEntityId = this.EntityPM.Id;
         params.LoggingUserId = SessionLocator.LoggedUserId;
-        return params
+        params.RequestName = "המכלה";
+        params.ResponseName = "המכלה תשובה"
+        this.EntityPM.IsChange = false;
+        CustomMessageProgressComponent
+            .ShowProgressBar(params.PBId,
+                "שליחת המכלה", false)
+            .then((res) => {
+                this.ResponseData = res;
+            }
+            ).catch((err) => {
+                this.ValidationErrors.push(err);
+                this.FillValidationErrors("Errors");
+            });
+        this.containerizationMessagesService.SendContainerization(params)
+            .subscribe((myServiceResponse: ServiceResponse) => {
+            });
+        this.containerizationPMService.update(this.EntityPM).subscribe((response: any) => {
+            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        });
     }
+
+
 
 
     public OnSuccessSendMethod: (response: any) => void;

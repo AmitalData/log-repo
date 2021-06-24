@@ -57,7 +57,7 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
     private declarationListService: DeclarationListService = new DeclarationListService();
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService) {
         super();
-
+        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
         this.EntityResourceService.getEntityResourceByTableName("Customs.Containerization").subscribe((response: any) => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
                 this.EntityPM = this.entityArgs.EntityPM;
@@ -97,7 +97,6 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
 
     getRows()//skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
     {
-
         let filters = new ApiQueryFilters();
 
 
@@ -122,6 +121,7 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
                 this.EntityPM.ConnectedDeclarations = "";
                 r.Result.forEach(x => this.EntityPM.ConnectedDeclarations += x.Id + ",");
                 this.EntityPM.DisableMarkAsDirty = false;
+                SessionLocator.SelectedSession.StopBusyIndicator();
             });
 
     }
@@ -138,6 +138,7 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
                 r.Result.forEach(element => {
                     if (!this.ContainerizationDeclarationList.Collection.filter(x => x.Id == element.Id).length)
                         this.ContainerizationDeclarationList.Insert(element);
+                    SessionLocator.SelectedSession.StopBusyIndicator();
                 });
                 this.getRowNumbers();
 
@@ -153,6 +154,7 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
             this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
                 this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
+
                         this.resetDeletedDeclaration();
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.getRows();
@@ -217,7 +219,7 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
     SetFieldsEditability() {
         //throw new Error('Method not implemented.');
     }
-
+    
 
 
     //#endregion
@@ -237,10 +239,10 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
         } else {
             this.EntityPM.NotConnectedDeclarations += "," + item.Id;
         }
-        debugger;
         if (this.EntityPM.ConnectedDeclarations.includes(item.Id)) {
             this.EntityPM.ConnectedDeclarations = this.EntityPM.ConnectedDeclarations.replace(item.Id + ",", "");
         }
+        this.EntityPM.IsChange = true;
         this.ContainerizationDeclarationList.Remove(item);
         this.getRowNumbers();
     }

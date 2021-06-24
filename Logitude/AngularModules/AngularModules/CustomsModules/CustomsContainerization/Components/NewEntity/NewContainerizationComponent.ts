@@ -424,9 +424,11 @@ export class NewContainerizationComponent extends BaseComponent {
 
     SendButtonClicked() {
         if (this.entityPM.Id != null) {
+            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
             this.entityPM.ConnectedDeclarations = this.containerizationExtendedListService.ConnectedDeclarations;
+            this.entityPM.OperationMode = "2";
+            this.entityPM.IsChange = true;
             SessionLocator.SelectedSession.CurrentEditComponent.EntityPM = this.entityPM;
-            SessionLocator.SelectedSession.CurrentEditComponent.EntityPM.OperationMode = "2";
             DeclarationEventManager.AddDeclarationToContainerization.emit(null);
             this.CurrentSession.CurrentWindow.Close("0");
         } else {
@@ -440,6 +442,7 @@ export class NewContainerizationComponent extends BaseComponent {
             logitudeWindow.ComponentLoaded.subscribe(comp => {
                 logitudeWindow.WindowClosed.subscribe((event:any) => {
                     if (event != null) {
+                        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
                         this.entityPM.AgentDeclaration = true;
                         this.entityPM.ConnectedDeclarations = this.containerizationExtendedListService.ConnectedDeclarations;
                         this.containerizationPMService.insert(this.entityPM).subscribe((response: ServiceResponse) => {
@@ -450,6 +453,9 @@ export class NewContainerizationComponent extends BaseComponent {
                                     cmpRef.instance.Run({
                                         EntityId: response.Result.Id,
                                         ObjectTableName: "Customs.Containerization"
+                                    });
+                                    cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                                     });
                                 });
                             if (!response.HasError) {
@@ -468,12 +474,13 @@ export class NewContainerizationComponent extends BaseComponent {
     getParams(response: ServiceResponse,event:any) {
         var params: GenericRequestParams = new GenericRequestParams();
         params.Tenant = SessionLocator.Tenant;
-        params.AppicationId = "12345";
         params.RequestVIA = event.RequestVIA;
         params.ForcePersonalSign = event.ForcePersonalSign;
         params.LoggingEnabled = true;
-        params.LoggingEntityId = response.Result.Id;
+        params.LoggingEntityId = this.EntityPM.Id;
         params.LoggingUserId = SessionLocator.LoggedUserId;
+        params.RequestName = "המכלה";
+        params.ResponseName = "המכלה תשובה"
         return params
     }
     private timerToken: any;

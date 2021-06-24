@@ -1265,7 +1265,6 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
     }
 
     private OpenNewContainerizationMethod() {
-        debugger;
         if (AppTool.IsNullOrEmpty(this.EntityPM.ExportContainerizationID)) {
             var args: any = {
                 EntityPM: this.EntityPM,
@@ -1290,6 +1289,9 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         cmpRef.instance.Run({
                             EntityId: this.EntityPM.ExportContainerizationID,
                             ObjectTableName: "Customs.Containerization"
+                        });
+                        cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                         });
                     });
         }
