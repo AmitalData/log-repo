@@ -196,6 +196,8 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public string ToPortCode  { get; set; }
        [DataMember]
        public int? NumberOfPackages  { get; set; }
+       [DataMember]
+       public string CurrentMilestoneExceptions  { get; set; }
    }
 
 }

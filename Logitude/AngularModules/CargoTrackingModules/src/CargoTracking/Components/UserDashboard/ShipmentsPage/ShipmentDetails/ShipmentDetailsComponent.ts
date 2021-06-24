@@ -389,7 +389,8 @@ export class ShipmentDetailsComponent implements AfterViewInit
                 newCard.Description = milstone.Notes;
                 newCard.IsDimmed = milstone.IsEstimation && !milstone.Done;
                 newCard.IsActive = milstone.Id + '' == this.Shipment.ShipmentList.CurrentMilestoneCode;
-                newCard.HasWarning = newCard.IsActive;
+                newCard.HasWarning = this.Shipment.ShipmentList.CurrentMilestoneExceptions != null;
+                newCard.Warning = this.Shipment.ShipmentList.CurrentMilestoneExceptions;
                 return newCard;
             });
         this.SetNoMilstonesFound();
@@ -913,6 +914,7 @@ export class MilestoneCard
     IsActive: boolean;
     HasWarning: boolean;
     IsDimmed: boolean;
+    Warning: string;
 }
 
 export class RoutingStep

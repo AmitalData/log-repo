@@ -144,7 +144,8 @@
                      *ngFor="let card of SliderCards"
                      [class.active]="card.IsActive"
                      [class.dim]="card.IsDimmed"
-                     [class.warning]="false">
+                     [class.warning]="card.HasWarning"
+                     >
                     <div class="date">{{card.Date | date: 'dd'}} <span>{{card.Date | date: 'MMM'}}</span></div>
                     <div class="title">{{card.Title}}</div>
                     <div class="desc hide-mobile "  [attr.title]="card.Description"
@@ -258,7 +259,7 @@
                 <div>
                     <div class="title">Pack Type</div>
                     <div class="description">
-                        <div *ngFor="let package of ShipmentPackages.slice(0,2), let i = index">
+                        <div *ngFor="let package of ShipmentPackages?.slice(0,2), let i = index">
                             {{package.PackageTypeName}}
                             <a *ngIf="ShipmentPackages.length > 2 && i == 1" (click)="ShowMoreLinkClicked()"
                                style="cursor: pointer; font-size: 11px;color:var(--MainColor)"> {{ShowDetailsSection?'Show less':'Show more'}}</a>

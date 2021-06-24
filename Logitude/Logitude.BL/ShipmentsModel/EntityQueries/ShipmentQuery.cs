@@ -13521,6 +13521,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             Shipment shipment = repository.GetShipmentForCargoTracking(id, tenant);
 
+            if (shipment == null) return null;
+
             var shipmentPM = new ShipmentPM();
 
             ShipmentMasterData masterData = (from a in repository.context.ShipmentMasterDatas
@@ -13632,7 +13634,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             Shipment shipment = repository.GetShipmentForCargoTracking(shipmentId, tenant);
 
-            if (shipment.ShipmentAdditionalCloudData == null) return null;
+            if (shipment?.ShipmentAdditionalCloudData == null) return null;
             
             ShipmentAdditionalCloudCustomData cloudCustomData = GetDeserializedCloudCustomData(shipment.ShipmentAdditionalCloudData);
             CargoTrackingShipmentCustomsData shipmentCustomsData = null;

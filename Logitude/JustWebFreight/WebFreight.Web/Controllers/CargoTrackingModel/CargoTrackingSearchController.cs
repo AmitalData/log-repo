@@ -99,6 +99,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 CargoTrackingShipmentListQueryService shipmentsQuery = new CargoTrackingShipmentListQueryService(MyContext);
 
                 CargoTrackingShipmentList shipment = shipmentsQuery.GetShipment(SecurityKey, tenant);
+                if (shipment == null) 
+                    return Request.CreateResponse(HttpStatusCode.OK);
 
                 List<Milestone> shipmentMilestones = shipmentsQuery.BuildShipmentMilstones(shipment);
                 shipmentsQuery.SetMilestonesStatus(shipment, shipmentMilestones);
