@@ -26,6 +26,7 @@ namespace WebFreight.Web.Helpers
         private List<TicketList> tickets = null;
         private List<DocumentsFilingList> documentsFilings = null;
         private int tenant;
+        private ICRMContext iCRMContext;
         private string documentTypeId = string.Empty;
         private string documentTypeCode = "QUTD";
         private string ticketObjectTableId = string.Empty;
@@ -36,6 +37,7 @@ namespace WebFreight.Web.Helpers
         {
             this.tenant = tenant;
             this.quotesRequestFilters = quotesRequestFilters;
+            this.iCRMContext = CRMContext.GetContext(this.tenant);
             documentTypeId = new DocumentTypeRepository(tenant).GetDocumentTypeIdByCode(documentTypeCode, tenant);
             ticketObjectTableId = ObjectTableRepository.GetObjectTableByName("Ticket");
             quoteObjectTableId = ObjectTableRepository.GetObjectTableByName("Quote");
@@ -53,45 +55,88 @@ namespace WebFreight.Web.Helpers
         }
 
 
-        public void SendEmail(QuotesRequestEmailFeedback emailFeedback)
+        public void UpdateQuotesRequestAndSendEmailFeedback(QuotesRequestEmailFeedback emailFeedback)
         {
-            ICRMContext MyContext = CRMContext.GetContext(this.tenant);
-            TicketQueryService ticketQueryService = new TicketQueryService(MyContext);
+            TicketPM ticketPM = GetSelectedTicketPM(emailFeedback);
+            MapTicketPMQuoteRequestFields(emailFeedback, ticketPM);
+            UpdateSelectedTicketPM(ticketPM);
+            UserPM ownerPM = GetTicketPMOwnerUser(ticketPM);
+            ContactPM loggedContactPM = GetLoggedContactPM(emailFeedback);
+            StringBuilder quotesRequestTemplateBody = GetQuotesRequestTemplateBody(emailFeedback, ownerPM, loggedContactPM);
+            byte[] quotesRequestTemplateBodyData = ConvertStringBodyToArrayOfByte(quotesRequestTemplateBody);
+            string emailSubject = GetQuotesRequestEmailSubject(emailFeedback);
+            HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
+            htmlEditorHelper.SendHtmlDocument(quotesRequestTemplateBodyData, null, null, this.tenant, ownerPM.Email, emailSubject, "", "", null, emailFeedback.QuotesRequest.Id, ticketObjectTableId, emailFeedback.QuotesRequest.DocumentId, "", emailFeedback.From, "");
+        }
+
+        private TicketPM GetSelectedTicketPM(QuotesRequestEmailFeedback emailFeedback)
+        {
+            TicketQueryService ticketQueryService = new TicketQueryService(this.iCRMContext);
             TicketPM ticketPM = ticketQueryService.GetSingle(emailFeedback.QuotesRequest.Id, true, false);
+            return ticketPM;
+        }
+
+        private static void MapTicketPMQuoteRequestFields(QuotesRequestEmailFeedback emailFeedback, TicketPM ticketPM)
+        {
             ticketPM.QuoteRequestComments = emailFeedback.QuotesRequest.Comments;
             ticketPM.QuoteRequestFeedback = emailFeedback.QuotesRequest.Feedback;
-            TicketUpdateService ticketUpdateService = new TicketUpdateService(MyContext, new Dictionary<string, IContext>(), this.tenant);
+        }
+
+        private void UpdateSelectedTicketPM(TicketPM ticketPM)
+        {
+            TicketUpdateService ticketUpdateService = new TicketUpdateService(this.iCRMContext, new Dictionary<string, IContext>(), this.tenant);
             ticketPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
             ticketUpdateService.Update(ticketPM, true);
+        }
+
+        private UserPM GetTicketPMOwnerUser(TicketPM ticketPM)
+        {
             UserQuery userQuery = new UserQuery(this.tenant);
             UserPM userPM = userQuery.GetSinglePM(ticketPM.OwnerId, this.tenant);
-            HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
+            return userPM;
+        }
+
+        private ContactPM GetLoggedContactPM(QuotesRequestEmailFeedback emailFeedback)
+        {
             ContactQuery contactQuery = new ContactQuery(this.tenant);
-            ContactPM contactPM = contactQuery.GetContactByEmailOnly(userPM.Email, this.tenant);
-            StringBuilder HtmlTemplate = new StringBuilder();
-            HtmlTemplate.Append("<div style='text-align:left;'>");
-            HtmlTemplate.Append("<br />");
-            HtmlTemplate.Append("Hi " + userPM.EnglishName + ",");
-            HtmlTemplate.Append("<br /><br />");
-            HtmlTemplate.Append(contactPM.EnglishName + " ");
-            HtmlTemplate.Append("has " + emailFeedback.QuotesRequest.Feedback + " ");
-            HtmlTemplate.Append("quote request " + emailFeedback.QuotesRequest.ReferenceNumber + " ");
+            ContactPM contactPM = contactQuery.GetContactByEmailOnly(emailFeedback.From, this.tenant);
+            return contactPM;
+        }
+
+        private static StringBuilder GetQuotesRequestTemplateBody(QuotesRequestEmailFeedback emailFeedback, UserPM ownerPM, ContactPM loggedContactPM)
+        {
+            StringBuilder quotesRequestTemplateBody = new StringBuilder();
+            quotesRequestTemplateBody.Append("<div style='text-align:left;'>");
+            quotesRequestTemplateBody.Append("<br />");
+            quotesRequestTemplateBody.Append("Hi " + ownerPM.EnglishName + ",");
+            quotesRequestTemplateBody.Append("<br /><br />");
+            quotesRequestTemplateBody.Append(loggedContactPM.EnglishName + " ");
+            quotesRequestTemplateBody.Append("has " + emailFeedback.QuotesRequest.Feedback + " ");
+            quotesRequestTemplateBody.Append("quote request " + emailFeedback.QuotesRequest.ReferenceNumber + " ");
             if (!string.IsNullOrEmpty(emailFeedback.QuotesRequest.Comments))
             {
-                HtmlTemplate.Append("with the following comments: ");
-                HtmlTemplate.Append("<br />");
-                HtmlTemplate.Append(emailFeedback.QuotesRequest.Comments);
+                quotesRequestTemplateBody.Append("with the following comments: ");
+                quotesRequestTemplateBody.Append("<br />");
+                quotesRequestTemplateBody.Append(emailFeedback.QuotesRequest.Comments);
             }
-            HtmlTemplate.Append("<br /><br />");
-            HtmlTemplate.Append("Best Regards,");
-            HtmlTemplate.Append("<br />");
-            HtmlTemplate.Append("Logitude Team");
-            HtmlTemplate.Append("<br /><br />");
+            quotesRequestTemplateBody.Append("<br /><br />");
+            quotesRequestTemplateBody.Append("Best Regards,");
+            quotesRequestTemplateBody.Append("<br />");
+            quotesRequestTemplateBody.Append("Logitude Team");
+            quotesRequestTemplateBody.Append("<br /><br />");
+            return quotesRequestTemplateBody;
+        }
 
+        private static byte[] ConvertStringBodyToArrayOfByte(StringBuilder quotesRequestTemplateBody)
+        {
             System.Text.UTF8Encoding uTF8Encoding = new System.Text.UTF8Encoding();
-            byte[] htmlData = uTF8Encoding.GetBytes(HtmlTemplate.ToString());
-            string emailSubject = "Quote Request " + emailFeedback.QuotesRequest.ReferenceNumber + " " + emailFeedback.QuotesRequest.Feedback;
-            htmlEditorHelper.SendHtmlDocument(htmlData, null, null, this.tenant, userPM.Email, emailSubject, "", "", null, emailFeedback.QuotesRequest.Id, ticketObjectTableId, emailFeedback.QuotesRequest.DocumentId, "", emailFeedback.From, "");
+            byte[] htmlData = uTF8Encoding.GetBytes(quotesRequestTemplateBody.ToString());
+            return htmlData;
+        }
+
+        private static string GetQuotesRequestEmailSubject(QuotesRequestEmailFeedback emailFeedback)
+        {
+            return "Quote Request " + emailFeedback.QuotesRequest.ReferenceNumber + " " + emailFeedback.QuotesRequest.Feedback;
         }
 
         public List<QuotesRequest> Get()

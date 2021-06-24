@@ -32,7 +32,7 @@ namespace WebFreight.Web.Controllers.CRMModel.Extended
         }
 
         [HttpPost]
-        public HttpResponseMessage SendEmailFeedBack(QuotesRequestEmailFeedback emailFeedback)
+        public HttpResponseMessage UpdateQuotesRequestAndSendEmailFeedback(QuotesRequestEmailFeedback emailFeedback)
         {
             try
             {
@@ -40,8 +40,8 @@ namespace WebFreight.Web.Controllers.CRMModel.Extended
                 SecurityUtility.AuthenticationOnTenant(authenticationToken.Tenant);
                 SecurityUtility.CheckSharedContactAuthentication(authenticationToken.Tenant, emailFeedback.PartnerId);
                 QuotesRequestService quotesRequestService = new QuotesRequestService(authenticationToken.Tenant, emailFeedback);
-                quotesRequestService.SendEmail(emailFeedback);
-                return Request.CreateResponse(HttpStatusCode.OK, "Sent");
+                quotesRequestService.UpdateQuotesRequestAndSendEmailFeedback(emailFeedback);
+                return Request.CreateResponse(HttpStatusCode.OK, "Success");
             }
             catch (Exception ex)
             {

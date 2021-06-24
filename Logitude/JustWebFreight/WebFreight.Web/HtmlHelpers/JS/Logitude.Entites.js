@@ -155,10 +155,11 @@ var QuotesRequest = function () {
     this.DocumentSecurityId = "";
     this.Feedback = "";
     this.Comments = "";
-    this.CommentId = "";
     this.DocumentId = "";
     this.IsRejected = false;
     this.IsApproved = false;
+    this.CommentsReadOnlyProperty = "";
+    this.OptionDisabledProperty = ""
 
 
 }
@@ -1727,12 +1728,13 @@ function GetNewInStanceFromQuotesRequest(quotesRequest, tenantDateTimeFormat) {
     var newQuotesRequest = new QuotesRequest();
     newQuotesRequest.Id = quotesRequest.Id;
     newQuotesRequest.Feedback = quotesRequest.Feedback;
-    newQuotesRequest.CommentId = "Comment" + quotesRequest.Id;
     newQuotesRequest.Comments = quotesRequest.Comments == null ? "" : quotesRequest.Comments;
+    newQuotesRequest.CommentsReadOnlyProperty = quotesRequest.Comments == null ? "" : "readonly";
+    newQuotesRequest.OptionDisabledProperty = quotesRequest.Comments == null ? "" : "disabled";
+    newQuotesRequest.IsApproved = quotesRequest.Feedback == "Approved" ? "selected" : "";
+    newQuotesRequest.IsRejected = quotesRequest.Feedback == "Rejected" ? "selected" : "";
     newQuotesRequest.CreateDate = $.Convert.ToShortDate(quotesRequest.CreateDate, tenantDateTimeFormat);
     newQuotesRequest.ReferenceNumber = $.trim(quotesRequest.ReferenceNumber);
-    newQuotesRequest.IsApproved = quotesRequest.Feedback == "Approved";
-    newQuotesRequest.IsRejected = quotesRequest.Feedback == "Rejected";
     if (quotesRequest.QuotationDocumentFiling) {
         newQuotesRequest.QuotationDocumentFiling = quotesRequest.QuotationDocumentFiling;
         newQuotesRequest.QuotationPreparedTickVisibility = "visible";
