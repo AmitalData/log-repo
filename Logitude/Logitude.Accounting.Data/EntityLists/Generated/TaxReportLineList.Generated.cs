@@ -70,6 +70,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string OriginalReference  { get; set; }
        [DataMember]
        public string UpdatedBUserName  { get; set; }
+       [DataMember]
+       public string PreviousReference  { get; set; }
    }
 
 }

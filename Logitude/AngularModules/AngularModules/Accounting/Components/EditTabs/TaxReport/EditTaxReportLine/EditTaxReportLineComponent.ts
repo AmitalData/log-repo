@@ -103,6 +103,14 @@ export class EditTaxReportLineComponent extends BaseComponent {
         }
     }
 
+    //PreviousReference
+    get PreviousReference() { return this.TaxReportLinePM.PreviousReference == null ? " " : this.TaxReportLinePM.PreviousReference; }
+    set PreviousReference(value: string) {
+        if (this.TaxReportLinePM.PreviousReference != value) {
+            this.TaxReportLinePM.PreviousReference = value;
+        }
+    }
+
     //ReferecneGroup
     get ReferecneGroup() { return this.TaxReportLinePM.ReferecneGroup; }
     set ReferecneGroup(value: string) {
@@ -124,6 +132,7 @@ export class EditTaxReportLineComponent extends BaseComponent {
 
   SetUIProperties() {
        this.UIProperties.SetEnabled("LineTypeCode", this.ObjectTableName, false);
+      this.UIProperties.SetEnabled("PreviousReference", this.ObjectTableName, false);
 
         if (this.TaxReportLinePM.OutputOrInput == "O") {
             if (this.TaxReportLinePM.StatusCode == "7") {
@@ -155,9 +164,6 @@ export class EditTaxReportLineComponent extends BaseComponent {
         else { this.Reference = this.TaxReportLinePM.OriginalReference; }
       }
       
-        
-
-
     }
 
     //#region Buttons
@@ -181,6 +187,8 @@ export class EditTaxReportLineComponent extends BaseComponent {
 
         // save(reprot)
         this.CurrentSession.StartBusyIndicatorSaving();
+        this.SetPreviousReference();
+
         this._TaxReportLinePMService.update(this.TaxReportLinePM).subscribe((myResult:any) => {
 
             var mm: ServiceResponse = myResult;
@@ -218,6 +226,15 @@ export class EditTaxReportLineComponent extends BaseComponent {
 
 
     }
+
+    SetPreviousReference() {
+        var isReferenceChanged = this.OldReference != this.Reference;
+        if (isReferenceChanged) {
+            this.PreviousReference = this.OldReference;
+            this.OldReference = this.Reference;
+        }
+    }
+
     CancelButtonClicked() {
 
         this.TransmitStatusCode = this.OldTransmitStatusCode;
