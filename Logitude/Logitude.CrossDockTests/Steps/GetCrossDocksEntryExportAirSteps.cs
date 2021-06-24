@@ -23,7 +23,7 @@ namespace Logitude.CrossDockTests.Steps
         [When(@"get cross docks with CrossDockId")]
         public void WhenGetCrossDocksWithCrossDockId()
         {
-            ApiResponse<CrossDockEntryPM> quoteResponse = APICaller.CallGet<CrossDockEntryPM>(Urls.CrossDockGetSingle(CrossDockData.Id), UserTenant.Token);
+            ApiResponse<CrossDockEntryPM> quoteResponse = APICaller.CallGet<CrossDockEntryPM>(Urls.CrossDockGetSingle(CrossDockData.CrossDockEntryId), UserTenant.Token);
             crossDockContext.CrossDockEntry = quoteResponse.Data;
         }
 

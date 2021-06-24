@@ -31,13 +31,13 @@ namespace Logitude.CrossDockTests.Services
             List<WarehouseEntryPackagePM> warehouseEntryPackages = new List<WarehouseEntryPackagePM>();
             warehouseEntryPackageTable.CreateDynamicSet().ToList().ForEach(warehouseEntryPackageDynamic =>
             {
-                warehouseEntryPackages.Add(WarehouseEntryPackagePrepar(warehouseEntryPackageDynamic));
+                warehouseEntryPackages.Add(GetWarehouseEntryPackage(warehouseEntryPackageDynamic));
             });
             return new List<WarehouseEntryPackagePM>(warehouseEntryPackages);
         }
 
 
-        private WarehouseEntryPackagePM WarehouseEntryPackagePrepar(dynamic warehouseEntryPackageDynamic)
+        private WarehouseEntryPackagePM GetWarehouseEntryPackage(dynamic warehouseEntryPackageDynamic)
         {
 
             return new WarehouseEntryPackageBuilder()

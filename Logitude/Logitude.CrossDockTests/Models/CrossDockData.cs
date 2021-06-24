@@ -8,7 +8,8 @@ namespace Logitude.CrossDockTests.Models
 {
     public static class CrossDockData
     {
-        public static string Id { get; set; }
+        public static string CrossDockEntryId { get; set; }
+        public static string CrossDockReleaseId { get; set; }
         public static List<WarehouseEntryPackagePM> WarehouseEntryPackages { get; set; }
     }
 }

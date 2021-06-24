@@ -26,7 +26,7 @@ namespace Logitude.CrossDockTests.Steps
         [Given(@"release cross dock")]
         public void GivenReleaseCrossDock()
         {
-            crossDockContext.CrossDockRelease = APICaller.CallGet<CrossDockReleasePM>(Urls.CrossDockReleaseGetSingle(CrossDockReleaseData.Id), UserTenant.Token).Data;
+            crossDockContext.CrossDockRelease = APICaller.CallGet<CrossDockReleasePM>(Urls.CrossDockReleaseGetSingle(CrossDockData.CrossDockReleaseId), UserTenant.Token).Data;
         }
 
         [Given(@"CustomerRef1 '(.*)' and House '(.*)'")]

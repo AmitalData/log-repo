@@ -31,12 +31,12 @@ namespace Logitude.CrossDockTests.Services
             List<WarehouseReleasePackagePM> warehouseReleasePackagePMs = new List<WarehouseReleasePackagePM>();
             CrossDockData.WarehouseEntryPackages.ForEach(warehouseEntryPackage =>
             {
-                warehouseReleasePackagePMs.Add(WarehouseReleasePackagesFromEntryPrepar(warehouseEntryPackage));
+                warehouseReleasePackagePMs.Add(GetWarehouseReleasePackage(warehouseEntryPackage));
             });
             return warehouseReleasePackagePMs;
 
         }
-        private WarehouseReleasePackagePM WarehouseReleasePackagesFromEntryPrepar(WarehouseEntryPackagePM warehouseEntryPackage)
+        private WarehouseReleasePackagePM GetWarehouseReleasePackage(WarehouseEntryPackagePM warehouseEntryPackage)
         {
 
             return new WarehouseReleasePackageBuilder()
