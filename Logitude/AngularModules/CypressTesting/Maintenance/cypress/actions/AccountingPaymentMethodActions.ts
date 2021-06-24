@@ -1,7 +1,7 @@
 import { AccountingPaymentMethodSelectors } from "../selectors/AccountingPaymentMethodSelectors";
 import { MaintenanceSelectors } from "../selectors/Selectors";
 import * as Actions from "./Actions";
-import * as GeneralActions from "./GeneralActions";
+import * as GeneralActions from "./BaseActions";
 import { AccountingPaymentMethodDetails } from "../models/AccountingPaymentMethodDetails";
 import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import { RestAPI } from "../../../Base/cypress/constants/RestAPI";

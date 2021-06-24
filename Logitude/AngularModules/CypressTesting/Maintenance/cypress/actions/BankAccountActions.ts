@@ -8,7 +8,7 @@ import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
 import * as gr from '../../../Base/cypress/actions/GenerateRandoms';
 import { BankAccountDetails } from '../models/BankAccountDetails'
 import { GenerateCurrentDatetimeString } from '../../../Base/cypress/actions/GenerateRandoms';
-import * as GeneralActions from './GeneralActions'
+import * as GeneralActions from './BaseActions'
 
 let BankAccountEnglishName = null;
 let inActiveBankAccount = false;

@@ -4,6 +4,7 @@ import { Urls } from "../constants/Urls";
 import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
 import * as Actions from "./Actions"
+import { ShippingLineSelectors } from "../Selectors/ShippingLineSelectors";
 
 export function Search(searchFieldValue) {
     DefineViewsGetByFiltersRequest(searchFieldValue);
@@ -26,8 +27,8 @@ export function AssertSearch(searchFieldValue) {
     });
 }
 
-export function MockCreate(selector) {
-    cy.intercept(RestAPI.POST, selector, [true])
+export function MockCreate(url) {
+    cy.intercept(RestAPI.POST, url, [true])
     Actions.DefineGetByFilterRequest()
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
 }
@@ -39,4 +40,14 @@ export function AssertMockCreate() {
 
 export function ValidateSingleErrorMessage(Message: string) {
     cy.get(BaseSelectors.SingleError).should("contain.text", Message)
+}
+
+export function MockImport() {
+    cy.intercept(RestAPI.GET, Urls.ImportShippingAirLine, [true])
+    Actions.DefineGetByFilterRequest()
+    cy.get(ShippingLineSelectors.Import).first().click()
+}
+
+export function AssertMockImport() {
+    Actions.AssertGetByFilters();
 }
