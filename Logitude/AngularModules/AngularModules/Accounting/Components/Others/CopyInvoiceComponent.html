@@ -254,22 +254,20 @@
 
                 <tr class="FormFieldRow" style="height:70px">
                     <td colspan="2">
-                        <td >
-                            <div  style="width: 140px;">{{'APInvoice.O.CopyLines' | TextCodeTranslationPipe}}</div>
-                            <div  style="width: 20px">
+                        <div float-start>
+                            <div float-start text-start style="width: 140px;">{{'APInvoice.O.CopyLines' | TextCodeTranslationPipe}}</div>
+                            <div float-start style="width: 20px">
                                 <CheckBox [IsChecked]="IsCopyLinesChecked" (Checked)="IsCopyLinesChecked = $event"></CheckBox>
                             </div>
-                        </td>
-                        
-                        <td>
-                            <div  style="width: 120px;">{{'APInvoice.O.CopyAmounts' | TextCodeTranslationPipe}}</div>
-                            <div  style="width: 20px;">
+                        </div>
+                        <div float-end>
+                            <div float-start text-start style="width: 120px;">{{'APInvoice.O.CopyAmounts' | TextCodeTranslationPipe}}</div>
+                            <div float-start style="width: 20px;">
                                 <CheckBox [IsChecked]="IsCopyAmountsChecked" (Checked)="IsCopyAmountsChecked = $event" [IsEnabled]="!disableCopyAmounts"></CheckBox>
                             </div>
-                        </td>
+                        </div>
                     </td>
-               </tr>
-
+                </tr>
                 <tr>
                     <td colspan="3">
                         <div></div>
