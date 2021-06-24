@@ -31,7 +31,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         const string LineType_SelfInvoiceTransactions = "M";
         const string StatusCode_VATAmountInTheRecordIsHigherThanThePercentageOfVATAllowed = "9";
         const string TaxReportLineInputType = "I";
-
+        const string ReferenceGroupDefaultValue = "0000";
         protected override void OnCreating(TaxReportLinePM entityPM, EntityPM entityParentPM)
         {
             entityPM.IsManuallyChanged = true;
@@ -371,32 +371,39 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
     
         private static void SetReferenceFields(TaxReportLinePM taxreportLine)
         {
-            if (taxreportLine.Reference == null) taxreportLine.ReferecneGroup = "0000";
-            if (taxreportLine.Reference != null)
+            if (taxreportLine.Reference == null) SetTaxReportLineReferenceGroup(ReferenceGroupDefaultValue, taxreportLine);
+            else
             {
-                taxreportLine.Reference = RemoveSpecialChars(taxreportLine.Reference);
-                Regex alphabet = new Regex("([A-Za-z])");
-                bool containsLetters = alphabet.IsMatch(taxreportLine.Reference);
+                taxreportLine.Reference = RemoveSpecialChars(taxreportLine.Reference);                
+                bool containsLetters = CheckIfReferenceContainsLetters(taxreportLine.Reference);
                 if (containsLetters)
-                {
-                    taxreportLine.ReferecneGroup = null;
+                {                   
                     SetReferenceGroupForReferencesWithPrefex(taxreportLine);
                    
                 }
-                else taxreportLine.ReferecneGroup = "0000";
+                else SetTaxReportLineReferenceGroup(ReferenceGroupDefaultValue, taxreportLine);
                 TrimMoreThan9Chars(taxreportLine);               
             }                    
         }
+        private static bool CheckIfReferenceContainsLetters(string reference)
+        {
+            Regex alphabet = new Regex("([A-Za-z])");
+          return alphabet.IsMatch(reference);
+        }
+        private static  void SetTaxReportLineReferenceGroup(string ReferenceGroup, TaxReportLinePM taxreportLine)
+        {
+            taxreportLine.ReferecneGroup = ReferenceGroup;
+        }
         private static void SetReferenceGroupForReferencesWithPrefex(TaxReportLinePM taxreportLine)
         {
-
+            SetTaxReportLineReferenceGroup(null, taxreportLine);
             for (int i = 0; i < taxreportLine.Reference.Length; i++)
             {
                 string referenceChar = taxreportLine.Reference.Substring(i, 1);
-                MatchCollection prefix = Regex.Matches(referenceChar, @"^[a-zA-Z]*$");
-                if (prefix.Count != 0)
+                bool IsReferenceHasPrefix = CheckIfReferenceHasPrefex(taxreportLine.Reference, referenceChar);
+                if (IsReferenceHasPrefix)
                 {
-                    taxreportLine.ReferecneGroup = taxreportLine.ReferecneGroup + referenceChar;
+                    SetTaxReportLineReferenceGroup(taxreportLine.ReferecneGroup + referenceChar, taxreportLine);
                 }
                 else
                 {
@@ -405,6 +412,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
 
             }
+        }
+        private static bool CheckIfReferenceHasPrefex(string reference, string referenceChar)
+        {           
+            MatchCollection prefix = Regex.Matches(referenceChar, @"^[a-zA-Z]*$");
+            return prefix.Count != 0 ? true : false;
         }
         private static string RemoveSpecialChars(string reference)
         {
