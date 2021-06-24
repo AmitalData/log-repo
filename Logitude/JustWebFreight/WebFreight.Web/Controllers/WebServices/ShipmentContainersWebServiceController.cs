@@ -69,7 +69,7 @@ namespace WebFreight.Web.Controllers.WebServices
             int tenant = authToken.Tenant;
             SecurityUtility.AuthenticationOnTenant(tenant);
             this.SetContainerFields(simulator);
-            this.CreateOceanInsightsWcfServiceResponse(tenant);
+            this.CreateOceanInsightsWcfServiceResponse();
             this.CreateLogitudeOceanInsightsRequest(oceanInsightId, simulator, tenant);
             var updatedOceanInsightsResponse = this.ReplaceOceanInsightTagInXML(simulator.XmlString, oceanInsightId, simulator.ContainerNumber);
             this.SendRequestToContainerPushService(updatedOceanInsightsResponse);
@@ -80,12 +80,14 @@ namespace WebFreight.Web.Controllers.WebServices
             containerNumber = simulator.ContainerNumber;
             scacCode = ReadOceanInsightsParametersXMLFields(simulator.XmlString, "carrier_scac", "shipment");
         }
-        private void CreateOceanInsightsWcfServiceResponse(int tenant)
+        private void CreateOceanInsightsWcfServiceResponse()
         {
+            int tenant = GetLogitudeOceanInsightsTenant();
             IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
             OceanInsightsRequestQuery oceanInsightsRequestQuery = new OceanInsightsRequestQuery(tenant);
             OceanInsightsRequestService service = new OceanInsightsRequestService(shipmentsContext, tenant);
             OceanInsightsRequestPM oceanInsightsRequest;
+
             oceanInsightsRequest = oceanInsightsRequestQuery.GetSinglePMByOceanInsightsByScacCodeContainerNoTenant(scacCode, containerNumber, tenant);
             if (oceanInsightsRequest == null)
             {
@@ -99,6 +101,22 @@ namespace WebFreight.Web.Controllers.WebServices
             }
             this.oceanInsightId = oceanInsightsRequest.OceanInsigntId;
         }
+        private int GetLogitudeOceanInsightsTenant()
+        {
+            var logitudeOceanInsightsTenant = 0;
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                SettingRepository settingRepository = new SettingRepository();
+                Setting setting = settingRepository.GetSingleSetting("1");
+                if (setting != null)
+                {
+                    logitudeOceanInsightsTenant = setting.OITenantNumber;
+                }
+                scope.Complete();
+            }
+            return logitudeOceanInsightsTenant;
+        }
+
         private string GetEightDigitssRandomNumber()
         {
             Random random = new Random();
