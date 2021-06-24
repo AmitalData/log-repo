@@ -422,128 +422,112 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             return glaAccount;
         }
 
-        public static void ValidateFullAccounting(FullAccountingARPaymentValidatorArguments args)
+        public static void ValidateFullAccounting(FullAccountingARPaymentValidatorArguments arguments)
         {
             var errors = "";
 
 
-            TenantRepository tenantRepository = new TenantRepository(args.Tenant);
-            Tenant tenantPOCO = tenantRepository.GetSingleTenant(args.Tenant);
+            TenantRepository tenantRepository = new TenantRepository(arguments.Tenant);
+            Tenant tenantPOCO = tenantRepository.GetSingleTenant(arguments.Tenant);
             if (tenantPOCO != null && tenantPOCO.AccountingActivated)
             {
                 bool useLocal = true;
-                var user = GetLoggedContact(args.Tenant);
-                if (user != null) useLocal = !(GetLoggedContact(args.Tenant).DontShowLocal);
+                var user = GetLoggedContact(arguments.Tenant);
+                if (user != null) useLocal = !(GetLoggedContact(arguments.Tenant).DontShowLocal);
 
-                if (!args.IsOut)
+                if (!arguments.IsOut)
                 {
-                    if (args.PaymentMethodCode == "CH" || args.PaymentMethodCode == "CA")
+                    if (arguments.PaymentMethodCode == "CH" || arguments.PaymentMethodCode == "CA")
                     {
-                        if (args.CashBook == null)
+                        if (arguments.CashBook == null)
                         {
-                            string msg = TranslateTextsClass.Translate("ARPayment.M.ARPaymentCashbook", args.Tenant, useLocal);
+                            string msg = TranslateTextsClass.Translate("ARPayment.M.ARPaymentCashbook", arguments.Tenant, useLocal);
                             //throw new ApplicationException(msg);
 
                             errors += msg + ";";
                         }
                     }
 
-                    if (args.PaymentMethodCode == "BT" && args.ValueDate != null && args.ValueDate > TenantServerConfigration.GetCurrentDateTime(args.Tenant))
+                    if (arguments.PaymentMethodCode == "BT" && arguments.ValueDate != null && arguments.ValueDate > TenantServerConfigration.GetCurrentDateTime(arguments.Tenant))
                     {
-                        string msg = TranslateTextsClass.Translate("ARPayment.M.ValueDateCantBeFutureDate", args.Tenant, useLocal);
+                        string msg = TranslateTextsClass.Translate("ARPayment.M.ValueDateCantBeFutureDate", arguments.Tenant, useLocal);
                         errors += msg + ";";
                     }
-                    bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(args.Tenant);
+                    bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(arguments.Tenant);
 
-                    if (args.PaymentMethodCode == "CH" && string.IsNullOrEmpty(args.Branch) && args.ChequeReplicas.Count == 0)
+                    if (arguments.PaymentMethodCode == "CH" && string.IsNullOrEmpty(arguments.Branch) && arguments.ChequeReplicas.Count == 0)
                     {
-                        string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", args.Tenant, showLocal);
-                        errors += rmsg.Replace("%FieldName", TranslateTextsClass.Translate("ARPayment.F.BankBranch", args.Tenant, useLocal)) + ";";
+                        string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", arguments.Tenant, showLocal);
+                        errors += rmsg.Replace("%FieldName", TranslateTextsClass.Translate("ARPayment.F.BankBranch", arguments.Tenant, useLocal)) + ";";
                     }
 
-                    if (args.PaymentMethodCode == "CH" && string.IsNullOrEmpty(args.Account) && args.ChequeReplicas.Count == 0)
+                    if (arguments.PaymentMethodCode == "CH" && string.IsNullOrEmpty(arguments.Account) && arguments.ChequeReplicas.Count == 0)
                     {
-                        string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", args.Tenant, showLocal);
-                        errors += rmsg.Replace("%FieldName", TranslateTextsClass.Translate("ARPayment.F.Account", args.Tenant, useLocal)) + ";";
+                        string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", arguments.Tenant, showLocal);
+                        errors += rmsg.Replace("%FieldName", TranslateTextsClass.Translate("ARPayment.F.Account", arguments.Tenant, useLocal)) + ";";
                     }
 
-                    if (args.PaymentMethodCode == "CH" && string.IsNullOrEmpty(args.Bank) && args.ChequeReplicas.Count == 0)
+                    if (arguments.PaymentMethodCode == "CH" && string.IsNullOrEmpty(arguments.Bank) && arguments.ChequeReplicas.Count == 0)
                     {
-                        string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", args.Tenant, showLocal);
-                        errors += rmsg.Replace("%FieldName", TranslateTextsClass.Translate("ARPayment.F.Bank", args.Tenant, useLocal)) + ";";
+                        string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", arguments.Tenant, showLocal);
+                        errors += rmsg.Replace("%FieldName", TranslateTextsClass.Translate("ARPayment.F.Bank", arguments.Tenant, useLocal)) + ";";
                     }
-                    if (args.PaymentMethodCode != "CA" && args.ValueDate == null)
+                    if (arguments.PaymentMethodCode != "CA" && arguments.ValueDate == null)
                     {
 
-                        string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", args.Tenant, false);
-                        errors += rmsg.Replace("%FieldName", TranslateTextsClass.Translate("ARPayment.F.ValueDate", args.Tenant, false)) + ";";
+                        string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", arguments.Tenant, false);
+                        errors += rmsg.Replace("%FieldName", TranslateTextsClass.Translate("ARPayment.F.ValueDate", arguments.Tenant, false)) + ";";
 
                     }
-                    if (args.PaymentMethodCode == "CH" && args.ValueDate != null && args.RegisterDate != null)
+                    if (arguments.PaymentMethodCode == "CH" && arguments.ValueDate != null && arguments.RegisterDate != null)
                     {
-                        ValidateValueDate(args.ValueDate, args.RegisterDate, args.Tenant);
+                        ValidateValueDate(arguments.ValueDate, arguments.RegisterDate, arguments.Tenant);
                     }
                 }
-                GLAccountPM glAccount = getGLAccount(args.BillToId, args.Tenant);
+                GLAccountPM glAccount = getGLAccount(arguments.BillToId, arguments.Tenant);
                 if (glAccount == null)
                 {
 
-                    string msg = TranslateTextsClass.Translate("ARPayment.M.BillToGLAccount", args.Tenant, useLocal);
+                    string msg = TranslateTextsClass.Translate("ARPayment.M.BillToGLAccount", arguments.Tenant, useLocal);
                     errors += msg + ";";
                     //throw new ApplicationException(msg);
                 }
                 else if (glAccount != null && (glAccount.IsMultiCurrency == null || glAccount.IsMultiCurrency == false))
                 {
-                    if (glAccount.CurrencyId != args.PaymentCurrencyId)
+                    if (glAccount.CurrencyId != arguments.PaymentCurrencyId)
                     {
-                        string msg = TranslateTextsClass.Translate("ARPayment.M.BillToGLAccountCurrency", args.Tenant, useLocal);
+                        string msg = TranslateTextsClass.Translate("ARPayment.M.BillToGLAccountCurrency", arguments.Tenant, useLocal);
                         msg += " " + glAccount.CurrencyCode;
                         //throw new ApplicationException(msg);
                         errors += msg + ";";
                     }
                 }
 
-                if (args.IsNewEntity)
-                {
-                    AccountingPeriodList accountingPeriodList = GetAccountingPeriods(args);
-                    if (accountingPeriodList != null && args.RegisterDate != null)
-                    {
-                        var month = args.RegisterDate.Value.Month;
-                        if (month > accountingPeriodList.OpenMonth || month <= accountingPeriodList.ClosedMonth)
-                        {
-                            string msg = TranslateTextsClass.Translate("ARPayment.M.ClosedMonth", args.Tenant, useLocal);
-                            errors += msg + ";";
-                        }
-                    }
-                    else
-                    {
-                        string msg = TranslateTextsClass.Translate("ARPayment.M.ClosedMonth", args.Tenant, useLocal);
-                        errors += msg + ";";
-                    }
-                }
+                if (arguments.IsNewEntity)
+                    errors = CheckClosedMonth(arguments, errors, useLocal);
 
                 IBankAccountQueryServiceExt bankAccountQuery = ContainerAccessor.Container.Resolve(typeof(IBankAccountQueryServiceExt), "BankAccountQueryServiceExt", new ParameterOverride("", 1)) as IBankAccountQueryServiceExt;
-                BankAccountPM bankAccount = bankAccountQuery.GetByFirstOrDefault(args.BankAccountId, args.Tenant);
+                BankAccountPM bankAccount = bankAccountQuery.GetByFirstOrDefault(arguments.BankAccountId, arguments.Tenant);
 
                 if (bankAccount != null && bankAccount.GLAccountCurrencyId != null && bankAccount.GLAccountCurrencyId != "multi")
                 {
-                    if (bankAccount.GLAccountCurrencyId != args.PaymentCurrencyId)
+                    if (bankAccount.GLAccountCurrencyId != arguments.PaymentCurrencyId)
                     {
                         string msg = "The currency of the bank account GLAccount(" + bankAccount.GLAccountNumber + ") is different from ARPayment curreny";
                         errors += msg + ";";
                     }
                 }
-                if (args.PaymentMethodCode == "BT")
+                if (arguments.PaymentMethodCode == "BT")
                 {
                     if (bankAccount != null)
                     {
                         IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
-                        var glaAccount = glAccountQuery.GetSingleGLAccountPM(bankAccount.GLAccountId, args.Tenant);
+                        var glaAccount = glAccountQuery.GetSingleGLAccountPM(bankAccount.GLAccountId, arguments.Tenant);
                         if (glaAccount != null)
                         {
-                            if (glaAccount.CurrencyId != args.PaymentCurrencyId)
+                            if (glaAccount.CurrencyId != arguments.PaymentCurrencyId)
                             {
-                                string msg = TranslateTextsClass.Translate("ARPayment.M.BanckAccountGLAccount", args.Tenant, useLocal);
+                                string msg = TranslateTextsClass.Translate("ARPayment.M.BanckAccountGLAccount", arguments.Tenant, useLocal);
                                 errors += msg.Replace("%", glaAccount.DisplayNumber) + ";";
                                 errors += msg + ";";
                             }
@@ -552,18 +536,18 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
                     else
                     {
-                        if (!args.IsOut)
+                        if (!arguments.IsOut)
                         {
-                            string msg = TranslateTextsClass.Translate("General.M.FieldIsRequired", args.Tenant, useLocal);
-                            errors += msg.Replace("%FieldName", TranslateTextsClass.Translate("APPayment.F.BankAccountId", args.Tenant, useLocal)) + ";";
+                            string msg = TranslateTextsClass.Translate("General.M.FieldIsRequired", arguments.Tenant, useLocal);
+                            errors += msg.Replace("%FieldName", TranslateTextsClass.Translate("APPayment.F.BankAccountId", arguments.Tenant, useLocal)) + ";";
                         }
                     }
 
                 }
 
-                if (args.PaymentMethodCode == "CH" && args.ChequeReplicas?.Count > 1)
+                if (arguments.PaymentMethodCode == "CH" && arguments.ChequeReplicas?.Count > 1)
                 {
-                    errors = ValidateDuplicateChequeNumber(args.ChequeReplicas, args.Tenant, errors, useLocal);
+                    errors = ValidateDuplicateChequeNumber(arguments.ChequeReplicas, arguments.Tenant, errors, useLocal);
                 }
 
                 if (!string.IsNullOrEmpty(errors))
@@ -572,6 +556,27 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     throw new ApplicationException(errors);
                 }
             }
+        }
+
+        private static string CheckClosedMonth(FullAccountingARPaymentValidatorArguments arguments, string errors, bool useLocal)
+        {
+            AccountingPeriodList accountingPeriodList = GetAccountingPeriods(arguments);
+            if (accountingPeriodList != null && arguments.RegisterDate != null)
+            {
+                var month = arguments.RegisterDate.Value.Month;
+                if (month > accountingPeriodList.OpenMonth || month <= accountingPeriodList.ClosedMonth)
+                {
+                    string msg = TranslateTextsClass.Translate("ARPayment.M.ClosedMonth", arguments.Tenant, useLocal);
+                    errors += msg + ";";
+                }
+            }
+            else
+            {
+                string msg = TranslateTextsClass.Translate("ARPayment.M.ClosedMonth", arguments.Tenant, useLocal);
+                errors += msg + ";";
+            }
+
+            return errors;
         }
 
         private static AccountingPeriodList GetAccountingPeriods(FullAccountingARPaymentValidatorArguments args)
