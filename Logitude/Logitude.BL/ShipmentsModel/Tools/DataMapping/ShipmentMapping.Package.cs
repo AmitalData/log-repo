@@ -126,6 +126,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.LastStatusDate = itemPM.LastStatusDate;
             itemPoco.DeliveryTransportModeCode = itemPM.DeliveryTransportModeCode;
             itemPoco.ECRTransportModeCode = itemPM.ECRTransportModeCode;
+            itemPoco.ContainerStatusSourceCode = itemPM.ContainerStatusSourceCode;
 
             itemPoco.Make = itemPM.Make;
             itemPoco.Year = itemPM.Year;
