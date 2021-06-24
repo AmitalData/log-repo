@@ -202,7 +202,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             }
             ValidateAccountingSetting(entityPM);
 
-            var args = new FullAccountingARPaymentValidatorArguments()
+            var arpaymentValidatorArgs = new FullAccountingARPaymentValidatorArguments()
             {
                 ChequeReplicas = entityPM.ARPaymentChequeReplicas,
                 Tenant = entityPM.Tenant,
@@ -220,7 +220,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 IsNewEntity = isNew
             };
 
-            ValidateFullAccounting(args);
+            ValidateFullAccounting(arpaymentValidatorArgs);
             ValidateUnUpdateFields(entityPM, entityPOCO, isNew);
         }
 
