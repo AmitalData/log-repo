@@ -36,7 +36,9 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="ARInvoice"
   DefaultText="&quot;A/R Invoice Line&quot;"
-  Code="&quot;3502&quot;"
+
+  Code="&quot;389f&quot;"
+
   Name="&quot;ARInvoiceLine&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Invoice&quot;"
@@ -50,6 +52,7 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
   Code1="&quot;28f7&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -1056,7 +1059,7 @@
     MinLength="0"
     MaxLength="15"
     IsRequired="true"
-    CopyToDW="false"
+    CopyToDW="true"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
     CanFilter="false"
@@ -1208,7 +1211,7 @@
     MinLength="0"
     MaxLength="0"
     IsRequired="true"
-    CopyToDW="false"
+    CopyToDW="true"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
     CanFilter="false"
@@ -1513,7 +1516,7 @@
     MinLength="0"
     MaxLength="500"
     IsRequired="false"
-    CopyToDW="false"
+    CopyToDW="true"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
     CanFilter="false"
@@ -3777,7 +3780,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;LineNumber&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -3792,7 +3796,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ChargesType&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -3807,7 +3812,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ForeignCurrency&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -3822,7 +3828,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ForeignExchangeRate&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -3837,7 +3844,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;LocalCurrencyAmount&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -3852,7 +3860,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ForeignCurrencyAmount&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -3867,7 +3876,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;LocalDescription&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -3882,7 +3892,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Notes&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -3897,7 +3908,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ValueDate&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -3912,7 +3924,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;DateForInterest&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -3927,7 +3940,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;VatType&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -3942,7 +3956,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Description&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -3957,7 +3972,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;InvoiceCurrencyAmount&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -3972,7 +3988,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ProfitCurrencyAmount&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -3987,7 +4004,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;VatPercentage&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -4002,7 +4020,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;UnitPriceInForeignCurrency&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -4017,7 +4036,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ExchangeRateDate&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -4032,7 +4052,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Quantity&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -4047,7 +4068,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Tenant&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -4062,7 +4084,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;GLAccountId&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -4077,7 +4100,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ARInvoiceLineAction&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -4092,7 +4116,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;InvoiceCurrencyExchangeRate&quot;"
         FieldName="&quot;InvoiceCurrencyExchangeRate&quot;"
@@ -4106,7 +4131,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes>

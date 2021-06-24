@@ -44,7 +44,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
     ShowDetailsSection: boolean = false;
 
 
-    ShipmentCustomsData: CargoTrackingShipmentCustomsData;
+    ShipmentCustomsData: CargoTrackingShipmentCustomsData = null;
     get tenant()
     {
         return CargoTrackingBrandingData.Tenant;
@@ -271,6 +271,8 @@ export class ShipmentDetailsComponent implements AfterViewInit
             this.loadingCustomsData = false;
 
         });
+        this.loadingCustomsData = false;
+
     }
 
     private FillCustomsBrokerReferenceFromShipmentPM()

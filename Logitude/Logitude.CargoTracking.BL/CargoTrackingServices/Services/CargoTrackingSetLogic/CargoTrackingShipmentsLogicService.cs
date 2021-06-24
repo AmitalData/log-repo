@@ -31,7 +31,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             SetCurrentMilestone(tableRow);
             SetShipmentTypeCode(tableRow);
 
-            SetDefaultFields(tableRow);
         }
 
         private static void SetDefaultFields(DataRow tableRow)
@@ -221,10 +220,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
                 tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.Pickup);
                 tableRow.SetField("CurrentMilestoneDate", tableRow["PickupDate"]);
 
-            }
-            else
-            {
-                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.NoMilstone);
             }
 
         }
