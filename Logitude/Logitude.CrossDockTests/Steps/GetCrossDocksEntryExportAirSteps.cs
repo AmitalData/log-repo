@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using Logitude.CrossDockTests.ExternalServices;
+using Logitude.CrossDockTests.Services;
 using Logitude.CrossDockTests.Models;
 using Logitude.Test.Base.Models.Api;
 using Logitude.Test.Base.Models.Shared;
@@ -23,8 +23,7 @@ namespace Logitude.CrossDockTests.Steps
         [When(@"get cross docks with CrossDockId")]
         public void WhenGetCrossDocksWithCrossDockId()
         {
-            string quotesGetSingleUrl = Urls.CrossDockGetSingle(CrossDockData.Id);
-            ApiResponse<CrossDockEntryPM> quoteResponse = APICaller.CallGet<CrossDockEntryPM>(quotesGetSingleUrl, UserTenant.Token);
+            ApiResponse<CrossDockEntryPM> quoteResponse = APICaller.CallGet<CrossDockEntryPM>(Urls.CrossDockGetSingle(CrossDockData.CrossDockEntryId), UserTenant.Token);
             crossDockContext.CrossDockEntry = quoteResponse.Data;
         }
 

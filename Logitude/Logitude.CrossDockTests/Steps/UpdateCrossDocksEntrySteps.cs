@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using Logitude.CrossDockTests.ExternalServices;
+using Logitude.CrossDockTests.Services;
 using Logitude.CrossDockTests.Models;
 using Logitude.CrossDockTests.Models.Builders;
 using Logitude.Test.Base.Models.Api;
@@ -13,41 +13,38 @@ using TechTalk.SpecFlow;
 namespace Logitude.CrossDockTests.Steps
 {
     [Binding]
-    public class UpdateCrossDocksSteps
+    public class UpdateCrossDocksEntrySteps
     {
-
         private readonly CrossDockContext crossDockContext;
         private readonly CrossDockEntryServices crossDockEntryServices;
-        private List<WarehouseEntryPackagePM> warehouseEntryPackages;
 
-        public UpdateCrossDocksSteps(CrossDockContext crossDockContext)
+        public UpdateCrossDocksEntrySteps(CrossDockContext crossDockContext, CrossDockEntryServices crossDockEntryServices)
         {
             this.crossDockContext = crossDockContext;
-            this.crossDockEntryServices = new CrossDockEntryServices();
+            this.crossDockEntryServices = crossDockEntryServices;
+        }
+
+        [Given(@"entry cross dock")]
+        public void GivenEntryCrossDock()
+        {
+            crossDockContext.CrossDockEntry = APICaller.CallGet<CrossDockEntryPM>(Urls.CrossDockGetSingle(CrossDockData.CrossDockEntryId), UserTenant.Token).Data;
         }
 
         [Given(@"a packages with the following properties")]
         public void GivenAPackageWithTheFollowingProperties(Table table)
         {
-            warehouseEntryPackages = crossDockEntryServices.BuildPackages(table);
+            crossDockContext.CrossDockEntry = new CrossDockEntryBuilder()
+                .WithModel(crossDockContext.CrossDockEntry)
+                .WarehouseEntryPackages(crossDockEntryServices.BuildPackages(table))
+                .Build();
         }
-        
-        [Given(@"entry cross dock")]
-        public void GivenEntryCrossDock()
-        {
-            crossDockContext.CrossDockEntry = APICaller.CallGet<CrossDockEntryPM>(Urls.CrossDockGetSingle(CrossDockData.Id), UserTenant.Token).Data;
-        }
-        
+
         [When(@"update entry cross dock")]
         public void WhenUpdateEntryCrossDock()
         {
-            crossDockContext.CrossDockEntry = new CrossDockBuilder()
-                .WithModel(crossDockContext.CrossDockEntry)
-                .WarehouseEntryPackages(warehouseEntryPackages).Build();
-
             crossDockContext.CrossDockEntry.Id = APICaller.CallPut<CrossDockEntryPM>(crossDockContext.CrossDockEntry, Urls.CrossDockController, UserTenant.Token)?.Data?.Id;
         }
-        
+
         [Then(@"the entry cross dock should update successfully")]
         public void ThenTheEntryCrossDockShouldUpdateSuccessfully()
         {

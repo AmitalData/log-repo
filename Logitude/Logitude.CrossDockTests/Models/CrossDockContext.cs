@@ -9,5 +9,6 @@ namespace Logitude.CrossDockTests.Models
     public class CrossDockContext
     {
         public CrossDockEntryPM CrossDockEntry { get; set; }
+        public CrossDockReleasePM CrossDockRelease { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Logitude.CrossDockTests.ExternalServices;
+﻿using Logitude.CrossDockTests.Services;
 using Logitude.Test.Base.Models.Infrastructure;
 using Logitude.Test.Base.Models.PartnersPreparation;
 using Logitude.Test.Base.Models.UserTenantPreparation;
@@ -10,13 +10,11 @@ using System.Threading.Tasks;
 
 namespace Logitude.CrossDockTests.Models.Builders
 {
-    public class CrossDockBuilder
+    public class CrossDockEntryBuilder
     {
         private CrossDockEntryPM _crossDockEntry;
-        private readonly RandomGeneratorService randomGeneratorService;
-        public CrossDockBuilder()
+        public CrossDockEntryBuilder()
         {
-            randomGeneratorService = new RandomGeneratorService();
             this.Reset();
         }
 
@@ -25,53 +23,53 @@ namespace Logitude.CrossDockTests.Models.Builders
             _crossDockEntry = new CrossDockEntryPM();
         }
 
-        public CrossDockBuilder DirectionId(string directionId)
+        public CrossDockEntryBuilder DirectionId(string directionId)
         {
             _crossDockEntry.DirectionId = directionId;
             return this;
         }
 
-        public CrossDockBuilder TransportModeId(string transportModeId)
+        public CrossDockEntryBuilder TransportModeId(string transportModeId)
         {
             _crossDockEntry.TransportModeId = transportModeId;
             return this;
         }
 
-        public CrossDockBuilder ChargeableWeightUnitCode(string chargeableWeightUnitCode)
+        public CrossDockEntryBuilder ChargeableWeightUnitCode(string chargeableWeightUnitCode)
         {
             _crossDockEntry.ChargeableWeightUnitCode = chargeableWeightUnitCode;
             return this;
         }
-        public CrossDockBuilder GrossWeightUnitCode(string grossWeightUnitCode)
+        public CrossDockEntryBuilder GrossWeightUnitCode(string grossWeightUnitCode)
         {
             _crossDockEntry.GrossWeightUnitCode = grossWeightUnitCode;
             return this;
         }
 
-        public CrossDockBuilder DimensionsUnitCode(string dimensionsUnitCode)
+        public CrossDockEntryBuilder DimensionsUnitCode(string dimensionsUnitCode)
         {
             _crossDockEntry.DimensionsUnitCode = dimensionsUnitCode;
             return this;
         }
 
-        public CrossDockBuilder VolumeUnitCode(string volumeUnitCode)
+        public CrossDockEntryBuilder VolumeUnitCode(string volumeUnitCode)
         {
             _crossDockEntry.VolumeUnitCode = volumeUnitCode;
             return this;
         }
 
-        public CrossDockBuilder StatusCode(string statusCode)
+        public CrossDockEntryBuilder StatusCode(string statusCode)
         {
             _crossDockEntry.StatusCode = statusCode;
             return this;
         }
 
-        public CrossDockBuilder WarehouseEntryPackages(List<WarehouseEntryPackagePM> warehouseEntryPackages)
+        public CrossDockEntryBuilder WarehouseEntryPackages(List<WarehouseEntryPackagePM> warehouseEntryPackages)
         {
             _crossDockEntry.WarehouseEntryPackages = warehouseEntryPackages;
             return this;
         }
-        public CrossDockBuilder WarehouseEntryPackage(WarehouseEntryPackagePM warehouseEntryPackage)
+        public CrossDockEntryBuilder WarehouseEntryPackage(WarehouseEntryPackagePM warehouseEntryPackage)
         {
             if (_crossDockEntry.WarehouseEntryPackages == null)
             {
@@ -88,13 +86,13 @@ namespace Logitude.CrossDockTests.Models.Builders
             return result;
         }
 
-        public CrossDockBuilder WithModel(CrossDockEntryPM crossDockEntry)
+        public CrossDockEntryBuilder WithModel(CrossDockEntryPM crossDockEntry)
         {
             _crossDockEntry = crossDockEntry;
             return this;
         }
 
-        public CrossDockBuilder WithDefualtValues()
+        public CrossDockEntryBuilder WithDefualtValues()
         {
             _crossDockEntry = new CrossDockEntryPM
             {
@@ -104,7 +102,7 @@ namespace Logitude.CrossDockTests.Models.Builders
                 CreatedByUserId = UserTenant.UserId,
                 UpdatedByUserId = UserTenant.UserId,
                 WarehouseId = PartnersData.WarehouseId,
-                EntryNumber = randomGeneratorService.RandomNumber(3).ToString()
+                EntryNumber = RandomGeneratorService.RandomNumber(3).ToString()
             };
             return this;
         }
