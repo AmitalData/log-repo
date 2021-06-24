@@ -270,6 +270,8 @@ namespace Logitude.Infrastructure.BL
 			});
 			 
             all.Add(new ToggleDetails()
+
+            all.Add(new ToggleDetails()
             {    
                 Name = "Reports in Shared Logistics", 
                 Code = "RSL", 
@@ -285,12 +287,21 @@ namespace Logitude.Infrastructure.BL
                 Description = "Collaboration Tool", 
 			});
 			 
+			 
             all.Add(new ToggleDetails()
             {    
                 Code = "SDE", 
                 Name = "Solve Duplicated Events Code", 
                 SearchFields = "SDE,Duplicated Events code", 
                 Description = "Solve Duplicated Events Code", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Lock Counter Procedure", 
+                SearchFields = "LCP,Lock Counter Procedure", 
+                Description = "Lock Counter Procedure", 
+                Code = "LCP", 
 			});
 			
             return all;

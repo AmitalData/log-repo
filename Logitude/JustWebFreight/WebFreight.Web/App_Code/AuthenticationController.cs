@@ -2245,7 +2245,7 @@ namespace WebFreight.Web
                         if (card != null)
                         {
                             string activity = card.PartnerTypeId == "CS" ? "Customer Access" : "Agent Access";
-                            CreateSharedLogisticsContactLastLogin(via, user, card); 
+                            CreateSharedLogisticsContactLastLogin(via, user, card);
                             ActivityLog.SendTotangoContactActivity(contact.Email, "System Login", activity, tenant, true, cardId, via);
                         }
 
