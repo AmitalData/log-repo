@@ -1,7 +1,7 @@
 import { DepartmentSelectors } from "../selectors/DepartmentSelectors";
 import { MaintenanceSelectors } from "../selectors/Selectors";
 import * as Actions from "./Actions";
-import * as GeneralActions from "./GeneralActions";
+import * as GeneralActions from "./BaseActions";
 import { DepartmentDetails } from "../models/DepartmentDetails";
 import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import { RestAPI } from "../../../Base/cypress/constants/RestAPI";
