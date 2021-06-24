@@ -269,7 +269,7 @@ namespace Logitude.Infrastructure.BL
                 Description = "Ocean Insights Containers", 
 			});
 			 
-            all.Add(new ToggleDetails()
+          
 
             all.Add(new ToggleDetails()
             {    
