@@ -362,7 +362,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     RegisterDate = registergdate,
                     BankAccountId = bankAccountId,
                     IsOut = true,
-                    IsNewEntity = false,
+                    IsNewEntity = true
                 };
                 ARPaymentValidator.ValidateFullAccounting(arpaymentValidatorArgs);
 
