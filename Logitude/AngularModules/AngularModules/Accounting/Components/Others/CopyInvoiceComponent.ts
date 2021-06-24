@@ -402,7 +402,6 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
     set PaymentTermId(value: string) {
         if (this.paymentTermId != value) {
             this.paymentTermId = value;
-            this.EntityPM.PaymentTermId = value;
 
             if (AppTool.IsNullOrEmpty(value)) {
                 this.paymentTermName = null;
@@ -522,61 +521,38 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
     }
 
     private SetDueDateAccordingToPaymentTerm(list: PaymentTermList) {
-        var myComparativeDate: Date = null;
+        var invoiceDateParts: Date = DateTool.GetDateParts(this.InvoiceDate).DateObject;
 
-        if (this.EntityPM.IsMultipleEntities) {
-            myComparativeDate = DateTool.GetDateParts(this.InvoiceDate).DateObject;
-        }
+        if (invoiceDateParts != null) {
+       
 
-        else {
-            if (list.FromDateTypeCode == "SHI") {
-                myComparativeDate = DateTool.GetDateParts(this.EntityPM.OperationalDate).DateObject;
-
-                if (myComparativeDate == null) {
-                    myComparativeDate = DateTool.GetDateParts(this.InvoiceDate).DateObject;
-                }
-            }
-
-            else {
-                myComparativeDate = DateTool.GetDateParts(this.InvoiceDate).DateObject;
-            }
-        }
-
-        if (myComparativeDate != null) {
-            var dateYear = myComparativeDate.getUTCFullYear();
-            var dateMonth = myComparativeDate.getUTCMonth() + 1;
-            var dateDay = myComparativeDate.getUTCDate();
-
-            if (list.CurrentMonth) {
-                dateMonth += 1;
-                dateDay = 1;
-            }
-
-            myComparativeDate = this.SetDateProperties(dateYear, dateMonth, dateDay);
+            invoiceDateParts = this.SetDateProperties(invoiceDateParts, list);
 
             if (!AppTool.IsNullOrZero(list.Days)) {
-                myComparativeDate.setUTCDate(myComparativeDate.getUTCDate() + list.Days);
+                invoiceDateParts.setUTCDate(invoiceDateParts.getUTCDate() + list.Days);
             }
 
-            if (this.DueDate != myComparativeDate) {
-                this.DueDate = myComparativeDate;
+            if (this.DueDate != invoiceDateParts) {
+                this.DueDate = invoiceDateParts;
             }
         }
     }
 
-    private SetDateProperties(dateYear: number, dateMonth: number, dateDay: number) {
-        var myDate = new Date();
-        myDate.setUTCMonth(0);
-        myDate.setUTCDate(1);
-        myDate.setUTCFullYear(dateYear);
-        myDate.setUTCMonth(dateMonth - 1);
-        myDate.setUTCDate(dateDay);
-        myDate.setUTCHours(0);
-        myDate.setUTCMinutes(0);
-        myDate.setUTCSeconds(0);
-        myDate.setUTCMilliseconds(0);
+    private SetDateProperties(invoiceDateParts: Date, list: PaymentTermList) {
+        var dateYear = invoiceDateParts.getUTCFullYear();
+        var dateMonth = list.CurrentMonth ? invoiceDateParts.getUTCMonth() + 2 : invoiceDateParts.getUTCMonth() + 1;
+        var dateDay = list.CurrentMonth ? 1 : invoiceDateParts.getUTCDate();
+     
+        var date = new Date();
+        date.setUTCFullYear(dateYear);
+        date.setUTCMonth(dateMonth - 1);
+        date.setUTCDate(dateDay);
+        date.setUTCHours(0);
+        date.setUTCMinutes(0);
+        date.setUTCSeconds(0);
+        date.setUTCMilliseconds(0);
 
-        return myDate;
+        return date;
     }
 
     CancelButtonClicked() {
