@@ -143,35 +143,36 @@ export class SendContainerizationService implements OnDestroy {
 
 
     OnCustomSendOptionsButtonClick(event) {
-        var params: GenericRequestParams = new GenericRequestParams();
-        params.Tenant = SessionLocator.Tenant;
-        params.RequestVIA = event.RequestVIA;
-        params.ForcePersonalSign = event.ForcePersonalSign;
-        params.LoggingEnabled = true;
-        params.LoggingEntityId = this.EntityPM.Id;
-        params.LoggingUserId = SessionLocator.LoggedUserId;
-        params.RequestName = "המכלה";
-        params.ResponseName = "המכלה תשובה"
         this.EntityPM.IsChange = false;
-        CustomMessageProgressComponent
-            .ShowProgressBar(params.PBId,
-                "שליחת המכלה", false)
-            .then((res) => {
-                this.ResponseData = res;
-            }
-            ).catch((err) => {
-                this.ValidationErrors.push(err);
-                this.FillValidationErrors("Errors");
-            });
-        this.containerizationMessagesService.SendContainerization(params)
-            .subscribe((myServiceResponse: ServiceResponse) => {
-            });
         this.containerizationPMService.update(this.EntityPM).subscribe((response: any) => {
             this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            var params: GenericRequestParams = new GenericRequestParams();
+            params.Tenant = SessionLocator.Tenant;
+            params.RequestVIA = event.RequestVIA;
+            params.ForcePersonalSign = event.ForcePersonalSign;
+            params.LoggingEnabled = true;
+            params.LoggingEntityId = this.EntityPM.Id;
+            params.LoggingUserId = SessionLocator.LoggedUserId;
+            params.RequestName = "המכלה";
+            params.ResponseName = "המכלה תשובה"
+            CustomMessageProgressComponent
+                .ShowProgressBar(params.PBId,
+                    "שליחת המכלה", false)
+                .then((res) => {
+                    this.ResponseData = res;
+                }
+                ).catch((err) => {
+                    this.ValidationErrors.push(err);
+                    this.FillValidationErrors("Errors");
+                });
+            this.containerizationMessagesService.SendContainerization(params)
+                .subscribe((myServiceResponse: ServiceResponse) => {
+                });
+
         });
     }
 
-
+    
 
 
     public OnSuccessSendMethod: (response: any) => void;
