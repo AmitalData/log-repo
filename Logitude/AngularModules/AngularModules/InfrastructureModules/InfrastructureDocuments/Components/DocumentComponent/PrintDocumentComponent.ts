@@ -324,7 +324,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                 case "ABOCO":
                 case "SHCMR":
                 case "TEST":
-
+                case "NCR":
 
                     return true;
 

@@ -241,6 +241,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "  <Relation ForeignKeyColumn='CurrentMilestoneCode' ReferencedTable='CargoTrackingMilestones' ReferencedColumn='Code' ReferencedTableSchema='dbo' />"+
 "  <Index Columns='EntityId' />"+
 "  <Index Columns='Tenant,SecurityKey' />"+
+"  <Index Columns='CustomerId' />"+
 "  <UniqueConstraint Columns='EntityType,EntityId,Tenant' />"+
 "</Table>";
 		

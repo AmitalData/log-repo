@@ -100,8 +100,8 @@ namespace WebFreight.Web
             }
             return userData;
         }
-         
-          
+
+
         public UserData PostTrayLoginUsingAuthenticaionToken(LoginTokenParameter logintokenparam, bool fromTray, bool useTenant)
         {
             UserData userdata;
@@ -828,7 +828,7 @@ namespace WebFreight.Web
                                                          where t.Id == contact.GlobalTenantId
                                                          select t).Include("TenantManagement").FirstOrDefault();
 
-                            if (contact.IsUser)
+                            if (contact.IsUser && !loginParameters.IsCargoTracking)
                             {
                                 bool Licensed = true;
                                 if (globalTenant.TenantManagement.ManageLicencesPerUser)
@@ -2241,15 +2241,14 @@ namespace WebFreight.Web
 
                         }
 
-                        string activity = card.PartnerTypeId == "CS" ? "Customer Access" : "Agent Access";
 
-                        if(card != null)
+                        if (card != null)
                         {
+                            string activity = card.PartnerTypeId == "CS" ? "Customer Access" : "Agent Access";
                             CreateSharedLogisticsContactLastLogin(via, user, card);
-
+                            ActivityLog.SendTotangoContactActivity(contact.Email, "System Login", activity, tenant, true, cardId, via);
                         }
 
-                        ActivityLog.SendTotangoContactActivity(contact.Email, "System Login", activity, tenant, true, cardId, via);
                         //Abed    Log
                         ContactLoginLog contactLog = new ContactLoginLog()
                         {

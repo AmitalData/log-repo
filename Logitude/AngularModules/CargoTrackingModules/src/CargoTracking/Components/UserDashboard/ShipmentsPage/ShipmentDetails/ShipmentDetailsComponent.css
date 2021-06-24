@@ -48,9 +48,9 @@ h1 {
 }
 
 .slider-wrapper {
-    padding: 10px 0 50px 0;
+    padding: 10px 0 10px 0;
     background: RGB(242, 244, 247);
-    margin-bottom: 40px;
+    margin-bottom: 10px;
     text-align: center;
 }
 
@@ -259,7 +259,8 @@ h1 {
         border-radius: 25px;
         box-shadow: 0px 0px 8px 0px #00000025;
         color: rgb(66, 66, 66);
-        background: white;
+        background: var(--MainColor);
+        color: white;
         border: none;
         cursor: pointer;
         margin-right: 20px;
@@ -379,7 +380,7 @@ h1 {
     min-height: 80px;
     height:148px;
     border-radius: 5px;
-    padding: 5px;
+    padding: 10px;
     background: #fff;
     box-shadow: 0px 0px 8px 0px #00000030;
     position: relative;

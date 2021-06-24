@@ -45,6 +45,7 @@ namespace WebFreight.Web.ReportsWebServices
         private PortRepository portRepository;
         private CountryRepository countryRepository;
         private ICommonDataContext commonContext;
+        private IWebFreightContext webFreightContext;
 
         [WebMethod]
         public byte[] GetProfitData(string shipmentId, int tenant, string accountingCurrencyId, string currentUser)
@@ -78,7 +79,7 @@ namespace WebFreight.Web.ReportsWebServices
         {
             this.tenant = tenant;
             ShipmentProfitDataProvider provider = new ShipmentProfitDataProvider();
-            IWebFreightContext context = WebFreightContext.GetContext(tenant);
+            webFreightContext = WebFreightContext.GetContext(tenant);
             commonContext = CommonDataContext.GetContext(tenant);
             ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
             ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
@@ -220,8 +221,13 @@ namespace WebFreight.Web.ReportsWebServices
                 double? allPayablesProfit = openPayablesProfit.Value + acctPayablesProfit.Value;
 
                 provider.ReceivablesInLocalCurrency = String.Format("{0:#,0.00}", allReceivablesLocal);
+                provider.ReceivablesInLocalCurrency_Double = allReceivablesLocal;
+
                 provider.ReceivablesInProfitCurrency = String.Format("{0:#,0.00}", allReceivablesProfit);
+                
                 provider.PayablesInLocalCurrency = String.Format("{0:#,0.00}", allPayablesLocal);
+                provider.PayablesInLocalCurrency_Double = allPayablesLocal;
+
                 provider.PayablesInProfitCurrency = String.Format("{0:#,0.00}", allPayablesProfit);
 
                 double? profitInLocalCurrency = shipmentPM.ProfitInLocalCurrency;
@@ -232,10 +238,13 @@ namespace WebFreight.Web.ReportsWebServices
                 double? differenceInProfitCurrency = profitInProfitCurrency.Value - estimateProfitInProfit.Value;
 
                 provider.ProfitInLocalCurrency = String.Format("{0:#,0.00}", profitInLocalCurrency);
+                provider.ProfitInLocalCurrency_Double = profitInLocalCurrency;
                 provider.ProfitInProfitCurrency = String.Format("{0:#,0.00}", profitInProfitCurrency);
                 provider.EstimateProfitInLocalCurrency = String.Format("{0:#,0.00}", estimateProfitInLocal);
+                provider.EstimateProfitInLocalCurrency_Double = estimateProfitInLocal;
                 provider.EstimateProfitInProfitCurrency = String.Format("{0:#,0.00}", estimateProfitInProfit);
                 provider.DifferenceInLocalCurrency = String.Format("{0:#,0.00}", differenceInLocalCurrency);
+                provider.DifferenceInLocalCurrency_Double =  differenceInLocalCurrency;
                 provider.DifferenceInProfitCurrency = String.Format("{0:#,0.00}", differenceInProfitCurrency);
                 provider.ShipmentVolume = shipmentPM.Volume;
                 provider.VolumeUnitCode = shipmentPM.VolumeUnitCode;
@@ -290,8 +299,12 @@ namespace WebFreight.Web.ReportsWebServices
                          ChargeTypeName = g.Select(s => s.ChargesTypeName).FirstOrDefault(),
                          IsExpenseCharge = g.Select(s => s.IsExpenseCharge).FirstOrDefault(),
                          ReceivablesInLocalCurrency = String.Format("{0:#,0.00}", g.Sum(s => s.TotalAmountLocal)),
+                         ReceivablesInLocalCurrency_Double = g.Sum(s => s.TotalAmountLocal),
                          ReceivablesInProfitCurrency = String.Format("{0:#,0.00}", g.Sum(s => s.AmountInProfitCurrency)),
                      }).ToList();
+
+                ChargesGroupRepository chargesGroupRepository = new ChargesGroupRepository(webFreightContext);
+                List<ChargesGroup> chargesGroups = chargesGroupRepository.GetChargesGroups(tenant).ToList();
 
                 foreach (ProfitDetailsClass item in payablesGroupByList)
                 {
@@ -311,6 +324,8 @@ namespace WebFreight.Web.ReportsWebServices
                     double? theAllPayablesProfit = theOpenPayablesProfit.Value + theAcctPayablesProfit.Value;
 
                     record.PayablesInLocalCurrency = String.Format("{0:#,0.00}", theAllPayablesLocal);
+                    record.PayablesInLocalCurrency_Double = theAllPayablesLocal;
+
                     record.PayablesInProfitCurrency = String.Format("{0:#,0.00}", theAllPayablesProfit);
 
                     ProfitDetailsClass rec = receivablesGroupByList.Where(d => d.ChargeTypeName == item.ChargeTypeName).FirstOrDefault();
@@ -318,13 +333,16 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         receivablesGroupByList.Remove(rec);
                         record.ReceivablesInLocalCurrency = rec.ReceivablesInLocalCurrency;
+                        record.ReceivablesInLocalCurrency_Double = rec.ReceivablesInLocalCurrency_Double;
                         record.ReceivablesInProfitCurrency = rec.ReceivablesInProfitCurrency;
                         record.ProfitInLocalCurrency = String.Format("{0:#,0.00}", Convert.ToDouble(record.ReceivablesInLocalCurrency) - Convert.ToDouble(record.PayablesInLocalCurrency));
+                        record.ProfitInLocalCurrency_Double = record.ReceivablesInLocalCurrency_Double - record.PayablesInLocalCurrency_Double;
                         record.ProfitInProfitCurrency = String.Format("{0:#,0.00}", Convert.ToDouble(record.ReceivablesInProfitCurrency) - Convert.ToDouble(record.PayablesInProfitCurrency));
                     }
                     else
                     {
                         record.ProfitInLocalCurrency = "-" + record.PayablesInLocalCurrency;
+                        record.ProfitInLocalCurrency_Double = -1 * record.PayablesInLocalCurrency_Double;
                         record.ProfitInProfitCurrency = "-" + record.PayablesInProfitCurrency;
                     }
 
@@ -334,6 +352,15 @@ namespace WebFreight.Web.ReportsWebServices
                     ChargesType chargesType = ChargesTypeRepository.GetSingleChargesType(item.ChargeTypeId, shipmentPM.Tenant, true);
                     if (chargesType != null)
                     {
+                        if (chargesType.ChargesGroupId != null)
+                        {
+                            ChargesGroup chargesGroup = chargesGroups.Where(d => d.Id == chargesType.ChargesGroupId).FirstOrDefault();
+                            if(chargesGroup != null)
+                            {
+                                record.ChargeGroupName = chargesGroup.Name;
+                            }
+                        }
+                            
                         if (chargesType.VatTypeId != null)
                         {
                             VatTypePM vatTypePM = vatTypeQuery.GetSinglePM(chargesType.VatTypeId, chargesType.Tenant);
@@ -375,8 +402,10 @@ namespace WebFreight.Web.ReportsWebServices
                     record.ChargeTypeName = item.ChargeTypeName;
                     record.IsExpenseCharge = item.IsExpenseCharge;
                     record.ReceivablesInLocalCurrency = item.ReceivablesInLocalCurrency;
+                    record.ReceivablesInLocalCurrency_Double = item.ReceivablesInLocalCurrency_Double;
                     record.ReceivablesInProfitCurrency = item.ReceivablesInProfitCurrency;
                     record.ProfitInLocalCurrency = item.ReceivablesInLocalCurrency;
+                    record.ProfitInLocalCurrency_Double = item.ReceivablesInLocalCurrency_Double;
                     record.ProfitInProfitCurrency = item.ReceivablesInProfitCurrency;
 
                     string varVatTypeCode = String.Empty;
@@ -385,6 +414,15 @@ namespace WebFreight.Web.ReportsWebServices
                     ChargesType chargesType = ChargesTypeRepository.GetSingleChargesType(item.ChargeTypeId, shipmentPM.Tenant, true);
                     if (chargesType != null)
                     {
+                        if (chargesType.ChargesGroupId != null)
+                        {
+                            ChargesGroup chargesGroup = chargesGroups.Where(d => d.Id == chargesType.ChargesGroupId).FirstOrDefault();
+                            if (chargesGroup != null)
+                            {
+                                record.ChargeGroupName = chargesGroup.Name;
+                            }
+                        }
+
                         VatTypePM vatTypePM = vatTypeQuery.GetSinglePM(chargesType.VatTypeId, chargesType.Tenant);
                         if (vatTypePM != null)
                         {
@@ -413,7 +451,7 @@ namespace WebFreight.Web.ReportsWebServices
                 provider.Notes = ServiceStringConvertor(shipmentPM.Notes);
                 provider.ShipmentNumber = ServiceStringConvertor(shipmentPM.ShipmentNumber);
                 provider.DescriptionOfGoods = ServiceStringConvertor(shipmentPM.DescriptionOfGoods);
-                provider.Direction = context.Directions.Where(d => d.Id == shipmentPM.DirectionId).FirstOrDefault().Name;
+                provider.Direction = webFreightContext.Directions.Where(d => d.Id == shipmentPM.DirectionId).FirstOrDefault().Name;
                 provider.ATD = ServiceDateConvertor(shipmentPM.MainCarriageATD);
                 provider.ATA = ServiceDateConvertor(shipmentPM.MainCarriageATA);
                 provider.ATD_DateTime = shipmentPM.MainCarriageATD;
@@ -735,7 +773,7 @@ namespace WebFreight.Web.ReportsWebServices
                 #region Move Type
                 if (!string.IsNullOrEmpty(shipmentPM.MoveTypeId))
                 {
-                    MoveType moveType = context.MoveTypes.Where(m => m.Id == shipmentPM.MoveTypeId).FirstOrDefault();
+                    MoveType moveType = webFreightContext.MoveTypes.Where(m => m.Id == shipmentPM.MoveTypeId).FirstOrDefault();
                 
                     if(moveType != null)
                     {

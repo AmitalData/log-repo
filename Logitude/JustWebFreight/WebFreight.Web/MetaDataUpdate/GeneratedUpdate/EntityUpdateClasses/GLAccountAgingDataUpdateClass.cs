@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountAgingDataUpdateClass
    {  		
-		public const string HashString = "0793d343182bb655b1b784eaf9721aa3";
+		public const string HashString = "4cf37d135855b6e2bfb2768a1064b458";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NewWizardControlName =  "",
 			      				    LocalDefaultText =  "טבלת מצטברים ",
 			      				    DefaultText =  "GLAccountAgingData",
-			      				    Code =  "5952",
+			      				    Code =  "bfdb",
 			      				    Name =  "GLAccountAgingData Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",

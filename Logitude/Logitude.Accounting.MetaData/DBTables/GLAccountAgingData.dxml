@@ -18,7 +18,6 @@
     <Constraints
       Nullable="false" />
   </Column>
-
   <Column
     Name="PeriodPast"
     Type="decimal"
@@ -28,31 +27,7 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="Period0"
-    Type="decimal"
-    Precision="16"
-    Scale="2">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Period1"
-    Type="decimal"
-    Precision="16"
-    Scale="2">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Period2"
-    Type="decimal"
-    Precision="16"
-    Scale="2">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Period3"
+    Name="Period5"
     Type="decimal"
     Precision="16"
     Scale="2">
@@ -68,14 +43,37 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="Period5"
+    Name="Period3"
     Type="decimal"
     Precision="16"
     Scale="2">
     <Constraints
       Nullable="true" />
   </Column>
-  
+  <Column
+    Name="Period2"
+    Type="decimal"
+    Precision="16"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Period1"
+    Type="decimal"
+    Precision="16"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Period0"
+    Type="decimal"
+    Precision="16"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Column
     Name="PeriodFuture"
     Type="decimal"

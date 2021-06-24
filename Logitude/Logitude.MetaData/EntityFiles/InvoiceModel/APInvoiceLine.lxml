@@ -35,7 +35,9 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="APInvoice"
   DefaultText="&quot;A/P Invoice Line&quot;"
-  Code="&quot;c941&quot;"
+
+  Code="&quot;ccb9&quot;"
+
   Name="&quot;APInvoiceLine&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Invoice&quot;"
@@ -49,6 +51,7 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
   Code1="&quot;2f3d&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -753,7 +756,7 @@
     MinLength="0"
     MaxLength="250"
     IsRequired="false"
-    CopyToDW="false"
+    CopyToDW="true"
     DisplayOnLookUp="true"
     DisplayOnLookUpLocal="false"
     CanFilter="false"
@@ -1224,7 +1227,7 @@
     MinLength="0"
     MaxLength="15"
     IsRequired="false"
-    CopyToDW="false"
+    CopyToDW="true"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
     CanFilter="true"
@@ -1378,7 +1381,7 @@
     MinLength="0"
     MaxLength="0"
     IsRequired="false"
-    CopyToDW="false"
+    CopyToDW="true"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
     CanFilter="true"
@@ -3512,6 +3515,75 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;551d7e39-193d-4c98-b0c1-02d14294f82c&quot;"
+    FieldName="&quot;LocalAmountWithVatRecognized&quot;"
+    OldNames="LocalAmountWithVatRecognized"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;APInvoiceLine&quot;"
+    FieldsDataType="&quot;Double&quot;"
+    MinLength="0"
+    MaxLength="0"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="0"
+    DisplayInList="false"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;LocalAmountWithVatRecognized&quot;"
+    ListPropertyPath="&quot;LocalAmountWithVatRecognized&quot;"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    DigitsAfterPoint="2"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;LocalAmountWithVatRecognized&quot;"
+    DefaultText="&quot;2&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="false"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <Screen
     Name="&quot;APInvoiceLineHeaderScreen&quot;"
     ObjectTableName="&quot;APInvoiceLine&quot;"
@@ -3567,7 +3639,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="true" />
+        IsCompositKey="true"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;LineNumber&quot;"
         FieldName="&quot;LineNumber&quot;"
@@ -3581,7 +3654,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="true" />
+        IsCompositKey="true"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Tenant&quot;"
         FieldName="&quot;Tenant&quot;"
@@ -3595,7 +3669,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ChargesType&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -3610,7 +3685,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;InvoiceCurrencyAmount&quot;"
         FieldName="&quot;InvoiceCurrencyAmount&quot;"
@@ -3624,7 +3700,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;LocalCurrencyAmount&quot;"
         FieldName="&quot;LocalCurrencyAmount&quot;"
@@ -3638,7 +3715,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ProfitCurrencyAmount&quot;"
         FieldName="&quot;ProfitCurrencyAmount&quot;"
@@ -3652,7 +3730,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;VatType&quot;"
         FieldName="&quot;VatTypeId&quot;"
@@ -3667,7 +3746,8 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        CloseTableCode="&quot;Code&quot;" />
+        CloseTableCode="&quot;Code&quot;"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Notes&quot;"
         FieldName="&quot;Notes&quot;"
@@ -3681,7 +3761,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;VatPercentage&quot;"
         FieldName="&quot;VatPercentage&quot;"
@@ -3695,7 +3776,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ForiegnCurrency&quot;"
         FieldName="&quot;ForiegnCurrencyId&quot;"
@@ -3709,7 +3791,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ForiegnExchangeRate&quot;"
         FieldName="&quot;ForiegnExchangeRate&quot;"
@@ -3723,7 +3806,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ForiegnCurrencyAmount&quot;"
         FieldName="&quot;ForiegnCurrencyAmount&quot;"
@@ -3737,7 +3821,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;DebitAccount&quot;"
         FieldName="&quot;DebitAccount&quot;"
@@ -3751,7 +3836,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Description&quot;"
         FieldName="&quot;Description&quot;"
@@ -3765,7 +3851,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;LocalDescription&quot;"
         FieldName="&quot;LocalDescription&quot;"
@@ -3779,7 +3866,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ChargeTypeGLAccountId&quot;"
         FieldName="&quot;ChargeTypeGLAccountId&quot;"
@@ -3793,7 +3881,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;PrepaidCollect&quot;"
         FieldName="&quot;PrepaidCollectId&quot;"
@@ -3807,7 +3896,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ExternalVATCard&quot;"
         FieldName="&quot;ExternalVATCard&quot;"
@@ -3821,7 +3911,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ContainerType&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -3836,7 +3927,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Quantity&quot;"
         FieldName="&quot;Quantity&quot;"
@@ -3850,7 +3942,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes>

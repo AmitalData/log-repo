@@ -41,6 +41,28 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             return iQueryable;
         }
 
+
+        public IQueryable<JournalMoreDataList> GetJournalMoreDatasForJournal(string JournalId, int tenant)
+        {
+            IQueryable<JournalMoreDataList> Journallines;
+
+
+
+            IQueryable<JournalMoreData> lines = (from a in context.JournalMoreDatas
+                                             where a.JournalId == JournalId && a.Tenant == tenant
+                                             select a);
+
+            Journallines = (from a in lines
+                            select new JournalMoreDataList()
+                            {
+                                JournalId = a.JournalId,
+                                Line = a.Line,
+                                GeneralData = a.GeneralData,
+                                Tenant = a.Tenant,
+                            });
+
+            return Journallines;
+        }
     }
 
 

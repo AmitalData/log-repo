@@ -167,8 +167,9 @@ namespace WebFreight.Web.WebServices
                              Id = IdCounter.GetNumber("Document", tenant).ToString(),//externalDocumentId,
                              HasFile = true,
                              Folder = "docsin",
-                             FileName = document.CalculatedFileName = TruncateLongString(realFileName, 120),
-                        
+                             FileName = TruncateLongString(realFileName, 120),
+                             CalculatedFileName = TruncateLongString(realFileName, 120),
+
                          };
                          docRepository.Add(document);
                      }
