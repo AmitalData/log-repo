@@ -116,17 +116,21 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CrossDockReleaseDataPreparation.cs" />
     <Compile Include="Services\CrossDockReleaseServices.cs" />
-    <Compile Include="Steps\CreateCrossDocksSteps.cs" />
+    <Compile Include="Steps\CreateCrossDocksReleaseSteps.cs" />
+    <Compile Include="Steps\CreateCrossDocksEntrySteps.cs" />
     <Compile Include="Steps\GetCrossDocksEntryExportAirSteps.cs" />
     <Compile Include="Steps\GetCrossDocksReleaseSteps.cs" />
-    <Compile Include="Steps\UpdateCrossDocksSteps.cs" />
+    <Compile Include="Steps\UpdateCrossDocksEntrySteps.cs" />
+    <Compile Include="Steps\UpdateCrossDocksReleaseSteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Features\CreateCrossDocks.feature" />
+    <None Include="Features\CreateCrossDocksEntry.feature" />
+    <None Include="Features\CreateCrossDocksRelease.feature" />
     <None Include="Features\GetCrossDocksEntryExportAir.feature" />
     <None Include="Features\GetCrossDocksRelease.feature" />
-    <None Include="Features\UpdateCrossDocks.feature" />
+    <None Include="Features\UpdateCrossDocksEntry.feature" />
+    <None Include="Features\UpdateCrossDocksRelease.feature" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
