@@ -30,7 +30,7 @@ export class DocumentDefaultExternalAttachmentsComponent implements OnInit {
     ExternalDocumentId: string = Guid.NewRandomString();
     FileName: string;
     Extension: string;
-
+    TermsofUseSelectedViewModel: any;
     private DocumentsTotalSize = 0;
     private  DocumentsMaximumSize = 20;
 
