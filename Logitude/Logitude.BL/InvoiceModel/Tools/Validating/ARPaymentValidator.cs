@@ -503,23 +503,23 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     }
                 }
 
-                IAccountingContext myContext = AccountingContext.GetContext(args.Tenant);
-                AccountingPeriodListQueryService accountingPeriodQuery = new AccountingPeriodListQueryService(myContext);
-                var now = TenantServerConfigration.GetCurrentDateTime(args.Tenant);
-                AccountingPeriodList accountingPeriodList = accountingPeriodQuery.GetByYear(args.RegisterDate.Value.Year, "1", args.Tenant);
-                if (accountingPeriodList != null && args.RegisterDate != null)
+                if (args.IsNewEntity)
                 {
-                    var month = args.RegisterDate.Value.Month;
-                    if (month > accountingPeriodList.OpenMonth || month <= accountingPeriodList.ClosedMonth)
+                    AccountingPeriodList accountingPeriodList = GetAccountingPeriods(args);
+                    if (accountingPeriodList != null && args.RegisterDate != null)
+                    {
+                        var month = args.RegisterDate.Value.Month;
+                        if (month > accountingPeriodList.OpenMonth || month <= accountingPeriodList.ClosedMonth)
+                        {
+                            string msg = TranslateTextsClass.Translate("ARPayment.M.ClosedMonth", args.Tenant, useLocal);
+                            errors += msg + ";";
+                        }
+                    }
+                    else
                     {
                         string msg = TranslateTextsClass.Translate("ARPayment.M.ClosedMonth", args.Tenant, useLocal);
                         errors += msg + ";";
                     }
-                }
-                else
-                {
-                    string msg = TranslateTextsClass.Translate("ARPayment.M.ClosedMonth", args.Tenant, useLocal);
-                    errors += msg + ";";
                 }
 
                 IBankAccountQueryServiceExt bankAccountQuery = ContainerAccessor.Container.Resolve(typeof(IBankAccountQueryServiceExt), "BankAccountQueryServiceExt", new ParameterOverride("", 1)) as IBankAccountQueryServiceExt;
@@ -572,6 +572,14 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     throw new ApplicationException(errors);
                 }
             }
+        }
+
+        private static AccountingPeriodList GetAccountingPeriods(FullAccountingARPaymentValidatorArguments args)
+        {
+            IAccountingContext myContext = AccountingContext.GetContext(args.Tenant);
+            AccountingPeriodListQueryService accountingPeriodQuery = new AccountingPeriodListQueryService(myContext);
+            AccountingPeriodList accountingPeriodList = accountingPeriodQuery.GetByYear(args.RegisterDate.Value.Year, "1", args.Tenant);
+            return accountingPeriodList;
         }
 
         private static string ValidateDuplicateChequeNumber(List<ARPaymentChequeReplicaPM> aRPaymentChequeReplicas, int tenant, string errors, bool useLocal)
