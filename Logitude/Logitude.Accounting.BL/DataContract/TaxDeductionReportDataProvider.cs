@@ -361,7 +361,7 @@ namespace Logitude.Accounting.BL.DataContract
    
         private bool CheckIfLineCreated(LedgerTransaction transaction)
         {
-            LedgerTransaction ledgerTransaction = createdLines.Where(d => d.JournalId == transaction.JournalId && d.AccountId ==transaction.OppositeAccountId&& d.Reference1 == transaction.Reference1).FirstOrDefault();
+            LedgerTransaction ledgerTransaction = createdLines.Where(d => d.JournalId == transaction.JournalId && d.OppositeAccountId ==transaction.OppositeAccountId&& d.Reference1 == transaction.Reference1).FirstOrDefault();
             if (ledgerTransaction == null)
             {
                 return false;
