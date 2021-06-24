@@ -199,15 +199,15 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         button.Width = 100;
                         if (this.EntityPM.Direction == "E") {
                             button.IsHidden = false;
-                        } else {
+                        } else { 
                             button.IsHidden = true;
                         }
                     } 
                     if (button.EventCode == "OpenNewContainerization") {
                         button.Width = 100;
                         button.DisplayText = "המכלה";
-                        if (this.EntityPM.Direction == "E" && this.EntityPM.ProcedureCurrentName.includes("המכלה לפני התרה")) {
-                            button.IsHidden = false;
+                        if (this.EntityPM.Direction == "E" && this.EntityPM.ProcedureCurrentCode && this.EntityPM.ProcedureCurrentName && this.EntityPM.ProcedureCurrentName.includes("המכלה לפני התרה")) {
+                                button.IsHidden = false;
                         } else {
                             button.IsHidden = true;
                         }
@@ -1271,7 +1271,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                 EntityIsDeclarationPM: "true",
             };
             var logWindow = new LogitudeWindow();
-            logWindow.Width = 1200;
+            logWindow.Width = 1220;
             logWindow.Height = 550;
             logWindow.Title = ("המכלה חדשה");
             logWindow.WindowArgs = args;
@@ -1279,6 +1279,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
             logWindow.Show('./CustomsModules/CustomsContainerization/Components/NewEntity/NewContainerizationComponent');
             logWindow.WindowClosed.subscribe(($event: any) => {
                 this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
             });
         } else {
                 //  this.EditEntity("Customs.Declaration", this.rowData.Id, null, "DEGC");
@@ -1288,6 +1289,9 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         cmpRef.instance.Run({
                             EntityId: this.EntityPM.ExportContainerizationID,
                             ObjectTableName: "Customs.Containerization"
+                        });
+                        cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                         });
                     });
         }

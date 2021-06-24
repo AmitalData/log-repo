@@ -1,22 +1,38 @@
 <!--<p>Containerization !!!!</p>-->
 <table>
+    <tr style="height:32px">
+        <td><div></div></td>
+    </tr>
     <tr style="height :15px;">
         <!--<td style="font-size: 18px; color: #1B90CB;">
-        <div>הצהרות בהמכלה </div>
-    </td>-->
+            <div>הצהרות בהמכלה </div>
+        </td>-->
         <td class="TabTitleRow" style="padding-right:5px">הצהרות בהמכלה </td>
     </tr>
-    
+
     <tr *ngIf="this.ContainerizationDeclarationList">
         <!--background-color :aquamarine;-->
         <td colspan="5" style="width: 100% ; height : 100%">
             <div class="GeneratedGridContainer"
-                 style="width: 100% ;height:90%;">
+                 style="width: 100% ;height:100%;">
 
                 <logitude-edit-grid GridWidth="100%"
                                     GridHeight="100%"
                                     (RowDataLoaded)="OnRowLoaded($event)"
                                     [ItemSource]="ContainerizationDeclarationList">
+
+                    <!-- DeclarationNumber -->
+                    <log-column [header]="'Customs.Containerization.O.RowNumber' | TextCodeTranslationPipe"
+                                [width]="'30'" [Alignment]="'right'"
+                                [binding]="'RowNumber'">
+                        <ng-template let-item>
+                            <log-cell-template #logcelltemplate>
+                                <div class="TextTrimming RightCenter">
+                                    <span>{{item.RowNumber}}</span>
+                                </div>
+                            </log-cell-template>
+                        </ng-template>
+                    </log-column>
 
                     <!-- DeclarationNumber -->
                     <log-column [header]="'Customs.Declaration.F.DeclarationNumber' | TextCodeTranslationPipe"
@@ -39,7 +55,7 @@
 
 
                     <!-- ExportFile -->
-                    <log-column [header]="'Customs.Declaration.F.ExportFile' | TextCodeTranslationPipe"
+                    <log-column [header]="'Customs.Containerization.O.ExportFile' | TextCodeTranslationPipe"
                                 [binding]="'ExportFile'"
                                 [width]="'120'" [Alignment]="'right'">
                         <ng-template let-item>
@@ -52,25 +68,30 @@
                     </log-column>
 
 
-
-
-
-                    <!-- DeclarationStatusTypeName -->
-                    <log-column [header]="'Customs.Declaration.F.DeclarationStatusTypeName' | TextCodeTranslationPipe"
-                                [binding]="'DeclarationStatusTypeName'"
-                                [width]="'210'" [Alignment]="'right'">
+                    <log-column [header]="'Customs.Containerization.O.ImporterName' | TextCodeTranslationPipe"
+                                [binding]="'ImporterName'"
+                                [width]="'120'" [Alignment]="'right'">
                         <ng-template let-item>
                             <log-cell-template #logcelltemplate>
                                 <div class="RightCenter">
-                                    <span>{{item.DeclarationStatusTypeName}}</span>
+                                    <span>{{item.CustomerName}}</span>
                                 </div>
                             </log-cell-template>
                         </ng-template>
                     </log-column>
-
-
+                    <log-column [header]="'Customs.Containerization.O.CargoTypeName' | TextCodeTranslationPipe"
+                                [binding]="'CargoTypeName'"
+                                [width]="'120'" [Alignment]="'right'">
+                        <ng-template let-item>
+                            <log-cell-template #logcelltemplate>
+                                <div class="RightCenter">
+                                    <span>{{item.CargoTypeName}}</span>
+                                </div>
+                            </log-cell-template>
+                        </ng-template>
+                    </log-column>
                     <!-- ManifestNumber -->
-                    <log-column [header]="'Customs.Declaration.F.ManifestNumber' | TextCodeTranslationPipe"
+                    <log-column [header]="'Customs.Containerization.O.ManifestNumber' | TextCodeTranslationPipe"
                                 [binding]="'ManifestNumber'"
                                 [width]="'105'" [Alignment]="'right'">
                         <ng-template let-item>
@@ -105,6 +126,31 @@
                             <log-cell-template #logcelltemplate>
                                 <div class="RightCenter">
                                     <span>{{item.ThirdCargoID}}</span>
+                                </div>
+                            </log-cell-template>
+                        </ng-template>
+                    </log-column>
+                    <!-- DeclarationStatusTypeName -->
+                    <log-column [header]="'Customs.Declaration.F.DeclarationStatusTypeName' | TextCodeTranslationPipe"
+                                [binding]="'DeclarationStatusTypeName'"
+                                [width]="'210'" [Alignment]="'right'">
+                        <ng-template let-item>
+                            <log-cell-template #logcelltemplate>
+                                <div class="RightCenter">
+                                    <span>{{item.DeclarationStatusTypeName}}</span>
+                                </div>
+                            </log-cell-template>
+                        </ng-template>
+                    </log-column>
+                    <log-column [header]="'Customs.Containerization.O.PaymentDate' | TextCodeTranslationPipe"
+                                [binding]="'PaymentDate'"
+                                [width]="'105'" [Alignment]="'right'">
+                        <ng-template let-item>
+                            <log-cell-template #logcelltemplate>
+                                <div class="RightCenter">
+                                    <div style="text-align:center" *ngIf="item.PaymentDate!=null">
+                                        <img title="הגשה" src="./Images/CheckBoxIcon.png" />
+                                    </div>
                                 </div>
                             </log-cell-template>
                         </ng-template>

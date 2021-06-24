@@ -273,6 +273,7 @@
     <Content Include="CustomsModules\CustomsContainerization\Components\EditTabs\ContainerizationGeneralComponent.html" />
     <Content Include="CustomsModules\CustomsContainerization\Components\NewEntity\NewContainerizationComponent.html" />
     <Content Include="CustomsModules\CustomsContainerization\Components\Other\AgentStatementContainerization.html" />
+    <Content Include="CustomsModules\CustomsContainerization\Components\SendContainerization\SendContainerization.html" />
     <Content Include="CustomsModules\CustomsControls\Components\TestCase\SendDeclarationTastCaseComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\AutonomyKeyword\AutonomyKeywordComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\CourierPendingReason\AddCourierPendingToUnifreightStatusComponent.html" />
@@ -348,6 +349,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsContainerization\Components\EditTabs\ContainerizationGeneralComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsContainerization\Components\NewEntity\NewContainerizationComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsContainerization\Components\Other\AgentStatementContainerization.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsContainerization\Components\SendContainerization\SendContainerization.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsContainerization\ModuleCustomsContainerization.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsContainerization\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\GetUnloadPortCodeComponent.ts" />
@@ -355,6 +357,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\DeclarationCancellation\DeclarationCancellationComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\DeclarationCancellation\Documents\DeclarationCancellationCustomsDocumentsController.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\NewEntity\NewExportDeclarationComponent.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsContainerization\ModuleProviders.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ConsigmentTabContent\ExportConsigmentContentComponent.ts" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ExportDeclarationComponent.html" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationSupplierInvoice\Components\SupplierInvoices\SupplierInvoiceItem\ExporterInvoiceItemComponent.ts" />
@@ -1330,6 +1333,7 @@
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\GatepassRequestMessageRequestParams.ts" />
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\SendALLStorageSiteRequestParams.ts" />
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\SendCollateralRequestParams.ts" />
+    <TypeScriptCompile Include="Customs\DataContract\ResponseData\ContainerizationResponseData.ts" />
     <TypeScriptCompile Include="Customs\DataContract\ResponseData\ContinuousResponseOnClaimFileResponseData.ts" />
     <TypeScriptCompile Include="Customs\DataContract\ResponseData\PhysicalCheckResponseData.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\AmendCancellRequestInitiatorList.ts" />

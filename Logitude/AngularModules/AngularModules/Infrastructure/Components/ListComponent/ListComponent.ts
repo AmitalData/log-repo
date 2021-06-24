@@ -2278,7 +2278,6 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                     EntityId: $event.rowData.Id,
                                     ObjectTableName: "Customs.Containerization"
                                 });
-
                                 cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
                                     this.isEditControlOpened = false;
                                     this.OnBackFromEdit(selectedEntityId, $event)
@@ -2854,7 +2853,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
     RunNewContainerization() {
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 1200;
+        logWindow.Width = 1220;
         logWindow.Height = 550;
         logWindow.Title = ("המכלה חדשה");
         logWindow.ShowCloseButton = true;

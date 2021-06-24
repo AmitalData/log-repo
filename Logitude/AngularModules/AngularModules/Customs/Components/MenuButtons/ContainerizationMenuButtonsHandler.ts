@@ -27,7 +27,7 @@ import { CustomFileCreditResponseData } from '../../DataContract/ResponseData/Cu
 import { DeclarationDisplayOnlyChecks, DisplayOnlyCheckResult } from '../../Utilities/DeclarationDisplayOnlyChecks';
 import { VehicleReductionTypeListService } from '../../Services/StandardLists/VehicleReductionTypeListService';
 import { MenuButtonsEvents, MenuButtonsStateChangedEventArgs } from '../../../Infrastructure/Utilities/events/MenuButtonsEvents';
-
+ 
 import { PrintRequestRequestParams } from '../../DataContract/RequestParams/PrintRequestRequestParams';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 
@@ -36,8 +36,11 @@ import { DeclarationEventManager } from '../../Utilities/DeclarationEventManager
 import { DownloadManager } from '../../../Infrastructure/Utilities/DownloadManager';
 import { MenuButtonsComponent } from '../../../Infrastructure/Components/LogitudeComponents/MenuButtonsComponent/MenuButtonsComponent';
 import { GenericRequestParams } from '../../DataContract/RequestParams/GenericRequestParams';
-import { TestCase } from '../../DataContract/RequestParams/RequestParamsBase';
+import { SendRequestVIA, TestCase } from '../../DataContract/RequestParams/RequestParamsBase';
 import { CustomsSettingExtendedListService } from '../../Services/ExtendedLists/CustomsSettingExtendedListService';
+import { DeclarationStatusRequestParams } from '../../DataContract/RequestParams/DeclarationStatusRequestParams';
+import { ContainerizationMessagesService } from '../../Services/WebServices/ContainerizationMessagesService';
+import { ContainerizationPMService } from '../../Services/StandardPMs/ContainerizationPMService';
 
 
 export class ContainerizationMenuButtonsHandler implements OnDestroy {
@@ -63,6 +66,9 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
     //Services
     private declarationPMService: DeclarationPMService = new DeclarationPMService();
     private declarationWebService: DeclarationWebService = new DeclarationWebService();
+    private containerizationMessagesService: ContainerizationMessagesService = new ContainerizationMessagesService();
+    private containerizationPMService: ContainerizationPMService = new ContainerizationPMService();
+
     private declarationCourierStatusPMService: DeclarationCourierStatusPMService = new DeclarationCourierStatusPMService();
 
     public SetEntityPM(entityArgs: EntityArgs) {
@@ -159,18 +165,7 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
                 } else {
                     myMenuButtonPM[attribut] = myMenuButtonDeclarationsStatusRequest[attribut];
                 }
-            }
-            //myMenuButtonPM.MenuButtonGroupId = myMenuButtonDeclarationsStatusRequest.
-            myMenuButtonPM.Id = "SincroSendDeclarationDCA";
-            myMenuButtonPM.LabelTextCodeCode = null;
-            myMenuButtonPM.LabelTextCodeId = null;
-            myMenuButtonPM.DisplayText = " DCA תרחיש";
-            myMenuButtonPM.EventCode = "SincroSendDeclarationDCA";
-            myMenuButtonPM.ShowMenuButton = true;
-            myMenuButtonPM.IsHidden = false;
-
-            myMenuButtonPM.Index=1000
-            menuButtons.push(myMenuButtonPM);
+            }           
         }
         this.DisplayOnlyCheck();
     }
@@ -179,7 +174,6 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
         let parentButton: MenuButtonPM;
           if (this.EntityPM != null) {
             if (this.CurrentSession.CurrentEditComponent != null) {
-
                 var table = window.ObjectTables.filter(d => d.Name === 'Customs.Containerization')[0];
 
                 var buttonEnabled: boolean = true;
@@ -187,7 +181,6 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
                 if (!eventsTabFeature) {
                     buttonEnabled = false;
                 }
-
                 for (var i = 0; i < menuButtons.length; i++) {
                     var button = menuButtons[i];
                     if (button.EventCode == "Actions") {
@@ -217,17 +210,62 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
                         this.AddDeclarationMethod();//SaveDeclarationMethod("DeclarationRestore");
                         break;
                     }
+                case "DeclarationsStatusRequest":
+                    {
+                        this.DeclarationsStatusRequestMethod();
+                        break;
+                    }
 
+                case "CancelContainerization":
+                    {
+                        this.CancelContainerizationMethod();//SaveDeclarationMethod("DeclarationRestore");
+                        break;
+                    }
             }
         }
     }
+
+    DeclarationsStatusRequestMethod() {
+
+        if (this.EntityPM.IsDirty)
+        {
+            let messageWindow = new MessageWindow();
+            messageWindow.Width = 300;
+            messageWindow.Height = 180;
+            messageWindow.RTL = true;
+            messageWindow.ShowWarningIcon = true;
+            messageWindow.Show("בוצעו שינויים במסך, יש לבצע שמירה");
+            return;
+        }
+        var currRequestParams = new DeclarationStatusRequestParams();
+        currRequestParams.LoggingEnabled = true;
+        currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
+        currRequestParams.LoggingObjectTableId = window.ObjectTables.filter(d => d.Name === 'Customs.Containerization')[0].Id;
+        currRequestParams.LoggingEntityId = this.EntityPM.Id;
+        currRequestParams.LoggingEntityId2 = this.EntityPM.ConnectedDeclarations;
+        currRequestParams.RequestVIA = SendRequestVIA.WebServiceInteractive;
+        currRequestParams.Tenant = SessionLocator.Tenant;
+        //currRequestParams.RequestOrigin = "DeclarationStatusRequestViewModel";
+        var _DeclarationMessagesService = new DeclarationMessagesService();
+        this.CurrentSession.StartBusyIndicator("Sending...");
+
+        _DeclarationMessagesService.PostDeclarationStatusRequest(currRequestParams)
+            .subscribe((myServiceResponse: ServiceResponse) => {
+                this.CurrentSession.CurrentEditComponent.LoadCompleted.emit(true);
+                this.CurrentSession.StopBusyIndicator();
+            });
+
+
+        }
+
+    
   
     AddDeclarationMethod() {
         var args: any = {
             EntityPM: this.EntityPM,
         }; 
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 1200;
+        logWindow.Width = 1220;
         logWindow.Height = 550;
         logWindow.Title = ("עדכון המכלה");
         logWindow.WindowArgs = args;
@@ -237,6 +275,57 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
             this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
         });
     }
+
+    getParams(response: ServiceResponse, event: any) {
+        var params: GenericRequestParams = new GenericRequestParams();
+        params.Tenant = SessionLocator.Tenant;
+        params.AppicationId = "12345";
+        params.RequestVIA = event.RequestVIA;
+        params.ForcePersonalSign = event.ForcePersonalSign;
+        params.LoggingEnabled = true;
+        params.LoggingEntityId = response.Result.Id;
+        params.LoggingUserId = SessionLocator.LoggedUserId;
+        return params
+    }
+    CancelContainerizationMethod() {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = 300;
+        confirmWindow.Show("האם ברצונך לבטל את ההמכלה ?");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes)
+            {
+                this.EntityPM.OperationMode = "3";
+                this.containerizationPMService.update(this.EntityPM).subscribe((response: ServiceResponse) => {
+                    if (!response.HasError)
+                    {
+                        this.CurrentSession.StartBusyIndicator("Sending...");
+                        this.containerizationMessagesService.SendContainerization(this.getParams(response, event)).subscribe((response: ServiceResponse) => {
+                            console.log("[response] CancelContainerizationMethod: ", response);
+                            this.CurrentSession.StopBusyIndicator();
+                            if (!response.Result.HasException) {
+                                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                                this.CurrentSession.CurrentEditComponent.LoadCompleted.emit(true);
+                                let messageWindow = new MessageWindow();
+                                messageWindow.Width = 300;
+                                messageWindow.Height = 180;
+                                messageWindow.Show("ההמכלה בוטלה בהצלחה");
+                            }
+                            else {
+                                let messageWindow = new MessageWindow();
+                                messageWindow.Width = 300;
+                                messageWindow.Height = 180;
+                                messageWindow.Title = "שליחה נכשלה";
+                                messageWindow.RTL = true;
+                                messageWindow.ShowErrorIcon = true;
+                                messageWindow.Show(response.Result.UserMessage);
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }
+
     DisplayOnlyCheck() {
     }
 }

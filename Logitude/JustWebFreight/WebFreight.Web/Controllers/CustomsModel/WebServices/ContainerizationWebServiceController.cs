@@ -19,7 +19,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
         {
             try
             {
-                GenericRequestParams ContainerizationRequest = new GenericRequestParams()
+                //requestParams
+                /*GenericRequestParams ContainerizationRequest = new GenericRequestParams()
                 {
                     LoggingEnabled = true,
                     Tenant = requestParams.Tenant,
@@ -33,10 +34,12 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                     LoggingUserId = requestParams.LoggingUserId,
                     RequestVIA=requestParams.RequestVIA,
                     ForcePersonalSign=requestParams.ForcePersonalSign,
-                };
-                ContainerizationRequest.RequestVIA = requestParams.RequestVIA; 
+                };*/
+                requestParams.MainInterfaceCode = "2450";
+                requestParams.InterfaceTypeCode = "2450";
+                requestParams.LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Containerization");
                 var myRequestMessagingService = new SaveCC_MSG2450_ContainerizationMessageMessagingService();
-                var resData = myRequestMessagingService.Send(ContainerizationRequest);
+                var resData = myRequestMessagingService.Send(requestParams);
                 return Request.CreateResponse(HttpStatusCode.OK, resData);
             }
             catch (Exception ex)
