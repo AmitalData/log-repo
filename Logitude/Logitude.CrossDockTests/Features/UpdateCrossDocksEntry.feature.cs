@@ -111,6 +111,9 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
+#line 6
+ testRunner.Given("entry cross dock", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
                 TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
                             "Quantity",
                             "Length",
@@ -123,11 +126,8 @@ this.ScenarioInitialize(scenarioInfo);
                             "20",
                             "30",
                             "40"});
-#line 6
- testRunner.Given("a packages with the following properties", ((string)(null)), table4, "Given ");
-#line hidden
-#line 9
- testRunner.And("entry cross dock", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 7
+ testRunner.And("a packages with the following properties", ((string)(null)), table4, "And ");
 #line hidden
 #line 10
  testRunner.When("update entry cross dock", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");

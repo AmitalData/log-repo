@@ -19,7 +19,7 @@ namespace Logitude.CrossDockTests.Features
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class CreateCrossDocksReleaseFeature : object, Xunit.IClassFixture<CreateCrossDocksReleaseFeature.FixtureData>, System.IDisposable
+    public partial class CreateCrossDocksEntryFeature : object, Xunit.IClassFixture<CreateCrossDocksEntryFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -31,7 +31,7 @@ namespace Logitude.CrossDockTests.Features
 #line 1 "CreateCrossDocksEntry.feature"
 #line hidden
         
-        public CreateCrossDocksReleaseFeature(CreateCrossDocksReleaseFeature.FixtureData fixtureData, Logitude_CrossDockTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public CreateCrossDocksEntryFeature(CreateCrossDocksEntryFeature.FixtureData fixtureData, Logitude_CrossDockTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -40,7 +40,7 @@ namespace Logitude.CrossDockTests.Features
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Create Cross Docks Release", "\tWe want to create entry cross docks.", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Create Cross Docks Entry", "\tWe want to create entry cross docks.", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -81,7 +81,7 @@ namespace Logitude.CrossDockTests.Features
         }
         
         [Xunit.SkippableFactAttribute(DisplayName="Create entry cross dock")]
-        [Xunit.TraitAttribute("FeatureTitle", "Create Cross Docks Release")]
+        [Xunit.TraitAttribute("FeatureTitle", "Create Cross Docks Entry")]
         [Xunit.TraitAttribute("Description", "Create entry cross dock")]
         public virtual void CreateEntryCrossDock()
         {
@@ -173,12 +173,12 @@ this.ScenarioInitialize(scenarioInfo);
             
             public FixtureData()
             {
-                CreateCrossDocksReleaseFeature.FeatureSetup();
+                CreateCrossDocksEntryFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                CreateCrossDocksReleaseFeature.FeatureTearDown();
+                CreateCrossDocksEntryFeature.FeatureTearDown();
             }
         }
     }

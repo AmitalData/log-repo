@@ -22,12 +22,6 @@ namespace Logitude.CrossDockTests.Steps
             this.crossDockContext = crossDockContext;
         }
 
-        [Given(@"CustomerRef1 '(.*)' and House '(.*)'")]
-        public void GivenFollowingProperties(string customerRef1, string house)
-        {
-            crossDockContext.House = house;
-            crossDockContext.CustomerRef1 = customerRef1;
-        }
 
         [Given(@"release cross dock")]
         public void GivenReleaseCrossDock()
@@ -35,14 +29,19 @@ namespace Logitude.CrossDockTests.Steps
             crossDockContext.CrossDockRelease = APICaller.CallGet<CrossDockReleasePM>(Urls.CrossDockReleaseGetSingle(CrossDockReleaseData.Id), UserTenant.Token).Data;
         }
 
+        [Given(@"CustomerRef1 '(.*)' and House '(.*)'")]
+        public void GivenFollowingProperties(string customerRef1, string house)
+        {
+            crossDockContext.CrossDockRelease = new CrossDockReleaseBuilder()
+               .WithModel(crossDockContext.CrossDockRelease)
+               .HouseNumber(house)
+               .CustomerRef1(customerRef1)
+               .Build();
+        }
+
         [When(@"update release cross dock")]
         public void WhenUpdateReleaseCrossDock()
         {
-            crossDockContext.CrossDockRelease = new CrossDockReleaseBuilder()
-            .WithModel(crossDockContext.CrossDockRelease)
-            .HouseNumber(crossDockContext.House)
-            .CustomerRef1(crossDockContext.CustomerRef1).Build();
-
             crossDockContext.CrossDockRelease.Id = APICaller.CallPut<CrossDockReleasePM>(crossDockContext.CrossDockRelease, Urls.CrossReleaseGetController, UserTenant.Token)?.Data?.Id;
         }
 

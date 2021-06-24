@@ -20,39 +20,25 @@ namespace Logitude.CrossDockTests.Services
             }
             catch (Exception e)
             {
-                throw new InvalidOperationException("Failed Creating release cross dock Before Feature Run");
+                throw new InvalidOperationException("Failed Creating release cross dock Before Feature Run " + e.InnerException);
             }
         }
 
-        private static CrossDockReleasePM GetValidCrossDockPM()
+        private CrossDockReleasePM GetValidCrossDockPM()
         {
 
-            List<WarehouseReleasePackagePM> warehouseReleasePackagePMs = new List<WarehouseReleasePackagePM>();
-            CrossDockData.WarehouseEntryPackages.ForEach(entryPackage =>
-            {
-                warehouseReleasePackagePMs.Add(
-                    new WarehouseReleasePackageBuilder()
-                    .WithDefualtValues()
-                    .Quantity((int)entryPackage.Quantity)
-                    .Weight(entryPackage.Weight)
-                    .Width(entryPackage.Width)
-                    .Height(entryPackage.Height)
-                    .Length(entryPackage.Length)
-                    .EntryPackageId(entryPackage.Id)
-                    .Build());
-            });
-
-            return new CrossDockReleaseBuilder().WithDefualtValues()
+            return new CrossDockReleaseBuilder()
+             .WithDefualtValues()
              .ChargeableWeightUnitCode("KG")
              .GrossWeightUnitCode("KG")
              .DimensionsUnitCode("Cm")
              .VolumeUnitCode("CBM")
              .StatusCode("CREA")
-             .WarehouseReleasePackages(warehouseReleasePackagePMs)
+             .WarehouseReleasePackages(new CrossDockReleaseServices().BuildPackages())
              .Build();
         }
 
-        private static void CrossDockDataMap(CrossDockReleasePM crossDockRelease)
+        private void CrossDockDataMap(CrossDockReleasePM crossDockRelease)
         {
             CrossDockReleaseData.Id = crossDockRelease.Id;
         }

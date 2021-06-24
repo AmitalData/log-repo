@@ -24,25 +24,24 @@ namespace Logitude.CrossDockTests.Steps
             this.crossDockEntryServices = crossDockEntryServices;
         }
 
-        [Given(@"a packages with the following properties")]
-        public void GivenAPackageWithTheFollowingProperties(Table table)
-        {
-            crossDockContext.WarehouseEntryPackages = crossDockEntryServices.BuildPackages(table);
-        }
-
         [Given(@"entry cross dock")]
         public void GivenEntryCrossDock()
         {
             crossDockContext.CrossDockEntry = APICaller.CallGet<CrossDockEntryPM>(Urls.CrossDockGetSingle(CrossDockData.Id), UserTenant.Token).Data;
         }
 
-        [When(@"update entry cross dock")]
-        public void WhenUpdateEntryCrossDock()
+        [Given(@"a packages with the following properties")]
+        public void GivenAPackageWithTheFollowingProperties(Table table)
         {
             crossDockContext.CrossDockEntry = new CrossDockEntryBuilder()
                 .WithModel(crossDockContext.CrossDockEntry)
-                .WarehouseEntryPackages(crossDockContext.WarehouseEntryPackages).Build();
+                .WarehouseEntryPackages(crossDockEntryServices.BuildPackages(table))
+                .Build();
+        }
 
+        [When(@"update entry cross dock")]
+        public void WhenUpdateEntryCrossDock()
+        {
             crossDockContext.CrossDockEntry.Id = APICaller.CallPut<CrossDockEntryPM>(crossDockContext.CrossDockEntry, Urls.CrossDockController, UserTenant.Token)?.Data?.Id;
         }
 

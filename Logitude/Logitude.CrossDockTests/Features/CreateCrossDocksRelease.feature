@@ -1,5 +1,5 @@
 ﻿@Pre-Prepare-release
-Feature: Create Cross Docks Entry
+Feature: Create Cross Docks Release
     With pre-prepared entry data
 	We want to create release cross docks.
 

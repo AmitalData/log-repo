@@ -12,11 +12,12 @@ namespace Logitude.CrossDockTests.Services
 {
     public class CrossDockReleaseServices
     {
-        public CrossDockReleasePM CreateInstance(Table crossDockTable)
+        public CrossDockReleasePM CreateInstance(Table crossDockReleaseTable)
         {
-            dynamic dataTable = crossDockTable.CreateDynamicInstance();
+            dynamic dataTable = crossDockReleaseTable.CreateDynamicInstance();
 
-            return new CrossDockReleaseBuilder().WithDefualtValues()
+            return new CrossDockReleaseBuilder()
+                .WithDefualtValues()
                 .ChargeableWeightUnitCode((string)dataTable.ChargeableWeightUnitCode)
                 .GrossWeightUnitCode((string)dataTable.GrossWeightUnitCode)
                 .DimensionsUnitCode((string)dataTable.DimensionsUnitCode)
@@ -28,22 +29,28 @@ namespace Logitude.CrossDockTests.Services
         public List<WarehouseReleasePackagePM> BuildPackages()
         {
             List<WarehouseReleasePackagePM> warehouseReleasePackagePMs = new List<WarehouseReleasePackagePM>();
-            CrossDockData.WarehouseEntryPackages.ForEach(entryPackage =>
+            CrossDockData.WarehouseEntryPackages.ForEach(warehouseEntryPackage =>
             {
-                warehouseReleasePackagePMs.Add(
-                    new WarehouseReleasePackageBuilder()
-                    .WithDefualtValues()
-                    .Quantity((int)entryPackage.Quantity)
-                    .Weight(entryPackage.Weight)
-                    .Width(entryPackage.Width)
-                    .Height(entryPackage.Height)
-                    .Length(entryPackage.Length)
-                    .EntryPackageId(entryPackage.Id)
-                    .Build());
+                warehouseReleasePackagePMs.Add(WarehouseReleasePackagesFromEntryPrepar(warehouseEntryPackage));
             });
             return warehouseReleasePackagePMs;
 
         }
+        private WarehouseReleasePackagePM WarehouseReleasePackagesFromEntryPrepar(WarehouseEntryPackagePM warehouseEntryPackage)
+        {
+
+            return new WarehouseReleasePackageBuilder()
+               .WithDefualtValues()
+               .Quantity(warehouseEntryPackage.Quantity)
+               .Weight(warehouseEntryPackage.Weight)
+               .Width(warehouseEntryPackage.Width)
+               .Height(warehouseEntryPackage.Height)
+               .Length(warehouseEntryPackage.Length)
+               .EntryPackageId(warehouseEntryPackage.Id)
+               .Build();
+        }
+   
+
 
     }
 }

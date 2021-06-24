@@ -1,4 +1,4 @@
-﻿Feature: Create Cross Docks Release
+﻿Feature: Create Cross Docks Entry
 	We want to create entry cross docks.
 
 Scenario: Create entry cross dock

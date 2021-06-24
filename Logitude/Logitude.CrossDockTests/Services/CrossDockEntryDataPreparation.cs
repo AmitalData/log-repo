@@ -24,26 +24,32 @@ namespace Logitude.CrossDockTests.Services
             }
         }
 
-        private static CrossDockEntryPM GetValidCrossDockPM()
+        private CrossDockEntryPM GetValidCrossDockPM()
         {
-            return new CrossDockEntryBuilder().WithDefualtValues()
-             .DirectionId("E")
-             .TransportModeId("A")
-             .ChargeableWeightUnitCode("KG")
-             .GrossWeightUnitCode("KG")
-             .DimensionsUnitCode("Cm")
-             .VolumeUnitCode("CBM")
-             .StatusCode("CREA")
-             .WarehouseEntryPackage(new WarehouseEntryPackageBuilder()
-                    .WithDefualtValues()
-                    .Quantity(3)
-                    .Length(10)
-                    .Width(20)
-                    .Build())
-             .Build();
+            return new CrossDockEntryBuilder()
+                 .WithDefualtValues()
+                 .DirectionId("E")
+                 .TransportModeId("A")
+                 .ChargeableWeightUnitCode("KG")
+                 .GrossWeightUnitCode("KG")
+                 .DimensionsUnitCode("Cm")
+                 .VolumeUnitCode("CBM")
+                 .StatusCode("CREA")
+                 .WarehouseEntryPackage(WarehouseEntryPackagePrepar())
+                 .Build();
         }
 
-        private static void CrossDockDataMap(CrossDockEntryPM crossDockEntry)
+        private WarehouseEntryPackagePM WarehouseEntryPackagePrepar()
+        {
+            return new WarehouseEntryPackageBuilder()
+                         .WithDefualtValues()
+                         .Quantity(3)
+                         .Length(10)
+                         .Width(20)
+                         .Build();
+        }
+
+        private void CrossDockDataMap(CrossDockEntryPM crossDockEntry)
         {
             CrossDockData.Id = crossDockEntry.Id;
             CrossDockData.WarehouseEntryPackages = crossDockEntry.WarehouseEntryPackages;
