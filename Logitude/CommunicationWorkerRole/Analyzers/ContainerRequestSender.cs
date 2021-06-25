@@ -85,8 +85,22 @@ namespace CommunicationWorkerRole.Analyzers
             binding.MaxReceivedMessageSize = 2147483647;
             binding.ReaderQuotas.MaxStringContentLength = 2147483647;
             binding.ReaderQuotas.MaxArrayLength = 2147483647;
+            binding.Security.Transport.ClientCredentialType = HttpClientCredentialType.None;
+            binding.Security.Transport.ProxyCredentialType = HttpProxyCredentialType.None;
+
             var endpoint = new EndpointAddress(LogitudeSettings.AmitalCloudEnvironmentURL + "WcfApi/LoginWcfService.svc");
             LoginWcfServiceClient loginService = new LoginWcfServiceClient(binding, endpoint);
+            if (loginService.Endpoint.Address.Uri.Scheme == "https")
+            {
+                binding.Security.Mode = BasicHttpSecurityMode.Transport;
+                binding.Security.Message.ClientCredentialType = BasicHttpMessageCredentialType.Certificate;
+            }
+            else
+            {
+                binding.Security.Mode = BasicHttpSecurityMode.None;
+                binding.Security.Message.ClientCredentialType = BasicHttpMessageCredentialType.UserName;
+            }
+
             var aPICredentialsParameters = new APICredentialsParameters()
             {
                 PrimaryKey = LogitudeSettings.AmitalCloudLogitudeTenantPrimaryKey,
@@ -104,8 +118,23 @@ namespace CommunicationWorkerRole.Analyzers
                 binding.MaxReceivedMessageSize = 2147483647;
                 binding.ReaderQuotas.MaxStringContentLength = 2147483647;
                 binding.ReaderQuotas.MaxArrayLength = 2147483647;
+                binding.Security.Transport.ClientCredentialType = HttpClientCredentialType.None;
+                binding.Security.Transport.ProxyCredentialType = HttpProxyCredentialType.None;
+
                 var endpoint = new EndpointAddress(LogitudeSettings.AmitalCloudEnvironmentURL + "WcfApi/OceanInsightsWcfService.svc");
                 OceanInsightsWcfServiceClient oceanInsightsWcfService = new OceanInsightsWcfServiceClient(binding, endpoint);
+
+                if (oceanInsightsWcfService.Endpoint.Address.Uri.Scheme == "https")
+                {
+                    binding.Security.Mode = BasicHttpSecurityMode.Transport;
+                    binding.Security.Message.ClientCredentialType = BasicHttpMessageCredentialType.Certificate;
+                }
+                else
+                {
+                    binding.Security.Mode = BasicHttpSecurityMode.None;
+                    binding.Security.Message.ClientCredentialType = BasicHttpMessageCredentialType.UserName;
+                }
+
                 Task<Logitude.Server.Tools.Response> oceanInsightResponseTask;
                 using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)oceanInsightsWcfService.InnerChannel))
                 {
