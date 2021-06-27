@@ -146,6 +146,7 @@ import { UpdateJournalLineComponent } from './Components/EditTabs/Journal/Update
 import { JournalCSVLoadComponent } from './Components/NewEntity/JournalCSVLoadComponent';
 
 import { GlAccountListTemplate } from './Components/ListTemplates/GlAccountListTemplate';
+import { CopyInvoiceComponent } from './Components/Others/CopyInvoiceComponent';
 
 
 //import { CashBookGeneralTabComponent } from './Components/EditTabs/CashBook/CashBookGeneralTabComponent';
@@ -254,6 +255,7 @@ export const Components =
         PrintedListHeaderTemplate,
         //Others
         CopyJournalComponent,
+        CopyInvoiceComponent,
         ReconcileComponent,
         ReconciledMessage,
         OutOfDepositMessage,
@@ -421,7 +423,8 @@ export class ModuleDeclarations {
 
 
             //Others
-            case "CopyJournalComponent": { myResult = CopyJournalComponent; break;}
+            case "CopyJournalComponent": { myResult = CopyJournalComponent; break; }
+            case "CopyInvoiceComponent": { myResult = CopyInvoiceComponent; break; }
             case "UserDefinedReportShortTitleComponent" :{myResult =UserDefinedReportShortTitleComponent; break;}
             case "CargoTrackingBuildShipmentComponent" :{myResult =CargoTrackingBuildShipmentComponent; break;}
             case "CargoTrackingIncrementalStatistics" :{myResult =CargoTrackingIncrementalStatistics; break;}
