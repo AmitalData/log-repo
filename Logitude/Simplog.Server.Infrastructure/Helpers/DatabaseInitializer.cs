@@ -174,7 +174,7 @@ namespace Simplog.Server.Infrastructure
             }
             else
             {
-                sqlBuilder.ConnectTimeout = 60;
+                sqlBuilder.ConnectTimeout = 100; // old value was 60 . the 100 added by Rabaia with mohammad in order to fix Time Out Problem caused by Lock on get next counter "the update is temporary"
             }
             sqlBuilder.MaxPoolSize = 200;
             //sqlBuilder.ConnectTimeout = 240;

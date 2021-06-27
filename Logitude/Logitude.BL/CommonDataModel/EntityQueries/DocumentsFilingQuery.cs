@@ -3825,6 +3825,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                         Tenant = a.Tenant,
                                                                         CreateDate = a.CreateDate,
                                                                         SecurityId = a.SecurityId,
+                                                                        DocumentId = a.DocumentId,
                                                                     });
             return documentsFilingLists;
         }

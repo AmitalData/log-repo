@@ -99,29 +99,40 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExternalServices\CrossDockEntryServices.cs" />
+    <Compile Include="Services\CrossDockEntryDataPreparation.cs" />
+    <Compile Include="Services\CrossDockEntryServices.cs" />
     <Compile Include="Hooks\BeforeFeatureRun.cs" />
-    <Compile Include="Models\Builders\CrossDockBuilder.cs" />
+    <Compile Include="Models\Builders\CrossDockEntryBuilder.cs" />
+    <Compile Include="Models\Builders\CrossDockReleaseBuilder.cs" />
     <Compile Include="Models\Builders\WarehouseEntryPackageBuilder.cs" />
+    <Compile Include="Models\Builders\WarehouseReleasePackageBuilder.cs" />
     <Compile Include="Models\CrossDockContext.cs" />
     <Compile Include="Models\CrossDockData.cs" />
     <Compile Include="Models\CrossDockEntryPM.cs" />
+    <Compile Include="Models\CrossDockReleasePM.cs" />
     <Compile Include="Models\WarehouseEntryPackagePM.cs" />
+    <Compile Include="Models\WarehouseReleasePackagePM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Steps\CreateCrossDocksSteps.cs" />
+    <Compile Include="Services\CrossDockReleaseDataPreparation.cs" />
+    <Compile Include="Services\CrossDockReleaseServices.cs" />
+    <Compile Include="Steps\CreateCrossDocksReleaseSteps.cs" />
+    <Compile Include="Steps\CreateCrossDocksEntrySteps.cs" />
     <Compile Include="Steps\GetCrossDocksEntryExportAirSteps.cs" />
-    <Compile Include="Steps\UpdateCrossDocksSteps.cs" />
+    <Compile Include="Steps\GetCrossDocksReleaseSteps.cs" />
+    <Compile Include="Steps\UpdateCrossDocksEntrySteps.cs" />
+    <Compile Include="Steps\UpdateCrossDocksReleaseSteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Features\CreateCrossDocks.feature" />
+    <None Include="Features\CreateCrossDocksEntry.feature" />
+    <None Include="Features\CreateCrossDocksRelease.feature" />
     <None Include="Features\GetCrossDocksEntryExportAir.feature" />
-    <None Include="Features\UpdateCrossDocks.feature" />
+    <None Include="Features\GetCrossDocksRelease.feature" />
+    <None Include="Features\UpdateCrossDocksEntry.feature" />
+    <None Include="Features\UpdateCrossDocksRelease.feature" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Test.Base\Logitude.Test.Base.csproj">
       <Project>{74fbc07e-5cbf-44c5-85c8-f86facaa06b6}</Project>

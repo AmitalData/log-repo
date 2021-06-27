@@ -96,7 +96,7 @@ export function FillShippingLineAddresses(shippingLineDetails: ShippingLineDetai
 }
 
 export function CreateShippingLineAddress() {
-    cy.DefineRequestWait(RestAPI.POST, Urls.AirShippingLinesAddress, RequestAliases.PostShippingLineAddress)
+    cy.DefineRequestWait(RestAPI.POST, Urls.ShippingLinesAddress, RequestAliases.PostShippingLineAddress)
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
 }
 
@@ -168,7 +168,7 @@ export function FillShippingLineTariffTranslations(shippingLineDetails: Shipping
 }
 
 export function CreateShippingLineTariffTranslations() {
-    cy.DefineRequestWait(RestAPI.POST, Urls.AirShippingLinesTariffTranslations, RequestAliases.PostShippingLineTariffTranslations)
+    cy.DefineRequestWait(RestAPI.POST, Urls.ShippingLinesTariffTranslations, RequestAliases.PostShippingLineTariffTranslations)
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
 }
 

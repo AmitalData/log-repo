@@ -24,9 +24,9 @@ import { WarehouseReleaseListExtendedService } from '../../../../Warehouse/Servi
 import { FeatureToggleList } from '../../../../Infrastructure/EntityLists/FeatureToggleList';
 import { NewShipmentComponentArgs } from '../../../../Shipment/Args';
 import { ShipmentTool } from '../../../../Shipment/Tools';
+import { ShipmentDomainService } from '../../../../Shipment/Services/ShipmentDomainService';
 
-@Component({
-    
+@Component({    
     templateUrl: './AddEditDeliveryComponent.html',
 })
 
@@ -846,6 +846,33 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
         });
     }
 
+
+    private ValidateStandaloneAddresses() {
+        this.CurrentSession.StartBusyIndicator("");
+
+        var service: ShipmentDomainService = new ShipmentDomainService();
+        service.GetPickupDeliveryValidForInlandDomestic(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var isValid = myResponse.Result;
+                if (isValid) {
+                    if (this.standaloneAction == "CreateStandalone") {
+                        this.CreateStandaloneShipment();
+                    }
+
+                    else {
+                        this.ChooseStandAloneShipment();
+                    }
+                }
+
+                else {
+                    this.ValidationErrorsList.push("Both Addresses must be in the same country since the direction is Domestic");
+                }
+            }
+
+            this.CurrentSession.StopBusyIndicator();
+        });
+    }
+
     private isCreateStandaloneShipmentClicked: boolean = false;
     CreateStandaloneShipmentClicked() {
         if (this.ValidationErrorsList.length == 0) {
@@ -855,7 +882,7 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
             }
 
             else {
-                this.CreateStandaloneShipment();
+                this.ValidateStandaloneAddresses();
             }
         } 
     }
@@ -869,7 +896,7 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
             }
 
             else {
-                this.ChooseStandAloneShipment();
+                this.ValidateStandaloneAddresses();
             }
         }
     }
@@ -892,15 +919,20 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
         logWindow.Show('./Shipment/Components/NewShipment/NewShipmentComponent');
     }
 
+    private standaloneAction: string;
     StandAloneShipmentButtonClicked(buttonCode: string) {
+        this.standaloneAction = buttonCode;
+
         if (buttonCode == "CreateStandalone") {
             this.ValidateNumberOfDeliveryPackages("Create");            
             this.CreateStandaloneShipmentClicked();
         }
+
         else if (buttonCode == "ConnectStandalone") {
             this.ValidateNumberOfDeliveryPackages("Connect");  
             this.ConnctingStandaloneShipmentClicked();
         }
+
         this.DropdownClose();
     }
 

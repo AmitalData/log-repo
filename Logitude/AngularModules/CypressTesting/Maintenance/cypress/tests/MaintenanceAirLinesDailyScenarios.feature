@@ -1,5 +1,5 @@
 @newdev @daily
-Feature: Airlines Create, Search and Edit from Maintenance
+Feature: Airlines Mock Create, Search and Edit from Maintenance
     The user creates an airline, searches for and edits it from the Maintenance Module.
 
     Scenario: Import Air Line
@@ -8,7 +8,7 @@ Feature: Airlines Create, Search and Edit from Maintenance
         Then the air line should import successfully
 
     Scenario: Add Airline Code with lenght more than 2
-        Given the user navigate air line wizerd
+        Given the user navigate air line Wizard
         When add "123" as air line code
         Then a validation message with "Code Field must be less than 2" error should appear
 
@@ -26,8 +26,8 @@ Feature: Airlines Create, Search and Edit from Maintenance
 
     Scenario: Create new Airline
         And an air line with the following details
-            | Code      | 0m              |
-            | ICAO      | 7MQ             |
+            | Code      | random          |
+            | ICAO      | random          |
             | Name      | Testing airline |
             | Prefix    | 011             |
             | LocalName | Testing airline |
@@ -53,7 +53,7 @@ Feature: Airlines Create, Search and Edit from Maintenance
         Then the air line address should create successfully
 
     Scenario: Add Air Line Tariff Partner Code with lenght more than 50
-        Given the user navigate air line tariff wizerd
+        Given the user navigate air line tariff Wizard
         When add "012345678901234567890123456789012345678901234567891" as air line tariff partner code
         Then a validation message with "Partner Code Field must be less than 50" error should appear
 
@@ -75,7 +75,7 @@ Feature: Airlines Create, Search and Edit from Maintenance
         Then the air line surcharge tariff should create successfully
 
     Scenario: Add Special Handling Code from Adaptations tab with lenght more than 4
-        Given the user navigate Special Handling Codes wizerd
+        Given the user navigate Special Handling Codes Wizard
         When add "12345" as Special Handling Code
         Then a validation message with "Code Field must be less than 4" error should appear
 

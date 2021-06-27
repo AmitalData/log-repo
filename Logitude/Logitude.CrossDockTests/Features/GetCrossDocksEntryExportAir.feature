@@ -1,4 +1,4 @@
-﻿@Pre-Prepare
+﻿@Pre-Prepare-Entry
 Feature: Get Cross Docks Entry Export Air
 	The API retrieves entry export air cross dock.
 

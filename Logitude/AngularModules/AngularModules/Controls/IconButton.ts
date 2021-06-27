@@ -116,6 +116,7 @@ export class IconButton implements OnInit {
     LayoutDirection: string = 'ltr';
     public Title: string;
     public ExternalId: string = "";
+    public DataCy: string;
     constructor() {
 
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;

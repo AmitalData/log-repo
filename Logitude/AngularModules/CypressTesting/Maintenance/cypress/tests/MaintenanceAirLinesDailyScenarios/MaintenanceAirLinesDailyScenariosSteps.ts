@@ -25,7 +25,7 @@ Then("the air line should import successfully", () => {
 //#endregion
 
 //#region Add air Line Code with lenght more than 2
-Given("the user navigate air line wizerd", () => {
+Given("the user navigate air line Wizard", () => {
     cy.Navigate(AirLineSelectors.AddNewAirLine)
 });
 
@@ -64,11 +64,12 @@ When("add {string} as airline prefix", (prefix) => {
 //#region Create new shipping line
 Given("an air line with the following details", (dataTable) => {
     let airLineDetails = Assists.CreateInstance<AirLineDetails>(dataTable, true);
+    AirLineActions.FillPrefix(airLineDetails.Prefix);
     AirLineActions.FillAirLineDetails(airLineDetails)
 });
 
 When("create air line", () => {
-    AirLineActions.CreateAirLine();
+    AirLineActions.MockCreateAirLine();
 });
 
 Then("the air line should create successfully", () => {
@@ -114,7 +115,7 @@ Then("the air line address should create successfully", () => {
 //#endregion
 
 //#region Add air Line Tariff partner code with lenght more than 50
-Given("the user navigate air line tariff wizerd", () => {
+Given("the user navigate air line tariff Wizard", () => {
     cy.Navigate(AirLineSelectors.TariffTranslationsTab)
     cy.Navigate(AirLineSelectors.AddTranslation)
 });
@@ -141,8 +142,7 @@ Then("the air line tariff translation should create successfully", () => {
 
 //#region Add air Line surcharge tariff
 Given("fill the following surcharge tariff details", () => {
-    cy.Navigate(AirLineSelectors.SurchargeTariffTab)
-    cy.Click(AirLineSelectors.AddSurchargeTariff, null)
+    AirLineActions.NavigateSurchargeTariffwizard()
     AirLineActions.FillAirLineSurchargeTariffDetails()
 });
 
@@ -162,7 +162,7 @@ Then("the air line surcharge tariff should create successfully", () => {
 //#endregion
 
 //#region Add Special Handling Code from Adaptations tab with lenght more than 4
-Given("the user navigate Special Handling Codes wizerd", () => {
+Given("the user navigate Special Handling Codes Wizard", () => {
     cy.Navigate(AirLineSelectors.AdaptationsTab)
     cy.Navigate(AirLineSelectors.AddSpecialHandlingCode)
 });
