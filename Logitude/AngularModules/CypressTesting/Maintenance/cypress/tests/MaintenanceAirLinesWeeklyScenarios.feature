@@ -1,5 +1,5 @@
-@newdev @daily
-Feature: Airlines Mock Create, Search and Edit from Maintenance
+@newdev @weekly
+Feature: Airlines Create, Search and Edit from Maintenance
     The user creates an airline, searches for and edits it from the Maintenance Module.
 
     Scenario: Import Air Line
@@ -36,8 +36,8 @@ Feature: Airlines Mock Create, Search and Edit from Maintenance
         Then the air line should create successfully
 
     Scenario: Search for the Airline by code
-        When search for "AA" air line
-        Then the "AA" air line should appear successfully
+        When search the air line
+        Then the air line should appear successfully
 
     Scenario: Open the Airline
         When open air line
@@ -91,8 +91,8 @@ Feature: Airlines Mock Create, Search and Edit from Maintenance
         When save air line
         Then the air line should update successfully
         And the following event should appear in events tab
-            | Event           |
-            | Airline Updated |
+            | Event           | Notes               |
+            | Airline Updated | Airline Inactivated |
 
     Scenario: Save and close the Airline
         When save and close air line

@@ -126,6 +126,8 @@ export class RequestAliases {
     public static readonly PostSurchargeTariff = "PostSurchargeTariff"
     public static readonly PostSpecialHandlingCodes = "PostSpecialHandlingCodes"
     public static readonly PostAirLineTariffTranslations = "PostAirLineTariffTranslations"
+    public static readonly GetAirlineByCode = "GetAirlineByCode"
+    public static readonly GetTarrifHeaders = "GetTarrifHeadersByCardIdAndTypeCode"
 
     public static readonly PostShippingLineAddress = "PostShippingLineAddress"
     public static readonly PostShippingLineArea = "PostShippingLineArea"
