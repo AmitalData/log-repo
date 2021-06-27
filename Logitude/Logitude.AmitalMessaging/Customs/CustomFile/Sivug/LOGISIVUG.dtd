@@ -49,7 +49,7 @@
 <!ELEMENT CurrencyTypeCode (#PCDATA)>
 <!ELEMENT ChangeInSupplierInvoice (#PCDATA)>
 <!ELEMENT QUE_TYPE (#PCDATA)>
-<!ELEMENT CustomsDocuments (Entname?, DocumentTypeCode?, Blocked?, FromDeclartion?, COM_ID?, SerialNum?, UNFINVOICEKEY?)>
+<!ELEMENT CustomsDocuments (Entname?, DocumentTypeCode?, Blocked?, FromDeclartion?, COM_ID?, SerialNum?, UNFINVOICEKEY?, CommChanged?)>
 <!ELEMENT Entname (#PCDATA)>
 <!ELEMENT DocumentTypeCode (#PCDATA)>
 <!ELEMENT Blocked (#PCDATA)>
@@ -57,3 +57,4 @@
 <!ELEMENT COM_ID (#PCDATA)>
 <!ELEMENT SerialNum (#PCDATA)>
 <!ELEMENT UNFINVOICEKEY (#PCDATA)>
+<!ELEMENT CommChanged (#PCDATA)>
