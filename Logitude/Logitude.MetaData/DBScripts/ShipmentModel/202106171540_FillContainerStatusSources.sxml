@@ -4,9 +4,20 @@
     
  if exists (SELECT * FROM sys.tables WHERE name='ContainerStatusSources')
   begin 
-   Insert into ContainerStatusSources(Code,Name,SearchFields) Values 
-   ('INT','INTTRA','INT,INTTRA'),
-   ('OIN','Ocean Insights','OIN,Ocean Insights')
+   IF NOT EXISTS (SELECT Code FROM ContainerStatusSources where Code = 'OIN')
+   BEGIN 
+     Insert into ContainerStatusSources(Code,Name,SearchFields) Values 
+     ('OIN','Ocean Insights','OIN,Ocean Insights')
+   END
+    IF NOT EXISTS (SELECT Code FROM ContainerStatusSources where Code = 'INT')
+   BEGIN 
+     Insert into ContainerStatusSources(Code,Name,SearchFields) Values 
+     ('INT','INTTRA','INT,INTTRA')
+   END
+  IF EXISTS (SELECT Code FROM ContainerStatusSources where Code = 'INT')
+   BEGIN 
+     update ContainerStatusSources set Name = 'INTTRA',SearchFields = 'INT,INTTRA' where Code = 'INT'
+   END
   end
   
     ]]>
