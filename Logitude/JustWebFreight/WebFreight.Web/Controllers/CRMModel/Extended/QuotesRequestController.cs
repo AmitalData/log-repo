@@ -39,7 +39,7 @@ namespace WebFreight.Web.Controllers.CRMModel.Extended
                 AuthenticationToken authenticationToken = GetAuthenticationToken();
                 SecurityUtility.AuthenticationOnTenant(authenticationToken.Tenant);
                 SecurityUtility.CheckSharedContactAuthentication(authenticationToken.Tenant, emailFeedback.PartnerId);
-                QuotesRequestService quotesRequestService = new QuotesRequestService(authenticationToken.Tenant, emailFeedback);
+                QuotesRequestService quotesRequestService = new QuotesRequestService(authenticationToken.Tenant);
                 quotesRequestService.UpdateQuotesRequestAndSendEmailFeedback(emailFeedback);
                 return Request.CreateResponse(HttpStatusCode.OK, "Success");
             }
