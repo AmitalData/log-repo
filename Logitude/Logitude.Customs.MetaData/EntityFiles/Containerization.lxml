@@ -1762,7 +1762,7 @@
         DefaultText="&quot;Add Declaration&quot;"
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="0"
-        LocalDefaultText="&quot;הוסף הצהרה&quot;"
+        LocalDefaultText="&quot;הוספת הצהרה&quot;"
         IsPackagable="true"
         HtmlComponentPath="&quot;./CustomsModules/CustomsContainerization/Components/NewEntity/NewContainerizationComponent&quot;" />
       <MenuItem
