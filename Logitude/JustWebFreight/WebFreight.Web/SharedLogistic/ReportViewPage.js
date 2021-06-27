@@ -182,7 +182,7 @@
 
     $("#DownloadReportLink").click(function () {
 
-        var reportDownloadURL = "../WebPages/DawnLoadExcelPage.aspx?fileName=" + $.ReportExcelFileName + "&tempId=" + $.DocumentDownloadToken + "&qname=" + $.ReportName;
+        var reportDownloadURL = "../WebPages/DawnLoadExcelPage.aspx?fileName=" + $.ReportExcelFileName + "&tempId=" + $.DocumentDownloadToken + "&qname=" + $.ReportName + "&requestArea=SharedLogistic"  ;
         window.open(reportDownloadURL);
     });
 
