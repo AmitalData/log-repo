@@ -1,3 +1,4 @@
+@newdev @weekly
 Feature: Airlines Create, Search and Edit from Maintenance
     The user creates an airline, searches for and edits it from the Maintenance Module.
 
