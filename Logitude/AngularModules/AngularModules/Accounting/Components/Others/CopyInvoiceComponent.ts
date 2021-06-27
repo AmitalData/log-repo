@@ -38,6 +38,8 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
     public IsAccountingActivated = false;
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
+    public errors: string[] = [];
+
 
     // services
     private paymentTermListService: PaymentTermListService = new PaymentTermListService();
@@ -565,60 +567,22 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
     }
 
     private ValidateInvoiceFields() {
-        var errors: string[] = [];
 
-        var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
-        this.CheckSpecialCharacters() != null ? errors.push(this.CheckSpecialCharacters()) : null;
-        if (AppTool.IsNullOrEmpty(this.VendorId)) {
-            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.VendorId")));
-        }
-
-        if (AppTool.IsNullOrEmpty(this.InvoiceNumber)) {
-            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.InvoiceNumber")));
-        }
-
+        this.CheckSpecialCharacters() != null ? this.errors.push(this.CheckSpecialCharacters()) : null;
+        this.ValidateRequiedFields();
         if (this.InvoiceDate > this.AccountingDate) {
-            errors.push(TextCodeTranslator.Translate("APInvoice.O.CheckInvoiceDate"));
+            this.errors.push(TextCodeTranslator.Translate("APInvoice.O.CheckInvoiceDate"));
         }
-        if (AppTool.IsNullOrEmpty(this.InvoiceCurrencyId)) {
-            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.InvoiceCurrencyId")));
-        }
-
-        if (this.InvoiceDate == null) {
-            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.InvoiceDate")));
-        }
-
-
+ 
         else if (DateTool.GetDateParts(this.InvoiceDate).DateTicks > DateTool.GetCurrentDateAsUtcForAccountingValidation().valueOf()) {
-            errors.push(TextCodeTranslator.Translate("APInvoice.M.CantReceiveFutureDateInvoice"));
+            this.errors.push(TextCodeTranslator.Translate("APInvoice.M.CantReceiveFutureDateInvoice"));
         }
 
         if (DateTool.GetDateParts(this.AccountingDate).DateTicks > DateTool.GetCurrentDateAsUtcForAccountingValidation().valueOf()) {
-            errors.push("Cant issue Invoice with Future Accounting Date");
+            this.errors.push("Cant issue Invoice with Future Accounting Date");
         }
-
-        if (AppTool.IsNullOrEmpty(this.PaymentTermId)) {
-            errors.push(msg.replace("%FieldName", "Payment Term"));
-        }
-
-        if (this.DueDate == null) {
-            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.DueDate")));
-        }
-
-        if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP) {
-            if (AppTool.IsNullOrEmpty(this.VATNumber)) {
-                errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.VATNumber")));
-            }
-        }
-
-        if (this.IsAccountingActivated && this.AccountingDate == null) {
-            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.AccountingDate")));
-        }
-
-        if (AppTool.IsNullOrEmpty(this.BranchId)) {
-            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.BranchId")));
-        }
-        return errors;
+  
+        return this.errors;
     }
 
     CheckSpecialCharacters() {
@@ -628,5 +592,51 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
                 return TextCodeTranslator.Translate("APInvoice.O.ValidateInvoiceNumber");
             }
         }
+    }
+
+    ValidateRequiedFields() {
+
+        if (AppTool.IsNullOrEmpty(this.VendorId)) {
+            this.AddReuiredErrorMessage("APInvoice.F.VendorId");
+        }
+
+        if (AppTool.IsNullOrEmpty(this.InvoiceNumber)) {
+            this.AddReuiredErrorMessage("APInvoice.F.InvoiceNumber");
+        }
+
+        if (AppTool.IsNullOrEmpty(this.InvoiceCurrencyId)) {
+            this.AddReuiredErrorMessage("APInvoice.F.InvoiceCurrencyId");
+        }
+
+        if (this.InvoiceDate == null) {
+            this.AddReuiredErrorMessage("APInvoice.F.InvoiceDate");
+        }
+
+        if (AppTool.IsNullOrEmpty(this.PaymentTermId)) {
+            this.AddReuiredErrorMessage("Payment Term");
+        }
+
+        if (this.DueDate == null) {
+            this.AddReuiredErrorMessage("APInvoice.F.DueDate");
+        }
+
+        if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP) {
+            if (AppTool.IsNullOrEmpty(this.VATNumber)) {
+                this.AddReuiredErrorMessage("APInvoice.F.VATNumber");
+            }
+        }
+
+        if (this.IsAccountingActivated && this.AccountingDate == null) {
+            this.AddReuiredErrorMessage("APInvoice.F.AccountingDate");
+        }
+
+        if (AppTool.IsNullOrEmpty(this.BranchId)) {
+            this.AddReuiredErrorMessage("APInvoice.F.BranchId");
+        }
+    }
+
+    AddReuiredErrorMessage(TextCode) {
+        var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+        this.errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.BranchId")));
     }
 }
