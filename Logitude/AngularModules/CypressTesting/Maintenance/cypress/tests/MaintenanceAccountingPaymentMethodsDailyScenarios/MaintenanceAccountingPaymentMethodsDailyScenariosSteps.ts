@@ -1,5 +1,5 @@
 import * as Actions from "../../actions/Actions";
-import * as GeneralActions from "../../actions/GeneralActions";
+import * as GeneralActions from "../../actions/BaseActions";
 import * as AccountingPaymentMethodActions from "../../actions/AccountingPaymentMethodActions";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";

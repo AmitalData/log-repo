@@ -30,8 +30,8 @@ Feature: Warehouse fake Create, Search and Edit from Maintenance
         Then the warehouse should create successfully
 
     Scenario: Search for the warehouse by code
-        When search for "5ioo" warehouse
-        Then the "5ioo" warehouse should appear successfully
+        When search for "TSWHE" warehouse
+        Then the "TSWHE" warehouse should appear successfully
 
     Scenario: Open the warhouse
         When open warehouse

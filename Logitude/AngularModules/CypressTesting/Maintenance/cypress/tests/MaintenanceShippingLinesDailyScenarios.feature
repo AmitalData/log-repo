@@ -26,8 +26,8 @@ Feature: Shipping Line fake Create, Search and Edit from Maintenance
         Then the shipping Line should create successfully
 
     Scenario: Search for the Shipping Line by code
-        When search for "8038" shipping Line
-        Then the "8038" shipping Line should appear successfully
+        When search for "MAEU" shipping Line
+        Then the "MAEU" shipping Line should appear successfully
 
     Scenario: Open the Shipping Line
         When open shipping Line
@@ -40,7 +40,7 @@ Feature: Shipping Line fake Create, Search and Edit from Maintenance
     Scenario: Create shipping line address
         Given fill the following Address in Addresses Shipping line
             | AddressCountry | United States |
-            | AddressCity    | las           |
+            | AddressCity    | Anchorage     |
             | AddressState   | Arkansas      |
         When create shipping line address
         Then the shipping line address should create successfully

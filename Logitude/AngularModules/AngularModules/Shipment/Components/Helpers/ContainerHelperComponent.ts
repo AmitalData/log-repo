@@ -7,6 +7,7 @@ import { AppTool } from '../../../Infrastructure/Tools';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 import { ShipmentContainersWebService } from '../../../Shipment/Services/ShipmentContainersWebService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 
 @Component({
 
@@ -63,6 +64,12 @@ export class ContainerHelperComponent implements OnDestroy {
                 this.entityArgs.EditComponent.ValidationErrorsList = myResponse.ErrorsArray;
             }
         });
+    }
+    ShipmentContainersSimulatorClicked() {
+        var logWindow = new LogitudeWindow();
+        logWindow.WindowArgs = { ShipmentId: this.EntityPM.ShipmentId, IsFromContainer: true, ContainerNumber: this.EntityPM.ContainerNumber };
+        logWindow.Title = "Shipment Containers Statuses Simulator";
+        logWindow.Show('./ShipmentModules/ShipmentOthers/Components/ShipmentContainersStatuses/ContainersStatusesSimulatorComponent');
     }
 
     ngOnDestroy() {

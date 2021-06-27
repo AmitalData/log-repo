@@ -1,19 +1,19 @@
-import {Component} from '@angular/core';
-import {AppTool, FormatTool} from '../../../../../Infrastructure/Tools';
-import {ShipmentTool} from '../../../../../Shipment/Tools';
-import {ShipmentPM} from '../../../../../Shipment/EntityPMs/ShipmentPM';
-import {ShipmentDeliveryPM} from '../../../../../Shipment/EntityPMs/ShipmentDeliveryPM';
-import {ShipmentPickUpDeliveryPackagePM} from '../../../../../Shipment/EntityPMs/ShipmentPickUpDeliveryPackagePM';
-import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
-import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {PackageTypeList} from '../../../../../Common/EntityLists/PackageTypeList';
-import {PackageTypeListService} from '../../../../../Common/Services/StandardLists/PackageTypeListService';
-import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/ServiceResponse';
-import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
-import {ConfirmWindow} from '../../../../../Controls/Windows/ConfirmWindow';
-import {FeatureLocator} from '../../../../../Infrastructure/Utilities/FeatureLocator';
-import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
-import {AddEditDeliveryComponent} from '../AddEditDeliveryComponent';
+import { Component } from '@angular/core';
+import { AppTool, FormatTool } from '../../../../../Infrastructure/Tools';
+import { ShipmentTool } from '../../../../../Shipment/Tools';
+import { ShipmentPM } from '../../../../../Shipment/EntityPMs/ShipmentPM';
+import { ShipmentDeliveryPM } from '../../../../../Shipment/EntityPMs/ShipmentDeliveryPM';
+import { ShipmentPickUpDeliveryPackagePM } from '../../../../../Shipment/EntityPMs/ShipmentPickUpDeliveryPackagePM';
+import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { PackageTypeList } from '../../../../../Common/EntityLists/PackageTypeList';
+import { PackageTypeListService } from '../../../../../Common/Services/StandardLists/PackageTypeListService';
+import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
+import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
+import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
+import { FeatureLocator } from '../../../../../Infrastructure/Utilities/FeatureLocator';
+import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
+import { AddEditDeliveryComponent } from '../AddEditDeliveryComponent';
 import { FeatureToggleList } from '../../../../../Infrastructure/EntityLists/FeatureToggleList';
 import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 import { ShipmentPackagePM } from '../../../../../Shipment/EntityPMs/ShipmentPackagePM';
@@ -21,7 +21,7 @@ import { PackagesTabComponent, ShipmentPackageItem } from '../../../../ShipmentP
 import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
 
-@Component({    
+@Component({
     templateUrl: './DeliveryPackagesTabComponent.html',
 })
 
@@ -31,7 +31,7 @@ export class DeliveryPackagesTabComponent {
     public IsLCLEntity: boolean = false;
     public IsFCLEntity: boolean = false;
     public IsContainersFUVisible: boolean = false;
-    public IsShowCopyFromReleasesPackages: boolean = false;    
+    public IsShowCopyFromReleasesPackages: boolean = false;
     public DirectionId: string;
     public TransportModeId: string;
     public ObjectTableName: string = "ShipmentPickUpDelivery";
@@ -256,7 +256,7 @@ export class DeliveryPackagesTabComponent {
                     if (!this.SaveCompletedEvent) {
                         this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                             this.FatherComponent.OnSaveCompleted(isSaveSuccess, false);
-                            
+
                             AppTool.KillEventEmitter(this.SaveCompletedEvent);
                             this.SaveCompletedEvent = null;
 
@@ -310,7 +310,7 @@ export class DeliveryPackagesTabComponent {
 
         var packagesTabComponent: PackagesTabComponent = new PackagesTabComponent(entityArgs, new EntityResourceService());
         packagesTabComponent.ngOnInit();
-        packagesTabComponent.IsEditingEnabled = AppTool.IsNullOrEmpty(deliveryItemComponent.EntityPM.ContainerEntityId) ? true: false;
+        packagesTabComponent.IsEditingEnabled = AppTool.IsNullOrEmpty(deliveryItemComponent.EntityPM.ContainerEntityId) ? true : false;
         var itemComponent = new ShipmentPackageItem(shipmentPackage, packagesTabComponent, false);
         logWindow.Width = 940;
         logWindow.Height = 610;
@@ -359,7 +359,7 @@ export class DeliveryPackagesTabComponent {
     GetEditPackageWindowTitle() {
         var logWindowTitle = "";
         if (this.IsLCLEntity) {
-            logWindowTitle =  TextCodeTranslator.Translate("ShipmentPackage.O.EditPackage");
+            logWindowTitle = TextCodeTranslator.Translate("ShipmentPackage.O.EditPackage");
         }
 
         else {
@@ -426,11 +426,11 @@ export class DeliveryPackageItem extends BaseComponent {
                 }
             });
         }
-        
+
         this.UIProperties.SetEnabled("PackageTypeId", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("ContainerNumber", this.ObjectTableName, this.IsEditingEnabled);        
+        this.UIProperties.SetEnabled("ContainerNumber", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Weight", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("ShipperSeal", this.ObjectTableName, this.IsEditingEnabled); 
+        this.UIProperties.SetEnabled("ShipperSeal", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Description", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Harmonize", this.ObjectTableName, this.IsEditingEnabled);
     }
@@ -470,7 +470,7 @@ export class DeliveryPackageItem extends BaseComponent {
         //this.UIProperties.SetVisibility("ContainerNumber", this.ObjectTableName, this.IsContainer);
         this.UIProperties.SetEnabled("Length", this.ObjectTableName, isDimensionEnabled);
         this.UIProperties.SetEnabled("Width", this.ObjectTableName, isDimensionEnabled);
-        this.UIProperties.SetEnabled("Height", this.ObjectTableName, isDimensionEnabled); 
+        this.UIProperties.SetEnabled("Height", this.ObjectTableName, isDimensionEnabled);
 
         if (this.IsContainer) {
             this.UIProperties.SetEnabled("Volume", this.ObjectTableName, this.IsEditingEnabled);
@@ -541,7 +541,7 @@ export class DeliveryPackageItem extends BaseComponent {
                                 this.RegistrationNumber = null;
                             }
                         }
-                       
+
                     }
                 });
             }

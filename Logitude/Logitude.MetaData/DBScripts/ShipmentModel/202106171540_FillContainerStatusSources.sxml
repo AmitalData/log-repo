@@ -1,0 +1,14 @@
+﻿<Script DBType="Main" Module="Shipment" >
+  <Sql Version="1">
+    <![CDATA[
+    
+ if exists (SELECT * FROM sys.tables WHERE name='ContainerStatusSources')
+  begin 
+   Insert into ContainerStatusSources(Code,Name,SearchFields) Values 
+   ('INT','INTTRA','INT,INTTRA'),
+   ('OIN','Ocean Insights','OIN,Ocean Insights')
+  end
+  
+    ]]>
+  </Sql>
+</Script>

@@ -22,6 +22,8 @@ namespace Logitude.Server.Tools.Helpers
 {
     public class TableCounter
     {
+        private static Object thisLock = new Object();
+
         public static string GetNumber(int tenant, string counterCode, string parameter1, string parameter2, Dictionary<string, string> additionalParameters = null)
         {
             Counter counter = null;
@@ -63,9 +65,29 @@ namespace Logitude.Server.Tools.Helpers
             string number = null;
             string counterLastNumberValue;
             string strConnString = GetConnection(tenant);//ConfigurationManager.ConnectionStrings["str"].ConnectionString;
+
+            
+            if (FeatureToggleHelper.HasFeatureToggle("LCP", tenant))
+            {
+                lock (thisLock)
+                {
+                    counterLastNumberValue = ExecuteNextTableNumberValueProcedure(tenant, counter, prefix, startNumber, strConnString);
+                }
+            }
+            else
+            {
+                counterLastNumberValue = ExecuteNextTableNumberValueProcedure(tenant, counter, prefix, startNumber, strConnString);
+            }
+            number = GetCounterLastNumberWithPrefixSuffix(counter, counterDef, tenant, counterLastNumberValue, additionalParameters);
+
+            return number;
+        }
+
+        private static string ExecuteNextTableNumberValueProcedure(int tenant, Counter counter, string prefix, int startNumber, string strConnString)
+        {
+            string counterLastNumberValue;
             if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
-
                 using (OracleConnection cn = new OracleConnection(strConnString))
                 {
                     OracleCommand cmd = new OracleCommand();
@@ -132,8 +154,6 @@ namespace Logitude.Server.Tools.Helpers
 
                     cn.Close();
                 }
-
-
             }
             else
             {
@@ -183,13 +203,9 @@ namespace Logitude.Server.Tools.Helpers
 
 
                 }
-
-
             }
 
-            number = GetCounterLastNumberWithPrefixSuffix(counter, counterDef, tenant, counterLastNumberValue, additionalParameters);
-
-            return number;
+            return counterLastNumberValue;
         }
 
         private static string GetCounterLastNumberWithPrefixSuffix(Counter counter, CounterDefinition counterDef, int tenant, string counterLastNumberValue, Dictionary<string, string> additionalParameters)

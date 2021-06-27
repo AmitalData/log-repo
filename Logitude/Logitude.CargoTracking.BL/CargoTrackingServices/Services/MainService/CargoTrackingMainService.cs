@@ -183,7 +183,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             }
 
             SyncShipmentMilstones(bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs);
-            AddDefaultEntities(bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs);
         }
 
         private static void SyncShipmentMilstones(CargoTrackingArgs buildCargoArgs)
@@ -192,7 +191,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             if(tableName == "CargoTrackingShipments")
             {
                 ShipmentMilestonesSyncService syncService = new ShipmentMilestonesSyncService();
-                syncService.SyncShipmentMilstones(buildCargoArgs);
+                //syncService.SyncShipmentMilstones(buildCargoArgs);
             }
 
         }

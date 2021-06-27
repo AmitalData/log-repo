@@ -51,6 +51,7 @@ namespace CommunicationWorkerRole
         private string communicationLogTypeCode;
         private string toPartner;
         private string queueName;
+        private const int AttachmentsBytesMaximumSize = 20;
         public EmailsWorkerRole(string communicationLogTypeCode, string toPartner)
         {
             this.communicationLogTypeCode = communicationLogTypeCode;
@@ -342,7 +343,7 @@ namespace CommunicationWorkerRole
             cl.Logs += Environment.NewLine + "Retry #" + cl.Retries + " Next Retry: " + cl.NextTryDateTimeUTC.ToString();
         }
 
-        ICommonDataContext context;
+        ICommonDataContext context; 
         private void SendCommunicationLog(string communicationLogId, int tenant, CommunicationLog cl, CommunicationLogRepository communicationLogRep, QueueResponse response)
         {
 
@@ -351,7 +352,7 @@ namespace CommunicationWorkerRole
             {
                 if (response.RetryNumber < 30 && cl.Retries < 30)
                 {
-                    SendWaitingCommunicationLog(cl);
+                    SendWaitingCommunicationLog(cl);  
                 }
 
                 else
@@ -625,6 +626,16 @@ namespace CommunicationWorkerRole
                 }
             }
 
+
+            CommunicationLogRepository commLogrepository = new CommunicationLogRepository(context);
+
+            if (!ValidateAttachmenstSize(attachmentsList))
+            {
+                SetFailCommunicationLog(currentLog, commLogrepository);
+                return;
+            }
+
+
             //attachements
             List<Attachment> attachements = new List<Attachment>();
             if (attachmentsList.Count != 0)
@@ -774,10 +785,10 @@ namespace CommunicationWorkerRole
             parameters.Tenant = currentLog.Tenant;
             EmailingHelper.SendEmail(parameters);
 
-            // After sent successfully, change status to done
-            CommunicationLogRepository commLogrepository = new CommunicationLogRepository(context);
+            // After sent successfully, change status to done 
 
             EmailProvider provider = EmailingHelper.GetEmailProvider(parameters.Tenant, parameters.Retries, parameters.IsProviderNumberSpecified, parameters.ProviderNumber);
+ 
             if (provider != null && provider.SupportsEmailDelivery)
             {
                 currentLog.CommunicationStatusTypeCode = "C";
@@ -793,6 +804,49 @@ namespace CommunicationWorkerRole
             commLogrepository.Update(currentLog);
             commLogrepository.SubmitChanges();
         }
+         
+        private bool ValidateAttachmenstSize(List<CommunicationAttachment> attachmentsList)
+        {
+            double? attachementsSize = GetBytesAttachmentSize(attachmentsList); 
+            return (attachementsSize < AttachmentsBytesMaximumSize); 
+        } 
+
+        private double? GetBytesAttachmentSize(List<CommunicationAttachment> communicationAttachments)
+        {
+            double? attachementsSize = 0;
+
+            foreach (CommunicationAttachment communicationAttachment in communicationAttachments)
+            {
+                if (communicationAttachment.Document.FileSize != null)
+                    attachementsSize = attachementsSize + communicationAttachment.Document.FileSize;
+            }
+
+            attachementsSize = GetByteSize(attachementsSize); 
+            return attachementsSize;
+        }
+
+        private static void SetFailCommunicationLog(CommunicationLog communicationLog, CommunicationLogRepository communicationLogRepository)
+        {
+            communicationLog.CommunicationStatusTypeCode = "F";
+            communicationLog.ExceptionMessage = "Maximum size of files attachments exceeded 20 MB";
+            communicationLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(communicationLog.Tenant);
+            communicationLogRepository.Update(communicationLog);
+            communicationLogRepository.SubmitChanges();
+        }  
+
+        private double GetByteSize(double? size)
+        {
+
+            int byteValue = 1024;
+            double fileSize = 0;
+
+            if (size != null)
+            {
+                fileSize = (double)(size / (byteValue * byteValue));
+            }
+            return fileSize;
+        }
+
 
         //        public void SendEmail(string from, string to, string cc, string bcc, string subject, string body)
         //        {

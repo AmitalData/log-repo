@@ -1,57 +1,76 @@
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
-import { MaintenanceSelectors } from "../../../cypress/selectors/Selectors";
 import * as CurrencyActions from "../../actions/CurrencyActions";
+import * as Actions from "../../actions/Actions";
+import * as GeneralActions from "../../actions/BaseActions";
 import { CurrencySelectors } from "../../../cypress/selectors/CurrencySelectors";
 import * as MaintenanceActions from "../../actions/Actions";
 import { CurrencyDetails } from "../../../cypress/models/CurrencyDetails";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetails";
-import { Constants } from "../../constants/Constants";
+import * as BaseActions from "../../../../Base/cypress/actions/Actions"
+import { Urls } from "../../constants/Urls";
 
-let currencyDetails = null
-
-//#region Search for the currency by code 
+//#region create currency already exists
 Given("the user logged in and open {string} in maintenance menu", (maintenanceItemName) => {
     cy.Login();
-    MaintenanceActions.OpenMaintenanceItemFromMaintenanceMenu(maintenanceItemName, MaintenanceSelectors.MaintenanceItemCurrency)
+    MaintenanceActions.OpenMaintenanceItemFromMaintenanceMenu(maintenanceItemName, CurrencySelectors.MaintenanceItem)
 });
 
-Given("get currency code", () => {
-    CurrencyActions.SelectFirstCurrency()
+Given("navigate currency wizard", () => {
+    Actions.OpenNewWizard("Currency");
 });
 
-When("search currency", () => {
-    CurrencyActions.SearchCurrency()
+Given("fill the following currency details", (dataTable) => {
+    let currencyDetails = Assists.CreateInstance<CurrencyDetails>(dataTable, true)
+    CurrencyActions.FillCurrencyDetails(currencyDetails)
 });
 
-Then("the currency should appear successfully", () => {
-    CurrencyActions.AssertSearchCurrency()
+When("create currency", () => {
+    CurrencyActions.MockCreateCurrency(Urls.GetCopyCurrencyToTenant)
 });
 
+Then("this validation message error {string} should appear", (validationMessage) => {
+    GeneralActions.ValidateSingleErrorMessage(validationMessage)
+});
+//#endregion
+
+//#region create currency
+Then("the currency should create successfully", () => {
+    GeneralActions.AssertMockCreate()
+});
+//#endregion
+
+//#region Search for the currency
+When("search for {string} currency", (searchFieldValue) => {
+    GeneralActions.Search(searchFieldValue)
+});
+
+Then("the {string} currency should appear successfully", (searchFieldValue) => {
+    GeneralActions.AssertSearch(searchFieldValue)
+});
+//#endregion
+
+//#region open the currency
 When("open currency", () => {
-    CurrencyActions.OpenCurrency();
+    CurrencyActions.OpenCurrency()
 });
 Then("the currency should open successfully", () => {
-    CurrencyActions.AssertOpenCurrency();
+    CurrencyActions.AssertOpenCurrency()
 });
-
 //#endregion
 
 //#region Edit the currency
-Given("the user fill the following currency details", (dataTable) => {
-    currencyDetails = Assists.CreateInstance<CurrencyDetails>(dataTable, true);
-    let LocalName = currencyDetails.LocalName
-    CurrencyActions.FillCurrencyLocalName(LocalName)
+Given("fill {string} as notes currency", (localName) => {
+    CurrencyActions.FillCurrencyNotes(localName)
 });
 
-Given("the user active or inactive currency", () => {
-    CurrencyActions.ChangeInactiveCheckBoxValue(CurrencySelectors.InActiveCurrencyCheckBox)
+Given("the user Check the InActive Currency CheckBox", () => {
+    CurrencyActions.CheckInActiveCurrencyCheckBox()
 });
 
-Given("fill the following currency Accounting External ID", (dataTable) => {
-    let currencyDetails = Assists.CreateInstance<CurrencyDetails>(dataTable, true);
-    cy.Navigate(CurrencySelectors.AccountingTab);
-    CurrencyActions.FillCurrencyAccountingTab(currencyDetails)
+Given("fill {string} as Accounting External ID", (externalId) => {
+    cy.Navigate(CurrencySelectors.AccountingTab)
+    CurrencyActions.FillCurrencyAccountingExternalId(externalId)
 });
 
 When("edit currency", () => {
@@ -64,9 +83,11 @@ Then("the currency should update successfully", () => {
 
 Then("following event should appear in events tab", (dataTable) => {
     let eventDetailsList = Assists.CreateSet<EventTypeDetails>(dataTable);
-    CurrencyActions.AssertEventTab(eventDetailsList)
+    BaseActions.ValidateEventsTab(eventDetailsList, CurrencySelectors.EventsTab);
 });
+//#endregion
 
+//#region save and close currency 
 When("save and close currency", () => {
     CurrencyActions.CloseSaveCurrency();
 });
@@ -74,17 +95,4 @@ When("save and close currency", () => {
 Then("the currency should close successfully", () => {
     CurrencyActions.AssertCloseSaveCurrency();
 });
-
-Given("a currency with the following details", (dataTable) => {
-    currencyDetails = Assists.CreateInstance<CurrencyDetails>(dataTable, true);
-    MaintenanceActions.OpenNewWizard(Constants.Currency);
-    CurrencyActions.FillCurrencyDetails(currencyDetails) 
-});
-
-When("create currency", () => {
-    CurrencyActions.CreateExitingCurrency();
-});
-
-Then("the currency should not create successfully", () => {
-    CurrencyActions.AssertFaildCreateCurrency();
-});
+//#endregion

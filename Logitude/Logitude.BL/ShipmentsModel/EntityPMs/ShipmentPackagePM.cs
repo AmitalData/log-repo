@@ -5,6 +5,7 @@ using System.ServiceModel.DomainServices.Server;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using System;
 using Logitude.BL.Validators;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
 
 namespace Logitude.BL.ShipmentsModel.EntityPMs
 {
@@ -329,6 +330,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string LastStatusCode { get; set; }
+
+        public string ContainerStatusSourceCode { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string LastStatusName { get; set; }

@@ -666,6 +666,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string previousReference ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PreviousReference  
+	   {
+	    
+	     get
+		{
+		   return previousReference;
+		 }
+		 set
+		 {
+		   if(previousReference != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PreviousReference",OldValue=previousReference,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   previousReference=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

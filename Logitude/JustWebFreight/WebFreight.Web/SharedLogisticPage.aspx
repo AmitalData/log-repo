@@ -122,6 +122,18 @@
             display: block !important;
             white-space: nowrap;
         }
+        
+        .SelectOption {
+            width: 100px;
+            text-align: center;
+            height: 10px;
+            border: 1px solid #6A8299;
+            color: #45494A;
+            font-size: 11px;
+            cursor: pointer;
+            background: linear-gradient( 180deg , rgb(255, 255, 255) 0%, rgb(186, 206, 227) 100%);
+            text-shadow: 1px 1px white;
+        }
     </style>
 
 </head>
@@ -860,8 +872,15 @@
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:130px; color:\\#1B90CB;">${ReferenceNumber}</div>
                         <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:130px;">Quotation Prepared:</div>
 
-                       <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:120px; visibility: #= QuotationPreparedTickVisibility #;"><img src="../HtmlHelpers/Images/Icons/Tick.png" style="width: 20px; height: 20px; position:relative; margin-top:-3px;" /></div>
-
+                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:160px; visibility: #= QuotationPreparedTickVisibility #;"><img src="HtmlHelpers/Images/Icons/Tick.png" style="width: 20px; height: 20px; position:relative; margin-top:-3px;" /><a id="#= DocumentSecurityId #" style="cursor: pointer;padding-left: 15px;text-decoration: underline;"  OnClick="ViewQuotationDocument(id)">View Quotation</a></div>
+                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:120px; visibility: #= QuotationPreparedTickVisibility #;">
+                            <select class="SelectOption" id="#= Id #Option"  #= OptionDisabledProperty # >
+                                <option style="display:none">Send Feedback</option>
+                                <option id="#= Id #" #= IsApproved # OnClick="SendApprovalQuotesRequstEmailFeedback(id)">Send Approval</option>
+                                <option id="#= Id #" #= IsRejected # OnClick="SendRejectionQuotesRequstEmailFeedback(id)">Send Rejection</option>
+                            </select>
+                        </div>
+                        <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:180px; visibility: #= QuotationPreparedTickVisibility #;">Approval/Rejection Comments:</div>
                     </div>
                     <div style="height:25px; vertical-align:central;">
                                <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:20px;"></div>
@@ -869,7 +888,11 @@
                         <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:110px;">Create Date:</div>
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:130px;">${CreateDate}</div>
                         <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:130px;">Quotation Update Date:</div>
-                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:120px;">${QuotationUpdateDate}</div>
+                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:140px;">${QuotationUpdateDate}</div>
+                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:140px;"></div>
+                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; height: 35px; visibility: #= QuotationPreparedTickVisibility #;">
+                            <textarea #= CommentsReadOnlyProperty # id="Comment#= Id #" style="height: 22px;max-height: 22px;max-width: 400px;" rows = "5" cols = "60">${Comments}</textarea>
+                        </div>
                     </div>
 
                 </div>
@@ -986,6 +1009,18 @@
 
     <script type="text/javascript">
 
+        function CheckIfApprovedSelected(Feedback) {
+            if (Feedback == "Approved")
+                return true;
+            return false;
+        }
+
+        function CheckIfRejectedSelected(Feedback) {
+            if (Feedback == "Rejected")
+                return true;
+            return false;
+        }
+
         function ViewShipment(ShipmentId) {
             ChangePage("SharedLogistic/ShipmentPage.aspx", ShipmentId);
         }
@@ -998,7 +1033,72 @@
             ChangePage("SharedLogistic/ReportViewPage.aspx", name);
         }
 
-        function ChangePage(pageURL, entityId) {
+
+        function ViewQuotationDocument(QuotationDocumentSecurityId) {
+
+            var sharedDownloadURL = "WebPages/DownloadPage.aspx?securityId=" + QuotationDocumentSecurityId + "&tempId=";
+            $.ajax({
+                url: "api/DocumentDownloadToken",
+                type: 'GET',
+                contentType: 'application/json',
+                headers: {
+                    'Token': $.Token
+                },
+                success: function (documentDownloadToken) {
+                    window.open(sharedDownloadURL + documentDownloadToken);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    window.open(sharedDownloadURL);
+                }
+            });
+        }
+
+        function SendApprovalQuotesRequstEmailFeedback(QuoteRequestId) {
+            var selectedQuoteRequest = $.AllQuotesRequests.find(d => d.Id == QuoteRequestId);
+            selectedQuoteRequest.Feedback = "Approved";
+            selectedQuoteRequest.Comments = $('#Comment' + selectedQuoteRequest.Id).val();
+            DisabledQuotesRequestProperties(selectedQuoteRequest);
+            SendQuotesRequstEmailFeedback(selectedQuoteRequest);
+        }
+
+        function SendRejectionQuotesRequstEmailFeedback(QuoteRequestId) {
+            var selectedQuoteRequest = $.AllQuotesRequests.find(d => d.Id == QuoteRequestId);
+            selectedQuoteRequest.Feedback = "Rejected";
+            selectedQuoteRequest.Comments = $('#Comment' + selectedQuoteRequest.Id).val();
+            DisabledQuotesRequestProperties(selectedQuoteRequest);
+            SendQuotesRequstEmailFeedback(selectedQuoteRequest);
+        }
+
+        function DisabledQuotesRequestProperties(selectedQuoteRequest) {
+            $('#Comment' + selectedQuoteRequest.Id).attr('readonly', 'readonly');
+            $('#' + selectedQuoteRequest.Id + 'Option').attr('disabled', 'disabled');
+        }
+
+        function SendQuotesRequstEmailFeedback(selectedQuoteRequest) {
+            var quotesRequestEmailFeedbackArgs = new QuotesRequestEmailFeedback(selectedQuoteRequest);
+            var url = "api/QuotesRequest/UpdateQuotesRequestAndSendEmailFeedback";
+            $.ajax({
+                url: url,
+                data: JSON.stringify(quotesRequestEmailFeedbackArgs),
+                type: 'POST',
+                contentType: 'application/json',
+                headers: { 'Token': $.Token },
+                success: function () {
+                    //Success
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $.CheckUserException(jqXHR);
+                }
+            });
+        }
+
+        function QuotesRequestEmailFeedback(quoteRequest) {
+            this.PartnerId = $.CurrentCardId;
+            this.From = $.CurrentEmail;
+            this.QuotesRequest = quoteRequest;
+        };
+        
+        function ChangePage(url, entityId) {
 
             var loginData = entityId + ":" + $.CurrentCardId + ":" + $.CurrentTenant + ":" + $.CurrentEmail + ":" + $.CurrentCardType + ":" + $.IsBrandingEnabled;
 

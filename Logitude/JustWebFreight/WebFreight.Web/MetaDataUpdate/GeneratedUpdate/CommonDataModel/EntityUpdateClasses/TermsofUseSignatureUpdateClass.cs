@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class TermsofUseSignatureUpdateClass
    {  		
-		public const string HashString = "33bc58557d3b7e73579e43cc8924e808";
+		public const string HashString = "0f4760335dfe0076e04056e28eabdc72";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -118,9 +118,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "TermsofUseSignature",
-			      				    Code =  "fb8e",
+			      				    Code =  "250f",
 			      				    Name =  "TermsofUseSignature",
 			      				    GenerateDomainService =  false,
+			      				    ClientModuleName =  "Common",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
@@ -310,7 +311,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TermsofUseId",
-					  						DefaultText =  "Terms of Use Version Id",
+					  						DefaultText =  "Terms of Use Id",
 					  						ShortFieldLable =  "TermsofUseId",
 					  						ShortFieldLableDefaultText =  "Terms of Use Version Id",
 					  						IsMaxLength =  false,
@@ -411,6 +412,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "VersionDocumentId",
 					  						ListPropertyPath =  "VersionDocumentId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,

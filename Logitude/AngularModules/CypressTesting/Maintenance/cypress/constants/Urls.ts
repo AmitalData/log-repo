@@ -55,14 +55,22 @@ export class Urls {
     public static readonly ShippingLines = "**/shippinglines"
     public static readonly ShippingLinesGetSingle = "**/shippinglines/getsingle?**"
     public static readonly ShippingLinesviewGetSingle = "**/shippinglineviews/getsingle/?**";
-    public static readonly ImportShippingLine = "**/PartnersDomain/GetCarrierCopyToCurrentTenant?**"
+    public static readonly ImportShippingAirLine = "**/PartnersDomain/GetCarrierCopyToCurrentTenant?**"
     public static readonly CountryPortviews = "**/portviews/getbyfilters?**"
     public static readonly PortPostLogsList = "**/PostLogsList"
     public static readonly ShippingLinesAddress = "**/PartnersDomain"
     public static readonly ShippingLinesArea = "**/carrierareas"
     public static readonly ShippingLinesTariffTranslations = "**/tariffcarriertranslations"
 
-    public static readonly GetTenatCurrencies = "**/GetCopyCurrencyToTenant?**"
+    public static readonly AirLines = "**/airlines"
+    public static readonly AirLinesGetSingle = "**/airlines/getsingle?**"
+    public static readonly AirLinesviewGetSingle = "**/airlineviews/getsingle/?**";
+    public static readonly AirLineTariffHeader = "**/tarrifheaders";
+    public static readonly AirLineSpecialHandlingCodes = "**/awbspecialhandlingcodesextended";
+    public static readonly AirLinesAddress = "**/PartnersDomain"
+    public static readonly AirLinesTariffTranslations = "**/tariffcarriertranslations"
+
+    public static readonly GetCopyCurrencyToTenant = "**/GetCopyCurrencyToTenant?**"
     public static readonly Currencies = "**/currencies"
     public static readonly CurrenciesGetSingle = "**/currencies/getsingle?**"
     public static readonly CurrenciesviewGetList = "**/currencyviews/getbyfilters?**";
@@ -70,7 +78,7 @@ export class Urls {
 
     public static readonly FBLStocks = "**/FBLStockExtened/GetCreateFBLStocksOperation?**"
     public static readonly FBLStocksDelete = "**/FBLStockExtened/GetDeleteFBLStocksOperation?**";
-    public static readonly FBLStocksGetAll= "**/FBLStockExtened/GetAllFBLStockPMsByTenant?**";
+    public static readonly FBLStocksGetAll = "**/FBLStockExtened/GetAllFBLStockPMsByTenant?**";
 
     public static readonly SpecialServicesTypes = "**/specialservicestypes"
     public static readonly SpecialServicesTypesGetSingle = "**/specialservicestypes/getsingle?**"

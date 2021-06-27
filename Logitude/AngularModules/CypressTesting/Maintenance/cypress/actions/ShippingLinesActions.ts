@@ -6,21 +6,11 @@ import { RestAPI } from "../../../Base/cypress/constants/RestAPI";
 import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
 import { ShippingLineDetails } from 'cypress/models/ShippingLineDetails';
-import * as GeneralActions from './GeneralActions'
+import * as GeneralActions from './BaseActions'
 import * as Actions from './Actions'
 import { GenerateRandomNumberAndString } from '../../../Base/cypress/actions/GenerateRandoms';
 
 let searchValueField = null;
-
-export function MockImport() {
-    cy.intercept(RestAPI.GET, Urls.ImportShippingLine, [true])
-    Actions.DefineGetByFilterRequest()
-    cy.get(ShippingLineSelectors.ImportShippingLine).first().click()
-}
-
-export function AssertMockImport() {
-    Actions.AssertGetByFilters();
-}
 
 export function FillCode(code: string) {
     cy.FillLogTextBox(ShippingLineSelectors.Code, code)
@@ -106,7 +96,7 @@ export function FillShippingLineAddresses(shippingLineDetails: ShippingLineDetai
 }
 
 export function CreateShippingLineAddress() {
-    cy.DefineRequestWait(RestAPI.POST, Urls.ShippingLinesAddress, RequestAliases.PostShippingLineAddress)
+    cy.DefineRequestWait(RestAPI.POST, Urls.AirShippingLinesAddress, RequestAliases.PostShippingLineAddress)
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
 }
 
@@ -178,7 +168,7 @@ export function FillShippingLineTariffTranslations(shippingLineDetails: Shipping
 }
 
 export function CreateShippingLineTariffTranslations() {
-    cy.DefineRequestWait(RestAPI.POST, Urls.ShippingLinesTariffTranslations, RequestAliases.PostShippingLineTariffTranslations)
+    cy.DefineRequestWait(RestAPI.POST, Urls.AirShippingLinesTariffTranslations, RequestAliases.PostShippingLineTariffTranslations)
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
 }
 

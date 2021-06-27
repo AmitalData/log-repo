@@ -3904,6 +3904,8 @@
     Columns="AutomaticLastUpdateDate" />
   <Index
     Columns="Tenant,ComputedStatusDate" />
+  <Index
+  Columns="Tenant,House" />
   <UniqueConstraint
     Columns="Tenant,ShipmentNumber" />
   <UniqueConstraint

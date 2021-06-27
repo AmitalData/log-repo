@@ -367,7 +367,7 @@
 
                                                                                     <td>
                                                                                         <div style="margin-left: 2px;">
-                                                                                            <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditAddressClicked('S')" [disabled]="!ShipperAddressId || !IsScreenEnabled"></IconButton>
+                                                                                            <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditAddressClicked('S')" [disabled]="!ShipperAddressId || !IsScreenEnabled || IsStandalone"></IconButton>
                                                                                             <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddAddressClicked('S')" [disabled]="!IsScreenEnabled || IsStandalone || !IsNewStandAlonePickupDelivery"></IconButton>
                                                                                         </div>
                                                                                     </td>
@@ -518,8 +518,8 @@
 
                                                                                     <td>
                                                                                         <div style="margin-left: 2px;">
-                                                                                            <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditAddressClicked('C')" [disabled]="!ConsigneeAddressId || !IsScreenEnabled"></IconButton>
                                                                                             <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddAddressClicked('C')" [disabled]="!IsScreenEnabled  || IsStandalone || !IsNewStandAlonePickupDelivery"></IconButton>
+                                                                                            <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditAddressClicked('C')" [disabled]="!ConsigneeAddressId || !IsScreenEnabled || IsStandalone"></IconButton>
                                                                                         </div>
                                                                                     </td>
                                                                                 </tr>
