@@ -1,7 +1,9 @@
+import { FilterMetadata, LazyLoadEvent } from 'primeng/api';
+import { AppTool } from '../Tools';
 import { ApiQueryFiltersAddParams } from './ApiQueryFiltersAddParams';
 export class ApiQueryFilters {
 
-    constructor(getAll: boolean = false) {
+    constructor(getAll: boolean = false,private usePrimNG = false) {
         this.GetAll = getAll;
     }
     public PageIndex: number;
@@ -14,7 +16,64 @@ export class ApiQueryFilters {
     public ForceCacheRefresh: boolean = false;
     public DontApplyVirtualization: boolean = false;
 
-    
+    public MyAmitalLazyLoadEvent: AmitalLazyLoadEvent ;
+    AddAmitaFilterMetadata(prop: string, propValue: any, matchMode: string, operator: string) {
+        if (AppTool.IsNullOrEmpty(this.MyAmitalLazyLoadEvent)) {
+            this.MyAmitalLazyLoadEvent = new AmitalLazyLoadEvent();
+        }
+        let myAmitaFilterMetadata = new AmitaFilterMetadata(prop);
+        myAmitaFilterMetadata.value = [];
+        myAmitaFilterMetadata.value.push(
+            {
+                value: propValue,
+                matchMode: matchMode,
+                operator: operator
+            });
+        if (this.MyAmitalLazyLoadEvent.filters == null) {
+            this.MyAmitalLazyLoadEvent.filters = [];
+        }
+        this.MyAmitalLazyLoadEvent.filters.push(myAmitaFilterMetadata);
+
+    }
+    MapLazyEvent($event: LazyLoadEvent, TotalRecords?: number) {
+        if (AppTool.IsNullOrEmpty(this.MyAmitalLazyLoadEvent)) {
+            this.MyAmitalLazyLoadEvent = new AmitalLazyLoadEvent();
+        }
+        this.MyAmitalLazyLoadEvent.GetCount = TotalRecords == null;
+        this.MyAmitalLazyLoadEvent.first = $event.first;
+        this.MyAmitalLazyLoadEvent.rows = $event.rows;
+        this.MyAmitalLazyLoadEvent.sortField = $event.sortField;
+        this.MyAmitalLazyLoadEvent.sortOrder = $event.sortOrder;
+        if (this.MyAmitalLazyLoadEvent.filters == null) {
+            this.MyAmitalLazyLoadEvent.filters = [];
+        }
+        for (let prop in $event.filters) {
+            let myAmitaFilterMetadata = new AmitaFilterMetadata(prop);
+            //myAmitaFilterMetadata.key = prop;
+            let filterMeta = $event.filters[prop];
+            myAmitaFilterMetadata.value = [];
+            if (Array.isArray(filterMeta)) {
+                let haveFilterValue = false;
+                for (let meta of filterMeta) {
+                    if (!AppTool.IsNullOrEmpty((meta as FilterMetadata).value)) {
+                        haveFilterValue = true;
+                        myAmitaFilterMetadata.value.push(meta);
+                    }
+
+                }
+                if (haveFilterValue) {
+                    this.MyAmitalLazyLoadEvent.filters.push(myAmitaFilterMetadata);
+                }
+
+            }
+            else {
+
+                myAmitaFilterMetadata.value.push(filterMeta);
+                this.MyAmitalLazyLoadEvent.filters.push(myAmitaFilterMetadata);
+            }
+
+        }
+    }
 
     addAdditionalFilter(
         FieldName: string,
@@ -43,8 +102,11 @@ export class ApiQueryFilters {
           params.IgnoreFilter=IgnoreFilter;
           params.IsCacheOnClient=IsCacheOnClient;
           params.ForceEnableAdd=ForceEnableAdd;
-          this.pushAdditionalFilter(params);
-
+        this.pushAdditionalFilter(params);
+        if (this.usePrimNG) {
+            this.AddAmitaFilterMetadata(FieldName, FieldValue, Operator.toLowerCase(), "and");
+        }
+        
 
         // if (!IsCacheOnClient) {
         //     if (typeof (FieldValue) === "string") {
@@ -213,4 +275,57 @@ export class FilterItem {
         public IsLookUpfilter:boolean=false) { }
         
 
+}
+
+
+
+export class AmitalLazyLoadEvent {
+    //constructor() { }
+    GetCount: boolean;
+    first?: number;
+    rows?: number;
+    sortField?: string;
+    sortOrder?: number;
+    filters?: AmitaFilterMetadata[];
+    //MyLazyLoadEvent: lazyLoadEvent
+}
+export class AmitaFilterMetadata {
+    constructor(public key: string) { }
+    value: any[];
+
+}
+
+class OperetorConverter {
+    /*
+    
+    C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(44):                                case "LargerThan":
+    C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(88):                                case "GreaterThanOrEqual":
+    C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(131):                                case "LessThan":
+    C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(173):                                case "LessThanOrEqual":
+    C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(215):                                case "StartsWith":
+    C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(234):                                case "Contains":
+    C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(276):                                case "InList":
+    C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(323):                                case "InListExact":
+    C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(374):                                //case "InListExact":
+    C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(421):                                case "Between":
+    C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(566):                                case "NotEqual":
+    C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(603):                                case "Exclude":
+    C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(647):                                case "IsNotNull":
+    C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(666):                                case "IsNull":
+    C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(686):                                case "InListInt":
+    
+     */
+
+    public Converter(primengOperetor: string): string {
+        const logiOperetorList =
+            ['LargerThan', 'GreaterThanOrEqual', 'LessThan', 'LessThanOrEqual', 'StartsWith', 'Contains', 'InList', 'InListExact', 'Between', 'NotEqual', 'Exclude', 'IsNotNull', 'IsNull', 'InListInt'];
+        var lower = logiOperetorList.map(opr => opr.toLowerCase());
+        var indx = lower.findIndex(logi => logi == primengOperetor.toLowerCase());
+        if (indx == -1) {
+            return "";
+
+        }
+        return logiOperetorList[indx];
+
+    }
 }

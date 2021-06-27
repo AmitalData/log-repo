@@ -19,7 +19,9 @@ import { CourierDeclarationWorkspaceComponent } from './Components/CourierWorksp
 import { AutonomyKeywordComponent } from './Components/AutonomyKeyword/AutonomyKeywordComponent';
 import { VirtualScrollNG } from './Components/CourierWorkspaces/VirtualScrollNG';
 import { VirtualScrollNGScroll } from './Components/CourierWorkspaces/VirtualScrollNGScroll';
-import { CourierWorksheetNGComponent } from './Components/CourierWorkspaces/CourierWorksheetNGComponent';
+import { CourierWorksheetNGTComponent } from './Components/CourierWorkspaces/CourierWorksheetNGTComponent';
+import { CourierWorksheetNGComponent } from './Components/CourierWorkSheet/CourierWorksheetNGComponent';
+import { CourierWorksheetNGListTemplate } from '../CustomsListTemplates/Components/CourierWorksheetNGListTemplate';
 
 export const Components =
     [
@@ -44,7 +46,9 @@ export const Components =
         GetUnloadPortCodeComponent,
         VirtualScrollNG,
         VirtualScrollNGScroll,
+        CourierWorksheetNGTComponent,
         CourierWorksheetNGComponent,
+        CourierWorksheetNGListTemplate,
     ];
 
 export class ModuleDeclarations {
@@ -75,7 +79,10 @@ export class ModuleDeclarations {
             case "AutonomyKeywordComponent": { myResult = AutonomyKeywordComponent; break; }
             case "VirtualScrollNG": { myResult = VirtualScrollNG; break; }
             case "VirtualScrollNGScroll": { myResult = VirtualScrollNGScroll; break; }
+            case "CourierWorksheetNGTComponent": { myResult = CourierWorksheetNGTComponent; break; }
             case "CourierWorksheetNGComponent": { myResult = CourierWorksheetNGComponent; break; }
+            case "CourierWorksheetNGListTemplate": { myResult = CourierWorksheetNGListTemplate; break; }
+                
                 
                 
                 

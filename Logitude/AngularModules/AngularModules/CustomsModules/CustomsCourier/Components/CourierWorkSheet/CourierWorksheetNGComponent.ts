@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { Guid } from '../../../../Infrastructure/Utilities/Guid';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { Component, Output, EventEmitter, OnInit, ComponentRef, ViewChild, OnDestroy, Injectable } from '@angular/core';
-import { AppTool, ArrayTool } from '../../../../Infrastructure/Tools';
+import { AppTool } from '../../../../Infrastructure/Tools';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { CourierMasterPM } from '../../../../Customs/EntityPMs/CourierMasterPM';
@@ -18,7 +18,7 @@ import { EntityListService } from '../../../../Infrastructure/Services/EntityLis
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { DeclarationEditComponentController } from '../../../../Customs/Controller/DeclarationEditComponentController';
-
+import { DropdownMenuFilterComponent } from './DropdownMenuFilterComponent'
 import { SendPayReadyLowRequestParams } from '../../../../Customs/DataContract/RequestParams/SendPayReadyLowRequestParams';
 import { SendALLCorrectRequestParams } from '../../../../Customs/DataContract/RequestParams/SendALLCorrectRequestParams';
 import { CourierWorksheetSharedDataService } from '../../../../Customs/Services/DataChange/CourierWorksheetSharedDataService';
@@ -31,20 +31,14 @@ import { CourierMasterPMService } from '../../../../Customs/Services/StandardPMs
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
-import { DropdownMenuFilterComponent } from '../CourierWorkSheet/DropdownMenuFilterComponent';
-import { FilterMetadata, LazyLoadEvent, MenuItem } from 'primeng/api';
-import { CourierMasterList } from '../../../../Customs/EntityLists/CourierMasterList';
 import { DeclarationCourierStatusList } from '../../../../Customs/EntityLists/DeclarationCourierStatusList';
+import { LazyLoadEvent } from 'primeng/api';
 import { IIGGeneralMessagesService } from '../../../../Customs/Services/WebServices/IIGGeneralMessagesService';
-import { match } from 'cypress/types/sinon';
 
-import { CustomsAirlineListService } from '../../../../Customs/Services/StandardLists/CustomsAirlineListService';
-import { CustomsAirlinePM } from '../../../../Customs/EntityPMs/CustomsAirlinePM';
-import { CustomsAirlineList } from '../../../../Customs/EntityLists/CustomsAirlineList';
 @Component({
 
     templateUrl: './CourierWorksheetNGComponent.html',
-    providers: [CourierWorksheetSharedDataService, CustomsAirlineListService],
+    providers: [CourierWorksheetSharedDataService],
 })
 
 
@@ -59,24 +53,11 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
 
 
     private _RowsItems: any;
-    loading: boolean;
-    TotalRecords?: number;
-    
-    oldEvent: LazyLoadEvent
     public get RowsItems(): any {
         return this._RowsItems;
     }
     public set RowsItems(value: any) {
         this._RowsItems = value;
-    }
-    _SelectedNGRows: any;
-    public get SelectedNGRows(): any {
-        return this._SelectedNGRows;
-    }
-    public set SelectedNGRows(value: any) {
-        this._SelectedNGRows = value;
-        this._CourierWorksheetSharedDataService._SelectedItems.Clear();
-        this._CourierWorksheetSharedDataService._SelectedItems.InsertCollection(this._SelectedNGRows);
     }
 
     private _SelectedRow: any;
@@ -86,31 +67,11 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
     public set SelectedRow(value: any) {
         this._SelectedRow = value;
     }
-
-
-
-    text: string;
-
-    results: CustomsAirlineList[];
-
-    search(event) {
-        debugger;
-        var filters: ApiQueryFilters = new ApiQueryFilters(true); 
-        filters.addAdditionalFilter("LocalName", event.query, null, null, "StartsWith", false, false, false, "string");
-
-
-        this.customsAirlineListService.getByFilters(filters).subscribe(data => {
-            this.results = data.Result;
-        });
-    }
-
-
-
     _CourierMasterValidator: CourierMasterValidator = new CourierMasterValidator();
     _CourierMasterService: CourierMasterService = new CourierMasterService();
     _DeclarationCourierStatusListService: DeclarationCourierStatusListService = new DeclarationCourierStatusListService();
     _EntityListService: EntityListService = new EntityListService();
-    myIIGGeneralMessagesService: IIGGeneralMessagesService = new IIGGeneralMessagesService();
+
     @ViewChild(DropdownMenuFilterComponent)
     public MyDropdownMenuFilterComponent: DropdownMenuFilterComponent = new DropdownMenuFilterComponent(null, null);
 
@@ -142,9 +103,6 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
     _SelectedDOCTabValue: string = 'MX'; // Correct/InCorrect/InProgress/ReadyToSend
 
     public columns: any[] = null;
-    public frozenCols: any[] = null;
-    public scrollableCols: any[] = null;
-    
 
     IsActionButtonsEnabled: boolean = false;
     IsInit: boolean = false;
@@ -164,7 +122,7 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
     private currentSession = SessionLocator.SelectedSession;
     private ChangedUnloadPortSite: boolean;
     //constructor(public entityArgs: EntityArgs) {
-    constructor(public _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService, private customsAirlineListService: CustomsAirlineListService) {
+    constructor(public _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
         //this.entityPM = entityArgs.EntityPM;
         this._TabFilterList.push(new TabFilter("ALL", "כל הש.מ.ב ", null, null));
@@ -192,39 +150,8 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
     ngOnDestroy() {
         //  this.PseventRowSelectEventSubscribe.unSubscribe();
     }
-    SendSplitButtonMenuItems: MenuItem[];
-    MyMenuItem: MenuItem[];
     ngOnInit() {
         this.IsInit = true;
-        this.MyMenuItem = [
-            { label: 'New', icon: 'pi pi-fw pi-plus' },
-            { label: 'Open', icon: 'pi pi-fw pi-download' },
-            { label: 'Undo', icon: 'pi pi-fw pi-refresh' }
-        ];
-        this.SendSplitButtonMenuItems = [
-            {
-                label: 'File',
-                items: [{
-                    label: 'New',
-                    icon: 'pi pi-fw pi-plus',
-                    items: [
-                        { label: 'Project' },
-                        { label: 'Other' },
-                    ]
-                },
-                { label: 'Open' },
-                { label: 'Quit' }
-                ]
-            },
-            {
-                label: 'Edit',
-                icon: 'pi pi-fw pi-pencil',
-                items: [
-                    { label: 'Delete', icon: 'pi pi-fw pi-trash' },
-                    { label: 'Refresh', icon: 'pi pi-fw pi-refresh' }
-                ]
-            }
-        ];
         this.BuildColumns();
         this._CourierWorksheetSharedDataService.CurrentMessage
             .subscribe(message => {
@@ -586,7 +513,7 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
         MyFilters.SortBy = this.currentSortingCol;
         MyFilters.SortDirection = this.currentSortingDir;
 
-        this.BuildFiltersForQuery(MyFilters,null);
+        this.BuildFiltersForQuery(MyFilters);
 
         MyFilters.GetCount = false;
         MyFilters.PageIndex = 0;
@@ -677,11 +604,14 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
         //if (!this.IsInit) {
         //    return;
         //}
-       
         setTimeout(() => {
             this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
+
+
             this.TotalRecords = null;
             this.loadLazy(this.oldEvent);
+
+
         }, 10);
     }
 
@@ -998,7 +928,8 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
             FieldName: 'ImporterName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CustomerName"),
-            Styles: { width: '200px' },
+            //Styles: { width: '200px' },
+            Styles: { width: '150px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'ImporterName'
@@ -1008,7 +939,8 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
             FieldName: 'ImporterCode',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.ImporterCode"),
-            Styles: { width: '100px' },
+            //Styles: { width: '100px' },
+            Styles: { width: '80px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'SortedImporterCode'
@@ -1109,22 +1041,13 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
             ServerSideSortable: true,
             SortByName: 'SpecialActionStatus'
         });
-        this.columns.push({
-            FieldName: 'SendSplitButton',
-            DataTypeCode: 'String',
-            //Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.IsClosedForFollowUp"),
-            Display:'split',
-            Styles: { width: '100px' },
-            IsCustomTemplate: true,
-            HtmlListComponentName: 'CourierWorksheetListTemplate',
-            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
-            ServerSideSortable: false
-        });
+
         this.columns.push({
             FieldName: 'DeclarationStatusTypeName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.DeclarationStatusTypeName"),
-            Styles: { width: '200px' },
+            ///Styles: { width: '200px' },
+            Styles: { width: '150px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'DeclarationStatusTypeName'
@@ -1176,17 +1099,17 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
             ServerSideSortable: false
         });
+        this.columns.push({
+            FieldName: 'SendSplitButton',
+            DataTypeCode: 'String',
+            //Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.IsClosedForFollowUp"),
+            Styles: { width: '100px' },
+            IsCustomTemplate: true,
+            HtmlListComponentName: 'CourierWorksheetListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+            ServerSideSortable: false
+        });
 
-
-        
-        this.frozenCols = [
-            { FieldName: 'MyDeclarationCheckBox', field: 'MyDeclarationCheckBox', header: '' },
-            { FieldName: 'CourierHawb',  field: 'CourierHawb', header: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierHawb") },
-
-        ];
-        this.frozenCols = this.columns.slice(0, 2);
-        this.scrollableCols = this.columns.slice(2);
-      
     }
 
     DataSource = {
@@ -1221,45 +1144,20 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
                 if (AppTool.IsNullOrEmpty(filters.SortDirection)) {
                     filters.SortDirection = "Descending";
                 }*/
-        this.BuildFiltersForQuery(filters,null);
+        this.BuildFiltersForQuery(filters);
 
         var myout = this._EntityListService.getExtendedByFilters("Customs.DeclarationCourierStatus", filters);
 
         return myout;
     }
-    AddAmitaFilterMetadata(amitalLazyLoadEvent: AmitalLazyLoadEvent, prop: string, propValue: any, matchMode: string, operator: string)
-    {
-        let myAmitaFilterMetadata = new AmitaFilterMetadata(prop);
-        myAmitaFilterMetadata.value = [];
-        myAmitaFilterMetadata.value.push(
-            {
-                value: propValue,
-                matchMode: matchMode,
-                operator: operator
-            });
-        if (amitalLazyLoadEvent.filters == null) {
-            amitalLazyLoadEvent.filters = [];
-        }
-        amitalLazyLoadEvent.filters.push(myAmitaFilterMetadata);
 
-    }
-    BuildFiltersForQuery(filters: ApiQueryFilters = null, amitalLazyLoadEvent :AmitalLazyLoadEvent ) {
+    BuildFiltersForQuery(filters: ApiQueryFilters = null) {
 
         if (filters == null) {
             filters = new ApiQueryFilters();
         }
-        if (amitalLazyLoadEvent == null) {
-            amitalLazyLoadEvent = new AmitalLazyLoadEvent();
-        }
-
         filters.addAdditionalFilter("CourierMasterId", this.entityPM.Id, null, null, "Equals", false, false, false, "string");
-        this.AddAmitaFilterMetadata(amitalLazyLoadEvent, "CourierMasterId", this.entityPM.Id, "Equals".toLowerCase(), "and");
-
         filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
-        this.AddAmitaFilterMetadata(amitalLazyLoadEvent, "Tenant", SessionLocator.Tenant, "Equals".toLowerCase(), "and");
-            
-
-
 
         switch (this._SelectedTabFilter.Code) {
             //case "ACC":
@@ -1268,7 +1166,6 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
             }
             default: {
                 filters.addAdditionalFilter("Is" + this._SelectedTabFilter.Code + "Tab", true, null, null, "Equals", false, false, false, "Boolean");
-                this.AddAmitaFilterMetadata(amitalLazyLoadEvent, "Is" + this._SelectedTabFilter.Code + "Tab", true, "Equals".toLowerCase(), "and");
                 break;
             }
         }
@@ -1276,12 +1173,10 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
         switch (this._SelectedBOLValue) {
             case "L": {
                 filters.addAdditionalFilter("HighLowValue", "L", null, null, "Equals", false, false, false, "string");
-                this.AddAmitaFilterMetadata(amitalLazyLoadEvent, "HighLowValue", "L", "Equals".toLowerCase(), "and");
                 break;
             }
             case "H": {
                 filters.addAdditionalFilter("HighLowValue", "H", null, null, "Equals", false, false, false, "string");
-                this.AddAmitaFilterMetadata(amitalLazyLoadEvent, "HighLowValue", "H", "Equals".toLowerCase(), "and");
                 break;
             }
         }
@@ -1289,12 +1184,10 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
         switch (this._SelectedStatusValue) {
             case "O": {
                 filters.addAdditionalFilter("IsClosedForFollowUp", false, null, null, "Equals", false, false, false, "Boolean");
-                this.AddAmitaFilterMetadata(amitalLazyLoadEvent, "IsClosedForFollowUp", false, "Equals".toLowerCase(), "and");
                 break;
             }
             case "C": {
                 filters.addAdditionalFilter("IsClosedForFollowUp", true, null, null, "Equals", false, false, false, "Boolean");
-                this.AddAmitaFilterMetadata(amitalLazyLoadEvent, "IsClosedForFollowUp", true,  "Equals".toLowerCase(), "and");
                 break;
             }
         }
@@ -1303,31 +1196,25 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
             switch (this._SelectedMNFTABValue) {
                 case "I": {
                     filters.addAdditionalFilter("CourierManifestStatusCode", "I", null, null, "Equals", false, false, false, "string");
-                    this.AddAmitaFilterMetadata(amitalLazyLoadEvent, "CourierManifestStatusCode", "I", "Equals".toLowerCase(), "and");
                     break;
                 }
                 case "R": {
                     filters.addAdditionalFilter("CourierManifestStatusCode", "R", null, null, "Equals", false, false, false, "string");
-                    this.AddAmitaFilterMetadata(amitalLazyLoadEvent, "CourierManifestStatusCode", "R", "Equals".toLowerCase(), "and");
                     break;
                 }
                 case "V": {
                     filters.addAdditionalFilter("CourierManifestStatusCode", "V", null, null, "Equals", false, false, false, "string");
-                    this.AddAmitaFilterMetadata(amitalLazyLoadEvent, "CourierManifestStatusCode", "V",  "Equals".toLowerCase(), "and");
                     break;
                 }
                 case "MX": {
                     filters.addAdditionalFilter("Is" + this._SelectedTabFilter.Code + "Tab", true, null, null, "Equals", false, false, false, "Boolean");
-                    this.AddAmitaFilterMetadata(amitalLazyLoadEvent, "Is" + this._SelectedTabFilter.Code + "Tab", true,  "Equals".toLowerCase(), "and");
                     switch (this._SelectedMNFValue) {
                         case "C": {
                             filters.addAdditionalFilter("CourierManifestStatusCode", "M", null, null, "Equals", false, false, false, "string");
-                            this.AddAmitaFilterMetadata(amitalLazyLoadEvent, "CourierManifestStatusCode", "M",  "Equals".toLowerCase(), "and");
                             break;
                         }
                         case "W": {
                             filters.addAdditionalFilter("CourierManifestStatusCode", "X", null, null, "Equals", false, false, false, "string");
-                            this.AddAmitaFilterMetadata(amitalLazyLoadEvent, "CourierManifestStatusCode", "X", "Equals".toLowerCase(), "and");
                             break;
                         }
                     }
@@ -1335,7 +1222,6 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
                 }
                 default: {
                     filters.addAdditionalFilter("Is" + this._SelectedTabFilter.Code + "Tab", true, null, null, "Equals", false, false, false, "Boolean");
-                    this.AddAmitaFilterMetadata(amitalLazyLoadEvent, "Is" + this._SelectedTabFilter.Code + "Tab", true, "Equals".toLowerCase(), "and");
                     break;
                 }
             }
@@ -1345,32 +1231,25 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
             switch (this._SelectedDECTabValue) {
                 case "I": {
                     filters.addAdditionalFilter("CourierDeclarationStatusCode", "I", null, null, "Equals", false, false, false, "string");
-                    this.AddAmitaFilterMetadata(amitalLazyLoadEvent, "CourierDeclarationStatusCode", "I", "Equals".toLowerCase(), "and");
                     break;
                 }
                 case "R": {
                     filters.addAdditionalFilter("CourierDeclarationStatusCode", "R", null, null, "Equals", false, false, false, "string");
-                    this.AddAmitaFilterMetadata(amitalLazyLoadEvent, "CourierDeclarationStatusCode", "R", "Equals".toLowerCase(), "and");
-
                     break;
                 }
                 case "V": {
                     filters.addAdditionalFilter("CourierDeclarationStatusCode", "V", null, null, "Equals", false, false, false, "string");
-                    this.AddAmitaFilterMetadata(amitalLazyLoadEvent, "CourierDeclarationStatusCode", "V", "Equals".toLowerCase(), "and");
                     break;
                 }
                 case "MX": {
                     filters.addAdditionalFilter("Is" + this._SelectedTabFilter.Code + "Tab", true, null, null, "Equals", false, false, false, "Boolean");
-                    this.AddAmitaFilterMetadata(amitalLazyLoadEvent, "Is" + this._SelectedTabFilter.Code + "Tab", true, "Equals".toLowerCase(), "and");
                     switch (this._SelectedDECValue) {
                         case "C": {
                             filters.addAdditionalFilter("CourierDeclarationStatusCode", "M", null, null, "Equals", false, false, false, "string");
-                            this.AddAmitaFilterMetadata(amitalLazyLoadEvent, "CourierDeclarationStatusCode", "M",  "Equals".toLowerCase(), "and");
                             break;
                         }
                         case "W": {
                             filters.addAdditionalFilter("CourierDeclarationStatusCode", "X", null, null, "Equals", false, false, false, "string");
-                            this.AddAmitaFilterMetadata(amitalLazyLoadEvent, "CourierDeclarationStatusCode", "X",  "Equals".toLowerCase(), "and");
                             break;
                         }
                     }
@@ -1378,7 +1257,6 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
                 }
                 default: {
                     filters.addAdditionalFilter("Is" + this._SelectedTabFilter.Code + "Tab", true, null, null, "Equals", false, false, false, "Boolean");
-                    this.AddAmitaFilterMetadata(amitalLazyLoadEvent, "Is" + this._SelectedTabFilter.Code + "Tab", true, "Equals".toLowerCase(), "and");
                     break;
                 }
             }
@@ -1512,18 +1390,14 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
         switch (this._SelectedCustomStatusValue) {
             case "H": {
                 filters.addAdditionalFilter("CourierCustomStatusCode", "1", null, null, "Equals", false, false, false, "string");
-                this.AddAmitaFilterMetadata(amitalLazyLoadEvent, "CourierCustomStatusCode", "1", "Equals".toLowerCase(), "and");
                 break;
             }
             case "S": {
                 filters.addAdditionalFilter("CourierCustomStatusCode", "2", null, null, "Equals", false, false, false, "string");
-                this.AddAmitaFilterMetadata(amitalLazyLoadEvent, "CourierCustomStatusCode", "2",  "Equals".toLowerCase(), "and");
                 break;
             }
             case "N": {
                 filters.addAdditionalFilter("CourierCustomStatusCode", "2", "1", null, "NotEqual", false, false, false, "string");
-                this.AddAmitaFilterMetadata(amitalLazyLoadEvent, "CourierCustomStatusCode", "1", "NotEqual".toLowerCase(), "and");
-                this.AddAmitaFilterMetadata(amitalLazyLoadEvent, "CourierCustomStatusCode", "2", "NotEqual".toLowerCase(), "and");
 
                 break;
             }
@@ -2208,7 +2082,7 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
         });
     }
 
-    LazyDataSource: DeclarationCourierStatusList[];
+
     CancelFlight() {
         this._ValidationErrors2 = []
         this._CourierMasterService.GetIfAllowToCancelCourierMaster(this.entityPM.Id).subscribe(
@@ -2251,9 +2125,47 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
 
 
     }
-    
+
+
+
+
+
+
+
+
+    ShowGrid: boolean = false;
+    myIIGGeneralMessagesService: IIGGeneralMessagesService = new IIGGeneralMessagesService();
+    LazyDataSource: DeclarationCourierStatusList[];
+    _SelectedNGRows: any;
+    public get SelectedNGRows(): any {
+        return this._SelectedNGRows;
+    }
+    public set SelectedNGRows(value: any) {
+        this._SelectedNGRows = value;
+        this._CourierWorksheetSharedDataService._SelectedItems.Clear();
+        this._CourierWorksheetSharedDataService._SelectedItems.InsertCollection(this._SelectedNGRows);
+    }
+    onRowSelect(event) {
+        //this.messageService.add({ severity: 'info', summary: 'Product Selected', detail: event.data.name });
+        console.log(event);
+    }
+
+    onRowUnselect(event) {
+        //this.messageService.add({ severity: 'info', summary: 'Product Unselected', detail: event.data.name });
+    }
+    onColDataClick(rowData) {
+        console.log(rowData);
+        let event = {
+            rowData: rowData
+        };
+        this.OnRowSelectedBL(event);
+    }
+    ///SendSplitButtonClick($event) { }
+    loading: boolean;
+    TotalRecords?: number;
+    oldEvent: LazyLoadEvent
     loadLazy($event: LazyLoadEvent) {
-        if (AppTool.IsNullOrEmpty( $event)) {
+        if (AppTool.IsNullOrEmpty($event)) {
             console.log("LazyLoadEvent is null (starting ...)");
             return;
         }
@@ -2298,222 +2210,51 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
             return;
         }
 
-        let filters = new ApiQueryFilters();
+        let filters = new ApiQueryFilters(false,true);
 
         filters.PageSize = $event.rows;
         filters.PageIndex = $event.first;
         filters.GetAll = false;
-        filters.GetCount = this.TotalRecords==null;
-        if (undefined != $event.sortField) {
-            filters.SortBy = $event.sortField;
-            //this.columns.push({
-            //    FieldName: 'HighLowValue',
-            //    DataTypeCode: 'String',
-            //    Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.FastIndividualProcessCode"),
-            //    Styles: { width: '68px' },
-            //    IsCustomTemplate: true,
-            //    HtmlListComponentName: 'CourierWorksheetListTemplate',
-            //    HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
-            //    ServerSideSortable: true,
-            //    SortByName: 'FastIndividualProcessCode'
-            //});
-            filters.SortBy=this.columns.filter(r => r.FieldName == $event.sortField)[0].SortByName;
+        filters.GetCount = this.TotalRecords == null;
+        this.BuildFiltersForQuery(filters);
+        filters.MapLazyEvent($event, this.TotalRecords);
 
-            if ($event.sortOrder == 1) {
-                filters.SortDirection = "Ascending";
-            } else {
-                filters.SortDirection = "Descending";
-            }
-
-            //filters.SortDirection = sortingDir;
-        }
-        let amitalLazyLoadEvent = new AmitalLazyLoadEvent();
-        this.BuildFiltersForQuery(filters, amitalLazyLoadEvent);
-
-
-        let myOperetorConverter = new OperetorConverter();
-        //filters.addAdditionalFilter("HighLowValue", "L", null, null, "Equals", false, false, false, "string");
-        for (let property in $event.filters) {
-            let propFilter= $event.filters[property];
-            for (let key in propFilter) {
-                let fil = propFilter[key];
-                let val = fil .value;
-                if (!AppTool.IsNullOrZero(val)) {
-                    
-                    var logiOperetor= myOperetorConverter.Converter(fil.matchMode)
-
-                    if (!AppTool.IsNullOrEmpty(logiOperetor)) {
-
-                        filters.addAdditionalFilter(property, val, null, null, logiOperetor, false, false, false, "string");
-                    }
-                }
-            }
-            
-            
-        }
-
+        let json = JSON.stringify(filters.MyAmitalLazyLoadEvent);
         this.loading = true;
         this.oldEvent = $event;
 
-
-        //filters.addAdditionalFilter("CourierMasterId", this.entityPM.Id, null, null, "Equals", false, false, false, "string");
-        //filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
-        
-        let useNew = true;
-        
-        if (useNew) {
-
-            //let myLazyLoadEvent: LazyLoadEvent = { ...$event };
-            //let idFilterMetadata: FilterMetadata = {
-            //    value: this.entityPM.Id,
-            //    matchMode: "equals",
-            //    operator: "and"
-            //}
-            //myLazyLoadEvent.filters["CourierMasterId"] = idFilterMetadata;
-
-
-            amitalLazyLoadEvent.GetCount = this.TotalRecords == null;
-            amitalLazyLoadEvent.first = $event.first;
-            amitalLazyLoadEvent.rows = $event.rows;
-            amitalLazyLoadEvent.sortField = $event.sortField;
-            amitalLazyLoadEvent.sortOrder = $event.sortOrder;
-            if (amitalLazyLoadEvent.filters == null) {
-                amitalLazyLoadEvent.filters = [];
-            }
-            for (let prop in $event.filters) {
-                let myAmitaFilterMetadata = new AmitaFilterMetadata(prop);
-                //myAmitaFilterMetadata.key = prop;
-                let filterMeta = $event.filters[prop];
-                myAmitaFilterMetadata.value = [];
-                if (Array.isArray(filterMeta)) {
-                    let haveFilterValue = false;
-                    for (let meta of filterMeta) {
-                        if (!AppTool.IsNullOrEmpty((meta as FilterMetadata).value)) {
-                            haveFilterValue = true;
-                            myAmitaFilterMetadata.value.push(meta);
-                        }
-
+        this.myIIGGeneralMessagesService.GetVirtualDeclarationCourierStatus(json)
+            .subscribe((viewResponse: ServiceResponse) => {
+                if (!viewResponse.HasError) {
+                    this.loading = false;
+                    this.ShowGrid = true;
+                    let res = viewResponse.Result;
+                    let newAry: any[] = res.Result;
+                    if (AppTool.IsNullOrZero(this.TotalRecords)) {
+                        this.TotalRecords = res.Count;
+                        this.LazyDataSource = Array.from({ length: this.TotalRecords });
                     }
-                    if (haveFilterValue ) {
-                        amitalLazyLoadEvent.filters.push(myAmitaFilterMetadata);
-                    }
-                    
+                    Array.prototype.splice.apply(this.LazyDataSource, [...[$event.first, $event.rows], ...newAry]);
+
+                    //trigger change detection
+                    this.LazyDataSource = [...this.LazyDataSource];
                 }
-                else {
-                    
-                    myAmitaFilterMetadata.value.push(filterMeta);
-                    amitalLazyLoadEvent.filters.push(myAmitaFilterMetadata);
-                }
-                
-            }
-
-            let json = JSON.stringify(amitalLazyLoadEvent);
-            //this.myIIGGeneralMessagesService.GetVirtualDeclarationCourierStatusOld(this.TotalRecords == null, myLazyLoadEvent)
-            this.myIIGGeneralMessagesService.GetVirtualDeclarationCourierStatus(json)
-                .subscribe((viewResponse: ServiceResponse) => {
-                    if (!viewResponse.HasError) {
-                        this.loading = false;
-
-                        let res = viewResponse.Result;
-                        let newAry: any[] = res.Result;
-                        if (AppTool.IsNullOrZero(this.TotalRecords)) {
-                            this.TotalRecords = res.Count;
-                            this.LazyDataSource = Array.from({ length: this.TotalRecords });
-                        }
-                        Array.prototype.splice.apply(this.LazyDataSource, [...[$event.first, $event.rows], ...newAry]);
-
-                        //trigger change detection
-                        this.LazyDataSource = [...this.LazyDataSource];
-                    }
 
 
-                });
+            });
 
-        } else {
-            var myout = this._EntityListService.getExtendedByFilters("Customs.DeclarationCourierStatus", filters);
-            myout.then(
-                (res: any) => {
-                    res.subscribe((viewResponse: ServiceResponse) => {
-
-                        if (!viewResponse.HasError) {
-                            this.loading = false;
-
-
-                            let newAry: any[] = viewResponse.Result;
-                            if (AppTool.IsNullOrZero(this.TotalRecords)) {
-                                this.TotalRecords = viewResponse.Count;
-                                this.LazyDataSource = Array.from({ length: this.TotalRecords });
-                            }
-                            Array.prototype.splice.apply(this.LazyDataSource, [...[$event.first, $event.rows], ...newAry]);
-
-                            //trigger change detection
-                            this.LazyDataSource = [...this.LazyDataSource];
-                        }
-
-                    });
-
-                    //this.DataSource.getRows(pageIndex * PSize, PSize, sortingCol, sortingDir, getCount, searchfields, Filters).then(res => {
-                    //    res.subscribe((viewResponse: ServiceResponse) => {
-                    //        if (!viewResponse.HasError) {
-                    //            this.requestedRowCount.emit(viewResponse.Count);
-                    //        }
-                    //    });
-                });
-        }
-    }
-    onRowSelect(event) {
-        //this.messageService.add({ severity: 'info', summary: 'Product Selected', detail: event.data.name });
-        console.log(event);
-    }
-
-    onRowUnselect(event) {
-        //this.messageService.add({ severity: 'info', summary: 'Product Unselected', detail: event.data.name });
-    }
-    onColDataClick(rowData) {
-        console.log(rowData);
-        let event = {
-            rowData: rowData
-        };
-        this.OnRowSelectedBL(event);
-    }
-    SendSplitButtonClick($event) { }
-}
-
-
-
-class OperetorConverter{
-/*
-
-C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(44):                                case "LargerThan":
-C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(88):                                case "GreaterThanOrEqual":
-C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(131):                                case "LessThan":
-C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(173):                                case "LessThanOrEqual":
-C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(215):                                case "StartsWith":
-C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(234):                                case "Contains":
-C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(276):                                case "InList":
-C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(323):                                case "InListExact":
-C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(374):                                //case "InListExact":
-C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(421):                                case "Between":
-C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(566):                                case "NotEqual":
-C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(603):                                case "Exclude":
-C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(647):                                case "IsNotNull":
-C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(666):                                case "IsNull":
-C:\C21R01\Logitude\Simplog.Server.Infrastructure\Helpers\GenericFilter.cs(686):                                case "InListInt":
-
- */
-
-    public Converter(primengOperetor: string): string {
-        const logiOperetorList =
-            ['LargerThan', 'GreaterThanOrEqual', 'LessThan', 'LessThanOrEqual', 'StartsWith', 'Contains', 'InList', 'InListExact', 'Between', 'NotEqual', 'Exclude', 'IsNotNull', 'IsNull', 'InListInt'];
-        var lower = logiOperetorList.map(opr => opr.toLowerCase());
-        var indx = lower.findIndex(logi => logi == primengOperetor.toLowerCase());
-        if (indx == -1) {
-            return ""; 
-        
-        }
-        return logiOperetorList[indx];
 
     }
+    IsDocumentStatusRed(val): boolean {
+        return (val == "X" || val == "M");
+    }
+    IsDeclarationStatusGreen(val): boolean {
+        return (val == "V");
+    }
+    IsDocumentStatusBlue(val): boolean {
+        return (val == "I");
+    }
+
 }
 
 
@@ -2527,18 +2268,3 @@ export class TabFilter {
     }
 }
 
-export class AmitalLazyLoadEvent {
-    //constructor() { }
-    GetCount: boolean;
-    first?: number;
-    rows?: number;
-    sortField?: string;
-    sortOrder?: number;
-    filters?: AmitaFilterMetadata[];
-    //MyLazyLoadEvent: lazyLoadEvent
-}
-export class AmitaFilterMetadata {
-    constructor(public key: string) { }
-        value: any[];
-
-}

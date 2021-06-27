@@ -277,10 +277,11 @@
     <Content Include="CustomsModules\CustomsCourier\Components\AutonomyKeyword\AutonomyKeywordComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\CourierPendingReason\AddCourierPendingToUnifreightStatusComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\CourierPendingReason\DeclarationPendingsGeneralComponent.html" />
+    <Content Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\CourierWorksheetNGComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\GetStorageSiteCodeComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\GetUnloadPortCodeComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\CourierWorkspaces\CourierDeclarationWorkspaceComponent.html" />
-    <Content Include="CustomsModules\CustomsCourier\Components\CourierWorkspaces\CourierWorksheetNGComponent.html" />
+    <Content Include="CustomsModules\CustomsCourier\Components\CourierWorkspaces\CourierWorksheetNGTComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\CourierWorkspaces\VirtualScrollNG.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\CourierWorkspaces\VirtualScrollNGScroll.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\GatepassRequest\GatepassRequestComponent.html" />
@@ -301,6 +302,7 @@
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\CasualSupplierDetailsComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\DeclarationAmendment\DeclarationAmendmentComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ConsigmentTabContent\ExportConsigmentContentComponent.html" />
+    <Content Include="CustomsModules\CustomsListTemplates\Components\CourierWorksheetNGListTemplate.html" />
     <Content Include="CustomsModules\CustomsListTemplates\Components\CustomsContainerizationListTemplate.html" />
     <Content Include="CustomsModules\CustomsReferant\Components\ReferantExceptionReason\AddEditExceptionReasonComponent.html" />
     <Content Include="CustomsModules\CustomsReferant\Components\ReferantWorkspaces\ReferantWorkspaceComponent.html" />
@@ -353,8 +355,9 @@
     <TypeScriptCompile Include="CustomsModules\CustomsContainerization\Components\Other\AgentStatementContainerization.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsContainerization\ModuleCustomsContainerization.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsContainerization\ModuleDeclarations.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\CourierWorksheetNGComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\GetUnloadPortCodeComponent.ts" />
-    <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierWorkspaces\CourierWorksheetNGComponent.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierWorkspaces\CourierWorksheetNGTComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierWorkspaces\VirtualScrollNG.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierWorkspaces\VirtualScrollNGScroll.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\ModuleSharedPrimeNG.ts" />
@@ -445,6 +448,7 @@
     <TypeScriptCompile Include="Common\Services\ExtendedPMs\ChargesTypeByProductsService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\HorseListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\HorsePMService.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\CourierWorksheetNGListTemplate.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\CustomsContainerizationListTemplate.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\DeclarationListTemplate.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\ListHeaderTemplates\ArrivalDateListHeaderTemplate.ts" />
