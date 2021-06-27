@@ -17,6 +17,9 @@ export class NewShipmentComponentArgs {
     public IsCreatedFromCustomerOverview: boolean = false;
     public IsMasterCreatedFromHouse: boolean = false;
     public IsStandalone: boolean = false;
+    public IsNewStandAlonePickupDelivery: boolean = false;
+    public ForwarderStandaloneShipmentId: string = null;
+    public ForwarderShipmentPickUpDeliveryTypeCode: string = null;
 }
 export class FSRWizardArgs {
     EntityPM: any;

@@ -22,6 +22,7 @@ import { ShipmentReceivablePM } from '../../../../Shipment/EntityPMs/ShipmentRec
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { FeatureToggleList } from '../../../../Infrastructure/EntityLists/FeatureToggleList';
+import { NewShipmentComponentArgs } from '../../../../Shipment/Args';
 
 @Component({    
     templateUrl: './RoutingsTabComponent.html',
@@ -42,6 +43,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
     public IsChildFeatureExists: boolean = false;
     public IsAddingPreOnCarriageVisible: boolean = false
     public CardLOVDependencyProperty1IsList: boolean = true;
+    public IsAddingStandaloneShipmentVisible: boolean = false;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -53,6 +55,10 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
 
         if (FeatureLocator.HasFeaturePermession("Shipment", "CHILDPICKUPDELIVERY")) {
             this.IsChildFeatureExists = true;
+        }
+        var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SAS")[0];
+        if (featureToggle) {
+            this.IsAddingStandaloneShipmentVisible = true;
         }
 
         this.CheckPreOnCarriageVisibility();       
@@ -74,6 +80,9 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                     this.GetWarehouseAddress();
                 }
 
+                if (s == "FollowupsChangedMainMenu") {
+                    this.entityArgs.EditComponent.ReloadEntityPM();
+                }
             });
 
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
@@ -295,62 +304,20 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
 
         switch (myLegType) {
             case "Pick Up": {
-                var myPickUpIndex = 1;
-                if (this.EntityPM.ShipmentPickUpIndex) {
-                    myPickUpIndex = this.EntityPM.ShipmentPickUpIndex + 1;
+                if (!this.IsAddingStandaloneShipmentVisible) {
+                    this.ViewAddPickupWindow();                
+                } else {
+                    this.ShowStanadAloneActionsWindow("Pickup");
                 }
-
-                var newPickupPM = new ShipmentPickUpPM(null);
-                newPickupPM.FullResponsibility = true;
-                newPickupPM.Tenant = this.EntityPM.Tenant;
-                newPickupPM.ShipmentId = this.EntityPM.Id;
-                newPickupPM.ShipmentNumber = this.EntityPM.ShipmentNumber;
-                newPickupPM.PickUpDeliveryNumber = this.EntityPM.ShipmentNumber + "/" + myPickUpIndex;
-                newPickupPM.PickUpDeliveryTypeCode = "PICK";
-                newPickupPM.PickUpDeliveryFromTypeCode = "PART";
-                newPickupPM.PickUpDeliveryToTypeCode = "PORT";
-                newPickupPM.TransportModeCode = "BYTR";                
-
-                var logitudeWindow = new LogitudeWindow();
-                logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.AddPickup");
-                logitudeWindow.WindowArgs = { ShipmentPM: this.EntityPM, EntityPM: newPickupPM, IsNewEntity: true };
-                logitudeWindow.Width = 950;
-                logitudeWindow.Height = 595;
-                logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditPickupComponent');
-
-                logitudeWindow.WindowClosed.subscribe(s => {
-                    this.BuildItemsCollection();
-                });
-
                 break;
             }
 
             case "Delivery": {
-                var myDeliveryIndex = 1;
-                if (this.EntityPM.ShipmentDeliveryIndex) {
-                    myDeliveryIndex = this.EntityPM.ShipmentDeliveryIndex + 1;
+                if (!this.IsAddingStandaloneShipmentVisible) {
+                    this.ViewAddDeliveryWindow()
+                } else {
+                    this.ShowStanadAloneActionsWindow("Delivery");
                 }
-
-                var newDeliveryPM = new ShipmentDeliveryPM(null);
-                newDeliveryPM.FullResponsibility = true;
-                newDeliveryPM.Tenant = this.EntityPM.Tenant;
-                newDeliveryPM.ShipmentId = this.EntityPM.Id;
-                newDeliveryPM.ShipmentNumber = this.EntityPM.ShipmentNumber;
-                newDeliveryPM.PickUpDeliveryNumber = this.EntityPM.ShipmentNumber + "/" + myDeliveryIndex;
-                newDeliveryPM.PickUpDeliveryTypeCode = "DELV";
-                newDeliveryPM.TransportModeCode = "BYTR";
-
-                var logitudeWindow = new LogitudeWindow();
-                logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.AddDelivery");
-                logitudeWindow.WindowArgs = { ShipmentPM: this.EntityPM, EntityPM: newDeliveryPM, IsNewEntity: true };
-                logitudeWindow.Width = 950;
-                logitudeWindow.Height = 595;
-                logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditDeliveryComponent');
-
-                logitudeWindow.WindowClosed.subscribe(s => {
-                    this.BuildItemsCollection();
-                });
-
                 break;
             }
 
@@ -424,6 +391,107 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             }
         }
     }
+    ViewAddPickupWindow() {
+        var myPickUpIndex = 1;
+        if (this.EntityPM.ShipmentPickUpIndex) {
+            myPickUpIndex = this.EntityPM.ShipmentPickUpIndex + 1;
+        }
+
+        var newPickupPM = new ShipmentPickUpPM(null);
+        newPickupPM.FullResponsibility = true;
+        newPickupPM.Tenant = this.EntityPM.Tenant;
+        newPickupPM.ShipmentId = this.EntityPM.Id;
+        newPickupPM.ShipmentNumber = this.EntityPM.ShipmentNumber;
+        newPickupPM.PickUpDeliveryNumber = this.EntityPM.ShipmentNumber + "/" + myPickUpIndex;
+        newPickupPM.PickUpDeliveryTypeCode = "PICK";
+        newPickupPM.PickUpDeliveryFromTypeCode = "PART";
+        newPickupPM.PickUpDeliveryToTypeCode = "PORT";
+        newPickupPM.TransportModeCode = "BYTR";
+
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.AddPickup");
+        logitudeWindow.WindowArgs = { ShipmentPM: this.EntityPM, EntityPM: newPickupPM, IsNewEntity: true };
+        logitudeWindow.Width = 950;
+        logitudeWindow.Height = 595;
+        logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditPickupComponent');
+
+        logitudeWindow.WindowClosed.subscribe(s => {
+            this.BuildItemsCollection();
+        }); 
+    }
+
+    ViewAddDeliveryWindow() {
+        var myDeliveryIndex = 1;
+        if (this.EntityPM.ShipmentDeliveryIndex) {
+            myDeliveryIndex = this.EntityPM.ShipmentDeliveryIndex + 1;
+        }
+
+        var newDeliveryPM = new ShipmentDeliveryPM(null);
+        newDeliveryPM.FullResponsibility = true;
+        newDeliveryPM.Tenant = this.EntityPM.Tenant;
+        newDeliveryPM.ShipmentId = this.EntityPM.Id;
+        newDeliveryPM.ShipmentNumber = this.EntityPM.ShipmentNumber;
+        newDeliveryPM.PickUpDeliveryNumber = this.EntityPM.ShipmentNumber + "/" + myDeliveryIndex;
+        newDeliveryPM.PickUpDeliveryTypeCode = "DELV";
+        newDeliveryPM.TransportModeCode = "BYTR";
+
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.AddDelivery");
+        logitudeWindow.WindowArgs = { ShipmentPM: this.EntityPM, EntityPM: newDeliveryPM, IsNewEntity: true };
+        logitudeWindow.Width = 950;
+        logitudeWindow.Height = 595;
+        logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditDeliveryComponent');
+
+        logitudeWindow.WindowClosed.subscribe(s => {
+            this.BuildItemsCollection();
+        });
+    }
+
+    ShowStanadAloneActionsWindow(typeCode: string) {
+
+        var windowTitle = "Add " + typeCode;
+        var logWindow = new LogitudeWindow();
+        logWindow.WindowArgs = { Code: typeCode };
+        logWindow.ShowCloseButton = true;
+        logWindow.Title = windowTitle;
+        logWindow.Width = 400;
+        logWindow.Height = 150;
+        logWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/StandAlonePickupDeilveryActionsComponent");
+        logWindow.WindowClosed.subscribe(s => {
+            if (s == "Pickup") {
+                this.ViewAddPickupWindow();
+            } else if (s == "Delivery") {
+                this.ViewAddDeliveryWindow();
+            } else if (s == "Shipment") {
+                this.CreateStandaloneShipment(typeCode)
+            }
+        });
+        
+    }
+
+    private CreateStandaloneShipment(typeCode: string) {
+        var shipmentPM: ShipmentPM = ShipmentTool.BuildStansaloneShipment(null, null, this.EntityPM);
+        var args = new NewShipmentComponentArgs();
+        args.Shipment = shipmentPM;
+        args.IsStandalone = true;
+        args.IsNewStandAlonePickupDelivery = true;
+        args.ForwarderStandaloneShipmentId = this.EntityPM.Id;
+        args.ForwarderShipmentPickUpDeliveryTypeCode = typeCode;
+
+        var str: string = TextCodeTranslator.Translate("General.O.NewEntity");
+        str = str.replace("%Entity", TextCodeTranslator.TranslateTable("Shipment"));
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 960;
+        logWindow.Height = 570;
+        logWindow.WindowArgs = args;
+        logWindow.Title = str;
+        logWindow.Show('./Shipment/Components/NewShipment/NewShipmentComponent');
+        logWindow.WindowClosed.subscribe(s => {
+            this.BuildItemsCollection();
+        }); 
+    }
+
     EditLeg(myRoutingItem: RoutingItem) {
         var myLegType: string = myRoutingItem.LegType;
 
