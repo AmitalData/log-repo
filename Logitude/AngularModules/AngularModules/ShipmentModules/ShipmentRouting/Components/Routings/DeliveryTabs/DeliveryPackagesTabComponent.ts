@@ -104,6 +104,8 @@ export class DeliveryPackagesTabComponent {
             this.IsEditingEnabled = ShipmentTool.IsEditingEnabled(this.ShipmentPM);
         }
 
+        
+
         if (this.IsEditingEnabled) {
             if (this.IsConnectedToContainer) {
                 this.IsEditingEnabled = false;
@@ -260,7 +262,7 @@ export class DeliveryPackagesTabComponent {
 
         var packagesTabComponent: PackagesTabComponent = new PackagesTabComponent(entityArgs, new EntityResourceService());
         packagesTabComponent.ngOnInit();
-        packagesTabComponent.IsEditingEnabled = false;
+        packagesTabComponent.IsEditingEnabled = AppTool.IsNullOrEmpty(deliveryItemComponent.EntityPM.ContainerEntityId) ? true: false;
         var itemComponent = new ShipmentPackageItem(shipmentPackage, packagesTabComponent, false);
         logWindow.Width = 940;
         logWindow.Height = 610;

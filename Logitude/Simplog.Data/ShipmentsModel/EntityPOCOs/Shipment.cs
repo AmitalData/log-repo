@@ -682,5 +682,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public virtual PickUpDeliveryTransportMode OnForwardingAdditionalTransportMode { get; set; }
         public bool IsStandalonePickupDelivery { get; set; }
         public bool IsHTSMissing { get; set; }
+        public string ForwarderStandaloneShipmentId { get; set; }
     }
 }

@@ -15,7 +15,7 @@
         </td>
     </tr>
 
-    <tr>
+    <tr *ngIf="IsVisible">
         <td>
             <div class="MediaFill">
                 <div class="SimpleGridView">
@@ -33,8 +33,8 @@
                                 <td [style.width.px]="PackageTypeColumnWidth" [style.min-width.px]="PackageTypeColumnWidth" [style.max-width.px]="PackageTypeColumnWidth">{{'ShipmentPickUpDeliveryPackage.O.PackageType' | TextCodeTranslationPipe}}</td>
                                 <td style="width: 110px; min-width: 110px; max-width: 110px;" *ngIf="TransportModeId != 'A'">{{'ShipmentPickUpDeliveryPackage.O.ContainerNumber' | TextCodeTranslationPipe}}</td>
                                 <td style="width: 60px; min-width: 60px; max-width: 60px;">{{'ShipmentPickUpDeliveryPackage.O.Quantity' | TextCodeTranslationPipe}}</td>
-                                <td style="width: 60px; min-width: 60px; max-width: 60px;">{{'ShipmentPickUpDeliveryPackage.O.Volume' | TextCodeTranslationPipe}}</td>
-                                <td style="width: 80px; min-width: 80px; max-width: 80px;">{{'ShipmentPickUpDeliveryPackage.O.GrossWeight' | TextCodeTranslationPipe}}</td>
+                                <td style="width: 60px; min-width: 60px; max-width: 60px;">{{VolumeLabel}}</td>
+                                <td style="width: 80px; min-width: 80px; max-width: 80px;">{{GrossWeightLabel}}</td>
                                 <td>{{'ShipmentPickUpDeliveryPackage.O.DescriptionOfGoods' | TextCodeTranslationPipe}}</td>
                             </tr>
                         </table>

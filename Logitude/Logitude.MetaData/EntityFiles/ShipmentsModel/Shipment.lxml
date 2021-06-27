@@ -90633,7 +90633,7 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-   <field
+  <field
     Id="&quot;bbfa2a50-bcc9-49d0-b74e-dd1d9bfaacab&quot;"
     FieldName="&quot;DocumentFilingIds&quot;"
     OldNames="DocumentFilingIds"
@@ -90967,7 +90967,7 @@
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
-    HasDataBaseField="false"
+    HasDataBaseField="true"
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
@@ -91014,6 +91014,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ForwarderPickUpDeliveryType&quot;"
     ListPropertyPath="&quot;ForwarderPickUpDeliveryType&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"

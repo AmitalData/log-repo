@@ -1936,6 +1936,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             #endregion
 
             shipmentPM.IsStandalonePickupDelivery = shipment.IsStandalonePickupDelivery;
+            shipmentPM.ForwarderStandaloneShipmentId = shipment.ForwarderStandaloneShipmentId;
             shipmentPM.ProductCode = shipment.ProductCode;
             shipmentPM.LastStatusLogDate = shipment.LastStatusLogDate;
             shipmentPM.ComputedStatusId = shipment.ComputedStatusId;
@@ -3658,6 +3659,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
 
             shipmentPM.IsStandalonePickupDelivery = shipment.IsStandalonePickupDelivery;
+            shipmentPM.ForwarderStandaloneShipmentId = shipment.ForwarderStandaloneShipmentId;
             shipmentPM.RegistryDate = shipment.RegistryDate;
             shipmentPM.IsAssembly = shipment.IsAssembly;
             shipmentPM.MasterShipmentDataId = shipment.MasterShipmentDataId;
@@ -3789,6 +3791,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
 
             shipmentPM.IsStandalonePickupDelivery = shipment.IsStandalonePickupDelivery;
+            shipmentPM.ForwarderStandaloneShipmentId = shipment.ForwarderStandaloneShipmentId;
             shipmentPM.CreatedByPartner = shipment.CreatedByPartner;
             shipmentPM.Tenant = shipment.Tenant;
             shipmentPM.Id = shipment.Id;
