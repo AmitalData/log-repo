@@ -69,6 +69,8 @@ export class Urls {
     public static readonly AirLineSpecialHandlingCodes = "**/awbspecialhandlingcodesextended";
     public static readonly AirLinesAddress = "**/PartnersDomain"
     public static readonly AirLinesTariffTranslations = "**/tariffcarriertranslations"
+    public static readonly GetAirlineByCode = "**/GetAirlineByCode?**"
+    public static readonly GetTarrifHeaders = "**/GetTarrifHeadersByCardIdAndTypeCode?**"
 
     public static readonly GetCopyCurrencyToTenant = "**/GetCopyCurrencyToTenant?**"
     public static readonly Currencies = "**/currencies"

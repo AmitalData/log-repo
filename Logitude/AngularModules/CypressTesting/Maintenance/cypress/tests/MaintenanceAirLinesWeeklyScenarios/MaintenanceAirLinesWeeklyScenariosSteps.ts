@@ -69,7 +69,7 @@ Given("an air line with the following details", (dataTable) => {
 });
 
 When("create air line", () => {
-    AirLineActions.MockCreateAirLine();
+    AirLineActions.CreateAirLine();
 });
 
 Then("the air line should create successfully", () => {
@@ -78,12 +78,12 @@ Then("the air line should create successfully", () => {
 //#endregion
 
 //#region Search for the shipping line by code
-When("search for {string} air line", (searchValueField) => {
-    GeneralActions.Search(searchValueField)
+When("search the air line", () => {
+    AirLineActions.Search()
 });
 
-Then("the {string} air line should appear successfully", (searchValueField) => {
-    GeneralActions.AssertSearch(searchValueField)
+Then("the air line should appear successfully", () => {
+    AirLineActions.AssertSearch()
 });
 //#endregion
 
