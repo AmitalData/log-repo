@@ -3,7 +3,7 @@ import { MaintenanceSelectors } from "../../selectors/Selectors";
 import { PackageTypeSelectors } from "../../selectors/PackageTypeSelectors";
 import * as PackageTypeActions from "../../actions/PackageTypeActions";
 import * as Actions from "../../actions/Actions";
-import * as GeneralActions from "../../actions/GeneralActions";
+import * as GeneralActions from "../../actions/BaseActions";
 import * as MaintenanceActions from "../../actions/Actions";
 import { PackageTypeDetails } from "../../models/PackageTypeDetails";
 import * as Assists from "../../../../Base/cypress/assists/Assists";

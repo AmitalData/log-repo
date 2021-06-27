@@ -930,7 +930,7 @@ export class CustomerOverviewTabComponent extends BaseComponent implements OnIni
             this.filterAgrs.addAdditionalFilter("DueDate", DateTool.GetCurrentDateTimeAsUtc(), null, null, "LessThan", false, false, false, "Boolean");
             this.filterAgrs.addAdditionalFilter("IsAutoCredit", false, null, null, "Equals", false, false, false, "Boolean");
             this.filterAgrs.addAdditionalFilter("IsCancelled", false, null, null, "Equals", false, false, false, "Boolean");
-            this.filterAgrs.addAdditionalFilter("StatusCode", "AD,PP,PR", null, null, "InList", false, false, false, "string");
+            this.filterAgrs.addAdditionalFilter("StatusCode", "AD,PP,PR,NT", null, null, "InList", false, false, false, "string");
 
             var listArgs = new ListComponentArgs();
             listArgs.Filters = this.filterAgrs;

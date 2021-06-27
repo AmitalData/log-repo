@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;26a6&quot;"
+  Code="&quot;820a&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -562,6 +562,16 @@
       Name="&quot;CollaborationTool&quot;"
       SearchFields="&quot;CTL,CollaborationTool&quot;"
       Description="&quot;Collaboration Tool&quot;" />
+    <Record
+      Code="&quot;SDE&quot;"
+      Name="&quot;Solve Duplicated Events Code&quot;"
+      SearchFields="&quot;SDE,Duplicated Events code&quot;"
+      Description="&quot;Solve Duplicated Events Code&quot;" />
+    <Record
+      Name="&quot;Lock Counter Procedure&quot;"
+      SearchFields="&quot;LCP,Lock Counter Procedure&quot;"
+      Description="&quot;Lock Counter Procedure&quot;"
+      Code="&quot;LCP&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

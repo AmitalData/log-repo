@@ -1,7 +1,7 @@
 import { BusinessUnitSelectors } from "../selectors/BusinessUnitSelectors";
 import { MaintenanceSelectors } from "../selectors/Selectors";
 import * as Actions from "./Actions";
-import * as GeneralActions from "./GeneralActions";
+import * as GeneralActions from "./BaseActions";
 import { BusinessUnitDetails } from "../models/BusinessUnitDetails";
 import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import { RestAPI } from "../../../Base/cypress/constants/RestAPI";
@@ -9,6 +9,7 @@ import { Urls } from "../constants/Urls";
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
 import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
 import { GenerateCurrentDatetimeString } from '../../../Base/cypress/actions/GenerateRandoms';
+import { constants } from "../../../Base/cypress/constants/constants";
 
 let searchFieldValue = null
 let firstBusinessUnit = null
@@ -75,8 +76,8 @@ function AssertBusinessUnitGetSingle() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetSignle, 200);
 }
 
-export function EditBusinessUnitGeneralTab(BusinessUnitDetails: BusinessUnitDetails) {
-    Actions.FillInputCheckBoxProcess(BusinessUnitSelectors.InActiveCheckBox, BusinessUnitDetails.InactiveCheckBox)
+export function CheckInactiveCheckBox() {
+    Actions.FillCheckBoxProcess(BusinessUnitSelectors.InActiveCheckBox, constants.YES)
 }
 
 export function AssertParentDisabled() {

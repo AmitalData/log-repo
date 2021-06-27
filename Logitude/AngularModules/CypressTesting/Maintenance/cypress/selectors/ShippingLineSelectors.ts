@@ -3,7 +3,7 @@ export class ShippingLineSelectors {
   public static readonly MaintenanceItem = "#MaintenanceItemMTSL"
   public static readonly SaveCloseButton = "#ShippingLine-SaveClose";
   public static readonly SaveButton = "#ShippingLine-Save";
-  public static readonly ImportShippingLine = "[data-cy='Import']"
+  public static readonly Import = "[data-cy='Import']"
   public static readonly AddNewShippingLine = "[data-cy='Add_ShippingLine']"
 
   public static readonly Name = "#ShippingLine_EnglishName";

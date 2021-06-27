@@ -3006,6 +3006,22 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                 str = TextCodeTranslator.Translate("Customs.Vendor.O.SearchVendors");
             }
 
+            if (this.ObjectTableName == "TaxReport") {
+                str = TextCodeTranslator.Translate("TaxReport.O.NewTaxReport");
+            }
+
+            if (this.ObjectTableName == "BankAccount") {
+                str = TextCodeTranslator.Translate("BankAccount.O.NewBankAccount");
+            }
+
+            if (this.ObjectTableName == "Revaluation") {
+                str = TextCodeTranslator.Translate("Revaluation.O.NewRevaluation");
+            }
+
+            if (this.ObjectTableName == "InterestBasesType") {
+                str = TextCodeTranslator.Translate("Accounting.General.O.NewInterestBases");
+            }
+
             if (!AppTool.IsNullOrEmpty(this.NewButtonLable)) {
                 str = this.NewButtonLable;
             }

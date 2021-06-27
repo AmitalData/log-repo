@@ -36,6 +36,10 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public decimal? TotalOpenChequesInLocalCur { get; set; }
         [Column("TotFutureOpenChequesInLocalCur")]
 	    public decimal? TotFutureOpenChequesInLocalCur { get; set; }
+        [Column("BalanceInForeignCurrency")]
+	    public decimal? BalanceInForeignCurrency { get; set; }
+        [Column("ForeignBalanceInDue")]
+	    public decimal? ForeignBalanceInDue { get; set; }
     }
 }
 	 

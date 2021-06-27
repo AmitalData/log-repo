@@ -6,10 +6,29 @@ import { VatTypesSelectors } from "../../selectors/VatTypesSelectors";
 import { VatTypeDetails } from "cypress/models/VatTypeDetails";
 import * as BaseActions from "../../../../Base/cypress/actions/Actions"
 import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetails";
+import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors";
 
-//#region Add multi vat type with lenght more than 5
+//#region Enable Multi-percentage
 Given("the user logged in and open {string} in maintenance menu", (maintenanceItemName) => {
     cy.Login()
+    Actions.OpenMaintenanceItemFromMaintenanceMenu(maintenanceItemName, BaseSelectors.AccountingSettings)
+});
+
+Given("navigate AR advanced settings", () => {
+    cy.Navigate(VatTypesSelectors.AccountingSetting_AdvancedARHyperlinkId)
+});
+
+When("enable multi-percentage VAT Types", () => {
+    vatTypeActions.EnableMultiPercentage()
+});
+
+Then("the accounting settings should update successfully", () => {
+    vatTypeActions.AssertEnableMultiPercentage()
+});
+//#endregion
+
+//#region Add multi vat type with lenght more than 5
+Given("the user open {string} in maintenance menu", (maintenanceItemName) => {
     Actions.OpenMaintenanceItemFromMaintenanceMenu(maintenanceItemName, VatTypesSelectors.MaintenanceItem)
 });
 

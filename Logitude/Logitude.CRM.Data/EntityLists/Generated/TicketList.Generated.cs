@@ -254,6 +254,10 @@ namespace Logitude.CRM.Data.EntityLists
        public string LastCorrespondence  { get; set; }
        [DataMember]
        public string EntityTypeName  { get; set; }
+       [DataMember]
+       public string QuoteRequestFeedback  { get; set; }
+       [DataMember]
+       public string QuoteRequestComments  { get; set; }
    }
 
 }

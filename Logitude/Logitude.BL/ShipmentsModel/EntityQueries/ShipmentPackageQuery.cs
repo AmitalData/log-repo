@@ -7,6 +7,7 @@ using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
+using System;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -168,7 +169,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        OnCarriageETD = a.OnCarriageETD,
                        LastStatusCode = a.LastStatusCode,
                        LastStatusDate = a.LastStatusDate,
-                       LastStatusName = a.LastStatus == null ? null : a.LastStatus.Name,
                        DeliveryTransportModeCode = a.DeliveryTransportModeCode,
                        ECRTransportModeCode = a.ECRTransportModeCode,
                        IsMultiHarmonize = a.IsMultiHarmonize,
@@ -190,12 +190,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        HorseName = a.Horse == null ? null : a.Horse.Name,
                        LCLContainerTypeId = a.LCLContainerTypeId,
                        ContainerEntityId = a.ContainerEntityId,
+                       ContainerStatusSourceCode = a.ContainerStatusSourceCode,
                    }).FirstOrDefault();
 
             myResult.InsideShipmentPackages = insideShipmentPackageQuery.GetInsideShipmentPackages(myResult.Id, tenant);
             myResult.ShipmentPackageItems = shipmentPackageItemQuery.GetShipmentPackageItems(myResult.Id, tenant);
             myResult.ShipmentPackageHarmonizes = shipmentPackageHarmonizeQuery.GetShipmentPackageHarmonizes(myResult.Id, tenant);
-
+            this.MapTheLastStatusName(myResult);
             return myResult;
         }
 
@@ -312,6 +313,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        HorseName = a.Horse == null ? null : a.Horse.Name,
                        LCLContainerTypeId = a.LCLContainerTypeId,
                        ContainerEntityId = a.ContainerEntityId,
+                       ContainerStatusSourceCode = a.ContainerStatusSourceCode,
                    }).ToList();
 
             var commonContext = CommonDataContext.GetContext(tenant);
@@ -353,28 +355,37 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                            select d.EnglishName).FirstOrDefault();
 
                 }
-                if (!string.IsNullOrEmpty(package.LastStatusCode))
-                {
-                    package.LastStatusName = (from d in repository.context.INTTRAStatuses
-
-                                              where d.Code == package.LastStatusCode
-
-                                              select d.Name).FirstOrDefault();
-
-
-                }
-
+                this.MapTheLastStatusName(package);
             }
-
             return shipmentPackages;
         }
+
+        private void MapTheLastStatusName(ShipmentPackagePM package)
+        {
+            if (!string.IsNullOrEmpty(package.LastStatusCode))
+            {
+                if(package.ContainerStatusSourceCode == "INT")
+                {
+                    package.LastStatusName = (from d in repository.context.INTTRAStatuses
+                                              where d.Code == package.LastStatusCode
+                                              select d.Name).FirstOrDefault();
+                }
+                else if (package.ContainerStatusSourceCode == "OIN")
+                {
+                    package.LastStatusName = (from d in repository.context.ContainerStatuses
+                                              where d.Code == package.LastStatusCode
+                                              select d.Name).FirstOrDefault();
+                }
+            }
+        }
+
         public List<ShipmentPackagePM> GetShipmentPackages(List<string> shipmentIds, int tenant)
         {
             List<ShipmentPackagePM> myResult = new List<ShipmentPackagePM>();
 
             if (shipmentIds.Count > 0)
             {
-                myResult = (from a in repository.context.ShipmentPackages.Include("PackageType").Include("LastStatus")
+                myResult = (from a in repository.context.ShipmentPackages.Include("PackageType")
                             where a.Tenant == tenant && shipmentIds.Contains(a.ShipmentId)
                             select new ShipmentPackagePM()
                             {
@@ -465,7 +476,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                 OnCarriageETD = a.OnCarriageETD,
                                 LastStatusCode = a.LastStatusCode,
                                 LastStatusDate = a.LastStatusDate,
-                                LastStatusName = a.LastStatus == null ? null : a.LastStatus.Name,
+                                //LastStatusName = a.LastStatus == null ? null : a.LastStatus.Name,
                                 DeliveryTransportModeCode = a.DeliveryTransportModeCode,
                                 ECRTransportModeCode = a.ECRTransportModeCode,
                                 IsMultiHarmonize = a.IsMultiHarmonize,
@@ -485,6 +496,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                 WarehouseReleaseNumber = a.WarehouseReleaseNumber,
                                 LCLContainerTypeId = a.LCLContainerTypeId,
                                 ContainerEntityId = a.ContainerEntityId,
+                                ContainerStatusSourceCode = a.ContainerStatusSourceCode,
                             }).ToList();
             }
 

@@ -263,6 +263,11 @@ export class APInvoiceLinePM {
     public set ForiegnAmountWithRecognizedVat(newValue: number) { if (this.foriegnAmountWithRecognizedVat != newValue) { this.foriegnAmountWithRecognizedVat = newValue; this.MarkAsDirty("ForiegnAmountWithRecognizedVat"); } }
        
 	 
+    private localAmountWithVatRecognized: number;
+    public get LocalAmountWithVatRecognized() { return this.localAmountWithVatRecognized; }
+    public set LocalAmountWithVatRecognized(newValue: number) { if (this.localAmountWithVatRecognized != newValue) { this.localAmountWithVatRecognized = newValue; this.MarkAsDirty("LocalAmountWithVatRecognized"); } }
+       
+	 
 
     public OldEntityPM: APInvoiceLinePM;
 	    

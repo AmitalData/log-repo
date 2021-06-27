@@ -25,5 +25,7 @@ export class VatTypesSelectors {
     public static readonly PercentageTab_Percentage = "#VatTypePercentage_Percentage"
     public static readonly PercentageTab_FromDate = "#date_VatTypePercentage_FromDate"
     public static readonly EventsTab = "#VatTypeTHEvents"
+    public static readonly AccountingSetting_AdvancedARHyperlinkId = "[data-cy='AdvancedARHyperlinkId']"
+    public static readonly AccountingSetting_EnableMultiPercentageVATTypes = "#AccountingSetting_EnableMultiPercentageVATTypes"
 
 }

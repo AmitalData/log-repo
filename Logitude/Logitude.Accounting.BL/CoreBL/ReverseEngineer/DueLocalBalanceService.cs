@@ -190,7 +190,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 #endif
 
-        public void ReBuild(int tenant,string AcountId,bool fastRun= false)
+        public void ReBuild(int tenant, string AccountId, bool fastRun = false)
         {
             int clientAndVendorTypeGLAccountIdsCount = -1;
             List<DueLocalBalanceM> myDueLocalBalanceListToUpdate;
@@ -204,19 +204,19 @@ namespace Logitude.Accounting.BL.CoreBL
                     var accountingContext = AccountingContext.GetContext(tenant);
                     if (fastRun)
                     {
-                        InitDueLocalBalanceListToUpdate(accountingContext, tenant, "",true,true);
+                        InitDueLocalBalanceListToUpdate(accountingContext, tenant, AccountId, true, true);
                     }
                     else
                     {
-                        InitDueLocalBalanceListToUpdate(accountingContext, tenant, "", false, false);// WHY I CHANGE TO FALSE FALSE (FROM TRUE*2) 1 NO TIME 2 THE REVERSE DUE DATE RETURN LISt
-                        
+                        InitDueLocalBalanceListToUpdate(accountingContext, tenant, AccountId, false, false);// WHY I CHANGE TO FALSE FALSE (FROM TRUE*2) 1 NO TIME 2 THE REVERSE DUE DATE RETURN LISt
+
                     }
 
                     myDueLocalBalanceListToUpdate = _QDueLocalBalanceListToUpdate.ToList();
-                    
+
                     myClientAndVendorTypeGLAccountIds = _QClientAndVendorTypeGLAccountIds.ToList();
-                    
-                    
+
+
                 }
                 clientAndVendorTypeGLAccountIdsCount = myClientAndVendorTypeGLAccountIds.Count;
 
@@ -230,7 +230,9 @@ namespace Logitude.Accounting.BL.CoreBL
                             AccountId = myAccountId,
                             RealDueInLocal = 0,
                             TotalLocalAmountLastMonthDue = decimalNull,
+                            TotalForeignAmountLastMonthDue = decimalNull,
                             TransLocalAmountDueMonth = decimalNull,
+                            TransForeignAmountDueMonth = decimalNull,
                             TransNextDueDate = dateTimeMinValue,
                         }
 
@@ -255,29 +257,35 @@ namespace Logitude.Accounting.BL.CoreBL
                             item2update = item2update ?? defaultItem;
                             var pm = pmList.First(r => r.AccountId == item2update.AccountId);
                             if (pm.NextDueDate.GetValueOrDefault() == item2update.TransNextDueDate &&
-                                pm.LocalBalanceInDue == item2update.RealDueInLocal)
+                                pm.LocalBalanceInDue == item2update.RealDueInLocal &&
+                                pm.ForeignBalanceInDue == item2update.RealDueInForeign
+                                )
                             {
                             }
                             else
                             {
-                                if (item2update.RealDueInLocal!= 0)
+                                if (item2update.RealDueInLocal != 0)
                                 {
 
                                 }
-                                var deltaLocalBalanceInDue = item2update.RealDueInLocal -pm.LocalBalanceInDue;
+                                var deltaLocalBalanceInDue = item2update.RealDueInLocal - pm.LocalBalanceInDue;
                                 pm.LocalBalanceInDue = pm.LocalBalanceInDue + deltaLocalBalanceInDue;
+
+                                var deltaForeignBalanceInDue = item2update.RealDueInForeign - pm.ForeignBalanceInDue;
+                                pm.ForeignBalanceInDue = pm.ForeignBalanceInDue + deltaForeignBalanceInDue;
+
                                 DateTime? nextDate = item2update.TransNextDueDate.Date;
-                                if (nextDate== DateTime.MinValue || nextDate == DateTime.MinValue.Date)
+                                if (nextDate == DateTime.MinValue || nextDate == DateTime.MinValue.Date)
                                 {
-                                    nextDate= null;
+                                    nextDate = null;
                                 }
                                 if (nextDate == DateTime.MaxValue || nextDate == DateTime.MaxValue.Date)
                                 {
                                     nextDate = null;
                                 }
-                                
+
                                 pm.NextDueDate = nextDate;
-                                
+
                                 pm.ChangeSetOp = ChangeSetOperation.Update;
 
                                 //myGLAccountMoreDataUpdateService.Init(null, deltaLocalBalanceInDue, nextDate);
@@ -302,7 +310,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 LogMessagingUtil.Instance.AppendLine("DueLocalBalanceService tenant= " + tenant + "  accountIdList.Count=" + clientAndVendorTypeGLAccountIdsCount + ") took:" + sw.Elapsed.ToString());
             }
         }
-        public List<DueLocalBalanceDiffM> ReverseEngineer(int tenant,string AccountId)
+        public List<DueLocalBalanceDiffM> ReverseEngineer(int tenant, string AccountId)
         {
             var sw = Stopwatch.StartNew();
             try
@@ -310,7 +318,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 using (var scope = TransactionFactory.GetTransaction())
                 {
                     var accountingContext = AccountingContext.GetContext(tenant);
-                    InitDueLocalBalanceListToUpdate(accountingContext, tenant, AccountId, false,false);
+                    InitDueLocalBalanceListToUpdate(accountingContext, tenant, AccountId, false, false);
 
                     var myGLAccountQueryService = new GLAccountQueryService(accountingContext);
 
@@ -324,19 +332,22 @@ namespace Logitude.Accounting.BL.CoreBL
 
                         from myGLAcc in qClientAndVendorTypeGLAccount
                         select new DueLocalBalanceM
-                            {
-                                AccountId = myGLAcc.Id,
-                                RealDueInLocal = myGLAcc.LocalBalanceInDue == null ? 0 : (decimal)myGLAcc.LocalBalanceInDue,
-                                TotalLocalAmountLastMonthDue = decimalNull,
-                                TransLocalAmountDueMonth = decimalNull,
-                                TransNextDueDate = myGLAcc.NextDueDate == null 
+                        {
+                            AccountId = myGLAcc.Id,
+                            RealDueInLocal = myGLAcc.LocalBalanceInDue == null ? 0 : (decimal)myGLAcc.LocalBalanceInDue,
+                             RealDueInForeign = myGLAcc.ForeignBalanceInDue == null ? 0 : (decimal)myGLAcc.ForeignBalanceInDue,
+                            TotalLocalAmountLastMonthDue = decimalNull,
+                            TotalForeignAmountLastMonthDue = decimalNull,
+                            TransLocalAmountDueMonth = decimalNull,
+                            TransForeignAmountDueMonth = decimalNull,
+                            TransNextDueDate = myGLAcc.NextDueDate == null
                                 //? dateTimeMinValue : (DateTime)myGLAcc.NextDueDate,
                                 ? dateTimeMaxValue : (DateTime)myGLAcc.NextDueDate,
-                            }
+                        }
 
                             );
                     //dbGLaccount.ToList();
-                        
+
                     var qDiff =
                         (
                    from db in dbGLaccount
@@ -344,30 +355,33 @@ namespace Logitude.Accounting.BL.CoreBL
                    on db.AccountId equals calc.AccountId into gjoin
                    from calcCanBeEmpty in gjoin.DefaultIfEmpty()
 
-                   //where 
-                   //!db.RealDueInLocal.Equals(calcCanBeEmpty.RealDueInLocal) ||
-                   //!db.TransNextDueDate.Equals( calcCanBeEmpty.TransNextDueDate)
+                       //where 
+                       //!db.RealDueInLocal.Equals(calcCanBeEmpty.RealDueInLocal) ||
+                       //!db.TransNextDueDate.Equals( calcCanBeEmpty.TransNextDueDate)
 
 
                    select new DueLocalBalanceDiffM()
                    {
                        AccountId = db.AccountId,
                        CalcDueInLocal = calcCanBeEmpty.RealDueInLocal == null ? 0 : calcCanBeEmpty.RealDueInLocal,
-                       CalcNextDueDate = 
+                       CalcDueInForeign= calcCanBeEmpty.RealDueInForeign == null ? 0 : calcCanBeEmpty.RealDueInForeign,
+                       CalcNextDueDate =
                        //calcCanBeEmpty.TransNextDueDate == null ? dateTimeMinValue : calcCanBeEmpty.TransNextDueDate,
                        calcCanBeEmpty.TransNextDueDate == null ? dateTimeMaxValue : calcCanBeEmpty.TransNextDueDate,
                        DBDueInLocal = db.RealDueInLocal == null ? 0 : db.RealDueInLocal,
+                       DBDueInForeign = db.RealDueInForeign == null ? 0 : db.RealDueInForeign,
                        //DBNextDueDate = db.TransNextDueDate == null ? dateTimeMinValue : db.TransNextDueDate,
                        DBNextDueDate = db.TransNextDueDate == null ? dateTimeMaxValue : db.TransNextDueDate,
                    }
                    );
                     qDiff =
                         (from a in qDiff
-                         where (!a.CalcDueInLocal.Equals(a.DBDueInLocal) || !a.CalcNextDueDate.Equals(a.DBNextDueDate))
+                         where (!a.CalcDueInLocal.Equals(a.DBDueInLocal) || !a.CalcDueInForeign.Equals(a.DBDueInForeign) ||  !a.CalcNextDueDate.Equals(a.DBNextDueDate))
+
                          select a);
-                   var myDiffList  =qDiff.ToList();
-                    myDiffList=myDiffList.Where( a=> !a.CalcDueInLocal.Equals(a.DBDueInLocal) || !a.CalcNextDueDate.Date.Equals(a.DBNextDueDate.Date)).ToList();
-                   return myDiffList;
+                    var myDiffList = qDiff.ToList();
+                    myDiffList = myDiffList.Where(a => !a.CalcDueInLocal.Equals(a.DBDueInLocal) || !a.CalcDueInForeign.Equals(a.DBDueInForeign) || !a.CalcNextDueDate.Date.Equals(a.DBNextDueDate.Date)).ToList();
+                    return myDiffList;
 
 
                 }
@@ -383,7 +397,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
         }
 
-        private void InitDueLocalBalanceListToUpdate(IAccountingContext accountingContext, int tenant,string AccountId, bool filterByNextDueDate,bool onlyWithActivity)
+        private void InitDueLocalBalanceListToUpdate(IAccountingContext accountingContext, int tenant, string AccountId, bool filterByNextDueDate, bool onlyWithActivity)
         {
             //using (var scope = TransactionFactory.GetTransaction())
             {
@@ -402,21 +416,28 @@ namespace Logitude.Accounting.BL.CoreBL
                         qClientAndVendorTypeGLAccount.Where(a => a.NextDueDate <= _today);
 
                 }
-                qClientAndVendorTypeGLAccountIds = qClientAndVendorTypeGLAccount.Select(r => r.Id);
+                var qGlAccountIdIsMulti = qClientAndVendorTypeGLAccount.Select(r => new { r.Id, r.IsMultiCurrency });
+
+                qClientAndVendorTypeGLAccountIds = qGlAccountIdIsMulti.Select(r => r.Id);
                 if (!string.IsNullOrWhiteSpace(AccountId))
                 {
                     qClientAndVendorTypeGLAccountIds = qClientAndVendorTypeGLAccountIds.Where(r => r == AccountId);
                 }
 
+
                 var qTotalLocalAmountLastMonthDue =
                     (from totDueDate in repoGLAccountTotalByMonths.GetQTotalByDateTypeCodeUntil(tenant, _lastMonth, qClientAndVendorTypeGLAccountIds, GLAccountTotalDateTypeValues.DueDate)
-                     group totDueDate by totDueDate.AccountId into g
+                     join a in qGlAccountIdIsMulti on totDueDate.AccountId equals a.Id
+                     group totDueDate by new { totDueDate.AccountId, a.IsMultiCurrency } into g
                      select new DueLocalBalanceM
                      {
-                         AccountId = g.Key,
+                         AccountId = g.Key.AccountId,
                          RealDueInLocal = 0,
+                          RealDueInForeign=0,
                          TotalLocalAmountLastMonthDue = g.Sum(r => r.LocalAmountDebit - r.LocalAmountCredit),
+                         TotalForeignAmountLastMonthDue = g.Key.IsMultiCurrency == true ? g.Sum(r => r.LocalAmountDebit - r.LocalAmountCredit) : g.Sum(r => r.ForeignAmountDebit - r.ForeignAmountCredit),
                          TransLocalAmountDueMonth = 0,
+                         TransForeignAmountDueMonth = 0,
                          TransNextDueDate = dateTimeMaxValue,
                      });
 
@@ -425,13 +446,17 @@ namespace Logitude.Accounting.BL.CoreBL
                 var qLedgerTrans =
                     (
                     from transDueDate in repoLedgerTransactionRepository.GetQBetweenDueInclusive(tenant, qClientAndVendorTypeGLAccountIds, _thisBeginOfMonth, _today)
-                    group transDueDate by transDueDate.AccountId into g
+                    join a in qGlAccountIdIsMulti on transDueDate.AccountId equals a.Id
+                    group transDueDate by new { transDueDate.AccountId, a.IsMultiCurrency } into g
                     select new DueLocalBalanceM
                     {
-                        AccountId = g.Key,
+                        AccountId = g.Key.AccountId,
                         RealDueInLocal = 0,
+                         RealDueInForeign =0,
                         TotalLocalAmountLastMonthDue = 0,
+                        TotalForeignAmountLastMonthDue = 0,
                         TransLocalAmountDueMonth = g.Sum(r => r.LocalAmountDebit - r.LocalAmountCredit),
+                        TransForeignAmountDueMonth = g.Key.IsMultiCurrency == true ? g.Sum(r => r.LocalAmountDebit - r.LocalAmountCredit) : g.Sum(r => r.ForeignAmountDebit - r.ForeignAmountCredit),
                         TransNextDueDate = dateTimeMaxValue,
                     });
 
@@ -439,21 +464,24 @@ namespace Logitude.Accounting.BL.CoreBL
                 var nextStep =
                     (from transDueDate in
                          repoLedgerTransactionRepository.GetQDueGreaterthan(tenant, qClientAndVendorTypeGLAccountIds, _today)
-                     //    accountingContext.LedgerTransactions
-                     //where transDueDate.Tenant == tenant
-                     //where listBatch.Contains(transDueDate.AccountId)
-                     //where transDueDate.DueDate > today
+                         //    accountingContext.LedgerTransactions
+                         //where transDueDate.Tenant == tenant
+                         //where listBatch.Contains(transDueDate.AccountId)
+                         //where transDueDate.DueDate > today
                      group transDueDate by transDueDate.AccountId into g
                      select new DueLocalBalanceM
                      {
                          AccountId = g.Key,
                          RealDueInLocal = 0,
+                          RealDueInForeign=0,
                          TotalLocalAmountLastMonthDue = 0,
+                         TotalForeignAmountLastMonthDue = 0,
                          TransLocalAmountDueMonth = 0,
+                         TransForeignAmountDueMonth = 0,
                          TransNextDueDate = g.Min(r => r.DueDate),
                      });
-                
-                    var all = qTotalLocalAmountLastMonthDue.Union(qLedgerTrans).Union(nextStep);
+
+                var all = qTotalLocalAmountLastMonthDue.Union(qLedgerTrans).Union(nextStep);
                 bool UnionreturnsDistinctvalues = true;
                 if (UnionreturnsDistinctvalues)
                 {
@@ -462,7 +490,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 if (!string.IsNullOrWhiteSpace(AccountId))
                 {
-                    var allList = all.ToList(); 
+                    var allList = all.ToList();
                 }
                 var theDueLocalBalanceListToUpdate =
                 (from m in all
@@ -471,9 +499,12 @@ namespace Logitude.Accounting.BL.CoreBL
                  {
                      AccountId = g.Key,
                      //RealDueInLocal = g.Sum(r => r.TotalLocalAmountLastMonthDue) ?? 0 + g.Sum(r => r.TransLocalAmountDueMonth) ?? 0,
-                     RealDueInLocal = g.Sum(r => r.TotalLocalAmountLastMonthDue  + r.TransLocalAmountDueMonth ) ?? 0,
+                     RealDueInLocal = g.Sum(r => r.TotalLocalAmountLastMonthDue + r.TransLocalAmountDueMonth) ?? 0,
+                     RealDueInForeign = g.Sum(r => r.TotalForeignAmountLastMonthDue + r.TransForeignAmountDueMonth) ?? 0,
                      TotalLocalAmountLastMonthDue = decimalNull,
+                     TotalForeignAmountLastMonthDue = decimalNull,
                      TransLocalAmountDueMonth = decimalNull,
+                     TransForeignAmountDueMonth = decimalNull,
                      TransNextDueDate = g.Min(r => r.TransNextDueDate),
                  }
                 );
@@ -482,7 +513,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     theDueLocalBalanceListToUpdate =
                         theDueLocalBalanceListToUpdate
-                        .Where(g => g.TransNextDueDate != dateTimeMaxValue || g.RealDueInLocal != null);
+                        .Where(g => g.TransNextDueDate != dateTimeMaxValue || g.RealDueInLocal != null || g.RealDueInForeign != null);
                 }
 
 
@@ -516,7 +547,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 try
                 {
-                    this.ReBuild(tenant,"",true);
+                    this.ReBuild(tenant, "", true);
                 }
                 catch (Exception e)
                 {
@@ -534,23 +565,33 @@ namespace Logitude.Accounting.BL.CoreBL
         public string AccountId { get; set; }
 
         public decimal CalcDueInLocal { get; set; }
+        public decimal CalcDueInForeign { get; set; }
         public DateTime CalcNextDueDate { get; set; }
-
+        
         public decimal DBDueInLocal { get; set; }
+        public decimal DBDueInForeign { get; set; }
         public DateTime DBNextDueDate { get; set; }
+        
     }
     public class DueLocalBalanceM
     {
+
+
         public string AccountId { get; set; }
 
 
 
         public decimal? TotalLocalAmountLastMonthDue { get; set; }
 
+        public decimal? TotalForeignAmountLastMonthDue { get; set; }
+
         public decimal? TransLocalAmountDueMonth { get; set; }
+
+        public decimal? TransForeignAmountDueMonth;
 
         public DateTime TransNextDueDate { get; set; }
 
         public decimal RealDueInLocal { get; set; }
+        public decimal RealDueInForeign { get; set; }
     }
 }

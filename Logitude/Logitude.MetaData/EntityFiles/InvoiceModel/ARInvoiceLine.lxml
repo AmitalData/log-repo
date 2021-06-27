@@ -36,7 +36,9 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="ARInvoice"
   DefaultText="&quot;A/R Invoice Line&quot;"
-  Code="&quot;07cf&quot;"
+
+  Code="&quot;389f&quot;"
+
   Name="&quot;ARInvoiceLine&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Invoice&quot;"
@@ -1514,7 +1516,7 @@
     MinLength="0"
     MaxLength="500"
     IsRequired="false"
-    CopyToDW="false"
+    CopyToDW="true"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
     CanFilter="false"

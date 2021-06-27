@@ -7477,6 +7477,8 @@
     <TypeScriptCompile Include="Shipment\DataContract\LogboxShipmentExportExcelArgs.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\ContainerFollowUpList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\ContainerList.ts" />
+    <TypeScriptCompile Include="Shipment\EntityLists\ContainerStatusList.ts" />
+    <TypeScriptCompile Include="Shipment\EntityLists\ContainerStatusSourceList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\CustomsTransferHeaderList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\CustomsTransferTypeList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\CustomsTransmissionsStatusList.ts" />
@@ -7526,6 +7528,8 @@
     <TypeScriptCompile Include="Shipment\Services\StandardLists\AWBAdditionalHandlingInfoListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\ContainerFollowUpListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\ContainerListService.ts" />
+    <TypeScriptCompile Include="Shipment\Services\StandardLists\ContainerStatusListService.ts" />
+    <TypeScriptCompile Include="Shipment\Services\StandardLists\ContainerStatusSourceListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\CustomsTransferHeaderListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\CustomsTransferTypeListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\HarmonizeCodeListService.ts" />
