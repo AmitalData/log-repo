@@ -6,10 +6,11 @@
         public static string TaskDone = "taskdone";
         public static string WorkflowStarter = "workflowstarter";
         public static string CreateTask = "createconsumer";
-        public static string UpdateTask = "updateconsumer";
+        public static string UpdateShipment = "updateconsumer";
         public static string LogitudePorts = "ports";
         public static string LogitudeCountries = "countries";
         public static string LogitudeContacts = "contacts";
         public static string LogitudeCards = "cards";
+        public static string UpdateWorkflowsVariables = "updateworkflowsvariables";
     }
 }

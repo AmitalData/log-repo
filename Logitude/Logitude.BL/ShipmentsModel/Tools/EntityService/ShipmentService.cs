@@ -338,6 +338,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 BuildAgentSharedManifest();
                 RunAutomation("OnCreate");
 
+                if (UpdateByEmail != "system@tenant" + entityPM.Tenant + ".com")
+                {
+                    AddShipmentUpdateKafkaQueueMessage("CToolShipmentsCreate");
+                }
+
                 scope.Complete();
             }
         }
@@ -573,26 +578,26 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 // Produce shipment update msg
                 if (UpdateByEmail != "system@tenant" + entityPM.Tenant + ".com")
                 {
-                    AddShipmentUpdateKafkaQueueMessage();
+                    AddShipmentUpdateKafkaQueueMessage("CToolShipmentsUpdate");
                 }
                  
                 scope.Complete();
                 #endregion
             }
         }
-        private void AddShipmentUpdateKafkaQueueMessage()
+        private void AddShipmentUpdateKafkaQueueMessage(string queueName)
         {
             if (!FeatureToggleHelper.HasFeatureToggle("CTL", entityPM.Tenant))
             {
                 return;
             }
-            AddKafkaQueueMessage();
+            AddKafkaQueueMessage(queueName);
         }
 
-        private void AddKafkaQueueMessage()
+        private void AddKafkaQueueMessage(string queueName)
         {
             IQueueService queueservice = new DbQueueService();
-            queueservice.InitializeQueue("CToolShipments", 0);
+            queueservice.InitializeQueue(queueName, 0);
             var queueMessage = new Dictionary<string, string>() {
                 { "ShipmentId", entityPM.Id },
                 { "Tenant", tenant.ToString()}};

@@ -1,9 +1,7 @@
 ﻿<Script DBType="Global">
-  <Sql Version="2">
+  <Sql Version="1">
     <![CDATA[
-
-update BatchServicesDefinitions set QueueDefinitionCode = 'CToolShipmentsUpdate' where Code = 'ShipmentUpdateWR'
-
+     
 INSERT INTO [dbo].[BatchServicesDefinitions]
            ([Code]
            ,[ClassName]
@@ -11,22 +9,20 @@ INSERT INTO [dbo].[BatchServicesDefinitions]
            ,[Parameter2]
            ,[QueueDefinitionCode])
      VALUES
-           ('ShipmentUpdateWR'
-           ,'ShipmentUpdateWR'
+           ('ShipmentCreateWR'
+           ,'ShipmentCreateWR'
            ,NULL
            ,NULL
-           ,'CToolShipmentsUpdate')
+           ,'CToolShipmentsCreate')
 
 INSERT INTO [dbo].[BatchServicesDefinitionMods]
            ([Code]
            ,[InActive]
            ,[NumberOfThreads])
      VALUES
-           ('ShipmentUpdateWR'
+           ('ShipmentCreateWR'
            ,0
            ,1)
-
-
 
     ]]>
   </Sql>

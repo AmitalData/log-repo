@@ -11,10 +11,10 @@ using System.Threading;
 
 namespace CommunicationWorkerRole
 {
-    class ShipmentUpdateWR : WorkerEntryPoint
+    class ShipmentCreateWR : WorkerEntryPoint
     {
         DbQueueService queueservice;
-        string queueName = "CToolShipmentsUpdate";
+        string queueName = "CToolShipmentsCreate";
 
         public override void Run()
         {
@@ -33,7 +33,7 @@ namespace CommunicationWorkerRole
 
                             var ShipmentUpdateMessageProducer = new Producer();
                             var serializedShipmentUpdateMessage = JsonConvert.SerializeObject(entityPM, Formatting.Indented);
-                            var result = ShipmentUpdateMessageProducer.Produce(KafkaTopics.ShipmentsUpdateTopic, KakaMessageTypes.ShipmentUpdate, serializedShipmentUpdateMessage);
+                            var result = ShipmentUpdateMessageProducer.Produce(KafkaTopics.ShipmentsCreateTopic, KakaMessageTypes.ShipmentCreate, serializedShipmentUpdateMessage);
                             queueservice.Complete();
                         }
                     }
@@ -41,7 +41,7 @@ namespace CommunicationWorkerRole
                     {
                         queueservice.CompleteAsFailed();
                         ConnectClient();
-                        ExceptionHandler.HandleException(ex, DateTime.Now, 1, null, "CToolShipmentsUpdate worker role start", null, null);
+                        ExceptionHandler.HandleException(ex, DateTime.Now, 1, null, "CToolShipmentsCreate worker role start", null, null);
                         Thread.Sleep(10000);
                     }
                 }
@@ -60,7 +60,7 @@ namespace CommunicationWorkerRole
             ServicePointManager.DefaultConnectionLimit = 12;
 
             ThreadId = Guid.NewGuid().ToString();
-            BatchServiceCode = "CToolShipmentsUpdate";
+            BatchServiceCode = "CToolShipmentsCreate";
 
             return base.OnStart();
         }

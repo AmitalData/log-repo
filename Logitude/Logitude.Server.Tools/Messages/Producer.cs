@@ -35,14 +35,14 @@ namespace Logitude.Server.Tools.Messages
             return config;
         }
 
-        public Task<DeliveryResult<long, string>> Produce(string topic, long key, string logitudeUpdateMessage)
+        public DeliveryResult<long, string> Produce(string topic, long key, string logitudeUpdateMessage)
         {
-            return ProducerBuilder.ProduceAsync(topic, new Message<long, string> { Key = key, Value = logitudeUpdateMessage });
+            return ProducerBuilder.ProduceAsync(topic, new Message<long, string> { Key = key, Value = logitudeUpdateMessage }).GetAwaiter().GetResult();
         }
 
-        public Task<DeliveryResult<long, string>> Produce(TopicPartition topicPartition, long key, string logitudeUpdateMessage)
+        public DeliveryResult<long, string> Produce(TopicPartition topicPartition, long key, string logitudeUpdateMessage)
         {
-            return ProducerBuilder.ProduceAsync(topicPartition, new Message<long, string> { Key = key, Value = logitudeUpdateMessage });
+            return ProducerBuilder.ProduceAsync(topicPartition, new Message<long, string> { Key = key, Value = logitudeUpdateMessage }).GetAwaiter().GetResult();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="Shipments">
 
-  <Sql Version="5">
+  <Sql Version="6">
 
     <![CDATA[
       
