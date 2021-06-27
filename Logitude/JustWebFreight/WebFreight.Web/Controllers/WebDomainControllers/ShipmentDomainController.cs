@@ -2840,6 +2840,74 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
 
         }
+
+        public HttpResponseMessage GetPickupDeliveryValidForInlandDomestic(string pickupDeliveryId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                bool isValid = true;
+                ShipmentPickUpDeliveryRepository shipmentPickUpDeliveryRepository = new ShipmentPickUpDeliveryRepository(tenant);
+                ShipmentPickUpDelivery pickUpDelivery = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDelivery(tenant, pickupDeliveryId);
+
+                if(pickUpDelivery != null)
+                {
+                    List<DomesticCountry> iDomesticCountries = this.GetDomesticCountries(pickUpDelivery, tenant);
+
+                    if (iDomesticCountries.GroupBy(g => g.CountryId).Count() > 1)
+                    {
+                        bool isAllPortsEC = iDomesticCountries.Where(d => d.CountryIsEC == false).Any() ? false : true;
+                        bool isAllPortsNA = iDomesticCountries.Where(d => d.CountryIsNorthAmerica == false).Any() ? false : true;
+
+                        if (!isAllPortsEC && !isAllPortsNA)
+                        {
+                            isValid = false;
+                        }
+                    }
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, isValid);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+        private List<DomesticCountry> GetDomesticCountries(ShipmentPickUpDelivery pickUpDelivery, int tenant)
+        {
+            List<DomesticCountry> iDomesticCountries = new List<DomesticCountry>();
+            AddDomesticAddress(iDomesticCountries, pickUpDelivery.FromAddressId, tenant);
+            AddDomesticAddress(iDomesticCountries, pickUpDelivery.ToAddressId, tenant);
+
+            return iDomesticCountries;
+        }
+        private static void AddDomesticAddress(List<DomesticCountry> iDomesticCountries, string iAddressId, int iTenant)
+        {
+            if (!string.IsNullOrEmpty(iAddressId))
+            {
+                if (!iDomesticCountries.Where(d => d.Id == iAddressId).Any())
+                {
+                    AddressRepository addressRepository = new AddressRepository(iTenant);
+                    Address iAddress = addressRepository.GetSingleAddress(iAddressId, iTenant);
+
+                    if (iAddress != null)
+                    {
+                        iDomesticCountries.Add(new DomesticCountry()
+                        {
+                            Id = iAddress.Id,
+                            CountryId = iAddress.CountryId,
+                            CountryIsEC = iAddress.Country.EC,
+                            CountryIsNorthAmerica = iAddress.Country.IsNorthAmerica,
+                        });
+                    }
+                }
+            }
+        }
     }
 }
 
