@@ -933,7 +933,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                         else
                         {
-                            throw new Exception("The Amount due is not suitable to the total amount paid!!");
+                            throw new Exception("The Amount due is not suitable to the total amount paid");
                         }
 
                         this.UpdateInvoicePaidDate(invoice);
