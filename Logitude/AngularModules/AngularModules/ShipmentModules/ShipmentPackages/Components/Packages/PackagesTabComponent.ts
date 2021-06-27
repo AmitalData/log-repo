@@ -1572,7 +1572,6 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             logWindow.Title = TextCodeTranslator.Translate("ShipmentPackage.O.AddPackage");
 
         }
-
         else {
             itemPM.Quantity = 1;
             itemPM.IsContainer = true;
@@ -1589,7 +1588,6 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             myPath = "./ShipmentModules/ShipmentPackages/Components/Packages/AddEditAirPackageComponent";
             logWindow.Height = 550;
         }
-
         else {
             myPath = "./ShipmentModules/ShipmentPackages/Components/Packages/AddEditOceanPackageComponent";
             logWindow.Width = 940;
@@ -1636,7 +1634,9 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                     this.CurrentSession.StopBusyIndicator();
                 }
             });
-
+        }
+        else {
+            this.ViewAddPackageWindow();
         }
     }
     AddStandAloneShipmentPackagePM(ItemsSource:any) {

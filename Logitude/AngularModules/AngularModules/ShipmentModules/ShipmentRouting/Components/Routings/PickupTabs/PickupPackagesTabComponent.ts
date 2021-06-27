@@ -69,20 +69,19 @@ export class PickupPackagesTabComponent {
             this.IsEditingEnabled = ShipmentTool.IsEditingEnabled(this.ShipmentPM);
         }
 
-        this.IsAddContainerEnabled = false;
-        if (this.IsEditingEnabled) {
-            if (AppTool.IsNullOrEmpty(this.EntityPM.StandaloneShipmentId)) {
-                this.IsAddContainerEnabled = true;
-            } else {
-                this.IsAddContainerEnabled = this.EntityPM.ShipmentPickUpDeliveryPackages.length == 0 ? true : this.IsAddContainerEnabled;
-            }
-        }
-
         this.IsAddContainerVisible = false;
         if (this.IsFCLEntity) {
             var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0];
             if (featureToggle) {
                 this.IsAddContainerVisible = true;
+                this.IsEditingEnabled = false;
+            }
+        }
+
+        this.IsAddContainerEnabled = false;
+        if (this.IsAddContainerVisible) {
+            if (AppTool.IsNullOrEmpty(this.EntityPM.StandaloneShipmentId)) {
+                this.IsAddContainerEnabled = true;
             }
         }
     }

@@ -2288,6 +2288,7 @@ export class ShipmentTool {
         shipmentPM.DepartmentId = shipment.DepartmentId;
         shipmentPM.BranchId = shipment.BranchId;
         shipmentPM.IncotermId = shipment.IncotermId;
+        shipmentPM.ForwarderStandaloneShipmentId = shipment.Id;
 
         if (delivery) {
             shipmentPM.StandalonePickupDeliveryId = delivery.Id;
