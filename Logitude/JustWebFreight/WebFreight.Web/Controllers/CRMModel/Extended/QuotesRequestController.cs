@@ -31,6 +31,24 @@ namespace WebFreight.Web.Controllers.CRMModel.Extended
             }
         }
 
+        [HttpPost]
+        public HttpResponseMessage UpdateQuotesRequestAndSendEmailFeedback(QuotesRequestEmailFeedback emailFeedback)
+        {
+            try
+            {
+                AuthenticationToken authenticationToken = GetAuthenticationToken();
+                SecurityUtility.AuthenticationOnTenant(authenticationToken.Tenant);
+                SecurityUtility.CheckSharedContactAuthentication(authenticationToken.Tenant, emailFeedback.PartnerId);
+                QuotesRequestService quotesRequestService = new QuotesRequestService(authenticationToken.Tenant, emailFeedback);
+                quotesRequestService.UpdateQuotesRequestAndSendEmailFeedback(emailFeedback);
+                return Request.CreateResponse(HttpStatusCode.OK, "Success");
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         private static AuthenticationToken GetAuthenticationToken()
         {
             string token = HttpContext.Current.Request.Headers["Token"];

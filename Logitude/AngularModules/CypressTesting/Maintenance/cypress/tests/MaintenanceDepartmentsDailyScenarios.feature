@@ -17,8 +17,8 @@ Feature: Department fake Create, Search and Edit from Maintenance
         Then the department should create successfully
 
     Scenario: Search for the Department by Name
-        When search for "12_6_2021_1623495492778" department
-        Then the "12_6_2021_1623495492778" department should appear successfully
+        When search for "Operational" department
+        Then the "Operational" department should appear successfully
 
     Scenario: Open the Department
         When open department

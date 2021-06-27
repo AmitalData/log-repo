@@ -689,6 +689,71 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
+        public HttpResponseMessage GetOceanInsightGlobalSetting()
+        {
+            try
+            {
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    int tenant = authToken.Tenant;
+
+                    SecurityUtility.AuthenticationOnTenant(tenant);
+
+                    OceanInsightGlobalSetting oceanInsightGlobalSetting = new OceanInsightGlobalSetting();
+
+                    SettingRepository mySettingRepository = new SettingRepository();
+                    Setting setting = mySettingRepository.GetSingleSetting("1");
+                    if (setting != null)
+                    {
+                        oceanInsightGlobalSetting.OITenantNumber = setting.OITenantNumber;
+                        oceanInsightGlobalSetting.AmitalCloudEnvironmentURL = setting.AmitalCloudEnvironmentURL;
+                        oceanInsightGlobalSetting.AmitalCloudLogitudeTenantPrimaryKey = setting.AmitalCloudLogitudeTenantPrimaryKey;
+                    }
+
+                    scope.Complete();
+                    return Request.CreateResponse(HttpStatusCode.OK, oceanInsightGlobalSetting);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        
+        public HttpResponseMessage GetUpdateOceanInsightGlobalSetting(int oITenantNumber, string amitalCloudEnvironmentURL, string amitalCloudLogitudeTenantPrimaryKey)
+        {
+            try
+            {
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    int tenant = authToken.Tenant;
+
+                    SecurityUtility.AuthenticationOnTenant(tenant);
+
+                    SettingRepository mySettingRepository = new SettingRepository();
+                    Setting setting = mySettingRepository.GetSingleSetting("1");
+                    if (setting != null)
+                    {
+                        setting.OITenantNumber = oITenantNumber;
+                        setting.AmitalCloudEnvironmentURL = amitalCloudEnvironmentURL;
+                        setting.AmitalCloudLogitudeTenantPrimaryKey = amitalCloudLogitudeTenantPrimaryKey;
+                        mySettingRepository.Update(setting);
+                        mySettingRepository.SubmitChanges();
+                    }
+                    scope.Complete();
+                    return Request.CreateResponse(HttpStatusCode.OK, "");
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         private static bool CheckIsLogboxSystem()
         {
             bool isLogboxSystem = false;
@@ -838,5 +903,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
     {
         public string QueueMessageCode { get; set; }
         public int Count { get; set; }
+    }
+
+    public class OceanInsightGlobalSetting
+    {
+        public int OITenantNumber { get; set; }
+        public string AmitalCloudEnvironmentURL { get; set; }
+        public string AmitalCloudLogitudeTenantPrimaryKey { get; set; }
     }
 }

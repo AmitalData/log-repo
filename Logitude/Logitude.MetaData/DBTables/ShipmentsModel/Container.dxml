@@ -130,6 +130,77 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="EstimatedEmptyPickupDate"
+    Type="date">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ActualEmptyPickupDate"
+    Type="date">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EstimatedGateInDate"
+    Type="date">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ActualGateInDate"
+    Type="date">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EmptyPickupLocation"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DepartureLocation"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DestinationLocation"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CurrentStatus"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CurrentStatusDate"
+    Type="date">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CurrentLocation"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="HasContainerException"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

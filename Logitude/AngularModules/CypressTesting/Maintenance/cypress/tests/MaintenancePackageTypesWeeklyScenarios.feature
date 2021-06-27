@@ -13,7 +13,7 @@ Feature: Package Type Create, Search and Edit from Maintenance
 
     Scenario: Create new package type with code already exists
         Given a package type with the following required details
-            | Code    | 1234         |
+            | Code    | 20BU         |
             | Name    | package type |
             | PrintAs | Test         |
             | Ocean   | Yes          |

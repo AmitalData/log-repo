@@ -14,12 +14,12 @@ namespace Logitude.CommonTests.Steps.Security
     public class TenantSecurityAccessSteps
     {
         private SecurityAccessStepsContext<TenantPM> Context;
-        private TenantExternalServices tenantDataService;
+        private TenantServices tenantServices;
 
         public TenantSecurityAccessSteps( SecurityAccessStepsContext<TenantPM> context)
         {
             Context = context;
-            tenantDataService = new TenantExternalServices();
+            tenantServices = new TenantServices();
         }
 
         #region Step Region
@@ -28,7 +28,7 @@ namespace Logitude.CommonTests.Steps.Security
         [When(@"get information for user's tenant")]
         public void WhenGetInformationForUsersTenant()
         {
-            Context.FirstUserPMData = tenantDataService.GetUserTenantByToken(UserTenant.Token);
+            Context.FirstUserPMData = tenantServices.GetByToken(UserTenant.Token);
         }
 
         [Then(@"tenant information should available")]
@@ -42,7 +42,7 @@ namespace Logitude.CommonTests.Steps.Security
         [When(@"get information for other tenant")]
         public void WhenGetInformationForOtherTenant()
         {
-            Context.act = () => tenantDataService.GetUserTenantByToken(UserOtherTenant.Token);
+            Context.act = () => tenantServices.GetByToken(UserOtherTenant.Token);
         }
 
         [Then(@"should receive error message say not authenticated to view company info")]

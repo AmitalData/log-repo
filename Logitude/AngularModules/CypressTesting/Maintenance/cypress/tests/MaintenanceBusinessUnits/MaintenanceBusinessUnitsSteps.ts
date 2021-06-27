@@ -29,17 +29,9 @@ Then("the business unit should create successfully", () => {
 //#endregion
 
 //#region Create another business unit
-Given("a new business unit and select the created business unit in the first scenario as a parent", () => {
+Given("create new business unit", () => {
     Actions.OpenNewWizard("BusinessUnit");
     BusinessUnitsActions.FillSecondBusinessUnitDetails();
-});
-
-When("create new business unit", () => {
-    BusinessUnitsActions.CreateBusinessUnit();
-});
-
-Then("the new business unit should create successfully", () => {
-    BusinessUnitsActions.AssertCreateBusinessUnit();
 });
 //#endregion
 
@@ -64,9 +56,8 @@ Then("the business unit should open successfully", () => {
 //#endregion
 
 //#region Edit the business unit
-Given("the user edit the following business unit details and the parent should be dim", (dataTable) => {
-    let businessUnitDetails = Assists.CreateInstance<BusinessUnitDetails>(dataTable, true);
-    BusinessUnitsActions.EditBusinessUnitGeneralTab(businessUnitDetails)
+Given("the user edit the business unit and the parent should be dim", () => {
+    BusinessUnitsActions.CheckInactiveCheckBox()
     BusinessUnitsActions.AssertParentDisabled()
 });
 

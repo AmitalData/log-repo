@@ -513,6 +513,7 @@
     <Compile Include="IntegrationTestModel\EntityQueries\LocationsPreparationVariables.cs" />
     <Compile Include="IntegrationTestModel\EntityQueries\PartnersPreparationVariables.cs" />
     <Compile Include="IntegrationTestModel\EntityQueries\ShipmentPreparationVariables.cs" />
+    <Compile Include="Interfaces\ILogitudeAuthenticationService.cs" />
     <Compile Include="InvoiceModel\APIDataContract\APInvoice.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\APInvoiceLine.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\APInvoiceStatus.Generated.cs" />
@@ -551,6 +552,7 @@
     <Compile Include="InvoiceModel\Tools\Behaviours\ARInvoiceBehaviours\ARInvoiceFieldsBehaviour.cs" />
     <Compile Include="InvoiceModel\Tools\Behaviours\ARInvoiceBehaviours\ARInvoiceShipmentsNumbersBehaviour.cs" />
     <Compile Include="InvoiceModel\Tools\Behaviours\EntityAutomationAPInvoiceMappingPMFields.cs" />
+    <Compile Include="InvoiceModel\Tools\FullAccountingARPaymentValidatorArguments.cs" />
     <Compile Include="InvoiceModel\Tools\Initializers\APInvoiceServiceInitializer.cs" />
     <Compile Include="InvoiceModel\Tools\Initializers\ARInvoiceServiceInitializer.cs" />
     <Compile Include="InvoiceModel\Tools\QuickbooksService.cs" />
@@ -2479,6 +2481,7 @@
     <Compile Include="QuoteModel\Tools\Validating\QuotetValidating.cs" />
     <Compile Include="Resolvers\WebClassResolver.cs" />
     <Compile Include="Security\AutenticationException.cs" />
+    <Compile Include="Security\EntityNotFoundException.cs" />
     <Compile Include="Security\LoggedContactUtil.cs" />
     <Compile Include="Security\SecurityUtility.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\AirPackage.Generated.cs" />
@@ -2518,6 +2521,7 @@
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\PickUpQueryService.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\ReceivableQueryService.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\ShipmentLevelQueryService.Generated.cs" />
+    <Compile Include="ShipmentsModel\APIDataContract\QueryService\ShipmentStatusesQueryService.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\ShipmentTypeQueryService.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\ShipmentTypeQueryService.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\SpecialServicesTypeQueryService.Generated.cs" />
@@ -2525,13 +2529,17 @@
     <Compile Include="ShipmentsModel\APIDataContract\Receivable.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\ShipmentLevel.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\GetShipmentNumbers.cs" />
+    <Compile Include="ShipmentsModel\APIDataContract\ShipmentStatuses.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\ShipmentType.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\SpecialServicesType.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\MainCarriageLeg.cs" />
+    <Compile Include="ShipmentsModel\APIDataContract\StatusDetails.cs" />
     <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\AccountingInformationIdentifierDetails.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\AWBChargesCodeDetails.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\AWBCustomsInformationDetails.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\AWBInformationDetails.Generated.cs" />
+    <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\ContainerStatusDetails.Generated.cs" />
+    <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\ContainerStatusSourceDetails.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\CustomsTransferTypeDetails.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\CustomsTransmissionsStatusDetails.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\HarmonizeCodeDetails.Generated.cs" />
@@ -2552,6 +2560,8 @@
     <Compile Include="ShipmentsModel\CloseTables\EnumGenerated\AWBChargesCodeStruct.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\EnumGenerated\AWBCustomsInformationStruct.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\EnumGenerated\AWBInformationStruct.Generated.cs" />
+    <Compile Include="ShipmentsModel\CloseTables\EnumGenerated\ContainerStatusSourceStruct.Generated.cs" />
+    <Compile Include="ShipmentsModel\CloseTables\EnumGenerated\ContainerStatusStruct.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\EnumGenerated\CustomsTransferTypeStruct.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\EnumGenerated\CustomsTransmissionsStatusStruct.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\EnumGenerated\HarmonizeCodeStruct.Generated.cs" />
@@ -2583,6 +2593,8 @@
     <Compile Include="ShipmentsModel\EntityLists\AWBCustomsInformationList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\AWBInformationList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\ContainerList.cs" />
+    <Compile Include="ShipmentsModel\EntityLists\ContainerStatusList.cs" />
+    <Compile Include="ShipmentsModel\EntityLists\ContainerStatusSourceList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\CustomsTransferHeaderList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\CustomsTransferTypeList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\HarmonizeCodeList.cs" />
@@ -2639,6 +2651,8 @@
     <Compile Include="ShipmentsModel\EntityPMs\AWBCustomsInformationPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\AWBInformationPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ContainerPM.cs" />
+    <Compile Include="ShipmentsModel\EntityPMs\ContainerStatusPM.cs" />
+    <Compile Include="ShipmentsModel\EntityPMs\ContainerStatusSourcePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\CustomsTransferHeaderPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\CustomsTransferLinePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\DeclarationApprovalRequestPM.cs" />
@@ -2707,6 +2721,8 @@
     <Compile Include="ShipmentsModel\EntityQueries\AWBCustomsInformationQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\AWBInformationQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ContainerQuery.cs" />
+    <Compile Include="ShipmentsModel\EntityQueries\ContainerStatusQuery.cs" />
+    <Compile Include="ShipmentsModel\EntityQueries\ContainerStatusSourceQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\CustomsTransferHeaderQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\CustomsTransferLineQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\CustomsTransferTypeQuery.cs" />

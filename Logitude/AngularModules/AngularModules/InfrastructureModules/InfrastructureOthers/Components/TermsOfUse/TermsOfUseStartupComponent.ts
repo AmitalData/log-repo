@@ -35,6 +35,8 @@ export class TermsOfUseStartupComponent implements OnInit {
 
     PrivateLabelId: string;
 
+    public HasErrorMessage = false;
+    public ErrorMessage = "";
     public LogoURL: string = "./Images/LoginScreen/header.jpg";
     public Name: string = "Logitude";
 
@@ -66,6 +68,11 @@ export class TermsOfUseStartupComponent implements OnInit {
 
     SetDataContext(data: any) {
 
+    }
+
+    LoadErrorMessage(errorMessage: string) {
+        this.ErrorMessage = errorMessage;
+        this.HasErrorMessage = true;
     }
 
     Load(privateLabelId: string, termsOfUseId: number) {

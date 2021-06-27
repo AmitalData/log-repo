@@ -1,4 +1,4 @@
-@NewDev
+@NewDev @daily
 Feature: FBL Stock Add, Remove and Remove Series in Maintenance
     The user creates a FBLStock, searches for and edits it from the Maintenance Module.
 
@@ -18,7 +18,6 @@ Feature: FBL Stock Add, Remove and Remove Series in Maintenance
     Scenario: Create new FBLStock by Amount
         Given user adds another FBL stock with the following details
             | StartNumber | random |
-            | EndNumber   | random |
             | ByAmount    | Yes    |
             | Amount      | 2      |
         When create fblStock
@@ -27,3 +26,7 @@ Feature: FBL Stock Add, Remove and Remove Series in Maintenance
     Scenario: Remove FBLStock series
         When user removes a series of entries
         Then the fblStock series should Remove successfully
+
+    Scenario: Close the FBLStock
+        When close FBL
+        Then the FBL should close successfully

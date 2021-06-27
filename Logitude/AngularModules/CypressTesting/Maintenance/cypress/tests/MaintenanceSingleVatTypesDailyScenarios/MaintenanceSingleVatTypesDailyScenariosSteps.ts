@@ -6,7 +6,7 @@ import { VatTypesSelectors } from "../../selectors/VatTypesSelectors";
 import { VatTypeDetails } from "cypress/models/VatTypeDetails";
 import * as BaseActions from "../../../../Base/cypress/actions/Actions";
 import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetails";
-import * as GeneralActions from "../../actions/GeneralActions";
+import * as GeneralActions from "../../actions/BaseActions";
 import { Urls } from "../../constants/Urls";
 
 //#region Add single vat type with lenght more than 5

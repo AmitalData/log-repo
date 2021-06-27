@@ -64,7 +64,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private static List<GLAccountCurrencyPM> gLAccountCurrencies;
         private static List<GLAccountPM> parentGLAccounts;
         const string StatusCode_VATAmountInTheRecordIsHigherThanThePercentageOfVATAllowed = "9";
-
+        const int maxAllowedLinesCount = 3000;
         public static List<TaxReportLinePM> CreateTaxReportLines(TaxReportPM taxReport, int tenant)
         {
 
@@ -127,7 +127,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         //{
                         outputreference = invoice.InvoiceNumber;
                         //}
-                        SetReferenceFields(outputreference);
+                     
                         if (!string.IsNullOrEmpty(invoice.VatNumber))
                         {
                             vatNumber = invoice.VatNumber;
@@ -137,9 +137,9 @@ namespace Logitude.Accounting.BL.CoreBL
                         TaxReportLinePM line = new TaxReportLinePM()
                         {
                             VatNumber = vatNumber,
-                            Reference = reference,
-                            OriginalReference = reference,
-                            ReferecneGroup = referenceGroup,
+                            Reference = outputreference,
+                            OriginalReference = outputreference,
+                            ReferecneGroup = null,
                             ReferenceDate = invoice.InvoiceDate,
                             JournalId = a.Id,
                             OutputOrInput = "O",
@@ -242,16 +242,16 @@ namespace Logitude.Accounting.BL.CoreBL
                 VatNumber = VatNumber == null ? "000000000" : VatNumber;
                 SetVatAmounts(transaction);
 
-                SetReferenceFields(transaction.Reference);
+             
                 string transmitStatusCode = SetTransmitStatusByDocumentDate(transaction.ReferenceDate);
                 TaxReportLinePM inputReportLine = new TaxReportLinePM()
                 {
 
                     VatNumber = VatNumber,
-                    Reference = reference,
-                    OriginalReference = reference,
+                    Reference = transaction.Reference,
+                    OriginalReference = transaction.Reference,
                     ReferenceDate = transaction.ReferenceDate,
-                    ReferecneGroup = referenceGroup,
+                    ReferecneGroup =null,
                     JournalId = transaction.JournalId,
                     OutputOrInput = "I",
                     VatAmount = Math.Round(InputVatAmount.Value, MidpointRounding.AwayFromZero),
@@ -319,39 +319,73 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
             // saving report
-            taxReport.ChangeSetOp = ChangeSetOperation.Update;
+            UpdateTaxReport(taxReport);
+            reportLinesList = HandleTaxReportLines(taxReport, reportLinesList);
+            return reportLinesList;
+        }
 
+        private static void UpdateTaxReport(TaxReportPM taxReport)
+        {
+            taxReport.ChangeSetOp = ChangeSetOperation.Update;
+            IAccountingContext accountingContext = AccountingContext.GetContext(taxReport.Tenant);
+            TaxReportUpdateService updateService = new TaxReportUpdateService(accountingContext, new Dictionary<string, IContext>(), taxReport.Tenant);
+            updateService.Update(taxReport, true, TimeSpan.FromMinutes(60));
+        }
+        private static List<TaxReportLinePM> HandleTaxReportLines(TaxReportPM taxReport, List<TaxReportLinePM> taxReportLines)
+        {
+            if (taxReportLines.Count > maxAllowedLinesCount)
+            {
+                return InsertMoreThanMaxAllowedLinesCount(taxReportLines,taxReport);
+            }
+            else
+            {
+                return InsertTaxReportLines(taxReport, taxReportLines,0);
+            }
+        }
+        private static List<TaxReportLinePM> InsertTaxReportLines(TaxReportPM taxReport, List<TaxReportLinePM> taxReportLines, int startIndex)
+        {
             using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(60)))
             {
-
-                IAccountingContext MyContext = AccountingContext.GetContext(taxReport.Tenant);
-                TaxReportUpdateService updateService = new TaxReportUpdateService(MyContext, new Dictionary<string, IContext>(), taxReport.Tenant);
-                TaxReportLineUpdateService lineUpdateService = new TaxReportLineUpdateService(MyContext, new Dictionary<string, IContext>(), taxReport.Tenant);
-                updateService.Update(taxReport, true, TimeSpan.FromMinutes(60));
-
-                // saving lines
-                int count = 0;
-                //int submitChangesCounter
-                foreach (TaxReportLinePM linePM in reportLinesList)
+                int count = startIndex;
+                foreach (TaxReportLinePM linePM in taxReportLines)
                 {
-                    linePM.Line = ++count;
-                    linePM.ChangeSetOp = ChangeSetOperation.Insert;
-                    linePM.UpdatedByUserId = taxReport.UpdatedByUserId;
-
-                    bool isTotalInvoiceAmountAndVatAmountHaveOppositeSigns = (linePM.TotalInvoiceAmount > 0 && linePM.VatAmount < 0) || (linePM.TotalInvoiceAmount < 0 && linePM.VatAmount > 0);
-                    if (isTotalInvoiceAmountAndVatAmountHaveOppositeSigns)
-                        linePM.StatusCode = StatusCode_VATAmountInTheRecordIsHigherThanThePercentageOfVATAllowed;
-                    lineUpdateService.Update(linePM, true, TimeSpan.FromMinutes(60));//the problem is here it loops on more than 3000  lines and updates them one by one ,each update will have to get single tenant and get single currency along with multible db gets which make the db to time out for the opened transaction
+                    ++count;
+                    MapTaxReportLinePMFields(linePM, taxReport, count);
+                    SaveTaxReportLine(linePM);
                 }
-
-
                 scope.Complete();
-
-                return reportLinesList;
+                return taxReportLines;
 
             }
-
-
+        }
+        private static void SaveTaxReportLine(TaxReportLinePM taxReportLine)
+        {
+            IAccountingContext accountingContext = AccountingContext.GetContext(taxReportLine.Tenant);
+            TaxReportLineUpdateService lineUpdateService = new TaxReportLineUpdateService(accountingContext, new Dictionary<string, IContext>(), taxReportLine.Tenant);
+            lineUpdateService.Update(taxReportLine, true, TimeSpan.FromMinutes(60));//the problem is here it loops on more than 3000  lines and updates them one by one ,each update will have to get single tenant and get single currency along with multible db gets which make the db to time out for the opened transaction
+        }
+        private static List<TaxReportLinePM> InsertMoreThanMaxAllowedLinesCount(List<TaxReportLinePM> taxReportLines, TaxReportPM taxReport)
+        {
+            List<TaxReportLinePM> createdLines = new List<TaxReportLinePM>();
+          
+            for (int i = 0; i < taxReportLines.Count; i += maxAllowedLinesCount)
+            {
+                createdLines = createdLines.Concat(InsertTaxReportLinesInMaxAllowedListRange(taxReportLines, i, taxReport)).ToList();
+            }
+            return createdLines;
+        }
+        private static List<TaxReportLinePM> InsertTaxReportLinesInMaxAllowedListRange(List<TaxReportLinePM> taxReportLines, int startIndex, TaxReportPM taxReport)
+        {
+            return InsertTaxReportLines(taxReport, taxReportLines.GetRange(startIndex, Math.Min(maxAllowedLinesCount, taxReportLines.Count - startIndex)), startIndex);
+        }
+        private static void MapTaxReportLinePMFields(TaxReportLinePM reportLinePM, TaxReportPM taxReport, int count)
+        {
+            reportLinePM.Line = count;
+            reportLinePM.ChangeSetOp = ChangeSetOperation.Insert;
+            reportLinePM.UpdatedByUserId = taxReport.UpdatedByUserId;
+            bool isTotalInvoiceAmountAndVatAmountHaveOppositeSigns = (reportLinePM.TotalInvoiceAmount > 0 && reportLinePM.VatAmount < 0) || (reportLinePM.TotalInvoiceAmount < 0 && reportLinePM.VatAmount > 0);
+            if (isTotalInvoiceAmountAndVatAmountHaveOppositeSigns)
+                reportLinePM.StatusCode = StatusCode_VATAmountInTheRecordIsHigherThanThePercentageOfVATAllowed;
         }
 
    
@@ -449,66 +483,8 @@ namespace Logitude.Accounting.BL.CoreBL
         static string VatNumber = null;
         static decimal? InputVatAmount = 0;
         static decimal? InputInvoiceAmount = 0;
-        static string  reference = null;
-        static string referenceGroup = null;
-        private static void SetReferenceFields(string Reference)
-        {
-            reference = null;
-            referenceGroup = null;
-            if (Reference != null)
-            {
-                Reference = RemoveSomeChars(Reference);               
-                Regex isMatche = new Regex("([A-Za-z])");
-                bool letters = isMatche.IsMatch(Reference);
-                if (letters)
-                {
-                    for (int i = 0; i < Reference.Length; i++)
-                    {
-                        string d = Reference.Substring(i, 1);
-                        MatchCollection match = Regex.Matches(d, @"^[a-zA-Z]*$");
-                        if (match.Count != 0)
-                        {
-                            referenceGroup = referenceGroup + d;// Reference.Substring(0, i);
-
-                        }
-                        else
-                        {
-                            reference = Reference.Substring(i, Reference.Length - i);
-                            break;
-                        }
-                       
-                    }
-                }
-                else
-                {
-                    reference = Reference;
-                    referenceGroup = "0000";
-                }
-                if (reference != null && reference.Length > 9)
-                {
-                    reference = reference.Substring(reference.Length - 9);
-                }
-            }
-            else
-            {
-                referenceGroup = "0000";
-                reference = null;
-            }           
-             if (reference != null&& reference.Length > 9)
-            {
-                reference = reference.Substring(reference.Length - 9);
-            }
-        }
-        private static string RemoveSomeChars(string reference)
-        {
-            char[] charsToRemove = { '-', '/', '.', '*', '\\' };
-            foreach (char c in charsToRemove)
-            {
-                reference = reference.Replace(c.ToString(), String.Empty);
-            }
-           
-            return reference;
-        }
+       
+      
         private static void SetVatNumber(Simplog.Data.CommonDataModel.EntityPOCOs.Card card)
         {
             if (card != null)
@@ -753,44 +729,44 @@ namespace Logitude.Accounting.BL.CoreBL
                 return docOut;
             }
         }
-        public static TaxReportPM CreatetTaxReportLine(TaxReportPM taxReport)
-        {
-            IAccountingContext context = AccountingContext.GetContext(taxReport.Tenant);
+        //public static TaxReportPM CreatetTaxReportLine(TaxReportPM taxReport)
+        //{
+        //    IAccountingContext context = AccountingContext.GetContext(taxReport.Tenant);
 
-            TaxReportLineListQueryService reportLineListQueryService = new TaxReportLineListQueryService(context);
-            List<TaxReportLineList> lines = reportLineListQueryService.GetReportLines(taxReport.Id, taxReport.Tenant).ToList();
-            int count = lines.Count;
-            TaxReportLinePM taxReportLine = new TaxReportLinePM()
-            {
-                IsExternalLine = true,
-                VatNumber = VatNumber,
-                Reference = reference,
-                ReferenceDate = DateTime.Today,
-                ReferecneGroup = referenceGroup,
-                Line =++count,
-                OutputOrInput = "O",
-                VatAmount =(decimal?) 200,// Math.Round(InputVatAmount.Value, MidpointRounding.AwayFromZero),
-                VatableInvoiceAmount =(decimal?) 17,// Math.Round(InputInvoiceAmount.Value, MidpointRounding.AwayFromZero),
-                IsEquipment = true,
-                IsManuallyChanged = true,
-                TaxReportId = taxReport.Id,
-                ChangeSetOp = ChangeSetOperation.Insert,
-                LastUpdateDateTime = DateTime.Now,
-                UpdatedByUserId = taxReport.UpdatedByUserId,
-                Tenant = taxReport.Tenant,
-                TransmitStatusCode = "1",
-                TaxReportDate = taxReport.TaxReportMonth
-            };
-            TaxReportUpdateService updateService = new TaxReportUpdateService(context, new Dictionary<string, IContext>(), taxReport.Tenant);
-            TaxReportLineUpdateService lineUpdateService = new TaxReportLineUpdateService(context, new Dictionary<string, IContext>(), taxReport.Tenant);
-            taxReportLine.ChangeSetOp = ChangeSetOperation.Insert;
-            taxReportLine.UpdatedByUserId = taxReport.UpdatedByUserId;
-            lineUpdateService.Update(taxReportLine, true, TimeSpan.FromMinutes(60));//the problem is here it loops on more than 3000  lines and updates them one by one ,each update will have to get single tenant and get single currency along with multible db gets which make the db to time out for the opened transaction
+        //    TaxReportLineListQueryService reportLineListQueryService = new TaxReportLineListQueryService(context);
+        //    List<TaxReportLineList> lines = reportLineListQueryService.GetReportLines(taxReport.Id, taxReport.Tenant).ToList();
+        //    int count = lines.Count;
+        //    TaxReportLinePM taxReportLine = new TaxReportLinePM()
+        //    {
+        //        IsExternalLine = true,
+        //        VatNumber = VatNumber,
+        //        Reference = reference,
+        //        ReferenceDate = DateTime.Today,
+        //        ReferecneGroup = referenceGroup,
+        //        Line =++count,
+        //        OutputOrInput = "O",
+        //        VatAmount =(decimal?) 200,// Math.Round(InputVatAmount.Value, MidpointRounding.AwayFromZero),
+        //        VatableInvoiceAmount =(decimal?) 17,// Math.Round(InputInvoiceAmount.Value, MidpointRounding.AwayFromZero),
+        //        IsEquipment = true,
+        //        IsManuallyChanged = true,
+        //        TaxReportId = taxReport.Id,
+        //        ChangeSetOp = ChangeSetOperation.Insert,
+        //        LastUpdateDateTime = DateTime.Now,
+        //        UpdatedByUserId = taxReport.UpdatedByUserId,
+        //        Tenant = taxReport.Tenant,
+        //        TransmitStatusCode = "1",
+        //        TaxReportDate = taxReport.TaxReportMonth
+        //    };
+        //    TaxReportUpdateService updateService = new TaxReportUpdateService(context, new Dictionary<string, IContext>(), taxReport.Tenant);
+        //    TaxReportLineUpdateService lineUpdateService = new TaxReportLineUpdateService(context, new Dictionary<string, IContext>(), taxReport.Tenant);
+        //    taxReportLine.ChangeSetOp = ChangeSetOperation.Insert;
+        //    taxReportLine.UpdatedByUserId = taxReport.UpdatedByUserId;
+        //    lineUpdateService.Update(taxReportLine, true, TimeSpan.FromMinutes(60));//the problem is here it loops on more than 3000  lines and updates them one by one ,each update will have to get single tenant and get single currency along with multible db gets which make the db to time out for the opened transaction
 
-            taxReport.ChangeSetOp = ChangeSetOperation.Update;
-            updateService.Update(taxReport, true, TimeSpan.FromMinutes(60));
-            return taxReport;
-        }
+        //    taxReport.ChangeSetOp = ChangeSetOperation.Update;
+        //    updateService.Update(taxReport, true, TimeSpan.FromMinutes(60));
+        //    return taxReport;
+        //}
 
 
         public static void CalculateReportTotals(TaxReportPM taxReportPM, List<TaxReportLinePM> lines)

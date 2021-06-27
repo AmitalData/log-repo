@@ -2128,6 +2128,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 TotalOpenChequesInLocalCur = 0,
                 TotFutureOpenChequesInLocalCur = 0,
 
+                BalanceInForeignCurrency = 0,
+                ForeignBalanceInDue = 0,
+
 
             }, false);
         }

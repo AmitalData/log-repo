@@ -63,7 +63,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.CountryId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.WarehouseReleaseNumber).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.HorseId).HasMaxLength(15).IsUnicode(false);
-
+            this.Property(t => t.ContainerStatusSourceCode).HasMaxLength(3).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("ShipmentPackages");
@@ -155,7 +155,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.WarehouseReleaseNumber).HasColumnName("WarehouseReleaseNumber");
             this.Property(t => t.InUse).HasColumnName("InUse");
             this.Property(t => t.HorseId).HasColumnName("HorseId");
-
+            this.Property(t => t.ContainerStatusSourceCode).HasColumnName("ContainerStatusSourceCode");
 
             this.HasOptional(t => t.Shipment).WithMany().HasForeignKey(d => d.ShipmentId);
             this.HasOptional(t => t.PackageType).WithMany().HasForeignKey(d => d.PackageTypeId);
@@ -163,7 +163,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.HasOptional(t => t.Delivery).WithMany().HasForeignKey(d => d.DeliveryId);
             this.HasOptional(t => t.EmptyContainerReturn).WithMany().HasForeignKey(d => d.EmptyContainerReturnId);
             this.HasOptional(t => t.TemperatureUnit).WithMany().HasForeignKey(d => d.TemperatureUnitCode);
-            this.HasOptional(t => t.LastStatus).WithMany().HasForeignKey(d => d.LastStatusCode);
+            this.HasOptional(t => t.ContainerStatusSource).WithMany().HasForeignKey(d => d.ContainerStatusSourceCode);
             this.HasOptional(t => t.DeliveryTransportMode).WithMany().HasForeignKey(d => d.DeliveryTransportModeCode);
             this.HasOptional(t => t.ECRTransportMode).WithMany().HasForeignKey(d => d.ECRTransportModeCode);
             this.HasOptional(t => t.FlashPointTemperatureUnit).WithMany().HasForeignKey(d => d.FlashPointTemperatureUnitCode);

@@ -39,6 +39,17 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? DischargeDate { get; set; }
 
         public string ShipmentId { get; set; }
+        public string EmptyPickupLocation { get; set; }
+        public DateTime? EstimatedEmptyPickupDate { get; set; }
+        public DateTime? ActualEmptyPickupDate { get; set; }
+        public DateTime? EstimatedGateInDate { get; set; }
+        public DateTime? ActualGateInDate { get; set; }
+        public string DepartureLocation { get; set; }
+        public string DestinationLocation { get; set; }
+        public string CurrentStatus { get; set; }
+        public DateTime? CurrentStatusDate { get; set; }
+        public string CurrentLocation { get; set; }
+        public bool HasContainerException { get; set; }
 
     }
 }

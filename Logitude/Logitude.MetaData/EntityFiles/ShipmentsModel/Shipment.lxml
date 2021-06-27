@@ -95248,6 +95248,19 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false"
       EntityStatusCode="&quot;ORFA&quot;" />
+    <EventType
+      Code="&quot;OISU&quot;"
+      ObjectTableName="&quot;Shipment&quot;"
+      EnglishName="&quot;Ocean Insight Shipment Update&quot;"
+      LocalName="&quot;Ocean Insight Shipment Update&quot;"
+      IsManualEntry="false"
+      ShortView="true"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
   <Records />
   <MenuButtons

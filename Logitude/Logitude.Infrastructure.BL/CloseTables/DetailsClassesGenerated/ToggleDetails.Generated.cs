@@ -269,20 +269,39 @@ namespace Logitude.Infrastructure.BL
                 Description = "Ocean Insights Containers", 
 			});
 			 
+          
+
             all.Add(new ToggleDetails()
             {    
                 Name = "Reports in Shared Logistics", 
                 Code = "RSL", 
                 SearchFields = "RSL,Reports in Shared Logistics", 
                 Description = "Reports in Shared Logistics", 
-			}); 
-             
+			});
+			 
             all.Add(new ToggleDetails()
             {    
                 Code = "CTL", 
                 Name = "CollaborationTool", 
                 SearchFields = "CTL,CollaborationTool", 
                 Description = "Collaboration Tool", 
+			});
+			 
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "SDE", 
+                Name = "Solve Duplicated Events Code", 
+                SearchFields = "SDE,Duplicated Events code", 
+                Description = "Solve Duplicated Events Code", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Lock Counter Procedure", 
+                SearchFields = "LCP,Lock Counter Procedure", 
+                Description = "Lock Counter Procedure", 
+                Code = "LCP", 
 			});
 			
             return all;

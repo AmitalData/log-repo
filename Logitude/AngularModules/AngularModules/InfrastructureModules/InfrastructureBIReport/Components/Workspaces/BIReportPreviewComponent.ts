@@ -73,8 +73,8 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     public ValidationErrorsList: string[] = [];
     public HasRunFeature: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    private hasFixedFilter = false;
-    private filterButtonTitle = "No available fixed filters";
+    public hasFixedFilter = false;
+    public filterButtonTitle = "No available fixed filters";
      
     @Output() ComputeFiltersCommand = new EventEmitter();
     constructor() {

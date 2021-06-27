@@ -53,6 +53,17 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     CarrierName = entityPoco.CarrierCard != null ? entityPoco.CarrierCard.EnglishName : "",
                     VesselName = entityPoco.VesselCard != null ? entityPoco.VesselCard.EnglishName : "",
                     ShipmentId = entityPoco.ShipmentId,
+                    ActualEmptyPickupDate = entityPoco.ActualEmptyPickupDate,
+                    EstimatedEmptyPickupDate = entityPoco.EstimatedEmptyPickupDate,
+                    EstimatedGateInDate = entityPoco.EstimatedGateInDate,
+                    ActualGateInDate = entityPoco.ActualGateInDate,
+                    CurrentStatus = entityPoco.CurrentStatus,
+                    CurrentStatusDate = entityPoco.CurrentStatusDate,
+                    HasContainerException = entityPoco.HasContainerException,
+                    CurrentLocation = entityPoco.CurrentLocation,
+                    EmptyPickupLocation = entityPoco.EmptyPickupLocation,
+                    DepartureLocation = entityPoco.DepartureLocation,
+                    DestinationLocation = entityPoco.DestinationLocation,
                 };
             }
 
@@ -86,6 +97,17 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         CarrierName = a.CarrierCard != null ? a.CarrierCard.EnglishName : "",
                         VesselName = a.VesselCard != null ? a.VesselCard.EnglishName : "",
                         ShipmentId = a.ShipmentId,
+                        ActualEmptyPickupDate = a.ActualEmptyPickupDate,
+                        EstimatedEmptyPickupDate = a.EstimatedEmptyPickupDate,
+                        EstimatedGateInDate = a.EstimatedGateInDate,
+                        ActualGateInDate = a.ActualGateInDate,
+                        CurrentStatus = a.CurrentStatus,
+                        CurrentStatusDate = a.CurrentStatusDate,
+                        HasContainerException = a.HasContainerException,
+                        CurrentLocation = a.CurrentLocation,
+                        EmptyPickupLocation = a.EmptyPickupLocation,
+                        DepartureLocation = a.DepartureLocation,
+                        DestinationLocation = a.DestinationLocation,
                     }).ToList();
         }
 
@@ -115,6 +137,17 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                      CarrierName = entity.CarrierCard != null ? entity.CarrierCard.EnglishName : "",
                                                      VesselName = entity.VesselCard != null ? entity.VesselCard.EnglishName : "",
                                                      ShipmentId = entity.ShipmentId,
+                                                     ActualEmptyPickupDate = entity.ActualEmptyPickupDate,
+                                                     EstimatedEmptyPickupDate = entity.EstimatedEmptyPickupDate,
+                                                     EstimatedGateInDate = entity.EstimatedGateInDate,
+                                                     ActualGateInDate = entity.ActualGateInDate,
+                                                     CurrentStatus = entity.CurrentStatus,
+                                                     CurrentStatusDate = entity.CurrentStatusDate,
+                                                     HasContainerException = entity.HasContainerException,
+                                                     CurrentLocation = entity.CurrentLocation,
+                                                     EmptyPickupLocation = entity.EmptyPickupLocation,
+                                                     DepartureLocation = entity.DepartureLocation,
+                                                     DestinationLocation = entity.DestinationLocation,
                                                  };
             return result;
         }
@@ -146,9 +179,69 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     DischargeDate = container.DischargeDate,
                     Master = container.Master,
                     ShipmentId = container.ShipmentId,
+                    ActualEmptyPickupDate = container.ActualEmptyPickupDate,
+                    EstimatedEmptyPickupDate = container.EstimatedEmptyPickupDate,
+                    EstimatedGateInDate = container.EstimatedGateInDate,
+                    ActualGateInDate = container.ActualGateInDate,
+                    CurrentStatus = container.CurrentStatus,
+                    CurrentStatusDate = container.CurrentStatusDate,
+                    HasContainerException = container.HasContainerException,
+                    CurrentLocation = container.CurrentLocation,
+                    EmptyPickupLocation = container.EmptyPickupLocation,
+                    DepartureLocation = container.DepartureLocation,
+                    DestinationLocation = container.DestinationLocation,
                 };
             }
             return containerPM;
+        }
+
+        public ContainerPM GetContainerByContainerNumberAndTenant(string containerNumber, int tenant)
+        {
+            ContainerPM result = null;
+            Container entityPoco = (from container in repository.context.Containers
+                                    where container.Tenant == tenant && container.ContainerNumber == containerNumber
+                                    select container).FirstOrDefault();
+
+            if(entityPoco != null)
+            {
+                result = new ContainerPM()
+                {
+                    Id = entityPoco.Id,
+                    Tenant = entityPoco.Tenant,
+                    CreateDate = entityPoco.CreateDate,
+                    CreatedByUserId = entityPoco.CreatedByUserId,
+                    UpdateDate = entityPoco.UpdateDate,
+                    UpdatedByUserId = entityPoco.UpdatedByUserId,
+                    MainCarriageCarrierId = entityPoco.MainCarriageCarrierId,
+                    MainCarriageCarrierNumber = entityPoco.MainCarriageCarrierNumber,
+                    MainCarriageATA = entityPoco.MainCarriageATA,
+                    MainCarriageATD = entityPoco.MainCarriageATD,
+                    MainCarriageETA = entityPoco.MainCarriageETA,
+                    MainCarriageETD = entityPoco.MainCarriageETD,
+                    ContainerNumber = entityPoco.ContainerNumber,
+                    MainCarriageVesselId = entityPoco.MainCarriageVesselId,
+                    ShipmentPackagesId = entityPoco.ShipmentPackagesId,
+                    SearchFields = entityPoco.SearchFields,
+                    DischargeDate = entityPoco.DischargeDate,
+                    Master = entityPoco.Master,
+                    CarrierName = entityPoco.CarrierCard != null ? entityPoco.CarrierCard.EnglishName : "",
+                    VesselName = entityPoco.VesselCard != null ? entityPoco.VesselCard.EnglishName : "",
+                    ShipmentId = entityPoco.ShipmentId,
+                    ActualEmptyPickupDate = entityPoco.ActualEmptyPickupDate,
+                    EstimatedEmptyPickupDate = entityPoco.EstimatedEmptyPickupDate,
+                    EstimatedGateInDate = entityPoco.EstimatedGateInDate,
+                    ActualGateInDate = entityPoco.ActualGateInDate,
+                    CurrentStatus = entityPoco.CurrentStatus,
+                    CurrentStatusDate = entityPoco.CurrentStatusDate,
+                    HasContainerException = entityPoco.HasContainerException,
+                    CurrentLocation = entityPoco.CurrentLocation,
+                    EmptyPickupLocation = entityPoco.EmptyPickupLocation,
+                    DepartureLocation = entityPoco.DepartureLocation,
+                    DestinationLocation = entityPoco.DestinationLocation,
+                };
+            }
+
+            return result;
         }
     }
 }
