@@ -14,7 +14,6 @@ import {ConfirmWindow} from '../../../../../Controls/Windows/ConfirmWindow';
 import {FeatureLocator} from '../../../../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 import {AddEditDeliveryComponent} from '../AddEditDeliveryComponent';
-import { FeatureToggleList } from '../../../../../Infrastructure/EntityLists/FeatureToggleList';
 import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 import { ShipmentPackagePM } from '../../../../../Shipment/EntityPMs/ShipmentPackagePM';
 import { PackagesTabComponent, ShipmentPackageItem } from '../../../../ShipmentPackages/Components/Packages/PackagesTabComponent';
@@ -39,8 +38,6 @@ export class DeliveryPackagesTabComponent {
     public DataContext = this;
     public TypeCode: string = null;
     private CurrentSession = SessionLocator.SelectedSession;
-    public IsAddContainerVisible: boolean = false;
-    public IsAddContainerEnabled: boolean = false;
     constructor() {
 
     }
@@ -78,15 +75,9 @@ export class DeliveryPackagesTabComponent {
         }
 
         else {
-
-
             if (this.ShipmentPM.ShipmentPackages.filter(f => f.DeliveryId == this.EntityPM.Id).length > 0) {
                 this.IsConnectedToContainer = true;
             }
-
-            //if (this.ShipmentPM.ShipmentPackages.filter(f => f.EmptyContainerReturnId == this.EntityPM.Id).length > 0) {
-            //    this.IsConnectedToContainer = true;
-            //}
         }
 
         this.SetLabels();
@@ -111,21 +102,6 @@ export class DeliveryPackagesTabComponent {
 
         else {
             this.IsEditingEnabled = ShipmentTool.IsEditingEnabled(this.ShipmentPM);
-        }
-
-        this.IsAddContainerEnabled = false;
-        if (this.IsEditingEnabled) {
-            if (this.EntityPM.ShipmentPickUpDeliveryPackages.length == 0) {
-                this.IsAddContainerEnabled = true;
-            }
-        }
-
-        this.IsAddContainerVisible = false;
-        if (this.IsFCLEntity) {
-            var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0];
-            if (featureToggle) {
-                this.IsAddContainerVisible = true;
-            }
         }
 
         if (this.IsEditingEnabled) {
@@ -167,19 +143,18 @@ export class DeliveryPackagesTabComponent {
     }
 
     AddButtonClicked() {
-        if (this.IsAddContainerVisible) {
-            this.ValidateNumberOfStandAloneShipmentPackages()
-        } else {
-            this.ViewAddDeliveryPackagesWindow();
-        }
+        this.ViewAddDeliveryPackagesWindow();
     }
 
     ValidateNumberOfStandAloneShipmentPackages() {
         var numberOfAllowedPackages = 1;
+
         if (this.EntityPM.ShipmentPickUpDeliveryPackages.length >= numberOfAllowedPackages && !AppTool.IsNullOrEmpty(this.EntityPM.StandaloneShipmentId)) {
             var messageWindow: MessageWindow = new MessageWindow();
             messageWindow.Show("Can't Add Another Container Since Delivery is Connected to a Stand Alone Shipment");
-        } else {
+        }
+
+        else {
             this.ViewAddDeliveryPackagesWindow();
         }
     }
@@ -201,14 +176,9 @@ export class DeliveryPackagesTabComponent {
     }
 
     EditPackageClicked(itemComponent: DeliveryPackageItem) {
-        if (this.IsAddContainerVisible) {
-            this.EditContainerClicked(itemComponent);
-        } else {
-            var logWindow = new LogitudeWindow();
-            logWindow.Title = TextCodeTranslator.Translate("ShipmentPickUpDeliveryPackage.O.EditDeliveryPackage");
-            logWindow.DataContext = itemComponent;
-            logWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/DeliveryTabs/DeliveryPackagesAddEditComponent");
-        }
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = TextCodeTranslator.Translate("ShipmentPickUpDeliveryPackage.O.EditDeliveryPackage");
+        logWindow.DataContext = itemComponent;
     }
 
     DeleteButtonClicked(itemComponent: DeliveryPackageItem) {
@@ -280,27 +250,7 @@ export class DeliveryPackagesTabComponent {
         logWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/DeliveryTabs/DeliveryPackagesConnectComponent");
     }
 
-    AddContainerClicked() {
-        var windowArgs: any = {};
-        windowArgs.EntityPM = this.EntityPM;
-        windowArgs.ShipmentPM = this.ShipmentPM;
-        windowArgs.IsLCLEntity = this.IsLCLEntity;
-        windowArgs.IsFCLEntity = this.IsFCLEntity;
-        windowArgs.TransportModeId = this.TransportModeId;
-
-        var logWindow = new LogitudeWindow();
-        logWindow.Title = "Add Container";
-        logWindow.WindowArgs = windowArgs;
-        logWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/SelectStandalonePackagesComponent");
-        logWindow.WindowClosed.subscribe((s: any) => {
-            if (s) {
-                this.BuildItemsSource();
-            }
-        });
-    }
-
     EditContainerClicked(deliveryItemComponent: DeliveryPackageItem) {
-
         var shipmentPackage = this.MapShipmentPackageFromPickupDeliveryPackage(deliveryItemComponent);
         var logWindow = new LogitudeWindow();
         logWindow.Title = this.GetEditPackageWindowTitle();
