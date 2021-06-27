@@ -24,6 +24,7 @@ import { AddEditPackageHarmonizeComponent } from './Components/Routings/AddEditP
 import { WarehouseStoragePricingComponent } from './Components/Routings/WarehouseStoragePricingComponent';
 import { ChooseStandaloneShipmentComponent } from './Components/Routings/ChooseStandaloneShipmentComponent';
 import { SelectStandalonePackagesComponent } from './Components/Routings/SelectStandalonePackagesComponent';
+import { StandAlonePickupDeilveryActionsComponent } from './Components/Routings/StandAlonePickupDeilveryActionsComponent';
 
 export const Components =
     [
@@ -52,6 +53,7 @@ export const Components =
         WarehouseStoragePricingComponent,
         ChooseStandaloneShipmentComponent,
         SelectStandalonePackagesComponent,
+        StandAlonePickupDeilveryActionsComponent,
     ];
 
 export const ControlsComponents =
@@ -91,6 +93,7 @@ export class ModuleDeclarations {
             case "WarehouseStoragePricingComponent": { myResult = WarehouseStoragePricingComponent; break; }
             case "ChooseStandaloneShipmentComponent": { myResult = ChooseStandaloneShipmentComponent; break; }
             case "SelectStandalonePackagesComponent": { myResult = SelectStandalonePackagesComponent; break; }
+            case "StandAlonePickupDeilveryActionsComponent": { myResult = StandAlonePickupDeilveryActionsComponent; break; }
         }
 
         return myResult;

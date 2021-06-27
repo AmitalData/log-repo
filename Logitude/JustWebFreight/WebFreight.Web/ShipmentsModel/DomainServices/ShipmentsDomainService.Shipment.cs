@@ -1051,7 +1051,10 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             //var user = HttpContext.Current.User;
             //var threadUser = Thread.CurrentPrincipal;
             SecurityUtility.AuthenticationOnTenant(tenant);
-            SecurityUtility.CheckContactFeature("Shipment", "READ", tenant);
+            if (!FeatureToggleHelper.HasFeatureToggle("RSL", tenant))
+            {
+                SecurityUtility.CheckContactFeature("Shipment", "READ", tenant);
+            }
 
             shipmentRepository = new ShipmentRepository(tenant);
 
@@ -1211,7 +1214,11 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
         public int GetShipmentFiltersCount(byte[] xmlFilters, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
-            SecurityUtility.CheckContactFeature("Shipment", "READ", tenant);
+
+            if (!FeatureToggleHelper.HasFeatureToggle("RSL", tenant))
+            {
+                SecurityUtility.CheckContactFeature("Shipment", "READ", tenant);
+            }
 
             shipmentRepository = new ShipmentRepository(tenant);
             MemoryStream memorystream = new MemoryStream(xmlFilters);

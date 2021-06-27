@@ -1098,7 +1098,7 @@
             this.QuotesRequest = quoteRequest;
         };
         
-        function ChangePage(url, entityId) {
+        function ChangePage(pageURL, entityId) {
 
             var loginData = entityId + ":" + $.CurrentCardId + ":" + $.CurrentTenant + ":" + $.CurrentEmail + ":" + $.CurrentCardType + ":" + $.IsBrandingEnabled;
 

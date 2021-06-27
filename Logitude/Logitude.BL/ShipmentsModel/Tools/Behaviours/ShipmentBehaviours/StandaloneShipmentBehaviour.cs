@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.Tools.DataMapping;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.ShipmentsModel.Tools.Initializers;
 using Logitude.Server.Tools.Counters;
@@ -52,7 +53,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         private void HandleBehaviourFromForwarderSide()
         {
             this.HandleBehaviourFromPickupForwarderSide();
-            this.HandleBehaviourFromDeliveryForwarderSide(); 
+            this.HandleBehaviourFromDeliveryForwarderSide();
         }
         private void HandleBehaviourFromPickupForwarderSide()
         {
@@ -211,6 +212,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             if(initializer.IsNewEntity)
             {
                 this.UpdatePickUpDeliveryStandaloneFieldsOnShipmentCreation();
+                this.CreatForwarderShipmentPickUpDelivery(); 
             }
 
             else
@@ -372,6 +374,69 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                     shipmentPickUpDeliveryPackageRepository.Update(shipmentPickUpDeliveryPackage);
                 }
             }
+        }
+        private void CreatForwarderShipmentPickUpDelivery()
+        {
+            if (!string.IsNullOrEmpty(this.shipmentPM.ForwarderStandaloneShipmentId) && !string.IsNullOrEmpty(this.shipmentPM.ForwarderPickUpDeliveryType))
+            {
+                Shipment forwarderShipment = this.GetForwarderShipmentPM();
+                ShipmentPickUpDelivery shipmentPickUpDelivery = new ShipmentPickUpDelivery();
+                this.MapForwarderShipmentNewPickUpDelivery(shipmentPickUpDelivery, forwarderShipment);
+                MapPickUpDeliveryFieldsFromStandaloneShipment(shipmentPickUpDelivery);
+                shipmentPickUpDeliveryRepository.Add(shipmentPickUpDelivery);
+                initializer.Repository.Update(forwarderShipment);
+            }
+        }
+        private Shipment GetForwarderShipmentPM()
+        {
+            Shipment  forwarderShipment = this.initializer.Repository.GetSingleShipment(this.shipmentPM.ForwarderStandaloneShipmentId,tenant);
+            return forwarderShipment;
+        }
+
+        private void MapForwarderShipmentNewPickUpDelivery(ShipmentPickUpDelivery shipmentPickUpDelivery,Shipment forwarderShipment)
+        {
+            shipmentPickUpDelivery.Id = IdCounter.GetNumber("ShipmentPickUpDelivery", tenant).ToString();
+            shipmentPickUpDelivery.Tenant = tenant;
+            shipmentPickUpDelivery.PickUpDeliveryTypeCode = GetShipmentPickUpDeliveryType();
+            shipmentPickUpDelivery.StandaloneShipmentId = this.shipmentPM.Id;
+            shipmentPickUpDelivery.StandaloneShipmentNumber = this.shipmentPM.ShipmentNumber;
+            shipmentPickUpDelivery.PickUpDeliveryNumber = GetShipmentPickUpDeliveryNumber(forwarderShipment);
+            shipmentPickUpDelivery.FromAddressCity = this.shipmentPM.FromAddressCity;
+            shipmentPickUpDelivery.FromAddressCountryId = this.shipmentPM.FromAddressCountryId;
+            shipmentPickUpDelivery.ToAddressCountryId = this.shipmentPM.ToAddressCountryId;
+            shipmentPickUpDelivery.ToAddressCity = this.shipmentPM.ToAddressCity;
+            shipmentPickUpDelivery.ShipmentId = forwarderShipment.Id;
+            shipmentPickUpDelivery.PickUpDeliveryFromTypeCode = "PART";
+            shipmentPickUpDelivery.PickUpDeliveryToTypeCode = "PART";
+        }
+
+        private dynamic GetShipmentPickUpDeliveryType()
+        {
+            string pickUpTypeCode = "";
+            if (this.shipmentPM.ForwarderPickUpDeliveryType == "Delivery")
+            {
+                pickUpTypeCode = "DELV";
+            }
+            else if (this.shipmentPM.ForwarderPickUpDeliveryType == "Pickup")
+            {
+                 pickUpTypeCode = "PICK";
+            }
+            return pickUpTypeCode;
+        }
+
+        private string GetShipmentPickUpDeliveryNumber(Shipment shipment)
+        {
+            if (this.shipmentPM.ForwarderPickUpDeliveryType == "Delivery")
+            {
+                shipment.ShipmentDeliveryIndex += 1;
+                return (shipment.ShipmentNumber + "/" + shipment.ShipmentDeliveryIndex);
+            }
+            else if (this.shipmentPM.ForwarderPickUpDeliveryType == "Pickup")
+            {
+                shipment.ShipmentPickUpIndex += 1;      
+                return (shipment.ShipmentNumber + "/" + shipment.ShipmentPickUpIndex);
+            }
+            return "";
         }
 
         private void UpdateForwarderShipmentPackages(ShipmentPackagePM shipmentPackagePM)
