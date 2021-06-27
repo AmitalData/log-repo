@@ -1040,7 +1040,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
         this.NewProtestClicked();
     }
     NewMethodMethod(isBtl = false) {
-        this.AddPaymentMethodClicked(isBtl, true);
+        //this.AddPaymentMethodClicked(isBtl, true);
     }
     CancelButtonClicked() {
         SessionLocator.SelectedSession.CloseCurrentWindowEmit("Cancel");
@@ -1314,7 +1314,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
     IsPaymentMethodMessageVisible: boolean = false;
     newLine: boolean = false;
     paymentMethodModelMax: PaymentMethodModel
-    AddPaymentMethodClicked(isBtl: boolean, isLoad: boolean) {
+    /*AddPaymentMethodClicked(isBtl: boolean, isLoad: boolean) {
         debugger;
         this.newLine = true;
         var line = 0;
@@ -1397,7 +1397,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
         //RefreshScreenEvent myEvent = SessionLocator.CurrentAssemblyLocator.EventAggregator.GetEvent<RefreshScreenEvent>();
         //myEvent.Publish(new RefreshScreenEventArgs("DeclarationPaymentMethods"));
         //myEvent.Publish(new RefreshScreenEventArgs("rowadded-paymentmethods"));
-    }
+    }*/
     RemovePaymentMethodClicked(item: PaymentMethodModel) {
 
         if (this.IsDisplayOnly) return;
