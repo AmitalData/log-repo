@@ -6,7 +6,7 @@
                 <tr>
                     <td><div></div></td>
 
-                    <td style="width: 1px">
+                    <td style="width: 1px" *ngIf="IsAddNewContainerVisible">
                         <IconButton [IsEnabled]="IsAddNewContainerEnabled" [Name]="'Add'" (click)="AddContainerClicked()"></IconButton>
                     </td>
 

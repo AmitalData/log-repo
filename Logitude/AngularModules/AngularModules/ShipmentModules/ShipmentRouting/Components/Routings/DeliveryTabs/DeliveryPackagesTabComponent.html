@@ -13,6 +13,14 @@
                             </span>
                         </td>
 
+                        <td style="width:5px;" *ngIf="IsAddContainerVisible">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 1px" *ngIf="IsAddContainerVisible">
+                            <button [disabled]="!IsAddContainerEnabled" class="Button" (click)="AddContainerClicked()">Add Container</button>
+                        </td>
+
                         <td style="width:5px;">
                             <div></div>
                         </td>

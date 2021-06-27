@@ -6,16 +6,18 @@ import { ShipmentPickUpPM } from '../../../../Shipment/EntityPMs/ShipmentPickUpP
 import { ShipmentPackagePM } from '../../../../Shipment/EntityPMs/ShipmentPackagePM';
 import { ShipmentPickUpDeliveryPackagePM } from '../../../../Shipment/EntityPMs/ShipmentPickUpDeliveryPackagePM';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { ShipmentDeliveryPM } from '../../../../Shipment/EntityPMs/ShipmentDeliveryPM';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { ShipmentPackageItem, PackagesTabComponent } from '../../../ShipmentPackages/Components/Packages/PackagesTabComponent';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+
 @Component({
     templateUrl: './SelectStandalonePackagesComponent.html',
 })
 
 export class SelectStandalonePackagesComponent {
-    public EntityPM: ShipmentPickUpPM;
+    public EntityPM: any;
     public ShipmentPM: ShipmentPM;
     public DataContext = this;
     public IsLCLEntity: boolean = false;
@@ -26,7 +28,7 @@ export class SelectStandalonePackagesComponent {
     public IsFromShipmentPackageTab: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     public IsVisible = false;
-
+    public IsAddNewContainerVisible: boolean = true;
     constructor(private _entityResourceService: EntityResourceService) {
 
     }
@@ -40,6 +42,10 @@ export class SelectStandalonePackagesComponent {
             this.IsFCLEntity = args.IsFCLEntity;
             this.TransportModeId = args.TransportModeId;
             this.IsFromShipmentPackageTab = args.IsFromShipmentPackageTab;
+
+            if (this.EntityPM instanceof ShipmentDeliveryPM) {
+                this.IsAddNewContainerVisible = false;
+            }
 
             if (this.IsFromShipmentPackageTab) {
                 this.SetShipmentLabels();
@@ -90,11 +96,21 @@ export class SelectStandalonePackagesComponent {
         var myPackageTypeColumnWidth: number = 80;
 
         var pickUpDliveryPackagescontainersIds: string[] = [];
-        this.ShipmentPM.ShipmentPickUps.forEach(item => {
-            item.ShipmentPickUpDeliveryPackages.forEach(item1 => {
-                pickUpDliveryPackagescontainersIds.push(item1.ContainerEntityId);
+        if (this.EntityPM instanceof ShipmentPickUpPM) {
+            this.ShipmentPM.ShipmentPickUps.forEach(item => {
+                item.ShipmentPickUpDeliveryPackages.forEach(item1 => {
+                    pickUpDliveryPackagescontainersIds.push(item1.ContainerEntityId);
+                });
             });
-        });
+        }
+
+        else if (this.EntityPM instanceof ShipmentDeliveryPM) {
+            this.ShipmentPM.ShipmentDeliveries.forEach(item => {
+                item.ShipmentPickUpDeliveryPackages.forEach(item1 => {
+                    pickUpDliveryPackagescontainersIds.push(item1.ContainerEntityId);
+                });
+            });
+        }
 
         if (this.EntityPM.ShipmentPickUpDeliveryPackages != null) {
             this.EntityPM.ShipmentPickUpDeliveryPackages.forEach(item => {
@@ -125,7 +141,7 @@ export class SelectStandalonePackagesComponent {
         var myPackageTypeColumnWidth: number = 80;
 
         var pickUpDliveryPackagescontainersIds: string[] = [];
-        if (this.ShipmentPM.ShipmentPickUps != null ) {
+        if (this.ShipmentPM.ShipmentPickUps != null) {
             this.ShipmentPM.ShipmentPickUps.forEach(pickUp => {
                 pickUp.ShipmentPickUpDeliveryPackages.forEach(item => {
                     pickUpDliveryPackagescontainersIds.push(item.ContainerEntityId);
@@ -237,7 +253,7 @@ export class SelectStandalonePackagesComponent {
                 this.BuildPickupDeliveryItemsSource();
             }
         });
-    }    
+    }
 }
 export class PackagesSelectItem {
     public EntityPM: ShipmentPackagePM;
