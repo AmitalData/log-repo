@@ -1,6 +1,8 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
+﻿using Logitude.Server.Tools;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -111,29 +113,15 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                 PropertyInfo propInfo = entityPM.GetType().GetProperty(item.FieldName);
                 if (propInfo != null)
                 {
-                    object oldValue = propInfo.GetValue(entityPM);
-                    object newValue = ResolveSetFieldValue(automationFieldLists, item);
-
-                    if (oldValue == null) oldValue = "";
-                    if (newValue == null) newValue = "";
-
-                    if (oldValue.ToString().ToLower() != newValue.ToString().ToLower())
+                    AutomationSetValueChangedFieldsArgs AutomationChangedFields = new AutomationSetValueChangedFieldsArgs
                     {
-                        if ((item.DataTypeCode.Trim() == "DateTime" || item.DataTypeCode.Trim() == "Date") && item.OperatorCode == "SF" && string.IsNullOrEmpty(newValue.ToString()))
-                        {
-                            newValue = null;
-                        }
-
-                        propInfo.SetValue(entityPM, newValue, null);
-                        c fieldc = new c()
-                        {
-                            f = item.ObjectFieldCode,
-                            o = oldValue.ToString(),
-                            n = newValue == null ? null : newValue.ToString(),
-                        };
-
-                        fields.Add(fieldc);
-                    }
+                        EntityPM = entityPM,
+                        AutomationFieldLists = automationFieldLists,
+                        ChangedFields = fields,
+                        SetValueItem = item,
+                        PropInfo = propInfo,
+                    };
+                    fields = FillChangedFieldsList(AutomationChangedFields);
                 }
             }
             #endregion
@@ -143,6 +131,21 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
             entityChangesAutomation.DoneDate = TenantServerConfigration.GetCurrentDateTime(entityChange.Tenant);
             EntityChangesAutomationsSsucceedList.Add(entityChangesAutomation);
             entityChangesAutomation.ExecutionTime = (int)((DateTime.Now.Ticks - dateBefore.Ticks) / TimeSpan.TicksPerMillisecond);
+        }
+
+        private List<c> FillChangedFieldsList(AutomationSetValueChangedFieldsArgs AutomationChangedFields)
+        {
+            object oldValue = AutomationChangedFields.PropInfo.GetValue(AutomationChangedFields.EntityPM) ?? "";
+            object newValue = ResolveSetFieldValue(AutomationChangedFields.AutomationFieldLists, AutomationChangedFields.SetValueItem) ?? "";
+
+            if (!IsValueChanged(oldValue, newValue) && !AutomationChangedFields.SetValueItem.IsCustomField)
+            {
+                return AutomationChangedFields.ChangedFields;
+            }
+
+            newValue = IsNewValueShouldBeNull(AutomationChangedFields, newValue) ? null : newValue;
+            AutomationChangedFields.PropInfo.SetValue(AutomationChangedFields.EntityPM, newValue, null);
+            return AddFieldToChangedFieldsList(AutomationChangedFields, oldValue, newValue);
         }
 
         private object ResolveSetFieldValue(List<Field> automationFieldLists, AutomationSetValue item)
@@ -174,11 +177,70 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
             {
                 result = !string.IsNullOrEmpty(item.Value) ? Int32.Parse(item.Value) : 0;
             }
+            else if (item.IsCustomField)
+            {
+                result = GetNewCustomField(item);
+            }
             else result = item.Value;
 
 
             return result;
         }
 
+        private static object GetNewCustomField(AutomationSetValue item)
+        {
+            string[] objectFieldSeparator = item.ObjectFieldCode.Split('.');
+            if (objectFieldSeparator.Length > 2)
+            {
+                return new CustomFieldClass(objectFieldSeparator[2], objectFieldSeparator[0], item.Value);
+            }
+            return null;
+        }
+
+        private static bool IsValueChanged(object oldValue, object newValue)
+        {
+            return oldValue.ToString().ToLower() != newValue.ToString().ToLower();
+        }
+
+        private static bool IsNewValueShouldBeNull(AutomationSetValueChangedFieldsArgs AutomationChangedFields, object newValue)
+        {
+            return (AutomationChangedFields.SetValueItem.DataTypeCode.Trim() == "DateTime" || AutomationChangedFields.SetValueItem.DataTypeCode.Trim() == "Date") && AutomationChangedFields.SetValueItem.OperatorCode == "SF" && string.IsNullOrEmpty(newValue.ToString());
+        }
+
+        private static List<c> AddFieldToChangedFieldsList(AutomationSetValueChangedFieldsArgs AutomationChangedFields, object oldValue, object newValue)
+        {
+            List<c> newChangedFields = AutomationChangedFields.ChangedFields;
+            string fieldOldValue = ResolveFieldValue(oldValue);
+            string fieldNewValue = ResolveFieldValue(newValue);
+
+            c changedField = new c()
+            {
+                f = AutomationChangedFields.SetValueItem.ObjectFieldCode,
+                o = fieldOldValue,
+                n = fieldNewValue,
+            };
+            newChangedFields.Add(changedField);
+
+            return newChangedFields;
+        }
+
+        private static string ResolveFieldValue(object value)
+        {
+            if (value != null && value.GetType() == typeof(CustomFieldClass))
+            {
+                CustomFieldClass customField = value as CustomFieldClass;
+                return customField.Value;
+            }
+            return value?.ToString();
+        }
     }
+}
+
+public class AutomationSetValueChangedFieldsArgs
+{
+    public object EntityPM { get; set; }
+    public List<Field> AutomationFieldLists { get; set; }
+    public List<c> ChangedFields { get; set; }
+    public AutomationSetValue SetValueItem { get; set; }
+    public PropertyInfo PropInfo { get; set; }
 }

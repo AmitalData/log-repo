@@ -23,6 +23,7 @@ using System.Transactions;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.CRM.BL.EntityQueryServices;
+using Logitude.BL.Helpers;
 
 namespace Logitude.CRM.BL.EntityDataMappings
 {
@@ -453,6 +454,7 @@ namespace Logitude.CRM.BL.EntityDataMappings
                 MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ShipmentNumber);
             }
 
+            mySearchFields = AddCustomFieldsToSearchFields(entityPM, mySearchFields);
             if (mySearchFields.Length > 1000)
             {
                 mySearchFields = mySearchFields.Substring(0, 1000);
@@ -460,6 +462,32 @@ namespace Logitude.CRM.BL.EntityDataMappings
 
             entityPM.SearchFields = mySearchFields;
             entityPOCO.SearchFields = mySearchFields;
+        }
+
+        private static string AddCustomFieldsToSearchFields(TicketPM entityPM, string mySearchFields)
+        {
+            List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Ticket", entityPM.Tenant).Where(o => o.DataTypeCode == "Text" || o.DataTypeCode == "nText" || o.DataTypeCode == "PickList").ToList();
+            string searchFields = mySearchFields;
+
+            foreach (ObjectField field in customFields)
+            {
+                searchFields = AddCustomFieldValueToSearchFields(entityPM, searchFields, field);
+            }
+            return searchFields;
+        }
+
+        private static string AddCustomFieldValueToSearchFields(TicketPM entityPM, string mySearchFields, ObjectField field)
+        {
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            string searchFields = mySearchFields;
+
+            object value = customFieldResolver.GetFieldValue(entityPM, field, entityPM.Tenant);
+            if (value != null)
+            {
+                MethodHelper.AddToSearchFields(ref searchFields, value.ToString());
+            }
+
+            return searchFields;
         }
 
         public string GetReplyToEmail(int tenant, string guidId)
