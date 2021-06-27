@@ -37,17 +37,17 @@ namespace WebFreight.Web.Helpers
         {
             this.tenant = tenant;
             this.quotesRequestFilters = quotesRequestFilters;
-            this.iCRMContext = CRMContext.GetContext(this.tenant);
             documentTypeId = new DocumentTypeRepository(tenant).GetDocumentTypeIdByCode(documentTypeCode, tenant);
             ticketObjectTableId = ObjectTableRepository.GetObjectTableByName("Ticket");
             quoteObjectTableId = ObjectTableRepository.GetObjectTableByName("Quote");
 
         }
 
-        public QuotesRequestService(int tenant, QuotesRequestEmailFeedback emailFeedback)
+        public QuotesRequestService(int tenant)
         {
             this.tenant = tenant;
             this.quotesRequestFilters = quotesRequestFilters;
+            this.iCRMContext = CRMContext.GetContext(this.tenant);
             documentTypeId = new DocumentTypeRepository(tenant).GetDocumentTypeIdByCode(documentTypeCode, tenant);
             ticketObjectTableId = ObjectTableRepository.GetObjectTableByName("Ticket");
             quoteObjectTableId = ObjectTableRepository.GetObjectTableByName("Quote");
