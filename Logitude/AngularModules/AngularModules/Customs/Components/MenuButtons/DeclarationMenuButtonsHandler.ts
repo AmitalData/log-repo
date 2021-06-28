@@ -1339,7 +1339,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         if (this.EntityPM.Direction == "E")
         {
             logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.PaymentsExport");
-            logWindow.Height = 500;
+            logWindow.Height = 400;
             logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationPayment/DeclarationPaymentExportComponent');
         }
         else
