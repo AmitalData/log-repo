@@ -97,19 +97,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Hooks\BeforeFeatureRun.cs" />
     <Compile Include="Models\AddressPM.cs" />
     <Compile Include="Models\Builders\AddressBuilder.cs" />
+    <Compile Include="Models\Builders\VesselBuilder.cs" />
+    <Compile Include="Models\CommonContext.cs" />
+    <Compile Include="Models\CommonData.cs" />
     <Compile Include="Models\ContactPM.cs" />
     <Compile Include="Models\FTPDetailPM.cs" />
     <Compile Include="Models\TenantPM.cs" />
+    <Compile Include="Models\VesselPM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ExternalServices\TenantServices.cs" />
+    <Compile Include="Services\TenantServices.cs" />
+    <Compile Include="Services\VesselDataPreparation.cs" />
     <Compile Include="Steps\LocalSettings\GetLocalSettingsAccessSteps.cs" />
     <Compile Include="Steps\LocalSettings\UpdateLocalSettingsAccessSteps.cs" />
     <Compile Include="Steps\Security\AddressSettingSecurityAccessSteps.cs" />
     <Compile Include="Steps\Security\GetContactSecurityAccessSteps.cs" />
     <Compile Include="Steps\Security\GetFTPDetailSecurityAccessSteps.cs" />
     <Compile Include="Steps\Security\TenantSecurityAccessSteps.cs" />
+    <Compile Include="Steps\Vessel\GetVesselAccessSteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -119,6 +126,7 @@
     <None Include="Features\Security\GetContactSecurityAccess.feature" />
     <None Include="Features\Security\GetFTPDetailSecurityAccess.feature" />
     <None Include="Features\Security\TenantSecurityAccess.feature" />
+    <None Include="Features\Vessel\GetVesselAccess.feature" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
