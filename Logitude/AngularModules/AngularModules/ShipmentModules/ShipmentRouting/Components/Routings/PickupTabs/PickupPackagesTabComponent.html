@@ -132,7 +132,7 @@
 
                                     <td class="CellTools" style="width: 25px; min-width: 25px; max-width: 25px;">
                                         <span class="CellSeparator"></span>
-                                        <IconButton [IsEnabled]="!item.IsDeleteContainerEnabled" [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteButtonClicked(item)"></IconButton>
+                                        <IconButton [disabled]="!IsEditingEnabled && !IsAddContainerEnabled" [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteButtonClicked(item)"></IconButton>
                                     </td>
 
 

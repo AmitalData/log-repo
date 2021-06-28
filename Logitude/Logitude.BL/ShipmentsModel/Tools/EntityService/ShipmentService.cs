@@ -4647,8 +4647,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
                 }
             }
-
-            UpdateConnectedPackages(itemPM);
+            if(!(IsInlandDomesticShipment(entityPM) && !entityPM.IsStandalonePickupDelivery))
+            {
+                UpdateConnectedPackages(itemPM);
+            }
 
             calculateProfit = true;
             calculatePayables = true;
@@ -7063,7 +7065,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             shipmentPickUpDeliveryPackage.ShipperSeal = itemPM.ShipperSeal;
             this.shipmentPickUpDeliveryPackageRepository.Update(shipmentPickUpDeliveryPackage);
         }
+        private bool IsInlandDomesticShipment(ShipmentPM entityPM)
+        {
+            return entityPM.DirectionId == "D" && entityPM.TransportModeId == "I";
+        }
     }
+
 
     public class NumberOfInsidePackagesHelper
     {

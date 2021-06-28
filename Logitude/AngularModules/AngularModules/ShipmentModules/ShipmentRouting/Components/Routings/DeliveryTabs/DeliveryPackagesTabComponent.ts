@@ -397,10 +397,10 @@ export class DeliveryPackageItem extends BaseComponent {
 
     public IsContainer: boolean = false;
     public IsEditingEnabled: boolean = true;
-    public IsDeleteContainerEnabled: boolean = false;
+    public IsAddContainerEnabled: boolean = false;
     SetUIProperties() {
-        this.IsEditingEnabled = this.fatherComponent.IsEditingEnabled ;
-        this.IsDeleteContainerEnabled = this.IsEditingEnabled || !this.fatherComponent.IsAddContainerEnabled;
+        this.IsEditingEnabled = this.fatherComponent.IsEditingEnabled;
+        this.IsAddContainerEnabled = this.fatherComponent.IsAddContainerEnabled;
         if (this.IsEditingEnabled) {
             if (this.EntityPM.OriginalShipmentPackageId) {
                 this.IsEditingEnabled = false;

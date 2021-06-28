@@ -294,11 +294,11 @@ export class PickupPackageItem extends BaseComponent {
 
     public IsContainer: boolean = false;
     public IsEditingEnabled: boolean = true;
-    public IsDeleteContainerEnabled :boolean = false;
-    SetUIProperties() {
+    public IsAddContainerEnabled: boolean = false;
 
+    SetUIProperties() {
+        this.IsAddContainerEnabled = this.fatherComponent.IsAddContainerEnabled;
         this.IsEditingEnabled = this.fatherComponent.IsEditingEnabled;
-        this.IsDeleteContainerEnabled = this.IsEditingEnabled || !this.fatherComponent.IsAddContainerEnabled;
         this.SetUIProperties_IsContainer();
         this.SetUIProperties_Harmonize();
 
