@@ -471,6 +471,7 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.Transshipment1ATA = shipment.Transshipment1ATA;
                 myDataProvider.AWBCommodityItemNumber = shipment.AWBCommodityItemNumber;
                 myDataProvider.SCI = shipment.SCI;
+                myDataProvider.MasterDate = shipment.MAWBOBLDate;
 
                 #region MasterAMSBL
                 var aMSBL_FromHouse = "";
@@ -1123,9 +1124,7 @@ namespace WebFreight.Web.WebServices
 
                 if (!string.IsNullOrEmpty(contactEmail))
                 {
-                    Contact currentContact = (from a in commonContext.Contacts
-                                              where a.Email == contactEmail && a.Tenant == tenant
-                                              select a).FirstOrDefault();
+                    Contact currentContact = contactRepository.GetSingleContactByEmailAndTenant(contactEmail, tenant);
 
                     if (currentContact != null)
                     {
@@ -1133,9 +1132,15 @@ namespace WebFreight.Web.WebServices
                         myDataProvider.UserEmail = currentContact.Email != null ? currentContact.Email : "";
                         myDataProvider.UserPhoneNumber = currentContact.BusinessPhone;
                         myDataProvider.UserMobileNumber = currentContact.Mobile;
+
+                        myDataProvider.UserDepartment = (from user in commonContext.Users
+                                                         join department in commonContext.Departments
+                                                         on user.DepartmentId equals department.Id into userDepartments
+                                                         from userDepartment in userDepartments.DefaultIfEmpty()
+                                                         where user.Id == currentContact.Id
+                                                         select userDepartment.EnglishName).FirstOrDefault();
                     }
                 }
-
                 #endregion
 
                 #region Agent
