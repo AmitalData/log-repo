@@ -307,10 +307,10 @@ export class DeliveryPackagesTabComponent {
         var entityArgs: EntityArgs = new EntityArgs();
         entityArgs.EntityPM = this.ShipmentPM;
         entityArgs.ObjectTableName = "Shipment";
-
+        entityArgs.IsFromStandAloneScreen  = true;
         var packagesTabComponent: PackagesTabComponent = new PackagesTabComponent(entityArgs, new EntityResourceService());
         packagesTabComponent.ngOnInit();
-        packagesTabComponent.IsEditingEnabled = AppTool.IsNullOrEmpty(deliveryItemComponent.EntityPM.ContainerEntityId) ? true : false;
+        packagesTabComponent.IsEditingEnabled = AppTool.IsNullOrEmpty(this.EntityPM.StandaloneShipmentId) ? true : false;
         var itemComponent = new ShipmentPackageItem(shipmentPackage, packagesTabComponent, false);
         logWindow.Width = 940;
         logWindow.Height = 610;
@@ -397,9 +397,10 @@ export class DeliveryPackageItem extends BaseComponent {
 
     public IsContainer: boolean = false;
     public IsEditingEnabled: boolean = true;
+    public IsDeleteContainerEnabled: boolean = false;
     SetUIProperties() {
-        this.IsEditingEnabled = this.fatherComponent.IsEditingEnabled;
-
+        this.IsEditingEnabled = this.fatherComponent.IsEditingEnabled ;
+        this.IsDeleteContainerEnabled = this.IsEditingEnabled || !this.fatherComponent.IsAddContainerEnabled;
         if (this.IsEditingEnabled) {
             if (this.EntityPM.OriginalShipmentPackageId) {
                 this.IsEditingEnabled = false;

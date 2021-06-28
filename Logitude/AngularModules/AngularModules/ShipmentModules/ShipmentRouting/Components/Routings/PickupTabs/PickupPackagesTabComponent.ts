@@ -206,7 +206,7 @@ export class PickupPackagesTabComponent {
 
         var packagesTabComponent: PackagesTabComponent = new PackagesTabComponent(entityArgs, new EntityResourceService());
         packagesTabComponent.ngOnInit();
-        packagesTabComponent.IsEditingEnabled = AppTool.IsNullOrEmpty(pickupItemComponent.EntityPM.ContainerEntityId) ? true : false;
+        packagesTabComponent.IsEditingEnabled = AppTool.IsNullOrEmpty(this.EntityPM.StandaloneShipmentId) ? true : false;
         var itemComponent = new ShipmentPackageItem(shipmentPackage, packagesTabComponent, false);
         logWindow.Width = 940;
         logWindow.Height = 610;
@@ -294,8 +294,11 @@ export class PickupPackageItem extends BaseComponent {
 
     public IsContainer: boolean = false;
     public IsEditingEnabled: boolean = true;
+    public IsDeleteContainerEnabled :boolean = false;
     SetUIProperties() {
-        this.IsEditingEnabled = this.fatherComponent.IsEditingEnabled;        
+
+        this.IsEditingEnabled = this.fatherComponent.IsEditingEnabled;
+        this.IsDeleteContainerEnabled = this.IsEditingEnabled || !this.fatherComponent.IsAddContainerEnabled;
         this.SetUIProperties_IsContainer();
         this.SetUIProperties_Harmonize();
 
@@ -319,6 +322,7 @@ export class PickupPackageItem extends BaseComponent {
         this.UIProperties.SetEnabled("ShipperSeal", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Harmonize", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Description", this.ObjectTableName, this.IsEditingEnabled);
+
     }
     private SetUIPropertiesOfCars(isEnabled: boolean) {
         this.UIProperties.SetEnabled("Make", this.ObjectTableName, isEnabled);

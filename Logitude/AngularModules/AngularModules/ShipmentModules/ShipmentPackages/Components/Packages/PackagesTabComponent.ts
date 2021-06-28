@@ -51,6 +51,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     public TransportModeId: string;
     public IsLCLEntity: boolean = false;
     public IsFCLEntity: boolean = false;
+    public IsFromStandAloneScreen: boolean = false;
     public IsResourcesReady: boolean = false;
     public IsContainersFUVisible: boolean = false;
     public IsCommodityNameVisible: boolean = false;
@@ -70,6 +71,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = entityArgs.EntityPM;
+        this.IsFromStandAloneScreen = entityArgs.IsFromStandAloneScreen;
         this.ObjectTableName = entityArgs.ObjectTableName;
         this.DirectionId = this.EntityPM.DirectionId;
         this.TransportModeId = this.EntityPM.TransportModeId;
@@ -2182,6 +2184,7 @@ export class ShipmentPackageItem extends BaseComponent {
     public IsLCLEntity: boolean = false;
     public IsFCLEntity: boolean = false;
     public IsNewEntity: boolean = false;
+    public IsFromStandAloneScreen: boolean = false;
     public InsideItemsSource: InsideShipmentPackageItem[] = [];
     public PackageItemsList: ObservableCollection;
     public IsRowHover: boolean = false;
@@ -2199,6 +2202,7 @@ export class ShipmentPackageItem extends BaseComponent {
         this.ShipmentPM = fatherComponent.EntityPM;
         this.IsLCLEntity = fatherComponent.IsLCLEntity;
         this.IsFCLEntity = fatherComponent.IsFCLEntity;
+        this.IsFromStandAloneScreen = fatherComponent.IsFromStandAloneScreen;
         this.IsCommodityNumberVisible = fatherComponent.IsCommodityNumberVisible;
         this.IsCommodityNameVisible = fatherComponent.IsCommodityNameVisible;
         this.HorseFieldIsVisible = fatherComponent.HorseFieldIsVisible;

@@ -96,6 +96,7 @@ export class SelectStandalonePackagesComponent {
         var myPackageTypeColumnWidth: number = 80;
 
         var pickUpDliveryPackagescontainersIds: string[] = [];
+        var pickUpDliveryPackagescontainerNumbers: string[] = [];
         if (this.EntityPM instanceof ShipmentPickUpPM) {
             this.ShipmentPM.ShipmentPickUps.forEach(item => {
                 item.ShipmentPickUpDeliveryPackages.forEach(item1 => {
@@ -115,10 +116,14 @@ export class SelectStandalonePackagesComponent {
         if (this.EntityPM.ShipmentPickUpDeliveryPackages != null) {
             this.EntityPM.ShipmentPickUpDeliveryPackages.forEach(item => {
                 pickUpDliveryPackagescontainersIds.push(item.ContainerEntityId);
+                pickUpDliveryPackagescontainerNumbers.push(item.ContainerNumber);
             });
         }
 
-        this.ShipmentPM.ShipmentPackages.filter(d => AppTool.IsNullOrEmpty(d.ContainerEntityId) || pickUpDliveryPackagescontainersIds.indexOf(d.ContainerEntityId) == -1).forEach(item => {
+        this.ShipmentPM.ShipmentPackages.filter(d => ( AppTool.IsNullOrEmpty(d.ContainerEntityId) ||
+            pickUpDliveryPackagescontainersIds.indexOf(d.ContainerEntityId) == -1) && (!AppTool.IsNullOrEmpty(d.ContainerNumber)
+            && pickUpDliveryPackagescontainerNumbers.indexOf(d.ContainerNumber) == -1)
+            ).forEach(item => {
             var widthOfLabel = AppTool.GetTextWidth(item.PackageTypeName);
             if (widthOfLabel > myPackageTypeColumnWidth) {
                 myPackageTypeColumnWidth = widthOfLabel;
@@ -141,6 +146,7 @@ export class SelectStandalonePackagesComponent {
         var myPackageTypeColumnWidth: number = 80;
 
         var pickUpDliveryPackagescontainersIds: string[] = [];
+
         if (this.ShipmentPM.ShipmentPickUps != null) {
             this.ShipmentPM.ShipmentPickUps.forEach(pickUp => {
                 pickUp.ShipmentPickUpDeliveryPackages.forEach(item => {
@@ -157,7 +163,8 @@ export class SelectStandalonePackagesComponent {
             });
         }
 
-        this.ShipmentPM.ShipmentPackages.filter(d => AppTool.IsNullOrEmpty(d.ContainerEntityId) || pickUpDliveryPackagescontainersIds.indexOf(d.ContainerEntityId) == -1).forEach(item => {
+        this.ShipmentPM.ShipmentPackages.filter(d => (AppTool.IsNullOrEmpty(d.ContainerEntityId) ||
+            pickUpDliveryPackagescontainersIds.indexOf(d.ContainerEntityId) == -1) && (!AppTool.IsNullOrEmpty(d.ContainerNumber))).forEach(item => {
             var widthOfLabel = AppTool.GetTextWidth(item.PackageTypeName);
             if (widthOfLabel > myPackageTypeColumnWidth) {
                 myPackageTypeColumnWidth = widthOfLabel;
@@ -242,7 +249,7 @@ export class SelectStandalonePackagesComponent {
         var entityArgs: EntityArgs = new EntityArgs();
         entityArgs.EntityPM = this.ShipmentPM;
         entityArgs.ObjectTableName = "Shipment";
-
+        entityArgs.IsFromStandAloneScreen = true;
         var packagesTabComponent: PackagesTabComponent = new PackagesTabComponent(entityArgs, new EntityResourceService());
         packagesTabComponent.ngOnInit();
         var itemComponent = new ShipmentPackageItem(newShipmentPackage, packagesTabComponent, true);
@@ -250,7 +257,11 @@ export class SelectStandalonePackagesComponent {
         logWindow.Show('./ShipmentModules/ShipmentPackages/Components/Packages/AddEditOceanPackageComponent');
         logWindow.WindowClosed.subscribe((s: any) => {
             if (s) {
-                this.BuildPickupDeliveryItemsSource();
+                if (!this.IsFromShipmentPackageTab) {
+                    this.BuildPickupDeliveryItemsSource();
+                } else {
+                    this.BuildShipmetItemsSource();
+                }
             }
         });
     }

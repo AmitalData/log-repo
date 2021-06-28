@@ -7022,15 +7022,23 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private void UpdateConnectedPackages(ShipmentPackagePM itemPM)
         {
-            ShipmentPackage shipmentPackage = this.shipmentPackageRepository.GetSingleShipmentPackageByContainerId(itemPM.ShipmentId,itemPM.ContainerEntityId,tenant);
-            if (shipmentPackage != null)
+            List<ShipmentPackage> shipmentPackages = this.shipmentPackageRepository.GetSingleShipmentPackageByContainerId(itemPM.ShipmentId,itemPM.ContainerEntityId,tenant);
+            if (shipmentPackages != null)
             {
-                UpdateConnectedStanadAloneShipmentPackages(itemPM, shipmentPackage);
+                foreach(ShipmentPackage shipmentPackage in shipmentPackages)
+                {
+                    if (shipmentPackage != null)
+                        UpdateConnectedStanadAloneShipmentPackages(itemPM, shipmentPackage);
+                }
             }
-            ShipmentPickUpDeliveryPackage shipmentPickUpDeliveryPackage = this.shipmentPickUpDeliveryPackageRepository.GetSingleShipmentPickUpDeliveryPackageByContainerId(itemPM.ContainerEntityId, tenant);
-            if(shipmentPickUpDeliveryPackage != null)
+            List<ShipmentPickUpDeliveryPackage> shipmentPickUpDeliveryPackages = this.shipmentPickUpDeliveryPackageRepository.GetSingleShipmentPickUpDeliveryPackageByContainerId(itemPM.ContainerEntityId, tenant);
+            if(shipmentPickUpDeliveryPackages != null)
             {
-                UpdateConnectedPickupDeliveryPackages(itemPM, shipmentPickUpDeliveryPackage);
+                foreach(ShipmentPickUpDeliveryPackage shipmentPickUpDeliveryPackage in shipmentPickUpDeliveryPackages)
+                {
+                    if (shipmentPickUpDeliveryPackage != null )
+                        UpdateConnectedPickupDeliveryPackages(itemPM, shipmentPickUpDeliveryPackage);
+                }
             }
         }
         private void UpdateConnectedStanadAloneShipmentPackages(ShipmentPackagePM itemPM, ShipmentPackage shipmentPackage)

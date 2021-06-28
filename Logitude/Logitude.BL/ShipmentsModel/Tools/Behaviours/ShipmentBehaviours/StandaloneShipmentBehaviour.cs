@@ -444,19 +444,24 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
         private void UpdateForwarderShipmentPackages(ShipmentPackagePM shipmentPackagePM)
         {
-
-            ShipmentPackage shipmentPackage = this.initializer.ShipmentPackageRepository.GetSingleShipmentPackageByContainerId(this.shipmentPM.Id, shipmentPackagePM.ContainerEntityId, tenant);
-            if (shipmentPackage != null)
+            List<ShipmentPackage> shipmentPackages = this.initializer.ShipmentPackageRepository.GetSingleShipmentPackageByContainerId(this.shipmentPM.Id, shipmentPackagePM.ContainerEntityId, tenant);
+            if (shipmentPackages != null)
             {
-                shipmentPackage.ContainerEntityId = shipmentPackagePM.ContainerEntityId;
-                shipmentPackage.ContainerNumber = shipmentPackagePM.ContainerNumber;
-                shipmentPackage.Description = shipmentPackagePM.Description;
-                shipmentPackage.PackageTypeId = shipmentPackagePM.PackageTypeId;
-                shipmentPackage.Quantity = shipmentPackagePM.Quantity;
-                shipmentPackage.Volume = shipmentPackagePM.Volume;
-                shipmentPackage.Weight = shipmentPackagePM.Weight;
-                shipmentPackage.ShipperSeal = shipmentPackagePM.ShipperSeal;
-                this.initializer.ShipmentPackageRepository.Update(shipmentPackage);
+                foreach (ShipmentPackage shipmentPackage in shipmentPackages)
+                {
+                    if (shipmentPackage != null)
+                    {
+                        shipmentPackage.ContainerEntityId = shipmentPackagePM.ContainerEntityId;
+                        shipmentPackage.ContainerNumber = shipmentPackagePM.ContainerNumber;
+                        shipmentPackage.Description = shipmentPackagePM.Description;
+                        shipmentPackage.PackageTypeId = shipmentPackagePM.PackageTypeId;
+                        shipmentPackage.Quantity = shipmentPackagePM.Quantity;
+                        shipmentPackage.Volume = shipmentPackagePM.Volume;
+                        shipmentPackage.Weight = shipmentPackagePM.Weight;
+                        shipmentPackage.ShipperSeal = shipmentPackagePM.ShipperSeal;
+                        this.initializer.ShipmentPackageRepository.Update(shipmentPackage);
+                    }
+                }
             }
         }
     }

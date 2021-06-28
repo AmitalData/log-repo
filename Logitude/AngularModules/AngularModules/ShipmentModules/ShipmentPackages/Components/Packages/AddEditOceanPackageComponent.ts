@@ -24,7 +24,8 @@ export class AddEditOceanPackageComponent {
     public ObjectTableName: string = "ShipmentPackage";
     public SelectedTabCode: string = "0";
     public IsFCLEntity: boolean = false;
-    public IsLCLEntity: boolean = false; 
+    public IsLCLEntity: boolean = false;
+    public IsFromStandAloneScreen: boolean = false;
     public ValidationErrorsList: string[] = [];
     public IsContainerEntityReferenceVisible: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
@@ -37,6 +38,7 @@ export class AddEditOceanPackageComponent {
         this.DataContext.FillMethodsList();
         this.IsFCLEntity = dataContext.IsFCLEntity;
         this.IsLCLEntity = dataContext.IsLCLEntity;
+        this.IsFromStandAloneScreen = dataContext.IsFromStandAloneScreen;
         this.SetLabels();
         this.Clone();
         this.GetContainerEntityReferenceVisiblity();
@@ -116,6 +118,10 @@ export class AddEditOceanPackageComponent {
 
         if (AppTool.IsNullOrEmpty(this.EntityPM.Weight)) {
             errors.push("Gross Weight is required");
+        }
+
+        if (AppTool.IsNullOrEmpty(this.EntityPM.ContainerNumber) && this.IsFromStandAloneScreen) {
+            errors.push("Container Number is required");
         }
 
         this.ValidationErrorsList = errors;
