@@ -48,7 +48,9 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
     private cardListService: CardListService = new CardListService();
     private gLAccountPMService: GLAccountPMService = new GLAccountPMService();
     private currencyListService: CurrencyListService = new CurrencyListService();
-
+    DisplayFieldsFromList: string;
+    DisplayLocalFieldsFromList: string;
+    VendorLovSizeForFullAccounting: number;
 
     private CurrentSession = SessionLocator.SelectedSession;
 
@@ -58,6 +60,16 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
+        }
+        this.InitializeVendorLov();
+
+    }
+
+    private InitializeVendorLov() {
+        if (this.IsAccountingActivated) {
+            this.DisplayFieldsFromList = "Code,CalculatedEnglishName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
+            this.DisplayLocalFieldsFromList = "Code,CalculatedLocalName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
+            this.VendorLovSizeForFullAccounting = 550;
         }
     }
 
