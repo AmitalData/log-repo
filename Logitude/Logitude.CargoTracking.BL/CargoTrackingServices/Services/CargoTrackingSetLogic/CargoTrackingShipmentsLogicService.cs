@@ -30,6 +30,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             SetGrossWeightUnit(tableRow);
             SetCurrentMilestone(tableRow);
             SetShipmentTypeCode(tableRow);
+            SetExceptionDescription(tableRow);
 
         }
 
@@ -494,6 +495,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         private static void SetShipmentTypeCode(DataRow tableRow)
         {
             tableRow.SetField("ShipmentTypeCode", tableRow["ShipmentTypeId"]);
+        }
+        private static void SetExceptionDescription(DataRow tableRow)
+        {
+            tableRow.SetField("CurrentMilestoneExceptions", tableRow["ExceptionDate"] + "\n" + tableRow["ExceptionDescription"]);
         }
         private static void SetDefaultShipper(DataRow tableRow)
         {
