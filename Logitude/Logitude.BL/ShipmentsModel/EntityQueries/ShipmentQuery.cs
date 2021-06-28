@@ -13557,7 +13557,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 ShipmentCloudCustomDataDeserializer deserializer = new ShipmentCloudCustomDataDeserializer();
                 var cloudCustomData = deserializer.BuildCustomDataFromXML(shipment.ShipmentAdditionalCloudData);
-                shipmentPM.TotalTax = cloudCustomData.TotalTax;
+                shipmentPM.TotalTax = cloudCustomData?.TotalTax;
             }
         }
 
@@ -13623,15 +13623,17 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             Shipment shipment = repository.GetShipmentForCargoTracking(shipmentId, tenant);
 
-            if (shipment.ShipmentAdditionalCloudData != null)
+            if (shipment.ShipmentAdditionalCloudData == null) return null;
+            
+            ShipmentAdditionalCloudCustomData cloudCustomData = GetDeserializedCloudCustomData(shipment.ShipmentAdditionalCloudData);
+            CargoTrackingShipmentCustomsData shipmentCustomsData = null;
+            if (cloudCustomData != null)
             {
-                ShipmentAdditionalCloudCustomData cloudCustomData = GetDeserializedCloudCustomData(shipment.ShipmentAdditionalCloudData);
-                CargoTrackingShipmentCustomsData shipmentCustomsData = BuildCargoTrackingShipmentCustomsData(cloudCustomData, tenant);
-
-                return shipmentCustomsData;
+                shipmentCustomsData = BuildCargoTrackingShipmentCustomsData(cloudCustomData, tenant);
             }
 
-            return null;
+            return shipmentCustomsData;
+            
         }
 
         private CargoTrackingShipmentCustomsData BuildCargoTrackingShipmentCustomsData(ShipmentAdditionalCloudCustomData cloudCustomData, int tenant)

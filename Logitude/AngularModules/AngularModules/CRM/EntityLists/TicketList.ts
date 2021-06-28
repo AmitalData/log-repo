@@ -128,6 +128,8 @@ export class TicketList {
 	SupportMailboxId: string;
 	LastCorrespondence: string;
 	EntityTypeName: string;
+	QuoteRequestFeedback: string;
+	QuoteRequestComments: string;
 	
 }
  

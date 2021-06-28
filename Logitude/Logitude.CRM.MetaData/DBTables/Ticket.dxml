@@ -451,6 +451,20 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="QuoteRequestFeedback"
+    Type="nvarchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="QuoteRequestComments"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByContactId"
     ReferencedTable="Contacts"

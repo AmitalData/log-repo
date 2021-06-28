@@ -91,5 +91,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string ContainerTypeCode { get; set; }
         public int? Quantity { get; set; }
         public double? ForiegnAmountWithRecognizedVat { get; set; }
+        public double? LocalAmountWithVatRecognized { get;  set; }
     }
 }

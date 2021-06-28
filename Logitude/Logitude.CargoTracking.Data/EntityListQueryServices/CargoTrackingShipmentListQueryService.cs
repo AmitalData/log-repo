@@ -20,10 +20,16 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                            join fromPort in ports on shipment.FromPortId equals fromPort.Id
                                                            join toPort in ports on shipment.ToPortId equals toPort.Id
                                                            join customer in context.CargoTrackingCards on shipment.CustomerId equals customer.Id
-                                                           join Consignee in context.CargoTrackingCards on shipment.ConsigneeId equals Consignee.Id
-                                                           join shipper in context.CargoTrackingCards on shipment.ShipperId equals shipper.Id 
-                                                           join milestone in context.CargoTrackingMilestones on shipment.CurrentMilestoneCode equals milestone.Code
-                                                           
+
+                                                           join consignee in context.CargoTrackingCards on shipment.ConsigneeId equals consignee.Id into consigneeJoined
+                                                           from consignee in consigneeJoined.DefaultIfEmpty()
+
+                                                           join shipper in context.CargoTrackingCards on shipment.ShipperId equals shipper.Id into shipperJoined
+                                                           from shipper in shipperJoined.DefaultIfEmpty()
+
+                                                           join milestone in context.CargoTrackingMilestones on shipment.CurrentMilestoneCode equals milestone.Code into lm
+                                                           from milestone in lm.DefaultIfEmpty()
+
                                                            join transportMode in context.CargoTrackingTransportModes on shipment.TransportModeId equals transportMode.Id
 
                                                            select new CargoTrackingShipmentList()
@@ -90,7 +96,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                AssignedTruckerNotes = shipment.AssignedTruckerNotes,
                                                                NumberOfPackages = shipment.PackagesQuantity,
                                                                PackagesQuantity = shipment.PackagesQuantity,
-                                                               ConsigneeName = Consignee == null ? null : Consignee.EnglishName,
+                                                               ConsigneeName = consignee == null ? null : consignee.EnglishName,
                                                                // port fields
                                                                ToPortCountryCode = toPort.CountryCode,
                                                                FromPortCountryCode = fromPort.CountryCode,
