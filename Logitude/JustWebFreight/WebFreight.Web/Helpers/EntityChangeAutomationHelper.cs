@@ -83,8 +83,10 @@ namespace WebFreight.Web.Helpers
                                 changeField.OldValue = newValue.Value.Date.ToShortDateString();
 
                             }
-
-                            changeFieldsList.Add(changeField);
+                            if (IsMatchChangeFieldsAutmationConditions(objectField, changeField))
+                            {
+                                changeFieldsList.Add(changeField);
+                            }
                         }
                     }
 
@@ -165,6 +167,16 @@ namespace WebFreight.Web.Helpers
             entityChangeAutomationsSummary.ChangeFieldsList = changeFieldsList;
             entityChangeAutomationsSummary.EntityChangeAutomationList = entityChangeAutomation;
             return entityChangeAutomationsSummary;
+        }
+
+        private static bool IsMatchChangeFieldsAutmationConditions(ObjectField objectField, ChangeField changeField)
+        {
+            return !objectField.IsCustom || (objectField.IsCustom && IsValueChanged(changeField));
+        }
+
+        private static bool IsValueChanged(ChangeField changeField)
+        {
+            return changeField.NewValue != changeField.OldValue;
         }
 
         private static List<EntityChangeAutomation> GetEntityChangeAutomationLists( string automationSsucceedXml ,string automationFailedXml)

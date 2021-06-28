@@ -494,6 +494,7 @@
     <Compile Include="IntegrationTestModel\EntityQueries\LocationsPreparationVariables.cs" />
     <Compile Include="IntegrationTestModel\EntityQueries\PartnersPreparationVariables.cs" />
     <Compile Include="IntegrationTestModel\EntityQueries\ShipmentPreparationVariables.cs" />
+    <Compile Include="Interfaces\ILogitudeAuthenticationService.cs" />
     <Compile Include="InvoiceModel\APIDataContract\APInvoice.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\APInvoiceLine.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\APInvoiceStatus.Generated.cs" />
@@ -2461,6 +2462,7 @@
     <Compile Include="QuoteModel\Tools\Validating\QuotetValidating.cs" />
     <Compile Include="Resolvers\WebClassResolver.cs" />
     <Compile Include="Security\AutenticationException.cs" />
+    <Compile Include="Security\EntityNotFoundException.cs" />
     <Compile Include="Security\LoggedContactUtil.cs" />
     <Compile Include="Security\SecurityUtility.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\AirPackage.Generated.cs" />
@@ -2500,6 +2502,7 @@
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\PickUpQueryService.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\ReceivableQueryService.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\ShipmentLevelQueryService.Generated.cs" />
+    <Compile Include="ShipmentsModel\APIDataContract\QueryService\ShipmentStatusesQueryService.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\ShipmentTypeQueryService.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\ShipmentTypeQueryService.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\SpecialServicesTypeQueryService.Generated.cs" />
@@ -2507,9 +2510,11 @@
     <Compile Include="ShipmentsModel\APIDataContract\Receivable.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\ShipmentLevel.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\GetShipmentNumbers.cs" />
+    <Compile Include="ShipmentsModel\APIDataContract\ShipmentStatuses.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\ShipmentType.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\SpecialServicesType.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\MainCarriageLeg.cs" />
+    <Compile Include="ShipmentsModel\APIDataContract\StatusDetails.cs" />
     <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\AccountingInformationIdentifierDetails.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\AWBChargesCodeDetails.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\AWBCustomsInformationDetails.Generated.cs" />

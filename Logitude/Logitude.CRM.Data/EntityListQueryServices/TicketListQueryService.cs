@@ -138,6 +138,8 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                                      LastCorrespondence = a.LastCorrespondence,
                                                      EntityType = a.EntityType,
                                                      EntityTypeName = a.ObjectTable.Name,
+                                                     QuoteRequestFeedback = a.QuoteRequestFeedback,
+                                                     QuoteRequestComments = a.QuoteRequestComments,
                                             });
             return query;
 		}
@@ -269,6 +271,8 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                         QuoteNumber = a.QuoteNumber,
                         EntityNumber = a.ShipmentNumber != null ? a.ShipmentNumber : a.QuoteNumber,
                         EntityType = a.EntityType,
+                        QuoteRequestFeedback = a.QuoteRequestFeedback,
+                        QuoteRequestComments = a.QuoteRequestComments,
                     };
 
                     ContactRepository rep = new ContactRepository(tenant);
@@ -391,7 +395,9 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                                 QuoteId = a.QuoteId,
                                                 QuoteNumber = a.QuoteNumber,
                                                 EntityNumber = a.ShipmentNumber != null ? a.ShipmentNumber : a.QuoteNumber,
-                                                EntityType = a.ObjectTable.Name
+                                                EntityType = a.ObjectTable.Name,
+                                                QuoteRequestFeedback = a.QuoteRequestFeedback,
+                                                QuoteRequestComments = a.QuoteRequestComments,
                                             });
             return query.ToList();
         }
@@ -483,7 +489,9 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                                 QuoteId = a.QuoteId,
                                                 QuoteNumber = a.QuoteNumber,
                                                 EntityNumber = a.ShipmentNumber != null ? a.ShipmentNumber : a.QuoteNumber,
-                                                EntityType = a.ObjectTable.Name
+                                                EntityType = a.ObjectTable.Name,
+                                                QuoteRequestFeedback = a.QuoteRequestFeedback,
+                                                QuoteRequestComments = a.QuoteRequestComments,
                                             });
             return query.ToList();
         }
