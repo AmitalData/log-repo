@@ -4,6 +4,7 @@ import * as GeneralActions from "../../actions/BaseActions";
 import { ShippingLineSelectors } from "../../selectors/ShippingLineSelectors";
 import * as MaintenanceActions from "../../actions/Actions";
 import { ShippingLineDetails } from "../../models/ShippingLineDetails";
+import { AddressDetails } from "../../models/AddressDetails";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetails";
 import * as BaseActions from "../../../../Base/cypress/actions/Actions"
@@ -92,25 +93,40 @@ Then("the INTTRA input fields should be dim", () => {
 
 //#region Create shipping line address
 Given("fill the following Address in Addresses Shipping line", (dataTable) => {
-    let shippingLineDetails = Assists.CreateInstance<ShippingLineDetails>(dataTable, true);
+    let addressDetails = Assists.CreateInstance<AddressDetails>(dataTable, true);
     cy.Navigate(ShippingLineSelectors.AddressesTab);
-    cy.Navigate(ShippingLineSelectors.EditAddressButton, true);
-    ShippingLineActions.FillShippingLineAddresses(shippingLineDetails)
+    GeneralActions.NavigateAddressWizard()
+    GeneralActions.FillAddressDetails(addressDetails)
 });
 
 When("create shipping line address", () => {
-    ShippingLineActions.CreateShippingLineAddress()
+    GeneralActions.CreateAddress()
 });
 
 Then("the shipping line address should create successfully", () => {
-    ShippingLineActions.AssertCreateShippingLineAddress()
+    GeneralActions.AssertCreateAddress()
+});
+//#endregion
+
+//#region Add Shipping Line Area Port
+Given("add {string} as port area in Areas Tab", (portName) => {
+    cy.Navigate(ShippingLineSelectors.AreasTab);
+    cy.Navigate(ShippingLineSelectors.AddArea)
+    cy.Navigate(ShippingLineSelectors.ChoosePortButton)
+    ShippingLineActions.FillAreaPortName(portName)
+});
+
+When("add port area", () => {
+    ShippingLineActions.AddAreaPort()
+});
+
+Then("the {string} port area should add successfully", (portName) => {
+    ShippingLineActions.AssertAddAreaPort(portName)
 });
 //#endregion
 
 //#region Add Shipping Line Area Country Port
 Given("add {string} as country port area in Areas Tab", (countryPortName) => {
-    cy.Navigate(ShippingLineSelectors.AreasTab);
-    cy.Navigate(ShippingLineSelectors.AddArea)
     cy.Navigate(ShippingLineSelectors.ChooseCountryPortButton)
     ShippingLineActions.FillAreaCountryPortName(countryPortName)
 });
@@ -121,21 +137,6 @@ When("add country port area", () => {
 
 Then("the country port area should add successfully", () => {
     ShippingLineActions.AssertAddAreaCountryPort()
-});
-//#endregion
-
-//#region Add Shipping Line Area Port
-Given("add {string} as port area in Areas Tab", (portName) => {
-    cy.Navigate(ShippingLineSelectors.ChoosePortButton)
-    ShippingLineActions.FillAreaPortName(portName)
-});
-
-When("add port area", () => {
-    ShippingLineActions.AddAreaPort()
-});
-
-Then("the port area should add successfully", () => {
-    ShippingLineActions.AssertAddAreaPort()
 });
 //#endregion
 

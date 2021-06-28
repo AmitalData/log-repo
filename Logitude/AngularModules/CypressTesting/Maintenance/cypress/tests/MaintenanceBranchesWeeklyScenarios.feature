@@ -31,9 +31,10 @@ Feature: Branch Create, Search and Edit from Maintenance
 
     Scenario: Edit the Branch by adding address
         Given the user create address with the following details
-            | AddressName    | address        |
-            | AddressCountry | United Kingdom |
-            | AddressCity    | Manchester     |
+            | Name    | Branch        |
+            | Country | United States |
+            | City    | Anchorage     |
+            | State   | Alaska        |
         When create address
         Then the address should create successfully
 

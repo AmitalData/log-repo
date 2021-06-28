@@ -45,10 +45,10 @@ Feature: Airlines Mock Create, Search and Edit from Maintenance
 
     Scenario: Create Air line address
         Given fill the following Address details in Addresses air line tab
-            | AddressName    | Testing Airlines |
-            | AddressCountry | United States    |
-            | AddressCity    | Anchorage        |
-            | AddressState   | Arkansas         |
+            | Name    | Testing Airlines |
+            | Country | United States    |
+            | City    | Anchorage        |
+            | State   | Arkansas         |
         When create air line address
         Then the air line address should create successfully
 

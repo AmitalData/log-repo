@@ -57,8 +57,7 @@ export class Urls {
     public static readonly ShippingLinesviewGetSingle = "**/shippinglineviews/getsingle/?**";
     public static readonly ImportShippingAirLine = "**/PartnersDomain/GetCarrierCopyToCurrentTenant?**"
     public static readonly CountryPortviews = "**/portviews/getbyfilters?**"
-    public static readonly PortPostLogsList = "**/PostLogsList"
-    public static readonly ShippingLinesAddress = "**/PartnersDomain"
+    public static readonly Address = "**/PartnersDomain"
     public static readonly ShippingLinesArea = "**/carrierareas"
     public static readonly ShippingLinesTariffTranslations = "**/tariffcarriertranslations"
 
@@ -67,7 +66,6 @@ export class Urls {
     public static readonly AirLinesviewGetSingle = "**/airlineviews/getsingle/?**";
     public static readonly AirLineTariffHeader = "**/tarrifheaders";
     public static readonly AirLineSpecialHandlingCodes = "**/awbspecialhandlingcodesextended";
-    public static readonly AirLinesAddress = "**/PartnersDomain"
     public static readonly AirLinesTariffTranslations = "**/tariffcarriertranslations"
     public static readonly GetAirlineByCode = "**/GetAirlineByCode?**"
     public static readonly GetTarrifHeaders = "**/GetTarrifHeadersByCardIdAndTypeCode?**"

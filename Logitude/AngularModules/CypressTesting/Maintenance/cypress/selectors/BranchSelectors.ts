@@ -14,9 +14,5 @@ export class BranchSelectors {
   public static readonly EventsTab = "#BranchTHEvents"
   public static readonly AccountingTab = "#BranchTHAccounting"
   public static readonly AccountingExternalID = "#Branch_ExternalId"
-  public static readonly AddressName = "#Address_Name"
-  public static readonly AddressCity = "#Address_City"
-  public static readonly AddressCountry = "#Address_CountryId"
-  public static readonly AddressWizard = "#Edit"
 }
 
