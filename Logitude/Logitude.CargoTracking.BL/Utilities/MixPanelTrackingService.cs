@@ -21,11 +21,12 @@ namespace Logitude.CargoTracking.BL.Utilities
         {
         }
 
-        public MixPanelTrackingEvent CreateMixPanelEvent(string search_key, int count)
+        public MixPanelTrackingEvent CreateMixPanelEvent(string searchkey, int count, string eventName)
         {
               MixPanelTrackingEvent trackingEvent = new MixPanelTrackingEvent()
                 {
-                    SearchKeyword = search_key,
+                  EventName= eventName,
+                    SearchKeyword = searchkey,
                     UserAgent = HttpContext.Current.Request.UserAgent,
                     Browser = GetBrowserName(),
                     ResultsCount = count,
@@ -34,20 +35,20 @@ namespace Logitude.CargoTracking.BL.Utilities
             return trackingEvent;
         }
 
-        public async Task TrackActionsAsync(MixPanelTrackingEvent trackingEvent, string evnetName)
+        public async Task SendTrackingEventPostRequest(MixPanelTrackingEvent trackingEvent)
         {
-            Dictionary<string, string> requestParameters = BuildHttpRequestParameters(trackingEvent, evnetName);
+            Dictionary<string, string> requestParameters = BuildHttpRequestParameters(trackingEvent);
             var trackEventResponse = await client.PostAsync(trackEventAPIURI, new FormUrlEncodedContent(requestParameters));
             var trackEventResponseMessage = await trackEventResponse.Content.ReadAsStringAsync();
         }
 
-        private static Dictionary<string, string> BuildHttpRequestParameters(MixPanelTrackingEvent trackingEvent, string eventName)
+        private static Dictionary<string, string> BuildHttpRequestParameters(MixPanelTrackingEvent trackingEvent)
         {
             return new Dictionary<string, string>
                 {
                     {
                     "data",
-                        "{ \"event\": \"" + eventName +"\"," +
+                        "{ \"event\": \"" + trackingEvent.EventName +"\"," +
                         " \"properties\": {" +
                             " \"distinct_id\": \"13793\"," +
                             " \"token\": \"24322335b969b8bc7cc9e3fd6af39aa0\"," +

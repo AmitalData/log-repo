@@ -18,6 +18,7 @@ namespace Logitude.CargoTracking.BL.DataContracts
         public int ResultsCount { get; set; } = 0;
         public string Browser { get; set; }
         public DateTime DateCreated { get; set; }
+        public string EventName { get; set; }
 
     }
 }

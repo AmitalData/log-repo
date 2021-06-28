@@ -66,8 +66,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 List<CargoTrackingShipmentList> shipments = cargoTrackingShipmentSearchQuery.GetShipments(searchKey, tenant).OrderByDescending(s => s.CreateDate).ToList();
 
                 MixPanelTrackingService trackingService = new MixPanelTrackingService();
-                MixPanelTrackingEvent trackingEvent = trackingService.CreateMixPanelEvent(searchKey, shipments.Count());
-                await trackingService.TrackActionsAsync(trackingEvent, "Search");
+                MixPanelTrackingEvent trackingEvent = trackingService.CreateMixPanelEvent(searchKey, shipments.Count(), "Search");
+                await trackingService.SendTrackingEventPostRequest(trackingEvent);
 
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, shipments);
 
@@ -96,8 +96,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 shipmentsQuery.SetMilestonesStatus(shipment, shipmentMilestones);
        
                 MixPanelTrackingService trackingService = new MixPanelTrackingService();
-                MixPanelTrackingEvent trackingEvent = trackingService.CreateMixPanelEvent(shipment.ShipmentNumber, 1);
-                await trackingService.TrackActionsAsync(trackingEvent, "Zoom");
+                MixPanelTrackingEvent trackingEvent = trackingService.CreateMixPanelEvent(shipment.ShipmentNumber, 1, "Zoom");
+                await trackingService.SendTrackingEventPostRequest(trackingEvent);
                 CargoTrackingShipmentWithMilestones cargoTrackingShipmentWithMilestones = new CargoTrackingShipmentWithMilestones()
                 {
                     ShipmentList = shipment,
