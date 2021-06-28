@@ -33,7 +33,6 @@
   </Column>
   <Column
     Name="TermsofUseId"
-    OldNames="TermsofUseVersion"
     Type="int">
     <Constraints
       Nullable="false" />
