@@ -116,15 +116,20 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
 
             this.UIProperties.SetEnabled("CreditLimitAmount", this.ObjectTableName, this.HasEditCreditAmountFeature);
             this.EntityPM.UIProperties.SetEnabled("CreditLimitAmount", this.ObjectTableName, this.HasEditCreditAmountFeature);
-            this.UIProperties.SetEnabled("InsuredcreditLimit", this.ObjectTableName, this.HasEditCreditAmountFeature);
-            this.EntityPM.UIProperties.SetEnabled("InsuredcreditLimit", this.ObjectTableName, this.HasEditCreditAmountFeature);
+            this.SetInsuredCreditLimitEnablitity();
 
         }
+    }
+
+    private SetInsuredCreditLimitEnablitity() {
+        this.UIProperties.SetEnabled("InsuredcreditLimit", this.ObjectTableName, this.HasEditCreditAmountFeature);
+        this.EntityPM.UIProperties.SetEnabled("InsuredcreditLimit", this.ObjectTableName, this.HasEditCreditAmountFeature);
     }
 
     public CreditLimitAmountLabel: string;
     public CreditLimitOpenBalanceLabel: string;
     public CreditLimitActualBalanceLabel: string;
+
     SetLabels() {
         this.CreditLimitAmountLabel = TextCodeTranslator.Translate('Customer.F.CreditLimitAmount') + " (" + this.LocalCurrencyCode + ")";
         this.CreditLimitOpenBalanceLabel = TextCodeTranslator.Translate('Customer.F.CreditLimitOpenBalance') + " (" + this.LocalCurrencyCode + ")";
