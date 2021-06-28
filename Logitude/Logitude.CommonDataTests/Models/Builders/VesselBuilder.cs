@@ -28,9 +28,9 @@ namespace Logitude.CommonDataTests.Models.Builders
             return result;
         }
 
-        public VesselBuilder WithModel(VesselPM crossDockEntry)
+        public VesselBuilder WithModel(VesselPM vessel)
         {
-            _vessel = crossDockEntry;
+            _vessel = vessel;
             return this;
         }
 
