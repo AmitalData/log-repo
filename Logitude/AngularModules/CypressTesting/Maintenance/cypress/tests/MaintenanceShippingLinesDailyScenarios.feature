@@ -46,15 +46,15 @@ Feature: Shipping Line fake Create, Search and Edit from Maintenance
         When create shipping line address
         Then the shipping line address should create successfully
 
+    Scenario: Add Shipping Line Area Port
+        Given add "MIA" as port area in Areas Tab
+        When add port area
+        Then the "MIA" port area should add successfully
+
     Scenario: Add Shipping Line Area Country Port
         Given add "GB" as country port area in Areas Tab
         When add country port area
         Then the country port area should add successfully
-
-    Scenario: Add Shipping Line Area Port
-        Given add "Mia" as port area in Areas Tab
-        When add port area
-        Then the port area should add successfully
 
     Scenario: Add Shipping Line Area
         Given fill the following Area details in Areas Tab

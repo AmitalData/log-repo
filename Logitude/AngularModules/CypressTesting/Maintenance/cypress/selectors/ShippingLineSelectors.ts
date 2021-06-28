@@ -20,6 +20,8 @@ export class ShippingLineSelectors {
   public static readonly AreaName = "#CarrierArea_Name"
   public static readonly AreaDescription = "#CarrierArea_Description"
 
+  public static readonly AreaGridBody = "[data-cy='AreaGridId']"
+  public static readonly AreaGridRow = ".SimpleGridViewRow"
   public static readonly ChoosePortButton = "[data-cy='ChoosePort_CarrierArea']"
   public static readonly CarrierAreasPort_PortId = "#CarrierAreasPort_PortId"
   public static readonly Add_CarrierAreasPort = "[data-cy='Add_CarrierAreasPort']"

@@ -57,7 +57,6 @@ export class Urls {
     public static readonly ShippingLinesviewGetSingle = "**/shippinglineviews/getsingle/?**";
     public static readonly ImportShippingAirLine = "**/PartnersDomain/GetCarrierCopyToCurrentTenant?**"
     public static readonly CountryPortviews = "**/portviews/getbyfilters?**"
-    public static readonly PortPostLogsList = "**/PostLogsList"
     public static readonly Address = "**/PartnersDomain"
     public static readonly ShippingLinesArea = "**/carrierareas"
     public static readonly ShippingLinesTariffTranslations = "**/tariffcarriertranslations"

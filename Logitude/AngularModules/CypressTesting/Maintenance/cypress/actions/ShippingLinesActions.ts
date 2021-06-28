@@ -112,16 +112,14 @@ export function FillAreaPortName(areaPortName) {
 }
 
 export function AddAreaPort() {
-    cy.DefineRequestWait(RestAPI.POST, Urls.PortPostLogsList, RequestAliases.PostShippingLineAreaPort)
     cy.get(ShippingLineSelectors.Add_CarrierAreasPort).click()
     cy.get(ShippingLineSelectors.Close_CarrierAreasPort).click()
 }
 
-export function AssertAddAreaPort() {
-    let intercept = cy.wait("@" + RequestAliases.PostShippingLineAreaPort);
-    intercept.then((interception) => {
-        assert.equal(interception.response.statusCode, 200)
-    })
+export function AssertAddAreaPort(portName) {
+    cy.get(ShippingLineSelectors.AreaGridBody).find(ShippingLineSelectors.AreaGridRow).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
+        expect(text).to.contain(portName);
+    });
 }
 
 export function FillShippingLineAreaDetails(shippingLineDetails: ShippingLineDetails) {

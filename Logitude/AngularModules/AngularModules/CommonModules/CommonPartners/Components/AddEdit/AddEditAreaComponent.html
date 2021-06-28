@@ -131,7 +131,7 @@
                                                             </table>
                                                         </div>
 
-                                                        <div class="SimpleGridViewBody" style="overflow-y:auto">
+                                                        <div [attr.data-cy]="'AreaGridId'" class="SimpleGridViewBody" style="overflow-y:auto">
                                                             <table>
                                                                 <tr class="SimpleGridViewRow RowHover" *ngFor="let item of DataContext.PortItemsList">
                                                                     <td class="GridViewCell" style="width:80px; min-width: 80px;max-width:80px">
