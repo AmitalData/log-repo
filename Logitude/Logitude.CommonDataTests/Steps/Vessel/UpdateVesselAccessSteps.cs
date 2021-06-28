@@ -35,7 +35,7 @@ namespace Logitude.CommonDataTests.Steps.Vessel
         [Then(@"vessel should update successfully")]
         public void ThenVesselShouldUpdateSuccessfully()
         {
-            commonContext.Vessel.Id.Should().NotBeNull();
+            commonContext.Vessel.Should().NotBeNull();
         }
         #endregion
     }
