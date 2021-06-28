@@ -3,6 +3,7 @@ using Logitude.CommonDataTests.Models;
 using Logitude.Test.Base.Models.Shared;
 using Logitude.Test.Base.Models.UserTenantPreparation;
 using Logitude.Test.Base.Services;
+using System;
 using TechTalk.SpecFlow;
 
 namespace Logitude.CommonDataTests.Steps.Vessel
@@ -27,7 +28,22 @@ namespace Logitude.CommonDataTests.Steps.Vessel
         [Then(@"vessel should available")]
         public void ThenVesselShouldAvailable()
         {
-            commonContext.Vessel.Should().NotBeNull();
+            commonContext.Vessel.Id.Should().NotBeNull();
+        }
+        #endregion
+
+
+        #region Get vessel for other tenant
+        [When(@"get vessel for other tenant")]
+        public void WhenGetVesselForOtherTenant()
+        {
+            commonContext.Vessel = APICaller.CallGet<VesselPM>(Urls.VesselGetSingle(CommonData.VesselId), UserOtherTenant.Token)?.Data;
+        }
+
+        [Then(@"vessel should not available")]
+        public void ThenVesselShouldNotAvailable()
+        {
+            commonContext.Vessel.Id.Should().BeNull();
         }
         #endregion
     }
