@@ -65,17 +65,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
                 List<CargoTrackingShipmentList> shipments = cargoTrackingShipmentSearchQuery.GetShipments(searchKey, tenant).OrderByDescending(s => s.CreateDate).ToList();
 
-                MixPanelTrackingEvent searchTrackingEvent = new MixPanelTrackingEvent()
-                {
-                    SearchKeyword = searchKey,
-                    UserAgent = HttpContext.Current.Request.UserAgent,
-                    Browser = GetBrowserName(),
-                    ResultsCount = shipments.Count(),
-                    IPAddress = HttpContext.Current.Request.UserHostAddress
-                };
-
                 MixPanelTrackingService trackingService = new MixPanelTrackingService();
-                await trackingService.TrackSearchActionAsync(searchTrackingEvent);
+                MixPanelTrackingEvent trackingEvent = trackingService.CreateMixPanelEvent(searchKey, shipments.Count());
+                await trackingService.TrackActionsAsync(trackingEvent, "Search");
 
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, shipments);
 
@@ -89,7 +81,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         }
 
         [HttpGet]
-        public HttpResponseMessage GetShipment(string SecurityKey, int tenant)
+        public async Task<HttpResponseMessage> GetShipment(string SecurityKey, int tenant)
         {
             try
             {
@@ -102,14 +94,18 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
                 List<Milestone> shipmentMilestones = shipmentsQuery.BuildShipmentMilstones(shipment);
                 shipmentsQuery.SetMilestonesStatus(shipment, shipmentMilestones);
-
-
+       
+                MixPanelTrackingService trackingService = new MixPanelTrackingService();
+                MixPanelTrackingEvent trackingEvent = trackingService.CreateMixPanelEvent(shipment.ShipmentNumber, 1);
+                await trackingService.TrackActionsAsync(trackingEvent, "Zoom");
                 CargoTrackingShipmentWithMilestones cargoTrackingShipmentWithMilestones = new CargoTrackingShipmentWithMilestones()
                 {
                     ShipmentList = shipment,
                     Milestones = shipmentMilestones,
 
                 };
+
+               
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, cargoTrackingShipmentWithMilestones);
 
                 return reponseMessage;
@@ -120,6 +116,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             }
 
         }
+
 
         [HttpGet]
         public HttpResponseMessage GetUserShipments(int pageIndex, int pageSize, [FromUri] CargoTrackingShipmentFilters shipmentFilters)
@@ -252,15 +249,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
         }
 
-        private static string GetBrowserName()
-        {
-            var userAgent = HttpContext.Current.Request.UserAgent;
-            var userBrowser = new HttpBrowserCapabilities { Capabilities = new Hashtable { { string.Empty, userAgent } } };
-            var factory = new BrowserCapabilitiesFactory();
-            factory.ConfigureBrowserCapabilities(new NameValueCollection(), userBrowser);
-            var browser = userBrowser.Browser;
-            return browser;
-        }
+      
     }
 
     public class CargoTrackingSearchArgs
