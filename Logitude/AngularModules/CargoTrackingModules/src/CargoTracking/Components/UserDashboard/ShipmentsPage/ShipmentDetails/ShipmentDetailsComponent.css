@@ -234,7 +234,7 @@ h1 {
 
 .data-cards > div {
     width: 180px;
-    min-height: 60px;
+    height: 70px;
     line-height: 24px;
     margin: 10px;
     float: left;
