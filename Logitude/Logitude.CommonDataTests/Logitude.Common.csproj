@@ -117,6 +117,7 @@
     <Compile Include="Steps\Security\GetFTPDetailSecurityAccessSteps.cs" />
     <Compile Include="Steps\Security\TenantSecurityAccessSteps.cs" />
     <Compile Include="Steps\Vessel\GetVesselAccessSteps.cs" />
+    <Compile Include="Steps\Vessel\UpdateVesselAccessSteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -127,6 +128,7 @@
     <None Include="Features\Security\GetFTPDetailSecurityAccess.feature" />
     <None Include="Features\Security\TenantSecurityAccess.feature" />
     <None Include="Features\Vessel\GetVesselAccess.feature" />
+    <None Include="Features\Vessel\UpdateVesselAccess.feature" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
