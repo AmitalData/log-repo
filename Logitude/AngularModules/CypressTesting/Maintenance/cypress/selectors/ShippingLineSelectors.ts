@@ -15,12 +15,6 @@ export class ShippingLineSelectors {
   public static readonly INTTRARegistrationNotes = "#ShippingLine_INTTRARegistrationNotes"
   public static readonly ImportShippingLine_AddButton = "[data-cy='Import_ShippingLine']"
 
-  public static readonly AddressesTab = "#ShippingLineTHAddresses"
-  public static readonly EditAddressButton = "#Edit"
-  public static readonly Address_CountryId = "#Address_CountryId"
-  public static readonly Address_City = "#Address_City"
-  public static readonly Address_StateId = "#Address_StateId"
-
   public static readonly AreasTab = "#ShippingLineTHAreas"
   public static readonly AddArea = "#addArea"
   public static readonly AreaName = "#CarrierArea_Name"
@@ -42,11 +36,11 @@ export class ShippingLineSelectors {
   public static readonly TariffPort = "#TariffCarrierTranslation_PortId"
 
   public static readonly GeneralTab = "#ShippingLineTHGeneral"
+  public static readonly EventsTab = "#ShippingLineTHEvents"
+  public static readonly AddressesTab = "#ShippingLineTHAddresses"
   public static readonly InActiveShippingLineCheckBox = "#ShippingLine_InActive"
 
   public static readonly IsINTTRACheckBox = '#ShippingLine_IsINTTRARegistered'
-
-  public static readonly EventsTab = "#ShippingLineTHEvents"
 
   public static readonly CodeDigitCount = 4
   public static readonly TariffCodeDigitCount = 10

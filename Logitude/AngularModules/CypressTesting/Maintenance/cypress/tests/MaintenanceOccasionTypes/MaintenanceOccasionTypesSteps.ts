@@ -3,7 +3,6 @@ import * as OccasionTypeActions from "../../actions/OccasionTypeActions";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { OccasionTypeSelectors } from "../../selectors/OccasionTypeSelectors";
-import { OccasionTypeDetails } from "cypress/models/OccasionTypeDetails";
 import * as BaseActions from "../../../../Base/cypress/actions/Actions";
 import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetails";
 

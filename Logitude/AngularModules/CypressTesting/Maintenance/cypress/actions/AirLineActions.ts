@@ -100,21 +100,6 @@ export function AssertOpenAirLine() {
     BaseAssertion.AssertElementExist(MaintenanceSelectors.GeneralEditScreen)
 }
 
-export function FillAirLineAddresses(airLineDetails: AirLineDetails) {
-    cy.FillLogTextBox(AirLineSelectors.AddressName, airLineDetails.AddressName)
-    cy.FillLogLov(AirLineSelectors.AddressCountryId, airLineDetails.AddressCountry, true)
-    cy.FillLogTextBox(AirLineSelectors.AddressCity, airLineDetails.AddressCity)
-    cy.FillLogLov(AirLineSelectors.AddressStateId, airLineDetails.AddressState, true)
-}
-
-export function CreateAirLineAddress() {
-    cy.DefineRequestWait(RestAPI.POST, Urls.AirLinesAddress, RequestAliases.PostAirLineAddress)
-    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
-}
-
-export function AssertCreateAirLineAddress() {
-    BaseAssertion.AssertStatusCode(RequestAliases.PostAirLineAddress, 200);
-}
 
 export function FillTariffPartnerCode(partnerCode: string) {
     cy.FillLogTextBox(AirLineSelectors.TariffPartnerCode, partnerCode)

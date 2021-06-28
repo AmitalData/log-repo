@@ -1,8 +1,10 @@
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import * as AirLineActions from "../../actions/AirLineActions";
 import { AirLineSelectors } from "../../selectors/AirLineSelectors";
+import { AddressSelectors } from "../../selectors/AddressSelectors";
 import * as Actions from "../../actions/Actions";
 import { AirLineDetails } from "../../models/AirLineDetails";
+import { AddressDetails } from "../../models/AddressDetails";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetails";
 import * as BaseActions from "../../../../Base/cypress/actions/Actions"
@@ -99,18 +101,18 @@ Then("the air line should open successfully", () => {
 
 //#region Create shipping line address
 Given("fill the following Address details in Addresses air line tab", (dataTable) => {
-    let airLineDetails = Assists.CreateInstance<AirLineDetails>(dataTable, true);
+    let addressDetails = Assists.CreateInstance<AddressDetails>(dataTable, true);
     cy.Navigate(AirLineSelectors.AddressesTab);
-    cy.Navigate(AirLineSelectors.EditAddressButton, true);
-    AirLineActions.FillAirLineAddresses(airLineDetails)
+    GeneralActions.NavigateAddressWizard()
+    GeneralActions.FillAddressDetails(addressDetails)
 });
 
 When("create air line address", () => {
-    AirLineActions.CreateAirLineAddress()
+    GeneralActions.CreateAddress()
 });
 
 Then("the air line address should create successfully", () => {
-    AirLineActions.AssertCreateAirLineAddress()
+    GeneralActions.AssertCreateAddress()
 });
 //#endregion
 

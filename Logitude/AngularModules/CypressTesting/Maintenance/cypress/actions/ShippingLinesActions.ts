@@ -89,23 +89,6 @@ export function CheckShippingLineINTTRA() {
     BaseAssertion.AssertElementHaveClass(ShippingLineSelectors.INTTRARegistrationNotes, 'TextAreaDisabled')
 }
 
-export function FillShippingLineAddresses(shippingLineDetails: ShippingLineDetails) {
-    cy.FillLogLov(ShippingLineSelectors.Address_CountryId, shippingLineDetails.AddressCountry, true)
-    cy.FillLogTextBox(ShippingLineSelectors.Address_City, shippingLineDetails.AddressCity)
-    cy.FillLogLov(ShippingLineSelectors.Address_StateId, shippingLineDetails.AddressState, true)
-}
-
-export function CreateShippingLineAddress() {
-    cy.DefineRequestWait(RestAPI.POST, Urls.ShippingLinesAddress, RequestAliases.PostShippingLineAddress)
-    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
-}
-
-export function AssertCreateShippingLineAddress() {
-    let intercept = cy.wait("@" + RequestAliases.PostShippingLineAddress);
-    intercept.then((interception) => {
-        assert.equal(interception.response.statusCode, 200)
-    })
-}
 
 export function FillAreaCountryPortName(areaCountryPortName) {
     cy.FillLogLov(ShippingLineSelectors.CarrierAreasPort_CountryId, areaCountryPortName, true)
