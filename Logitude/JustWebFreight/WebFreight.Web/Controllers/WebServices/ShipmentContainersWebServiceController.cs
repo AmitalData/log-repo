@@ -26,7 +26,9 @@ using System.Transactions;
 using System.Web;
 using System.Web.Http;
 using System.Xml;
+using System.Xml.Linq;
 using System.Xml.Serialization;
+using System.Xml.XPath;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Helpers.Analyzers;
 using WebFreight.Web.Security;
@@ -72,9 +74,11 @@ namespace WebFreight.Web.Controllers.WebServices
             this.CreateOceanInsightsWcfServiceResponse();
             this.CreateLogitudeOceanInsightsRequest(oceanInsightId, simulator, tenant);
             var updatedOceanInsightsResponse = this.ReplaceOceanInsightTagInXML(simulator.XmlString, oceanInsightId, simulator.ContainerNumber);
+            updatedOceanInsightsResponse = RemoveOceanInsightsXMLTag(simulator.XmlString, "Root");
             this.SendRequestToContainerPushService(updatedOceanInsightsResponse);
             return simulator;
         }
+
         private void SetContainerFields(ShipmentContainerSimulator simulator)
         {
             containerNumber = simulator.ContainerNumber;
@@ -142,14 +146,21 @@ namespace WebFreight.Web.Controllers.WebServices
             }
             return tagValue;
         }
-        private string ReplaceOceanInsightTagInXML(string xmlText,string oceanInsightId, string containerNumber)
+        private string ReplaceOceanInsightTagInXML(string xmlText, string oceanInsightId, string containerNumber)
         {
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml(xmlText);
-            xmlDoc.DocumentElement.SelectSingleNode("//Root//container//shipment//shipmentsubscription_id").InnerText = oceanInsightId;
-            xmlDoc.DocumentElement.SelectSingleNode("//Root//container//event//shipment_id").InnerText = oceanInsightId;
-            xmlDoc.DocumentElement.SelectSingleNode("//Root//container//shipment//container_number").InnerText = containerNumber;
-            return xmlDoc.OuterXml;
+            try
+            {
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.LoadXml(xmlText);
+                xmlDoc.DocumentElement.SelectSingleNode("//Root//container//shipment//shipmentsubscription_id").InnerText = oceanInsightId;
+                xmlDoc.DocumentElement.SelectSingleNode("//Root//container//event//shipment_id").InnerText = oceanInsightId;
+                xmlDoc.DocumentElement.SelectSingleNode("//Root//container//shipment//container_number").InnerText = containerNumber;
+                return xmlDoc.OuterXml;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Xml Text is not valid");
+            }
         }
         private void CreateLogitudeOceanInsightsRequest(string oceanInsightId, ShipmentContainerSimulator simulator, int tenant)
         {
@@ -205,13 +216,37 @@ namespace WebFreight.Web.Controllers.WebServices
             dataStream.Close();
             webResponse.Close();
         }
+
+        private string RemoveOceanInsightsXMLTag(string xmlText, string tag)
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.LoadXml(xmlText);
+
+            XElement root = XElement.Load(xmlDoc.OuterXml); 
+            var removes = root.XPathSelectElements("//nodeB[@attribute=\"Root\"]");
+            foreach (XElement node in removes.ToArray())
+            {
+                node.AddBeforeSelf(node.Elements());
+                node.Remove();
+            }
+            root.Save(xmlText);
+            return root.Value;
+        }
+
         private byte[] GetXMLByteDataFromText(string xmlString)
         {
-            var doc = new XmlDocument();
-            doc.LoadXml(xmlString);
-            string jsonText = JsonConvert.SerializeXmlNode(doc);
-            byte[] documentXML = Encoding.ASCII.GetBytes(jsonText);
-            return documentXML;
+            try
+            {
+                var doc = new XmlDocument();
+                doc.LoadXml(xmlString);
+                string jsonText = JsonConvert.SerializeXmlNode(doc);
+                byte[] documentXML = Encoding.ASCII.GetBytes(jsonText);
+                return documentXML;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Xml Text is not valid");
+            }
         }
         private ShipmentContainerSimulator RunContainerStatusResponseSimulator(ShipmentContainerSimulator simulator)
         {
