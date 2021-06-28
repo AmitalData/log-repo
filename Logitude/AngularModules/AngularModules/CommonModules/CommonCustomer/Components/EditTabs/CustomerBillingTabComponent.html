@@ -162,7 +162,7 @@
                                     <td style="width: 1px;">
                                         <div class="Label">
                                             {{'Customer.F.BlockNewShipmentCreation' | TextCodeTranslationPipe}}
-                                        </div>                                       
+                                        </div>
                                     </td>
 
                                     <td style="width: 5px;">
@@ -171,6 +171,20 @@
 
                                     <td style="width: 20px;">
                                         <LogCheckBox [ObjectFieldName]="'BlockNewShipmentCreation'" [Checked]="BlockNewShipmentCreation" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <td style="width: 140px;">
+                                        <LogLabel [ObjectFieldName]="'InsuredcreditLimit'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="InsuredcreditLimit"></LogLabel>
+                                    </td>
+
+                                    <td style="width: 200px;">
+                                        <LogTextBox [ObjectFieldName]="'InsuredcreditLimit'" [Text]="InsuredcreditLimit" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                     </td>
 
                                     <td>
