@@ -910,8 +910,9 @@ export class ShipmentDetailsComponent implements AfterViewInit
     OpenMessageWindow(messageText) {
         this.dialog.open(MessageWindowComponent, {
             data: {
-                message: messageText,
-                title: 'Alert'
+                title: 'Alert',
+                date : messageText?.split("\n")[0],
+                description : messageText?.split("\n")[1],
             }
         });
     } 
