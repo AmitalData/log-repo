@@ -936,7 +936,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         public List<Shipment> GetAllShipmentsByHouseNumber(string house, int tenant)
         {
             return (from a in context.Shipments
-                    where a.House == house && a.Tenant == tenant
+                    where a.Tenant == tenant && a.House == house
                     select a).ToList();
         }
     }
