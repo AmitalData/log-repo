@@ -574,11 +574,11 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
     }
 
     OkButtonClicked() {
-        var errors: string[] = this.ValidateInvoiceFields();
-        this.ValidationErrorsList = errors;
+        this.ValidationErrorsList = this.ValidateInvoiceFields();
     }
 
     private ValidateInvoiceFields() {
+        this.errors = [];
 
         this.CheckSpecialCharacters() != null ? this.errors.push(this.CheckSpecialCharacters()) : null;
         this.ValidateRequiedFields();
@@ -649,6 +649,6 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
 
     AddReuiredErrorMessage(TextCode) {
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
-        this.errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.BranchId")));
+        this.errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate(TextCode)));
     }
 }
