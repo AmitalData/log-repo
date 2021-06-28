@@ -74,7 +74,7 @@ namespace WebFreight.Web.Controllers.WebServices
             this.CreateOceanInsightsWcfServiceResponse();
             this.CreateLogitudeOceanInsightsRequest(oceanInsightId, simulator, tenant);
             var updatedOceanInsightsResponse = this.ReplaceOceanInsightTagInXML(simulator.XmlString, oceanInsightId, simulator.ContainerNumber);
-            updatedOceanInsightsResponse = RemoveOceanInsightsXMLTag(simulator.XmlString, "Root");
+            //updatedOceanInsightsResponse = RemoveOceanInsightsXMLTag(simulator.XmlString);
             this.SendRequestToContainerPushService(updatedOceanInsightsResponse);
             return simulator;
         }
@@ -217,20 +217,13 @@ namespace WebFreight.Web.Controllers.WebServices
             webResponse.Close();
         }
 
-        private string RemoveOceanInsightsXMLTag(string xmlText, string tag)
+        private string RemoveOceanInsightsXMLTag(string xmlText)
         {
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml(xmlText);
-
-            XElement root = XElement.Load(xmlDoc.OuterXml); 
-            var removes = root.XPathSelectElements("//nodeB[@attribute=\"Root\"]");
-            foreach (XElement node in removes.ToArray())
-            {
-                node.AddBeforeSelf(node.Elements());
-                node.Remove();
-            }
-            root.Save(xmlText);
-            return root.Value;
+            string newXML = xmlText.Replace("<Root>", "");
+            newXML = newXML.Replace("</Root>", "");
+            newXML = newXML.Replace("<container>", "");
+            newXML = newXML.Replace("</container>", "");
+            return newXML;
         }
 
         private byte[] GetXMLByteDataFromText(string xmlString)
