@@ -81,7 +81,11 @@ namespace WebFreight.Web.WebPages
             string FileName = Request["fileName"] ?? "";
             string QName = Request["qname"] ?? "";
             string Type = Request["Type"] ?? "";
+            string requestArea = Request["requestArea"] ?? "";
 
+
+
+            
             SecurityDocumentResult securityDocumentResult = SecurityDocumentHelper.ValidationDocumentToken(token);
             bool isValid = securityDocumentResult.IsValid;
             string email = securityDocumentResult.Email;
@@ -91,7 +95,7 @@ namespace WebFreight.Web.WebPages
             if (isValid)
             {
                 isValid = false;
-                if (IsUser(email, (int)tenant) && CheckAvailablityTenantsForEmail(email, (int)tenant) || tenant == 0) isValid = true;
+                if ((IsUser(email, (int)tenant) || requestArea == "SharedLogistic") && CheckAvailablityTenantsForEmail(email, (int)tenant) || tenant == 0) isValid = true;
             }
 
             if (isValid)
