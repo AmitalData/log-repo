@@ -1124,9 +1124,7 @@ namespace WebFreight.Web.WebServices
 
                 if (!string.IsNullOrEmpty(contactEmail))
                 {
-                    Contact currentContact = (from a in commonContext.Contacts
-                                              where a.Email == contactEmail && a.Tenant == tenant
-                                              select a).FirstOrDefault();
+                    Contact currentContact = contactRepository.GetSingleContactByEmailAndTenant(contactEmail, tenant);
 
                     if (currentContact != null)
                     {
