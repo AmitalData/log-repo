@@ -9,5 +9,8 @@ namespace Logitude.CommonDataTests.Models
     public class CommonContext
     {
         public VesselPM Vessel { get; set; }
+
+        public Action act;
+
     }
 }

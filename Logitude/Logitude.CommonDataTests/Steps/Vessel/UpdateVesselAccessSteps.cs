@@ -38,5 +38,28 @@ namespace Logitude.CommonDataTests.Steps.Vessel
             commonContext.Vessel.Should().NotBeNull();
         }
         #endregion
+
+
+        #region Update Vessel for other tenant
+        [Given(@"vessel for the user's tenant")]
+        public void GivenVesselForTheUserSTenant()
+        {
+            commonContext.Vessel = APICaller.CallGet<VesselPM>(Urls.VesselGetSingle(CommonData.VesselId), UserTenant.Token).Data;
+        }
+
+        [When(@"update vessel for other tenant")]
+        public void WhenUpdateVesselForOtherTenant()
+        {
+            commonContext.act = () => APICaller.CallPut<VesselPM>(commonContext.Vessel, Urls.VesselsController, UserOtherTenant.Token);
+        }
+
+        [Then(@"update should receive error message")]
+        public void ThenUpdateShouldReceiveErrorMessage()
+        {
+            commonContext.act.Should().ThrowExactly<AggregateException>()
+                    .And.InnerExceptions[0].Message.Should().Contain("Sorry! you have no permission to do this operation on Tenant");
+        }
+        #endregion
+
     }
 }
