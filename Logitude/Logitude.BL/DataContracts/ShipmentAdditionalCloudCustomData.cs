@@ -32,7 +32,7 @@ namespace Logitude.BL.DataContracts
         public string PaymentRequestXML { get; set; }
         public string TargetEnv { get; set; }
         public string DocumentsApprovedByUserName { get; set; }
-
+        public string DeclarationStatus { get; set; }
 
 
 
