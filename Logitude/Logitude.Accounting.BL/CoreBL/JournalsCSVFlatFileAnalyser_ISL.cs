@@ -339,7 +339,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         text_2 = TranslateTextsClassTranslate("JournalsCSV.O.CreditGLAccount", 0, useLocal);
                         this.AddErrorRow($"{text}{count} {text_2} {text_44}");
                     }
-                    GLAccountPM creditPM = gLAccountQueryService.GetSinglePMByInternalNumber(jLine.CreditGLAccount, tenant);
+                    GLAccountPM creditPM = gLAccountQueryService.GetSinglePMByDisplayNumber(jLine.CreditGLAccount, tenant);
                     if (creditPM == null)
                     {
                         text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
@@ -361,7 +361,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         text_2 = TranslateTextsClassTranslate("JournalsCSV.O.DebitGLAccount", 0, useLocal);
                         this.AddErrorRow($"{text}{count} {text_2} {text_44}");
                     }
-                    GLAccountPM debitPM = gLAccountQueryService.GetSinglePMByInternalNumber(jLine.DebitGLAccount, tenant);
+                    GLAccountPM debitPM = gLAccountQueryService.GetSinglePMByDisplayNumber(jLine.DebitGLAccount, tenant);
                     if (debitPM == null)
                     {
                         text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
@@ -614,22 +614,22 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 if (rec.ActionCode == "1") // credit 
                 {
-                    rec.CreditGLAccount = values[1].TrimStart('0');
+                    rec.CreditGLAccount = values[1].TrimStart('G');
                 }
                 else // debit
                 {
-                    rec.DebitGLAccount = values[1].TrimStart('0');
+                    rec.DebitGLAccount = values[1].TrimStart('G');
                 }
             }
             if (count > 2)
             {
                 if (rec.ActionCode == "1") // credit 
                 {
-                    rec.DebitGLAccount = values[2].TrimStart('0'); // opposite
+                    rec.DebitGLAccount = values[2].TrimStart('G'); // opposite
                 }
                 else // debit
                 {
-                    rec.CreditGLAccount = values[2].TrimStart('0'); // opposite 
+                    rec.CreditGLAccount = values[2].TrimStart('G'); // opposite 
                 }
             }
             string txtDateTime = "";
