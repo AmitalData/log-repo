@@ -975,6 +975,18 @@ export class ShipmentDomainService extends BaseService  {
         });
     }
     
+
+    GetPickupDeliveryValidForInlandDomestic(pickupDeliveryId: string) {
+        var url = this._apiUrl + '/GetPickupDeliveryValidForInlandDomestic?pickupDeliveryId=' + pickupDeliveryId;
+        return defer(() => {
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var result = response;
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = result;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 }
 
 export class ShipmentsSummary {

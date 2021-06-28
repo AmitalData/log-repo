@@ -197,12 +197,12 @@ export class SelectStandalonePackagesComponent {
     OnItemsChecked() {
         var isChecked: boolean = false;
         if (this.IsFromShipmentPackageTab) {
-            isChecked = this.ItemsSource.filter(f => f.IsChecked)[0] ? false : isChecked;
+            isChecked = this.ItemsSource.filter(f => f.IsChecked)[0] ? true : isChecked;
         } else {
             if (this.EntityPM != null && AppTool.IsNullOrEmpty(this.EntityPM.StandaloneShipmentId)) {
                 isChecked = true;
             } else {
-                isChecked = this.ItemsSource.filter(f => f.IsChecked)[0] ? false : isChecked;
+                isChecked = this.ItemsSource.filter(f => f.IsChecked)[0] ? true : isChecked;
             }
         }
         this.IsOkButtonEnabled = isChecked;
