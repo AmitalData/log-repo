@@ -60,7 +60,7 @@
         -webkit-box-shadow: 0px -3px 1px #ececec !important;
     }
 </style>
-<table>
+<table *ngIf="paymentPM">
 
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td colspan="4">
@@ -373,7 +373,7 @@
             <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel' |TextCodeTranslationPipe}}</button>
         </td>
         <td style="width: 67px;vertical-align: bottom; padding-right: 10px;">
-            <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!OkButtonEnabled ||  AutomaticPayment">{{'General.B.Save' |TextCodeTranslationPipe}}</button>
+            <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!OkButtonEnabled">{{'General.B.Save' |TextCodeTranslationPipe}}</button>
         </td>
     </tr>
 
