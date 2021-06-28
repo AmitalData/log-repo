@@ -13,12 +13,14 @@ import { PointersFromInvoicesSelectionComponent } from './Components/Documents/P
 import { DeclarationQueryComponent } from './Components/DeclarationQueryComponent';
 import { DeclarationCancellationComponent } from './Components/DeclarationCancellation/DeclarationCancellationComponent';
 import { ExportDeclarationClosingDataComponent } from './Components/CloseDeclaration/ExportDeclarationClosingDataComponent';
+import { DeclarationPaymentExportComponent } from './Components/DeclarationPayment/DeclarationPaymentExportComponent';
 
 
 
 export const Components =
     [
         DeclarationPaymentComponent,
+        DeclarationPaymentExportComponent,
         DeclarationSplitComponent,
         DocumentsPanelComponent,
         VehicleModificationsComponent,
@@ -40,6 +42,7 @@ export class ModuleDeclarations {
 
         switch (name) {
             case "DeclarationPaymentComponent": { myResult = DeclarationPaymentComponent; break; }
+            case "DeclarationPaymentExportComponent": { myResult = DeclarationPaymentExportComponent; break; }
             case "DeclarationSplitComponent": { myResult = DeclarationSplitComponent; break; }
             case "DocumentsPanelComponent": { myResult = DocumentsPanelComponent; break; }
             case "VehicleModificationsComponent": { myResult = VehicleModificationsComponent; break; }
