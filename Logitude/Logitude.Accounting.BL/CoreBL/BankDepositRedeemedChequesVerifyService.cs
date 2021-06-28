@@ -169,17 +169,20 @@ namespace Logitude.Accounting.BL.CoreBL
 
             var context = AccountingContext.GetContext(tenant);
 
+            var startOfFeb = new DateTime(2021, 02, 01, 0, 0, 0);
+
             var isInBankStatusCode = "3";
 
             List<ARPaymentChequePM> paymentChequesNotRedeemed = (from cheque in context.ARPaymentCheques
                                                                  join ledger in context.LedgerTransactions on cheque.ChequeNumber equals ledger.Reference2
                                                                  join journal in context.Journals on ledger.JournalId equals journal.Id
-                                                                 where  cheque.StatusCode == isInBankStatusCode
+                                                                 where cheque.StatusCode == isInBankStatusCode
                                                                         && cheque.Tenant == tenant
                                                                         && ledger.Tenant == tenant
-                                                                        && ledger.LocalAmountCredit == 0 
+                                                                        && ledger.LocalAmountCredit == 0
                                                                         && ledger.IsExternalReconcile == true
                                                                         && journal.AccountingEntityReference == cheque.ChequeNumber
+                                                                        && journal.CreateDate > startOfFeb
                                                                  select new ARPaymentChequePM()
                                                                  {
                                                                      Id = cheque.Id,
