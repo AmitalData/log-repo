@@ -4,7 +4,7 @@ using Logitude.Test.Base.Models.Shared;
 using Logitude.Test.Base.Models.UserTenantPreparation;
 using Logitude.Test.Base.Services;
 
-namespace Logitude.CommonDataTests.ExternalServices
+namespace Logitude.CommonDataTests.Services
 {
     public class TenantServices
     {
