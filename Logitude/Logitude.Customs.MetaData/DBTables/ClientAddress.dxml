@@ -132,7 +132,7 @@
   <Column
     Name="LocalStreetName"
     Type="nvarchar"
-    Size="20">
+    Size="50">
     <Constraints
       Nullable="true" />
   </Column>
