@@ -22263,13 +22263,13 @@
     <TextCode
       Code="&quot;Customs.Declaration.O.Create&quot;"
       DefaultText="&quot;Create&quot;"
-      LocalDefaultText="&quot;יצירה&quot;"
+      LocalDefaultText="&quot;צור חדש&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Customs.Declaration.O.Move&quot;"
       DefaultText="&quot;Move&quot;"
-      LocalDefaultText="&quot;לזוז &quot;"
+      LocalDefaultText="&quot;העבר&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode

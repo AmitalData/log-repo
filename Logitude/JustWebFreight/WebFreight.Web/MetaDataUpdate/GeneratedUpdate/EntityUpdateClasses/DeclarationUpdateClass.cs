@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "4374af08bb7a5f741e6c8eead703c5d8";
+		public const string HashString = "425a1873f3e1060adeaa009313b1439d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -17893,9 +17893,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOTicketAlreadyExist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.TicketAlreadyExist", DefaultText = "This Ticket already exist , do you want to move the items to the existing ticket ?",LocalDefaultText = @"המענה שהזנת כבר קיים , האם להעביר את פרטי המכס למענה הקיים ?", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCreate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Create", DefaultText = "Create",LocalDefaultText = @"יצירה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCreate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Create", DefaultText = "Create",LocalDefaultText = @"צור חדש", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOMove = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Move", DefaultText = "Move",LocalDefaultText = @"לזוז ", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOMove = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Move", DefaultText = "Move",LocalDefaultText = @"העבר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOMoreData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MoreData", DefaultText = "More Data",LocalDefaultText = @"נוספים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
