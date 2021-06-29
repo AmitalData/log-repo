@@ -26,6 +26,7 @@ import { DeclarationList } from '../../../../Customs/EntityLists/DeclarationList
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { DeclarationListService } from '../../../../Customs/Services/StandardLists/DeclarationListService';
 import { DeclarationEventManager } from '../../../../Customs/Utilities/DeclarationEventManager';
+import { ContainerizationExtendedListService } from '../../../../Customs/Services/ExtendedLists/ContainerizationExtendedListService';
 
 
 @Component({
@@ -47,6 +48,7 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
     AddDeclarationToContainerizationEVENT: any;
     ;
     ResponseData: INF_MSG_GenericResponseData;
+    containerizationExtendedListService: ContainerizationExtendedListService;
 
 
     public ContainerizationDeclarationList: ObservableCollection;
@@ -64,8 +66,7 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
                 this.ObjectTableName = this.entityArgs.ObjectTableName;
                 this.Listen();
                 this.SetFieldsEditability();
-
-
+                this.containerizationExtendedListService = new ContainerizationExtendedListService();
                 this.getRows();
             });
         });
@@ -108,7 +109,7 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
         //filters.SortDirection = sortingDir;
         //Customs.Declaration.F.ExportContainerizationID
         filters.addAdditionalFilter("ExportContainerizationID", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
-        return this.declarationListService.getByFilters(filters)
+        return this.containerizationExtendedListService.getByFilters(filters)
             .subscribe(r => {
                 this.ContainerizationDeclarationList = new ObservableCollection([]);
                 for (let item of r.Result) {
