@@ -147,6 +147,7 @@ export class SendContainerizationService implements OnDestroy {
         this.CurrentSession.StartBusyIndicator("");
         this.containerizationPMService.update(this.EntityPM).subscribe((response: any) => {
             this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            this.CurrentSession.CurrentEditComponent.LoadCompleted.emit(true);
             var params: GenericRequestParams = new GenericRequestParams();
             params.Tenant = SessionLocator.Tenant;
             params.RequestVIA = event.RequestVIA;

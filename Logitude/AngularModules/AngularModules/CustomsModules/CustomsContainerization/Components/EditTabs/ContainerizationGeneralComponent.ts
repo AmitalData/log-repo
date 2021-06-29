@@ -37,6 +37,8 @@ import { ContainerizationExtendedListService } from '../../../../Customs/Service
 export class ContainerizationGeneralComponent extends BaseComponent implements AfterViewInit {
     @Output() FillValidationErrorList: EventEmitter<any> = new EventEmitter();
     public EntityPM: ContainerizationPM;
+    public YellowMessage: string;
+
     public ObjectTableName: string = "Customs.Containerization";
     public DataContext: any = this;
     public IsNewEntity: boolean = false;
@@ -67,6 +69,7 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
                 this.Listen();
                 this.SetFieldsEditability();
                 this.containerizationExtendedListService = new ContainerizationExtendedListService();
+                this.setYellowMessage();
                 this.getRows();
             });
         });
@@ -158,6 +161,7 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
 
                         this.resetDeletedDeclaration();
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.setYellowMessage();
                         this.getRows();
                     }
                 })
@@ -168,6 +172,7 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
                 this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.setYellowMessage();
                         this.getRows();
                         //this.RefreshEntity();
                     }
@@ -220,8 +225,13 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
     SetFieldsEditability() {
         //throw new Error('Method not implemented.');
     }
-    
 
+    setYellowMessage() {
+        if (this.EntityPM.IsChange)
+            this.YellowMessage = TextCodeTranslator.Translate("Customs.Containerization.O.ContainerizationChanged");
+        else
+            this.YellowMessage = null;
+    }
 
     //#endregion
 
