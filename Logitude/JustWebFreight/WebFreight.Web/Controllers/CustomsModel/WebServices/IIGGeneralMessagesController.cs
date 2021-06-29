@@ -756,8 +756,11 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                     int count = q.Count();
                     response.Count = count;
                 }
-
-                amitalLazyLoadEvent.sortField = amitalLazyLoadEvent.sortField ?? "DeclarationId";
+                if (String.IsNullOrWhiteSpace(amitalLazyLoadEvent.sortField))
+                {
+                    amitalLazyLoadEvent.sortField = "DeclarationId";
+                }
+                
                 q = q.LazyOrderBy(amitalLazyLoadEvent);
                 
                 q = q.LazySkipTake(amitalLazyLoadEvent);

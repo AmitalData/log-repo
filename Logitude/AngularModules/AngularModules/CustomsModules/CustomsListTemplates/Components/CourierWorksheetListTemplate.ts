@@ -56,7 +56,7 @@ import { AmitalGatewayUtil } from "../../../Infrastructure/Utilities/AmitalGatew
 export class CourierWorksheetListTemplate {
   public entityPM: any;
 
-    _CourierWorksheet: DeclarationCourierStatusList;
+    public _CourierWorksheet: DeclarationCourierStatusList;
     public fieldName: any;
 
     IsDocumentStatusGreen: boolean = false;

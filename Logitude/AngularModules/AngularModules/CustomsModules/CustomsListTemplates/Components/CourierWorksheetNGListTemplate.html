@@ -254,7 +254,7 @@
     </div>
 
 
-    <div class="TextTrimming" style="cursor:default;height:35px;width:115px" *ngIf="fieldName == 'SendSplitButton'" (click)="ButtonClick($event)">
+    <div class="TextTrimming" style="cursor:default;height:35px;width:115px" *ngIf=" false && fieldName == 'SendSplitButton'" (click)="ButtonClick($event)">
         <div style="text-align:right;margin-top:5px;cursor:default;margin-left:30px" (click)="ButtonClick($event)">
             <!--[IsDisabled]="_CourierWorksheet['CourierPaymentStatusCode'] == 'P'  ||_CourierWorksheet['CourierPaymentStatusCode'] == 'O'   "-->
             <split-button #currSplitButtonComponent

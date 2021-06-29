@@ -2,7 +2,7 @@ declare var window: any;
 import { Observable } from 'rxjs';
 import { Guid } from '../../../../Infrastructure/Utilities/Guid';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
-import { Component, Output, EventEmitter, OnInit, ComponentRef, ViewChild, OnDestroy, Injectable } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit, ComponentRef, ViewChild, OnDestroy, Injectable, ChangeDetectorRef } from '@angular/core';
 import { AppTool } from '../../../../Infrastructure/Tools';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
@@ -34,6 +34,7 @@ import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLoca
 import { DeclarationCourierStatusList } from '../../../../Customs/EntityLists/DeclarationCourierStatusList';
 import { LazyLoadEvent } from 'primeng/api';
 import { IIGGeneralMessagesService } from '../../../../Customs/Services/WebServices/IIGGeneralMessagesService';
+import { CourierWorksheetListTemplate } from '../../../CustomsListTemplates/Components/CourierWorksheetListTemplate';
 
 @Component({
 
@@ -122,7 +123,10 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
     private currentSession = SessionLocator.SelectedSession;
     private ChangedUnloadPortSite: boolean;
     //constructor(public entityArgs: EntityArgs) {
-    constructor(public _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
+    constructor(public _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, public entityArgs: EntityArgs,
+        private EntityResourceService: EntityResourceService,
+        private CD: ChangeDetectorRef
+    ) {
         super();
         //this.entityPM = entityArgs.EntityPM;
         this._TabFilterList.push(new TabFilter("ALL", "כל הש.מ.ב ", null, null));
@@ -2172,10 +2176,10 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
 
 
 
-        console.log($event);
+        //console.log($event);
 
 
-        let useCache: boolean = true;
+        let useCache: boolean = false;
         if (this.oldEvent) {
 
             if (
@@ -2229,12 +2233,32 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
                     this.loading = false;
                     this.ShowGrid = true;
                     let res = viewResponse.Result;
-                    let newAry: any[] = res.Result;
+                    let newAry: DeclarationCourierStatusList[] = res.Result;
                     if (AppTool.IsNullOrZero(this.TotalRecords)) {
                         this.TotalRecords = res.Count;
                         this.LazyDataSource = Array.from({ length: this.TotalRecords });
                     }
-                    Array.prototype.splice.apply(this.LazyDataSource, [...[$event.first, $event.rows], ...newAry]);
+
+                    let fromCourierWSData: boolean = false;
+                    if (fromCourierWSData) {
+                        let courierWorksheetListTemplateS: CourierWorksheetListTemplate[] = [];
+                        newAry.forEach((myDeclarationCourierStatusList) => {
+
+                            let a = new CourierWorksheetListTemplate(this._CourierWorksheetSharedDataService, this.CD);
+                            a.setVariables(myDeclarationCourierStatusList, "");
+                            courierWorksheetListTemplateS.push(a)
+                        });
+                        Array.prototype.splice.apply(this.LazyDataSource, [...[$event.first, $event.rows], ...courierWorksheetListTemplateS]);
+                    } else {
+
+                        Array.prototype.splice.apply(this.LazyDataSource, [...[$event.first, $event.rows], ...newAry]);
+                    }
+
+
+                    
+                    
+                    
+                    
 
                     //trigger change detection
                     this.LazyDataSource = [...this.LazyDataSource];

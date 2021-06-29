@@ -920,44 +920,64 @@
                                                                  [lazy]="true" (onLazyLoad)="loadLazy($event)" [loading]="loading" [resizableColumns]="true"
                                                                  [(selection)]="SelectedNGRows" (onRowSelect)="onRowSelect($event)"
                                                                  (onRowUnselect)="onRowUnselect($event)" scrollHeight="600px"
-                                                                 [columns]="columns">
+                                                                 [columns]="columns"
+                                                                 dataKey="Id"
+                                                                 >
+
 
 
 
                                                             <ng-template pTemplate="header">
-
                                             <tr>
-                                                <th style="width:27px;padding:0px"><p-tableHeaderCheckbox style="margin-right: -18px;"></p-tableHeaderCheckbox></th>
-
-                                                <th *ngFor="let currIndex of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]"
-                                                    pSortableColumn="{{columns[currIndex].SortByName}}"
-                                                    [style.width]="columns[currIndex].Styles.width"
-                                                    style="text-align: center;padding:0px"
-                                                    >
-                                                    <p-sortIcon field="{{columns[currIndex].SortByName}}"></p-sortIcon>
-
-                                                    <p-columnFilter type="text" field="{{columns[currIndex].FieldName}}" display="menu"></p-columnFilter>
-                                                </th>
-                                                <th>rest </th>
-                                            </tr>
-                                            <tr>
-                                                <th style="width:27px;padding:0px">
-                                                    <!--<p-tableHeaderCheckbox style="margin-right: -18px;"></p-tableHeaderCheckbox>-->
-                                                </th>
-
-                                                <th *ngFor="let currIndex of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]"
-                                                    [style.width]="columns[currIndex].Styles.width"
-                                                    style="text-align: right;padding:0px">
-                                                    {{columns[currIndex].Display}}
-                                                    <!--<p-columnFilter type="text" field="{{columns[currIndex].FieldName}}" display="menu">
-            </p-columnFilter>-->
+                                                <th style="width: 27px;text-align: center; padding: 0px; margin-right: -18px;" >
+                                                    
+                                                        <table>
+                                                            <tr>
+                                                                <th style="width:27px;padding:0px"><p-tableHeaderCheckbox ></p-tableHeaderCheckbox></th>
+                                                            </tr>
+                                                            <tr>
+                                                            </tr>
+                                                        </table>
                                                     
                                                 </th>
-                                                <th>rest </th>
+                                                <th *ngFor="let currIndex of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]"
+                                                    style="text-align: center;padding:0px"
+                                                    [style.width]="columns[currIndex].Styles.width"
+                                                    >
+                                                    
+                                                        <table>
+
+                                                            <tr>
+
+
+                                                                <td
+                                                                    pSortableColumn="{{columns[currIndex].SortByName}}"
+                                                                    
+                                                                    style="text-align: center;padding:0px"
+                                                                    >
+                                                                    <p-sortIcon *ngIf="columns[currIndex].SortByName" field="{{columns[currIndex].SortByName}}"></p-sortIcon>
+
+                                                                    <p-columnFilter *ngIf="columns[currIndex].SortByName" type="text" field="{{columns[currIndex].FieldName}}" display="menu"></p-columnFilter>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td [style.width]="columns[currIndex].Styles.width"
+                                                                    style="text-align: center;padding:0px">
+                                                                    {{columns[currIndex].Display}}
+
+
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    
+
+                                                </th>
+
+                                                <th> </th>
                                             </tr>
+                                            
 
-
-                                            </ng-template>
+                                                            </ng-template>
 
                                             <ng-template pTemplate="body" let-rowData let-columns="columns">
                                                 <tr>
@@ -967,32 +987,33 @@
                                                     <td *ngFor="let currIndex of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]"
                                                         [style.width]="columns[currIndex].Styles.width"
                                                         style="padding: 0px">
-                                                        <!--(click)="onColDataClick(rowData)"-->
-                                                        <CourierWorksheetNGListTemplate *ngIf="columns[currIndex].HtmlListComponentUrl !=null"
+
+
+
+
+                                                        <CourierWorksheetNGListTemplate
+                                                                                        *ngIf="columns[currIndex].HtmlListComponentUrl !=null"
                                                                                         [CourierWorksheet]="rowData"
-                                                                                        [fieldName]="columns[currIndex].FieldName"></CourierWorksheetNGListTemplate>
+                                                                                        [fieldName]="columns[currIndex].FieldName">
+
+                                                        </CourierWorksheetNGListTemplate>
+
+
+
+
+
+
+
+
                                                         <div *ngIf="columns[currIndex].HtmlListComponentUrl ==null" (click)="onColDataClick(rowData)">
                                                             {{  rowData[columns[currIndex].FieldName]}}
                                                         </div>
 
-                                                        <!--<ng-container [ngSwitch]="columns[currIndex].FieldName">
-
-    <div *ngSwitchCase="'DocumentStatusCode'" class="TextTrimming" (click)="onColDataClick(rowData)">-->
-                                                        <!--<img *ngIf="true" src="./Images/Icons/GreenV.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />-->
-                                                        <!--<img *ngIf="rowData[columns[currIndex].FieldName] == 'V' " src="./Images/Icons/GreenV.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
-            <img *ngIf="rowData[columns[currIndex].FieldName]== 'M' || rowData[columns[currIndex].FieldName]== 'X' " src="./Images/Icons/RedX.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
-
-            <img *ngIf="rowData[columns[currIndex].FieldName]== 'I'" src="./Images/Icons/InProgress.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
-        </div>
-
-
-
-    </ng-container>-->
 
 
                                                     </td>
 
-                                                    <td>rest</td>
+                                                    <td></td>
 
                                                 </tr>
                                             </ng-template>

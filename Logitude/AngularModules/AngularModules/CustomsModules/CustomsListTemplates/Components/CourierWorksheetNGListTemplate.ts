@@ -74,7 +74,7 @@ export class CourierWorksheetNGListTemplate {
             this.ReloadVariables();
         }
     }
-
+    _ReloadVariables: boolean = false;
     
     private _fieldName: string;
     @Input()
@@ -87,6 +87,7 @@ export class CourierWorksheetNGListTemplate {
         //console.log(this._CourierWorksheet );
         
         if (!AppTool.IsNullOrEmpty(this._CourierWorksheet)) {
+            
             this.ReloadVariables();
         }
 
@@ -186,7 +187,11 @@ export class CourierWorksheetNGListTemplate {
     setVariables(courierWorksheet: DeclarationCourierStatusList, fieldName: string)
         { }
 
-    ReloadVariables(){
+    ReloadVariables() {
+        if (this._ReloadVariables) {
+            return;
+        }
+        this._ReloadVariables = true;
         //this._CourierWorksheet = courierWorksheet;
         //this.fieldName = fieldName;
         //this._AdditionalData = AdditionalData;
