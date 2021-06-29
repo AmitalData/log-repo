@@ -21,6 +21,7 @@ namespace CommunicationWorkerRole
                     {
                         ContainerStatusesReceiver containerStatusesReceiver = new ContainerStatusesReceiver();
                         containerStatusesReceiver.Run();
+                        LogDoneItemInMemory();
                     }
                     catch (Exception e)
                     {

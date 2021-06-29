@@ -20,8 +20,7 @@ namespace CommunicationWorkerRole
     {
         public override void Run()
         {
-            var LogitudeConsumer = new Consumer(KafkaConsumerGroups.UpdateTask, new List<string> { KafkaTopics.TasksTopic },
-                                    new TopicPartition(KafkaTopics.TasksTopic, KakaPartitions.TasksTopic_UpdatePartition));
+            var LogitudeConsumer = new Consumer(KafkaConsumerGroups.UpdateShipment, new List<string> { KafkaTopics.TasksUpdateTopic }, null);
 
             while (IsRunning)
             {
@@ -30,7 +29,7 @@ namespace CommunicationWorkerRole
                     try
                     {
                         var msg = LogitudeConsumer.Consume();
-                        if (msg != null && msg.Message.Key == KakaMessageTypes.Task)
+                        if (msg != null && msg.Message.Key == KakaMessageTypes.TaskUpdate)
                         {
                             UpdateShipmentPM(msg.Message.Value);
                         }

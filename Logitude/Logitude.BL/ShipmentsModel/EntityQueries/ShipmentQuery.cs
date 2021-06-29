@@ -13524,6 +13524,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             Shipment shipment = repository.GetShipmentForCargoTracking(id, tenant);
 
+            if (shipment == null) return null;
+
             var shipmentPM = new ShipmentPM();
 
             ShipmentMasterData masterData = (from a in repository.context.ShipmentMasterDatas
@@ -13635,7 +13637,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             Shipment shipment = repository.GetShipmentForCargoTracking(shipmentId, tenant);
 
-            if (shipment.ShipmentAdditionalCloudData == null) return null;
+            if (shipment?.ShipmentAdditionalCloudData == null) return null;
             
             ShipmentAdditionalCloudCustomData cloudCustomData = GetDeserializedCloudCustomData(shipment.ShipmentAdditionalCloudData);
             CargoTrackingShipmentCustomsData shipmentCustomsData = null;
@@ -13660,7 +13662,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 ImporterVatAmount = CalculateImporterVatAmountFromCloudCustomData(cloudCustomData),
                 TaxDetails = BuildCargoTrackingShipmentCustomTaxDetails(cloudCustomData),
                 CurrencyCode = cloudCustomData.GoodsValueDetails == null ? null : cloudCustomData.GoodsValueDetails.FirstOrDefault()?.CurrencyName,
-                CurrencySign = GetCurrencySignFromCloudCustomData(cloudCustomData, tenant)
+                CurrencySign = GetCurrencySignFromCloudCustomData(cloudCustomData, tenant),
+                DeclarationStatus= cloudCustomData.DeclarationStatus
             };
 
         }
@@ -13730,6 +13733,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public decimal TotalValueInNIS { get; set; }
         public decimal TotalValueInForeignCurrency { get; set; }
         public decimal TotalTax { get; set; }
+     
 
         public List<CargoTrackingShipmentCustomTaxDetails> TaxDetails;
     }

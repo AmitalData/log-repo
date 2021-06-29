@@ -74,7 +74,7 @@ namespace Logitude.DBMigrations.Models
             string defaultValue = FormatDefaultValue(dbMigrationsSetDefaultValue.DefaultValue);
 
             string queryString = "UPDATE TOP(1000) [" + schemaName + "].[" + tableName + "] SET [" + columnName + "] = " + defaultValue + ", " +
-                "[DBMigrationsLastDefaultValue] = " + updateNumber.ToString() + " WHERE [DBMigrationsLastDefaultValue] = " + (updateNumber - 1).ToString() +
+                "[DBMigrationsLastDefaultValue] = " + updateNumber.ToString() + " WHERE [DBMigrationsLastDefaultValue] <= " + (updateNumber - 1).ToString() +
                 " OR [DBMigrationsLastDefaultValue] IS NULL;";
 
             string connectionString = GetZeroDownTimeConnectionString(ToolConfigurations.GetConnectionString(databaseType));

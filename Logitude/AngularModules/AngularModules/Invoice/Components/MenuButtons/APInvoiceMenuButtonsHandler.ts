@@ -13,12 +13,14 @@ import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTran
 import {GeneralPrintHelper} from '../../../Infrastructure/Helpers/GeneralPrintHelper';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 
 export class APInvoiceMenuButtonsHandler {
     private CurrentSession = SessionLocator.SelectedSession;
     public EntityPM: APInvoicePM;
     public entityArgs: EntityArgs
     isFullAccounting: boolean = false;
+    public approvedStatusCode: string = "AD";
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
@@ -161,6 +163,11 @@ export class APInvoiceMenuButtonsHandler {
                             button.IsHidden = isHidden;
                             break;
                         }
+
+                        case "CopyInvoice": {
+                            myButtonIsDisabled = this.SetEnableForCopyInvoiceButton(myButtonIsDisabled);
+                            break;
+                        }
                     }
 
                     button.IsDisabled = myButtonIsDisabled;
@@ -169,6 +176,17 @@ export class APInvoiceMenuButtonsHandler {
             }
         }
     }
+    private SetEnableForCopyInvoiceButton(myButtonIsDisabled: boolean) {
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) && this.EntityPM.StatusCode != this.approvedStatusCode) {
+            myButtonIsDisabled = true;
+        }
+
+        if (this.EntityPM != null && this.EntityPM.IsExternalEntity) {
+            myButtonIsDisabled = true;
+        }
+        return myButtonIsDisabled;
+    }
+
     public MenuButtonClick(menuButton: MenuButtonPM) {
         if (!this.isButtonClicked) {
 
@@ -217,6 +235,11 @@ export class APInvoiceMenuButtonsHandler {
                 case "BlockFromTransfer": {
                     this.BlockFromTransferToQBO();
                     break;
+                }
+
+                case "CopyInvoice":{
+                     this.OpenCopyInvoiceScreen();
+                     break;
                 }
 
                 default: {
@@ -752,5 +775,20 @@ if (response != null) {
                 }
             });
         }
+    }
+
+    OpenCopyInvoiceScreen() {
+        var windowTitle = TextCodeTranslator.Translate("APInvoice.O.CopyInvoice");
+        var windowArgs: any = {};
+        windowArgs.APInvoicePM = this.EntityPM;
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 700;
+        logWindow.Height = 660;
+        logWindow.Title = windowTitle;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        });
+        logWindow.Show('./Accounting/Components/Others/CopyInvoiceComponent');
     }
 }

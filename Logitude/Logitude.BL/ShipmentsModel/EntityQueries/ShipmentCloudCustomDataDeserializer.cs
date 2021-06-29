@@ -125,7 +125,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 {
                     CustomData.TotalTax = TotalTax[0].InnerText;
                 }
-
+                XmlNodeList mehes_draft_status = xmldoc.GetElementsByTagName("mehes_draft_status");
+                if (mehes_draft_status[0] != null)
+                {
+                    CustomData.DeclarationStatus = mehes_draft_status[0].InnerText;
+                }
                 XmlNodeList MishgorPackageQuantity = xmldoc.GetElementsByTagName("mishgor-package-quantity");
                 if (MishgorPackageQuantity[0] != null)
                 {

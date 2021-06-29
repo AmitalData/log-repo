@@ -89,23 +89,6 @@ export function CheckShippingLineINTTRA() {
     BaseAssertion.AssertElementHaveClass(ShippingLineSelectors.INTTRARegistrationNotes, 'TextAreaDisabled')
 }
 
-export function FillShippingLineAddresses(shippingLineDetails: ShippingLineDetails) {
-    cy.FillLogLov(ShippingLineSelectors.Address_CountryId, shippingLineDetails.AddressCountry, true)
-    cy.FillLogTextBox(ShippingLineSelectors.Address_City, shippingLineDetails.AddressCity)
-    cy.FillLogLov(ShippingLineSelectors.Address_StateId, shippingLineDetails.AddressState, true)
-}
-
-export function CreateShippingLineAddress() {
-    cy.DefineRequestWait(RestAPI.POST, Urls.AirShippingLinesAddress, RequestAliases.PostShippingLineAddress)
-    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
-}
-
-export function AssertCreateShippingLineAddress() {
-    let intercept = cy.wait("@" + RequestAliases.PostShippingLineAddress);
-    intercept.then((interception) => {
-        assert.equal(interception.response.statusCode, 200)
-    })
-}
 
 export function FillAreaCountryPortName(areaCountryPortName) {
     cy.FillLogLov(ShippingLineSelectors.CarrierAreasPort_CountryId, areaCountryPortName, true)
@@ -129,16 +112,14 @@ export function FillAreaPortName(areaPortName) {
 }
 
 export function AddAreaPort() {
-    cy.DefineRequestWait(RestAPI.POST, Urls.PortPostLogsList, RequestAliases.PostShippingLineAreaPort)
     cy.get(ShippingLineSelectors.Add_CarrierAreasPort).click()
     cy.get(ShippingLineSelectors.Close_CarrierAreasPort).click()
 }
 
-export function AssertAddAreaPort() {
-    let intercept = cy.wait("@" + RequestAliases.PostShippingLineAreaPort);
-    intercept.then((interception) => {
-        assert.equal(interception.response.statusCode, 200)
-    })
+export function AssertAddAreaPort(portName) {
+    cy.get(ShippingLineSelectors.AreaGridBody).find(ShippingLineSelectors.AreaGridRow).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
+        expect(text).to.contain(portName);
+    });
 }
 
 export function FillShippingLineAreaDetails(shippingLineDetails: ShippingLineDetails) {
@@ -168,7 +149,7 @@ export function FillShippingLineTariffTranslations(shippingLineDetails: Shipping
 }
 
 export function CreateShippingLineTariffTranslations() {
-    cy.DefineRequestWait(RestAPI.POST, Urls.AirShippingLinesTariffTranslations, RequestAliases.PostShippingLineTariffTranslations)
+    cy.DefineRequestWait(RestAPI.POST, Urls.ShippingLinesTariffTranslations, RequestAliases.PostShippingLineTariffTranslations)
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
 }
 

@@ -55,6 +55,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             columnsForCopy.Add("GrossWeightUnitCode");
             columnsForCopy.Add("ShipmentTypeId");
 
+            columnsForCopy.Add("ExceptionDate");
+            columnsForCopy.Add("ExceptionDescription");
 
 
             return string.Join(",", columnsForCopy.ToArray());

@@ -99,6 +99,7 @@ export class CargoTrackingShipmentList {
 	FromPortCode: string;
 	ToPortCode: string;
 	NumberOfPackages: number;
+	CurrentMilestoneExceptions: string;
 	
 }
  

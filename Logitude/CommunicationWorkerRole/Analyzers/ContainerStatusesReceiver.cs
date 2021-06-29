@@ -116,7 +116,7 @@ namespace CommunicationWorkerRole.Analyzers
                 }
                 if (envelopeResponse.HasError)
                 {
-                    //throw new Exception(envelopeResponse.ErrorMessage);
+                    throw new Exception(envelopeResponse.ErrorMessage);
                 }
                 var oceanInsightsPushUpdate = envelopeResponse?.Tasks?.Where(a => a.Action == "OceanInsights.PushUpdate").FirstOrDefault();
                 if (oceanInsightsPushUpdate != null)
@@ -139,7 +139,7 @@ namespace CommunicationWorkerRole.Analyzers
             var communicationLogResponse = await response;
             if (communicationLogResponse.HasError)
             {
-                //throw new Exception(response.ErrorMessage);
+                throw new Exception(communicationLogResponse.ErrorMessage);
             }
             externalTasksQueueWcfService.Close();
         }

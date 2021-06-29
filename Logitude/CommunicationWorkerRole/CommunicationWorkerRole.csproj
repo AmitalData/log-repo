@@ -394,6 +394,7 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Services\QuoteSchedulerTaskService.cs" />
+    <Compile Include="ShipmentCreateWR.cs" />
     <Compile Include="ShipmentUpdateWR.cs" />
     <Compile Include="Tasks\ExchangeRateUpdateTask.cs" />
     <Compile Include="TransfareOnGoingDataWR.cs" />

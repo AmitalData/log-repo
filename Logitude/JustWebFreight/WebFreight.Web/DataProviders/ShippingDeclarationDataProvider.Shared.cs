@@ -517,5 +517,9 @@ namespace WebFreight.Web.DataProviders
         public string CustomerContactEmail { get; set; }
         public string CustomerContactMobile { get; set; }
         public string CustomerContactPhone { get; set; }
+
+        public DateTime? MasterDate { get; set; }
+        public string UserDepartment { get; set; }
+
     }
 }

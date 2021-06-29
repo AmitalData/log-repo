@@ -172,5 +172,10 @@
         {
             return "warehousereleases/getsingle?id=" + id;
         }
+
+        public static string VesselGetSingle(string id)
+        {
+            return "vessels/getsingle?id=" + id;
+        }
     }
 }

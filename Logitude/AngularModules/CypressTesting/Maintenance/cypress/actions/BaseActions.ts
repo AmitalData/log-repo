@@ -5,6 +5,8 @@ import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
 import * as Actions from "./Actions"
 import { ShippingLineSelectors } from "../Selectors/ShippingLineSelectors";
+import { AddressDetails } from 'cypress/models/AddressDetails';
+import { AddressSelectors } from "../selectors/AddressSelectors";
 
 export function Search(searchFieldValue) {
     DefineViewsGetByFiltersRequest(searchFieldValue);
@@ -50,4 +52,24 @@ export function MockImport() {
 
 export function AssertMockImport() {
     Actions.AssertGetByFilters();
+}
+
+export function NavigateAddressWizard() {
+    cy.get(AddressSelectors.EditButton).click({ force: true })
+}
+
+export function FillAddressDetails(addressDetails: AddressDetails) {
+    cy.FillLogTextBox(AddressSelectors.Name, addressDetails.Name)
+    cy.FillLogLov(AddressSelectors.Country, addressDetails.Country, true)
+    cy.FillLogTextBox(AddressSelectors.City, addressDetails.City)
+    cy.FillLogLov(AddressSelectors.State, addressDetails.State, true)
+}
+
+export function CreateAddress() {
+    cy.DefineRequestWait(RestAPI.POST, Urls.Address, RequestAliases.PostAddress)
+    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
+}
+
+export function AssertCreateAddress() {
+    BaseAssertion.AssertStatusCode(RequestAliases.PostAddress, 200);
 }

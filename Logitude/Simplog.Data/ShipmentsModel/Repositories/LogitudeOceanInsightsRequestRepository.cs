@@ -72,17 +72,17 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             throw new NotImplementedException();
         }
 
-        public LogitudeOceanInsightsRequest GetSingleLogitudeOceanInsightsRequestByOceanInsigntId(string id)
+        public List<LogitudeOceanInsightsRequest> GetLogitudeOceanInsightsRequestByOceanInsigntId(string id)
         {
-            return (from a in Context.LogitudeOceanInsightsRequests where a.OceanInsigntId == id select a).FirstOrDefault();
+            return (from a in Context.LogitudeOceanInsightsRequests where a.OceanInsigntId == id select a).ToList();
         }
 
-        public LogitudeOceanInsightsRequest GetSingleLogitudeOceanInsightsRequestByContainerNumberAndScac(string container_number, string carrier_scac)
+        public List<LogitudeOceanInsightsRequest> GetLogitudeOceanInsightsRequestByContainerNumberAndScac(string container_number, string carrier_scac)
         {
             var oceanInsights = from a in Context.LogitudeOceanInsightsRequests where a.ContainerNumber == container_number && a.SCACCode == carrier_scac select a;
             if(oceanInsights != null && oceanInsights.Count() == 1)
             {
-                return oceanInsights.FirstOrDefault();
+                return oceanInsights.ToList();
             }
             else
             {

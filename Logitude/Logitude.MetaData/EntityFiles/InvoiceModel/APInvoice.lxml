@@ -10495,6 +10495,13 @@
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="15"
         IsPackagable="false" />
+      <MenuItem
+        EventCode="&quot;CopyInvoice&quot;"
+        DefaultText="&quot;Copy Invoice&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="16"
+        LocalDefaultText="&quot;העתקת חשבונית&quot;"
+        IsPackagable="false" />
     </MenuButton>
   </MenuButtons>
   <DataContracts>
@@ -11449,6 +11456,24 @@
       Code="&quot;APInvoice.O.ValidateInvoiceNumber&quot;"
       DefaultText="&quot;The invoice number entered is invalid, it should only contain numbers or letters.&quot;"
       LocalDefaultText="&quot;מספר החשבונית שהוקלד אינו תקין , ניתן לרשום רק אותיות ומספרים.&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;APInvoice.O.CopyInvoice&quot;"
+      DefaultText="&quot;Copy Invoice&quot;"
+      LocalDefaultText="&quot;העתקת חשבונית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;APInvoice.O.CopyLines&quot;"
+      DefaultText="&quot;Copy Lines&quot;"
+      LocalDefaultText="&quot;העתקת שורות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;APInvoice.O.CopyAmounts&quot;"
+      DefaultText="&quot;Copy Amounts&quot;"
+      LocalDefaultText="&quot;העתקת סכומים&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
