@@ -321,6 +321,7 @@ namespace WebFreight.Web.Helpers.Analyzers
             {
                 container = containerQuery.GetContainerByContainerNumberAndTenant(containerNumber, logitudeTenant.Value);
                 containerId = container?.Id;
+                container_number = container?.ContainerNumber;
             }
         }
         private void AddContainerStatusCommunicationLog()
@@ -823,7 +824,7 @@ namespace WebFreight.Web.Helpers.Analyzers
                     
                     shipmentContainers = shipmentContainers.Except(nullValuesContainers).ToList();
 
-                    List<Container> shipmentContainers_grouped = (from s in shipmentContainers
+                    var shipmentContainers_grouped = (from s in shipmentContainers
                                                                   group s by new
                                                                   {
                                                                       s.DepartureLocation,
@@ -833,12 +834,13 @@ namespace WebFreight.Web.Helpers.Analyzers
                                                                       s.MainCarriageATD,
                                                                       s.MainCarriageATA,
                                                                   } into m
-                                                                  select new Container()
+                                                                  select new
                                                                   {
                                                                       MainCarriageETD = m.Key.MainCarriageETD,
                                                                       MainCarriageETA = m.Key.MainCarriageETA,
                                                                       MainCarriageATD = m.Key.MainCarriageATD,
                                                                       MainCarriageATA = m.Key.MainCarriageATA,
+                                                                      GroupList = m.ToList(),
                                                                   }).ToList();
 
                     if (shipmentContainers_grouped != null)
@@ -846,7 +848,7 @@ namespace WebFreight.Web.Helpers.Analyzers
                         if (shipmentContainers_grouped.Count() == 1)
                         {
                             shipmentPM.IsUpdatedOceanInsightsAnalyzer = true;
-                            this.UpdateShipmentDates(shipmentContainers_grouped.FirstOrDefault(), shipmentPM);
+                            this.UpdateShipmentDates(shipmentContainers.FirstOrDefault(), shipmentPM);
                             this.UpdateContainersException(shipmentContainers, true);
                             isSavingShipment = true;
                         }
@@ -867,13 +869,13 @@ namespace WebFreight.Web.Helpers.Analyzers
         }
         private void UpdateContainersException(List<Container> shipmentContainers, bool sameConatiner)
         {
-            foreach(Container item in shipmentContainers)
+            foreach (Container item in shipmentContainers)
             {
                 item.HasContainerException = false;
 
-                if (!sameConatiner)
+                if (!sameConatiner && item.ContainerNumber != container_number)
                 {
-                    if(item.DepartureLocation != departureLocation || item.DestinationLocation != destinationLocation 
+                    if (item.DepartureLocation != departureLocation || item.DestinationLocation != destinationLocation
                         || item.MainCarriageATA != ComputeMainCarriageATA()
                         || item.MainCarriageATD != ComputeMainCarriageATD()
                         || item.MainCarriageETA != ComputeMainCarriageETA()
