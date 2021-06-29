@@ -166,20 +166,19 @@
                     <tr style="height: 30px;">
                         <td><div></div></td>
                         <td style="width: 57px;">
-                            <button style="float: left; " class="GreenButton" [disabled]="!containerizationExtendedListService.SelectedDeclarations" (click)="SendButtonClicked()">המשך</button>
+                            <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Close' |TextCodeTranslationPipe}}</button>
                         </td>
                         <td style="width:5px"><div></div></td>
                         <td style="width: 57px;">
-                            <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Close' |TextCodeTranslationPipe}}</button>
+                            <button style="float: left; " class="GreenButton" [disabled]="!containerizationExtendedListService.SelectedDeclarations" (click)="SendButtonClicked()">המשך</button>
                         </td>
-
                         <!--<td style="width: 5px;">
-            <div></div>
-        </td>
+        <div></div>
+    </td>
 
-        <td style="width: 57px;">
-            <button class="RedButton" [disabled]="IsDisplayOnly" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
-        </td>-->
+    <td style="width: 57px;">
+        <button class="RedButton" [disabled]="IsDisplayOnly" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+    </td>-->
                     </tr>
                 </table>
             </div>
