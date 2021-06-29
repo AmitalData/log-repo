@@ -263,8 +263,7 @@ export class SelectStandalonePackagesComponent {
             newPackage.ShipmentPickUpDeliveryId = this.EntityPM.Id;
             newPackage.ContainerEntityId = item.ContainerEntityId;
             this.EntityPM.AddPackage(newPackage);
-            item.EntityPM.IsPackageAddedManually = true;
-            item.EntityPM.IsPackageAddedManually = false;
+            item.EntityPM.IsPackageCheckedInLeg = true;
         });
     }
 
@@ -276,7 +275,7 @@ export class SelectStandalonePackagesComponent {
         newShipmentPackage.Tenant = SessionLocator.Tenant;
         newShipmentPackage.TemperatureUnitCode = SessionLocator.TenantPM.TemperatureUnitCode;
         newShipmentPackage.FlashPointTemperatureUnitCode = SessionLocator.TenantPM.TemperatureUnitCode;
-        newShipmentPackage.IsPackageAddedManually = true;
+        newShipmentPackage.IsPackageCheckedInLeg = true;
 
         var logWindow = new LogitudeWindow();
         logWindow.Title = TextCodeTranslator.Translate("ShipmentPackage.O.AddContainer");
@@ -318,7 +317,7 @@ export class PackagesSelectItem {
             this.IsContainer = this.EntityPM.IsContainer;
         }
 
-        if (this.EntityPM.IsPackageAddedManually) {
+        if (this.EntityPM.IsPackageCheckedInLeg) {
             this.IsChecked = true;
         }
     }

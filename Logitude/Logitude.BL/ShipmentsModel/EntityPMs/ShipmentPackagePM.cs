@@ -423,5 +423,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ContainerEntityId { get; set; }
         public bool IsCreatedFromPickupDelivery{ get; set; }
+        public bool IsPackageCheckedInLeg { get; set; }
     }
 }

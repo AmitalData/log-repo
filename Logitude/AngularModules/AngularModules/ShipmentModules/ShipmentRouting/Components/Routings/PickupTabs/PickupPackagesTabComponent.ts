@@ -239,7 +239,7 @@ export class PickupPackagesTabComponent {
         shipmentPackage.Tenant = SessionLocator.Tenant;
         shipmentPackage.TemperatureUnitCode = SessionLocator.TenantPM.TemperatureUnitCode;
         shipmentPackage.FlashPointTemperatureUnitCode = SessionLocator.TenantPM.TemperatureUnitCode;
-        shipmentPackage.IsPackageAddedManually = true;
+        shipmentPackage.IsPackageCheckedInLeg = true;
         shipmentPackage.Volume = pickupItemComponent.Volume;
         shipmentPackage.Width = pickupItemComponent.Width;
         shipmentPackage.Height = pickupItemComponent.Height;

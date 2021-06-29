@@ -343,7 +343,7 @@ export class DeliveryPackagesTabComponent {
         shipmentPackage.Tenant = SessionLocator.Tenant;
         shipmentPackage.TemperatureUnitCode = SessionLocator.TenantPM.TemperatureUnitCode;
         shipmentPackage.FlashPointTemperatureUnitCode = SessionLocator.TenantPM.TemperatureUnitCode;
-        shipmentPackage.IsPackageAddedManually = true;
+        shipmentPackage.IsPackageCheckedInLeg = true;
         shipmentPackage.Volume = deliveryItemComponent.Volume;
         shipmentPackage.Width = deliveryItemComponent.Width;
         shipmentPackage.Height = deliveryItemComponent.Height;

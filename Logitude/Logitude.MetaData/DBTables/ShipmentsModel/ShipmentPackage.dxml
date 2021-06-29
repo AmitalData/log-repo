@@ -692,5 +692,4 @@
     ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant,CommodityId" />
-
 </Table>
