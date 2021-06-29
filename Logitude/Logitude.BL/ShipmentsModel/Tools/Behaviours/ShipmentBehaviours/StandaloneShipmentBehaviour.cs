@@ -126,6 +126,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             {
                 stanAloneShipmentPM.IsStandalonePickupDelivery = false;
                 stanAloneShipmentPM.StandalonePickupDeliveryId = null;
+                stanAloneShipmentPM.ForwarderStandaloneShipmentId = null;
                 this.UpdateShipment(stanAloneShipmentPM);                
             }
         }
@@ -188,16 +189,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         }
         private void MapStandaloneShipmentFields(ShipmentPM stanAloneShipmentPM, string pickupDeliveryId)
         {
+            ShipmentPickUpDelivery shipmentPickUpDelivery = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDelivery(tenant, pickupDeliveryId);
             stanAloneShipmentPM.IsStandalonePickupDelivery = true;
+            stanAloneShipmentPM.ForwarderStandaloneShipmentId = this.shipmentPM.Id;
             stanAloneShipmentPM.StandalonePickupDeliveryId = pickupDeliveryId;
-            stanAloneShipmentPM.MainCarriageCarrierNumber = null;
-            stanAloneShipmentPM.Driver = null;
-            stanAloneShipmentPM.TruckNumber = null;
-            stanAloneShipmentPM.TrailerNumber = null;
-            stanAloneShipmentPM.MainCarriageETD = null;
-            stanAloneShipmentPM.MainCarriageETA = null;
-            stanAloneShipmentPM.MainCarriageATD = null;
-            stanAloneShipmentPM.MainCarriageATA = null;
+            stanAloneShipmentPM.MainCarriageCarrierNumber = shipmentPickUpDelivery!=null? shipmentPickUpDelivery.CarrierNumber : null;
+            stanAloneShipmentPM.Driver = shipmentPickUpDelivery != null ? shipmentPickUpDelivery.Driver : null; 
+            stanAloneShipmentPM.TruckNumber = shipmentPickUpDelivery != null ? shipmentPickUpDelivery.TruckNumber : null;
+            stanAloneShipmentPM.TrailerNumber = shipmentPickUpDelivery != null ? shipmentPickUpDelivery.TrailerNumber : null;
+            stanAloneShipmentPM.MainCarriageETD = shipmentPickUpDelivery != null ? shipmentPickUpDelivery.ETD : null;
+            stanAloneShipmentPM.MainCarriageETA = shipmentPickUpDelivery != null ? shipmentPickUpDelivery.ETA : null;
+            stanAloneShipmentPM.MainCarriageATD = shipmentPickUpDelivery != null ? shipmentPickUpDelivery.ATD : null;
+            stanAloneShipmentPM.MainCarriageATA = shipmentPickUpDelivery != null ? shipmentPickUpDelivery.ATA : null;
         }
         private ShipmentPM GetStandAloneShipmentPM(string shipmentId)
         {
@@ -314,6 +317,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             }
 
             shipmentPM.IsStandalonePickupDelivery = false;
+            shipmentPM.ForwarderStandaloneShipmentId = null;
             shipmentPM.StandalonePickupDeliveryId = null;
         }
         private void DeleteStanadAlonePickupDeliveryPackages()
@@ -441,19 +445,24 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
         private void UpdateForwarderShipmentPackages(ShipmentPackagePM shipmentPackagePM)
         {
-
-            ShipmentPackage shipmentPackage = this.initializer.ShipmentPackageRepository.GetSingleShipmentPackageByContainerId(this.shipmentPM.Id, shipmentPackagePM.ContainerEntityId, tenant);
-            if (shipmentPackage != null)
+            List<ShipmentPackage> shipmentPackages = this.initializer.ShipmentPackageRepository.GetSingleShipmentPackageByContainerId(this.shipmentPM.Id, shipmentPackagePM.ContainerEntityId, tenant);
+            if(shipmentPackages != null)
             {
-                shipmentPackage.ContainerEntityId = shipmentPackagePM.ContainerEntityId;
-                shipmentPackage.ContainerNumber = shipmentPackagePM.ContainerNumber;
-                shipmentPackage.Description = shipmentPackagePM.Description;
-                shipmentPackage.PackageTypeId = shipmentPackagePM.PackageTypeId;
-                shipmentPackage.Quantity = shipmentPackagePM.Quantity;
-                shipmentPackage.Volume = shipmentPackagePM.Volume;
-                shipmentPackage.Weight = shipmentPackagePM.Weight;
-                shipmentPackage.ShipperSeal = shipmentPackagePM.ShipperSeal;
-                this.initializer.ShipmentPackageRepository.Update(shipmentPackage);
+                foreach(ShipmentPackage shipmentPackage in shipmentPackages)
+                {
+                    if (shipmentPackage != null)
+                    {
+                        shipmentPackage.ContainerEntityId = shipmentPackagePM.ContainerEntityId;
+                        shipmentPackage.ContainerNumber = shipmentPackagePM.ContainerNumber;
+                        shipmentPackage.Description = shipmentPackagePM.Description;
+                        shipmentPackage.PackageTypeId = shipmentPackagePM.PackageTypeId;
+                        shipmentPackage.Quantity = shipmentPackagePM.Quantity;
+                        shipmentPackage.Volume = shipmentPackagePM.Volume;
+                        shipmentPackage.Weight = shipmentPackagePM.Weight;
+                        shipmentPackage.ShipperSeal = shipmentPackagePM.ShipperSeal;
+                        this.initializer.ShipmentPackageRepository.Update(shipmentPackage);
+                    }
+                }
             }
         }
     }

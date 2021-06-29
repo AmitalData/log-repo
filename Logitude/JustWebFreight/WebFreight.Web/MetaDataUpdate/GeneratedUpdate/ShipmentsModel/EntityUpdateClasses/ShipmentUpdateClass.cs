@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "c1b75d6a538b097f3d8ddaa79dcbc2dc";
+		public const string HashString = "57d61c3644467482a1d3b13af6a264e0";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -44312,6 +44312,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ForwarderStandaloneShipmentId",
 					  						ListPropertyPath =  "ForwarderStandaloneShipmentId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -44329,6 +44330,62 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ForwarderStandaloneShipmentId",
 					  						DefaultText =  "Forwarder Standalone Shipment Id",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ForwarderPickUpDeliveryType",
+					  						ObjectTableName =  "Shipment",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ForwarderPickUpDeliveryType",
+					  						ListPropertyPath =  "ForwarderPickUpDeliveryType",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ForwarderPickUpDeliveryType",
+					  						DefaultText =  "Forwarder Shipmet PickUp Delivery Type",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

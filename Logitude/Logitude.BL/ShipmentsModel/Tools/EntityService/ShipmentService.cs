@@ -4652,8 +4652,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
                 }
             }
-
-            UpdateConnectedPackages(itemPM);
+            if(!(IsInlandDomesticShipment(entityPM) && !entityPM.IsStandalonePickupDelivery))
+            {
+                UpdateConnectedPackages(itemPM);
+            }
 
             calculateProfit = true;
             calculatePayables = true;
@@ -6959,6 +6961,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 ContainerNumber = initializer.StandalonePackage.ContainerNumber,
                 Description = initializer.StandalonePackage.Description,
                 PackageTypeId = initializer.StandalonePackage.PackageTypeId,
+                ContainerEntityId = initializer.StandalonePackage.ContainerEntityId,
                 Quantity = initializer.StandalonePackage.Quantity,
                 Volume = initializer.StandalonePackage.Volume,
                 Weight = initializer.StandalonePackage.Weight,
@@ -7026,15 +7029,23 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private void UpdateConnectedPackages(ShipmentPackagePM itemPM)
         {
-            ShipmentPackage shipmentPackage = this.shipmentPackageRepository.GetSingleShipmentPackageByContainerId(itemPM.ShipmentId,itemPM.ContainerEntityId,tenant);
-            if (shipmentPackage != null)
+            List<ShipmentPackage> shipmentPackages = this.shipmentPackageRepository.GetSingleShipmentPackageByContainerId(itemPM.ShipmentId,itemPM.ContainerEntityId,tenant);
+            if (shipmentPackages != null)
             {
-                UpdateConnectedStanadAloneShipmentPackages(itemPM, shipmentPackage);
+                foreach(ShipmentPackage shipmentPackage in shipmentPackages)
+                {
+                    if (shipmentPackage != null)
+                        UpdateConnectedStanadAloneShipmentPackages(itemPM, shipmentPackage);
+                }
             }
-            ShipmentPickUpDeliveryPackage shipmentPickUpDeliveryPackage = this.shipmentPickUpDeliveryPackageRepository.GetSingleShipmentPickUpDeliveryPackageByContainerId(itemPM.ContainerEntityId, tenant);
-            if(shipmentPickUpDeliveryPackage != null)
+            List<ShipmentPickUpDeliveryPackage> shipmentPickUpDeliveryPackages = this.shipmentPickUpDeliveryPackageRepository.GetSingleShipmentPickUpDeliveryPackageByContainerId(itemPM.ContainerEntityId, tenant);
+            if(shipmentPickUpDeliveryPackages != null)
             {
-                UpdateConnectedPickupDeliveryPackages(itemPM, shipmentPickUpDeliveryPackage);
+                foreach(ShipmentPickUpDeliveryPackage shipmentPickUpDeliveryPackage in shipmentPickUpDeliveryPackages)
+                {
+                    if (shipmentPickUpDeliveryPackage != null )
+                        UpdateConnectedPickupDeliveryPackages(itemPM, shipmentPickUpDeliveryPackage);
+                }
             }
         }
         private void UpdateConnectedStanadAloneShipmentPackages(ShipmentPackagePM itemPM, ShipmentPackage shipmentPackage)
@@ -7059,7 +7070,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             shipmentPickUpDeliveryPackage.ShipperSeal = itemPM.ShipperSeal;
             this.shipmentPickUpDeliveryPackageRepository.Update(shipmentPickUpDeliveryPackage);
         }
+        private bool IsInlandDomesticShipment(ShipmentPM entityPM)
+        {
+            return entityPM.DirectionId == "D" && entityPM.TransportModeId == "I";
+        }
     }
+
 
     public class NumberOfInsidePackagesHelper
     {

@@ -9,7 +9,7 @@ using Simplog.Data.ShipmentsModel.EntityPOCOs;
 
 namespace Logitude.BL.ShipmentsModel.EntityPMs
 {
-        
+
     [CustomValidation(typeof(Validators.ClassLevelValidator), "ValidateClass")]
     [CustomValidation(typeof(ShipmentPackageValidator), "IsShipmentPackageValid")]
     public class ShipmentPackagePM
@@ -109,7 +109,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ShipmentNumber { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ShipmentId { get; set; }       
+        public string ShipmentId { get; set; }
         public string ShipmentPMId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -198,7 +198,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         //Dummy
         public bool IsAWBWizardDefault { get; set; }
-        public string DummyIdGuid { get; set; }        
+        public string DummyIdGuid { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? OnCarriageETD { get; set; }
@@ -422,5 +422,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ContainerEntityId { get; set; }
+        public bool IsCreatedFromPickupDelivery{ get; set; }
+        public bool IsPackageCheckedInLeg { get; set; }
     }
 }

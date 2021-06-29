@@ -2908,6 +2908,25 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
             }
         }
+       
+        public HttpResponseMessage GetIfShipmentPackageConnectedToPickUpDeliveryPackage(string containerId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                ShipmentPickUpDeliveryPackageRepository shipmentPickUpDeliveryPackageRepository = new ShipmentPickUpDeliveryPackageRepository(tenant);
+                var shipmentPickUpDeliveryPackage = shipmentPickUpDeliveryPackageRepository.GetSingleShipmentPickUpDeliveryPackageByContainerId(containerId,tenant);
+                var result = shipmentPickUpDeliveryPackage.Count == 0 ? false : true;
+
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }
 

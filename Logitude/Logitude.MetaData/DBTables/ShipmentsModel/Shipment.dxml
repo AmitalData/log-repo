@@ -3152,6 +3152,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="ForwarderStandaloneShipmentId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
     ReferencedTable="Countries"
