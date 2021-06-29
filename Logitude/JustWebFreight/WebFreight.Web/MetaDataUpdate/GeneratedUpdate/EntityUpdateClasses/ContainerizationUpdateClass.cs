@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ContainerizationUpdateClass
    {  		
-		public const string HashString = "385cfe7f6254a68d710f492f0e50612d";
+		public const string HashString = "70dd17347358fe6aaaaf5499be040017";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1504,6 +1504,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode ContainerizationTextCode_CustomsContainerizationOCargoTypeName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.CargoTypeName", DefaultText = "CargoTypeName",LocalDefaultText = @"מזהה מטען", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ContainerizationTextCode_CustomsContainerizationOManifestNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.ManifestNumber", DefaultText = "ManifestNumber",LocalDefaultText = @"מזהה מטען ראשון ", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationOContainerizationChanged = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.ContainerizationChanged", DefaultText = "Containerization Changed",LocalDefaultText = @"בוצעו שינויים בהמכלה, יש לשדר פעם נוספת", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
