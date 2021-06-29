@@ -15,10 +15,10 @@ using TechTalk.SpecFlow;
 namespace Logitude.CargoTrackingTests.Steps
 {
     [Binding]
-    public class BuildCargoTrackingDatabaseAfterAdjustingAShipmentSteps
+    public class UpdatingADirectShipmentUpdatesCargoTrackingShipmentAfterBuildSteps
     {
         private readonly ShipmentContext ShipmentContext;
-        public BuildCargoTrackingDatabaseAfterAdjustingAShipmentSteps(ShipmentContext shipmentContext)
+        public UpdatingADirectShipmentUpdatesCargoTrackingShipmentAfterBuildSteps(ShipmentContext shipmentContext)
         {
             ShipmentContext = shipmentContext;
         }

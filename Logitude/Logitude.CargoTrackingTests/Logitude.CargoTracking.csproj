@@ -121,7 +121,7 @@
     <Compile Include="Models\ShipmentReceivablePM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CargoTrackingBuildService.cs" />
-    <Compile Include="Steps\BuildCargoTrackingDatabaseAfterAdjustingAShipmentSteps.cs" />
+    <Compile Include="Steps\UpdatingADirectShipmentUpdatesCargoTrackingShipmentAfterBuildSteps.cs" />
     <Compile Include="Steps\SharedCargoTrackingSteps.cs" />
   </ItemGroup>
   <ItemGroup>

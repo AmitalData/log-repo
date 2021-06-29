@@ -22,19 +22,27 @@ namespace Logitude.CargoTrackingTests.Services
         CargoTrackingMainService cargoTrackingMainService;
         public void BuildCargoTrackingTables(string sourceConnectionString,string destinationConnectionString)
         {
-            //UpdateTenantAsIncrementalBuilding();
+            SetCargoTrackingXMLParameters();
+            SetSourceAndDestinationConnections(sourceConnectionString, destinationConnectionString);
+            cargoTrackingMainService = new CargoTrackingMainService();
+            ServiceHelper.CheckAndUpdateWaterMark(destinationConnectionString, sourceConnectionString);
+            BuildCargoTrackingDatabaseForCargoTrackingTables(CargoTrackingTableList.GetCargoTrackingTableList());
+        }
+
+        private void SetSourceAndDestinationConnections(string sourceConnectionString, string destinationConnectionString)
+        {
+            this.destinationConnectionString = destinationConnectionString;
+            this.sourceConnectionString = sourceConnectionString;
+        }
+
+        private void SetCargoTrackingXMLParameters()
+        {
             cargoTrackingXMLParameters = new CargoTrackingXMLParameters()
             {
                 FromDate = new DateTime(2021, 01, 01),
                 ToDate = DateTime.Now,
                 Tenant = 1,
             };
-            this.destinationConnectionString = destinationConnectionString;
-            this.sourceConnectionString = sourceConnectionString;
-            cargoTrackingMainService = new CargoTrackingMainService();
-            ServiceHelper.CheckAndUpdateWaterMark(destinationConnectionString, sourceConnectionString);
-            BuildCargoTrackingDatabaseForCargoTrackingTables(CargoTrackingTableList.GetCargoTrackingTableList());
-            //UpdateIsIncrementalRunningFinished();
         }
 
         private void UpdateIsIncrementalRunningFinished()
@@ -60,21 +68,20 @@ namespace Logitude.CargoTrackingTests.Services
         {
             foreach (CargoTrackingTable table in CargoTableLists)
             {
-                BuildTableForCargoTracking(table);
+                BuildCargoTrackingTable(table);
             }
         }
 
-        private void BuildTableForCargoTracking(CargoTrackingTable table)
+        private void BuildCargoTrackingTable(CargoTrackingTable table)
         {
-            CargoTrackingArguments CargoTrackingArgs = new CargoTrackingArguments
-            {
-                FromDate = cargoTrackingXMLParameters.FromDate,
-                Tenant = cargoTrackingXMLParameters.Tenant,
-                ToDate = cargoTrackingXMLParameters.ToDate,
-                ThreadNumber = 50,
-                FormTableName = null,
-            };
-            CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs = new CargoTrackingUpdateDataBaseArgs()
+            CargoTrackingArguments CargoTrackingArgs = CreateCargoTrackingArguments();
+            CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs = CreateCargoTrackingDataBaseArgs(table, CargoTrackingArgs);
+            cargoTrackingMainService.UpdateCargoTrackingDataBase(cargoTrackingDataBaseArgs);
+        }
+
+        private CargoTrackingUpdateDataBaseArgs CreateCargoTrackingDataBaseArgs(CargoTrackingTable table, CargoTrackingArguments CargoTrackingArgs)
+        {
+            return new CargoTrackingUpdateDataBaseArgs()
             {
                 BuildCargoArgs = new CargoTrackingArgs() { Table = table, SourceConnectionString = sourceConnectionString, DestinationConnectionString = destinationConnectionString },
                 NumberOfBulkPerTime = 1000,
@@ -82,7 +89,18 @@ namespace Logitude.CargoTrackingTests.Services
                 CargoTrackingArguments = CargoTrackingArgs,
                 IsUpdateFromBuild = true,
             };
-            cargoTrackingMainService.UpdateCargoTrackingDataBase(cargoTrackingDataBaseArgs);
+        }
+
+        private CargoTrackingArguments CreateCargoTrackingArguments()
+        {
+            return new CargoTrackingArguments
+            {
+                FromDate = cargoTrackingXMLParameters.FromDate,
+                Tenant = cargoTrackingXMLParameters.Tenant,
+                ToDate = cargoTrackingXMLParameters.ToDate,
+                ThreadNumber = 50,
+                FormTableName = null,
+            };
         }
     }
 }
