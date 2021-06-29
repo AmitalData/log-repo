@@ -253,6 +253,21 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
             .subscribe((myServiceResponse: ServiceResponse) => {
                 this.CurrentSession.CurrentEditComponent.LoadCompleted.emit(true);
                 this.CurrentSession.StopBusyIndicator();
+                if (!myServiceResponse.Result.HasException) {
+                    let messageWindow = new MessageWindow();
+                    messageWindow.Width = 300;
+                    messageWindow.Height = 180;
+                    messageWindow.Show("מסר סטטוס הצהרות נשלח בהצלחה");
+                }
+                else {
+                    let messageWindow = new MessageWindow();
+                    messageWindow.Width = 300;
+                    messageWindow.Height = 180;
+                    messageWindow.Title = "שליחה נכשלה";
+                    messageWindow.RTL = true;
+                    messageWindow.ShowErrorIcon = true;
+                    messageWindow.Show(myServiceResponse.Result.UserMessage);
+                }
             });
 
 
