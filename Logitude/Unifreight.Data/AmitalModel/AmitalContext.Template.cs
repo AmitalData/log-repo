@@ -6965,6 +6965,16 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnName(@"MANUAL_PROCESS")
                     .HasMaxLength(1)
                     .HasColumnType("char");
+            modelBuilder.Entity<GAQDATA>()
+                    .Property(p => p.NEWTEAMID)
+                    .HasColumnName(@"NEW_TEAM_ID")
+                    .HasMaxLength(9)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQDATA>()
+                .Property(p => p.PRIMARYNUMCFI)
+                    .HasColumnName(@"PRIMARY_NUM_CFI")
+                    .IsRequired()
+                    .HasColumnType("int64");
 
             #endregion
 

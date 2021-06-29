@@ -441,6 +441,42 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         }
         private string _MANUALPROCESS;
 
+        [System.Runtime.Serialization.DataMember]
+        public virtual string NEWTEAMID
+        {
+            get
+            {
+                return _NEWTEAMID;
+            }
+            set
+            {
+                if (_NEWTEAMID != value)
+                {
+                    _NEWTEAMID = value;
+                    OnPropertyChanged("NEWTEAMID");
+                }
+            }
+        }
+        private string _NEWTEAMID;
+
+        [System.Runtime.Serialization.DataMember]
+        public virtual long PRIMARYNUMCFI
+        {
+            get
+            {
+                return _PRIMARYNUMCFI;
+            }
+            set
+            {
+                if (_PRIMARYNUMCFI != value)
+                {
+                    _PRIMARYNUMCFI = value;
+                    OnPropertyChanged("PRIMARYNUMCFI");
+                }
+            }
+        }
+        private long _PRIMARYNUMCFI;
+
         #endregion
 
         #region Extensibility Method Definitions
