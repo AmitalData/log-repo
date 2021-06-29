@@ -36,6 +36,8 @@ import { DeclarationEventManager } from '../../../../Customs/Utilities/Declarati
 export class ContainerizationGeneralComponent extends BaseComponent implements AfterViewInit {
     @Output() FillValidationErrorList: EventEmitter<any> = new EventEmitter();
     public EntityPM: ContainerizationPM;
+    public YellowMessage: string;
+
     public ObjectTableName: string = "Customs.Containerization";
     public DataContext: any = this;
     public IsNewEntity: boolean = false;
@@ -64,6 +66,7 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
                 this.ObjectTableName = this.entityArgs.ObjectTableName;
                 this.Listen();
                 this.SetFieldsEditability();
+                this.setYellowMessage();
 
 
                 this.getRows();
@@ -157,6 +160,7 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
 
                         this.resetDeletedDeclaration();
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.setYellowMessage();
                         this.getRows();
                     }
                 })
@@ -167,6 +171,7 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
                 this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.setYellowMessage();
                         this.getRows();
                         //this.RefreshEntity();
                     }
@@ -219,8 +224,13 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
     SetFieldsEditability() {
         //throw new Error('Method not implemented.');
     }
-    
 
+    setYellowMessage() {
+        if (this.EntityPM.IsChange)
+            this.YellowMessage = "בוצעו שינויים בהמכלה, יש לשדר פעם נוספת";
+        else
+            this.YellowMessage = null;
+    }
 
     //#endregion
 

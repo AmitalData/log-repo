@@ -1,7 +1,26 @@
 <!--<p>Containerization !!!!</p>-->
+<style>
+.DisbleBox {
+        display: inline-block;
+        border: 1px solid #ffd800;
+        border-radius: 5px;
+        background: #faf5c0; /*fbebbc*/
+        padding: 4px 10px;
+        color: gray;
+        font-family: sans-serif;
+        max-width: 660px;
+        white-space: normal;
+    }
+</style>
 <table>
-    <tr style="height:32px">
-        <td><div></div></td>
+   <tr style="height:32px">
+        <td>
+            <div *ngIf="YellowMessage" style="margin: 0 auto;position: absolute;width: 100%;text-align: center;left: 0;right: 0;">
+                <div class="DisbleBox">
+                    {{YellowMessage}}
+                </div>
+            </div>
+        </td>
     </tr>
     <tr style="height :15px;">
         <!--<td style="font-size: 18px; color: #1B90CB;">
@@ -170,9 +189,9 @@
                                     <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteButtonClicked(item)" [IsEnabled]="!IsDisplayOnly"></IconButton>
                                 </div>
                                 <!--<div style="width: 22px;  height:20px;float:left; padding-top: 2px;">
-                    <CheckBox [IsChecked]="IsPrimary" ></CheckBox>
-                    <LogCheckBox [Checked]="item.IsPrimarySupplierInvoice" [ObjectTableName]="'Customs.SupplierInvoice'" [ObjectFieldName]="'IsPrimarySupplierInvoice'" [DataContext]="item" (ValueChanged)="IsPrimarySupplierInvoiceChecked($event,item)"></LogCheckBox>
-                </div>-->
+                                    <CheckBox [IsChecked]="IsPrimary" ></CheckBox>
+                                    <LogCheckBox [Checked]="item.IsPrimarySupplierInvoice" [ObjectTableName]="'Customs.SupplierInvoice'" [ObjectFieldName]="'IsPrimarySupplierInvoice'" [DataContext]="item" (ValueChanged)="IsPrimarySupplierInvoiceChecked($event,item)"></LogCheckBox>
+                                </div>-->
 
                             </log-cell-template>
                         </ng-template>
