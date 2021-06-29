@@ -99,6 +99,7 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
 
     SetUIProperties() {
         this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", this.ObjectTableName, false);
+        this.UIProperties.SetRequired("VATNumber",this.ObjectTableName,true);
     }
 
     // Load Data
