@@ -2918,7 +2918,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 int tenant = authToken.Tenant;
                 ShipmentPickUpDeliveryPackageRepository shipmentPickUpDeliveryPackageRepository = new ShipmentPickUpDeliveryPackageRepository(tenant);
                 var shipmentPickUpDeliveryPackage = shipmentPickUpDeliveryPackageRepository.GetSingleShipmentPickUpDeliveryPackageByContainerId(containerId,tenant);
-                var result = shipmentPickUpDeliveryPackage != null ? true : false;
+                var result = shipmentPickUpDeliveryPackage.Count == 0 ? false : true;
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
