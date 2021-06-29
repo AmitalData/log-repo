@@ -166,24 +166,27 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
                 {
 
                     var myCustomsPartnerFtpQueryService = new CustomsPartnerFtpQueryService(_SeedTenant);
-                    var pmCustomsPartnerFtp = myCustomsPartnerFtpQueryService.GetBy(_SeedTenant, ftpIncustomsPartnerFtpDetail.Code /*CustomsPartnerFtpDetails.InterfaceName_ECSPCL*/,
+                    var pmCustomsPartnerFtps = myCustomsPartnerFtpQueryService.GetAllTenantBy(ftpIncustomsPartnerFtpDetail.Code /*CustomsPartnerFtpDetails.InterfaceName_ECSPCL*/,
                         ftpIncustomsPartnerFtpDetail.Partner,
                         ftpIncustomsPartnerFtpDetail.TypeCode);
 
 
-
-                    if (pmCustomsPartnerFtp != null)
+                    foreach (var pmCustomsPartnerFtp in pmCustomsPartnerFtps)
                     {
-
-
-                        FTPDetailRepository ftpDetailsRepository = new FTPDetailRepository(_SeedTenant);
-                        FTPDetail ftpDetail = ftpDetailsRepository.GetSingleFTPDetail(pmCustomsPartnerFtp.FtpDetailsId, pmCustomsPartnerFtp.Tenant);
-                        if (ftpDetail != null)
+                        //if (pmCustomsPartnerFtp != null)
                         {
 
-                            pmCustomsPartnerFtp.MyFtpDetail = ftpDetail;
-                            _FtpDefinitions.Add(pmCustomsPartnerFtp);
+
+                            FTPDetailRepository ftpDetailsRepository = new FTPDetailRepository(_SeedTenant);
+                            FTPDetail ftpDetail = ftpDetailsRepository.GetSingleFTPDetail(pmCustomsPartnerFtp.FtpDetailsId, pmCustomsPartnerFtp.Tenant);
+                            if (ftpDetail != null)
+                            {
+
+                                pmCustomsPartnerFtp.MyFtpDetail = ftpDetail;
+                                _FtpDefinitions.Add(pmCustomsPartnerFtp);
+                            }
                         }
+
                     }
                 });
             }
@@ -261,7 +264,7 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
                 var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
                 var defInterfaceDetails = customsPartnerFtpDetails.GetAllInterfaceDetails()
                     .Where(r => r.Code == customsPartnerFtpPM.InterfaceName).First();
-                Debug.WriteLine($"DownloadFTPFiles({customsPartnerFtpPM.InterfaceName})");
+                Debug.WriteLine($"DownloadFTPFiles({customsPartnerFtpPM.InterfaceName},T{customsPartnerFtpPM.Tenant})");
                 var ftpDetail = customsPartnerFtpPM.MyFtpDetail;
 
                 Debug.WriteLine($"FTPService({ftpDetail.Host}, {ftpDetail.UserName}, {ftpDetail.Password})");
@@ -312,6 +315,7 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
                         if (fileData.Length > 0)
                         {
 
+                            Debug.WriteLine($"SaveAnalyzeQueue({defInterfaceDetails}, {fileName}, {fileData}, {tenant})");
                             SaveAnalyzeQueue(defInterfaceDetails, fileName, fileData, tenant);
                         }
                         Debug.WriteLine($"ftpService.Delete({fileName})");
