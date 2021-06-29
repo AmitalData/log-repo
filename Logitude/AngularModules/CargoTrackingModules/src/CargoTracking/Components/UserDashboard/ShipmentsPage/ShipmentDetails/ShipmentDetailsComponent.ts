@@ -10,7 +10,8 @@ import { CargoTrackingShipmentService } from '../../../../Services/Others/CargoT
 import { CargoTrackingShipmentCustomsData } from "../../../../DataContracts/CargoTrackingShipmentCustomsData";
 import { DocumentDownloadService } from '../../../../Services/Others/DocumentDownloadService';
 import { MessageWindowComponent } from '../../../../../Infrastructure/Components/MessageWindow/MessageWindowComponent';
-import { MatDialog} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
+import { DatePipe } from '@angular/common';
 
 @Component({
     selector: 'ShipmentDetailsComponent',
@@ -58,7 +59,8 @@ export class ShipmentDetailsComponent implements AfterViewInit
         private cargoTrackingPortService: CargoTrackingPortService,
         private cargoTrackingShipmentService: CargoTrackingShipmentService,
         private documentDownloadService: DocumentDownloadService,
-        public dialog: MatDialog)
+        public dialog: MatDialog,
+        private datePipe: DatePipe)
     {
 
         this.GetIdFromURI();
@@ -394,7 +396,8 @@ export class ShipmentDetailsComponent implements AfterViewInit
                 newCard.IsDimmed = milstone.IsEstimation && !milstone.Done;
                 newCard.IsActive = milstone.Id + '' == this.Shipment.ShipmentList.CurrentMilestoneCode;
                 newCard.HasWarning = milstone.IsCurrent && this.Shipment.ShipmentList.CurrentMilestoneExceptions != null;
-                newCard.WarningMessage = this.Shipment.ShipmentList.CurrentMilestoneExceptions;
+                newCard.WarningMessage = this.Shipment.ShipmentList.CurrentMilestoneExceptions?.split("\n")[1];
+                newCard.WarningDate = this.datePipe.transform(this.Shipment.ShipmentList.CurrentMilestoneExceptions?.split("\n")[0], 'dd/MM/yyyy, HH:mm');
                 return newCard;
             });
         this.SetNoMilstonesFound();
@@ -929,6 +932,7 @@ export class MilestoneCard
     HasWarning: boolean;
     IsDimmed: boolean;
     WarningMessage: string;
+    WarningDate: string;
 }
 
 export class RoutingStep
