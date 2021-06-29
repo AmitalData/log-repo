@@ -155,8 +155,9 @@
                                 [width]="'210'" [Alignment]="'right'">
                         <ng-template let-item>
                             <log-cell-template #logcelltemplate>
-                                <div class="RightCenter">
-                                    <span>{{item.DeclarationStatusTypeName}}</span>
+                                <div class="RightCenter"
+                                     [ngStyle]="{color: item.DeclarationStatusTypeCode | StringToColorPipe:'DeclarationStatusTypeCode'}">
+                                    <span style="font-weight: bold;">{{item.DeclarationStatusTypeName}}</span>
                                 </div>
                             </log-cell-template>
                         </ng-template>
