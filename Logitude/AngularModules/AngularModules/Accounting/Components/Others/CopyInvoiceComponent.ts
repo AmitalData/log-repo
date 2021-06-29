@@ -98,8 +98,16 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
     }
 
     SetUIProperties() {
+        var isVatNumberRequired = false;
+
+        if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP) {
+            if (AppTool.IsNullOrEmpty(this.VATNumber)) {
+                isVatNumberRequired = true;
+            }
+        }
+
+        this.UIProperties.SetRequired("VATNumber", "APInvoice", isVatNumberRequired);
         this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", this.ObjectTableName, false);
-        this.UIProperties.SetRequired("VATNumber",this.ObjectTableName,true);
     }
 
     // Load Data
@@ -409,6 +417,7 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
     set VATNumber(value: string) {
         if (this.vatNumber != value) {
             this.vatNumber = value;
+            this.SetUIProperties();
         }
     }
 
