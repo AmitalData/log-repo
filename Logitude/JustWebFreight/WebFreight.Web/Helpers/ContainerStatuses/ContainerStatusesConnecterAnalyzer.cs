@@ -632,6 +632,7 @@ namespace WebFreight.Web.Helpers.Analyzers
                     package.LastStatusDate = eventData;
                     package.ContainerStatusSourceCode = oceanInsightsSource;
                     package.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                    isSavingShipment = true;
                 }
                 else if (eventData > package.LastStatusDate)
                 {
@@ -639,6 +640,7 @@ namespace WebFreight.Web.Helpers.Analyzers
                     package.LastStatusDate = eventData;
                     package.ContainerStatusSourceCode = oceanInsightsSource;
                     package.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                    isSavingShipment = true;
                 }
             }
         }
@@ -790,6 +792,8 @@ namespace WebFreight.Web.Helpers.Analyzers
                 return this.emptyPickupLocation;
             }
         }
+
+        bool isSavingShipment = false;
         private void UpdateShipment(LogitudeOceanInsightsRequest oceanInsight)
         {
             ShipmentPM shipmentPM = shipmentQuery.GetSinglePM(oceanInsight.ShipmentId, logitudeTenant.Value);
@@ -801,8 +805,8 @@ namespace WebFreight.Web.Helpers.Analyzers
 
             else
             {
+                isSavingShipment = false;
                 this.UpdatePackage(shipmentPM);
-                bool isSavingShipment = false;
                 List<Container> shipmentContainers = containerRepository.GetContainesrByShipmentId(shipmentPM.Id, logitudeTenant.Value).ToList();
                 if (shipmentContainers.Count() == 1)
                 {
