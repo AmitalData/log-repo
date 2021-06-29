@@ -349,8 +349,8 @@ namespace Logitude.CustomsMessaging.RequestServices
             myGeneralData.DocumentaryInspectionRequest = myDeclarationPaymentsPM.IsProcessA;
             myGeneralData.DocumentaryInspectionRequestSpecified = myGeneralData.DocumentaryInspectionRequest != null ? true : false;
             myGeneralData.DocumentaryInspectionReason = myDeclarationPaymentsPM.ProcessADescription;
-            myGeneralData.SubmitWithProtest = GetSubmitWithProtest(myDeclarationPaymentsPM.DeclarationPaymentProtests);
-            myGeneralData.PaymentMethod = GetPaymentMethod(myDeclarationPaymentsPM.DeclarationPaymentMethods);
+         //   myGeneralData.SubmitWithProtest = GetSubmitWithProtest(myDeclarationPaymentsPM.DeclarationPaymentProtests);
+         //   myGeneralData.PaymentMethod = GetPaymentMethod(myDeclarationPaymentsPM.DeclarationPaymentMethods);
 
             return myGeneralData;
         }
