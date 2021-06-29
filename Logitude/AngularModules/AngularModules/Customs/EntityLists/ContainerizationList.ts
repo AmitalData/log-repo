@@ -23,6 +23,7 @@ export class ContainerizationList {
 	ContainerizationStatusName: string;
 	HataraStatusName: string;
 	HataraStatusIsNull: boolean;
+	OpenContainerization: boolean;
 	
 }
  
