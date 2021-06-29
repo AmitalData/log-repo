@@ -17836,6 +17836,15 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             //AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "902", EnglishName = "Distribution", LocalName = "הפצה" }, courierPendingReasonRepository);
             //courierPendingReasonRepository.SubmitChanges();
         }
+        public void FillContainerizationStatusCodeTable()
+        {
+            var repo = new ContainerizationStatusCodeRepository(0);
+            var dic = repo.GetAll().ToDictionary<ContainerizationStatusCode, string, ContainerizationStatusCode>(rec => rec.Code, a => a);
+            this.FillCloseTable<
+                                Logitude.Customs.Data.EntityPOCOs.ContainerizationStatusCode,
+                                Logitude.Customs.BL.ClosedTable.ContainerizationStatusCodeDetails,
+                                Logitude.Customs.Data.Repsitories.ContainerizationStatusCodeRepository>(repo, dic);
+        }
 
         public void FillMamanSpecialActionTable()
         {

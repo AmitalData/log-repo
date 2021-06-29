@@ -2748,6 +2748,7 @@
     <Compile Include="LogInUserControls\DsvLoginUC.ascx.designer.cs">
       <DependentUpon>DsvLoginUC.ascx</DependentUpon>
     </Compile>
+    <Compile Include="MetaDataUpdate\DetailClasses\ContainerizationStatusCodeDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\MamanStatusDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\AccountingCompanyTypeDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\AccumalationStateDetails.cs" />

@@ -1432,6 +1432,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;OpenContainerization&quot;"
     ListPropertyPath="&quot;OpenContainerization&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"

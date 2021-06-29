@@ -33,9 +33,11 @@ namespace Logitude.CustomsMessaging.RequestServices
           
 
             req.ContainerizationDetails = new AV_MSG2_ContainerizationMessageContainerizationDetails();
-
-
-            req.ContainerizationDetails.operationCode =Convert.ToInt32( containerization.OperationMode);
+            req.ContainerizationDetails.operationCode = Convert.ToInt32(containerization.OperationMode);
+            if (containerization.ContainerizationStatus == "4")
+            {
+                req.ContainerizationDetails.operationCode = 1;
+            }
             req.ContainerizationDetails.operationType = 2;
             req.ContainerizationDetails.CustomsAgentID = Convert.ToInt32(settings.CustomsAgentId);
             req.ContainerizationDetails.CustomsAgentIDSpecified = true;
