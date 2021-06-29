@@ -67,7 +67,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                    List< DeclarationCourierStatus> decCouriers = rep.GetByMasterIDDeclarationCourierStatus(requestParams.Tenant, requestParams.LoggingEntityId);
                 CourierMasterRepository courierMasterRepository = new CourierMasterRepository(context);
                 CourierMasterQueryService courierMasterQueryService = new CourierMasterQueryService(courierMasterRepository);
-                CourierMasterPM courierMasterPM = courierMasterQueryService.GetSingle(requestParams.LoggingEntityId, false, false);
+                CourierMasterPM courierMasterPM = courierMasterQueryService.GetSingle(customResponse.EntityId, false, false);
 
                 if (decCouriers != null )
 
