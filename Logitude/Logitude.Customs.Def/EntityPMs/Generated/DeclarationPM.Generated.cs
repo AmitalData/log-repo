@@ -5469,6 +5469,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool? isSubmitDeclaration ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? IsSubmitDeclaration  
+	   {
+	    
+	     get
+		{
+		   return isSubmitDeclaration;
+		 }
+		 set
+		 {
+		   if(isSubmitDeclaration != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsSubmitDeclaration",OldValue=isSubmitDeclaration,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   isSubmitDeclaration=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
