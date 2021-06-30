@@ -259,6 +259,11 @@ export class InterestReportPM {
     public set CalCreditAllotmentCommission(newValue: number) { if (this.calCreditAllotmentCommission != newValue) { this.calCreditAllotmentCommission = newValue; this.MarkAsDirty("CalCreditAllotmentCommission"); } }
        
 	 
+    private calculatedPostponedCheques: number;
+    public get CalculatedPostponedCheques() { return this.calculatedPostponedCheques; }
+    public set CalculatedPostponedCheques(newValue: number) { if (this.calculatedPostponedCheques != newValue) { this.calculatedPostponedCheques = newValue; this.MarkAsDirty("CalculatedPostponedCheques"); } }
+       
+	 
 
     public OldEntityPM: InterestReportPM;
 		

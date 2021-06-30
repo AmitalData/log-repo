@@ -306,6 +306,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string ThirdPeriodsMonths  { get; set; }
        [DataMember]
        public double? InsuredCreditLimit  { get; set; }
+       [DataMember]
+       public decimal? PostponedChequesCommission  { get; set; }
    }
 
 }
