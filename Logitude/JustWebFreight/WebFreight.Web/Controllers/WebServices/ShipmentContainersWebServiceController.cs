@@ -71,7 +71,7 @@ namespace WebFreight.Web.Controllers.WebServices
             int tenant = authToken.Tenant;
             SecurityUtility.AuthenticationOnTenant(tenant);
             this.SetContainerFields(simulator);
-            this.CreateOceanInsightsWcfServiceResponse();
+            this.CreateOceanInsightsWcfServiceResponse(tenant);
             this.CreateLogitudeOceanInsightsRequest(oceanInsightId, simulator, tenant);
             var updatedOceanInsightsResponse = this.ReplaceOceanInsightTagInXML(simulator.XmlString, oceanInsightId, simulator.ContainerNumber);
             //updatedOceanInsightsResponse = RemoveOceanInsightsXMLTag(simulator.XmlString);
@@ -84,9 +84,9 @@ namespace WebFreight.Web.Controllers.WebServices
             containerNumber = simulator.ContainerNumber;
             scacCode = ReadOceanInsightsParametersXMLFields(simulator.XmlString, "carrier_scac", "shipment");
         }
-        private void CreateOceanInsightsWcfServiceResponse()
+        private void CreateOceanInsightsWcfServiceResponse(int tenant)
         {
-            int tenant = GetLogitudeOceanInsightsTenant();
+            //int tenant = GetLogitudeOceanInsightsTenant();
             IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
             OceanInsightsRequestQuery oceanInsightsRequestQuery = new OceanInsightsRequestQuery(tenant);
             OceanInsightsRequestService service = new OceanInsightsRequestService(shipmentsContext, tenant);
