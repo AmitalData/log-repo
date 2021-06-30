@@ -27,6 +27,8 @@ using Logitude.Server.Tools.ExternalServices;
 using Logitude.Customs.BL.Messaging.Maman;
 using Simplog.Server.Infrastructure.Helpers;
 using Unifreight.Data.AmitalModel.Repsitories;
+using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.Messaging.ILSWS;
 
 namespace CustomsWorkerRole.Test
 {
@@ -589,7 +591,7 @@ PaymentDate  מלפני 3  ימים ");
             }
         }
 
-        public void FtpMamanTester()
+        public void FtpMamanTester(int tenant)
         {
             using (var scop = TransactionFactory.GetTransaction())
             {
@@ -601,7 +603,24 @@ PaymentDate  מלפני 3  ימים ");
                 //http://192.116.221.103:584/Courier58/api/couriermasters/getsingle?id=1-106
 
                 var myFTPMamanService = new FTPOutMamanSubManifestService();
-                myFTPMamanService.BuildCommunicationLog(bytearray, 1, "1-106");//020-42905645
+                myFTPMamanService.BuildCommunicationLog(bytearray, tenant, "1-333");//02004004
+
+                var myFTPMamanService1 = new FTPOutMamanSubManifestService();
+                myFTPMamanService1.BuildCommunicationLogOLD(bytearray, tenant, "1-333");//02004004
+
+
+
+                string dec = "1-1240276";
+                //CustomsPartnerFtpDetails.InterfaceName_ECSWSTHR_REQUEST
+                var fTPOutMawbSWSService = new FTPOutMawbSWSService();
+                Guid g = Guid.NewGuid();
+                string filename = "02004004" + "_" + g;
+                fTPOutMawbSWSService.BuildCommunicationLog(bytearray, tenant, dec, CustomsPartnerFtpDetails.InterfaceName_ECSWSTHR_REQUEST, filename);
+                    
+                    
+                g = Guid.NewGuid();
+                filename = "02004004" + "_" + g;
+                fTPOutMawbSWSService.BuildCommunicationLogOld(bytearray, tenant, dec, CustomsPartnerFtpDetails.InterfaceName_ECSWSTHR_REQUEST, filename);
                 scop.Complete();
                     //output  ftp://192.168.10.88/FTP_MAMAN/	
             }
