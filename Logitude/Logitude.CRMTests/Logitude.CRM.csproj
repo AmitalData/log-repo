@@ -98,23 +98,25 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Hooks\BeforeFeatureRun.cs" />
     <Compile Include="Models\ActivityPriorityPM.cs" />
     <Compile Include="Models\CRMContext.cs" />
     <Compile Include="Models\ActivityPM.cs" />
     <Compile Include="Models\Builders\ActivityBuilder.cs" />
     <Compile Include="Models\CRMData.cs" />
+    <Compile Include="Services\ActivityTaskDataPreparation.cs" />
     <Compile Include="Services\ActivityTaskServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Steps\Activities\CreateTaskSteps.cs" />
+    <Compile Include="Steps\Activities\GetTaskSteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Features\Activities\CreateTask.feature" />
+    <None Include="Features\Activities\GetTask.feature" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Hooks\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Test.Base\Logitude.Test.Base.csproj">
       <Project>{74FBC07E-5CBF-44C5-85C8-F86FACAA06B6}</Project>
