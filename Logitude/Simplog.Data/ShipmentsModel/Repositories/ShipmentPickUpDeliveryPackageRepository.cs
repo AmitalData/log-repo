@@ -86,9 +86,15 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         }
         public List<ShipmentPickUpDeliveryPackage> GetSingleShipmentPickUpDeliveryPackageByContainerId(string containerId, int tenant)
         {
-            return (from record in context.ShipmentPickUpDeliveryPackages
-                    where  record.Tenant == tenant && record.ContainerEntityId == containerId
-                    select record).ToList();
+            List<ShipmentPickUpDeliveryPackage> shipmentPickUpDeliveryPackages = null;
+            if (!string.IsNullOrEmpty(containerId))
+            {
+                shipmentPickUpDeliveryPackages = (from record in context.ShipmentPickUpDeliveryPackages
+                                                  where record.Tenant == tenant && record.ContainerEntityId == containerId
+                                                  select record).ToList();
+            }
+
+            return shipmentPickUpDeliveryPackages;
         }
     }
 }
