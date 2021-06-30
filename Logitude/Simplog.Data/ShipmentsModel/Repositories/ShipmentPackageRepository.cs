@@ -57,7 +57,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             return shipments;
         }
 
-        public List<ShipmentPackage> GetSingleShipmentPackageByContainerId(string shipmentId, string containerId,int tenant)
+        public List<ShipmentPackage> GetShipmentsPackagesByContainerIdAndTenant(string shipmentId, string containerId,int tenant)
         {
             List<ShipmentPackage> shipmentPackages = null;
             if (!string.IsNullOrEmpty(containerId))

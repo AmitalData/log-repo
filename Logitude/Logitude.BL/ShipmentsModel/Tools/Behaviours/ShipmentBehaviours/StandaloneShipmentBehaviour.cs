@@ -445,7 +445,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
         private void UpdateForwarderShipmentPackages(ShipmentPackagePM shipmentPackagePM)
         {
-            List<ShipmentPackage> shipmentPackages = this.initializer.ShipmentPackageRepository.GetSingleShipmentPackageByContainerId(this.shipmentPM.Id, shipmentPackagePM.ContainerEntityId, tenant);
+            List<ShipmentPackage> shipmentPackages = this.initializer.ShipmentPackageRepository.GetShipmentsPackagesByContainerIdAndTenant(this.shipmentPM.Id, shipmentPackagePM.ContainerEntityId, tenant);
             if(shipmentPackages != null)
             {
                 foreach(ShipmentPackage shipmentPackage in shipmentPackages)

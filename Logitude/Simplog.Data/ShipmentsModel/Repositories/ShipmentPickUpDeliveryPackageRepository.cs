@@ -84,7 +84,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         {
             return context.ShipmentPickUpDeliveryPackages.Where(d => d.Tenant == tenant && d.ShipmentPickUpDeliveryId == deliveryId);
         }
-        public List<ShipmentPickUpDeliveryPackage> GetSingleShipmentPickUpDeliveryPackageByContainerId(string containerId, int tenant)
+        public List<ShipmentPickUpDeliveryPackage> GetShipmentPickUpDeliveryPackagesByContainerIdAndTenant(string containerId, int tenant)
         {
             List<ShipmentPickUpDeliveryPackage> shipmentPickUpDeliveryPackages = null;
             if (!string.IsNullOrEmpty(containerId))
