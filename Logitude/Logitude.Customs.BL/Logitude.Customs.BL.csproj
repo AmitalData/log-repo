@@ -2061,6 +2061,7 @@
     <Compile Include="Messaging\Customs\CustomsStateMachineProcess.cs" />
     <Compile Include="Messaging\Customs\SendSheetSignModel.cs" />
     <Compile Include="Messaging\Customs\SignQueue.cs" />
+    <Compile Include="Messaging\FtpOutService.cs" />
     <Compile Include="Messaging\ILOVS\CourierOVSECTHMessageRequestService.cs" />
     <Compile Include="Messaging\ILOVS\CourierOVSECTHMessageResponseService.cs" />
     <Compile Include="Messaging\ILOVS\CourierOVSSpecialActionRequestService.cs" />
