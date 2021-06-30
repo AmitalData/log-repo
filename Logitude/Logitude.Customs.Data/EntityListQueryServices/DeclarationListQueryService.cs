@@ -577,7 +577,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
           //  q1stConsignments = context.Consignments.Where(r => r.DeclarationId == "-1");
 
 
-            IQueryable<DeclarationList> query = (from a in iQueryable.Include("ProcedureCurrent")
+            IQueryable<DeclarationList> query = (from a in iQueryable.Include("ProcedureCurrent").Include("Importer")
                                                  join recConsignment in q1stConsignments
                                                  on a.Id equals recConsignment.DeclarationId into qjoinConsignments
                                                  from myJoinConsignment in qjoinConsignments.DefaultIfEmpty()
@@ -605,6 +605,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      Direction = a.Direction,
                                                      ProcedureCurrentName = a.GovernmentProcedureCurrent.LocalName,
                                                      TaxationDateTime = a.TaxationDateTime,
+                                                     CustomerName = a.IsCourierDeclaration ? a.ImporterName : (a.CustomerCard.LocalName != null ? a.CustomerCard.LocalName : a.CustomerCard.EnglishName),
+
                                                  });
 
 
