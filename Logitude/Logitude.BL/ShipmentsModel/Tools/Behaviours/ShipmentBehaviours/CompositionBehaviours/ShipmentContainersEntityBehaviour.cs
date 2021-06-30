@@ -169,10 +169,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             container.MainCarriageCarrierId = this.initializer.EntityPM.MainCarriageCarrierId;
             container.MainCarriageCarrierNumber = this.initializer.EntityPM.MainCarriageCarrierNumber;
             container.MainCarriageVesselId = this.initializer.EntityPM.MainCarriageVesselId;
-            container.MainCarriageATA = this.initializer.EntityPM.MainCarriageATA;
-            container.MainCarriageATD = this.initializer.EntityPM.MainCarriageATD;
-            container.MainCarriageETA = this.initializer.EntityPM.MainCarriageETA;
-            container.MainCarriageETD = this.initializer.EntityPM.MainCarriageETD;
             container.Master = this.initializer.EntityPM.Master;
             container.ContainerNumber = shipmentPackage.ContainerNumber;
             container.ShipmentId = shipmentPackage.ShipmentId;
