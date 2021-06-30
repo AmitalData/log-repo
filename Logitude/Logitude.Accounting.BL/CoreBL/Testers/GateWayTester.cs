@@ -438,7 +438,7 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
             }
             return gateWayTesterResult;
         }
-        private JournalPM ImmediateYearTransferthod(int YY, int tenant)
+        public JournalPM ImmediateYearTransferthod(int YY, int tenant)
         {
             JournalPM journal;
             using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(10)))
