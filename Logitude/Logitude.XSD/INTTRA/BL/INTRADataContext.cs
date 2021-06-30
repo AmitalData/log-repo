@@ -1440,10 +1440,14 @@ namespace Logitude.XSD.INTTRA.BL
 
                 if (this.Shipper != null)
                 {
+                    ContactRepository contactRepository = new ContactRepository(this.CommonContext);
+                    Contact shipperContact = contactRepository.GetSingleContact(this.Shipment.ShipperContactId,this.Tenant);
+
                     INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
                     {
                         PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.Shipper,
                         PartnerName = this.iNTTRAGeneralMethods.GetStringList(this.Shipper.EnglishName, 2, 35).ToArray<string>(),
+                        ContactInformation = shipperContact != null ? this.GetContactInformation(shipperContact) : null,
                     };
 
                     if (this.ShipperAddress != null)
@@ -1462,10 +1466,14 @@ namespace Logitude.XSD.INTTRA.BL
                 Card myCard = (from d in CommonContext.Cards where d.Id == this.Shipment.ConsigneeId select d).FirstOrDefault();
                 if (myCard != null)
                 {
+                    ContactRepository contactRepository = new ContactRepository(this.CommonContext);
+                    Contact consigneeContact = contactRepository.GetSingleContact(this.Shipment.ConsigneeContactId, this.Tenant);
+
                     INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
                     {
                         PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.Consignee,
                         PartnerName = this.iNTTRAGeneralMethods.GetStringList(myCard.EnglishName, 2, 35).ToArray<string>(),
+                        ContactInformation = consigneeContact != null ? this.GetContactInformation(consigneeContact) : null,
                     };
 
                     if (this.ConsigneeAddress != null)
