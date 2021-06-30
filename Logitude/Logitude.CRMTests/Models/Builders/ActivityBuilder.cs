@@ -14,11 +14,11 @@ namespace Logitude.CRMTests.Models.Builders
         private ActivityPM _activity;
         public ActivityBuilder()
         {
-            this.SetProiorities();
+            this.SetActivityProiorities();
             this.Reset();
         }
 
-        private void SetProiorities()
+        private void SetActivityProiorities()
         {
             activityPriorities = new List<ActivityPriorityPM>
             {
@@ -104,7 +104,8 @@ namespace Logitude.CRMTests.Models.Builders
                 CreatedByUserId = UserTenant.UserId,
                 UpdatedByUserId = UserTenant.UserId,
                 OwnerId = UserTenant.UserId,
-                BranchId = UserTenant.BranchId
+                BranchId = UserTenant.BranchId,
+                BusinessUnitId = UserTenant.BusinessUnitId
             };
             return this;
         }

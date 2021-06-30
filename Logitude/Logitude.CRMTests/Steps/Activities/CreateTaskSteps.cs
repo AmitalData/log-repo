@@ -34,8 +34,8 @@ namespace Logitude.CRMTests.Steps.Activities
             crmContext.ActiviyTask = APICaller.CallPost<ActivityPM>(crmContext.ActiviyTask, Urls.ActivitiesController, UserTenant.Token)?.Data;
         }
 
-        [Then(@"the etask should create successfully")]
-        public void ThenTheEtaskShouldCreateSuccessfully()
+        [Then(@"the task should create successfully")]
+        public void ThenTheTaskShouldCreateSuccessfully()
         {
             crmContext.ActiviyTask.Id.Should().NotBeNull();
         }
