@@ -339,13 +339,15 @@ export class NewContainerizationComponent extends BaseComponent {
             Styles: { width: '120px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
-            SortByName: 'DeclarationStatusTypeName'
+            SortByName: 'DeclarationStatusTypeName',
+            HtmlListComponentName: 'CustomsContainerizationListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsContainerizationListTemplate',
 
         });
 
         this.columns.push({
 
-            FieldName: 'PaymentDate',
+            FieldName: 'IsSubmitDeclaration',
             DataTypeCode: 'String',//'Number',
             Display: "הגשה",
             Styles: { width: '50px' },
