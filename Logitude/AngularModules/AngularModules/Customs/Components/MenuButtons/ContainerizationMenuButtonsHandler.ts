@@ -27,7 +27,7 @@ import { CustomFileCreditResponseData } from '../../DataContract/ResponseData/Cu
 import { DeclarationDisplayOnlyChecks, DisplayOnlyCheckResult } from '../../Utilities/DeclarationDisplayOnlyChecks';
 import { VehicleReductionTypeListService } from '../../Services/StandardLists/VehicleReductionTypeListService';
 import { MenuButtonsEvents, MenuButtonsStateChangedEventArgs } from '../../../Infrastructure/Utilities/events/MenuButtonsEvents';
- 
+
 import { PrintRequestRequestParams } from '../../DataContract/RequestParams/PrintRequestRequestParams';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 
@@ -102,7 +102,7 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
 
     }
     Listen() {
-         if (this.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
 
             //this._SubMenuButtonsStateChanged =
             this.CurrentSession.SubscriptionAdd(
@@ -154,8 +154,8 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
     public CheckButtonState(menuButtons: MenuButtonPM[]) {
         this.MenuButtons = menuButtons;
         if (SessionLocator.TenantPM.IsTestTenant) {
-            
-            
+
+
             let myMenuButtonDeclarationsStatusRequest = this.MenuButtons.filter(r => r.EventCode == "DeclarationsStatusRequest").slice(0)[0];
             //let myMenuButtonPM: MenuButtonPM= (JSON.parse(JSON.stringify(myMenuButtonDeclarationsStatusRequest))) ;
             let myMenuButtonPM = new MenuButtonPM(null);
@@ -165,14 +165,14 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
                 } else {
                     myMenuButtonPM[attribut] = myMenuButtonDeclarationsStatusRequest[attribut];
                 }
-            }           
+            }
         }
         this.DisplayOnlyCheck();
     }
 
     ApplyCheckMenuButtonsState(menuButtons: MenuButtonPM[]) {
         let parentButton: MenuButtonPM;
-          if (this.EntityPM != null) {
+        if (this.EntityPM != null) {
             if (this.CurrentSession.CurrentEditComponent != null) {
                 var table = window.ObjectTables.filter(d => d.Name === 'Customs.Containerization')[0];
 
@@ -185,7 +185,7 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
                     var button = menuButtons[i];
                     if (button.EventCode == "Actions") {
 
-                         button.Width = 70;
+                        button.Width = 70;
                     }
                 }
                 this.IsDisplayOnlyCheckDone = true;
@@ -227,8 +227,7 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
 
     DeclarationsStatusRequestMethod() {
 
-        if (this.EntityPM.IsDirty)
-        {
+        if (this.EntityPM.IsDirty) {
             let messageWindow = new MessageWindow();
             messageWindow.Width = 300;
             messageWindow.Height = 180;
@@ -271,14 +270,14 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
             });
 
 
-        }
+    }
 
-    
-  
+
+
     AddDeclarationMethod() {
         var args: any = {
             EntityPM: this.EntityPM,
-        }; 
+        };
         var logWindow = new LogitudeWindow();
         logWindow.Width = 1220;
         logWindow.Height = 550;
@@ -303,42 +302,52 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
         return params
     }
     CancelContainerizationMethod() {
-        var confirmWindow = new ConfirmWindow();
-        confirmWindow.Width = 300;
-        confirmWindow.Show("האם ברצונך לבטל את ההמכלה ?");
-        confirmWindow.WindowClosed.subscribe((event: any) => {
-            if (confirmWindow.Yes)
-            {
-                this.EntityPM.OperationMode = "3";
-                this.containerizationPMService.update(this.EntityPM).subscribe((response: ServiceResponse) => {
-                    if (!response.HasError)
-                    {
-                        this.CurrentSession.StartBusyIndicator("Sending...");
-                        this.containerizationMessagesService.SendContainerization(this.getParams(response, event)).subscribe((response: ServiceResponse) => {
-                            console.log("[response] CancelContainerizationMethod: ", response);
-                            this.CurrentSession.StopBusyIndicator();
-                            if (!response.Result.HasException) {
-                                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                                this.CurrentSession.CurrentEditComponent.LoadCompleted.emit(true);
-                                let messageWindow = new MessageWindow();
-                                messageWindow.Width = 300;
-                                messageWindow.Height = 180;
-                                messageWindow.Show("ההמכלה בוטלה בהצלחה");
-                            }
-                            else {
-                                let messageWindow = new MessageWindow();
-                                messageWindow.Width = 300;
-                                messageWindow.Height = 180;
-                                messageWindow.Title = "שליחה נכשלה";
-                                messageWindow.RTL = true;
-                                messageWindow.ShowErrorIcon = true;
-                                messageWindow.Show(response.Result.UserMessage);
-                            }
-                        });
-                    }
-                });
-            }
-        });
+        if (this.EntityPM.ContainerizationStatus == "4") {
+            let messageWindow = new MessageWindow();
+            messageWindow.Width = 300;
+            messageWindow.Height = 180;
+            messageWindow.Title = "שליחת המכלה";
+            messageWindow.RTL = true;
+            messageWindow.ShowErrorIcon = true;
+            messageWindow.Show("המכלה לא קיימת במכס");
+        }
+        else
+        {
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.Width = 300;
+            confirmWindow.Show("האם ברצונך לבטל את ההמכלה ?");
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    this.EntityPM.OperationMode = "3";
+                    this.containerizationPMService.update(this.EntityPM).subscribe((response: ServiceResponse) => {
+                        if (!response.HasError) {
+                            this.CurrentSession.StartBusyIndicator("Sending...");
+                            this.containerizationMessagesService.SendContainerization(this.getParams(response, event)).subscribe((response: ServiceResponse) => {
+                                console.log("[response] CancelContainerizationMethod: ", response);
+                                this.CurrentSession.StopBusyIndicator();
+                                if (!response.Result.HasException) {
+                                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                                    this.CurrentSession.CurrentEditComponent.LoadCompleted.emit(true);
+                                    let messageWindow = new MessageWindow();
+                                    messageWindow.Width = 300;
+                                    messageWindow.Height = 180;
+                                    messageWindow.Show("ההמכלה בוטלה בהצלחה");
+                                }
+                                else {
+                                    let messageWindow = new MessageWindow();
+                                    messageWindow.Width = 300;
+                                    messageWindow.Height = 180;
+                                    messageWindow.Title = "שליחה נכשלה";
+                                    messageWindow.RTL = true;
+                                    messageWindow.ShowErrorIcon = true;
+                                    messageWindow.Show(response.Result.UserMessage);
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        }
     }
 
     DisplayOnlyCheck() {
