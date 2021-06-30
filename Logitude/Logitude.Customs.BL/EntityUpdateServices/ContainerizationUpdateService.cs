@@ -32,11 +32,19 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     foreach (var declaration in pms)
                     {
-                        declaration.ExportContainerizationID = entityPM.Id;
-                        declaration.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                        if (declaration.ExportContainerizationID != entityPM.Id)
+                        {
+                            declaration.ExportContainerizationID = entityPM.Id;
+                            declaration.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                        }
                     }
                 }
 
+            }
+            else
+            {
+                entityPM.IsChange = false;
+                entityPM.ChangeSetOp= Simplog.Server.Infrastructure.ChangeSetOperation.Update;
             }
             if (!String.IsNullOrWhiteSpace(entityPM.NotConnectedDeclarations))
             {

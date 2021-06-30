@@ -37,11 +37,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.HataraStatusName);
             var declarationRepository = new DeclarationRepository(entityPOCO.Tenant);
             var declarations=declarationRepository.GetByExportContainerizationID(entityPOCO.Id, entityPOCO.Tenant);
-           /* var items = declarations.ToList();
+            var items = declarations.ToList();
             foreach(Declaration dec in items)
             {
                 entityPM.ConnectedDeclarations= entityPM.ConnectedDeclarations + dec.Id + ",";
-            }*/
+            }
             var declaration= declarations.FirstOrDefault();
             if (declaration != null)
             {

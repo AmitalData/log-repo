@@ -6,8 +6,10 @@ import { ContainerizationResponseData } from "../../../../Customs/DataContract/R
 import { ContainerizationPM } from "../../../../Customs/EntityPMs/ContainerizationPM";
 import { ContainerizationPMService } from "../../../../Customs/Services/StandardPMs/ContainerizationPMService";
 import { ContainerizationMessagesService } from "../../../../Customs/Services/WebServices/ContainerizationMessagesService";
+import { DeclarationEventManager } from "../../../../Customs/Utilities/DeclarationEventManager";
 import { ServiceResponse } from "../../../../Infrastructure/DataContracts/ServiceResponse";
 import { ObjectTablePM } from "../../../../Infrastructure/EntityPMs/ObjectTablePM";
+import { AppTool } from "../../../../Infrastructure/Tools";
 import { SessionLocator } from "../../../../Infrastructure/Utilities/SessionLocator";
 import { TextCodeTranslator } from "../../../../Infrastructure/Utilities/TextCodeTranslator";
 import { CustomMessageProgressComponent, ShowProgressBarParams } from "../../../CustomsControls/Components/CustomMessageProgressComponent";
@@ -33,11 +35,17 @@ export class SendContainerization implements OnDestroy {
     _WorkWithService: boolean = true;
     private CurrentSession = SessionLocator.SelectedSession;
     SendContainerizationService: SendContainerizationService = new SendContainerizationService();
+    IsDisabled: boolean = false;
     constructor() {
+
     }
 
     Run(args: any) {
         this.EntityPM = args.EntityPM;
+        this.Listen();
+        if (this.EntityPM.ConnectedDeclarations == null) {
+            this.IsDisabled = true;
+        }
         this.ButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Send");
         this.SendContainerizationService.Run(args);
         return;
@@ -50,7 +58,11 @@ export class SendContainerization implements OnDestroy {
                 this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-
+                        if (AppTool.IsNullOrEmpty(this.EntityPM.ConnectedDeclarations)) {
+                            this.IsDisabled = true;
+                        } else {
+                            this.IsDisabled = false;
+                        }
                     }
                 });
             }
@@ -59,9 +71,23 @@ export class SendContainerization implements OnDestroy {
                 this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        if (this.EntityPM.ConnectedDeclarations == null) {
+                            this.IsDisabled = true;
+                        } else {
+                            this.IsDisabled = false;
+                        }
                     }
                 });
             }
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                DeclarationEventManager.AddDeclarationToContainerization.subscribe(data => {
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                    if (this.EntityPM.ConnectedDeclarations == null) {
+                        this.IsDisabled = true;
+                    } else {
+                        this.IsDisabled = false;
+                    }
+                }));
         }
 
 
@@ -105,6 +131,7 @@ export class SendContainerizationService implements OnDestroy {
     containerizationMessagesService: ContainerizationMessagesService = new ContainerizationMessagesService();
     ResponseData: ContainerizationResponseData;
     containerizationPMService: ContainerizationPMService = new ContainerizationPMService();
+    IsDisabled: boolean = false;
 
     constructor() {
 
@@ -123,7 +150,6 @@ export class SendContainerizationService implements OnDestroy {
                 this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-
                     }
                 });
             }
