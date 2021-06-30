@@ -38,7 +38,6 @@ namespace Logitude.CRMTests.Services
                 .PriorityCode("Normal")
                 .ActivityStatusCode("N")
                 .ActivityTypeCode("TS")
-                .BusinessUnitId("1311")
                 .Build();
         }
 

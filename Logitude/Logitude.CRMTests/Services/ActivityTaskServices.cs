@@ -23,5 +23,18 @@ namespace Logitude.CRMTests.Services
                 .Build();
         }
 
+        public ActivityPM UpdateInstance(Table taskTable, ActivityPM activity)
+        {
+            dynamic dataTable = taskTable.CreateDynamicInstance();
+            return new ActivityBuilder()
+                .WithModel(activity)
+                .Subject((string)dataTable.Subject)
+                .Description((string)dataTable.Description)
+                .StartDateTime(Convert.ToString(dataTable.StartDateTime).Length == 0 ? null : (DateTime?)dataTable.StartDateTime)
+                .DueDate(Convert.ToString(dataTable.DueDate).Length == 0 ? null : (DateTime?)dataTable.DueDate)
+                .PriorityCode((string)dataTable.Priority)
+                .Build();
+        }
+
     }
 }
