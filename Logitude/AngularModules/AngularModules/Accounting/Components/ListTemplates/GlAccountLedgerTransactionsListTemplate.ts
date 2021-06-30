@@ -7,7 +7,6 @@ import {OnInit, Output, EventEmitter, ComponentRef, QueryList} from '@angular/co
 import {JournalExtendedListService} from '../../Services/ExtendedLists/JournalExtendedListService';
 import {ARPaymentExtendedListService} from '../../../Invoice/Services/ExtendedLists/ARPaymentExtendedListService';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {JournalList} from '../../EntityLists/JournalList';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {ReconcileEventManager} from '../../Utilities/ReconcileEventManager';
 
@@ -24,6 +23,8 @@ export class GlAccountLedgerTransactionsListTemplate {
     public IconCode: string;
     public ColorCode: string;
     public TenantCurrencySign: string;
+    public ChequeStatusColor = "black";
+
 
     public _JournalExtendedListService = new JournalExtendedListService();
     public _ARPaymentExtendedListService = new ARPaymentExtendedListService();
@@ -204,6 +205,21 @@ export class GlAccountLedgerTransactionsListTemplate {
                 ObjectTableName: tableName
             });
         });
+    }
+
+    GetChequeStatusColor(chequeStatus) {
+
+         if (chequeStatus == "בקופה" || chequeStatus == "משמרת" || chequeStatus == "הופקד- טרם נפרע") {
+             this.ChequeStatusColor = "orange";
+         }
+         else if (chequeStatus == "הוחזר ללקוח") {
+             this.ChequeStatusColor = "red";
+         }
+         else if (chequeStatus == "נפרע") {
+             this.ChequeStatusColor = "green";
+        }
+
+        return this.ChequeStatusColor;
     }
 
 }
