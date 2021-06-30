@@ -54,7 +54,8 @@ namespace Logitude.Customs.BL.CloseTables
                 Name = "תת מצהר לממן",
                 TypeCode = TypeCode_Out,
                 Partner = PartnerCode_Mamam,
-                ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key
+                ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
+                 Subject  /*FTPOutMamanSubManifestService*/ ="שידור פנימיים מסוכנים לממן",
             }
             ,
             new InterfaceDetails()
