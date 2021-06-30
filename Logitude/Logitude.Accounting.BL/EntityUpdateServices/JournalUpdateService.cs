@@ -95,7 +95,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             //GetIQueryableLedgerTransactionsByGLAccountIdsList
             //base.UpdateComposition(entityPM);
             //while insert do once insert JournalReconciles +  Update ledgerTrasaction to  InReconcileProgress !!!!
-            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert
+                || (
+                entityPM.ChangeSetOp == ChangeSetOperation.Update &&
+                entityPM.JournalReconciles.All( r=>r.ChangeSetOp== ChangeSetOperation.Delete)
+                )
+                )
             {
                 var journalReconcileUpdateService = new JournalReconcileUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
                 journalReconcileUpdateService.UpdateMulti(entityPM.JournalReconciles, entityPM.DeletedJournalReconciles, entityPM,
@@ -113,7 +118,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     ledgerTransactionUpdateService.UpdateInReconcileProgress(listTransactionId, Tenant, true);
                 }
             }
-            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert
+                || (
+                entityPM.ChangeSetOp == ChangeSetOperation.Update &&
+                entityPM.JournalExternalReconciles.All(r => r.ChangeSetOp == ChangeSetOperation.Delete)
+                ))
             {
                 var journalReconcileUpdateService = new JournalExternalReconcileUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
                 journalReconcileUpdateService.UpdateMulti(entityPM.JournalExternalReconciles, entityPM.DeletedJournalExternalReconciles, entityPM,
