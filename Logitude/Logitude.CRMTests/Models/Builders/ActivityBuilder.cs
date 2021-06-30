@@ -14,11 +14,11 @@ namespace Logitude.CRMTests.Models.Builders
         private ActivityPM _activity;
         public ActivityBuilder()
         {
-            this.SetProiorities();
+            this.SetActivityProiorities();
             this.Reset();
         }
 
-        private void SetProiorities()
+        private void SetActivityProiorities()
         {
             activityPriorities = new List<ActivityPriorityPM>
             {
