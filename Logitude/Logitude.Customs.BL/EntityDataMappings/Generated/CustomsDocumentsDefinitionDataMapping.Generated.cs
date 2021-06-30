@@ -29,7 +29,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ProcessTypeCode, 
 	         CargoTypeCode, 
 	         Mandatory, 
-	         Inactive,
+	         Inactive, 
+	         DeclarationTypeCode,
 	      }
 
 
@@ -47,7 +48,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CargoTypeCode, 
 	         CargoTypeName, 
 	         Mandatory, 
-	         Inactive,
+	         Inactive, 
+	         DeclarationTypeCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -89,6 +91,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Inactive))
             {
 				entityPOCO.Inactive = entityPM.Inactive;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationTypeCode))
+            {
+				entityPOCO.DeclarationTypeCode = entityPM.DeclarationTypeCode;
 			}
 			}
 
@@ -135,6 +142,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.Inactive = entityPOCO.Inactive;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DeclarationTypeCode))
+            {
+					entityPM.DeclarationTypeCode = entityPOCO.DeclarationTypeCode;
+            }
+
 		}
 
 		public void PMToOldPM(CustomsDocumentsDefinitionPM entityPM, CustomsDocumentsDefinitionPM oldEntityPM)
@@ -174,6 +186,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Inactive))
             {
                 oldEntityPM.Inactive = entityPM.Inactive;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationTypeCode))
+            {
+                oldEntityPM.DeclarationTypeCode = entityPM.DeclarationTypeCode;
             }
 			
 		}

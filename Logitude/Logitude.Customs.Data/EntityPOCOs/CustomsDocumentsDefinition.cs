@@ -47,6 +47,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool Mandatory { get; set; }
         [Column("Inactive")]
 	    public bool Inactive { get; set; }
+        [ForeignKey("LeadDocumentType")]
+        [Column("DeclarationTypeCode")]
+	    public string DeclarationTypeCode { get; set; }
+	      
+        public virtual LeadDocumentType LeadDocumentType { get; set; }
     }
 }
 	 
