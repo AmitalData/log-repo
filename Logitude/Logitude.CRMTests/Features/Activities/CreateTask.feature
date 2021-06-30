@@ -10,4 +10,4 @@ Scenario: Create task
 		| DueDate            | 2021-07-15 14:40 |
 		| Priority           | Normal           |
 	When create task
-	Then the etask should create successfully
+	Then the task should create successfully
