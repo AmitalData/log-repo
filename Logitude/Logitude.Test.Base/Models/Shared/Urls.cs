@@ -177,5 +177,11 @@
         {
             return "vessels/getsingle?id=" + id;
         }
+
+        public static string ActivitySingle(string id)
+        {
+            return "activities/GetSingle?id=" + id;
+        }
+
     }
 }
