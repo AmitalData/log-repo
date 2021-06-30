@@ -84,7 +84,11 @@ namespace Logitude.Customs.Data.Utils
                 /// 1- Get customers codes 
                 //if (custSettings.IsConnectedToUniFreight)
                 CustomsSetting custSettings = null;
-                if (LogitudeSettings.WorkEnvironment == "Customs") { custSettings = custSettingsRepo.GetSettingByTenant(user.Tenant); }
+                
+                //if (LogitudeSettings.WorkEnvironment == "Customs") { custSettings = custSettingsRepo.GetSettingByTenant(user.Tenant); }
+                if (LogitudeSettings.IsCostomsDeploy) {
+                    custSettings = custSettingsRepo.GetSettingByTenant(user.Tenant);
+                }
 
                 if (custSettings != null && !string.IsNullOrWhiteSpace(custSettings.UnfConnectionString))
                 {
