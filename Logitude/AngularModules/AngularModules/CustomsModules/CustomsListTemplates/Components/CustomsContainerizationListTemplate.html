@@ -10,6 +10,12 @@
         <!--*ngIf="CustomsContainerizationRecord.PaymentDate"-->
     </div>
 
+    <div class="TextTrimming RightCenter" *ngIf="fieldName == 'DeclarationStatusTypeName'">
+        <div [ngStyle]="{color: rowData.DeclarationStatusTypeCode | StringToColorPipe:'DeclarationStatusTypeCode'}">
+            <span style="font-weight: bold;">{{rowData.DeclarationStatusTypeName}}</span>
+        </div>
+    </div>
+
     <div class="TextTrimming RightCenter"
          *ngIf="fieldName == 'CreateDateTime'">
         <span>{{rowData.CreateDateTime  | DateTimeToDatePipe  }}</span>
@@ -21,15 +27,15 @@
         <CheckBox [IsChecked]="IsConnectedDeclarationChecked" (Checked)="OnConnectedCheckBoxChecked($event)" [IsEnabled]="!IsDisplayOnly"></CheckBox>
     </div>
 
-     <div *ngIf="fieldName == 'TransportModeForExport'" style="position:relative;width:100%; height: 100%;">
-                 <div *ngIf="rowData.TransportModeForExport=='A'">
-                    <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Airline.png" />
-                </div>
-                <div *ngIf="rowData.TransportModeForExport=='L'">
-                    <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Trucker.png" />
-                </div>
-                <div *ngIf="rowData.TransportModeForExport=='O'">
-                    <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Vessel.png" />
-                </div>
-      </div>
+    <div *ngIf="fieldName == 'TransportModeForExport'" style="position:relative;width:100%; height: 100%;">
+        <div *ngIf="rowData.TransportModeForExport=='A'">
+            <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Airline.png" />
+        </div>
+        <div *ngIf="rowData.TransportModeForExport=='L'">
+            <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Trucker.png" />
+        </div>
+        <div *ngIf="rowData.TransportModeForExport=='O'">
+            <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Vessel.png" />
+        </div>
+    </div>
 </div>

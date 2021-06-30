@@ -339,7 +339,9 @@ export class NewContainerizationComponent extends BaseComponent {
             Styles: { width: '120px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
-            SortByName: 'DeclarationStatusTypeName'
+            SortByName: 'DeclarationStatusTypeName',
+            HtmlListComponentName: 'CustomsContainerizationListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsContainerizationListTemplate',
 
         });
 
