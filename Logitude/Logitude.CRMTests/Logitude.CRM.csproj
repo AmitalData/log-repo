@@ -103,7 +103,7 @@
     <Compile Include="Models\ActivityPM.cs" />
     <Compile Include="Models\Builders\ActivityBuilder.cs" />
     <Compile Include="Models\CRMData.cs" />
-    <Compile Include="Models\ActivityTaskServices.cs" />
+    <Compile Include="Services\ActivityTaskServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Steps\Activities\CreateTaskSteps.cs" />
   </ItemGroup>
@@ -114,7 +114,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Hooks\" />
-    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Test.Base\Logitude.Test.Base.csproj">

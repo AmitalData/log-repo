@@ -1,9 +1,10 @@
-﻿using Logitude.CRMTests.Models.Builders;
+﻿using Logitude.CRMTests.Models;
+using Logitude.CRMTests.Models.Builders;
 using System;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 
-namespace Logitude.CRMTests.Models
+namespace Logitude.CRMTests.Services
 {
     public class ActivityTaskServices
     {

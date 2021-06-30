@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Logitude.CRMTests.Models;
+using Logitude.CRMTests.Services;
 using Logitude.Test.Base.Models.Shared;
 using Logitude.Test.Base.Models.UserTenantPreparation;
 using Logitude.Test.Base.Services;
