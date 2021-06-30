@@ -345,7 +345,7 @@ export class NewContainerizationComponent extends BaseComponent {
 
         this.columns.push({
 
-            FieldName: 'PaymentDate',
+            FieldName: 'IsSubmitDeclaration',
             DataTypeCode: 'String',//'Number',
             Display: "הגשה",
             Styles: { width: '50px' },
