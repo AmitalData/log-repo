@@ -32,7 +32,7 @@
         public static string CrossDockController = "warehouseentries";
         public static string CrossReleaseGetController = "warehousereleases";
         public static string CrossReleaseController = "WarehouseReleaseExtended/postwarehousereleasepm";
-
+        public static string ActivitiesController = "Activities";
         //public static string QuotesGetSingle(string id)
         //{
         //    return "Quotes/GetSingle?id=" + id;
