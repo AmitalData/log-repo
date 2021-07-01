@@ -7,9 +7,10 @@
         public static long TaskUpdate = 3;
         public static long ShipmentCreate = 4;
         public static long ShipmentUpdate = 5;
-        public static long Contact = 6;
-        public static long Port = 7;
-        public static long Country = 8;
-        public static long Card = 9;
+        public static long ShipmentSetValue = 6;
+        public static long Contact = 7;
+        public static long Port = 8;
+        public static long Country = 9;
+        public static long Card = 10;
     }
 }
