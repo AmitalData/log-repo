@@ -957,10 +957,10 @@ _Param.AgingForDate.Date, false, true, true,false);
                         var acc = myaccountsList.First(m => m.Id == r.AccountId);
                         r.CurrencyId = acc.ReconcileMethodCode == "0" ? tenant.CurrencyId : acc.CurrencyId;
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
 
-                        throw;
+                        throw new Exception("the Account is bad no composite entities - glaccountmore*  {r.AccountId}", e) ;
                     }
                     
                    
