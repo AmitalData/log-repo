@@ -18,10 +18,10 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             {
                 entityPOCO.Tenant = entityPM.Tenant;
             }
-            if(string.IsNullOrEmpty(entityPM.ExternalId)  && string.IsNullOrEmpty(entityPOCO.ExternalId))
-            {
-                entityPOCO.ExternalId = entityPOCO.Id;
-            }
+            //if (!string.IsNullOrEmpty(entityPM.ExternalId) && string.IsNullOrEmpty(entityPOCO.ExternalId))
+            //{
+            //    entityPOCO.ExternalId = entityPOCO.Id;
+            //}
             entityPOCO.Address1 = entityPM.Address1;
             entityPOCO.Address2 = entityPM.Address2;
             entityPOCO.AddressTypeId = entityPM.AddressTypeId;
