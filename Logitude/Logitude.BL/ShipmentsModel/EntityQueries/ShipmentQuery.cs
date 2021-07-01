@@ -1291,6 +1291,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.FreightPayerId = shipment.FreightPayerId;
             shipmentPM.FreightPayerAddressId = shipment.FreightPayerAddressId;
             shipmentPM.ARInvoices = shipment.ARInvoices;
+            shipmentPM.HandlerUserId = shipment.HandlerUserId;
+            shipmentPM.ExpectedCargoReadyDate = shipment.ExpectedCargoReadyDate;
+            shipmentPM.ActualCargoReadyDate = shipment.ActualCargoReadyDate;
 
             #region ppcc region
             string ppcc = "";
@@ -3834,6 +3837,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.LastSharedEventDate = shipment.LastSharedEventDate;
             shipmentPM.IsAccrualsApproved = shipment.IsAccrualsApproved; 
             shipmentPM.LastUpdateDate = shipment.LastUpdateDate;
+            shipmentPM.HandlerUserId = shipment.HandlerUserId;
+            shipmentPM.ExpectedCargoReadyDate = shipment.ExpectedCargoReadyDate;
+            shipmentPM.ActualCargoReadyDate = shipment.ActualCargoReadyDate;
 
             if (masterData != null)
             {
@@ -4668,6 +4674,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         ShipperReference1 = s.ShipperReference1,
                                                         ShipperReference2 = s.ShipperReference2,
                                                         UpdatedByUserId = s.UpdatedByUserId,
+                                                        HandlerUserId = s.HandlerUserId,
+                                                        ExpectedCargoReadyDate = s.ExpectedCargoReadyDate,
+                                                        ActualCargoReadyDate = s.ActualCargoReadyDate,
                                                         UpdatedByUserName = s.UpdatedByUser != null ? s.UpdatedByUser.Contact.EnglishName : null,
                                                         VolumeInCBM = s.VolumeInCBM,
                                                         Volume = s.Volume,
@@ -4891,6 +4900,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.Tenant = shipment.Tenant;
                     shipmentPM.CreatedByUserId = shipment.CreatedByUserId;
                     shipmentPM.UpdatedByUserId = shipment.UpdatedByUserId;
+                    shipmentPM.HandlerUserId = shipment.HandlerUserId;
+                    shipmentPM.ExpectedCargoReadyDate = shipment.ExpectedCargoReadyDate;
+                    shipmentPM.ActualCargoReadyDate = shipment.ActualCargoReadyDate;
                     shipmentPM.DirectionId = shipment.DirectionId;
                     shipmentPM.ShipmentLevelCode = shipment.ShipmentLevelCode;
                     shipmentPM.CustomerId = shipment.CustomerId;
@@ -5255,6 +5267,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         ShipperReference1 = s.ShipperReference1,
                                                         ShipperReference2 = s.ShipperReference2,
                                                         UpdatedByUserId = s.UpdatedByUserId,
+                                                        HandlerUserId = s.HandlerUserId,
+                                                        ExpectedCargoReadyDate = s.ExpectedCargoReadyDate,
+                                                        ActualCargoReadyDate = s.ActualCargoReadyDate,
 
                                                         VolumeInCBM = s.VolumeInCBM,
                                                         Volume = s.Volume,
@@ -11656,6 +11671,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          ShipperReference1 = s.ShipperReference1,
                                                          ShipperReference2 = s.ShipperReference2,
                                                          UpdatedByUserId = s.UpdatedByUserId,
+                                                         HandlerUserId = s.HandlerUserId,
+                                                         ExpectedCargoReadyDate = s.ExpectedCargoReadyDate,
+                                                         ActualCargoReadyDate = s.ActualCargoReadyDate,
                                                          VolumeInCBM = s.VolumeInCBM,
                                                          VolumetricWeight = s.VolumetricWeight,
                                                          QuoteId = s.QuoteId,
@@ -13374,6 +13392,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          ShipperReference1 = s.ShipperReference1,
                                                          ShipperReference2 = s.ShipperReference2,
                                                          UpdatedByUserId = s.UpdatedByUserId,
+                                                         HandlerUserId = s.HandlerUserId,
+                                                         ExpectedCargoReadyDate = s.ExpectedCargoReadyDate,
+                                                         ActualCargoReadyDate = s.ActualCargoReadyDate,
                                                          VolumeInCBM = s.VolumeInCBM,
                                                          VolumetricWeight = s.VolumetricWeight,
                                                          QuoteId = s.QuoteId,

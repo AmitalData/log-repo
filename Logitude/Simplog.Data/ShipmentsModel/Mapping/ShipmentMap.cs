@@ -135,6 +135,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.FreightForwarderId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.FreightForwarderReference).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.CustomerId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.HandlerUserId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.CustomerAddressId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.CustomerContactId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.CustomerReference1).HasMaxLength(50).IsUnicode(false);
@@ -771,9 +772,9 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.IsStandalonePickupDelivery).HasColumnName("IsStandalonePickupDelivery");
             this.Property(t => t.IsHTSMissing).HasColumnName("IsHTSMissing");
             this.Property(t => t.ForwarderStandaloneShipmentId).HasColumnName("ForwarderStandaloneShipmentId");
-            this.Property(t => t.ForwarderStandaloneShipmentId).HasColumnName("ExpectedCargoReadyDate");
-            this.Property(t => t.ForwarderStandaloneShipmentId).HasColumnName("ActualCargoReadyDate");
-            this.Property(t => t.ForwarderStandaloneShipmentId).HasColumnName("Handler");
+            this.Property(t => t.ExpectedCargoReadyDate).HasColumnName("ExpectedCargoReadyDate");
+            this.Property(t => t.ActualCargoReadyDate).HasColumnName("ActualCargoReadyDate");
+            this.Property(t => t.HandlerUserId).HasColumnName("HandlerUserId");
 
             if (dbms == "oracle")
             {
@@ -916,6 +917,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.HasOptional(t => t.ShipmentType).WithMany().HasForeignKey(d => d.ShipmentTypeId);
             this.HasOptional(t => t.SalesmanUser).WithMany().HasForeignKey(d => d.SalesmanUserId);
             this.HasRequired(t => t.CreatedByUser).WithMany().HasForeignKey(d => d.CreatedByUserId);
+            this.HasRequired(t => t.HandlerUser).WithMany().HasForeignKey(d => d.HandlerUserId);
             this.HasOptional(t => t.GrossWeightUnit).WithMany().HasForeignKey(d => d.GrossWeightUnitCode);
             this.HasRequired(t => t.UpdatedByUser).WithMany().HasForeignKey(d => d.UpdatedByUserId);
             this.HasOptional(t => t.CustomClearancePoint).WithMany().HasForeignKey(d => d.CustomClearancePointId);
