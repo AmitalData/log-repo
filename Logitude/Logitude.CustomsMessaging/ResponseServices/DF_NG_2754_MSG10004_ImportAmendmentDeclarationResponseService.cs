@@ -1079,8 +1079,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 supplierInvoiceItemPM.ItemCode = invoiceItem.ItemCode;
                                 supplierInvoiceItemPM.ItemDescription = invoiceItem.ItemDescription;
 
+                            supplierInvoiceItemPM.ItemAdditionalStatus = invoiceItem.ItemAdditionalStatus;
+                            supplierInvoiceItemPM.CertificatesStatusCode = invoiceItem.CertificatesStatusCode;
+ 
                             }
-                            
+ 
+
                         }
                         else
                         {
