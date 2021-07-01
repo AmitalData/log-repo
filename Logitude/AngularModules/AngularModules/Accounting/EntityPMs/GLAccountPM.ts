@@ -10,7 +10,7 @@
 import {GLAccountWithholdingTaxPM} from './GLAccountWithholdingTaxPM';
 import {GLAccountInterestPeriodPM} from './GLAccountInterestPeriodPM';
 import {GLAccountCurrencyPM} from './GLAccountCurrencyPM';
-//import {GLAccountPM} from './GLAccountPM';
+import {GLAccountPM} from './GLAccountPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -864,6 +864,16 @@ export class GLAccountPM {
     public set InsuredCreditLimit(newValue: number) { if (this.insuredCreditLimit != newValue) { this.insuredCreditLimit = newValue; this.MarkAsDirty("InsuredCreditLimit"); } }
        
 	 
+    private balanceInForeignCurrency: number;
+    public get BalanceInForeignCurrency() { return this.balanceInForeignCurrency; }
+    public set BalanceInForeignCurrency(newValue: number) { if (this.balanceInForeignCurrency != newValue) { this.balanceInForeignCurrency = newValue; this.MarkAsDirty("BalanceInForeignCurrency"); } }
+       
+	 
+    private foreignBalanceInDue: number;
+    public get ForeignBalanceInDue() { return this.foreignBalanceInDue; }
+    public set ForeignBalanceInDue(newValue: number) { if (this.foreignBalanceInDue != newValue) { this.foreignBalanceInDue = newValue; this.MarkAsDirty("ForeignBalanceInDue"); } }
+       
+	 
 
     public OldEntityPM: GLAccountPM;
 		
@@ -892,4 +902,4 @@ export class GLAccountPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

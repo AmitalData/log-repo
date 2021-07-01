@@ -306,6 +306,10 @@ namespace Logitude.Accounting.Data.EntityLists
        public string ThirdPeriodsMonths  { get; set; }
        [DataMember]
        public double? InsuredCreditLimit  { get; set; }
+       [DataMember]
+       public decimal? BalanceInForeignCurrency  { get; set; }
+       [DataMember]
+       public decimal? ForeignBalanceInDue  { get; set; }
    }
 
 }
