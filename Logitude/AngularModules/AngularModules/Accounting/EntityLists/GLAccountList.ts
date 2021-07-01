@@ -154,6 +154,8 @@ export class GLAccountList {
 	SecondPeriodsMonths: string;
 	ThirdPeriodsMonths: string;
 	InsuredCreditLimit: number;
+	BalanceInForeignCurrency: number;
+	ForeignBalanceInDue: number;
 	
 }
  
