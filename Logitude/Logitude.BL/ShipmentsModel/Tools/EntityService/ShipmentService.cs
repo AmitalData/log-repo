@@ -7029,7 +7029,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private void UpdateConnectedPackages(ShipmentPackagePM itemPM)
         {
-            List<ShipmentPackage> shipmentPackages = this.shipmentPackageRepository.GetSingleShipmentPackageByContainerId(itemPM.ShipmentId,itemPM.ContainerEntityId,tenant);
+            List<ShipmentPackage> shipmentPackages = this.shipmentPackageRepository.GetShipmentsPackagesByContainerIdAndTenant(itemPM.ShipmentId,itemPM.ContainerEntityId,tenant);
             if (shipmentPackages != null)
             {
                 foreach(ShipmentPackage shipmentPackage in shipmentPackages)
@@ -7038,7 +7038,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         UpdateConnectedStanadAloneShipmentPackages(itemPM, shipmentPackage);
                 }
             }
-            List<ShipmentPickUpDeliveryPackage> shipmentPickUpDeliveryPackages = this.shipmentPickUpDeliveryPackageRepository.GetSingleShipmentPickUpDeliveryPackageByContainerId(itemPM.ContainerEntityId, tenant);
+            List<ShipmentPickUpDeliveryPackage> shipmentPickUpDeliveryPackages = this.shipmentPickUpDeliveryPackageRepository.GetShipmentPickUpDeliveryPackagesByContainerIdAndTenant(itemPM.ContainerEntityId, tenant);
             if(shipmentPickUpDeliveryPackages != null)
             {
                 foreach(ShipmentPickUpDeliveryPackage shipmentPickUpDeliveryPackage in shipmentPickUpDeliveryPackages)
