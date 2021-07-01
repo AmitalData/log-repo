@@ -28,6 +28,7 @@ using Logitude.BL.Helpers;
 using Simplog.Data.Helpers;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.EntityPMs;
+using System.Data.Entity;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -976,6 +977,9 @@ namespace WebFreight.Web.ReportsWebServices
                     this.ComputeOriginCountryAndLocationVariables(provider, shipment, masterData);
                     this.ComputeDestinationCountryAndLocationVariables(provider, shipment, masterData);                                        
                 }
+
+                provider.MasterNumber = masterData == null ? null : masterData.Master;
+                this.GetCarrierNumber(provider, shipment, masterData);
                 #endregion
 
                 #region Containers
@@ -1024,6 +1028,10 @@ namespace WebFreight.Web.ReportsWebServices
 
                 }
                 #endregion
+
+                provider.HouseNumber = shipment.House;
+                provider.GrossWeight = shipment.GrossWeight;
+                provider.Volume = shipment.Volume;
 
                 provider.PayableInvoices = new List<PayableInvoiceProvider>();
                 provider.ReceivableInvoices = new List<ReceivableInvoiceProvider>();
@@ -1179,6 +1187,53 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                 }
             }
+        }
+
+        private void GetCarrierNumber(ShipmentProfitInvoicesDataProvider provider, Shipment shipment, ShipmentMasterData shipmentMasterData)
+        {
+            if (shipmentMasterData == null)
+                return;
+
+            if (shipment.TransportModeId == "O")
+            {
+                provider.CarrierNumber = this.GetCarrierNumberByVessel(shipmentMasterData);
+            }
+            else if (shipment.TransportModeId == "A")
+            {
+                provider.CarrierNumber = shipmentMasterData.MainCarriageCarrierNumber != null ? shipmentMasterData.MainCarriageCarrierNumber : null;
+            }
+            else if (shipment.TransportModeId == "I")
+            {
+                provider.CarrierNumber = this.GetCarrierNumberByTrucker(shipmentMasterData);
+            }
+        }
+
+        private string GetCarrierNumberByVessel(ShipmentMasterData shipmentMasterData)
+        {
+            if (!string.IsNullOrEmpty(shipmentMasterData.MainCarriageVesselId))
+            {
+                Vessel maincarriagevessel = (from a in commonContext.Vessels
+                                             where a.Id == shipmentMasterData.MainCarriageVesselId
+                                             select a).FirstOrDefault();
+
+               if(maincarriagevessel != null)
+                    return maincarriagevessel.EnglishName + " " + shipmentMasterData.MainCarriageCarrierNumber;
+            }
+            return null;
+        }
+
+        private string GetCarrierNumberByTrucker(ShipmentMasterData shipmentMasterData)
+        {
+            if (!string.IsNullOrEmpty(shipmentMasterData.MainCarriageCarrierId))
+            {
+                Trucker trucker = (from a in commonContext.Truckers.Include("Card")
+                                   where a.Id == shipmentMasterData.MainCarriageCarrierId
+                                   select a).FirstOrDefault();
+
+               if(trucker != null)
+                    return trucker.Card.EnglishName + " " + shipmentMasterData.MainCarriageCarrierNumber;
+            }
+            return null;
         }
 
         private string ServiceStringConvertor(string str)
