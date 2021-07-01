@@ -65,7 +65,16 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.CalCreditAllotmentCommission).HasColumnName("CalCreditAllotmentCommission").HasPrecision(18, 2);
 
-            this.Property(t => t.CalculatedPostponedCheques).HasColumnName("CalculatedPostponedCheques").HasPrecision(16, 2);
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.CalculatedPostponedChequesCommision).HasColumnName("CalculatedPostponedChequesComm").HasPrecision(16, 2);
+			}
+			else
+			{
+              this.Property(t => t.CalculatedPostponedChequesCommision).HasColumnName("CalculatedPostponedChequesCommision").HasPrecision(16, 2);
+			}
+
         }
     }
 }

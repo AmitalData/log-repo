@@ -79,7 +79,7 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public decimal? CalCreditAllotmentCommission  { get; set; }
        [DataMember]
-       public decimal? CalculatedPostponedCheques  { get; set; }
+       public decimal? CalculatedPostponedChequesCommision  { get; set; }
    }
 
 }

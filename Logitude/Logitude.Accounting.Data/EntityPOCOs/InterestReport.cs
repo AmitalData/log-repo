@@ -79,8 +79,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public decimal? CreditAllotmentPercentage { get; set; }
         [Column("CalCreditAllotmentCommission")]
 	    public decimal? CalCreditAllotmentCommission { get; set; }
-        [Column("CalculatedPostponedCheques")]
-	    public decimal? CalculatedPostponedCheques { get; set; }
+     
+	    public decimal? CalculatedPostponedChequesCommision { get; set; }
     }
 }
 	 

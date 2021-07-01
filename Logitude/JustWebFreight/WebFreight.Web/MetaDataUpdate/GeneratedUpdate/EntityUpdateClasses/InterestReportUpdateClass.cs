@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InterestReportUpdateClass
    {  		
-		public const string HashString = "9280645e3277d66c6718c0881d9437fc";
+		public const string HashString = "f5c94c0b523aeec175d3dc20e2523ca1";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2577,7 +2577,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "CalculatedPostponedCheques",
+					 						FieldName =  "CalculatedPostponedChequesCommision",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -2596,8 +2596,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "CalculatedPostponedCheques",
-					  						ListPropertyPath =  "CalculatedPostponedCheques",
+					  						PMPropertyPath =  "CalculatedPostponedChequesCommision",
+					  						ListPropertyPath =  "CalculatedPostponedChequesCommision",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -2617,12 +2617,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DigitsAfterPoint =  2,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "CalculatedPostponedCheques",
-					  						DefaultText =  "Calculated Postponed Cheques",
-					  						FullLocalDefaultText =  "שקים דחויים מחושבים",
-					  						ListFieldLable =  "CalculatedPostponedChequesListLable",
-					  						ListLableDefaultText =  "Calculated Postponed Cheques",
-					  						ListLocalDefaultText =  "שקים דחויים מחושבים",
+					  						FullFieldLable =  "CalculatedPostponedChequesCommision",
+					  						DefaultText =  "Calculated Postponed Cheques Commision",
+					  						FullLocalDefaultText =  "עמלת שקים דחויים מחושבת",
+					  						ListFieldLable =  "CalculatedPostponedChequesCommisionListLable",
+					  						ListLableDefaultText =  "Calculated Postponed Cheques Commision",
+					  						ListLocalDefaultText =  "עמלת שקים דחויים מחושבת",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

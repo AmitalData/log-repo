@@ -75,7 +75,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
 											  CalCreditAllotmentCommission = a.CalCreditAllotmentCommission,
 
-											  CalculatedPostponedCheques = a.CalculatedPostponedCheques,
+											 CalculatedPostponedChequesCommision = a.CalculatedPostponedChequesCommision,
 
 											});
             return query;

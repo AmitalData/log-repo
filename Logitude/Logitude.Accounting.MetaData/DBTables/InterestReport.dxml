@@ -156,7 +156,8 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="CalculatedPostponedCheques"
+    Name="CalculatedPostponedChequesCommision"
+    OldNames="CalculatedPostponedCheques"
     Type="decimal"
     Precision="16"
     Scale="2">

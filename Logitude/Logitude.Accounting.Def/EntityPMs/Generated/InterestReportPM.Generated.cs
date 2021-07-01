@@ -975,25 +975,25 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private decimal? calculatedPostponedCheques ;
+	  private decimal? calculatedPostponedChequesCommision ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public decimal? CalculatedPostponedCheques  
+       public decimal? CalculatedPostponedChequesCommision  
 	   {
 	    
 	     get
 		{
-		   return calculatedPostponedCheques;
+		   return calculatedPostponedChequesCommision;
 		 }
 		 set
 		 {
-		   if(calculatedPostponedCheques != value)
+		   if(calculatedPostponedChequesCommision != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CalculatedPostponedCheques",OldValue=calculatedPostponedCheques,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CalculatedPostponedChequesCommision",OldValue=calculatedPostponedChequesCommision,NewValue=value,PropertyType="decimal?"};
 		    NotifyPropertyChanged(values);
-		   calculatedPostponedCheques=value;
+		   calculatedPostponedChequesCommision=value;
 		   }
 			
 		 }

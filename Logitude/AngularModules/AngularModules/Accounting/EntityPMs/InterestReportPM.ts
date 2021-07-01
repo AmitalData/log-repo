@@ -259,9 +259,9 @@ export class InterestReportPM {
     public set CalCreditAllotmentCommission(newValue: number) { if (this.calCreditAllotmentCommission != newValue) { this.calCreditAllotmentCommission = newValue; this.MarkAsDirty("CalCreditAllotmentCommission"); } }
        
 	 
-    private calculatedPostponedCheques: number;
-    public get CalculatedPostponedCheques() { return this.calculatedPostponedCheques; }
-    public set CalculatedPostponedCheques(newValue: number) { if (this.calculatedPostponedCheques != newValue) { this.calculatedPostponedCheques = newValue; this.MarkAsDirty("CalculatedPostponedCheques"); } }
+    private calculatedPostponedChequesCommision: number;
+    public get CalculatedPostponedChequesCommision() { return this.calculatedPostponedChequesCommision; }
+    public set CalculatedPostponedChequesCommision(newValue: number) { if (this.calculatedPostponedChequesCommision != newValue) { this.calculatedPostponedChequesCommision = newValue; this.MarkAsDirty("CalculatedPostponedChequesCommision"); } }
        
 	 
 
