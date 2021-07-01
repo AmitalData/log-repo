@@ -79,7 +79,12 @@ namespace Logitude.Customs.Data.Repsitories
             (context as DbContextBase)
                 .DeleteWhere<Consignment>(rec => rec.DeclarationId == entityKeyFields.Id);
         }
-
+        public string GetManfiestNumberByDecId(string declarationId, int tenant)
+        {
+            return (from a in context.Consignments
+                    where a.DeclarationId == declarationId && a.Tenant == tenant
+                    select a.ManifestNumber).FirstOrDefault();
+        }
         //partial void onRemove(Consignment entity)
         //{
         //    //entity.DeclarationId

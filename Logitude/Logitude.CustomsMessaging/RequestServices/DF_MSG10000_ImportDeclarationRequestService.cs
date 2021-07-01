@@ -1318,7 +1318,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             }
 
             //Get supplier Item Certificate - From SupplierInvioceItemsCertificates Table
-            foreach (var CertificateItem in supplierInvoiceItemPM.SupplierInvioceItemCertificats)
+            foreach (var CertificateItem in supplierInvoiceItemPM.SupplierInvioceItemCertificats.OrderBy(x=>x.SequenceNumeric))
             {
                 if (!(string.IsNullOrWhiteSpace(CertificateItem.ResConfirmationTypeCode) && string.IsNullOrWhiteSpace(CertificateItem.CertificateNumber) && string.IsNullOrWhiteSpace(CertificateItem.CertificateExemptionTypeCode) && string.IsNullOrWhiteSpace(CertificateItem.AttachmentTypeCode) && string.IsNullOrWhiteSpace(CertificateItem.CustomsAttachmentID)))
                 { // moran 26.9.16 - Task 22961 - enter into 'if' fields are empty
