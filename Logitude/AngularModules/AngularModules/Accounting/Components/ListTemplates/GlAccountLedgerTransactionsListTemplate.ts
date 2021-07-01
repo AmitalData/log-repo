@@ -24,6 +24,12 @@ export class GlAccountLedgerTransactionsListTemplate {
     public ColorCode: string;
     public TenantCurrencySign: string;
     public ChequeStatusColor = "black";
+    public ChequeStatusColorDictionary = {
+        'הופקד- טרם נפרע': 'orange',
+        'בקופה': 'orange',
+        'משמרת': 'orange',
+        'הוחזר ללקוח' : 'red',
+        'נפרע': 'green', };
 
 
     public _JournalExtendedListService = new JournalExtendedListService();
@@ -209,15 +215,7 @@ export class GlAccountLedgerTransactionsListTemplate {
 
     GetChequeStatusColor(chequeStatus) {
 
-         if (chequeStatus == "בקופה" || chequeStatus == "משמרת" || chequeStatus == "הופקד- טרם נפרע") {
-             this.ChequeStatusColor = "orange";
-         }
-         else if (chequeStatus == "הוחזר ללקוח") {
-             this.ChequeStatusColor = "red";
-         }
-         else if (chequeStatus == "נפרע") {
-             this.ChequeStatusColor = "green";
-        }
+        this.ChequeStatusColor = this.ChequeStatusColorDictionary[chequeStatus];
 
         return this.ChequeStatusColor;
     }
