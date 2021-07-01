@@ -869,7 +869,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
             this.SendButtonEnabled = true;
         }
 
-        if (!AppTool.IsNullOrEmpty(entityPM.PaymentDate)) {
+        if (!AppTool.IsNullOrEmpty(entityPM.IsSubmitDeclaration)) {
             this.IsDisplayOnly = true;
             this.OkButtonEnabled = false;
             this.SendButtonEnabled = false;
@@ -883,12 +883,12 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
             this.ErrorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.WaitingApproval");
         }
 
-        if (entityPM.DeclarationStatusTypeCode == "10") {
+        /*if (entityPM.DeclarationStatusTypeCode == "10") {
             this.IsDisplayOnly = true;
             this.OkButtonEnabled = false;
             this.SendButtonEnabled = false;
             this.ErrorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.FuturePayment");
-        }
+        }*/
 
         var controller = SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController;
         if (controller.InDisplayMode == true) {
