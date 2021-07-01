@@ -121,12 +121,12 @@
     <Compile Include="Models\ShipmentReceivablePM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CargoTrackingBuildService.cs" />
-    <Compile Include="Steps\UpdatingADirectShipmentUpdatesCargoTrackingShipmentAfterBuildSteps.cs" />
+    <Compile Include="Steps\BuildCargoTrackingDatabaseAfterAdjustingOrAddingShipmentsSteps.cs" />
     <Compile Include="Steps\SharedCargoTrackingSteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Features\UpdatingADirectShipmentUpdatesCargoTrackingShipmentAfterBuild.feature" />
+    <None Include="Features\BuildCargoTrackingDatabaseAfterAdjustingOrAddingShipments.feature" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

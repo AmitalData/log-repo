@@ -15,10 +15,10 @@ using TechTalk.SpecFlow;
 namespace Logitude.CargoTrackingTests.Steps
 {
     [Binding]
-    public class UpdatingADirectShipmentUpdatesCargoTrackingShipmentAfterBuildSteps
+    public class BuildCargoTrackingDatabaseAfterAdjustingOrAddingShipmentsSteps
     {
         private readonly ShipmentContext ShipmentContext;
-        public UpdatingADirectShipmentUpdatesCargoTrackingShipmentAfterBuildSteps(ShipmentContext shipmentContext)
+        public BuildCargoTrackingDatabaseAfterAdjustingOrAddingShipmentsSteps(ShipmentContext shipmentContext)
         {
             ShipmentContext = shipmentContext;
         }
@@ -42,6 +42,20 @@ namespace Logitude.CargoTrackingTests.Steps
                 GetUpdatedCargoTrackingShipment(ShipmentContext.DirectShipment.SecurityKey,ShipmentContext.DirectShipment.Tenant);
             cargoTrackingShipmentResponse.Data.GrossWeight.Should().Be(200);
         }
+
+        [When(@"building cargo tables")]
+        public void WhenBuildingCargoTables()
+        {
+            ScenarioContext.Current.Pending();
+        }
+
+
+        [Then(@"a cargo tracking shipment with the same id will be created")]
+        public void ThenACargoTrackingShipmentWithTheSameIdWillBeCreated()
+        {
+            ScenarioContext.Current.Pending();
+        }
+
 
         private ApiResponse<ShipmentPM> UpdateShipmentGrossWeight(ShipmentPM shipment)
         {

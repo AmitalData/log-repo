@@ -19,7 +19,7 @@ namespace Logitude.CargoTrackingTests.Features
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class BuildCargoTrackingDatabaseAfterAdjustingAShipmentFeature : object, Xunit.IClassFixture<BuildCargoTrackingDatabaseAfterAdjustingAShipmentFeature.FixtureData>, System.IDisposable
+    public partial class BuildCargoTrackingDatabaseAfterAdjustingOrAddingShipmentsFeature : object, Xunit.IClassFixture<BuildCargoTrackingDatabaseAfterAdjustingOrAddingShipmentsFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -28,10 +28,10 @@ namespace Logitude.CargoTrackingTests.Features
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "UpdatingADirectShipmentUpdatesCargoTrackingShipmentAfterBuild.feature"
+#line 1 "BuildCargoTrackingDatabaseAfterAdjustingOrAddingShipments.feature"
 #line hidden
         
-        public BuildCargoTrackingDatabaseAfterAdjustingAShipmentFeature(BuildCargoTrackingDatabaseAfterAdjustingAShipmentFeature.FixtureData fixtureData, Logitude_CargoTrackingTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public BuildCargoTrackingDatabaseAfterAdjustingOrAddingShipmentsFeature(BuildCargoTrackingDatabaseAfterAdjustingOrAddingShipmentsFeature.FixtureData fixtureData, Logitude_CargoTrackingTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -40,7 +40,7 @@ namespace Logitude.CargoTrackingTests.Features
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "BuildCargoTrackingDatabaseAfterAdjustingAShipment", "\tWith pre-prepared base and shipment data\r\n\tUpdate a Shipment and Build Cargo Tra" +
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "BuildCargoTrackingDatabaseAfterAdjustingOrAddingShipments", "\tWith pre-prepared base and shipment data\r\n\tUpdate a Shipment and Build Cargo Tra" +
                     "cking Data", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
@@ -82,7 +82,7 @@ namespace Logitude.CargoTrackingTests.Features
         }
         
         [Xunit.SkippableFactAttribute(DisplayName="Updating a direct shipment gross weight and building cargo tracking")]
-        [Xunit.TraitAttribute("FeatureTitle", "BuildCargoTrackingDatabaseAfterAdjustingAShipment")]
+        [Xunit.TraitAttribute("FeatureTitle", "BuildCargoTrackingDatabaseAfterAdjustingOrAddingShipments")]
         [Xunit.TraitAttribute("Description", "Updating a direct shipment gross weight and building cargo tracking")]
         public virtual void UpdatingADirectShipmentGrossWeightAndBuildingCargoTracking()
         {
@@ -122,6 +122,47 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
+        [Xunit.SkippableFactAttribute(DisplayName="Creating a new direct shipment and building cargo tracking")]
+        [Xunit.TraitAttribute("FeatureTitle", "BuildCargoTrackingDatabaseAfterAdjustingOrAddingShipments")]
+        [Xunit.TraitAttribute("Description", "Creating a new direct shipment and building cargo tracking")]
+        public virtual void CreatingANewDirectShipmentAndBuildingCargoTracking()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Creating a new direct shipment and building cargo tracking", null, tagsOfScenario, argumentsOfScenario);
+#line 11
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 12
+ testRunner.Given("a direct shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 13
+ testRunner.When("building cargo tables", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 14
+ testRunner.Then("a cargo tracking shipment with the same id will be created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
         [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
         [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
         public class FixtureData : System.IDisposable
@@ -129,12 +170,12 @@ this.ScenarioInitialize(scenarioInfo);
             
             public FixtureData()
             {
-                BuildCargoTrackingDatabaseAfterAdjustingAShipmentFeature.FeatureSetup();
+                BuildCargoTrackingDatabaseAfterAdjustingOrAddingShipmentsFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                BuildCargoTrackingDatabaseAfterAdjustingAShipmentFeature.FeatureTearDown();
+                BuildCargoTrackingDatabaseAfterAdjustingOrAddingShipmentsFeature.FeatureTearDown();
             }
         }
     }
