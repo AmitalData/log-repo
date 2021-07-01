@@ -438,7 +438,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
 
         private static void SetToWarehouseDate(DataRow tableRow)
         {
-            if (tableRow["DirectionId"].Equals("I"))
+            if (tableRow["DirectionId"].Equals("I") || tableRow["DirectionId"].Equals("C"))
             {
                 tableRow.SetField("ToWarehouseDate", tableRow["WarehouseLegActualEntryDate"]);
             }
@@ -449,7 +449,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
 
         private static void SetToWarehouseEstimationDate(DataRow tableRow)
         {
-            if (tableRow["DirectionId"].Equals("I"))
+            if (tableRow["DirectionId"].Equals("I") || tableRow["DirectionId"].Equals("C"))
             {
                 tableRow.SetField("ToWarehouseEstimationDate", tableRow["WarehouseLegExpectedEntryDate"]);
             }
