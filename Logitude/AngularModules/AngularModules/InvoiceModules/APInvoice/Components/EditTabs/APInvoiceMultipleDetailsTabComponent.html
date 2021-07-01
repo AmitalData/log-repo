@@ -204,7 +204,7 @@
                                     </td>
 
                                     <td style="width: 300px;">
-                                        <SearchBox [ObjectTableName]="'Shipment'" [IsQuickSearch]="true" [IsDisabled]="!IsEditingEnabled" (ItemClicked)="AddShipment($event)" [QueryFilterItems] ="apiQueryFilters" [AutoClearSearchText]="true"></SearchBox>
+                                        <SearchBox [ObjectTableName]="'Shipment'" [IsQuickSearch]="true" [IsDisabled]="!IsEditingEnabled" (ItemClicked)="AddShipment($event)" [QueryFilterItems]="apiQueryFilters" [AutoClearSearchText]="true"></SearchBox>
                                     </td>
 
                                     <td style="width: 10px;">
@@ -222,8 +222,19 @@
                                             <li style="width:70px;" (click)="LevelCodeitemClicked('HouseAndDirect')" (mouseover)="LevelCodeMouseOver('MasterAndHouse')" (mouseleave)="LevelCodeMouseLeave('HouseAndDirect')" [class.SelectedFilter]="LevelCodeSelectedValue === 'HouseAndDirect'" title="House And Direct">
                                                 Shipments
                                             </li>
-                      
                                         </ul>
+                                    </td>
+
+                                    <td style="width: 5px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width: 1px;">
+                                        <button [disabled]="!IsEditingEnabled" class="Button" (click)="AddShipmentsButtonClicked()">Add Shipments</button>
+                                    </td>
+
+                                    <td style="width: 5px;">
+                                        <div></div>
                                     </td>
 
                                     <td>

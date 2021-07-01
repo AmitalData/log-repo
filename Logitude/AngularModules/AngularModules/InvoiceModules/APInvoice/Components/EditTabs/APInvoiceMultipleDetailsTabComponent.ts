@@ -20,10 +20,9 @@ import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocato
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { Output, EventEmitter } from '@angular/core';
+import { InvoiceDomainService } from '../../../../Invoice/Services/InvoiceDomainService';
 
-
-@Component({
-    
+@Component({    
     templateUrl: './APInvoiceMultipleDetailsTabComponent.html',
 })
 
@@ -68,9 +67,14 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
                     if (this.editingShipmentRequested) {
                         this.RunEditShipment();
                     }
+
+                    else if (this.loadShipmentsRequested) {
+                        this.StartLoadingShipments();
+                    }
                 }
 
                 this.editingShipmentRequested = false;
+                this.loadShipmentsRequested = false;
             });
 
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
@@ -757,6 +761,35 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
         }
 
         this.EntityPM.ShipmentsNumbers = shipmentsNumbers;
+    }
+
+    private loadShipmentsRequested: boolean = false;
+    AddShipmentsButtonClicked() {
+        if (this.EntityPM.IsDirty) {
+            this.loadShipmentsRequested = true;
+            this.SaveChanges();
+        }
+
+        else {
+            this.StartLoadingShipments();
+        }        
+    }
+    private StartLoadingShipments() {
+        this.CurrentSession.StartBusyIndicatorLoading();
+
+        var service: InvoiceDomainService = new InvoiceDomainService();
+        service.GetShipmentsForMultipleAPInvoice(this.EntityPM.Id, this.VendorId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var shipments: ShipmentList[] = myResponse.Result;
+                if (shipments.length > 0) {
+                    shipments.forEach(item => {
+                        this.AddShipment(item);
+                    });
+                }
+            }
+
+            this.CurrentSession.StopBusyIndicator();
+        });
     }
 }
 
