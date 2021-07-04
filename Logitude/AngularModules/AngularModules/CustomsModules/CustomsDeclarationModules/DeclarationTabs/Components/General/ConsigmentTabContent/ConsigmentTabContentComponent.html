@@ -140,6 +140,13 @@
                                                         <IconButton *ngIf="CargoTypeCode == '20'" style="float:left;" [IsSmall]="true" [Name]="'search'"
                                                                     [IsIconOnly]="true"
                                                                     (click)="CargoQueryRequestMethod()"></IconButton>
+                                              
+                                                        <IconButton *ngIf="CargoTypeCode == '8'"
+                                                                    style="float:left;" [Name]="'Edit'" [IsSmall]="true" (click)="openKanamDeclaration()"></IconButton>
+                                                   
+                                                    <!--<span class="CellSeparator" style="float: right;"></span>-->
+
+                                                
                                                     </div>
                                                 </td>
 
@@ -178,6 +185,14 @@
                                                                     (click)="CargoQueryRequestMethod()"></IconButton>
                                                     </div>
                                                 </td>
+                                                <!--<td style="width: 20px;">
+
+                                                    <div *ngIf="CargoTypeCode == '8'" style="width: 22px; float: right; height:20px; padding-top: 2px; display:block">
+                                                        <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="openKanamDeclaration()"></IconButton>
+                                                    </div>-->
+                                                    <!--<span class="CellSeparator" style="float: right;"></span>-->
+
+                                                <!--</td>-->
                                             </tr>
 
                                             <tr style="height: 25px;">
