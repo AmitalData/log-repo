@@ -56,8 +56,6 @@ namespace Logitude.Customs.Data.Repsitories
                     && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
-
-
         public Declaration GetAcceptDeclarationAmendment(string id, int tenant)
         {
 
@@ -65,7 +63,20 @@ namespace Logitude.Customs.Data.Repsitories
             (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
 
             return (from a in context.Declarations
-                    where ((a.Id == id && a.AmendmentDontDisplayInList == false && a.DeclarationNumber != null) || (a.AmendmentOriginalDeclartation == id &&    a.DeclarationNumber != null && a.AmendmentDontDisplayInList == false))
+                    where ((a.Id == id && a.AmendmentDontDisplayInList == false && a.DeclarationNumber != null) || (a.AmendmentOriginalDeclartation == id && a.DeclarationNumber != null && a.AmendmentDontDisplayInList == false))
+                    && a.Tenant == tenant
+                    select a).FirstOrDefault();
+        }
+
+
+        public Declaration GetAcceptDeclarationAmendmentByCustomsFile(string customFileNo, int tenant)
+        {
+
+            //SELECT * FROM AMINEt_MAIN.Declarations Extent1 WHERE((Extent1.DeclarationNumber = :p__linq__0) OR ((Extent1.DeclarationNumber IS NULL) AND(:p__linq__0 IS NULL))) AND(Extent1.Tenant = :p__linq__1)
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
+            return (from a in context.Declarations
+                    where (a.CustomFileNo == customFileNo && a.AmendmentDontDisplayInList == false && a.DeclarationNumber != null)
                     && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
