@@ -571,7 +571,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         if (this.EntityPM.DirectionId != newValue) {
             this.EntityPM.DirectionId = newValue;
             this.IsInlandDomestic = this.TransportModeId == "I" && this.DirectionId == "D" ? true : false;
-            this.CustomerDependencyProperty1 = this.IsInlandDomestic ? this.CustomerDependencyProperty1 + ",WH" : this.CustomerDependencyProperty1;
+            this.CustomerDependencyProperty1 = this.IsInlandDomestic ? this.CustomerDependencyProperty1 + ",WH" : this.CustomerDependencyProperty1.replace(',WH','');
             this.CustomerDependencyProperty1IsList = true;
             this.OnFiltersChanged();
             this.SetTransportModes();
@@ -603,7 +603,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             this.IsLCLEntity = AppTool.IsLCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
             this.IsFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
             this.IsInlandDomestic = this.TransportModeId == "I" && this.DirectionId == "D" ? true : false;
-            this.CustomerDependencyProperty1 = this.IsInlandDomestic ? this.CustomerDependencyProperty1 + ",WH" : this.CustomerDependencyProperty1;
+            this.CustomerDependencyProperty1 = this.IsInlandDomestic ? this.CustomerDependencyProperty1 + ",WH" : this.CustomerDependencyProperty1.replace(',WH', '');
             this.CustomerDependencyProperty1IsList = true;
             this.DelOrderDetails();
             this.OnFiltersChanged();
