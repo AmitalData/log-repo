@@ -64,7 +64,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 DeclarationCourierStatusRepository rep = new DeclarationCourierStatusRepository(context);
 
-                   List< DeclarationCourierStatus> decCouriers = rep.GetByMasterIDDeclarationCourierStatus(requestParams.Tenant, requestParams.LoggingEntityId);
+                   List< DeclarationCourierStatus> decCouriers = rep.GetByMasterIDDeclarationCourierStatus(requestParams.Tenant, customResponse.EntityId);
                 CourierMasterRepository courierMasterRepository = new CourierMasterRepository(context);
                 CourierMasterQueryService courierMasterQueryService = new CourierMasterQueryService(courierMasterRepository);
                 CourierMasterPM courierMasterPM = courierMasterQueryService.GetSingle(customResponse.EntityId, false, false);
@@ -85,8 +85,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
                     courierMasterPM.OpenDeclarations = decCouriers.Count(x => x.IsClosedForFollowUp == false);
-
-                    CourierMasterUpdateService courierMasterUpdateService = new CourierMasterUpdateService(context);
+                    courierMasterPM.ChangeSetOp = ChangeSetOperation.Update; 
+                    CourierMasterUpdateService courierMasterUpdateService = new CourierMasterUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
 
 
                     courierMasterUpdateService.Update(courierMasterPM, true);
