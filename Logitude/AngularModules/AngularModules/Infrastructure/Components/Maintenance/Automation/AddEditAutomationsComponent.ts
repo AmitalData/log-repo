@@ -1362,7 +1362,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 this.AutomationEmailRecipientFieldLists.push(new AutomationEmailRecipientFieldItem(objectField));
             }
 
-            if (objectField.CanAutomateSetValue && !objectField.IsCustom) this.AutomationSetValuebjectFieldLists.push(objectField);
+            if (objectField.CanAutomateSetValue || objectField.IsCustom) this.AutomationSetValuebjectFieldLists.push(objectField);
 
             if (objectField.FieldName == "CreatedByUserId" || objectField.FieldName == "SalesmanUserId" || objectField.FieldName == "UpdatedByUserId" || objectField.FieldName == "AccountManagerUserId") {
                 this.FollowUpOwnerObjectFieldLists.push(objectField);
@@ -1386,7 +1386,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 if (objectField.FieldName == "SLAId") {
                     this.AutomationSetSLAValue.ObjectFieldCode = objectField.FieldCode;
                 }
-                this.AddCustomObjectFieldToAutomationSetValuebjectFieldLists(objectField);
+            //    this.AddCustomObjectFieldToAutomationSetValuebjectFieldLists(objectField);
             }
         });
 
@@ -1452,11 +1452,11 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
     }
 
-    private AddCustomObjectFieldToAutomationSetValuebjectFieldLists(objectField: ObjectFieldPM) {
-        if (objectField.IsCustom) {
-            this.AutomationSetValuebjectFieldLists.push(objectField);
-        }
-    }
+ //   private AddCustomObjectFieldToAutomationSetValuebjectFieldLists(objectField: ObjectFieldPM) {
+ //       if (objectField.IsCustom) {
+ //           this.AutomationSetValuebjectFieldLists.push(objectField);
+ //       }
+ //  }
 
     IsViewCondition: boolean;
     BuildAutomationCondition() {
