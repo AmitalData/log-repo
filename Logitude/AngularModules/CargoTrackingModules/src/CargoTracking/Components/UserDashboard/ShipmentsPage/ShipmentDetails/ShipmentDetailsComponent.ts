@@ -25,7 +25,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
 
     @Input() DetailsSectionToggleEvent: EventEmitter<any> = new EventEmitter();
 
-    isLoading: boolean = false;
+    public isLoading: boolean = true;
     showMoreReferences: boolean = false;
     SecurityKey: string = "";
     Shipment: CargoTrackingShipmentWithMilestones = null;
@@ -69,12 +69,6 @@ export class ShipmentDetailsComponent implements AfterViewInit
     ngAfterViewInit(): void
     {
         this.LoadShipment();
-        setTimeout(() =>
-        {
-            this.InitSlider();
-           /// this.BuildSliderCards();
-
-        }, 200);
         this.CreatePartnerCardsFromShipmentPM();
 
     }
@@ -123,7 +117,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
 
     LoadShipment()
     {
-        this.isLoading = true;
+        //this.isLoading = true;
         this.searchService.getShipment(this.SecurityKey, this.tenant).subscribe((result: any) =>
         {
             this.isLoading = false;
