@@ -171,7 +171,6 @@ private MappingAndGetCurrencyGlAccount():GLAccountCurrencyPM{
     GetSelectedGLAccountPM() {
         this.gLAccountPMService.get(this.selectedGLAccount.Id)
             .subscribe((response: ServiceResponse) => {
-                if (response) {
                     if (!response.HasError) {
                         this.selectedGLAccountPM = response.Result;
                         this.UpdateSelectedGLAccountPM();
@@ -180,7 +179,6 @@ private MappingAndGetCurrencyGlAccount():GLAccountCurrencyPM{
                         this.CurrentSession.StopBusyIndicator();
                         this.ValidationErrorsList = response.ErrorsArray;
                     }
-                }
             });
     }
 
@@ -188,8 +186,6 @@ private MappingAndGetCurrencyGlAccount():GLAccountCurrencyPM{
         this.selectedGLAccountPM.CardsDataId = this.entityPM.CardsDataId;
         this.gLAccountPMService.update(this.selectedGLAccountPM)
             .subscribe((response: ServiceResponse) => {
-
-                if (response) {
                     if (!response.HasError) {
                         this.CurrentSession.StopBusyIndicator();
                         this.CurrentSession.CloseCurrentWindowEmit("ok");
@@ -198,7 +194,6 @@ private MappingAndGetCurrencyGlAccount():GLAccountCurrencyPM{
                         this.CurrentSession.StopBusyIndicator();
                         this.ValidationErrorsList = response.ErrorsArray;
                     }
-                }
             });
     }
 
