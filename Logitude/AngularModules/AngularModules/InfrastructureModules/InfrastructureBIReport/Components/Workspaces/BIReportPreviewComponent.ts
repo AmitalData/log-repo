@@ -130,7 +130,8 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     }
     getFixedButtonTitle() {
         if (this.hasFixedFilter)
-            this.filterButtonTitle = "Show fixed filters"; 
+            this.filterButtonTitle = "Show fixed filters";
+        this.filterButtonTitle = "No available fixed filters";
     } 
 
     public Run(args: any) {
