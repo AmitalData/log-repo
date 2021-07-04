@@ -1668,7 +1668,7 @@ namespace HypredTest
         private string Login()
         {
             LoginProxy.LoginWcfServiceClient loginService = new LoginProxy.LoginWcfServiceClient();
-            Response loginResponse = loginService.Login("maheera@fnarsoft.com", "0");//"tomerp@amital.co.il", "!T123456");  ("islam@logitudeworld.com", "!I123456");//("yaronc@amital.co.il", "!Y123456");//"yaronc@amital.co.il", "!Y123456");//
+            Response loginResponse = loginService.Login("islam@fnarsoft.com", "0");//"tomerp@amital.co.il", "!T123456");  ("islam@logitudeworld.com", "!I123456");//("yaronc@amital.co.il", "!Y123456");//"yaronc@amital.co.il", "!Y123456");//
             if (!loginResponse.HasError)
             {
                 Token = loginResponse.Result;
@@ -3320,7 +3320,10 @@ namespace HypredTest
                     break;
                 case "Hybrid Tenant State":
                     response = TestHybridTenantStateService();
-                    break; 
+                    break;
+                case "Address":
+                    response =  TestAddressService();
+                    break;
                 default:
                     MessageBox.Show("select a service to test");
                     break;
@@ -3333,6 +3336,34 @@ namespace HypredTest
             }
 
             MessageBox.Show("Success " + response?.Result);
+
+        }
+
+        private Response TestAddressService()
+        {
+            AddressProxy.AddressWcfServiceClient addressService = new AddressProxy.AddressWcfServiceClient();
+            AddressProxy.AddressPM address = new AddressProxy.AddressPM()
+            {
+                ExternalId = "EXT1234",
+                Tenant = 1,
+                Address1 = "Al Beireh",
+                Address2 = "Jawwal",
+                AddressTypeId = "M", // M: main address, B: billing // O:Other
+                ATTN = "11111",
+                CardId = "70132",
+                City = "Ramallah",
+                CountryId = "PS",
+                Name = "Main Address",
+                ZipCode = "0972",
+                Description = "ramallah address updated",
+            };
+            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)addressService.InnerChannel))
+            {
+                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
+                Response response = addressService.Upsert(address, false);
+
+                return response;
+            }
 
         }
 
