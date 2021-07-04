@@ -685,7 +685,9 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string ForwarderStandaloneShipmentId { get; set; }
         public DateTime? ExpectedCargoReadyDate { get; set; }
         public DateTime? ActualCargoReadyDate { get; set; }
-        public string Handler { get; set; }
+        public virtual User HandlerUser { get; set; }
+        public string HandlerUserId { get; set; }
+
 
     }
 }

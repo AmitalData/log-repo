@@ -3172,9 +3172,10 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="Handler"
+    Name="HandlerUserId"
+    OldNames="Handler"
     Type="varchar"
-    Size="50">
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
@@ -3887,6 +3888,11 @@
     ForeignKeyColumn="OnForwardingAdditionalTransportModeCode"
     ReferencedTable="PickUpDeliveryTransportModes"
     ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="HandlerUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant,CustomFileNumber" />
