@@ -102,7 +102,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         #endregion
 
-        public DeclarationPM MapResponseToDeclaration(UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration declaration, int tenant, bool FromImporter, string idOrg, out string error, bool isUpdate = false, string user = null, bool isUpdateAfterAccept=false)
+        public DeclarationPM MapResponseToDeclaration(UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration declaration, int tenant, bool FromImporter, string idOrg, out string error, bool isUpdate = false, string user = null, bool isUpdateAfterAccept=false, bool isCopy =false)
         {
             error = "";
             try
@@ -198,8 +198,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     if (isFromAmendment)
                     {
-                        declarationPM.ReplacingRepairRequest = declarationOrg.AmendmentRequestNumber;
-                       declarationPM.AmendmentOriginalDeclartation = declarationOrg.AmendmentOriginalDeclartation;
+                        if(!isCopy)
+                        {
+                            declarationPM.ReplacingRepairRequest = declarationOrg.AmendmentRequestNumber;
+
+                        }
+                        declarationPM.AmendmentOriginalDeclartation = declarationOrg.AmendmentOriginalDeclartation;
                         //declarationPM.AmendmentRequestNumber = declarationOrg.AmendmentRequestNumber;
                     }
                     else
@@ -865,7 +869,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     supplierInvoiceItemPM.SequenceNumeric = (int)governmentAgencyGoodsItem.SequenceNumeric;
                     supplierInvoiceItemPM.OriginCountryCode = GetValueCodeType(governmentAgencyGoodsItem.Origin.CountryCode);
                     if (item.Invoice.DMExtensions.InvoiceAmount != null) supplierInvoiceItemPM.ItemPriceCurrencyCode = item.Invoice.DMExtensions.InvoiceAmount.currencyID.ToString();
-
+                      
                     supplierInvoiceItemPM.Tenant = tenant;
                     if (governmentAgencyGoodsItem.Commodity.DMExtensions != null)
                     {
@@ -1058,17 +1062,31 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             SupplierInvoiceItemVehicleQueryService supplierInvoiceItemVehicleQueryService = new SupplierInvoiceItemVehicleQueryService(context);
 
                             SupplierInvoiceItemQueryService supplierInvoiceItemQueryService = new SupplierInvoiceItemQueryService(context);
-                            var invoiceItem = supplierInvoiceItemQueryService.GetSingleSupplierInvoicePMBySequence(decIdOrg, Convert.ToInt32(supplierInvoicePM.InvoiceCounterKey), Convert.ToInt32(supplierInvoiceItemPM.SequenceNumeric));
-                            //supplierInvoiceItemPM.SupplierInvoiceItemVehicles = invoiceItem.SupplierInvoiceItemVehicles;
 
-                            supplierInvoiceItemPM.SupplierInvoiceItemVehicles  =supplierInvoiceItemVehicleQueryService.GetSupplierInvoiceItemVehiclesForSupplierInvoiceItem(invoiceItem.DeclarationId, Convert.ToInt32(invoiceItem.CounterKey), invoiceItem.LineNumber, tenant);
-                            foreach (var supplierInvoiceItemVehicle in supplierInvoiceItemPM.SupplierInvoiceItemVehicles)
+                            var invoiceItem = supplierInvoiceItemQueryService.GetSingleSupplierInvoicePMBySequence(decIdOrg, Convert.ToInt32(supplierInvoicePM.SequenceNumeric), Convert.ToInt32(supplierInvoiceItemPM.SequenceNumeric));
+                         if(invoiceItem!= null)
                             {
-                                supplierInvoiceItemVehicle.ChangeSetOp = ChangeSetOperation.Insert;
-                            }
+       
+                            supplierInvoiceItemPM.SupplierInvoiceItemVehicles  =supplierInvoiceItemVehicleQueryService.GetSupplierInvoiceItemVehiclesForSupplierInvoiceItem(invoiceItem.DeclarationId, Convert.ToInt32(invoiceItem.CounterKey), invoiceItem.LineNumber, tenant);
 
+                               // supplierInvoiceItemVehicleQueryService.GetSupplierInvoiceItemVehiclesForSupplierInvoiceItem(invoiceItem.DeclarationId, Convert.ToInt32(invoiceItem.CounterKey), invoiceItem.LineNumber, tenant);
+
+                                foreach (var supplierInvoiceItemVehicle in supplierInvoiceItemPM.SupplierInvoiceItemVehicles)
+                                {
+                                    supplierInvoiceItemVehicle.ChangeSetOp = ChangeSetOperation.Insert;
+                                }
+
+
+                                supplierInvoiceItemPM.CatalogNumber = invoiceItem.CatalogNumber;
+                                supplierInvoiceItemPM.ItemCode = invoiceItem.ItemCode;
+                                supplierInvoiceItemPM.ItemDescription = invoiceItem.ItemDescription;
                             supplierInvoiceItemPM.ItemAdditionalStatus = invoiceItem.ItemAdditionalStatus;
                             supplierInvoiceItemPM.CertificatesStatusCode = invoiceItem.CertificatesStatusCode;
+
+                            }
+
+
+                           
                         }
                         else
                         {
