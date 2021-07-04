@@ -379,6 +379,23 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         }
 
+        public DeclarationPM GetAcceptDeclarationAmendmentByCustomsFile(string customFile, int tenant)
+        {
+
+            var declaration = repository.GetAcceptDeclarationAmendmentByCustomsFile(customFile, tenant);
+            DeclarationPM declarationPM = new DeclarationPM();
+            DeclarationDataMapping mapping = new DeclarationDataMapping();
+            if (declaration == null) return null;
+
+            mapping.CustomPOCOToPM(declarationPM, declaration);
+            mapping.POCOToPM(declarationPM, declaration);
+
+
+
+            return declarationPM;
+
+        }
+
 
         public string GetIdByCustomFileNo(string customFileNo, int tenant)
         {

@@ -1066,6 +1066,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             {
                                 supplierInvoiceItemVehicle.ChangeSetOp = ChangeSetOperation.Insert;
                             }
+
+                            supplierInvoiceItemPM.ItemAdditionalStatus = invoiceItem.ItemAdditionalStatus;
+                            supplierInvoiceItemPM.CertificatesStatusCode = invoiceItem.CertificatesStatusCode;
                         }
                         else
                         {
