@@ -978,7 +978,7 @@ namespace WebFreight.Web.ReportsWebServices
                     this.ComputeDestinationCountryAndLocationVariables(provider, shipment, masterData);                                        
                 }
 
-                provider.MasterNumber = masterData == null ? null : masterData.Master;
+                provider.MasterNumber = masterData?.Master;
                 this.GetCarrierNumber(provider, shipment, masterData);
                 #endregion
 
@@ -1200,7 +1200,7 @@ namespace WebFreight.Web.ReportsWebServices
             }
             else if (shipment.TransportModeId == "A")
             {
-                provider.CarrierNumber = shipmentMasterData.MainCarriageCarrierNumber != null ? shipmentMasterData.MainCarriageCarrierNumber : null;
+                provider.CarrierNumber = shipmentMasterData.MainCarriageCarrierNumber;
             }
             else if (shipment.TransportModeId == "I")
             {
@@ -1226,12 +1226,12 @@ namespace WebFreight.Web.ReportsWebServices
         {
             if (!string.IsNullOrEmpty(shipmentMasterData.MainCarriageCarrierId))
             {
-                Trucker trucker = (from a in commonContext.Truckers.Include("Card")
+                Card truckerCard = (from a in commonContext.Cards
                                    where a.Id == shipmentMasterData.MainCarriageCarrierId
                                    select a).FirstOrDefault();
 
-               if(trucker != null)
-                    return trucker.Card.EnglishName + " " + shipmentMasterData.MainCarriageCarrierNumber;
+               if(truckerCard != null)
+                  return truckerCard.EnglishName + " " + shipmentMasterData.MainCarriageCarrierNumber;
             }
             return null;
         }
