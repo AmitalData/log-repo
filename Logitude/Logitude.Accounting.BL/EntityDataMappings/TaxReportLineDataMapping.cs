@@ -53,6 +53,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 result = string.IsNullOrEmpty(result) ? entityPM.Reference : result + "," + entityPM.Reference;
 
             }
+
+            if (!string.IsNullOrEmpty(entityPM.PreviousReference))
+            {
+                result = string.IsNullOrEmpty(result) ? entityPM.PreviousReference : result + "," + entityPM.PreviousReference;
+            }
             //if (!string.IsNullOrEmpty(entityPM.ReferecneGroup))
             //{
             //    result = string.IsNullOrEmpty(result) ? entityPM.ReferecneGroup : result + "," + entityPM.ReferecneGroup;

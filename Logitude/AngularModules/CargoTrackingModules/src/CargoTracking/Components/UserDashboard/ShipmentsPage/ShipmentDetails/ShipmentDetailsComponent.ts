@@ -9,6 +9,10 @@ import { CargoTrackingPortService } from '../../../../Services/Others/CargoTrack
 import { CargoTrackingShipmentService } from '../../../../Services/Others/CargoTrackingShipmentService';
 import { CargoTrackingShipmentCustomsData } from "../../../../DataContracts/CargoTrackingShipmentCustomsData";
 import { DocumentDownloadService } from '../../../../Services/Others/DocumentDownloadService';
+import { MessageWindowComponent } from '../../../../../Infrastructure/Components/MessageWindow/MessageWindowComponent';
+import { MatDialog } from '@angular/material/dialog';
+import { DatePipe } from '@angular/common';
+
 @Component({
     selector: 'ShipmentDetailsComponent',
     templateUrl: './ShipmentDetailsComponent.html',
@@ -54,7 +58,9 @@ export class ShipmentDetailsComponent implements AfterViewInit
         private searchService: CargoTrackingSearchService,
         private cargoTrackingPortService: CargoTrackingPortService,
         private cargoTrackingShipmentService: CargoTrackingShipmentService,
-        private documentDownloadService: DocumentDownloadService)
+        private documentDownloadService: DocumentDownloadService,
+        public dialog: MatDialog,
+        private datePipe: DatePipe)
     {
 
         this.GetIdFromURI();
@@ -389,7 +395,9 @@ export class ShipmentDetailsComponent implements AfterViewInit
                 newCard.Description = milstone.Notes;
                 newCard.IsDimmed = milstone.IsEstimation && !milstone.Done;
                 newCard.IsActive = milstone.Id + '' == this.Shipment.ShipmentList.CurrentMilestoneCode;
-                newCard.HasWarning = newCard.IsActive;
+                newCard.HasWarning = milstone.IsCurrent && this.Shipment.ShipmentList.CurrentMilestoneExceptions != null;
+                newCard.WarningMessage = this.Shipment.ShipmentList.CurrentMilestoneExceptions?.split("\n")[1];
+                newCard.WarningDate = this.datePipe.transform(this.Shipment.ShipmentList.CurrentMilestoneExceptions?.split("\n")[0], 'dd/MM/yyyy, HH:mm');
                 return newCard;
             });
         this.SetNoMilstonesFound();
@@ -901,6 +909,16 @@ export class ShipmentDetailsComponent implements AfterViewInit
         this.ShowDetailsSection = !this.ShowDetailsSection;
         this.DetailsSectionToggleEvent.emit();
     }
+
+    OpenMessageWindow(messageText) {
+        this.dialog.open(MessageWindowComponent, {
+            data: {
+                title: 'Alert',
+                date : messageText?.split("\n")[0],
+                description : messageText?.split("\n")[1],
+            }
+        });
+    } 
 }
 
 
@@ -913,6 +931,8 @@ export class MilestoneCard
     IsActive: boolean;
     HasWarning: boolean;
     IsDimmed: boolean;
+    WarningMessage: string;
+    WarningDate: string;
 }
 
 export class RoutingStep

@@ -205,7 +205,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 var rowtype = rawLine.Split(',')[0];///.Substring(0, 1);
 
-                if (Opening_LineDTO_JCSV_ISL.RowType.Contains(rowtype) || Opening_LineDTO_JCSV_ISL.RowType.Contains(rowtype.Substring(0, 1)))
+                if (Opening_LineDTO_JCSV_ISL.RowType.Contains(rowtype) || (rowtype.Length >= 1 && Opening_LineDTO_JCSV_ISL.RowType.Contains(rowtype.Substring(0, 1))))
                 {
                     Opening_Line = Opening_LineDTO_JCSV_ISL.Create(rawLine);
                     reading_Lines = true;
@@ -339,7 +339,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         text_2 = TranslateTextsClassTranslate("JournalsCSV.O.CreditGLAccount", 0, useLocal);
                         this.AddErrorRow($"{text}{count} {text_2} {text_44}");
                     }
-                    GLAccountPM creditPM = gLAccountQueryService.GetSinglePMByInternalNumber(jLine.CreditGLAccount, tenant);
+                    GLAccountPM creditPM = gLAccountQueryService.GetSinglePMByDisplayNumber(jLine.CreditGLAccount, tenant);
                     if (creditPM == null)
                     {
                         text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
@@ -361,7 +361,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         text_2 = TranslateTextsClassTranslate("JournalsCSV.O.DebitGLAccount", 0, useLocal);
                         this.AddErrorRow($"{text}{count} {text_2} {text_44}");
                     }
-                    GLAccountPM debitPM = gLAccountQueryService.GetSinglePMByInternalNumber(jLine.DebitGLAccount, tenant);
+                    GLAccountPM debitPM = gLAccountQueryService.GetSinglePMByDisplayNumber(jLine.DebitGLAccount, tenant);
                     if (debitPM == null)
                     {
                         text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
@@ -457,7 +457,7 @@ namespace Logitude.Accounting.BL.CoreBL
             if (rawLine.Length >= 1)
             {
                 actualRowType = rawLine.Split(',')[0]; ////rawLine.Substring(0, 1);
-                if (RowType.Contains(actualRowType) || RowType.Contains(actualRowType.Substring(0, 1))) startsWithRowTypeOk = true;
+                if (RowType.Contains(actualRowType) || (actualRowType.Length >= 1 && RowType.Contains(actualRowType.Substring(0, 1)))) startsWithRowTypeOk = true;
             }
 
             if (!startsWithRowTypeOk || actualRowType == "")
@@ -565,7 +565,7 @@ namespace Logitude.Accounting.BL.CoreBL
             string actualRowType = "";
             if (rawLine.Length >= 1)
             {
-                actualRowType = rawLine.Substring(0, 1);
+                if (rawLine.Length >= 1) actualRowType = rawLine.Substring(0, 1);
                 if (RowType.Contains(actualRowType)) startsWithRowTypeOk = true;
             }
 
@@ -614,22 +614,22 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 if (rec.ActionCode == "1") // credit 
                 {
-                    rec.CreditGLAccount = values[1].TrimStart('0');
+                    rec.CreditGLAccount = values[1].TrimStart('G');
                 }
                 else // debit
                 {
-                    rec.DebitGLAccount = values[1].TrimStart('0');
+                    rec.DebitGLAccount = values[1].TrimStart('G');
                 }
             }
             if (count > 2)
             {
                 if (rec.ActionCode == "1") // credit 
                 {
-                    rec.DebitGLAccount = values[2].TrimStart('0'); // opposite
+                    rec.DebitGLAccount = values[2].TrimStart('G'); // opposite
                 }
                 else // debit
                 {
-                    rec.CreditGLAccount = values[2].TrimStart('0'); // opposite 
+                    rec.CreditGLAccount = values[2].TrimStart('G'); // opposite 
                 }
             }
             string txtDateTime = "";
@@ -639,7 +639,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
             if (count > 3)
             {
-                txtDateTime = values[3].Substring(0, 8);
+                txtDateTime = values[3];
+                if (txtDateTime.Length >= 8) txtDateTime = txtDateTime.Substring(0, 8);
                 rec.AccountingDateString = txtDateTime;
                 if (rec.AccountingDateString != _EmptyDate)
                 {
@@ -652,7 +653,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
             if (count > 4)
             {
-                txtDateTime = values[4].Substring(0, 8);
+                txtDateTime = values[4];
+                if (txtDateTime.Length >= 8) txtDateTime = txtDateTime.Substring(0, 8);
                 rec.DocumentDateString = txtDateTime;
                 if (rec.DocumentDateString != _EmptyDate)
                 {
@@ -665,7 +667,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
             if (count > 5)
             {
-                txtDateTime = values[5].Substring(0, 8);
+                txtDateTime = values[5];
+                if (txtDateTime.Length >= 8) txtDateTime = txtDateTime.Substring(0, 8);
                 rec.DueDateString = txtDateTime;
                 if (rec.DueDateString != _EmptyDate)
                 {

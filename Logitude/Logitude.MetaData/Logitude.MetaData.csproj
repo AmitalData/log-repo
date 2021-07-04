@@ -212,6 +212,7 @@
     <None Include="DBScripts\GlobalModel\202106060833_AddContainerStatusesReceiverWR.sxml" />
     <None Include="DBScripts\GlobalModel\202106081600_AddContainerStatusesConnecterWR.sxml" />
     <None Include="DBScripts\GlobalModel\AddCollaborationToolSgipmentUpdateBatchService.sxml" />
+    <None Include="DBScripts\GlobalModel\AddShipmentCreateSgipmentUpdateBatchService.sxml" />
     <None Include="DBScripts\GlobalModel\AddShipmentUpdateSgipmentUpdateBatchService.sxml" />
     <None Include="DBScripts\GlobalModel\AddTransfareOnGoingSgipmentUpdateBatchService.sxml" />
     <None Include="DBScripts\InfrastructureModel\202101120950_ModifyDBMigrationLastScriptTrigger.sxml" />
@@ -310,6 +311,7 @@
     <None Include="DBScripts\InfrastructureModel\GetDateFormateFunction.sxml" />
     <None Include="DBScripts\InfrastructureModel\DropChangeCurrencyFunctions.sxml" />
     <None Include="DBScripts\InfrastructureModel\GetLastRateFunction.sxml" />
+    <None Include="DBScripts\InfrastructureModel\UpdateDWSubQueries.sxml" />
     <None Include="DBScripts\InsertDBMigrationSettingsData.sxml" />
     <None Include="DBScripts\InvoiceModel\202012060902_FillPaidDateOfAPInvoices.sxml" />
     <None Include="DBScripts\InvoiceModel\202012201448_SAT voided invoices and payments.sxml" />
@@ -511,7 +513,11 @@
     <None Include="DBScripts\ShipmentModel\202102241906_UpdateCustomerContactAndAddress.sxml" />
     <None Include="DBScripts\ShipmentModel\202103211413_UpdateOnForwardingDepartedEventStatusWeight.sxml" />
     <None Include="DBScripts\ShipmentModel\202104051350_UpdatePreForwardingArrivedStatusWeight.sxml" />
+    <None Include="DBScripts\ShipmentModel\202106231043_FillShipmentPackagesContainerStatusSourceCode.sxml" />
+    <None Include="DBScripts\ShipmentModel\202106171550_FillShipmentContainerStatuseSource.sxml" />
+    <None Include="DBScripts\ShipmentModel\202106171540_FillContainerStatusSources.sxml" />
     <None Include="DBScripts\ShipmentModel\202104251340_UpdateCustomClearanceStatusWeight.sxml" />
+    <None Include="DBScripts\ShipmentModel\202106231025_AddOceatInsightUpdateEventToTenants.sxml" />
     <None Include="DBScripts\ShipmentModel\202122031108_UpdateFollowUpForwardingEvents.sxml" />
     <None Include="DBScripts\ShipmentModel\UpdateshipmentsCalculateDocumentsKPIFields.sxml" />
     <None Include="DBScripts\ShipmentModel\UpdateShipmentsCalculateSendDocumentField.sxml" />
@@ -966,6 +972,7 @@
     <None Include="DBTables\ShipmentsModel\AWBSpecialHandlingCode.dxml" />
     <None Include="DBTables\ShipmentsModel\AWBStatus.dxml" />
     <None Include="DBTables\ShipmentsModel\Container.dxml" />
+    <None Include="DBTables\ShipmentsModel\ContainerStatus.dxml" />
     <None Include="DBTables\ShipmentsModel\CustomsTransferHeader.dxml" />
     <None Include="DBTables\ShipmentsModel\CustomsTransferLine.dxml" />
     <None Include="DBTables\ShipmentsModel\CustomsTransferType.dxml" />
@@ -1126,6 +1133,8 @@
     <None Include="EntityFiles\CommonDataModel\FilingInbox.lxml" />
     <None Include="EntityFiles\CommonDataModel\FilingInboxAttachmentLog.lxml" />
     <None Include="EntityFiles\ShipmentsModel\Container.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\ContainerStatus.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\ContainerStatusSource.lxml" />
     <None Include="EntityFiles\ShipmentsModel\OBLType.lxml" />
     <None Include="EntityFiles\CommonDataModel\PaymentGatewayPartner.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteVATsTotal.lxml" />

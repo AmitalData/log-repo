@@ -31,7 +31,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         const string LineType_SelfInvoiceTransactions = "M";
         const string StatusCode_VATAmountInTheRecordIsHigherThanThePercentageOfVATAllowed = "9";
         const string TaxReportLineInputType = "I";
-
+        const string ReferenceGroupDefaultValue = "0000";
         protected override void OnCreating(TaxReportLinePM entityPM, EntityPM entityParentPM)
         {
             entityPM.IsManuallyChanged = true;
@@ -41,10 +41,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void OnUpdating(TaxReportLinePM entityPM, TaxReportLine entityPOCO)
         {
-           
+            SetReferenceFields(entityPM);
             SetTaxReportLineStatusCodeAndLineTypeCode(entityPM);
             Validate(entityPM);
             UpdateStatusByTransmitStatusCode(entityPM,entityPOCO);
+        
+          
             // TASK 43057
             if (this.EntityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
@@ -367,8 +369,74 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
            
             base.Validate(entityPM);
         }
-       
+    
+        private static void SetReferenceFields(TaxReportLinePM taxreportLine)
+        {
+            if (taxreportLine.Reference == null) SetTaxReportLineReferenceGroup(ReferenceGroupDefaultValue, taxreportLine);
+            else
+            {
+                taxreportLine.Reference = RemoveSpecialChars(taxreportLine.Reference);                
+                bool containsLetters = CheckIfReferenceContainsLetters(taxreportLine.Reference);
+                if (containsLetters)
+                {                   
+                    SetReferenceGroupForReferencesWithPrefex(taxreportLine);
+                   
+                }
+                else SetTaxReportLineReferenceGroup(ReferenceGroupDefaultValue, taxreportLine);
+                TrimMoreThan9Chars(taxreportLine);               
+            }                    
+        }
+        private static bool CheckIfReferenceContainsLetters(string reference)
+        {
+            Regex alphabet = new Regex("([A-Za-z])");
+          return alphabet.IsMatch(reference);
+        }
+        private static  void SetTaxReportLineReferenceGroup(string ReferenceGroup, TaxReportLinePM taxreportLine)
+        {
+            taxreportLine.ReferecneGroup = ReferenceGroup;
+        }
+        private static void SetReferenceGroupForReferencesWithPrefex(TaxReportLinePM taxreportLine)
+        {
+            SetTaxReportLineReferenceGroup(null, taxreportLine);
+            for (int i = 0; i < taxreportLine.Reference.Length; i++)
+            {
+                string referenceChar = taxreportLine.Reference.Substring(i, 1);
+                bool IsReferenceHasPrefix = CheckIfReferenceHasPrefex(taxreportLine.Reference, referenceChar);
+                if (IsReferenceHasPrefix)
+                {
+                    SetTaxReportLineReferenceGroup(taxreportLine.ReferecneGroup + referenceChar, taxreportLine);
+                }
+                else
+                {
+                    taxreportLine.Reference = taxreportLine.Reference.Substring(i, taxreportLine.Reference.Length - i);
+                    break;
+                }
+
+            }
+        }
+        private static bool CheckIfReferenceHasPrefex(string reference, string referenceChar)
+        {           
+            MatchCollection prefix = Regex.Matches(referenceChar, @"^[a-zA-Z]*$");
+            return prefix.Count != 0 ? true : false;
+        }
+        private static string RemoveSpecialChars(string reference)
+        {
+            char[] charsToRemove = { '-', '/', '.', '*', '\\' };
+            foreach (char c in charsToRemove)
+            {
+                reference = reference.Replace(c.ToString(), String.Empty);
+            }
+
+            return reference;
+        }
+       private static void  TrimMoreThan9Chars(TaxReportLinePM taxreportLine)
+        {
+            if (taxreportLine.Reference.Length > 9)
+            {
+                taxreportLine.Reference= taxreportLine.Reference.Substring(taxreportLine.Reference.Length - 9);
+            }
+        }
     }
 
-   
+
 }

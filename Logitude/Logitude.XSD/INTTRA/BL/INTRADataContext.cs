@@ -66,6 +66,7 @@ namespace Logitude.XSD.INTTRA.BL
         private MoveType MoveType;
         private string MoveType_Name;
         private Contact LoggedContact;
+        private ContactRepository contactRepository;
         private Contact BranchContact;
         private Contact EmergencyContact;
         public Country FromPortCountry;
@@ -87,6 +88,7 @@ namespace Logitude.XSD.INTTRA.BL
             this.shipmentMasterDataRepository = new ShipmentMasterDataRepository(shipmentContext);
             this.Shipment = shipmentRepository.GetSingleShipment(ShipmentId, Tenant);
             this.MasterData = shipmentMasterDataRepository.GetSingleMasterData(Shipment.MasterShipmentDataId);
+            this.contactRepository = new ContactRepository(this.CommonContext);
 
 
             if (!string.IsNullOrEmpty(this.Shipment.ShipmentTypeId))
@@ -1440,10 +1442,13 @@ namespace Logitude.XSD.INTTRA.BL
 
                 if (this.Shipper != null)
                 {
+                    Contact shipperContact = this.contactRepository.GetSingleContact(this.Shipment.ShipperContactId,this.Tenant);
+
                     INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
                     {
                         PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.Shipper,
                         PartnerName = this.iNTTRAGeneralMethods.GetStringList(this.Shipper.EnglishName, 2, 35).ToArray<string>(),
+                        ContactInformation = shipperContact != null ? this.GetContactInformation(shipperContact) : null,
                     };
 
                     if (this.ShipperAddress != null)
@@ -1462,10 +1467,13 @@ namespace Logitude.XSD.INTTRA.BL
                 Card myCard = (from d in CommonContext.Cards where d.Id == this.Shipment.ConsigneeId select d).FirstOrDefault();
                 if (myCard != null)
                 {
+                    Contact consigneeContact = this.contactRepository.GetSingleContact(this.Shipment.ConsigneeContactId, this.Tenant);
+
                     INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
                     {
                         PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.Consignee,
                         PartnerName = this.iNTTRAGeneralMethods.GetStringList(myCard.EnglishName, 2, 35).ToArray<string>(),
+                        ContactInformation = consigneeContact != null ? this.GetContactInformation(consigneeContact) : null,
                     };
 
                     if (this.ConsigneeAddress != null)

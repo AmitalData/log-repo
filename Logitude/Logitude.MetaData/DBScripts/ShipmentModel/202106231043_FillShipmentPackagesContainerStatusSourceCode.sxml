@@ -1,0 +1,12 @@
+﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="ShipmentPackages">
+  <Sql Version="1">
+    <![CDATA[
+    IF NOT EXISTS (SELECT Code FROM ContainerStatusSources where Code = 'INT')
+    BEGIN 
+    insert into ContainerStatusSources values ('INT','INT','INT')
+    END
+    update ShipmentPackages set ContainerStatusSourceCode = 'INT' where  $LastCounterWhere$
+  
+    ]]>
+  </Sql>
+</Script>

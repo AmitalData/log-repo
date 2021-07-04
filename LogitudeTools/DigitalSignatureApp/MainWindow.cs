@@ -29,7 +29,7 @@ namespace Cloud.Sign.App
 {
     public partial class MainWindow : Form
     {
-        public string Version = "2.38";
+        public string Version = "2.42";
         //RegistryKey reg = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
         object _Obj = new object();
         public string Token = "";
@@ -1821,13 +1821,13 @@ namespace Cloud.Sign.App
                 //'Dim rec As New iTextSharp.text.Rectangle(wSize - 105, hSize - 125, wSize - 25, hSize - 25)
                 iTextSharp.text.Rectangle rec = new iTextSharp.text.Rectangle(wSize - 350, hSize - 64, wSize - 250, hSize);
                 iTextSharp.text.Rectangle currentPageRectangle = pdfReader.GetPageSizeWithRotation(1);
-                if (currentPageRectangle.Width > currentPageRectangle.Height)
-                {
-                    //page is landscape
-                    rec = new iTextSharp.text.Rectangle(wSize - 350, hSize - 420, wSize - 250, hSize);
-                    //rec = new iTextSharp.text.Rectangle(wSize - 150, hSize - 150, wSize - 200, hSize - 200);
-                    //rec = new iTextSharp.text.Rectangle(currentPageRectangle.Width - 150, currentPageRectangle.Height - 150, currentPageRectangle.Width - 200, currentPageRectangle.Height - 200);
-                }
+                //if (currentPageRectangle.Width > currentPageRectangle.Height)
+                //{
+                //    //page is landscape
+                //    rec = new iTextSharp.text.Rectangle(wSize - 350, hSize - 420, wSize - 250, hSize);
+                //    //rec = new iTextSharp.text.Rectangle(wSize - 150, hSize - 150, wSize - 200, hSize - 200);
+                //    //rec = new iTextSharp.text.Rectangle(currentPageRectangle.Width - 150, currentPageRectangle.Height - 150, currentPageRectangle.Width - 200, currentPageRectangle.Height - 200);
+                //}
                 //else
                 //{
                 //    //page is portrait

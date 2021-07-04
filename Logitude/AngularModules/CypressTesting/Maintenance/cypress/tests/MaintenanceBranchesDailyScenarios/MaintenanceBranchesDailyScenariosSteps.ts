@@ -4,8 +4,9 @@ import * as BranchActions from "../../actions/BranchActions";
 import * as Actions from "../../actions/Actions";
 import { BranchSelectors } from "../../selectors/BranchSelectors";
 import * as MaintenanceActions from "../../actions/Actions";
-import * as GeneralActions from "../../actions/GeneralActions";
+import * as GeneralActions from "../../actions/BaseActions";
 import { BranchDetails } from "../../models/BranchDetails";
+import { AddressDetails } from "../../models/AddressDetails";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetails";
 import * as BaseActions from "../../../../Base/cypress/actions/Actions"
@@ -75,9 +76,9 @@ Then("the branch should open successfully", () => {
 
 //#region Edit the Branch by adding address
 Given("the user create address with the following details", (dataTable) => {
-    BranchActions.NavigateAddressWizard()
-    let branchAddressDetails = Assists.CreateInstance<BranchDetails>(dataTable, true);
-    BranchActions.FillBranchAddressDetails(branchAddressDetails)
+    GeneralActions.NavigateAddressWizard()
+    let addressDetails = Assists.CreateInstance<AddressDetails>(dataTable, true);
+    GeneralActions.FillAddressDetails(addressDetails)
 });
 
 When("create address", () => {

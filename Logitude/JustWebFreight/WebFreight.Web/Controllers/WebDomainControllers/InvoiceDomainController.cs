@@ -350,7 +350,21 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 DateTime? registergdate = DateHelper.GetDate(registergDateString);
                 CashBookPM cashBook = cashQuery.GetByPaymentAndCurrency(currency, methodType, tenant);
-                ARPaymentValidator.ValidateFullAccounting(null, tenant, billTo, currency, cashBook, code, registergdate, bankAccountId, true);
+
+                FullAccountingARPaymentValidatorArguments arpaymentValidatorArgs = new FullAccountingARPaymentValidatorArguments()
+                {
+                    ChequeReplicas = null,
+                    Tenant = tenant,
+                    BillToId = billTo,
+                    PaymentCurrencyId = currency,
+                    CashBook = cashBook,
+                    PaymentMethodCode = code,
+                    RegisterDate = registergdate,
+                    BankAccountId = bankAccountId,
+                    IsOut = true,
+                    IsNewEntity = true
+                };
+                ARPaymentValidator.ValidateFullAccounting(arpaymentValidatorArgs);
 
                 return Request.CreateResponse(HttpStatusCode.OK, "");
             }

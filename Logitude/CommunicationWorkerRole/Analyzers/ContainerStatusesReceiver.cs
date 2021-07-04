@@ -45,8 +45,23 @@ namespace CommunicationWorkerRole.Analyzers
                 binding.MaxReceivedMessageSize = 2147483647;
                 binding.ReaderQuotas.MaxStringContentLength = 2147483647;
                 binding.ReaderQuotas.MaxArrayLength = 2147483647;
+                binding.Security.Transport.ClientCredentialType =HttpClientCredentialType.None;
+                binding.Security.Transport.ProxyCredentialType =  HttpProxyCredentialType.None;
+
                 var endpoint = new EndpointAddress(LogitudeSettings.AmitalCloudEnvironmentURL + "WcfApi/LoginWcfService.svc");
                 LoginWcfServiceClient loginService = new LoginWcfServiceClient(binding, endpoint);
+
+                if (loginService.Endpoint.Address.Uri.Scheme == "https")
+                {
+                    binding.Security.Mode = BasicHttpSecurityMode.Transport;
+                    binding.Security.Message.ClientCredentialType = BasicHttpMessageCredentialType.Certificate;
+                }
+                else
+                {
+                    binding.Security.Mode = BasicHttpSecurityMode.None;
+                    binding.Security.Message.ClientCredentialType = BasicHttpMessageCredentialType.UserName;
+                }
+
                 var aPICredentialsParameters = new APICredentialsParameters()
                 {
                     PrimaryKey = LogitudeSettings.AmitalCloudLogitudeTenantPrimaryKey,
@@ -64,8 +79,22 @@ namespace CommunicationWorkerRole.Analyzers
             binding.MaxReceivedMessageSize = 2147483647;
             binding.ReaderQuotas.MaxStringContentLength = 2147483647;
             binding.ReaderQuotas.MaxArrayLength = 2147483647;
+            binding.Security.Transport.ClientCredentialType = HttpClientCredentialType.None;
+            binding.Security.Transport.ProxyCredentialType = HttpProxyCredentialType.None;
+
             var endpoint = new EndpointAddress(LogitudeSettings.AmitalCloudEnvironmentURL + "WcfApi/ExternalTasksQueueWcfService.svc");
             ExternalTasksQueueWcfServiceClient externalTasksQueueWcfService = new ExternalTasksQueueWcfServiceClient(binding, endpoint);
+
+            if (externalTasksQueueWcfService.Endpoint.Address.Uri.Scheme == "https")
+            {
+                binding.Security.Mode = BasicHttpSecurityMode.Transport;
+                binding.Security.Message.ClientCredentialType = BasicHttpMessageCredentialType.Certificate;
+            }
+            else
+            {
+                binding.Security.Mode = BasicHttpSecurityMode.None;
+                binding.Security.Message.ClientCredentialType = BasicHttpMessageCredentialType.UserName;
+            }
             this.GetTaskFromQueue(externalTasksQueueWcfService);
         }
         private async void GetTaskFromQueue(ExternalTasksQueueWcfServiceClient externalTasksQueueWcfService)
@@ -87,7 +116,7 @@ namespace CommunicationWorkerRole.Analyzers
                 }
                 if (envelopeResponse.HasError)
                 {
-                    //throw new Exception(envelopeResponse.ErrorMessage);
+                    throw new Exception(envelopeResponse.ErrorMessage);
                 }
                 var oceanInsightsPushUpdate = envelopeResponse?.Tasks?.Where(a => a.Action == "OceanInsights.PushUpdate").FirstOrDefault();
                 if (oceanInsightsPushUpdate != null)
@@ -110,7 +139,7 @@ namespace CommunicationWorkerRole.Analyzers
             var communicationLogResponse = await response;
             if (communicationLogResponse.HasError)
             {
-                //throw new Exception(response.ErrorMessage);
+                throw new Exception(communicationLogResponse.ErrorMessage);
             }
             externalTasksQueueWcfService.Close();
         }

@@ -87,7 +87,9 @@ namespace Logitude.CRM.BL.EntityDataMappings
 	         SLAId, 
 	         EntityType, 
 	         SupportMailboxId, 
-	         LastCorrespondence,
+	         LastCorrespondence, 
+	         QuoteRequestFeedback, 
+	         QuoteRequestComments,
 	      }
 
 
@@ -202,7 +204,9 @@ namespace Logitude.CRM.BL.EntityDataMappings
 	         EntityNumber, 
 	         SupportMailboxId, 
 	         LastCorrespondence, 
-	         EntityTypeName,
+	         EntityTypeName, 
+	         QuoteRequestFeedback, 
+	         QuoteRequestComments,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -534,6 +538,16 @@ namespace Logitude.CRM.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastCorrespondence))
             {
 				entityPOCO.LastCorrespondence = entityPM.LastCorrespondence;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QuoteRequestFeedback))
+            {
+				entityPOCO.QuoteRequestFeedback = entityPM.QuoteRequestFeedback;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QuoteRequestComments))
+            {
+				entityPOCO.QuoteRequestComments = entityPM.QuoteRequestComments;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -872,6 +886,16 @@ namespace Logitude.CRM.BL.EntityDataMappings
 					entityPM.LastCorrespondence = entityPOCO.LastCorrespondence;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.QuoteRequestFeedback))
+            {
+					entityPM.QuoteRequestFeedback = entityPOCO.QuoteRequestFeedback;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.QuoteRequestComments))
+            {
+					entityPM.QuoteRequestComments = entityPOCO.QuoteRequestComments;
+            }
+
 		}
 
 		public void PMToOldPM(TicketPM entityPM, TicketPM oldEntityPM)
@@ -1203,6 +1227,16 @@ namespace Logitude.CRM.BL.EntityDataMappings
                 oldEntityPM.LastCorrespondence = entityPM.LastCorrespondence;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QuoteRequestFeedback))
+            {
+                oldEntityPM.QuoteRequestFeedback = entityPM.QuoteRequestFeedback;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QuoteRequestComments))
+            {
+                oldEntityPM.QuoteRequestComments = entityPM.QuoteRequestComments;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(TicketPM entityPM)
@@ -1239,6 +1273,14 @@ namespace Logitude.CRM.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.LastCorrespondence)) //T4 find type == nText 
             {
                 entityPM.LastCorrespondence = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.LastCorrespondence));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.QuoteRequestFeedback)) //T4 find type == nText 
+            {
+                entityPM.QuoteRequestFeedback = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.QuoteRequestFeedback));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.QuoteRequestComments)) //T4 find type == nText 
+            {
+                entityPM.QuoteRequestComments = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.QuoteRequestComments));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

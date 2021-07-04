@@ -2079,6 +2079,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsUpdatedByChampAnalyzer { get; set; }
         public bool IsUpdatedByGLSHKAnalyzer { get; set; }
         public bool IsUpdatedByINTTRAAnalyzer { get; set; }
+        public bool IsUpdatedOceanInsightsAnalyzer { get; set; }
 
         public bool IsCreatedFromCustomerOverview { get; set; }
 
@@ -2682,6 +2683,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsStandalonePickupDelivery { get; set; }
         public string StandalonePickupDeliveryId { get; set; }
         public string StandalonePickupDeliveryNumber { get; set; }
+        public string ForwarderStandaloneShipmentId { get; set; }
+        public string ForwarderPickUpDeliveryType { get; set; }
     }
 
     public class TransshipmentLeg

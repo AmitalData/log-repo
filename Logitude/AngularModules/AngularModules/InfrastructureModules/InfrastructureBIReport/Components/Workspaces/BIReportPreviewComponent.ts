@@ -73,8 +73,8 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     public ValidationErrorsList: string[] = [];
     public HasRunFeature: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    private hasFixedFilter = false;
-    private filterButtonTitle = "No available fixed filters";
+    public hasFixedFilter = false;
+    public filterButtonTitle = "No available fixed filters";
      
     @Output() ComputeFiltersCommand = new EventEmitter();
     constructor() {
@@ -130,7 +130,8 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     }
     getFixedButtonTitle() {
         if (this.hasFixedFilter)
-            this.filterButtonTitle = "Show fixed filters"; 
+            this.filterButtonTitle = "Show fixed filters";
+        this.filterButtonTitle = "No available fixed filters";
     } 
 
     public Run(args: any) {

@@ -1,7 +1,7 @@
 import { BusinessUnitSelectors } from "../selectors/BusinessUnitSelectors";
 import { MaintenanceSelectors } from "../selectors/Selectors";
 import * as Actions from "./Actions";
-import * as GeneralActions from "./GeneralActions";
+import * as GeneralActions from "./BaseActions";
 import { BusinessUnitDetails } from "../models/BusinessUnitDetails";
 import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import { RestAPI } from "../../../Base/cypress/constants/RestAPI";

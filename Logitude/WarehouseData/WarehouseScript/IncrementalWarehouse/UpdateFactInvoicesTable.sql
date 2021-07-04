@@ -105,7 +105,7 @@ set @APInvoicesAutomaticLastUpdateDate = (select MAX(AutomaticLastUpdateDate) Au
 
 	--inner JOIN dw_CustomObjectFields  ON dw_ARInvoices.Tenant = dw_CustomObjectFields.Tenant and dw_CustomObjectFields.ObjectTableName = 'ARInvoice'
 
-	where dw_ARInvoices.AutomaticLastUpdateDate > @ARInvoicesLastUpdateDate 
+	where dw_ARInvoices.AutomaticLastUpdateDate > @ARInvoicesLastUpdateDate and dw_ARInvoices.StatusCode <> 'VD' and dw_ARInvoices.StatusCode <> 'LL'
 
 	UNION ALL
 
@@ -142,7 +142,7 @@ set @APInvoicesAutomaticLastUpdateDate = (select MAX(AutomaticLastUpdateDate) Au
 
 	--inner JOIN dw_CustomObjectFields  ON dw_APInvoices.Tenant = dw_CustomObjectFields.Tenant and dw_CustomObjectFields.ObjectTableName = 'APInvoice'
 
-	where dw_APInvoices.AutomaticLastUpdateDate > @APInvoicesLastUpdateDate 
+	where dw_APInvoices.AutomaticLastUpdateDate > @APInvoicesLastUpdateDate and dw_APInvoices.StatusCode <> 'VD'
 
 	OPEN InvoicesCursor FETCH NEXT FROM InvoicesCursor into
 		@Id, @Tenant, @SourceTenant, @ParentTenant, @InvoiceNumber, @VATNumber, @ShipmentsNumbers, @SubTotalInLocalCurrency, @SubTotalInInvoiceCurrency,

@@ -165,6 +165,10 @@ namespace Logitude.CRM.Data.EntityMapping
 
 
             this.Property(t => t.LastCorrespondence).HasColumnName("LastCorrespondence").IsUnicode(true);
+
+            this.Property(t => t.QuoteRequestFeedback).HasColumnName("QuoteRequestFeedback").HasMaxLength(100).IsUnicode(true);
+
+            this.Property(t => t.QuoteRequestComments).HasColumnName("QuoteRequestComments").HasMaxLength(1000).IsUnicode(true);
         }
     }
 }

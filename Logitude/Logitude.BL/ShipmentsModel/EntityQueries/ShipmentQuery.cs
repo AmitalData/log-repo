@@ -1936,6 +1936,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             #endregion
 
             shipmentPM.IsStandalonePickupDelivery = shipment.IsStandalonePickupDelivery;
+            shipmentPM.ForwarderStandaloneShipmentId = shipment.ForwarderStandaloneShipmentId;
             shipmentPM.ProductCode = shipment.ProductCode;
             shipmentPM.LastStatusLogDate = shipment.LastStatusLogDate;
             shipmentPM.ComputedStatusId = shipment.ComputedStatusId;
@@ -3658,6 +3659,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
 
             shipmentPM.IsStandalonePickupDelivery = shipment.IsStandalonePickupDelivery;
+            shipmentPM.ForwarderStandaloneShipmentId = shipment.ForwarderStandaloneShipmentId;
             shipmentPM.RegistryDate = shipment.RegistryDate;
             shipmentPM.IsAssembly = shipment.IsAssembly;
             shipmentPM.MasterShipmentDataId = shipment.MasterShipmentDataId;
@@ -3789,6 +3791,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
 
             shipmentPM.IsStandalonePickupDelivery = shipment.IsStandalonePickupDelivery;
+            shipmentPM.ForwarderStandaloneShipmentId = shipment.ForwarderStandaloneShipmentId;
             shipmentPM.CreatedByPartner = shipment.CreatedByPartner;
             shipmentPM.Tenant = shipment.Tenant;
             shipmentPM.Id = shipment.Id;
@@ -13521,6 +13524,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             Shipment shipment = repository.GetShipmentForCargoTracking(id, tenant);
 
+            if (shipment == null) return null;
+
             var shipmentPM = new ShipmentPM();
 
             ShipmentMasterData masterData = (from a in repository.context.ShipmentMasterDatas
@@ -13632,7 +13637,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             Shipment shipment = repository.GetShipmentForCargoTracking(shipmentId, tenant);
 
-            if (shipment.ShipmentAdditionalCloudData == null) return null;
+            if (shipment?.ShipmentAdditionalCloudData == null) return null;
             
             ShipmentAdditionalCloudCustomData cloudCustomData = GetDeserializedCloudCustomData(shipment.ShipmentAdditionalCloudData);
             CargoTrackingShipmentCustomsData shipmentCustomsData = null;
@@ -13657,7 +13662,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 ImporterVatAmount = CalculateImporterVatAmountFromCloudCustomData(cloudCustomData),
                 TaxDetails = BuildCargoTrackingShipmentCustomTaxDetails(cloudCustomData),
                 CurrencyCode = cloudCustomData.GoodsValueDetails == null ? null : cloudCustomData.GoodsValueDetails.FirstOrDefault()?.CurrencyName,
-                CurrencySign = GetCurrencySignFromCloudCustomData(cloudCustomData, tenant)
+                CurrencySign = GetCurrencySignFromCloudCustomData(cloudCustomData, tenant),
+                DeclarationStatus= cloudCustomData.DeclarationStatus
             };
 
         }
@@ -13727,6 +13733,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public decimal TotalValueInNIS { get; set; }
         public decimal TotalValueInForeignCurrency { get; set; }
         public decimal TotalTax { get; set; }
+     
 
         public List<CargoTrackingShipmentCustomTaxDetails> TaxDetails;
     }

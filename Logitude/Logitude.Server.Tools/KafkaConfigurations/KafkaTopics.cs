@@ -3,8 +3,11 @@
     public class KafkaTopics
     {
         public static string Default = "CTool";
-        public static string ShipmentsTopic = "shipments_topic";
-        public static string TasksTopic = "tasks_topic";
+        public static string ShipmentsUpdateTopic = "shipmentsupdate_topic";
+        public static string ShipmentsCreateTopic = "shipmentscreate_topic";
+        public static string ShipmentSetValues = "shipmentsetvalues_topic";
+        public static string TasksUpdateTopic = "tasksupdate_topic";
+        public static string TasksCreateTopic = "taskscreate_topic";
         public static string LookupsTopic = "lookups_topic";
     }
 }

@@ -93,9 +93,11 @@ namespace Logitude.Accounting.BL.CoreBL.Fix
                 journalPM.JournalReconciles.ForEach(r => r.ChangeSetOp = ChangeSetOperation.Delete);
                 journalPM.JournalExternalReconciles.ForEach(r => r.ChangeSetOp = ChangeSetOperation.Delete);
                 journalPM.ChangeSetOp = ChangeSetOperation.Update;
-                if (clearIt)
+                journalPM.StatusCode = "0";
+                bool journalReco = (journalPM.AccountingEntityCode == "10" || journalPM.AccountingEntityCode == "12");
+                if (clearIt || journalReco)
                 {
-                    journalPM.StatusCode = "0";
+                    
                     journalPM.AccountingEntityCode = "1";
 
                 }

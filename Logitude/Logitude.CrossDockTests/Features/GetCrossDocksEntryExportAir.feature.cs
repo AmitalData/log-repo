@@ -19,14 +19,14 @@ namespace Logitude.CrossDockTests.Features
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [Xunit.TraitAttribute("Category", "Pre-Prepare")]
+    [Xunit.TraitAttribute("Category", "Pre-Prepare-Entry")]
     public partial class GetCrossDocksEntryExportAirFeature : object, Xunit.IClassFixture<GetCrossDocksEntryExportAirFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
         private string[] _featureTags = new string[] {
-                "Pre-Prepare"};
+                "Pre-Prepare-Entry"};
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
@@ -43,7 +43,7 @@ namespace Logitude.CrossDockTests.Features
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
             TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Get Cross Docks Entry Export Air", "\tThe API retrieves entry export air cross dock.", ProgrammingLanguage.CSharp, new string[] {
-                        "Pre-Prepare"});
+                        "Pre-Prepare-Entry"});
             testRunner.OnFeatureStart(featureInfo);
         }
         

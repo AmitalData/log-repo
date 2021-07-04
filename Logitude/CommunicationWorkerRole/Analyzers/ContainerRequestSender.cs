@@ -12,7 +12,6 @@ using System.ServiceModel;
 using WebFreight.Web.Helpers;
 using Simplog.Server.Infrastructure;
 using System.Threading.Tasks;
-using System.Threading;
 
 namespace CommunicationWorkerRole.Analyzers
 {
@@ -22,7 +21,6 @@ namespace CommunicationWorkerRole.Analyzers
         private ICommonDataContext commonContext;
         private CommunicationLogRepository communicationLogRepository;
         private CommunicationLog communicationLog;
-        private string communicationLogId;
         private string oceanInsightId;
         private LogitudeOceanInsightsRequestRepository logitudeOceanInsightsRequestRepository;
         private string refrenceNumber;
@@ -31,22 +29,16 @@ namespace CommunicationWorkerRole.Analyzers
         private string shipmentId;
         private string containerNumber;
 
-        public ContainerRequestSender(string communicationLogId, int tenant)
+        public ContainerRequestSender(CommunicationLog communicationLog, ICommonDataContext context, CommunicationLogRepository communicationLogRepository, int tenant)
         {
-            this.communicationLogId = communicationLogId;
+            commonContext = context;
+            this.communicationLog = communicationLog;
+            this.communicationLogRepository = communicationLogRepository;
             this.tenant = tenant;
-            this.InitializeComponent();
-        }
-
-        private void InitializeComponent()
-        {
-            commonContext = CommonDataContext.GetContext(this.tenant);
             logitudeOceanInsightsRequestRepository = new LogitudeOceanInsightsRequestRepository(this.tenant);
-            communicationLogRepository = new CommunicationLogRepository(commonContext);
-            communicationLog = communicationLogRepository.GetSingleCommunicationLog(communicationLogId, this.tenant);
         }
 
-        public async void Send()
+        public void Send()
         {
             ValidateRequest();
             SetRequestArguments();
@@ -54,7 +46,7 @@ namespace CommunicationWorkerRole.Analyzers
             loginToExternalServiceTask.Wait();
             if (loginToExternalServiceTask.Result != null && loginToExternalServiceTask.Result.HasError)
             {
-                throw new Exception(loginToExternalServiceTask.Result.ErrorMessage);
+                throw new ApplicationException(loginToExternalServiceTask.Result.ErrorMessage);
             }
             var token = loginToExternalServiceTask.Result.Result;
             SendContainerStatusRequestToOceanInsightSevice(token);
@@ -64,7 +56,7 @@ namespace CommunicationWorkerRole.Analyzers
         {
             if (communicationLog != null && communicationLog.EntityId == null)
             {
-                throw new Exception("Analyzing containetr status request faild, containetr not found");
+                throw new ApplicationException("Analyzing containetr status request faild, containetr not found");
             }
         }
         private void SetRequestArguments()
@@ -85,8 +77,22 @@ namespace CommunicationWorkerRole.Analyzers
             binding.MaxReceivedMessageSize = 2147483647;
             binding.ReaderQuotas.MaxStringContentLength = 2147483647;
             binding.ReaderQuotas.MaxArrayLength = 2147483647;
+            binding.Security.Transport.ClientCredentialType = HttpClientCredentialType.None;
+            binding.Security.Transport.ProxyCredentialType = HttpProxyCredentialType.None;
+
             var endpoint = new EndpointAddress(LogitudeSettings.AmitalCloudEnvironmentURL + "WcfApi/LoginWcfService.svc");
             LoginWcfServiceClient loginService = new LoginWcfServiceClient(binding, endpoint);
+            if (loginService.Endpoint.Address.Uri.Scheme == "https")
+            {
+                binding.Security.Mode = BasicHttpSecurityMode.Transport;
+                binding.Security.Message.ClientCredentialType = BasicHttpMessageCredentialType.Certificate;
+            }
+            else
+            {
+                binding.Security.Mode = BasicHttpSecurityMode.None;
+                binding.Security.Message.ClientCredentialType = BasicHttpMessageCredentialType.UserName;
+            }
+
             var aPICredentialsParameters = new APICredentialsParameters()
             {
                 PrimaryKey = LogitudeSettings.AmitalCloudLogitudeTenantPrimaryKey,
@@ -95,7 +101,7 @@ namespace CommunicationWorkerRole.Analyzers
             return await loginService.LoginByCredentialAsync(null, aPICredentialsParameters);
         }
 
-        private async void SendContainerStatusRequestToOceanInsightSevice(string externalServiceToken)
+        private void SendContainerStatusRequestToOceanInsightSevice(string externalServiceToken)
         {
             try
             {
@@ -104,19 +110,33 @@ namespace CommunicationWorkerRole.Analyzers
                 binding.MaxReceivedMessageSize = 2147483647;
                 binding.ReaderQuotas.MaxStringContentLength = 2147483647;
                 binding.ReaderQuotas.MaxArrayLength = 2147483647;
+                binding.Security.Transport.ClientCredentialType = HttpClientCredentialType.None;
+                binding.Security.Transport.ProxyCredentialType = HttpProxyCredentialType.None;
+
                 var endpoint = new EndpointAddress(LogitudeSettings.AmitalCloudEnvironmentURL + "WcfApi/OceanInsightsWcfService.svc");
                 OceanInsightsWcfServiceClient oceanInsightsWcfService = new OceanInsightsWcfServiceClient(binding, endpoint);
-                Task<Logitude.Server.Tools.Response> oceanInsightResponseTask;
+
+                if (oceanInsightsWcfService.Endpoint.Address.Uri.Scheme == "https")
+                {
+                    binding.Security.Mode = BasicHttpSecurityMode.Transport;
+                    binding.Security.Message.ClientCredentialType = BasicHttpMessageCredentialType.Certificate;
+                }
+                else
+                {
+                    binding.Security.Mode = BasicHttpSecurityMode.None;
+                    binding.Security.Message.ClientCredentialType = BasicHttpMessageCredentialType.UserName;
+                }
+
+                Logitude.Server.Tools.Response oceanInsightResponseTask;
                 using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)oceanInsightsWcfService.InnerChannel))
                 {
                     System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", externalServiceToken);
-                    oceanInsightResponseTask = oceanInsightsWcfService.InsertAsync(LogitudeSettings.OITenantNumber, scacCode, refrenceNumber, oceanInsightInsertType);
+                    oceanInsightResponseTask = oceanInsightsWcfService.Insert(LogitudeSettings.OITenantNumber, scacCode, refrenceNumber, oceanInsightInsertType);
                 }
-                var oceanInsightResponse = await oceanInsightResponseTask;
+                var oceanInsightResponse =  oceanInsightResponseTask;
                 if (oceanInsightResponse.HasError)
                 {
-                    this.MarkCommunicationLogAsFaild(oceanInsightResponse.ErrorMessage); // Need to retry or not (Issue) 
-                    throw new Exception(oceanInsightResponse.ErrorMessage);
+                    this.ThrowError(oceanInsightResponse.ErrorMessage); 
                 }
                 else
                 {
@@ -125,17 +145,16 @@ namespace CommunicationWorkerRole.Analyzers
                         oceanInsightId = oceanInsightResponse.Result;
                         this.HandelLogitudeOceanInsightsRequest();
                         this.DoneCommunicationLog();
-                    }
+                    }                        
                 }
                 oceanInsightsWcfService.Close();
-            }
+            }                                                                                                     
             catch (Exception exception)
             {
-                this.MarkCommunicationLogAsFaild(exception.Message);
-                throw exception;
+                throw new ApplicationException(exception.Message);
             }
         }
-
+               
         private void HandelLogitudeOceanInsightsRequest()
         {
             LogitudeOceanInsightsRequest logitudeOceanInsightsRequest = logitudeOceanInsightsRequestRepository.GetSingleLogitudeOceanInsightsByOceanInsigntId(oceanInsightId, this.tenant);
@@ -180,16 +199,9 @@ namespace CommunicationWorkerRole.Analyzers
             communicationLogRepository.SubmitChanges();
         }
 
-        private void MarkCommunicationLogAsFaild(string exception)
+        private void ThrowError(string exception)
         {
-            communicationLog.CommunicationStatusTypeCode = "F";
-            communicationLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(this.tenant);
-            communicationLog.DoneDateUTC = DateTime.UtcNow;
-            communicationLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(this.tenant);
-            communicationLog.LastStatusDateUTC = DateTime.UtcNow;
-            communicationLog.ExceptionMessage = exception;
-            communicationLogRepository.Update(communicationLog);
-            communicationLogRepository.SubmitChanges();
+            throw new ApplicationException(exception);
         }
     }
 }

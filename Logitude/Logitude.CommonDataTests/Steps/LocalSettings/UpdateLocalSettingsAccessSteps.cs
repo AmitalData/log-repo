@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using Logitude.CommonDataTests.ExternalServices;
+using Logitude.CommonDataTests.Services;
 using Logitude.CommonTests.Models;
 using Logitude.Test.Base.Context;
 using Logitude.Test.Base.Models.Api;

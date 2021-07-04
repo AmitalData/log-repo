@@ -40,7 +40,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports.Aging
             }
         }
 
-        private void ReBuild(int tenant)
+        public void ReBuild(int tenant)
         {
             RebuildAging4AccountTypeCode(tenant, "Customer2", null);
             RebuildAging4AccountTypeCode(tenant, "Vendor3", null);

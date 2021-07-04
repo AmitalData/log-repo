@@ -7,7 +7,7 @@ import { RestAPI } from "../../../Base/cypress/constants/RestAPI";
 import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
 import { GenerateRandomNumberAndString } from '../../../Base/cypress/actions/GenerateRandoms';
-import * as GeneralActions from './GeneralActions'
+import * as GeneralActions from './BaseActions'
 import * as Actions from './Actions'
 
 let searchFieldValue = null;

@@ -7,7 +7,7 @@ import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
 import { BranchDetails } from 'cypress/models/BranchDetails';
 import * as gr from '../../../Base/cypress/actions/GenerateRandoms';
-import * as GeneralActions from './GeneralActions'
+import * as GeneralActions from './BaseActions'
 import * as Actions from './Actions'
 
 let searchFieldValue = null;
@@ -70,16 +70,6 @@ export function AssertOpenBranch() {
 
 function AssertBranchGetSingle() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetSignle, 200);
-}
-
-export function NavigateAddressWizard() {
-    cy.get(BranchSelectors.AddressWizard).click()
-}
-
-export function FillBranchAddressDetails(branchAddressDetails: BranchDetails) {
-    cy.FillLogTextBox(BranchSelectors.AddressName, branchAddressDetails.AddressName)
-    cy.FillLogTextBox(BranchSelectors.AddressCity, branchAddressDetails.AddressCity)
-    cy.FillLogLov(BranchSelectors.AddressCountry, branchAddressDetails.AddressCountry, true)
 }
 
 export function CreateAddress() {

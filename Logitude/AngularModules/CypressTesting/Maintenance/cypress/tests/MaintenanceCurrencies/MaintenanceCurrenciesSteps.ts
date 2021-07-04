@@ -1,7 +1,7 @@
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import * as CurrencyActions from "../../actions/CurrencyActions";
 import * as Actions from "../../actions/Actions";
-import * as GeneralActions from "../../actions/GeneralActions";
+import * as GeneralActions from "../../actions/BaseActions";
 import { CurrencySelectors } from "../../../cypress/selectors/CurrencySelectors";
 import * as MaintenanceActions from "../../actions/Actions";
 import { CurrencyDetails } from "../../../cypress/models/CurrencyDetails";

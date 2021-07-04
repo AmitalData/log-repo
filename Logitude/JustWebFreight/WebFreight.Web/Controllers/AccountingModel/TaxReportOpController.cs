@@ -271,7 +271,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckContactFeature("TaxReport", "UPDATE", authToken.Tenant);
                 int tenant = authToken.Tenant;             
-                entityPM = TaxReportService.CreatetTaxReportLine(entityPM);
+            //    entityPM = TaxReportService.CreatetTaxReportLine(entityPM);
 
 
                 return Request.CreateResponse(HttpStatusCode.OK,entityPM );

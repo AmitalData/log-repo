@@ -3,7 +3,7 @@ export class ShippingLineSelectors {
   public static readonly MaintenanceItem = "#MaintenanceItemMTSL"
   public static readonly SaveCloseButton = "#ShippingLine-SaveClose";
   public static readonly SaveButton = "#ShippingLine-Save";
-  public static readonly ImportShippingLine = "[data-cy='Import']"
+  public static readonly Import = "[data-cy='Import']"
   public static readonly AddNewShippingLine = "[data-cy='Add_ShippingLine']"
 
   public static readonly Name = "#ShippingLine_EnglishName";
@@ -15,17 +15,13 @@ export class ShippingLineSelectors {
   public static readonly INTTRARegistrationNotes = "#ShippingLine_INTTRARegistrationNotes"
   public static readonly ImportShippingLine_AddButton = "[data-cy='Import_ShippingLine']"
 
-  public static readonly AddressesTab = "#ShippingLineTHAddresses"
-  public static readonly EditAddressButton = "#Edit"
-  public static readonly Address_CountryId = "#Address_CountryId"
-  public static readonly Address_City = "#Address_City"
-  public static readonly Address_StateId = "#Address_StateId"
-
   public static readonly AreasTab = "#ShippingLineTHAreas"
   public static readonly AddArea = "#addArea"
   public static readonly AreaName = "#CarrierArea_Name"
   public static readonly AreaDescription = "#CarrierArea_Description"
 
+  public static readonly AreaGridBody = "[data-cy='AreaGridId']"
+  public static readonly AreaGridRow = ".SimpleGridViewRow"
   public static readonly ChoosePortButton = "[data-cy='ChoosePort_CarrierArea']"
   public static readonly CarrierAreasPort_PortId = "#CarrierAreasPort_PortId"
   public static readonly Add_CarrierAreasPort = "[data-cy='Add_CarrierAreasPort']"
@@ -42,11 +38,11 @@ export class ShippingLineSelectors {
   public static readonly TariffPort = "#TariffCarrierTranslation_PortId"
 
   public static readonly GeneralTab = "#ShippingLineTHGeneral"
+  public static readonly EventsTab = "#ShippingLineTHEvents"
+  public static readonly AddressesTab = "#ShippingLineTHAddresses"
   public static readonly InActiveShippingLineCheckBox = "#ShippingLine_InActive"
 
   public static readonly IsINTTRACheckBox = '#ShippingLine_IsINTTRARegistered'
-
-  public static readonly EventsTab = "#ShippingLineTHEvents"
 
   public static readonly CodeDigitCount = 4
   public static readonly TariffCodeDigitCount = 10

@@ -1,0 +1,45 @@
+
+<table>
+    <tr style="height: 1px;">
+        <td class="Value">
+            Please select an action:
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 1px;">
+                        <button class="Button" (click)="SelectAction('PickupDelivery')">{{MainButtonRoutingLinkText}}</button>
+                    </td>
+
+                    <td style="width: 10px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 1px;">
+                        <button class="Button" (click)="SelectAction('Shipment')">{{RoutingLinkText}}</button>
+                    </td>
+
+                    <td style="width: 10px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 1px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

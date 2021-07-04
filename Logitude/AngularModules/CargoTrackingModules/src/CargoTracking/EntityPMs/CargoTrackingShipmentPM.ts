@@ -469,6 +469,11 @@ export class CargoTrackingShipmentPM {
     public set NumberOfPackages(newValue: number) { if (this.numberOfPackages != newValue) { this.numberOfPackages = newValue; this.MarkAsDirty("NumberOfPackages"); } }
        
 	 
+    private currentMilestoneExceptions: string;
+    public get CurrentMilestoneExceptions() { return this.currentMilestoneExceptions; }
+    public set CurrentMilestoneExceptions(newValue: string) { if (this.currentMilestoneExceptions != newValue) { this.currentMilestoneExceptions = newValue; this.MarkAsDirty("CurrentMilestoneExceptions"); } }
+       
+	 
 
     public OldEntityPM: CargoTrackingShipmentPM;
 		

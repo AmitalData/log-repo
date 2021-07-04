@@ -128,6 +128,11 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                    NextDueDate = MoreDatas.NextDueDate,
                                                    TotalOpenChequesInLocalCur = MoreDatas.TotalOpenChequesInLocalCur,
                                                    TotFutureOpenChequesInLocalCur = MoreDatas.TotFutureOpenChequesInLocalCur,
+
+                                                   BalanceInForeignCurrency = MoreDatas.BalanceInForeignCurrency,
+                                                   ForeignBalanceInDue = MoreDatas.ForeignBalanceInDue,
+                                                    
+
                                                    DeductionFileNumber = a.DeductionFileNumber,
 
                                                    //categories
@@ -176,10 +181,38 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                    PeriodPast = AgingDatas.PeriodPast,
                                                    PeriodFuture = AgingDatas.PeriodFuture,
                                                    TotalOpenTransactions = AgingDatas.TotalOpenTransactions,
+                                                   
                                                    FirstPeriodsMonths = fullAccountingSettings.FirstPeriodsMonths,
                                                    SecondPeriodsMonths = fullAccountingSettings.SecondPeriodsMonths,
                                                    ThirdPeriodsMonths = fullAccountingSettings.ThirdsPeriodsMonths,
 
+                                                   CalculatedAgingPeriod1 =  ( fullAccountingSettings.FirstPeriodsMonths.Contains("Period0") ? AgingDatas.Period0 : 0)
+                                                                            + (fullAccountingSettings.FirstPeriodsMonths.Contains("Period1") ? AgingDatas.Period1 : 0)
+                                                                            + (fullAccountingSettings.FirstPeriodsMonths.Contains("Period2") ? AgingDatas.Period2 : 0)
+                                                                            + (fullAccountingSettings.FirstPeriodsMonths.Contains("Period3") ? AgingDatas.Period3 : 0)
+                                                                            + (fullAccountingSettings.FirstPeriodsMonths.Contains("Period4") ? AgingDatas.Period4 : 0)
+                                                                            + (fullAccountingSettings.FirstPeriodsMonths.Contains("Period5") ? AgingDatas.Period5 : 0)
+                                                                            + (fullAccountingSettings.FirstPeriodsMonths.Contains("PeriodPast") ? AgingDatas.PeriodPast : 0)
+                                                                            ,
+
+                                                   CalculatedAgingPeriod2 = (fullAccountingSettings.SecondPeriodsMonths.Contains("Period0") ? AgingDatas.Period0 : 0)
+                                                                            + (fullAccountingSettings.SecondPeriodsMonths.Contains("Period1") ? AgingDatas.Period1 : 0)
+                                                                            + (fullAccountingSettings.SecondPeriodsMonths.Contains("Period2") ? AgingDatas.Period2 : 0)
+                                                                            + (fullAccountingSettings.SecondPeriodsMonths.Contains("Period3") ? AgingDatas.Period3 : 0)
+                                                                            + (fullAccountingSettings.SecondPeriodsMonths.Contains("Period4") ? AgingDatas.Period4 : 0)
+                                                                            + (fullAccountingSettings.SecondPeriodsMonths.Contains("Period5") ? AgingDatas.Period5 : 0)
+                                                                            + (fullAccountingSettings.SecondPeriodsMonths.Contains("PeriodPast") ? AgingDatas.PeriodPast : 0)
+                                                                            ,
+
+
+                                                   CalculatedAgingPeriod3 = (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period0") ? AgingDatas.Period0 : 0)
+                                                                            + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period1") ? AgingDatas.Period1 : 0)
+                                                                            + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period2") ? AgingDatas.Period2 : 0)
+                                                                            + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period3") ? AgingDatas.Period3 : 0)
+                                                                            + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period4") ? AgingDatas.Period4 : 0)
+                                                                            + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period5") ? AgingDatas.Period5 : 0)
+                                                                            + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("PeriodPast") ? AgingDatas.PeriodPast : 0)
+                                                                            ,
 
 
                                                    // GLAccount Recocile Datas
@@ -198,7 +231,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                    // GLAccount Follow Up Datas
                                                    FollowupDate = FollowUpDatas != null ? FollowUpDatas.FollowUpDate : null,
                                                    FollowupNotes = FollowUpDatas != null ? FollowUpDatas.FollowUpRemarks : null,
-                                                   InsuredCreditLimit= CardsDatas.InsuredcreditLimit
+                                                   InsuredCreditLimit= CardsDatas.InsuredcreditLimit,
+
 
                                                });
             return query;

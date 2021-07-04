@@ -1,4 +1,4 @@
-﻿
+
 <table>
 
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
@@ -223,7 +223,7 @@
                                     <table>
                                         <tr>
                                             <td>
-                                                <button class="Button" (click)="AddTarrifCharge()">{{AddTarrifChargeString}}</button>
+                                                <button [attr.data-cy]="'AddTariffCharge'" class="Button" (click)="AddTarrifCharge()">{{AddTarrifChargeString}}</button>
                                             </td>
                                             <td style="width: 5px;">
                                                 <div style="width: 5px;"></div>
