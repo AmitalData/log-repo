@@ -60,7 +60,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             foreach (var dec in declarations)
             {
                 AV_MSG2_ContainerizationMessageDeclaration aV_MSG2_ContainerizationMessageDeclaration = new AV_MSG2_ContainerizationMessageDeclaration();
-                aV_MSG2_ContainerizationMessageDeclaration.DeclarationID = dec.DeclarationNumber;
+                aV_MSG2_ContainerizationMessageDeclaration.DeclarationID = dec.DeclarationNumber ?? "";
                 aV_MSG2_ContainerizationMessageDeclaration.LeadDocumentType = Convert.ToInt32(dec.DeclarationTypeCode);
                 connectedDeclarations.Add(aV_MSG2_ContainerizationMessageDeclaration);
              }
