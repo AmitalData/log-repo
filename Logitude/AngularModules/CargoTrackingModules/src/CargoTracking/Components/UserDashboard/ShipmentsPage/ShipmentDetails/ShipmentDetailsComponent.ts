@@ -72,7 +72,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
         setTimeout(() =>
         {
             this.InitSlider();
-            this.BuildSliderCards();
+           /// this.BuildSliderCards();
 
         }, 200);
         this.CreatePartnerCardsFromShipmentPM();
