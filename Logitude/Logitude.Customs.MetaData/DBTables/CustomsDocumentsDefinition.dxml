@@ -58,6 +58,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="DeclarationTypeCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DocumentTypeCode"
     ReferencedTable="CustomDocumentTypes"
@@ -76,6 +83,11 @@
   <Relation
     ForeignKeyColumn="CargoTypeCode"
     ReferencedTable="CargoIdentifireTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="DeclarationTypeCode"
+    ReferencedTable="LeadDocumentTypes"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
 </Table>

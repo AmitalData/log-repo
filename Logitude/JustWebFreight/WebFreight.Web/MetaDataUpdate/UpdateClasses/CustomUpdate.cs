@@ -707,6 +707,10 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             FeaturePM physicalCheckFeature_Actions = features.Where(d => d.Code == "PHYSICALCHECKACTIONS" && d.ObjectTableId == physicalCheckTableId).FirstOrDefault();
             FeaturePM physicalCheckFeature_ClosePhysicalCheck = features.Where(d => d.Code == "CLOSEPHYSICALCHECK" && d.ObjectTableId == physicalCheckTableId).FirstOrDefault();
 
+            string ContainerizationableId = ObjectContext.ObjectTables.Where(f => f.Name == "Customs.Containerization" && f.Tenant == tenant).FirstOrDefault().Id;
+            FeaturePM containerizationFeature_sendContainerization = features.Where(d => d.Code == "SendContainerization" && d.ObjectTableId == ContainerizationableId).FirstOrDefault();
+
+
             #region Declaration Buttons
             MenuButtonGroup declarationMenuButtonGroup = AddMenuButtonGroupAndMenuButtons.AddMenuButtonGroup(new MenuButtonGroupDetails()
             {
@@ -715,6 +719,17 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 ObjectTableId = declarationTableId,
                 Tenant = tenant,
             }, MenuButtonGroupRepository, TenantMenuButtonGroups);
+
+
+            #region Containerization Buttons
+            MenuButtonGroup containerizationMenuButtonGroup = AddMenuButtonGroupAndMenuButtons.AddMenuButtonGroup(new MenuButtonGroupDetails()
+            {
+                MenuButtonGroupType = "Customs.ContainerizationEdit",
+                Name = "Customs.ContainerizationEditButtonsGroup",
+                ObjectTableId = ContainerizationableId,
+                Tenant = tenant,
+            }, MenuButtonGroupRepository, TenantMenuButtonGroups);
+            #endregion
 
             #region forms button
             MenuButton formsButton = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -846,6 +861,26 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 MenuButtonType = "control",
                 ControlPath = "Logitude.Customs.CustomsControls.SendOptionsControl",
                 HtmlComponentPath = "./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/SendDeclaration/SendManifestComponent",
+
+            }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
+            #endregion
+            #region Send Containerization
+            MenuButton sendContainerization = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+            {
+                EventCode = "SendContainerization",
+                Index = 1,
+                IsActive = true,
+                LabelTextCodeCode = "Customs.Declaration.B.SendManifest",
+                LabelTextCodeDefaultText = "Send Containerization",
+                LocalDefaultText = "שלח",
+                ObjectTableId = ContainerizationableId,
+                Tenant = tenant,
+                MenuButtonGroupId = containerizationMenuButtonGroup.Id,
+                ParentMenuButtonId = null,
+                FeatureId = containerizationFeature_sendContainerization.Id,
+                MenuButtonType = "control",
+                ControlPath = "Logitude.Customs.CustomsControls.SendOptionsControl",
+                HtmlComponentPath = "./CustomsModules/CustomsContainerization/Components/SendContainerization/SendContainerization",
 
             }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
             #endregion
@@ -14990,7 +15025,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CSPC", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 6, CategoryTypeCode = null, TextCode = "General.MH.PhysicalChecks", Icon = "CustomersPath", FeatureId = customFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.PhysicalCheck").FirstOrDefault().Id, FeatureUniqeCode = customFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { HtmlView = "./CustomsModules/CustomsControls/Components/NotificationComponent", Code = "CSNT", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 8, CategoryTypeCode = null, TextCode = "General.MH.Notifications", Icon = "ReportsPath", FeatureId = customFeature.Id, FeatureUniqeCode = customFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CSPO", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 7, CategoryTypeCode = null, TextCode = "General.MH.PaymentOrders", Icon = "CustomersPath", FeatureId = customFeature.Id,FeatureUniqeCode = customFeature.FeatureUniqeCode, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.PaymentOrder").FirstOrDefault().Id }, MenusTablesRepository, tenantMenusTables);
-            AddMenusTables.AddMenusTable(new MenusTableDetails() { HtmlView = "./CustomsModules/CustomsRequests/Components/CustomsRequestsComponent", Code = "CSTM", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 16, CategoryTypeCode = null, TextCode = "General.MH.Customs", Icon = "CustomersPath", FeatureId = customFeature.Id, FeatureUniqeCode = customFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { HtmlView = "./CustomsModules/CustomsRequests/Components/CustomsRequestsComponent", Code = "CSTM", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 18, CategoryTypeCode = null, TextCode = "General.MH.Customs", Icon = "CustomersPath", FeatureId = customFeature.Id, FeatureUniqeCode = customFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CSPF", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 12, CategoryTypeCode = null, TextCode = "General.MH.ProceduralFaults", Icon = "CustomersPath", FeatureId = customsProceduralFaultsFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.ProceduralFault").FirstOrDefault().Id, FeatureUniqeCode = customsProceduralFaultsFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CSVH", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 13, CategoryTypeCode = null, TextCode = "General.MH.Vehicles", Icon = "ReportsPath", FeatureId = vehiclesFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.Vehicle").FirstOrDefault().Id,FeatureUniqeCode = vehiclesFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CSCC", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 10, CategoryTypeCode = null, TextCode = "General.MH.CustomsCollateral", Icon = "CustomersPath", FeatureId = customsCollateralFaultsFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.CustomsCollateral").FirstOrDefault().Id, FeatureUniqeCode = customFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
@@ -15000,7 +15035,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddMenusTables.AddMenusTable(new MenusTableDetails() { HtmlView = "./CustomsModules/CustomsCourier/Components/CourierWorkspaces/CourierDeclarationWorkspaceComponent", Code = "CODC", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 5, CategoryTypeCode = null, TextCode = "General.MH.Declarations", Icon = "CustomersPath", FeatureId = courierDeclarationFeature.Id,FeatureUniqeCode = courierDeclarationFeature.FeatureUniqeCode, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.Declaration").FirstOrDefault().Id }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { HtmlView = "./CustomsModules/CustomsReferant/Components/ReferantWorkspaces/ReferantWorkspaceComponent", Code = "REWP", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 2, CategoryTypeCode = null, TextCode = "General.MH.ReferantWorkspace", Icon = "CustomersPath", FeatureId = referantWorkspaceFeature.Id, FeatureUniqeCode = referantWorkspaceFeature.FeatureUniqeCode, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.DeclarationReferantData").FirstOrDefault().Id }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "REDC", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 3, CategoryTypeCode = null, TextCode = "General.MH.ReferantScreen", Icon = "CustomersPath", FeatureId = customsReferantFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.DeclarationReferantData").FirstOrDefault().Id,FeatureUniqeCode = customsReferantFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
-            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CSCO", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 17, CategoryTypeCode = null, TextCode = "General.MH.Containerization", Icon = "CustomersPath", FeatureId = containerizationFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.Containerization").FirstOrDefault().Id, FeatureUniqeCode = containerizationFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CSCO", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 16, CategoryTypeCode = null, TextCode = "General.MH.Containerization", Icon = "CustomersPath", FeatureId = containerizationFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.Containerization").FirstOrDefault().Id, FeatureUniqeCode = containerizationFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
 
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CSES", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 18, CategoryTypeCode = null, TextCode = "General.MH.ExportStorage", Icon = "CustomersPath", FeatureId = exportStorageFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.ExportStorge").FirstOrDefault().Id, FeatureUniqeCode = exportStorageFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
 
@@ -17800,6 +17835,15 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             //AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "901", EnglishName = "Distribution", LocalName = "הפצה" }, courierPendingReasonRepository);
             //AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "902", EnglishName = "Distribution", LocalName = "הפצה" }, courierPendingReasonRepository);
             //courierPendingReasonRepository.SubmitChanges();
+        }
+        public void FillContainerizationStatusCodeTable()
+        {
+            var repo = new ContainerizationStatusCodeRepository(0);
+            var dic = repo.GetAll().ToDictionary<ContainerizationStatusCode, string, ContainerizationStatusCode>(rec => rec.Code, a => a);
+            this.FillCloseTable<
+                                Logitude.Customs.Data.EntityPOCOs.ContainerizationStatusCode,
+                                Logitude.Customs.BL.ClosedTable.ContainerizationStatusCodeDetails,
+                                Logitude.Customs.Data.Repsitories.ContainerizationStatusCodeRepository>(repo, dic);
         }
 
         public void FillMamanSpecialActionTable()

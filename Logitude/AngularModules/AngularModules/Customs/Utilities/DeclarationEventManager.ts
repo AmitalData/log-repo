@@ -5,5 +5,6 @@ export class DeclarationEventManager {
     static DeclarationSplitDocumentItemSelection: EventEmitter<any> = new EventEmitter();
     static ConsignmentsChanged: EventEmitter<any> = new EventEmitter();
     static DeclarationAmendmentCancelled: EventEmitter<any> = new EventEmitter();
+    static AddDeclarationToContainerization: EventEmitter<any> = new EventEmitter();
 
 }

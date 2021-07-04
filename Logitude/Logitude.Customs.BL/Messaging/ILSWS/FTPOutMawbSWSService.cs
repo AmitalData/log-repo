@@ -27,7 +27,22 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
 
 
         //private string communicationSubject = "שידור פנימיים מסוכנים לממן";
-        public void BuildCommunicationLog(byte[] bytearray, int tenant, string declarationId, string ftpDetailsName, string fileName)
+        public void BuildCommunicationLog(byte[] bytearray, int tenant, string declarationId, string interfaceDetailCode, string fileName)
+        {
+            var myCustomsPartnerFtpQueryService = new CustomsPartnerFtpQueryService(tenant);
+            var pmCustomsPartnerFtp = myCustomsPartnerFtpQueryService.GetBy(tenant, interfaceDetailCode, CustomsPartnerFtpDetails.PartnerCode_ILSWS, CustomsPartnerFtpDetails.TypeCode_Out);
+            var ftpOutService = new FtpOutService();
+            ftpOutService.BuildCommunicationLog(tenant, new FtpOutParams()
+            {
+                bytearray = bytearray,
+                tablename = "Customs.Declaration",
+                entityId = declarationId,
+                MyFileName = new FtpOutParams.FileName(fileName),
+                sendIsMust = false,
+                MyCustomsPartnerFtpPM = pmCustomsPartnerFtp,
+            });
+        }
+        public void BuildCommunicationLogOld(byte[] bytearray, int tenant, string declarationId, string ftpDetailsName, string fileName)
         {
           
             ObjectTableRepository repo = new ObjectTableRepository(tenant);

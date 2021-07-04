@@ -872,7 +872,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 if (_FromMessaging == true )
                 {
                     var requestData2 = "";
-                    bool isAmendmentRelease = false;
                     var myEventContextTagModel = new EventContextTagModel();
                     myEventContextTagModel = this._DirtyDeclarationPM.CurrentContextTag as EventContextTagModel;
                     if (myEventContextTagModel != null)
@@ -884,10 +883,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         if (myEventContextTagModel.CallProccessID == EventContextTagModel.ProccessEnum.DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageResponseServiceUpdate)
                         {
                             requestData2 = GetMyFUStatusXML(myEventContextTagModel.EventCode, myEventContextTagModel.EventCode, "", "new", myEventContextTagModel.StatusDateTime, false);
-                            if (!(string.IsNullOrEmpty(this._DirtyDeclarationPM.AmendmentOriginalDeclartation) && this._DirtyDeclarationPM.AmendmentDontDisplayInList == false))
-                            {
-                                isAmendmentRelease = true;
-                            }
                         }
                     }
                     //if (myEventContextTagModel.CallProccessID == EventContextTagModel.ProccessEnum.MN_MSG4_SendManifestFeedBack_MessageResponseService)
@@ -905,10 +900,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         {
                             requestData = requestData2;
                         }
-                    }
-                    if (isAmendmentRelease) 
-                    {
-                        requestData = requestData.Replace("</transmission>", string.Concat("<GENERALQUERYMODE>AMENDMENTRELEASE</GENERALQUERYMODE>", "</transmission>"));
                     }
                 }
                 /*

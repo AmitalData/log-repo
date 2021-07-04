@@ -96,6 +96,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
   <Currency>NIS</Currency>
   <AmountForeign></AmountForeign>
   <Wip>N</Wip>
+<LineNumber>1</LineNumber>
  </InvoiceLine>
  <InvoiceLine>
   <ServiceCode>COM</ServiceCode>
@@ -105,6 +106,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
   <Currency>NIS</Currency>
   <AmountForeign>344</AmountForeign>
   <Wip>N</Wip>
+<LineNumber>2</LineNumber>
  </InvoiceLine>
  <InvoiceLine>
   <ServiceCode>T16</ServiceCode>
@@ -114,6 +116,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
   <Currency>NIS</Currency>
   <AmountForeign>41</AmountForeign>
   <Wip>Y</Wip>
+<LineNumber>3</LineNumber>
  </InvoiceLine>
  <InvoiceLine>
   <ServiceCode>T6</ServiceCode>
@@ -123,6 +126,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
   <Currency>NIS</Currency>
   <AmountForeign>36</AmountForeign>
   <Wip>Y</Wip>
+<LineNumber>4</LineNumber>
  </InvoiceLine>
  <InvoiceLine>
   <ServiceCode>TAX</ServiceCode>
@@ -132,6 +136,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
   <Currency>NIS</Currency>
   <AmountForeign>-207144</AmountForeign>
   <Wip>Y</Wip>
+<LineNumber>5</LineNumber>
  </InvoiceLine>
 </InvoiceLines>
 <IntegratedInvoices/>
@@ -224,7 +229,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
             public string AmountForeign { get; set; }
             public string Wip { get; set; }
             public string Currency { get; set; }
-
+            public string LineNumber { get; set; }
 
         }
 

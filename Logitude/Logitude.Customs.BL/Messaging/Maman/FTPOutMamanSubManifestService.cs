@@ -25,7 +25,25 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
 
         public const string communicationSubject= "שידור פנימיים מסוכנים לממן";
-        public void BuildCommunicationLog(byte[] bytearray, int tenant, string entityId, string FileName= null)///using  by FTPCommunicationWorkerRole
+        public void BuildCommunicationLog(byte[] bytearray, int tenant, string entityId, string FileName = null)///using  by FTPCommunicationWorkerRole
+        {
+
+            var myCustomsPartnerFtpQueryService = new CustomsPartnerFtpQueryService(tenant);
+            var pmCustomsPartnerFtp = myCustomsPartnerFtpQueryService.GetBy(tenant, CustomsPartnerFtpDetails.InterfaceName_SubManifest, CustomsPartnerFtpDetails.PartnerCode_Mamam, CustomsPartnerFtpDetails.TypeCode_Out);
+            var ftpOutService = new FtpOutService();
+            ftpOutService.BuildCommunicationLog(tenant, new FtpOutParams()
+            {
+                bytearray = bytearray,
+                tablename = "Customs.CourierMaster",
+                entityId = entityId,
+                MyFileName = new FtpOutParams.FileName(true, "HWB"),
+                sendIsMust = false,
+                MyCustomsPartnerFtpPM = pmCustomsPartnerFtp,
+            });
+
+        }
+
+        public void BuildCommunicationLogOLD(byte[] bytearray, int tenant, string entityId, string FileName= null)///using  by FTPCommunicationWorkerRole
         {
             if (String.IsNullOrWhiteSpace(FileName))
             {

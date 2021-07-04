@@ -233,7 +233,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 this.MyResponseData.Succeeded = true;
                 this.MyResponseData.UserMessage = customResponse.ResponseContentHeader.Exception[0].ExeptionDescription;
                 this.MyResponseData.HasException = false;
-
+                if (!string.IsNullOrWhiteSpace(requestParams.AppicationId))
+                {
+                    _MyDeclarationPM = myQueryService.GetSingle(requestParams.AppicationId, true, false);
+                    if (_MyDeclarationPM != null)
+                    {
+                        _MyDeclarationPM.IsSubmitDeclaration = false;
+                        myDeclarationUpdateService.Update(_MyDeclarationPM, true);
+                    }
+                }
                 return;
 
             }
@@ -589,6 +597,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
             //Update Declaration 
             _MyDeclarationPM.VersionId = customResponse.Response.Declaration.DMExtensions.VersionID.Value;
+
+            float version;
+            float.TryParse(_MyDeclarationPM.VersionId, out version);
+            if (version >= 1.0)
+            {
+                _MyDeclarationPM.IsSubmitDeclaration = true;
+            }
 
             if (customResponse.Response.Declaration.DMExtensions.TransshipmentApprovalDateTime != null)
             {

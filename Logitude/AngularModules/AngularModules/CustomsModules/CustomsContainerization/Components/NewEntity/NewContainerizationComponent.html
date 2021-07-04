@@ -66,6 +66,9 @@
                     <tr>
                         <td colspan="2" style="width: 1200px;">
                             <table style="table-layout: fixed;">
+                                <tr>
+                                    <td><div></div></td>
+                                </tr>
                                 <tr class="FormFieldRow">
                                     <td style="height:26px; ">
                                         <div style="border:1px solid #6A8299;width:47px;border-radius: 3px;max-height: 26px;">
@@ -88,31 +91,20 @@
                                                 </tr>
                                             </table>
                                         </div>
-
-
-
                                     </td>
-                                    <td colspan="6">
-                                        <button style="width: 100px; float: left; " class="GreenButton" (click)="SendButtonClicked()">המשך</button>
-
-                                    </td>
-
-                                </tr>
-                                <tr class="FormFieldRow">
-
-                                    <td style="text-align:right !important;">
+                                    <td style="text-align:right !important; left:120px">
                                         <div style="color: #555555;">
-                                            {{'Customs.Declaration.F.ExportFile' |TextCodeTranslationPipe}} :
+                                            <!--{{'Customs.Declaration.F.ExportFile' |TextCodeTranslationPipe}}--> תיק יצוא:
                                         </div>
                                     </td>
-                                    <td>
+                                    <td style="left:260px;">
                                         <LogTextBox [ObjectFieldName]="'ExportFile'" [InputType]="'text'" [DataContext]="DataContext"
                                                     [ObjectTableName]="objectTableNameDec" [HideColumns]="true" [Text]="ExportFile"></LogTextBox>
                                     </td>
 
 
                                     <td style="width: 60px;"><div></div></td>
-                                    <td style="text-align:right !important;">
+                                    <td style="text-align:right !important; left:500px">
                                         <ul class="FiltersMenu">
                                             <li (click)="itemClicked('All')" (mouseover)="itemMouseOver('All')" [class.SelectedFilter]="SelectedValue === 'All'">
                                                 All
@@ -128,11 +120,7 @@
                                             </li>
                                         </ul>
                                     </td>
-
-                                    <td></td>
-
                                     <td style="width:130px;">
-
                                         <SearchTextBox [PlaceHolder]="'הצהרה/מזהה מטען/לקוח'" [ObjectTableName]="objectTableNameDec" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
                                     </td>
 
@@ -153,7 +141,7 @@
                                 <table style="height: 100%;">
                                     <tr>
                                         <td>
-                                            <div class="GeneratedGridContainer">
+                                            <div class="GeneratedGridContainer" style="padding:5px;vertical-align:top;top:0;position:absolute">
                                                 <logitude-grid GridWidth="100%" GridHeight="100%"
                                                                [ObjectTable]="objectTableNameDec"
                                                                [dataSource]="DataSource"
@@ -162,9 +150,8 @@
                                                                [QueryChangeEvent]="onQueryChangeEvent"
                                                                (CheckBoxChecked)="onCheckBoxChecked($event)"
                                                                [SelectedRow]="SelectedRow"
-                                                               [IsCustomTemplate]="true"
-                                                               [MenuHeaderchangeevent]="MenuHeaderchangeevent"
-                                                               [IsGradiantSelectedColor]="true">
+                                                               [IsCustomTemplate]="false"
+                                                               [MenuHeaderchangeevent]="MenuHeaderchangeevent">
                                                 </logitude-grid>
                                             </div>
                                         </td>
@@ -177,21 +164,21 @@
 
                     <!-- footer -->
                     <tr style="height: 30px;">
-                        <td>
-                            <div></div>
-                        </td>
-
+                        <td><div></div></td>
                         <td style="width: 57px;">
                             <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Close' |TextCodeTranslationPipe}}</button>
                         </td>
-
-                        <!--<td style="width: 5px;">
-                            <div></div>
-                        </td>
-
+                        <td style="width:5px"><div></div></td>
                         <td style="width: 57px;">
-                            <button class="RedButton" [disabled]="IsDisplayOnly" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
-                        </td>-->
+                            <button style="float: left; " class="GreenButton" [disabled]="!containerizationExtendedListService.SelectedDeclarations" (click)="SendButtonClicked()">המשך</button>
+                        </td>
+                        <!--<td style="width: 5px;">
+        <div></div>
+    </td>
+
+    <td style="width: 57px;">
+        <button class="RedButton" [disabled]="IsDisplayOnly" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+    </td>-->
                     </tr>
                 </table>
             </div>

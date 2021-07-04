@@ -199,11 +199,19 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         button.Width = 100;
                         if (this.EntityPM.Direction == "E") {
                             button.IsHidden = false;
-                        } else {
+                        } else { 
                             button.IsHidden = true;
                         }
                     } 
- 
+                    if (button.EventCode == "OpenNewContainerization") {
+                        button.Width = 100;
+                        button.DisplayText = "המכלה";
+                        if (this.EntityPM.Direction == "E" && this.EntityPM.ProcedureCurrentCode && this.EntityPM.ProcedureCurrentName && this.EntityPM.ProcedureCurrentName.includes("המכלה לפני התרה")) {
+                                button.IsHidden = false;
+                        } else {
+                            button.IsHidden = true;
+                        }
+                    }
                     if (button.EventCode == "SendDeclaration") {
                         if (this.IsDisplayOnly) {
                             button.IsDisabled = true;
@@ -407,6 +415,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         if (parentButton.Id == button.ParentMenuButtonId)
                         button.IsDisabled = true;
                     }
+
                 }
                 this.IsDisplayOnlyCheckDone = true;
                 return menuButtons;
@@ -536,6 +545,11 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                 case "PrintRelease": // moran 29.2.16 - Task 19807
                     {
                         this.PrintReleaseMethod();
+                        break;
+                    }
+                case "OpenNewContainerization":
+                    {
+                        this.OpenNewContainerizationMethod();
                         break;
                     }
                 case "CloseDeclaration": 
@@ -1250,6 +1264,39 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         });
     }
 
+    private OpenNewContainerizationMethod() {
+        if (AppTool.IsNullOrEmpty(this.EntityPM.ExportContainerizationID)) {
+            var args: any = {
+                EntityPM: this.EntityPM,
+                EntityIsDeclarationPM: "true",
+            };
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 1220;
+            logWindow.Height = 550;
+            logWindow.Title = ("המכלה חדשה");
+            logWindow.WindowArgs = args;
+            logWindow.ShowCloseButton = true;
+            logWindow.Show('./CustomsModules/CustomsContainerization/Components/NewEntity/NewContainerizationComponent');
+            logWindow.WindowClosed.subscribe(($event: any) => {
+                this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            });
+        } else {
+                //  this.EditEntity("Customs.Declaration", this.rowData.Id, null, "DEGC");
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
+                    .then(cmpRef => {
+                        cmpRef.instance.ComponentRef = cmpRef;
+                        cmpRef.instance.Run({
+                            EntityId: this.EntityPM.ExportContainerizationID,
+                            ObjectTableName: "Customs.Containerization"
+                        });
+                        cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        });
+                    });
+        }
+    }
+
     private PrintReleaseMethod() // moran 29.2.16 - Task 19807
     {
 
@@ -1289,11 +1336,20 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         };
         var logWindow = new LogitudeWindow();
         logWindow.Width = 1000;
-        logWindow.Height = 700;
-        logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.Payments");
         logWindow.WindowArgs = args;
         logWindow.ShowCloseButton = true;
-        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationPayment/DeclarationPaymentComponent');
+        if (this.EntityPM.Direction == "E")
+        {
+            logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.PaymentsExport");
+            logWindow.Height = 400;
+            logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationPayment/DeclarationPaymentExportComponent');
+        }
+        else
+        {
+            logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.Payments");
+            logWindow.Height = 700;
+            logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationPayment/DeclarationPaymentComponent');
+        }
         logWindow.WindowClosed.subscribe(($event: any) => {
             this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         });

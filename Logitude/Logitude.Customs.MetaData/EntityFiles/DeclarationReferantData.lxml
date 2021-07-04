@@ -5928,7 +5928,6 @@
     IsPackagable="true"
     DefaultSortName="&quot;SortedColumns&quot;"
     DefaultSortDirection="&quot;Ascending&quot;"
-    SpotlightDataTemplate="&quot;ReferantSpotlightDataTemplate&quot;"
     IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn
@@ -7484,7 +7483,6 @@
     IsPackagable="true"
     DefaultSortName="&quot;SortedColumns&quot;"
     DefaultSortDirection="&quot;Ascending&quot;"
-    SpotlightDataTemplate="&quot;ReferantSpotlightDataTemplate&quot;"
     IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn
@@ -7681,13 +7679,13 @@
     <TextCode
       Code="&quot;Customs.DeclarationReferantData.O.FilesInCreditControl&quot;"
       DefaultText="&quot;Files In Credit Control&quot;"
-      LocalDefaultText="&quot;תיקים בבקרת אשראי&quot;"
+      LocalDefaultText="&quot; תיקים בבקרת אשראי&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Customs.DeclarationReferantData.O.FilesAvailableFreeOfCharge&quot;"
       DefaultText="&quot;FilesAvailableFreeOfCharge&quot;"
-      LocalDefaultText="&quot;תיקים זמינים ללא תשלום&quot;"
+      LocalDefaultText="&quot; תיקים זמינים ללא תשלום&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -7717,7 +7715,7 @@
     <TextCode
       Code="&quot;Customs.DeclarationReferantData.O.FilesWithoutRelease&quot;"
       DefaultText="&quot;Files Without Release&quot;"
-      LocalDefaultText="&quot;תיקים שהוגשו ולא הותרו&quot;"
+      LocalDefaultText="&quot; תיקים שהוגשו ולא הותרו&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode

@@ -167,7 +167,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         RequestedCustomsDocId, 
 	         ExportDeclarationOfficeCode, 
 	         PhysicalCheck, 
-	         ExportContainerizationID,
+	         ExportContainerizationID, 
+	         IsSubmitDeclaration,
 	      }
 
 
@@ -398,7 +399,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         FinalLoadingSiteName, 
 	         ShipCodeName, 
 	         CancelRejectionReasonName, 
-	         ExportContainerizationID,
+	         ExportContainerizationID, 
+	         IsSubmitDeclaration,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -1130,6 +1132,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportContainerizationID))
             {
 				entityPOCO.ExportContainerizationID = entityPM.ExportContainerizationID;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsSubmitDeclaration))
+            {
+				entityPOCO.IsSubmitDeclaration = entityPM.IsSubmitDeclaration;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -1868,6 +1875,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ExportContainerizationID = entityPOCO.ExportContainerizationID;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsSubmitDeclaration))
+            {
+					entityPM.IsSubmitDeclaration = entityPOCO.IsSubmitDeclaration;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationPM entityPM, DeclarationPM oldEntityPM)
@@ -2597,6 +2609,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportContainerizationID))
             {
                 oldEntityPM.ExportContainerizationID = entityPM.ExportContainerizationID;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsSubmitDeclaration))
+            {
+                oldEntityPM.IsSubmitDeclaration = entityPM.IsSubmitDeclaration;
             }
 			
 		}

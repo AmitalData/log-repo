@@ -1949,7 +1949,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     toDeclaration.ProcedureCurrentCode = fromDeclaration.ProcedureCurrentCode;
                 }
-
+                if (string.IsNullOrEmpty(toDeclaration.DeclarationOfficeCode))
+                {
+                    toDeclaration.DeclarationOfficeCode = fromDeclaration.DeclarationOfficeCode;
+                }
                 if (toDeclaration.TaxationDateTime == null)
                 {
                     toDeclaration.TaxationDateTime = fromDeclaration.TaxationDateTime;

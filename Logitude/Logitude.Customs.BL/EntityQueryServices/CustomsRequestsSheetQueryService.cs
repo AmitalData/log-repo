@@ -302,6 +302,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "8250",
 "2892",
 "2450",
+
+"UCUDO", 
 "UCBNDCD",///  Send bonded filing
 ///"8302", //בקשה לטופס הצהרה
 
@@ -428,7 +430,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "1171", // - מסר תשובה מצהר
 "1172", // - מסר תשובה מצהר - נדחף
 "8373",//"שאילתא לשחזור נתוני הצהרה"
-
+"UCUDO", 
  "UCB8212"
  ,"2892" ,
 "UCB9999",

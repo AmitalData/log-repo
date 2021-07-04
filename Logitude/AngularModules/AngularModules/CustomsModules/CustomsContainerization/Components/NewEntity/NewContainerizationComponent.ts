@@ -12,6 +12,13 @@ import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCod
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { ContainerizationPMService } from '../../../../Customs/Services/StandardPMs/ContainerizationPMService';
+import { Response } from 'selenium-webdriver/http';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { ContainerizationMessagesService } from '../../../../Customs/Services/WebServices/ContainerizationMessagesService';
+import { GenericRequestParams } from '../../../../Customs/DataContract/RequestParams/GenericRequestParams';
+import { DeclarationEventManager } from '../../../../Customs/Utilities/DeclarationEventManager';
+import { DeclarationPM } from '../../../../Customs/EntityPMs/DeclarationPM';
 
 
 @Component({
@@ -26,6 +33,7 @@ export class NewContainerizationComponent extends BaseComponent {
     objectTableNameDec: string = "Customs.Declaration";
     objectTableName: string = "Customs.Containerization";
     entityPM: ContainerizationPM;
+    declarationPM: DeclarationPM;
     @Output() onQueryChangeEvent = new EventEmitter();
     entityListService: EntityListService;
     SearchFieldsFilter: FilterItem;
@@ -39,8 +47,8 @@ export class NewContainerizationComponent extends BaseComponent {
     IsSelected: boolean;
     @Output() MenuHeaderchangeevent = new EventEmitter();
     connectedListIds: ObservableCollection;
-
-
+    containerizationPMService: ContainerizationPMService = new ContainerizationPMService();
+    containerizationMessagesService: ContainerizationMessagesService = new ContainerizationMessagesService();
     private selectedValue: string = "All";
     public get SelectedValue() { return this.selectedValue; }
     public set SelectedValue(value: string) {
@@ -94,6 +102,7 @@ export class NewContainerizationComponent extends BaseComponent {
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService, public containerizationExtendedListService: ContainerizationExtendedListService) {
         super();
         this.entityPM = new ContainerizationPM();
+        this.entityPM.Tenant = SessionLocator.Tenant;
         this.connectedListIds = new ObservableCollection([]);
         this.EntityResourceService.getEntityResourceByTableName("Customs.Containerization").subscribe((response: any) => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
@@ -186,7 +195,7 @@ export class NewContainerizationComponent extends BaseComponent {
         filters.AdditionalFilters.push(ExportFilter);
         var ProcFilter = new FilterItem("ProcedureCurrentName", 'המכלה', null, null, "Contains", false, false, false, "string", false);
         filters.AdditionalFilters.push(ProcFilter);
-
+        filters.addAdditionalFilter("IsContainerization", true, null, null, "Equal", true, false, false, "string");
         if (this.selectedValue != 'All') {
             var ModeFilter = new FilterItem("TransportModeId", this.selectedValue, null, null, "Equals", false, false, false, "string", false);
             filters.AdditionalFilters.push(ModeFilter);
@@ -221,7 +230,7 @@ export class NewContainerizationComponent extends BaseComponent {
             FieldName: 'MyConnectedCheckBox',
             DataTypeCode: 'String',//'Number',
             Display: '',
-            Styles: { width: '30px' },
+            Styles: { width: '25px'},
             IsCustomTemplate: true,
             HtmlListComponentName: 'CustomsContainerizationListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsContainerizationListTemplate',
@@ -231,8 +240,8 @@ export class NewContainerizationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'CreateDateTime',
             DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate('Customs.Declaration.F.CreateDateTime'),
-            Styles: { width: '80px' },
+            Display: "תאריך פתיחת הצהרה",
+            Styles: { width: '120px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'CreateDateTime',
@@ -253,7 +262,7 @@ export class NewContainerizationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'ExportFile',
             DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate('Customs.Declaration.F.ExportFile'),
+            Display: "מס' תיק יצוא",
             Styles: { width: '120px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -275,7 +284,7 @@ export class NewContainerizationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'CustomFileNo',
             DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate('Customs.Declaration.F.CustomFileNo'),
+            Display: "תיק מכס",
             Styles: { width: '80px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -296,7 +305,7 @@ export class NewContainerizationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'ManifestNumber',
             DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate('Customs.Declaration.F.ManifestNumber'),
+            Display: "מזהה מטען 1",
             Styles: { width: '100px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -306,7 +315,7 @@ export class NewContainerizationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'SecondCargoID',
             DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate('Customs.Declaration.F.SecondCargoID'),
+            Display: "מזהה מטען 2",
             Styles: { width: '100px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -316,7 +325,7 @@ export class NewContainerizationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'ThirdCargoID',
             DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate('Customs.Declaration.F.ThirdCargoID'),
+            Display: "מזהה מטען 3",
             Styles: { width: '120px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -330,22 +339,21 @@ export class NewContainerizationComponent extends BaseComponent {
             Styles: { width: '120px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
-            SortByName: 'DeclarationStatusTypeName'
+            SortByName: 'DeclarationStatusTypeName',
+            HtmlListComponentName: 'CustomsContainerizationListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsContainerizationListTemplate',
 
         });
 
         this.columns.push({
 
-            FieldName: 'PaymentDate',
+            FieldName: 'IsSubmitDeclaration',
             DataTypeCode: 'String',//'Number',
             Display: "הגשה",
             Styles: { width: '50px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CustomsContainerizationListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsContainerizationListTemplate',
-
-
-
         });
 
     }
@@ -354,6 +362,8 @@ export class NewContainerizationComponent extends BaseComponent {
     OnAllBtnClicked() {
         this.IsSelected = true;
         this.containerizationExtendedListService.connectedSelectAll = true;
+        this.containerizationExtendedListService.SelectedDeclarations = true;
+        this.containerizationExtendedListService.ConnectedDeclarations = this.containerizationExtendedListService.AllDeclarations + this.entityPM.ConnectedDeclarations;
         this.LoadConnectedItems();
 
     }
@@ -367,9 +377,10 @@ export class NewContainerizationComponent extends BaseComponent {
     OnNoneBtnClicked() {
         this.IsSelected = false;
         this.containerizationExtendedListService.connectedSelectAll = false;
-        this.entityPM.ConnectedDeclarations = "ALL";
+        this.entityPM.ConnectedDeclarations = "";
+        this.containerizationExtendedListService.ConnectedDeclarations = "";
+        this.containerizationExtendedListService.SelectedDeclarations = false;
         this.LoadConnectedItems();
-
     }
 
     itemClicked(itemValue: string) {
@@ -413,21 +424,66 @@ export class NewContainerizationComponent extends BaseComponent {
         }
     }
 
-
     SendButtonClicked() {
-        var windowArgs: any = {};
-        var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Height = 200;
-        logitudeWindow.Width = 250;
-        logitudeWindow.ShowCloseButton = true;
-        logitudeWindow.Title = "הצהרת סוכן";
-        logitudeWindow.WindowArgs = windowArgs;
-        logitudeWindow.ComponentLoaded.subscribe(comp => {
-            logitudeWindow.WindowClosed.subscribe((toCreateQInvoice: any) => {
-                debugger;
+        if (this.entityPM.Id != null) {
+            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+            this.entityPM.ConnectedDeclarations = this.containerizationExtendedListService.ConnectedDeclarations;
+            this.entityPM.OperationMode = "2";
+            this.entityPM.IsChange = true;
+            SessionLocator.SelectedSession.CurrentEditComponent.EntityPM = this.entityPM;
+            DeclarationEventManager.AddDeclarationToContainerization.emit(null);
+            this.CurrentSession.CurrentWindow.Close("0");
+        } else {
+            var windowArgs: any = {};
+            var logitudeWindow = new LogitudeWindow();
+            logitudeWindow.Height = 200;
+            logitudeWindow.Width = 250;
+            logitudeWindow.ShowCloseButton = true;
+            logitudeWindow.Title = "הצהרת סוכן";
+            logitudeWindow.WindowArgs = windowArgs;
+            logitudeWindow.ComponentLoaded.subscribe(comp => {
+                logitudeWindow.WindowClosed.subscribe((event:any) => {
+                    if (event != null) {
+                        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+                        this.entityPM.AgentDeclaration = true;
+                        this.entityPM.ConnectedDeclarations = this.containerizationExtendedListService.ConnectedDeclarations;
+                        this.containerizationPMService.insert(this.entityPM).subscribe((response: ServiceResponse) => {
+                            this.CurrentSession.CurrentWindow.Close("0");
+                            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
+                                .then(cmpRef => {
+                                    cmpRef.instance.ComponentRef = cmpRef;
+                                    cmpRef.instance.Run({
+                                        EntityId: response.Result.Id,
+                                        ObjectTableName: "Customs.Containerization"
+                                    });
+                                    cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                                    });
+                                });
+                            if (!response.HasError) {
+                                this.containerizationMessagesService.SendContainerization(this.getParams(response,event))
+                                    .subscribe(res1 => {
+                                    });
+                            }
+                        });
+                    }
+                });
             });
-        });
-        logitudeWindow.Show('./CustomsModules/CustomsContainerization/Components/Other/AgentStatementContainerization');
+            logitudeWindow.Show('./CustomsModules/CustomsContainerization/Components/Other/AgentStatementContainerization');
+        }
+    }
+
+    getParams(response: ServiceResponse,event:any) {
+        var params: GenericRequestParams = new GenericRequestParams();
+        params.Tenant = SessionLocator.Tenant;
+        params.RequestVIA = event.RequestVIA;
+        params.ForcePersonalSign = event.ForcePersonalSign;
+        params.LoggingEnabled = true;
+        params.LoggingEntityId = this.EntityPM.Id;
+        params.LoggingUserId = SessionLocator.LoggedUserId;
+        params.RequestName = "המכלה";
+        params.ResponseName = "המכלה תשובה"
+        return params
     }
     private timerToken: any;
     TextChanged(searchtext: any) {
@@ -447,15 +503,18 @@ export class NewContainerizationComponent extends BaseComponent {
         this.CurrentSession.CloseCurrentWindowEmit("cancel");
     }
 
+
     SetWindowArgs(windowArgs) {
-
-        //this.EntityResourceService.getEntityResourceByTableName("Customs.Containerization").subscribe((response: any) => {
-        //    this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
-        //        this.entityListService = new EntityListService();
-
-        //    });
-        //});
-
+        if (windowArgs.EntityPM != null) {
+            if (windowArgs.EntityIsDeclarationPM == "true") {
+                this.declarationPM = windowArgs.EntityPM;
+                this.ExportFile = this.declarationPM.ExportFile;
+                this.containerizationExtendedListService.ConnectedDeclarations = this.declarationPM.Id + ",";
+                this.containerizationExtendedListService.SelectedDeclarations = true;
+            } else {
+                this.entityPM = windowArgs.EntityPM;
+            }
+        } 
     }
 
 
