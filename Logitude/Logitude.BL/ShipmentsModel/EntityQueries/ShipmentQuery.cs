@@ -13762,6 +13762,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          House = shipment.House,
                                                          ShipmentLevelCode = shipment.ShipmentLevelCode,
                                                          AgentName = shipment.AgentCard == null ? null : shipment.AgentCard.EnglishName,
+                                                         OpenPayablesInProfitCurrency = shipment.OpenPayablesInProfitCurrency,                                                         
+                                                         AccountedPayablesInProfitCurrency = shipment.AccountedPayablesInProfitCurrency,
+                                                         OpenPayablesInLocalCurrency = shipment.OpenPayablesInLocalCurrency,
+                                                         AccountedPayablesInLocalCurrency = shipment.AccountedPayablesInLocalCurrency,
                                                      });
 
                 myResult = myResult.OrderByDescending(d => d.CreateDateTime);

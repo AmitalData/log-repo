@@ -741,6 +741,19 @@ export class InvoiceDomainService {
         });
     }
 
+    GetInvoiceOpenAmountPayables(shipmentId: string) {
+        var url = ServiceHelper.GetLogitudeURL() + 'api/ShipmentDomain' + '/GetInvoiceOpenAmountPayables?entityId=' + shipmentId;
+
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myJsonResult = response;
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myJsonResult;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
     MapARPaymentJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ARPaymentPM = null) {
         if (!entityPM) {
             entityPM = new ARPaymentPM();

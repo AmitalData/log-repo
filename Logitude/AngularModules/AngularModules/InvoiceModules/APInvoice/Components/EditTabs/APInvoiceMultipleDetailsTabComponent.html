@@ -269,6 +269,9 @@
                                                 <td style="width: 120px; min-width: 120px; max-width: 120px;">Open Amount</td>
                                                 <td style="width: 120px; min-width: 120px; max-width: 120px;">Total</td>
                                                 <td style="width: 120px; min-width: 120px; max-width: 120px;">Total VAT</td>
+                                                <td style="width: 90px; min-width: 90px; max-width: 90px;">
+                                                    <div></div>
+                                                </td>
                                                 <td class="LastChild" style="min-width: 50px;">
                                                     <div></div>
                                                 </td>
@@ -312,17 +315,21 @@
                                                     {{item.TotalVATAmount | NumbersPipe:'N2'}}
                                                 </td>
 
+                                                <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px;">
+                                                    <button [disabled]="!IsEditingEnabled" class="Button" (click)="AddPayablesButtonClicked(item)">Add Payables</button>
+                                                </td>
+
                                                 <td style="min-width: 50px;">
                                                     <div class="LeftCenter" style="height: 20px;">
                                                         <span class="CellSeparator"></span>
                                                         <IconButton attr.data-cy="{{'EditShipmentLine_' + item.ShipmentNumber | IdGeneratorPipe}}" [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditShipmentLine(item)" [IsEnabled]="IsEditingEnabled"></IconButton>
-                                                        <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteShipmentLine(item)" [IsEnabled]="IsEditingEnabled"></IconButton>
+                                                        <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteShipmentLine(item)" [IsEnabled]="IsEditingEnabled"></IconButton>                                                        
                                                     </div>
                                                 </td>
                                             </tr>
 
                                             <tr>
-                                                <td colspan="9">
+                                                <td colspan="10">
                                                     <div></div>
                                                 </td>
                                             </tr>
