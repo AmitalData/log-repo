@@ -894,7 +894,6 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
                 line.VendorName = item.VendorName;
                 line.ExpectedAmount = item.ExpectedAmount;
                 line.OtherInvoicesAmounts = item.AccountedAmount;
-                line.OpenAmount = item.OpenAmount;
                 line.CorrectionAmount = item.CorrectionAmount;
                 line.CorrectionNote = item.CorrectionNote;
                 line.CorrectionByUserId = item.CorrectionByUserId;
@@ -905,10 +904,9 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
                 line.VatPercentage = this.GetVatTypePercentage(item.VatTypeId);
                 line.ForiegnExchangeRate = this.GetCurrencyRate(item.CurrencyId);
                 line.ForiegnCurrencyAmount = item.OpenAmount;
-
-                var invoiceAmount: number = 0;
                 line.LocalCurrencyAmount = line.ForiegnCurrencyAmount * line.ForiegnExchangeRate;
-
+                line.OpenAmount = this.ComputeOpenAmount(item);
+                
                 if (line.ForiegnCurrencyId == this.ProfitCurrencyId) {
                     line.ProfitCurrencyAmount = line.ForiegnCurrencyAmount;
                 }
@@ -917,6 +915,7 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
                     line.ProfitCurrencyAmount = line.LocalCurrencyAmount / this.EntityPM.ProfitCurrencyExchangeRate;
                 }
 
+                var invoiceAmount: number = 0;
                 if (line.ForiegnCurrencyId == this.EntityPM.InvoiceCurrencyId) {
                     invoiceAmount = line.ForiegnCurrencyAmount;
                 }
@@ -1003,6 +1002,48 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
 
             this.CurrentSession.StopBusyIndicator();
         });
+    }
+
+    ComputeOpenAmount(payable: ShipmentPayablePM): number {
+        var expect: number = payable.ExpectedAmount;
+        var amount: number = payable.OpenAmount == null ? 0 : payable.OpenAmount;
+        var others: number = payable.AccountedAmount == null ? 0 : payable.AccountedAmount;
+        var corre: number = payable.CorrectionAmount == null ? 0 : payable.CorrectionAmount;
+        var open: number = expect - others - amount - corre;
+
+        return AppTool.Round(open, 2);
+    }
+    ComputeOtherAmounts() {
+        if (AppTool.IsNullOrEmpty(this.ForiegnCurrencyAmount)) {
+            this.LocalCurrencyAmount = null;
+            this.ProfitCurrencyAmount = null;
+            this.EntityPM.InvoiceCurrencyAmount = null;
+        }
+
+        else {
+            var invoiceAmount: number = 0;
+            this.LocalCurrencyAmount = this.ForiegnCurrencyAmount * this.EntityPM.ForiegnExchangeRate;
+
+            if (this.ForiegnCurrencyId == this.ProfitCurrencyId) {
+                this.ProfitCurrencyAmount = this.ForiegnCurrencyAmount;
+            }
+
+            else {
+                this.ProfitCurrencyAmount = this.LocalCurrencyAmount / this.APInvoicePM.ProfitCurrencyExchangeRate;
+            }
+
+            if (this.ForiegnCurrencyId == this.InvoiceCurrencyId) {
+                invoiceAmount = this.ForiegnCurrencyAmount;
+            }
+
+            else {
+                invoiceAmount = this.LocalCurrencyAmount / this.APInvoicePM.InvoiceCurrencyExchangeRate;
+            }
+
+            this.EntityPM.InvoiceCurrencyAmount = AppTool.Round(invoiceAmount, 2);
+        }
+
+        this.fatherComponent.ComputeTotals();
     }
 }
 
