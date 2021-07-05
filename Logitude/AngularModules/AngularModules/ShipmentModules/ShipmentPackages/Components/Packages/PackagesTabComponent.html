@@ -739,22 +739,7 @@
                                                                     <div></div>
                                                                 </td>
 
-                                                                <td *ngIf="IsShipmentContainersRequestStatusVisible" style="width: 4px;">
-                                                                    <span class="CellSeparator"></span>
-                                                                </td>
-
-                                                                <td *ngIf="IsShipmentContainersRequestStatusVisible" style="width: 95px;">
-                                                                    <div class="MediaFill">
-                                                                        <div style="width: 95px; height: 16px;" class="CenterCenter">
-                                                                            <button style="height: 16px;" class="Button" (click)="ContainersRequestStatusClicked()">Request Status</button>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-
-                                                                <td *ngIf="IsShipmentContainersRequestStatusVisible" style="width: 5px;">
-                                                                    <div></div>
-                                                                </td>
-
+                                                              
                                                                 <td>
                                                                     <span class="CellSeparator"></span>
                                                                     <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditPackageClicked(item)"></IconButton>
