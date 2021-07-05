@@ -111,6 +111,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configurations\Configurations.cs" />
+    <Compile Include="Configurations\ConfigurationsGetter.cs" />
+    <Compile Include="Hooks\BeforeFeatureRun.cs" />
     <Compile Include="Hooks\BeforeTestRun.cs" />
     <Compile Include="Models\Builders\ShipmentBuilder.cs" />
     <Compile Include="Models\CargoTrackingShipmentList.cs" />
@@ -129,9 +132,7 @@
     <None Include="Features\BuildCargoTrackingDatabaseAfterAdjustingOrAddingShipments.feature" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Connections\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
       <Project>{a663e7ef-b858-4bb6-bc33-e473f51b8e56}</Project>

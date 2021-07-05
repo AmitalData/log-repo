@@ -1,4 +1,5 @@
-﻿Feature: BuildCargoTrackingDatabaseAfterAdjustingOrAddingShipments
+﻿@GetConnectionStrings
+Feature: BuildCargoTrackingDatabaseAfterAdjustingOrAddingShipments
 	With pre-prepared base and shipment data
 	Update a Shipment and Build Cargo Tracking Data
 

@@ -10,5 +10,6 @@ namespace Logitude.CargoTrackingTests.Hooks
     [Binding]
     public class BeforeTestRun
     {
+
     }
 }

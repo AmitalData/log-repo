@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelper;
+using Logitude.CargoTrackingTests.Configurations;
 using Logitude.CargoTrackingTests.Models;
 using Logitude.CargoTrackingTests.Services;
 
@@ -28,8 +29,8 @@ namespace Logitude.CargoTrackingTests.Steps
         {
             ApiResponse<ShipmentPM> response = UpdateShipmentGrossWeight(ShipmentContext.DirectShipment);
             CargoTrackingBuildService cargoTrackingBuildService = new CargoTrackingBuildService();
-            string sourceConnectionString = ConfigurationManager.ConnectionStrings["LogitudeConnectionString"].ConnectionString;//"Data Source=.;Initial Catalog=Logitude2-5_Main;Integrated Security=False;Persist Security Info=True;User ID=sa;Password=Saas256;MultipleActiveResultSets=True;Connect Timeout=60";
-            string destinationConnectionString = ConfigurationManager.ConnectionStrings["CargoTrackingConnectionString"].ConnectionString; //"Data Source=.;Initial Catalog=Logitude2-5_CargoTracking;Integrated Security=False;Persist Security Info=True;User ID=sa;Password=Saas256;MultipleActiveResultSets=True;Connect Timeout=60";
+            string sourceConnectionString = ConfigurationsGetter.GetMainDBConnectionString();//ConfigurationManager.ConnectionStrings["LogitudeConnectionString"].ConnectionString;//"Data Source=.;Initial Catalog=Logitude2-5_Main;Integrated Security=False;Persist Security Info=True;User ID=sa;Password=Saas256;MultipleActiveResultSets=True;Connect Timeout=60";
+            string destinationConnectionString = ConfigurationsGetter.GetCargoDBConnectionString();//ConfigurationManager.ConnectionStrings["CargoTrackingConnectionString"].ConnectionString; //"Data Source=.;Initial Catalog=Logitude2-5_CargoTracking;Integrated Security=False;Persist Security Info=True;User ID=sa;Password=Saas256;MultipleActiveResultSets=True;Connect Timeout=60";
             cargoTrackingBuildService.BuildCargoTrackingTables(sourceConnectionString,destinationConnectionString);
         }
 
@@ -46,14 +47,19 @@ namespace Logitude.CargoTrackingTests.Steps
         [When(@"building cargo tables")]
         public void WhenBuildingCargoTables()
         {
-            ScenarioContext.Current.Pending();
+            CargoTrackingBuildService cargoTrackingBuildService = new CargoTrackingBuildService();
+            string sourceConnectionString = ConfigurationsGetter.GetMainDBConnectionString();//ConfigurationManager.ConnectionStrings["LogitudeConnectionString"].ConnectionString;//"Data Source=.;Initial Catalog=Logitude2-5_Main;Integrated Security=False;Persist Security Info=True;User ID=sa;Password=Saas256;MultipleActiveResultSets=True;Connect Timeout=60";
+            string destinationConnectionString = ConfigurationsGetter.GetCargoDBConnectionString();//ConfigurationManager.ConnectionStrings["CargoTrackingConnectionString"].ConnectionString; //"Data Source=.;Initial Catalog=Logitude2-5_CargoTracking;Integrated Security=False;Persist Security Info=True;User ID=sa;Password=Saas256;MultipleActiveResultSets=True;Connect Timeout=60";
+            cargoTrackingBuildService.BuildCargoTrackingTables(sourceConnectionString, destinationConnectionString);
         }
 
 
         [Then(@"a cargo tracking shipment with the same id will be created")]
         public void ThenACargoTrackingShipmentWithTheSameIdWillBeCreated()
         {
-            ScenarioContext.Current.Pending();
+            ApiResponse<CargoTrackingShipmentList> cargoTrackingShipmentResponse =
+                            GetUpdatedCargoTrackingShipment(ShipmentContext.DirectShipment.SecurityKey, ShipmentContext.DirectShipment.Tenant);
+            cargoTrackingShipmentResponse.Data.EntityId.Should().Be(ShipmentContext.DirectShipment.Id);
         }
 
 
