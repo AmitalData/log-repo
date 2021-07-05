@@ -3167,13 +3167,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="PrivateLabelConsigneeName"
-    Type="varchar"
-    Size="40">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="PrivateLabelIncludePickup"
     Type="bit">
     <Constraints

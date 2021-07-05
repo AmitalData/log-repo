@@ -341,8 +341,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.OnForwardingCarrierId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.OnForwardingAdditionalTransportModeCode).HasMaxLength(4).IsUnicode(false);
 
-            this.Property(t => t.PrivateLabelInvoiceNumber).HasMaxLength(40).IsUnicode(false);
-            this.Property(t => t.PrivateLabelConsigneeName).HasMaxLength(40).IsUnicode(false);  
+            this.Property(t => t.PrivateLabelInvoiceNumber).HasMaxLength(40).IsUnicode(false);  
 
 
             // Table & Column Mappings
@@ -776,8 +775,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.IsHTSMissing).HasColumnName("IsHTSMissing");
             this.Property(t => t.ForwarderStandaloneShipmentId).HasColumnName("ForwarderStandaloneShipmentId");
 
-            this.Property(t => t.PrivateLabelInvoiceNumber).HasColumnName("PrivateLabelInvoiceNumber");
-            this.Property(t => t.PrivateLabelConsigneeName).HasColumnName("PrivateLabelConsigneeName");
+            this.Property(t => t.PrivateLabelInvoiceNumber).HasColumnName("PrivateLabelInvoiceNumber"); 
             this.Property(t => t.PrivateLabelIncludePickup).HasColumnName("PrivateLabelIncludePickup");
             this.Property(t => t.PrivateLabelIncludeDelivery).HasColumnName("PrivateLabelIncludeDelivery");
             this.Property(t => t.RequestedFlightDate).HasColumnName("RequestedFlightDate");

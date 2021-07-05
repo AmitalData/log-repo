@@ -684,8 +684,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public bool IsHTSMissing { get; set; }
         public string ForwarderStandaloneShipmentId { get; set; }
          
-        public string PrivateLabelInvoiceNumber { get; set; } 
-        public string PrivateLabelConsigneeName { get; set; } 
+        public string PrivateLabelInvoiceNumber { get; set; }  
         public DateTime? RequestedFlightDate { get; set; } 
         public bool PrivateLabelIncludePickup { get; set; } 
         public bool PrivateLabelIncludeDelivery { get; set; }

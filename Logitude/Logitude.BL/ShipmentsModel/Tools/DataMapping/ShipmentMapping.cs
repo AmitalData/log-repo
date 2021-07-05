@@ -470,8 +470,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.ForwarderStandaloneShipmentId = entityPM.ForwarderStandaloneShipmentId;
             entityPoco.IsHTSMissing = entityPM.IsHTSMissing;
 
-            entityPoco.PrivateLabelInvoiceNumber = entityPM.PrivateLabelInvoiceNumber;
-            entityPoco.PrivateLabelConsigneeName = entityPM.PrivateLabelConsigneeName;
+            entityPoco.PrivateLabelInvoiceNumber = entityPM.PrivateLabelInvoiceNumber; 
             entityPoco.PrivateLabelIncludePickup = entityPM.PrivateLabelIncludePickup;
             entityPoco.PrivateLabelIncludeDelivery = entityPM.PrivateLabelIncludeDelivery;
             entityPoco.RequestedFlightDate = entityPM.RequestedFlightDate;
