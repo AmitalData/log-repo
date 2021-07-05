@@ -102,8 +102,7 @@ export class AutomationConditionsDetailsComponent {
                 this.LoadAutomationConditionsList();
                 
             }
-        });
- this.IsAtuomationResourceReady = true;
+        }); 
     }
 
     LoadConditionsFieldLists() {
