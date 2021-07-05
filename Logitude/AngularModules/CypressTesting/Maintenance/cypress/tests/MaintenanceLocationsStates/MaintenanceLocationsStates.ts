@@ -6,7 +6,6 @@ import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetails";
 import * as BaseActions from "../../../../Base/cypress/actions/Actions"
 import { Constants } from "../../constants/Constants";
-import { constants } from "../../../../Base/cypress/constants/constants"
 
 //#region variable
 let stateDetails: StateDetails

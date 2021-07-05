@@ -1,4 +1,4 @@
-@NewDev @daily
+@dev @daily
 Feature: FBL Stock Add, Remove and Remove Series in Maintenance
     The user creates a FBLStock, searches for and edits it from the Maintenance Module.
 

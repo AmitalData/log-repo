@@ -2685,6 +2685,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string StandalonePickupDeliveryNumber { get; set; }
         public string ForwarderStandaloneShipmentId { get; set; }
         public string ForwarderPickUpDeliveryType { get; set; }
+        public DateTime? ExpectedCargoReadyDate { get; set; }
+        public DateTime? ActualCargoReadyDate { get; set; }
+        public string HandlerUserId { get; set; }
     }
 
     public class TransshipmentLeg

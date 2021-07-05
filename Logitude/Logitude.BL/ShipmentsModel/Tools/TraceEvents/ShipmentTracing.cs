@@ -213,6 +213,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                         string notes = this.BuildOceanInsightsEventNotes();
                         this.CreateTraceEvent("OISU", notes);
                     }
+                    if (entityPM.ExpectedCargoReadyDate != entityPoco.ExpectedCargoReadyDate)
+                    {
+                        this.CreateTraceEvent("ECRD", entityPM.EventNote);
+                    }
+                    if (entityPM.ActualCargoReadyDate != entityPoco.ActualCargoReadyDate)
+                    {
+                        this.CreateTraceEvent("ACRD", entityPM.EventNote);
+                    }
+                    if (entityPM.HandlerUserId != entityPoco.HandlerUserId)
+                    {
+                        this.CreateTraceEvent("HAUI", entityPM.EventNote);
+                    }
                 }
 
                 this.TraceOtherData();

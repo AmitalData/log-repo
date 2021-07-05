@@ -761,8 +761,6 @@ export function SearchAContainer(ContainerNumber: string) {
     cy.FillLogTextBox(BaseSelectors.SearchField, ContainerNumber);
     cy.DefineRequestWait(RestAPI.GET, URLs.ContainerFollowUpViewsGetbyfilters, RequestAliases.ContainerFollowUpViewsGetbyfilters)
     BaseAssertion.AssertStatusCode(RequestAliases.ContainerFollowUpViewsGetbyfilters, 200)
-    cy.DefineRequestWait(RestAPI.GET, URLs.ContainerFollowUpViewsGetbyfilters, RequestAliases.ContainerFollowUpViewsGetbyfilters)
-    BaseAssertion.AssertStatusCode(RequestAliases.ContainerFollowUpViewsGetbyfilters, 200)
 }
 export function UpdateFollowUp() {
     cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.ShipmentRequest)

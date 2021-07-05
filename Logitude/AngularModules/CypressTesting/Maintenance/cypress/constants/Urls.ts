@@ -3,7 +3,7 @@ export class Urls {
 
     public static readonly Contacts = "**/contacts";
     public static readonly ContactsGetSingle = "**/contacts/getsingle?**";
-    public static readonly ContactViewsGetByFilters = "**/contactviews/getbyfilters?**GetCount=false**";
+    public static readonly ContactViewsGetByFilters = "**/contactviews/getbyfilters?**";
 
     public static readonly Vendor = "**/vendors";
     public static readonly PartnersDomain = "**/PartnersDomain";

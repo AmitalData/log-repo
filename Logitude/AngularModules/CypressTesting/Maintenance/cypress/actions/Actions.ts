@@ -263,6 +263,7 @@ export function SearchVessel() {
 export function AssertSearchVessel() {
     let vesselName = VesselContext.Name;
     if (vesselName) {
+        cy.get(BaseSelectors.ListDataLoaded)
         cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
             expect(text).to.contain(vesselName);
         });
@@ -340,7 +341,7 @@ function GenerateNewRandomCode() {
 }
 
 function DefineVesselViewsGetByFiltersRequest(VesselCode: string) {
-    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(VesselCode + "&GetCount=false"), RequestAliases.GetFilterSearch);
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(VesselCode), RequestAliases.GetFilterSearch);
 }
 
 function AssertVesselViewsGetByFilters() {
@@ -414,6 +415,7 @@ export function SearchContact() {
 export function AssertSearchContact() {
     let contactEmail = ContactContext.Email;
     if (contactEmail) {
+        cy.get(BaseSelectors.ListDataLoaded)
         cy.get(BaseSelectors.RowClass).eq(0).invoke("text").then((text) => {
             expect(text).to.contain(contactEmail);
         });
@@ -1056,10 +1058,11 @@ export function SearchState() {
 }
 
 export function DefineStateViewsGetByFiltersRequest(StateName: string) {
-    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(StateName + "&GetCount=false"), RequestAliases.GetFilterSearch);
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(StateName), RequestAliases.GetFilterSearch);
 }
 
 export function AssertSearchState() {
+    cy.get(BaseSelectors.ListDataLoaded)
     cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
         expect(text).to.contain(StateCode);
     });
@@ -1235,13 +1238,14 @@ export function AssertCitiesViewsGetByFilters() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
 }
 export function AssertSearchCity() {
+    cy.get(BaseSelectors.ListDataLoaded)
     cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
         expect(text).to.contain(CityCode);
     });
 }
 
 export function DefineCityViewsGetByFiltersRequest(CityName: string) {
-    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(CityName + "&GetCount=false"), RequestAliases.GetFilterSearch);
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(CityName), RequestAliases.GetFilterSearch);
 }
 export function OpenCity() {
     DefineCountryCitiesGetSingleRequest();
@@ -1342,13 +1346,14 @@ export function SearchGlobalZone() {
 }
 
 export function DefineGlobalZoneViewsGetByFiltersRequest(GlobalZoneName: string) {
-    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(GlobalZoneName + "&GetCount=false"), RequestAliases.GetFilterSearch);
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(GlobalZoneName), RequestAliases.GetFilterSearch);
 }
 export function AsserGlobalZoneViewsGetByFilters() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
 }
 
 export function AssertSearchGlobalZone() {
+    cy.get(BaseSelectors.ListDataLoaded)
     cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
         expect(text).to.contain(GlobalZoneCode);
     });
@@ -1447,12 +1452,13 @@ export function SearchCommodity() {
     AssertCommodityViewsGetByFilters();
 }
 export function DefineCommodityViewsGetByFiltersRequest(CommodityName: string) {
-    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(CommodityName + "&GetCount=false"), RequestAliases.GetFilterSearch);
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(CommodityName), RequestAliases.GetFilterSearch);
 }
 export function AssertCommodityViewsGetByFilters() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
 }
 export function AssertSearchCommodity() {
+    cy.get(BaseSelectors.ListDataLoaded)
     cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
         expect(text).to.contain(CommodityName);
     });
@@ -1544,12 +1550,13 @@ export function SearchRegion() {
     AssertRegionViewsGetByFilters();
 }
 export function DefineRegionViewsGetByFiltersRequest(CommodityName: string) {
-    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(CommodityName + "&GetCount=false"), RequestAliases.GetFilterSearch);
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(CommodityName), RequestAliases.GetFilterSearch);
 }
 export function AssertRegionViewsGetByFilters() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
 }
 export function AssertSearchRegion() {
+    cy.get(BaseSelectors.ListDataLoaded)
     cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
         expect(text).to.contain(RegionName);
     });

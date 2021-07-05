@@ -4948,6 +4948,18 @@ export class ShipmentPM {
     public get ForwarderPickUpDeliveryType() { return this.forwarderPickUpDeliveryType; }
     public set ForwarderPickUpDeliveryType(newValue: string) { if (this.forwarderPickUpDeliveryType != newValue) { this.forwarderPickUpDeliveryType = newValue; this.MarkAsDirty("forwarderPickUpDeliveryType"); } }
 
+    private expectedCargoReadyDate: Date;
+    public get ExpectedCargoReadyDate() { return this.expectedCargoReadyDate; }
+    public set ExpectedCargoReadyDate(newValue: Date) { if (this.expectedCargoReadyDate != newValue) { this.expectedCargoReadyDate = newValue; this.MarkAsDirty("ExpectedCargoReadyDate"); } }
+
+    private actualCargoReadyDate: Date;
+    public get ActualCargoReadyDate() { return this.actualCargoReadyDate; }
+    public set ActualCargoReadyDate(newValue: Date) { if (this.actualCargoReadyDate != newValue) { this.actualCargoReadyDate = newValue; this.MarkAsDirty("ActualCargoReadyDate"); } }
+
+    private handlerUserId: string;
+    public get HandlerUserId() { return this.handlerUserId; }
+    public set HandlerUserId(newValue: string) { if (this.handlerUserId != newValue) { this.handlerUserId = newValue; this.MarkAsDirty("HandlerUserId"); } }
+
     public OldEntityPM: ShipmentPM;
 
     private aWBOCIPMs: AWBOCIPM[];
