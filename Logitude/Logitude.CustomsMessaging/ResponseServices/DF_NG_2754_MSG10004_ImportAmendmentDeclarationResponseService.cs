@@ -177,6 +177,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     Consignments = GetConsignments(declaration, tenant, null,context),
 
 
+
+
                 };
 
 
@@ -195,6 +197,29 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     declarationPM.PrimaryInvoiceCounterKey = declarationOrg.PrimaryInvoiceCounterKey;
                     declarationPM.ExcludeConsignment = declarationOrg.ExcludeConsignment;
                     //declarationPM.IsClose = declarationOrg.IsClose;
+
+                    if(declarationOrg.IsCourierDeclaration)
+                    {
+
+                        declarationPM.IsCourierDeclaration = true;
+
+                        DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
+
+                        DeclarationCourierStatusPM declarationCourierStatusPM =    declarationCourierStatusQueryService.GetSingle(declarationOrg.Id, false, false);
+
+                        DeclarationCourierStatusPM declarationCourierStatusPMNew = declarationCourierStatusPM;
+
+                        declarationCourierStatusPMNew.DeclarationId = declarationPM.Id;
+
+                        declarationCourierStatusPMNew.ChangeSetOp = ChangeSetOperation.Insert;
+
+                        DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), tenant);
+
+                        declarationCourierStatusUpdateService.Update(declarationCourierStatusPMNew, true);
+                    }
+
+
+
 
                     if (isFromAmendment)
                     {
