@@ -39,7 +39,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //if (setting.IsConnectedToUniFreight)
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
             DeclarationPM declarationPM = declarationQueryService.GetSingle(entityPM.DeclarationId, false, false);
-            if (declarationPM != null && declarationPM.IsConnectedToUnifreight)
+            if (declarationPM != null && (declarationPM.IsConnectedToUnifreight|| declarationPM.IsAmendment==true))
             {
                 UpdateUnifreight(entityPM);
             }
