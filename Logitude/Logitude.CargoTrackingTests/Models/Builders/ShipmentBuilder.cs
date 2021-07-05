@@ -3,10 +3,13 @@ using Logitude.Test.Base.Models.PartnersPreparation;
 using Logitude.Test.Base.Models.UserTenantPreparation;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 
-namespace Logitude.ShipmentTests.Models.Builders
+namespace Logitude.CargoTrackingTests.Models.Builders
 {
     public class ShipmentBuilder
     {
@@ -157,7 +160,7 @@ namespace Logitude.ShipmentTests.Models.Builders
         public ShipmentBuilder AgentAddressCountryCode(string agentAddressCountryCode)
         {
             _shipmentPM.AgentAddressCountryCode = agentAddressCountryCode;
-            return this; 
+            return this;
         }
 
         public ShipmentBuilder AgentName(string agentName)
@@ -213,7 +216,7 @@ namespace Logitude.ShipmentTests.Models.Builders
         }
         public ShipmentBuilder ShipmentReceivableStatusCode(string ShipmentReceivableStatusCode)
         {
-            _shipmentPM.ShipmentReceivableStatusCode = ShipmentReceivableStatusCode ;
+            _shipmentPM.ShipmentReceivableStatusCode = ShipmentReceivableStatusCode;
             return this;
         }
         public ShipmentBuilder ShipmentReceivableStatusName(string ShipmentReceivableStatusName)

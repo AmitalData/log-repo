@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Logitude.ShipmentTests.Models
+namespace Logitude.CargoTrackingTests.Models
 {
     public class ShipmentPM
     {
@@ -40,5 +43,6 @@ namespace Logitude.ShipmentTests.Models
         public string ShipmentReceivableStatusName { get; set; }
         public string ShipmentReceivableStatusCode { get; set; }
         public double? GrossWeight { get; set; }
+        public string SecurityKey { get; set; }
     }
 }

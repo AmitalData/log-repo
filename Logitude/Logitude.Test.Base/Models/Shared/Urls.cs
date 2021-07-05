@@ -41,7 +41,7 @@
         public static string APInvoicesController = "APInvoices";
         public static string ARInvoicesController = "ARInvoices";
         //public static string APInvoiceViewsGetByFilters = "APInvoiceViews/getbyfilters";
-
+        public static string CargoTrackingSearchController = "CargoTrackingSearch";
 
 
 
@@ -166,6 +166,11 @@
         public static string CrossDockGetSingle(string id)
         {
             return "warehouseentries/GetSingle?id=" + id;
+        }
+
+        public static string CargoTrackingShipmentGetSingleList(string securityKey, int tenant)
+        {
+            return "CargoTrackingSearch/GetSingleShipmentList?SecurityKey=" + securityKey + "&tenant=" + tenant;
         }
 
         public static string CrossDockReleaseGetSingle(string id)
