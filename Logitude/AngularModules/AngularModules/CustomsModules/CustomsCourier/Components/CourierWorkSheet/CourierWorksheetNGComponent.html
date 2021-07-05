@@ -1,4 +1,16 @@
 <style>
+/*    .p-menu p-component {
+        top: 0px;
+        left: 0px;
+    }
+*/
+
+.menuPop0 {
+        position: absolute;
+        /*        top:0px;
+        left:0px;
+*/
+    }
     .MyBlue {
         color: #fff;
         background-color: #337ab7;
@@ -201,7 +213,15 @@
                                                 <table>
                                                     <tr>
                                                         <!--<td style="width: 48px; font-weight:bold; font-size:16px; color: black;">{{'Customs.CourierMaster.O.TotalFilter' | TextCodeTranslationPipe }}</td>-->
-                                                        <td colspan="2" style="font-weight:bold; font-size:16px; ">{{'סהכ ש.מ.ב '}} {{ DataSource.rowCount }}</td>
+                                                        <td colspan="2" style="font-weight:bold; font-size:16px; ">
+                                                            {{'סהכ ש.מ.ב '}} {{ DataSource.rowCount }}
+                                                            <div>
+                                                                <!--label="Show"-->
+                                                                <button type="button" pButton icon="pi pi-bars" (click)="menu123.toggle($event)"></button>
+                                                                <!--style="top:0px;left:0px" [popup]="true" -->
+                                                                <p-menu #menu123 [model]="MyMenuItem" [popup]="true"  ></p-menu>
+                                                            </div>
+                                                        </td>
                                                         <td *ngIf="IsFiltered || SearchFilter != null" style="font-weight:bold; font-size:16px; ">&nbsp;{{'מתאימים לחיתוך'}}</td>
                                                         <td></td>
                                                     </tr>
@@ -913,22 +933,21 @@
 
 
 
-
-
+                                                        <!--dataKey="Id"-->
+                                                        
                                                         <p-table [value]="LazyDataSource"
                                                                  [scrollable]="true" [rows]="50" [virtualScroll]="true" [virtualRowHeight]="15"
                                                                  [lazy]="true" (onLazyLoad)="loadLazy($event)" [loading]="loading" [resizableColumns]="true"
-                                                                 [(selection)]="SelectedNGRows" (onRowSelect)="onRowSelect($event)"
+                                                                 [(selection)]="SelectedNGRows"
+                                                                 (onRowSelect)="onRowSelect($event)"
                                                                  (onRowUnselect)="onRowUnselect($event)" scrollHeight="600px"
-                                                                 [columns]="columns"
-                                                                 dataKey="Id"
-                                                                 >
+                                                                 [columns]="columns">
 
 
 
 
                                                             <ng-template pTemplate="header">
-                                            <tr>
+<tr>
                                                 <th style="width: 27px;text-align: center; padding: 0px; margin-right: -18px;" >
                                                     
                                                         <table>
@@ -1030,7 +1049,7 @@
                                             <ng-template pTemplate="emptymessage" let-columns>
                                                 <tr>
                                                     <td [attr.colspan]="columns.length">
-                                                        No records found
+                                                        <label  class="CenterCenter" style="text-align:center;font-size:18px;color:gray"> לא נמצאו תוצאות מתאימות </label>
                                                     </td>
                                                 </tr>
                                             </ng-template>

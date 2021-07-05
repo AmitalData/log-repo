@@ -32,7 +32,7 @@ import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 import { DeclarationCourierStatusList } from '../../../../Customs/EntityLists/DeclarationCourierStatusList';
-import { LazyLoadEvent } from 'primeng/api';
+import { LazyLoadEvent, MenuItem } from 'primeng/api';
 import { IIGGeneralMessagesService } from '../../../../Customs/Services/WebServices/IIGGeneralMessagesService';
 import { CourierWorksheetListTemplate } from '../../../CustomsListTemplates/Components/CourierWorksheetListTemplate';
 
@@ -149,6 +149,11 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
         //);
         this.GetMamanPUR();
         this.isAllowAccounting = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowAccounting")
+        this.MyMenuItem = [
+            { label: 'New', icon: 'pi pi-fw pi-plus' },
+            { label: 'Open', icon: 'pi pi-fw pi-download' },
+            { label: 'Undo', icon: 'pi pi-fw pi-refresh' }
+        ];
     }
     //PseventRowSelectEventSubscribe: any;
     ngOnDestroy() {
@@ -889,8 +894,8 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
             IsCustomTemplate: true,
             Styles: { width: '27px' },
             //IsCheckBox: true
-            HtmlListComponentName: 'CourierWorksheetListTemplate',
-            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+            //HtmlListComponentName: 'CourierWorksheetListTemplate',
+            //HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
         });
 
         this.columns.push({
@@ -2136,7 +2141,7 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
 
 
 
-
+    MyMenuItem: MenuItem[];
     ShowGrid: boolean = false;
     myIIGGeneralMessagesService: IIGGeneralMessagesService = new IIGGeneralMessagesService();
     LazyDataSource: DeclarationCourierStatusList[];
@@ -2179,7 +2184,7 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
         //console.log($event);
 
 
-        let useCache: boolean = false;
+        let useCache: boolean = true;
         if (this.oldEvent) {
 
             if (

@@ -104,7 +104,13 @@ export class ApiQueryFilters {
           params.ForceEnableAdd=ForceEnableAdd;
         this.pushAdditionalFilter(params);
         if (this.usePrimNG) {
-            this.AddAmitaFilterMetadata(FieldName, FieldValue, Operator.toLowerCase(), "and");
+            if (Operator == "Between") {
+                this.AddAmitaFilterMetadata(FieldName, FieldValue, "LessThanOrEqual".toLowerCase(), "and");
+                this.AddAmitaFilterMetadata(FieldName, FieldValue2, "GreaterThanOrEqual".toLowerCase(), "and");
+            } else {
+                this.AddAmitaFilterMetadata(FieldName, FieldValue, Operator.toLowerCase(), "and");
+            }
+            
         }
         
 
