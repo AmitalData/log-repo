@@ -156,7 +156,9 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
     LoadChildComponent() {
         SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.viewContainerRef)
             .then(cmpRef => {
-
+                //cmpRef.instance.HideColumns = true;
+                cmpRef.instance.HideLastColumn = true;
+                cmpRef.instance.LabelWidth = 120;
                 cmpRef.instance.Run(this.entityArgs.EntityPM, this.entityArgs.ObjectTableName, this.ScreenCode);
             });
     }

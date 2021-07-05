@@ -96,8 +96,8 @@ namespace Logitude.Accounting.BL.CoreBL.Fix
                 journalPM.StatusCode = "0";
                 bool journalReco = (journalPM.AccountingEntityCode == "10" || journalPM.AccountingEntityCode == "12");
                 if (clearIt || journalReco)
+                //if (clearIt)
                 {
-                    
                     journalPM.AccountingEntityCode = "1";
 
                 }

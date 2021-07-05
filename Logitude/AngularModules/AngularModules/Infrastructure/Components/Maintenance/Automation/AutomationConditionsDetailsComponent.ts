@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AutomationHistoryPM } from '../../../../Common/EntityPMs/AutomationHistoryPM';
 import { EntityChangePM } from '../../../../Common/EntityPMs/EntityChangePM';
+import { AutomationExtendedPMService } from '../../../../Common/Services/ExtendedPMs/AutomationExtendedPMService';
 import { AutomationHistoryExtendedPMService } from '../../../../Common/Services/ExtendedPMs/AutomationHistoryExtendedPMService';
 import { ApiQueryFilters } from '../../../DataContracts/ApiQueryFilters';
 import { AutomationCondition } from '../../../DataContracts/AutomationCondition';
@@ -37,7 +38,8 @@ export class AutomationConditionsDetailsComponent {
     DataViewModel: any; 
     IsAtuomationResourceReady: boolean = false; 
     automationConditionPMList: any;
-
+    IsMasterShipment: boolean = false; 
+    public automationExtendedPMService: AutomationExtendedPMService = new AutomationExtendedPMService();
     constructor(public entityListService: EntityListService, public _automationHistoryExtendedPMService: AutomationHistoryExtendedPMService) {
 
     }
@@ -47,7 +49,7 @@ export class AutomationConditionsDetailsComponent {
         this.DataViewModel = windowArgs.DataViewModel;
         this.ObjectTableName = this.DataViewModel.ObjectTableName;
         this.automationConditionPMList = windowArgs.CurrentEntityPM.ConditionsList;
-        this.CurrentEntityPM = windowArgs.CurrentEntityPM; 
+        this.CurrentEntityPM = windowArgs.CurrentEntityPM;
         this.Initialize(); 
     }
 
@@ -81,9 +83,25 @@ export class AutomationConditionsDetailsComponent {
     }
 
     Start() { 
-        this.LoadConditionsFieldLists();
-        this.LoadAutomationConditionsList();   
+        this.LoadConditionsFieldLists(); 
+        this.LoadAutomationList(); 
         this.IsAtuomationResourceReady = true;
+    }
+
+    private LoadAutomationList() {
+        let automationId = this.CurrentEntityPM.AutomationId;
+        this.automationExtendedPMService.GetIsMasterAutomation(automationId).subscribe((response: any) => {
+            let serviceResponse: ServiceResponse = response;
+            if (!serviceResponse.HasError) {
+                if (serviceResponse.Result == true) {
+                    this.IsMasterShipment = true;
+                }
+                this.LoadAutomationConditionsList();
+                }
+            else {
+                this.LoadAutomationConditionsList();
+            }
+        });
     }
 
     LoadConditionsFieldLists() {
@@ -99,7 +117,7 @@ export class AutomationConditionsDetailsComponent {
         })
     }
 
-    LoadAutomationConditionsList() { 
+    LoadAutomationConditionsList() {
         if (this.automationConditionPMList != null) {
             this.automationConditionPMList.forEach((item) => { 
                 if (item.ConditionType == "And") { 

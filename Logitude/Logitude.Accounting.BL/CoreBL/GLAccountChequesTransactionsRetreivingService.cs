@@ -41,7 +41,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
         public List<LedgerTransactionList> GetAccountChequesTransactions(string accountId)
         {
-            List<LedgerTransactionList> arPaymentTransactions = GetARPaymentLedgerTransactions(accountId).Distinct().ToList();
+            List<LedgerTransactionList> arPaymentTransactions = GetARPaymentLedgerTransactions(accountId).OrderByDescending(d => d.PaymentValueDate).Distinct().ToList();
             List<LedgerTransactionList> externalTransactions = GetExternalTransactionsForAccount(accountId, tenant);
 
             arPaymentTransactions.AddRange(externalTransactions);
@@ -77,7 +77,12 @@ namespace Logitude.Accounting.BL.CoreBL
                         SourceId = journal.AccountingEntityId,
                         SourceTypeCode = arPaymentSourceTypeCode,
                         JournalId = journal.Id,
-                        IconCode = paymentIconCode
+                        IconCode = paymentIconCode,
+                        IsForeignAmountCreditPos = transaction.ForeignAmountCredit != 0,
+                        IsLocalAmountCreditPos = transaction.LocalAmountCredit != 0,
+                        CalculatedForeignAmount = transaction.ForeignAmountCredit != 0 ? transaction.ForeignAmountCredit : transaction.ForeignAmountDebit,
+                        CalculatedLocalAmount = transaction.LocalAmountCredit != 0 ? transaction.LocalAmountCredit : transaction.LocalAmountDebit,
+                        CurrencySign =transaction.Currency.Sign,
 
                     }).Distinct().ToList();
         }
@@ -109,7 +114,11 @@ namespace Logitude.Accounting.BL.CoreBL
                         JournalId = journal.Id,
                         SourceId = journal.AccountingEntityId,
                         SourceTypeCode = arPaymentSourceTypeCode,
-
+                        IsForeignAmountCreditPos = trans.ForeignAmountCredit != 0,
+                        IsLocalAmountCreditPos = trans.LocalAmountCredit != 0,
+                        CalculatedForeignAmount = trans.ForeignAmountCredit != 0 ? trans.ForeignAmountCredit : trans.ForeignAmountDebit,
+                        CalculatedLocalAmount = trans.LocalAmountCredit != 0 ? trans.LocalAmountCredit : trans.LocalAmountDebit,
+                        CurrencySign = trans.Currency.Sign,
                     }).ToList();
 
         }

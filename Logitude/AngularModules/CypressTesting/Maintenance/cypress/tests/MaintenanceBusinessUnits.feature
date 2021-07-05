@@ -1,4 +1,4 @@
-@NewDev
+@dev
 Feature: Business Unit Create, Search and Edit from Maintenance
     The user creates a business Unit, searches for and edits it from the Maintenance Module.
 
