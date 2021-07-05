@@ -19,6 +19,7 @@ import { ContainerizationMessagesService } from '../../../../Customs/Services/We
 import { GenericRequestParams } from '../../../../Customs/DataContract/RequestParams/GenericRequestParams';
 import { DeclarationEventManager } from '../../../../Customs/Utilities/DeclarationEventManager';
 import { DeclarationPM } from '../../../../Customs/EntityPMs/DeclarationPM';
+import { CustomMessageProgressComponent } from '../../../CustomsControls/Components/CustomMessageProgressComponent';
 
 
 @Component({
@@ -461,8 +462,11 @@ export class NewContainerizationComponent extends BaseComponent {
                                     });
                                 });
                             if (!response.HasError) {
-                                this.containerizationMessagesService.SendContainerization(this.getParams(response,event))
+                                var params = this.getParams(response, event);
+                                CustomMessageProgressComponent.ShowProgressBar(params.PBId,"שליחת המכלה", false).then((res) => {});
+                                this.containerizationMessagesService.SendContainerization(params)
                                     .subscribe(res1 => {
+                                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                                     });
                             }
                         });
@@ -479,7 +483,7 @@ export class NewContainerizationComponent extends BaseComponent {
         params.RequestVIA = event.RequestVIA;
         params.ForcePersonalSign = event.ForcePersonalSign;
         params.LoggingEnabled = true;
-        params.LoggingEntityId = this.EntityPM.Id;
+        params.LoggingEntityId = response.Result.Id;
         params.LoggingUserId = SessionLocator.LoggedUserId;
         params.RequestName = "המכלה";
         params.ResponseName = "המכלה תשובה"

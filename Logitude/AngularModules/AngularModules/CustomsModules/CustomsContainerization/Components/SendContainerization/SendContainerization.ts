@@ -195,6 +195,8 @@ export class SendContainerizationService implements OnDestroy {
                 });
             this.containerizationMessagesService.SendContainerization(params)
                 .subscribe((myServiceResponse: ServiceResponse) => {
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+
                 });
 
         });
