@@ -4889,6 +4889,7 @@
     <Content Include="WcfApi\CustomerAdditionalServiceDWWcfService.svc" />
     <Content Include="WcfApi\CustomerCompetitorDWWcfService.svc" />
     <Content Include="WcfApi\CustomerDWWcfService.svc" />
+    <Content Include="WcfApi\OceanInsightsTestWcfService.svc" />
     <Content Include="WcfApi\PaymentTermWcfService.svc" />
     <Content Include="WcfApi\UserIDNumberRequestWcfService.svc" />
     <Content Include="WcfApi\DeclarationApprovalRequestWcfService.svc" />
@@ -6450,6 +6451,9 @@
     </Compile>
     <Compile Include="WcfApi\IPaymentTermWcfService.cs" />
     <Compile Include="WcfApi\IWarehouseWcfService.cs" />
+    <Compile Include="WcfApi\OceanInsightsTestWcfService.svc.cs">
+      <DependentUpon>OceanInsightsTestWcfService.svc</DependentUpon>
+    </Compile>
     <Compile Include="WcfApi\PaymentTermWcfService.svc.cs">
       <DependentUpon>PaymentTermWcfService.svc</DependentUpon>
     </Compile>
@@ -6993,6 +6997,10 @@
     <ProjectReference Include="..\..\ContainerMonitoring\ContainerMonitoring.csproj">
       <Project>{1758a10f-0068-45c1-8e60-06022bbfb8b8}</Project>
       <Name>ContainerMonitoring</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ContainerOISimulator\ContainerOISimulator.csproj">
+      <Project>{20837f2f-2acc-4350-ba91-decf89327194}</Project>
+      <Name>ContainerOISimulator</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Logitude.Accounting.BL\Logitude.Accounting.BL.csproj">
       <Project>{00e5d96d-dd45-47e8-aaa3-fdbfd8add61a}</Project>
