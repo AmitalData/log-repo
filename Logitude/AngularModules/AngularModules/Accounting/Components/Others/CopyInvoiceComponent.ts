@@ -744,6 +744,8 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
     MapNewAPInvoice(entityPM) {
         entityPM.Tenant = this.EntityPM.Tenant;
         entityPM.VendorId = this.vendorId;
+        entityPM.VendorName = this.VendorName;
+        entityPM.VendorLocalName = this.VendorLocalName;
         entityPM.InvoiceNumber = this.invoiceNumber;
         entityPM.InvoiceCurrencyId = this.InvoiceCurrencyId;
         entityPM.InvoiceDate = this.InvoiceDate;
@@ -764,7 +766,6 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
         entityPM.IsCopied = true;
         entityPM.CopiedFrom = this.EntityPM.InvoiceNumber;
         entityPM.IsGeneralInvoice = true;
-     
     }
 
     CopyInvoiceLines(entityPM) {
@@ -810,22 +811,22 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
     }
 
     GetCurrencyRate(currencyId: string) {
-        var myResult: number = null;
+        var result: number = null;
 
         if (!AppTool.IsNullOrEmpty(currencyId)) {
             if (currencyId == SessionLocator.TenantPM.CurrencyId) {
-                myResult = 1;
+                result = 1;
             }
 
             else {
                 var lastRate: LastRate = this.LastRatesList.filter(d => d.ForeignCurrencyId == currencyId)[0];
                 if (lastRate != null) {
-                    myResult = lastRate.Rate;
+                    result = lastRate.Rate;
                 }
             }
         }
 
-        return myResult;
+        return result;
     }
 
     OpenInvoiceEditScreen(entityPM) {
@@ -833,7 +834,7 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({
-                    EntityPM: entityPM, ObjectTableName: 'APInvoice', DisplayTitle: "A/P Invoice: " + this.InvoiceNumber + ',' + this.VendorName
+                    EntityPM: entityPM, ObjectTableName: 'APInvoice',
                 });
                 this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                 cmpRef.instance.BackCompleted.subscribe(bk => {
