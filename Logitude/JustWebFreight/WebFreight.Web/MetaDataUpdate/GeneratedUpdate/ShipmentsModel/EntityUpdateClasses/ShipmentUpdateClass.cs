@@ -79,8 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-
-		public const string HashString = "3826c140efcda112c9ed359bf17414cc";
+		public const string HashString = "6229e5604fbae111f39b3f772870fd9e";
 
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
@@ -44278,7 +44277,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsHTSMissing",
-					  						DefaultText =  "Is HTS Missing",
+					  						DefaultText =  "Is HTS Missing ",
 					  						ListFieldLable =  "IsHTSMissingListLable",
 					  						ListLableDefaultText =  "Is HTS Missing",
 					  						IsMaxLength =  false,

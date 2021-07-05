@@ -90896,7 +90896,7 @@
     InActive="false"
     DisplayLongName="false"
     FullFieldLable="&quot;IsHTSMissing&quot;"
-    DefaultText="&quot;Is HTS Missing&quot;"
+    DefaultText="&quot;Is HTS Missing &quot;"
     ListFieldLable="&quot;IsHTSMissingListLable&quot;"
     ListLableDefaultText="&quot;Is HTS Missing&quot;"
     IsNullable="false"

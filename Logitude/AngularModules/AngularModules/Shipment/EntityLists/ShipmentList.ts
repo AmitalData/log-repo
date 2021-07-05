@@ -468,5 +468,6 @@ export class ShipmentList {
 		PrivateLabelIncludePickup: boolean;
 		PrivateLabelIncludeDelivery: boolean;
 
+		IsHTSMissing: boolean;
 	
 }
