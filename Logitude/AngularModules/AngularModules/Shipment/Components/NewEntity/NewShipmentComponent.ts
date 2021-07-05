@@ -502,17 +502,16 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
     public IsFCLEntity: boolean = false;
     public IsInlandDomestic: boolean = false;
     OnFiltersChanged() {
-        if (this.EntityPM.IsStandalonePickupDelivery) {
-            this.IsDirectionListEnabled = false;
-            this.IsTransportModesListEnabled = false;
-            this.IsShipmentTypesListEnabled = false;
-            this.IsShipmentSubTypesListEnabled = true;
-        }
-
-       else if (!this.IsCreatedFromMasterHouses) {
+        if (!this.IsCreatedFromMasterHouses) {
             this.IsDirectionListEnabled = true;
             this.IsTransportModesListEnabled = AppTool.IsNullOrEmpty(this.DirectionId) ? false : true;
             this.IsShipmentTypesListEnabled = true;
+            this.IsShipmentSubTypesListEnabled = true;
+        }
+        else if (this.EntityPM.IsStandalonePickupDelivery) {
+            this.IsDirectionListEnabled = false;
+            this.IsTransportModesListEnabled = false;
+            this.IsShipmentTypesListEnabled = false;
             this.IsShipmentSubTypesListEnabled = true;
         }
 
