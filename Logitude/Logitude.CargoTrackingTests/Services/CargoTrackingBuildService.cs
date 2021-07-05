@@ -39,7 +39,7 @@ namespace Logitude.CargoTrackingTests.Services
         {
             cargoTrackingXMLParameters = new CargoTrackingXMLParameters()
             {
-                FromDate = new DateTime(2021, 01, 01),
+                FromDate = DateTime.Now.AddMonths(-1),
                 ToDate = DateTime.Now,
                 Tenant = 1,
             };
