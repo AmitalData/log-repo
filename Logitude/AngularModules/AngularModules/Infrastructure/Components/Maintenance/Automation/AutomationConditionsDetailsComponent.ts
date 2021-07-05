@@ -83,8 +83,8 @@ export class AutomationConditionsDetailsComponent {
     }
 
     Start() { 
-        this.LoadConditionsFieldLists(); 
-        this.LoadAutomationList(); 
+        this.LoadConditionsFieldLists();
+        this.LoadAutomationConditionsList();
         this.IsAtuomationResourceReady = true;
     }
 
