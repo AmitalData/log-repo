@@ -1,4 +1,4 @@
-@NewDev @weekly
+@dev @weekly
 Feature: Branch Create, Search and Edit from Maintenance
     The user creates a Branch, searches for and edits it from the Maintenance Module.
 
