@@ -13,14 +13,27 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
         public static void Trace(APInvoicePM entityPM, APInvoice invoice, bool isNewState)
         {
             ContactPM loggedContact = new ContactQuery(entityPM.Tenant).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), entityPM.Tenant);
-                       
+
             // UPPI : Updated
             // CRPI : Created
             // APIA : Approved
             // APIC : Canceled
             // APIV : Voided
             // COIN : Connected
+            // CPIN : Copied
 
+            if(isNewState && entityPM.IsNew && entityPM.IsCopied)
+            {
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = entityPM.Tenant,
+                    EventTypeCode = "CPIN",
+                    UserId = loggedContact.Id,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = "APInvoice",
+                    Notes = TranslateTextsClass.Translate("APInvoice.M.CopiedFromAPInvoiceNumber", entityPM.Tenant) + entityPM.CopiedFrom
+                });
+            }
             if (isNewState)
             {
                 EventTracer.CreateTraceEvent(new EventTracerArgs()

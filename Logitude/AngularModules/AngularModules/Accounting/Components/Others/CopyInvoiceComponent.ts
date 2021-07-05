@@ -20,6 +20,8 @@ import { CurrencyListService } from '../../../Common/Services/StandardLists/Curr
 import { CardPMService } from '../../../Common/Services/StandardPMs/CardPMService';
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
+import { APInvoiceLinePM } from '../../../Invoice/EntityPMs/APInvoiceLinePM';
+import { EntitlementTypeList } from '../../../Customs/EntityLists/EntitlementTypeList';
 
 
 @Component({
@@ -39,6 +41,7 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
     public errors: string[] = [];
+    public LocalCurrencyId: string;
 
 
     // services
@@ -48,6 +51,7 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
     private cardListService: CardListService = new CardListService();
     private gLAccountPMService: GLAccountPMService = new GLAccountPMService();
     private currencyListService: CurrencyListService = new CurrencyListService();
+
     DisplayFieldsFromList: string;
     DisplayLocalFieldsFromList: string;
     VendorLovSizeForFullAccounting: number;
@@ -57,6 +61,7 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
     constructor() {
         super();
         this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
+        this.LocalCurrencyId = SessionLocator.LocalCurrencyId;
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
@@ -341,7 +346,7 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
         var setValue = AppTool.Round(value, 2);
         if (this.amountInInvoiceCurrency != setValue) {
             this.amountInInvoiceCurrency = setValue;
-            this.amountInInvoiceCurrency = setValue;
+            this.InvoiceExpectedAmount = setValue;
         }
     }
 
@@ -520,6 +525,71 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
         }
     }
 
+    private profitCurrencyId: string;
+    get ProfitCurrencyId() { return this.profitCurrencyId; }
+    set ProfitCurrencyId(value: string) {
+        if (this.profitCurrencyId != value) {
+            this.profitCurrencyId = value;
+            this.InvoiceCurrencyExchangeRate = this.GetCurrencyRate(value);
+        }
+    }
+
+    private profitCurrencyExchangeRate: number;
+    get ProfitCurrencyExchangeRate() { return this.profitCurrencyExchangeRate; }
+    set ProfitCurrencyExchangeRate(value: number) {
+        if (this.profitCurrencyExchangeRate != value) {
+            this.profitCurrencyExchangeRate = AppTool.Round(value, 5);
+        }
+    }
+
+    private amountInLocalCurrency: number;
+    get AmountInLocalCurrency() { return this.amountInLocalCurrency; }
+    set AmountInLocalCurrency(value: number) {
+        var setValue = AppTool.Round(value, 2);
+        if (this.amountInLocalCurrency != setValue) {
+            this.amountInLocalCurrency = setValue;
+            this.AmountDueInLocalCurrency = setValue;
+        }
+    }
+
+    private amountDueInLocalCurrency: number;
+    get AmountDueInLocalCurrency() { return this.amountDueInLocalCurrency; }
+    set AmountDueInLocalCurrency(value: number) {
+        if (this.amountDueInLocalCurrency != value) {
+            this.amountDueInLocalCurrency = AppTool.Round(value, 5);
+        }
+    }
+
+    private amountDueInProfitCurrency: number;
+    get AmountDueInProfitCurrency() { return this.amountDueInProfitCurrency; }
+    set AmountDueInProfitCurrency(value: number) {
+        var setValue = AppTool.Round(value, 2);
+        if (this.amountDueInProfitCurrency != setValue) {
+            this.amountDueInProfitCurrency = setValue;
+        }
+    }
+
+
+    private amountInProfitCurrency: number;
+    get AmountInProfitCurrency() { return this.amountInProfitCurrency; }
+    set AmountInProfitCurrency(value: number) {
+        var setValue = AppTool.Round(value, 2);
+        if (this.amountInProfitCurrency != setValue) {
+            this.amountInProfitCurrency = setValue;
+            this.AmountDueInProfitCurrency = setValue;
+        }
+    }
+
+
+    private invoiceExpectedAmount: number;
+    get InvoiceExpectedAmount() { return this.invoiceExpectedAmount; }
+    set InvoiceExpectedAmount(value: number) {
+        var setValue = AppTool.Round(value, 2);
+        if (this.invoiceExpectedAmount != setValue) {
+            this.invoiceExpectedAmount = setValue;
+        }
+    }
+
     public ComputeAPInvoiceDueDate() {
         if (AppTool.IsNullOrEmpty(this.PaymentTermId)) {
             this.DueDate = DateTool.GetDateParts(this.InvoiceDate).DateObject;
@@ -585,6 +655,15 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
 
     OkButtonClicked() {
         this.ValidationErrorsList = this.ValidateInvoiceFields();
+        if (this.ValidationErrorsList.length == 0) {
+            var entityPM: APInvoicePM = new APInvoicePM();
+            this.MapNewAPInvoice(entityPM);
+            if (this.IsCopyLinesChecked) {
+                this.CopyInvoiceLines(entityPM);
+            }
+            this.InitializeProfitCurrency(entityPM);
+            this.OpenInvoiceEditScreen(entityPM);
+        }
     }
 
     private ValidateInvoiceFields() {
@@ -660,5 +739,106 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
     AddReuiredErrorMessage(TextCode) {
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
         this.errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate(TextCode)));
+    }
+
+    MapNewAPInvoice(entityPM) {
+        entityPM.Tenant = this.EntityPM.Tenant;
+        entityPM.VendorId = this.vendorId;
+        entityPM.InvoiceNumber = this.invoiceNumber;
+        entityPM.InvoiceCurrencyId = this.InvoiceCurrencyId;
+        entityPM.InvoiceDate = this.InvoiceDate;
+        entityPM.PaymentTermId = this.PaymentTermId;
+        entityPM.DueDate = this.DueDate;
+        entityPM.VATNumber = this.vatNumber;
+        entityPM.AccountingDate = this.AccountingDate;
+        entityPM.BranchId = this.BranchId;
+        entityPM.AmountInInvoiceCurrency = this.AmountInInvoiceCurrency;
+        entityPM.InvoiceCurrencyExchangeRate = this.InvoiceCurrencyExchangeRate;
+        entityPM.InternalNotes = this.InternalNotes;
+        entityPM.InvoiceExpectedAmount = this.InvoiceExpectedAmount;
+        entityPM.AmountInLocalCurrency = this.AmountInLocalCurrency == null ? this.EntityPM.AmountInLocalCurrency :null;
+        entityPM.ProfitCurrencyExchangeRate = this.ProfitCurrencyExchangeRate;
+        entityPM.AmountInProfitCurrency = this.EntityPM.AmountInProfitCurrency;
+        entityPM.localCurrencyId = this.LocalCurrencyId;
+        entityPM.IsNew = true;
+        entityPM.IsCopied = true;
+        entityPM.CopiedFrom = this.EntityPM.InvoiceNumber;
+        entityPM.IsGeneralInvoice = true;
+     
+    }
+
+    CopyInvoiceLines(entityPM) {
+        for (var i = 0; i < this.EntityPM.InvoiceLines.length; i++) {
+            var line: APInvoiceLinePM = this.MapNewInvoiceLine(entityPM, this.EntityPM.InvoiceLines[i]);
+            entityPM.InvoiceLines.push(line);
+        }
+
+    }
+
+    MapNewInvoiceLine(apInvoicePM: APInvoicePM, originalAPInvoiceLine: APInvoiceLinePM) {
+        var apInvoiceLinePM = new APInvoiceLinePM(apInvoicePM);
+        apInvoiceLinePM = originalAPInvoiceLine;
+        apInvoiceLinePM.ChargesTypeId = this.IsCopyLinesChecked ? originalAPInvoiceLine.ChargesTypeId : null;
+        apInvoiceLinePM.InvoiceCurrencyAmount = this.IsCopyAmountsChecked ? originalAPInvoiceLine.InvoiceCurrencyAmount : 0;
+        apInvoiceLinePM.ForiegnCurrencyAmount = this.IsCopyAmountsChecked ? originalAPInvoiceLine.ForiegnCurrencyAmount : 0;
+        apInvoiceLinePM.LocalDescription = originalAPInvoiceLine.LocalDescription;
+        apInvoiceLinePM.VendorId = this.VendorId;
+        return apInvoiceLinePM;
+    }
+
+
+    private InitializeProfitCurrency(entityPM) {
+        if (this.EntityPM.IsMultipleEntities) {
+            entityPM.ProfitCurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
+        }
+
+        else if (AppTool.IsNullOrEmpty(this.EntityPM.ProfitCurrencyId)) {
+            entityPM.ProfitCurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
+        }
+
+        this.currencyListService.getSingleFromCache(this.EntityPM.ProfitCurrencyId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var list: CurrencyList = myResponse.Result;
+                if (list != null) {
+                    entityPM.ProfitCurrencyCode = list.Code;
+                    entityPM.ProfitCurrencyId = list.Id;
+                }
+            }
+        });
+
+        entityPM.ProfitCurrencyExchangeRate = this.GetCurrencyRate(entityPM.ProfitCurrencyId);
+    }
+
+    GetCurrencyRate(currencyId: string) {
+        var myResult: number = null;
+
+        if (!AppTool.IsNullOrEmpty(currencyId)) {
+            if (currencyId == SessionLocator.TenantPM.CurrencyId) {
+                myResult = 1;
+            }
+
+            else {
+                var lastRate: LastRate = this.LastRatesList.filter(d => d.ForeignCurrencyId == currencyId)[0];
+                if (lastRate != null) {
+                    myResult = lastRate.Rate;
+                }
+            }
+        }
+
+        return myResult;
+    }
+
+    OpenInvoiceEditScreen(entityPM) {
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({
+                    EntityPM: entityPM, ObjectTableName: 'APInvoice', DisplayTitle: "A/P Invoice: " + this.InvoiceNumber + ',' + this.VendorName
+                });
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                cmpRef.instance.BackCompleted.subscribe(bk => {
+                    this.CancelButtonClicked();
+                });
+            });
     }
 }
