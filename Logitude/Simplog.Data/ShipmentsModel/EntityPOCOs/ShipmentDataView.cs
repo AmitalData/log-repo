@@ -727,10 +727,10 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string OnCarriageTransportModeId { get; set; }
         public string OnForwardingTransportModeId { get; set; }
         public string PreForwardingFromPortId { get; set; }
-
         public bool IsStandalonePickupDelivery { get; set; }
         public string MainCarriageFromPartnerId { get; set; }
         public string MainCarriageToPartnerId { get; set; }
         public string FreightLocationId { get; set; }
+        public bool IsHTSMissing { get; set; }
     }
 }
