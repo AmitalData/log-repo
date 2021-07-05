@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AutomationHistoryPM } from '../../../../Common/EntityPMs/AutomationHistoryPM';
 import { EntityChangePM } from '../../../../Common/EntityPMs/EntityChangePM';
+import { AutomationExtendedPMService } from '../../../../Common/Services/ExtendedPMs/AutomationExtendedPMService';
 import { AutomationHistoryExtendedPMService } from '../../../../Common/Services/ExtendedPMs/AutomationHistoryExtendedPMService';
 import { ApiQueryFilters } from '../../../DataContracts/ApiQueryFilters';
 import { AutomationCondition } from '../../../DataContracts/AutomationCondition';
@@ -37,7 +38,8 @@ export class AutomationConditionsDetailsComponent {
     DataViewModel: any; 
     IsAtuomationResourceReady: boolean = false; 
     automationConditionPMList: any;
-
+    IsMasterShipment: boolean = false;
+    public automationExtendedPMService: AutomationExtendedPMService = new AutomationExtendedPMService();
     constructor(public entityListService: EntityListService, public _automationHistoryExtendedPMService: AutomationHistoryExtendedPMService) {
 
     }
@@ -82,8 +84,26 @@ export class AutomationConditionsDetailsComponent {
 
     Start() { 
         this.LoadConditionsFieldLists();
-        this.LoadAutomationConditionsList();   
+        this.LoadAutomationList();
         this.IsAtuomationResourceReady = true;
+    }
+
+    private LoadAutomationList() {
+        let automationId = this.CurrentEntityPM.AutomationId;
+        this.automationExtendedPMService.GetIsMasterAutomation(automationId).subscribe((response: any) => {
+            let serviceResponse: ServiceResponse = response;
+            if (!serviceResponse.HasError) {
+                if (serviceResponse.Result == true) {
+                    this.IsMasterShipment = true;
+                }
+                this.LoadAutomationConditionsList();
+            }
+            else {
+                this.LoadAutomationConditionsList();
+                
+            }
+        });
+ this.IsAtuomationResourceReady = true;
     }
 
     LoadConditionsFieldLists() {
