@@ -10,6 +10,7 @@ using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net;
 using System.Reflection;
 using System.Threading;
@@ -24,12 +25,13 @@ namespace CommunicationWorkerRole
 
             while (IsRunning)
             {
-                if (!General.IsUpdating())
+                 
+                if (!General.IsUpdating() && !Debugger.IsAttached)
                 {
                     try
-                    {
+                    {  
                         var msg = LogitudeConsumer.Consume();
-                        if (msg != null && msg.Message.Key == KakaMessageTypes.TaskUpdate)
+                        if (msg != null && (msg.Message.Key == KakaMessageTypes.TaskUpdate || msg.Message.Key == KakaMessageTypes.ShipmentSetValue))
                         {
                             UpdateShipmentPM(msg.Message.Value);
                         }
