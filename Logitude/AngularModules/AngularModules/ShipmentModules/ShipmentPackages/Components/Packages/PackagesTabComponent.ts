@@ -1897,6 +1897,30 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     }
 
     DeletePackagesButtonClicked() {
+        if (this.IsContainerFeatureToggleVisible && this.EntityPM.ShipmentPackages.length > 0) {
+            this.CurrentSession.StartBusyIndicatorLoading();
+            var shipmentDomainService = new ShipmentDomainService();
+            var shipmentId = this.EntityPM.Id;
+            shipmentDomainService.GetIfShipmentPackagesConnectedToStandAloneShipmentPackage(shipmentId).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    this.CurrentSession.StopBusyIndicator();
+                    var isPackagesConnectedWithStandAlonePackage = myResponse.Result;
+                    if (isPackagesConnectedWithStandAlonePackage) {
+                        this.ValidateDeleteConnectedShipmetPackage()
+                    } else {
+                        this.ViewDeletePackagesConfirmationWindow();
+                    }
+                }
+                else {
+                    this.CurrentSession.StopBusyIndicator();
+                }
+            });
+        } else {
+            this.ViewDeletePackagesConfirmationWindow();
+        }
+    }
+
+    ViewDeletePackagesConfirmationWindow() {
         if (this.EntityPM.ShipmentPackages.length > 0) {
             var confirmWindow = new ConfirmWindow();
 
@@ -1907,7 +1931,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             else {
                 confirmWindow.Show("Are you sure you want to delete all packages?");
             }
-            
+
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
                     this.StartDelete();
