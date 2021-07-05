@@ -201,7 +201,6 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (node.ChildNodes != null && node.Name == "event")
             {
-                oceanInsightsId = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "shipmentsubscription_id").FirstOrDefault()?.InnerText;
                 createdDate = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "created").FirstOrDefault()?.InnerText;
                 eventCode = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "code").FirstOrDefault()?.InnerText;
 
@@ -216,6 +215,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (node.ChildNodes != null && node.Name == "shipment")
             {
+                oceanInsightsId = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "shipmentsubscription_id").FirstOrDefault()?.InnerText;
                 container_number = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "container_number").FirstOrDefault()?.InnerText;
                 carrier_scac = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "carrier_scac").FirstOrDefault()?.InnerText;
                 container_status = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "status").FirstOrDefault()?.InnerText;
@@ -286,31 +286,34 @@ namespace WebFreight.Web.Helpers.Analyzers
         }
         private void ProcessLogitudeTenant()
         {
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            if (oceanInsights != null)
             {
-                foreach (var item in oceanInsights)
+                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-                    this.logitudeTenant = item.Tenant;
-                    if (this.logitudeTenant != null)
+                    foreach (var item in oceanInsights)
                     {
-                        this.shipmentContext = ShipmentsContext.GetContext(logitudeTenant.Value);
-                        this.shipmentContainerStatusRepository = new ShipmentContainerStatusRepository(shipmentContext);
-                        this.containerRepository = new ContainerRepository(shipmentContext);
-                        this.containerQuery = new ContainerQuery(containerRepository);
-                        this.containerStatusRepository = new ContainerStatusRepository(shipmentContext);
-                        this.shipmentRepository = new ShipmentRepository(shipmentContext);
-                        this.shipmentQuery = new ShipmentQuery(shipmentRepository);
-                        this.GetContainerDataByContainerNumber(item);
-                        this.AddContainerStatusCommunicationLog();
-                        if (this.eventCode == "0")
+                        this.logitudeTenant = item.Tenant;
+                        if (this.logitudeTenant != null)
                         {
-                            this.CreateShipmentContainerStatus(item);
-                            this.UpdateContainer();
-                            this.UpdateShipment(item);
+                            this.shipmentContext = ShipmentsContext.GetContext(logitudeTenant.Value);
+                            this.shipmentContainerStatusRepository = new ShipmentContainerStatusRepository(shipmentContext);
+                            this.containerRepository = new ContainerRepository(shipmentContext);
+                            this.containerQuery = new ContainerQuery(containerRepository);
+                            this.containerStatusRepository = new ContainerStatusRepository(shipmentContext);
+                            this.shipmentRepository = new ShipmentRepository(shipmentContext);
+                            this.shipmentQuery = new ShipmentQuery(shipmentRepository);
+                            this.GetContainerDataByContainerNumber(item);
+                            this.AddContainerStatusCommunicationLog();
+                            if (this.eventCode == "0")
+                            {
+                                this.CreateShipmentContainerStatus(item);
+                                this.UpdateContainer();
+                                this.UpdateShipment(item);
+                            }
                         }
                     }
+                    scope.Complete();
                 }
-                scope.Complete();
             }
         }
        
