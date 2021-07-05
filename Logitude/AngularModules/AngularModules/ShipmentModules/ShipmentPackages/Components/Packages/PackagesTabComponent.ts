@@ -2219,6 +2219,7 @@ export class ShipmentPackageItem extends BaseComponent {
     public IsShowReleaseNumber: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     public HorseFieldIsVisible: boolean = false;
+    public IsContainerFeatureToggleVisible: boolean = false;
     WarehouseReleaseNumber: string;
     constructor(entity: ShipmentPackagePM, public fatherComponent: PackagesTabComponent, isNew: boolean = false) {
         super();
@@ -2230,6 +2231,7 @@ export class ShipmentPackageItem extends BaseComponent {
         this.IsCommodityNumberVisible = fatherComponent.IsCommodityNumberVisible;
         this.IsCommodityNameVisible = fatherComponent.IsCommodityNameVisible;
         this.HorseFieldIsVisible = fatherComponent.HorseFieldIsVisible;
+        this.IsContainerFeatureToggleVisible = fatherComponent.IsContainerFeatureToggleVisible;
 
         this.IsNewEntity = isNew;
         this.SetUIProperties();
@@ -2342,6 +2344,7 @@ export class ShipmentPackageItem extends BaseComponent {
             this.UIProperties.SetEnabled("LCLContainerTypeId", this.ObjectTableName, this.IsEditingEnabled);
             this.UIProperties.SetEnabled("ContainerNumber", this.ObjectTableName, this.IsEditingFieldsEnabled);
             this.UIProperties.SetEnabled("Quantity", this.ObjectTableName, this.IsEditingFieldsEnabled);
+            this.UIProperties.SetEnabled("Notes", this.ObjectTableName, this.IsEditingFieldsEnabled);
 
             var isVolumeEnabled: boolean = false;
             var isDimensionEnabled: boolean = false;
@@ -2513,6 +2516,8 @@ export class ShipmentPackageItem extends BaseComponent {
             if (this.IsMultiHarmonize == true) {
                 isFieldEnabled = false;
             }
+        } else if (this.IsContainerFeatureToggleVisible && !this.IsEditingEnabled) {
+            isFieldEnabled = false;
         }
 
         this.UIProperties.SetEnabled("Harmonize", this.ObjectTableName, isFieldEnabled);
@@ -3770,6 +3775,7 @@ export class InsideShipmentPackageItem extends BaseComponent {
     public IsVehicleDetails: boolean = false;
     public CountryListService: CountryListService;
     public IsEditingFieldsEnabled: boolean = false;
+    public IsContainerFeatureToggleVisible: boolean = false;
     constructor(entity: InsideShipmentPackagePM, public fatherComponent: ShipmentPackageItem, isNew: boolean = false) {
         super();
         this.EntityPM = entity;
@@ -3778,6 +3784,7 @@ export class InsideShipmentPackageItem extends BaseComponent {
         this.IsNewEntity = isNew;
         this.CountryListService = new CountryListService();
         this.IsEditingFieldsEnabled = fatherComponent.IsEditingFieldsEnabled;
+        this.IsContainerFeatureToggleVisible = fatherComponent.IsContainerFeatureToggleVisible;
 
         this.SetUIProperties();
         if (this.IsNewEntity) {
@@ -3873,6 +3880,8 @@ export class InsideShipmentPackageItem extends BaseComponent {
             if (this.IsMultiHarmonize == true) {
                 isFieldEnabled = false;
             }
+        } else if (this.IsContainerFeatureToggleVisible && !this.IsEditingEnabled) {
+            isFieldEnabled = false;
         }
 
         this.UIProperties.SetEnabled("Harmonize", this.ObjectTableName, isFieldEnabled);

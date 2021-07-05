@@ -123,6 +123,13 @@ export class AddEditOceanPackageComponent {
         if (AppTool.IsNullOrEmpty(this.EntityPM.ContainerNumber) && this.IsFromStandAloneScreen) {
             errors.push("Container Number is required");
         }
+        if (this.DataContext.ShipmentPM != null && !AppTool.IsNullOrEmpty(this.DataContext.ContainerNumber) && this.IsFromStandAloneScreen) {
+            if (this.DataContext.ShipmentPM.ShipmentPackages != null) {
+                if (this.DataContext.ShipmentPM.ShipmentPackages.find(item => item.ContainerNumber == this.DataContext.ContainerNumber)) {
+                    errors.push("Cannot have 2 containers with the same number");
+                }
+            }
+        }
 
         this.ValidationErrorsList = errors;
 
