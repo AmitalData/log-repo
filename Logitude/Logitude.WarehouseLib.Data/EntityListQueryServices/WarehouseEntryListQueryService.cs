@@ -69,6 +69,7 @@ namespace Logitude.WarehouseLib.Data.EntityListQueryServices
                                                         DirectionName = a.Direction != null ? a.Direction.Name : "",
                                                         TransportModeName = a.TransportMode != null ? a.TransportMode.Name : "",
                                                         MasterShipmentNumber = a.MasterShipmentNumber,
+                                                        Notes = a.Notes,
                                                     });
 
      
