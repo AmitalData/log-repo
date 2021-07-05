@@ -315,7 +315,7 @@ export class RootComponent implements AfterViewInit {
     }
     private LoadTermsOfUse(serviceResponse: ServiceResponse) {
         this.ClearLocation();
-        if (this.isPrivateLable == false) {
+        if (this.isPrivateLable == true) {
             this.LoadPrivateLableTermsOfUseComponent(serviceResponse);
         }
         else
