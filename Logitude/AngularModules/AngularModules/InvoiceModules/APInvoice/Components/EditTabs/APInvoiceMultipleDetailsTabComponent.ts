@@ -846,6 +846,7 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
     }
 
     private myOpenPayables: ShipmentPayablePM[] = [];
+    private missingVATPayables: ShipmentPayablePM[] = [];
     private LastRatesList: LastRate[] = [];
     private VatTypePercentagesList: VatTypePercentageList[] = [];
     private LoadOpenPayables() {
@@ -878,7 +879,8 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
         var chargesTypeListService: ChargesTypeListService = new ChargesTypeListService();
         var vatTypeListService: VatTypeListService = new VatTypeListService();;
 
-        this.myOpenPayables = this.myOpenPayables.filter(f => f.ShipmentPayableParentId == null && f.VendorId == this.VendorId);
+        this.missingVATPayables = this.myOpenPayables.filter(f => f.ShipmentPayableParentId == null && f.VendorId == this.VendorId && AppTool.IsNullOrEmpty(f.VatTypeId));
+        this.myOpenPayables = this.myOpenPayables.filter(f => f.ShipmentPayableParentId == null && f.VendorId == this.VendorId && !AppTool.IsNullOrEmpty(f.VatTypeId));
         this.myOpenPayables.forEach(item => {
             if (this.APInvoiceMultipleShortEntity.InvoiceLines.filter(f => f.EntityPayableId == item.Id).length == 0) {
                 var line = new APInvoiceLinePM(null);
@@ -991,9 +993,21 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
     private SaveAPInvoiceMultipleShortEntity() {
         this.invoiceDomainService.PutSingleAPInvoiceShortPM(this.APInvoiceMultipleShortEntity).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
-                if (this.CurrentSession.CurrentEditComponent) {
-                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                if (this.missingVATPayables.length > 0) {
+                    var window: MessageWindow = new MessageWindow();
+                    window.Show("Some of the payables in this shipment don't have a VAT type and will not be added.");
+                    window.WindowClosed.subscribe(s => {
+                        if (this.CurrentSession.CurrentEditComponent) {
+                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        }
+                    });
                 }
+
+                else {
+                    if (this.CurrentSession.CurrentEditComponent) {
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    }
+                } 
             }
 
             else {
@@ -1012,38 +1026,6 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
         var open: number = expect - others - amount - corre;
 
         return AppTool.Round(open, 2);
-    }
-    ComputeOtherAmounts() {
-        if (AppTool.IsNullOrEmpty(this.ForiegnCurrencyAmount)) {
-            this.LocalCurrencyAmount = null;
-            this.ProfitCurrencyAmount = null;
-            this.EntityPM.InvoiceCurrencyAmount = null;
-        }
-
-        else {
-            var invoiceAmount: number = 0;
-            this.LocalCurrencyAmount = this.ForiegnCurrencyAmount * this.EntityPM.ForiegnExchangeRate;
-
-            if (this.ForiegnCurrencyId == this.ProfitCurrencyId) {
-                this.ProfitCurrencyAmount = this.ForiegnCurrencyAmount;
-            }
-
-            else {
-                this.ProfitCurrencyAmount = this.LocalCurrencyAmount / this.APInvoicePM.ProfitCurrencyExchangeRate;
-            }
-
-            if (this.ForiegnCurrencyId == this.InvoiceCurrencyId) {
-                invoiceAmount = this.ForiegnCurrencyAmount;
-            }
-
-            else {
-                invoiceAmount = this.LocalCurrencyAmount / this.APInvoicePM.InvoiceCurrencyExchangeRate;
-            }
-
-            this.EntityPM.InvoiceCurrencyAmount = AppTool.Round(invoiceAmount, 2);
-        }
-
-        this.fatherComponent.ComputeTotals();
     }
 }
 
