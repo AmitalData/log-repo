@@ -57,7 +57,7 @@ namespace ContainerOISimulator
             binding.Security.Transport.ClientCredentialType = HttpClientCredentialType.None;
             binding.Security.Transport.ProxyCredentialType = HttpProxyCredentialType.None;
 
-            var endpoint = new EndpointAddress(LogitudeSettings.AmitalCloudEnvironmentURL + "WcfApi/OceanInsightsWcfTestService.svc");
+            var endpoint = new EndpointAddress(LogitudeSettings.AmitalCloudEnvironmentURL + "WcfApi/OceanInsightsTestWcfService.svc");
 
             OceanInsightsWcfServiceClient oceanInsightsWcfService = new OceanInsightsWcfServiceClient(binding, endpoint);
 
