@@ -314,6 +314,30 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
             }
         }
 
+        public HttpResponseMessage GetIsMasterAutomation(string automationId)
+        {
+            try
+            {
+                bool isMasterAutomaion = false;
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                AutomationRepository automationRepository = new AutomationRepository(authToken.Tenant); 
+                ObjectTableRepository objectTableRepository = new ObjectTableRepository(authToken.Tenant);
+
+                Automation automation = automationRepository.GetSingleAutomation(automationId, authToken.Tenant); 
+                ObjectTable objectTable = objectTableRepository.GetSingleObjectTable(automation.ObjectTableId,authToken.Tenant,false);
+             
+                isMasterAutomaion = objectTable.Name == "Master" ? true : false;
+               
+                return Request.CreateResponse(HttpStatusCode.OK, isMasterAutomaion);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
 
         private static void Authentication()
         {
