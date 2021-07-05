@@ -1782,6 +1782,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.AssginedToCustomsAgentDate = shipment.AssginedToCustomsAgentDate;
             shipmentPM.AssginedtoCustomsAgentId = shipment.AssginedtoCustomsAgentId;
 
+            shipmentPM.PrivateLabelInvoiceNumber = shipment.PrivateLabelInvoiceNumber;
+            shipmentPM.PrivateLabelConsigneeName = shipment.PrivateLabelConsigneeName;
+            shipmentPM.PrivateLabelIncludePickup = shipment.PrivateLabelIncludePickup;
+            shipmentPM.PrivateLabelIncludeDelivery = shipment.PrivateLabelIncludeDelivery;
+            shipmentPM.RequestedFlightDate = shipment.RequestedFlightDate;
+
+
             if (!string.IsNullOrEmpty(shipmentPM.UpdatedByUserId))
             {
                 Contact myContact = ContactRepository.GetSingleContact(shipmentPM.UpdatedByUserId, tenant, true);

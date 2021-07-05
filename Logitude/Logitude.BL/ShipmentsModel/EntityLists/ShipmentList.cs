@@ -550,6 +550,12 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
 
         public string PreForwardingFromPortId { get; set; }
         public string OnForwardingToPortId { get; set; }
-        public bool IsStandalonePickupDelivery { get; set; }
+        public bool IsStandalonePickupDelivery { get; set; } 
+        public string PrivateLabelInvoiceNumber { get; set; }
+        public string PrivateLabelConsigneeName { get; set; }
+        public DateTime? RequestedFlightDate { get; set; }
+        public bool PrivateLabelIncludePickup { get; set; }
+        public bool PrivateLabelIncludeDelivery { get; set; }
+
     }
 }
