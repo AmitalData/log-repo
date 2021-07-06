@@ -20,6 +20,7 @@ export class CustomsDocumentsDefinitionList {
 	CargoTypeName: string;
 	Mandatory: boolean;
 	Inactive: boolean;
+	DeclarationTypeName: string;
 	
 }
  
