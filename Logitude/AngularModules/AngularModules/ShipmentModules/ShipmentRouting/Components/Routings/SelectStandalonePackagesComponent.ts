@@ -11,6 +11,7 @@ import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { ShipmentPackageItem, PackagesTabComponent } from '../../../ShipmentPackages/Components/Packages/PackagesTabComponent';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { Cloner } from '../../../../Infrastructure/Utilities/Cloner';
 
 @Component({
     templateUrl: './SelectStandalonePackagesComponent.html',
@@ -55,6 +56,7 @@ export class SelectStandalonePackagesComponent {
                 this.SetPickupDeliveryLabels();
                 this.BuildPickupDeliveryItemsSource();
             }
+            this.Clone(); 
         });
     }
 
@@ -238,6 +240,7 @@ export class SelectStandalonePackagesComponent {
     }
 
     CancelButtonClicked() {
+        this.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
     }
 
@@ -306,6 +309,38 @@ export class SelectStandalonePackagesComponent {
             }
         });
     }
+    private myCloner: Cloner;
+    private Clone() {
+        this.myCloner = new Cloner(this.DataContext);
+        this.myCloner.AddField('PackageTypeId');
+        this.myCloner.AddField('ContainerNumber');
+        this.myCloner.AddField('PackageTypeName');
+        this.myCloner.AddField('Volume');
+        this.myCloner.AddField('Weight');
+        this.myCloner.AddField('ContainerEntityId');
+        this.myCloner.AddField('Quantity');
+        this.myCloner.AddField('Description');
+        this.myCloner.AddEntity(this.EntityPM);
+        this.myCloner.AddEntity(this.DataContext.ShipmentPM);
+    }
+
+    private RejectChanges() {
+        this.ClearItemsSource();
+        this.myCloner.RejectChanges();
+    }
+
+    private ClearItemsSource() {
+        this.RemoveNewShipmentPackages();
+    }
+
+    private RemoveNewShipmentPackages() {
+        if (this.ShipmentPM.ShipmentPackages != null) {
+            this.ShipmentPM.ShipmentPackages.filter(item => AppTool.IsNullOrEmpty(item.Id)).forEach(item => {
+                this.ShipmentPM.RemovePackage(item);
+            });
+        }
+    }
+
 }
 export class PackagesSelectItem {
     public EntityPM: ShipmentPackagePM;

@@ -527,8 +527,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     shipmentAdditionalCloudDataRepository.SubmitChanges();
                     followUpRepository.SubmitChanges();
                     shipmentPickUpDeliveryRepository.SubmitChanges();
-
-                    this.CopyForwarderShipmentPackagesFromStandalone();
+                    if (entityPM.IsStandalonePickupDelivery) {
+                        this.CopyForwarderShipmentPackagesFromStandalone();
+                    }
                     UpdateMasterHouses();
                     RunStoredProcedures();
                     GetForeignFields();
@@ -6919,11 +6920,24 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     if(forwarderShipment != null)
                     {
+                        this.ValidateUpdatingInsertStandAloneShipmentPackages(initializer.StandalonePackage.ContainerNumber, initializer.StandalonePackage.ContainerEntityId, forwarderShipmentId);
                         this.CreateOrUpdateForwarderShipmentPackage(forwarderShipment);
                         this.UpdateForwarderShipmentPickUpDelivery(forwarderShipment);
                         this.UpdateForwarderShipment(forwarderShipment);
 
                     }
+                }
+            }
+        }
+        private void ValidateUpdatingInsertStandAloneShipmentPackages(string containerNumber, string ContainerEntityId,string forwarderShipmentId)
+        {
+            List<ShipmentPackage> shipmentPackages = this.initializer.ShipmentPackageRepository.GetShipmentPackagesForShipmentTenant(forwarderShipmentId, tenant).ToList();
+            if (shipmentPackages != null)
+            {
+                bool isContainerNumberExist = shipmentPackages.Any(d => d.ContainerNumber == containerNumber && d.ContainerEntityId != ContainerEntityId);
+                if (isContainerNumberExist)
+                {
+                    throw new ApplicationException("Cannot have 2 containers with same number");
                 }
             }
         }

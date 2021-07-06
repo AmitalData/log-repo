@@ -330,6 +330,7 @@ export class DeliveryPackagesTabComponent {
                     deliveryItemComponent.Description = component.DataContext.Description;
                     deliveryItemComponent.ShipperSeal = component.DataContext.ShipperSeal;
                     this.BuildItemsSource();
+                    packagesTabComponent.BuildItemsSource();
                 }
             });
         });

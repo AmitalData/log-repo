@@ -13811,6 +13811,24 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return myResult1;
         }
+
+        public bool IsShipmentPackagesConnectedToStandAlonePackage(string shipmentId,int tenant)
+        {
+            ShipmentPackageRepository shipmentRepository = new ShipmentPackageRepository(tenant);
+            List<ShipmentPackage> shipmentPackages = shipmentRepository.GetShipmentPackagesForShipmentTenant(shipmentId, tenant).ToList();
+            if (shipmentPackages.Count != 0)
+            {
+                ShipmentPickUpDeliveryPackageRepository shipmentPickUpDeliveryPackageRepository = new ShipmentPickUpDeliveryPackageRepository(tenant);
+                foreach (ShipmentPackage shipmentPackage in shipmentPackages)
+                {
+                    var shipmentPickUpDeliveryPackage = shipmentPickUpDeliveryPackageRepository.GetShipmentPickUpDeliveryPackagesByContainerIdAndTenant(shipmentPackage.ContainerEntityId, tenant);
+                    if (shipmentPickUpDeliveryPackage != null && shipmentPickUpDeliveryPackage.Count != 0)
+                       return true;
+                }
+            }
+            return false;
+        }
+
     }
 
     public class CargoTrackingShipmentCustomsData
