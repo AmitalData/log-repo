@@ -1335,7 +1335,7 @@ export class MaintenanceComponent {
                     logitudeWindow.Title = TextCodeTranslator.Translate("General.MC.Customs.DocumentsDefinition");
                     logitudeWindow.ShowCloseButton = true;
                     logitudeWindow.Height = 650;
-                    logitudeWindow.Width = 750;
+                    logitudeWindow.Width = 800;
 
                     logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/Maintenance/CustomsDocumentsDefinitionComponent');
                     break;
