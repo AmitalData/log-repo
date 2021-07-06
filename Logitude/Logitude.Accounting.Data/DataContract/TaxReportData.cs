@@ -29,5 +29,6 @@ namespace Logitude.Accounting.Data.DataContract
         public decimal? TaxReportTotalAmount { get; set; }
         public int JournalLineNumber { get; set; }
         public string AccountId { get;  set; }
+        public string TransmitStatusCode { get; set; }
     }
 }

@@ -95,6 +95,8 @@ using Logitude.Accounting.Data.Repositories;
 using Logitude.Update.SandBox;
 using Logitude.BL.InfrastructureModel.APIDataContract.Messages;
 using WebFreight.Web.Security;
+using Logitude.Accounting.Data.DataContract;
+
 namespace Logitude.Update
 {
     public partial class Form1 : Form
@@ -4702,6 +4704,66 @@ User/Pass",
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
+
+        }
+
+        private void button53_Click(object sender, EventArgs e)
+        {
+            LoggedContactResolver.RegisterLoggedContactUtil();
+            int tenant = Convert.ToInt32(textBox3.Text);
+            FullAccountingSettingRepository fullAccountingSettingRepository = new FullAccountingSettingRepository(tenant);
+            FullAccountingSetting setting = fullAccountingSettingRepository.GetSingleFullAccountingSetting(tenant);
+         
+            IAccountingContext context = AccountingContext.GetContext(tenant);
+
+            List<TaxReportData> inputLine1s = (from a in context.LedgerTransactions
+                                            join d in context.JournalAdditionalDatas on a.JournalId equals d.JournalId
+                                            where a.AccountId == setting.VATInputsGLAccountId && a.Tenant == tenant && a.DocumentDate<= dateTimePicker1.Value && d.JournalLineNumber == 0 && a.OppositeAccountId != setting.VATInputsGLAccountId
+                                            select new TaxReportData() {
+                                            Id = d.TaxReportId,
+                                            JournalId = a.JournalId,
+                                            JournalLineNumber= a.JournalLineNumber,
+                                            TransmitStatusCode = d.TaxReportTransmitStatusCode,
+                                            
+                                            }).Distinct().ToList();
+           
+                 foreach (TaxReportData line in inputLine1s) {
+                    JournalAdditionalDataPM journalAdditionalDataPM = new JournalAdditionalDataPM();
+                    journalAdditionalDataPM.TaxReportTransmitStatusCode = line.TransmitStatusCode;
+                    journalAdditionalDataPM.TaxReportId = line.Id;
+                    journalAdditionalDataPM.JournalLineNumber = line.JournalLineNumber;
+                    journalAdditionalDataPM.JournalId = line.JournalId;
+                    journalAdditionalDataPM.Tenant = tenant;
+                    journalAdditionalDataPM.ChangeSetOp = ChangeSetOperation.Insert;
+                    
+                    JournalAdditionalDataUpdateService journalAdditionalDataUpdateService = new JournalAdditionalDataUpdateService(context, new Dictionary<string, IContext>(), journalAdditionalDataPM.Tenant);
+                    journalAdditionalDataUpdateService.Update(journalAdditionalDataPM, true);             
+            }
+        }
+
+        private void button54_Click(object sender, EventArgs e)
+        {
+            LoggedContactResolver.RegisterLoggedContactUtil();
+            int tenant = Convert.ToInt32(textBox3.Text);
+            IAccountingContext context = AccountingContext.GetContext(tenant);
+
+            List<JournalAdditionalData> journalAdditionals = (from a in context.JournalAdditionalDatas
+                                                              join journal in context.Journals on a.JournalId equals journal.Id
+
+                                                              where journal.AccountingEntityCode == "2" && journal.DocumentDate<= dateTimePicker1 && a.JournalLineNumber == 0 && a.Tenant==tenant  select a).ToList();
+            foreach (JournalAdditionalData line in journalAdditionals)
+            {
+                JournalAdditionalDataPM journalAdditionalDataPM = new JournalAdditionalDataPM();
+                journalAdditionalDataPM.TaxReportTransmitStatusCode = line.TaxReportTransmitStatusCode;
+                journalAdditionalDataPM.TaxReportId = line.TaxReportId;
+                journalAdditionalDataPM.JournalLineNumber = 1;
+                journalAdditionalDataPM.JournalId = line.JournalId;
+                journalAdditionalDataPM.Tenant = 0;
+                journalAdditionalDataPM.ChangeSetOp = ChangeSetOperation.Insert;
+
+                JournalAdditionalDataUpdateService journalAdditionalDataUpdateService = new JournalAdditionalDataUpdateService(context, new Dictionary<string, IContext>(), journalAdditionalDataPM.Tenant);
+                journalAdditionalDataUpdateService.Update(journalAdditionalDataPM, true);
+            }
 
         }
     }

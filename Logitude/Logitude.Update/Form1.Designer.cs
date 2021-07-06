@@ -215,9 +215,16 @@
             this.AirlineLogoTenantTextBox = new System.Windows.Forms.TextBox();
             this.button46 = new System.Windows.Forms.Button();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label12 = new System.Windows.Forms.Label();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.label11 = new System.Windows.Forms.Label();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.button53 = new System.Windows.Forms.Button();
             this.button52 = new System.Windows.Forms.Button();
             this.fixJournalsButton = new System.Windows.Forms.Button();
             this.button51 = new System.Windows.Forms.Button();
+            this.button54 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -229,6 +236,7 @@
             this.groupBox2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.tabPage4.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -397,7 +405,7 @@
             this.createDecToolStripMenuItem,
             this.accountingTesterToolStripMenuItem});
             this.sandBoxToolStripMenuItem.Name = "sandBoxToolStripMenuItem";
-            this.sandBoxToolStripMenuItem.Size = new System.Drawing.Size(81, 26);
+            this.sandBoxToolStripMenuItem.Size = new System.Drawing.Size(81, 24);
             this.sandBoxToolStripMenuItem.Text = "SandBox";
             // 
             // fillCustomsTableToolStripMenuItem
@@ -476,7 +484,7 @@
             // productionToolStripMenuItem
             // 
             this.productionToolStripMenuItem.Name = "productionToolStripMenuItem";
-            this.productionToolStripMenuItem.Size = new System.Drawing.Size(141, 26);
+            this.productionToolStripMenuItem.Size = new System.Drawing.Size(141, 24);
             this.productionToolStripMenuItem.Text = "Update-Database";
             this.productionToolStripMenuItem.Click += new System.EventHandler(this.productionToolStripMenuItem_Click);
             // 
@@ -485,7 +493,7 @@
             this.customsBookToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.importToolStripMenuItem});
             this.customsBookToolStripMenuItem.Name = "customsBookToolStripMenuItem";
-            this.customsBookToolStripMenuItem.Size = new System.Drawing.Size(113, 26);
+            this.customsBookToolStripMenuItem.Size = new System.Drawing.Size(113, 24);
             this.customsBookToolStripMenuItem.Text = "CustomsBook";
             // 
             // importToolStripMenuItem
@@ -498,7 +506,7 @@
             // metaDataUpdateToolStripMenuItem
             // 
             this.metaDataUpdateToolStripMenuItem.Name = "metaDataUpdateToolStripMenuItem";
-            this.metaDataUpdateToolStripMenuItem.Size = new System.Drawing.Size(146, 26);
+            this.metaDataUpdateToolStripMenuItem.Size = new System.Drawing.Size(146, 24);
             this.metaDataUpdateToolStripMenuItem.Text = "Meta Data Update";
             this.metaDataUpdateToolStripMenuItem.Click += new System.EventHandler(this.metaDataUpdateToolStripMenuItem_Click);
             // 
@@ -508,7 +516,7 @@
             this.exportToolStripMenuItem,
             this.importToolStripMenuItem1});
             this.expImpToolStripMenuItem.Name = "expImpToolStripMenuItem";
-            this.expImpToolStripMenuItem.Size = new System.Drawing.Size(79, 26);
+            this.expImpToolStripMenuItem.Size = new System.Drawing.Size(79, 24);
             this.expImpToolStripMenuItem.Text = "Exp/Imp";
             // 
             // exportToolStripMenuItem
@@ -564,7 +572,7 @@
             this.rTLToolStripMenuItem,
             this.lTRToolStripMenuItem});
             this.tenantRTLToolStripMenuItem.Name = "tenantRTLToolStripMenuItem";
-            this.tenantRTLToolStripMenuItem.Size = new System.Drawing.Size(94, 26);
+            this.tenantRTLToolStripMenuItem.Size = new System.Drawing.Size(94, 24);
             this.tenantRTLToolStripMenuItem.Text = "Tenant RTL";
             // 
             // tenantTxtBox
@@ -593,7 +601,7 @@
             this.batchTaskExecutionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.executeToolStripMenuItem});
             this.batchTaskExecutionToolStripMenuItem.Name = "batchTaskExecutionToolStripMenuItem";
-            this.batchTaskExecutionToolStripMenuItem.Size = new System.Drawing.Size(159, 26);
+            this.batchTaskExecutionToolStripMenuItem.Size = new System.Drawing.Size(159, 24);
             this.batchTaskExecutionToolStripMenuItem.Text = "Batch Task Execution";
             // 
             // executeToolStripMenuItem
@@ -1618,7 +1626,7 @@
             this.tabPage1.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage1.Size = new System.Drawing.Size(1136, 770);
+            this.tabPage1.Size = new System.Drawing.Size(1136, 772);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Update";
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
@@ -2280,6 +2288,7 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.panel1);
             this.tabPage4.Controls.Add(this.button52);
             this.tabPage4.Controls.Add(this.fixJournalsButton);
             this.tabPage4.Controls.Add(this.button51);
@@ -2287,10 +2296,67 @@
             this.tabPage4.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage4.Size = new System.Drawing.Size(1136, 772);
+            this.tabPage4.Size = new System.Drawing.Size(1136, 770);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Accounting Tools";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.button54);
+            this.panel1.Controls.Add(this.label12);
+            this.panel1.Controls.Add(this.dateTimePicker1);
+            this.panel1.Controls.Add(this.label11);
+            this.panel1.Controls.Add(this.textBox3);
+            this.panel1.Controls.Add(this.button53);
+            this.panel1.Location = new System.Drawing.Point(353, 43);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(406, 233);
+            this.panel1.TabIndex = 4;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(14, 62);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(106, 17);
+            this.label12.TabIndex = 7;
+            this.label12.Text = "Document Date";
+            // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Location = new System.Drawing.Point(153, 62);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(149, 22);
+            this.dateTimePicker1.TabIndex = 6;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(14, 20);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(53, 17);
+            this.label11.TabIndex = 5;
+            this.label11.Text = "Tenant";
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(153, 15);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(60, 22);
+            this.textBox3.TabIndex = 4;
+            this.textBox3.Text = "1";
+            // 
+            // button53
+            // 
+            this.button53.Location = new System.Drawing.Point(38, 111);
+            this.button53.Margin = new System.Windows.Forms.Padding(4);
+            this.button53.Name = "button53";
+            this.button53.Size = new System.Drawing.Size(240, 44);
+            this.button53.TabIndex = 3;
+            this.button53.Text = "Fix Tax report old input data";
+            this.button53.UseVisualStyleBackColor = true;
+            this.button53.Click += new System.EventHandler(this.button53_Click);
             // 
             // button52
             // 
@@ -2324,6 +2390,17 @@
             this.button51.Text = "Verify Redeemed Cheques";
             this.button51.UseVisualStyleBackColor = true;
             this.button51.Click += new System.EventHandler(this.button51_Click_1);
+            // 
+            // button54
+            // 
+            this.button54.Location = new System.Drawing.Point(38, 163);
+            this.button54.Margin = new System.Windows.Forms.Padding(4);
+            this.button54.Name = "button54";
+            this.button54.Size = new System.Drawing.Size(240, 44);
+            this.button54.TabIndex = 8;
+            this.button54.Text = "Fix Tax report old output data";
+            this.button54.UseVisualStyleBackColor = true;
+            this.button54.Click += new System.EventHandler(this.button54_Click);
             // 
             // Form1
             // 
@@ -2360,6 +2437,8 @@
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             this.tabPage4.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2570,6 +2649,13 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Button button53;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Button button54;
     }
 }
 
