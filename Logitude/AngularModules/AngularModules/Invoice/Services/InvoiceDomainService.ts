@@ -728,6 +728,32 @@ export class InvoiceDomainService {
         });
     }
 
+    GetShipmentsForMultipleAPInvoice(invoiceId: string, vendorId: string) {
+        var url = ServiceHelper.GetLogitudeURL() + 'api/ShipmentDomain' + '/GetShipmentsForMultipleAPInvoice?invoiceId=' + invoiceId + "&vendorId=" + vendorId;
+
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var result = response;
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = result;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    GetInvoiceOpenAmountPayables(shipmentId: string) {
+        var url = ServiceHelper.GetLogitudeURL() + 'api/ShipmentDomain' + '/GetInvoiceOpenAmountPayables?entityId=' + shipmentId;
+
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myJsonResult = response;
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myJsonResult;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
     MapARPaymentJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ARPaymentPM = null) {
         if (!entityPM) {
             entityPM = new ARPaymentPM();
