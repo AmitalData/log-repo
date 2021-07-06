@@ -71,7 +71,6 @@ Then("all fields of the main carriage should be dim", () => {
 
 //#region Disconnect the house shipment
 Given("the user goes back to the master shipment", () => {
-    cy.get("#MainCarriageCancelBtn").click({ force: true })
     cy.get("#EditBackbutton_1").click({ force: true })
 });
 

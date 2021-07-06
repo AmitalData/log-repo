@@ -409,6 +409,7 @@ export function AssertConnectedHouseMainCarriage() {
     cy.get("#GetFromStockBtn").should('be.disabled')
     AssertTimeAndDate()
     AssertCalendarButton()
+    cy.get("#MainCarriageCancelBtn").click({ force: true })
 }
 
 function AssertTimeAndDate() {
