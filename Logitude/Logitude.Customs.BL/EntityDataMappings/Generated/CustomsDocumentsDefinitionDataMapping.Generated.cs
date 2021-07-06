@@ -49,7 +49,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CargoTypeName, 
 	         Mandatory, 
 	         Inactive, 
-	         DeclarationTypeCode,
+	         DeclarationTypeCode, 
+	         DeclarationTypeName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
