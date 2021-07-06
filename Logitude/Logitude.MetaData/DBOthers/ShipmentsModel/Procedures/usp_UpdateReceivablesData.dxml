@@ -578,9 +578,18 @@ AS
 										set @AmountLocal = @Amount * @MasterReceivableRate
 										set @AmountInProfitCurrency = @AmountLocal / @MasterReceivableProfitRate
 
+                  if (@MasterReceivableAmount != 0)
+									BEGIN
 										set @Ratio = @Amount / @MasterReceivableAmount
 										set @VatAmountLocal =  @MasterPayableVatLocalAmount  * @Ratio;
 										set @VatAmountProfit = @MasterPayableVatProfitAmount * @Ratio;
+									END
+									else 
+									BEGIN
+										set @VatAmountLocal =  0;
+										set @VatAmountProfit = 0;
+									END
+										
 									END
 
 									-- Update Receivable
@@ -776,10 +785,18 @@ AS
 									set @Amount = @Quantity * @UnitPrice / 100
 									set @AmountLocal = @Amount * @MasterReceivableRate
 									set @AmountInProfitCurrency = @AmountLocal / @MasterReceivableProfitRate
-
-									set @Ratio = @Amount / @MasterReceivableAmount
+                    
+                  if (@MasterReceivableAmount != 0)
+									BEGIN
+										set @Ratio = @Amount / @MasterReceivableAmount
 									set @VatAmountLocal =  @MasterPayableVatLocalAmount  * @Ratio;
 									set @VatAmountProfit = @MasterPayableVatProfitAmount * @Ratio;
+									END
+									else 
+									BEGIN
+										set @VatAmountLocal =  0;
+										set @VatAmountProfit = 0;
+									END 
 
 									-- Update Receivable
 									BEGIN
@@ -973,9 +990,19 @@ AS
 									set @Amount = @Quantity * @UnitPrice / 100
 									set @AmountLocal = @Amount * @MasterReceivableRate
 									set @AmountInProfitCurrency = @AmountLocal / @MasterReceivableProfitRate
-									set @Ratio = @Amount / @MasterReceivableAmount
-									set @VatAmountLocal =  @MasterPayableVatLocalAmount  * @Ratio;
-									set @VatAmountProfit = @MasterPayableVatProfitAmount * @Ratio;
+									
+                  if (@MasterReceivableAmount != 0)
+									BEGIN
+										  set @Ratio = @Amount / @MasterReceivableAmount
+											set @VatAmountLocal =  @MasterPayableVatLocalAmount  * @Ratio;
+											set @VatAmountProfit = @MasterPayableVatProfitAmount * @Ratio;
+									END
+									else 
+									BEGIN
+										set @VatAmountLocal =  0;
+										set @VatAmountProfit = 0;
+									END 
+                
 									-- Update Receivable
 									BEGIN
 										update ShipmentReceivables
