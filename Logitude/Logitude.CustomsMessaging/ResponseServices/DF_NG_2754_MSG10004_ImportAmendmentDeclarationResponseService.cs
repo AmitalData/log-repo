@@ -197,12 +197,31 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     declarationPM.PrimaryInvoiceCounterKey = declarationOrg.PrimaryInvoiceCounterKey;
                     declarationPM.ExcludeConsignment = declarationOrg.ExcludeConsignment;
                     //declarationPM.IsClose = declarationOrg.IsClose;
-
-                    if(declarationOrg.IsCourierDeclaration)
+                    declarationPM.IsDiamondDeclaration = declarationOrg.IsDiamondDeclaration;
+                    if (declarationOrg.IsCourierDeclaration)
                     {
 
                         declarationPM.IsCourierDeclaration = true;
-
+                        declarationPM.CasualSupplierName = declarationOrg.CasualSupplierName;
+                        declarationPM.CasualSupplierAddress = declarationOrg.CasualSupplierAddress;
+                        declarationPM.ManifestCargoStatusCode = declarationOrg.ManifestCargoStatusCode;
+                        declarationPM.ManifestErrorXml = declarationOrg.ManifestErrorXml;
+                        declarationPM.CourierHAWB = declarationOrg.CourierHAWB;
+                        declarationPM.CourierCustomStatusCode = declarationOrg.CourierCustomStatusCode;
+                        declarationPM.CourierSuspentionReasonCode = declarationOrg.CourierSuspentionReasonCode;
+                        declarationPM.DealValueWithFactor = declarationOrg.DealValueWithFactor;
+                        declarationPM.WeightValue = declarationOrg.WeightValue;
+                        declarationPM.CasualImporterAddress1 = declarationOrg.CasualImporterAddress1;
+                        declarationPM.CasualImporterAddress2 = declarationOrg.CasualImporterAddress2;
+                        declarationPM.CasualImporterCity = declarationOrg.CasualImporterCity;
+                        declarationPM.CasualImporterZipCode = declarationOrg.CasualImporterZipCode;
+                        declarationPM.CasualImporterFax = declarationOrg.CasualImporterFax;
+                        declarationPM.CasualImporterEmail = declarationOrg.CasualImporterEmail;
+                        declarationPM.CasualImporterTel = declarationOrg.CasualImporterTel;
+                        declarationPM.CasualImporterContact = declarationOrg.CasualImporterContact;
+                        declarationPM.PalestinianCode = declarationOrg.PalestinianCode;
+                        declarationPM.CourierSuspentionCode = declarationOrg.CourierSuspentionCode;
+ 
                         DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
 
                         DeclarationCourierStatusPM declarationCourierStatusPM =    declarationCourierStatusQueryService.GetSingle(declarationOrg.Id, false, false);
