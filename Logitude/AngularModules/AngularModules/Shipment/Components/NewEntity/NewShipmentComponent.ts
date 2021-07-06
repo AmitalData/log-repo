@@ -508,7 +508,8 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             this.IsShipmentTypesListEnabled = true;
             this.IsShipmentSubTypesListEnabled = true;
         }
-        else if (this.EntityPM.IsStandalonePickupDelivery) {
+
+        if (this.EntityPM.IsStandalonePickupDelivery) {
             this.IsDirectionListEnabled = false;
             this.IsTransportModesListEnabled = false;
             this.IsShipmentTypesListEnabled = false;
