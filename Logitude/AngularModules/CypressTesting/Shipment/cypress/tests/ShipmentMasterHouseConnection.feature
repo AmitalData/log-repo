@@ -22,9 +22,9 @@ Feature: Shipment Master House Connection
         Then the house should create successfully
         And the house should connect successfully
 
-    Scenario: Assert main carriage be dim from inside the connected house
-        Given the user goes to the main carriage of the created house
-        Then all fields of the main carriage should be dim
+    Scenario: Routing main carriage leg should be dim inside the connected house
+        Given the user goes to the main carriage leg of the created house
+        Then all fields of the main carriage leg should be dim
 
     Scenario: Disconnect the house shipment
         Given the user goes back to the master shipment

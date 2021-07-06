@@ -16,6 +16,11 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ShipmentShipper = '#Shipment_ShipperId';
   public static readonly ShipmentConsignee = '#Shipment_ConsigneeId';
   public static readonly ShipmentCustomerType = '#Shipment_ShipmentCustomerTypeCode';
+  public static readonly Backbutton_1 = '#EditBackbutton_1';
+  public static readonly HouseHyperLink = ".HyperlinkButtonControl";
+  public static readonly RoutingTab_1 = "#ShipmentTHRoutings_1";
+  public static readonly HouseMainCarriageCancelButton = "#MainCarriageCancelBtn"
+
   //#endregion
 
   //#region Create shipment
@@ -156,6 +161,19 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly MainCarriageATDDate = '#date_Shipment_MainCarriageATD';
   public static readonly MainCarriageATATime = '#time_Shipment_MainCarriageATA';
   public static readonly MainCarriageATADate = '#date_Shipment_MainCarriageATA';
+  public static readonly MainCarriageETATime = '#time_Shipment_MainCarriageETA';
+  public static readonly MainCarriageETADate = '#date_Shipment_MainCarriageETA';
+  public static readonly MainCarriageCutOffDate = '#date_Shipment_CutoffDate';
+  public static readonly MainCarriageCutOffTime = '#time_Shipment_CutoffDate';
+  public static readonly MainCarriageMAWBDate = '#date_Shipment_MAWBOBLDate';
+  public static readonly MainCarriageGetFromStockBtn = '#GetFromStockBtn';
+  public static readonly Shipment_AirlinePrefix = '#Shipment_AirlinePrefix';
+  public static readonly MainCarriageCarrierPrefix = '#Shipment_MainCarriageCarrierPrefix';
+  public static readonly MainCarriageFinalDestinationPortId = '#Shipment_MainCarriageFinalDestinationPortId';
+  public static readonly MainCarriagePort1Id = '#Shipment_Transshipment1FromPortId';
+  public static readonly MainCarriagePort2Id = '#Shipment_Transshipment2FromPortId';
+  public static readonly MainCarriagePort3Id = '#Shipment_Transshipment3FromPortId';
+
   public static readonly WarehouseLeg = "#Shipment_WarehouseLegWarehouseId";
   public static readonly WarehouseLegActualReleaseDate = '#date_Shipment_WarehouseLegActualReleaseDate';
   public static readonly WarehouseLegActualEntryDate = '#date_Shipment_WarehouseLegActualEntryDate';

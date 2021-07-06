@@ -27,7 +27,7 @@ export class RequestAliases {
     public static readonly UpdateQuotation = 'UpdateQuotation';
     public static readonly SentToCustomer = 'SentToCustomer';
     public static readonly SendReport = 'SendReport';
-
+    public static readonly ShipmentViews = 'ShipmentViews';
 
     public static readonly PrintQuotationWindowOpen = 'PrintQuotationWindowOpen';
 

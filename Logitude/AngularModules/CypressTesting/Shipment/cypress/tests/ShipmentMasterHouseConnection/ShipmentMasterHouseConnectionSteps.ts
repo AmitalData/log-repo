@@ -60,18 +60,19 @@ Then("the house should connect successfully", () => {
 //#endregion
 
 //#region Assert main carriage be dim from inside the connected house
-When("the user goes to the main carriage of the created house", () => {
-    Actions.NavigateConnectedHouseMainCarriage()
+When("the user goes to the main carriage leg of the created house", () => {
+    Actions.CheckBusyIndicator()
+    Actions.NavigateMainCarriageLegForConnectedHouse()
 });
 
-Then("all fields of the main carriage should be dim", () => {
-    Actions.AssertConnectedHouseMainCarriage()
+Then("all fields of the main carriage leg should be dim", () => {
+    Actions.AssertMainCarriageLegFieldsDisableForConnectedHouse()
 });
 //#endregion
 
 //#region Disconnect the house shipment
 Given("the user goes back to the master shipment", () => {
-    cy.get("#EditBackbutton_1").click({ force: true })
+    cy.get(ShipmentSelectors.Backbutton_1).click({ force: true })
 });
 
 When("disconnect shipment", () => {

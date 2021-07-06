@@ -388,56 +388,44 @@ export function ValidateCheckHouseCheckBox() {
     })
 }
 
-export function NavigateConnectedHouseMainCarriage() {
-    cy.wait(10000)
-    cy.get(".HyperlinkButtonControl").eq(0).click({ force: true })
-    cy.get("#ShipmentTHRoutings_1").click()
+export function NavigateMainCarriageLegForConnectedHouse() {
+    cy.get(ShipmentSelectors.HouseHyperLink).eq(0).click({ force: true })
+    cy.get(ShipmentSelectors.RoutingTab_1).click()
     cy.get(ShipmentSelectors.EditRoutingMainCarriage).click({ force: true })
 }
 
-export function AssertConnectedHouseMainCarriage() {
-    cy.get("#Shipment_MainCarriageFromPortId").should('be.disabled')
-    cy.get("#Shipment_Transshipment1FromPortId").should('be.disabled')
-    cy.get("#Shipment_Transshipment2FromPortId").should('be.disabled')
-    cy.get("#Shipment_Transshipment3FromPortId").should('be.disabled')
-    cy.get("#Shipment_MainCarriageFinalDestinationPortId").should('be.disabled')
-    cy.get("#Shipment_MainCarriageCarrierId").should('be.disabled')
-    cy.get("#Shipment_MainCarriageCarrierPrefix").should('be.disabled')
-    cy.get("#Shipment_MainCarriageCarrierNumber").should('be.disabled')
-    cy.get("#Shipment_AirlinePrefix").should('be.disabled')
-    cy.get("#Shipment_Master").should('be.disabled')
-    cy.get("#GetFromStockBtn").should('be.disabled')
-    AssertTimeAndDate()
-    AssertCalendarButton()
-    cy.get("#MainCarriageCancelBtn").click({ force: true })
+export function AssertMainCarriageLegFieldsDisableForConnectedHouse() {
+    AssertMainCarriagePortsFieldsDisable()
+    AssertMainCarriageDatesFieldsDisable()
+    cy.get(ShipmentSelectors.HouseMainCarriageCancelButton).click({ force: true })
 }
 
-function AssertTimeAndDate() {
-    cy.get("#date_Shipment_MAWBOBLDate").should('be.disabled')
-    cy.get("#date_Shipment_CutoffDate").should('be.disabled')
-    cy.get("#time_Shipment_CutoffDate").should('be.disabled')
-    cy.get("#date_Shipment_MainCarriageETD").should('be.disabled')
-    cy.get("#time_Shipment_MainCarriageETD").should('be.disabled')
-    cy.get("#date_Shipment_MainCarriageETA").should('be.disabled')
-    cy.get("#time_Shipment_MainCarriageETA").should('be.disabled')
-    cy.get("#date_Shipment_MainCarriageATD").should('be.disabled')
-    cy.get("#time_Shipment_MainCarriageATD").should('be.disabled')
-    cy.get("#date_Shipment_MainCarriageATA").should('be.disabled')
-    cy.get("#time_Shipment_MainCarriageATA").should('be.disabled')
+function AssertMainCarriagePortsFieldsDisable() {
+    cy.get(ShipmentSelectors.ShipmentMainCarriageFromPort).should(BaseSelectors.BeDisabled)
+    cy.get(ShipmentSelectors.MainCarriagePort1Id).should(BaseSelectors.BeDisabled)
+    cy.get(ShipmentSelectors.MainCarriagePort2Id).should(BaseSelectors.BeDisabled)
+    cy.get(ShipmentSelectors.MainCarriagePort3Id).should(BaseSelectors.BeDisabled)
+    cy.get(ShipmentSelectors.MainCarriageFinalDestinationPortId).should(BaseSelectors.BeDisabled)
+    cy.get(ShipmentSelectors.ShipmentMainCarriageCarrierId).should(BaseSelectors.BeDisabled)
+    cy.get(ShipmentSelectors.MainCarriageCarrierPrefix).should(BaseSelectors.BeDisabled)
+    cy.get(ShipmentSelectors.ShipmentFlightNumber).should(BaseSelectors.BeDisabled)
+    cy.get(ShipmentSelectors.Shipment_AirlinePrefix).should(BaseSelectors.BeDisabled)
+    cy.get(ShipmentSelectors.ShipmentMAWB).should(BaseSelectors.BeDisabled)
+    cy.get(ShipmentSelectors.MainCarriageGetFromStockBtn).should(BaseSelectors.BeDisabled)
 }
 
-function AssertCalendarButton() {
-    cy.get("#calendarbutton_date_Shipment_MAWBOBLDate").should('be.disabled')
-    cy.get("#calendarbutton_date_Shipment_CutoffDate").should('be.disabled')
-    cy.get("#timebutton_time_Shipment_CutoffDate").should('be.disabled')
-    cy.get("#calendarbutton_date_Shipment_MainCarriageETD").should('be.disabled')
-    cy.get("#timebutton_time_Shipment_MainCarriageETD").should('be.disabled')
-    cy.get("#calendarbutton_date_Shipment_MainCarriageETA").should('be.disabled')
-    cy.get("#timebutton_time_Shipment_MainCarriageETA").should('be.disabled')
-    cy.get("#calendarbutton_date_Shipment_MainCarriageATD").should('be.disabled')
-    cy.get("#timebutton_time_Shipment_MainCarriageATD").should('be.disabled')
-    cy.get("#calendarbutton_date_Shipment_MainCarriageATA").should('be.disabled')
-    cy.get("#timebutton_time_Shipment_MainCarriageATA").should('be.disabled')
+function AssertMainCarriageDatesFieldsDisable() {
+    cy.get(ShipmentSelectors.MainCarriageMAWBDate).should(BaseSelectors.BeDisabled)
+    cy.get(ShipmentSelectors.MainCarriageCutOffDate).should(BaseSelectors.BeDisabled)
+    cy.get(ShipmentSelectors.MainCarriageCutOffTime).should(BaseSelectors.BeDisabled)
+    cy.get(ShipmentSelectors.ShipmentMainCarriageETDDate).should(BaseSelectors.BeDisabled)
+    cy.get(ShipmentSelectors.ShipmentMainCarriageETDTime).should(BaseSelectors.BeDisabled)
+    cy.get(ShipmentSelectors.MainCarriageETADate).should(BaseSelectors.BeDisabled)
+    cy.get(ShipmentSelectors.MainCarriageETATime).should(BaseSelectors.BeDisabled)
+    cy.get(ShipmentSelectors.MainCarriageATDDate).should(BaseSelectors.BeDisabled)
+    cy.get(ShipmentSelectors.MainCarriageATDTime).should(BaseSelectors.BeDisabled)
+    cy.get(ShipmentSelectors.MainCarriageATADate).should(BaseSelectors.BeDisabled)
+    cy.get(ShipmentSelectors.MainCarriageATATime).should(BaseSelectors.BeDisabled)
 }
 //#endregion
 
