@@ -4193,17 +4193,6 @@
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab
-    TabName="&quot;Events&quot;"
-    TabLocalName="&quot;אירועים&quot;"
-    ObjectTableName="&quot;Journal&quot;"
-    Code="&quot;JNEV&quot;"
-    ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;"
-    TextCode="&quot;Journal.TH.Events&quot;"
-    IsPackagable="true"
-    IndexOrder="1"
-    IsSpellChecked="false"
-    HasGeneralFeature="false" />
-  <Tab
     TabName="&quot;Debug&quot;"
     TabLocalName="&quot;ניהול&quot;"
     ObjectTableName="&quot;Journal&quot;"
@@ -4214,6 +4203,17 @@
     IndexOrder="0"
     HtmlComponentURL="&quot;./Accounting/Components/EditTabs/Journal/JournalDebugTabComponent&quot;"
     HtmlComponentName="&quot;JournalDebugTabComponent&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
+  <Tab
+    TabName="&quot;Events&quot;"
+    TabLocalName="&quot;אירועים&quot;"
+    ObjectTableName="&quot;Journal&quot;"
+    Code="&quot;JNEV&quot;"
+    ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;"
+    TextCode="&quot;Journal.TH.Events&quot;"
+    IsPackagable="true"
+    IndexOrder="1"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <EventTypes>
