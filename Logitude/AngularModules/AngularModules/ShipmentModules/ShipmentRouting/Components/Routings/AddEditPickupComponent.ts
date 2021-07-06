@@ -614,6 +614,14 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
                 }
             }
 
+            if (this.IsAddingStandaloneShipmentVisible) {
+                if (this.ShipmentPM.ShipmentPackages != null) {
+                    this.ShipmentPM.ShipmentPackages.filter(item => AppTool.IsNullOrEmpty(item.Id)).forEach(item => {
+                        this.ShipmentPM.RemovePackage(item);
+                    });
+                }
+            }
+
             this.myCloner.RejectChanges();
         }
     }
