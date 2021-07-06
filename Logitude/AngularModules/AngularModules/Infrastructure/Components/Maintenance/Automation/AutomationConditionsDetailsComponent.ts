@@ -38,7 +38,7 @@ export class AutomationConditionsDetailsComponent {
     DataViewModel: any; 
     IsAtuomationResourceReady: boolean = false; 
     automationConditionPMList: any;
-    IsMasterShipment: boolean = false; 
+    IsMasterShipment: boolean = false;
     public automationExtendedPMService: AutomationExtendedPMService = new AutomationExtendedPMService();
     constructor(public entityListService: EntityListService, public _automationHistoryExtendedPMService: AutomationHistoryExtendedPMService) {
 
@@ -49,7 +49,7 @@ export class AutomationConditionsDetailsComponent {
         this.DataViewModel = windowArgs.DataViewModel;
         this.ObjectTableName = this.DataViewModel.ObjectTableName;
         this.automationConditionPMList = windowArgs.CurrentEntityPM.ConditionsList;
-        this.CurrentEntityPM = windowArgs.CurrentEntityPM;
+        this.CurrentEntityPM = windowArgs.CurrentEntityPM; 
         this.Initialize(); 
     }
 
@@ -84,7 +84,7 @@ export class AutomationConditionsDetailsComponent {
 
     Start() { 
         this.LoadConditionsFieldLists();
-        this.LoadAutomationConditionsList();
+        this.LoadAutomationList();
         this.IsAtuomationResourceReady = true;
     }
 
@@ -97,11 +97,12 @@ export class AutomationConditionsDetailsComponent {
                     this.IsMasterShipment = true;
                 }
                 this.LoadAutomationConditionsList();
-                }
+            }
             else {
                 this.LoadAutomationConditionsList();
+                
             }
-        });
+        }); 
     }
 
     LoadConditionsFieldLists() {
@@ -117,7 +118,7 @@ export class AutomationConditionsDetailsComponent {
         })
     }
 
-    LoadAutomationConditionsList() {
+    LoadAutomationConditionsList() { 
         if (this.automationConditionPMList != null) {
             this.automationConditionPMList.forEach((item) => { 
                 if (item.ConditionType == "And") { 

@@ -45,23 +45,20 @@ export class AutomationExtendedPMService {
         }),catchError(ServiceHelper.HandleServiceError));
 
     }
-
     GetIsMasterAutomation(automationId: string) {
 
         let authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return this._http.get(this._apiUrl + "/GetIsMasterAutomation" + '?automationId=' + automationId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-             
+
             let serviceResponse: ServiceResponse = new ServiceResponse();
-            serviceResponse.Result = response; 
-            return serviceResponse; 
+            serviceResponse.Result = response;
+            return serviceResponse;
 
         }), catchError(ServiceHelper.HandleServiceError));
 
     }
 
-
-     
 
     getAutomationesByObjectTableId(objectTableId: string, tenant: number) {
         var authHeader = new Headers();
