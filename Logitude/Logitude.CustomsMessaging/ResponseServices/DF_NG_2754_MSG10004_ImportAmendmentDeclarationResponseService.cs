@@ -1063,7 +1063,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                             SupplierInvoiceItemQueryService supplierInvoiceItemQueryService = new SupplierInvoiceItemQueryService(context);
 
-                            var invoiceItem = supplierInvoiceItemQueryService.GetSingleSupplierInvoicePMBySequence(decIdOrg, Convert.ToInt32(supplierInvoicePM.SequenceNumeric), Convert.ToInt32(supplierInvoiceItemPM.SequenceNumeric));
+                            var invoiceItem = supplierInvoiceItemQueryService.GetSingleSupplierInvoicePMBySequence(decIdOrg, Convert.ToInt32(supplierInvoicePM.InvoiceCounterKey), Convert.ToInt32(supplierInvoiceItemPM.SequenceNumeric));
                          if(invoiceItem!= null)
                             {
        
