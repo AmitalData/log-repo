@@ -66,7 +66,6 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     @Output() ReloadDetails = new EventEmitter();
     warehouseReleasePackageListExtendedService: WarehouseReleasePackageListExtendedService;
     private CurrentSession = SessionLocator.SelectedSession;
-    public IsShipmentContainersRequestStatusVisible: boolean = false;
 
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
@@ -78,7 +77,6 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         this.ItemsSource = new ObservableCollection([]);
         this.Listen();
         this.setDigits();
-        this.CheckShipmentContainersRequestStatusFeature();
     }
 
     private SessionEvent: any = null;
@@ -305,16 +303,6 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                         this.IsShippingInstructionsVisible = true;
                     }
                 }
-            }
-        }
-    }
-
-    private CheckShipmentContainersRequestStatusFeature() {
-        this.IsShipmentContainersRequestStatusVisible = false;
-        if (FeatureLocator.HasFeaturePermession("Shipment", "INTTRASimulator")) {
-            var isFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
-            if (this.EntityPM.TransportModeId == "O" && isFCLEntity) {
-                this.IsShipmentContainersRequestStatusVisible = true;
             }
         }
     }
@@ -1754,15 +1742,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         messageWindow.Show("Can't Delete a Container that is Connected to a Pickup/Delivery");
     }
 
-    ContainersRequestStatusClicked() {
-        //var service = new ShipmentContainersWebService();
-        //service.GetContainerStatusResult(this.EntityPM.Id,  , true).subscribe((myResponse: ServiceResponse) => {
-        //    this.CurrentSession.StopBusyIndicator();
-        //    if (!myResponse.HasError) {
 
-        //    }
-        //});
-    }
 
   DeletePackage(shipmentPackageItem: ShipmentPackageItem) {
     if (shipmentPackageItem) {

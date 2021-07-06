@@ -28,6 +28,8 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
     ShowTitle: boolean = false;
     public IsCustomerCare: boolean = false;
     public IsCustomerCareOrDistributor: boolean = false;
+    public HideColumns: boolean = false;
+    public HideLastColumn: boolean = false;
 
     @Output() LoadCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
     constructor(private entityArgs: EntityArgs) {
@@ -130,7 +132,7 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
                     }
                 }
 
-                this.ScreenColumns = myScreenColumns;
+                this.ScreenColumns = myScreenColumns.filter(c => c.ObjectFields?.length > 0);
 
                 if (fireEmit) {
                     this.LoadCompleted.emit(true);

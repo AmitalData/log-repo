@@ -458,5 +458,6 @@ export class ShipmentList {
 		PreForwardingFromPortId: string;
 		OnForwardingToPortId: string;
 		IsStandalonePickupDelivery: boolean;
+		IsHTSMissing: boolean;
 	
 }
