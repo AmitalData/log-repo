@@ -89,6 +89,11 @@ export class CustomsDocumentsDefinitionPM {
     public set DeclarationTypeCode(newValue: string) { if (this.declarationTypeCode != newValue) { this.declarationTypeCode = newValue; this.MarkAsDirty("DeclarationTypeCode"); } }
        
 	 
+    private declarationTypeName: string;
+    public get DeclarationTypeName() { return this.declarationTypeName; }
+    public set DeclarationTypeName(newValue: string) { if (this.declarationTypeName != newValue) { this.declarationTypeName = newValue; this.MarkAsDirty("DeclarationTypeName"); } }
+       
+	 
 
     public OldEntityPM: CustomsDocumentsDefinitionPM;
 		
