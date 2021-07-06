@@ -1200,7 +1200,7 @@ namespace WebFreight.Web.ReportsWebServices
             }
             else if (shipment.TransportModeId == "A")
             {
-                provider.CarrierNumber = shipmentMasterData.MainCarriageCarrierNumber;
+                provider.CarrierNumber = shipmentMasterData.MainCarriageCarrierPrefix + shipmentMasterData.MainCarriageCarrierNumber;
             }
             else if (shipment.TransportModeId == "I")
             {
