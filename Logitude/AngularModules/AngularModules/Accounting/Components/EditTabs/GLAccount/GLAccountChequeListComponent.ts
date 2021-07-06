@@ -27,6 +27,7 @@ export class GLAccountChequeListComponent extends BaseComponent implements OnIni
     public ObjectTableName = "GLAccount";
     public DataContext = this;
     public filterAgrs: ApiQueryFilters;
+
  
     // Services
     _GLAccountExtendedListService: GLAccountExtendedListService = new GLAccountExtendedListService();
@@ -71,8 +72,6 @@ export class GLAccountChequeListComponent extends BaseComponent implements OnIni
         this.CD.detectChanges();
     }
 
-
-
     //#region Data Source
     public columns: any[] = null;
   
@@ -85,7 +84,8 @@ export class GLAccountChequeListComponent extends BaseComponent implements OnIni
             Styles: { width: '85px' },
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true
         });
 
         this.columns.push({
@@ -104,7 +104,8 @@ export class GLAccountChequeListComponent extends BaseComponent implements OnIni
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.LocalAmountCredit"), // 'Local Amount',
             Styles: { width: '120px' },
-           
+            HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
         });
 
@@ -113,7 +114,8 @@ export class GLAccountChequeListComponent extends BaseComponent implements OnIni
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.ForeignAmountCredit"), // 'Foreign Amount',
             Styles: { width: '120px' },
-           
+            HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
         });
 
@@ -178,7 +180,7 @@ export class GLAccountChequeListComponent extends BaseComponent implements OnIni
         pageSize: 50,
         rowCount: null,
         sortingCol: "PaymentValueDate",
-        sortingDir: "Ascending",
+        sortingDir: "Descending",
         getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
             var tempo = this.getRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
             return tempo;
