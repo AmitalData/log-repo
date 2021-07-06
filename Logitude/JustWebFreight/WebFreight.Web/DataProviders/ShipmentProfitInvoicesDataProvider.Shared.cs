@@ -37,6 +37,13 @@ namespace WebFreight.Web.DataProviders
         public double ReceivableAmountInLocalCurrency { get; set; }
         public double ProfitAmountInProfitCurrency { get; set; }
         public double ProfitAmountInLocalCurrency { get; set; }
+
+        public string HouseNumber { get; set; }
+        public string MasterNumber { get; set; }
+        public double? Volume { get; set; }
+        public double? GrossWeight { get; set; }
+        public string CarrierNumber { get; set; }
+
         public List<PayableInvoiceProvider> PayableInvoices { get; set; }
         public List<ReceivableInvoiceProvider> ReceivableInvoices { get; set; }
     }
