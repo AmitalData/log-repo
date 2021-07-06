@@ -289,9 +289,9 @@
                                                         <td [hidden]="!HasCopyFeature" style="width: 25px;">
                                                             <button class="Button" style="width:25px;float:left;" (click)="onCopyBIReportClick()"><img class="CenterCenter" title="Copy" src="./Images/Buttons/copy.report.png" /></button>
                                                         </td>
-                                                        <td style="width: 25px;" [title]="filterButtonTitle">
-                                                            <button *ngIf="ShowStaticFilters == true" class="Button" style="width:25px;float:left;" (click)="ShowStaticFilters = false"><img style="width:23px;" class="CenterCenter" title="Hide fixed filters" src="./Images/HideFilters.png" /></button>
-                                                            <button *ngIf="ShowStaticFilters == false" [disabled]="!hasFixedFilter" class="Button" style="width:25px;float:left;" (click)="ShowStaticFilters = true"><img style="width:23px;" class="CenterCenter" title="Show fixed filters" src="./Images/ShowFilters.png" /></button>
+                                                        <td style="width: 25px;" [attr.title]="!hasFixedFilter ? filterButtonTitle : ''">
+                                                            <button *ngIf="ShowStaticFilters == true" class="Button" style="width:25px;float:left;" (click)="ShowStaticFilters = false"><img style="width:23px;" class="CenterCenter" [attr.title]="ShowStaticFilters ? 'Hide fixed filters' : ''" src="./Images/HideFilters.png" /></button>
+                                                            <button *ngIf="ShowStaticFilters == false" [disabled]="!hasFixedFilter" class="Button" style="width:25px;float:left;" (click)="ShowStaticFilters = true"><img style="width:23px;" class="CenterCenter" [attr.title]="!ShowStaticFilters ? 'Show fixed filters' : ''" src="./Images/ShowFilters.png" /></button>
                                                         </td>
                                                         <td style="width: 25px;">
                                                             <button class="Button" style="width:25px;float:left;" (click)="onBIReportColumnsClick()"><img style="width:18px;" class="CenterCenter" title="Show/Hide/Reorder Column(s)" src="./Images/Columns.png" /></button>
