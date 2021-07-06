@@ -1,6 +1,7 @@
 ﻿using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.Validators;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.Resolvers;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
@@ -402,7 +403,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             BankAccountPM bankAccountFromTransfer, BankAccountPM bankAccountFromReconcileExternalPageLine)
         {
             var err = new List<string>();
-            
+            bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
             //if (myLedgerTransactionBankTransferPMs.Tenant != tenant)
             if (myLedgerTransactionBankTransferPMs.Any(r => r.Tenant != tenant))
             {
@@ -452,9 +453,11 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             }
             if (_AdjustAsBankFee && String.IsNullOrWhiteSpace(_OnAdjust_adjustGLAccountId))
             {
-                err.Add(
-                    M_OnAdjustMustInit// " סכום החובה בדף בנק שונה מסכום התנועה בכרטסת בנק לשלם בזכות אולם המשתנה כרטיס להפרשים לא אותחל";
-                    );
+                string msg = TextCodesTranslator.TranslateText("ExternalReconciliation.O.CantReconcileTransferTransactionsWithMultipleBankPages", tenant, showLocal);
+                err.Add(msg);
+                // err.Add(
+                //    M_OnAdjustMustInit// " סכום החובה בדף בנק שונה מסכום התנועה בכרטסת בנק לשלם בזכות אולם המשתנה כרטיס להפרשים לא אותחל";
+                //     );
             }
             if (!String.IsNullOrWhiteSpace(_OnAdjust_adjustGLAccountId) && bankAccountFromTransfer != null &&  _OnAdjust_adjustGLAccountId == bankAccountFromTransfer.Id)
             {
