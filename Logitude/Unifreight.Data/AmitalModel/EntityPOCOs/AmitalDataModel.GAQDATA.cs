@@ -477,6 +477,25 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         }
         private long _PRIMARYNUMCFI;
 
+
+        [System.Runtime.Serialization.DataMember]
+        public virtual string BACKTOQUE
+        {
+            get
+            {
+                return _BACKTOQUE;
+            }
+            set
+            {
+                if (_BACKTOQUE != value)
+                {
+                    _BACKTOQUE = value;
+                    OnPropertyChanged("BACKTOQUE");
+                }
+            }
+        }
+        private string _BACKTOQUE;
+
         #endregion
 
         #region Extensibility Method Definitions

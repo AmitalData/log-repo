@@ -6975,6 +6975,11 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnName(@"PRIMARY_NUM_CFI")
                     .IsRequired()
                     .HasColumnType("int64");
+            modelBuilder.Entity<GAQDATA>()
+                .Property(p => p.BACKTOQUE)
+                .HasColumnName(@"BACK_TO_QUE")
+                .HasMaxLength(1)
+                .HasColumnType("char");
 
             #endregion
 
