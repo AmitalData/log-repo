@@ -269,6 +269,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 {
                                     if (additionalInformation.Content != null)
                                         _MyDeclarationPM.AmendmentRemarks += '\n' + additionalInformation.Content.Value;
+                                    if(!string.IsNullOrEmpty(_MyDeclarationPM.AmendmentRemarks)&&  _MyDeclarationPM.AmendmentRemarks.Length>=511)
+                                    {
+                                        _MyDeclarationPM.AmendmentRemarks = _MyDeclarationPM.AmendmentRemarks.Substring(0, 511);
+                                    }
                                     break;
                                 }
                             case "27":
