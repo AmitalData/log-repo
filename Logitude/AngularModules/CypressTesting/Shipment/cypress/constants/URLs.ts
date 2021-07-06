@@ -27,4 +27,5 @@ export class URLs
         return "**/shipmentviews/getbyfilters?**" + ShipmentNumber + "**";
     }
     public static readonly GetAll = "**/getall"
+    public static readonly ShipmentViews = "**/shipmentviews/getbyfilters?**"
 }
