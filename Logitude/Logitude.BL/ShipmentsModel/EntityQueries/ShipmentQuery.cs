@@ -13753,6 +13753,64 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                
             return 0;
         }
+
+        public List<ShipmentList> GetShipmentsForMultipleAPInvoice(string invoiceId, string vendorId, int tenant)
+        {
+            List<ShipmentList> myResult1 = new List<ShipmentList>();
+
+            if (!string.IsNullOrEmpty(vendorId))
+            {
+                IQueryable<Shipment> iQueryable = (from d in repository.context.Shipments where d.Tenant == tenant && !d.IsCancelled && !d.IsAccountingClosed select d);
+
+                APInvoiceEntityRepository aPInvoiceEntityRepository = new APInvoiceEntityRepository(tenant);
+                IQueryable<APInvoiceEntity> aPInvoiceEntities = aPInvoiceEntityRepository.GetInvoiceEntitiesForInvoice(invoiceId, tenant);
+                if (aPInvoiceEntities.Count() > 0)
+                {
+                    List<string> connectedShipmentsIds = aPInvoiceEntities.Select(s => s.EntityId).ToList();
+                    iQueryable = iQueryable.Where(d => !connectedShipmentsIds.Contains(d.Id));
+                }
+
+                IQueryable<ShipmentList> myResult = (from shipment in iQueryable.Include("Direction").Include("TransportMode").Include("CustomerCard")
+                                                     join masterData in repository.context.ShipmentMasterDatas
+                                                     on shipment.MasterShipmentDataId equals masterData.Id into masterJoin
+                                                     join pay in repository.context.ShipmentPayables
+                                                     on shipment.Id equals pay.ShipmentId into payableJoin
+                                                     from master in masterJoin.DefaultIfEmpty()
+                                                     from payable in payableJoin
+                                                     where payable.VendorId == vendorId
+                                                     && (payable.ShipmentPayableLineStatusCode == "OAMT" || payable.ShipmentPayableLineStatusCode == "PACC")
+                                                     select new ShipmentList()
+                                                     {
+                                                         Id = shipment.Id,
+                                                         CreateDateTime = shipment.CreateDateTime,
+                                                         Tenant = shipment.Tenant,
+                                                         ShipmentNumber = shipment.ShipmentNumber,
+                                                         DirectionId = shipment.DirectionId,
+                                                         TransportModeId = shipment.TransportModeId,
+                                                         CustomerId = shipment.CustomerId,
+                                                         DirectionName = shipment.Direction == null ? null : shipment.Direction.Name,
+                                                         TransportModeName = shipment.TransportMode == null ? null : shipment.TransportMode.Name,
+                                                         CustomerName = shipment.CustomerCard == null ? null : shipment.CustomerCard.EnglishName,
+                                                         Master = master.Master,
+                                                         LongMaster = shipment.TransportModeId == "A" ? (!string.IsNullOrEmpty(master.AirlinePrefix) && !string.IsNullOrEmpty(master.Master) ? master.AirlinePrefix + "-" + master.Master : "") : master.Master,
+                                                         House = shipment.House,
+                                                         ShipmentLevelCode = shipment.ShipmentLevelCode,
+                                                         AgentName = shipment.AgentCard == null ? null : shipment.AgentCard.EnglishName,
+                                                         OpenPayablesInProfitCurrency = shipment.OpenPayablesInProfitCurrency,                                                         
+                                                         AccountedPayablesInProfitCurrency = shipment.AccountedPayablesInProfitCurrency,
+                                                         OpenPayablesInLocalCurrency = shipment.OpenPayablesInLocalCurrency,
+                                                         AccountedPayablesInLocalCurrency = shipment.AccountedPayablesInLocalCurrency,
+                                                     });
+
+                myResult = myResult.OrderByDescending(d => d.CreateDateTime);
+                myResult = System.Data.Entity.QueryableExtensions.Skip(myResult, () => 0);
+                myResult = System.Data.Entity.QueryableExtensions.Take(myResult, () => 50);
+
+                myResult1 = myResult.ToList();
+            }      
+
+            return myResult1;
+        }
     }
 
     public class CargoTrackingShipmentCustomsData
