@@ -123,7 +123,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (//cntxt.MainInterfaceCode == "2715"
                 Environment.StackTrace.ToString().Contains("D_NG_2716_MSG22001_AddAttachmentResponseService"))
             {
-                LogMessagingUtil.Instance.AppendLine("While in 2715 , StackTrace D_NG_2716_MSG22001_AddAttachmentResponseService (Batch Mode) do not update CCUFILEM !!! (cntxt.MainInterfaceCode " + cntxt.MainInterfaceCode + ")");
+                LogMessagingUtil.Instance.AppendLine("While in 2715 , StackTrace D_NG_2716_MSG22001_AddAttachmentResponseService (Batch Mode) do not update CCUFILEM !!! ");
                 if (cntxt != null && cntxt.MainInterfaceCode != null) LogMessagingUtil.Instance.AppendLine("cntxt.MainInterfaceCode " + cntxt.MainInterfaceCode + ")");
                 return;
             }
