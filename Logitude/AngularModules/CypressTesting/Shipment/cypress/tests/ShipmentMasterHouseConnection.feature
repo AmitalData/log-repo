@@ -14,7 +14,7 @@ Feature: Shipment Master House Connection
             | MainCarriageFromPort | LHR       |
             | MainCarriageToPort   | MIA       |
         When create shipment
-        Then the master should create successfully 
+        Then the master should create successfully
 
     Scenario: Create house export air shipment inside the master
         Given the user in the master's Shipment tab
@@ -22,7 +22,12 @@ Feature: Shipment Master House Connection
         Then the house should create successfully
         And the house should connect successfully
 
+    Scenario: Assert main carriage be dim from inside the connected house
+        Given the user goes to the main carriage of the created house
+        Then all fields of the main carriage should be dim
+
     Scenario: Disconnect the house shipment
+        Given the user goes back to the master shipment
         When disconnect shipment
         Then the shipment should disconnect successfully
 
