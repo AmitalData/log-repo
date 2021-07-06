@@ -845,8 +845,9 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
         });
     }
 
+    private invoiceLinesAdded: boolean = false;
     private myOpenPayables: ShipmentPayablePM[] = [];
-    private missingVATPayables: ShipmentPayablePM[] = [];
+    private missingVATPayables: APInvoiceLinePM[] = [];
     private LastRatesList: LastRate[] = [];
     private VatTypePercentagesList: VatTypePercentageList[] = [];
     private LoadOpenPayables() {
@@ -870,7 +871,11 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
                     this.VatTypePercentagesList = myResponse2.Result;
                     this.AddInvoiceLines();
                     this.CurrentSession.StopBusyIndicator();
-                    this.SaveAPInvoiceMultipleShortEntity();                    
+
+                    if (this.invoiceLinesAdded) {
+                        this.invoiceLinesAdded = false;
+                        this.SaveAPInvoiceMultipleShortEntity();
+                    }
                 });
             });
         });
@@ -879,8 +884,7 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
         var chargesTypeListService: ChargesTypeListService = new ChargesTypeListService();
         var vatTypeListService: VatTypeListService = new VatTypeListService();;
 
-        this.missingVATPayables = this.myOpenPayables.filter(f => f.ShipmentPayableParentId == null && f.VendorId == this.VendorId && AppTool.IsNullOrEmpty(f.VatTypeId));
-        this.myOpenPayables = this.myOpenPayables.filter(f => f.ShipmentPayableParentId == null && f.VendorId == this.VendorId && !AppTool.IsNullOrEmpty(f.VatTypeId));
+        this.myOpenPayables = this.myOpenPayables.filter(f => f.ShipmentPayableParentId == null && f.VendorId == this.VendorId);
         this.myOpenPayables.forEach(item => {
             if (this.APInvoiceMultipleShortEntity.InvoiceLines.filter(f => f.EntityPayableId == item.Id).length == 0) {
                 var line = new APInvoiceLinePM(null);
@@ -958,7 +962,14 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
                     });
                 }
 
-                this.APInvoiceMultipleShortEntity.AddInvoiceLinePM(line);
+                if (AppTool.IsNullOrEmpty(line.VatTypeId)) {
+                    this.missingVATPayables.push(line);
+                }
+
+                else {
+                    this.APInvoiceMultipleShortEntity.AddInvoiceLinePM(line);
+                    this.invoiceLinesAdded = true;
+                }
             }
         });
     }
