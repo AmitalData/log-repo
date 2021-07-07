@@ -2702,8 +2702,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public bool PrivateLabelIncludeDelivery { get; set; }
 
-        public DateTime? ExpectedCargoReadyDate { get; set; }
-        public DateTime? ActualCargoReadyDate { get; set; }
+        public DateTime? PlannedCargoReadyDate { get; set; }
+        public DateTime? ApprovedCargoReadyDate { get; set; }
         public string HandlerUserId { get; set; }
         
     }

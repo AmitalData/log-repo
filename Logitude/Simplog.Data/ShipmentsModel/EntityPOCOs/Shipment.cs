@@ -689,8 +689,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public bool PrivateLabelIncludePickup { get; set; } 
         public bool PrivateLabelIncludeDelivery { get; set; }
 
-        public DateTime? ExpectedCargoReadyDate { get; set; }
-        public DateTime? ActualCargoReadyDate { get; set; }
+        public DateTime? PlannedCargoReadyDate { get; set; }
+        public DateTime? ApprovedCargoReadyDate { get; set; }
         public virtual User HandlerUser { get; set; }
         public string HandlerUserId { get; set; }
 
