@@ -226,6 +226,7 @@ export class PickupPackagesTabComponent {
                     pickupItemComponent.Description = component.DataContext.Description;
                     pickupItemComponent.ShipperSeal = component.DataContext.ShipperSeal;
                     this.BuildItemsSource();
+                    packagesTabComponent.BuildItemsSource();
                 }
             });
         });

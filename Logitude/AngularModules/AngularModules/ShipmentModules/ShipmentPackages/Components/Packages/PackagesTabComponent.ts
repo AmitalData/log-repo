@@ -66,7 +66,6 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     @Output() ReloadDetails = new EventEmitter();
     warehouseReleasePackageListExtendedService: WarehouseReleasePackageListExtendedService;
     private CurrentSession = SessionLocator.SelectedSession;
-    public IsShipmentContainersRequestStatusVisible: boolean = false;
 
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
@@ -78,7 +77,6 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         this.ItemsSource = new ObservableCollection([]);
         this.Listen();
         this.setDigits();
-        this.CheckShipmentContainersRequestStatusFeature();
     }
 
     private SessionEvent: any = null;
@@ -305,16 +303,6 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                         this.IsShippingInstructionsVisible = true;
                     }
                 }
-            }
-        }
-    }
-
-    private CheckShipmentContainersRequestStatusFeature() {
-        this.IsShipmentContainersRequestStatusVisible = false;
-        if (FeatureLocator.HasFeaturePermession("Shipment", "INTTRASimulator")) {
-            var isFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
-            if (this.EntityPM.TransportModeId == "O" && isFCLEntity) {
-                this.IsShipmentContainersRequestStatusVisible = true;
             }
         }
     }
@@ -1754,15 +1742,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         messageWindow.Show("Can't Delete a Container that is Connected to a Pickup/Delivery");
     }
 
-    ContainersRequestStatusClicked() {
-        //var service = new ShipmentContainersWebService();
-        //service.GetContainerStatusResult(this.EntityPM.Id,  , true).subscribe((myResponse: ServiceResponse) => {
-        //    this.CurrentSession.StopBusyIndicator();
-        //    if (!myResponse.HasError) {
 
-        //    }
-        //});
-    }
 
   DeletePackage(shipmentPackageItem: ShipmentPackageItem) {
     if (shipmentPackageItem) {
@@ -1897,6 +1877,30 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     }
 
     DeletePackagesButtonClicked() {
+        if (this.IsContainerFeatureToggleVisible && this.EntityPM.ShipmentPackages.length > 0) {
+            this.CurrentSession.StartBusyIndicatorLoading();
+            var shipmentDomainService = new ShipmentDomainService();
+            var shipmentId = this.EntityPM.Id;
+            shipmentDomainService.GetIfShipmentPackagesConnectedToStandAloneShipmentPackage(shipmentId).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    this.CurrentSession.StopBusyIndicator();
+                    var isPackagesConnectedWithStandAlonePackage = myResponse.Result;
+                    if (isPackagesConnectedWithStandAlonePackage) {
+                        this.ValidateDeleteConnectedShipmetPackage()
+                    } else {
+                        this.ViewDeletePackagesConfirmationWindow();
+                    }
+                }
+                else {
+                    this.CurrentSession.StopBusyIndicator();
+                }
+            });
+        } else {
+            this.ViewDeletePackagesConfirmationWindow();
+        }
+    }
+
+    ViewDeletePackagesConfirmationWindow() {
         if (this.EntityPM.ShipmentPackages.length > 0) {
             var confirmWindow = new ConfirmWindow();
 
@@ -1907,7 +1911,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             else {
                 confirmWindow.Show("Are you sure you want to delete all packages?");
             }
-            
+
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
                     this.StartDelete();
@@ -2195,6 +2199,7 @@ export class ShipmentPackageItem extends BaseComponent {
     public IsShowReleaseNumber: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     public HorseFieldIsVisible: boolean = false;
+    public IsContainerFeatureToggleVisible: boolean = false;
     WarehouseReleaseNumber: string;
     constructor(entity: ShipmentPackagePM, public fatherComponent: PackagesTabComponent, isNew: boolean = false) {
         super();
@@ -2206,6 +2211,7 @@ export class ShipmentPackageItem extends BaseComponent {
         this.IsCommodityNumberVisible = fatherComponent.IsCommodityNumberVisible;
         this.IsCommodityNameVisible = fatherComponent.IsCommodityNameVisible;
         this.HorseFieldIsVisible = fatherComponent.HorseFieldIsVisible;
+        this.IsContainerFeatureToggleVisible = fatherComponent.IsContainerFeatureToggleVisible;
 
         this.IsNewEntity = isNew;
         this.SetUIProperties();
@@ -2318,6 +2324,7 @@ export class ShipmentPackageItem extends BaseComponent {
             this.UIProperties.SetEnabled("LCLContainerTypeId", this.ObjectTableName, this.IsEditingEnabled);
             this.UIProperties.SetEnabled("ContainerNumber", this.ObjectTableName, this.IsEditingFieldsEnabled);
             this.UIProperties.SetEnabled("Quantity", this.ObjectTableName, this.IsEditingFieldsEnabled);
+            this.UIProperties.SetEnabled("Notes", this.ObjectTableName, this.IsEditingFieldsEnabled);
 
             var isVolumeEnabled: boolean = false;
             var isDimensionEnabled: boolean = false;
@@ -2489,6 +2496,8 @@ export class ShipmentPackageItem extends BaseComponent {
             if (this.IsMultiHarmonize == true) {
                 isFieldEnabled = false;
             }
+        } else if (this.IsContainerFeatureToggleVisible && !this.IsEditingEnabled) {
+            isFieldEnabled = false;
         }
 
         this.UIProperties.SetEnabled("Harmonize", this.ObjectTableName, isFieldEnabled);
@@ -3746,6 +3755,7 @@ export class InsideShipmentPackageItem extends BaseComponent {
     public IsVehicleDetails: boolean = false;
     public CountryListService: CountryListService;
     public IsEditingFieldsEnabled: boolean = false;
+    public IsContainerFeatureToggleVisible: boolean = false;
     constructor(entity: InsideShipmentPackagePM, public fatherComponent: ShipmentPackageItem, isNew: boolean = false) {
         super();
         this.EntityPM = entity;
@@ -3754,6 +3764,7 @@ export class InsideShipmentPackageItem extends BaseComponent {
         this.IsNewEntity = isNew;
         this.CountryListService = new CountryListService();
         this.IsEditingFieldsEnabled = fatherComponent.IsEditingFieldsEnabled;
+        this.IsContainerFeatureToggleVisible = fatherComponent.IsContainerFeatureToggleVisible;
 
         this.SetUIProperties();
         if (this.IsNewEntity) {
@@ -3849,6 +3860,8 @@ export class InsideShipmentPackageItem extends BaseComponent {
             if (this.IsMultiHarmonize == true) {
                 isFieldEnabled = false;
             }
+        } else if (this.IsContainerFeatureToggleVisible && !this.IsEditingEnabled) {
+            isFieldEnabled = false;
         }
 
         this.UIProperties.SetEnabled("Harmonize", this.ObjectTableName, isFieldEnabled);

@@ -342,6 +342,9 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.OnForwardingCarrierId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.OnForwardingAdditionalTransportModeCode).HasMaxLength(4).IsUnicode(false);
 
+            this.Property(t => t.PrivateLabelInvoiceNumber).HasMaxLength(40).IsUnicode(false);  
+
+
             // Table & Column Mappings
             this.ToTable("Shipments");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -775,6 +778,11 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ExpectedCargoReadyDate).HasColumnName("ExpectedCargoReadyDate");
             this.Property(t => t.ActualCargoReadyDate).HasColumnName("ActualCargoReadyDate");
             this.Property(t => t.HandlerUserId).HasColumnName("HandlerUserId");
+
+            this.Property(t => t.PrivateLabelInvoiceNumber).HasColumnName("PrivateLabelInvoiceNumber"); 
+            this.Property(t => t.PrivateLabelIncludePickup).HasColumnName("PrivateLabelIncludePickup");
+            this.Property(t => t.PrivateLabelIncludeDelivery).HasColumnName("PrivateLabelIncludeDelivery");
+            this.Property(t => t.RequestedFlightDate).HasColumnName("RequestedFlightDate");
 
             if (dbms == "oracle")
             {

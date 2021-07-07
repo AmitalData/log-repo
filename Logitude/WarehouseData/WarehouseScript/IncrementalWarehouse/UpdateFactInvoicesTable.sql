@@ -11,16 +11,6 @@ set @APInvoicesLastUpdateDate = (select top(1) LastUpdateDate from dw_WaterMarks
 set @ARInvoicesAutomaticLastUpdateDate = (select MAX(AutomaticLastUpdateDate) AutomaticLastUpdateDate from dw_ARInvoices)
 set @APInvoicesAutomaticLastUpdateDate = (select MAX(AutomaticLastUpdateDate) AutomaticLastUpdateDate from dw_APInvoices)
 
---if(@ARInvoicesAutomaticLastUpdateDate > @APInvoicesAutomaticLastUpdateDate)
---	set @AutomaticLastUpdateDate = @ARInvoicesAutomaticLastUpdateDate
---else
---	set @AutomaticLastUpdateDate = @APInvoicesAutomaticLastUpdateDate
-
---if(@ARInvoicesLastUpdateDate > @APInvoicesLastUpdateDate)
---	set @LastUpdateDate = @ARInvoicesLastUpdateDate
---else
---	set @LastUpdateDate = @APInvoicesLastUpdateDate
-
  if(@ARInvoicesAutomaticLastUpdateDate > @ARInvoicesLastUpdateDate or @APInvoicesAutomaticLastUpdateDate > @APInvoicesLastUpdateDate)
 
  begin
@@ -209,8 +199,8 @@ set @APInvoicesAutomaticLastUpdateDate = (select MAX(AutomaticLastUpdateDate) Au
 	DEALLOCATE InvoicesCursor
 
 
-	update dw_WaterMarks set LastUpdateDate = @ARInvoicesLastUpdateDate where TableName = 'ARInvoice'
-	update dw_WaterMarks set LastUpdateDate = @APInvoicesLastUpdateDate where TableName = 'APInvoice'
+	update dw_WaterMarks set LastUpdateDate = @ARInvoicesAutomaticLastUpdateDate where TableName = 'ARInvoice'
+	update dw_WaterMarks set LastUpdateDate = @APInvoicesAutomaticLastUpdateDate where TableName = 'APInvoice'
 
 End
 

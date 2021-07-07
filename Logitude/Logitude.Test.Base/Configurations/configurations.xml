@@ -1,12 +1,20 @@
 ﻿<Configurations>
 
-  <ServerSettings>
+  <!--<ServerSettings>
     <Url>https://test.logitudeworld.com/test/api</Url>
   </ServerSettings>
 
   <Users>
     <User Default="true" Email="specflowtest@logitudeworld.com" Password="Spec_Flow21" />
     <User Email="protractor@test.com" Password="!P123t456" />
+  </Users>-->
+
+ <ServerSettings>
+    <Url>http://localhost:9996/api</Url>
+  </ServerSettings>
+
+  <Users>
+    <User Default="true" Email="angular@fnarsoft.com" Password="1" />
   </Users>
 
 </Configurations>

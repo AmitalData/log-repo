@@ -637,8 +637,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? OnForwardingETD { get; set; }
         public DateTime? OnForwardingATD { get; set; }
         public DateTime? OnForwardingETA { get; set; }
-        public DateTime? OnForwardingATA { get; set; }
-       
+        public DateTime? OnForwardingATA { get; set; }       
         public bool IsStandalonePickupDelivery { get; set; }
+        public bool IsHTSMissing { get; set; }
     }
 }

@@ -473,6 +473,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.ExpectedCargoReadyDate = entityPM.ExpectedCargoReadyDate;
             entityPoco.ActualCargoReadyDate = entityPM.ActualCargoReadyDate;
 
+            entityPoco.PrivateLabelInvoiceNumber = entityPM.PrivateLabelInvoiceNumber; 
+            entityPoco.PrivateLabelIncludePickup = entityPM.PrivateLabelIncludePickup;
+            entityPoco.PrivateLabelIncludeDelivery = entityPM.PrivateLabelIncludeDelivery;
+            entityPoco.RequestedFlightDate = entityPM.RequestedFlightDate;
+
             BuildSearchField(entityPM, entityPoco, entityMasterData, myPackagesList);
             if (!LBcurrentTenant.IsDocumentsArchive)
             {

@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class JournalUpdateClass
    {  		
-		public const string HashString = "54cfc3398846f735533ef4433604c9a1";
+		public const string HashString = "8c3b51d0bcf7770e6f69d0cdd87cbcdf";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3265,12 +3265,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature JournalDetailsFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Journal.Tab.Details", ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "JournalFeatures.JNDT", NameTextCodeDefaultText = "Details", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,JournalObjectTable);
  
                  
-			   TextCode JournalEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature JournalEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Journal.Tab.Events", ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "JournalFeatures.JNEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,JournalObjectTable);
+			   TextCode JournalDebugTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.TH.Debug", DefaultText = "Debug",LocalDefaultText = "ניהול", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature JournalDebugFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Journal.Tab.Debug", ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "JournalFeatures.JNDB", NameTextCodeDefaultText = "Debug", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,JournalObjectTable);
  
                  
-			   TextCode JournalDebugTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.TH.Debug", DefaultText = "Debug",LocalDefaultText = "ניהול", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature JournalDebugFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Journal.Tab.Debug", ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "JournalFeatures.JNDB", NameTextCodeDefaultText = "Debug", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,JournalObjectTable);
+			   TextCode JournalEventsTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature JournalEventsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Journal.Tab.Events", ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "JournalFeatures.JNEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,JournalObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -3278,9 +3278,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JNDT",HtmlComponentName = "JournalDetailsTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/Journal/JournalDetailsTabComponent", FeatureId = JournalDetailsFeature_TH0.Id,FeatureUniqeCode = JournalDetailsFeature_TH0.FeatureUniqeCode, ControlPath = "Logitude.Accounting.Views.Tabs.JRNL.JournalDetailsTabControl", ObjectTableId = JournalObjectTable.Id, TabNameTextCodeId = JournalDetailsTextCode_TH0.Id, TabNameTextCodeCode = JournalDetailsTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JNEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = JournalEventsFeature_TH1.Id,FeatureUniqeCode = JournalEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = JournalObjectTable.Id, TabNameTextCodeId = JournalEventsTextCode_TH1.Id, TabNameTextCodeCode = JournalEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JNDB",HtmlComponentName = "JournalDebugTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/Journal/JournalDebugTabComponent", FeatureId = JournalDebugFeature_TH1.Id,FeatureUniqeCode = JournalDebugFeature_TH1.FeatureUniqeCode, ControlPath = "Logitude.Accounting.Views.Tabs.JRNL.JournalDebugTabControl", ObjectTableId = JournalObjectTable.Id, TabNameTextCodeId = JournalDebugTextCode_TH1.Id, TabNameTextCodeCode = JournalDebugTextCode_TH1.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JNDB",HtmlComponentName = "JournalDebugTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/Journal/JournalDebugTabComponent", FeatureId = JournalDebugFeature_TH2.Id,FeatureUniqeCode = JournalDebugFeature_TH2.FeatureUniqeCode, ControlPath = "Logitude.Accounting.Views.Tabs.JRNL.JournalDebugTabControl", ObjectTableId = JournalObjectTable.Id, TabNameTextCodeId = JournalDebugTextCode_TH2.Id, TabNameTextCodeCode = JournalDebugTextCode_TH2.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "JNEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = JournalEventsFeature_TH2.Id,FeatureUniqeCode = JournalEventsFeature_TH2.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = JournalObjectTable.Id, TabNameTextCodeId = JournalEventsTextCode_TH2.Id, TabNameTextCodeCode = JournalEventsTextCode_TH2.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

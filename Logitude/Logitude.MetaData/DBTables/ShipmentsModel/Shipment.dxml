@@ -3159,6 +3159,7 @@
     <Constraints
       Nullable="true" />
   </Column>
+
   <Column
     Name="ExpectedCargoReadyDate"
     Type="datetime">
@@ -3179,6 +3180,33 @@
     <Constraints
       Nullable="true" />
   </Column>
+
+  <Column
+    Name="PrivateLabelInvoiceNumber"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PrivateLabelIncludePickup"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PrivateLabelIncludeDelivery"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="RequestedFlightDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
     ReferencedTable="Countries"
