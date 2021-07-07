@@ -3159,28 +3159,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-
-  <Column
-    Name="ExpectedCargoReadyDate"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ActualCargoReadyDate"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="HandlerUserId"
-    OldNames="Handler"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-
   <Column
     Name="PrivateLabelInvoiceNumber"
     Type="varchar"
@@ -3206,7 +3184,26 @@
     <Constraints
       Nullable="true" />
   </Column>
-
+  <Column
+    Name="PlannedCargoReadyDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ApprovedCargoReadyDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="HandlerUserId"
+    OldNames="Handler"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
     ReferencedTable="Countries"

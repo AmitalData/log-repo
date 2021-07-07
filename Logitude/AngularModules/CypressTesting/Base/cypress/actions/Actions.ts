@@ -4,7 +4,7 @@ import { AccountingSelectors } from '../../../Accounting/cypress/selectors/Selec
 import { RestAPI } from '../constants/RestAPI';
 import { AccountingURLs } from '../../../Accounting/cypress/constants/URLs';
 import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
-import {BaseURLs}from "../constants/URLs"
+import { BaseURLs } from "../constants/URLs"
 import { WarehouseStorage } from "../../../Shipment/cypress/models/WarehouseStorage";
 import * as gr from "../../../Base/cypress/actions/GenerateRandoms";
 import { Datepicker } from "../models/Datepicker";
@@ -20,37 +20,37 @@ export function NavigatesToCustomsSettings() {
     cy.Click(BaseSelectors.CustomsSettings, null)
 }
 
-export function NavigatesToWarehouse(){
+export function NavigatesToWarehouse() {
     cy.Click(BaseSelectors.MaintenanceMenu, null);
     cy.FillLogTextBox(BaseSelectors.NullSearch, BaseSelectors.ContainWarehouse);
     cy.Click(BaseSelectors.Warehouse, null);
 }
 
-export function FillWarehouseStorageDetails(warehouseDetails : WarehouseStorage){
+export function FillWarehouseStorageDetails(warehouseDetails: WarehouseStorage) {
     cy.Click(BaseSelectors.Hyperlink, BaseSelectors.WarehouseStorageDefaults);
     cy.SelectCheckBox(BaseSelectors.WarehouseChargeStorage);
     cy.FillLogLov(BaseSelectors.WarehouseCurrency, warehouseDetails.Currency, true);
     cy.FillLogTextBox(BaseSelectors.WarehouseStorageFreeDays, warehouseDetails.StorageFreeDays.toString());
 }
 
-export function FillWarehouseStorageWeightDetails(warehouseDetails : WarehouseStorage , transportmode:string){
+export function FillWarehouseStorageWeightDetails(warehouseDetails: WarehouseStorage, transportmode: string) {
     cy.FillLogLov(BaseSelectors.WarehouseStorageMeasurement(transportmode), warehouseDetails.Measurement, true)
     cy.FillLogLov(BaseSelectors.WarehouseStorageRounding(transportmode), warehouseDetails.Rounding, true)
 }
 
 export function FillWarehouseStoragePricing(warehousePricingList: WarehouseStorage[]) {
-        if (Cypress.$(BaseSelectors.LogitudeIconButton).length > 2) {  
-            DeletePricingDefaults()
-        }
+    if (Cypress.$(BaseSelectors.LogitudeIconButton).length > 2) {
+        DeletePricingDefaults()
+    }
     AddPricingDefaults(warehousePricingList);
 }
-function DeletePricingDefaults(){
+function DeletePricingDefaults() {
     for (let i = 0; i < BaseSelectors.DeleteButton.length; i++) {
         cy.get(BaseSelectors.DeleteButton).first().click();
         cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, BaseSelectors.ContainYes)
     }
-}	
-function AddPricingDefaults(warehousePricingList: WarehouseStorage[]){
+}
+function AddPricingDefaults(warehousePricingList: WarehouseStorage[]) {
     for (let i = 0; i < warehousePricingList.length; i++) {
         cy.Click(BaseSelectors.AddButton, null)
         FillCell(BaseSelectors.StepFromColumn, i, BaseSelectors.WarehouseStoragePricingStepFrom, warehousePricingList[i].StepFrom)
@@ -60,14 +60,14 @@ function AddPricingDefaults(warehousePricingList: WarehouseStorage[]){
     }
 }
 
-export function OpenWarehouse(warehouseName:string){
+export function OpenWarehouse(warehouseName: string) {
     cy.DefineRequestWait(RestAPI.GET, BaseURLs.GetFilterSearch(warehouseName), RequestAliases.GetByFilter)
     cy.FillLogTextBox(BaseSelectors.SearchField, warehouseName);
     BaseAssertion.AssertStatusCode(RequestAliases.GetByFilter, 200)
-    cy.Click(BaseSelectors.GridFitstRow(),null,true)
+    cy.Click(BaseSelectors.GridFitstRow(), null, true)
 }
 
-export function UpdateWarehouse(){
+export function UpdateWarehouse() {
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK)
     cy.DefineRequestWait(RestAPI.PUT, BaseURLs.Warehouses, RequestAliases.PutWarehouses)
     cy.Click(BaseSelectors.WarehouseSaveCloseBtn, null)
@@ -121,35 +121,36 @@ export function ClickOnRowDependingOnValue(value: string) {
 export function CloseWindow() {
     cy.Click(BaseSelectors.button, BaseSelectors.ContainClose)
 }
-export function FormatDate(date: string): string{
+export function FormatDate(date: string): string {
     var currentDateArray = date.split("/");
     return currentDateArray[0] + " " + GetMonth(currentDateArray[1]) + " " + currentDateArray[2];
 }
 
 function GetMonth(monthNum: string) {
     switch (monthNum) {
-      case "01": return "Jan"; 
-      case "02": return "Feb"; 
-      case "03": return "Mar"; 
-      case "04": return "Apr"; 
-      case "05": return "May"; 
-      case "06": return "Jun"; 
-      case "07": return "July"; 
-      case "08": return "Aug"; 
-      case "09": return "Sept"; 
-      case "10": return "Oct"; 
-      case "11": return "Nov"; 
-      case "12": return "Dec"; 
+        case "01": return "Jan";
+        case "02": return "Feb";
+        case "03": return "Mar";
+        case "04": return "Apr";
+        case "05": return "May";
+        case "06": return "Jun";
+        case "07": return "Jul";
+        case "08": return "Aug";
+        case "09": return "Sept";
+        case "10": return "Oct";
+        case "11": return "Nov";
+        case "12": return "Dec";
     }
-  }
-export function AssertDateOneOf(daySelector:string){
+}
+
+export function AssertDateOneOf(daySelector: string) {
     cy.get(daySelector).then(($day) => {
         const day = $day.text()
-        expect(day).to.be.oneOf([FormatDate(GetTodayDate()),FormatDate(GetYesterdayDate()),FormatDate(GetTomorrowDate())] ) 
-})
-   
-  }
-  export function GetTodayDate() {
+        expect(day).to.be.oneOf([FormatDate(GetTodayDate()), FormatDate(GetYesterdayDate()), FormatDate(GetTomorrowDate())])
+    })
+}
+
+export function GetTodayDate() {
     var todayDate = new Date
     return FormateTheDate(todayDate)
 }
@@ -172,14 +173,14 @@ export function SubstractDaysFromDate(Days: number) {
 }
 
 export function AddDaysToTodayDate(days: number) {
-    var todayDate = new Date().toLocaleDateString("en-US", { timeZone: "Asia/Jerusalem"})
+    var todayDate = new Date().toLocaleDateString("en-US", { timeZone: "Asia/Jerusalem" })
     var todayDateList = todayDate.split("/")
 
     todayDateList[1] = (Number(todayDateList[1]) + days).toString();
     return FormateTheDateString(todayDateList)
 }
 
-export function GetDatepicker(dateString: string): Datepicker{
+export function GetDatepicker(dateString: string): Datepicker {
     let currentDate = new Date();
     let dateDay: number;
     let dateMonth: number;
@@ -195,7 +196,7 @@ export function GetDatepicker(dateString: string): Datepicker{
         dateYear = gr.GenerateRandomNumber(1950, currentDate.getFullYear());
         dateDay = GetRandomDay(dateMonth, dateYear);
     }
-    else{
+    else {
         let date = new Date(dateString);
         dateDay = date.getDate();
         dateMonth = date.getMonth() + 1;
@@ -209,20 +210,20 @@ export function GetDatepicker(dateString: string): Datepicker{
     return datepicker;
 }
 
-function GetRandomDay(month: number, year: number){
+function GetRandomDay(month: number, year: number) {
     let maxDay = 0;
-    if(month == 2){
-        if(year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)){
+    if (month == 2) {
+        if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)) {
             maxDay = 29;
         }
-        else{
+        else {
             maxDay = 28;
         }
     }
-    else if([1, 3, 5, 7, 8, 10, 12].indexOf(month) != -1){
+    else if ([1, 3, 5, 7, 8, 10, 12].indexOf(month) != -1) {
         maxDay = 31;
     }
-    else if([4, 6, 9, 11].indexOf(month) != -1){
+    else if ([4, 6, 9, 11].indexOf(month) != -1) {
         maxDay = 30;
     }
 
@@ -284,24 +285,24 @@ function FillCell(columnNumber: string, rowNumber: number, pricingCellselector: 
     cy.FillLogTextBox(pricingCellselector, value.toString())
 }
 
-export function ValidateEventsTab(expectedEventDetailsList: EventTypeDetails[] , eventTabSelector:string) {
+export function ValidateEventsTab(expectedEventDetailsList: EventTypeDetails[], eventTabSelector: string) {
     cy.get(eventTabSelector).then(($eventTab) => {
         cy.DefineRequestWait(RestAPI.GET, BaseURLs.GetTraceEventsForEntity, RequestAliases.GetTraceEventsForEntity);
         if ($eventTab.hasClass("SelectedMenuItem")) {
-            cy.Click(BaseSelectors.RefreshImg+BaseSelectors.LastElement, null,true);
+            cy.Click(BaseSelectors.RefreshImg + BaseSelectors.LastElement, null, true);
         } else {
-            cy.Click(eventTabSelector, null,true);
+            cy.Click(eventTabSelector, null, true);
         }
         BaseAssertion.AssertStatusCode(RequestAliases.GetTraceEventsForEntity, 200);
-        cy.Click(BaseSelectors.RefreshImg+BaseSelectors.LastElement, null,true);
+        cy.Click(BaseSelectors.RefreshImg + BaseSelectors.LastElement, null, true);
         for (let i = 0; i < expectedEventDetailsList.length; i++) {
             let expectedEvent = expectedEventDetailsList[i].Event;
             let expectedNotes = expectedEventDetailsList[i].Notes;
-    
+
             if (expectedEvent) {
                 cy.contains(expectedEvent).eq(0).should("exist");
             }
-    
+
             if (expectedEvent && expectedNotes) {
                 cy.get(BaseSelectors.EventItemBox).contains(expectedEvent).eq(0).parents(BaseSelectors.EventItemBox).within(() => {
                     cy.get(BaseSelectors.textarea).should("have.value", expectedNotes);
@@ -310,7 +311,7 @@ export function ValidateEventsTab(expectedEventDetailsList: EventTypeDetails[] ,
         }
     });
 }
-export function FillLoggedInUserEmail(InputEmailSelector:string){
+export function FillLoggedInUserEmail(InputEmailSelector: string) {
     cy.GetLoggedInUser().then(email => {
         cy.get(InputEmailSelector).type(email + '{downarrow}{enter}')
     });

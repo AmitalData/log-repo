@@ -29,17 +29,17 @@ Then("a validation message with {string} error should appear", (ValidationMessag
 //#region  Create a new special services type
 Given("a special services type with the following details", (dataTable) => {
     specialServicesTypeDetails = Assists.CreateInstance<SpecialServicesTypeDetails>(dataTable, true);
-    MaintenanceActions.FillSpecialServicesTypeDetails(specialServicesTypeDetails) 
+    MaintenanceActions.FillSpecialServicesTypeDetails(specialServicesTypeDetails)
 });
- 
+
 When("create special services type", () => {
     MaintenanceActions.CreateSpecialServicesTypeMockCreate();
 });
- 
+
 Then("the special services type should create successfully", () => {
     MaintenanceActions.AssertCreateSpecialServicesTypeMockCreate();
 });
- 
+
 //#endregion
 //#region Search for the special services type
 When("search for {string} special services type", (specialServicesType) => {
@@ -64,11 +64,11 @@ Then("the special services type should open successfully", () => {
 Given("{string} as special services type local name", (localName) => {
     MaintenanceActions.FillSpecialServicesTypeLocalName(localName)
 });
- 
+
 When("update special services type", () => {
     MaintenanceActions.UpdateSpecialServicesType()
 });
- 
+
 Then("the special services type should update successfully", () => {
     MaintenanceActions.AssertUpdateSpecialServicesType()
 });

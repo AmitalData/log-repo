@@ -32,9 +32,9 @@ Then("a validation message with {string} error should appear", (ValidationMessag
 //#region  Create a new shipment sub type/Create a new shipment with already exists code
 Given("a shipment sub type with the following details", (dataTable) => {
     shipmentSubTypesDetails = Assists.CreateInstance<ShipmentSubTypeDetails>(dataTable, true);
-    MaintenanceActions.FillShipmentSubTypeDetails(shipmentSubTypesDetails) 
+    MaintenanceActions.FillShipmentSubTypeDetails(shipmentSubTypesDetails)
 });
- 
+
 When("create shipment sub type", () => {
     MaintenanceActions.CreateShipmentSubTypeMockCreate();
 });
@@ -45,10 +45,10 @@ Then("the shipment sub type should create successfully", () => {
     MaintenanceActions.AssertCreateShipmentSubTypeMockCreate();
 });
 Then("the shipment sub type should not create successfully", () => {
-    BaseAssertion.AssertStatusCode(RequestAliases.PostShipmentSubType,400)
+    BaseAssertion.AssertStatusCode(RequestAliases.PostShipmentSubType, 400)
 });
 Then("a validation error with {string} message should appear", (ValidationMessage) => {
-    BaseAssertion.AssertElementContain(BaseSelectors.SingleError,ValidationMessage)
+    BaseAssertion.AssertElementContain(BaseSelectors.SingleError, ValidationMessage)
 });
 //#endregion
 //#region Search for the shipment sub type by code
@@ -74,11 +74,11 @@ Then("the shipment sub type should open successfully", () => {
 Given("{string} as shipment sub type name", (name) => {
     MaintenanceActions.FillShipmentSubTypeName(name)
 });
- 
+
 When("update shipment sub type", () => {
     MaintenanceActions.UpdateShipmentSubType()
 });
- 
+
 Then("the shipment sub type should update successfully", () => {
     MaintenanceActions.AssertUpdateShipmentSubType()
 });

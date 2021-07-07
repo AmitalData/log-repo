@@ -80,8 +80,8 @@ export class ShipmentsListComponent implements AfterViewInit
     }
     ngAfterViewInit(): void
     {
-        this.GetPreservedToggleFiltersFromSessionInfo();
         this.GetCompanyLoginsFromCache();
+        this.GetPreservedToggleFiltersFromSessionInfo();
 
     }
 

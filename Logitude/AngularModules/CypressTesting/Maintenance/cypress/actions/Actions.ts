@@ -637,13 +637,14 @@ export function AddColumnsToPricingTable(coulmnsList: QuoteTemplateDetails[]) {
 export function OpenQuoteTemplate() {
     SearchQuoteTemplate()
     DefineQuoteTemplatetGetSingleRequest()
-    cy.get(BaseSelectors.RowClass).last().click({ force: true });
+    cy.get(BaseSelectors.ListDataLoaded)
+    cy.get(BaseSelectors.RowClass).eq(0).click({ force: true });
     AssertOpenQuoteTemplate();
 }
 
 export function ReopenQuoteTemplate() {
     DefineQuoteTemplatetGetSingleRequest()
-    cy.get(BaseSelectors.RowClass).click({ force: true });
+    cy.get(BaseSelectors.RowClass).eq(0).click({ force: true });
     AssertOpenQuoteTemplate();
 }
 
@@ -1130,15 +1131,11 @@ export function SearchCardByFilter(FilterValue: string, FilterTypeSelector: stri
     cy.Click(MaintenanceSelectors.CardFiltersOpen, null);
     cy.Click(MaintenanceSelectors.CardAddFilterBtn, null);
     cy.get(FilterTypeSelector).then($InActiveStatesCheckBox => {
-        if ($InActiveStatesCheckBox.is(':checked')) {
-            FillFilterValue(FilterValue);
-        }
-        else {
+        if (!($InActiveStatesCheckBox.is(':checked'))) {
             cy.get(FilterTypeSelector).check({ force: true });
-            FillFilterValue(FilterValue);
         }
+        FillFilterValue(FilterValue);
     })
-    AssertListViewsGetByFilters();
 }
 export function DefineCardGetByFiltersRequest(ShipmentSubTypeCode: string) {
     cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(ShipmentSubTypeCode), RequestAliases.GetFilterSearch);
@@ -1977,7 +1974,7 @@ export function FillSpecialServicesTypeDetails(specialServicesTypeDetails: Speci
     var RandomSpecialServicesTypeCode = gr.GenerateRandomNumberAndString(8);
     cy.FillLogTextBox(MaintenanceSelectors.SpecialServicesTypeCode, specialServicesTypeDetails.Code.toLowerCase() == "random" ? RandomSpecialServicesTypeCode : specialServicesTypeDetails.Code)
     cy.FillLogTextBox(MaintenanceSelectors.SpecialServicesTypeEnglishName, specialServicesTypeDetails.EnglishName)
-    FillSpecialServicesTypeLocalName(specialServicesTypeDetails.LocalName)
+    cy.FillLogTextBox(MaintenanceSelectors.SpecialServicesTypeLocalName, specialServicesTypeDetails.LocalName)
 }
 export function CreateSpecialServicesType() {
     DefinePostSpecialServicesTypeRequest()
@@ -2025,7 +2022,7 @@ export function SearchSpecialServicesType() {
     AsserSpecialServicesTypeViewsGetByFilters();
 }
 export function DefineSpecialServicesTypeGetByFiltersRequest(SpecialServicesTypeCode: string) {
-    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(SpecialServicesTypeCode + "&GetCount=false"), RequestAliases.GetFilterSearch);
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(SpecialServicesTypeCode), RequestAliases.GetFilterSearch);
 }
 export function AsserSpecialServicesTypeViewsGetByFilters() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
@@ -2044,9 +2041,12 @@ export function AssertOpenSpecialServicesType() {
 function DefineSpecialServicesTypesGetSingleRequest() {
     cy.DefineRequestWait(RestAPI.GET, Urls.SpecialServicesTypesGetSingle, RequestAliases.GetSignle);
 }
+
 export function FillSpecialServicesTypeLocalName(localName: string) {
+    cy.FillLogTextBox(MaintenanceSelectors.SpecialServicesTypeLocalName, " ")
     cy.FillLogTextBox(MaintenanceSelectors.SpecialServicesTypeLocalName, localName)
 }
+
 export function UpdateSpecialServicesType() {
     DefinePutSpecialServicesTypeRequest()
     cy.Click(MaintenanceSelectors.SpecialServicesTypeSaveButton, null)
@@ -2072,9 +2072,12 @@ export function FillMoveTypeDetails(moveTypeDetails: MoveTypeDetails) {
     FillMoveTypeLocalName(moveTypeDetails.LocalName)
     FillMoveTypeTransportMode(moveTypeDetails.TransportMode)
 }
+
 export function FillMoveTypeLocalName(localName: string) {
+    cy.FillLogTextBox(MaintenanceSelectors.MoveTypeLocalName, " ")
     cy.FillLogTextBox(MaintenanceSelectors.MoveTypeLocalName, localName)
 }
+
 function FillMoveTypeTransportMode(TransportMode: string) {
     if (TransportMode.toLocaleUpperCase() == constants.Air) {
         cy.get(BaseSelectors.IsAir).click({ force: true })
@@ -2183,9 +2186,12 @@ export function FillShipmentSubTypeDetails(shipmentSubTypeDetails: ShipmentSubTy
     FillShipmentSubTypeName(shipmentSubTypeDetails.Name)
     FillShipmentType(shipmentSubTypeDetails.ShipmentType)
 }
+
 export function FillShipmentSubTypeName(ShipmentSubTypeName: string) {
+    cy.FillLogTextBox(MaintenanceSelectors.ShipmentSubTypeName, " ")
     cy.FillLogTextBox(MaintenanceSelectors.ShipmentSubTypeName, ShipmentSubTypeName)
 }
+
 export function FillShipmentType(ShipmentType: string) {
     cy.SelectDropDownListItem(MaintenanceSelectors.LogLovShipmentSubType, ShipmentType)
 }
@@ -2370,5 +2376,3 @@ export function CreditCardTypeConversionEventsMapping(eventDetailsList: EventTyp
     return eventDetailsList;
 }
 //#endregion
-
-
