@@ -38,6 +38,8 @@ namespace Logitude.Customs.Data.EntityLists
        public bool Mandatory  { get; set; }
        [DataMember]
        public bool Inactive  { get; set; }
+       [DataMember]
+       public string DeclarationTypeName  { get; set; }
    }
 
 }
