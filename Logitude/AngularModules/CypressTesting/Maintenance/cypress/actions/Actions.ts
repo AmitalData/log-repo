@@ -637,13 +637,14 @@ export function AddColumnsToPricingTable(coulmnsList: QuoteTemplateDetails[]) {
 export function OpenQuoteTemplate() {
     SearchQuoteTemplate()
     DefineQuoteTemplatetGetSingleRequest()
-    cy.get(BaseSelectors.RowClass).last().click({ force: true });
+    cy.get(BaseSelectors.ListDataLoaded)
+    cy.get(BaseSelectors.RowClass).eq(0).click({ force: true });
     AssertOpenQuoteTemplate();
 }
 
 export function ReopenQuoteTemplate() {
     DefineQuoteTemplatetGetSingleRequest()
-    cy.get(BaseSelectors.RowClass).click({ force: true });
+    cy.get(BaseSelectors.RowClass).eq(0).click({ force: true });
     AssertOpenQuoteTemplate();
 }
 
@@ -1130,15 +1131,11 @@ export function SearchCardByFilter(FilterValue: string, FilterTypeSelector: stri
     cy.Click(MaintenanceSelectors.CardFiltersOpen, null);
     cy.Click(MaintenanceSelectors.CardAddFilterBtn, null);
     cy.get(FilterTypeSelector).then($InActiveStatesCheckBox => {
-        if ($InActiveStatesCheckBox.is(':checked')) {
-            FillFilterValue(FilterValue);
-        }
-        else {
+        if (!($InActiveStatesCheckBox.is(':checked'))) {
             cy.get(FilterTypeSelector).check({ force: true });
-            FillFilterValue(FilterValue);
         }
+        FillFilterValue(FilterValue);
     })
-    AssertListViewsGetByFilters();
 }
 export function DefineCardGetByFiltersRequest(ShipmentSubTypeCode: string) {
     cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(ShipmentSubTypeCode), RequestAliases.GetFilterSearch);
@@ -2069,12 +2066,14 @@ export function FillMoveTypeDetails(moveTypeDetails: MoveTypeDetails) {
     var RandomMoveTypeCode = gr.GenerateRandomNumberAndString(3);
     cy.FillLogTextBox(MaintenanceSelectors.MoveTypeCode, moveTypeDetails.Code.toLowerCase() == "random" ? RandomMoveTypeCode : moveTypeDetails.Code)
     cy.FillLogTextBox(MaintenanceSelectors.MoveTypeEnglishName, moveTypeDetails.EnglishName)
-    FillMoveTypeLocalName(moveTypeDetails.LocalName)
+    cy.FillLogTextBox(MaintenanceSelectors.MoveTypeLocalName, moveTypeDetails.LocalName)
     FillMoveTypeTransportMode(moveTypeDetails.TransportMode)
 }
-export function FillMoveTypeLocalName(localName: string) {
-    cy.FillLogTextBox(MaintenanceSelectors.MoveTypeLocalName, localName)
+
+export function FillMoveTypeLocalName() {
+    cy.FillLogTextBox(MaintenanceSelectors.MoveTypeLocalName, gr.GenerateRandomNumberAndString(7))
 }
+
 function FillMoveTypeTransportMode(TransportMode: string) {
     if (TransportMode.toLocaleUpperCase() == constants.Air) {
         cy.get(BaseSelectors.IsAir).click({ force: true })
@@ -2180,11 +2179,11 @@ export function FillShipmentSubTypeCode(ShipmentSubTypeCode: string) {
 export function FillShipmentSubTypeDetails(shipmentSubTypeDetails: ShipmentSubTypeDetails) {
     var RandomShipmentSubTypeCode = gr.GenerateRandomNumberAndString(5);
     cy.FillLogTextBox(MaintenanceSelectors.ShipmentSubTypeCode, shipmentSubTypeDetails.Code.toLowerCase() == "random" ? RandomShipmentSubTypeCode : shipmentSubTypeDetails.Code)
-    FillShipmentSubTypeName(shipmentSubTypeDetails.Name)
+    cy.FillLogTextBox(MaintenanceSelectors.ShipmentSubTypeName, shipmentSubTypeDetails.Name)
     FillShipmentType(shipmentSubTypeDetails.ShipmentType)
 }
-export function FillShipmentSubTypeName(ShipmentSubTypeName: string) {
-    cy.FillLogTextBox(MaintenanceSelectors.ShipmentSubTypeName, ShipmentSubTypeName)
+export function FillShipmentSubTypeName() {
+    cy.FillLogTextBox(MaintenanceSelectors.ShipmentSubTypeName, gr.GenerateRandomNumberAndString(7))
 }
 export function FillShipmentType(ShipmentType: string) {
     cy.SelectDropDownListItem(MaintenanceSelectors.LogLovShipmentSubType, ShipmentType)

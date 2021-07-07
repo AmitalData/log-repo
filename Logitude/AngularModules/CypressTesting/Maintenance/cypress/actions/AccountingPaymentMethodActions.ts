@@ -90,9 +90,9 @@ export function EditAccountingPaymentMethodGeneralTab(accountingPaymentMethodDet
     Actions.FillInputCheckBoxProcess(AccountingPaymentMethodSelectors.APCheckBox, accountingPaymentMethodDetails.APCheckBox)
 }
 
-export function FillAccountingPaymentMethodAccountingTab(accountingPaymentMethodDetails: AccountingPaymentMethodDetails) {
-    cy.FillLogTextBox(AccountingPaymentMethodSelectors.AccountingARExternalID, accountingPaymentMethodDetails.ARExternalID);
-    cy.FillLogTextBox(AccountingPaymentMethodSelectors.AccountingAPExternalID, accountingPaymentMethodDetails.APExternalID);
+export function FillAccountingPaymentMethodAccountingTab() {
+    cy.FillLogTextBox(AccountingPaymentMethodSelectors.AccountingARExternalID, GenerateRandomNumberAndString(7));
+    cy.FillLogTextBox(AccountingPaymentMethodSelectors.AccountingAPExternalID, GenerateRandomNumberAndString(7));
 }
 
 export function UpdateAccountingPaymentMethod() {

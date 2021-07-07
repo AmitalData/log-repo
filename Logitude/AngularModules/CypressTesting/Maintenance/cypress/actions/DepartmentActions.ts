@@ -74,7 +74,7 @@ function AssertDepartmentGetSingle() {
 }
 
 export function EditDepartmentGeneralTab(departmentDetails: DepartmentDetails) {
-    cy.FillLogTextBox(DepartmentSelectors.LocalName, departmentDetails.LocalName);
+    cy.FillLogTextBox(DepartmentSelectors.LocalName, gr.GenerateRandomNumberAndString(7));
     cy.FillLogTextBox(DepartmentSelectors.Notes, departmentDetails.Notes);
     Actions.FillCheckBoxProcess(DepartmentSelectors.InactiveCheckBox, departmentDetails.InActiveCheckBox)
 }

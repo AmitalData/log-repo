@@ -26,7 +26,7 @@ Feature: Department fake Create, Search and Edit from Maintenance
 
     Scenario: Edit the Department
         Given the user edit the following department details
-            | LocalName        | New LocalName  |
+            | LocalName        | Random         |
             | Notes            | New Department |
             | InActiveCheckBox | Yes            |
         When save department

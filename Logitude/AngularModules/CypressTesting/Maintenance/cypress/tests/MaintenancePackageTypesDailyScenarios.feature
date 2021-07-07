@@ -45,10 +45,10 @@ Feature: Package Type fake Create, Search and Edit from Maintenance
 
     Scenario: Edit the package type
         Given the user fill the following package type details
-            | ContainerSize | 45                     |
-            | Volume        | 99                     |
-            | Notes         | Package types Inactive |
-            | InActive      | Yes                    |
+            | ContainerSize | 45     |
+            | Volume        | 99     |
+            | Notes         | random |
+            | InActive      | Yes    |
         When edit package type
         Then the package type should update successfully
         And following event should appear in events tab
