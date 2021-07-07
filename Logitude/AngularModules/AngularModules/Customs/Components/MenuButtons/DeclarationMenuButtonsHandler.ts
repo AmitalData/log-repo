@@ -265,6 +265,10 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         button.IsHidden = false;
                         button.Width = 120;
 
+                        if (this.EntityPM.Direction == "E")
+                        {
+                            button.DisplayText = TextCodeTranslator.Translate("Customs.Declaration.TH.PaymentsExport");
+                        } 
                     }
                     if (button.EventCode == "Forms") {
                         button.Width = 60;
