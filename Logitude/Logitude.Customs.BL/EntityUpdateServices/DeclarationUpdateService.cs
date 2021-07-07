@@ -185,6 +185,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 entityPM.ReferentUserId = entityPM.CreatedByUserId;
             }
             OnCreatingExportDeclaration(entityPM);
+            
+            if (entityPM.Direction == "I" && string.IsNullOrWhiteSpace(entityPM.DeclarationTypeCode)) entityPM.DeclarationTypeCode = "1";
 
         }
 

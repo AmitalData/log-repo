@@ -2011,7 +2011,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 CargoTypeCode = myDeclaration.Consignments[0].CargoTypeCode;
             }
             var myCustomsDocumentsDefinitionQueryService = new CustomsDocumentsDefinitionQueryService(tenant);
-            var listCustomsDocumentsDefinition = myCustomsDocumentsDefinitionQueryService.GetCustomsDocumentsDefinitionsForDeclaration(CargoTypeCode, myDeclaration.ProcedureCurrentCode, myDeclaration.TransportModeId, tenant);
+            var listCustomsDocumentsDefinition = myCustomsDocumentsDefinitionQueryService.GetCustomsDocumentsDefinitionsForDeclaration(CargoTypeCode, myDeclaration.ProcedureCurrentCode, myDeclaration.TransportModeId, myDeclaration.DeclarationTypeCode, tenant);
 
             var ticketDocumentTypeCodeInDB = listDeclarationTicket.Select(r => r.DocumentTypeCode).Distinct().ToList();
             var notInDbTicketActiveMandatory =

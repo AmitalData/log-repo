@@ -1010,7 +1010,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
                     if (AppTool.IsNullOrEmpty(this.originalCustomsDocumentTicketViewModel)) {
                         this.originalCustomsDocumentTicketViewModel = [];
                     }
-                    if (!AppTool.IsNullOrEmpty(this._CustomsDocumentsDefinitionList) && this.declarationPM.Direction!='E') {
+                    if (!AppTool.IsNullOrEmpty(this._CustomsDocumentsDefinitionList) ) {
                         this._CustomsDocumentsDefinitionList.forEach(item => {
 
                             var vm: CustomsDocumentTicketViewModel =
