@@ -863,6 +863,11 @@ export class GLAccountPM {
     public set InsuredCreditLimit(newValue: number) { if (this.insuredCreditLimit != newValue) { this.insuredCreditLimit = newValue; this.MarkAsDirty("InsuredCreditLimit"); } }
        
 	 
+    private postponedChequesCommission: number;
+    public get PostponedChequesCommission() { return this.postponedChequesCommission; }
+    public set PostponedChequesCommission(newValue: number) { if (this.postponedChequesCommission != newValue) { this.postponedChequesCommission = newValue; this.MarkAsDirty("PostponedChequesCommission"); } }
+       
+	 
 
     public OldEntityPM: GLAccountPM;
 		
@@ -891,4 +896,4 @@ export class GLAccountPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

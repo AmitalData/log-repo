@@ -40,6 +40,7 @@ export class InterestReportList {
 	InvoiceFailureReason: string;
 	CreditAllotmentPercentage: number;
 	CalCreditAllotmentCommission: number;
+	CalculatedPostponedChequesCommision: number;
 	
 }
  
