@@ -11,9 +11,9 @@
     "env": {
         "Mode": "Development"
     },
-    "defaultCommandTimeout": 300000,
-    "responseTimeout": 360000,
-    "requestTimeout": 360000,
+    "defaultCommandTimeout": 20000,
+    "responseTimeout": 120000,
+    "requestTimeout": 120000,
     "video": false,
     "screenshotOnRunFailure": true,
     "screenshots": true,
