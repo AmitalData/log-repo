@@ -594,11 +594,19 @@
 												
 								set @ExpectedAmountInProfitCurrency = @ExpectedAmountLocal / @MasterPayableProfitRate
 								set @AccountedAmountInProfitCurrency= @AccountedAmountInLocalCurrency / @MasterPayableProfitRate
-								set @OpenAmountInProfitCurrency = @OpenAmountInLocalCurrency / @MasterPayableProfitRate								
-				
-								set @ExpectedAmountRatio = @ExpectedAmount / @MasterPayableExpectedAmount
-								set @VatAmountLocal =  @MasterPayableVatLocalAmount  * @ExpectedAmountRatio;
-								set @VatAmountProfit = @MasterPayableVatProfitAmount * @ExpectedAmountRatio;
+								set @OpenAmountInProfitCurrency = @OpenAmountInLocalCurrency / @MasterPayableProfitRate		
+                
+                if (@MasterPayableExpectedAmount != 0)
+				        BEGIN
+									set @ExpectedAmountRatio = @ExpectedAmount / @MasterPayableExpectedAmount
+									set @VatAmountLocal =  @MasterPayableVatLocalAmount  * @ExpectedAmountRatio;
+									set @VatAmountProfit = @MasterPayableVatProfitAmount * @ExpectedAmountRatio;
+                END
+                else 
+                BEGIN
+                  set @VatAmountLocal =  0;
+									set @VatAmountProfit = 0;
+                END
 							END
 
 							-- Update Payable
@@ -865,9 +873,18 @@
 								set @AccountedAmountInProfitCurrency= @AccountedAmountInLocalCurrency / @MasterPayableProfitRate
 								set @OpenAmountInProfitCurrency = @OpenAmountInLocalCurrency / @MasterPayableProfitRate
 
-							    set @ExpectedAmountRatio = @ExpectedAmount / @MasterPayableExpectedAmount
-								set @VatAmountLocal =  @MasterPayableVatLocalAmount  * @ExpectedAmountRatio;
-								set @VatAmountProfit = @MasterPayableVatProfitAmount * @ExpectedAmountRatio;
+                if (@MasterPayableExpectedAmount != 0)
+				        BEGIN
+								  set @ExpectedAmountRatio = @ExpectedAmount / @MasterPayableExpectedAmount
+									set @VatAmountLocal =  @MasterPayableVatLocalAmount  * @ExpectedAmountRatio;
+									set @VatAmountProfit = @MasterPayableVatProfitAmount * @ExpectedAmountRatio;
+                END
+                else 
+                BEGIN
+                  set @VatAmountLocal =  0;
+									set @VatAmountProfit = 0;
+                END
+
 							END
 
 							-- Update Payable
