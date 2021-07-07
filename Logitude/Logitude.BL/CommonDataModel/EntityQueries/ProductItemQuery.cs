@@ -98,6 +98,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     Description = a.Description,
                                                     Name = a.Name,
                                                     SearchFields = a.SearchFields,
+                                                    ASIN = a.ASIN,
+                                                    UPC = a.UPC,
+                                                    OriginCountryId = a.OriginCountryId,
+                                                    OriginCountryName = a.OriginCountry == null ? null : a.OriginCountry.EnglishName,
                                                 }).ToList();
             if (productItems != null)
             { 

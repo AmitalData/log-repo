@@ -9,11 +9,11 @@
         <td>
             <table>
                 <tr>
-                    <td style="width:300px;">
+                    <td style="width:340px;">
                         <table>
                             <!-- SKU -->
                             <tr class="FormFieldRow">
-                                <td style="width:80px;">
+                                <td style="width:120px;">
                                     <LogLabel [ObjectFieldName]="'SKU'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td>
@@ -41,6 +41,22 @@
                                 </td>
                             </tr>
 
+                            <!-- Origin Country -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'OriginCountryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogLov [ObjectFieldName]="'OriginCountryId'"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Country'"
+                                            [SelectedValue]="DataContext.OriginCountryId"
+                                            (SelectedItemChanged)="DataContext.OriginCountry = $event">
+                                    </LogLov>
+                                </td>
+                            </tr>
+
                             <!-- InActive -->
                             <tr class="FormFieldRow">
                                 <td>
@@ -59,21 +75,59 @@
                         </table>
                     </td>
 
-                    <td style="width:10px;">
+                    <td style="width:20px;">
                         <div>
                         </div>
                     </td>
 
                     <td>
                         <table>
+                            <!-- ASIN -->
+                            <tr class="FormFieldRow">
+                                <td style="width:80px;">
+                                    <LogLabel [ObjectFieldName]="'ASIN'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td style="width:250px;">
+                                    <LogTextBox [ObjectFieldName]="'ASIN'" [Text]="ASIN" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                                <td>
+                                    <div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- UPC -->
+                            <tr class="FormFieldRow">
+                                <td style="width:80px;">
+                                    <LogLabel [ObjectFieldName]="'UPC'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'UPC'" [Text]="UPC" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                                <td>
+                                    <div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr style="height:5px;">
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
                             <!-- Description -->
                             <tr class="FormFieldRow" style="height:50px;">
                                 <td style="width:80px;vertical-align:top">
                                     <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
-                                <td style="height:50px;">
+                                <td style="height:60px;">
                                     <div class="FillParent">
                                         <LogTextBox [ObjectFieldName]="'Description'" [Text]="DataContext.Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
                                     </div>
                                 </td>
                             </tr>
