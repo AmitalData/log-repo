@@ -79,9 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-
-		public const string HashString = "add40d3c37089f20e24b0915020f6cc7";
-
+		public const string HashString = "29f16a5913f1f938be7c6ae02d3a4376";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -44639,7 +44637,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "ExpectedCargoReadyDate",
+					 						FieldName =  "PlannedCargoReadyDate",
 					  						ObjectTableName =  "Shipment",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -44657,8 +44655,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "ExpectedCargoReadyDate",
-					  						ListPropertyPath =  "ExpectedCargoReadyDate",
+					  						PMPropertyPath =  "PlannedCargoReadyDate",
+					  						ListPropertyPath =  "PlannedCargoReadyDate",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -44675,8 +44673,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "ExpectedCargoReadyDate",
-					  						DefaultText =  "Expected Cargo Ready Date",
+					  						FullFieldLable =  "PlannedCargoReadyDate",
+					  						DefaultText =  "Planned Cargo Ready Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -44695,7 +44693,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "ActualCargoReadyDate",
+					 						FieldName =  "ApprovedCargoReadyDate",
 					  						ObjectTableName =  "Shipment",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -44713,8 +44711,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "ActualCargoReadyDate",
-					  						ListPropertyPath =  "ActualCargoReadyDate",
+					  						PMPropertyPath =  "ApprovedCargoReadyDate",
+					  						ListPropertyPath =  "ApprovedCargoReadyDate",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -44731,8 +44729,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "ActualCargoReadyDate",
-					  						DefaultText =  "Actual Cargo Ready Date",
+					  						FullFieldLable =  "ApprovedCargoReadyDate",
+					  						DefaultText =  "Approved Cargo Ready Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -44789,7 +44787,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "HandlerUserId",
-					  						DefaultText =  "Handler User",
+					  						DefaultText =  "Handler",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -48306,8 +48304,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "ACRD",
-                EnglishName =  "Actual Cargo Ready Date Updated",
-                LocalName =  "Actual Cargo Ready Date Updated",
+                EnglishName =  "Approved Cargo Ready Date Updated",
+                LocalName =  "Approved Cargo Ready Date Updated",
                 IsManualEntry =  false,
                 ShortView =  true,
                 IsAgentView =  false,
@@ -48324,8 +48322,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "ECRD",
-                EnglishName =  "Expected Cargo Ready Date Updated",
-                LocalName =  "Expected Cargo Ready Date Updated",
+                EnglishName =  "Planned Cargo Ready Date Updated",
+                LocalName =  "Planned Cargo Ready Date Updated",
                 IsManualEntry =  false,
                 ShortView =  true,
                 IsAgentView =  false,

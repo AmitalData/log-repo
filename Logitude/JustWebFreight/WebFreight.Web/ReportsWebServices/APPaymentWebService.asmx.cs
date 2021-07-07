@@ -91,6 +91,7 @@ namespace WebFreight.Web.ReportsWebServices
                         apPaymentDataProvider.BankAccountName = bankAccount.LocalName;
                     }
 
+                    apPaymentDataProvider.APPaymentBankAddress = bankAccount.BranchAddress;
                 }
 
                 // tenant data
