@@ -466,5 +466,9 @@ export class ShipmentList {
 		PrivateLabelIncludePickup: boolean;
 		PrivateLabelIncludeDelivery: boolean;
 
+		ExpectedCargoReadyDate: Date;
+		ActualCargoReadyDate: Date;
+		HandlerUserId: string;
+	
 	
 }

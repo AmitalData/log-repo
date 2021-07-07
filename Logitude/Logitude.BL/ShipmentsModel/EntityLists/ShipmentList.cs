@@ -560,5 +560,9 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public bool PrivateLabelIncludeDelivery { get; set; }
 
 
+        public DateTime? ExpectedCargoReadyDate { get; set; }
+        public DateTime? ActualCargoReadyDate { get; set; }
+        public string HandlerUserId { get; set; }
+        
     }
 }

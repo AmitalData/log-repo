@@ -3184,6 +3184,26 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ExpectedCargoReadyDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ActualCargoReadyDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="HandlerUserId"
+    OldNames="Handler"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
     ReferencedTable="Countries"
@@ -3893,6 +3913,11 @@
     ForeignKeyColumn="OnForwardingAdditionalTransportModeCode"
     ReferencedTable="PickUpDeliveryTransportModes"
     ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="HandlerUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant,CustomFileNumber" />
