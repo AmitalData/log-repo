@@ -2686,11 +2686,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ForwarderStandaloneShipmentId { get; set; }
         public string ForwarderPickUpDeliveryType { get; set; }
 
-        public DateTime? ExpectedCargoReadyDate { get; set; }
-        public DateTime? ActualCargoReadyDate { get; set; }
-        public string HandlerUserId { get; set; }
-
-
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string PrivateLabelInvoiceNumber { get; set; }
@@ -2707,6 +2702,10 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public bool PrivateLabelIncludeDelivery { get; set; }
 
+        public DateTime? PlannedCargoReadyDate { get; set; }
+        public DateTime? ApprovedCargoReadyDate { get; set; }
+        public string HandlerUserId { get; set; }
+        
     }
 
     public class TransshipmentLeg

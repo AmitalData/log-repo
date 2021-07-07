@@ -458,16 +458,13 @@ export class ShipmentList {
 		PreForwardingFromPortId: string;
 		OnForwardingToPortId: string;
 		IsStandalonePickupDelivery: boolean;
-
-		ExpectedCargoReadyDate: Date;
-		ActualCargoReadyDate: Date;
-		HandlerUserId: string;
-
+		IsHTSMissing: boolean;
 		PrivateLabelInvoiceNumber: string;
 		RequestedFlightDate: Date;
 		PrivateLabelIncludePickup: boolean;
 		PrivateLabelIncludeDelivery: boolean;
-
-		IsHTSMissing: boolean;
+		PlannedCargoReadyDate: Date;
+		ApprovedCargoReadyDate: Date;
+		HandlerUserId: string;
 	
-}
+}

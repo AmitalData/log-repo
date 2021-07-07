@@ -552,9 +552,6 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string OnForwardingToPortId { get; set; }
         public bool IsStandalonePickupDelivery { get; set; } 
 
-        public DateTime? ExpectedCargoReadyDate { get; set; }
-        public DateTime? ActualCargoReadyDate { get; set; }
-        public string HandlerUserId { get; set; }
         public bool IsHTSMissing { get; set; }
 
         public string PrivateLabelInvoiceNumber { get; set; } 
@@ -563,5 +560,9 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public bool PrivateLabelIncludeDelivery { get; set; }
 
 
+        public DateTime? PlannedCargoReadyDate { get; set; }
+        public DateTime? ApprovedCargoReadyDate { get; set; }
+        public string HandlerUserId { get; set; }
+        
     }
 }

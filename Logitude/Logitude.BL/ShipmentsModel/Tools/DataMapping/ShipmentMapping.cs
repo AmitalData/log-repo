@@ -470,8 +470,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.ForwarderStandaloneShipmentId = entityPM.ForwarderStandaloneShipmentId;
             entityPoco.IsHTSMissing = entityPM.IsHTSMissing;
             entityPoco.HandlerUserId = entityPM.HandlerUserId;
-            entityPoco.ExpectedCargoReadyDate = entityPM.ExpectedCargoReadyDate;
-            entityPoco.ActualCargoReadyDate = entityPM.ActualCargoReadyDate;
+            entityPoco.PlannedCargoReadyDate = entityPM.PlannedCargoReadyDate;
+            entityPoco.ApprovedCargoReadyDate = entityPM.ApprovedCargoReadyDate;
 
             entityPoco.PrivateLabelInvoiceNumber = entityPM.PrivateLabelInvoiceNumber; 
             entityPoco.PrivateLabelIncludePickup = entityPM.PrivateLabelIncludePickup;
@@ -2871,8 +2871,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             shipmentPM.Field39 = houseShipment.Field39;
             shipmentPM.Field30 = houseShipment.Field30;
             shipmentPM.HandlerUserId = houseShipment.HandlerUserId;
-            shipmentPM.ExpectedCargoReadyDate = houseShipment.ExpectedCargoReadyDate;
-            shipmentPM.ActualCargoReadyDate = houseShipment.ActualCargoReadyDate;
+            shipmentPM.PlannedCargoReadyDate = houseShipment.PlannedCargoReadyDate;
+            shipmentPM.ApprovedCargoReadyDate = houseShipment.ApprovedCargoReadyDate;
 
             if (masterShipment != null)
             {

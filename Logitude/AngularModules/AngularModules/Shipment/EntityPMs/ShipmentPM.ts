@@ -4948,13 +4948,13 @@ export class ShipmentPM {
     public get ForwarderPickUpDeliveryType() { return this.forwarderPickUpDeliveryType; }
     public set ForwarderPickUpDeliveryType(newValue: string) { if (this.forwarderPickUpDeliveryType != newValue) { this.forwarderPickUpDeliveryType = newValue; this.MarkAsDirty("forwarderPickUpDeliveryType"); } }
 
-    private expectedCargoReadyDate: Date;
-    public get ExpectedCargoReadyDate() { return this.expectedCargoReadyDate; }
-    public set ExpectedCargoReadyDate(newValue: Date) { if (this.expectedCargoReadyDate != newValue) { this.expectedCargoReadyDate = newValue; this.MarkAsDirty("ExpectedCargoReadyDate"); } }
+    private plannedCargoReadyDate: Date;
+    public get PlannedCargoReadyDate() { return this.plannedCargoReadyDate; }
+    public set PlannedCargoReadyDate(newValue: Date) { if (this.plannedCargoReadyDate != newValue) { this.plannedCargoReadyDate = newValue; this.MarkAsDirty("PlannedCargoReadyDate"); } }
 
-    private actualCargoReadyDate: Date;
-    public get ActualCargoReadyDate() { return this.actualCargoReadyDate; }
-    public set ActualCargoReadyDate(newValue: Date) { if (this.actualCargoReadyDate != newValue) { this.actualCargoReadyDate = newValue; this.MarkAsDirty("ActualCargoReadyDate"); } }
+    private approvedCargoReadyDate: Date;
+    public get ApprovedCargoReadyDate() { return this.approvedCargoReadyDate; }
+    public set ApprovedCargoReadyDate(newValue: Date) { if (this.approvedCargoReadyDate != newValue) { this.approvedCargoReadyDate = newValue; this.MarkAsDirty("ApprovedCargoReadyDate"); } }
 
     private handlerUserId: string;
     public get HandlerUserId() { return this.handlerUserId; }
