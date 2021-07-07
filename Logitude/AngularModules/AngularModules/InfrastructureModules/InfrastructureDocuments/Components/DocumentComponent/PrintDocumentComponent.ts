@@ -272,6 +272,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                 case "ARNT":
                 case "PGDF":
                 case "DORE":
+                case "TBOL":
                 case "REOR":
                 case "TML":
                 case "LCOT":
