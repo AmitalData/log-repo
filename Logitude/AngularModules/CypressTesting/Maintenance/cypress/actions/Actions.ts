@@ -644,7 +644,7 @@ export function OpenQuoteTemplate() {
 
 export function ReopenQuoteTemplate() {
     DefineQuoteTemplatetGetSingleRequest()
-    cy.get(BaseSelectors.RowClass).eq(0).click({ force: true });
+    cy.get(BaseSelectors.RowClass).eq(0).click()
     AssertOpenQuoteTemplate();
 }
 
