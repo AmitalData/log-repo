@@ -106,7 +106,7 @@ function AssertPackageTypeGetSingle() {
 export function EditGeneralTab(packageTypeDetails: PackageTypeDetails) {
     cy.FillLogTextBox(PackageTypeSelectors.ContainerSize, packageTypeDetails.ContainerSize)
     cy.FillLogTextBox(PackageTypeSelectors.Volume, packageTypeDetails.Volume)
-    cy.FillLogTextBox(PackageTypeSelectors.Notes, packageTypeDetails.Notes)
+    cy.FillLogTextBox(PackageTypeSelectors.Notes, GenerateRandomNumberAndString(7))
     Actions.FillCheckBoxProcess(PackageTypeSelectors.InActivePackageTypeCheckBox, packageTypeDetails.InActive)
 }
 
