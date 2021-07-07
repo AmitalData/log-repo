@@ -1452,7 +1452,7 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 ------------------------------------------------------------------------------------
 declare @Fact_ShipmentsNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ShipmentsNewId OUTPUT,'DWObjectTable' 
-insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DataViewName,HasPivotColumn,ParentFactCode,RecordType,DisplayName,ObjectTableName,HasCustomFields,MaxNumberOfCustomFields) Values(@Fact_ShipmentsNewId,0,'<ArrayOfIndexItem xmlns:i="http://www.w3.org/2001/XMLSchema-instance"><IndexItem> <Columns>[Source Tenant],[Create Date]</Columns></IndexItem><IndexItem> <Columns>[Source Tenant],[Create Date Time]</Columns></IndexItem><IndexItem> <Columns>[Source Tenant],[DirectHouse]</Columns></IndexItem></ArrayOfIndexItem>','Fact_Shipments','Fact_Shipments','Fact','false','factShipments','false','Fact_Shipments','Shipment','Shipments','Shipment','true',40)  
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DataViewName,HasPivotColumn,RecordType,DisplayName,ObjectTableName,HasCustomFields,MaxNumberOfCustomFields) Values(@Fact_ShipmentsNewId,0,'<ArrayOfIndexItem xmlns:i="http://www.w3.org/2001/XMLSchema-instance"><IndexItem> <Columns>[Source Tenant],[Create Date]</Columns></IndexItem><IndexItem> <Columns>[Source Tenant],[Create Date Time]</Columns></IndexItem><IndexItem> <Columns>[Source Tenant],[DirectHouse]</Columns></IndexItem></ArrayOfIndexItem>','Fact_Shipments','Fact_Shipments','Fact','false','factShipments','false','Shipment','Shipments','Shipment','true',40)  
 --Fields --
 declare @Fact_ShipmentsId_NumberNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ShipmentsId_NumberNewId OUTPUT,'DWObjectField' 

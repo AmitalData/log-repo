@@ -527,8 +527,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     shipmentAdditionalCloudDataRepository.SubmitChanges();
                     followUpRepository.SubmitChanges();
                     shipmentPickUpDeliveryRepository.SubmitChanges();
-
-                    this.CopyForwarderShipmentPackagesFromStandalone();
+                    if (entityPM.IsStandalonePickupDelivery) {
+                        this.CopyForwarderShipmentPackagesFromStandalone();
+                    }
                     UpdateMasterHouses();
                     RunStoredProcedures();
                     GetForeignFields();
@@ -6919,11 +6920,24 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     if(forwarderShipment != null)
                     {
+                        this.ValidateUpdatingInsertStandAloneShipmentPackages(initializer.StandalonePackage.ContainerNumber, initializer.StandalonePackage.ContainerEntityId, forwarderShipmentId);
                         this.CreateOrUpdateForwarderShipmentPackage(forwarderShipment);
                         this.UpdateForwarderShipmentPickUpDelivery(forwarderShipment);
                         this.UpdateForwarderShipment(forwarderShipment);
 
                     }
+                }
+            }
+        }
+        private void ValidateUpdatingInsertStandAloneShipmentPackages(string containerNumber, string ContainerEntityId,string forwarderShipmentId)
+        {
+            List<ShipmentPackage> shipmentPackages = this.initializer.ShipmentPackageRepository.GetShipmentPackagesForShipmentTenant(forwarderShipmentId, tenant).ToList();
+            if (shipmentPackages != null)
+            {
+                bool isContainerNumberExist = shipmentPackages.Any(d => d.ContainerNumber == containerNumber && d.ContainerEntityId != ContainerEntityId);
+                if (isContainerNumberExist)
+                {
+                    throw new ApplicationException("Cannot have 2 containers with same number");
                 }
             }
         }
@@ -7029,7 +7043,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private void UpdateConnectedPackages(ShipmentPackagePM itemPM)
         {
-            List<ShipmentPackage> shipmentPackages = this.shipmentPackageRepository.GetSingleShipmentPackageByContainerId(itemPM.ShipmentId,itemPM.ContainerEntityId,tenant);
+            List<ShipmentPackage> shipmentPackages = this.shipmentPackageRepository.GetShipmentsPackagesByContainerIdAndTenant(itemPM.ShipmentId,itemPM.ContainerEntityId,tenant);
             if (shipmentPackages != null)
             {
                 foreach(ShipmentPackage shipmentPackage in shipmentPackages)
@@ -7038,7 +7052,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         UpdateConnectedStanadAloneShipmentPackages(itemPM, shipmentPackage);
                 }
             }
-            List<ShipmentPickUpDeliveryPackage> shipmentPickUpDeliveryPackages = this.shipmentPickUpDeliveryPackageRepository.GetSingleShipmentPickUpDeliveryPackageByContainerId(itemPM.ContainerEntityId, tenant);
+            List<ShipmentPickUpDeliveryPackage> shipmentPickUpDeliveryPackages = this.shipmentPickUpDeliveryPackageRepository.GetShipmentPickUpDeliveryPackagesByContainerIdAndTenant(itemPM.ContainerEntityId, tenant);
             if(shipmentPickUpDeliveryPackages != null)
             {
                 foreach(ShipmentPickUpDeliveryPackage shipmentPickUpDeliveryPackage in shipmentPickUpDeliveryPackages)

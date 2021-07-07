@@ -110,8 +110,8 @@
 
     </div>
 
-    <div class="TextTrimming" *ngIf="fieldName == 'PaymentChequeStatus'" style="text-align: right; padding: 0px 2px;direction: ltr;">
-        {{ rowData[fieldName] }} 
+    <div class="TextTrimming" *ngIf="fieldName == 'PaymentChequeStatus'"  [style.text-align]="isRTL ? 'right' : 'left'"  [ngStyle]="{color: GetChequeStatusColor(rowData['PaymentChequeStatus'])}">
+        {{ rowData[fieldName] }}
     </div>
 
     <div class="TextTrimming" *ngIf="fieldName == 'OpenAmount'" style="text-align: right; padding: 0px 2px;direction: ltr;">

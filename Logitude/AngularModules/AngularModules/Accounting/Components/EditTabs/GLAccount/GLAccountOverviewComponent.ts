@@ -736,7 +736,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
         var logWindow = new LogitudeWindow();
         logWindow.Width = 1100;
         logWindow.Height = 600;
-       
+        logWindow.Title = TextCodeTranslator.Translate('GLAccount.O.ChequesList');
         logWindow.ShowCloseButton = false;
         logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => { });

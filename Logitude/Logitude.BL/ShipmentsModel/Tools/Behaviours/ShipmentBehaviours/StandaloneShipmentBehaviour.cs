@@ -291,8 +291,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
                         case ChangeSetOperation.Update:
                             {
-                                this.UpdateStanadAlonePickupDeliveryPackages(shipmentPickUpDelivery.Id, itemPM);
+                                this.ValidateUpdatingForwarderShipmentPackages(itemPM.ContainerNumber, itemPM.ContainerEntityId);
                                 this.UpdateForwarderShipmentPackages(itemPM);
+                                this.UpdateStanadAlonePickupDeliveryPackages(shipmentPickUpDelivery.Id, itemPM);
                                 break;
                             }
 
@@ -445,7 +446,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
         private void UpdateForwarderShipmentPackages(ShipmentPackagePM shipmentPackagePM)
         {
-            List<ShipmentPackage> shipmentPackages = this.initializer.ShipmentPackageRepository.GetSingleShipmentPackageByContainerId(this.shipmentPM.Id, shipmentPackagePM.ContainerEntityId, tenant);
+            List<ShipmentPackage> shipmentPackages = this.initializer.ShipmentPackageRepository.GetShipmentsPackagesByContainerIdAndTenant(this.shipmentPM.Id, shipmentPackagePM.ContainerEntityId, tenant);
             if(shipmentPackages != null)
             {
                 foreach(ShipmentPackage shipmentPackage in shipmentPackages)
@@ -462,6 +463,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                         shipmentPackage.ShipperSeal = shipmentPackagePM.ShipperSeal;
                         this.initializer.ShipmentPackageRepository.Update(shipmentPackage);
                     }
+                }
+            }
+        }
+        private void ValidateUpdatingForwarderShipmentPackages(string containerNumber,string ContainerEntityId)
+        {
+            List<ShipmentPackage> shipmentPackages = this.initializer.ShipmentPackageRepository.GetShipmentPackagesForShipmentTenant(this.shipmentPM.ForwarderStandaloneShipmentId, tenant).ToList();
+            if (shipmentPackages != null)
+            {
+                bool isContainerNumberExist = shipmentPackages.Any(d=>d.ContainerNumber == containerNumber && d.ContainerEntityId != ContainerEntityId);
+                if (isContainerNumberExist)
+                {
+                    throw new ApplicationException("Cannot have 2 containers with same number");
                 }
             }
         }

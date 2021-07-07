@@ -152,17 +152,27 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
         {
             object result = null;
 
+             if (item.IsCustomField)
+             {
+                if (hasDateTypeField(item))
+                {
+                    item.Value = GetDateValue(item);
+                }
+
+                return GetNewCustomField(item);
+             }
+
             if (item.OperatorCode.Contains("F"))
             {
                 Field field = automationFieldLists.Where(d => d.FieldCode == item.Value).FirstOrDefault();
                 if (field != null) result = field.Value;
-                if ((item.DataTypeCode.Trim() == "DateTime" || item.DataTypeCode.Trim() == "Date") && item.OperatorCode == "SF" && !string.IsNullOrEmpty(field.Value))
+                if ((hasDateTypeField(item)) && item.OperatorCode == "SF" && !string.IsNullOrEmpty(field.Value))
                 {
                     result = ConvertToDate(field.Value);
                 }
             }
 
-            else if (item.DataTypeCode.Trim() == "DateTime" || item.DataTypeCode.Trim() == "Date")
+            else if (hasDateTypeField(item))
             {
                 var dateSplitParts = item.Value.Split('*');
                 result = ConvertToDate(dateSplitParts[dateSplitParts.Length - 1]);
@@ -185,6 +195,25 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
 
 
             return result;
+        }
+
+        private static string GetDateValue(AutomationSetValue item)
+        {
+            var dateParts = item.Value.Split('*'); 
+            if (item.Value.IndexOf("Today") > -1)
+            {
+                return dateParts[2];
+            }
+            else if (item.Value.IndexOf("Date") > -1)
+            {
+                return dateParts[1];
+            }
+            return null;
+        }
+
+        private static bool hasDateTypeField(AutomationSetValue item)
+        {
+            return item.DataTypeCode.Trim() == "DateTime" || item.DataTypeCode.Trim() == "Date";
         }
 
         private static object GetNewCustomField(AutomationSetValue item)

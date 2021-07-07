@@ -470,6 +470,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.ForwarderStandaloneShipmentId = entityPM.ForwarderStandaloneShipmentId;
             entityPoco.IsHTSMissing = entityPM.IsHTSMissing;
 
+            entityPoco.PrivateLabelInvoiceNumber = entityPM.PrivateLabelInvoiceNumber; 
+            entityPoco.PrivateLabelIncludePickup = entityPM.PrivateLabelIncludePickup;
+            entityPoco.PrivateLabelIncludeDelivery = entityPM.PrivateLabelIncludeDelivery;
+            entityPoco.RequestedFlightDate = entityPM.RequestedFlightDate;
+
             BuildSearchField(entityPM, entityPoco, entityMasterData, myPackagesList);
             if (!LBcurrentTenant.IsDocumentsArchive)
             {

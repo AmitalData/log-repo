@@ -974,7 +974,21 @@ export class ShipmentDomainService extends BaseService  {
             }), catchError(ServiceHelper.HandleServiceError));
         });
     }
-    
+
+    GetIfShipmentPackagesConnectedToStandAloneShipmentPackage(shipmentId: string) {
+
+        var url = this._apiUrl + '/GetIfShipmentPackagesConnectedToStandAloneShipmentPackage?shipmentId=' + shipmentId;
+        return defer(() => {
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                var result = response;
+
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = result;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 
     GetPickupDeliveryValidForInlandDomestic(pickupDeliveryId: string) {
         var url = this._apiUrl + '/GetPickupDeliveryValidForInlandDomestic?pickupDeliveryId=' + pickupDeliveryId;

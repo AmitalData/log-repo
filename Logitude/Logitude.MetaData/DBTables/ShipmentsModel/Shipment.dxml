@@ -3159,6 +3159,31 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="PrivateLabelInvoiceNumber"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PrivateLabelIncludePickup"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PrivateLabelIncludeDelivery"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="RequestedFlightDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
     ReferencedTable="Countries"
@@ -3905,7 +3930,7 @@
   <Index
     Columns="Tenant,ComputedStatusDate" />
   <Index
-  Columns="Tenant,House" />
+    Columns="Tenant,House" />
   <UniqueConstraint
     Columns="Tenant,ShipmentNumber" />
   <UniqueConstraint
