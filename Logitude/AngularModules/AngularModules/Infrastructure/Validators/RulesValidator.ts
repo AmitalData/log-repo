@@ -309,18 +309,22 @@ export class RulesValidator {
         if (value != undefined && value != null && (value instanceof CustomFieldClass)) {
             value = value.ResolvedValue;
         }
-        if (field != null) {
+        if (field !== null) {
+            const textValue = value + '';
+            if (value && field.MaxLength < textValue.length) {
+                value = textValue.substring(0, field.MaxLength);
+            }
             if (field.IsCustom) {
-                var classvalue: CustomFieldClass = entity[propertyName];
+                const classvalue: CustomFieldClass = entity[propertyName];
                 if (classvalue != null) {
                     if (classvalue.Value != value) {
-                        var customFieldClass: CustomFieldClass = new CustomFieldClass(value, propertyName, table.Name);
+                        const customFieldClass: CustomFieldClass = new CustomFieldClass(value, propertyName, table.Name);
                         entity[propertyName] = customFieldClass;
                     }
                 }
                 else {
 
-                    var customFieldClass: CustomFieldClass = new CustomFieldClass(value, propertyName, table.Name);
+                    const customFieldClass: CustomFieldClass = new CustomFieldClass(value, propertyName, table.Name);
                     entity[propertyName] = customFieldClass;
                 }
             }
