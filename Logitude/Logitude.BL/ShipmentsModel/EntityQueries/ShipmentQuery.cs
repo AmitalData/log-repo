@@ -1937,6 +1937,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             shipmentPM.IsStandalonePickupDelivery = shipment.IsStandalonePickupDelivery;
             shipmentPM.ForwarderStandaloneShipmentId = shipment.ForwarderStandaloneShipmentId;
+            shipmentPM.ForwarderPickUpDeliveryType = shipment.ForwarderPickUpDeliveryType;
             shipmentPM.ProductCode = shipment.ProductCode;
             shipmentPM.LastStatusLogDate = shipment.LastStatusLogDate;
             shipmentPM.ComputedStatusId = shipment.ComputedStatusId;
@@ -3661,6 +3662,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.IsHTSMissing = shipment.IsHTSMissing;
             shipmentPM.IsStandalonePickupDelivery = shipment.IsStandalonePickupDelivery;
             shipmentPM.ForwarderStandaloneShipmentId = shipment.ForwarderStandaloneShipmentId;
+            shipmentPM.ForwarderPickUpDeliveryType = shipment.ForwarderPickUpDeliveryType;
             shipmentPM.RegistryDate = shipment.RegistryDate;
             shipmentPM.IsAssembly = shipment.IsAssembly;
             shipmentPM.MasterShipmentDataId = shipment.MasterShipmentDataId;
@@ -3794,6 +3796,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.IsHTSMissing = shipment.IsHTSMissing;
             shipmentPM.IsStandalonePickupDelivery = shipment.IsStandalonePickupDelivery;
             shipmentPM.ForwarderStandaloneShipmentId = shipment.ForwarderStandaloneShipmentId;
+            shipmentPM.ForwarderPickUpDeliveryType = shipment.ForwarderPickUpDeliveryType;
             shipmentPM.CreatedByPartner = shipment.CreatedByPartner;
             shipmentPM.Tenant = shipment.Tenant;
             shipmentPM.Id = shipment.Id;
@@ -13742,6 +13745,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
             return false;
         }
+
+      /*  public List<ShipmentPackagePM> GetFilteredForwarderShipmentPackages(string ShipmentId , int tenant)
+        {
+            ShipmentPM shipmentPM = 
+        }*/
     }
 
     public class CargoTrackingShipmentCustomsData

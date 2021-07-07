@@ -1877,7 +1877,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     }
 
     DeletePackagesButtonClicked() {
-        if (this.IsContainerFeatureToggleVisible && this.EntityPM.ShipmentPackages.length > 0) {
+        if (this.IsContainerFeatureToggleVisible && this.EntityPM.ShipmentPackages.length > 0 && !this.EntityPM.IsStandalonePickupDelivery) {
             this.CurrentSession.StartBusyIndicatorLoading();
             var shipmentDomainService = new ShipmentDomainService();
             var shipmentId = this.EntityPM.Id;

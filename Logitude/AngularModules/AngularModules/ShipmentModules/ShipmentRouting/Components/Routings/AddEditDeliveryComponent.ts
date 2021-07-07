@@ -907,7 +907,7 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
         var args = new NewShipmentComponentArgs();
         args.Shipment = shipmentPM;
         args.IsStandalone = true;
-
+        args.ForwarderShipmentPickUpDeliveryTypeCode = "Delivery";
         var str: string = TextCodeTranslator.Translate("General.O.NewEntity");
         str = str.replace("%Entity", TextCodeTranslator.TranslateTable("Shipment"));
 

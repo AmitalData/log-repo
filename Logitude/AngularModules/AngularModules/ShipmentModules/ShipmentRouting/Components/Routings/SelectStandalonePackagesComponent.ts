@@ -44,7 +44,7 @@ export class SelectStandalonePackagesComponent {
             this.TransportModeId = args.TransportModeId;
             this.IsFromShipmentPackageTab = args.IsFromShipmentPackageTab;
 
-            if (this.EntityPM instanceof ShipmentDeliveryPM) {
+            if (this.EntityPM instanceof ShipmentDeliveryPM || this.ShipmentPM.ForwarderPickUpDeliveryType == "Delivery") {
                 this.IsAddNewContainerVisible = false;
             }
 
@@ -188,22 +188,57 @@ export class SelectStandalonePackagesComponent {
         this.ItemsSource = [];
         this.SelectedItem = null;
         var myPackageTypeColumnWidth: number = 80;
-
+        var sameParent: boolean = false;
         var pickUpDliveryPackagescontainersIds: string[] = [];
 
-        if (this.ShipmentPM.ShipmentPickUps != null) {
-            this.ShipmentPM.ShipmentPickUps.forEach(pickUp => {
-                pickUp.ShipmentPickUpDeliveryPackages.forEach(item => {
-                    pickUpDliveryPackagescontainersIds.push(item.ContainerEntityId);
-                });
-            });
-        }
+        if (this.ShipmentPM.ForwarderPickUpDeliveryType == "Delivery") {
+            this.ShipmentPM.ShipmentDeliveries.forEach(item => {
+                sameParent = false;
+                if (!AppTool.IsNullOrEmpty(item.ParentPickUpDeliveryId) && !AppTool.IsNullOrEmpty(this.EntityPM.ParentPickUpDeliveryId)) {
+                    if (item.ParentPickUpDeliveryId == this.EntityPM.ParentPickUpDeliveryId) {
+                        sameParent = true;
+                    }
+                }
 
-        if (this.ShipmentPM.ShipmentDeliveries != null) {
-            this.ShipmentPM.ShipmentDeliveries.forEach(delivery => {
-                delivery.ShipmentPickUpDeliveryPackages.forEach(item => {
-                    pickUpDliveryPackagescontainersIds.push(item.ContainerEntityId);
-                });
+                if (AppTool.IsNullOrEmpty(this.EntityPM.ParentPickUpDeliveryId)) {
+                    item.ShipmentPickUpDeliveryPackages.forEach(item1 => {
+                        pickUpDliveryPackagescontainersIds.push(item1.ContainerEntityId);
+                    });
+                }
+                else {
+                    if (!sameParent) {
+                        if (item.Id != this.EntityPM.ParentPickUpDeliveryId) {
+                            item.ShipmentPickUpDeliveryPackages.forEach(item1 => {
+                                pickUpDliveryPackagescontainersIds.push(item1.ContainerEntityId);
+                            });
+                        }
+                    }
+                }
+            });
+            
+        } else if (this.ShipmentPM.ForwarderPickUpDeliveryType == "Pickup") {
+            this.ShipmentPM.ShipmentPickUps.forEach(item => {
+                sameParent = false;
+                if (!AppTool.IsNullOrEmpty(item.ParentPickUpDeliveryId) && !AppTool.IsNullOrEmpty(this.EntityPM.ParentPickUpDeliveryId)) {
+                    if (item.ParentPickUpDeliveryId == this.EntityPM.ParentPickUpDeliveryId) {
+                        sameParent = true;
+                    }
+                }
+
+                if (AppTool.IsNullOrEmpty(this.EntityPM.ParentPickUpDeliveryId)) {
+                    item.ShipmentPickUpDeliveryPackages.forEach(item1 => {
+                        pickUpDliveryPackagescontainersIds.push(item1.ContainerEntityId);
+                    });
+                }
+                else {
+                    if (!sameParent) {
+                        if (item.Id != this.EntityPM.ParentPickUpDeliveryId) {
+                            item.ShipmentPickUpDeliveryPackages.forEach(item1 => {
+                                pickUpDliveryPackagescontainersIds.push(item1.ContainerEntityId);
+                            });
+                        }
+                    }
+                }
             });
         }
 

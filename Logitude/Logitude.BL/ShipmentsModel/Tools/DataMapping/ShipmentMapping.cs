@@ -468,6 +468,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.AssginedtoCustomsAgentId = entityPM.AssginedtoCustomsAgentId;
             entityPoco.IsStandalonePickupDelivery = entityPM.IsStandalonePickupDelivery;
             entityPoco.ForwarderStandaloneShipmentId = entityPM.ForwarderStandaloneShipmentId;
+            entityPoco.ForwarderPickUpDeliveryType = entityPM.ForwarderPickUpDeliveryType;
             entityPoco.IsHTSMissing = entityPM.IsHTSMissing;
 
             BuildSearchField(entityPM, entityPoco, entityMasterData, myPackagesList);
