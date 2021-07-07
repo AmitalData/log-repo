@@ -775,8 +775,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.IsStandalonePickupDelivery).HasColumnName("IsStandalonePickupDelivery");
             this.Property(t => t.IsHTSMissing).HasColumnName("IsHTSMissing");
             this.Property(t => t.ForwarderStandaloneShipmentId).HasColumnName("ForwarderStandaloneShipmentId");
-            this.Property(t => t.ExpectedCargoReadyDate).HasColumnName("ExpectedCargoReadyDate");
-            this.Property(t => t.ActualCargoReadyDate).HasColumnName("ActualCargoReadyDate");
+            this.Property(t => t.PlannedCargoReadyDate).HasColumnName("PlannedCargoReadyDate");
+            this.Property(t => t.ApprovedCargoReadyDate).HasColumnName("ApprovedCargoReadyDate");
             this.Property(t => t.HandlerUserId).HasColumnName("HandlerUserId");
 
             this.Property(t => t.PrivateLabelInvoiceNumber).HasColumnName("PrivateLabelInvoiceNumber"); 

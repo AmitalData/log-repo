@@ -1292,8 +1292,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.FreightPayerAddressId = shipment.FreightPayerAddressId;
             shipmentPM.ARInvoices = shipment.ARInvoices;
             shipmentPM.HandlerUserId = shipment.HandlerUserId;
-            shipmentPM.ExpectedCargoReadyDate = shipment.ExpectedCargoReadyDate;
-            shipmentPM.ActualCargoReadyDate = shipment.ActualCargoReadyDate;
+            shipmentPM.PlannedCargoReadyDate = shipment.PlannedCargoReadyDate;
+            shipmentPM.ApprovedCargoReadyDate = shipment.ApprovedCargoReadyDate;
 
             #region ppcc region
             string ppcc = "";
@@ -3846,8 +3846,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.IsAccrualsApproved = shipment.IsAccrualsApproved;
             shipmentPM.LastUpdateDate = shipment.LastUpdateDate;
             shipmentPM.HandlerUserId = shipment.HandlerUserId;
-            shipmentPM.ExpectedCargoReadyDate = shipment.ExpectedCargoReadyDate;
-            shipmentPM.ActualCargoReadyDate = shipment.ActualCargoReadyDate;
+            shipmentPM.PlannedCargoReadyDate = shipment.PlannedCargoReadyDate;
+            shipmentPM.ApprovedCargoReadyDate = shipment.ApprovedCargoReadyDate;
 
             if (masterData != null)
             {
@@ -4683,8 +4683,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         ShipperReference2 = s.ShipperReference2,
                                                         UpdatedByUserId = s.UpdatedByUserId,
                                                         HandlerUserId = s.HandlerUserId,
-                                                        ExpectedCargoReadyDate = s.ExpectedCargoReadyDate,
-                                                        ActualCargoReadyDate = s.ActualCargoReadyDate,
+                                                        PlannedCargoReadyDate = s.PlannedCargoReadyDate,
+                                                        ApprovedCargoReadyDate = s.ApprovedCargoReadyDate,
                                                         UpdatedByUserName = s.UpdatedByUser != null ? s.UpdatedByUser.Contact.EnglishName : null,
                                                         VolumeInCBM = s.VolumeInCBM,
                                                         Volume = s.Volume,
@@ -4909,8 +4909,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.CreatedByUserId = shipment.CreatedByUserId;
                     shipmentPM.UpdatedByUserId = shipment.UpdatedByUserId;
                     shipmentPM.HandlerUserId = shipment.HandlerUserId;
-                    shipmentPM.ExpectedCargoReadyDate = shipment.ExpectedCargoReadyDate;
-                    shipmentPM.ActualCargoReadyDate = shipment.ActualCargoReadyDate;
+                    shipmentPM.PlannedCargoReadyDate = shipment.PlannedCargoReadyDate;
+                    shipmentPM.ApprovedCargoReadyDate = shipment.ApprovedCargoReadyDate;
                     shipmentPM.DirectionId = shipment.DirectionId;
                     shipmentPM.ShipmentLevelCode = shipment.ShipmentLevelCode;
                     shipmentPM.CustomerId = shipment.CustomerId;
@@ -5276,8 +5276,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         ShipperReference2 = s.ShipperReference2,
                                                         UpdatedByUserId = s.UpdatedByUserId,
                                                         HandlerUserId = s.HandlerUserId,
-                                                        ExpectedCargoReadyDate = s.ExpectedCargoReadyDate,
-                                                        ActualCargoReadyDate = s.ActualCargoReadyDate,
+                                                        PlannedCargoReadyDate = s.PlannedCargoReadyDate,
+                                                        ApprovedCargoReadyDate = s.ApprovedCargoReadyDate,
 
                                                         VolumeInCBM = s.VolumeInCBM,
                                                         Volume = s.Volume,
@@ -11681,8 +11681,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          ShipperReference2 = s.ShipperReference2,
                                                          UpdatedByUserId = s.UpdatedByUserId,
                                                          HandlerUserId = s.HandlerUserId,
-                                                         ExpectedCargoReadyDate = s.ExpectedCargoReadyDate,
-                                                         ActualCargoReadyDate = s.ActualCargoReadyDate,
+                                                         PlannedCargoReadyDate = s.PlannedCargoReadyDate,
+                                                         ApprovedCargoReadyDate = s.ApprovedCargoReadyDate,
                                                          VolumeInCBM = s.VolumeInCBM,
                                                          VolumetricWeight = s.VolumetricWeight,
                                                          QuoteId = s.QuoteId,
@@ -13406,8 +13406,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          ShipperReference2 = s.ShipperReference2,
                                                          UpdatedByUserId = s.UpdatedByUserId,
                                                          HandlerUserId = s.HandlerUserId,
-                                                         ExpectedCargoReadyDate = s.ExpectedCargoReadyDate,
-                                                         ActualCargoReadyDate = s.ActualCargoReadyDate,
+                                                         PlannedCargoReadyDate = s.PlannedCargoReadyDate,
+                                                         ApprovedCargoReadyDate = s.ApprovedCargoReadyDate,
                                                          VolumeInCBM = s.VolumeInCBM,
                                                          VolumetricWeight = s.VolumetricWeight,
                                                          QuoteId = s.QuoteId,
