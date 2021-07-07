@@ -1,0 +1,34 @@
+﻿<Script DBType="Main" Module="Accounting" AOT="false">
+  <Sql Version="2">
+    <![CDATA[
+ 
+declare @Id varchar(15)
+Declare @Tenant int
+Declare GLAccountCards cursor
+
+for
+select Id, Tenant from GLAccountCardsDatas 
+
+OPEN GLAccountCards FETCH NEXT FROM GLAccountCards into  @Id, @Tenant
+WHILE @@FETCH_STATUS = 0
+BEGIN
+
+	update GLAccountCardsDatas 
+	set TotalOpenShipments=(  select sum(o.TotalOpenFilesAmount) from cards c 
+	join GLAccounts g on c.GLAccountId=g.Id 
+	join CustomerOpenFilesAmounts o on o.CustomerId= c.Id 
+	where g.CardsDataId =@Id),
+	CreditLimit=(  select sum(cs.CreditLimit) from cards c 
+	join GLAccounts g on c.GLAccountId=g.Id 
+	join customers  cs on c.Id = cs.Id where g.CardsDataId =@Id)
+	where id = @Id and Tenant =@Tenant
+
+
+FETCH NEXT FROM GLAccountCards INTO   @Id,  @Tenant
+END
+CLOSE GLAccountCards
+DEALLOCATE GLAccountCards
+ 
+     ]]>
+ </Sql>
+</Script>
