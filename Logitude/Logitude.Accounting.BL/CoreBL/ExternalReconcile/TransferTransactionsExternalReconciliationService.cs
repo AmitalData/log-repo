@@ -37,34 +37,13 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 
         public void HandleTransferAccountTransactions()
         {
-            if (bankAccountPM == null)
-                UpdateExternalReconciliation();  // came from glaccount external transaction
-            else if (bankAccountPM.GLAccountId == bankAccountPM.TransferGLAcccountId)
+            List<ExternalReconciliationLinePM> transferRecoLines = GetRecoLinesOfTransferAccount();
+
+            bool transferAccountIsSameAsBankAccount = (bankAccountPM == null || bankAccountPM.GLAccountId == bankAccountPM.TransferGLAcccountId);
+            if (transferRecoLines.Count() == 0 || transferAccountIsSameAsBankAccount)
                 UpdateExternalReconciliation();
             else
-            {
-                
-                List<ExternalReconciliationLinePM> transferRecoLines = GetRecoLinesOfTransferAccount();
-                //externalRecoPM.ExternalReconciliationLines
-
-
-                //if (transferRecoLines.Count == 1)
-                if (transferRecoLines.Count >= 1)
-                {
-                    MoveTransactionFromTransferGLAccountToBankGLAccount(transferRecoLines.Select(r=>r.LedgerTransactionId).ToList());
-                }
-                else if (transferRecoLines.Count == 0)
-                {
-                    UpdateExternalReconciliation();
-                }
-                //else if (transferRecoLines.Count > 1)
-                //{
-                    //throw new ApplicationException("for now, you can select only one transaction for transfer account");
-                //}
-
-            }
-
-
+                SplitTransferReconciliationsFromOriginalReconiliation();
         }
 
         private void UpdateExternalReconciliation()
@@ -74,6 +53,62 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             externalRecoPM.ChangeSetOp = ChangeSetOperation.Insert;
             service.Update(externalRecoPM, true);
         }
+        private void SplitTransferReconciliationsFromOriginalReconiliation()
+        {
+            var transactionsRecoLines = externalRecoPM.ExternalReconciliationLines.Where(d => d.LedgerTransactionId != null).ToList();
+            CreateReconciliationsOfTransferAccount(transactionsRecoLines);
+            SubmitOriginalReconciliation();
+        }
+
+        private void CreateReconciliationsOfTransferAccount(IEnumerable<ExternalReconciliationLinePM> transactionsRecoLines)
+        {
+            foreach (var transactionRecoLine in transactionsRecoLines)
+            {
+                var isTransferTransaction = transactionRecoLine.LedgerGLAccountId == bankAccountPM.TransferGLAcccountId;
+                if (isTransferTransaction)
+                    CreateReconcileForTransferTransactionRecoLine(transactionRecoLine);
+            }
+        }
+        private void SubmitOriginalReconciliation()
+        {
+            if (externalRecoPM.ExternalReconciliationLines.Count() > 0)
+                UpdateExternalReconciliation();
+        }
+
+        private void CreateReconcileForTransferTransactionRecoLine(ExternalReconciliationLinePM transactionRecoLine)
+        {
+            ExternalReconciliationLinePM oppositExternalPageRecoLine = GetOppositExternalPageRecoLine(transactionRecoLine);
+            MoveTransactionFromTransferGLAccountToBankGLAccount(transactionRecoLine.LedgerTransactionId, oppositExternalPageRecoLine.ExternalPageLineId);
+            RemoveLinesGroupFromOriginalReconciliation(transactionRecoLine, oppositExternalPageRecoLine);
+        }
+
+        private ExternalReconciliationLinePM GetOppositExternalPageRecoLine(ExternalReconciliationLinePM transactionRecoLine)
+        {
+            var line = externalRecoPM.ExternalReconciliationLines
+                                        .Where(d => d.ExternalPageLineId != null
+                                        && d.GroupNumber == transactionRecoLine.GroupNumber)
+                                        .FirstOrDefault();
+
+            if (line == null) throw new ApplicationException("Cannot find opposit external page line");
+            return line;
+        }
+
+        private void MoveTransactionFromTransferGLAccountToBankGLAccount(string transactionIds, string externalPpageLineId)
+        {
+            ExternalReconcileMoveBankCheckFromTransfer2GLAccountService extRecoJournalService = new ExternalReconcileMoveBankCheckFromTransfer2GLAccountService();
+            extRecoJournalService.MustInit(new ExternalReconcileDataProvider(AccountingContext.GetContext(tenant)));
+            extRecoJournalService.CreateJournalWithExtReconcile(tenant, new List<string>() { transactionIds }, externalPpageLineId);
+            JournalPM journalPM = extRecoJournalService.TheJournalPM;
+
+            SubmitJournal(journalPM);
+        }
+        private void RemoveLinesGroupFromOriginalReconciliation(ExternalReconciliationLinePM transactionRecoLine, ExternalReconciliationLinePM oppositExternalPageRecoLine)
+        {
+            externalRecoPM.ExternalReconciliationLines.Remove(transactionRecoLine);
+            externalRecoPM.ExternalReconciliationLines.Remove(oppositExternalPageRecoLine);
+        }
+
+        
 
         private void ValidateExternalReconciliation(ExternalReconciliationPM _externalRecoPM)
         {
@@ -102,6 +137,9 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             SubmitJournal(journalPM);
 
         }
+
+
+
 #if noReference
         private void BuildExternalReconciliationForTransferTransaction(LedgerTransactionPM ledgerTransactionForTransferAccount, JournalPM journalPM)
         {
@@ -133,12 +171,9 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 #endif
         private List<ExternalReconciliationLinePM> GetRecoLinesOfTransferAccount()
         {
-
-            List<ExternalReconciliationLinePM> transferAccountTransactions = new List<ExternalReconciliationLinePM>();
-            if (bankAccountPM.TransferGLAcccountId != null)
-                transferAccountTransactions = externalRecoPM.ExternalReconciliationLines.Where(d => d.LedgerGLAccountId == bankAccountPM.TransferGLAcccountId).ToList();
-
-            return transferAccountTransactions;
+            if (bankAccountPM != null && bankAccountPM.TransferGLAcccountId != null)
+                return externalRecoPM.ExternalReconciliationLines.Where(d => d.LedgerGLAccountId == bankAccountPM.TransferGLAcccountId).ToList();
+            return new List<ExternalReconciliationLinePM>();
         }
 
         private void BuildInternalReconcile(LedgerTransactionPM transferTransaction, JournalPM journalPM)
