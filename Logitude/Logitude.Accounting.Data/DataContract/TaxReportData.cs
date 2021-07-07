@@ -30,5 +30,6 @@ namespace Logitude.Accounting.Data.DataContract
         public int JournalLineNumber { get; set; }
         public string AccountId { get;  set; }
         public string TransmitStatusCode { get; set; }
+        public int Tenant { get; set; }
     }
 }
