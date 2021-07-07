@@ -1974,7 +1974,7 @@ export function FillSpecialServicesTypeDetails(specialServicesTypeDetails: Speci
     var RandomSpecialServicesTypeCode = gr.GenerateRandomNumberAndString(8);
     cy.FillLogTextBox(MaintenanceSelectors.SpecialServicesTypeCode, specialServicesTypeDetails.Code.toLowerCase() == "random" ? RandomSpecialServicesTypeCode : specialServicesTypeDetails.Code)
     cy.FillLogTextBox(MaintenanceSelectors.SpecialServicesTypeEnglishName, specialServicesTypeDetails.EnglishName)
-    FillSpecialServicesTypeLocalName(specialServicesTypeDetails.LocalName)
+    cy.FillLogTextBox(MaintenanceSelectors.SpecialServicesTypeLocalName, specialServicesTypeDetails.LocalName)
 }
 export function CreateSpecialServicesType() {
     DefinePostSpecialServicesTypeRequest()
@@ -2022,7 +2022,7 @@ export function SearchSpecialServicesType() {
     AsserSpecialServicesTypeViewsGetByFilters();
 }
 export function DefineSpecialServicesTypeGetByFiltersRequest(SpecialServicesTypeCode: string) {
-    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(SpecialServicesTypeCode + "&GetCount=false"), RequestAliases.GetFilterSearch);
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(SpecialServicesTypeCode), RequestAliases.GetFilterSearch);
 }
 export function AsserSpecialServicesTypeViewsGetByFilters() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
@@ -2041,8 +2041,8 @@ export function AssertOpenSpecialServicesType() {
 function DefineSpecialServicesTypesGetSingleRequest() {
     cy.DefineRequestWait(RestAPI.GET, Urls.SpecialServicesTypesGetSingle, RequestAliases.GetSignle);
 }
-export function FillSpecialServicesTypeLocalName(localName: string) {
-    cy.FillLogTextBox(MaintenanceSelectors.SpecialServicesTypeLocalName, localName)
+export function FillSpecialServicesTypeLocalName() {
+    cy.FillLogTextBox(MaintenanceSelectors.SpecialServicesTypeLocalName, gr.GenerateRandomNumberAndString(7))
 }
 export function UpdateSpecialServicesType() {
     DefinePutSpecialServicesTypeRequest()
