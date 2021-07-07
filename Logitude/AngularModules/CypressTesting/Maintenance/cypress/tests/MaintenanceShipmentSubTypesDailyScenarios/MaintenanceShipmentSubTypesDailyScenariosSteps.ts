@@ -71,8 +71,8 @@ Then("the shipment sub type should open successfully", () => {
 });
 //#endregion
 //#region  Edit the shipment sub type
-Given("the user fill shipment sub type name", () => {
-    MaintenanceActions.FillShipmentSubTypeName()
+Given("{string} as shipment sub type name", (name) => {
+    MaintenanceActions.FillShipmentSubTypeName(name)
 });
 
 When("update shipment sub type", () => {

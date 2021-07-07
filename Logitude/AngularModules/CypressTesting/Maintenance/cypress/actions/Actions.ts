@@ -1974,7 +1974,7 @@ export function FillSpecialServicesTypeDetails(specialServicesTypeDetails: Speci
     var RandomSpecialServicesTypeCode = gr.GenerateRandomNumberAndString(8);
     cy.FillLogTextBox(MaintenanceSelectors.SpecialServicesTypeCode, specialServicesTypeDetails.Code.toLowerCase() == "random" ? RandomSpecialServicesTypeCode : specialServicesTypeDetails.Code)
     cy.FillLogTextBox(MaintenanceSelectors.SpecialServicesTypeEnglishName, specialServicesTypeDetails.EnglishName)
-    FillSpecialServicesTypeLocalName(specialServicesTypeDetails.LocalName)
+    cy.FillLogTextBox(MaintenanceSelectors.SpecialServicesTypeLocalName, specialServicesTypeDetails.LocalName)
 }
 export function CreateSpecialServicesType() {
     DefinePostSpecialServicesTypeRequest()
@@ -2022,7 +2022,7 @@ export function SearchSpecialServicesType() {
     AsserSpecialServicesTypeViewsGetByFilters();
 }
 export function DefineSpecialServicesTypeGetByFiltersRequest(SpecialServicesTypeCode: string) {
-    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(SpecialServicesTypeCode + "&GetCount=false"), RequestAliases.GetFilterSearch);
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(SpecialServicesTypeCode), RequestAliases.GetFilterSearch);
 }
 export function AsserSpecialServicesTypeViewsGetByFilters() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
@@ -2041,9 +2041,12 @@ export function AssertOpenSpecialServicesType() {
 function DefineSpecialServicesTypesGetSingleRequest() {
     cy.DefineRequestWait(RestAPI.GET, Urls.SpecialServicesTypesGetSingle, RequestAliases.GetSignle);
 }
+
 export function FillSpecialServicesTypeLocalName(localName: string) {
+    cy.FillLogTextBox(MaintenanceSelectors.SpecialServicesTypeLocalName, " ")
     cy.FillLogTextBox(MaintenanceSelectors.SpecialServicesTypeLocalName, localName)
 }
+
 export function UpdateSpecialServicesType() {
     DefinePutSpecialServicesTypeRequest()
     cy.Click(MaintenanceSelectors.SpecialServicesTypeSaveButton, null)
@@ -2066,12 +2069,13 @@ export function FillMoveTypeDetails(moveTypeDetails: MoveTypeDetails) {
     var RandomMoveTypeCode = gr.GenerateRandomNumberAndString(3);
     cy.FillLogTextBox(MaintenanceSelectors.MoveTypeCode, moveTypeDetails.Code.toLowerCase() == "random" ? RandomMoveTypeCode : moveTypeDetails.Code)
     cy.FillLogTextBox(MaintenanceSelectors.MoveTypeEnglishName, moveTypeDetails.EnglishName)
-    cy.FillLogTextBox(MaintenanceSelectors.MoveTypeLocalName, moveTypeDetails.LocalName)
+    FillMoveTypeLocalName(moveTypeDetails.LocalName)
     FillMoveTypeTransportMode(moveTypeDetails.TransportMode)
 }
 
-export function FillMoveTypeLocalName() {
-    cy.FillLogTextBox(MaintenanceSelectors.MoveTypeLocalName, gr.GenerateRandomNumberAndString(7))
+export function FillMoveTypeLocalName(localName: string) {
+    cy.FillLogTextBox(MaintenanceSelectors.MoveTypeLocalName, " ")
+    cy.FillLogTextBox(MaintenanceSelectors.MoveTypeLocalName, localName)
 }
 
 function FillMoveTypeTransportMode(TransportMode: string) {
@@ -2179,12 +2183,15 @@ export function FillShipmentSubTypeCode(ShipmentSubTypeCode: string) {
 export function FillShipmentSubTypeDetails(shipmentSubTypeDetails: ShipmentSubTypeDetails) {
     var RandomShipmentSubTypeCode = gr.GenerateRandomNumberAndString(5);
     cy.FillLogTextBox(MaintenanceSelectors.ShipmentSubTypeCode, shipmentSubTypeDetails.Code.toLowerCase() == "random" ? RandomShipmentSubTypeCode : shipmentSubTypeDetails.Code)
-    cy.FillLogTextBox(MaintenanceSelectors.ShipmentSubTypeName, shipmentSubTypeDetails.Name)
+    FillShipmentSubTypeName(shipmentSubTypeDetails.Name)
     FillShipmentType(shipmentSubTypeDetails.ShipmentType)
 }
-export function FillShipmentSubTypeName() {
-    cy.FillLogTextBox(MaintenanceSelectors.ShipmentSubTypeName, gr.GenerateRandomNumberAndString(7))
+
+export function FillShipmentSubTypeName(ShipmentSubTypeName: string) {
+    cy.FillLogTextBox(MaintenanceSelectors.ShipmentSubTypeName, " ")
+    cy.FillLogTextBox(MaintenanceSelectors.ShipmentSubTypeName, ShipmentSubTypeName)
 }
+
 export function FillShipmentType(ShipmentType: string) {
     cy.SelectDropDownListItem(MaintenanceSelectors.LogLovShipmentSubType, ShipmentType)
 }
@@ -2369,5 +2376,3 @@ export function CreditCardTypeConversionEventsMapping(eventDetailsList: EventTyp
     return eventDetailsList;
 }
 //#endregion
-
-

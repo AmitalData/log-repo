@@ -64,9 +64,10 @@ Given("the user edit the following accounting payment details", (dataTable) => {
     AccountingPaymentMethodActions.EditAccountingPaymentMethodGeneralTab(accountingPaymentMethodDetails)
 });
 
-Given("fill the following Accounting tab details", () => {
+Given("fill the following Accounting tab details", (dataTable) => {
+    let accountingPaymentMethodDetails = Assists.CreateInstance<AccountingPaymentMethodDetails>(dataTable, true);
     cy.Navigate(AccountingPaymentMethodSelectors.AccountingTab);
-    AccountingPaymentMethodActions.FillAccountingPaymentMethodAccountingTab()
+    AccountingPaymentMethodActions.FillAccountingPaymentMethodAccountingTab(accountingPaymentMethodDetails)
 });
 
 When("save accounting payment", () => {

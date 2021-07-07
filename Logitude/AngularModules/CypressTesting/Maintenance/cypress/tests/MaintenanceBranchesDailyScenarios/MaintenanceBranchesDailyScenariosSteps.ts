@@ -91,9 +91,9 @@ Then("the address should update successfully", () => {
 //#endregion
 
 //#region Edit the Branch
-Given("the user change the External ID in Accounting Tab", () => {
+Given("add {string} to External ID in Accounting Tab", (accountingExternalID) => {
     cy.Navigate(BranchSelectors.AccountingTab);
-    BranchActions.FillAccountingExternalID()
+    BranchActions.FillAccountingExternalID(accountingExternalID)
 });
 
 Given("the user Inactivate the Branch", () => {

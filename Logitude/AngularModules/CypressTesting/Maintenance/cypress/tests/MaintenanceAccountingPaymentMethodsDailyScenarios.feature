@@ -29,8 +29,8 @@ Feature: Accounting Payment Method fake Create, Search and Edit from Maintenance
             | InactiveCheckBox | Yes |
             | APCheckBox       | No  |
         And fill the following Accounting tab details
-            | ARExternalID | Random |
-            | APExternalID | Random |
+            | ARExternalID | External1 |
+            | APExternalID | External1 |
         When save accounting payment
         Then the accounting payment should update successfully
 

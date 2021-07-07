@@ -1,4 +1,4 @@
-@release @all @dev @daily 
+@release @all @dev @daily
 Feature: Shipment Sub Type fake Create and Edit in Maintenance Module
     The user creates a Shipment Sub Type fake create and edit another one from the Maintenance Module.
 
@@ -33,7 +33,7 @@ Feature: Shipment Sub Type fake Create and Edit in Maintenance Module
         Then the shipment sub type should open successfully
 
     Scenario: Edit the shipment sub type
-        Given the user fill shipment sub type name
+        Given "Testing Edit Shipment Sub Type Daily Scenario" as shipment sub type name
         When update shipment sub type
         Then the shipment sub type should update successfully
         And the following event should appear in events tab

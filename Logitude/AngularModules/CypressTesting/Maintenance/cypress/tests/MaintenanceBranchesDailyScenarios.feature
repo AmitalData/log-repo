@@ -39,7 +39,7 @@ Feature: Branch fake Create, Search and Edit from Maintenance
         Then the address should update successfully
 
     Scenario: Edit the Branch
-        Given the user change the External ID in Accounting Tab
+        Given add "external" to External ID in Accounting Tab
         Given the user Inactivate the Branch
         When save branch
         Then the branch should update successfully
