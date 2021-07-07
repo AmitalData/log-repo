@@ -106,8 +106,8 @@ export function AssertUpdateAddress() {
     })
 }
 
-export function FillAccountingExternalID() {
-    cy.FillLogTextBox(BranchSelectors.AccountingExternalID, gr.GenerateRandomNumberAndString(7))
+export function FillAccountingExternalID(accountingExternalID) {
+    cy.FillLogTextBox(BranchSelectors.AccountingExternalID, accountingExternalID)
 }
 
 export function CheckInactiveBox() {

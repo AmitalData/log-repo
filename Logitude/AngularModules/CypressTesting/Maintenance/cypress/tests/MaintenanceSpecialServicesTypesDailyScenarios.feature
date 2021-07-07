@@ -1,4 +1,4 @@
-@release @all @dev @daily 
+@release @all @dev @daily
 Feature: Special Services Type fake Create and Edit in Maintenance Module
     The user creates a Special Services Type fake create and edit another one from the Maintenance Module.
 
@@ -24,7 +24,7 @@ Feature: Special Services Type fake Create and Edit in Maintenance Module
         Then the special services type should open successfully
 
     Scenario: Edit the special services type
-        Given the user fill special services type local name
+        Given "Test edit LocalName special services type" as special services type local name
         When update special services type
         Then the special services type should update successfully
         And the following event should appear in events tab
