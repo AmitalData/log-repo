@@ -13847,11 +13847,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
 
             List<string> connectedPickUpDliveryPackagesContainersIds = this.GetConnectedContainerEntityIdsToLegs(shipmentPM, stanAloneShipment);
-            List<ShipmentPackagePM> shipmentPackages = this.GetFilteredForwarderShipmentPackagesExceptConnectedToLegs(shipmentPM, connectedPickUpDliveryPackagesContainersIds);
+            List<ShipmentPackagePM> shipmentPackages = this.GetForwarderPackagesExceptConnectedContainers(shipmentPM, connectedPickUpDliveryPackagesContainersIds);
             return shipmentPackages;
         }
 
-        private List<string> GetConnectedContainerEntityIdsToLegs(ShipmentPM shipmentPM,ShipmentPM stanAloneShipment)
+        private List<string> GetConnectedContainerEntityIdsToLegs(ShipmentPM shipmentPM, ShipmentPM stanAloneShipment)
         {
             List<string> connectedPickUpDliveryPackagesContainersIds = new List<string>();
             if (stanAloneShipment.ForwarderPickUpDeliveryType == "Pickup")
@@ -13877,7 +13877,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 return;
             }
 
-            List<ShipmentPickUpPM> filteredShipmentPickUpPMs = this.GetFilteredForwaderShipmentPickUps(shipmentPM, forwarderPickUp);
+            List<ShipmentPickUpPM> filteredShipmentPickUpPMs = this.GetForwaderShipmentPickUpsByIdAndParentPickUpDeliveryId(shipmentPM, forwarderPickUp);
             if (filteredShipmentPickUpPMs != null && filteredShipmentPickUpPMs.Count != 0)
             {
                 foreach (ShipmentPickUpPM shipmentPickUpPM in filteredShipmentPickUpPMs)
@@ -13887,17 +13887,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
         }
 
-        private List<ShipmentPickUpPM> GetFilteredForwaderShipmentPickUps(ShipmentPM shipmentPM, ShipmentPickUpPM forwarderPickUp)
+        private List<ShipmentPickUpPM> GetForwaderShipmentPickUpsByIdAndParentPickUpDeliveryId(ShipmentPM shipmentPM, ShipmentPickUpPM forwarderPickUp)
         {
-            List<ShipmentPickUpPM> filteredShipmentPickUpPMs = new List<ShipmentPickUpPM>();
+            List<ShipmentPickUpPM> filteredShipmentPickUpPMs = shipmentPM.ShipmentPickUps;
             if (!string.IsNullOrEmpty(forwarderPickUp.ParentPickUpDeliveryId))
             {
                 filteredShipmentPickUpPMs = shipmentPM.ShipmentPickUps.FindAll(d => d.Id != forwarderPickUp.ParentPickUpDeliveryId && d.ParentPickUpDeliveryId != forwarderPickUp.ParentPickUpDeliveryId);
             }
-            else
-            {
-                filteredShipmentPickUpPMs = shipmentPM.ShipmentPickUps;
-            }
+
             return filteredShipmentPickUpPMs;
         }
 
@@ -13926,7 +13923,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 return;
             }
 
-            List<ShipmentDeliveryPM> filteredShipmentDeliveries = this.GetFilteredForwaderShipmentDeliveries(shipmentPM, forwarderDelivery);
+            List<ShipmentDeliveryPM> filteredShipmentDeliveries = this.GetForwaderShipmentDeliveriesByIdAndParentPickUpDeliveryId(shipmentPM, forwarderDelivery);
             if (filteredShipmentDeliveries != null && filteredShipmentDeliveries.Count != 0)
             {
                 foreach (ShipmentDeliveryPM shipmentDeliveryPM in filteredShipmentDeliveries)
@@ -13936,17 +13933,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
         }
 
-        private List<ShipmentDeliveryPM> GetFilteredForwaderShipmentDeliveries(ShipmentPM shipmentPM, ShipmentDeliveryPM forwarderDelivery)
+        private List<ShipmentDeliveryPM> GetForwaderShipmentDeliveriesByIdAndParentPickUpDeliveryId(ShipmentPM shipmentPM, ShipmentDeliveryPM forwarderDelivery)
         {
-            List<ShipmentDeliveryPM> filteredShipmentDeliveries = new List<ShipmentDeliveryPM>();
+            List<ShipmentDeliveryPM> filteredShipmentDeliveries = shipmentPM.ShipmentDeliveries;
             if (!string.IsNullOrEmpty(forwarderDelivery.ParentPickUpDeliveryId))
             {
                 filteredShipmentDeliveries = shipmentPM.ShipmentDeliveries.FindAll(d => d.Id != forwarderDelivery.ParentPickUpDeliveryId && d.ParentPickUpDeliveryId != forwarderDelivery.ParentPickUpDeliveryId);
             }
-            else
-            {
-                filteredShipmentDeliveries = shipmentPM.ShipmentDeliveries;
-            }
+
             return filteredShipmentDeliveries;
         }
 
@@ -13963,20 +13957,20 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
         }
 
-        private List<ShipmentPackagePM> GetFilteredForwarderShipmentPackagesExceptConnectedToLegs(ShipmentPM shipmentPM,List<string> connectedPickUpDliveryPackagesContainersIds)
+        private List<ShipmentPackagePM> GetForwarderPackagesExceptConnectedContainers(ShipmentPM shipmentPM, List<string> connectedPickUpDliveryPackagesContainersIds)
         {
-            List<ShipmentPackagePM> FilteredShipmentPackages = new List<ShipmentPackagePM>();
+            List<ShipmentPackagePM> filteredShipmentPackages = new List<ShipmentPackagePM>();
             if (shipmentPM.ShipmentPackages == null || shipmentPM.ShipmentPackages.Count == 0)
             {
                 return null;
             }
 
-            FilteredShipmentPackages = (from a in shipmentPM.ShipmentPackages where
+            filteredShipmentPackages = (from a in shipmentPM.ShipmentPackages where
                                         !(connectedPickUpDliveryPackagesContainersIds.Contains(a.ContainerEntityId))
                                         && !(string.IsNullOrEmpty(a.ContainerNumber))
                                         select a).ToList();
 
-            return FilteredShipmentPackages;
+            return filteredShipmentPackages;
         }
 
     }
