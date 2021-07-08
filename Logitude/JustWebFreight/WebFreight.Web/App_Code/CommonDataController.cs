@@ -261,7 +261,7 @@ namespace WebFreight.Web
                 myResult.IsConsigneeShared = sharedLogisticsSetting.IsConsigneeShared;
             }
 
-            myResult.IsReportsMenuEnabled = FeatureToggleHelper.HasFeatureToggle("RSL", tenant);
+            myResult.IsReportsMenuEnabled = true;
 
 
             return myResult;
