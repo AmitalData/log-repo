@@ -635,11 +635,11 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
 
             if (this.isCreateStandaloneShipmentClicked) {
                 this.isCreateStandaloneShipmentClicked = false;
-                this.CreateStandaloneShipment();
+                this.ValidateStandaloneAddresses();
             }
             if (this.isConnctingStandaloneShipmentClicked) {
                 this.isConnctingStandaloneShipmentClicked = false;
-                this.ChooseStandAloneShipment();
+                this.ValidateStandaloneAddresses();
             }
 
 

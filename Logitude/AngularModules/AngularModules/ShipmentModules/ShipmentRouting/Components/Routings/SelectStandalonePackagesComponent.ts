@@ -232,8 +232,9 @@ export class SelectStandalonePackagesComponent {
     OkButtonClicked() {
         if (!this.IsFromShipmentPackageTab) {
             this.AddShipmentPickUpDeliveryPackagePM();
+        } else if (this.IsFromShipmentPackageTab && !this.IsNewShipmentPackage()) {
+            this.AddStandAloneShipmentPackagePM();
         }
-
         this.CurrentSession.CloseCurrentWindowEmit("OK");
     }
 
@@ -252,6 +253,23 @@ export class SelectStandalonePackagesComponent {
             newPackage.ContainerEntityId = item.ContainerEntityId;
             this.EntityPM.AddPackage(newPackage);
             item.EntityPM.IsPackageCheckedInLeg = true;
+        });
+    }
+
+    AddStandAloneShipmentPackagePM() {
+        this.ItemsSource.filter(f => f.IsChecked).forEach(item => {
+            var newPackage = new ShipmentPackagePM(this.ShipmentPM);
+            newPackage.Tenant = this.ShipmentPM.Tenant;
+            newPackage.ContainerNumber = item.ContainerNumber;
+            newPackage.Description = item.Description;
+            newPackage.PackageTypeId = item.PackageTypeId;
+            newPackage.PackageTypeName = item.PackageTypeName;
+            newPackage.Quantity = item.Quantity;
+            newPackage.Volume = item.Volume;
+            newPackage.Weight = item.Weight;
+            newPackage.ShipmentId = this.ShipmentPM.Id;
+            newPackage.ContainerEntityId = item.ContainerEntityId;
+            this.ShipmentPM.AddPackage(newPackage);
         });
     }
 
@@ -327,6 +345,14 @@ export class SelectStandalonePackagesComponent {
                 this.ShipmentPM.RemovePackage(item);
             });
         }
+    }
+
+    private IsNewShipmentPackage() {
+        var ShipmentPackage = this.ItemsSource.filter(f => f.IsChecked)[0];
+        if (AppTool.IsNullOrEmpty(ShipmentPackage.EntityPM.Id)) {
+            return true;
+        }
+        return false;
     }
 
 }
