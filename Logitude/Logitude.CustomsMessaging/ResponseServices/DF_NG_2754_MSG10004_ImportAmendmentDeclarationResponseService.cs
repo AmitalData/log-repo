@@ -222,19 +222,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         declarationPM.PalestinianCode = declarationOrg.PalestinianCode;
                         declarationPM.CourierSuspentionCode = declarationOrg.CourierSuspentionCode;
  
-                        DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
-
-                        DeclarationCourierStatusPM declarationCourierStatusPM =    declarationCourierStatusQueryService.GetSingle(declarationOrg.Id, false, false);
-
-                        DeclarationCourierStatusPM declarationCourierStatusPMNew = declarationCourierStatusPM;
-
-                        declarationCourierStatusPMNew.DeclarationId = declarationPM.Id;
-
-                        declarationCourierStatusPMNew.ChangeSetOp = ChangeSetOperation.Insert;
-
-                        DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), tenant);
-
-                        declarationCourierStatusUpdateService.Update(declarationCourierStatusPMNew, true);
+       
                     }
 
 
@@ -325,6 +313,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         declarationPM.DeclarationDocumentTypeCode = GetValueCodeType(declaration.DMExtensions.PreviousDocument.TypeCode);
 
                     }
+                    if(declaration.DMExtensions.ExpenseLoadingFactor!=null)
                     declarationPM.LoadingFactor = declaration.DMExtensions.ExpenseLoadingFactor.Value;
                 }
 
@@ -339,10 +328,28 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
  
                     declarationUpdateService.Update(declarationPM, true);
-                
+
+                if(declarationPM.IsCourierDeclaration)
+                {
+
+                    DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
+
+                    DeclarationCourierStatusPM declarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declarationOrg.Id, false, false);
+
+                    DeclarationCourierStatusPM declarationCourierStatusPMNew = declarationCourierStatusPM;
+
+                    declarationCourierStatusPMNew.DeclarationId = declarationPM.Id;
+
+                    declarationCourierStatusPMNew.ChangeSetOp = ChangeSetOperation.Update;
+                     DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), tenant);
+
+                    declarationCourierStatusUpdateService.Update(declarationCourierStatusPMNew, true);
 
 
- 
+                }
+
+
+
                 string declarationId;
                 if (declarationOrg != null)
                     declarationId = declarationRepository.GetLastDeclarationByDeclarationId(declarationPM.AmendmentOriginalDeclartation, tenant).Id;
@@ -796,7 +803,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 };
                 Customs.BL.EntityQueryServices.SupplierInvoiceQueryService supplierInvoiceQueryService = new Customs.BL.EntityQueryServices.SupplierInvoiceQueryService(tenant);
-                _OrgSupplierInvoicePM = supplierInvoiceQueryService.GetSupplierInvoiceWithSpecificItemBySequenceNumber(decIdOrg, (int)supplierInvoicePM.SequenceNumeric, tenant);
+                _OrgSupplierInvoicePM = supplierInvoiceQueryService.GetSupplierInvoiceBySequenceNumber(decIdOrg, (int)supplierInvoicePM.SequenceNumeric, 0,0);
 
                 if (_OrgSupplierInvoicePM == null && declarationPMOrg!=null)
                     continue;
@@ -1107,7 +1114,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                             SupplierInvoiceItemQueryService supplierInvoiceItemQueryService = new SupplierInvoiceItemQueryService(context);
 
-                            var invoiceItem = supplierInvoiceItemQueryService.GetSingleSupplierInvoicePMBySequence(decIdOrg, Convert.ToInt32(supplierInvoicePM.SequenceNumeric), Convert.ToInt32(supplierInvoiceItemPM.SequenceNumeric));
+                            var invoiceItem = supplierInvoiceItemQueryService.GetSingleSupplierInvoicePMBySequence(decIdOrg, Convert.ToInt32(supplierInvoicePM.InvoiceCounterKey), Convert.ToInt32(supplierInvoiceItemPM.SequenceNumeric));
                          if(invoiceItem!= null)
                             {
        

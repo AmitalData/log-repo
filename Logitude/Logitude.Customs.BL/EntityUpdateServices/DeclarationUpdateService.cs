@@ -157,7 +157,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             CardRepository cardRep = new CardRepository(entityPM.Tenant);
             Card card = cardRep.GetSingleCard(entityPM.CustomerId, entityPM.Tenant);
-            if (card != null)
+            if (card != null && entityPM.IsAmendment!=true)
             {
                 // moran 31.5.15 - Task 13325 -->
                 //entityPM.ImporterCode = card.VatNumber;
