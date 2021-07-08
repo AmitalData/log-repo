@@ -25,6 +25,7 @@ export class SelectStandalonePackagesComponent {
     public IsFCLEntity: boolean = false;
     public TransportModeId: string;
     public ItemsSource: PackagesSelectItem[] = [];
+    public ShipmentPackages: ShipmentPackagePM[] = [];
     public IsOkButtonEnabled: boolean = false;
     public IsFromShipmentPackageTab: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
@@ -39,20 +40,23 @@ export class SelectStandalonePackagesComponent {
             this.IsVisible = true;
             this.EntityPM = args.EntityPM;
             this.ShipmentPM = args.ShipmentPM;
+            this.ShipmentPackages = args.ShipmentPackages;
             this.IsLCLEntity = args.IsLCLEntity;
             this.IsFCLEntity = args.IsFCLEntity;
             this.TransportModeId = args.TransportModeId;
             this.IsFromShipmentPackageTab = args.IsFromShipmentPackageTab;
 
-            if (this.EntityPM instanceof ShipmentDeliveryPM || this.ShipmentPM.ForwarderPickUpDeliveryType == "Delivery") {
-                this.IsAddNewContainerVisible = false;
-            }
-
             if (this.IsFromShipmentPackageTab) {
                 this.SetShipmentLabels();
                 this.BuildShipmetItemsSource();
+                if (this.ShipmentPM.ForwarderPickUpDeliveryType == "Delivery") {
+                    this.IsAddNewContainerVisible = false;
+                }
             }
             else {
+                if (this.EntityPM instanceof ShipmentDeliveryPM) {
+                    this.IsAddNewContainerVisible = false;
+                }
                 this.SetPickupDeliveryLabels();
                 this.BuildPickupDeliveryItemsSource();
             }
@@ -188,62 +192,8 @@ export class SelectStandalonePackagesComponent {
         this.ItemsSource = [];
         this.SelectedItem = null;
         var myPackageTypeColumnWidth: number = 80;
-        var sameParent: boolean = false;
-        var pickUpDliveryPackagescontainersIds: string[] = [];
-
-        if (this.ShipmentPM.ForwarderPickUpDeliveryType == "Delivery") {
-            this.ShipmentPM.ShipmentDeliveries.forEach(item => {
-                sameParent = false;
-                if (!AppTool.IsNullOrEmpty(item.ParentPickUpDeliveryId) && !AppTool.IsNullOrEmpty(this.EntityPM.ParentPickUpDeliveryId)) {
-                    if (item.ParentPickUpDeliveryId == this.EntityPM.ParentPickUpDeliveryId) {
-                        sameParent = true;
-                    }
-                }
-
-                if (AppTool.IsNullOrEmpty(this.EntityPM.ParentPickUpDeliveryId)) {
-                    item.ShipmentPickUpDeliveryPackages.forEach(item1 => {
-                        pickUpDliveryPackagescontainersIds.push(item1.ContainerEntityId);
-                    });
-                }
-                else {
-                    if (!sameParent) {
-                        if (item.Id != this.EntityPM.ParentPickUpDeliveryId) {
-                            item.ShipmentPickUpDeliveryPackages.forEach(item1 => {
-                                pickUpDliveryPackagescontainersIds.push(item1.ContainerEntityId);
-                            });
-                        }
-                    }
-                }
-            });
-            
-        } else if (this.ShipmentPM.ForwarderPickUpDeliveryType == "Pickup") {
-            this.ShipmentPM.ShipmentPickUps.forEach(item => {
-                sameParent = false;
-                if (!AppTool.IsNullOrEmpty(item.ParentPickUpDeliveryId) && !AppTool.IsNullOrEmpty(this.EntityPM.ParentPickUpDeliveryId)) {
-                    if (item.ParentPickUpDeliveryId == this.EntityPM.ParentPickUpDeliveryId) {
-                        sameParent = true;
-                    }
-                }
-
-                if (AppTool.IsNullOrEmpty(this.EntityPM.ParentPickUpDeliveryId)) {
-                    item.ShipmentPickUpDeliveryPackages.forEach(item1 => {
-                        pickUpDliveryPackagescontainersIds.push(item1.ContainerEntityId);
-                    });
-                }
-                else {
-                    if (!sameParent) {
-                        if (item.Id != this.EntityPM.ParentPickUpDeliveryId) {
-                            item.ShipmentPickUpDeliveryPackages.forEach(item1 => {
-                                pickUpDliveryPackagescontainersIds.push(item1.ContainerEntityId);
-                            });
-                        }
-                    }
-                }
-            });
-        }
-
-        this.ShipmentPM.ShipmentPackages.filter(d => (AppTool.IsNullOrEmpty(d.ContainerEntityId) ||
-            pickUpDliveryPackagescontainersIds.indexOf(d.ContainerEntityId) == -1) && (!AppTool.IsNullOrEmpty(d.ContainerNumber))).forEach(item => {
+        
+        this.ShipmentPackages.forEach(item => {
             var widthOfLabel = AppTool.GetTextWidth(item.PackageTypeName);
             if (widthOfLabel > myPackageTypeColumnWidth) {
                 myPackageTypeColumnWidth = widthOfLabel;
@@ -334,14 +284,17 @@ export class SelectStandalonePackagesComponent {
         var itemComponent = new ShipmentPackageItem(newShipmentPackage, packagesTabComponent, true);
         logWindow.DataContext = itemComponent;
         logWindow.Show('./ShipmentModules/ShipmentPackages/Components/Packages/AddEditOceanPackageComponent');
-        logWindow.WindowClosed.subscribe((s: any) => {
-            if (s) {
-                if (!this.IsFromShipmentPackageTab) {
-                    this.BuildPickupDeliveryItemsSource();
-                } else {
-                    this.BuildShipmetItemsSource();
+        logWindow.ComponentLoaded.subscribe(component => {
+            logWindow.WindowClosed.subscribe((s: any) => {
+                if (s) {
+                    if (!this.IsFromShipmentPackageTab) {
+                        this.BuildPickupDeliveryItemsSource();
+                    } else {
+                        this.ShipmentPackages.push(newShipmentPackage);
+                        this.BuildShipmetItemsSource();
+                    }
                 }
-            }
+            });
         });
     }
     private myCloner: Cloner;

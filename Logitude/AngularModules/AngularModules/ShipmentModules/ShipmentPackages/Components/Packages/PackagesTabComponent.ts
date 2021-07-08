@@ -1592,14 +1592,14 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     AddStandAloneContainerClicked() {
         if (!AppTool.IsNullOrEmpty(this.EntityPM.ForwarderStandaloneShipmentId)) {
             var windowArgs: any = {};
-            var shipmentPMService = new ShipmentPMService();
-            var forwarderShipmentPM = null;
+
+            var shipmentDomainService = new ShipmentDomainService();
             this.CurrentSession.StartBusyIndicatorLoading();
-            shipmentPMService.get(this.EntityPM.ForwarderStandaloneShipmentId).subscribe((myResponse: ServiceResponse) => {
+            shipmentDomainService.GetFilteredForwarderShipmentPackages(this.EntityPM.ForwarderStandaloneShipmentId, this.EntityPM.Id).subscribe((myResponse: ServiceResponse) =>  {
                 if (!myResponse.HasError) {
                     this.CurrentSession.StopBusyIndicator();
-                    forwarderShipmentPM = myResponse.Result;
-                    windowArgs.ShipmentPM = forwarderShipmentPM;
+                    windowArgs.ShipmentPackages = myResponse.Result;
+                    windowArgs.ShipmentPM = this.EntityPM;
                     windowArgs.IsLCLEntity = this.IsLCLEntity;
                     windowArgs.IsFCLEntity = this.IsFCLEntity;
                     windowArgs.TransportModeId = this.TransportModeId;
@@ -1609,15 +1609,10 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                     logWindow.Title = "Add Container";
                     logWindow.WindowArgs = windowArgs;
                     logWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/SelectStandalonePackagesComponent");
-                    logWindow.ComponentLoaded.subscribe(component => {
-                        logWindow.WindowClosed.subscribe(result => {
-                            if (result) {
-                                if (component.ItemsSource != null) {
-                                    this.AddStandAloneShipmentPackagePM(component.ItemsSource);
-                                }
-                                this.BuildItemsSource();
-                            }
-                        });
+                    logWindow.WindowClosed.subscribe(result => {
+                        if (result) {
+                            this.BuildItemsSource();
+                        }
                     });
                 }
                 else {
@@ -1628,22 +1623,6 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         else {
             this.ViewAddPackageWindow();
         }
-    }
-    AddStandAloneShipmentPackagePM(ItemsSource:any) {
-        ItemsSource.filter(f => f.IsChecked).forEach(item => {
-            var newPackage = new ShipmentPackagePM(this.EntityPM);
-            newPackage.Tenant = this.EntityPM.Tenant;
-            newPackage.ContainerNumber = item.ContainerNumber;
-            newPackage.Description = item.Description;
-            newPackage.PackageTypeId = item.PackageTypeId;
-            newPackage.PackageTypeName = item.PackageTypeName;
-            newPackage.Quantity = item.Quantity;
-            newPackage.Volume = item.Volume;
-            newPackage.Weight = item.Weight;
-            newPackage.ShipmentId = this.EntityPM.Id;
-            newPackage.ContainerEntityId = item.ContainerEntityId;
-            this.EntityPM.AddPackage(newPackage);
-        });
     }
 
     EditPackageClicked(itemComponent: ShipmentPackageItem) {

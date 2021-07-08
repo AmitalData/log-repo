@@ -684,5 +684,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public bool IsHTSMissing { get; set; }
         public string ForwarderStandaloneShipmentId { get; set; }
         public string ForwarderPickUpDeliveryType { get; set; }
+        public string StandalonePickupDeliveryId { get; set; }
+
     }
 }

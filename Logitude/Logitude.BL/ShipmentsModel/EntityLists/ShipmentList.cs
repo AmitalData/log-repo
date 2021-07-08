@@ -552,5 +552,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string OnForwardingToPortId { get; set; }
         public bool IsStandalonePickupDelivery { get; set; }
         public bool IsHTSMissing { get; set; }
+        public string StandalonePickupDeliveryId { get; set; }
+
     }
 }

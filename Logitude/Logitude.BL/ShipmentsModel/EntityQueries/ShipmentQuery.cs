@@ -1936,6 +1936,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             #endregion
 
             shipmentPM.IsStandalonePickupDelivery = shipment.IsStandalonePickupDelivery;
+            shipmentPM.StandalonePickupDeliveryId = shipment.StandalonePickupDeliveryId;
             shipmentPM.ForwarderStandaloneShipmentId = shipment.ForwarderStandaloneShipmentId;
             shipmentPM.ForwarderPickUpDeliveryType = shipment.ForwarderPickUpDeliveryType;
             shipmentPM.ProductCode = shipment.ProductCode;
@@ -3661,6 +3662,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             shipmentPM.IsHTSMissing = shipment.IsHTSMissing;
             shipmentPM.IsStandalonePickupDelivery = shipment.IsStandalonePickupDelivery;
+            shipmentPM.StandalonePickupDeliveryId = shipment.StandalonePickupDeliveryId;
             shipmentPM.ForwarderStandaloneShipmentId = shipment.ForwarderStandaloneShipmentId;
             shipmentPM.ForwarderPickUpDeliveryType = shipment.ForwarderPickUpDeliveryType;
             shipmentPM.RegistryDate = shipment.RegistryDate;
@@ -3795,6 +3797,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             shipmentPM.IsHTSMissing = shipment.IsHTSMissing;
             shipmentPM.IsStandalonePickupDelivery = shipment.IsStandalonePickupDelivery;
+            shipmentPM.StandalonePickupDeliveryId = shipment.StandalonePickupDeliveryId;
             shipmentPM.ForwarderStandaloneShipmentId = shipment.ForwarderStandaloneShipmentId;
             shipmentPM.ForwarderPickUpDeliveryType = shipment.ForwarderPickUpDeliveryType;
             shipmentPM.CreatedByPartner = shipment.CreatedByPartner;
@@ -11761,6 +11764,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          DangerousUnNumber = s.DangerousUnNumber,
                                                          BookingConfirmationNumber = m.BookingConfirmationNumber,
                                                          IsStandalonePickupDelivery = s.IsStandalonePickupDelivery,
+                                                         StandalonePickupDeliveryId = s.StandalonePickupDeliveryId,
                                                          IsHTSMissing = s.IsHTSMissing,
                                                      };
 
@@ -13466,6 +13470,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          PreForwardingFromPortId = s.PreForwardingFromPortId,
                                                          OnForwardingToPortId = s.OnForwardingToPortId,
                                                          IsStandalonePickupDelivery = s.IsStandalonePickupDelivery,
+                                                         StandalonePickupDeliveryId = s.StandalonePickupDeliveryId,
                                                      };
 
             return shipmentsList;
@@ -13746,10 +13751,136 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return false;
         }
 
-      /*  public List<ShipmentPackagePM> GetFilteredForwarderShipmentPackages(string ShipmentId , int tenant)
+        public List<ShipmentPackagePM> GetFilteredForwarderShipmentPackages(string forwarderShipmentId, int tenant , string stanAloneShipmentId)
         {
-            ShipmentPM shipmentPM = 
-        }*/
+            ShipmentPM shipmentPM = this.GetSingleShipmentPM(forwarderShipmentId, tenant);
+            ShipmentPM stanAloneShipment = this.GetSingleShipmentPM(stanAloneShipmentId, tenant);
+            List<string> pickUpDliveryPackagesContainersIds = new List<string>();
+
+            if (shipmentPM == null || stanAloneShipment == null)
+            {
+                return null;
+            }
+
+            if (stanAloneShipment.ForwarderPickUpDeliveryType == "Pickup")
+            {
+                GetPickUpPackagesContainersIds(shipmentPM, pickUpDliveryPackagesContainersIds, stanAloneShipment.StandalonePickupDeliveryId);
+            }
+            else if (stanAloneShipment.ForwarderPickUpDeliveryType == "Delivery")
+            {
+                GetDeliveryPackagesContainersIds(shipmentPM, pickUpDliveryPackagesContainersIds, stanAloneShipment.StandalonePickupDeliveryId);
+            }
+            return GetFilteredShipmentPackages(shipmentPM,pickUpDliveryPackagesContainersIds);
+        }
+
+        private void GetPickUpPackagesContainersIds(ShipmentPM shipmentPM, List<string> pickUpPackagescontainersIds, string forwarderPickUpDeliveryId)
+        {
+            ShipmentPickUpPM forwarderPickUp = shipmentPM.ShipmentPickUps.Find(d => d.Id == forwarderPickUpDeliveryId);
+            if (shipmentPM.ShipmentPickUps == null || shipmentPM.ShipmentPickUps.Count == 0 || forwarderPickUp == null)
+            {
+                return;
+            }
+
+            List<ShipmentPickUpPM> filteredShipmentPickUpPMs = this.GetFilteredForwaderShipmentPickUps(shipmentPM, forwarderPickUp);
+            if (filteredShipmentPickUpPMs != null && filteredShipmentPickUpPMs.Count != 0)
+            {
+                foreach (ShipmentPickUpPM shipmentPickUpPM in filteredShipmentPickUpPMs)
+                {
+                    this.GetFilteredForwarderPickUpPackagesContainersIds(shipmentPickUpPM, pickUpPackagescontainersIds);
+                }
+            }
+        }
+
+        private List<ShipmentPickUpPM> GetFilteredForwaderShipmentPickUps(ShipmentPM shipmentPM, ShipmentPickUpPM forwarderPickUp)
+        {
+            List<ShipmentPickUpPM> filteredShipmentPickUpPMs = new List<ShipmentPickUpPM>();
+            if (!string.IsNullOrEmpty(forwarderPickUp.ParentPickUpDeliveryId))
+            {
+                filteredShipmentPickUpPMs = shipmentPM.ShipmentPickUps.FindAll(d => d.Id != forwarderPickUp.ParentPickUpDeliveryId && d.ParentPickUpDeliveryId != forwarderPickUp.ParentPickUpDeliveryId);
+            }
+            else
+            {
+                filteredShipmentPickUpPMs = shipmentPM.ShipmentPickUps;
+            }
+            return filteredShipmentPickUpPMs;
+        }
+
+        private void GetFilteredForwarderPickUpPackagesContainersIds(ShipmentPickUpPM shipmentPickUpPM, List<string> pickUpPackagescontainersIds)
+        {
+            if (shipmentPickUpPM.ShipmentPickUpDeliveryPackages == null || shipmentPickUpPM.ShipmentPickUpDeliveryPackages.Count == 0)
+            {
+                return;
+            }
+
+            foreach (ShipmentPickUpDeliveryPackagePM shipmentPickUpDeliveryPackagePM  in shipmentPickUpPM.ShipmentPickUpDeliveryPackages)
+            {
+                pickUpPackagescontainersIds.Add(shipmentPickUpDeliveryPackagePM.ContainerEntityId);
+            }
+        }
+
+        private void GetDeliveryPackagesContainersIds(ShipmentPM shipmentPM, List<string> deliveryPackagescontainersIds, string forwarderPickUpDeliveryId)
+        {
+            ShipmentDeliveryPM forwarderDelivery = shipmentPM.ShipmentDeliveries.Find(d => d.Id == forwarderPickUpDeliveryId);
+            if (shipmentPM.ShipmentDeliveries == null || shipmentPM.ShipmentDeliveries.Count == 0 || forwarderDelivery == null)
+            {
+                return;
+            }
+
+            List<ShipmentDeliveryPM> filteredShipmentDeliveries = this.GetFilteredForwaderShipmentDeliveries(shipmentPM, forwarderDelivery);
+            if (filteredShipmentDeliveries != null && filteredShipmentDeliveries.Count != 0)
+            {
+                foreach (ShipmentDeliveryPM shipmentDeliveryPM in filteredShipmentDeliveries)
+                {
+                    this.GetFilteredForwarderDeliveryPackagesContainersIds(shipmentDeliveryPM, deliveryPackagescontainersIds);
+                }
+            }
+        }
+
+        private List<ShipmentDeliveryPM> GetFilteredForwaderShipmentDeliveries(ShipmentPM shipmentPM, ShipmentDeliveryPM forwarderDelivery)
+        {
+            List<ShipmentDeliveryPM> filteredShipmentDeliveries = new List<ShipmentDeliveryPM>();
+            if (!string.IsNullOrEmpty(forwarderDelivery.ParentPickUpDeliveryId))
+            {
+                filteredShipmentDeliveries = shipmentPM.ShipmentDeliveries.FindAll(d => d.Id != forwarderDelivery.ParentPickUpDeliveryId && d.ParentPickUpDeliveryId != forwarderDelivery.ParentPickUpDeliveryId);
+            }
+            else
+            {
+                filteredShipmentDeliveries = shipmentPM.ShipmentDeliveries;
+            }
+            return filteredShipmentDeliveries;
+        }
+
+        private void GetFilteredForwarderDeliveryPackagesContainersIds(ShipmentDeliveryPM shipmentDeliveryPM, List<string> pickUpPackagescontainersIds)
+        {
+            if (shipmentDeliveryPM.ShipmentPickUpDeliveryPackages == null || shipmentDeliveryPM.ShipmentPickUpDeliveryPackages.Count == 0)
+            {
+                return;
+            }
+
+            foreach (ShipmentPickUpDeliveryPackagePM shipmentPickUpDeliveryPackagePM in shipmentDeliveryPM.ShipmentPickUpDeliveryPackages)
+            {
+                pickUpPackagescontainersIds.Add(shipmentPickUpDeliveryPackagePM.ContainerEntityId);
+            }
+        }
+
+        private List<ShipmentPackagePM> GetFilteredShipmentPackages(ShipmentPM shipmentPM,List<string> pickUpDliveryPackagesContainersIds)
+        {
+            List<ShipmentPackagePM> FilteredShipmentPackages = new List<ShipmentPackagePM>();
+            if (shipmentPM.ShipmentPackages == null || shipmentPM.ShipmentPackages.Count == 0)
+            {
+                return null;
+            }
+
+            foreach (ShipmentPackagePM shipmentPackagePM in shipmentPM.ShipmentPackages)
+            {
+                if (!pickUpDliveryPackagesContainersIds.Contains(shipmentPackagePM.ContainerEntityId) && !string.IsNullOrEmpty(shipmentPackagePM.ContainerNumber))
+                {
+                    FilteredShipmentPackages.Add(shipmentPackagePM);
+                } 
+            }
+            return FilteredShipmentPackages;
+        }
+
     }
 
     public class CargoTrackingShipmentCustomsData

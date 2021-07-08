@@ -2945,7 +2945,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        public HttpResponseMessage GetFilteredForwarderShipmentPackages(string shipmentId)
+        public HttpResponseMessage GetFilteredForwarderShipmentPackages(string shipmentId, string stanAloneShipmentId)
         {
             try
             {
@@ -2953,7 +2953,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
                 ShipmentQuery query = new ShipmentQuery(tenant);
-                bool result = query.IsShipmentPackagesConnectedToStandAlonePackage(shipmentId, tenant);
+                var result = query.GetFilteredForwarderShipmentPackages(shipmentId, tenant, stanAloneShipmentId);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
