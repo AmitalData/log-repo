@@ -878,6 +878,8 @@
 
         private string uNFINVOICEKEYField;
 
+        private bool commChanged;
+
         /// <remarks/>
         public string Entname
         {
@@ -966,6 +968,17 @@
             set
             {
                 this.uNFINVOICEKEYField = value;
+            }
+        }
+        public bool CommChanged
+        {
+            get
+            {
+                return this.commChanged;
+            }
+            set
+            {
+                this.commChanged = value;
             }
         }
     }

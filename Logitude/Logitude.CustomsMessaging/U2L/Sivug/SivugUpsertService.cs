@@ -440,7 +440,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
 
                                 myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
                             }
-                            else
+                            else if(customsDocument.CommChanged)
                             {
                                 myDocumentId.DocumentVersion = myDocumentId.DocumentVersion + 1;
                                 myDocumentId.DocumentStatusCode = null;
