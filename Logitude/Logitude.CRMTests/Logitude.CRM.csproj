@@ -104,15 +104,18 @@
     <Compile Include="Models\ActivityPM.cs" />
     <Compile Include="Models\Builders\ActivityBuilder.cs" />
     <Compile Include="Models\CRMData.cs" />
+    <Compile Include="Services\ActivityAppointmentServices.cs" />
     <Compile Include="Services\ActivityTaskDataPreparation.cs" />
     <Compile Include="Services\ActivityTaskServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Steps\Activities\CreateAppointmentSteps.cs" />
     <Compile Include="Steps\Activities\CreateTaskSteps.cs" />
     <Compile Include="Steps\Activities\GetTaskSteps.cs" />
     <Compile Include="Steps\Activities\UpdateTaskSteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Features\Activities\CreateAppointment.feature" />
     <None Include="Features\Activities\CreateTask.feature" />
     <None Include="Features\Activities\GetTask.feature" />
     <None Include="Features\Activities\UpdateTask.feature" />

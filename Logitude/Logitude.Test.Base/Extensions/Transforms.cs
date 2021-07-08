@@ -32,11 +32,17 @@ namespace Logitude.Test.Base.Extensions
             {"Prepaid", "P"},
             {"Collect", "C"},
             {"Both", "B"},
-            #endregion
-            #region QuoteTypes
+        #endregion
+        #region QuoteTypes
             {"Spot Rate","A" },
             {"Routing Rates","P" },
-            {"Shipper" ,"SHI" }
+            {"Shipper" ,"SHI" },
+        #endregion
+        #region ActivityTimeTypes
+            {"Busy","BS" },
+            {"Free","FR" },
+            {"Out Of Office" ,"OF" },
+            {"Tentative" ,"TN" }
         #endregion
         };
 
