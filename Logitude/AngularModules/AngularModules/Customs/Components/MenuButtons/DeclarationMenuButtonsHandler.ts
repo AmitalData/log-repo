@@ -236,11 +236,16 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                             if (!this.IsDisplayOnly) {
                                 if (!((this.EntityPM.CourierPaymentStatusCode != 'P' || this.EntityPM.CourierPaymentStatusCode == null  ) &&
                                     (this.EntityPM.CourierManifestStatusCode == 'V' || this.EntityPM.CourierManifestStatusCode == 'R' || this.EntityPM.CourierManifestStatusCode == 'X' || this.EntityPM.CourierManifestStatusCode == 'M' )
-                                )){
-
-                                    button.IsDisabled = true;
+                                )) {
+                               
+                                     button.IsDisabled = true;
                                 }
                             }
+
+
+                            if (this.EntityPM.AmendmentDontDisplayInList == true)
+                                button.IsDisabled = true;
+
                         }
                         else {
                             button.IsHidden = true;

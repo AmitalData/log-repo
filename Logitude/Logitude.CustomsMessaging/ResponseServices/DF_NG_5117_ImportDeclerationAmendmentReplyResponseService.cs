@@ -39,6 +39,8 @@ using DeclarationGoodsShipment = UnifreightIIG.Common.MessageLib.ID.DeclarationG
 using DeclarationGoodsShipmentCustomsValuation = UnifreightIIG.Common.MessageLib.ID.DeclarationGoodsShipmentCustomsValuation;
 using UnifreightIIG.Common.MessageLib.Ransom;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Customs.BL.Messaging.Maman;
+using Logitude.Customs.BL.Messaging.Customs;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -702,6 +704,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
 
 
+                if(_MyDeclarationPM.IsCourierDeclaration &&( _MyDeclarationPM.AmendmentStatus =="6" || _MyDeclarationPM.AmendmentStatus == "3" ) && _MyDeclarationPM.HatraDate ==null)
+
+                {
+                    var mySend2MasofIfNeededService = new Send2MasofIfNeededService();
+                    mySend2MasofIfNeededService.Send2Masof(_MyDeclarationPM, false, _MyDeclarationPM, true);
+
+
+                    SendManifest(_MyDeclarationPM, requestParams); 
+
+                }
+
+
                 this.MyResponseData.ApplicationID = requestParams.AppicationId;
                 this.MyResponseData.Succeeded = true;
                 this.MyResponseData.HasException = false;
@@ -874,6 +888,31 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
 
             }
+        }
+
+
+        public void SendManifest(DeclarationPM declarationPM, GenericRequestParams requestParams)  
+        {
+
+            var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+            var objectTableIdCourierMaster = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
+
+            var requestParams1170 = new MANIFESTRequestRequestParams()
+            {
+                Tenant = requestParams.Tenant,
+                LoggingEnabled = true,
+                LoggingObjectTableId = objectTableId,
+                LoggingEntityId = declarationPM.Id,
+                LoggingObjectTableId2 = objectTableIdCourierMaster,
+                LoggingEntityId2 = declarationPM.CourierMasterId,
+                InterfaceTypeCode = "1170",
+                LoggingUserId = requestParams.LoggingUserId,
+                RequestVIA = SendRequestVIA.WebServiceBatch,
+                DeclarationId = declarationPM.Id,
+                LoggingEntityReference = declarationPM.Id,
+
+            };
+            SBQMessageService.CreateSheetSBQMessage<MANIFESTRequestRequestParams>(requestParams1170, false);
         }
 
         private void UpdateParentDec(DeclarationUpdateService myDeclarationUpdateService, DeclarationPM declarationParent)
