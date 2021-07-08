@@ -30,12 +30,14 @@
     jQuery.IsQuotesRequestsDataLoaded = false;
     jQuery.IsReportsDataLoaded = false;
 
+    jQuery.ContactId = "";
+    jQuery.RequestedBy = "";
 
     jQuery.AllQuotesRequests = null;
     jQuery.SelectedTabId = "TAB_SHI";
     jQuery.watermark_SHI = "Search partners / ports / ref.#";
     jQuery.watermark_INV = "Search Inv. # / bill to / ref.#";
-    jQuery.watermark_QUOTESREQUESTS = "Search contact / customer status / ref.#";
+    jQuery.watermark_QUOTESREQUESTS = "Search requester / reference / status / brand / PO";
 
 
 
@@ -115,6 +117,9 @@
                 
                 $("#CompanyText").html(result.TenantCompany);
                 $("#MemberText").html(result.ContactName);
+                $("#RequestedByContact").html(result.ContactName);
+                $.ContactId = result.ContactId;
+                $.RequestedBy = result.ContactId;
                 $("#MemberCardText").html(" (" + result.CardName + ")");
                 $.TenantDateTimeFormat = result.TenantDateTimeFormat;
                 $.IsInvoicesMenuEnabled = result.IsInvoicesMenuEnabled;
@@ -308,6 +313,9 @@
     function QuotesRequstFilters() {
         this.PartnerId = $.CurrentCardId;
         this.SearchField = ($.trim($.SearchText_QUOTESREQUESTS) == "" || $.trim($.SearchText_QUOTESREQUESTS) == $.watermark_QUOTESREQUESTS) ? null : $.trim($.SearchText_QUOTESREQUESTS);
+        this.OnlyOpened = true;
+        this.RequestedBy = $.RequestedBy;
+        this.CustomerStatus = "Pending Approval";// $('#SavedSelectedTabId').val();
         this.PageSize = jQuery.LoadingCount;
         this.PageIndex = 0
         this.Tenant = $.CurrentTenant
@@ -792,7 +800,7 @@
     $('#SearchBox_SHI').val($.watermark_SHI).addClass('watermark');
     $('#SearchBox_INV').val($.watermark_INV).addClass('watermark');
     $('#SearchBox_QUOTESREQUESTS').val($.watermark_QUOTESREQUESTS).addClass('watermark');
-
+    $('#SearchBox_QUOTESREQUESTS').attr('title', $.watermark_QUOTESREQUESTS);
 
     $('.SearchBox').blur(function () {
 

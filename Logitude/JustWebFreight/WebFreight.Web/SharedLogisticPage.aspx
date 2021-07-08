@@ -126,13 +126,32 @@
         .SelectOption {
             width: 100px;
             text-align: center;
-            height: 10px;
+            height: 12px;
             border: 1px solid #6A8299;
             color: #45494A;
             font-size: 11px;
             cursor: pointer;
             background: linear-gradient( 180deg , rgb(255, 255, 255) 0%, rgb(186, 206, 227) 100%);
             text-shadow: 1px 1px white;
+        }
+
+        .CheckBOX {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            display: block;
+            background: white;
+            border: 1px solid #AAAAAA;
+            user-select: none;
+            -ms-user-select: none;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            box-shadow: inset 0 0 3px #AAAAAA;
+            line-height: 15px;
+            text-indent: 20px;
+            font-size: 11px;
+            color: #6E7172;
+            position: absolute;
         }
     </style>
 
@@ -649,6 +668,42 @@
 
                                                                 <td class="box" style="padding: 0;">
                                                                     <div class="ListBoxContainer" style="overflow: auto;">
+                                                                        <div class="ListBox" style="width:1100px;">
+                                                                            <div style="height:28px; vertical-align:central;">
+                                                                                <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:20px;min-width:20px"></div>
+                                                                                <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:80px;min-width:80px; color:black">Requested by:</div>
+                                                                                <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:170px;min-width:170px;height:22px;">
+                                                                                    <select Id="RequestedByOption" class="SelectOption" OnChange="RequestedByChanged()" style="background:white">
+                                                                                        <option Id="RequestedByContact"></option>
+                                                                                        <option>All</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:50px;min-width:50px;color:black">Opened</div>
+                                                                                <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:60px;min-width:60px;height:22px;">
+                                                                                    <input  type="checkbox">
+                                                                                </div>
+                                                                                <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:40px;min-width:40px;color:black">Status:</div>
+                                                                                <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:180px;min-width:180px;height:22px;">
+                                                                                    <select class="SelectOption" style="background:white; width:120px;min-width:120px;">
+                                                                                        <option>Request Received</option>
+                                                                                        <option>Quote Process</option>
+                                                                                        <option selected>Pending Approval</option>
+                                                                                        <option>Pending Decision</option>
+                                                                                        <option>Approved</option>
+                                                                                        <option>Rejected</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:35px;min-width:35px;color:black">From:</div>
+                                                                                <div class="ValueTextStyle TemplateItem" style="display:inline-block;width:190px;min-width:190px;height:25px;">
+                                                                                    <input type="datetime-local" style="width:160px;min-width:160px;">
+                                                                                </div>
+                                                                                <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:20px;min-width:20px;color:black">To:</div>
+                                                                                <div class="ValueTextStyle TemplateItem" style="display:inline-block;width:180px;min-width:180px;height:25px;">
+                                                                                    <input type="datetime-local" style="width:160px;min-width:160px;">
+                                                                                </div>
+                                                                                <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:20px;min-width:20px"></div>
+                                                                            </div>
+                                                                        </div>
                                                                         <div id="QuotesRequestsListBox" class="ListBox"></div>
                                                                     </div>
                                                                 </td>
@@ -862,39 +917,50 @@
             <div class="ListItem" style="width:100%; height:100%;">
                 <div style="margin:3px 3px 0px 3px;">
 
-                            <div style="height:12px;">      </div>
+                            <div style="height:5px;">      </div>
 
 
-                    <div style="height:25px; vertical-align:central;">
-                      <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:20px;"></div>
-
-                        <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:110px;">Reference Number :</div>
-                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:130px; color:\\#1B90CB;">${ReferenceNumber}</div>
-                        <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:130px;">Quotation Prepared:</div>
-
-                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:160px; visibility: #= QuotationPreparedTickVisibility #;"><img src="HtmlHelpers/Images/Icons/Tick.png" style="width: 20px; height: 20px; position:relative; margin-top:-3px;" /><a id="#= DocumentSecurityId #" style="cursor: pointer;padding-left: 15px;text-decoration: underline;"  OnClick="ViewQuotationDocument(id)">View Quotation</a></div>
-                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:120px; visibility: #= QuotationPreparedTickVisibility #;">
-                            <select class="SelectOption" id="#= Id #Option"  #= OptionDisabledProperty # >
-                                <option style="display:none">Send Feedback</option>
-                                <option id="#= Id #" #= IsApproved # OnClick="SendApprovalQuotesRequstEmailFeedback(id)">Send Approval</option>
-                                <option id="#= Id #" #= IsRejected # OnClick="SendRejectionQuotesRequstEmailFeedback(id)">Send Rejection</option>
+                    <div style="height:24px; vertical-align:central;">
+                        <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:20px;min-width:20px;"></div>
+                        <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:50px;min-width:50px;">Quote \#:</div>
+                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:130px;min-width:130px;height:22px;color:\\#1B90CB;">${QuoteNumber}</div>
+                        <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:50px;min-width:50px;">Subject:</div>
+                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:140px;min-width:140px;height:22px;">${Subject}</div>
+                        <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:50px;min-width:50px;">Status:</div>
+                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:175px;min-width:175px;height:22px;">${Status}</div>
+                        <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:120px;min-width:120px;visibility: #= QuotationPreparedTickVisibility #;">Comments:</div>
+                       <div class="ValueTextStyle TemplateItem" style="display:inline-block; height: 35px;visibility: #= QuotationPreparedTickVisibility #;">
+                            <textarea readonly id="OLDComment#= Id #" style="height: 22px;max-height: 18px;max-width: 400px;" rows = "5" cols = "60">${Comments}</textarea>
+                        </div>
+                    </div>
+                    <div style="height:23px; vertical-align:central;">
+                        <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:20px;"><img id="#= DocumentSecurityId #" OnClick="ViewQuotationDocument(id)" src="images/FileIcons/File-pdf-48.png" style="width: 20px; height: 20px; position:relative; cursor: pointer;visibility: #= QuotationPreparedTickVisibility #;" /></div>
+                        <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:80px;min-width:80px;">Requested by:</div>
+                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:100px;min-width:100px;height:22px;">${ContactName}</div>
+                        <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:90px;min-width:90px;">Reference \#/PO:</div>
+                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:100px;min-width:100px;height:22px;">${ReferenceNumber}/${PONumber}</div>
+                        <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:95px;min-width:95px;visibility: #= QuotationPreparedTickVisibility #;">Updated Status:</div>
+                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:130px;height:22px;visibility: #= QuotationPreparedTickVisibility #;">
+                            <select class="SelectOption" id="Option#= Id #" OnChange="SendApprovalQuotesRequstEmailFeedback(id)"  #= OptionDisabledProperty # >
+                                <option style="display:none">Updated Status</option>
+                                <option>Send Approval</option>
+                                <option>Send Rejection</option>
                             </select>
                         </div>
-                        <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:180px; visibility: #= QuotationPreparedTickVisibility #;">Approval/Rejection Comments:</div>
-                    </div>
-                    <div style="height:25px; vertical-align:central;">
-                               <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:20px;"></div>
-
-                        <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:110px;">Create Date:</div>
-                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:130px;">${CreateDate}</div>
-                        <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:130px;">Quotation Update Date:</div>
-                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:140px;">${QuotationUpdateDate}</div>
-                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:140px;"></div>
-                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; height: 35px; visibility: #= QuotationPreparedTickVisibility #;">
-                            <textarea #= CommentsReadOnlyProperty # id="Comment#= Id #" style="height: 22px;max-height: 22px;max-width: 400px;" rows = "5" cols = "60">${Comments}</textarea>
+                        <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:120px;min-width:120px;visibility: #= QuotationPreparedTickVisibility #;">Updated Comments:</div>
+                       <div class="ValueTextStyle TemplateItem" style="display:inline-block; height: 35px;visibility: #= QuotationPreparedTickVisibility #;">
+                            <textarea id="Comment#= Id #" style="height: 22px;max-height: 18px;max-width: 400px;margin-top: 5px;" oninput="OnQuoteRequestCommentsChanged(id)" rows = "5" cols = "60"></textarea>
                         </div>
                     </div>
+                    <div style="height:22px; vertical-align:central;">
+                      <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:20px;"></div>
 
+                        <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:40px;min-width:40px;">Owner:</div>
+                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:140px;min-width:140px;height:22px;">${OwnerName}</div>
+                        
+                        <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:40px;min-width:40px;">Brand:</div>
+                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:150px;min-width:150px;height:22px;">${Brand}</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1033,6 +1099,18 @@
             ChangePage("SharedLogistic/ReportViewPage.aspx", name);
         }
 
+        function RequestedByChanged() {
+            var requestedBy = document.getElementById("RequestedByOption").value;
+            $.RequestedBy = requestedBy;
+            RefreshQuotesRequstsData();
+        }
+
+        function OnQuoteRequestCommentsChanged(QuoteRequestId) {
+            var selectedQuoteRequest = $.AllQuotesRequests.find(d => d.Id == QuoteRequestId.replace('Comment', ''));
+            $('#Option' + selectedQuoteRequest.Id).removeAttr('disabled');
+            $('#Option' + selectedQuoteRequest.Id).css("background", "linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%)");
+        }
+
 
         function ViewQuotationDocument(QuotationDocumentSecurityId) {
 
@@ -1053,28 +1131,29 @@
             });
         }
 
-        function SendApprovalQuotesRequstEmailFeedback(QuoteRequestId) {
-            var selectedQuoteRequest = $.AllQuotesRequests.find(d => d.Id == QuoteRequestId);
-            selectedQuoteRequest.Feedback = "Approved";
-            selectedQuoteRequest.Comments = $('#Comment' + selectedQuoteRequest.Id).val();
-            DisabledQuotesRequestProperties(selectedQuoteRequest);
-            SendQuotesRequstEmailFeedback(selectedQuoteRequest);
-        }
-
-        function SendRejectionQuotesRequstEmailFeedback(QuoteRequestId) {
-            var selectedQuoteRequest = $.AllQuotesRequests.find(d => d.Id == QuoteRequestId);
-            selectedQuoteRequest.Feedback = "Rejected";
+        function SendApprovalQuotesRequstEmailFeedback(QuoteRequestOptionId) {
+            var selectedQuoteRequest = $.AllQuotesRequests.find(d => d.Id == QuoteRequestOptionId.replace('Option', ''));
+            var feedback = document.getElementById(QuoteRequestOptionId).value;
+            selectedQuoteRequest.Feedback = feedback.indexOf('Approv') > -1 ? "Approved" : "Rejected";
             selectedQuoteRequest.Comments = $('#Comment' + selectedQuoteRequest.Id).val();
             DisabledQuotesRequestProperties(selectedQuoteRequest);
             SendQuotesRequstEmailFeedback(selectedQuoteRequest);
         }
 
         function DisabledQuotesRequestProperties(selectedQuoteRequest) {
-            $('#Comment' + selectedQuoteRequest.Id).attr('readonly', 'readonly');
-            $('#' + selectedQuoteRequest.Id + 'Option').attr('disabled', 'disabled');
+            //$('#OLDComment' + selectedQuoteRequest.Id).val($('#Comment' + selectedQuoteRequest.Id).val());
+            //$('#Comment' + selectedQuoteRequest.Id).val('');
+            $('#Option' + selectedQuoteRequest.Id).attr('disabled', 'disabled');
+        }
+
+        function RefreshQuotesRequstsData() {
+            $("#QuotesRequestsBusyIndicator").show();
+            $.LoadQuotesRequsts();
         }
 
         function SendQuotesRequstEmailFeedback(selectedQuoteRequest) {
+            $("#QuotesRequestsListBox").html("");
+            $("#QuotesRequestsBusyIndicator").show();
             var quotesRequestEmailFeedbackArgs = new QuotesRequestEmailFeedback(selectedQuoteRequest);
             var url = "api/QuotesRequest/UpdateQuotesRequestAndSendEmailFeedback";
             $.ajax({
@@ -1084,7 +1163,7 @@
                 contentType: 'application/json',
                 headers: { 'Token': $.Token },
                 success: function () {
-                    //Success
+                    $.LoadQuotesRequsts();
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     $.CheckUserException(jqXHR);
