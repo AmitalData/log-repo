@@ -9,5 +9,6 @@ namespace Logitude.CRMTests.Models
     public static class CRMData
     {
         public static string ActivityTaskId { get; set; }
+        public static string ActivityAppointmentId { get; set; }
     }
 }

@@ -14,12 +14,19 @@ namespace Logitude.CRMTests.Hooks
         public static void SetUpPrepareDataBeforeFeatureRun()
         {
             new ActivityTaskDataPreparation().Prepar();
+            new ActivityAppointmentDataPreparation().Prepar();
         }
 
         [BeforeFeature("Pre-Prepare-Activity-Task")]
-        public static void SetUpPrepareDataBeforeFeatureRunEntry()
+        public static void SetUpPrepareDataBeforeFeatureRunActivityTask()
         {
             new ActivityTaskDataPreparation().Prepar();
+        }
+
+        [BeforeFeature("Pre-Prepare-Activity-Appointment")]
+        public static void SetUpPrepareDataBeforeFeatureRunActivityAppointment()
+        {
+            new ActivityAppointmentDataPreparation().Prepar();
         }
     }
 }
