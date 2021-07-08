@@ -39,12 +39,30 @@ namespace Logitude.CRMTests.Models.Builders
             return this;
         }
 
+        public ActivityBuilder Location(string location)
+        {
+            _activity.Location = location;
+            return this;
+        }
+
+
         public ActivityBuilder Description(string description)
         {
             _activity.Description = description;
             return this;
         }
 
+        public ActivityBuilder ActivityTimeTypeCode(string activityTimeTypeCode)
+        {
+            _activity.ActivityTimeTypeCode = activityTimeTypeCode;
+            return this;
+        }      
+
+        public ActivityBuilder Duration(int? duration)
+        {
+            _activity.Duration = duration;
+            return this;
+        }
 
         public ActivityBuilder StartDateTime(DateTime? dateTime)
         {
@@ -55,6 +73,11 @@ namespace Logitude.CRMTests.Models.Builders
         public ActivityBuilder DueDate(DateTime? dueDate)
         {
             _activity.DueDate = dueDate;
+            return this;
+        }   
+        public ActivityBuilder EndDateTime(DateTime? endDateTime)
+        {
+            _activity.EndDateTime = endDateTime;
             return this;
         }
 

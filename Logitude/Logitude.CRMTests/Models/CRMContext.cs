@@ -9,5 +9,6 @@ namespace Logitude.CRMTests.Models
     public class CRMContext
     {
         public ActivityPM ActiviyTask { get; set; }
+        public ActivityPM ActiviyAppointment { get; set; }
     }
 }
