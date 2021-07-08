@@ -80,9 +80,10 @@
     <field Id="&quot;3e2e2d47-cc02-4c85-bdf2-33adbf1dae55&quot;" Code="&quot;[Invoice Line Foreign Currency]&quot;" Name="&quot;Invoice Line Foreign Currency&quot;" DataTypeCode="&quot;Dimension&quot;" IsRequired="false" MinLength="0" MaxLength="0" DimensionTableCode="&quot;DIM_Currencies&quot;" IsPrimaryKey="false" IsMeasurement="false" DisplayInQueryBuilder="true" Category1="&quot;Money&quot;" HideTree="false" CannotFilter="false" IsCustom="false" DontDisplayInView="false" IsMultipleSelection="false" />
   </fields>
   <Indexes>
-    <Index Columns="[Source Tenant],[Shipment Create Date]" />
-    <Index Columns="[Source Tenant],[Shipment Create Date Time]" />
-    <Index Columns="[Source Tenant],[Invoice Date]" />
-    <Index Columns="[Source Tenant],[DirectHouse]" />
+      <Index Columns="[Source Tenant],[Shipment Create Date]" />
+      <Index Columns="[Source Tenant],[Shipment Create Date Time]" />
+      <Index Columns="[Source Tenant],[Invoice Date]" />
+      <Index Columns="[Source Tenant],[DirectHouse]" />
+      <Index Columns="[Source Tenant]" />
   </Indexes>
 </entity>
