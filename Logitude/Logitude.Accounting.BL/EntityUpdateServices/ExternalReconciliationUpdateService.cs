@@ -135,13 +135,15 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             if (transactionPM.SourceTypeCode == AccountingEntityValues.ChequeDeposit)
             {
-                var transactionComesFromDeferedAccountChequesMovingService = transactionPM.OppositeAccountId == externalRecoPM.BankAccountId;
+                BankAccountPM bankAccount = GetBankAccountForExternalReconciliation(externalRecoPM);
+
+                var transactionComesFromDeferedAccountChequesMovingService = transactionPM.OppositeAccountId == bankAccount?.DeferredGLAccountId;
                 bool transactionHasOnlyOneCheque = !string.IsNullOrEmpty(transactionPM.Reference2);
                 var isDebitTransaction = (transactionPM.ForeignAmountDebit + transactionPM.LocalAmountDebit) != 0;
-                
+
                 if (isDebitTransaction && transactionComesFromDeferedAccountChequesMovingService)
                     return GetChequeOfDepositTransactionBySourceAndReference(transactionPM.Reference1, transactionPM.SourceId, transactionPM.Tenant);
-                else if(isDebitTransaction && !transactionHasOnlyOneCheque) 
+                else if (isDebitTransaction && !transactionHasOnlyOneCheque)
                     return GetChequeOfDepositTransactionBySource(transactionPM.SourceId, transactionPM.Tenant);
                 else
                     return GetChequeOfDepositTransactionBySourceAndReference(transactionPM.Reference2, transactionPM.SourceId, transactionPM.Tenant);
