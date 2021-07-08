@@ -37,6 +37,7 @@
     <field Id="&quot;5690d751-79f3-492f-b6d9-57a49b25e2b3&quot;" Code="&quot;[Bill To]&quot;" Name="&quot;Bill To&quot;" DataTypeCode="&quot;Text&quot;" IsRequired="false" MinLength="0" MaxLength="70" IsPrimaryKey="false" IsMeasurement="false" DisplayInQueryBuilder="false" HideTree="false" CannotFilter="false" IsCustom="false" DontDisplayInView="true" IsMultipleSelection="false" />
   </fields>
   <Indexes>
-    <Index Columns="[InActive],[Source Tenant]" />
+      <Index Columns="[InActive],[Source Tenant]" />
+      <Index Columns="[InActive], [Source Tenant], [Country]" />
   </Indexes>
 </entity>

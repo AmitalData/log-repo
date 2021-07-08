@@ -39,7 +39,8 @@
     <field Id="&quot;d99f83cf-a1eb-4bee-9c50-ab7aa8f2beb0&quot;" Code="&quot;[AR_AP Invoice]&quot;" Name="&quot;AR_AP Invoice&quot;" DataTypeCode="&quot;Dimension&quot;" IsRequired="false" MinLength="0" MaxLength="0" DimensionTableCode="&quot;DIM_InvoiceMainTypes&quot;" IsPrimaryKey="false" IsMeasurement="false" DisplayInQueryBuilder="true" Category1="&quot;General&quot;" HideTree="false" CannotFilter="false" IsCustom="false" DontDisplayInView="false" IsMultipleSelection="false" />
   </fields>
   <Indexes>
-    <Index Columns="[Source Tenant],[Create Date]" />
-    <Index Columns="[Source Tenant],[Main Entity Id]" />
+      <Index Columns="[Source Tenant],[Create Date]" />
+      <Index Columns="[Source Tenant],[Main Entity Id]" />
+      <Index Columns="[Id]" />
   </Indexes>
 </entity>
