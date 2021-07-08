@@ -121,8 +121,8 @@ this.ScenarioInitialize(scenarioInfo);
                             "Description",
                             "specflow desc"});
                 table1.AddRow(new string[] {
-                            "ActivityTimeTypeCode",
-                            "BS"});
+                            "ActivityTimeType",
+                            "Busy"});
                 table1.AddRow(new string[] {
                             "Duration",
                             "30"});

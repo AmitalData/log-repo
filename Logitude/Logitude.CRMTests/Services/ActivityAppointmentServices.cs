@@ -16,7 +16,7 @@ namespace Logitude.CRMTests.Services
                 .Subject((string)dataTable.Subject)
                 .Location((string)dataTable.Location)
                 .Description((string)dataTable.Description)
-                .ActivityTimeTypeCode((string)dataTable.ActivityTimeTypeCode)
+                .ActivityTimeTypeCode((string)dataTable.ActivityTimeType)
                 .Duration((int)dataTable.Duration)
                 .StartDateTime(Convert.ToString(dataTable.StartDateTime).Length == 0 ? null : (DateTime?)dataTable.StartDateTime)
                 .EndDateTime(Convert.ToString(dataTable.EndDateTime).Length == 0 ? null : (DateTime?)dataTable.EndDateTime)
