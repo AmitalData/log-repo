@@ -766,66 +766,16 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
-                //object myResult = null;
-
                 if (!string.IsNullOrEmpty(ObjectTableName))
                 {
                     bool isFullTextSearch = false;
-
-                    //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-                    //{
-                    //    SettingRepository mySettingRepository = new SettingRepository();
-                    //    Setting mySetting = mySettingRepository.GetSingleSetting("1");
-
-                    //    if (mySetting != null)
-                    //    {
-                    //        if (mySetting.DeploymentStage != null)
-                    //        {
-                    //            if (mySetting.DeploymentStage.ToLower() == "amitalstorage" || mySetting.DeploymentStage.ToLower() == "dev")
-                    //            {
-                    //                isFullTextSearch = true;
-                    //            }
-                    //        }
-                    //    }
-                    //    if (isFullTextSearch == false)
-                    //    {
-                    //        string loggedUserEmail = authToken.Email;
-                    //        string loggedContactId = null;
-                    //        ContactQuery contactQuery = new ContactQuery(tenant);
-                    //        ContactPM loggedContact = contactQuery.GetContactByEmailOnly(loggedUserEmail, tenant);
-                    //        if (loggedContact != null)
-                    //        {
-                    //            loggedContactId = loggedContact.Id;
-                    //        }
-                    //        if (loggedContactId == "1-23905" || loggedContactId == "1-60232" || loggedContactId == "1-16354")//Ayman,Ihab and Rabaia
-                    //        {
-                    //            isFullTextSearch = true;
-                    //        }
-                    //    }
-
-                    //}
-
-                    //if (isFullTextSearch == false)
-                    //{
-                    //    string loggedUserEmail = authToken.Email;
-                    //    string loggedContactId = null;
-                    //    ContactQuery contactQuery = new ContactQuery(tenant);
-                    //    ContactPM loggedContact = contactQuery.GetContactByEmailOnly(loggedUserEmail, tenant);
-                    //    if (loggedContact != null)
-                    //    {
-                    //        loggedContactId = loggedContact.Id;
-                    //    }
-                    //    if (loggedContactId == "1-23905" || loggedContactId == "1-60232" || loggedContactId == "1-16354")//Ayman,Ihab and Rabaia
-                    //    {
-                    //        isFullTextSearch = true;
-                    //    }
-                    //}
                     TenantRepository myTenantRepository = new TenantRepository(tenant);
                     Tenant myTenant = myTenantRepository.GetSingleTenant(tenant);
                     if (myTenant != null)
                     {
                         isFullTextSearch = myTenant.IsFullTextSearchEnabled;
                     }
+
                     QueryOperations myQueryOperations = new QueryOperations();
                     myQueryOperations.PageIndex = 0;
                     myQueryOperations.PageSize = 10;
@@ -855,8 +805,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                                 else
                                 {
-                                    //IQueryable<ShipmentList> myResult = myDomainService.GetShipmentFilters(arrayOfBytes, tenant);
-
                                     IShipmentsContext iContext = ShipmentsContext.GetContext(tenant);
                                     IQueryable<Shipment> iQueryable = (from d in iContext.Shipments where d.Tenant == tenant select d);
 
@@ -890,6 +838,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                                                        House = x.House,
                                                                        ShipmentLevelCode = x.ShipmentLevelCode,
                                                                        AgentName = x.AgentCard == null? null : x.AgentCard.EnglishName,
+                                                                       OpenPayablesInProfitCurrency = x.OpenPayablesInProfitCurrency,
+                                                                       AccountedPayablesInProfitCurrency = x.AccountedPayablesInProfitCurrency,
+                                                                       OpenPayablesInLocalCurrency = x.OpenPayablesInLocalCurrency,
+                                                                       AccountedPayablesInLocalCurrency = x.AccountedPayablesInLocalCurrency,
                                                                    }).ToList();
 
                                     return Request.CreateResponse(HttpStatusCode.OK, myResult);

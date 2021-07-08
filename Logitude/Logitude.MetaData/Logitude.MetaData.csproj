@@ -204,6 +204,7 @@
     <None Include="DBScripts\CommonModel\202105161305_AddCustomerProductItemEventTypesToTenants.sxml" />
     <None Include="DBScripts\CommonModel\202103161606_AddNewUOMPercentOForeignChargesLocalAmounts.sxml" />
     <None Include="DBScripts\CommonModel\202104071606_FillTermsofUseVersionNumber.sxml.sxml" />
+    <None Include="DBScripts\CommonModel\202107071250_CopySCXChargesTypeToAllTenants.sxml" />
     <None Include="DBScripts\CommonModel\UpdateTermsOfUsePrimaryKey.sxml" />
     <None Include="DBScripts\CommonModel\202104161424_UpdateTenantRatios.sxml" />
     <None Include="DBScripts\CommonModel\202104161425_UpdateTenantRatiosOnCloud.sxml" />

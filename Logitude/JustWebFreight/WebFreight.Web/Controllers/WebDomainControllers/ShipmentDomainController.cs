@@ -2927,6 +2927,40 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        public HttpResponseMessage GetShipmentsForMultipleAPInvoice(string invoiceId, string vendorId)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        string loggedUserEmail = authToken.Email;
+                        int tenant = authToken.Tenant;
+
+                        ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+                        List<ShipmentList> myResult = shipmentQuery.GetShipmentsForMultipleAPInvoice(invoiceId, vendorId, tenant);                      
+                        
+                        scope.Complete();
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+            }
+        }
+
         public HttpResponseMessage GetIfShipmentPackagesConnectedToStandAloneShipmentPackage(string shipmentId)
         {
             try

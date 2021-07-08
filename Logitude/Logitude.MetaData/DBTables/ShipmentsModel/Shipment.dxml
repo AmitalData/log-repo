@@ -3160,6 +3160,51 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="PrivateLabelInvoiceNumber"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PrivateLabelIncludePickup"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PrivateLabelIncludeDelivery"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="RequestedFlightDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PlannedCargoReadyDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ApprovedCargoReadyDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="HandlerUserId"
+    OldNames="Handler"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="ForwarderPickUpDeliveryType"
     Type="varchar"
     Size="15">
@@ -3882,6 +3927,11 @@
     ForeignKeyColumn="OnForwardingAdditionalTransportModeCode"
     ReferencedTable="PickUpDeliveryTransportModes"
     ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="HandlerUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant,CustomFileNumber" />

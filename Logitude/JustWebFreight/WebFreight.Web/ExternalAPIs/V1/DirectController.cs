@@ -102,69 +102,79 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             computingPartnerCode = entity.ComputingPartnerCode;
                         }
 
-                        if (entity.TransportMode != null && entity.ShipmentType != null)
+                        if (entity.TransportMode != null)
                         {
-                            if (!IsInlandDomesticShipment(entity))
+                            if(entity.ShipmentType != null)
                             {
-                                if (entity.TransportMode.Code != "A")
+                                if (!IsInlandDomesticShipment(entity))
                                 {
-                                    if (entity.OceanOrInlandPackages != null && entity.OceanOrInlandPackages.Count > 0)
+                                    if (entity.TransportMode.Code != "A")
                                     {
-                                        foreach (OceanOrInlandPackage item in entity.OceanOrInlandPackages)
+                                        if (entity.OceanOrInlandPackages != null && entity.OceanOrInlandPackages.Count > 0)
                                         {
-                                            if (item.InsidePackages != null && item.InsidePackages.Count > 0)
+                                            foreach (OceanOrInlandPackage item in entity.OceanOrInlandPackages)
                                             {
-                                                foreach (InsidePackage itemInside in item.InsidePackages)
+                                                if (item.InsidePackages != null && item.InsidePackages.Count > 0)
                                                 {
-                                                    if (itemInside.PackageType != null)
+                                                    foreach (InsidePackage itemInside in item.InsidePackages)
                                                     {
-                                                        Logitude.BL.CommonDataModel.APIDataContract.ApiV1.PackageTypeQueryService PackageTypeService0 = new Logitude.BL.CommonDataModel.APIDataContract.ApiV1.PackageTypeQueryService(authToken.Tenant);
-                                                        PackageTypePM PackageTypePM = PackageTypeService0.PackageTypeDataMappingAndValidatin(itemInside.PackageType, authToken.Tenant);
-                                                        if (PackageTypePM != null)
+                                                        if (itemInside.PackageType != null)
                                                         {
-                                                            if (PackageTypePM.IsContainer == true)
+                                                            Logitude.BL.CommonDataModel.APIDataContract.ApiV1.PackageTypeQueryService PackageTypeService0 = new Logitude.BL.CommonDataModel.APIDataContract.ApiV1.PackageTypeQueryService(authToken.Tenant);
+                                                            PackageTypePM PackageTypePM = PackageTypeService0.PackageTypeDataMappingAndValidatin(itemInside.PackageType, authToken.Tenant);
+                                                            if (PackageTypePM != null)
                                                             {
-                                                                throw new ApplicationException("Invalid Inside Package Type Code");
+                                                                if (PackageTypePM.IsContainer == true)
+                                                                {
+                                                                    throw new ApplicationException("Invalid Inside Package Type Code");
+                                                                }
                                                             }
-                                                        }
-                                                        else
-                                                        {
-                                                            itemInside.PackageType = null;
+                                                            else
+                                                            {
+                                                                itemInside.PackageType = null;
+                                                            }
                                                         }
                                                     }
                                                 }
-                                            }
 
-                                            if (item.PackageType == null)
-                                            {
-                                                string message = entity.ShipmentType.Code.Contains("LCL") ? "Package Type is required" : "Container Type is required";
-                                                throw new ApplicationException(message);
-                                            }
-
-                                            else
-                                            {
-                                                if (entity.ShipmentType.Code.Contains("FCL") || entity.ShipmentType.Code.Contains("FTL"))
+                                                if (item.PackageType == null)
                                                 {
-                                                    if (item.Pieces == null || item.Pieces == 0)
+                                                    string message = entity.ShipmentType.Code.Contains("LCL") ? "Package Type is required" : "Container Type is required";
+                                                    throw new ApplicationException(message);
+                                                }
+
+                                                else
+                                                {
+                                                    if (entity.ShipmentType.Code.Contains("FCL") || entity.ShipmentType.Code.Contains("FTL"))
                                                     {
-                                                        item.Pieces = 1;
+                                                        if (item.Pieces == null || item.Pieces == 0)
+                                                        {
+                                                            item.Pieces = 1;
+                                                        }
                                                     }
                                                 }
                                             }
                                         }
                                     }
                                 }
-                            }else
-                            {
-                                entity.OceanOrInlandPackages = null;
-                            }
-                        }
 
-                        if (entity.TransportMode != null && entity.TransportMode.Code != "A")
-                        {
-                            if (entity.ShipmentType == null || (entity.ShipmentType != null && string.IsNullOrEmpty(entity.ShipmentType.Code)))
+                                else
+                                {
+                                    entity.OceanOrInlandPackages = null;
+                                }
+                            }
+
+                            if(entity.TransportMode.Code == "A")
                             {
-                                throw new ApplicationException("Missing Shipment Type");
+                                this.ValidateMasterNumberAndCarrier(entity);
+                            }
+
+                            else
+                            {
+                                if (entity.ShipmentType == null || (entity.ShipmentType != null && string.IsNullOrEmpty(entity.ShipmentType.Code)))
+                                {
+                                    throw new ApplicationException("Missing Shipment Type");
+                                }
                             }
                         }
 
@@ -246,10 +256,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         this.ValidateShipmentClosure(entity, entityPM, authToken.Tenant);
 
                         AddressRepository addressRepository = new AddressRepository(entityPM.Tenant);
-                        //this.SetPartnersAddresses(entityPM, addressRepository, authToken.Tenant);
                         this.ValidateAndSetCustomerData(entityPM, addressRepository, authToken.Tenant);
-
-                      
 
                         if (!string.IsNullOrEmpty(entityPM.IncotermId))
                         {
@@ -261,6 +268,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 entityPM.OtherPrepaidCollectId = myIncoterm.OtherCharges;
                             }
                         }
+
                         if (!IsInlandDomesticShipment(entityPM))
                         {
                             if (entityPM.ShipmentPackages.Count > 0)
@@ -370,6 +378,32 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
         }
+
+        private void ValidateMasterNumberAndCarrier(Direct entity)
+        {
+            bool validate = false;
+            if(!string.IsNullOrEmpty(entity.Master))
+            {
+                if(entity.MainCarriageCarrier == null)
+                {
+                    validate = true;
+                }
+
+                else
+                {
+                    if (string.IsNullOrEmpty(entity.MainCarriageCarrier.Code))
+                    {
+                        validate = true;
+                    }
+                }
+            }
+
+            if (validate)
+            {
+                throw new ApplicationException("Main Carriage Carrier is required when sending MAWB");
+            }
+        }
+
         private void ValidateUnitCodes(ShipmentPM entityPM)
         {
             if (string.IsNullOrEmpty(entityPM.VolumeUnitCode))
@@ -518,72 +552,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
             }
         }
 
-        // Ayman Handled in Shipment Service (keep it DRY)
-        //private void SetPartnersAddresses(ShipmentPM entityPM, AddressRepository addressRepository, int tenant)
-        //{
-        //    if (!string.IsNullOrEmpty(entityPM.ShipperId))
-        //    {
-        //        Address address = addressRepository.GetMainAddressByCardId(entityPM.ShipperId, tenant);
-        //        if (address != null)
-        //        {
-        //            entityPM.ShipperAddressId = address.Id;
-        //        }
-        //    }
-
-        //    if (!string.IsNullOrEmpty(entityPM.ConsigneeId))
-        //    {
-        //        Address address = addressRepository.GetMainAddressByCardId(entityPM.ConsigneeId, tenant);
-        //        if (address != null)
-        //        {
-        //            entityPM.ConsigneeAddressId = address.Id;
-        //        }
-        //    }
-
-        //    if (!string.IsNullOrEmpty(entityPM.ShipperNotExporterId))
-        //    {
-        //        Address address = addressRepository.GetMainAddressByCardId(entityPM.ShipperNotExporterId, tenant);
-        //        if (address != null)
-        //        {
-        //            entityPM.ShipperNotExporterAddressId = address.Id;
-        //        }
-        //    }
-
-        //    if (!string.IsNullOrEmpty(entityPM.AgentId))
-        //    {
-        //        Address address = addressRepository.GetMainAddressByCardId(entityPM.AgentId, tenant);
-        //        if (address != null)
-        //        {
-        //            entityPM.AgentAddressId = address.Id;
-        //        }
-        //    }
-
-        //    if (!string.IsNullOrEmpty(entityPM.CustomAgentImportId))
-        //    {
-        //        Address address = addressRepository.GetMainAddressByCardId(entityPM.CustomAgentImportId, tenant);
-        //        if (address != null)
-        //        {
-        //            entityPM.CustomAgentImportAddressId = address.Id;
-        //        }
-        //    }
-
-        //    if (!string.IsNullOrEmpty(entityPM.ReleasingAgentId))
-        //    {
-        //        Address address = addressRepository.GetMainAddressByCardId(entityPM.ReleasingAgentId, tenant);
-        //        if (address != null)
-        //        {
-        //            entityPM.ReleasingAgentAddressId = address.Id;
-        //        }
-        //    }
-
-        //    if (!string.IsNullOrEmpty(entityPM.FreightForwarderId))
-        //    {
-        //        Address address = addressRepository.GetMainAddressByCardId(entityPM.FreightForwarderId, tenant);
-        //        if (address != null)
-        //        {
-        //            entityPM.FreightForwarderAddressId = address.Id;
-        //        }
-        //    }
-        //}
         private void ValidateAndSetCustomerData(ShipmentPM entityPM, AddressRepository addressRepository, int tenant)
         {
             if (!string.IsNullOrEmpty(entityPM.CustomerId))
@@ -810,6 +778,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
+                    if (entity.TransportMode != null && entity.TransportMode.Code == "A")
+                    {
+                        this.ValidateMasterNumberAndCarrier(entity);
+                    }
+
                     if (FeatureToggleHelper.HasFeatureToggle("API", authToken.Tenant))
                     {
                         IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
@@ -872,298 +845,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 var apiExceptionResult = ApiExceptionHandler.HandleModelException(ModelState);
                 APIHelper.AddCommunicationLog("F", entity, apiExceptionResult.Exception, "Shipment", null, "Direct API");
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
-            }
-        }
-
-        private void MapDirectToEntityPM(ShipmentPM directPM, ShipmentPM entityPM, IShipmentsContext MyContext)
-        {
-            entityPM.ShipmentLevelCode = directPM.ShipmentLevelCode;
-            entityPM.DirectionId = directPM.DirectionId;
-            entityPM.TransportModeId = directPM.TransportModeId;
-            entityPM.ShipperId = directPM.ShipperId;
-            entityPM.ShipperReference1 = directPM.ShipperReference1;
-            entityPM.ShipperReference2 = directPM.ShipperReference2;
-            entityPM.ConsigneeId = directPM.ConsigneeId;
-            entityPM.ConsigneeReference1 = directPM.ConsigneeReference1;
-            entityPM.ConsigneeReference2 = directPM.ConsigneeReference2;
-            entityPM.CustomerId = directPM.CustomerId;
-            entityPM.FromPortId = directPM.FromPortId;
-            entityPM.ToPortId = directPM.ToPortId;
-            entityPM.GrossWeightUnitCode = directPM.GrossWeightUnitCode;
-            entityPM.ChargeableWeightUnitCode = directPM.ChargeableWeightUnitCode;
-            entityPM.VolumeUnitCode = directPM.VolumeUnitCode;
-            entityPM.IncotermCode = directPM.IncotermCode;
-            entityPM.IncotermId = directPM.IncotermId;
-            entityPM.DescriptionOfGoods = directPM.DescriptionOfGoods;
-            entityPM.ShipmentPackages = directPM.ShipmentPackages;
-            entityPM.BranchId = directPM.BranchId;
-            entityPM.BranchId = directPM.BranchId;
-            entityPM.DepartmentId = directPM.DepartmentId;
-            entityPM.TEU = directPM.TEU;
-            entityPM.NumberOfPackages = directPM.NumberOfPackages;
-            entityPM.GrossWeight = directPM.GrossWeight;
-            entityPM.Volume = directPM.Volume;
-            entityPM.VolumetricWeight = directPM.VolumetricWeight;
-            entityPM.ChargeableWeight = directPM.ChargeableWeight;
-            entityPM.Master = directPM.Master;
-            entityPM.MainCarriageCarrierCode = directPM.MainCarriageCarrierCode;
-            entityPM.MainCarriageCarrierId = directPM.MainCarriageCarrierId;
-            entityPM.MainCarriageFromPortId = directPM.MainCarriageFromPortId;
-            entityPM.MainCarriageToPortId = directPM.MainCarriageToPortId;
-
-        }
-
-        private void RemovePackages(ShipmentPM directPM, ShipmentPM entityPM, IShipmentsContext MyContext)
-        {
-            ShipmentPackageQuery shipPackageQuery = new ShipmentPackageQuery(new ShipmentPackageRepository(MyContext));
-            entityPM.ShipmentPackages = shipPackageQuery.GetShipmentPackages(entityPM.Id, entityPM.ShipmentNumber, entityPM.Tenant);
-            foreach (ShipmentPackagePM package in entityPM.ShipmentPackages)
-            {
-                package.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Delete;
-            }
-
-            if (directPM.ShipmentPackages.Count > 0)
-            {
-                foreach (ShipmentPackagePM package in directPM.ShipmentPackages)
-                {
-                    package.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
-                    entityPM.ShipmentPackages.Add(package);
-                }
-            }
-
-        }
-
-        private void CheckEntityChanges(ShipmentPM entityPM, Shipment entityPoco)
-        {
-            if (entityPM.IsOperationalClosed)
-            {
-                if (entityPM.ShipperId != entityPoco.ShipperId)
-                {
-                    throw new ApplicationException("You can't change shipper, because this direct is closed");
-                }
-
-                else if (entityPM.ConsigneeId != entityPoco.ConsigneeId)
-                {
-                    throw new ApplicationException("You can't change consignee, because this direct is closed");
-                }
-
-                else if (entityPM.CustomerId != entityPoco.CustomerId)
-                {
-                    throw new ApplicationException("You can't change customer, because this direct is closed");
-                }
-
-                else if (entityPM.FromPortId != entityPoco.FromPortId)
-                {
-                    throw new ApplicationException("You can't change from port, because this direct is closed");
-                }
-
-                else if (entityPM.ToPortId != entityPoco.ToPortId)
-                {
-                    throw new ApplicationException("You can't change to port, because this direct is closed");
-                }
-
-                else if (entityPM.ChargeableWeightUnitCode != entityPoco.ChargeableWeightUnitCode)
-                {
-                    throw new ApplicationException("You can't change Chargeable Weight Unit, because this direct is closed");
-                }
-
-                else if (entityPM.GrossWeightUnitCode != entityPoco.GrossWeightUnitCode)
-                {
-                    throw new ApplicationException("You can't change Gross Weight Unit, because this direct is closed");
-                }
-
-                else if (entityPM.VolumeUnitCode != entityPoco.VolumeUnitCode)
-                {
-                    throw new ApplicationException("You can't change Volume Unit, because this direct is closed");
-                }
-
-                else if (entityPM.HAWBDate != entityPoco.HAWBDate)
-                {
-                    throw new ApplicationException("You can't change HAWB Date, because this direct is closed");
-                }
-
-                else if (entityPM.DescriptionOfGoods != entityPoco.DescriptionOfGoods)
-                {
-                    throw new ApplicationException("You can't change Description Of Goods, because this direct is closed");
-                }
-
-                else if (entityPM.BranchId != entityPoco.BranchId)
-                {
-                    throw new ApplicationException("You can't change Branch, because this direct is closed");
-                }
-
-                else if (entityPM.DepartmentId != entityPoco.DepartmentId)
-                {
-                    throw new ApplicationException("You can't change Department, because this direct is closed");
-                }
-
-                else
-                {
-                    ShipmentPackageRepository packageRepository = new ShipmentPackageRepository(entityPM.Tenant);
-                    List<ShipmentPackage> packages = packageRepository.GetShipmentPackagesForShipmentTenant(entityPM.Id, entityPM.Tenant).ToList();
-
-                    if (packages.Count < entityPM.ShipmentPackages.Count)
-                    {
-                        throw new ApplicationException("You can't add packages, because this direct is closed");
-                    }
-
-                    else if (packages.Count > entityPM.ShipmentPackages.Count)
-                    {
-                        throw new ApplicationException("You can't delete packages, because this direct is closed");
-                    }
-
-                    //else
-                    //{
-                    //    foreach (ShipmentPackagePM itemPM in entityPM.ShipmentPackages)
-                    //    {
-                    //        ShipmentPackage item = packages.Where(d => d.Id == itemPM.Id).FirstOrDefault();
-
-                    //        if (itemPM.PackageTypeId != item.PackageTypeId)
-                    //        {
-                    //            throw new ApplicationException("You can't change Package Type, because this direct is closed");
-                    //        }
-
-                    //        else if (itemPM.Length != item.Length)
-                    //        {
-                    //            throw new ApplicationException("You can't change Length, because this direct is closed");
-                    //        }
-
-                    //        else if (itemPM.Width != item.Width)
-                    //        {
-                    //            throw new ApplicationException("You can't change Width, because this direct is closed");
-                    //        }
-
-                    //        else if (itemPM.Height != item.Height)
-                    //        {
-                    //            throw new ApplicationException("You can't change Height, because this direct is closed");
-                    //        }
-
-                    //        else if (itemPM.Quantity != item.Quantity)
-                    //        {
-                    //            throw new ApplicationException("You can't change Quantity, because this direct is closed");
-                    //        }
-
-                    //        else if (itemPM.Volume != item.Volume)
-                    //        {
-                    //            throw new ApplicationException("You can't change Volume, because this direct is closed");
-                    //        }
-
-                    //        else if (itemPM.Weight != item.Weight)
-                    //        {
-                    //            throw new ApplicationException("You can't change Weight, because this direct is closed");
-                    //        }
-
-                    //        else if (itemPM.Reference1 != item.Reference1)
-                    //        {
-                    //            throw new ApplicationException("You can't change Reference 1, because this direct is closed");
-                    //        }
-
-                    //        else if (itemPM.Reference2 != item.Reference2)
-                    //        {
-                    //            throw new ApplicationException("You can't change Reference 2, because this direct is closed");
-                    //        }
-
-                    //        else if (itemPM.Reference3 != item.Reference3)
-                    //        {
-                    //            throw new ApplicationException("You can't change Reference 3, because this direct is closed");
-                    //        }
-
-                    //        else if (itemPM.CommodityNumber != item.CommodityNumber)
-                    //        {
-                    //            throw new ApplicationException("You can't change Commodity Number, because this direct is closed");
-                    //        }
-
-                    //        if (!string.IsNullOrEmpty(entityPM.ShipmentLevelCode))
-                    //        {
-                    //            if (itemPM.Seal != item.Seal)
-                    //            {
-                    //                throw new ApplicationException("You can't change Seal, because this direct is closed");
-                    //            }
-
-                    //            else if (itemPM.Seal2 != item.Seal2)
-                    //            {
-                    //                throw new ApplicationException("You can't change Seal 2, because this direct is closed");
-                    //            }
-                    //        }
-
-                    //        if (!string.IsNullOrEmpty(entityPM.ShipmentLevelCode) && entityPM.ShipmentLevelCode != "FCLD")
-                    //        {
-                    //            if (itemPM.Harmonize != item.Harmonize)
-                    //            {
-                    //                throw new ApplicationException("You can't change Length, because this direct is closed");
-                    //            }
-
-                    //            else if (itemPM.Temperature != item.Temperature)
-                    //            {
-                    //                throw new ApplicationException("You can't change Temperature, because this direct is closed");
-                    //            }
-
-                    //            else if (itemPM.Ventilation != item.Ventilation)
-                    //            {
-                    //                throw new ApplicationException("You can't change Ventilation, because this direct is closed");
-                    //            }
-
-                    //            else if (itemPM.IsDangerous != item.IsDangerous)
-                    //            {
-                    //                throw new ApplicationException("You can't change Is Dangerous, because this direct is closed");
-                    //            }
-
-                    //            else if (itemPM.ClassNumber != item.ClassNumber)
-                    //            {
-                    //                throw new ApplicationException("You can't change Class Number, because this direct is closed");
-                    //            }
-
-                    //            else if (itemPM.UnNumber != item.UnNumber)
-                    //            {
-                    //                throw new ApplicationException("You can't change Un Number, because this direct is closed");
-                    //            }
-
-                    //            else if (itemPM.PackagingGroup != item.PackagingGroup)
-                    //            {
-                    //                throw new ApplicationException("You can't change Packaging Group, because this direct is closed");
-                    //            }
-
-                    //            else if (itemPM.IMDGCode != item.IMDGCode)
-                    //            {
-                    //                throw new ApplicationException("You can't change IMDG Code, because this direct is closed");
-                    //            }
-
-                    //            else if (itemPM.FlashPoint != item.FlashPoint)
-                    //            {
-                    //                throw new ApplicationException("You can't change Flash Point, because this direct is closed");
-                    //            }
-
-                    //            else if (itemPM.MaterialDescription != item.MaterialDescription)
-                    //            {
-                    //                throw new ApplicationException("You can't change Material Description, because this direct is closed");
-                    //            }
-                    //        }
-
-                    //        if (entityPM.ShipmentLevelCode == "FCLD")
-                    //        {
-                    //            if (itemPM.Tare != item.Tare)
-                    //            {
-                    //                throw new ApplicationException("You can't change Tare, because this direct is closed");
-                    //            }
-
-                    //            else if (itemPM.MarksAndNumbers != item.MarksAndNumbers)
-                    //            {
-                    //                throw new ApplicationException("You can't change Marks And Numbers, because this direct is closed");
-                    //            }
-                    //        }
-                    //    }
-                    //}
-                }
-            }
-
-            else if (entityPM.IsAccountingClosed)
-            {
-                throw new ApplicationException("Shipment Is Accounting closed, you can't do any change");
-            }
-
-            else if (entityPM.IsCancelled)
-            {
-                throw new ApplicationException("Shipment Is cancelled, you can't do any change");
             }
         }
 

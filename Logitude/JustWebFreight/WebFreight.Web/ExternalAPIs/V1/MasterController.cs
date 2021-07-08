@@ -103,11 +103,19 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         computingPartnerCode = entity.ComputingPartnerCode;
                     }
 
-                    if (entity.TransportMode != null && entity.TransportMode.Code != "A")
+                    if (entity.TransportMode != null)
                     {
-                        if (entity.ShipmentType == null || (entity.ShipmentType != null && string.IsNullOrEmpty(entity.ShipmentType.Code)))
+                        if (entity.TransportMode.Code == "A")
                         {
-                            throw new ApplicationException("Missing Shipment Type");
+                            this.ValidateMasterNumberAndCarrier(entity);
+                        }
+
+                        else
+                        {
+                            if (entity.ShipmentType == null || (entity.ShipmentType != null && string.IsNullOrEmpty(entity.ShipmentType.Code)))
+                            {
+                                throw new ApplicationException("Missing Shipment Type");
+                            }
                         }
                     }
 
@@ -716,6 +724,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
+                    if (entity.TransportMode != null && entity.TransportMode.Code == "A")
+                    {
+                        this.ValidateMasterNumberAndCarrier(entity);
+                    }
+
                     if (FeatureToggleHelper.HasFeatureToggle("API", authToken.Tenant))
                     {
                         IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
@@ -864,6 +877,31 @@ namespace WebFreight.Web.ExternalAPIs.V1
         private bool IsShipmentHasDelivery(ShipmentPM shipmentPM)
         {
             return shipmentPM.ShipmentDeliveries != null && shipmentPM.ShipmentDeliveries.Count > 0;
+        }
+
+        private void ValidateMasterNumberAndCarrier(Master entity)
+        {
+            bool validate = false;
+            if (!string.IsNullOrEmpty(entity.MasterNumber))
+            {
+                if (entity.MainCarriageCarrier == null)
+                {
+                    validate = true;
+                }
+
+                else
+                {
+                    if (string.IsNullOrEmpty(entity.MainCarriageCarrier.Code))
+                    {
+                        validate = true;
+                    }
+                }
+            }
+
+            if (validate)
+            {
+                throw new ApplicationException("Main Carriage Carrier is required when sending MAWB");
+            }
         }
     }
 }
