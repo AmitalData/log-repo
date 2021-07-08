@@ -2297,6 +2297,22 @@ namespace Logitude.Customs.Def.ClosedTable
                 //  NeedSignature = false
             });
 
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "UCUDO",
+                InOut = InOutEnum.I.ToString(),
+                Description = "עדכון כמות הצהרות פתוחות בטיסה",
+                DcaPrefixName = "UCUDO_Out.",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = 5,
+                AllowRestore = true,
+
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "",
+                //  NeedSignature = false
+            });
+
 
             all.Add(new InterfaceManagementDetails()
             {

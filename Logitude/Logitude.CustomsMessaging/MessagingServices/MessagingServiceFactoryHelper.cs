@@ -382,6 +382,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+           DCAInUCUDO_UpdateOpenDeclarationsMessagingService>
+           ((new DCAInUCUDO_UpdateOpenDeclarationsMessagingService()).MainInterfaceCode);
+
+
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
               DCAInUniDebug01_MsgMessagingService>
               ((new DCAInUniDebug01_MsgMessagingService()).MainInterfaceCode);
 
