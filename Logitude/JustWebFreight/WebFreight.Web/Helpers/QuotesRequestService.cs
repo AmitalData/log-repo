@@ -1,6 +1,9 @@
 ﻿using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Helpers;
+using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.CRM.BL.EntityPMs;
 using Logitude.CRM.BL.EntityQueryServices;
 using Logitude.CRM.BL.EntityUpdateServices;
@@ -9,6 +12,7 @@ using Logitude.CRM.Data.EntityListQueryServices;
 using Logitude.CRM.Data.EntityLists;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts;
@@ -76,10 +80,25 @@ namespace WebFreight.Web.Helpers
             return ticketPM;
         }
 
-        private static void MapTicketPMQuoteRequestFields(QuotesRequestEmailFeedback emailFeedback, TicketPM ticketPM)
+        private void MapTicketPMQuoteRequestFields(QuotesRequestEmailFeedback emailFeedback, TicketPM ticketPM)
         {
             ticketPM.QuoteRequestComments = emailFeedback.QuotesRequest.Comments;
             ticketPM.QuoteRequestFeedback = emailFeedback.QuotesRequest.Feedback;
+            MapTicketCustomField(ticketPM, "CustomerStatus", emailFeedback.QuotesRequest.Feedback);
+        }
+
+        private void MapTicketCustomField(TicketPM ticketPM, string fieldCode, string fieldValue)
+        {
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolverArgs customFieldResolverArgs = new CustomFieldResolverArgs
+            {
+                ObjectTableName = "Ticket",
+                EntityPM = ticketPM,
+                FieldCode = fieldCode,
+                FieldValue = fieldValue,
+                Tenant = this.tenant
+            };
+            customFieldResolver.SetFieldValue(customFieldResolverArgs);
         }
 
         private void UpdateSelectedTicketPM(TicketPM ticketPM)
@@ -112,7 +131,7 @@ namespace WebFreight.Web.Helpers
             quotesRequestTemplateBody.Append("<br /><br />");
             quotesRequestTemplateBody.Append(loggedContactPM.EnglishName + " ");
             quotesRequestTemplateBody.Append("has " + emailFeedback.QuotesRequest.Feedback + " ");
-            quotesRequestTemplateBody.Append("quote request " + emailFeedback.QuotesRequest.ReferenceNumber + " ");
+            quotesRequestTemplateBody.Append("quote request " + emailFeedback.QuotesRequest.QuoteNumber + " ");
             if (!string.IsNullOrEmpty(emailFeedback.QuotesRequest.Comments))
             {
                 quotesRequestTemplateBody.Append("with the following comments: ");
@@ -136,7 +155,7 @@ namespace WebFreight.Web.Helpers
 
         private static string GetQuotesRequestEmailSubject(QuotesRequestEmailFeedback emailFeedback)
         {
-            return "Quote Request " + emailFeedback.QuotesRequest.ReferenceNumber + " " + emailFeedback.QuotesRequest.Feedback;
+            return "Quote Request " + emailFeedback.QuotesRequest.QuoteNumber + " " + emailFeedback.QuotesRequest.Feedback;
         }
 
         public List<QuotesRequest> Get()
@@ -158,7 +177,22 @@ namespace WebFreight.Web.Helpers
             queryOperations.SetFilter("EntityType", quoteObjectTableId, false, "Equals", null, false);
             queryOperations.SetFilter("CompanyId", quotesRequestFilters.PartnerId, false, "Equals", null, false);
             queryOperations.SetFilter("SearchFields", quotesRequestFilters.SearchField, false, "Contains", null, false);
-
+            //if (quotesRequestFilters.OnlyOpened)
+            //{
+            //    queryOperations.SetFilter("StageId", "Created", false, "Equals", null, false);
+            //}
+            if (!string.IsNullOrEmpty(quotesRequestFilters.RequestedBy) && quotesRequestFilters.RequestedBy != "All")
+            {
+                queryOperations.SetFilter("CustomerContactId", quotesRequestFilters.RequestedBy, false, "Equals", null, false);
+            }
+            //List<ObjectField> ticketCustomFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Ticket", this.tenant);
+            //ObjectField objectCustomField = ticketCustomFields.Where(f => f.Code == "CustomerStatus").FirstOrDefault();
+            //if (objectCustomField != null)
+            //{
+            //    string fieldCode = objectCustomField.FieldCode.Split('.')[2];
+            //    queryOperations.SetFilter(fieldCode, quotesRequestFilters.CustomerStatus, false, "Equals", null, false);
+            //}
+            //Create Date
             return queryOperations;
         }
 
@@ -194,13 +228,22 @@ namespace WebFreight.Web.Helpers
 
         private QuotesRequest GetNewInStanceFromQuotesRequest(TicketList ticketList)
         {
-            QuotesRequest quotesRequest = new QuotesRequest() 
-            { 
+            List<ObjectField> ticketCustomFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Ticket", this.tenant);
+            
+            QuotesRequest quotesRequest = new QuotesRequest()
+            {
                 Id = ticketList.Id,
-                CreateDate = ticketList.CreateDate, 
-                ReferenceNumber = ticketList.TicketNumber,
+                CreateDate = ticketList.CreateDate,
+                QuoteNumber = ticketList.TicketNumber,
                 Comments = ticketList.QuoteRequestComments,
-                Feedback = ticketList.QuoteRequestFeedback
+                Feedback = ticketList.QuoteRequestFeedback,
+                ContactName = ticketList.ContactName,
+                OwnerName = ticketList.OwnerName,
+                Subject = ticketList.Subject,
+                Status = GetCustomFieldValueByEntityAndCode(ticketList, ticketCustomFields, "CustomerStatus"),
+                ReferenceNumber = GetCustomFieldValueByEntityAndCode(ticketList, ticketCustomFields, "ReferenceNumber"),
+                PONumber = GetCustomFieldValueByEntityAndCode(ticketList, ticketCustomFields, "PO"),
+                Brand = GetCustomFieldValueByEntityAndCode(ticketList, ticketCustomFields, "Brand"),
             };
             if (documentsFilings.Where(d => d.EntityId == ticketList.Id).Any())
             {
@@ -208,6 +251,24 @@ namespace WebFreight.Web.Helpers
             }
             return quotesRequest;
 
+        }
+
+        private string GetCustomFieldValueByEntityAndCode(object entity, List<ObjectField> entityCustomFields, string customFieldCode)
+        {
+            ObjectField objectCustomField = entityCustomFields.Where(f => f.Code == customFieldCode).FirstOrDefault();
+            if (objectCustomField != null)
+                return GetCustomFieldValue(objectCustomField, entity, this.tenant);
+            else
+                return "";
+        }
+
+        private string GetCustomFieldValue(ObjectField objectField, object entity, int tenant)
+        {
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            object customFieldValue = customFieldResolver.GetFieldValue(entity, objectField, tenant);
+            if (customFieldValue != null)
+                return customFieldValue.ToString();
+            return "";
         }
 
         private DocumentsFilingList GetLatestCreatedDocumentsFilingByEntityId(string entityId)
@@ -219,11 +280,18 @@ namespace WebFreight.Web.Helpers
     public class QuotesRequest
     {
         public string Id { get; set; }
-        public string ReferenceNumber { get; set; }
         public DateTime? CreateDate { get; set; }
         public string Feedback { get; set; }
         public string Comments { get; set; }
         public string DocumentId { get; set; }
+        public string ContactName { get; set; }
+        public string OwnerName { get; set; }
+        public string Subject { get; set; }
+        public string Status { get; set; }
+        public string ReferenceNumber { get; set; }
+        public string PONumber { get; set; }
+        public string Brand { get; set; }
+        public string QuoteNumber { get; set; }
         public DocumentsFilingList QuotationDocumentFiling { get; set; }
 
     }
@@ -232,6 +300,9 @@ namespace WebFreight.Web.Helpers
     {
         public string PartnerId { get; set; }
         public string SearchField { get; set; }
+        public string RequestedBy { get; set; }
+        public string CustomerStatus { get; set; }
+        public bool OnlyOpened { get; set; }
         public int PageSize { get; set; }
         public int PageIndex { get; set; }
 
