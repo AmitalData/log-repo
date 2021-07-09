@@ -653,12 +653,32 @@ export function UpdateQuoteTemplate() {
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
 }
 
+function DefinePutQuoteTemplateRequest() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.QuoteTemplatetextdesigns, RequestAliases.PutQuoteTemplate);
+}
+
 export function UpdateQuoteHeaderTemplate() {
     DefineQuoteTemplatetPutTextDesignRequest();
     DefineQuoteTemplatetPutHeaderFieldsRequest();
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
-    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
+}
 
+function DefineQuoteTemplatetPutTextDesignRequest() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.PutQuoteTemplateTextDesignPMs, RequestAliases.PutQuoteTemplateTextDesignPMs);
+}
+
+function DefineQuoteTemplatetPutHeaderFieldsRequest() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.PutQuoteTemplateHeaderFields, RequestAliases.PutQuoteTemplateHeaderFields);
+}
+
+export function UpdateQuoteDetailsTemplate() {
+    DefineQuoteTemplatetPutTextDesignRequest();
+    DefinePutQuoteTemplateDetailsFieldsRequest();
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+}
+
+function DefinePutQuoteTemplateDetailsFieldsRequest() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.PutQuoteTemplateDetailsFields, RequestAliases.PutQuoteTemplateDetailsFields);
 }
 
 export function UpdateQuotePricingTemplate() {
@@ -666,10 +686,17 @@ export function UpdateQuotePricingTemplate() {
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
 }
 
+function DefineQuoteTemplatetPutSettingsRequest() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.QuotetemplateSettings, RequestAliases.PutQuoteTemplate);
+}
+
 export function UpdateQuoteIntroductionTemplate() {
     DefineQuoteTemplatetPutSectionsRequest();
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+}
 
+function DefineQuoteTemplatetPutSectionsRequest() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.Quotetemplatesections, RequestAliases.PutQuoteTemplate);
 }
 
 export function AssertCreateQuoteTemplate() {
@@ -678,12 +705,29 @@ export function AssertCreateQuoteTemplate() {
 }
 
 export function AssertUpdateQuoteTemplate() {
-    AssertPutQuoteTemplate();
+    BaseAssertion.AssertStatusCode(RequestAliases.PutQuoteTemplate, 200);
 }
 
 export function AssertUpdateQuoteHeaderTemplate() {
-    AssertQuoteTemplatetPutHeaderFields();
     AssertQuoteTemplatetPutTextDesign();
+    AssertQuoteTemplatetPutHeaderFields();
+}
+
+function AssertQuoteTemplatetPutTextDesign() {
+    BaseAssertion.AssertStatusCode(RequestAliases.PutQuoteTemplateTextDesignPMs, 200);
+}
+
+function AssertQuoteTemplatetPutHeaderFields() {
+    BaseAssertion.AssertStatusCode(RequestAliases.PutQuoteTemplateHeaderFields, 200);
+}
+
+export function AssertUpdateQuoteDetailsTemplate() {
+    AssertQuoteTemplatetPutTextDesign();
+    AssertPutQuoteTemplateDetailsFields();
+}
+
+function AssertPutQuoteTemplateDetailsFields() {
+    BaseAssertion.AssertStatusCode(RequestAliases.PutQuoteTemplateDetailsFields, 200);
 }
 
 function SearchQuoteTemplate() {
@@ -702,32 +746,12 @@ function DefinePostQuoteTemplateRequest() {
     cy.DefineRequestWait(RestAPI.POST, Urls.QuoteTemplateExtended, RequestAliases.PostQuoteTemplate);
 }
 
-function DefinePutQuoteTemplateRequest() {
-    cy.DefineRequestWait(RestAPI.PUT, Urls.QuoteTemplatetextdesigns, RequestAliases.PutQuoteTemplate);
-}
-
 function DefineQuoteTemplatetGetSingleRequest() {
     cy.DefineRequestWait(RestAPI.GET, Urls.QuoteTemplateGetSingle, RequestAliases.GetSignle);
 }
 
 function DefineQuoteTemplateViewsGetByFiltersRequest(quoteTemplateName: string) {
     cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(quoteTemplateName), RequestAliases.GetFilterSearch);
-}
-
-function DefineQuoteTemplatetPutHeaderFieldsRequest() {
-    cy.DefineRequestWait(RestAPI.PUT, Urls.PutQuoteTemplateHeaderFields, RequestAliases.PutQuoteTemplateHeaderFields);
-}
-
-function DefineQuoteTemplatetPutTextDesignRequest() {
-    cy.DefineRequestWait(RestAPI.PUT, Urls.PutQuoteTemplateTextDesignPMs, RequestAliases.PutQuoteTemplateTextDesignPMs);
-}
-
-function DefineQuoteTemplatetPutSettingsRequest() {
-    cy.DefineRequestWait(RestAPI.PUT, Urls.QuotetemplateSettings, RequestAliases.PutQuoteTemplate);
-}
-
-function DefineQuoteTemplatetPutSectionsRequest() {
-    cy.DefineRequestWait(RestAPI.PUT, Urls.Quotetemplatesections, RequestAliases.PutQuoteTemplate);
 }
 
 function AssertPostQuoteTemplate() {
@@ -744,19 +768,6 @@ function AssertQuoteTemplatetGetSingle() {
 function AssertQuoteTemplateViewsGetByFilters() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
 }
-
-function AssertPutQuoteTemplate() {
-    BaseAssertion.AssertStatusCode(RequestAliases.PutQuoteTemplate, 200);
-}
-
-function AssertQuoteTemplatetPutHeaderFields() {
-    cy.DefineRequestWait(RestAPI.PUT, Urls.PutQuoteTemplateHeaderFields, RequestAliases.PutQuoteTemplateHeaderFields);
-}
-
-function AssertQuoteTemplatetPutTextDesign() {
-    cy.DefineRequestWait(RestAPI.PUT, Urls.PutQuoteTemplateTextDesignPMs, RequestAliases.PutQuoteTemplateTextDesignPMs);
-}
-
 //#endregion
 
 //#region Invoice Settings

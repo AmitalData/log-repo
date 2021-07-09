@@ -156,6 +156,7 @@ export class RequestAliases {
     public static readonly PutQuoteTemplate = "PutQuoteTemplate";
     public static readonly PutQuoteTemplateHeaderFields = "PutQuoteTemplateHeaderFields";
     public static readonly PutQuoteTemplateTextDesignPMs = "PutQuoteTemplateTextDesignPMs";
+    public static readonly PutQuoteTemplateDetailsFields = "PutQuoteTemplateDetailsFields";
 
     public static readonly PostCrossdockEntry = "PostCrossdockEntry";
     public static readonly PutCrossdockEntry = "PutCrossdockEntry";

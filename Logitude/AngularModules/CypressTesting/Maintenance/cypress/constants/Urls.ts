@@ -21,6 +21,7 @@ export class Urls {
     public static readonly QuoteTemplateGetSingle = "**/quotetemplatesettings/getsingle?**";
     public static readonly PutQuoteTemplateTextDesignPMs = "**/PutQuoteTemplateTextDesignPMs";
     public static readonly PutQuoteTemplateHeaderFields = "**/PutQuoteTemplateHeaderFields";
+    public static readonly PutQuoteTemplateDetailsFields = "**/PutQuoteTemplateDetailsFields";
 
     public static readonly AccountingSettings = "**/accountingsettings"
 
