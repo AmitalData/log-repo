@@ -148,5 +148,13 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     }).ToList();
             return result;
         }
+
+        public string GetIdByCodeAndValueAndTenant(string code, string value, int tenant)
+        {
+            string result = (from entity in repository.context.CustomPickLists
+                                               where entity.Code == code && entity.Value == value && entity.Tenant == tenant
+                                               select entity.Id).FirstOrDefault();
+            return result;
+        }
     }
 }
