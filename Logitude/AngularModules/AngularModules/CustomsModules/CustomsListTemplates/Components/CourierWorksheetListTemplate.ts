@@ -46,15 +46,16 @@ import { DeclarationExtendedListService } from '../../../Customs/Services/Extend
 import { CacheCourierPendingReasonService } from "../../../Customs/Services/Others/CacheCourierPendingReasonService";
 
 import { AmitalGatewayUtil } from "../../../Infrastructure/Utilities/AmitalGatewayUtil";
+import { Observable, of } from 'rxjs';
 
 
 @Component({
-    
+
     templateUrl: './CourierWorksheetListTemplate.html',
 })
 
 export class CourierWorksheetListTemplate {
-  public entityPM: any;
+    public entityPM: any;
 
     public _CourierWorksheet: DeclarationCourierStatusList;
     public fieldName: any;
@@ -89,7 +90,7 @@ export class CourierWorksheetListTemplate {
     IsMamanSticker: boolean = false;
     IsSban: boolean = false;
     IsMamanEnabled: boolean = false;
-    
+
     private _DeclarationCourierStatusPMService: DeclarationCourierStatusPMService = new DeclarationCourierStatusPMService();
     //private declarationPendingPMService: DeclarationPendingPMService = new DeclarationPendingPMService();
     private _CourierMasterService: CourierMasterService = new CourierMasterService();
@@ -98,7 +99,7 @@ export class CourierWorksheetListTemplate {
     private _DeclarationWebService: DeclarationWebService = new DeclarationWebService;
     private _DeclarationCourierStatusWebService: DeclarationCourierStatusWebService = new DeclarationCourierStatusWebService();
     _DeclarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
-    private currentSession=SessionLocator.SelectedSession;
+    private currentSession = SessionLocator.SelectedSession;
 
     FirePreventSelect() {
         SessionLocator.SelectedSession.PseventRowSelectEvent.emit("CourierWorksheetListTemplate.SendSplitButton");
@@ -112,7 +113,7 @@ export class CourierWorksheetListTemplate {
     //@ViewChild('MySplitButtonComponent', { read: SplitButtonComponent }) MySplitButtonComponent: SplitButtonComponent;
 
     constructor(private _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, private CD: ChangeDetectorRef) {
-        
+
     }
 
     //[AdditionalData] = "{rowIndex:row.rowIndex,gridId:LogGridId,RowOutEvent:RowOutEvent,RowOverEvent:RowOverEvent}"
@@ -146,7 +147,9 @@ export class CourierWorksheetListTemplate {
         //}
     }
 
-
+    ShowOpCenter() {
+        this._CourierWorksheetSharedDataService.SendNextMessage
+    }
 
     setVariables(courierWorksheet: DeclarationCourierStatusList, fieldName: string)/*, AdditionalData:any)*/ {
         this._CourierWorksheet = courierWorksheet;
@@ -269,9 +272,9 @@ export class CourierWorksheetListTemplate {
     ShowFollowUpStatus() {
         if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
             AmitalGatewayUtil.Instance.ShowCFIFILEMFUStatusScreen(
-                    this._CourierWorksheet.CustomFileNo,
-                    this._CourierWorksheet.DeclarationId,
-                    "ShowCFIFILEMFUStatusScreen");
+                this._CourierWorksheet.CustomFileNo,
+                this._CourierWorksheet.DeclarationId,
+                "ShowCFIFILEMFUStatusScreen");
 
         } else {
             var myMessageWindow = new MessageWindow();
@@ -279,8 +282,8 @@ export class CourierWorksheetListTemplate {
             myMessageWindow.Show(mess);
 
         }
-        
-        
+
+
     }
     SendManifest(event) {
         this.ButtonClick(event);
@@ -331,6 +334,30 @@ export class CourierWorksheetListTemplate {
 
         this.CD.detectChanges();
     }
+    PrepareSplitButtonMenuFilterSub(): Observable<boolean> {
+
+        return new Observable(subscriber => {
+            this._IsSplitButtonMenuFilterReady = false;
+            this.IsWebAPICourierGWMessageECTHRDataMamanEnable = false;
+
+            let myDeclarationPMService: DeclarationPMService = new DeclarationPMService()
+            myDeclarationPMService.get(this._CourierWorksheet['DeclarationId']).subscribe(rsptPMget => {
+                let entitypm: DeclarationPM = rsptPMget.Result;
+                if (entitypm != null && entitypm.Consignments != null) {
+                    if (this.WebAPICourierGWMessageECTHRDataMaman.includes(entitypm.Consignments[0].StorageSiteCode)) {
+                        this.IsWebAPICourierGWMessageECTHRDataMamanEnable = true;
+                    }
+                }
+                this._IsSplitButtonMenuFilterReady = true;
+                subscriber.next(true)
+                //return subscriber.next(true) 
+            }
+                , err => subscriber.error(err))
+        });
+
+    }
+
+
 
     SendDec(event) {
         //event.stopPropagation();

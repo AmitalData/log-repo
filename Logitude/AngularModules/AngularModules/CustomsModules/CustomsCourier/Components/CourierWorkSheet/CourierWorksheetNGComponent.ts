@@ -35,6 +35,8 @@ import { DeclarationCourierStatusList } from '../../../../Customs/EntityLists/De
 import { LazyLoadEvent, MenuItem } from 'primeng/api';
 import { IIGGeneralMessagesService } from '../../../../Customs/Services/WebServices/IIGGeneralMessagesService';
 import { CourierWorksheetListTemplate } from '../../../CustomsListTemplates/Components/CourierWorksheetListTemplate';
+import { ContextMenu } from 'primeng/contextmenu';
+import { debug } from 'console';
 
 @Component({
 
@@ -149,11 +151,7 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
         //);
         this.GetMamanPUR();
         this.isAllowAccounting = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowAccounting")
-        this.MyMenuItem = [
-            { label: 'New', icon: 'pi pi-fw pi-plus' },
-            { label: 'Open', icon: 'pi pi-fw pi-download' },
-            { label: 'Undo', icon: 'pi pi-fw pi-refresh' }
-        ];
+        
     }
     //PseventRowSelectEventSubscribe: any;
     ngOnDestroy() {
@@ -894,8 +892,8 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
             IsCustomTemplate: true,
             Styles: { width: '27px' },
             //IsCheckBox: true
-            //HtmlListComponentName: 'CourierWorksheetListTemplate',
-            //HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+            HtmlListComponentName: 'CourierWorksheetListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
         });
 
         this.columns.push({
@@ -937,8 +935,7 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
             FieldName: 'ImporterName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CustomerName"),
-            //Styles: { width: '200px' },
-            Styles: { width: '150px' },
+            Styles: { width: '200px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'ImporterName'
@@ -948,8 +945,7 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
             FieldName: 'ImporterCode',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.ImporterCode"),
-            //Styles: { width: '100px' },
-            Styles: { width: '80px' },
+            Styles: { width: '100px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'SortedImporterCode'
@@ -1055,8 +1051,7 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
             FieldName: 'DeclarationStatusTypeName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.DeclarationStatusTypeName"),
-            ///Styles: { width: '200px' },
-            Styles: { width: '150px' },
+            Styles: { width: '200px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'DeclarationStatusTypeName'
@@ -1118,7 +1113,6 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
             ServerSideSortable: false
         });
-
     }
 
     DataSource = {
@@ -2140,8 +2134,35 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
 
 
 
-
+    
     MyMenuItem: MenuItem[];
+    @ViewChild(ContextMenu) public contextMenu: ContextMenu;
+    public SplitButtonOpenContextMenu(event: any, rowData: CourierWorksheetListTemplate) {
+        event.stopPropagation();
+        this.MyMenuItem = [];
+        rowData.PrepareSplitButtonMenuFilterSub()
+            .subscribe((isOk) => {
+                let isDisableManifest: boolean=
+                    !((rowData._CourierWorksheet['CourierPaymentStatusCode'] != 'P' || rowData._CourierWorksheet['CourierPaymentStatusCode'] == null) && (rowData._CourierWorksheet['CourierManifestStatusCode'] == 'V' || rowData._CourierWorksheet['CourierManifestStatusCode'] == 'R' || rowData._CourierWorksheet['CourierManifestStatusCode'] == 'X' || rowData._CourierWorksheet['CourierManifestStatusCode'] == 'M'));
+                //isDisableManifest = true;
+                let manifest = {
+                    label: 'מצהר', disabled: isDisableManifest, command:
+                        () => {
+                            
+                            rowData.SendManifest(event);
+                        }
+                };
+                
+                this.MyMenuItem = [
+                    manifest,
+                    { label: 'New', icon: 'pi pi-fw pi-plus',  },
+                    { label: 'Open', icon: 'pi pi-fw pi-download' },
+                    { label: 'Undo', icon: 'pi pi-fw pi-refresh' }
+                ];
+                this.contextMenu.toggle(event); 
+            });
+
+    }
     ShowGrid: boolean = false;
     myIIGGeneralMessagesService: IIGGeneralMessagesService = new IIGGeneralMessagesService();
     LazyDataSource: DeclarationCourierStatusList[];
@@ -2164,6 +2185,10 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
     }
     onColDataClick(rowData) {
         console.log(rowData);
+        if (this._CourierWorksheetSharedDataService.SupperssOnRowSelectedAction) {
+            this._CourierWorksheetSharedDataService.SupperssOnRowSelectedAction = false;
+            return;
+        }
         let event = {
             rowData: rowData
         };
@@ -2244,7 +2269,7 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
                         this.LazyDataSource = Array.from({ length: this.TotalRecords });
                     }
 
-                    let fromCourierWSData: boolean = false;
+                    let fromCourierWSData: boolean = true;
                     if (fromCourierWSData) {
                         let courierWorksheetListTemplateS: CourierWorksheetListTemplate[] = [];
                         newAry.forEach((myDeclarationCourierStatusList) => {
@@ -2274,14 +2299,9 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
 
 
     }
-    IsDocumentStatusRed(val): boolean {
-        return (val == "X" || val == "M");
-    }
-    IsDeclarationStatusGreen(val): boolean {
-        return (val == "V");
-    }
-    IsDocumentStatusBlue(val): boolean {
-        return (val == "I");
+    MytoggleClick(menu123, $event) {
+        $event.relativeAlign = true;
+        menu123.toggle($event);
     }
 
 }

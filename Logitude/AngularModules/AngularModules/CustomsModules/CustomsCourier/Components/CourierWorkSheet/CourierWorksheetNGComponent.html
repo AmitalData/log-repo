@@ -1,35 +1,142 @@
 <style>
-/*    .p-menu p-component {
-        top: 0px;
-        left: 0px;
-    }
-*/
+        /*style="z-index: 1003; transform-origin: center top; top: 209.5px; left: 1723.72px;"*/
+        /*    .ng-trigger ng-trigger-overlayAnimation ng-tns-c25-0 p-menu p-component p-menu-overlay ng-star-inserted {
+            top: 0px;
+            left: 0px;
+        }*/
 
-.menuPop0 {
+
+        .menuPop0 {
+            position: absolute;
+            /*        top:0px;
+            left:0px;
+    */
+        }
+
+        .MyBlue {
+            color: #fff;
+            background-color: #337ab7;
+            border-color: #2e6da4;
+            outline: none;
+            text-align: center;
+            font-size: 11px;
+            height: 22px;
+            border: 1px solid #6A8299;
+            border-radius: 3px;
+            -moz-border-radius: 3px;
+            -webkit-border-radius: 3px;
+            text-shadow: 1px 1px white;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .tbl3Label {
+            width: 150px;
+        }
+
+        .dropdown {
+            display: block;
+            outline: none;
+            width: 100%;
+            height: 22px;
+            position: relative;
+            cursor: pointer;
+            background: white;
+        }
+
+        .ValidationSummary {
+            /*height: 100%;
+            width: 95%;
+            border: 1px solid #DA6F6F;
+            */
+            -webkit-text-stroke: 0.5px;
+            border-radius: 5px;
+            background: rgba(247, 227, 227, 1);
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            overflow: hidden;
+            text-align: right;
+            direction: rtl;
+        }
+
+        .CWSTabHeader {
+            width: 150px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+            .CWSTabHeader:hover {
+                background-color: #B3E2FF;
+                /*border-top:0.1px solid #00BCD4;*/
+            }
+
+        .DisbleBox {
+            display: inline-block;
+            border: 1px solid #ffd800;
+            border-radius: 5px;
+            background: #faf5c0;
+            padding: 2px 10px;
+            margin: 5px;
+            color: gray;
+            font-family: sans-serif;
+        }
+
+        .DetailsButton {
+            width: 120px;
+            height: 28px;
+            text-align: center;
+            color: #4db6ea;
+            background-color: white;
+            border: 1px solid black;
+            border-radius: 3px;
+            border-color: #4db6ea;
+            cursor: pointer;
+        }
+
+            .DetailsButton:hover {
+                box-shadow: 0px 0px 6px 0px #4db6ea;
+                text-shadow: 1px 1px white;
+            }
+
+        .x-button-drop-menu {
+            position: absolute;
+            top: 22px;
+            z-index: 1000;
+            text-align: center;
+            padding: 1px;
+            font-size: 15px;
+            list-style: none;
+            background-color: #F2F2F2;
+            background-clip: padding-box;
+            border: .5px solid #45494A;
+        }
+
+            .x-button-drop-menu li span {
+                display: block;
+                clear: both;
+                font-family: arial;
+                color: #444;
+                text-decoration: none;
+                height: 22px;
+                line-height: 23px;
+            }
+
+                .x-button-drop-menu li span:hover {
+                    background: #D3D3D3;
+                    cursor: pointer;
+                }
+</style>
+<style>
+    img {
         position: absolute;
-        /*        top:0px;
-        left:0px;
-*/
-    }
-    .MyBlue {
-        color: #fff;
-        background-color: #337ab7;
-        border-color: #2e6da4;
-        outline: none;
-        text-align: center;
-        font-size: 11px;
-        height: 22px;
-        border: 1px solid #6A8299;
-        border-radius: 3px;
-        -moz-border-radius: 3px;
-        -webkit-border-radius: 3px;
-        text-shadow: 1px 1px white;
-        position: relative;
-        cursor: pointer;
-    }
-
-    .tbl3Label {
-        width: 150px;
+        top: 50%;
+        left: 50%;
+        width: 12px;
+        height: 10px;
+        margin-top: -6px;
+        margin-left: -5px;
     }
 
     .dropdown {
@@ -39,71 +146,19 @@
         height: 22px;
         position: relative;
         cursor: pointer;
-        background: white;
+        background: none;
     }
 
-    .ValidationSummary {
-        /*height: 100%;
-        width: 95%;
-        border: 1px solid #DA6F6F;
-        */
-        -webkit-text-stroke: 0.5px;
-        border-radius: 5px;
-        background: rgba(247, 227, 227, 1);
-        box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        -webkit-box-sizing: border-box;
-        overflow: hidden;
-        text-align: right;
-        direction: rtl;
-    }
-
-    .CWSTabHeader {
-        width: 150px;
-        cursor: pointer;
-        font-size: 16px;
-        font-weight: bold;
-    }
-
-        .CWSTabHeader:hover {
-            background-color: #B3E2FF;
-            /*border-top:0.1px solid #00BCD4;*/
-        }
-
-    .DisbleBox {
-        display: inline-block;
-        border: 1px solid #ffd800;
-        border-radius: 5px;
-        background: #faf5c0;
-        padding: 2px 10px;
-        margin: 5px;
-        color: gray;
-        font-family: sans-serif;
-    }
-
-    .DetailsButton {
-        width: 120px;
-        height: 28px;
-        text-align: center;
-        color: #4db6ea;
-        background-color: white;
-        border: 1px solid black;
-        border-radius: 3px;
-        border-color: #4db6ea;
-        cursor: pointer;
-    }
-
-        .DetailsButton:hover {
-            box-shadow: 0px 0px 6px 0px #4db6ea;
-            text-shadow: 1px 1px white;
-        }
 
     .x-button-drop-menu {
         position: absolute;
         top: 22px;
         z-index: 1000;
+        /*display: none;*/
         text-align: center;
         padding: 1px;
+        /*padding: 5px 0;
+        margin: 2px 0 0;*/
         font-size: 15px;
         list-style: none;
         background-color: #F2F2F2;
@@ -112,22 +167,69 @@
     }
 
         .x-button-drop-menu li span {
+            text-align: right;
             display: block;
             clear: both;
             font-family: arial;
             color: #444;
             text-decoration: none;
             height: 22px;
-            line-height: 23px;
+            line-height: 23px; /*make text center*/
         }
 
             .x-button-drop-menu li span:hover {
                 background: #D3D3D3;
                 cursor: pointer;
             }
-</style>
 
-<span style="visibility:hidden"> CourierWorksheetComponent </span>
+    .P-button-drop-menu {
+        text-align: center;
+        font-size: 15px;
+        list-style: none;
+    }
+
+        .P-button-drop-menu li span {
+            text-align: right;
+            display: block;
+            clear: both;
+            font-family: arial;
+            color: #444;
+            text-decoration: none;
+            height: 22px;
+            line-height: 23px; /*make text center*/
+        }
+
+            .P-button-drop-menu li span:hover {
+                background: #D3D3D3;
+                cursor: pointer;
+            }
+
+    .DimLI {
+        opacity: 0.5;
+        cursor: default
+    }
+
+    .LogitudeCheckBox input:focus {
+        border: 1px solid #3BB3E2;
+    }
+
+    .LogitudeCheckBox input:checked {
+        background: url('./Images/CheckBoxIcon.png') center center no-repeat white;
+    }
+
+    .LogitudeCheckBox input {
+        position: absolute;
+    }
+
+    .LogitudeCheckBox {
+        position: relative;
+        display: block;
+        height: 10px;
+    }
+</style>
+<span style="visibility:hidden"> CourierWorksheetComponent NG </span>
+<!--(onHide)="cmOnHide($event)"-->
+<p-contextMenu #cm [model]="MyMenuItem" appendTo="body"  ></p-contextMenu>
 
 <div #myRef *ngIf="entityPM" class="MediaFillAbsolute" [ngStyle]="{background: ComponentBackground}">
     <div class="MarginAbsolute10" style="height:100% ;top: 5px; bottom: 8px;">
@@ -213,13 +315,18 @@
                                                 <table>
                                                     <tr>
                                                         <!--<td style="width: 48px; font-weight:bold; font-size:16px; color: black;">{{'Customs.CourierMaster.O.TotalFilter' | TextCodeTranslationPipe }}</td>-->
+                                                        
                                                         <td colspan="2" style="font-weight:bold; font-size:16px; ">
                                                             {{'סהכ ש.מ.ב '}} {{ DataSource.rowCount }}
                                                             <div>
+                                                                <div #divMenu style="background-color:aqua"></div>
                                                                 <!--label="Show"-->
-                                                                <button type="button" pButton icon="pi pi-bars" (click)="menu123.toggle($event)"></button>
+                                                                <button type="button" pButton icon="pi pi-bars" c1lick="menu123.toggle($event)" (click)="MytoggleClick(menu123,$event)"></button>
                                                                 <!--style="top:0px;left:0px" [popup]="true" -->
-                                                                <p-menu #menu123 [model]="MyMenuItem" [popup]="true"  ></p-menu>
+                                                                <!--[popup]="true" [style.top]="'0px'"  [style.left]="'0px'"   [style.position]="'absolute'"-->
+                                                                <!--[style.background-color]="'aqua'"  [style.top]="'0px'"  [style.left]="'0px'"-->
+
+                                                                <p-menu #menu123 [model]="MyMenuItem" [popup]="true" [appendTo]="divMenu"></p-menu>
                                                             </div>
                                                         </td>
                                                         <td *ngIf="IsFiltered || SearchFilter != null" style="font-weight:bold; font-size:16px; ">&nbsp;{{'מתאימים לחיתוך'}}</td>
@@ -600,17 +707,17 @@
                                                                         <td style="width:1px"></td>
                                                                         <td style="width:200px">
                                                                             <!--
-                                    <split-button (DefaultSplitButtonClicked)="SendUncorrectDocuments()"
-                                                  [IsDisabled]="!(_SelectedDOCValue == 'U') || IsDisplayOnly"
-                                                  [ButtonText]="'שדר מסמכים שגויים'"
-                                                  [AsRegularButton]="'true'"
-                                                  [MENUDivExtraTop]="24" [MENUDivExtraLeft]="110">
+                                                                            <split-button (DefaultSplitButtonClicked)="SendUncorrectDocuments()"
+                                                                                          [IsDisabled]="!(_SelectedDOCValue == 'U') || IsDisplayOnly"
+                                                                                          [ButtonText]="'שדר מסמכים שגויים'"
+                                                                                          [AsRegularButton]="'true'"
+                                                                                          [MENUDivExtraTop]="24" [MENUDivExtraLeft]="110">
 
-                                        <div class="class-MENUSplitButton-content">
-                                            <div></div>
-                                        </div>
-                                    </split-button>
-                                        -->
+                                                                                <div class="class-MENUSplitButton-content">
+                                                                                    <div></div>
+                                                                                </div>
+                                                                            </split-button>
+                                                                                -->
 
                                                                             <split-button (DefaultSplitButtonClicked)="SendUncorrectDocuments('X')"
                                                                                           [IsDisabled]="!(_SelectedDOCValue == 'U') || IsDisplayOnly"
@@ -934,69 +1041,66 @@
 
 
                                                         <!--dataKey="Id"-->
-                                                        
+                                                        <!--(onRowSelect)="onRowSelect($event)"
+                                                        (onRowUnselect)="onRowUnselect($event)"-->
                                                         <p-table [value]="LazyDataSource"
-                                                                 [scrollable]="true" [rows]="50" [virtualScroll]="true" [virtualRowHeight]="15"
+                                                                 [scrollable]="true" [rows]="50" [virtualScroll]="true" [virtualRowHeight]="25"
                                                                  [lazy]="true" (onLazyLoad)="loadLazy($event)" [loading]="loading" [resizableColumns]="true"
                                                                  [(selection)]="SelectedNGRows"
-                                                                 (onRowSelect)="onRowSelect($event)"
-                                                                 (onRowUnselect)="onRowUnselect($event)" scrollHeight="600px"
-                                                                 [columns]="columns">
+                                                                 scrollHeight="600px"
+                                                                 [columns]="columns"
+                                                                 dataKey="_CourierWorksheet.DeclarationId">
 
 
 
 
                                                             <ng-template pTemplate="header">
-<tr>
-                                                <th style="width: 27px;text-align: center; padding: 0px; margin-right: -18px;" >
-                                                    
-                                                        <table>
-                                                            <tr>
-                                                                <th style="width:27px;padding:0px"><p-tableHeaderCheckbox ></p-tableHeaderCheckbox></th>
-                                                            </tr>
-                                                            <tr>
-                                                            </tr>
-                                                        </table>
-                                                    
+                                            <tr>
+                                                <th style="width: 27px;text-align: center; padding: 0px; margin-right: -18px;">
+
+                                                    <table>
+                                                        <tr>
+                                                            <th style="width:27px;padding:0px"><p-tableHeaderCheckbox></p-tableHeaderCheckbox></th>
+                                                        </tr>
+                                                        <tr>
+                                                        </tr>
+                                                    </table>
+
                                                 </th>
                                                 <th *ngFor="let currIndex of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]"
                                                     style="text-align: center;padding:0px"
-                                                    [style.width]="columns[currIndex].Styles.width"
-                                                    >
-                                                    
-                                                        <table>
+                                                    [style.width]="columns[currIndex].Styles.width">
 
-                                                            <tr>
+                                                    <table>
 
-
-                                                                <td
-                                                                    pSortableColumn="{{columns[currIndex].SortByName}}"
-                                                                    
-                                                                    style="text-align: center;padding:0px"
-                                                                    >
-                                                                    <p-sortIcon *ngIf="columns[currIndex].SortByName" field="{{columns[currIndex].SortByName}}"></p-sortIcon>
-
-                                                                    <p-columnFilter *ngIf="columns[currIndex].SortByName" type="text" field="{{columns[currIndex].FieldName}}" display="menu"></p-columnFilter>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td [style.width]="columns[currIndex].Styles.width"
-                                                                    style="text-align: center;padding:0px">
-                                                                    {{columns[currIndex].Display}}
+                                                        <tr>
 
 
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    
+                                                            <td pSortableColumn="{{columns[currIndex].SortByName}}"
+                                                                style="text-align: center;padding:0px">
+                                                                <p-sortIcon *ngIf="columns[currIndex].SortByName" field="{{columns[currIndex].SortByName}}"></p-sortIcon>
+
+                                                                <p-columnFilter *ngIf="columns[currIndex].SortByName" type="text" field="{{columns[currIndex].FieldName}}" display="menu"></p-columnFilter>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td [style.width]="columns[currIndex].Styles.width"
+                                                                style="text-align: center;padding:0px">
+                                                                {{columns[currIndex].Display}}
+
+
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+
 
                                                 </th>
 
                                                 <th> </th>
                                             </tr>
-                                            
 
-                                                            </ng-template>
+
+                                            </ng-template>
 
                                             <ng-template pTemplate="body" let-rowData let-columns="columns">
                                                 <tr>
@@ -1005,29 +1109,190 @@
                                                     </td>
                                                     <td *ngFor="let currIndex of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]"
                                                         [style.width]="columns[currIndex].Styles.width"
-                                                        style="padding: 0px">
+                                                        style="padding: 0px"
+                                                        (click)="onColDataClick(rowData._CourierWorksheet)">
 
 
 
 
-                                                        <CourierWorksheetNGListTemplate
-                                                                                        *ngIf="columns[currIndex].HtmlListComponentUrl !=null"
-                                                                                        [CourierWorksheet]="rowData"
-                                                                                        [fieldName]="columns[currIndex].FieldName">
-
+                                                        <!--<CourierWorksheetNGListTemplate *ngIf="columns[currIndex].HtmlListComponentUrl !=null" [CourierWorksheet]="rowData" [fieldName]="columns[currIndex].FieldName">
                                                         </CourierWorksheetNGListTemplate>
-
-
-
-
-
-
-
-
                                                         <div *ngIf="columns[currIndex].HtmlListComponentUrl ==null" (click)="onColDataClick(rowData)">
                                                             {{  rowData[columns[currIndex].FieldName]}}
+                                                        </div>-->
+                                                        <!--copy from template use fromCourierWSData-->
+
+                                                        <div *ngIf="columns[currIndex].HtmlListComponentUrl !=null">
+
+
+
+                                                            
+
+
+
+                                                            <div class="TextTrimming" *ngIf="columns[currIndex].FieldName == 'DocumentStatusCode'">
+
+                                                                <img *ngIf="rowData.IsDocumentStatusGreen" src="./Images/Icons/GreenV.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
+                                                                <img *ngIf="rowData.IsDocumentStatusRed" src="./Images/Icons/RedX.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
+                                                                <img *ngIf="rowData.IsDocumentStatusBlue" src="./Images/Icons/InProgress.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
+                                                            </div>
+
+                                                            <div class="TextTrimming" *ngIf="columns[currIndex].FieldName == 'CourierManifestStatusCode'">
+                                                                <img *ngIf="rowData.IsManifestStatusGreen" src="./Images/Icons/GreenV.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
+                                                                <img *ngIf="rowData.IsManifestStatusRed" src="./Images/Icons/RedX.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
+                                                                <img *ngIf="rowData.IsManifestStatusBlue" src="./Images/Icons/InProgress.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
+                                                                <img *ngIf="rowData.IsManifestStatusOrange" src="./Images/Icons/OrangeV.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
+                                                            </div>
+
+                                                            <div class="TextTrimming" *ngIf="columns[currIndex].FieldName == 'CourierDeclarationStatusCode'">
+                                                                <img *ngIf="rowData.IsDeclarationStatusGreen" src="./Images/Icons/GreenV.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
+                                                                <img *ngIf="rowData.IsDeclarationStatusRed" src="./Images/Icons/RedX.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
+                                                                <img *ngIf="rowData.IsDeclarationStatusBlue" src="./Images/Icons/InProgress.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
+                                                                <img *ngIf="rowData.IsDeclarationStatusOrange" src="./Images/Icons/OrangeV.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
+                                                            </div>
+
+                                                            <div class="TextTrimming" *ngIf="columns[currIndex].FieldName == 'CourierPaymentStatusCode'">
+                                                                <img *ngIf="rowData.IsPaymentStatusGreen" src="./Images/Icons/GreenV.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
+                                                                <img *ngIf="rowData.IsPaymentStatusBlueChecked" src="./Images/Icons/BlueChecked.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
+                                                                <img *ngIf="rowData.IsPaymentStatusBlue" src="./Images/Icons/InProgress.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
+                                                                <img *ngIf="rowData.IsPaymentStatusOrange" src="./Images/Icons/OrangeV.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
+                                                            </div>
+
+                                                            <div class="TextTrimming" *ngIf="columns[currIndex].FieldName == 'StorageSiteStatusCode'">
+                                                                <img *ngIf="rowData._CourierWorksheet['StorageSiteStatusCode'] == '1'" src="./Images/Icons/GreenV.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
+                                                                <img *ngIf="rowData._CourierWorksheet['StorageSiteStatusCode'] == '2'" src="./Images/Icons/RedX.png" [attr.title]="rowData._CourierWorksheet['StorageSiteErrorText']" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
+                                                                <span *ngIf="rowData._CourierWorksheet['StorageSiteStatusCode'] == '1' && rowData._CourierWorksheet['AcceptanceStatusCode'] == '0'">{{'Customs.CourierMaster.Available.NotAvailable' | TextCodeTranslationPipe }}</span>
+                                                                <span *ngIf="rowData._CourierWorksheet['StorageSiteStatusCode'] == '1' && rowData._CourierWorksheet['AcceptanceStatusCode'] == '1'">{{'Customs.CourierMaster.Available.Available' | TextCodeTranslationPipe }}</span>
+                                                                <span *ngIf="rowData._CourierWorksheet['StorageSiteStatusCode'] == '1' && rowData._CourierWorksheet['AcceptanceStatusCode'] == '2'">{{'Customs.CourierMaster.Available.Additional' | TextCodeTranslationPipe }}</span>
+                                                            </div>
+
+
+                                                            <div class="TextTrimming" *ngIf="columns[currIndex].FieldName == 'SpecialActionStatus'" style="cursor:default;height:35px;width:120px;" (click)="rowData.ButtonClick($event)">
+                                                                <!---->
+                                                                <img *ngIf="rowData._CourierWorksheet['SpecialActionStatus'] == 'V'" src="./Images/Icons/GreenV.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " (click)="rowData.ButtonClick($event); rowData.SpecialActionStatusXClicked($event)" />
+                                                                <img *ngIf="rowData._CourierWorksheet['SpecialActionStatus'] == 'X'" src="./Images/Icons/RedX.png" (click)="rowData.SpecialActionStatusXClicked($event)" [attr.title]="rowData._CourierWorksheet['SpecialActionsErrorXml']"
+                                                                     style="height:20px;width:15px;vertical-align:central;padding-bottom:5px;cursor:pointer;" />
+                                                            </div>
+
+
+
+                                                            <div class="TextTrimming" *ngIf="columns[currIndex].FieldName == 'IsCourierMissingClassification'" style="text-align: center;  ">
+                                                                <img *ngIf="rowData._CourierWorksheet['IsCourierMissingClassification']" src="./Images/Icons/RedX.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
+                                                                <img *ngIf="!rowData._CourierWorksheet['IsCourierMissingClassification']" src="./Images/Icons/GreenV.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
+                                                            </div>
+
+                                                            <div class="TextTrimming" *ngIf="columns[currIndex].FieldName == 'HighLowValue'" style="text-align:right;">
+                                                                <span *ngIf="rowData._CourierWorksheet['FastIndividualProcessCode'] == 'F'">{{'Customs.CourierMaster.HighLowValue.High'  | TextCodeTranslationPipe }}</span>
+                                                                <span *ngIf="rowData._CourierWorksheet['FastIndividualProcessCode'] == 'I'">{{'Customs.CourierMaster.HighLowValue.Low'  | TextCodeTranslationPipe }}</span>
+                                                            </div>
+
+                                                            <div class="TextTrimming" *ngIf="columns[currIndex].FieldName == 'CourierHawb'" style="text-align:right;">
+                                                                <span style="font-weight: bold">{{rowData._CourierWorksheet.CourierHawb}}</span>
+                                                            </div>
+
+                                                            <div class="TextTrimming" *ngIf="columns[currIndex].FieldName == 'IsClosedForFollowUp'" style="text-align:right;">
+                                                                <span *ngIf="!rowData._CourierWorksheet['IsClosedForFollowUp']">{{'Customs.CourierMaster.Status.Open'  | TextCodeTranslationPipe }}</span>
+                                                                <span *ngIf="rowData._CourierWorksheet['IsClosedForFollowUp']">{{'Customs.CourierMaster.Status.Close'  | TextCodeTranslationPipe }}</span>
+                                                            </div>
+
+                                                            <div class="TextTrimming" (click)=" rowData.CourierPendingReasonCommand($event,rowData._CourierWorksheet['DeclarationId'],'');rowData.ButtonClick($event)" *ngIf="columns[currIndex].FieldName ==  'CourierPendingReasonName'" style="text-align:right;">
+                                                                <span data-toggle="tooltip" data-placement="bottom" title="{{rowData.CourierPendingReasonListToolTip}}">{{rowData.CourierPendingReasonListText}}</span>
+                                                            </div>
+
+
+
+
+
+
+                                                            <div class="TextTrimming" style="text-align:right" title="{{rowData.SuspentionReasonTip}}" *ngIf="columns[currIndex].FieldName == 'CourierCustomStatusName' && rowData.SuspentionReasonText!=''">
+                                                                <span style="color:red" *ngIf="rowData._CourierWorksheet['CourierCustomStatusCode']=='2'">{{rowData.SuspentionReasonText}}</span>
+                                                                <span style="color:green" *ngIf="rowData._CourierWorksheet['CourierCustomStatusCode']=='1'">{{rowData.SuspentionReasonText}}</span>
+                                                            </div>
+
+                                                            <div class="TextTrimming" *ngIf="columns[currIndex].FieldName == 'LastMileStatusCode' " style="text-align:right;">
+                                                                <span data-toggle="tooltip" data-placement="bottom" title="{{rowData._CourierWorksheet['LastMileStatusDate'] | DateTimePipe:'DT'}}">{{rowData._CourierWorksheet.LastMileStatusName}}</span>
+                                                            </div>
+
+
+
+                                                            <div *ngIf="columns[currIndex].FieldName ==  'SendSplitButton'" >
+                                                                
+                                                                <button type="button" pButton icon="pi pi-bars"  (click)="SplitButtonOpenContextMenu($event,rowData)" ></button>
+                                                                
+                                                            </div>
+
+                                                            
+                                                            <!--example-->
+                                                            <div *ngIf="false">
+                                                                <p-menu #menu [popup]="true" [model]="userMenuItems" [style]="{'width':'250px'}"></p-menu>
+                                                                <button type="button" pButton icon="pi pi-chevron-down" class="p-mr-2" label="Options" (click)="menu.toggle($event)" style="width:auto"></button>
+
+                                                                <span class="p-input-icon-left">
+                                                                    <i class="pi pi-search"></i>
+                                                                    <input pInputText type="text" (input)="customertable.filterGlobal($event.target.value, 'contains')" placeholder="Global Search" />
+                                                                </span>
+                                                            </div>
+
+                                                            <div class="TextTrimming" style="cursor:default;height:35px;width:115px" *ngIf="columns[currIndex].FieldName ==  '1SendSplitButton'" (click)="rowData.ButtonClick($event)">
+                                                                <div style="text-align:right;margin-top:5px;cursor:default;margin-left:30px" (click)="rowData.ButtonClick($event)">
+
+                                                                    <split-button #currSplitButtonComponent
+                                                                                  [IsDisabled]="rowData.IsDisplayOnly"
+                                                                                  [OnClickedShowMenuContent]="true"
+                                                                                  (DefaultSplitButtonClicked)="rowData.PrepareSplitButtonMenuFilter()"
+                                                                                  [ButtonText]="'שלח'"
+                                                                                  [MENUDivExtraTop]="24" [MENUDivExtraLeft]="66">
+
+                                                                        <div class="class-MENUSplitButton-content" style="cursor:pointer">
+                                                                            <div>
+                                                                                <ul *ngIf="rowData._IsSplitButtonMenuFilterReady" class="x-button-drop-menu" style="width:90px;">
+
+                                                                                    <li>
+                                                                                        <span *ngIf=" ( (rowData._CourierWorksheet['CourierPaymentStatusCode'] != 'P' || rowData._CourierWorksheet['CourierPaymentStatusCode'] ==null) && ( rowData._CourierWorksheet['CourierManifestStatusCode']=='V' ||rowData._CourierWorksheet['CourierManifestStatusCode'] == 'R' || rowData._CourierWorksheet['CourierManifestStatusCode'] == 'X' || rowData._CourierWorksheet['CourierManifestStatusCode'] == 'M'))" (click)="currSplitButtonComponent.DropdownDisplayClose();SendManifest($event);">מצהר</span>
+                                                                                        <span *ngIf="!( (rowData._CourierWorksheet['CourierPaymentStatusCode'] != 'P' || rowData._CourierWorksheet['CourierPaymentStatusCode'] ==null)  && ( rowData._CourierWorksheet['CourierManifestStatusCode']=='V' ||rowData._CourierWorksheet['CourierManifestStatusCode'] == 'R' || rowData._CourierWorksheet['CourierManifestStatusCode'] == 'X'|| rowData._CourierWorksheet['CourierManifestStatusCode'] == 'M'))" class="DimLI">מצהר</span>
+                                                                                    </li>
+
+
+                                                                                    <li>
+                                                                                        <span *ngIf="!(rowData._CourierWorksheet['CourierPaymentStatusCode'] == 'P'  ||rowData._CourierWorksheet['CourierPaymentStatusCode'] == 'O' )  " (click)="currSplitButtonComponent.DropdownDisplayClose();SendDec($event);">הצהרה</span>
+                                                                                        <span *ngIf="(rowData._CourierWorksheet['CourierPaymentStatusCode'] == 'P'  ||rowData._CourierWorksheet['CourierPaymentStatusCode'] == 'O' )  " class="DimLI">הצהרה</span>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <span *ngIf="!(rowData._CourierWorksheet['CourierPaymentStatusCode'] == 'P'  ||rowData._CourierWorksheet['CourierPaymentStatusCode'] == 'O' )  " (click)="currSplitButtonComponent.DropdownDisplayClose();SendPay($event);">תשלום</span>
+                                                                                        <span *ngIf="(rowData._CourierWorksheet['CourierPaymentStatusCode'] == 'P'  ||rowData._CourierWorksheet['CourierPaymentStatusCode'] == 'O' )  " class="DimLI">תשלום</span>
+                                                                                    </li>
+
+                                                                                    <li *ngIf="rowData.IsWebAPICourierGWMessageECTHRDataMamanEnable === true">
+                                                                                        <span (click)="currSplitButtonComponent.DropdownDisplayClose();GetSendECTHRDataMaman($event);">ש.מ.ב למסוף</span>
+                                                                                        <!-- *ngIf="rowData._CourierWorksheet['AcceptanceStatusCode']==null" <span *ngIf="rowData._CourierWorksheet['AcceptanceStatusCode']!=null" class="DimLI">ש.מ.ב למסוף</span>-->
+                                                                                    </li>
+
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </split-button>
+
+                                                                </div>
+                                                            </div>
+
                                                         </div>
 
+
+
+
+
+
+
+
+                                                        <div *ngIf="columns[currIndex].HtmlListComponentUrl ==null">
+                                                            {{  rowData._CourierWorksheet[columns[currIndex].FieldName]}}
+                                                        </div>
+
+
+                                                        <!--<div (click)="onColDataClick(rowData)">
+                                                            {{  rowData[columns[currIndex].FieldName]}}
+                                                        </div>-->
 
 
                                                     </td>
@@ -1036,6 +1301,9 @@
 
                                                 </tr>
                                             </ng-template>
+
+
+                                            at
 
 
                                             <ng-template pTemplate="loadingbody" let-columns="columns">
@@ -1049,7 +1317,7 @@
                                             <ng-template pTemplate="emptymessage" let-columns>
                                                 <tr>
                                                     <td [attr.colspan]="columns.length">
-                                                        <label  class="CenterCenter" style="text-align:center;font-size:18px;color:gray"> לא נמצאו תוצאות מתאימות </label>
+                                                        <label class="CenterCenter" style="text-align:center;font-size:18px;color:gray"> לא נמצאו תוצאות מתאימות </label>
                                                     </td>
                                                 </tr>
                                             </ng-template>
@@ -1066,24 +1334,24 @@
 
 
 
-</div>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td></td>
-                                            </tr>
-
-
-                                        </table>
                                     </div>
                                 </td>
                             </tr>
-                            <tr></tr>
+
+                            <tr>
+                                <td></td>
+                            </tr>
+
+
                         </table>
                     </div>
                 </td>
             </tr>
+            <tr></tr>
         </table>
     </div>
+    </td>
+    </tr>
+    </table>
+</div>
 </div>
