@@ -46,6 +46,7 @@ import { DeclarationExtendedListService } from '../../../Customs/Services/Extend
 import { CacheCourierPendingReasonService } from "../../../Customs/Services/Others/CacheCourierPendingReasonService";
 
 import { AmitalGatewayUtil } from "../../../Infrastructure/Utilities/AmitalGatewayUtil";
+import { Observable, of } from 'rxjs';
 
 @Component({
 
@@ -373,6 +374,28 @@ export class CourierWorksheetNGListTemplate {
         });
 
         this.CD.detectChanges();
+    }
+    PrepareSplitButtonMenuFilterSub(): Observable<boolean> {
+
+        return new Observable(subscriber => {
+            this._IsSplitButtonMenuFilterReady = false;
+            this.IsWebAPICourierGWMessageECTHRDataMamanEnable = false;
+
+            let myDeclarationPMService: DeclarationPMService = new DeclarationPMService()
+            myDeclarationPMService.get(this._CourierWorksheet['DeclarationId']).subscribe(rsptPMget => {
+                let entitypm: DeclarationPM = rsptPMget.Result;
+                if (entitypm != null && entitypm.Consignments != null) {
+                    if (this.WebAPICourierGWMessageECTHRDataMaman.includes(entitypm.Consignments[0].StorageSiteCode)) {
+                        this.IsWebAPICourierGWMessageECTHRDataMamanEnable = true;
+                    }
+                }
+                this._IsSplitButtonMenuFilterReady = true;
+                subscriber.next(true)
+                //return subscriber.next(true) 
+            }
+                , err => subscriber.error(err))
+        });
+
     }
 
     SendDec(event) {

@@ -36,6 +36,12 @@ import { LazyLoadEvent, MenuItem } from 'primeng/api';
 import { IIGGeneralMessagesService } from '../../../../Customs/Services/WebServices/IIGGeneralMessagesService';
 import { CourierWorksheetListTemplate } from '../../../CustomsListTemplates/Components/CourierWorksheetListTemplate';
 import { ContextMenu } from 'primeng/contextmenu';
+import { DeclarationPM } from '../../../../Customs/EntityPMs/DeclarationPM';
+import { DeclarationPMService } from '../../../../Customs/Services/StandardPMs/DeclarationPMService';
+import { DeclarationMamanSpecialActionListService } from '../../../../Customs/Services/StandardLists/DeclarationMamanSpecialActionListService';
+import { DeclarationMamanSpecialActionPM } from '../../../../Customs/EntityPMs/DeclarationMamanSpecialActionPM';
+import { DeclarationCourierStatusPMService } from '../../../../Customs/Services/StandardPMs/DeclarationCourierStatusPMService';
+import { CourierWorksheetNGListTemplate } from '../../../CustomsListTemplates/Components/CourierWorksheetNGListTemplate';
 
 
 @Component({
@@ -2137,19 +2143,201 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
     
     MyMenuItem: MenuItem[];
     @ViewChild(ContextMenu) public contextMenu: ContextMenu;
-    public SplitButtonOpenContextMenu(event: any, rowData: CourierWorksheetListTemplate) {
+    
+    public PendingReasonListOpenContextMenu(event: any, rowData: DeclarationCourierStatusList) {
         event.stopPropagation();
+        //CourierPendingReasonCommand($event, rowData['DeclarationId'], '')
+        let myCourierWorksheetNGListTemplate = new CourierWorksheetNGListTemplate(this._CourierWorksheetSharedDataService, this.CD);
+        myCourierWorksheetNGListTemplate.CourierWorksheet = rowData;
+        myCourierWorksheetNGListTemplate.fieldName = "CourierPendingReasonList"; 
+        this.MyMenuItem = [
+            {
+                label: 'Pending',
+                command:
+                    () => {
+
+                        myCourierWorksheetNGListTemplate.CourierPendingReasonCommand(event, rowData.DeclarationId, '')
+                    }
+            },
+            { label: 'New', icon: 'pi pi-fw pi-plus', },
+            { label: 'Open', icon: 'pi pi-fw pi-download' },
+            { label: 'Undo', icon: 'pi pi-fw pi-refresh' }
+        ];
+        this.contextMenu.toggle(event); 
+
+    }
+    get WebAPICourierGWMessageECTHRDataMaman() { return this._CourierWorksheetSharedDataService.WebAPICourierGWMessageECTHRDataMaman }
+    _DeclarationPMService: DeclarationPMService = new DeclarationPMService()
+    private _DeclarationMamanSpecialActionListService: DeclarationMamanSpecialActionListService = new DeclarationMamanSpecialActionListService();
+    private _DeclarationCourierStatusPMService: DeclarationCourierStatusPMService = new DeclarationCourierStatusPMService();
+    //CourierPendingReasonCommand(event, rowData: DeclarationCourierStatusList, mode) {
+    //    //this.ButtonClick(event);
+    //    let declarationId = rowData.DeclarationId;
+    //    var logitudeWindow = new LogitudeWindow();
+    //    var windowArgs: any = {};
+    //    var declarationIdList = [];
+
+    //    this._DeclarationCourierStatusPMService.get(declarationId).subscribe((response: ServiceResponse) => {
+    //        //this.declarationPendingPMService.get(declarationId, "").subscribe((response: ServiceResponse) => {
+    //        //this._DeclarationExtendedListService.GetDeclarationPendingListPMByDeclarationId(declarationId).subscribe((response: ServiceResponse) => {
+    //        if (!response.HasError) {
+    //            //declarationIdList.push(response.Result);
+    //            //windowArgs.DeclarationIdList = declarationIdList;
+    //            windowArgs.DeclarationCourierStatus = response.Result
+    //            windowArgs.CourierHawb = rowData.CourierHawb;
+    //            windowArgs.Mode = mode;
+    //            windowArgs.DeclarationId = declarationId;
+
+    //            if (mode == "Delete") {
+    //                var confirm = new ConfirmWindow();
+    //                confirm.Width = 380;
+    //                confirm.Height = 280;
+    //                confirm.Title = "מחיקת Pending";
+    //                confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
+    //                confirm.ShowNoButton = true;
+    //                confirm.Show("האם למחוק Pending?");
+    //                confirm.WindowClosed.subscribe((event: any) => {
+    //                    if (confirm.Yes) {
+    //                        this.DeletePending(response.Result);
+    //                    }
+    //                    confirm.Close();
+    //                });
+    //            }
+    //            else {
+    //                //if (mode == "Update") {
+    //                windowArgs.CourierPendingReasonList = this._CourierWorksheet.CourierPendingReasonList;
+    //                //windowArgs.PendingRemarks = this._CourierWorksheet.PendingRemarks;
+    //                //}
+    //                logitudeWindow.Width = 470;
+    //                logitudeWindow.Height = 300;
+    //                logitudeWindow.IsShowCloseButton = true;
+    //                logitudeWindow.Title = "Pending";//TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
+    //                logitudeWindow.WindowArgs = windowArgs;
+    //                //logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/CourierPendingReasonGeneralComponent');
+    //                logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/DeclarationPendingsGeneralComponent');
+    //                logitudeWindow.WindowClosed.subscribe(($event: any) => {
+    //                    this.RefreshData();
+    //                });
+    //            }
+
+    //        }
+    //    });
+
+    //    this.CD.detectChanges();
+    //}
+    //DeletePending(declarationCourierStatusPM: DeclarationCourierStatusPM) {
+    //    SessionLocator.SelectedSession.StartBusyIndicatorSaving();
+    //    declarationCourierStatusPM.CourierPendingReasonList = null;
+    //    //declarationCourierStatusPM.PendingRemarks = null;
+    //    this._DeclarationCourierStatusPMService.update(declarationCourierStatusPM).subscribe((response: ServiceResponse) => {
+    //        SessionLocator.SelectedSession.StopBusyIndicator();
+    //        this.RefreshData();
+    //    });
+    //}
+    //PrepareDropdownMenuFilter(event, declarationId) {
+    //    this._IsDropdownMenuFilterReady = false;
+    //    this.IsWebAPICourierGWMessageECTHRDataMamanEnable = false;
+    //    this.IsReceivingDelayCertificate = false;
+    //    this.IsPrintDocuments = false;
+    //    this.IsSban = false;
+    //    this.DelayCertificateDetails = null;
+    //    this.MamanStickerDetails = null;
+    //    this.PrintDocumentsDetails = null;
+    //    this.SbanDetails = null;
+    //    this.IsMamanEnabled = false;
+
+
+    //    this._DeclarationPMService.get(declarationId).subscribe(rsptPMget => {
+    //        let entitypm: DeclarationPM = rsptPMget.Result;
+    //        if (entitypm != null && entitypm.Consignments != null) {
+    //            if (this.WebAPICourierGWMessageECTHRDataMaman.includes("ILMMN") && entitypm.Consignments[0].StorageSiteCode == "ILMMN") {
+    //                this.IsMamanEnabled = true;
+    //            }
+    //            if (this.WebAPICourierGWMessageECTHRDataMaman.includes(entitypm.Consignments[0].StorageSiteCode)) {
+    //                this.IsWebAPICourierGWMessageECTHRDataMamanEnable = true;
+
+    //                var filters = new ApiQueryFilters();
+    //                filters.PageIndex = 0;
+    //                filters.PageSize = 1000;
+    //                filters.addAdditionalFilter("DeclarationId", declarationId, null, null, "Equals", false, false, false, "string");
+
+    //                this._DeclarationMamanSpecialActionListService.getByFilters(filters).subscribe((response: ServiceResponse) => {
+    //                    if (!response.HasError && response.Result != null) {
+    //                        response.Result.forEach((declarationMamanSpecialActionPMItem: DeclarationMamanSpecialActionPM) => {
+    //                            switch (declarationMamanSpecialActionPMItem.MamanSpecialActionCode) {
+    //                                case "2": {
+    //                                    this.DelayCertificateDetails = declarationMamanSpecialActionPMItem;
+    //                                    if (declarationMamanSpecialActionPMItem.MamanSpecialActionStatusCode == "1") {
+    //                                        this.IsReceivingDelayCertificate = true;
+    //                                    }
+    //                                    break;
+    //                                }
+    //                                case "4": {
+    //                                    this.MamanStickerDetails = declarationMamanSpecialActionPMItem;
+    //                                    if (declarationMamanSpecialActionPMItem.MamanSpecialActionStatusCode == "1") {
+    //                                        this.IsMamanSticker = true;
+    //                                    }
+    //                                    break;
+    //                                }
+    //                                case "5": {
+    //                                    this.PrintDocumentsDetails = declarationMamanSpecialActionPMItem;
+    //                                    if (declarationMamanSpecialActionPMItem.MamanSpecialActionStatusCode == "1") {
+    //                                        this.IsPrintDocuments = true;
+    //                                    }
+    //                                    break;
+    //                                }
+    //                                case "6": {
+    //                                    this.SbanDetails = declarationMamanSpecialActionPMItem;
+    //                                    if (declarationMamanSpecialActionPMItem.MamanSpecialActionStatusCode == "1") {
+    //                                        this.IsSban = true;
+    //                                    }
+    //                                    break;
+    //                                }
+    //                            }
+    //                        });
+
+    //                    }
+    //                    this._IsDropdownMenuFilterReady = true;
+    //                    this.CD.detectChanges();
+    //                });
+    //            }
+
+    //            this._IsDropdownMenuFilterReady = true;
+    //            this.CD.detectChanges();
+    //        }
+    //        else {
+    //            this._IsDropdownMenuFilterReady = true;
+    //            this.CD.detectChanges();
+    //        }
+    //    });
+    //}
+
+
+    public SplitButtonOpenContextMenu(rowData: DeclarationCourierStatusList) {
+        //event.stopPropagation();
         this.MyMenuItem = [];
-        rowData.PrepareSplitButtonMenuFilterSub()
+
+        
+        
+        let myCourierWorksheetNGListTemplate = new CourierWorksheetNGListTemplate(this._CourierWorksheetSharedDataService, this.CD);
+        myCourierWorksheetNGListTemplate.CourierWorksheet = rowData;
+        myCourierWorksheetNGListTemplate.fieldName = "CourierPendingReasonList"; 
+
+
+        myCourierWorksheetNGListTemplate.fieldName = "SendSplitButton"; 
+
+
+        myCourierWorksheetNGListTemplate.PrepareSplitButtonMenuFilterSub()
             .subscribe((isOk) => {
                 let isDisableManifest: boolean=
-                    !((rowData._CourierWorksheet['CourierPaymentStatusCode'] != 'P' || rowData._CourierWorksheet['CourierPaymentStatusCode'] == null) && (rowData._CourierWorksheet['CourierManifestStatusCode'] == 'V' || rowData._CourierWorksheet['CourierManifestStatusCode'] == 'R' || rowData._CourierWorksheet['CourierManifestStatusCode'] == 'X' || rowData._CourierWorksheet['CourierManifestStatusCode'] == 'M'));
+                    !((rowData['CourierPaymentStatusCode'] != 'P' || rowData['CourierPaymentStatusCode'] == null) && (rowData['CourierManifestStatusCode'] == 'V' || rowData['CourierManifestStatusCode'] == 'R' ||
+                        rowData['CourierManifestStatusCode'] == 'X' || rowData['CourierManifestStatusCode'] == 'M'));
                 //isDisableManifest = true;
                 let manifest = {
                     label: 'מצהר', disabled: isDisableManifest, command:
                         () => {
                             
-                            rowData.SendManifest(event);
+                            myCourierWorksheetNGListTemplate.SendManifest(event);
                         }
                 };
                 
@@ -2159,7 +2347,7 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
                     { label: 'Open', icon: 'pi pi-fw pi-download' },
                     { label: 'Undo', icon: 'pi pi-fw pi-refresh' }
                 ];
-                this.contextMenu.toggle(event); 
+                this.contextMenu.toggle(); 
             });
 
     }
@@ -2198,6 +2386,7 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
     loading: boolean;
     TotalRecords?: number;
     oldEvent: LazyLoadEvent
+    fromCourierWSData: boolean = false;
     loadLazy($event: LazyLoadEvent) {
         if (AppTool.IsNullOrEmpty($event)) {
             console.log("LazyLoadEvent is null (starting ...)");
@@ -2269,8 +2458,8 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
                         this.LazyDataSource = Array.from({ length: this.TotalRecords });
                     }
 
-                    let fromCourierWSData: boolean = true;
-                    if (fromCourierWSData) {
+                    
+                    if (this.fromCourierWSData) {
                         let courierWorksheetListTemplateS: CourierWorksheetListTemplate[] = [];
                         newAry.forEach((myDeclarationCourierStatusList) => {
 
