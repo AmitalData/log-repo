@@ -88,4 +88,5 @@ export class ShipmentContainerSimulator {
     public IsFromContainer: boolean;
     public ShipmentId: string;
     public ContainerNumber: string;
+    public CarrierId: string;
 }
