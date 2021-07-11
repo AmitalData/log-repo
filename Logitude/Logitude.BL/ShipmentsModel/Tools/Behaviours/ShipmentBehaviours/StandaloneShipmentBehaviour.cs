@@ -163,7 +163,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                     this.CreateStandaloneShipmentPackage(itemPoco, stanAloneShipmentPM.Id);
                 }
             }
-
+            //// here 
             else if (shipmentPickUpDeliveryPackages.Count() == 0 && stanAloneShipmentPM.ShipmentPackages.Count != 0)
             {
                 this.CreateStandaloneShipmentPackageFromForwarder(stanAloneShipmentPM.ShipmentPackages.FirstOrDefault(), pickupDeliveryId);
