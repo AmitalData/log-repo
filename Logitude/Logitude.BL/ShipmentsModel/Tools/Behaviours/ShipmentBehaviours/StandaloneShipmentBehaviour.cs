@@ -382,7 +382,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         }
         private void CreatForwarderShipmentPickUpDelivery()
         {
-            if (!string.IsNullOrEmpty(this.shipmentPM.ForwarderStandaloneShipmentId) && !string.IsNullOrEmpty(this.shipmentPM.ForwarderPickUpDeliveryType))
+            if (!string.IsNullOrEmpty(this.shipmentPM.ForwarderStandaloneShipmentId) && !string.IsNullOrEmpty(this.shipmentPM.ForwarderPickUpDeliveryType)
+                && string.IsNullOrEmpty(this.shipmentPM.StandalonePickupDeliveryId))
             {
                 Shipment forwarderShipment = this.GetForwarderShipmentPM();
                 ShipmentPickUpDelivery shipmentPickUpDelivery = new ShipmentPickUpDelivery();
