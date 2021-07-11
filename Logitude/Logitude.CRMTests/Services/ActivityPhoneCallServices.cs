@@ -26,10 +26,10 @@ namespace Logitude.CRMTests.Services
                 .PriorityCode((string)dataTable.Priority)
                 .ActivityStatusCode("N")
                 .ActivityTypeCode("CL")
-                .CallWithId(GetContactId())
+                .CallWithId(GetDefaultContact())
                 .Build();
         }
-        private string GetContactId()
+        private string GetDefaultContact()
         {
             ApiQueryFilters apiQueryFilters = new ApiQueryFiltersBuilder().WithDefualtValues().Build();
             ApiResponse<IEnumerable<ContactPM>> response = APICaller.CallGetByFilters<IEnumerable<ContactPM>>(Urls.ContactViewsGetByFilters, UserTenant.Token, apiQueryFilters);
