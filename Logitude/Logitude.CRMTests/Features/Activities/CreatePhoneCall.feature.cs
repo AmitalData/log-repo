@@ -19,21 +19,19 @@ namespace Logitude.CRMTests.Features.Activities
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [Xunit.TraitAttribute("Category", "Pre-Prepare-Activity-Appointment")]
-    public partial class UpdateAppointmentFeature : object, Xunit.IClassFixture<UpdateAppointmentFeature.FixtureData>, System.IDisposable
+    public partial class CreatePhoneCallFeature : object, Xunit.IClassFixture<CreatePhoneCallFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-        private string[] _featureTags = new string[] {
-                "Pre-Prepare-Activity-Appointment"};
+        private string[] _featureTags = ((string[])(null));
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "UpdateAppointment.feature"
+#line 1 "CreatePhoneCall.feature"
 #line hidden
         
-        public UpdateAppointmentFeature(UpdateAppointmentFeature.FixtureData fixtureData, Logitude_CRMTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public CreatePhoneCallFeature(CreatePhoneCallFeature.FixtureData fixtureData, Logitude_CRMTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -42,8 +40,7 @@ namespace Logitude.CRMTests.Features.Activities
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Activities", "Update Appointment", "\tWe want to Appointment task.", ProgrammingLanguage.CSharp, new string[] {
-                        "Pre-Prepare-Activity-Appointment"});
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Activities", "Create Phone Call", "\tWe want to create phone call.", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -83,15 +80,15 @@ namespace Logitude.CRMTests.Features.Activities
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Update Appointment")]
-        [Xunit.TraitAttribute("FeatureTitle", "Update Appointment")]
-        [Xunit.TraitAttribute("Description", "Update Appointment")]
-        public virtual void UpdateAppointment()
+        [Xunit.SkippableFactAttribute(DisplayName="Create phone call")]
+        [Xunit.TraitAttribute("FeatureTitle", "Create Phone Call")]
+        [Xunit.TraitAttribute("Description", "Create phone call")]
+        public virtual void CreatePhoneCall()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update Appointment", null, tagsOfScenario, argumentsOfScenario);
-#line 5
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create phone call", null, tagsOfScenario, argumentsOfScenario);
+#line 4
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -111,41 +108,32 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 6
- testRunner.Given("an appointment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-                TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                             "property",
                             "Value"});
-                table4.AddRow(new string[] {
+                table2.AddRow(new string[] {
                             "Subject",
-                            "updated specflow sub"});
-                table4.AddRow(new string[] {
-                            "Location",
-                            "updated specflow location"});
-                table4.AddRow(new string[] {
+                            "specflow sub"});
+                table2.AddRow(new string[] {
                             "Description",
-                            "updated specflow desc"});
-                table4.AddRow(new string[] {
-                            "StartDateTime",
-                            "2021-09-15 14:40"});
-                table4.AddRow(new string[] {
-                            "EndDateTime",
-                            "2021-12-15 14:40"});
-                table4.AddRow(new string[] {
+                            "specflow desc"});
+                table2.AddRow(new string[] {
                             "Duration",
-                            "45"});
-                table4.AddRow(new string[] {
+                            "30"});
+                table2.AddRow(new string[] {
+                            "DueDate",
+                            "2021-07-15 14:40"});
+                table2.AddRow(new string[] {
                             "Priority",
-                            "Low"});
-#line 7
- testRunner.And("following appointment properties", ((string)(null)), table4, "And ");
+                            "Normal"});
+#line 5
+ testRunner.Given("a phone call with the following properties", ((string)(null)), table2, "Given ");
 #line hidden
-#line 16
- testRunner.When("update appointment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 12
+ testRunner.When("create phone call", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 17
- testRunner.Then("the appointment should update successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 13
+ testRunner.Then("the phone call should create successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -158,12 +146,12 @@ this.ScenarioInitialize(scenarioInfo);
             
             public FixtureData()
             {
-                UpdateAppointmentFeature.FeatureSetup();
+                CreatePhoneCallFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                UpdateAppointmentFeature.FeatureTearDown();
+                CreatePhoneCallFeature.FeatureTearDown();
             }
         }
     }

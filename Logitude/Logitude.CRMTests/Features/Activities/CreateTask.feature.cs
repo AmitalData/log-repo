@@ -108,26 +108,26 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
                             "property",
                             "Value"});
-                table2.AddRow(new string[] {
+                table3.AddRow(new string[] {
                             "Subject",
                             "specflow sub"});
-                table2.AddRow(new string[] {
+                table3.AddRow(new string[] {
                             "Description",
                             "specflow desc"});
-                table2.AddRow(new string[] {
+                table3.AddRow(new string[] {
                             "StartDateTime",
                             "2021-06-15 14:40"});
-                table2.AddRow(new string[] {
+                table3.AddRow(new string[] {
                             "DueDate",
                             "2021-07-15 14:40"});
-                table2.AddRow(new string[] {
+                table3.AddRow(new string[] {
                             "Priority",
                             "Normal"});
 #line 5
- testRunner.Given("a task with the following properties", ((string)(null)), table2, "Given ");
+ testRunner.Given("a task with the following properties", ((string)(null)), table3, "Given ");
 #line hidden
 #line 12
  testRunner.When("create task", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");

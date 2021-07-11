@@ -128,7 +128,8 @@ namespace Logitude.CRMTests.Models.Builders
                 UpdatedByUserId = UserTenant.UserId,
                 OwnerId = UserTenant.UserId,
                 BranchId = UserTenant.BranchId,
-                BusinessUnitId = UserTenant.BusinessUnitId
+                BusinessUnitId = UserTenant.BusinessUnitId,
+                CallWithId = PartnersData.ContactId
             };
             return this;
         }

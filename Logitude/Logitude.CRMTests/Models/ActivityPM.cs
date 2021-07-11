@@ -61,5 +61,6 @@ namespace Logitude.CRMTests.Models
         public bool IsCopy { get; set; }
         public bool DontSetNeedSynchronization { get; set; }
         public int ChangeSetOp { get; set; }
+        public string CallWithId { get; set; }
     }
 }
