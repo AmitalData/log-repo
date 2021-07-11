@@ -106,14 +106,14 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
 
                                     if (!ticket) {
 
-                                        var entityParams: RelatedEntityParams = new RelatedEntityParams();
+                                        /*var entityParams: RelatedEntityParams = new RelatedEntityParams();
                                         entityParams.ParentEntityCode = 'Declaration';
                                         entityParams.ParentEntityId = this.declarationPM.Id;
                                         var ticket_81: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, "IL_81");
                                         var IL_81ViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(ticket_81, null, true,
                                         this.IsDisplayOnly, this.declarationPM, "Customs.Declaration", this);
                                         this.GeneratedCustomsDocumentTicketViewModel.push(IL_81ViewModel);
-                                        this.originalCustomsDocumentTicketViewModel.push(IL_81ViewModel);
+                                        this.originalCustomsDocumentTicketViewModel.push(IL_81ViewModel);*/
 
                                     }
 
