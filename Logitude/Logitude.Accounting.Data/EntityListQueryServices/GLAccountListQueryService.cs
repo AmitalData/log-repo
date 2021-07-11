@@ -129,6 +129,11 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                    NextDueDate = MoreDatas.NextDueDate,
                                                    TotalOpenChequesInLocalCur = MoreDatas.TotalOpenChequesInLocalCur,
                                                    TotFutureOpenChequesInLocalCur = MoreDatas.TotFutureOpenChequesInLocalCur,
+
+                                                   BalanceInForeignCurrency = MoreDatas.BalanceInForeignCurrency,
+                                                   ForeignBalanceInDue = MoreDatas.ForeignBalanceInDue,
+                                                    
+
                                                    DeductionFileNumber = a.DeductionFileNumber,
 
                                                    //categories
