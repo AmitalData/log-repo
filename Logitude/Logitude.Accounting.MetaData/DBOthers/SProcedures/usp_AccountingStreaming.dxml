@@ -4,11 +4,12 @@
   >
   <SqlScript>
     <![CDATA[
-    --- cccc
+    
 --DROP PROCEDURE [dbo].[usp_AccountingStreaming] 
 -- =============================================
 -- Author:		itzik
--- Create date: update at 20210325
+-- Create date: update at 20210711
+-- Task 142407: יתרה במטז - הוספת טיפול לחישוב בזמן העברת פקודה לתנועה
 -- Description:	
 -- =============================================
 CREATE PROCEDURE [dbo].[usp_AccountingStreaming] 
@@ -40,7 +41,9 @@ print @myrowcount
 DECLARE @GLAccountStruct  table(
 [AccountId] VARCHAR(15) NOT NULL,
 AccountingDateDeltaAmount DECIMAL(16,2),
+AccountingDateDeltaForeignAmount DECIMAL(16,2),
 DueDateDeltaAmount DECIMAL(16,2),
+DueDateDeltaForeignAmount DECIMAL(16,2),
 NextDueDate date
 );
 
@@ -175,13 +178,13 @@ print @myrowcount
 delete from  @GLAccountStruct ;
  
 print N'GLAccunt Prepare : Accounting Date Delta Amount'
-insert into @GLAccountStruct (AccountId,AccountingDateDeltaAmount )
+insert into @GLAccountStruct (AccountId,AccountingDateDeltaAmount ,AccountingDateDeltaForeignAmount )
 select  
-tot.[AccountId] ,  SUM(tot.[LocalAmountDebit]-  tot.[LocalAmountCredit])
+tot.[AccountId] ,  SUM(tot.[LocalAmountDebit]-  tot.[LocalAmountCredit]) , SUM(tot.[ForeignAmountDebit]-  tot.[ForeignAmountCredit])
 from @tGLAccountTotalByMonthsType tot
 where tot.[DateTypeCode] ='1'  -- Accountingdate
 group by tot.[AccountId] 
-having SUM(tot.[LocalAmountDebit]-  tot.[LocalAmountCredit]) !=0
+having SUM(tot.[LocalAmountDebit]-  tot.[LocalAmountCredit]) !=0  or  SUM(tot.[ForeignAmountDebit]-  tot.[ForeignAmountCredit]) !=0  
 
 
 
@@ -198,6 +201,32 @@ print N'affected rows :'
 print @myrowcount 
 
 
+
+print N'update  GLAccountMoreDatas BalanceInForeignCurrency IsMultiCurrency '
+update  GLAccountMoreDatas 
+set GLAccountMoreDatas.BalanceInForeignCurrency = ISNULL ( GLAccountMoreDatas.BalanceInForeignCurrency, 0 )   + toUpdate.AccountingDateDeltaAmount
+from @GLAccountStruct toUpdate
+inner join GLAccounts on toUpdate.AccountId = GLAccounts.id
+where  
+GLAccountMoreDatas.AccountId = toUpdate.AccountId and  GLAccountMoreDatas.Tenant = @pTenant 
+and   GLAccounts.IsMultiCurrency=1 --AccountingDateDeltaAmount
+
+SELECT @myrowcount = @@ROWCOUNT
+print N'affected rows :'
+print @myrowcount 
+
+print N'update  GLAccountMoreDatas BalanceInForeignCurrency  NOT IsMultiCurrency '
+update  GLAccountMoreDatas 
+set GLAccountMoreDatas.BalanceInForeignCurrency = ISNULL ( GLAccountMoreDatas.BalanceInForeignCurrency, 0 )   + toUpdate.AccountingDateDeltaForeignAmount
+from @GLAccountStruct toUpdate
+inner join GLAccounts on toUpdate.AccountId = GLAccounts.id
+where  GLAccountMoreDatas.AccountId = toUpdate.AccountId and  GLAccountMoreDatas.Tenant = @pTenant 
+and   GLAccounts.IsMultiCurrency=0 --AccountingDateDeltaForeignAmount
+
+SELECT @myrowcount = @@ROWCOUNT
+print N'affected rows :'
+print @myrowcount 
+
 declare @toDayIs date;
 set @toDayIs =CONVERT(DATE,GETDATE());
 
@@ -207,13 +236,13 @@ set @toDayIs =CONVERT(DATE,GETDATE());
 delete from @GLAccountStruct;
 
 print N'GLAccunt Prepare (clients/Vendors) : until today  Due Date Delta amount'
-insert into @GLAccountStruct (AccountId,DueDateDeltaAmount )
+insert into @GLAccountStruct (AccountId,DueDateDeltaAmount ,DueDateDeltaForeignAmount )
 select  
-trans.[AccountId] ,  SUM(trans.[LocalAmountDebit]-  trans.[LocalAmountCredit])
+trans.[AccountId] ,  SUM(trans.[LocalAmountDebit]-  trans.[LocalAmountCredit]) ,  SUM(trans.[ForeignAmountDebit]-  trans.[ForeignAmountCredit])
 from @tLedgerTransactionsType trans
 where trans.DueDate<=@toDayIs 
 group by trans.[AccountId] 
-having SUM(trans.[LocalAmountDebit]-  trans.[LocalAmountCredit]) !=0
+having (SUM(trans.[LocalAmountDebit]-  trans.[LocalAmountCredit]) !=0 or  SUM(trans.[ForeignAmountDebit]-  trans.[ForeignAmountCredit]) !=0 )
 
 
 --round( round(GLAccounts.LocalBalanceInDue,2)  + round(toUpdate.DueDateDeltaAmount,2),2)
@@ -233,6 +262,31 @@ and  GLAccountMoreDatas.Tenant = @pTenant
 SELECT @myrowcount = @@ROWCOUNT
 print N'affected rows :'
 print @myrowcount 
+
+
+print N'ForeignBalanceInDue IsMultiCurrency TAKE LOCAL AMOUNT'
+update  GLAccountMoreDatas 
+set GLAccountMoreDatas.ForeignBalanceInDue = ISNULL ( GLAccountMoreDatas.ForeignBalanceInDue, 0 )  +    toUpdate.DueDateDeltaAmount
+from @GLAccountStruct toUpdate
+inner join GLAccounts on toUpdate.AccountId = GLAccounts.id
+where  GLAccountMoreDatas.AccountId = toUpdate.AccountId
+and   GLAccounts.AccountTypeCode in ('2','3')  --(clients/Vendors)
+and   GLAccounts.IsMultiCurrency=1 --DueDateDeltaAmount
+and  GLAccountMoreDatas.Tenant = @pTenant 
+
+
+
+print N'ForeignBalanceInDue  nottr IsMultiCurrency TAKE Foreign AMOUNT'
+update  GLAccountMoreDatas 
+set GLAccountMoreDatas.ForeignBalanceInDue = ISNULL ( GLAccountMoreDatas.ForeignBalanceInDue, 0 )  +    toUpdate.DueDateDeltaForeignAmount
+from @GLAccountStruct toUpdate
+inner join GLAccounts on toUpdate.AccountId = GLAccounts.id
+where  GLAccountMoreDatas.AccountId = toUpdate.AccountId
+and   GLAccounts.AccountTypeCode in ('2','3')  --(clients/Vendors)
+and   GLAccounts.IsMultiCurrency=0 --DueDateDeltaForeignAmount
+and  GLAccountMoreDatas.Tenant = @pTenant 
+
+
 
 delete from @GLAccountStruct;
 
