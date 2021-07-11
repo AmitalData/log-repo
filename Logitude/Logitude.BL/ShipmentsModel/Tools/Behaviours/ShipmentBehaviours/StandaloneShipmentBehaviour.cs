@@ -193,6 +193,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             stanAloneShipmentPM.IsStandalonePickupDelivery = true;
             stanAloneShipmentPM.ForwarderStandaloneShipmentId = this.shipmentPM.Id;
             stanAloneShipmentPM.StandalonePickupDeliveryId = pickupDeliveryId;
+            stanAloneShipmentPM.MainCarriageCarrierId = shipmentPickUpDelivery != null ? shipmentPickUpDelivery.CarrierId : null;
             stanAloneShipmentPM.MainCarriageCarrierNumber = shipmentPickUpDelivery!=null? shipmentPickUpDelivery.CarrierNumber : null;
             stanAloneShipmentPM.Driver = shipmentPickUpDelivery != null ? shipmentPickUpDelivery.Driver : null; 
             stanAloneShipmentPM.TruckNumber = shipmentPickUpDelivery != null ? shipmentPickUpDelivery.TruckNumber : null;

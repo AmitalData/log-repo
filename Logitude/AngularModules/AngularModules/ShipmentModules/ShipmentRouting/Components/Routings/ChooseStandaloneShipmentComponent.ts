@@ -113,8 +113,8 @@ export class ChooseStandaloneShipmentComponent {
                 + item.ShipmentNumber + " or this pickup / delivery and try again. ");
         }
 
-        else if (numberOfSelectedShipmentPackages > 1 && this.NumberOfPickupDeliveryPackages == 0) {
-            messageWindow.Show("Can't connect to Shipment " + item.ShipmentNumber + " because it has more than one container");
+        else if (numberOfSelectedShipmentPackages >= 1 && this.NumberOfPickupDeliveryPackages == 0) {
+            messageWindow.Show("Can't connect to Shipment " + item.ShipmentNumber + " because it has containers. Please remove the containers and try again.");
         }
 
         else {
@@ -125,7 +125,7 @@ export class ChooseStandaloneShipmentComponent {
     ConfirmSelectedShipment(item: ShipmentList) {
         var confirmWindow: ConfirmWindow = new ConfirmWindow();
         confirmWindow.Title = "";
-        confirmWindow.Show("Different fields will be Updated from the shipment level when connecting the shipment to this leg");
+        confirmWindow.Show("Different Fields and Containers will be Updated from the shipment level when connecting the shipment to this leg");
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
                 this.SelectedShipment = item;
