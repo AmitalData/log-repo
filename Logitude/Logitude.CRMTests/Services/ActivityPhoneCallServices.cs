@@ -8,9 +8,9 @@ namespace Logitude.CRMTests.Services
 {
     public class ActivityPhoneCallServices
     {
-        public ActivityPM CreateInstance(Table taskTable)
+        public ActivityPM CreateInstance(Table phoneCallTable)
         {
-            dynamic dataTable = taskTable.CreateDynamicInstance();
+            dynamic dataTable = phoneCallTable.CreateDynamicInstance();
             return new ActivityBuilder()
                 .WithDefualtValues()
                 .Subject((string)dataTable.Subject)

@@ -16,9 +16,9 @@ namespace Logitude.CRMTests.Steps.Activities
         private readonly CRMContext crmContext;
         private readonly ActivityPhoneCallServices activityPhoneCallServices;
 
-        public CreatePhoneCallSteps(CRMContext activitesContext, ActivityPhoneCallServices activityPhoneCallServices)
+        public CreatePhoneCallSteps(CRMContext crmContext, ActivityPhoneCallServices activityPhoneCallServices)
         {
-            this.crmContext = activitesContext;
+            this.crmContext = crmContext;
             this.activityPhoneCallServices = activityPhoneCallServices;
         }
 
