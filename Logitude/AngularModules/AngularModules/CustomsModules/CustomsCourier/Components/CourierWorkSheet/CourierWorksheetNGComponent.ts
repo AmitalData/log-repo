@@ -36,7 +36,7 @@ import { LazyLoadEvent, MenuItem } from 'primeng/api';
 import { IIGGeneralMessagesService } from '../../../../Customs/Services/WebServices/IIGGeneralMessagesService';
 import { CourierWorksheetListTemplate } from '../../../CustomsListTemplates/Components/CourierWorksheetListTemplate';
 import { ContextMenu } from 'primeng/contextmenu';
-import { debug } from 'console';
+
 
 @Component({
 
