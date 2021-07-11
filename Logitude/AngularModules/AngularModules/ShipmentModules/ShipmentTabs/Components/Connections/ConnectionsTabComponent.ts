@@ -37,6 +37,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
     public MastersItemsSource: ShipmentConnectedEntityItem[];
     public CustomFilesItemsSource: ShipmentConnectedEntityItem[];
     public TicketsItemsSource: ShipmentConnectedEntityItem[];
+    public PickupDeliveryItemsSource: ShipmentConnectedEntityItem[];
 
     public IsWarehouseEntryVisible: boolean = false;
     public IsNewWarehouseEntryVisible: boolean = false;
@@ -214,6 +215,8 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
     public ReleasesGridHeight: number = 90;
     public AssembliesGridHeight: number = 90;
     public TicketsGridHeight: number = 90;
+    public PickupDeliveryGridHeight: number = 90;
+
 
     public IsQuoteGridVisible: boolean = false;
     public IsCustomFileGridVisible: boolean = false;
@@ -237,6 +240,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
         this.MastersItemsSource = this.ItemsSource.filter(d => d.EntityType == "Master");
         this.CustomFilesItemsSource = this.ItemsSource.filter(d => d.EntityType == "Custom File");
         this.TicketsItemsSource = this.ItemsSource.filter(d => d.EntityType == "Ticket");
+        this.PickupDeliveryItemsSource = this.ItemsSource.filter(d => d.EntityType == "PickUp" || d.EntityType == "Delivery");
 
         this.IsQuoteGridVisible = this.QuotesItemsSource.length == 0 ? false : true;
         this.IsCustomFileGridVisible = this.CustomFilesItemsSource.length == 0 ? false : true;
@@ -245,6 +249,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
         this.EntriesGridHeight = this.ComputeGridHeight(this.WarehouseEntriesItemsSource);
         this.ReleasesGridHeight = this.ComputeGridHeight(this.WarehouseReleasesItemsSource);
         this.TicketsGridHeight = this.ComputeGridHeight(this.TicketsItemsSource);
+        this.PickupDeliveryGridHeight = this.ComputeGridHeight(this.PickupDeliveryItemsSource);
     }
 
     private ComputeGridHeight(list: any[]): number {
@@ -500,8 +505,31 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
         });
     }
 
-    DisconnectStandaloneShipment() {
+    DisconnectStandaloneShipmentClicked() {
+        if (this.EntityPM.ShipmentPackages != null && this.EntityPM.ShipmentPackages.length > 0) {
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.Show("Disconnecting this standalone shipment will cause the package(s) to be deleted from the shipment. Please confirm.");
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    this.DisconnectStandaloneShipment();
+                }
+            });
+        }
+        else {
+            this.DisconnectStandaloneShipment();
+        }
+    }
 
+    DisconnectStandaloneShipment() {
+        this.myDomainService.DisconnectStandaloneShipment(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
+            if (myResponse != null) {
+                if (!myResponse.HasError) {
+                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+                    this.entityArgs.EditComponent.ReloadEntityPM();
+                    this.LoadData();
+                }
+            }
+        });
     }
 }
 

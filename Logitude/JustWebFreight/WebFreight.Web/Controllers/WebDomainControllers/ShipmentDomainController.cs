@@ -616,15 +616,35 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             shipmentConnectedEntityDetails.Add(new ShipmentConnectedEntity()
             {
-                EntityId = shipmentPickUpDelivery.Id,
-                EntityType = "Ticket",
-                Reference = shipmentPickUpDelivery.PickUpDeliveryTypeCode == "PICK" ? "PickUp" : "Delivery",
-                ObjectTableName = "ShipmentPickUpDelivery",
+                EntityId = shipmentPickUpDelivery.ShipmentId,
+                Reference = shipmentPickUpDelivery.PickUpDeliveryNumber,
+                EntityType = shipmentPickUpDelivery.PickUpDeliveryTypeCode == "PICK" ? "PickUp" : "Delivery",
+                ObjectTableName = "Shipment",
             });
 
             return shipmentConnectedEntityDetails;
         }
+        public HttpResponseMessage GetDisconnectStandaloneShipment(string shipmentId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
 
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("Shipment", "UPDATE", tenant);
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, true);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        
         public HttpResponseMessage GetShipmentsQueriesCounts([FromUri] ShipmentsQueriesCountsArgs shipmentsQueriesCountsArgs)
         {
             try

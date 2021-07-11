@@ -529,8 +529,14 @@
                                     </td>
                                 </tr>
 
-                                <!--Standalone Shipment-->
-                                <tr *ngIf="IsStandaloneShipmentVisible" style="height:90px; max-height:90px;">
+                                <tr style="height:10px;" *ngIf="IsStandaloneShipmentVisible">
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <!--Pickup/Delivery Of Standalone Shipment-->
+                                <tr *ngIf="IsStandaloneShipmentVisible" [style.height.px]="PickupDeliveryGridHeight" style="max-height:160px;">
                                     <td>
                                         <table>
                                             <tr style="height:30px;">
@@ -546,8 +552,6 @@
                                                                     <tr>
                                                                         <td style="width: 150px; min-width:150px; max-width:150px;">#</td>
                                                                         <td style="width: 150px; min-width:150px; max-width:150px;">Type</td>
-                                                                        <td style="width: 75px; min-width:75px; max-width:75px;">From</td>
-                                                                        <td style="width: 75px; min-width:75px; max-width:75px;">To</td>
                                                                         <td class="LastChild">
                                                                             <div></div>
                                                                         </td>
@@ -557,7 +561,7 @@
 
                                                             <div class="SimpleGridViewBody">
                                                                 <table>
-                                                                    <tr class="SimpleGridViewRow RowHover" *ngFor="let item of QuotesItemsSource">
+                                                                    <tr class="SimpleGridViewRow RowHover" *ngFor="let item of PickupDeliveryItemsSource">
                                                                         <td class="GridViewCell TextTrimming" style="width: 150px; max-width:150px; min-width:150px;">
                                                                             {{item.EntityNumber}}
                                                                         </td>
@@ -566,23 +570,15 @@
                                                                             {{item.EntityType}}
                                                                         </td>
 
-                                                                        <td class="GridViewCell" style="width: 75px; min-width:75px; max-width:75px;">
-                                                                             {{item.From}}
-                                                                        </td>
-
-                                                                        <td class="GridViewCell" style="width: 75px; min-width:75px; max-width:75px;">
-                                                                            {{item.To}}
-                                                                        </td>
-
                                                                         <td class="CellTools">
                                                                             <div>
-                                                                                <span class="hyperlink" (click)="DisconnectStandaloneShipment()" style="padding-left:5px;">Disconnect</span>
+                                                                                <span class="hyperlink" (click)="DisconnectStandaloneShipmentClicked()" style="padding-left:5px;">Disconnect</span>
                                                                                 <span class="hyperlink" (click)="ViewEntity(item)" style="padding-left:5px;">View</span>
                                                                             </div>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <td colspan="5">
+                                                                        <td colspan="3">
                                                                             <div></div>
                                                                         </td>
                                                                     </tr>
