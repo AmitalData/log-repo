@@ -177,23 +177,47 @@ namespace WebFreight.Web.Helpers
             queryOperations.SetFilter("EntityType", quoteObjectTableId, false, "Equals", null, false);
             queryOperations.SetFilter("CompanyId", quotesRequestFilters.PartnerId, false, "Equals", null, false);
             queryOperations.SetFilter("SearchFields", quotesRequestFilters.SearchField, false, "Contains", null, false);
-            //if (quotesRequestFilters.OnlyOpened)
-            //{
-            //    queryOperations.SetFilter("StageId", "Created", false, "Equals", null, false);
-            //}
-            if (!string.IsNullOrEmpty(quotesRequestFilters.RequestedBy) && quotesRequestFilters.RequestedBy != "All")
-            {
-                queryOperations.SetFilter("CustomerContactId", quotesRequestFilters.RequestedBy, false, "Equals", null, false);
-            }
-            //List<ObjectField> ticketCustomFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Ticket", this.tenant);
-            //ObjectField objectCustomField = ticketCustomFields.Where(f => f.Code == "CustomerStatus").FirstOrDefault();
-            //if (objectCustomField != null)
-            //{
-            //    string fieldCode = objectCustomField.FieldCode.Split('.')[2];
-            //    queryOperations.SetFilter(fieldCode, quotesRequestFilters.CustomerStatus, false, "Equals", null, false);
-            //}
-            //Create Date
+            MapRequestedByFilterToQueryOperations(queryOperations);
+            MapOpenedByFilterToQueryOperations(queryOperations);
+            MapCreateDateFilterToQueryOperations(queryOperations);
+            MapCustomerStatusCustomFieldFilterToQueryOperations(queryOperations);
             return queryOperations;
+        }
+
+        private void MapRequestedByFilterToQueryOperations(QueryOperations queryOperations)
+        {
+            if (!string.IsNullOrEmpty(quotesRequestFilters.RequestedBy) && quotesRequestFilters.RequestedBy != "All")
+                queryOperations.SetFilter("CustomerContactId", quotesRequestFilters.RequestedBy, false, "Equals", null, false);
+        }
+
+        private void MapOpenedByFilterToQueryOperations(QueryOperations queryOperations)
+        {
+            if (!quotesRequestFilters.OnlyOpened)
+                return;
+
+            TicketStageQueryService ticketStageQueryService = new TicketStageQueryService(tenant);
+            string OpenedTicketStageId = ticketStageQueryService.GetIdByName("Created", tenant);
+            queryOperations.SetFilter("StageId", OpenedTicketStageId, false, "Equals", null, false);
+        }
+        
+        private void MapCreateDateFilterToQueryOperations(QueryOperations queryOperations)
+        {
+            if (quotesRequestFilters.FromDate == null || quotesRequestFilters.ToDate == null)
+                return;
+
+            queryOperations.SetFilter("CreateDate", quotesRequestFilters.FromDate, false, "Between", quotesRequestFilters.ToDate, false);
+        }
+
+        private void MapCustomerStatusCustomFieldFilterToQueryOperations(QueryOperations queryOperations)
+        {
+            List<ObjectField> ticketCustomFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Ticket", tenant);
+            ObjectField objectCustomField = ticketCustomFields.Where(f => f.Code == "CustomerStatus").FirstOrDefault();
+            if (objectCustomField == null)
+                return;
+            string fieldCode = objectCustomField.FieldCode.Split('.')[2];
+            CustomPickListQuery customPickListQuery = new CustomPickListQuery(tenant);
+            string customerStatusValueId = customPickListQuery.GetIdByCodeAndValueAndTenant("CustomerStatus", quotesRequestFilters.CustomerStatus, tenant);
+            queryOperations.SetFilter(fieldCode, customerStatusValueId, false, "Equals", null, false);
         }
 
         private List<TicketList> GetTickets(QueryOperations queryOperations)
@@ -303,6 +327,8 @@ namespace WebFreight.Web.Helpers
         public string RequestedBy { get; set; }
         public string CustomerStatus { get; set; }
         public bool OnlyOpened { get; set; }
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get; set; }
         public int PageSize { get; set; }
         public int PageIndex { get; set; }
 

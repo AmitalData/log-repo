@@ -680,11 +680,11 @@
                                                                                 </div>
                                                                                 <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:50px;min-width:50px;color:black">Opened</div>
                                                                                 <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:60px;min-width:60px;height:22px;">
-                                                                                    <input  type="checkbox">
+                                                                                    <input Id="OnlyOpened" onchange="RefreshQuotesRequstsData()" type="checkbox">
                                                                                 </div>
                                                                                 <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:40px;min-width:40px;color:black">Status:</div>
                                                                                 <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:180px;min-width:180px;height:22px;">
-                                                                                    <select class="SelectOption" style="background:white; width:120px;min-width:120px;">
+                                                                                    <select id="SelectStatusFilter" class="SelectOption" onchange="RefreshQuotesRequstsData()" style="background:white; width:120px;min-width:120px;">
                                                                                         <option>Request Received</option>
                                                                                         <option>Quote Process</option>
                                                                                         <option selected>Pending Approval</option>
@@ -694,12 +694,12 @@
                                                                                     </select>
                                                                                 </div>
                                                                                 <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:35px;min-width:35px;color:black">From:</div>
-                                                                                <div class="ValueTextStyle TemplateItem" style="display:inline-block;width:190px;min-width:190px;height:25px;">
-                                                                                    <input type="datetime-local" style="width:160px;min-width:160px;">
+                                                                                <div class="ValueTextStyle TemplateItem" style="display:inline-block;width:170px;min-width:170px;height:25px;">
+                                                                                    <input id="FromDate" type="date" onchange="RefreshQuotesRequstsData()" style="width:120px;min-width:120px;">
                                                                                 </div>
                                                                                 <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:20px;min-width:20px;color:black">To:</div>
-                                                                                <div class="ValueTextStyle TemplateItem" style="display:inline-block;width:180px;min-width:180px;height:25px;">
-                                                                                    <input type="datetime-local" style="width:160px;min-width:160px;">
+                                                                                <div class="ValueTextStyle TemplateItem" style="display:inline-block;width:130px;min-width:130px;height:25px;">
+                                                                                    <input id="ToDate" type="date" onchange="RefreshQuotesRequstsData()" style="width:120px;min-width:120px;">
                                                                                 </div>
                                                                                 <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:20px;min-width:20px"></div>
                                                                             </div>
@@ -925,7 +925,7 @@
                         <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:50px;min-width:50px;">Quote \#:</div>
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:130px;min-width:130px;height:22px;color:\\#1B90CB;">${QuoteNumber}</div>
                         <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:50px;min-width:50px;">Subject:</div>
-                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:140px;min-width:140px;height:22px;">${Subject}</div>
+                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:140px;min-width:140px;height:22px;" title="${Subject}">${Subject}</div>
                         <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:50px;min-width:50px;">Status:</div>
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:175px;min-width:175px;height:22px;">${Status}</div>
                         <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:120px;min-width:120px;visibility: #= QuotationPreparedTickVisibility #;">Comments:</div>
@@ -936,9 +936,9 @@
                     <div style="height:23px; vertical-align:central;">
                         <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:20px;"><img id="#= DocumentSecurityId #" OnClick="ViewQuotationDocument(id)" src="images/FileIcons/File-pdf-48.png" style="width: 20px; height: 20px; position:relative; cursor: pointer;visibility: #= QuotationPreparedTickVisibility #;" /></div>
                         <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:80px;min-width:80px;">Requested by:</div>
-                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:100px;min-width:100px;height:22px;">${ContactName}</div>
+                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:100px;min-width:100px;height:22px;" title="${ContactName}">${ContactName}</div>
                         <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:90px;min-width:90px;">Reference \#/PO:</div>
-                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:100px;min-width:100px;height:22px;">${ReferenceNumber}/${PONumber}</div>
+                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:100px;min-width:100px;height:22px;" title="${ReferenceNumber}/${PONumber}">${ReferenceNumber}/${PONumber}</div>
                         <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:95px;min-width:95px;visibility: #= QuotationPreparedTickVisibility #;">Updated Status:</div>
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:130px;height:22px;visibility: #= QuotationPreparedTickVisibility #;">
                             <select class="SelectOption" id="Option#= Id #" OnChange="SendApprovalQuotesRequstEmailFeedback(id)"  #= OptionDisabledProperty # >
@@ -956,10 +956,10 @@
                       <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:20px;"></div>
 
                         <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:40px;min-width:40px;">Owner:</div>
-                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:140px;min-width:140px;height:22px;">${OwnerName}</div>
+                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:140px;min-width:140px;height:22px;" title="${OwnerName}">${OwnerName}</div>
                         
                         <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:40px;min-width:40px;">Brand:</div>
-                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:150px;min-width:150px;height:22px;">${Brand}</div>
+                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:150px;min-width:150px;height:22px;" title="${Brand}">${Brand}</div>
                     </div>
                 </div>
             </div>
@@ -1101,7 +1101,7 @@
 
         function RequestedByChanged() {
             var requestedBy = document.getElementById("RequestedByOption").value;
-            $.RequestedBy = requestedBy;
+            $.RequestedBy = requestedBy == "All" ? "All" : $.ContactId;
             RefreshQuotesRequstsData();
         }
 
@@ -1110,7 +1110,6 @@
             $('#Option' + selectedQuoteRequest.Id).removeAttr('disabled');
             $('#Option' + selectedQuoteRequest.Id).css("background", "linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%)");
         }
-
 
         function ViewQuotationDocument(QuotationDocumentSecurityId) {
 

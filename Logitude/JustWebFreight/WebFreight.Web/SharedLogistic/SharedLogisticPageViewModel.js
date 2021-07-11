@@ -313,12 +313,14 @@
     function QuotesRequstFilters() {
         this.PartnerId = $.CurrentCardId;
         this.SearchField = ($.trim($.SearchText_QUOTESREQUESTS) == "" || $.trim($.SearchText_QUOTESREQUESTS) == $.watermark_QUOTESREQUESTS) ? null : $.trim($.SearchText_QUOTESREQUESTS);
-        this.OnlyOpened = true;
+        this.OnlyOpened = $('#OnlyOpened').is(':checked');
         this.RequestedBy = $.RequestedBy;
-        this.CustomerStatus = "Pending Approval";// $('#SavedSelectedTabId').val();
+        this.CustomerStatus = $('#SelectStatusFilter').val();
         this.PageSize = jQuery.LoadingCount;
-        this.PageIndex = 0
-        this.Tenant = $.CurrentTenant
+        this.PageIndex = 0;
+        this.FromDate = new Date($('#FromDate').val());
+        this.ToDate = new Date($('#ToDate').val());
+        this.Tenant = $.CurrentTenant;
     };
 
     
@@ -405,6 +407,17 @@
             }
 
             case "TAB_QUOTESREQUESTS": {
+                var dateNow = new Date();
+                var month = dateNow.getUTCMonth() + 1;
+                var day = padWithZeroes(dateNow.getUTCDate().toString(), 2);
+                var year = dateNow.getUTCFullYear();
+                var previousMonth = month == 1 ? 12 : month - 1;
+                var nextMonth = month == 12 ? 1 : month + 1;
+                var fromYear = month == 1 ? year - 1 : year;
+                var toYear = month == 12 ? year + 1 : year;
+
+                $('#FromDate').val(fromYear + '-' + padWithZeroes(previousMonth,2) + '-' + padWithZeroes(day,2));
+                $('#ToDate').val(toYear + '-' + padWithZeroes(nextMonth,2) + '-' + padWithZeroes(day,2));
                 $.LoadQuotesRequsts();
                 break;
             }
@@ -416,6 +429,11 @@
 
         }
     });
+
+    function padWithZeroes(str, max) {
+        str = str.toString();
+        return str.length < max ? padWithZeroes("0" + str, max) : str;
+    }
 
     jQuery.SelectQuery = (function () {
 
