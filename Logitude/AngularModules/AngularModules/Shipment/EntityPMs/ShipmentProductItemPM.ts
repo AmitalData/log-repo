@@ -98,6 +98,11 @@ export class ShipmentProductItemPM {
     public set OriginCountryName(newValue: string) { if (this.originCountryName != newValue) { this.originCountryName = newValue; this.MarkAsDirty("OriginCountryName"); } }
        
 	 
+    private isEmptyLine: boolean;
+    public get IsEmptyLine() { return this.isEmptyLine; }
+    public set IsEmptyLine(newValue: boolean) { if (this.isEmptyLine != newValue) { this.isEmptyLine = newValue; this.MarkAsDirty("IsEmptyLine"); } }
+       
+	 
     private changeSetOp: string;
     public get ChangeSetOp() { return this.changeSetOp; }
     public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }

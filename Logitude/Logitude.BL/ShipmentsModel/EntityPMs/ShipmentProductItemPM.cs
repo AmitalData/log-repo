@@ -25,6 +25,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string UPC { get; set; }
         public string OriginCountryId { get; set; }
         public string OriginCountryName { get; set; }
+        public bool IsEmptyLine { get; set; }
         public ChangeSetOperation ChangeSetOp { get; set; }
     }
 }

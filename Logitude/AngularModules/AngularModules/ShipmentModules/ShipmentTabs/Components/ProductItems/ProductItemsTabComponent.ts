@@ -67,6 +67,7 @@ export class ProductItemsTabComponent extends BaseComponent implements OnInit, O
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.CustomerId = this.EntityPM.CustomerId;
                     this.ToCountryId = this.EntityPM.ToCountryId;
+                    this.BuildProductItems();
                 }
             });
 
@@ -75,6 +76,7 @@ export class ProductItemsTabComponent extends BaseComponent implements OnInit, O
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.CustomerId = this.EntityPM.CustomerId;
                     this.ToCountryId = this.EntityPM.ToCountryId;
+                    this.BuildProductItems();
                 }
             });
         }
