@@ -113,6 +113,7 @@
     <Compile Include="Steps\Activities\CreateTaskSteps.cs" />
     <Compile Include="Steps\Activities\GetAppointmentSteps.cs" />
     <Compile Include="Steps\Activities\GetTaskSteps.cs" />
+    <Compile Include="Steps\Activities\UpdateAppointmentSteps.cs" />
     <Compile Include="Steps\Activities\UpdateTaskSteps.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -121,6 +122,7 @@
     <None Include="Features\Activities\CreateTask.feature" />
     <None Include="Features\Activities\GetAppointment.feature" />
     <None Include="Features\Activities\GetTask.feature" />
+    <None Include="Features\Activities\UpdateAppointment.feature" />
     <None Include="Features\Activities\UpdateTask.feature" />
     <None Include="packages.config" />
   </ItemGroup>
