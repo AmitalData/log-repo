@@ -15,6 +15,7 @@ import { WarehouseHelper } from '../../../../Warehouse/Helpers/WarehouseHelper';
 import { NewShipmentComponentArgs } from '../../../../Shipment/Args';
 import { WarehouseEntryListExtendedService } from '../../../../Warehouse/Services/ExtendedLists/WarehouseEntryListExtendedService';
 import { WarehouseReleaseListExtendedService } from '../../../../Warehouse/Services/ExtendedLists/WarehouseReleaseListExtendedService';
+import { FeatureToggleList } from '../../../../Infrastructure/EntityLists/FeatureToggleList';
 
 @Component({
     
@@ -47,6 +48,8 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
     public IsNewMasterVisible: boolean = false;
     public DisableNewWarehouseEntryButton: boolean = false;
     public DisableNewWarehouseReleaseButton: boolean = false;
+    public IsStandaloneShipmentVisible: boolean = false;
+
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         this.EntityPM = this.entityArgs.EntityPM;
@@ -83,6 +86,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
             }
         }
 
+        this.SetIsStandaloneShipmentVisible();
         this.Listen();
         this.LoadData();
     }
@@ -197,6 +201,13 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
                 this.DisableNewWarehouseReleaseButton = true;
             }
         });
+    }
+
+    SetIsStandaloneShipmentVisible() {
+        var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SAS")[0];
+        if (featureToggle && this.EntityPM.IsStandalonePickupDelivery) {
+            this.IsStandaloneShipmentVisible = true;
+        }
     }
 
     public EntriesGridHeight: number = 90;
@@ -487,6 +498,10 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
                 }
             });
         });
+    }
+
+    DisconnectStandaloneShipment() {
+
     }
 }
 

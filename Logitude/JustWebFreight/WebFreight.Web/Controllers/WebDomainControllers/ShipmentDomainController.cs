@@ -580,16 +580,51 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             EntityStatus = crmContext.TicketStages.Where(d => d.Id == item.StageId).FirstOrDefault().Name,
                         });
                     }
+
+
+                    myResult.AddRange(this.GetStandaloneShipmentDetails(myShipment));
+
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
+
 
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        private List<ShipmentConnectedEntity> GetStandaloneShipmentDetails(Shipment myShipment)
+        {
+            if (!myShipment.IsStandalonePickupDelivery)
+            {
+                return null;
+            }
+
+            int tenant = myShipment.Tenant;
+            string standaloneShipmentId = myShipment.Id;
+            List<ShipmentConnectedEntity> shipmentConnectedEntityDetails = new List<ShipmentConnectedEntity>();
+            ShipmentPickUpDeliveryRepository shipmentPickUpDeliveryRepository = new ShipmentPickUpDeliveryRepository(tenant);
+            ShipmentPickUpDelivery shipmentPickUpDelivery = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDeliveryByStandaloneShipmentId(standaloneShipmentId, tenant);
+
+            if(shipmentPickUpDelivery == null)
+            {
+                return null;
+            }
+
+            shipmentConnectedEntityDetails.Add(new ShipmentConnectedEntity()
+            {
+                EntityId = shipmentPickUpDelivery.Id,
+                EntityType = "Ticket",
+                Reference = shipmentPickUpDelivery.PickUpDeliveryTypeCode == "PICK" ? "PickUp" : "Delivery",
+                ObjectTableName = "ShipmentPickUpDelivery",
+            });
+
+            return shipmentConnectedEntityDetails;
+        }
+
         public HttpResponseMessage GetShipmentsQueriesCounts([FromUri] ShipmentsQueriesCountsArgs shipmentsQueriesCountsArgs)
         {
             try
