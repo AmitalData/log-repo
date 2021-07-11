@@ -5540,6 +5540,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
                 }
             }
+            UpdateShipmentConcectedPackagesByContainerEntityId(pickUpDeliveryPackagePM);
         }
         private void DeleteShipmentPickUpDeliveryPackage(ShipmentPickUpDeliveryPackagePM pickUpDeliveryPackagePM)
         {
@@ -7087,6 +7088,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private bool IsInlandDomesticShipment(ShipmentPM entityPM)
         {
             return entityPM.DirectionId == "D" && entityPM.TransportModeId == "I";
+        }
+        private void UpdateShipmentConcectedPackagesByContainerEntityId(ShipmentPickUpDeliveryPackagePM shipmentPickUpDeliveryPackagePM)
+        {
+          /*  if (this.entityPM.ShipmentPackages.Find(d=> d.ContainerEntityId == shipmentPickUpDeliveryPackagePM.ContainerEntityId).)
+            {
+
+            }*/
         }
     }
 
