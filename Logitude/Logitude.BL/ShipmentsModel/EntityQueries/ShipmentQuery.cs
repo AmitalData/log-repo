@@ -13889,10 +13889,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         private List<ShipmentPickUpPM> GetForwaderShipmentPickUpsByIdAndParentPickUpDeliveryId(ShipmentPM shipmentPM, ShipmentPickUpPM forwarderPickUp)
         {
-            List<ShipmentPickUpPM> filteredShipmentPickUpPMs = shipmentPM.ShipmentPickUps;
+            List<ShipmentPickUpPM> filteredShipmentPickUpPMs = shipmentPM.ShipmentPickUps.FindAll(d => !string.IsNullOrEmpty(d.StandaloneShipmentId));
             if (!string.IsNullOrEmpty(forwarderPickUp.ParentPickUpDeliveryId))
             {
-                filteredShipmentPickUpPMs = shipmentPM.ShipmentPickUps.FindAll(d => d.Id != forwarderPickUp.ParentPickUpDeliveryId && d.ParentPickUpDeliveryId != forwarderPickUp.ParentPickUpDeliveryId);
+                filteredShipmentPickUpPMs = shipmentPM.ShipmentPickUps.FindAll(d => d.Id != forwarderPickUp.ParentPickUpDeliveryId &&
+                                           d.ParentPickUpDeliveryId != forwarderPickUp.ParentPickUpDeliveryId && !string.IsNullOrEmpty(d.StandaloneShipmentId));
             }
 
             return filteredShipmentPickUpPMs;
@@ -13935,10 +13936,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         private List<ShipmentDeliveryPM> GetForwaderShipmentDeliveriesByIdAndParentPickUpDeliveryId(ShipmentPM shipmentPM, ShipmentDeliveryPM forwarderDelivery)
         {
-            List<ShipmentDeliveryPM> filteredShipmentDeliveries = shipmentPM.ShipmentDeliveries;
+            List<ShipmentDeliveryPM> filteredShipmentDeliveries = shipmentPM.ShipmentDeliveries.FindAll(d => !string.IsNullOrEmpty(d.StandaloneShipmentId));
             if (!string.IsNullOrEmpty(forwarderDelivery.ParentPickUpDeliveryId))
             {
-                filteredShipmentDeliveries = shipmentPM.ShipmentDeliveries.FindAll(d => d.Id != forwarderDelivery.ParentPickUpDeliveryId && d.ParentPickUpDeliveryId != forwarderDelivery.ParentPickUpDeliveryId);
+                filteredShipmentDeliveries = shipmentPM.ShipmentDeliveries.FindAll(d => d.Id != forwarderDelivery.ParentPickUpDeliveryId 
+                                             && d.ParentPickUpDeliveryId != forwarderDelivery.ParentPickUpDeliveryId && !string.IsNullOrEmpty(d.StandaloneShipmentId));
             }
 
             return filteredShipmentDeliveries;

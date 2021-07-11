@@ -390,6 +390,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 this.MapForwarderShipmentNewPickUpDelivery(shipmentPickUpDelivery, forwarderShipment);
                 MapPickUpDeliveryFieldsFromStandaloneShipment(shipmentPickUpDelivery);
                 shipmentPickUpDeliveryRepository.Add(shipmentPickUpDelivery);
+                this.shipmentPM.StandalonePickupDeliveryId = shipmentPickUpDelivery != null ? shipmentPickUpDelivery.Id : null;
+                this.shipmentPM.StandalonePickupDeliveryNumber = shipmentPickUpDelivery != null ? shipmentPickUpDelivery.PickUpDeliveryNumber : null;
                 initializer.Repository.Update(forwarderShipment);
             }
         }
