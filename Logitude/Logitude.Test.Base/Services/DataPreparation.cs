@@ -517,8 +517,6 @@ namespace Logitude.Test.Base.Services
                     return Urls.WarehouseViewsGetByFilters;
                 case "SL":
                     return Urls.ShippingLineViewsGetByFilters;
-                case "CO":
-                    return Urls.ContactViewsGetByFilters;
                 default:
                     return null;
             }
