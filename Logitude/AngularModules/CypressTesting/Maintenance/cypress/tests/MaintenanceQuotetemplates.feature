@@ -39,8 +39,8 @@ Feature: Create, Search, Open and Edit a Quote Template from Maintenance
             | Consignee Name  | Column2 |
             | Shipper Address | Column2 |
         And edit "Shipper Name" field in label tab to "Shipper Name Test"
-        When save quote header
-        Then the quote header template should update successfully
+        When save quote details
+        Then the quote template details should update successfully
 
     Scenario: Edit the quote template's Pricing Packages
         Given the user reopen the quote template
