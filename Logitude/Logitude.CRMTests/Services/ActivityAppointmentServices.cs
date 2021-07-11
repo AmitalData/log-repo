@@ -8,9 +8,9 @@ namespace Logitude.CRMTests.Services
 {
     public class ActivityAppointmentServices
     {
-        public ActivityPM CreateInstance(Table taskTable)
+        public ActivityPM CreateInstance(Table appointmentTable)
         {
-            dynamic dataTable = taskTable.CreateDynamicInstance();
+            dynamic dataTable = appointmentTable.CreateDynamicInstance();
             return new ActivityBuilder()
                 .WithDefualtValues()
                 .Subject((string)dataTable.Subject)
@@ -26,9 +26,9 @@ namespace Logitude.CRMTests.Services
                 .Build();
         }
 
-        public ActivityPM UpdateInstance(Table taskTable, ActivityPM activity)
+        public ActivityPM UpdateInstance(Table appointmentTable, ActivityPM activity)
         {
-            dynamic dataTable = taskTable.CreateDynamicInstance();
+            dynamic dataTable = appointmentTable.CreateDynamicInstance();
             return new ActivityBuilder()
                 .WithModel(activity)
                 .Subject((string)dataTable.Subject)

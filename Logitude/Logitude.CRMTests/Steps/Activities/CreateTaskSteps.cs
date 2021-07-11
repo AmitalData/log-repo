@@ -16,9 +16,9 @@ namespace Logitude.CRMTests.Steps.Activities
         private readonly CRMContext crmContext;
         private readonly ActivityTaskServices activityTaskServices;
 
-        public CreateTaskSteps(CRMContext activitesContext, ActivityTaskServices taskServices)
+        public CreateTaskSteps(CRMContext crmContext, ActivityTaskServices taskServices)
         {
-            this.crmContext = activitesContext;
+            this.crmContext = crmContext;
             this.activityTaskServices = taskServices;
         }
 

@@ -16,9 +16,9 @@ namespace Logitude.CRMTests.Steps.Activities
         private readonly CRMContext crmContext;
         private readonly ActivityAppointmentServices activityAppointmentServices;
 
-        public CreateAppointmentSteps(CRMContext activitesContext, ActivityAppointmentServices activityAppointmentServices)
+        public CreateAppointmentSteps(CRMContext crmContext, ActivityAppointmentServices activityAppointmentServices)
         {
-            this.crmContext = activitesContext;
+            this.crmContext = crmContext;
             this.activityAppointmentServices = activityAppointmentServices;
         }
 
