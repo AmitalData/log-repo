@@ -189,6 +189,10 @@ export class SelectStandalonePackagesComponent {
     }
 
     BuildShipmetItemsSource() {
+        if (this.ShipmentPackages == null) {
+            return;
+        }
+
         this.ItemsSource = [];
         this.SelectedItem = null;
         var myPackageTypeColumnWidth: number = 80;
