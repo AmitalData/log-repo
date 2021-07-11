@@ -106,8 +106,7 @@ namespace Logitude.Test.Base.Services
                 ShippingLineMAEUId = GetPartnerId(new PartnerParameters { TypeCode = "SL", Name = "TestMAEUShippingLine", Code = "MAEU", CopyFromTenantZero = true }),
                 ShippingLineMSCUId = GetPartnerId(new PartnerParameters { TypeCode = "SL", Name = "TestMSCUShippingLine", Code = "MSCU", CopyFromTenantZero = true }),
                 ShippingLineYMLUId = GetPartnerId(new PartnerParameters { TypeCode = "SL", Name = "TestYMLUShippingLine", Code = "YMLU", CopyFromTenantZero = true }),
-                WarehouseId = GetPartnerId(new PartnerParameters { TypeCode = "WH", Name = "TestWarehouse", Code = "TSWHE" }),
-                ContactId = GetPartnerId(new PartnerParameters { TypeCode = "CO", Name = "TestContact" })
+                WarehouseId = GetPartnerId(new PartnerParameters { TypeCode = "WH", Name = "TestWarehouse", Code = "TSWHE" })
             };
         }
 

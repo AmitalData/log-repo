@@ -104,6 +104,11 @@ namespace Logitude.CRMTests.Models.Builders
             _activity.BusinessUnitId = businessUnitId;
             return this;
         }
+        public ActivityBuilder CallWithId(string callWithId)
+        {
+            _activity.CallWithId = callWithId;
+            return this;
+        }
 
         public ActivityPM Build()
         {
@@ -128,8 +133,7 @@ namespace Logitude.CRMTests.Models.Builders
                 UpdatedByUserId = UserTenant.UserId,
                 OwnerId = UserTenant.UserId,
                 BranchId = UserTenant.BranchId,
-                BusinessUnitId = UserTenant.BusinessUnitId,
-                CallWithId = PartnersData.ContactId
+                BusinessUnitId = UserTenant.BusinessUnitId
             };
             return this;
         }

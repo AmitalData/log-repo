@@ -214,7 +214,6 @@ namespace Logitude.Test.Base.Hooks
             PartnersData.ShippingLineMAEUId = partnersVariables.ShippingLineMAEUId;
             PartnersData.ShippingLineYMLUId = partnersVariables.ShippingLineYMLUId;
             PartnersData.WarehouseId = partnersVariables.WarehouseId;
-            PartnersData.ContactId = partnersVariables.ContactId;
         }
 
         private static void BillingDataMap(BillingVariables billingVariables)

@@ -100,6 +100,7 @@
   <ItemGroup>
     <Compile Include="Hooks\BeforeFeatureRun.cs" />
     <Compile Include="Models\ActivityPriorityPM.cs" />
+    <Compile Include="Models\ContactPM.cs" />
     <Compile Include="Models\CRMContext.cs" />
     <Compile Include="Models\ActivityPM.cs" />
     <Compile Include="Models\Builders\ActivityBuilder.cs" />
