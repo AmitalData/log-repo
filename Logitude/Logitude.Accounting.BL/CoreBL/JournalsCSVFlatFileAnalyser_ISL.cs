@@ -56,101 +56,111 @@ namespace Logitude.Accounting.BL.CoreBL
                 accountingContext = AccountingContext.GetContext(tenant);
                 _FullAccountingSettingPM = GetFullAccountingSettings(accountingContext, tenant);
                 ValidateFlatFile(tenant);
-
-                IAccountingContext MyContext = AccountingContext.GetContext(tenant);
-
-                using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(25)))
+                if (this.MyCSVFlatFileLoadResult.ErrorRowList.Count == 0)
                 {
-                    int count = 0;
-                    bool global_errors = false;
-                    string text;
-                    string text_44;
-                    string text_2;
-                    DateTime @now = TenantServerConfigration.GetCurrentDateTime(tenant);
-                    var usrid = AuthenticationUtil.ResolveUserId(tenant);
-                    JournalSrcLineDTO_ISL j1stLineDTO = _JournalSrcLinesDTO.FirstOrDefault();
-                    JournalPM journal = new JournalPM()
+                    IAccountingContext MyContext = AccountingContext.GetContext(tenant);
+
+                    using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(25)))
                     {
-                        ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
-                        Tenant = tenant,
-                        ///journal.JournalNumber = "1";
-                        CreateDate = @now,
-                        AccountingDate = j1stLineDTO.AccountingDate,
-                        TypeCode = "0", //== REGULAR  //"1" == TEMPLATE,
-                        StatusCode = "1", // "2", //1=Waiting Approval, 2=Approved 
-                        AccountingEntityCode = "1",// - Journal
-                        AccountingEntityId = null,
-                        AccountingEntityReference = null,
-
-                        UpdateDate = @now,
-                        ApproveDate = @now,
-
-                        CreatedByUserId = usrid,
-                        ApprovedByUserId = usrid,
-
-                        ExternalNo = null,
-                        ExternalSystem = null,
-                        OriginalJournalId = null,
-
-
-                    };
-
-
-                    foreach (JournalSrcLineDTO_ISL jLineDTO in _JournalSrcLinesDTO)
-                    {
-                        count++;
-                        bool errors = false;
-
-                        journal.JournalLines.Add(new JournalLinePM()
+                        int count = 0;
+                        bool global_errors = false;
+                        string text;
+                        string text_44;
+                        string text_2;
+                        DateTime @now = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        var usrid = AuthenticationUtil.ResolveUserId(tenant);
+                        JournalSrcLineDTO_ISL j1stLineDTO = _JournalSrcLinesDTO.FirstOrDefault();
+                        JournalPM journal = new JournalPM()
                         {
                             ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                             Tenant = tenant,
-                            JournalId = journal.Id,
-                            AccountingDate = jLineDTO.AccountingDate,
-                            ActionCode = jLineDTO.ActionCode,
-                            DebitAccountId = jLineDTO.DebitGLAccountId,
-                            CreditAccountId = jLineDTO.CreditGLAccountId,
-                            LocalAmount = jLineDTO.LocalAmount,
-                            CurrencyCode = jLineDTO.CurrencyCode,
-                            ForeignAmount = jLineDTO.ForeignAmount,
+                            ///journal.JournalNumber = "1";
+                            CreateDate = @now,
+                            AccountingDate = j1stLineDTO.AccountingDate,
+                            TypeCode = "0", //== REGULAR  //"1" == TEMPLATE,
+                            StatusCode = "1", // "2", //1=Waiting Approval, 2=Approved 
+                            AccountingEntityCode = "1",// - Journal
+                            AccountingEntityId = null,
+                            AccountingEntityReference = null,
 
-                            DocumentDate = jLineDTO.DocumentDate,
-                            DueDate = jLineDTO.DueDate,
-                            Reference1 = jLineDTO.Rererence1,
-                            Reference2 = jLineDTO.Rererence2,
-                            Reference3 = jLineDTO.Rererence3,
-                            Notes = jLineDTO.Notes,
-                        });
+                            UpdateDate = @now,
+                            ApproveDate = @now,
 
+                            CreatedByUserId = usrid,
+                            ApprovedByUserId = usrid,
+
+                            ExternalNo = null,
+                            ExternalSystem = null,
+                            OriginalJournalId = null,
+
+
+                        };
+
+
+                        foreach (JournalSrcLineDTO_ISL jLineDTO in _JournalSrcLinesDTO)
+                        {
+                            count++;
+                            bool errors = false;
+
+                            journal.JournalLines.Add(new JournalLinePM()
+                            {
+                                ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                                Tenant = tenant,
+                                JournalId = journal.Id,
+                                AccountingDate = jLineDTO.AccountingDate,
+                                ActionCode = jLineDTO.ActionCode,
+                                DebitAccountId = jLineDTO.DebitGLAccountId,
+                                CreditAccountId = jLineDTO.CreditGLAccountId,
+                                LocalAmount = jLineDTO.LocalAmount,
+                                CurrencyCode = jLineDTO.CurrencyCode,
+                                ForeignAmount = jLineDTO.ForeignAmount,
+
+                                DocumentDate = jLineDTO.DocumentDate,
+                                DueDate = jLineDTO.DueDate,
+                                Reference1 = jLineDTO.Rererence1,
+                                Reference2 = jLineDTO.Rererence2,
+                                Reference3 = jLineDTO.Rererence3,
+                                Notes = jLineDTO.Notes,
+                            });
+
+
+
+                        }
+
+                        var JournalUP = new JournalUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
+                        JournalUP.Update(journal, true);
+
+
+
+                        if (MyCSVFlatFileLoadResult.ErrorRowList.Count > 0)
+                        {
+                            string text_1 = MyCSVFlatFileLoadResult.ErrorRowList.FirstOrDefault();
+                            throw new ApplicationException($"{text_1}");
+                        }
+                        //    if (MyFlatFileLoadResult.ExceptionVendorList.Count > 0)
+                        //    {
+                        //        string text = MyFlatFileLoadResult.ExceptionVendorList.FirstOrDefault();
+                        //        throw new ApplicationException($"{text}");
+                        //    }
+                        scope.Complete();
+                        return journal;
 
 
                     }
-
-                    var JournalUP = new JournalUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
-                    JournalUP.Update(journal, true);
-
-
-
-                    if (MyCSVFlatFileLoadResult.ErrorRowList.Count > 0)
-                    {
-                        string text_1 = MyCSVFlatFileLoadResult.ErrorRowList.FirstOrDefault();
-                        throw new ApplicationException($"{text_1}");
-                    }
-                    //    if (MyFlatFileLoadResult.ExceptionVendorList.Count > 0)
-                    //    {
-                    //        string text = MyFlatFileLoadResult.ExceptionVendorList.FirstOrDefault();
-                    //        throw new ApplicationException($"{text}");
-                    //    }
-                    scope.Complete();
-                    return journal;
-
-
                 }
-
+                else
+                {
+                    JournalPM journal = new JournalPM();
+                    String errorLines = "";
+                    MyCSVFlatFileLoadResult.ErrorRowList.ForEach(item => errorLines += item.ToString() + "\n");
+                    return journal;
+                }
+                
             }
             catch (Exception e)
             {
                 string text = TranslateTextsClassTranslate("JournalsCSV.O.FailedWhilePerforming", 0, useLocal);
+                if (String.IsNullOrEmpty(text)) text = "failed while performing";
 
                 throw new ApplicationException($"{text} ", e);
             }
@@ -205,10 +215,12 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 var rowtype = rawLine.Split(',')[0];///.Substring(0, 1);
 
-                if (Opening_LineDTO_JCSV_ISL.RowType.Contains(rowtype) || (rowtype.Length >= 1 && Opening_LineDTO_JCSV_ISL.RowType.Contains(rowtype.Substring(0, 1))))
+                //if (Opening_LineDTO_JCSV_ISL.RowType.Contains(rowtype) || (rowtype.Length >= 1 && Opening_LineDTO_JCSV_ISL.RowType.Contains(rowtype.Substring(0, 1))))
+                if (!reading_Lines)
                 {
-                    Opening_Line = Opening_LineDTO_JCSV_ISL.Create(rawLine);
+                 //   Opening_Line = Opening_LineDTO_JCSV_ISL.Create(rawLine);
                     reading_Lines = true;
+                    continue;
                 }
                 else if (JournalSrcLineDTO_ISL.RowType.Contains(rowtype))
                 {
@@ -227,6 +239,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 else
                 {
                     string text = TranslateTextsClassTranslate("JournalsCSV.O.NotValidRowType", 0, useLocal);
+                    if (String.IsNullOrEmpty(text)) text = "Not a valid Row Type";
                     throw new ApplicationException($"{text}  {rawLine}");
                 }
                 if (finished)
@@ -330,49 +343,72 @@ namespace Logitude.Accounting.BL.CoreBL
             long count = 1;
             foreach (JournalSrcLineDTO_ISL jLine in _JournalSrcLinesDTO)
             {
-                if (jLine.ActionCode != "2")
+                // if (jLine.ActionCode != "2")
+                // {
+                if (String.IsNullOrEmpty(jLine.CreditGLAccount))
                 {
-                    if (String.IsNullOrEmpty(jLine.CreditGLAccount))
-                    {
-                        text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
-                        text_44 = TranslateTextsClassTranslate("JournalsCSV.O.IsMissing", 0, useLocal);
-                        text_2 = TranslateTextsClassTranslate("JournalsCSV.O.CreditGLAccount", 0, useLocal);
-                        this.AddErrorRow($"{text}{count} {text_2} {text_44}");
-                    }
-                    GLAccountPM creditPM = gLAccountQueryService.GetSinglePMByDisplayNumber(jLine.CreditGLAccount, tenant);
-                    if (creditPM == null)
-                    {
-                        text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
-                        text_44 = TranslateTextsClassTranslate("JournalsCSV.O.NotFound", 0, useLocal);
-                        text_2 = TranslateTextsClassTranslate("JournalsCSV.O.CreditGLAccount", 0, useLocal);
-                        this.AddErrorRow($"{text}{count} {text_2} {jLine.CreditGLAccount} {text_44}");
-                    }
-                    else
-                    {
-                        jLine.CreditGLAccountId = creditPM.Id;
-                    }
+                    text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
+                    if (String.IsNullOrEmpty(text)) text = "Journal Line";
+
+                    text_44 = TranslateTextsClassTranslate("JournalsCSV.O.IsMissing", 0, useLocal);
+                    if (String.IsNullOrEmpty(text_44)) text_44 = "is missing";
+
+                    text_2 = TranslateTextsClassTranslate("JournalsCSV.O.CreditGLAccount", 0, useLocal);
+                    if (String.IsNullOrEmpty(text_2)) text_2 = "Credit GLAccount Id";
+
+                    this.AddErrorRow($"{text}{count} {text_2} {text_44}");
                 }
-                if (jLine.ActionCode != "1")
+                GLAccountPM creditPM = gLAccountQueryService.GetSinglePMByDisplayNumber(jLine.CreditGLAccount, tenant);
+                if (creditPM == null)
                 {
-                    if (String.IsNullOrEmpty(jLine.DebitGLAccount))
-                    {
-                        text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
-                        text_44 = TranslateTextsClassTranslate("JournalsCSV.O.IsMissing", 0, useLocal);
-                        text_2 = TranslateTextsClassTranslate("JournalsCSV.O.DebitGLAccount", 0, useLocal);
-                        this.AddErrorRow($"{text}{count} {text_2} {text_44}");
-                    }
-                    GLAccountPM debitPM = gLAccountQueryService.GetSinglePMByDisplayNumber(jLine.DebitGLAccount, tenant);
-                    if (debitPM == null)
-                    {
-                        text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
-                        text_44 = TranslateTextsClassTranslate("JournalsCSV.O.NotFound", 0, useLocal);
-                        text_2 = TranslateTextsClassTranslate("JournalsCSV.O.DebitGLAccount", 0, useLocal);
-                        this.AddErrorRow($"{text}{count} {text_2} {jLine.DebitGLAccount} {text_44}");
-                    }
-                    else
-                    {
-                        jLine.DebitGLAccountId = debitPM.Id;
-                    }
+                    text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
+                    if (String.IsNullOrEmpty(text)) text = "Journal Line";
+
+                    text_44 = TranslateTextsClassTranslate("JournalsCSV.O.NotFound", 0, useLocal);
+                    if (String.IsNullOrEmpty(text_44)) text_44 = "is missing";
+
+                    text_2 = TranslateTextsClassTranslate("JournalsCSV.O.CreditGLAccount", 0, useLocal);
+                    if (String.IsNullOrEmpty(text_2)) text_2 = "Credit GLAccount Id";
+
+                    this.AddErrorRow($"{text}{count} {text_2} {jLine.CreditGLAccount} {text_44}");
+                }
+                else
+                {
+                    jLine.CreditGLAccountId = creditPM.Id;
+                }
+                //   }
+                //    if (jLine.ActionCode != "1")
+                //   {
+                if (String.IsNullOrEmpty(jLine.DebitGLAccount))
+                {
+                    text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
+                    if (String.IsNullOrEmpty(text)) text = "Journal Line";
+
+                    text_44 = TranslateTextsClassTranslate("JournalsCSV.O.IsMissing", 0, useLocal);
+                    if (String.IsNullOrEmpty(text_44)) text_44 = "is missing";
+
+                    text_2 = TranslateTextsClassTranslate("JournalsCSV.O.DebitGLAccount", 0, useLocal);
+                    if (String.IsNullOrEmpty(text_2)) text_2 = "Debit GLAccount Id";
+
+                    this.AddErrorRow($"{text}{count} {text_2} {text_44}");
+                }
+                GLAccountPM debitPM = gLAccountQueryService.GetSinglePMByDisplayNumber(jLine.DebitGLAccount, tenant);
+                if (debitPM == null)
+                {
+                    text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
+                    if (String.IsNullOrEmpty(text)) text = "Journal Line";
+
+                    text_44 = TranslateTextsClassTranslate("JournalsCSV.O.NotFound", 0, useLocal);
+                    if (String.IsNullOrEmpty(text_44)) text_44 = "is missing";
+
+                    text_2 = TranslateTextsClassTranslate("JournalsCSV.O.DebitGLAccount", 0, useLocal);
+                    if (String.IsNullOrEmpty(text_2)) text_2 = "Debit GLAccount Id";
+
+                    this.AddErrorRow($"{text}{count} {text_2} {jLine.DebitGLAccount} {text_44}");
+                }
+                else
+                {
+                    jLine.DebitGLAccountId = debitPM.Id;
                 }
                 //if (String.IsNullOrWhiteSpace(jLine.LocalName) && String.IsNullOrWhiteSpace(jLine.EnglishName))
                 //{
@@ -463,6 +499,7 @@ namespace Logitude.Accounting.BL.CoreBL
             if (!startsWithRowTypeOk || actualRowType == "")
             {
                 string text = TranslateTextsClassTranslate("JournalsCSV.O.DoesntStartWithHeaderLine", 0, useLocal);
+                if (String.IsNullOrEmpty(text)) text = "does not start with a Header Line";
                 throw new ApplicationException($"{text} {RowType} ");
             }
 
@@ -572,6 +609,7 @@ namespace Logitude.Accounting.BL.CoreBL
             if (!startsWithRowTypeOk || actualRowType == "")
             {
                 string text = TranslateTextsClassTranslate("JournalsCSV.O.DoesntStartWithCoAType", 0, useLocal);
+                if (String.IsNullOrEmpty(text)) text = "does not start with an Action Type";
                 throw new ApplicationException($"{text} {RowType.ToString()} ");
             }
             string orig_rawLine = rawLine;
