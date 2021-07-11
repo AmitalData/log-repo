@@ -231,7 +231,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CalculatedAgingPeriod2, 
 	         CalculatedAgingPeriod3, 
 	         InsuredCreditLimit, 
-	         PostponedChequesCommission,
+	         PostponedChequesCommission, 
+	         BalanceInForeignCurrency, 
+	         ForeignBalanceInDue,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
