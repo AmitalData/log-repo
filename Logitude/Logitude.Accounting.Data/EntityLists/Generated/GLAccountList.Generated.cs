@@ -308,6 +308,10 @@ namespace Logitude.Accounting.Data.EntityLists
        public double? InsuredCreditLimit  { get; set; }
        [DataMember]
        public decimal? PostponedChequesCommission  { get; set; }
+       [DataMember]
+       public decimal? BalanceInForeignCurrency  { get; set; }
+       [DataMember]
+       public decimal? ForeignBalanceInDue  { get; set; }
    }
 
 }
