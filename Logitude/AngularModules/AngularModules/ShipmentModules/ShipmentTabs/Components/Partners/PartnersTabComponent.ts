@@ -965,7 +965,13 @@ export class PartnerItem extends BaseComponent {
 
     SetAsCustomer() {
         if (this.EntityPM.CustomerId != this.PartnerId && this.EntityPM.ShipmentProductItems.length > 0) {
-            this.ShowDeleteProductItemsConfirmation();
+            if (ShipmentTool.IsShipmentProductItemsEmpty(this.EntityPM.ShipmentProductItems)) {
+                this.ContinueChangeCustomer();
+            }
+
+            else {
+                this.ShowDeleteProductItemsConfirmation();
+            }
         }
 
         else {

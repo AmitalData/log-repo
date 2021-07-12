@@ -197,6 +197,14 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 }
             }
 
+            if (!string.IsNullOrEmpty(entityPM.Notes))
+            {
+                if (!(result.Split(',').Contains(entityPM.Notes)))
+                {
+                    result = string.IsNullOrEmpty(result) ? entityPM.Notes : result + "," + entityPM.Notes;
+                }
+            }
+
 
 
 

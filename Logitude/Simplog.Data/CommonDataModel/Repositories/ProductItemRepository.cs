@@ -39,7 +39,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public ProductItem GetSingleProductItem(string id,int tenant)
         {
-            return (from a in context.ProductItems.Include("Customer")
+            return (from a in context.ProductItems.Include("OriginCountry")
                     where a.Id == id && a.Tenant == tenant
                     select a).FirstOrDefault();
         }

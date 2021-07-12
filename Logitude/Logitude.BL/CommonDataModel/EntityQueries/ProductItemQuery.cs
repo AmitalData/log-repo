@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -46,7 +47,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     Description = entityPoco.Description,
                     Name = entityPoco.Name,
                     SearchFields = entityPoco.SearchFields,
-                    Brand = entityPoco.Brand,                    
+                    Brand = entityPoco.Brand,              
+                    ASIN = entityPoco.ASIN,
+                    UPC = entityPoco.UPC,
+                    OriginCountryId = entityPoco.OriginCountryId,
+                    OriginCountryName = entityPoco.OriginCountry == null ? null : entityPoco.OriginCountry.EnglishName,
                 };
 
                 HTSCodeQuery hTSCodeQuery = new HTSCodeQuery(tenant);
@@ -70,13 +75,17 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    Description = entity.Description,
                                                    Name = entity.Name,
                                                    SearchFields = entity.SearchFields,
+                                                   ASIN = entity.ASIN,
+                                                   UPC = entity.UPC,
+                                                   OriginCountryId = entity.OriginCountryId,
+                                                   OriginCountryName = entity.OriginCountry == null ? null : entity.OriginCountry.EnglishName,
                                                };
             return result;
         }
 
         public List<ProductItemPM> GetProductItemPMsByCustomerId(string customerId,int tenant)
         {
-            List<ProductItemPM> productItems = (from a in repository.context.ProductItems
+            List<ProductItemPM> productItems = (from a in repository.context.ProductItems.Include("OriginCountry")
                                                 where a.Tenant == tenant && a.CustomerId == customerId
                                                 select new ProductItemPM()
                                                 {
@@ -89,6 +98,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     Description = a.Description,
                                                     Name = a.Name,
                                                     SearchFields = a.SearchFields,
+                                                    ASIN = a.ASIN,
+                                                    UPC = a.UPC,
+                                                    OriginCountryId = a.OriginCountryId,
+                                                    OriginCountryName = a.OriginCountry == null ? null : a.OriginCountry.EnglishName,
                                                 }).ToList();
             if (productItems != null)
             { 

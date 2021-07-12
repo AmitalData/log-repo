@@ -986,6 +986,18 @@ export class ShipmentDomainService extends BaseService  {
             }), catchError(ServiceHelper.HandleServiceError));
         });
     }
+
+    GetFilteredForwarderShipmentPackages(shipmentId: string, stanAloneShipmentId: string) {
+        var url = this._apiUrl + '/GetFilteredForwarderShipmentPackages?shipmentId=' + shipmentId + "&stanAloneShipmentId=" + stanAloneShipmentId;
+        return defer(() => {
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var result = response;
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = result;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 }
 
 export class ShipmentsSummary {
