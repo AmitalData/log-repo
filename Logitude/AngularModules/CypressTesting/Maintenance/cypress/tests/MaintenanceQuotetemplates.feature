@@ -17,7 +17,7 @@ Feature: Create, Search, Open and Edit a Quote Template from Maintenance
         Then the quote template should update successfully
 
     Scenario: Edit the quote template's Quote Header
-        Given drag and drop the following details in "Quote Header" settings
+        Given drag and drop the following details in quote header settings
             | Field           | Column  |
             | Expiration Date | Column1 |
             | Customer        | Column1 |
@@ -32,7 +32,7 @@ Feature: Create, Search, Open and Edit a Quote Template from Maintenance
         Then the quote template should update successfully
 
     Scenario: Edit the quote template's Quote Details
-        Given drag and drop the following details in "Quote Details" settings
+        Given drag and drop the following details in quote details settings
             | Field           | Column  |
             | Expiration Days | Column1 |
             | Shipper Name    | Column1 |

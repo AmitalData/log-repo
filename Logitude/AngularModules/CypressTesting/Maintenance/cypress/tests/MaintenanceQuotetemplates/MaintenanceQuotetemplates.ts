@@ -44,9 +44,10 @@ Then("the quote template should update successfully", () => {
 //#endregion
 
 //#region Edit the quote template's Quote Header & Details
-Given("drag and drop the following details in {string} settings", (section, dataTable) => {
+Given("drag and drop the following details in quote header settings", (dataTable) => {
     let fieldDetails = Assists.CreateSet<QuoteTemplateDetails>(dataTable);
-    Actions.OpenQuoteTemplateSection(section);
+    Actions.OpenQuoteHeaderSection();
+    Actions.AssertGetQuoteHeader()
     Actions.DragAndDropFields(fieldDetails);
 });
 
@@ -65,6 +66,13 @@ Then("the quote header template should update successfully", () => {
 //#endregion
 
 //#region Edit the quote template's Quote Details
+Given("drag and drop the following details in quote details settings", (dataTable) => {
+    let fieldDetails = Assists.CreateSet<QuoteTemplateDetails>(dataTable);
+    Actions.OpenQuoteDetailsSection();
+    Actions.AssertGetQuoteDetails()
+    Actions.DragAndDropFields(fieldDetails);
+});
+
 When("save quote details", () => {
     Actions.UpdateQuoteDetailsTemplate();
 });
