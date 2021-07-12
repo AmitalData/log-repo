@@ -7091,10 +7091,23 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
         private void UpdateShipmentConcectedPackagesByContainerEntityId(ShipmentPickUpDeliveryPackagePM shipmentPickUpDeliveryPackagePM)
         {
-          /*  if (this.entityPM.ShipmentPackages.Find(d=> d.ContainerEntityId == shipmentPickUpDeliveryPackagePM.ContainerEntityId).)
+            ShipmentPackagePM shipmentPackagePM = this.entityPM.ShipmentPackages.Find(d => d.ContainerEntityId == shipmentPickUpDeliveryPackagePM.ContainerEntityId);
+            if (shipmentPackagePM == null)
             {
-
-            }*/
+                return;
+            }
+            this.MapUpdatedConnectedForwaderShipmentPackage(shipmentPackagePM , shipmentPickUpDeliveryPackagePM);
+            this.UpdateShipmentPackage(shipmentPackagePM);
+        }
+        private void MapUpdatedConnectedForwaderShipmentPackage(ShipmentPackagePM shipmentPackagePM, ShipmentPickUpDeliveryPackagePM shipmentPickUpDeliveryPackagePM)
+        {
+            shipmentPackagePM.ContainerNumber = shipmentPickUpDeliveryPackagePM.ContainerNumber;
+            shipmentPackagePM.Description = shipmentPickUpDeliveryPackagePM.Description;
+            shipmentPackagePM.PackageTypeId = shipmentPickUpDeliveryPackagePM.PackageTypeId;
+            shipmentPackagePM.Quantity = shipmentPickUpDeliveryPackagePM.Quantity;
+            shipmentPackagePM.Volume = shipmentPickUpDeliveryPackagePM.Volume;
+            shipmentPackagePM.Weight = shipmentPickUpDeliveryPackagePM.Weight;
+            shipmentPackagePM.ShipperSeal = shipmentPickUpDeliveryPackagePM.ShipperSeal;
         }
     }
 
