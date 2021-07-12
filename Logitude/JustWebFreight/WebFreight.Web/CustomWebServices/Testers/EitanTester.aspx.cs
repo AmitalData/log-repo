@@ -28,7 +28,7 @@ namespace WebFreight.Web.CustomWebServices.Testers
                 if(myDeclaration != null && myDeclaration.Consignments != null && myDeclaration.Consignments.Count() > 0)
                 {
                     var myCustomsDocumentsDefinitionQueryService = new CustomsDocumentsDefinitionQueryService(1);
-                    var myCustomsDocumentsDefinition = myCustomsDocumentsDefinitionQueryService.GetCustomsDocumentsDefinitionsForDeclaration(myDeclaration.Consignments[0].CargoTypeCode, myDeclaration.ProcedureCurrentCode, myDeclaration.TransportModeId,1);
+                    var myCustomsDocumentsDefinition = myCustomsDocumentsDefinitionQueryService.GetCustomsDocumentsDefinitionsForDeclaration(myDeclaration.Consignments[0].CargoTypeCode, myDeclaration.ProcedureCurrentCode, myDeclaration.TransportModeId, myDeclaration.DeclarationTypeCode, 1);
                 }
                 
             }

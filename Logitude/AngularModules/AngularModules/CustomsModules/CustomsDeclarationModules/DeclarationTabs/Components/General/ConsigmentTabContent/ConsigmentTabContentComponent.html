@@ -536,7 +536,7 @@
                                             </td>
 
                                             <td style="width: 105px;">
-                                                <select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width:  105px; cursor:pointer;" #selectControl (change)="ConsignmentTypeSelectionChanged(selectControl.value)">
+                                                <select class="LogLovContainer LogLOVControl LogLovInputDiv" [class.disabled]="IsDisplayOnly" style="width:  105px; cursor:pointer;" #selectControl (change)="ConsignmentTypeSelectionChanged(selectControl.value)">
                                                     <option *ngFor="let c of ConsignmentTypes" [value]="c.Id" [selected]="c.Id==ConsignmentType">{{c.Value}}</option>
                                                 </select>
                                             </td>
@@ -883,7 +883,7 @@
                                             </td>
 
                                             <td style="width: 105px;">
-                                                <select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width:  105px; cursor:pointer;" #selectControl (change)="ConsignmentTypeSelectionChanged(selectControl.value)">
+                                                <select [class.disabled]="IsDisplayOnly" class="LogLovContainer LogLOVControl LogLovInputDiv"  style="width:  105px; cursor:pointer;" #selectControl (change)="ConsignmentTypeSelectionChanged(selectControl.value)">
                                                     <option *ngFor="let c of ConsignmentTypes" [value]="c.Id" [selected]="c.Id==ConsignmentType">{{c.Value}}</option>
                                                 </select>
                                             </td>

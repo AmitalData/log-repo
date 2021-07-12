@@ -36,6 +36,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.TransportationTypeName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.ProcessTypeName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.CargoTypeName);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.DeclarationTypeName);
 
             if (!string.IsNullOrEmpty(entityPOCO.DocumentTypeCode))
             {
@@ -64,6 +65,13 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 CargoIdentifireTypeQueryService cargoIdentifireTypeQueryService = new CargoIdentifireTypeQueryService(entityPOCO.Tenant);
                 CargoIdentifireTypePM cargoIdentifireTypePM = cargoIdentifireTypeQueryService.GetSingle(entityPOCO.CargoTypeCode, false, true);
                 entityPM.CargoTypeName = cargoIdentifireTypePM.LocalName;
+            }
+
+            if (!string.IsNullOrEmpty(entityPOCO.DeclarationTypeCode))
+            {
+                LeadDocumentTypeQueryService leadDocumentTypeQueryService = new LeadDocumentTypeQueryService(entityPOCO.Tenant);
+                LeadDocumentTypePM leadDocumentTypePM = leadDocumentTypeQueryService.GetSingle(entityPOCO.DeclarationTypeCode, false, true);
+                entityPM.DeclarationTypeName = leadDocumentTypePM.LocalName;
             }
         }
    }

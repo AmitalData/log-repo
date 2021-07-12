@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsDocumentsDefinitionUpdateClass
    {  		
-		public const string HashString = "23b59ccc52e804319be279c3bc2d2d4f";
+		public const string HashString = "48947a75c7870495bbb2877920420b1d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -120,7 +120,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "הגדרת סוגי מסמך",
 			      				    DefaultText =  "Customs Documents Definition",
-			      				    Code =  "0a25",
+			      				    Code =  "b065",
 			      				    Name =  "Customs.CustomsDocumentsDefinition Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -777,7 +777,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  3,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -792,6 +792,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.CustomsDocumentsDefinition",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -803,6 +804,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullFieldLable =  "DeclarationTypeCode",
 					  						DefaultText =  "Declaration Type Code",
 					  						FullLocalDefaultText =  "סוג הצהרה",
+					  						ListFieldLable =  "DeclarationTypeCodeListLable",
+					  						ListLableDefaultText =  "Declaration Type Code",
+					  						ListLocalDefaultText =  "סוג הצהרה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

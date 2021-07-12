@@ -82,7 +82,6 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
                                                  this.EntityPM = this.entityArgs.EntityPM;
                                                  this.ObjectTableName = this.entityArgs.ObjectTableName;
                                                 this.Listen();
-                                                this.BuildRecipientsList();
                                                 //var tab;
                                                 console.log("DeclarationGeneralComponent/EntityPM ", this.EntityPM);
                                                 if (!AppTool.IsNullOrEmpty(this.EntityPM)) {
@@ -99,6 +98,8 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
                                                     this.BuildConsignments();
                                                     this.checkImportersVisibility();
                                                     this.DisplayOnlyCheck();
+                                                    this.BuildRecipientsList();
+
                                                     this.CheckRequrierdFieldsForSend();
 
                                                     this.PreceduralFilterItems = new ApiQueryFilters();
@@ -469,7 +470,14 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
         this.UIProperties.SetEnabled("ImporterName", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("TransferImporterCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("EntitleImporterCode", this.ObjectTableName, !this.IsDisplayOnly);
-
+        this.UIProperties.SetEnabled("DeclarationTypeCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("DestinationCountryCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("ExportAutonomyRegionTypeCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("IsExporterConfirmation", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("RecipientName", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("RecipientAddress", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("RecipientIssueCountryCode", this.ObjectTableName, !this.IsDisplayOnly);
+        
         this.IsImporerCodeEnabled = !this.IsDisplayOnly;
         this.IsTransferImporterEnabled = !this.IsDisplayOnly;
         this.IsEntitleImporterEnabled = !this.IsDisplayOnly;
@@ -1487,7 +1495,6 @@ export class DeclarationExportRecipientModel extends BaseComponent {
             this.UIProperties.SetEnabled("RecipientIssueCountryCode", this.ObjectTableName, !this.Parent.IsDisplayOnly);
             this.UIProperties.SetEnabled("RecipientAddress", this.ObjectTableName, !this.Parent.IsDisplayOnly);
             this.UIProperties.SetEnabled("RecipientName", this.ObjectTableName, !this.Parent.IsDisplayOnly);
-
             var customsRequiredFieldListService: CustomsRequiredFieldListService = new CustomsRequiredFieldListService();
             var table = window.ObjectTables.filter(d => d.Name == 'Customs.DeclarationExportRecipient')[0];
             var filters = new ApiQueryFilters();

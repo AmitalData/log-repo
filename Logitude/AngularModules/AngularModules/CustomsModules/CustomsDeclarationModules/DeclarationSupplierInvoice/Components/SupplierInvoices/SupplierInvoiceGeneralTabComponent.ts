@@ -759,6 +759,8 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         this.UIProperties.SetEnabled("BuyerCountryCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("BuyerAddress", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("BuyerRoleCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("ExportModificationCurrency", this.ObjectTableName, !this.IsDisplayOnly);
+
 
         if (this.IsDisplayOnly) {
             this.UIProperties.SetEnabled("FreightCurrencyTypeCode", this.ObjectTableName, !this.IsDisplayOnly);
@@ -4036,6 +4038,9 @@ export class ModificationItemModel extends BaseComponent {
             this.DeleteButton = true;
         }
         this.EntityPM.IsDirty = false;
+        this.UIProperties.SetEnabled("CurrencyTypeCode", this.ObjectTableName, !this.parent.IsDisplayOnly);
+        this.UIProperties.SetEnabled("Amount", this.ObjectTableName, !this.parent.IsDisplayOnly);
+        
     }
 
     setSupplierInvoiceFreightAmountPM() {

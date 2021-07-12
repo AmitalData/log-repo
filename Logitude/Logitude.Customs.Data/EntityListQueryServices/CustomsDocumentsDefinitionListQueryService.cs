@@ -21,7 +21,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
 	    private IQueryable<CustomsDocumentsDefinitionList> GetIqueryableList(IQueryable<CustomsDocumentsDefinition> iQueryable)
         {
-		IQueryable<CustomsDocumentsDefinitionList> query = (from a in iQueryable.Include("CustomDocumentType").Include("CustomsTransportMode").Include("GovernmentProcedureType").Include("CargoIdentifireType")
+		IQueryable<CustomsDocumentsDefinitionList> query = (from a in iQueryable.Include("CustomDocumentType").Include("CustomsTransportMode").Include("GovernmentProcedureType").Include("CargoIdentifireType").Include("LeadDocumentType")
                                                             select new CustomsDocumentsDefinitionList()
 											                {
 					                                            Id = a.Id,
@@ -35,8 +35,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                 TransportationTypeCode = a.TransportationTypeCode,
                                                                 TransportationTypeName = a.CustomsTransportMode != null ? a.CustomsTransportMode.LocalName : null,
                                                                 Mandatory = a.Mandatory,
-                                                                Inactive = a.Inactive,					
-		                    	                            });
+                                                                Inactive = a.Inactive,
+                                                                DeclarationTypeCode = a.DeclarationTypeCode,
+                                                                DeclarationTypeName = a.LeadDocumentType != null ? a.LeadDocumentType.LocalName : null,
+
+                                                            });
             return query;
 		}
 
