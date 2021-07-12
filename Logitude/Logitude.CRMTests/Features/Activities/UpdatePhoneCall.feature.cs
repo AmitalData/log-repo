@@ -19,21 +19,21 @@ namespace Logitude.CRMTests.Features.Activities
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [Xunit.TraitAttribute("Category", "Pre-Prepare-Activity-Task")]
-    public partial class UpdateTaskFeature : object, Xunit.IClassFixture<UpdateTaskFeature.FixtureData>, System.IDisposable
+    [Xunit.TraitAttribute("Category", "Pre-Prepare-Activity-PhoneCall")]
+    public partial class UpdatePhoneCallFeature : object, Xunit.IClassFixture<UpdatePhoneCallFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
         private string[] _featureTags = new string[] {
-                "Pre-Prepare-Activity-Task"};
+                "Pre-Prepare-Activity-PhoneCall"};
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "UpdateTask.feature"
+#line 1 "UpdatePhoneCall.feature"
 #line hidden
         
-        public UpdateTaskFeature(UpdateTaskFeature.FixtureData fixtureData, Logitude_CRMTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public UpdatePhoneCallFeature(UpdatePhoneCallFeature.FixtureData fixtureData, Logitude_CRMTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -42,8 +42,8 @@ namespace Logitude.CRMTests.Features.Activities
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Activities", "Update Task", "\tWe want to update task.", ProgrammingLanguage.CSharp, new string[] {
-                        "Pre-Prepare-Activity-Task"});
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Activities", "Update Phone Call", "\tWe want to update phone call.", ProgrammingLanguage.CSharp, new string[] {
+                        "Pre-Prepare-Activity-PhoneCall"});
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -83,14 +83,14 @@ namespace Logitude.CRMTests.Features.Activities
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Update task")]
-        [Xunit.TraitAttribute("FeatureTitle", "Update Task")]
-        [Xunit.TraitAttribute("Description", "Update task")]
-        public virtual void UpdateTask()
+        [Xunit.SkippableFactAttribute(DisplayName="Update phone call")]
+        [Xunit.TraitAttribute("FeatureTitle", "Update Phone Call")]
+        [Xunit.TraitAttribute("Description", "Update phone call")]
+        public virtual void UpdatePhoneCall()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update task", null, tagsOfScenario, argumentsOfScenario);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update phone call", null, tagsOfScenario, argumentsOfScenario);
 #line 5
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -112,34 +112,34 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 6
- testRunner.Given("task", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("phone call", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-                TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
                             "property",
                             "Value"});
-                table6.AddRow(new string[] {
+                table5.AddRow(new string[] {
                             "Subject",
                             "updated specflow sub"});
-                table6.AddRow(new string[] {
+                table5.AddRow(new string[] {
                             "Description",
                             "updated specflow desc"});
-                table6.AddRow(new string[] {
-                            "StartDateTime",
-                            "2021-09-15 14:40"});
-                table6.AddRow(new string[] {
+                table5.AddRow(new string[] {
+                            "Duration",
+                            "45"});
+                table5.AddRow(new string[] {
                             "DueDate",
                             "2021-12-15 14:40"});
-                table6.AddRow(new string[] {
+                table5.AddRow(new string[] {
                             "Priority",
                             "Low"});
 #line 7
- testRunner.And("following task properties", ((string)(null)), table6, "And ");
+ testRunner.And("following phone call properties", ((string)(null)), table5, "And ");
 #line hidden
 #line 14
- testRunner.When("update task", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("update phone call", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 15
- testRunner.Then("the task should update successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the phone call should update successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -152,12 +152,12 @@ this.ScenarioInitialize(scenarioInfo);
             
             public FixtureData()
             {
-                UpdateTaskFeature.FeatureSetup();
+                UpdatePhoneCallFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                UpdateTaskFeature.FeatureTearDown();
+                UpdatePhoneCallFeature.FeatureTearDown();
             }
         }
     }
