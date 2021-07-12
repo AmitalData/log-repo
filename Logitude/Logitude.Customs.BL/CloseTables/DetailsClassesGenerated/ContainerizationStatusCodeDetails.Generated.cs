@@ -41,6 +41,13 @@ namespace Logitude.Customs.BL
                 Name = "המכלה מבוטלת", 
                 SearchFields = "המכלה מבוטלת", 
 			});
+			 
+            all.Add(new ContainerizationStatusCodeDetails()
+            {    
+                Code = "4", 
+                Name = "המכלה לא נקלטה במכס", 
+                SearchFields = "המכלה לא נקלטה במכס", 
+			});
 			
             return all;
        }

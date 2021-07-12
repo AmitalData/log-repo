@@ -276,7 +276,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                IsPendingNotNull = true,
                            });
                 //qMyJoin = Enumerable.Empty<MyDecJoin>().AsQueryable();
-               q1stConsignments = context.Consignments.Where(r => r.DeclarationId == "-1");
+                q1stConsignments = context.Consignments.Where(r => r.DeclarationId == "-1");
                 //q1stConsignments = Enumerable.Empty<Consignment>().AsQueryable();
             }
 
@@ -333,6 +333,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      FileState = a.FileState,
                                                      LoadingFactor = a.LoadingFactor,
                                                      PaymentDate = a.PaymentDate,
+                                                     IsSubmitDeclaration = a.IsSubmitDeclaration,
                                                      ProcedureCurrentName = a.GovernmentProcedureCurrent.LocalName,
                                                      TaxationDateTime = a.TaxationDateTime,
                                                      Tenant = a.Tenant,
@@ -559,17 +560,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                  select a
                  );
 
-            var qOriginalDeclarations = context.Declarations.Where(x => x.IsAmendment != true && x.ExportContainerizationID == null);
 
-
-
-            bool test = false;
-            if (test)
-            {
-                //var myMyJoin = qMyJoin.ToList();
-                var s = q1stConsignments.ToList();
-                /*var pr = qCourierPendingReasonLocalName.ToList();*/
-            }
             int tenant = 1;
             try
             {
@@ -583,18 +574,13 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                 // throw;
             }
+          //  q1stConsignments = context.Consignments.Where(r => r.DeclarationId == "-1");
 
 
-            IQueryable<DeclarationList> query = (from a in iQueryable.Include("ProcedureCurrent")
+            IQueryable<DeclarationList> query = (from a in iQueryable.Include("ProcedureCurrent").Include("Importer")
                                                  join recConsignment in q1stConsignments
                                                  on a.Id equals recConsignment.DeclarationId into qjoinConsignments
                                                  from myJoinConsignment in qjoinConsignments.DefaultIfEmpty()
-
-
-                                                 join recOriginalDeclarations in qOriginalDeclarations
-                                                 on a.AmendmentOriginalDeclartation equals recOriginalDeclarations.Id
-                                                 into originalDeclarations
-                                                 from myJoinOriginalDeclaration in originalDeclarations.DefaultIfEmpty()
 
 
                                                  select new DeclarationList()
@@ -611,6 +597,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      TransportModeName = a.CustomsTransportMode == null ? null : a.CustomsTransportMode.LocalName,
                                                      ExportFile = a.ExportFile,
                                                      PaymentDate = a.PaymentDate,
+                                                     IsSubmitDeclaration = a.IsSubmitDeclaration,
                                                      CargoTypeName = myJoinConsignment != null && myJoinConsignment.CargoType != null ? myJoinConsignment.CargoType.LocalName : null,
                                                      SecondCargoID = myJoinConsignment != null ? myJoinConsignment.SecondCargoID : null,
                                                      ThirdCargoID = myJoinConsignment != null ? myJoinConsignment.ThirdCargoID : null,
@@ -618,6 +605,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      Direction = a.Direction,
                                                      ProcedureCurrentName = a.GovernmentProcedureCurrent.LocalName,
                                                      TaxationDateTime = a.TaxationDateTime,
+                                                     CustomerName = a.IsCourierDeclaration ? a.ImporterName : (a.CustomerCard.LocalName != null ? a.CustomerCard.LocalName : a.CustomerCard.EnglishName),
+
                                                  });
 
 

@@ -120,9 +120,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             this._CreateCCUTAXFor105Feature = true; ///ConfigurationManager.AppSettings["20180121.CreateCCUTAXFor105"] == "1";///todo
             this._NoRaiseLD2ULogicFeature = true; ///ConfigurationManager.AppSettings["20180204.NoRaiseLD2ULogicFeature"] == "1";
             var cntxt = RequestSheetContext.Current.GetContextOrDefault();
-            if (cntxt.MainInterfaceCode == "2715")
+            if (//cntxt.MainInterfaceCode == "2715"
+                Environment.StackTrace.ToString().Contains("D_NG_2716_MSG22001_AddAttachmentResponseService"))
             {
-                LogMessagingUtil.Instance.AppendLine("While in 2715 (Batch Mode) do not update CCUFILEM !!! ");
+                LogMessagingUtil.Instance.AppendLine("While in 2715 , StackTrace D_NG_2716_MSG22001_AddAttachmentResponseService (Batch Mode) do not update CCUFILEM !!! ");
+                if (cntxt != null && cntxt.MainInterfaceCode != null) LogMessagingUtil.Instance.AppendLine("cntxt.MainInterfaceCode " + cntxt.MainInterfaceCode + ")");
                 return;
             }
 
@@ -872,7 +874,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 if (_FromMessaging == true )
                 {
                     var requestData2 = "";
-                    bool isAmendmentRelease = false;
                     var myEventContextTagModel = new EventContextTagModel();
                     myEventContextTagModel = this._DirtyDeclarationPM.CurrentContextTag as EventContextTagModel;
                     if (myEventContextTagModel != null)
@@ -884,10 +885,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         if (myEventContextTagModel.CallProccessID == EventContextTagModel.ProccessEnum.DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageResponseServiceUpdate)
                         {
                             requestData2 = GetMyFUStatusXML(myEventContextTagModel.EventCode, myEventContextTagModel.EventCode, "", "new", myEventContextTagModel.StatusDateTime, false);
-                            if (!(string.IsNullOrEmpty(this._DirtyDeclarationPM.AmendmentOriginalDeclartation) && this._DirtyDeclarationPM.AmendmentDontDisplayInList == false))
-                            {
-                                isAmendmentRelease = true;
-                            }
                         }
                     }
                     //if (myEventContextTagModel.CallProccessID == EventContextTagModel.ProccessEnum.MN_MSG4_SendManifestFeedBack_MessageResponseService)
@@ -905,10 +902,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         {
                             requestData = requestData2;
                         }
-                    }
-                    if (isAmendmentRelease) 
-                    {
-                        requestData = requestData.Replace("</transmission>", string.Concat("<GENERALQUERYMODE>AMENDMENTRELEASE</GENERALQUERYMODE>", "</transmission>"));
                     }
                 }
                 /*

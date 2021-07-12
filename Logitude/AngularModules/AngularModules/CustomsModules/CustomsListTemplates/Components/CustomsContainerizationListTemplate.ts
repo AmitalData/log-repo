@@ -48,11 +48,14 @@ export class CustomsContainerizationListTemplate {
 
     BuildDeclarationsCheckBox() {
         this.IsConnectedDeclarationChecked = false;
-        if (this.entityPM.ConnectedDeclarations && this.entityPM.Id != null) {
+        if (this.entityPM.ConnectedDeclarations && this.entityPM.Id != null && !this._containerizationExtendedListService.connectedSelectAll) {
             this._containerizationExtendedListService.ConnectedDeclarations = this.entityPM.ConnectedDeclarations;
         }
         if (!this._containerizationExtendedListService.ConnectedDeclarations) {
             this._containerizationExtendedListService.ConnectedDeclarations = "";
+        }
+        if (!this._containerizationExtendedListService.IsDirectCharging) {
+            this._containerizationExtendedListService.IsDirectCharging = "";
         }
         if (!this._containerizationExtendedListService.AllDeclarations) {
             this._containerizationExtendedListService.AllDeclarations = "";
@@ -77,11 +80,18 @@ export class CustomsContainerizationListTemplate {
             if (!this._containerizationExtendedListService.ConnectedDeclarations.includes(this.rowData.Id)) {
                 this._containerizationExtendedListService.ConnectedDeclarations = this._containerizationExtendedListService.ConnectedDeclarations + this.rowData.Id + ",";
             }
+            if (this.rowData.ProcedureCurrentName != null && !this._containerizationExtendedListService.IsDirectCharging.includes(this.rowData.Id) &&
+                this.rowData.ProcedureCurrentName.includes("טעינה ישירה")) {
+                this._containerizationExtendedListService.IsDirectCharging = this._containerizationExtendedListService.IsDirectCharging + this.rowData.Id + ",";
+            }
         }
         else {
             if (this._containerizationExtendedListService.ConnectedDeclarations.includes(this.rowData.Id)) {
                 this._containerizationExtendedListService.ConnectedDeclarations = this._containerizationExtendedListService.ConnectedDeclarations.replace(this.rowData.Id + ",", "");
                 this._containerizationExtendedListService.connectedSelectAll = false;
+            }
+            if (this._containerizationExtendedListService.IsDirectCharging.includes(this.rowData.Id)) {
+                this._containerizationExtendedListService.IsDirectCharging = this._containerizationExtendedListService.IsDirectCharging.replace(this.rowData.Id + ",", "");
             }
         }
         if (AppTool.IsNullOrEmpty(this._containerizationExtendedListService.ConnectedDeclarations)) {

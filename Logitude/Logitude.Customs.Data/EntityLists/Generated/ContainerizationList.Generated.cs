@@ -44,6 +44,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string HataraStatusName  { get; set; }
        [DataMember]
        public bool HataraStatusIsNull  { get; set; }
+       [DataMember]
+       public bool OpenContainerization  { get; set; }
    }
 
 }

@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "5ef3590faa4ef125f98487ccb374809b";
+		public const string HashString = "219f456a33203c0639e62a770b884400";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -14688,6 +14688,122 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "RowNumber",
+					  						ObjectTableName =  "Customs.Declaration",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "RowNumber",
+					  						ListPropertyPath =  "RowNumber",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "RowNumber",
+					  						DefaultText =  "RowNumber",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "IsSubmitDeclaration",
+					  						ObjectTableName =  "Customs.Declaration",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "IsSubmitDeclaration",
+					  						ListPropertyPath =  "IsSubmitDeclaration",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.Declaration",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "IsSubmitDeclaration",
+					  						DefaultText =  "Is Submit Declaration ",
+					  						FullLocalDefaultText =  "האם הצהרה הוגשה",
+					  						ListFieldLable =  "IsSubmitDeclarationListLable",
+					  						ListLableDefaultText =  "Is Submit Declaration ",
+					  						ListLocalDefaultText =  "האם הצהרה הוגשה",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -16866,27 +16982,27 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
       
     
-			   Feature DeclarationFeature_MB1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SENDMANIFEST", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.SendManifest", NameTextCodeDefaultText = "Send Manifest", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
+			   Feature DeclarationFeature_MB1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OpenNewContainerization", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Declaration.Features.OpenNewContainerization", NameTextCodeDefaultText = "OpenNewContainerization", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
 
       
     
-			   Feature DeclarationFeature_MB2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DECLARATIONPAYMENT", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.Payment", NameTextCodeDefaultText = "Declaration Payment", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
+			   Feature DeclarationFeature_MB2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SENDMANIFEST", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.SendManifest", NameTextCodeDefaultText = "Send Manifest", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
 
       
     
-			   Feature DeclarationFeature_MB3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FORMS", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.Forms", NameTextCodeDefaultText = "Forms", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
+			   Feature DeclarationFeature_MB3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DECLARATIONPAYMENT", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.Payment", NameTextCodeDefaultText = "Declaration Payment", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
 
-			   Feature DeclarationFeature_MB30 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRINTTZRUFA", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.PrintTzrufa", NameTextCodeDefaultText = "Print Tzrufa", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
-             			   Feature DeclarationFeature_MB31 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRINTTAZRUFA", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.PrintATzrufa", NameTextCodeDefaultText = "Print Accumulated Tzrufa", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
-             			   Feature DeclarationFeature_MB32 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRINTTDECLARATIONFORM", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.PrintDeclarationForm", NameTextCodeDefaultText = "Print Declaration Form", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
-             			   Feature DeclarationFeature_MB33 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRINTRELEASE", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.PrintRelease", NameTextCodeDefaultText = "Print Release", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
+      
+    
+			   Feature DeclarationFeature_MB4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FORMS", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.Forms", NameTextCodeDefaultText = "Forms", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
+
+			   Feature DeclarationFeature_MB40 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRINTTZRUFA", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.PrintTzrufa", NameTextCodeDefaultText = "Print Tzrufa", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
+             			   Feature DeclarationFeature_MB41 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRINTTAZRUFA", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.PrintATzrufa", NameTextCodeDefaultText = "Print Accumulated Tzrufa", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
+             			   Feature DeclarationFeature_MB42 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRINTTDECLARATIONFORM", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.PrintDeclarationForm", NameTextCodeDefaultText = "Print Declaration Form", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
+             			   Feature DeclarationFeature_MB43 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRINTRELEASE", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.PrintRelease", NameTextCodeDefaultText = "Print Release", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
                    
     
-			   Feature DeclarationFeature_MB4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CloseDeclaration", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Declaration.Features.CloseDeclaration", NameTextCodeDefaultText = "Close Declaration", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
-
-      
-    
-			   Feature DeclarationFeature_MB5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OpenNewContainerization", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Declaration.Features.OpenNewContainerization", NameTextCodeDefaultText = "OpenNewContainerization", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
+			   Feature DeclarationFeature_MB5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CloseDeclaration", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Declaration.Features.CloseDeclaration", NameTextCodeDefaultText = "Close Declaration", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
 
       
     
@@ -16943,6 +17059,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    
 			   MenuButton DeclarationMenuButton1 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
+						EventCode = "OpenNewContainerization",
+						Index = 0, 
+						IsActive = true,
+						LabelTextCodeCode = "Declaration.B.OpenNewContainerization",
+						LabelTextCodeDefaultText = "OpenNewContainerization",
+						Tenant = 0,
+						MenuButtonGroupId = DeclarationMenuButtonGroup.Id,
+						ObjectTableId = DeclarationObjectTable.Id,
+						MenuButtonType = "button",
+						FeatureId = DeclarationFeature_MB1.Id,
+						Style = "",
+						LocalDefaultText = "המכלה חדשה",
+						FeatureUniqeCode = DeclarationFeature_MB1.FeatureUniqeCode,
+						HtmlComponentPath = null,
+						Width = 0,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+       
+   
+			   MenuButton DeclarationMenuButton2 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
 						EventCode = "SendManifest",
 						Index = 1, 
 						IsActive = true,
@@ -16952,16 +17088,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonGroupId = DeclarationMenuButtonGroup.Id,
 						ObjectTableId = DeclarationObjectTable.Id,
 						MenuButtonType = "control",
-						FeatureId = DeclarationFeature_MB1.Id,
+						FeatureId = DeclarationFeature_MB2.Id,
 						Style = null,
 						LocalDefaultText = "שלח מצהר",
-						FeatureUniqeCode = DeclarationFeature_MB1.FeatureUniqeCode,
+						FeatureUniqeCode = DeclarationFeature_MB2.FeatureUniqeCode,
 						HtmlComponentPath = "./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/SendDeclaration/SendManifestComponent",
 						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
-			   MenuButton DeclarationMenuButton2 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton DeclarationMenuButton3 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "DeclarationPayment",
 						Index = 2, 
@@ -16972,16 +17108,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonGroupId = DeclarationMenuButtonGroup.Id,
 						ObjectTableId = DeclarationObjectTable.Id,
 						MenuButtonType = "button",
-						FeatureId = DeclarationFeature_MB2.Id,
+						FeatureId = DeclarationFeature_MB3.Id,
 						Style = null,
 						LocalDefaultText = "הגשת תשלום",
-						FeatureUniqeCode = DeclarationFeature_MB2.FeatureUniqeCode,
+						FeatureUniqeCode = DeclarationFeature_MB3.FeatureUniqeCode,
 						HtmlComponentPath = null,
 						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
-			   MenuButton DeclarationMenuButton3 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton DeclarationMenuButton4 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "Forms",
 						Index = 3, 
@@ -16992,15 +17128,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonGroupId = DeclarationMenuButtonGroup.Id,
 						ObjectTableId = DeclarationObjectTable.Id,
 						MenuButtonType = "dropdownbutton",
-						FeatureId = DeclarationFeature_MB3.Id,
+						FeatureId = DeclarationFeature_MB4.Id,
 						Style = null,
 						LocalDefaultText = "טפסים",
-						FeatureUniqeCode = DeclarationFeature_MB3.FeatureUniqeCode,
+						FeatureUniqeCode = DeclarationFeature_MB4.FeatureUniqeCode,
 						HtmlComponentPath = null,
 						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
-			   MenuButton DeclarationMenuButton30 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton DeclarationMenuButton40 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "PrintTzrufa",
 						Index = 1, 
@@ -17009,18 +17145,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						LabelTextCodeDefaultText = "Print Tzrufa",
 						Tenant = 0,
 						MenuButtonGroupId = DeclarationMenuButtonGroup.Id,
-						ParentMenuButtonId = DeclarationMenuButton3.Id,
+						ParentMenuButtonId = DeclarationMenuButton4.Id,
 						ObjectTableId = DeclarationObjectTable.Id,
 						MenuButtonType = "menuitem",
-						FeatureId=  DeclarationFeature_MB30.Id,
+						FeatureId=  DeclarationFeature_MB40.Id,
 						Style = null,
 						LocalDefaultText = "צרופה",
                         HtmlComponentPath=null,
                         Width=0,
-						FeatureUniqeCode=  DeclarationFeature_MB30.FeatureUniqeCode,
+						FeatureUniqeCode=  DeclarationFeature_MB40.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
-			   MenuButton DeclarationMenuButton31 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton DeclarationMenuButton41 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "PrintAccumaltedTzrufa",
 						Index = 1, 
@@ -17029,18 +17165,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						LabelTextCodeDefaultText = "Print Accumalted Tzrufa",
 						Tenant = 0,
 						MenuButtonGroupId = DeclarationMenuButtonGroup.Id,
-						ParentMenuButtonId = DeclarationMenuButton3.Id,
+						ParentMenuButtonId = DeclarationMenuButton4.Id,
 						ObjectTableId = DeclarationObjectTable.Id,
 						MenuButtonType = "menuitem",
-						FeatureId=  DeclarationFeature_MB31.Id,
+						FeatureId=  DeclarationFeature_MB41.Id,
 						Style = null,
 						LocalDefaultText = "צרופה צבורה",
                         HtmlComponentPath=null,
                         Width=0,
-						FeatureUniqeCode=  DeclarationFeature_MB31.FeatureUniqeCode,
+						FeatureUniqeCode=  DeclarationFeature_MB41.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
-			   MenuButton DeclarationMenuButton32 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton DeclarationMenuButton42 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "PrintDeclarationForm",
 						Index = 2, 
@@ -17049,18 +17185,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						LabelTextCodeDefaultText = "Print Declaration Form",
 						Tenant = 0,
 						MenuButtonGroupId = DeclarationMenuButtonGroup.Id,
-						ParentMenuButtonId = DeclarationMenuButton3.Id,
+						ParentMenuButtonId = DeclarationMenuButton4.Id,
 						ObjectTableId = DeclarationObjectTable.Id,
 						MenuButtonType = "menuitem",
-						FeatureId=  DeclarationFeature_MB32.Id,
+						FeatureId=  DeclarationFeature_MB42.Id,
 						Style = null,
 						LocalDefaultText = "טופס הצהרה",
                         HtmlComponentPath=null,
                         Width=0,
-						FeatureUniqeCode=  DeclarationFeature_MB32.FeatureUniqeCode,
+						FeatureUniqeCode=  DeclarationFeature_MB42.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
-			   MenuButton DeclarationMenuButton33 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton DeclarationMenuButton43 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "PrintRelease",
 						Index = 3, 
@@ -17069,19 +17205,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						LabelTextCodeDefaultText = "Print Release",
 						Tenant = 0,
 						MenuButtonGroupId = DeclarationMenuButtonGroup.Id,
-						ParentMenuButtonId = DeclarationMenuButton3.Id,
+						ParentMenuButtonId = DeclarationMenuButton4.Id,
 						ObjectTableId = DeclarationObjectTable.Id,
 						MenuButtonType = "menuitem",
-						FeatureId=  DeclarationFeature_MB33.Id,
+						FeatureId=  DeclarationFeature_MB43.Id,
 						Style = null,
 						LocalDefaultText = "שחרור חלקי",
                         HtmlComponentPath=null,
                         Width=0,
-						FeatureUniqeCode=  DeclarationFeature_MB33.FeatureUniqeCode,
+						FeatureUniqeCode=  DeclarationFeature_MB43.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	          
    
-			   MenuButton DeclarationMenuButton4 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton DeclarationMenuButton5 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "CloseDeclaration",
 						Index = 3, 
@@ -17092,29 +17228,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonGroupId = DeclarationMenuButtonGroup.Id,
 						ObjectTableId = DeclarationObjectTable.Id,
 						MenuButtonType = "button",
-						FeatureId = DeclarationFeature_MB4.Id,
+						FeatureId = DeclarationFeature_MB5.Id,
 						Style = null,
 						LocalDefaultText = "סגירת הצהרה",
-						FeatureUniqeCode = DeclarationFeature_MB4.FeatureUniqeCode,
-						HtmlComponentPath = null,
-						Width = 0,
-					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
-       
-   
-			   MenuButton DeclarationMenuButton5 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
-					{
-						EventCode = "OpenNewContainerization",
-						Index = 0, 
-						IsActive = true,
-						LabelTextCodeCode = "Declaration.B.OpenNewContainerization",
-						LabelTextCodeDefaultText = "OpenNewContainerization",
-						Tenant = 0,
-						MenuButtonGroupId = DeclarationMenuButtonGroup.Id,
-						ObjectTableId = DeclarationObjectTable.Id,
-						MenuButtonType = "button",
-						FeatureId = DeclarationFeature_MB5.Id,
-						Style = "",
-						LocalDefaultText = "המכלה חדשה",
 						FeatureUniqeCode = DeclarationFeature_MB5.FeatureUniqeCode,
 						HtmlComponentPath = null,
 						Width = 0,
@@ -17837,9 +17953,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOTicketAlreadyExist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.TicketAlreadyExist", DefaultText = "This Ticket already exist , do you want to move the items to the existing ticket ?",LocalDefaultText = @"המענה שהזנת כבר קיים , האם להעביר את פרטי המכס למענה הקיים ?", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCreate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Create", DefaultText = "Create",LocalDefaultText = @"יצירה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCreate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Create", DefaultText = "Create",LocalDefaultText = @"צור חדש", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOMove = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Move", DefaultText = "Move",LocalDefaultText = @"לזוז ", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOMove = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Move", DefaultText = "Move",LocalDefaultText = @"העבר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOMoreData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MoreData", DefaultText = "More Data",LocalDefaultText = @"נוספים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationReferantDataUpdateClass
    {  		
-		public const string HashString = "37892337fbfbe1a0ac29e7989d819af4";
+		public const string HashString = "064b3b27eca9e816dd233033d9bb7cff";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -5712,9 +5712,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOFilesInReview = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.FilesInReview", DefaultText = "FilesInReview",LocalDefaultText = @"תיקים בביקורת", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOFilesInCreditControl = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.FilesInCreditControl", DefaultText = "Files In Credit Control",LocalDefaultText = @"תיקים בבקרת אשראי", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOFilesInCreditControl = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.FilesInCreditControl", DefaultText = "Files In Credit Control",LocalDefaultText = @" תיקים בבקרת אשראי", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOFilesAvailableFreeOfCharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.FilesAvailableFreeOfCharge", DefaultText = "FilesAvailableFreeOfCharge",LocalDefaultText = @"תיקים זמינים ללא תשלום", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOFilesAvailableFreeOfCharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.FilesAvailableFreeOfCharge", DefaultText = "FilesAvailableFreeOfCharge",LocalDefaultText = @" תיקים זמינים ללא תשלום", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOAllCases = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.AllCases", DefaultText = "AllCases",LocalDefaultText = @"כל התיקים", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -5724,7 +5724,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOFilesRejectedByClassification = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.FilesRejectedByClassification", DefaultText = "Files Rejected By Classification",LocalDefaultText = "תיקים שנדחו ע''י מסווג", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOFilesWithoutRelease = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.FilesWithoutRelease", DefaultText = "Files Without Release",LocalDefaultText = @"תיקים שהוגשו ולא הותרו", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOFilesWithoutRelease = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.FilesWithoutRelease", DefaultText = "Files Without Release",LocalDefaultText = @" תיקים שהוגשו ולא הותרו", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOFilesToPay = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.FilesToPay", DefaultText = "Files To Pay",LocalDefaultText = @"תיקים לתשלום", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

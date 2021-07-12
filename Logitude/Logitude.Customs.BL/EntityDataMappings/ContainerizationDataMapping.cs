@@ -15,6 +15,7 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.BL.EntityQueryServices;
 using Simplog.Server.Infrastructure;
+using Logitude.Customs.Data.EntityKeys;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -37,11 +38,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.HataraStatusName);
             var declarationRepository = new DeclarationRepository(entityPOCO.Tenant);
             var declarations=declarationRepository.GetByExportContainerizationID(entityPOCO.Id, entityPOCO.Tenant);
-           /* var items = declarations.ToList();
+            var items = declarations.ToList();
             foreach(Declaration dec in items)
             {
                 entityPM.ConnectedDeclarations= entityPM.ConnectedDeclarations + dec.Id + ",";
-            }*/
+            }
             var declaration= declarations.FirstOrDefault();
             if (declaration != null)
             {
@@ -61,34 +62,52 @@ namespace Logitude.Customs.BL.EntityDataMappings
         private static void BuildSearchFields(ContainerizationPM entityPM, Containerization poco, bool isNewEntity)
         {
             string result = "";
-            entityPM.SearchFields = result.ToLower();
-            var declarationRepository = new DeclarationRepository(entityPM.Tenant);
-            var declarations = declarationRepository.GetByExportContainerizationID(entityPM.Id, entityPM.Tenant);
-            var declaration = declarations.FirstOrDefault();
-            if (declaration != null)
+            if (!string.IsNullOrEmpty(entityPM.ConnectedDeclarations))
             {
-                ConsignmentQueryService cosigmentQuery = new ConsignmentQueryService(poco.Tenant);
-                ConsignmentPM consignment = cosigmentQuery.GetSingle(declaration.Id, 1, false, false);
-                if (consignment != null)
+                var declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
+                var ConnectedDeclarations = entityPM.ConnectedDeclarations.Split(',').ToList();
+                var pms = declarationQueryService.GetDeclarationsByIds(ConnectedDeclarations, entityPM.Tenant);
+                foreach (var declaration in pms)
                 {
-                    if (!string.IsNullOrEmpty(consignment.ManifestNumber))
+                    ConsignmentQueryService cosigmentQuery = new ConsignmentQueryService(poco.Tenant);
+                    ConsignmentPM consignment = cosigmentQuery.GetSingle(declaration.Id, 1, false, false);
+                    if (consignment != null)
                     {
-                        result = string.IsNullOrEmpty(result) ? consignment.ManifestNumber : result + "," + consignment.ManifestNumber;
+                        if (!string.IsNullOrEmpty(consignment.ManifestNumber))
+                        {
+                            result = string.IsNullOrEmpty(result) ? consignment.ManifestNumber : result + "," + consignment.ManifestNumber;
+                        }
+                        if (!string.IsNullOrEmpty(consignment.SecondCargoID))
+                        {
+                            result = string.IsNullOrEmpty(result) ? consignment.SecondCargoID : result + "," + consignment.SecondCargoID;
+                        }
+                        if (!string.IsNullOrEmpty(consignment.ThirdCargoID))
+                        {
+                            result = string.IsNullOrEmpty(result) ? consignment.ThirdCargoID : result + "," + consignment.ThirdCargoID;
+                        }
                     }
-                    if (!string.IsNullOrEmpty(consignment.SecondCargoID))
+                    if (!string.IsNullOrEmpty(declaration.ExportFile))
                     {
-                        result = string.IsNullOrEmpty(result) ? consignment.SecondCargoID : result + "," + consignment.SecondCargoID;
+                        result = string.IsNullOrEmpty(result) ? declaration.ExportFile : result + "," + declaration.ExportFile;
                     }
-                    if (!string.IsNullOrEmpty(consignment.ThirdCargoID))
+                    if (!string.IsNullOrEmpty(declaration.CustomerName))
                     {
-                        result = string.IsNullOrEmpty(result) ? consignment.ThirdCargoID : result + "," + consignment.ThirdCargoID;
+                            result = string.IsNullOrEmpty(result) ? declaration.CustomerName : result + "," + declaration.CustomerName;
                     }
-                }
-                if (!string.IsNullOrEmpty(declaration.ExportFile))
-                {
-                    result = string.IsNullOrEmpty(result) ? declaration.ExportFile : result + "," + declaration.ExportFile;
                 }
             }
+            if (!string.IsNullOrEmpty(entityPM.ContainerizationNumber))
+            {
+                result = string.IsNullOrEmpty(result) ? entityPM.ContainerizationNumber : result + "," + entityPM.ContainerizationNumber;
+            }
+            var splittedResult = result.Split(',');
+            var distinctResult = splittedResult.Distinct().ToList();
+            result = "";
+            foreach (var item in distinctResult)
+            {
+                result = string.IsNullOrEmpty(result) ? item : result + "," + item;
+            }
+            entityPM.SearchFields = result.ToLower();
             poco.SearchFields = entityPM.SearchFields;
         }
     }

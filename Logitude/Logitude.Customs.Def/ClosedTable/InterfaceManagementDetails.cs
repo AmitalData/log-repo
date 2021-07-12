@@ -2840,7 +2840,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 Code = "2450",
                 InOut = InOutEnum.O.ToString(),
                 Description = "מסר המכלה",
-                DcaPrefixName = "",
+                DcaPrefixName = "GetDF_MSG2755_2757_SubmitExportDeclarationRequest_Out",
                 DefaultSendOptionsCode = Logitude.Customs.Def.ClosedTable.InterfaceSendOptionsDetails.InterfaceSendOptionEnum.WI.ToString(),
                 DefaultPriority = 5,
                 AllowRestore = true,

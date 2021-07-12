@@ -38,6 +38,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.Mandatory).HasColumnName("Mandatory");
 
             this.Property(t => t.Inactive).HasColumnName("Inactive");
+
+            this.Property(t => t.DeclarationTypeCode).HasColumnName("DeclarationTypeCode").HasMaxLength(3).IsUnicode(false);
         }
     }
 }

@@ -185,6 +185,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 entityPM.ReferentUserId = entityPM.CreatedByUserId;
             }
             OnCreatingExportDeclaration(entityPM);
+            
+            if (entityPM.Direction == "I" && string.IsNullOrWhiteSpace(entityPM.DeclarationTypeCode)) entityPM.DeclarationTypeCode = "1";
 
         }
 
@@ -1949,7 +1951,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     toDeclaration.ProcedureCurrentCode = fromDeclaration.ProcedureCurrentCode;
                 }
-
+                if (string.IsNullOrEmpty(toDeclaration.DeclarationOfficeCode))
+                {
+                    toDeclaration.DeclarationOfficeCode = fromDeclaration.DeclarationOfficeCode;
+                }
                 if (toDeclaration.TaxationDateTime == null)
                 {
                     toDeclaration.TaxationDateTime = fromDeclaration.TaxationDateTime;

@@ -1405,6 +1405,76 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;e6f8b240-a152-4e27-8366-8481d8568fa7&quot;"
+    FieldName="&quot;OpenContainerization&quot;"
+    OldNames="OpenContainerization"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;Customs.Containerization&quot;"
+    FieldsDataType="&quot;Boolean&quot;"
+    MinLength="0"
+    MaxLength="0"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="0"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;OpenContainerization&quot;"
+    ListPropertyPath="&quot;OpenContainerization&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;&quot;"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;OpenContainerization&quot;"
+    DefaultText="&quot;OpenContainerization&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="false"
+    HasPMField="false"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <Query
     Code="&quot;OpenContainerization&quot;"
     TextCode="&quot;Open Containerization&quot;"
@@ -1459,15 +1529,15 @@
     <QueryFilters>
       <QueryFilter
         QueryCode="&quot;OpenContainerization&quot;"
-        PredefinedValue="&quot;3&quot;"
-        ObjectFieldName="&quot;ContainerizationStatus&quot;"
+        PredefinedValue="&quot;true&quot;"
+        ObjectFieldName="&quot;HataraStatusIsNull&quot;"
         IsPredefined="true"
-        Operator="&quot;NotEqual&quot;"
+        Operator="&quot;Equal&quot;"
         IndexOrder="0" />
       <QueryFilter
         QueryCode="&quot;OpenContainerization&quot;"
         PredefinedValue="&quot;true&quot;"
-        ObjectFieldName="&quot;HataraStatusIsNull&quot;"
+        ObjectFieldName="&quot;OpenContainerization&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
         IndexOrder="0" />
@@ -1686,11 +1756,11 @@
   </Screen>
   <Tab
     TabName="&quot;General Details&quot;"
-    TabLocalName="&quot;פרטים כללים&quot;"
+    TabLocalName="&quot;כללי&quot;"
     ObjectTableName="&quot;Customs.Containerization&quot;"
     Code="&quot;CNGN&quot;"
     ControlPath="&quot;&quot;"
-    TextCode="&quot;Customs.Containerization.TH.GeneralDetails&quot;"
+    TextCode="&quot;Customs.Containerization.TH.General&quot;"
     IsPackagable="true"
     IndexOrder="0"
     HtmlComponentURL="&quot;./CustomsModules/CustomsContainerization/Components/EditTabs/ContainerizationGeneralComponent&quot;"
@@ -1699,7 +1769,7 @@
     HasGeneralFeature="false" />
   <Tab
     TabName="&quot;Request Sheet&quot;"
-    TabLocalName="&quot;גיליון בקשה&quot;"
+    TabLocalName="&quot;גליון בקשות&quot;"
     ObjectTableName="&quot;Customs.Containerization&quot;"
     Code="&quot;CNRS&quot;"
     ControlPath="&quot;&quot;"
@@ -1743,6 +1813,14 @@
     MenuButtonGroupType="&quot;Customs.ContainerizationEdit&quot;"
     MenuButtonGroupName="&quot;Customs.ContainerizationEditButtonsGroup&quot;">
     <MenuButton
+      EventCode="&quot;SendContainerization&quot;"
+      DefaultText="&quot;Send Containerization&quot;"
+      MenuButtonType="&quot;control&quot;"
+      IndexOrder="0"
+      LocalDefaultText="&quot;שלח&quot;"
+      IsPackagable="true"
+      HtmlComponentPath="&quot;./CustomsModules/CustomsContainerization/Components/SendContainerization/SendContainerization&quot;" />
+    <MenuButton
       EventCode="&quot;Actions&quot;"
       DefaultText="&quot;Actions&quot;"
       MenuButtonType="&quot;dropdownbutton&quot;"
@@ -1754,7 +1832,7 @@
         DefaultText="&quot;Add Declaration&quot;"
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="0"
-        LocalDefaultText="&quot;הוסף הצהרה&quot;"
+        LocalDefaultText="&quot;הוספת הצהרה&quot;"
         IsPackagable="true"
         HtmlComponentPath="&quot;./CustomsModules/CustomsContainerization/Components/NewEntity/NewContainerizationComponent&quot;" />
       <MenuItem
@@ -1774,6 +1852,61 @@
     </MenuButton>
   </MenuButtons>
   <DataContracts />
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;Customs.Containerization.TH.General&quot;"
+      DefaultText="&quot;General&quot;"
+      LocalDefaultText="&quot;כללי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Containerization.TH.RequestSheet&quot;"
+      DefaultText="&quot;RequestSheet&quot;"
+      LocalDefaultText="&quot;גליון בקשות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Containerization.O.RowNumber&quot;"
+      DefaultText="&quot;RowNumber&quot;"
+      LocalDefaultText="&quot;מס'&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Containerization.O.ExportFile&quot;"
+      DefaultText="&quot;ExportFile&quot;"
+      LocalDefaultText="&quot;תיק יצוא&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Containerization.O.ImporterName&quot;"
+      DefaultText="&quot;ImporterName&quot;"
+      LocalDefaultText="&quot;לקוח&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Containerization.O.PaymentDate&quot;"
+      DefaultText="&quot;PaymentDate&quot;"
+      LocalDefaultText="&quot;הגשה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Containerization.O.CargoTypeName&quot;"
+      DefaultText="&quot;CargoTypeName&quot;"
+      LocalDefaultText="&quot;מזהה מטען&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Containerization.O.ManifestNumber&quot;"
+      DefaultText="&quot;ManifestNumber&quot;"
+      LocalDefaultText="&quot;מזהה מטען ראשון &quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Containerization.O.ContainerizationChanged&quot;"
+      DefaultText="&quot;Containerization Changed&quot;"
+      LocalDefaultText="&quot;בוצעו שינויים בהמכלה, יש לשדר פעם נוספת&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

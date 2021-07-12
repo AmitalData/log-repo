@@ -1359,7 +1359,7 @@ export class MaintenanceComponent {
                     logitudeWindow.Title = TextCodeTranslator.Translate("General.MC.Customs.DocumentsDefinition");
                     logitudeWindow.ShowCloseButton = true;
                     logitudeWindow.Height = 650;
-                    logitudeWindow.Width = 750;
+                    logitudeWindow.Width = 800;
 
                     logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/Maintenance/CustomsDocumentsDefinitionComponent');
                     break;
@@ -1754,7 +1754,7 @@ class MaintenanceMenuItem {
             var r = "";
         }
 
-        if (this.Code == "MTCL" || this.Code == "MTIS" || this.Code == "MCSG" || this.Code == "MASC" || this.Code == "CRTE") {
+        if (this.Code == "MTCL" || this.Code == "MTIS" || this.Code == "MCSG" || this.Code == "MASC" || this.Code == "CRTE" || this.Code == "MTDD" ) {
             myResult = TextCodeTranslator.TranslateTable(this.item.TextCode);
         }
 

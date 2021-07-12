@@ -25,6 +25,7 @@ export class ContainerizationExtendedListService {
     public ConnectedDeclarations: string;
     public SelectedDeclarations: boolean;
     public AllDeclarations: string;
+    public IsDirectCharging: string;
 
     getPromiseByFilters(filters: ApiQueryFilters) {
 
