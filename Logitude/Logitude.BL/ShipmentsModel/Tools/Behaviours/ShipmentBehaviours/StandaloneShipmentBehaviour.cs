@@ -196,8 +196,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             }
         }
 
-            shipmentPickUpDeliveryPackageRepository.Add(shipmentPickUpDeliveryPackage);
-        }
         private void MapStandaloneShipmentFields(ShipmentPM standAloneShipmentPM, string pickupDeliveryId, string forwarderPickUpDeliveryType)
         {
             ShipmentPickUpDelivery shipmentPickUpDelivery = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDelivery(tenant, pickupDeliveryId);
