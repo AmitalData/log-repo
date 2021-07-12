@@ -15,6 +15,7 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.BL.EntityQueryServices;
 using Simplog.Server.Infrastructure;
+using Logitude.Customs.Data.EntityKeys;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -89,15 +90,22 @@ namespace Logitude.Customs.BL.EntityDataMappings
                     {
                         result = string.IsNullOrEmpty(result) ? declaration.ExportFile : result + "," + declaration.ExportFile;
                     }
-                    if (!string.IsNullOrEmpty(declaration.ImporterName))
+                    if (!string.IsNullOrEmpty(declaration.CustomerName))
                     {
-                        result = string.IsNullOrEmpty(result) ? declaration.ImporterName : result + "," + declaration.ImporterName;
+                            result = string.IsNullOrEmpty(result) ? declaration.CustomerName : result + "," + declaration.CustomerName;
                     }
                 }
             }
             if (!string.IsNullOrEmpty(entityPM.ContainerizationNumber))
             {
                 result = string.IsNullOrEmpty(result) ? entityPM.ContainerizationNumber : result + "," + entityPM.ContainerizationNumber;
+            }
+            var splittedResult = result.Split(',');
+            var distinctResult = splittedResult.Distinct().ToList();
+            result = "";
+            foreach (var item in distinctResult)
+            {
+                result = string.IsNullOrEmpty(result) ? item : result + "," + item;
             }
             entityPM.SearchFields = result.ToLower();
             poco.SearchFields = entityPM.SearchFields;
