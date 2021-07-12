@@ -60,6 +60,30 @@
                             </ng-template>
                         </log-column>
 
+                        <log-column [header]="'ASIN'" [width]="'150'" [Alignment]="'left'">
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate>
+                                    <span>{{item.ASIN}}</span>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+
+                        <log-column [header]="'UPC'" [width]="'150'" [Alignment]="'left'">
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate>
+                                    <span>{{item.UPC}}</span>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+
+                        <log-column [header]="'Country of Origin'" [width]="'150'" [Alignment]="'left'">
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate>
+                                    <span>{{item.OriginCountryName}}</span>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+
                         <log-column [header]="'Description'" [width]="'150'" [Alignment]="'left'">
                             <ng-template let-item>
                                 <log-cell-template #logcelltemplate>

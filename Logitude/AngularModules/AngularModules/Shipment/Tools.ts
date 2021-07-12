@@ -35,6 +35,7 @@ import { VatTypeList } from '../Common/EntityLists/VatTypeList';
 import { VatTypePercentagePM } from '../Common/EntityPMs/VatTypePercentagePM';
 import { ShipmentPickUpDeliveryPackagePM } from './EntityPMs/ShipmentPickUpDeliveryPackagePM';
 import { ShipmentPackageHarmonizePM } from './EntityPMs/ShipmentPackageHarmonizePM';
+import { ShipmentProductItemPM } from './EntityPMs/ShipmentProductItemPM';
 
 export class ShipmentTool {
     private static CurrentSession = SessionLocator.SelectedSession;
@@ -2339,6 +2340,53 @@ export class ShipmentTool {
         }
 
         return shipmentPM;
+    }
+
+    public static IsShipmentProductItemsEmpty(productItems: ShipmentProductItemPM[]): boolean {
+        productItems.forEach((item) => {
+            if (!AppTool.IsNullOrEmpty(item.ProductItemId)) {
+                item.IsEmptyLine = false;
+            }
+
+            else if (!AppTool.IsNullOrEmpty(item.SKU)) {
+                item.IsEmptyLine = false;
+            }
+
+            else if (!AppTool.IsNullOrEmpty(item.Brand)) {
+                item.IsEmptyLine = false;
+            }
+
+            else if (!AppTool.IsNullOrEmpty(item.ASIN)) {
+                item.IsEmptyLine = false;
+            }
+
+            else if (!AppTool.IsNullOrEmpty(item.UPC)) {
+                item.IsEmptyLine = false;
+            }
+
+            else if (!AppTool.IsNullOrEmpty(item.OriginCountryId)) {
+                item.IsEmptyLine = false;
+            }
+
+            else if (!AppTool.IsNullOrEmpty(item.Description)) {
+                item.IsEmptyLine = false;
+            }
+
+            else if (!AppTool.IsNullOrEmpty(item.HTSCode)) {
+                item.IsEmptyLine = false;
+            }
+
+            else {
+                item.IsEmptyLine = true;
+            }
+        });
+
+        var isEmpty: boolean = false;
+        if (productItems.filter(d => d.IsEmptyLine).length == productItems.length) {
+            isEmpty = true;
+        }
+
+        return isEmpty;
     }
 }
 export class ByPckageType {

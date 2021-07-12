@@ -16,6 +16,10 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public bool ApprovedByCustomer { get; set; }
         public string Brand { get; set; }
         public string Name { get; set; }
+        public string ASIN { get; set; }
+        public string UPC { get; set; }
+        public string OriginCountryId { get; set; }
+        public virtual Country OriginCountry { get; set; }
         public virtual ProductItem ProductItem { get; set; }
         public virtual Shipment Shipment { get; set; }
     }
