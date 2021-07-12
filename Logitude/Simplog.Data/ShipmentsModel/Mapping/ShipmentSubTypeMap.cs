@@ -31,7 +31,6 @@ namespace Simplog.Data.ShipmentsModel.Mapping
                 .IsUnicode(false);
 
             this.Property(t => t.ShipmentTypeCode)
-                .IsRequired()
                 .HasMaxLength(4)
                 .IsUnicode(false);
 
@@ -63,7 +62,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.UpdatedByUserId).HasColumnName("UpdatedByUserId");
             this.Property(t => t.Inactive).HasColumnName("Inactive");
 
-            this.HasRequired(t => t.ShipmentType).WithMany().HasForeignKey(d => d.ShipmentTypeCode);
+            this.HasOptional(t => t.ShipmentType).WithMany().HasForeignKey(d => d.ShipmentTypeCode);
             this.HasRequired(t => t.CreatedByUser).WithMany().HasForeignKey(d => d.CreatedByUserId);
             this.HasRequired(t => t.UpdatedByUser).WithMany().HasForeignKey(d => d.UpdatedByUserId);
         }

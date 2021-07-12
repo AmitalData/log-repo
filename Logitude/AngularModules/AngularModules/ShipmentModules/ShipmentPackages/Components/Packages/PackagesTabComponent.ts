@@ -369,6 +369,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     public IsTotalsFieldEnabled: boolean = true;
     public IsAddInsideButtonEnabled: boolean = false;
     SetUIProperties() {
+        this.CheckHorseVisiblility();
         if (this.EntityPM.IsMultipleCommodities) {
             this.IsEditingEnabled = false;
         }
@@ -1476,6 +1477,8 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                 newPackage.CommodityNumber = item.CommodityNumber;
                 newPackage.CommodityName = item.CommodityName;
                 newPackage.LCLContainerTypeId = item.LCLContainerTypeId;
+                newPackage.HorseId = item.HorseId;
+                newPackage.HorseName = item.HorseName;
 
                 item.InsideShipmentPackages.forEach(itemInside => {
                     var newInsidePackage = new InsideShipmentPackagePM(null);
@@ -1498,6 +1501,8 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                     newInsidePackage.CommodityNumber = itemInside.CommodityNumber;
                     newInsidePackage.CommodityName = itemInside.CommodityName;
                     newInsidePackage.Harmonize = itemInside.Harmonize;
+                    newInsidePackage.HorseId = itemInside.HorseId;
+                    newInsidePackage.HorseName = itemInside.HorseName;
                     newPackage.AddInsideShipmentPackagePM(newInsidePackage);
                 });
 
@@ -2201,6 +2206,7 @@ export class ShipmentPackageItem extends BaseComponent {
     public HorseFieldIsVisible: boolean = false;
     public IsContainerFeatureToggleVisible: boolean = false;
     WarehouseReleaseNumber: string;
+    public TransportModeId: string;
     constructor(entity: ShipmentPackagePM, public fatherComponent: PackagesTabComponent, isNew: boolean = false) {
         super();
         this.EntityPM = entity;
@@ -2211,7 +2217,11 @@ export class ShipmentPackageItem extends BaseComponent {
         this.IsCommodityNumberVisible = fatherComponent.IsCommodityNumberVisible;
         this.IsCommodityNameVisible = fatherComponent.IsCommodityNameVisible;
         this.HorseFieldIsVisible = fatherComponent.HorseFieldIsVisible;
+
         this.IsContainerFeatureToggleVisible = fatherComponent.IsContainerFeatureToggleVisible;
+
+        this.TransportModeId = fatherComponent.TransportModeId;
+
 
         this.IsNewEntity = isNew;
         this.SetUIProperties();
@@ -3755,7 +3765,11 @@ export class InsideShipmentPackageItem extends BaseComponent {
     public IsVehicleDetails: boolean = false;
     public CountryListService: CountryListService;
     public IsEditingFieldsEnabled: boolean = false;
+
     public IsContainerFeatureToggleVisible: boolean = false;
+
+    public HorseFieldIsVisible: boolean = false;
+
     constructor(entity: InsideShipmentPackagePM, public fatherComponent: ShipmentPackageItem, isNew: boolean = false) {
         super();
         this.EntityPM = entity;
@@ -3764,7 +3778,11 @@ export class InsideShipmentPackageItem extends BaseComponent {
         this.IsNewEntity = isNew;
         this.CountryListService = new CountryListService();
         this.IsEditingFieldsEnabled = fatherComponent.IsEditingFieldsEnabled;
+
         this.IsContainerFeatureToggleVisible = fatherComponent.IsContainerFeatureToggleVisible;
+
+        this.HorseFieldIsVisible = fatherComponent.HorseFieldIsVisible;
+
 
         this.SetUIProperties();
         if (this.IsNewEntity) {
@@ -3865,6 +3883,35 @@ export class InsideShipmentPackageItem extends BaseComponent {
         }
 
         this.UIProperties.SetEnabled("Harmonize", this.ObjectTableName, isFieldEnabled);
+    }
+
+    get HorseId() { return this.EntityPM.HorseId; }
+    set HorseId(newValue: string) {
+        if (this.EntityPM.HorseId != newValue) {
+            this.EntityPM.HorseId = newValue;
+        }
+    }
+
+    get HorseName() { return this.EntityPM.HorseName; }
+    set HorseName(newValue: string) {
+        if (this.EntityPM.HorseName != newValue) {
+            this.EntityPM.HorseName = newValue;
+        }
+    }
+
+    horse: HorseList;
+    get Horse() { return this.horse; }
+    set Horse(value: HorseList) {
+        if (this.horse != value) {
+            this.horse = value;
+        }
+
+        if (value != null) {
+            this.HorseName = value.Name;
+        }
+        else {
+            this.HorseName = null;
+        }
     }
 
     get Harmonize() { return this.EntityPM.Harmonize; }
