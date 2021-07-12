@@ -196,7 +196,7 @@ namespace WebFreight.Web.Helpers
                 return;
 
             TicketStageQueryService ticketStageQueryService = new TicketStageQueryService(tenant);
-            string OpenedTicketStageId = ticketStageQueryService.GetIdByName("Created", tenant);
+            string OpenedTicketStageId = ticketStageQueryService.GetIdByCode("OP", tenant);
             queryOperations.SetFilter("StageId", OpenedTicketStageId, false, "Equals", null, false);
         }
         
@@ -211,7 +211,7 @@ namespace WebFreight.Web.Helpers
         private void MapCustomerStatusCustomFieldFilterToQueryOperations(QueryOperations queryOperations)
         {
             List<ObjectField> ticketCustomFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Ticket", tenant);
-            ObjectField objectCustomField = ticketCustomFields.Where(f => f.Code == "CustomerStatus").FirstOrDefault();
+            ObjectField objectCustomField = ticketCustomFields.Where(f => f.Code.Replace(" ","") == "CustomerStatus").FirstOrDefault();
             if (objectCustomField == null)
                 return;
             string fieldCode = objectCustomField.FieldCode.Split('.')[2];
@@ -279,7 +279,7 @@ namespace WebFreight.Web.Helpers
 
         private string GetCustomFieldValueByEntityAndCode(object entity, List<ObjectField> entityCustomFields, string customFieldCode)
         {
-            ObjectField objectCustomField = entityCustomFields.Where(f => f.Code == customFieldCode).FirstOrDefault();
+            ObjectField objectCustomField = entityCustomFields.Where(f => f.Code.Replace(" ", "") == customFieldCode).FirstOrDefault();
             if (objectCustomField != null)
                 return GetCustomFieldValue(objectCustomField, entity, this.tenant);
             else

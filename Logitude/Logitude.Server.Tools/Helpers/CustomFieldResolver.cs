@@ -18,7 +18,7 @@ namespace Logitude.BL.Helpers
         public void SetFieldValue(CustomFieldResolverArgs customFieldResolverArgs)
         {
             List<ObjectField> customObjectFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName(customFieldResolverArgs.ObjectTableName, customFieldResolverArgs.Tenant).ToList();
-            ObjectField customObjectField = customObjectFields.FirstOrDefault(f => f.Code == customFieldResolverArgs.FieldCode);
+            ObjectField customObjectField = customObjectFields.FirstOrDefault(f => f.Code.Replace(" ", "") == customFieldResolverArgs.FieldCode);
             if (customObjectField == null) return;
             PropertyInfo propInfo = customFieldResolverArgs.EntityPM.GetType().GetProperty(customObjectField.FieldName);
             if (propInfo == null) return;
