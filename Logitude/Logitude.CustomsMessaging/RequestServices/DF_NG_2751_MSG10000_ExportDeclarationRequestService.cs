@@ -1155,7 +1155,7 @@ namespace Logitude.CustomsMessaging.RequestServices
         private List<DeclarationGoodsShipmentInvoiceDMExtensionsCustomsValuation> GetcustomsValuation(SupplierInvoicePM supplierInvoicePM)
         {
             var customsValuationlist = new List<DeclarationGoodsShipmentInvoiceDMExtensionsCustomsValuation>();
-
+            var sequence = 0;
             for (int modificationsSeq = 0; modificationsSeq < supplierInvoicePM.SupplierInvoiceModifications.Count(); modificationsSeq++)
             {
                 var supplierInvoiceModificationPM = supplierInvoicePM.SupplierInvoiceModifications[modificationsSeq];
@@ -1163,6 +1163,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 {
                     var customsValuation = new DeclarationGoodsShipmentInvoiceDMExtensionsCustomsValuation();
 
+                    customsValuation.SequenceNumeric = ++sequence;
                     customsValuation.ChargesTypeCode = new DeclarationGoodsShipmentInvoiceDMExtensionsCustomsValuationChargesTypeCode();
                     customsValuation.ChargesTypeCode = SetCodeTypeValue<DeclarationGoodsShipmentInvoiceDMExtensionsCustomsValuationChargesTypeCode>(supplierInvoiceModificationPM.TypeCode);
                     customsValuation.OtherChargeDeductionAmount = new DeclarationGoodsShipmentInvoiceDMExtensionsCustomsValuationOtherChargeDeductionAmount();
