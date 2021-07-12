@@ -68,13 +68,16 @@ namespace WebFreight.Web.Controllers.AccountingModel
                         IAccountingContext MyContext = AccountingContext.GetContext(extRecoPM.Tenant);
 
                         TransferTransactionsExternalReconciliationService movingService = new TransferTransactionsExternalReconciliationService(extRecoPM);
-                        movingService.HandleTransferAccountTransactions();
-
+                        ExternalReconciliationCreationResponse response = new ExternalReconciliationCreationResponse()
+                        {
+                            CreatedReconciliationsCount = movingService.HandleTransferAccountTransactions(),
+                            CreatedExternalReconciliation = extRecoPM
+                        };
 
                         scope.Complete();
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
-                        return Request.CreateResponse(HttpStatusCode.OK, extRecoPM);
+                        return Request.CreateResponse(HttpStatusCode.OK, response);
                     }
                 }
 
