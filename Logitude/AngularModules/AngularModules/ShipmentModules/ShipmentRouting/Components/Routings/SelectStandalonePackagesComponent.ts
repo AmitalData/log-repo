@@ -312,6 +312,9 @@ export class SelectStandalonePackagesComponent {
                     if (!this.IsFromShipmentPackageTab) {
                         this.BuildPickupDeliveryItemsSource();
                     } else {
+                        if (this.ShipmentPackages == null) {
+                            this.ShipmentPackages = [];
+                        }
                         this.ShipmentPackages.push(newShipmentPackage);
                         this.BuildShipmetItemsSource();
                     }
