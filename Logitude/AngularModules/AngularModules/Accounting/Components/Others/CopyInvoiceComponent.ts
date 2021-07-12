@@ -122,26 +122,26 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
 
         this.CurrentSession.StartBusyIndicatorLoading();
 
-        var myCurrencyRatesService = new CurrencyRatesService();
-        var myCommonDomainService = new CommonDomainService();
+        var currencyRatesService = new CurrencyRatesService();
+        var commonDomainService = new CommonDomainService();
 
         var loadingDate = this.InvoiceDate;
         if (loadingDate == null) {
             loadingDate = DateTool.GetCurrentDateAsUtc();
         }
 
-        this.GetCurrencyExchangeRate(myCurrencyRatesService, loadingDate, myCommonDomainService);
+        this.GetCurrencyExchangeRate(currencyRatesService, loadingDate, commonDomainService);
     }
 
-    private GetCurrencyExchangeRate(myCurrencyRatesService: CurrencyRatesService, loadingDate: Date, myCommonDomainService: CommonDomainService) {
-        myCurrencyRatesService.GetCurrenciesExchangeRateByValueDate(SessionLocator.LocalCurrencyId, loadingDate).subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                this.LastRatesList = myResponse.Result;
+    private GetCurrencyExchangeRate(currencyRatesService: CurrencyRatesService, loadingDate: Date, commonDomainService: CommonDomainService) {
+        currencyRatesService.GetCurrenciesExchangeRateByValueDate(SessionLocator.LocalCurrencyId, loadingDate).subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+                this.LastRatesList = response.Result;
                 this.SetCurrencyRateData();
 
-                myCommonDomainService.GetVatTypePercentagePMByDate(loadingDate).subscribe((myResponse2: ServiceResponse) => {
-                    if (!myResponse2.HasError) {
-                        this.VatTypePercentagesList = myResponse2.Result;
+                commonDomainService.GetVatTypePercentagePMByDate(loadingDate).subscribe((response2: ServiceResponse) => {
+                    if (!response2.HasError) {
+                        this.VatTypePercentagesList = response2.Result;
                     }
 
                     this.CurrentSession.StopBusyIndicator();
@@ -155,9 +155,9 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
     }
 
     private SetVendorIdForActiveCard(id: string) {
-        this.cardPMService.get(id).subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                var card = myResponse.Result;
+        this.cardPMService.get(id).subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+                var card = response.Result;
                 if (!card.InActive)
                     this.VendorId = this.EntityPM.VendorId;
             }
@@ -166,7 +166,7 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
 
     SetCurrencyRateData() {
         var rate: number = null;
-        var myRateDate: Date = null;
+        var rateDate: Date = null;
 
         if (!AppTool.IsNullOrEmpty(this.InvoiceCurrencyId)) {
             if (this.InvoiceCurrencyId == SessionLocator.TenantPM.CurrencyId) {
@@ -177,13 +177,13 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
                 var lastRate: LastRate = this.LastRatesList.filter(d => d.ForeignCurrencyId == this.InvoiceCurrencyId)[0];
                 if (lastRate != null) {
                     rate = lastRate.Rate;
-                    myRateDate = lastRate.ValueDate;
+                    rateDate = lastRate.ValueDate;
                 }
             }
         }
 
         this.InvoiceCurrencyExchangeRate = rate;
-        this.ExchangeRateDate = myRateDate;
+        this.ExchangeRateDate = rateDate;
     }
  
     // Vendor Properties
@@ -240,9 +240,9 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
     }
 
     private SetVendorDataFromConnectedCard(value: string) {
-        this.cardListService.getSingle(value).subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                var list: CardList = myResponse.Result;
+        this.cardListService.getSingle(value).subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+                var list: CardList = response.Result;
                 if (list != null) {
                     this.SetVendorData(list);
                     this.SetInvoiceCurrency(list);
@@ -275,9 +275,9 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
 
     private SetVendorGLAccount(list: CardList) {
         if (!AppTool.IsNullOrEmpty(list.GLAccountId)) {
-            this.gLAccountPMService.get(list.GLAccountId).subscribe((myResponse: ServiceResponse) => {
-                if (!myResponse.HasError) {
-                    var glaccount = myResponse.Result;
+            this.gLAccountPMService.get(list.GLAccountId).subscribe((response: ServiceResponse) => {
+                if (!response.HasError) {
+                    var glaccount = response.Result;
                     if (glaccount != null) {
                         this.VendorGLAccountId = glaccount.Id;
                     }
@@ -297,10 +297,10 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
     }
 
     private CheckIfInvoiceNumberDuplicated(warnings: string[]) {
-        this.invoiceDomainService.CheckVendor_NumberDuplication(this.VendorId, this.InvoiceNumber, this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
+        this.invoiceDomainService.CheckVendor_NumberDuplication(this.VendorId, this.InvoiceNumber, this.EntityPM.Id).subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
 
-                var isDuplicated: boolean = myResponse.Result;
+                var isDuplicated: boolean = response.Result;
 
                 if (isDuplicated) {
                     warnings.push(TextCodeTranslator.Translate("APInvoice.M.SameInvoiceNumber"));
@@ -369,9 +369,9 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
     }
 
     private SetInvoiceCurrencyCode(value: string) {
-        this.currencyListService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                var list: CurrencyList = myResponse.Result;
+        this.currencyListService.getSingleFromCache(value).subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+                var list: CurrencyList = response.Result;
                 if (list != null) {
                     this.InvoiceCurrencyCode = list.Code;
                 }
@@ -444,9 +444,9 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
     }
 
     private SetPaymentTermName(value: string) {
-        this.paymentTermListService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                var list: PaymentTermList = myResponse.Result;
+        this.paymentTermListService.getSingleFromCache(value).subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+                var list: PaymentTermList = response.Result;
                 if (list != null) {
                     this.paymentTermName = list.EnglishName;
                 }
@@ -596,10 +596,10 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
         }
 
         else {
-            var myService = new PaymentTermListService();
-            myService.getSingleFromCache(this.PaymentTermId).subscribe((myResponse: ServiceResponse) => {
-                if (!myResponse.HasError) {
-                    var list: PaymentTermList = myResponse.Result;
+            var service = new PaymentTermListService();
+            service.getSingleFromCache(this.PaymentTermId).subscribe((response: ServiceResponse) => {
+                if (!response.HasError) {
+                    var list: PaymentTermList = response.Result;
                     if (list != null) {
                         if (list.IsManuallySet) {
                             this.DueDate = null;
@@ -656,13 +656,7 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
     OkButtonClicked() {
         this.ValidationErrorsList = this.ValidateInvoiceFields();
         if (this.ValidationErrorsList.length == 0) {
-            var entityPM: APInvoicePM = new APInvoicePM();
-            this.MapNewAPInvoice(entityPM);
-            if (this.IsCopyLinesChecked) {
-                this.CopyInvoiceLines(entityPM);
-            }
-            this.InitializeProfitCurrency(entityPM);
-            this.OpenInvoiceEditScreen(entityPM);
+            this.CreateNewAPInvoicePM();
         }
     }
 
@@ -741,6 +735,16 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
         this.errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate(TextCode)));
     }
 
+    private CreateNewAPInvoicePM() {
+        var entityPM: APInvoicePM = new APInvoicePM();
+        this.MapNewAPInvoice(entityPM);
+        if (this.IsCopyLinesChecked) {
+            this.CopyInvoiceLines(entityPM);
+        }
+        this.InitializeProfitCurrency(entityPM);
+        this.OpenInvoiceEditScreen(entityPM);
+    }
+
     MapNewAPInvoice(entityPM) {
         entityPM.Tenant = this.EntityPM.Tenant;
         entityPM.VendorId = this.vendorId;
@@ -797,9 +801,9 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
             entityPM.ProfitCurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
         }
 
-        this.currencyListService.getSingleFromCache(this.EntityPM.ProfitCurrencyId).subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                var list: CurrencyList = myResponse.Result;
+        this.currencyListService.getSingleFromCache(this.EntityPM.ProfitCurrencyId).subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+                var list: CurrencyList = response.Result;
                 if (list != null) {
                     entityPM.ProfitCurrencyCode = list.Code;
                     entityPM.ProfitCurrencyId = list.Id;

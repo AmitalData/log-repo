@@ -21,8 +21,8 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
             // APIV : Voided
             // COIN : Connected
             // CPIN : Copied
-
-            if(isNewState && entityPM.IsNew && entityPM.IsCopied)
+            var isCreatedAPInvoiceCopied = isNewState && entityPM.IsNew && entityPM.IsCopied;
+            if (isCreatedAPInvoiceCopied)
             {
                 EventTracer.CreateTraceEvent(new EventTracerArgs()
                 {
@@ -31,7 +31,7 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                     UserId = loggedContact.Id,
                     EntityId = entityPM.Id,
                     ObjectTableName = "APInvoice",
-                    Notes = TranslateTextsClass.Translate("APInvoice.M.CopiedFromAPInvoiceNumber", entityPM.Tenant) + entityPM.CopiedFrom
+                    Notes = string.Concat(TranslateTextsClass.Translate("APInvoice.M.CopiedFromAPInvoiceNumber", entityPM.Tenant), ' ', entityPM.CopiedFrom)
                 });
             }
             if (isNewState)
