@@ -49,7 +49,7 @@
             <td width="25%">
                 <div style="float: left;display: inline-block;width: 110px;">
                     <custom-send-options #MyCustomSendOptionsComponent
-                                         [IsDisabled]="!IsSelected"
+                                         [IsDisabled]="!IsSelected && !IsDirectCharging"
                                          (SendButtonClicked)="SendButtonClicked($event)">
                     </custom-send-options>
                 </div>
