@@ -16,5 +16,9 @@ export class ProductItemList {
 		Name: string;
 		Brand: string;
 		SearchFields: string;
+		ASIN: string;
+		UPC: string;
+		OriginCountryId: string;
+		OriginCountryName: string;
 	
 }

@@ -195,11 +195,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return containerPM;
         }
 
-        public ContainerPM GetContainerByContainerNumberAndTenant(string containerNumber, int tenant)
+        public ContainerPM GetContainerByNumberAndShipmentIdAndTenant(string containerNumber, string shipmentId, int tenant)
         {
             ContainerPM result = null;
             Container entityPoco = (from container in repository.context.Containers
-                                    where container.Tenant == tenant && container.ContainerNumber == containerNumber
+                                    where container.Tenant == tenant && container.ContainerNumber == containerNumber && container.ShipmentId == shipmentId
                                     select container).FirstOrDefault();
 
             if(entityPoco != null)

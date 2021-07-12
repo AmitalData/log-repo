@@ -78,6 +78,31 @@ export class ShipmentProductItemPM {
     public set Name(newValue: string) { if (this.name != newValue) { this.name = newValue; this.MarkAsDirty("Name"); } }
        
 	 
+    private aSIN: string;
+    public get ASIN() { return this.aSIN; }
+    public set ASIN(newValue: string) { if (this.aSIN != newValue) { this.aSIN = newValue; this.MarkAsDirty("ASIN"); } }
+       
+	 
+    private uPC: string;
+    public get UPC() { return this.uPC; }
+    public set UPC(newValue: string) { if (this.uPC != newValue) { this.uPC = newValue; this.MarkAsDirty("UPC"); } }
+       
+	 
+    private originCountryId: string;
+    public get OriginCountryId() { return this.originCountryId; }
+    public set OriginCountryId(newValue: string) { if (this.originCountryId != newValue) { this.originCountryId = newValue; this.MarkAsDirty("OriginCountryId"); } }
+       
+	 
+    private originCountryName: string;
+    public get OriginCountryName() { return this.originCountryName; }
+    public set OriginCountryName(newValue: string) { if (this.originCountryName != newValue) { this.originCountryName = newValue; this.MarkAsDirty("OriginCountryName"); } }
+       
+	 
+    private isEmptyLine: boolean;
+    public get IsEmptyLine() { return this.isEmptyLine; }
+    public set IsEmptyLine(newValue: boolean) { if (this.isEmptyLine != newValue) { this.isEmptyLine = newValue; this.MarkAsDirty("IsEmptyLine"); } }
+       
+	 
     private changeSetOp: string;
     public get ChangeSetOp() { return this.changeSetOp; }
     public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }

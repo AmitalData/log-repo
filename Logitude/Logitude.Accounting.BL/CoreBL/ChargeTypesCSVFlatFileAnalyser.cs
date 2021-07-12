@@ -89,11 +89,13 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     foreach (ChargeTypeSrcLineDTO ct1stLineDTO in _ChargeTypeSrcLinesDTO)
                     {
-                        string recId = "";
-                        string payId = "";
+                        count++;
+                        string recId = null;
+                        string payId = null;
                         string vatTypeId = "";
                         string recInternal = "";
                         string payInternal = "";
+                        bool error_on_this_line = false;
                         GLAccountQueryService gLAccountQueryService;
                         VatTypeQuery vatTypeQuery = new VatTypeQuery(tenant);
                         if (!String.IsNullOrWhiteSpace(ct1stLineDTO.ReceivableAccountingCard) || !String.IsNullOrWhiteSpace(ct1stLineDTO.PayableAccountingCard))
@@ -105,10 +107,16 @@ namespace Logitude.Accounting.BL.CoreBL
                                 if (recPM == null || String.IsNullOrEmpty(recPM.Id))
                                 {
                                     string text_rec = "Receivable GLAccount not found";// TranslateTextsClassTranslate("ChargeTypesCSV.O.NotValidRowType", 0, useLocal);
-                                    throw new ApplicationException($"{text_rec}  {ct1stLineDTO.ReceivableAccountingCard}");
+
+                                    this.AddErrorRow($"Line {count} {text_rec} {ct1stLineDTO.ReceivableAccountingCard}");
+                                    //throw new ApplicationException($"{text_rec}  {ct1stLineDTO.ReceivableAccountingCard}");
+                                    error_on_this_line = true;
                                 }
-                                recId = recPM.Id;
-                                recInternal = recPM.InternalNumber;
+                                else
+                                {
+                                    recId = recPM.Id;
+                                    recInternal = recPM.InternalNumber;
+                                }
                             }
                             if (!String.IsNullOrWhiteSpace(ct1stLineDTO.PayableAccountingCard))
                             {
@@ -116,110 +124,125 @@ namespace Logitude.Accounting.BL.CoreBL
                                 if (payPM == null || String.IsNullOrEmpty(payPM.Id))
                                 {
                                     string text_pay = "Payable GLAccount not found";// TranslateTextsClassTranslate("ChargeTypesCSV.O.NotValidRowType", 0, useLocal);
-                                    throw new ApplicationException($"{text_pay}  {ct1stLineDTO.PayableAccountingCard}");
+                                    this.AddErrorRow($"Line {count} {text_pay} {ct1stLineDTO.PayableAccountingCard}");
+                                    //  throw new ApplicationException($"{text_pay}  {ct1stLineDTO.PayableAccountingCard}");
+                                    error_on_this_line = true;
                                 }
-                                payId = payPM.Id;
-                                payInternal = payPM.InternalNumber;
-                            }
-                            if (!String.IsNullOrWhiteSpace(ct1stLineDTO.VatType))
-                            {
-                                VatTypePM vatTypePM = vatTypeQuery.GetSinglePMByCode(ct1stLineDTO.VatType, tenant);
-                                if (vatTypePM == null || String.IsNullOrEmpty(vatTypePM.Id))
+                                else
                                 {
-                                    string text_pay = "Vat Type not found";// TranslateTextsClassTranslate("ChargeTypesCSV.O.NotValidRowType", 0, useLocal);
-                                    throw new ApplicationException($"{text_pay}  {ct1stLineDTO.VatType}");
+                                    payId = payPM.Id;
+                                    payInternal = payPM.InternalNumber;
                                 }
-                                vatTypeId = vatTypePM.Id;
-
                             }
-                            
+                        }
+                        if (!String.IsNullOrWhiteSpace(ct1stLineDTO.VatType))
+                        {
+                            VatTypePM vatTypePM = vatTypeQuery.GetSinglePMByCode(ct1stLineDTO.VatType, tenant);
+                            if (vatTypePM == null || String.IsNullOrEmpty(vatTypePM.Id))
+                            {
+                                string text_vat = "Vat Type not found";// TranslateTextsClassTranslate("ChargeTypesCSV.O.NotValidRowType", 0, useLocal);
+                                this.AddErrorRow($"Line {count} {text_vat} {ct1stLineDTO.VatType}");
+                                //     throw new ApplicationException($"{text_pay}  {ct1stLineDTO.VatType}");
+                                error_on_this_line = true;
+                            }
+                            else
+                            {
+                                vatTypeId = vatTypePM.Id;
+                            }
+
                         }
 
-                        chargeType = new ChargesTypePM()
 
+                        if (!error_on_this_line)
                         {
-                            //ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
-                            Tenant = tenant,
-                            Code = ct1stLineDTO.Code,
-                            LocalName = ct1stLineDTO.LocalName,
-                            EnglishName = ct1stLineDTO.EnglishName,
-                            ReceivableCreditGLAcountNumber = ct1stLineDTO.ReceivableAccountingCard,
-                            PayableDebitGLAcountNumber = ct1stLineDTO.PayableAccountingCard,
-                            VatTypeId = vatTypeId,
+                            chargeType = new ChargesTypePM()
 
-                            AddedManually = false,
-                            InActive = false,
-                            ChargesGroupCode = chargesGroupCode,
-                            IsReceivable = ct1stLineDTO.IsReceivable,
-                            IsPayable = ct1stLineDTO.IsPayable,
-                            IsAir = true,
-                            IsOcean = true,
-                            IsInland = true,
-                            IsAutoDisplayInShipment = false,
-                            IsAutoDisplayInConsolidation = false,
-                            Description = "",
-                            AWBPrintDescription = true,
-                            DueTypeCode = "", 
-                            IsAutoDisplayInQuote = false, 
-                            MeasurementId = "???",
-                            ContainerMeasurementCode  = "",
+                            {
+                                //ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                                Tenant = tenant,
+                                Code = ct1stLineDTO.Code,
+                                LocalName = ct1stLineDTO.LocalName,
+                                EnglishName = ct1stLineDTO.EnglishName,
+                                ReceivableCreditGLAcountNumber = ct1stLineDTO.ReceivableAccountingCard,
+                                PayableDebitGLAcountNumber = ct1stLineDTO.PayableAccountingCard,
+                                VatTypeId = vatTypeId,
 
-
-                            ContainerMeasurementId = "",
-                            ViewOrder = 100, 
-                            ReceivableAccountId = "",
-                            PayableAccountId = "",
-                            AccountingVATSplit = false, 
-                            ReceivableCreditAccount = recInternal,
-                            PayableDebitAccount = payInternal,
-                            ReceivablesChargesTypeExternalCode = "",
-                            IATACodeId = "",
-                            PayableDebitGLAcountId = payId,
-                            ReceivableCreditGLAccountId = recId,
-                            ChargesGroupId = chargesGroupId, 
-                            PayablesChargesTypeExternalCode = "",
-                            IsExpense = false,
-
-                            IsBackToBack = false,
-                            IsAutoDisplayInCustoms = false,
-                            IsCustoms = false,
-                            SATExternalId = "",
-                            IsImport = false,
-                            IsDomestic = false, 
-                            IsExport = false, 
-                            IsDrop = false,
-                            ReceivablesDefaultCurrencyId = "",
-                            PayablesDefaultCurrencyId = "", 
-                            ApplyRegionalTax = false,
-                            HasPickup = false,
-                            HasDelivery = false, 
-                            IsDirectionRestricted = false,
-                            IsActiveInExport = false, 
-                            IsActiveInImport = false,
-                            IsActiveInDomestic = false, 
-                            IsActiveInDrop = false, 
-                         
-                        };
+                                AddedManually = false,
+                                InActive = false,
+                                ChargesGroupCode = chargesGroupCode,
+                                IsReceivable = ct1stLineDTO.IsReceivable,
+                                IsPayable = ct1stLineDTO.IsPayable,
+                                IsAir = true,
+                                IsOcean = true,
+                                IsInland = true,
+                                IsAutoDisplayInShipment = false,
+                                IsAutoDisplayInConsolidation = false,
+                                Description = "",
+                                AWBPrintDescription = true,
+                                DueTypeCode = "",
+                                IsAutoDisplayInQuote = false,
+                                MeasurementId = "???",
+                                ContainerMeasurementCode = "",
 
 
+                                ContainerMeasurementId = "",
+                                ViewOrder = 100,
+                                ReceivableAccountId = "",
+                                PayableAccountId = "",
+                                AccountingVATSplit = false,
+                                ReceivableCreditAccount = recInternal,
+                                PayableDebitAccount = payInternal,
+                                ReceivablesChargesTypeExternalCode = "",
+                                IATACodeId = "",
+                                PayableDebitGLAcountId = payId,
+                                ReceivableCreditGLAccountId = recId,
+                                ChargesGroupId = chargesGroupId,
+                                PayablesChargesTypeExternalCode = "",
+                                IsExpense = false,
+
+                                IsBackToBack = false,
+                                IsAutoDisplayInCustoms = false,
+                                IsCustoms = false,
+                                SATExternalId = "",
+                                IsImport = false,
+                                IsDomestic = false,
+                                IsExport = false,
+                                IsDrop = false,
+                                ReceivablesDefaultCurrencyId = "",
+                                PayablesDefaultCurrencyId = "",
+                                ApplyRegionalTax = false,
+                                HasPickup = false,
+                                HasDelivery = false,
+                                IsDirectionRestricted = false,
+                                IsActiveInExport = false,
+                                IsActiveInImport = false,
+                                IsActiveInDomestic = false,
+                                IsActiveInDrop = false,
+
+                            };
 
 
-                        var ChargeTypeSvc = new ChargesTypeService(objectContext, tenant);
-                        ChargeTypeSvc.Create(chargeType);
+
+
+                            var ChargeTypeSvc = new ChargesTypeService(objectContext, tenant);
+                            ChargeTypeSvc.Create(chargeType);
+                        }
+                        
 
                     }
-
+                    scope.Complete();
                     if (MyCSVFlatFileLoadResult.ErrorRowList.Count > 0)
                     {
-                        string text_1 = MyCSVFlatFileLoadResult.ErrorRowList.FirstOrDefault();
-                        throw new ApplicationException($"{text_1}");
+                        String errorLines = "";
+                        MyCSVFlatFileLoadResult.ErrorRowList.ForEach(item => errorLines += item.ToString() + "\n");
+                        throw new ApplicationException($"{errorLines}");
                     }
                     //    if (MyFlatFileLoadResult.ExceptionVendorList.Count > 0)
                     //    {
                     //        string text = MyFlatFileLoadResult.ExceptionVendorList.FirstOrDefault();
                     //        throw new ApplicationException($"{text}");
                     //    }
-                    scope.Complete();
+
    
 
 
@@ -280,6 +303,12 @@ namespace Logitude.Accounting.BL.CoreBL
                         tenant = int.Parse(tenantS);
                     }
                     continue;// remark do nothing ...
+                }
+                if (!reading_Lines)
+                {
+                    //   Opening Line 
+                    reading_Lines = true;
+                    continue;
                 }
                 else if (!String.IsNullOrWhiteSpace(rawLine))
                 {

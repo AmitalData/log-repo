@@ -2893,25 +2893,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             return myResult;
         }
 
-        public HttpResponseMessage GetNumberOfShipmentPackages(string shipmentId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                ShipmentQuery query = new ShipmentQuery(tenant);
-                var result = query.GetNumberOfShipmentPackages(tenant ,shipmentId);
-
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-
-        }
-
         public HttpResponseMessage GetPickupDeliveryValidForInlandDomestic(string pickupDeliveryId)
         {
             try
@@ -3050,6 +3031,23 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
+        public HttpResponseMessage GetFilteredForwarderShipmentPackages(string shipmentId, string stanAloneShipmentId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                ShipmentQuery query = new ShipmentQuery(tenant);
+                var result = query.GetFilteredForwarderShipmentPackages(shipmentId, tenant, stanAloneShipmentId);
+
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }
 

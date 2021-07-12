@@ -12,5 +12,6 @@
         public static string LogitudeContacts = "contacts";
         public static string LogitudeCards = "cards";
         public static string UpdateWorkflowsVariables = "updateworkflowsvariables";
+        public static string ObjectFieldTrackChanges = "objectfieldtrackchanges";
     }
 }

@@ -33,18 +33,28 @@ namespace ContainerOISimulator
         string token;
         public void Run(ShipmentContainerSimulator simulator, int tenant)
         {
-            this.SetContainerFields(simulator);
+            this.SetContainerFields(simulator, tenant);
             this.CreateOceanInsightsWcfServiceResponse(tenant);
             this.CreateLogitudeOceanInsightsRequest(oceanInsightId, simulator, tenant);
             var updatedOceanInsightsResponse = this.ReplaceOceanInsightTagInXML(simulator.XmlString, oceanInsightId, simulator.ContainerNumber);
             this.SendRequestToContainerPushService(updatedOceanInsightsResponse);
         }
 
-        private void SetContainerFields(ShipmentContainerSimulator simulator)
+        private void SetContainerFields(ShipmentContainerSimulator simulator, int tenant)
         {
             containerNumber = simulator.ContainerNumber;
-            scacCode = ReadOceanInsightsParametersXMLFields(simulator.XmlString, "carrier_scac", "shipment");
+            scacCode = this.SetScacCode(simulator.CarrierId, tenant);
         }
+
+        private string SetScacCode(string carrierId, int tenant)
+        {
+            string scacCode = "";
+            ShippingLineRepository shippingLineRepository = new ShippingLineRepository(tenant);
+            ShippingLine shippingLine = shippingLineRepository.GetSingleShippingLine(carrierId, tenant);
+            scacCode = shippingLine?.SCACCode;
+            return scacCode;
+        }
+
         private void CreateOceanInsightsWcfServiceResponse(int tenant)
         {
             LoginToExternalService();
