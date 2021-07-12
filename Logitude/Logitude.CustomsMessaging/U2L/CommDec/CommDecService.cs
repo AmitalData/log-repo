@@ -182,6 +182,10 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                         }
                     }
                     AppendLogLine("Updating Master Courier Only " + this._MyDeclarationPM.CustomFileNo + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
+                    MyGenericResponseObj.Stage = "Done Updating Master Courier Only ";
+                    if (this._MyDeclarationPM != null) MyGenericResponseObj.ApplicationId = this._MyDeclarationPM.Id;
+                    MyCommunicationsParams.LoggingEntityId = MyGenericResponseObj.ApplicationId;
+                    MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
                     return;
                 }
             }
