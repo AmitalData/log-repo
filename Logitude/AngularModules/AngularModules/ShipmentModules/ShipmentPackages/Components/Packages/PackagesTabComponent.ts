@@ -369,6 +369,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     public IsTotalsFieldEnabled: boolean = true;
     public IsAddInsideButtonEnabled: boolean = false;
     SetUIProperties() {
+        this.CheckHorseVisiblility();
         if (this.EntityPM.IsMultipleCommodities) {
             this.IsEditingEnabled = false;
         }

@@ -187,7 +187,7 @@
                                                         </td>
                                                     </tr>
 
-                                                    <tr class="FormFieldRow" *ngIf="DataContext.TransportModeId == 'I' && IsFCLEntity && DataContext.HorseFieldIsVisible">
+                                                    <tr class="FormFieldRow" *ngIf="(DataContext.HorseFieldIsVisible && !IsFCLEntity) || (DataContext.HorseFieldIsVisible && DataContext.TransportModeId == 'I' && IsFCLEntity)">
                                                         <td>
                                                             <LogLabel [ObjectFieldName]="'HorseId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                         </td>
