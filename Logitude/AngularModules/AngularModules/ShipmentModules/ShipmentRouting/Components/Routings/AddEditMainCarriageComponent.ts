@@ -1796,15 +1796,17 @@ export class AddEditMainCarriageComponent extends BaseComponent {
             var updateProductItems: boolean = false
             if (this.oldCountryId != this.EntityPM.ToCountryId) {
                 if (this.EntityPM.ShipmentProductItems.length > 0) {
-                    isConfirmingPorts = true;
-                    updateProductItems = true;
+                    if (!ShipmentTool.IsShipmentProductItemsEmpty(this.EntityPM.ShipmentProductItems)) {
+                        updateProductItems = true;
+                        isConfirmingPorts = true;
 
-                    if (AppTool.IsNullOrEmpty(confirmationMessage)) {
-                        confirmationMessage = "All product items in this shipment will be updated";
-                    }
+                        if (AppTool.IsNullOrEmpty(confirmationMessage)) {
+                            confirmationMessage = "All product items in this shipment will be updated";
+                        }
 
-                    else {
-                        confirmationMessage = confirmationMessage + ", " + "All product items in this shipment will be updated";
+                        else {
+                            confirmationMessage = confirmationMessage + ", " + "All product items in this shipment will be updated";
+                        }
                     }
                 }
             }

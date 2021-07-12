@@ -7,7 +7,6 @@ import { ShipmentListService } from '../../../../Shipment/Services/StandardLists
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
-import { ShipmentDomainService } from '../../../../Shipment/Services/ShipmentDomainService';
 
 @Component({
     templateUrl: './ChooseStandaloneShipmentComponent.html',
@@ -23,13 +22,11 @@ export class ChooseStandaloneShipmentComponent {
     public CarrierId: string;
     public NumberOfPickupDeliveryPackages: number;   
     public EntityId: string;
-    public shipmentDomainService: ShipmentDomainService;
     private myShipmentListService: ShipmentListService; 
     private CurrentSession = SessionLocator.SelectedSession;
 
     constructor() {
         this.myShipmentListService = new ShipmentListService();
-        this.shipmentDomainService = new ShipmentDomainService();
     }
 
     SetWindowArgs(args: any) {
@@ -102,30 +99,13 @@ export class ChooseStandaloneShipmentComponent {
     public SelectedShipment: ShipmentList = null;
 
     Selecting(item: ShipmentList) {
-        this.GetNumberOfSelectedShipmentPackages(item);
-    }
-
-    ValidateNumberOfSelectedShipmentPackeges(item: ShipmentList, numberOfSelectedShipmentPackages: number) {
-        var messageWindow: MessageWindow = new MessageWindow();
-        messageWindow.Height = 200;
-        if (this.NumberOfPickupDeliveryPackages == 1 && numberOfSelectedShipmentPackages >= 1) {
-            messageWindow.Show(" Can't connect to Shipment " + item.ShipmentNumber + " because the number of containers should be one. Please remove the containers either from Shipment "
-                + item.ShipmentNumber + " or this pickup / delivery and try again. ");
-        }
-
-        else if (numberOfSelectedShipmentPackages > 1 && this.NumberOfPickupDeliveryPackages == 0) {
-            messageWindow.Show("Can't connect to Shipment " + item.ShipmentNumber + " because it has more than one container");
-        }
-
-        else {
-            this.ConfirmSelectedShipment(item);
-        }
+        this.ConfirmSelectedShipment(item);
     }
 
     ConfirmSelectedShipment(item: ShipmentList) {
         var confirmWindow: ConfirmWindow = new ConfirmWindow();
         confirmWindow.Title = "";
-        confirmWindow.Show("Different fields will be Updated from the shipment level when connecting the shipment to this leg");
+        confirmWindow.Show("Different Fields will be Updated and Containers will be Deleted from the shipment level when connecting the shipment to this leg");
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
                 this.SelectedShipment = item;
@@ -144,20 +124,5 @@ export class ChooseStandaloneShipmentComponent {
 
     Close() {
         this.CurrentSession.CloseCurrentWindow();
-    }
-
-    GetNumberOfSelectedShipmentPackages(shipment: ShipmentList) {
-        this.CurrentSession.StartBusyIndicatorLoading();
-        var shipmentId = shipment.Id;
-        this.shipmentDomainService.GetNumberOfShipmentPackages(shipmentId).subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                this.CurrentSession.StopBusyIndicator();
-                var numberOfSelectedShipmentPackages = myResponse.Result;
-                this.ValidateNumberOfSelectedShipmentPackeges(shipment, numberOfSelectedShipmentPackages)
-            }
-            else {
-                this.CurrentSession.StopBusyIndicator();
-            }
-        });
     }
 }
