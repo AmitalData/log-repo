@@ -37,7 +37,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 string fileContent = ConvertFromDosHebrewToWinHebrew(FileContent);
                 int? tenantFromPage4Tester = null;
-           //     FileContent = fileContent.Replace("\"", "");
+                //     FileContent = fileContent.Replace("\"", "");
                 _JournalSrcLinesDTO = CreateJournalSrcLinesDTOFromFile(FileContent, out tenantFromPage4Tester);
 
                 if (tenantFromPage4Tester.HasValue)
@@ -153,9 +153,10 @@ namespace Logitude.Accounting.BL.CoreBL
                     JournalPM journal = new JournalPM();
                     String errorLines = "";
                     MyCSVFlatFileLoadResult.ErrorRowList.ForEach(item => errorLines += item.ToString() + "\n");
+                    throw new ApplicationException($"{errorLines}");
                     return journal;
                 }
-                
+
             }
             catch (Exception e)
             {
@@ -218,7 +219,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 //if (Opening_LineDTO_JCSV_ISL.RowType.Contains(rowtype) || (rowtype.Length >= 1 && Opening_LineDTO_JCSV_ISL.RowType.Contains(rowtype.Substring(0, 1))))
                 if (!reading_Lines)
                 {
-                 //   Opening_Line = Opening_LineDTO_JCSV_ISL.Create(rawLine);
+                    //   Opening_Line = Opening_LineDTO_JCSV_ISL.Create(rawLine);
                     reading_Lines = true;
                     continue;
                 }
@@ -617,7 +618,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 Regex regex = new Regex("\\\"(.*?)\\\"");
                 string temp = regex.Replace(rawLine, m => m.Value.Replace(',', '@'));
-                rawLine = temp.Replace("@", "").Replace("\"", ""); 
+                rawLine = temp.Replace("@", "").Replace("\"", "");
             }
             var rec = new JournalSrcLineDTO_ISL();
             rec.RawLine = rawLine;
@@ -756,7 +757,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             if (count > 9) rec.Rererence1 = values[9];
             if (count > 10) rec.Rererence2 = values[10];
- //           if (count > 11) rec.Rererence3 = values[11];
+            //           if (count > 11) rec.Rererence3 = values[11];
             if (count > 11) rec.Notes = values[11];
 
 
