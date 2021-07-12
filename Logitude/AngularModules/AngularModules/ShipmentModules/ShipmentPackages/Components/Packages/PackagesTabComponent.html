@@ -602,7 +602,7 @@
                                     </log-column>
 
                                     <!-- Horse Name-->
-                                    <log-column [width]="'150'" [header]="'Horse'" *ngIf="(HorseFieldIsVisible && !IsFCLEntity) || (HorseFieldIsVisible && TransportModeId == 'I' && IsFCLEntity)">
+                                    <log-column [width]="'150'" [header]="'Horse'" *ngIf="(HorseFieldIsVisible && !IsFCLEntity)">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IsEnabled]="false">
                                                 {{item.HorseName}}
