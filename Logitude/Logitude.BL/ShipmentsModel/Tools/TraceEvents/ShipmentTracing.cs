@@ -72,7 +72,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                     string notes = null;
                     if (entityPM.IsStandalonePickupDelivery)
                     {
-                        notes = this.GetStandaloneShipmentNotes();
+                        notes = this.GetStandaloneShipmentNotes("Created from ");
                     }
 
                     this.CreateTraceEvent("ORDR", notes);
@@ -170,7 +170,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                         string notes = null;
                         if (entityPM.IsStandalonePickupDelivery)
                         {
-                            notes = this.GetConnectedStandaloneShipmentNotes();
+                            notes = this.GetStandaloneShipmentNotes("Conncted To ");
                         }
                         this.CreateTraceEvent("USHI", notes);
                     }
@@ -225,6 +225,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                     {
                         this.CreateTraceEvent("HAUI", entityPM.EventNote);
                     }
+
+                    this.AddDisconnectingStandaloneShipment();
                 }
 
                 this.TraceOtherData();
@@ -236,22 +238,32 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             }
         }
 
-        private string GetStandaloneShipmentNotes()
+        private void AddDisconnectingStandaloneShipment()
+        {
+            if (entityPoco.IsStandalonePickupDelivery && !entityPM.IsStandalonePickupDelivery)
+            {
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = tenant,
+                    EventTypeCode = "SADT",
+                    UserId = loggedContactId,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = "Shipment",
+                    Notes = GetStandaloneShipmentNotes("Disconnected From "),
+                });
+            }
+        }
+
+        private string GetStandaloneShipmentNotes(string msg)
         {
             string eventNotes = null;
-
-            if(!string.IsNullOrEmpty(entityPM.StandalonePickupDeliveryId))
+            if (!string.IsNullOrEmpty(entityPM.StandalonePickupDeliveryId))
             {
-                ShipmentPickUpDeliveryRepository shipmentPickUpDeliveryRepository = new ShipmentPickUpDeliveryRepository(tenant);
-                ShipmentPickUpDelivery shipmentPickUpDelivery = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDelivery(tenant, entityPM.StandalonePickupDeliveryId);
-                if (shipmentPickUpDelivery != null)
-                {
-                    eventNotes = "Created from " + (shipmentPickUpDelivery.PickUpDeliveryTypeCode == "PICK" ? "pickup: " : "delivery: ") + shipmentPickUpDelivery.PickUpDeliveryNumber;
-                }
+                eventNotes = msg + entityPM.ForwarderPickUpDeliveryType +" "+ entityPM.StandalonePickupDeliveryNumber;
             }
-
             return eventNotes;
         }
+
         private string BuildOceanInsightsEventNotes()
         {
             string notes = "";

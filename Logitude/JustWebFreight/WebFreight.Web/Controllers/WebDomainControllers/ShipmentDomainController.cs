@@ -581,8 +581,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         });
                     }
 
-
-                    myResult.AddRange(this.GetStandaloneShipmentDetails(myShipment));
+                    var standaloneShipmentDetails = this.GetStandaloneShipmentDetails(myShipment);
+                    if (standaloneShipmentDetails != null)
+                        myResult.AddRange(standaloneShipmentDetails);
 
                 }
 
@@ -631,11 +632,26 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Shipment", "UPDATE", tenant);
 
+                IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(0);
+                ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+                ShipmentPickUpDeliveryRepository shipmentPickUpDeliveryRepository = new ShipmentPickUpDeliveryRepository(shipmentsContext);
+                ShipmentPickUpDelivery shipmentPickUpDelivery = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDeliveryByStandaloneShipmentId(shipmentId, tenant);
+                if (shipmentPickUpDelivery != null)
+                {
+                    shipmentPickUpDelivery.StandaloneShipmentId = null;
+                    shipmentPickUpDelivery.StandaloneShipmentNumber = null;
+                    shipmentPickUpDeliveryRepository.Update(shipmentPickUpDelivery);
+                }
 
+                ShipmentPM shipmentPM = shipmentQuery.GetSinglePM(shipmentId, tenant);
+                shipmentPM.IsStandalonePickupDelivery = false;
+                shipmentPM.ForwarderStandaloneShipmentId = null;
+                shipmentPM.StandalonePickupDeliveryId = null;
+                ShipmentService shipmentService = new ShipmentService(shipmentsContext, shipmentPM, authToken.Email);
+                shipmentService.Update();
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
 

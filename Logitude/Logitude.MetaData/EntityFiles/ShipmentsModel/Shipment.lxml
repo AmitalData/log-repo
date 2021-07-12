@@ -95795,6 +95795,19 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
+    <EventType
+      Code="&quot;SADT&quot;"
+      ObjectTableName="&quot;Shipment&quot;"
+      EnglishName="&quot;Disconnecting Standalone Shipment&quot;"
+      LocalName="&quot;Disconnecting Standalone Shipment&quot;"
+      IsManualEntry="false"
+      ShortView="true"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
   <Records />
   <MenuButtons
