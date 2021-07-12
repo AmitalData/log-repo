@@ -33,7 +33,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("ProductItem", "READ", authToken.Tenant);
+                SecurityUtility.CheckContactFeature("Customer", "READ", authToken.Tenant);
 
                 ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
                 ProductItemRepository productItemRepository = new ProductItemRepository(MyContext);
@@ -70,7 +70,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("ProductItem", "READ", authToken.Tenant);
+                SecurityUtility.CheckContactFeature("Customer", "READ", authToken.Tenant);
 
                 ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
                 ProductItemRepository productItemRepository = new ProductItemRepository(MyContext);

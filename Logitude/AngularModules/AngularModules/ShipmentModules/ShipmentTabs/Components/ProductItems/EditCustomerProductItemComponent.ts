@@ -113,6 +113,49 @@ export class EditCustomerProductItemComponent extends BaseComponent {
         }
     }
 
+    get ASIN() { return this.EntityPM.ASIN; }
+    set ASIN(newValue: string) {
+        if (this.EntityPM.ASIN != newValue) {
+            this.EntityPM.ASIN = newValue;
+        }
+    }
+
+    get UPC() { return this.EntityPM.UPC; }
+    set UPC(newValue: string) {
+        if (this.EntityPM.UPC != newValue) {
+            this.EntityPM.UPC = newValue;
+        }
+    }
+
+    get OriginCountryId() { return this.EntityPM.OriginCountryId; }
+    set OriginCountryId(newValue: string) {
+        if (this.EntityPM.OriginCountryId != newValue) {
+            this.EntityPM.OriginCountryId = newValue;
+        }
+    }
+
+    get OriginCountryName() { return this.EntityPM.OriginCountryName; }
+    set OriginCountryName(newValue: string) {
+        if (this.EntityPM.OriginCountryName != newValue) {
+            this.EntityPM.OriginCountryName = newValue;
+        }
+    }
+
+    originCountry: CountryList;
+    get OriginCountry() { return this.originCountry; }
+    set OriginCountry(value: CountryList) {
+        if (this.originCountry != value) {
+            this.originCountry = value;
+        }
+
+        if (!AppTool.IsNullOrEmpty(value)) {
+            this.OriginCountryName = value.EnglishName;
+        }
+        else {
+            this.OriginCountryName = null;
+        }
+    }
+
     AddHTSCode() {
         this.ValidationErrorsList = [];
         this.ValidateHTSCodes(this.ValidationErrorsList);

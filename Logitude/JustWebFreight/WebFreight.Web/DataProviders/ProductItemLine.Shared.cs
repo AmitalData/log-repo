@@ -16,14 +16,14 @@ namespace WebFreight.Web.DataProviders
         public string Brand { get; set; }
         public int Tenant { get; set; }
         public string CustomerId { get; set; }
-        public string SKU { get; set; }
-        public string Remarks { get; set; }
+        public string SKU { get; set; }        
         public bool InActive { get; set; }
         public string Description { get; set; }
-        public string ShipmentItemHTSCode { get; set; }
+        public string ASIN { get; set; }
+        public string UPC { get; set; }
+        public string OriginCountry { get; set; }
         public  List<HTSCodeLine> HTScodeLines { get; set; }
     }
-
 
     public class HTSCodeLine {
         public string Id { get; set; }

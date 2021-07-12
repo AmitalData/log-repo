@@ -19,6 +19,10 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string Description { get; set; }
         public string Brand { get; set; }
         public string SearchFields { get; set; }
+        public string ASIN { get; set; }
+        public string UPC { get; set; }
+        public string OriginCountryId { get; set; }
+        public string OriginCountryName { get; set; }
         public ChangeSetOperation ChangeSetOp { get; set; }
 
         private List<HTSCodePM> HTScodes;
