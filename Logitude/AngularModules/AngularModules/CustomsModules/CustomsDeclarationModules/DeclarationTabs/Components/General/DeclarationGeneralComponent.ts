@@ -674,12 +674,12 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     public get DestinationCountryCode() { return this.EntityPM.DestinationCountryCode; }
     public set DestinationCountryCode(newValue: string) {
         this.EntityPM.DestinationCountryCode = newValue;
-        if (newValue) {
-            this.UIProperties.SetRequired("DestinationCountryCode", this.ObjectTableName, false);
-        }
-        else {
-            this.UIProperties.SetRequired("DestinationCountryCode", this.ObjectTableName, true);
-        }
+        //if (newValue) {
+        //    this.UIProperties.SetRequired("DestinationCountryCode", this.ObjectTableName, false);
+        //}
+        //else {
+        //    this.UIProperties.SetRequired("DestinationCountryCode", this.ObjectTableName, true);
+        //}
     }
 
     public get DeclarationTypeCode() { return this.EntityPM.DeclarationTypeCode }
