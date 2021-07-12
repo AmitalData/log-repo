@@ -153,6 +153,9 @@ export class RequestAliases {
     public static readonly PostRegions = "PostRegions"
     public static readonly PutRegions = "PutRegions"
 
+    public static readonly GetQuoteTemplateHeaderFieldByQuoteTemplateId = "GetQuoteTemplateHeaderFieldByQuoteTemplateId";
+    public static readonly GetQuoteTemplateDetailsFieldByQuoteTemplateId = "GetQuoteTemplateDetailsFieldByQuoteTemplateId";
+    public static readonly GetQuoteTemplateTextDesignPMListByIds = "GetQuoteTemplateTextDesignPMListByIds";
     public static readonly PostQuoteTemplate = "PostQuoteTemplate";
     public static readonly PutQuoteTemplate = "PutQuoteTemplate";
     public static readonly PutQuoteTemplateHeaderFields = "PutQuoteTemplateHeaderFields";

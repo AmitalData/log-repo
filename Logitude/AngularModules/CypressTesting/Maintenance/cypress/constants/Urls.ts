@@ -14,6 +14,9 @@ export class Urls {
     public static readonly VesselsGetSingle = "**/vessels/getsingle?**";
     public static readonly VesselviewGetSingle = "**/vesselviews/getsingle/?**";
 
+    public static readonly GetQuoteTemplateHeaderFieldByQuoteTemplateId = "**/GetQuoteTemplateHeaderFieldByQuoteTemplateId/**";
+    public static readonly GetQuoteTemplateDetailsFieldByQuoteTemplateId = "**/GetQuoteTemplateDetailsFieldByQuoteTemplateId/**";
+    public static readonly GetQuoteTemplateTextDesignPMListByIds = "**/GetQuoteTemplateTextDesignPMListByIds/**";
     public static readonly QuoteTemplateExtended = "**/QuoteTemplateExtended";
     public static readonly QuoteTemplatetextdesigns = "**/quotetemplatetextdesigns";
     public static readonly QuotetemplateSettings = "**/quotetemplatesettings";

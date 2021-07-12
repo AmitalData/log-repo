@@ -589,6 +589,40 @@ export function OpenQuoteTemplateSection(section: string) {
     cy.Click(MaintenanceSelectors.QuoteTemplateSectionsButton(section), null)
 }
 
+export function OpenQuoteHeaderSection() {
+    DefineGetQuoteTemplateHeaderFieldByQuoteTemplateId()
+    DefineGetQuoteTemplateTextDesignPMListByIds()
+    cy.Click(MaintenanceSelectors.QuoteTemplateSectionsButton("Quote Header"), null)
+}
+
+function DefineGetQuoteTemplateHeaderFieldByQuoteTemplateId() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetQuoteTemplateHeaderFieldByQuoteTemplateId, RequestAliases.GetQuoteTemplateHeaderFieldByQuoteTemplateId);
+}
+
+function DefineGetQuoteTemplateTextDesignPMListByIds() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetQuoteTemplateTextDesignPMListByIds, RequestAliases.GetQuoteTemplateTextDesignPMListByIds);
+}
+
+export function AssertGetQuoteHeader() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetQuoteTemplateHeaderFieldByQuoteTemplateId, 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.GetQuoteTemplateTextDesignPMListByIds, 200);
+}
+
+export function OpenQuoteDetailsSection() {
+    DefineGetQuoteTemplateDetailsFieldByQuoteTemplateId()
+    DefineGetQuoteTemplateTextDesignPMListByIds()
+    cy.Click(MaintenanceSelectors.QuoteTemplateSectionsButton("Quote Details"), null)
+}
+
+function DefineGetQuoteTemplateDetailsFieldByQuoteTemplateId() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetQuoteTemplateDetailsFieldByQuoteTemplateId, RequestAliases.GetQuoteTemplateDetailsFieldByQuoteTemplateId);
+}
+
+export function AssertGetQuoteDetails() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetQuoteTemplateDetailsFieldByQuoteTemplateId, 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.GetQuoteTemplateTextDesignPMListByIds, 200);
+}
+
 export function FillQuoteHeaderFooterColumnWidth(coulmnWidthDetails: QuoteTemplateDetails) {
     cy.FillLogTextBox(MaintenanceSelectors.HeaderFooterColumnWidth("1"), coulmnWidthDetails.Width1)
     cy.FillLogTextBox(MaintenanceSelectors.HeaderFooterColumnWidth("2"), coulmnWidthDetails.Width2)
