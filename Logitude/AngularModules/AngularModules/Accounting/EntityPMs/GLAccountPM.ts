@@ -868,6 +868,16 @@ export class GLAccountPM {
     public set PostponedChequesCommission(newValue: number) { if (this.postponedChequesCommission != newValue) { this.postponedChequesCommission = newValue; this.MarkAsDirty("PostponedChequesCommission"); } }
        
 	 
+    private balanceInForeignCurrency: number;
+    public get BalanceInForeignCurrency() { return this.balanceInForeignCurrency; }
+    public set BalanceInForeignCurrency(newValue: number) { if (this.balanceInForeignCurrency != newValue) { this.balanceInForeignCurrency = newValue; this.MarkAsDirty("BalanceInForeignCurrency"); } }
+       
+	 
+    private foreignBalanceInDue: number;
+    public get ForeignBalanceInDue() { return this.foreignBalanceInDue; }
+    public set ForeignBalanceInDue(newValue: number) { if (this.foreignBalanceInDue != newValue) { this.foreignBalanceInDue = newValue; this.MarkAsDirty("ForeignBalanceInDue"); } }
+       
+	 
 
     public OldEntityPM: GLAccountPM;
 		

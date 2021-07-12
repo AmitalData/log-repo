@@ -3470,6 +3470,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private decimal? postponedChequesCommission ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? PostponedChequesCommission  
+	   {
+	    
+	     get
+		{
+		   return postponedChequesCommission;
+		 }
+		 set
+		 {
+		   if(postponedChequesCommission != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PostponedChequesCommission",OldValue=postponedChequesCommission,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   postponedChequesCommission=value;
+		   }
+			
+		 }
+	   }
 	  private decimal? balanceInForeignCurrency ;
 	  	  
        
@@ -3512,29 +3535,6 @@ namespace Logitude.Accounting.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ForeignBalanceInDue",OldValue=foreignBalanceInDue,NewValue=value,PropertyType="decimal?"};
 		    NotifyPropertyChanged(values);
 		   foreignBalanceInDue=value;
-		   }
-			
-		 }
-	   }
-	  private decimal? postponedChequesCommission ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public decimal? PostponedChequesCommission  
-	   {
-	    
-	     get
-		{
-		   return postponedChequesCommission;
-		 }
-		 set
-		 {
-		   if(postponedChequesCommission != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PostponedChequesCommission",OldValue=postponedChequesCommission,NewValue=value,PropertyType="decimal?"};
-		    NotifyPropertyChanged(values);
-		   postponedChequesCommission=value;
 		   }
 			
 		 }
