@@ -119,6 +119,7 @@
     <Compile Include="Steps\Activities\GetPhoneCallSteps.cs" />
     <Compile Include="Steps\Activities\GetTaskSteps.cs" />
     <Compile Include="Steps\Activities\UpdateAppointmentSteps.cs" />
+    <Compile Include="Steps\Activities\UpdatePhoneCallSteps.cs" />
     <Compile Include="Steps\Activities\UpdateTaskSteps.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -130,6 +131,7 @@
     <None Include="Features\Activities\GetPhoneCall.feature" />
     <None Include="Features\Activities\GetTask.feature" />
     <None Include="Features\Activities\UpdateAppointment.feature" />
+    <None Include="Features\Activities\UpdatePhoneCall.feature" />
     <None Include="Features\Activities\UpdateTask.feature" />
     <None Include="packages.config" />
   </ItemGroup>

@@ -29,11 +29,26 @@ namespace Logitude.CRMTests.Services
                 .CallWithId(GetDefaultContact())
                 .Build();
         }
+
         public string GetDefaultContact()
         {
             ApiQueryFilters apiQueryFilters = new ApiQueryFiltersBuilder().WithDefualtValues().Build();
             ApiResponse<IEnumerable<ContactPM>> response = APICaller.CallGetByFilters<IEnumerable<ContactPM>>(Urls.ContactViewsGetByFilters, UserTenant.Token, apiQueryFilters);
             return response.Data?.FirstOrDefault()?.Id;
         }
+
+        public ActivityPM UpdateInstance(Table appointmentTable, ActivityPM activity)
+        {
+            dynamic dataTable = appointmentTable.CreateDynamicInstance();
+            return new ActivityBuilder()
+                .WithModel(activity)
+                .Subject((string)dataTable.Subject)
+                .Description((string)dataTable.Description)
+                .Duration((int)dataTable.Duration)
+                .DueDate(Convert.ToString(dataTable.DueDate).Length == 0 ? null : (DateTime?)dataTable.DueDate)
+                .PriorityCode((string)dataTable.Priority)
+                .Build();
+        }
+
     }
 }
