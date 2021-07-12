@@ -145,8 +145,17 @@ namespace Logitude.Accounting.BL.CoreBL
                     return journal;
 
 
+                    }
                 }
-
+                else
+                {
+                    JournalPM journal = new JournalPM();
+                    String errorLines = "";
+                    MyCSVFlatFileLoadResult.ErrorRowList.ForEach(item => errorLines += item.ToString() + "\n");
+                    throw new ApplicationException($"{errorLines}");
+                    return journal;
+                }
+                
             }
             catch (Exception e)
             {

@@ -628,8 +628,9 @@ Line3
         let opr = "ButtonLoadChargeTypes_Click";
         let str: string =
             `Please insert page, you can add a header  //Tenant=1071
-Line2
+Headers - this line will be deleted
 Line3
+Line4
 `;
         this.PostOp(opr, str, () => { });
     }
