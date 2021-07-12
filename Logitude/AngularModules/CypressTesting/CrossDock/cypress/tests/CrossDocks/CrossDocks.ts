@@ -85,6 +85,7 @@ When("create cross dock release", () => {
 });
 
 Then("the cross dock entry should create successfully", () => {
+    Actions.DefineUpdateShipment()
     Actions.AssertCreateCrossdockEntry();
 });
 
@@ -101,11 +102,11 @@ Then("the cross dock {string} should contain the linked shipment details", (cros
 });
 
 Then("the cross dock release should create successfully", () => {
+    Actions.DefineUpdateShipment()
     Actions.AssertCreateCrossdockRelease();
 });
 
 Then("the shipment should update successfully", () => {
-    Actions.DefineUpdateShipment()
     Actions.AssertUpdateShipment()
 });
 
