@@ -20,7 +20,7 @@ namespace CommunicationWorkerRole
     {
         public override void Run()
         {
-            var LogitudeConsumer = new Consumer(KafkaConsumerGroups.UpdateShipment, new List<string> { KafkaTopics.TasksUpdateTopic, KafkaTopics.ShipmentSetValues }, null);
+            var LogitudeConsumer = new Consumer(KafkaConsumerGroups.UpdateShipment, new List<string> { KafkaTopics.TasksDoneTopic, KafkaTopics.ShipmentSetValues }, null);
 
             while (IsRunning)
             {
