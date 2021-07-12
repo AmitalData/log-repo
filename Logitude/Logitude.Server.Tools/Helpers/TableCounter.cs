@@ -22,7 +22,7 @@ namespace Logitude.Server.Tools.Helpers
 {
     public class TableCounter
     {
-
+        private static Object thisLock = new Object();
         public static string GetNumber(int tenant, string counterCode, string parameter1, string parameter2, Dictionary<string, string> additionalParameters = null)
         {
             Counter counter = null;
@@ -63,8 +63,22 @@ namespace Logitude.Server.Tools.Helpers
             int startNumber = counterDef.StartNumber;
             string number = null;
             string strConnString = GetConnection(tenant);//ConfigurationManager.ConnectionStrings["str"].ConnectionString;
-
-            string counterLastNumberValue = ExecuteNextTableNumberValueProcedure(tenant, counter, prefix, startNumber, strConnString);
+            string counterLastNumberValue = string.Empty;
+            if (FeatureToggleHelper.HasFeatureToggle("LCP", tenant))
+            {
+                lock (thisLock)
+                {
+                    using (TransactionScope scope = TransactionFactory.GetNewReadCommittedTransaction())
+                    {
+                        counterLastNumberValue = ExecuteNextTableNumberValueProcedure(tenant, counter, prefix, startNumber, strConnString);
+                        scope.Complete();
+                    }
+                }
+            }
+            else
+            {
+                counterLastNumberValue = ExecuteNextTableNumberValueProcedure(tenant, counter, prefix, startNumber, strConnString);
+            }
 
             number = GetCounterLastNumberWithPrefixSuffix(counter, counterDef, tenant, counterLastNumberValue, additionalParameters);
 
