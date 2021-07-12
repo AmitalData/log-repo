@@ -65,7 +65,6 @@ import * as ReactDOM from "react-dom";
 import { LoggedUser } from "collaboration-tool-core";
 import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
 import TasksList from "collaboration-tool-tasks-list";
-import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
 
 
 @Component({
