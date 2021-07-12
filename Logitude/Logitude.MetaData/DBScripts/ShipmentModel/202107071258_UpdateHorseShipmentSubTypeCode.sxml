@@ -1,0 +1,9 @@
+﻿<Script DBType="Main" Module="Shipment"  AOT="true" TargetTableName="ShipmentSubTypes">
+  <Sql Version="1">
+    <![CDATA[
+
+      update ShipmentSubTypes set ShipmentTypeCode = null  where code = 'HORSE' and $LastCounterWhere$
+    
+    ]]>
+  </Sql>
+</Script>

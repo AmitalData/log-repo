@@ -190,6 +190,19 @@ namespace WebFreight.Web.DataProviders
         public string RegistrationNumber { get; set; }
         public string CountryName { get; set; }
         public string HSCode { get; set; }
+        public string HorseName { get; set; }
+        public int? HorseYearOfBirth { get; set; }
+        public string HorseColor { get; set; }
+        public string HorseGender { get; set; }
+        public string HorseBreed { get; set; }
+        public string HorseDiscipline { get; set; }
+        public string HorseTravelBehavior { get; set; }
+        public string HorseMicochipNumber { get; set; }
+        public string HorsePassportNumber { get; set; }
+        public string HorseCountryOfBirthName { get; set; }
+        public string HorseCurrentStable { get; set; }
+        public string HorseOwner { get; set; }
+        public string HorseRemarks { get; set; }
     }
 
     public class InsidePackageGroup

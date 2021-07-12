@@ -200,6 +200,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="HorseId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ShipmentPackageId"
     ReferencedTable="ShipmentPackages"
@@ -215,4 +222,10 @@
     ReferencedTable="Countries"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="HorseId"
+    ReferencedTable="Horses"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
 </Table>

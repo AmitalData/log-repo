@@ -586,6 +586,8 @@ export class ShipmentTool {
                 newItem.Weight = item.Weight;
                 newItem.Width = item.Width;
                 newItem.LCLContainerTypeId = item.LCLContainerTypeId;
+                newItem.HorseId = item.HorseId;
+                newItem.HorseName = item.HorseName;
                 shipmentPM.ShipmentPackages.push(newItem);
 
                 item.InsideShipmentPackages.forEach(inside => {
@@ -600,6 +602,8 @@ export class ShipmentTool {
                     newItemInside.Volume = inside.Volume;
                     newItemInside.Weight = inside.Weight;
                     newItemInside.Width = inside.Width;
+                    newItemInside.HorseId = inside.HorseId;
+                    newItemInside.HorseName = inside.HorseName;
                     newItem.InsideShipmentPackages.push(newItemInside);
                 });
             });

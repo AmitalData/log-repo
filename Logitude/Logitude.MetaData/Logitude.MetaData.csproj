@@ -520,6 +520,7 @@
     <None Include="DBScripts\ShipmentModel\202106171540_FillContainerStatusSources.sxml" />
     <None Include="DBScripts\ShipmentModel\202104251340_UpdateCustomClearanceStatusWeight.sxml" />
     <None Include="DBScripts\ShipmentModel\202106231025_AddOceatInsightUpdateEventToTenants.sxml" />
+    <None Include="DBScripts\ShipmentModel\202107071258_UpdateHorseShipmentSubTypeCode.sxml" />
     <None Include="DBScripts\ShipmentModel\202122031108_UpdateFollowUpForwardingEvents.sxml" />
     <None Include="DBScripts\ShipmentModel\UpdateshipmentsCalculateDocumentsKPIFields.sxml" />
     <None Include="DBScripts\ShipmentModel\UpdateShipmentsCalculateSendDocumentField.sxml" />
