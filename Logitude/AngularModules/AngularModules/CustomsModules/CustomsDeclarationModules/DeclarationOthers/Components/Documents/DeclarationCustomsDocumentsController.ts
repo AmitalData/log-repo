@@ -71,9 +71,9 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
   
 
     CheckIfDuplicateTicket() {
-        if (this.declarationPM.Direction == 'E') {
-            return false;
-        }
+        //if (this.declarationPM.Direction == 'E') {
+        //    return false;
+        //}
         return true;
     }
 
