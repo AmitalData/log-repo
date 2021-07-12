@@ -64,6 +64,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { LoggedUser } from "collaboration-tool-core";
 import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
+import { ShipmentPMService } from "../../Shipment/Services/StandardPMs/ShipmentPMService";
 import TasksList from "collaboration-tool-tasks-list";
 
 @Component({
@@ -73,7 +74,11 @@ import TasksList from "collaboration-tool-tasks-list";
 export class TasksAppComponent extends BaseComponent implements OnChanges, AfterViewInit {
 
     public rootId = "tasks-list-root";
-    private hasViewLoaded = false;
+    private hasViewLoaded = false;  
+
+    constructor() {
+         super(); 
+     }
 
     public ngOnChanges() {
         this.renderComponent();
@@ -90,12 +95,32 @@ export class TasksAppComponent extends BaseComponent implements OnChanges, After
         }
 
         const props: any = {
-            loggedUserEmail: SessionLocator.LoggedUserPM.Email
-        };
-
+            loggedUserEmail: SessionLocator.LoggedUserPM.Email,
+            enableUncLink: true,
+            uncLinkClickCallback: this.UNCNumberClicked
+        }; 
         ReactDOM.render(
             React.createElement(TasksList, props),
             document.getElementById(this.rootId)
         );
     }
+
+    private UNCNumberClicked(entityNumber: string) {
+        var ShipmentNumber = entityNumber;
+        var _ShipmentPMService = new ShipmentPMService();
+        var CurrentSession = SessionLocator.SelectedSession;
+        _ShipmentPMService.getSingleByShipmentNumber(ShipmentNumber).subscribe((myResult: any) => {
+            if (!myResult.HasError) {
+                var backLabel = "Tasks";
+                var myEntityId = myResult.Result;
+                SessionLocator.DynamicLoader.Load("./Infrastructure/Components/EditComponent/EditComponent", CurrentSession.SessionLocation.viewContainerRef)
+                    .then(cmpRef => {
+                        cmpRef.instance.ComponentRef = cmpRef;
+                        cmpRef.instance.Run({ EntityId: myEntityId, ObjectTableName: "Shipment", BackButtonLabel: backLabel });
+                        let isEditComponentSaved = false;
+                    });
+            }
+        });
+    }
+     
 }
