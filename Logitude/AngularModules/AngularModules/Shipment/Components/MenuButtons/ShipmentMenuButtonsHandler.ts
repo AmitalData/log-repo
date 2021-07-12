@@ -236,7 +236,7 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                         else {
                             button.IsHidden = true;
                         }
-                        if (this.IsStandAloneFeatureShipment()) {
+                        if (this.IsStandAloneFeatureShipment() || this.IsForwarderShipmentConnectedWithStandAlone()) {
                             button.IsDisabled = true;
                         }
                     }
@@ -1688,6 +1688,21 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
     }
     private IsStandAloneFeatureShipment() {
         return this.EntityPM.IsStandalonePickupDelivery;
+    }
+
+    private IsForwarderShipmentConnectedWithStandAlone() {
+        var result = false;
+        if (this.EntityPM.ShipmentPickUps != null && this.EntityPM.ShipmentPickUps.length != 0) {
+            result = (this.EntityPM.ShipmentPickUps.filter(pickup =>
+                !AppTool.IsNullOrEmpty(pickup.StandaloneShipmentId)).length != 0 ? true : result
+            );
+        }
+        if (this.EntityPM.ShipmentDeliveries != null && this.EntityPM.ShipmentDeliveries.length != 0) {
+            result = (this.EntityPM.ShipmentDeliveries.filter(delivery =>
+                !AppTool.IsNullOrEmpty(delivery.StandaloneShipmentId)).length != 0 ? true : result
+            );
+        }
+        return result;
     }
 }
 export class ActionValidationArgs {

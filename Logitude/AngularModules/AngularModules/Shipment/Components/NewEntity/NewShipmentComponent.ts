@@ -76,8 +76,20 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         this.EntityPM = this.myShipmentPMService.GetNewEntityPM();
         this.OkButtonLabel = TextCodeTranslator.Translate("Shipment.B.Create");
 
+        this.SetCardDependency();
+    }
+
+    private SetCardDependency() {
+        this.CardDependencyProperty1 = "CS";
+        this.CardDependencyProperty1IsList = false;
+
         if (this.TenantPM.AllowAgentInCustomersLOV) {
-            this.CardDependencyProperty1 = this.IsInlandDomestic ? "CS,AG,WH" : "CS,AG";
+            this.CardDependencyProperty1 = "CS,AG";
+            this.CardDependencyProperty1IsList = true;
+        }
+
+        if (this.IsInlandDomestic) {
+            this.CardDependencyProperty1 = this.CardDependencyProperty1 + ",WH";
             this.CardDependencyProperty1IsList = true;
         }
     }
@@ -236,13 +248,17 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
     public IsCreatedFromCustomerOverview: boolean = false;
     public ShowShipmentLevels: boolean = true;
     public IsStandalone: boolean = false;
+    public IsNewStandAlonePickupDelivery: boolean = false; 
     SetWindowArgs(args: any) {
         if (args.IsNew == null) {
             this.SourceEntityPM = args.Shipment;
             this.EntityPM.ShipmentLevelCode = args.ShipmentLevelCode;
+            this.EntityPM.ForwarderStandaloneShipmentId = args.ForwarderStandaloneShipmentId == null ? (this.SourceEntityPM != null ? this.SourceEntityPM.ForwarderStandaloneShipmentId : args.ForwarderStandaloneShipmentId) : args.ForwarderStandaloneShipmentId;
+            this.EntityPM.ForwarderPickUpDeliveryType = args.ForwarderShipmentPickUpDeliveryTypeCode;
             this.IsShipmentLevelFixed = args.IsShipmentLevelFixed;
             this.IsBuildFromQuote = args.IsBuildFromQuote;
             this.IsStandalone = args.IsStandalone;
+            this.IsNewStandAlonePickupDelivery = args.IsNewStandAlonePickupDelivery;
             this.IsCopyFromShipment = args.IsCopyFromShipment;
             this.IsCreatedFromMasterHouses = args.IsCreatedFromMasterHouses;
             this.IsCreatedFromCustomerOverview = args.IsCreatedFromCustomerOverview;
@@ -332,7 +348,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
     BuildShipmentSubTypes() {
         this.ShipmentSubTypesList = [];
 
-        this.allShipmentSubTypes.filter(d => d.ShipmentTypeCode == this.ShipmentTypeId).forEach(item => {
+        this.allShipmentSubTypes.filter(d => d.ShipmentTypeCode == this.ShipmentTypeId || d.ShipmentTypeCode == null).forEach(item => {
             this.ShipmentSubTypesList.push(new FilterClass(item.Id, item.Name));
         });
 
@@ -468,11 +484,11 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         this.UIProperties.SetEnabled("BookingNumberOfPackages", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("DescriptionOfGoods", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("OrderIsDangerouseGoods", this.ObjectTableName, isScreenEnabled);
-        this.UIProperties.SetEnabled("Quantity1", this.ObjectTableName, isScreenEnabled);
-        this.UIProperties.SetEnabled("Quantity2", this.ObjectTableName, isScreenEnabled);
-        this.UIProperties.SetEnabled("Quantity3", this.ObjectTableName, isScreenEnabled);
-        this.UIProperties.SetEnabled("Quantity4", this.ObjectTableName, isScreenEnabled);
-        this.UIProperties.SetEnabled("Quantity5", this.ObjectTableName, isScreenEnabled);
+        this.UIProperties.SetEnabled("Quantity1", this.ObjectTableName, isScreenEnabled && !(this.IsStandalone || this.IsNewStandAlonePickupDelivery));
+        this.UIProperties.SetEnabled("Quantity2", this.ObjectTableName, isScreenEnabled && !(this.IsStandalone || this.IsNewStandAlonePickupDelivery));
+        this.UIProperties.SetEnabled("Quantity3", this.ObjectTableName, isScreenEnabled && !(this.IsStandalone || this.IsNewStandAlonePickupDelivery));
+        this.UIProperties.SetEnabled("Quantity4", this.ObjectTableName, isScreenEnabled && !(this.IsStandalone || this.IsNewStandAlonePickupDelivery));
+        this.UIProperties.SetEnabled("Quantity5", this.ObjectTableName, isScreenEnabled && !(this.IsStandalone || this.IsNewStandAlonePickupDelivery));
         this.UIProperties.SetEnabled("PackageTypeId1", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("PackageTypeId2", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("PackageTypeId3", this.ObjectTableName, isScreenEnabled);
@@ -486,17 +502,17 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
     public IsFCLEntity: boolean = false;
     public IsInlandDomestic: boolean = false;
     OnFiltersChanged() {
+        if (!this.IsCreatedFromMasterHouses) {
+            this.IsDirectionListEnabled = true;
+            this.IsTransportModesListEnabled = AppTool.IsNullOrEmpty(this.DirectionId) ? false : true;
+            this.IsShipmentTypesListEnabled = true;
+            this.IsShipmentSubTypesListEnabled = true;
+        }
+
         if (this.EntityPM.IsStandalonePickupDelivery) {
             this.IsDirectionListEnabled = false;
             this.IsTransportModesListEnabled = false;
             this.IsShipmentTypesListEnabled = false;
-            this.IsShipmentSubTypesListEnabled = true;
-        }
-
-       else if (!this.IsCreatedFromMasterHouses) {
-            this.IsDirectionListEnabled = true;
-            this.IsTransportModesListEnabled = AppTool.IsNullOrEmpty(this.DirectionId) ? false : true;
-            this.IsShipmentTypesListEnabled = true;
             this.IsShipmentSubTypesListEnabled = true;
         }
 
@@ -506,12 +522,12 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         this.SetLabels();
         this.SetPartners();
         this.SetPrepaidCollect();
+        this.SetCardDependency();
 
         if (this.IsInlandDomestic) {
             if (!this.IsShipmentLevelFixed) {
                 this.ShipmentLevelCode = "D";
             }
-            this.CardDependencyProperty1 =  "CS,AG,WH";
             this.ShowShipmentLevels = false;
         }
 
@@ -567,7 +583,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         if (this.EntityPM.DirectionId != newValue) {
             this.EntityPM.DirectionId = newValue;
             this.IsInlandDomestic = this.TransportModeId == "I" && this.DirectionId == "D" ? true : false;
-            this.CustomerDependencyProperty1 = this.IsInlandDomestic ? this.CustomerDependencyProperty1 + ",WH" : this.CustomerDependencyProperty1;
+            this.CustomerDependencyProperty1 = this.IsInlandDomestic ? this.CustomerDependencyProperty1 + ",WH" : this.CustomerDependencyProperty1.replace(',WH','');
             this.CustomerDependencyProperty1IsList = true;
             this.OnFiltersChanged();
             this.SetTransportModes();
@@ -599,7 +615,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             this.IsLCLEntity = AppTool.IsLCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
             this.IsFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
             this.IsInlandDomestic = this.TransportModeId == "I" && this.DirectionId == "D" ? true : false;
-            this.CustomerDependencyProperty1 = this.IsInlandDomestic ? this.CustomerDependencyProperty1 + ",WH" : this.CustomerDependencyProperty1;
+            this.CustomerDependencyProperty1 = this.IsInlandDomestic ? this.CustomerDependencyProperty1 + ",WH" : this.CustomerDependencyProperty1.replace(',WH', '');
             this.CustomerDependencyProperty1IsList = true;
             this.DelOrderDetails();
             this.OnFiltersChanged();
@@ -930,7 +946,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
 
         this.UIProperties.SetRequired("ShipperId", this.ObjectTableName, isFieldRequired);
 
-        if (this.IsStandalone) {
+        if (this.IsStandalone && !this.IsNewStandAlonePickupDelivery) {
             this.UIProperties.SetEnabled("ShipperId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("ShipperAddressId", this.ObjectTableName, false);
         }
@@ -946,13 +962,13 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
 
         this.UIProperties.SetRequired("ConsigneeId", this.ObjectTableName, isFieldRequired);
 
-        if (this.IsStandalone) {
+        if (this.IsStandalone && !this.IsNewStandAlonePickupDelivery) {
             this.UIProperties.SetEnabled("ConsigneeId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("ConsigneeAddressId", this.ObjectTableName, false);
         }
     }
     SetUIProperties_Customer() {
-        if (this.IsStandalone) {
+        if (this.IsStandalone && !this.IsNewStandAlonePickupDelivery) {
             this.UIProperties.SetEnabled("CustomerId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("ShipmentCustomerTypeCode", this.ObjectTableName, false);
         }
@@ -1059,6 +1075,10 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             isFieldsEnabled = this.EntityPM.ShipmentOrderPackages.length == 0 ? true : false;
         }
 
+        if (this.IsNewStandAlonePickupDelivery || this.IsStandalone) {
+            isFieldsEnabled = false;
+        }
+
         this.UIProperties.SetEnabled("OrderGrossWeight", this.ObjectTableName, isFieldsEnabled);
         this.UIProperties.SetEnabled("BookingVolume", this.ObjectTableName, isFieldsEnabled);
         this.UIProperties.SetEnabled("OrderChargeableWeight", this.ObjectTableName, isFieldsEnabled);
@@ -1074,11 +1094,12 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         this.UIProperties.SetRequired("BookingNumberOfPackages", this.ObjectTableName, isNoOfPackagesRequired);
     }
     SetUIProperties_Containers() {
-        this.UIProperties.SetEnabled("PackageTypeId1", this.ObjectTableName, this.Quantity1 > 0);
-        this.UIProperties.SetEnabled("PackageTypeId2", this.ObjectTableName, this.Quantity2 > 0);
-        this.UIProperties.SetEnabled("PackageTypeId3", this.ObjectTableName, this.Quantity3 > 0);
-        this.UIProperties.SetEnabled("PackageTypeId4", this.ObjectTableName, this.Quantity4 > 0);
-        this.UIProperties.SetEnabled("PackageTypeId5", this.ObjectTableName, this.Quantity5 > 0);
+
+        this.UIProperties.SetEnabled("PackageTypeId1", this.ObjectTableName, this.Quantity1 > 0 && !(this.IsStandalone || this.IsNewStandAlonePickupDelivery));
+        this.UIProperties.SetEnabled("PackageTypeId2", this.ObjectTableName, this.Quantity2 > 0 && !(this.IsStandalone || this.IsNewStandAlonePickupDelivery) );
+        this.UIProperties.SetEnabled("PackageTypeId3", this.ObjectTableName, this.Quantity3 > 0 && !(this.IsStandalone || this.IsNewStandAlonePickupDelivery));
+        this.UIProperties.SetEnabled("PackageTypeId4", this.ObjectTableName, this.Quantity4 > 0 && !(this.IsStandalone || this.IsNewStandAlonePickupDelivery) );
+        this.UIProperties.SetEnabled("PackageTypeId5", this.ObjectTableName, this.Quantity5 > 0 && !(this.IsStandalone || this.IsNewStandAlonePickupDelivery));
 
         if (AppTool.IsNullOrZero(this.Quantity1)) {
             this.PackageTypeId1 = null;
@@ -1101,7 +1122,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         }
     }
     SetUIProperties_Carrier() {
-        if (this.IsStandalone) {
+        if (this.IsStandalone && !this.IsNewStandAlonePickupDelivery) {
             this.UIProperties.SetEnabled("MainCarriageCarrierId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("MainCarriageCarrierNumber", this.ObjectTableName, false);
         }

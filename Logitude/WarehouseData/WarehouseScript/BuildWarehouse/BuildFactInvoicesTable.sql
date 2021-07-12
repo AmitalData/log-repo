@@ -79,7 +79,7 @@
    inner JOIN NewDIM_Partners BillTo ON dw_ARInvoices.BillToId = BillTo.Id
 
 	--inner JOIN dw_CustomObjectFields  ON dw_ARInvoices.Tenant = dw_CustomObjectFields.Tenant and dw_CustomObjectFields.ObjectTableName = 'ARInvoice'
-
+	where dw_ARInvoices.StatusCode <> 'VD' and dw_ARInvoices.StatusCode <> 'LL'
 	UNION ALL
 
 	SELECT	dw_APInvoices.Id, dw_APInvoices.Tenant, SourceTenant.[Tenant Number], ParentTenant.[Tenant Number], dw_APInvoices.InvoiceNumber,
@@ -117,6 +117,7 @@
 	
 	--inner JOIN dw_CustomObjectFields  ON dw_APInvoices.Tenant = dw_CustomObjectFields.Tenant and dw_CustomObjectFields.ObjectTableName = 'APInvoice'
 
+	where dw_APInvoices.StatusCode <> 'VD'
 
 	OPEN InvoicesCursor FETCH NEXT FROM InvoicesCursor into
 		@Id, @Tenant, @SourceTenant, @ParentTenant, @InvoiceNumber, @VATNumber, @ShipmentsNumbers, @SubTotalInLocalCurrency, @SubTotalInInvoiceCurrency,

@@ -48,7 +48,9 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
     private cardListService: CardListService = new CardListService();
     private gLAccountPMService: GLAccountPMService = new GLAccountPMService();
     private currencyListService: CurrencyListService = new CurrencyListService();
-
+    DisplayFieldsFromList: string;
+    DisplayLocalFieldsFromList: string;
+    VendorLovSizeForFullAccounting: number;
 
     private CurrentSession = SessionLocator.SelectedSession;
 
@@ -58,6 +60,16 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
+        }
+        this.InitializeVendorLov();
+
+    }
+
+    private InitializeVendorLov() {
+        if (this.IsAccountingActivated) {
+            this.DisplayFieldsFromList = "Code,CalculatedEnglishName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
+            this.DisplayLocalFieldsFromList = "Code,CalculatedLocalName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
+            this.VendorLovSizeForFullAccounting = 550;
         }
     }
 
@@ -86,6 +98,15 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
     }
 
     SetUIProperties() {
+        var isVatNumberRequired = false;
+
+        if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP) {
+            if (AppTool.IsNullOrEmpty(this.VATNumber)) {
+                isVatNumberRequired = true;
+            }
+        }
+
+        this.UIProperties.SetRequired("VATNumber", "APInvoice", isVatNumberRequired);
         this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", this.ObjectTableName, false);
     }
 
@@ -396,6 +417,7 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
     set VATNumber(value: string) {
         if (this.vatNumber != value) {
             this.vatNumber = value;
+            this.SetUIProperties();
         }
     }
 
@@ -562,11 +584,11 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
     }
 
     OkButtonClicked() {
-        var errors: string[] = this.ValidateInvoiceFields();
-        this.ValidationErrorsList = errors;
+        this.ValidationErrorsList = this.ValidateInvoiceFields();
     }
 
     private ValidateInvoiceFields() {
+        this.errors = [];
 
         this.CheckSpecialCharacters() != null ? this.errors.push(this.CheckSpecialCharacters()) : null;
         this.ValidateRequiedFields();
@@ -637,6 +659,6 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
 
     AddReuiredErrorMessage(TextCode) {
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
-        this.errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.BranchId")));
+        this.errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate(TextCode)));
     }
 }

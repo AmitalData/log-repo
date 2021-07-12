@@ -39,6 +39,6 @@ namespace Logitude.ShipmentTests.Models
         public List<ShipmentReceivablePM> ShipmentReceivable { get; set; }
         public string ShipmentReceivableStatusName { get; set; }
         public string ShipmentReceivableStatusCode { get; set; }
-
+        public double? GrossWeight { get; set; }
     }
 }

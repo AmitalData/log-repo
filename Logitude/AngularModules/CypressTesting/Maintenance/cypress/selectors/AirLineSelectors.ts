@@ -14,12 +14,6 @@ export class AirLineSelectors {
     public static readonly Notes = "#Airline_Remark";
 
     public static readonly AddressesTab = "#AirlineTHAddresses"
-    public static readonly EditAddressButton = "#Edit"
-    public static readonly AddressName = "#Address_Name"
-    public static readonly AddressCity = "#Address_City"
-    public static readonly AddressCountryId = "#Address_CountryId"
-    public static readonly AddressStateId = "#Address_StateId"
-
     public static readonly TariffTranslationsTab = "#AirlineTHTariffTranslations"
     public static readonly AddTranslation = "#addTranslation"
     public static readonly TariffPartnerCode = "#TariffCarrierTranslation_PartnerCode"

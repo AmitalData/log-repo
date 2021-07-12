@@ -1,4 +1,4 @@
-@NewDev @daily
+@dev @daily
 Feature: Branch fake Create, Search and Edit from Maintenance
     The user creates a Branch, searches for and edits it from the Maintenance Module.
 
@@ -31,9 +31,10 @@ Feature: Branch fake Create, Search and Edit from Maintenance
 
     Scenario: Edit the Branch by adding address
         Given the user create address with the following details
-            | AddressName    | address        |
-            | AddressCountry | United Kingdom |
-            | AddressCity    | Manchester     |
+            | Name    | Branch        |
+            | Country | United States |
+            | City    | Anchorage     |
+            | State   | Alaska        |
         When create address
         Then the address should update successfully
 

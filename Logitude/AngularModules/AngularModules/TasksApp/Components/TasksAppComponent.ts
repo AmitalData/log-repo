@@ -63,7 +63,9 @@ import { Component, OnChanges, AfterViewInit } from "@angular/core";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { LoggedUser } from "collaboration-tool-core";
+import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
 import TasksList from "collaboration-tool-tasks-list";
+
 
 @Component({
     selector: "tasks-list",
@@ -72,8 +74,7 @@ import TasksList from "collaboration-tool-tasks-list";
 export class TasksAppComponent extends BaseComponent implements OnChanges, AfterViewInit {
 
     public rootId = "tasks-list-root";
-    private hasViewLoaded = false;
-
+    private hasViewLoaded = false; 
     public ngOnChanges() {
         this.renderComponent();
     }
@@ -89,7 +90,7 @@ export class TasksAppComponent extends BaseComponent implements OnChanges, After
         }
 
         const props: any = {
-            loggedUserEmail: LoggedUser.getEmail()
+            loggedUserEmail: SessionLocator.LoggedUserPM.Email
         };
 
         ReactDOM.render(

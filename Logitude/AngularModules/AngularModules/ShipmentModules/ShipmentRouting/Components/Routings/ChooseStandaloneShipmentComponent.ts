@@ -125,7 +125,7 @@ export class ChooseStandaloneShipmentComponent {
     ConfirmSelectedShipment(item: ShipmentList) {
         var confirmWindow: ConfirmWindow = new ConfirmWindow();
         confirmWindow.Title = "";
-        confirmWindow.Show("Different fields will be cleared from the shipment level when connecting the shipment to this leg");
+        confirmWindow.Show("Different fields will be Updated from the shipment level when connecting the shipment to this leg");
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
                 this.SelectedShipment = item;

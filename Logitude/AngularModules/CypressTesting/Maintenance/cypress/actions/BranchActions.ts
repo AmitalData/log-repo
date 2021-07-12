@@ -72,16 +72,6 @@ function AssertBranchGetSingle() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetSignle, 200);
 }
 
-export function NavigateAddressWizard() {
-    cy.get(BranchSelectors.AddressWizard).click()
-}
-
-export function FillBranchAddressDetails(branchAddressDetails: BranchDetails) {
-    cy.FillLogTextBox(BranchSelectors.AddressName, branchAddressDetails.AddressName)
-    cy.FillLogTextBox(BranchSelectors.AddressCity, branchAddressDetails.AddressCity)
-    cy.FillLogLov(BranchSelectors.AddressCountry, branchAddressDetails.AddressCountry, true)
-}
-
 export function CreateAddress() {
     DefinePostAddressRequest()
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
@@ -117,6 +107,7 @@ export function AssertUpdateAddress() {
 }
 
 export function FillAccountingExternalID(accountingExternalID) {
+    cy.FillLogTextBox(BranchSelectors.AccountingExternalID, " ")
     cy.FillLogTextBox(BranchSelectors.AccountingExternalID, accountingExternalID)
 }
 

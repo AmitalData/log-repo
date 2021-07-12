@@ -81,7 +81,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 XmlDocument xmldoc = new XmlDocument();
                 xmldoc.LoadXml(data_out);
 
-                CustomData.IsImporterApprovalRequried = data.IsImporterApprovalRequried;
                 CustomData.ApprovedByUserName = data.ApprovedByUserName;
                 CustomData.VersionApproved = data.VersionApproved;
                 CustomData.ApproveDateTime = data.ApproveDateTime;
@@ -89,7 +88,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 CustomData.DocumentsApprovedByUserName = data.DocumentsApprovedByUserName;
                 CustomData.GoodsValueDetails = new List<GoodsValueDetails>();
                 CustomData.TaxesDetails = new List<TaxesDetails>();
-
+                MapIsImporterApprovalRequriedField(data, CustomData, xmldoc);
                 XmlNodeList CustomsFileNo = xmldoc.GetElementsByTagName("customs_file_num");
                 if (CustomsFileNo[0] != null)
                 {
@@ -125,7 +124,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 {
                     CustomData.TotalTax = TotalTax[0].InnerText;
                 }
-
+                XmlNodeList mehes_draft_status = xmldoc.GetElementsByTagName("mehes_draft_status");
+                if (mehes_draft_status[0] != null)
+                {
+                    CustomData.DeclarationStatus = mehes_draft_status[0].InnerText;
+                }
                 XmlNodeList MishgorPackageQuantity = xmldoc.GetElementsByTagName("mishgor-package-quantity");
                 if (MishgorPackageQuantity[0] != null)
                 {
@@ -313,6 +316,19 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
 
             return CustomData;
+        }
+
+        private static void MapIsImporterApprovalRequriedField(ShipmentAdditionalCloudData data, ShipmentAdditionalCloudCustomData CustomData, XmlDocument xmldoc)
+        {
+            XmlNodeList IsImporterApprovalRequired = xmldoc.GetElementsByTagName("IsImporterApprovalRequired");
+            if (IsImporterApprovalRequired[0]?.InnerText?.ToLower() == "false")
+            {
+                CustomData.IsImporterApprovalRequried = false;
+            }
+            else
+            {
+                CustomData.IsImporterApprovalRequried = data.IsImporterApprovalRequried;
+            }
         }
     }
 }

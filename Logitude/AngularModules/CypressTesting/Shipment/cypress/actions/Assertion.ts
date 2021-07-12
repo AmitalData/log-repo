@@ -2,7 +2,6 @@ import { ShipmentSelectors } from "../selectors/Selectors";
 import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion"
 import { AMANACStatusDetails } from "../models/AMANACStatusDetails";
-import * as Actions from "../actions/Actions"
 import * as BaseActions from "../../../Base/cypress/actions/Actions"
 
 export function AssertAMANAandCustomsTransmissionsStatuses(Status: string){

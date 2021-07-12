@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.Security;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
@@ -20,9 +21,9 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
     {
         public HttpResponseMessage PostGetQueryToExcelData(LogboxShipmentExportExcelArgs logboxShipmentExportExcelArgs)
         {
-
-
             int tenant = (int)logboxShipmentExportExcelArgs.Tenant;
+            SecurityUtility.AuthenticationOnTenant(tenant);
+            SecurityUtility.CheckContactFeature("Shipment", "READ", tenant);
             string userid = logboxShipmentExportExcelArgs.UserId;
             string ObjectTableName = logboxShipmentExportExcelArgs.ObjectTableName;
 

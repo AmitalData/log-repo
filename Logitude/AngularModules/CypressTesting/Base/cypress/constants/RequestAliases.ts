@@ -3,6 +3,7 @@ export class RequestAliases {
     public static readonly performancelogs = "performancelogs"
     public static readonly PartnersDomainRequest = 'PartnersDomainRequest';
     public static readonly ShipmentRequest = 'ShipmentRequest';
+    public static readonly GetShipmentConnectedEntities = 'GetShipmentConnectedEntities';
     public static readonly SplitShipmentRequest = 'SplitShipmentRequest';
     public static readonly GetTraceEvent = 'GetTraceEvent';
     public static readonly CardViewsRequest = 'CardViewsRequest';
@@ -27,7 +28,7 @@ export class RequestAliases {
     public static readonly UpdateQuotation = 'UpdateQuotation';
     public static readonly SentToCustomer = 'SentToCustomer';
     public static readonly SendReport = 'SendReport';
-
+    public static readonly ShipmentViews = 'ShipmentViews';
 
     public static readonly PrintQuotationWindowOpen = 'PrintQuotationWindowOpen';
 
@@ -122,14 +123,13 @@ export class RequestAliases {
 
     public static readonly PostAirLine = "PostAirLine"
     public static readonly PutAirLinee = "PutAirLinee"
-    public static readonly PostAirLineAddress = "PostAirLineAddress"
+    public static readonly PostAddress = "PostAddress"
     public static readonly PostSurchargeTariff = "PostSurchargeTariff"
     public static readonly PostSpecialHandlingCodes = "PostSpecialHandlingCodes"
     public static readonly PostAirLineTariffTranslations = "PostAirLineTariffTranslations"
     public static readonly GetAirlineByCode = "GetAirlineByCode"
     public static readonly GetTarrifHeaders = "GetTarrifHeadersByCardIdAndTypeCode"
 
-    public static readonly PostShippingLineAddress = "PostShippingLineAddress"
     public static readonly PostShippingLineArea = "PostShippingLineArea"
     public static readonly PostShippingLineTariffTranslations = "PostShippingLineTariffTranslations"
 
@@ -153,10 +153,14 @@ export class RequestAliases {
     public static readonly PostRegions = "PostRegions"
     public static readonly PutRegions = "PutRegions"
 
+    public static readonly GetQuoteTemplateHeaderFieldByQuoteTemplateId = "GetQuoteTemplateHeaderFieldByQuoteTemplateId";
+    public static readonly GetQuoteTemplateDetailsFieldByQuoteTemplateId = "GetQuoteTemplateDetailsFieldByQuoteTemplateId";
+    public static readonly GetQuoteTemplateTextDesignPMListByIds = "GetQuoteTemplateTextDesignPMListByIds";
     public static readonly PostQuoteTemplate = "PostQuoteTemplate";
     public static readonly PutQuoteTemplate = "PutQuoteTemplate";
     public static readonly PutQuoteTemplateHeaderFields = "PutQuoteTemplateHeaderFields";
     public static readonly PutQuoteTemplateTextDesignPMs = "PutQuoteTemplateTextDesignPMs";
+    public static readonly PutQuoteTemplateDetailsFields = "PutQuoteTemplateDetailsFields";
 
     public static readonly PostCrossdockEntry = "PostCrossdockEntry";
     public static readonly PutCrossdockEntry = "PutCrossdockEntry";

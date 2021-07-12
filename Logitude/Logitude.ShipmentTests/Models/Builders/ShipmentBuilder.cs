@@ -221,6 +221,11 @@ namespace Logitude.ShipmentTests.Models.Builders
             _shipmentPM.ShipmentReceivableStatusName = ShipmentReceivableStatusName;
             return this;
         }
+        public ShipmentBuilder GrossWeight(double? grossWeight)
+        {
+            _shipmentPM.GrossWeight = grossWeight;
+            return this;
+        }
 
         public ShipmentPM Build()
         {

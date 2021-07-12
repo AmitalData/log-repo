@@ -32,7 +32,7 @@
         public static string CrossDockController = "warehouseentries";
         public static string CrossReleaseGetController = "warehousereleases";
         public static string CrossReleaseController = "WarehouseReleaseExtended/postwarehousereleasepm";
-
+        public static string ActivitiesController = "Activities";
         //public static string QuotesGetSingle(string id)
         //{
         //    return "Quotes/GetSingle?id=" + id;
@@ -41,7 +41,7 @@
         public static string APInvoicesController = "APInvoices";
         public static string ARInvoicesController = "ARInvoices";
         //public static string APInvoiceViewsGetByFilters = "APInvoiceViews/getbyfilters";
-
+        public static string CargoTrackingSearchController = "CargoTrackingSearch";
 
 
 
@@ -168,9 +168,25 @@
             return "warehouseentries/GetSingle?id=" + id;
         }
 
+        public static string CargoTrackingShipmentGetSingleList(string securityKey, int tenant)
+        {
+            return "CargoTrackingSearch/GetSingleShipmentList?SecurityKey=" + securityKey + "&tenant=" + tenant;
+        }
+
         public static string CrossDockReleaseGetSingle(string id)
         {
             return "warehousereleases/getsingle?id=" + id;
         }
+
+        public static string VesselGetSingle(string id)
+        {
+            return "vessels/getsingle?id=" + id;
+        }
+
+        public static string ActivitySingle(string id)
+        {
+            return "activities/GetSingle?id=" + id;
+        }
+
     }
 }

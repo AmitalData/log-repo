@@ -10,6 +10,7 @@ using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net;
 using System.Reflection;
 using System.Threading;
@@ -20,17 +21,17 @@ namespace CommunicationWorkerRole
     {
         public override void Run()
         {
-            var LogitudeConsumer = new Consumer(KafkaConsumerGroups.UpdateTask, new List<string> { KafkaTopics.TasksTopic },
-                                    new TopicPartition(KafkaTopics.TasksTopic, KakaPartitions.TasksTopic_UpdatePartition));
+            var LogitudeConsumer = new Consumer(KafkaConsumerGroups.UpdateShipment, new List<string> { KafkaTopics.TasksDoneTopic, KafkaTopics.ShipmentSetValues }, null);
 
             while (IsRunning)
             {
-                if (!General.IsUpdating())
+                 
+                if (!General.IsUpdating() && !Debugger.IsAttached)
                 {
                     try
-                    {
+                    {  
                         var msg = LogitudeConsumer.Consume();
-                        if (msg != null && msg.Message.Key == KakaMessageTypes.Task)
+                        if (msg != null && (msg.Message.Key == KakaMessageTypes.TaskUpdate || msg.Message.Key == KakaMessageTypes.ShipmentSetValue))
                         {
                             UpdateShipmentPM(msg.Message.Value);
                         }

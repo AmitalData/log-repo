@@ -335,6 +335,7 @@
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\PrivateLabelApprovePaymentComponent.html" />
     <Content Include="ShipmentModules\ShipmentRouting\Components\Routings\ChooseStandaloneShipmentComponent.html" />
     <Content Include="ShipmentModules\ShipmentRouting\Components\Routings\SelectStandalonePackagesComponent.html" />
+    <Content Include="ShipmentModules\ShipmentRouting\Components\Routings\StandAlonePickupDeilveryActionsComponent.html" />
     <Content Include="ShipmentModules\ShipmentTabs\Components\ProductItems\EditCustomerProductItemComponent.html" />
     <Content Include="ShipmentModules\ShipmentOthers\Components\ShipmentContainersStatuses\ContainersStatusesSimulatorComponent.html" />
     <Content Include="ShipmentModules\ShipmentTabs\Components\ProductItems\ProductItemsTabComponent.html" />
@@ -4720,6 +4721,7 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentRouting\Components\Routings\ChooseStandaloneShipmentComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentRouting\Components\Routings\DeliveryTabs\DeliveryPackagesConnectComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentRouting\Components\Routings\SelectStandalonePackagesComponent.ts" />
+    <TypeScriptCompile Include="ShipmentModules\ShipmentRouting\Components\Routings\StandAlonePickupDeilveryActionsComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentRouting\Components\Routings\WarehouseStoragePricingComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentSharedManifest\Components\SharedManifestEditAgentComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentSharedManifest\Components\SharedManifestHeaderComponent.ts" />

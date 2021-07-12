@@ -9,4 +9,12 @@
     <User Email="protractor@test.com" Password="!P123t456" />
   </Users>
 
+ <!--<ServerSettings>
+    <Url>http://localhost:9996/api</Url>
+  </ServerSettings>
+
+  <Users>
+    <User Default="true" Email="angular@fnarsoft.com" Password="1" />
+  </Users>-->
+
 </Configurations>

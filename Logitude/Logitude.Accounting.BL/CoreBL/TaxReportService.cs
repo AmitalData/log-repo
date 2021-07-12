@@ -233,11 +233,6 @@ namespace Logitude.Accounting.BL.CoreBL
                         VatNumber = card != null ? card.VatNumber : null;
                         VatNumber = ModifyVatNumber(VatNumber);
                     }
-                    if (account.IsEquipmentVendor)
-                    {
-                        isEquipment = true;
-                    }
-
                 }
                 VatNumber = VatNumber == null ? "000000000" : VatNumber;
                 SetVatAmounts(transaction);
@@ -257,7 +252,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     VatAmount = Math.Round(InputVatAmount.Value, MidpointRounding.AwayFromZero),
                     VatableInvoiceAmount = 0,// Math.Round(InputInvoiceAmount.Value, MidpointRounding.AwayFromZero),
                     TotalInvoiceAmount = Math.Round(InputInvoiceAmount.Value, MidpointRounding.AwayFromZero),
-                    IsEquipment = isEquipment,
+                    IsEquipment = account != null ? account.IsEquipmentVendor : false,
                     IsManuallyChanged = true,
                     TaxReportId = taxReport.Id,
                     ChangeSetOp = ChangeSetOperation.Insert,

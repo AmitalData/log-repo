@@ -4940,6 +4940,25 @@ export class ShipmentPM {
     public get IsProductItemsUpdated() { return this.isProductItemsUpdated; }
     public set IsProductItemsUpdated(newValue: boolean) { if (this.isProductItemsUpdated != newValue) { this.isProductItemsUpdated = newValue; this.MarkAsDirty("IsProductItemsUpdated"); } }
 
+    private forwarderStandaloneShipmentId: string;
+    public get ForwarderStandaloneShipmentId() { return this.forwarderStandaloneShipmentId; }
+    public set ForwarderStandaloneShipmentId(newValue: string) { if (this.forwarderStandaloneShipmentId != newValue) { this.forwarderStandaloneShipmentId = newValue; this.MarkAsDirty("ForwarderStandaloneShipmentId"); } }      
+
+    private forwarderPickUpDeliveryType: string;
+    public get ForwarderPickUpDeliveryType() { return this.forwarderPickUpDeliveryType; }
+    public set ForwarderPickUpDeliveryType(newValue: string) { if (this.forwarderPickUpDeliveryType != newValue) { this.forwarderPickUpDeliveryType = newValue; this.MarkAsDirty("forwarderPickUpDeliveryType"); } }
+
+    private plannedCargoReadyDate: Date;
+    public get PlannedCargoReadyDate() { return this.plannedCargoReadyDate; }
+    public set PlannedCargoReadyDate(newValue: Date) { if (this.plannedCargoReadyDate != newValue) { this.plannedCargoReadyDate = newValue; this.MarkAsDirty("PlannedCargoReadyDate"); } }
+
+    private approvedCargoReadyDate: Date;
+    public get ApprovedCargoReadyDate() { return this.approvedCargoReadyDate; }
+    public set ApprovedCargoReadyDate(newValue: Date) { if (this.approvedCargoReadyDate != newValue) { this.approvedCargoReadyDate = newValue; this.MarkAsDirty("ApprovedCargoReadyDate"); } }
+
+    private handlerUserId: string;
+    public get HandlerUserId() { return this.handlerUserId; }
+    public set HandlerUserId(newValue: string) { if (this.handlerUserId != newValue) { this.handlerUserId = newValue; this.MarkAsDirty("HandlerUserId"); } }
 
     public OldEntityPM: ShipmentPM;
 

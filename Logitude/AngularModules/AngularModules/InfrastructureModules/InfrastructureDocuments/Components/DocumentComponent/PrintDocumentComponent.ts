@@ -272,6 +272,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                 case "ARNT":
                 case "PGDF":
                 case "DORE":
+                case "TBOL":
                 case "REOR":
                 case "TML":
                 case "LCOT":
@@ -332,7 +333,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                 case "SHCMR":
                 case "TEST":
                 case "NCR":
-
+                case "782":
                     return true;
 
                 default:

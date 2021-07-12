@@ -39,7 +39,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;התאמה&quot;"
   DefaultText="&quot;Reconciliation&quot;"
-  Code="&quot;eb7b&quot;"
+  Code="&quot;ded7&quot;"
   Name="&quot;Reconciliation Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Accounting&quot;"
@@ -1300,6 +1300,12 @@
       Code="&quot;Reconciliation.O.CantReconcileMutipleAPPayment&quot;"
       DefaultText="&quot;Can’t include more than one AP payment in the same reconciliation&quot;"
       LocalDefaultText="&quot;לא ניתן לכלול יותר מתשלום אחד באותה התאמה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Reconciliation.O.AdditionalReconciliationsHasBeenCreated&quot;"
+      DefaultText="&quot;Reconcile has been created, additional Reconciliations of the Transfer will be created in the background and can be found on the in the Reconcile Management screen at the end of the process&quot;"
+      LocalDefaultText="&quot; התאמות נוצרו, התאמות נוספות לתנועות מחשבון הדחויים יווצרו ברקע וניתן יהיה לראותם במסך ניהול ההתאמות בסיום התהליך &quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

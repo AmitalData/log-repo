@@ -405,7 +405,7 @@
                                                                         <td style="width: 120px; min-width: 120px; max-width: 120px; color : #6E7172;">{{WeightColumnHeader}}</td>
                                                                         <td style="width: 120px; min-width: 120px; max-width: 120px; color : #6E7172;" *ngIf="item.IsCommodityNumberVisible">Commodity #</td>
                                                                         <td style="width: 120px; min-width: 120px; max-width: 120px; color : #6E7172;" *ngIf="item.IsCommodityNameVisible">Commodity Name</td>
-
+                                                                        <td *ngIf="HorseFieldIsVisible" style="width: 150px; min-width: 150px; max-width: 150px; color: #6E7172;">Horse</td>
                                                                         <td class="LastChild" style="min-width: 50px;">
                                                                             <div></div>
                                                                         </td>
@@ -454,6 +454,10 @@
                                                                             {{insideItem.CommodityName}}
                                                                         </td>
 
+                                                                        <td *ngIf="HorseFieldIsVisible" class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px;">
+                                                                            {{insideItem.HorseName}}
+                                                                        </td>
+
                                                                         <td class="CellTools" style="min-width: 50px;">
                                                                             <span class="CellSeparator"></span>
                                                                             <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditInsideButtonClicked(insideItem)"></IconButton>
@@ -471,7 +475,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </ng-template>                                            
+                                            </ng-template>
                                         </row-template>
                                     </log-row-details>
 
@@ -500,7 +504,7 @@
                                             <log-cell-template #logcelltemplate [IsEnabled]="false" [Alignment]="'right'">
                                                 {{item.Quantity}}
                                             </log-cell-template>
-                                        </ng-template>                                        
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Container# -->
@@ -528,7 +532,7 @@
                                                     <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'ContainerNumber'" [Text]="item.ContainerNumber" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
                                                 </div>
                                             </log-cell-template>
-                                        </ng-template>                                        
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- ShipperSeal -->
@@ -544,7 +548,7 @@
                                                     <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'ShipperSeal'" [Text]="item.ShipperSeal" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
                                                 </div>
                                             </log-cell-template>
-                                        </ng-template>                                        
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Volume -->
@@ -560,7 +564,7 @@
                                                     <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Volume'" [Text]="item.Volume" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
                                                 </div>
                                             </log-cell-template>
-                                        </ng-template>                                        
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Gross Weight -->
@@ -576,7 +580,7 @@
                                                     <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Weight'" [Text]="item.Weight" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
                                                 </div>
                                             </log-cell-template>
-                                        </ng-template>                                        
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Commodity No-->
@@ -593,6 +597,15 @@
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IsEnabled]="false">
                                                 {{item.CommodityName}}
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+
+                                    <!-- Horse Name-->
+                                    <log-column [width]="'150'" [header]="'Horse'" *ngIf="(HorseFieldIsVisible && !IsFCLEntity) || (HorseFieldIsVisible && TransportModeId == 'I' && IsFCLEntity)">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false">
+                                                {{item.HorseName}}
                                             </log-cell-template>
                                         </ng-template>
                                     </log-column>
@@ -685,7 +698,7 @@
 
                                                 </div>
                                             </log-cell-template>
-                                        </ng-template>  
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Icon:ContainerReturnId -->
@@ -717,7 +730,7 @@
                                     <!-- Buttons -->
                                     <log-column [width]="'200'">
                                         <ng-template let-item>
-                                            <log-cell-template  [TabIndex]="-1">
+                                            <log-cell-template [TabIndex]="-1">
                                                 <div style="width: 100%; height: 100%; position: relative;">
                                                     <div class="LeftCenter" style="height: 20px;">
                                                         <table>
@@ -739,21 +752,6 @@
                                                                     <div></div>
                                                                 </td>
 
-                                                                <td *ngIf="IsShipmentContainersRequestStatusVisible" style="width: 4px;">
-                                                                    <span class="CellSeparator"></span>
-                                                                </td>
-
-                                                                <td *ngIf="IsShipmentContainersRequestStatusVisible" style="width: 95px;">
-                                                                    <div class="MediaFill">
-                                                                        <div style="width: 95px; height: 16px;" class="CenterCenter">
-                                                                            <button style="height: 16px;" class="Button" (click)="ContainersRequestStatusClicked()">Request Status</button>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-
-                                                                <td *ngIf="IsShipmentContainersRequestStatusVisible" style="width: 5px;">
-                                                                    <div></div>
-                                                                </td>
 
                                                                 <td>
                                                                     <span class="CellSeparator"></span>
@@ -765,7 +763,7 @@
                                                     </div>
                                                 </div>
                                             </log-cell-template>
-                                        </ng-template>                                        
+                                        </ng-template>
                                     </log-column>
 
                                     <log-column *ngIf="IsShowReleaseNumber" [width]="'150'">

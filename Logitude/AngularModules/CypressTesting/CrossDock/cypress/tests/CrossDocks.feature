@@ -33,6 +33,7 @@ Feature: Cross Docks Entries and Releases
             | ExpectedEntryTime | 13:00         |
         When create cross dock entry
         Then the cross dock entry should create successfully
+        And the shipment should update successfully
         And the shipment should contain the linked entry details
             | EntryNumber | "Created Entry Number" |
             | Status      | Created                |
@@ -83,6 +84,7 @@ Feature: Cross Docks Entries and Releases
             | Package             | PackageWithEntryNumber |
         When create cross dock release
         Then the cross dock release should create successfully
+        And the shipment should update successfully
         And shipment should contain the linked release details
             | ReleaseNumber | "Created Release Number" |
             | Status        | Created                  |
@@ -107,14 +109,14 @@ Feature: Cross Docks Entries and Releases
         And linked release status should be "Cancelled"
 
     Scenario: Add cross dock release
-        Given the user in Connected Entities tab
-        And a corss dock "Release" with the following details
+        Given a corss dock "Release" with the following details
             | Warehouse           | TestWarehouse          |
             | ExpectedReleaseDate | Today                  |
             | ExpectedReleaseTime | 14:00                  |
             | Package             | PackageWithEntryNumber |
         When create cross dock release
         Then the cross dock release should create successfully
+        And the shipment should update successfully
 
     Scenario: Edit release
         Given the user open the created release

@@ -43,6 +43,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.CountryId = itemPM.CountryId;
             itemPoco.Harmonize = itemPM.Harmonize;
             itemPoco.IsMultiHarmonize = itemPM.IsMultiHarmonize;
+            itemPoco.HorseId = itemPM.HorseId;
         }
     }
 }

@@ -14,7 +14,7 @@ namespace CommunicationWorkerRole
     class ShipmentUpdateWR : WorkerEntryPoint
     {
         DbQueueService queueservice;
-        string queueName = "CToolShipments";
+        string queueName = "CToolShipmentsUpdate";
 
         public override void Run()
         {
@@ -33,8 +33,7 @@ namespace CommunicationWorkerRole
 
                             var ShipmentUpdateMessageProducer = new Producer();
                             var serializedShipmentUpdateMessage = JsonConvert.SerializeObject(entityPM, Formatting.Indented);
-                            var result = ShipmentUpdateMessageProducer.Produce(KafkaTopics.ShipmentsTopic, KakaMessageTypes.Shipment, serializedShipmentUpdateMessage);
-                            result.Wait();
+                            var result = ShipmentUpdateMessageProducer.Produce(KafkaTopics.ShipmentsUpdateTopic, KakaMessageTypes.ShipmentUpdate, serializedShipmentUpdateMessage);
                             queueservice.Complete();
                         }
                     }
@@ -42,7 +41,7 @@ namespace CommunicationWorkerRole
                     {
                         queueservice.CompleteAsFailed();
                         ConnectClient();
-                        ExceptionHandler.HandleException(ex, DateTime.Now, 1, null, "CToolShipments worker role start", null, null);
+                        ExceptionHandler.HandleException(ex, DateTime.Now, 1, null, "CToolShipmentsUpdate worker role start", null, null);
                         Thread.Sleep(10000);
                     }
                 }
@@ -61,7 +60,7 @@ namespace CommunicationWorkerRole
             ServicePointManager.DefaultConnectionLimit = 12;
 
             ThreadId = Guid.NewGuid().ToString();
-            BatchServiceCode = "CToolShipments";
+            BatchServiceCode = "CToolShipmentsUpdate";
 
             return base.OnStart();
         }

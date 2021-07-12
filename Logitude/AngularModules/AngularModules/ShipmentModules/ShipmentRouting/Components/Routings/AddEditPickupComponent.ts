@@ -614,6 +614,14 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
                 }
             }
 
+            if (this.IsAddingStandaloneShipmentVisible) {
+                if (this.ShipmentPM.ShipmentPackages != null) {
+                    this.ShipmentPM.ShipmentPackages.filter(item => AppTool.IsNullOrEmpty(item.Id)).forEach(item => {
+                        this.ShipmentPM.RemovePackage(item);
+                    });
+                }
+            }
+
             this.myCloner.RejectChanges();
         }
     }
@@ -770,7 +778,7 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
         var args = new NewShipmentComponentArgs();
         args.Shipment = shipmentPM;
         args.IsStandalone = true;
-
+        args.ForwarderShipmentPickUpDeliveryTypeCode = "Pickup";
         var str: string = TextCodeTranslator.Translate("General.O.NewEntity");
         str = str.replace("%Entity", TextCodeTranslator.TranslateTable("Shipment"));
 

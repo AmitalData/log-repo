@@ -42,7 +42,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CustomerId, 
 	         InvoiceFailureReason, 
 	         CreditAllotmentPercentage, 
-	         CalCreditAllotmentCommission,
+	         CalCreditAllotmentCommission, 
+	         CalculatedPostponedChequesCommision,
 	      }
 
 
@@ -88,7 +89,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         InvoiceDate, 
 	         IsNewReport, 
 	         CreditAllotmentPercentage, 
-	         CalCreditAllotmentCommission,
+	         CalCreditAllotmentCommission, 
+	         CalculatedPostponedChequesCommision,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -195,6 +197,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CalCreditAllotmentCommission))
             {
 				entityPOCO.CalCreditAllotmentCommission = entityPM.CalCreditAllotmentCommission;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CalculatedPostponedChequesCommision))
+            {
+				entityPOCO.CalculatedPostponedChequesCommision = entityPM.CalculatedPostponedChequesCommision;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -308,6 +315,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.CalCreditAllotmentCommission = entityPOCO.CalCreditAllotmentCommission;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CalculatedPostponedChequesCommision))
+            {
+					entityPM.CalculatedPostponedChequesCommision = entityPOCO.CalculatedPostponedChequesCommision;
+            }
+
 		}
 
 		public void PMToOldPM(InterestReportPM entityPM, InterestReportPM oldEntityPM)
@@ -412,6 +424,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CalCreditAllotmentCommission))
             {
                 oldEntityPM.CalCreditAllotmentCommission = entityPM.CalCreditAllotmentCommission;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CalculatedPostponedChequesCommision))
+            {
+                oldEntityPM.CalculatedPostponedChequesCommision = entityPM.CalculatedPostponedChequesCommision;
             }
 			
 		}

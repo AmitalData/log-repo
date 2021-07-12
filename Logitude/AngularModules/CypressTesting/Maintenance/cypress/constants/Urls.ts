@@ -3,7 +3,7 @@ export class Urls {
 
     public static readonly Contacts = "**/contacts";
     public static readonly ContactsGetSingle = "**/contacts/getsingle?**";
-    public static readonly ContactViewsGetByFilters = "**/contactviews/getbyfilters?**GetCount=false**";
+    public static readonly ContactViewsGetByFilters = "**/contactviews/getbyfilters?**";
 
     public static readonly Vendor = "**/vendors";
     public static readonly PartnersDomain = "**/PartnersDomain";
@@ -14,6 +14,9 @@ export class Urls {
     public static readonly VesselsGetSingle = "**/vessels/getsingle?**";
     public static readonly VesselviewGetSingle = "**/vesselviews/getsingle/?**";
 
+    public static readonly GetQuoteTemplateHeaderFieldByQuoteTemplateId = "**/GetQuoteTemplateHeaderFieldByQuoteTemplateId/**";
+    public static readonly GetQuoteTemplateDetailsFieldByQuoteTemplateId = "**/GetQuoteTemplateDetailsFieldByQuoteTemplateId/**";
+    public static readonly GetQuoteTemplateTextDesignPMListByIds = "**/GetQuoteTemplateTextDesignPMListByIds/**";
     public static readonly QuoteTemplateExtended = "**/QuoteTemplateExtended";
     public static readonly QuoteTemplatetextdesigns = "**/quotetemplatetextdesigns";
     public static readonly QuotetemplateSettings = "**/quotetemplatesettings";
@@ -21,6 +24,7 @@ export class Urls {
     public static readonly QuoteTemplateGetSingle = "**/quotetemplatesettings/getsingle?**";
     public static readonly PutQuoteTemplateTextDesignPMs = "**/PutQuoteTemplateTextDesignPMs";
     public static readonly PutQuoteTemplateHeaderFields = "**/PutQuoteTemplateHeaderFields";
+    public static readonly PutQuoteTemplateDetailsFields = "**/PutQuoteTemplateDetailsFields";
 
     public static readonly AccountingSettings = "**/accountingsettings"
 
@@ -57,8 +61,7 @@ export class Urls {
     public static readonly ShippingLinesviewGetSingle = "**/shippinglineviews/getsingle/?**";
     public static readonly ImportShippingAirLine = "**/PartnersDomain/GetCarrierCopyToCurrentTenant?**"
     public static readonly CountryPortviews = "**/portviews/getbyfilters?**"
-    public static readonly PortPostLogsList = "**/PostLogsList"
-    public static readonly ShippingLinesAddress = "**/PartnersDomain"
+    public static readonly Address = "**/PartnersDomain"
     public static readonly ShippingLinesArea = "**/carrierareas"
     public static readonly ShippingLinesTariffTranslations = "**/tariffcarriertranslations"
 
@@ -67,7 +70,6 @@ export class Urls {
     public static readonly AirLinesviewGetSingle = "**/airlineviews/getsingle/?**";
     public static readonly AirLineTariffHeader = "**/tarrifheaders";
     public static readonly AirLineSpecialHandlingCodes = "**/awbspecialhandlingcodesextended";
-    public static readonly AirLinesAddress = "**/PartnersDomain"
     public static readonly AirLinesTariffTranslations = "**/tariffcarriertranslations"
     public static readonly GetAirlineByCode = "**/GetAirlineByCode?**"
     public static readonly GetTarrifHeaders = "**/GetTarrifHeadersByCardIdAndTypeCode?**"

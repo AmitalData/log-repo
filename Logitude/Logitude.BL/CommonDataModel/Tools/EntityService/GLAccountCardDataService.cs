@@ -88,9 +88,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private double? SetCreditLimit()
         {
-            var cardWithCreditLimit = connectedCards.Where(d => d.CreditLimitAmount != null).FirstOrDefault();
+            var cardWithCreditLimit = connectedCards.Where(d => d.CreditLimitAmount != null).Sum(d => d.CreditLimitAmount);
             if (cardWithCreditLimit == null) return null;
-            else return cardWithCreditLimit.CreditLimitAmount;
+            else return cardWithCreditLimit;
         }
         private string SetCollectorId()
         {
@@ -199,9 +199,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private decimal? GetTotalOpenFilesAmount()
         {
             List<CustomerOpenFilesAmountPM> customerOpenFilesAmountPMs = GetCustomerOpenFilesAmount();
-            var customerTotalOpenFilesAmount = customerOpenFilesAmountPMs.Where(d => d.TotalOpenFilesAmount != 0).FirstOrDefault();
+            var customerTotalOpenFilesAmount = customerOpenFilesAmountPMs.Where(d => d.TotalOpenFilesAmount != 0).Sum(d => d.TotalOpenFilesAmount);
             if (customerTotalOpenFilesAmount == null) return null;
-            else return customerTotalOpenFilesAmount.TotalOpenFilesAmount;
+            else return customerTotalOpenFilesAmount;
         }
         private void SaveGLAccountChanges(GLAccountPM accountPM)
         {

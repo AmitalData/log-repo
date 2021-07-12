@@ -25,6 +25,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.ApprovedByCustomer = itemPM.ApprovedByCustomer;
             itemPoco.Name = itemPM.Name;
             itemPoco.Brand = itemPM.Brand;
+            itemPoco.ASIN = itemPM.ASIN;
+            itemPoco.UPC = itemPM.UPC;
+            itemPoco.OriginCountryId = itemPM.OriginCountryId;
         }
     }
 }

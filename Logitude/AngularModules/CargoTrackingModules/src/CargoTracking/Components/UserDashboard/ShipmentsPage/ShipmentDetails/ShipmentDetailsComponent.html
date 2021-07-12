@@ -143,12 +143,12 @@
                 <div class="card"
                      *ngFor="let card of SliderCards"
                      [class.active]="card.IsActive"
-                     [class.dim]="card.IsDimmed"
-                     [class.warning]="false">
+                     [class.dim]="card.IsDimmed">
                     <div class="date">{{card.Date | date: 'dd'}} <span>{{card.Date | date: 'MMM'}}</span></div>
                     <div class="title">{{card.Title}}</div>
-                    <div class="desc hide-mobile "  [attr.title]="card.Description"
+                    <div class="desc hide-mobile " [attr.title]="card.Description"
                          style="overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">{{card.Description}}</div>
+                    <div (click)="OpenMessageWindow(card.WarningMessage,card.WarningDate)" [attr.title]="card.WarningDate +'\n'+ card.WarningMessage" *ngIf="card.HasWarning" class="warning-icon mobile-only">!</div>
                 </div>
 
             </div>
@@ -258,7 +258,7 @@
                 <div>
                     <div class="title">Pack Type</div>
                     <div class="description">
-                        <div *ngFor="let package of ShipmentPackages.slice(0,2), let i = index">
+                        <div *ngFor="let package of ShipmentPackages?.slice(0,2), let i = index">
                             {{package.PackageTypeName}}
                             <a *ngIf="ShipmentPackages.length > 2 && i == 1" (click)="ShowMoreLinkClicked()"
                                style="cursor: pointer; font-size: 11px;color:var(--MainColor)"> {{ShowDetailsSection?'Show less':'Show more'}}</a>
@@ -358,7 +358,7 @@
                 </div>
                 <div>
                     <div class="title">Declaration Status</div>
-                    <div class="description">-</div>
+                    <div class="description">{{ShipmentCustomsData.DeclarationStatus}}</div>
                 </div>
                 <div>
                     <div class="title">Import VAT</div>

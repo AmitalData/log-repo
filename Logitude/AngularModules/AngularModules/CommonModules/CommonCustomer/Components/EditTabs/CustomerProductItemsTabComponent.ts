@@ -104,6 +104,8 @@ export class CustomerProductItemsTabComponent extends BaseComponent implements O
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = myWindowTitle;
         logitudeWindow.DataContext = itemPM;
+        logitudeWindow.Height = 550;
+        logitudeWindow.Width = 800; 
         logitudeWindow.Show('./CommonModules/CommonCustomer/Components/AddEdit/AddEditCustomerProductItemComponent');
     }
 }
@@ -240,6 +242,49 @@ export class CustomerProductItem extends BaseComponent {
             this.EntityPM.Brand = value;
         }
     }
+
+    get ASIN() { return this.EntityPM.ASIN; }
+    set ASIN(newValue: string) {
+        if (this.EntityPM.ASIN != newValue) {
+            this.EntityPM.ASIN = newValue;
+        }
+    }
+
+    get UPC() { return this.EntityPM.UPC; }
+    set UPC(newValue: string) {
+        if (this.EntityPM.UPC != newValue) {
+            this.EntityPM.UPC = newValue;
+        }
+    }
+
+    get OriginCountryId() { return this.EntityPM.OriginCountryId; }
+    set OriginCountryId(newValue: string) {
+        if (this.EntityPM.OriginCountryId != newValue) {
+            this.EntityPM.OriginCountryId = newValue;
+        }
+    }
+
+    get OriginCountryName() { return this.EntityPM.OriginCountryName; }
+    set OriginCountryName(newValue: string) {
+        if (this.EntityPM.OriginCountryName != newValue) {
+            this.EntityPM.OriginCountryName = newValue;
+        }
+    }
+
+    originCountry: CountryList;
+    get OriginCountry() { return this.originCountry; }
+    set OriginCountry(value: CountryList) {
+        if (this.originCountry != value) {
+            this.originCountry = value;
+        }
+
+        if (value) {
+            this.OriginCountryName = value.EnglishName;
+        }
+        else {
+            this.OriginCountryName = null;
+        }
+    }
 }
 
 export class CustomerHTSCode extends BaseComponent {
@@ -351,9 +396,11 @@ export class CustomerHTSCode extends BaseComponent {
         if (this.destinationCountry != value) {
             this.destinationCountry = value;
         }
-        if (!AppTool.IsNullOrEmpty(value)) {
+
+        if (value) {
             this.CountryEnglishName = value.EnglishName;
-        } else {
+        }
+        else {
             this.CountryEnglishName = null;
         }
     }

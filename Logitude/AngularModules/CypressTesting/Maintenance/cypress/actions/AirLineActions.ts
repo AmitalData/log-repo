@@ -29,21 +29,8 @@ export function FillPrefix(prefix: string) {
 }
 
 export function FillAirLineDetails(airLineDetails: AirLineDetails) {
-    cy.DefineRequestWait(RestAPI.GET, Urls.GetAirlineByCode, RequestAliases.GetAirlineByCode);
     FillCode(GenerateRandomNumberAndString(AirLineSelectors.CodeDigitCount))
     FillICAO(GenerateRandomNumberAndString(AirLineSelectors.ICAODigitCount))
-    let intercept = cy.wait("@" + RequestAliases.GetAirlineByCode);
-    intercept.then((interception) => {
-        if (interception.response.body === null) {
-            FillCustomAirLineDetails(airLineDetails)
-        }
-        else {
-            FillAirLineDetails(airLineDetails)
-        }
-    })
-}
-
-export function FillCustomAirLineDetails(airLineDetails: AirLineDetails) {
     cy.FillLogTextBox(AirLineSelectors.Name, airLineDetails.Name)
     cy.FillLogTextBox(AirLineSelectors.LocalName, airLineDetails.LocalName)
     cy.FillLogTextBox(AirLineSelectors.Notes, airLineDetails.Notes)
@@ -52,13 +39,20 @@ export function FillCustomAirLineDetails(airLineDetails: AirLineDetails) {
 export function CreateAirLine() {
     DefinePostAirLineRequest()
     Actions.DefineGetByFilterRequest()
-    cy.get(BaseSelectors.RedButton).then(($btn) => {
-        if ($btn.is(":disabled")) {
-            ReCreateAirLine()
-        } else {
-            cy.wrap($btn).click({ force: true })
+    cy.get("body").then($body => {
+        if ($body.find(BaseSelectors.SingleError).length > 0) {
+            Recreate()
+        }
+        else {
+            cy.get(BaseSelectors.RedButton).click({ force: true })
         }
     })
+}
+
+export function Recreate() {
+    FillCode(GenerateRandomNumberAndString(AirLineSelectors.CodeDigitCount))
+    FillICAO(GenerateRandomNumberAndString(AirLineSelectors.ICAODigitCount))
+    CreateAirLine()
 }
 
 export function MockCreateAirLine() {
@@ -69,21 +63,6 @@ export function MockCreateAirLine() {
 
 function DefinePostAirLineRequest() {
     cy.DefineRequestWait(RestAPI.POST, Urls.AirLines, RequestAliases.PostAirLine)
-}
-
-function ReCreateAirLine() {
-    cy.DefineRequestWait(RestAPI.GET, Urls.GetAirlineByCode, RequestAliases.GetAirlineByCode);
-    FillCode(GenerateRandomNumberAndString(AirLineSelectors.CodeDigitCount))
-    FillICAO(GenerateRandomNumberAndString(AirLineSelectors.ICAODigitCount))
-    let intercept = cy.wait("@" + RequestAliases.GetAirlineByCode);
-    intercept.then((interception) => {
-        if (interception.response.body === null) {
-            CreateAirLine();
-        }
-        else {
-            ReCreateAirLine()
-        }
-    })
 }
 
 export function AssertCreateAirLine() {
@@ -121,21 +100,6 @@ export function AssertOpenAirLine() {
     BaseAssertion.AssertElementExist(MaintenanceSelectors.GeneralEditScreen)
 }
 
-export function FillAirLineAddresses(airLineDetails: AirLineDetails) {
-    cy.FillLogTextBox(AirLineSelectors.AddressName, airLineDetails.AddressName)
-    cy.FillLogLov(AirLineSelectors.AddressCountryId, airLineDetails.AddressCountry, true)
-    cy.FillLogTextBox(AirLineSelectors.AddressCity, airLineDetails.AddressCity)
-    cy.FillLogLov(AirLineSelectors.AddressStateId, airLineDetails.AddressState, true)
-}
-
-export function CreateAirLineAddress() {
-    cy.DefineRequestWait(RestAPI.POST, Urls.AirLinesAddress, RequestAliases.PostAirLineAddress)
-    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
-}
-
-export function AssertCreateAirLineAddress() {
-    BaseAssertion.AssertStatusCode(RequestAliases.PostAirLineAddress, 200);
-}
 
 export function FillTariffPartnerCode(partnerCode: string) {
     cy.FillLogTextBox(AirLineSelectors.TariffPartnerCode, partnerCode)

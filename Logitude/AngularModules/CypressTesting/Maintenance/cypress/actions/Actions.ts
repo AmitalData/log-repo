@@ -263,6 +263,7 @@ export function SearchVessel() {
 export function AssertSearchVessel() {
     let vesselName = VesselContext.Name;
     if (vesselName) {
+        cy.get(BaseSelectors.ListDataLoaded)
         cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
             expect(text).to.contain(vesselName);
         });
@@ -340,7 +341,7 @@ function GenerateNewRandomCode() {
 }
 
 function DefineVesselViewsGetByFiltersRequest(VesselCode: string) {
-    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(VesselCode + "&GetCount=false"), RequestAliases.GetFilterSearch);
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(VesselCode), RequestAliases.GetFilterSearch);
 }
 
 function AssertVesselViewsGetByFilters() {
@@ -414,6 +415,7 @@ export function SearchContact() {
 export function AssertSearchContact() {
     let contactEmail = ContactContext.Email;
     if (contactEmail) {
+        cy.get(BaseSelectors.ListDataLoaded)
         cy.get(BaseSelectors.RowClass).eq(0).invoke("text").then((text) => {
             expect(text).to.contain(contactEmail);
         });
@@ -587,6 +589,40 @@ export function OpenQuoteTemplateSection(section: string) {
     cy.Click(MaintenanceSelectors.QuoteTemplateSectionsButton(section), null)
 }
 
+export function OpenQuoteHeaderSection() {
+    DefineGetQuoteTemplateHeaderFieldByQuoteTemplateId()
+    DefineGetQuoteTemplateTextDesignPMListByIds()
+    cy.Click(MaintenanceSelectors.QuoteTemplateSectionsButton("Quote Header"), null)
+}
+
+function DefineGetQuoteTemplateHeaderFieldByQuoteTemplateId() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetQuoteTemplateHeaderFieldByQuoteTemplateId, RequestAliases.GetQuoteTemplateHeaderFieldByQuoteTemplateId);
+}
+
+function DefineGetQuoteTemplateTextDesignPMListByIds() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetQuoteTemplateTextDesignPMListByIds, RequestAliases.GetQuoteTemplateTextDesignPMListByIds);
+}
+
+export function AssertGetQuoteHeader() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetQuoteTemplateHeaderFieldByQuoteTemplateId, 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.GetQuoteTemplateTextDesignPMListByIds, 200);
+}
+
+export function OpenQuoteDetailsSection() {
+    DefineGetQuoteTemplateDetailsFieldByQuoteTemplateId()
+    DefineGetQuoteTemplateTextDesignPMListByIds()
+    cy.Click(MaintenanceSelectors.QuoteTemplateSectionsButton("Quote Details"), null)
+}
+
+function DefineGetQuoteTemplateDetailsFieldByQuoteTemplateId() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetQuoteTemplateDetailsFieldByQuoteTemplateId, RequestAliases.GetQuoteTemplateDetailsFieldByQuoteTemplateId);
+}
+
+export function AssertGetQuoteDetails() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetQuoteTemplateDetailsFieldByQuoteTemplateId, 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.GetQuoteTemplateTextDesignPMListByIds, 200);
+}
+
 export function FillQuoteHeaderFooterColumnWidth(coulmnWidthDetails: QuoteTemplateDetails) {
     cy.FillLogTextBox(MaintenanceSelectors.HeaderFooterColumnWidth("1"), coulmnWidthDetails.Width1)
     cy.FillLogTextBox(MaintenanceSelectors.HeaderFooterColumnWidth("2"), coulmnWidthDetails.Width2)
@@ -635,13 +671,14 @@ export function AddColumnsToPricingTable(coulmnsList: QuoteTemplateDetails[]) {
 export function OpenQuoteTemplate() {
     SearchQuoteTemplate()
     DefineQuoteTemplatetGetSingleRequest()
-    cy.get(BaseSelectors.RowClass).last().click({ force: true });
+    cy.get(BaseSelectors.ListDataLoaded)
+    cy.get(BaseSelectors.RowClass).eq(0).click({ force: true });
     AssertOpenQuoteTemplate();
 }
 
 export function ReopenQuoteTemplate() {
     DefineQuoteTemplatetGetSingleRequest()
-    cy.get(BaseSelectors.RowClass).click({ force: true });
+    cy.get(BaseSelectors.RowClass).eq(0).click()
     AssertOpenQuoteTemplate();
 }
 
@@ -650,12 +687,32 @@ export function UpdateQuoteTemplate() {
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
 }
 
+function DefinePutQuoteTemplateRequest() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.QuoteTemplatetextdesigns, RequestAliases.PutQuoteTemplate);
+}
+
 export function UpdateQuoteHeaderTemplate() {
     DefineQuoteTemplatetPutTextDesignRequest();
     DefineQuoteTemplatetPutHeaderFieldsRequest();
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
-    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
+}
 
+function DefineQuoteTemplatetPutTextDesignRequest() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.PutQuoteTemplateTextDesignPMs, RequestAliases.PutQuoteTemplateTextDesignPMs);
+}
+
+function DefineQuoteTemplatetPutHeaderFieldsRequest() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.PutQuoteTemplateHeaderFields, RequestAliases.PutQuoteTemplateHeaderFields);
+}
+
+export function UpdateQuoteDetailsTemplate() {
+    DefineQuoteTemplatetPutTextDesignRequest();
+    DefinePutQuoteTemplateDetailsFieldsRequest();
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+}
+
+function DefinePutQuoteTemplateDetailsFieldsRequest() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.PutQuoteTemplateDetailsFields, RequestAliases.PutQuoteTemplateDetailsFields);
 }
 
 export function UpdateQuotePricingTemplate() {
@@ -663,10 +720,17 @@ export function UpdateQuotePricingTemplate() {
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
 }
 
+function DefineQuoteTemplatetPutSettingsRequest() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.QuotetemplateSettings, RequestAliases.PutQuoteTemplate);
+}
+
 export function UpdateQuoteIntroductionTemplate() {
     DefineQuoteTemplatetPutSectionsRequest();
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+}
 
+function DefineQuoteTemplatetPutSectionsRequest() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.Quotetemplatesections, RequestAliases.PutQuoteTemplate);
 }
 
 export function AssertCreateQuoteTemplate() {
@@ -675,12 +739,29 @@ export function AssertCreateQuoteTemplate() {
 }
 
 export function AssertUpdateQuoteTemplate() {
-    AssertPutQuoteTemplate();
+    BaseAssertion.AssertStatusCode(RequestAliases.PutQuoteTemplate, 200);
 }
 
 export function AssertUpdateQuoteHeaderTemplate() {
-    AssertQuoteTemplatetPutHeaderFields();
     AssertQuoteTemplatetPutTextDesign();
+    AssertQuoteTemplatetPutHeaderFields();
+}
+
+function AssertQuoteTemplatetPutTextDesign() {
+    BaseAssertion.AssertStatusCode(RequestAliases.PutQuoteTemplateTextDesignPMs, 200);
+}
+
+function AssertQuoteTemplatetPutHeaderFields() {
+    BaseAssertion.AssertStatusCode(RequestAliases.PutQuoteTemplateHeaderFields, 200);
+}
+
+export function AssertUpdateQuoteDetailsTemplate() {
+    AssertQuoteTemplatetPutTextDesign();
+    AssertPutQuoteTemplateDetailsFields();
+}
+
+function AssertPutQuoteTemplateDetailsFields() {
+    BaseAssertion.AssertStatusCode(RequestAliases.PutQuoteTemplateDetailsFields, 200);
 }
 
 function SearchQuoteTemplate() {
@@ -699,32 +780,12 @@ function DefinePostQuoteTemplateRequest() {
     cy.DefineRequestWait(RestAPI.POST, Urls.QuoteTemplateExtended, RequestAliases.PostQuoteTemplate);
 }
 
-function DefinePutQuoteTemplateRequest() {
-    cy.DefineRequestWait(RestAPI.PUT, Urls.QuoteTemplatetextdesigns, RequestAliases.PutQuoteTemplate);
-}
-
 function DefineQuoteTemplatetGetSingleRequest() {
     cy.DefineRequestWait(RestAPI.GET, Urls.QuoteTemplateGetSingle, RequestAliases.GetSignle);
 }
 
 function DefineQuoteTemplateViewsGetByFiltersRequest(quoteTemplateName: string) {
     cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(quoteTemplateName), RequestAliases.GetFilterSearch);
-}
-
-function DefineQuoteTemplatetPutHeaderFieldsRequest() {
-    cy.DefineRequestWait(RestAPI.PUT, Urls.PutQuoteTemplateHeaderFields, RequestAliases.PutQuoteTemplateHeaderFields);
-}
-
-function DefineQuoteTemplatetPutTextDesignRequest() {
-    cy.DefineRequestWait(RestAPI.PUT, Urls.PutQuoteTemplateTextDesignPMs, RequestAliases.PutQuoteTemplateTextDesignPMs);
-}
-
-function DefineQuoteTemplatetPutSettingsRequest() {
-    cy.DefineRequestWait(RestAPI.PUT, Urls.QuotetemplateSettings, RequestAliases.PutQuoteTemplate);
-}
-
-function DefineQuoteTemplatetPutSectionsRequest() {
-    cy.DefineRequestWait(RestAPI.PUT, Urls.Quotetemplatesections, RequestAliases.PutQuoteTemplate);
 }
 
 function AssertPostQuoteTemplate() {
@@ -741,19 +802,6 @@ function AssertQuoteTemplatetGetSingle() {
 function AssertQuoteTemplateViewsGetByFilters() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
 }
-
-function AssertPutQuoteTemplate() {
-    BaseAssertion.AssertStatusCode(RequestAliases.PutQuoteTemplate, 200);
-}
-
-function AssertQuoteTemplatetPutHeaderFields() {
-    cy.DefineRequestWait(RestAPI.PUT, Urls.PutQuoteTemplateHeaderFields, RequestAliases.PutQuoteTemplateHeaderFields);
-}
-
-function AssertQuoteTemplatetPutTextDesign() {
-    cy.DefineRequestWait(RestAPI.PUT, Urls.PutQuoteTemplateTextDesignPMs, RequestAliases.PutQuoteTemplateTextDesignPMs);
-}
-
 //#endregion
 
 //#region Invoice Settings
@@ -1056,10 +1104,11 @@ export function SearchState() {
 }
 
 export function DefineStateViewsGetByFiltersRequest(StateName: string) {
-    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(StateName + "&GetCount=false"), RequestAliases.GetFilterSearch);
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(StateName), RequestAliases.GetFilterSearch);
 }
 
 export function AssertSearchState() {
+    cy.get(BaseSelectors.ListDataLoaded)
     cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
         expect(text).to.contain(StateCode);
     });
@@ -1127,15 +1176,11 @@ export function SearchCardByFilter(FilterValue: string, FilterTypeSelector: stri
     cy.Click(MaintenanceSelectors.CardFiltersOpen, null);
     cy.Click(MaintenanceSelectors.CardAddFilterBtn, null);
     cy.get(FilterTypeSelector).then($InActiveStatesCheckBox => {
-        if ($InActiveStatesCheckBox.is(':checked')) {
-            FillFilterValue(FilterValue);
-        }
-        else {
+        if (!($InActiveStatesCheckBox.is(':checked'))) {
             cy.get(FilterTypeSelector).check({ force: true });
-            FillFilterValue(FilterValue);
         }
+        FillFilterValue(FilterValue);
     })
-    AssertListViewsGetByFilters();
 }
 export function DefineCardGetByFiltersRequest(ShipmentSubTypeCode: string) {
     cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(ShipmentSubTypeCode), RequestAliases.GetFilterSearch);
@@ -1235,13 +1280,14 @@ export function AssertCitiesViewsGetByFilters() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
 }
 export function AssertSearchCity() {
+    cy.get(BaseSelectors.ListDataLoaded)
     cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
         expect(text).to.contain(CityCode);
     });
 }
 
 export function DefineCityViewsGetByFiltersRequest(CityName: string) {
-    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(CityName + "&GetCount=false"), RequestAliases.GetFilterSearch);
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(CityName), RequestAliases.GetFilterSearch);
 }
 export function OpenCity() {
     DefineCountryCitiesGetSingleRequest();
@@ -1342,13 +1388,14 @@ export function SearchGlobalZone() {
 }
 
 export function DefineGlobalZoneViewsGetByFiltersRequest(GlobalZoneName: string) {
-    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(GlobalZoneName + "&GetCount=false"), RequestAliases.GetFilterSearch);
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(GlobalZoneName), RequestAliases.GetFilterSearch);
 }
 export function AsserGlobalZoneViewsGetByFilters() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
 }
 
 export function AssertSearchGlobalZone() {
+    cy.get(BaseSelectors.ListDataLoaded)
     cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
         expect(text).to.contain(GlobalZoneCode);
     });
@@ -1447,12 +1494,13 @@ export function SearchCommodity() {
     AssertCommodityViewsGetByFilters();
 }
 export function DefineCommodityViewsGetByFiltersRequest(CommodityName: string) {
-    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(CommodityName + "&GetCount=false"), RequestAliases.GetFilterSearch);
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(CommodityName), RequestAliases.GetFilterSearch);
 }
 export function AssertCommodityViewsGetByFilters() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
 }
 export function AssertSearchCommodity() {
+    cy.get(BaseSelectors.ListDataLoaded)
     cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
         expect(text).to.contain(CommodityName);
     });
@@ -1544,12 +1592,13 @@ export function SearchRegion() {
     AssertRegionViewsGetByFilters();
 }
 export function DefineRegionViewsGetByFiltersRequest(CommodityName: string) {
-    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(CommodityName + "&GetCount=false"), RequestAliases.GetFilterSearch);
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(CommodityName), RequestAliases.GetFilterSearch);
 }
 export function AssertRegionViewsGetByFilters() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
 }
 export function AssertSearchRegion() {
+    cy.get(BaseSelectors.ListDataLoaded)
     cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
         expect(text).to.contain(RegionName);
     });
@@ -1970,7 +2019,7 @@ export function FillSpecialServicesTypeDetails(specialServicesTypeDetails: Speci
     var RandomSpecialServicesTypeCode = gr.GenerateRandomNumberAndString(8);
     cy.FillLogTextBox(MaintenanceSelectors.SpecialServicesTypeCode, specialServicesTypeDetails.Code.toLowerCase() == "random" ? RandomSpecialServicesTypeCode : specialServicesTypeDetails.Code)
     cy.FillLogTextBox(MaintenanceSelectors.SpecialServicesTypeEnglishName, specialServicesTypeDetails.EnglishName)
-    FillSpecialServicesTypeLocalName(specialServicesTypeDetails.LocalName)
+    cy.FillLogTextBox(MaintenanceSelectors.SpecialServicesTypeLocalName, specialServicesTypeDetails.LocalName)
 }
 export function CreateSpecialServicesType() {
     DefinePostSpecialServicesTypeRequest()
@@ -2018,7 +2067,7 @@ export function SearchSpecialServicesType() {
     AsserSpecialServicesTypeViewsGetByFilters();
 }
 export function DefineSpecialServicesTypeGetByFiltersRequest(SpecialServicesTypeCode: string) {
-    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(SpecialServicesTypeCode + "&GetCount=false"), RequestAliases.GetFilterSearch);
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(SpecialServicesTypeCode), RequestAliases.GetFilterSearch);
 }
 export function AsserSpecialServicesTypeViewsGetByFilters() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
@@ -2037,9 +2086,12 @@ export function AssertOpenSpecialServicesType() {
 function DefineSpecialServicesTypesGetSingleRequest() {
     cy.DefineRequestWait(RestAPI.GET, Urls.SpecialServicesTypesGetSingle, RequestAliases.GetSignle);
 }
+
 export function FillSpecialServicesTypeLocalName(localName: string) {
+    cy.FillLogTextBox(MaintenanceSelectors.SpecialServicesTypeLocalName, " ")
     cy.FillLogTextBox(MaintenanceSelectors.SpecialServicesTypeLocalName, localName)
 }
+
 export function UpdateSpecialServicesType() {
     DefinePutSpecialServicesTypeRequest()
     cy.Click(MaintenanceSelectors.SpecialServicesTypeSaveButton, null)
@@ -2065,9 +2117,12 @@ export function FillMoveTypeDetails(moveTypeDetails: MoveTypeDetails) {
     FillMoveTypeLocalName(moveTypeDetails.LocalName)
     FillMoveTypeTransportMode(moveTypeDetails.TransportMode)
 }
+
 export function FillMoveTypeLocalName(localName: string) {
+    cy.FillLogTextBox(MaintenanceSelectors.MoveTypeLocalName, " ")
     cy.FillLogTextBox(MaintenanceSelectors.MoveTypeLocalName, localName)
 }
+
 function FillMoveTypeTransportMode(TransportMode: string) {
     if (TransportMode.toLocaleUpperCase() == constants.Air) {
         cy.get(BaseSelectors.IsAir).click({ force: true })
@@ -2176,9 +2231,12 @@ export function FillShipmentSubTypeDetails(shipmentSubTypeDetails: ShipmentSubTy
     FillShipmentSubTypeName(shipmentSubTypeDetails.Name)
     FillShipmentType(shipmentSubTypeDetails.ShipmentType)
 }
+
 export function FillShipmentSubTypeName(ShipmentSubTypeName: string) {
+    cy.FillLogTextBox(MaintenanceSelectors.ShipmentSubTypeName, " ")
     cy.FillLogTextBox(MaintenanceSelectors.ShipmentSubTypeName, ShipmentSubTypeName)
 }
+
 export function FillShipmentType(ShipmentType: string) {
     cy.SelectDropDownListItem(MaintenanceSelectors.LogLovShipmentSubType, ShipmentType)
 }
@@ -2363,5 +2421,3 @@ export function CreditCardTypeConversionEventsMapping(eventDetailsList: EventTyp
     return eventDetailsList;
 }
 //#endregion
-
-

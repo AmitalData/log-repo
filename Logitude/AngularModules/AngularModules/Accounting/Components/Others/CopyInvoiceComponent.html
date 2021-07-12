@@ -110,7 +110,7 @@
                                 </td>
 
                                 <td style="width: 18px;" *ngIf="IsEditExchangeRateVisible">
-                                    <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="UpdateCurrencyRateClicked()" [disabled]="true"></IconButton>
+                                    <IconButton [Name]="'Edit'" [IsSmall]="true" [disabled]="true"></IconButton>
                                 </td>
 
                                 <td style="width: 5px;">
@@ -167,7 +167,7 @@
                                 [DataContext]="DataContext"
                                 [LookUpTableName]="'PaymentTerm'"
                                 [SelectedValue]="PaymentTermId"
-                                [DependencyFilter1Value]="PaymentTermDisplayInLOV">
+                                [DependencyFilter1Value]="true">
                         </LogLov>
                     </td>
 
@@ -236,6 +236,12 @@
                     </td>
                 </tr>
 
+                <tr class="FormFieldRow" style="height:14px">
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
                 <!-- BranchId -->
                 <tr class="FormFieldRow">
                     <td>
@@ -255,13 +261,14 @@
                 <tr class="FormFieldRow" style="height:70px">
                     <td colspan="2">
                         <div float-start>
-                            <div float-start text-start style="width: 140px;">{{'APInvoice.O.CopyLines' | TextCodeTranslationPipe}}</div>
+                            <div float-start style="width:10px;height:14px"></div>
+                            <div float-start text-start style="width: 130px;">{{'APInvoice.O.CopyLines' | TextCodeTranslationPipe}}</div>
                             <div float-start style="width: 20px">
                                 <CheckBox [IsChecked]="IsCopyLinesChecked" (Checked)="IsCopyLinesChecked = $event"></CheckBox>
                             </div>
                         </div>
                         <div float-end>
-                            <div float-start text-start style="width: 120px;">{{'APInvoice.O.CopyAmounts' | TextCodeTranslationPipe}}</div>
+                            <div float-start text-start style="width: 100px;">{{'APInvoice.O.CopyAmounts' | TextCodeTranslationPipe}}</div>
                             <div float-start style="width: 20px;">
                                 <CheckBox [IsChecked]="IsCopyAmountsChecked" (Checked)="IsCopyAmountsChecked = $event" [IsEnabled]="!disableCopyAmounts"></CheckBox>
                             </div>
@@ -274,7 +281,6 @@
                     </td>
                 </tr>
             </table>
-        </td>
     </tr>
 
     <tr style="height: 32px;">

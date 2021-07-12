@@ -114,8 +114,12 @@ namespace WebFreight.Web.WcfApi
                     else
                     {
                         entity = AddressRepository.GetSingleAddressByExternalId(entityPM.ExternalId, entityPM.Tenant);
+                        if  (entity == null && (entityPM.AddressTypeId != "O") && !string.IsNullOrEmpty(entityPM.CardId))
+                        {
+                            entity = AddressRepository.GetByCardIdAndTypeId(entityPM.CardId, entityPM.AddressTypeId, entityPM.Tenant);
+                        }
 
-                        if (entityPM.AddressTypeId == "M" && entity == null) ConvertPreviousMainAddressToBillingAddress(entityPM);
+                        //if (entityPM.AddressTypeId == "M" && entity == null) ConvertPreviousMainAddressToBillingAddress(entityPM);
                     }
 
 
@@ -171,17 +175,18 @@ namespace WebFreight.Web.WcfApi
             }
         }
 
-        private static void ConvertPreviousMainAddressToBillingAddress(AddressPM entityPM)
-        {
-            AddressRepository addressRepository = new AddressRepository(entityPM.Tenant);
-            var mainaddress = addressRepository.GetMainAddressByCardId(entityPM.CardId, entityPM.Tenant);
-            if (mainaddress != null && entityPM.Id != mainaddress.Id)
-            {
-                mainaddress.AddressTypeId = "B";
-                addressRepository.Update(mainaddress);
-                addressRepository.SubmitChanges();
-            }
-        }
+       
+        //private static void ConvertPreviousMainAddressToBillingAddress(AddressPM entityPM)
+        //{
+        //    AddressRepository addressRepository = new AddressRepository(entityPM.Tenant);
+        //    var mainaddress = addressRepository.GetMainAddressByCardId(entityPM.CardId, entityPM.Tenant);
+        //    if (mainaddress != null && entityPM.Id != mainaddress.Id)
+        //    {
+        //        mainaddress.AddressTypeId = "B";
+        //        addressRepository.Update(mainaddress);
+        //        addressRepository.SubmitChanges();
+        //    }
+        //}
 
         public AddressPM GetAddressByExternalId(string externalId, int tenant, ref Response response)
         {

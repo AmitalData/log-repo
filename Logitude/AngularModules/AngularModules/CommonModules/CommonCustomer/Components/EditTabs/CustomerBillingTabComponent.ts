@@ -116,13 +116,20 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
 
             this.UIProperties.SetEnabled("CreditLimitAmount", this.ObjectTableName, this.HasEditCreditAmountFeature);
             this.EntityPM.UIProperties.SetEnabled("CreditLimitAmount", this.ObjectTableName, this.HasEditCreditAmountFeature);
+            this.SetInsuredCreditLimitEnablitity();
 
         }
+    }
+
+    private SetInsuredCreditLimitEnablitity() {
+        this.UIProperties.SetEnabled("InsuredcreditLimit", this.ObjectTableName, this.HasEditCreditAmountFeature);
+        this.EntityPM.UIProperties.SetEnabled("InsuredcreditLimit", this.ObjectTableName, this.HasEditCreditAmountFeature);
     }
 
     public CreditLimitAmountLabel: string;
     public CreditLimitOpenBalanceLabel: string;
     public CreditLimitActualBalanceLabel: string;
+
     SetLabels() {
         this.CreditLimitAmountLabel = TextCodeTranslator.Translate('Customer.F.CreditLimitAmount') + " (" + this.LocalCurrencyCode + ")";
         this.CreditLimitOpenBalanceLabel = TextCodeTranslator.Translate('Customer.F.CreditLimitOpenBalance') + " (" + this.LocalCurrencyCode + ")";
@@ -248,6 +255,14 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
     set CreditLimitAmount(value: number) {
         if (this.EntityPM.CreditLimitAmount != value) {
             this.EntityPM.CreditLimitAmount = AppTool.Round(value, 2);
+            this.SetUIProperties();
+        }
+    }
+
+    get InsuredcreditLimit() { return this.EntityPM.InsuredcreditLimit; }
+    set InsuredcreditLimit(value: number) {
+        if (this.EntityPM.InsuredcreditLimit != value) {
+            this.EntityPM.InsuredcreditLimit = AppTool.Round(value, 2);
             this.SetUIProperties();
         }
     }

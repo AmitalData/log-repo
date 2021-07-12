@@ -710,8 +710,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         oceanInsightGlobalSetting.OITenantNumber = setting.OITenantNumber;
                         oceanInsightGlobalSetting.AmitalCloudEnvironmentURL = setting.AmitalCloudEnvironmentURL;
                         oceanInsightGlobalSetting.AmitalCloudLogitudeTenantPrimaryKey = setting.AmitalCloudLogitudeTenantPrimaryKey;
+                       
                     }
-
                     scope.Complete();
                     return Request.CreateResponse(HttpStatusCode.OK, oceanInsightGlobalSetting);
                 }
@@ -743,6 +743,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         setting.AmitalCloudLogitudeTenantPrimaryKey = amitalCloudLogitudeTenantPrimaryKey;
                         mySettingRepository.Update(setting);
                         mySettingRepository.SubmitChanges();
+                        LogitudeSettings.OITenantNumber = oITenantNumber;
+                        LogitudeSettings.AmitalCloudEnvironmentURL = amitalCloudEnvironmentURL;
+                        LogitudeSettings.AmitalCloudLogitudeTenantPrimaryKey = amitalCloudLogitudeTenantPrimaryKey;
                     }
                     scope.Complete();
                     return Request.CreateResponse(HttpStatusCode.OK, "");
