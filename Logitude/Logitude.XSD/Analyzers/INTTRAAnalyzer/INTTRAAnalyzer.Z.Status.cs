@@ -138,6 +138,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                     Location = this.EventLocationPortId,
                     TimeOfArrivalInfo = ArrivalDateIndicator,
                     TimeOfDepartureInfo = DepartureDateIndicator,
+                    StatusSource = "INT",
                 };
 
                 iShipmentContainerStatusRepository.Add(iStatus);
@@ -192,6 +193,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                         Location = EventLocationPortId,
                                         TimeOfArrivalInfo = ArrivalDateIndicator,
                                         TimeOfDepartureInfo = DepartureDateIndicator,
+                                        StatusSource = "INT",
                                     };
 
                                     iShipmentContainerStatusRepository.Add(iHouseStatus);
@@ -742,6 +744,8 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
         }
         private void UpdateContainerFields()
         {
+            string inttraSource = "INT";
+            iContainer.ContainerStatusSourceCode = inttraSource;
             if (this.DepartureDateIndicator == "E")
             {
                 iContainer.ETD = this.DepartureDate;
