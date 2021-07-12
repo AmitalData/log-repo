@@ -1553,7 +1553,7 @@
     InActive="false"
     DisplayLongName="false"
     FullFieldLable="&quot;ShipmentId&quot;"
-    DefaultText="&quot;ShipmentId&quot;"
+    DefaultText="&quot;Shipment&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -1571,7 +1571,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    HasTemplate="false"
+    HasTemplate="true"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
@@ -2421,6 +2421,11 @@
         Column="1"
         Row="0"
         ObjectFieldName="&quot;CarrierName&quot;"
+        ScreenName="ContainerHeaderScreen" />
+      <ScreenField
+        Column="1"
+        Row="1"
+        ObjectFieldName="&quot;ShipmentId&quot;"
         ScreenName="ContainerHeaderScreen" />
       <ScreenField
         Column="2"
