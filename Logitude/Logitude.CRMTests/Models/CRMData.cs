@@ -10,5 +10,6 @@ namespace Logitude.CRMTests.Models
     {
         public static string ActivityTaskId { get; set; }
         public static string ActivityAppointmentId { get; set; }
+        public static string ActivityPhoneCallId { get; set; }
     }
 }

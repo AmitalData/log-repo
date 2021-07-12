@@ -29,7 +29,7 @@ namespace Logitude.CRMTests.Services
                 .CallWithId(GetDefaultContact())
                 .Build();
         }
-        private string GetDefaultContact()
+        public string GetDefaultContact()
         {
             ApiQueryFilters apiQueryFilters = new ApiQueryFiltersBuilder().WithDefualtValues().Build();
             ApiResponse<IEnumerable<ContactPM>> response = APICaller.CallGetByFilters<IEnumerable<ContactPM>>(Urls.ContactViewsGetByFilters, UserTenant.Token, apiQueryFilters);
