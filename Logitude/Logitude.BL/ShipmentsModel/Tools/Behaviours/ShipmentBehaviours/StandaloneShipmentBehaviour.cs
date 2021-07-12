@@ -134,7 +134,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         private void UpdateShipment(ShipmentPM stanAloneShipmentPM)
         {
             ShipmentService shipmentService = new ShipmentService(this.shipmentsContext, stanAloneShipmentPM, "");
-            shipmentService.Update();
+            shipmentService.Update(true);
         }
 
         private void UpdateStandAloneShipmentOnPickDeliveryConnection(string shipmentId, string pickupDeliveryId, List<ShipmentPickUpDeliveryPackagePM> connectedPickupDeliveryPackages)
@@ -154,8 +154,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         private void MapStandAlonePackagesOnPickDeliveryConnection(ShipmentPM stanAloneShipmentPM, string pickupDeliveryId, List<ShipmentPickUpDeliveryPackagePM> connectedPickupDeliveryPackages)
         {
             List<ShipmentPickUpDeliveryPackagePM> shipmentPickUpDeliveryPackages = connectedPickupDeliveryPackages.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
-            
-            if (shipmentPickUpDeliveryPackages.Count() != 0 && stanAloneShipmentPM.ShipmentPackages.Count == 0)
+            if (stanAloneShipmentPM.ShipmentPackages.Count != 0)
+            {
+                foreach (ShipmentPackagePM shipmentPackagePM in stanAloneShipmentPM.ShipmentPackages)
+                {
+                    shipmentPackagePM.ChangeSetOp = ChangeSetOperation.Delete;
+                }
+            }
+            if (shipmentPickUpDeliveryPackages.Count() != 0)
             {
                 ShipmentPickUpDeliveryPackage itemPoco = shipmentPickUpDeliveryPackageRepository.GetSingleShipmentPickUpDeliveryPackage(shipmentPickUpDeliveryPackages.FirstOrDefault().Id);
                 if (itemPoco != null)
@@ -163,30 +169,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                     this.CreateStandaloneShipmentPackage(itemPoco, stanAloneShipmentPM.Id);
                 }
             }
-            //// here 
-            else if (shipmentPickUpDeliveryPackages.Count() == 0 && stanAloneShipmentPM.ShipmentPackages.Count != 0)
-            {
-                this.CreateStandaloneShipmentPackageFromForwarder(stanAloneShipmentPM.ShipmentPackages.FirstOrDefault(), pickupDeliveryId);
-            }
         }
-        private void CreateStandaloneShipmentPackageFromForwarder(ShipmentPackagePM shipmentPackagePM, string pickupDeliveryId)
-        {
-            ShipmentPickUpDeliveryPackage shipmentPickUpDeliveryPackage = new ShipmentPickUpDeliveryPackage()
-            {
-                Tenant = tenant,
-                ContainerEntityId = shipmentPackagePM.ContainerEntityId,
-                ContainerNumber = shipmentPackagePM.ContainerNumber,
-                Description = shipmentPackagePM.Description,
-                PackageTypeId = shipmentPackagePM.PackageTypeId,
-                Quantity = shipmentPackagePM.Quantity,
-                Volume = shipmentPackagePM.Volume,
-                Weight = shipmentPackagePM.Weight,
-                Id = IdCounter.GetNumber("ShipmentPickUpDeliveryPackage", tenant).ToString(),
-                ShipmentPickUpDeliveryId = pickupDeliveryId,
-            };
 
-            shipmentPickUpDeliveryPackageRepository.Add(shipmentPickUpDeliveryPackage);
-        }
         private void MapStandaloneShipmentFields(ShipmentPM stanAloneShipmentPM, string pickupDeliveryId)
         {
             ShipmentPickUpDelivery shipmentPickUpDelivery = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDelivery(tenant, pickupDeliveryId);

@@ -13741,19 +13741,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return cloudCustomData;
         }
 
-        public int  GetNumberOfShipmentPackages(int tenant, string shipmentId)
-        {
-            var shipmentIds = new List<string>() { shipmentId };
-            ShipmentPackageQuery shipmentPackageQuery = new ShipmentPackageQuery(tenant);
-            var shipmentPackages = shipmentPackageQuery.GetShipmentPackages(shipmentIds, tenant);
-            if (shipmentPackages != null)
-            {
-                return shipmentPackages.Count;
-            }
-               
-            return 0;
-        }
-
         public List<ShipmentList> GetShipmentsForMultipleAPInvoice(string invoiceId, string vendorId, int tenant)
         {
             List<ShipmentList> myResult1 = new List<ShipmentList>();
