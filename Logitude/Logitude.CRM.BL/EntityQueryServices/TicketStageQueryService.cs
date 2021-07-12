@@ -22,10 +22,10 @@ namespace Logitude.CRM.BL.EntityQueryServices
 {
     public partial class TicketStageQueryService
     {
-        public string GetIdByName(string stageName, int tenant)
+        public string GetIdByCode(string code, int tenant)
         {
             string ticketStageId = (from ticketStage in context.TicketStages
-                                        where ticketStage.Name == stageName && ticketStage.Tenant == tenant
+                                        where ticketStage.Code == code && ticketStage.Tenant == tenant
                                         select ticketStage.Id).FirstOrDefault();
             return ticketStageId;
         }
