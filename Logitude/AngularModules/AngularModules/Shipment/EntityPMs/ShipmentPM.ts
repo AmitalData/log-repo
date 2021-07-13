@@ -4124,6 +4124,25 @@ export class ShipmentPM {
     public set ProjectNumber(newValue: string) { if (this.projectNumber != newValue) { this.projectNumber = newValue; this.MarkAsDirty("ProjectNumber"); } }
 
 
+
+    private privateLabelInvoiceNumber: string;
+    public get PrivateLabelInvoiceNumber() { return this.privateLabelInvoiceNumber; }
+    public set PrivateLabelInvoiceNumber(newValue: string) { if (this.privateLabelInvoiceNumber != newValue) { this.privateLabelInvoiceNumber = newValue; this.MarkAsDirty(); } }
+
+    private privateLabelIncludePickup: boolean;
+    public get PrivateLabelIncludePickup() { return this.privateLabelIncludePickup; }
+    public set PrivateLabelIncludePickup(newValue: boolean) { if (this.privateLabelIncludePickup != newValue) { this.privateLabelIncludePickup = newValue; this.MarkAsDirty(); } }
+
+    private privateLabelIncludeDelivery: boolean;
+    public get PrivateLabelIncludeDelivery() { return this.privateLabelIncludeDelivery; }
+    public set PrivateLabelIncludeDelivery(newValue: boolean) { if (this.privateLabelIncludeDelivery != newValue) { this.privateLabelIncludeDelivery = newValue; this.MarkAsDirty(); } }
+
+    private requestedFlightDate: Date;
+    public get RequestedFlightDate() { return this.requestedFlightDate; }
+    public set RequestedFlightDate(newValue: Date) { if (this.requestedFlightDate != newValue) { this.requestedFlightDate = newValue; this.MarkAsDirty(); } }
+
+
+
     private notify1Reference: string;
     public get Notify1Reference() { return this.notify1Reference; }
     public set Notify1Reference(newValue: string) {

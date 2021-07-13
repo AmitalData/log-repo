@@ -1,0 +1,1222 @@
+
+
+<style type="text/css">
+	.NotesBox p {
+		font-size: 11px;
+		color: #6E7172;
+		white-space: normal;
+		word-wrap: break-word;
+		text-wrap: normal;
+		text-overflow: ellipsis;
+	}
+
+	.NotesBox {
+		background: #FFFADC;
+		border: 1px solid #AAAAAA;
+		border-radius: 3px;
+		-moz-border-radius: 3px;
+		-webkit-border-radius: 3px;
+		box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		padding: 5px;
+		line-height: 12px;
+		text-align: left;
+		overflow-x: hidden;
+		overflow-y: scroll;
+		margin-right: 36px;
+	}
+
+	.SectionTitle > span {
+		font-size: 14px;
+		user-select: text;
+		-webkit-user-select: auto;
+	}
+
+	.SectionTitle td {
+		font-size: 14px;
+		user-select: text;
+	}
+
+	.SectionTitle {
+		height: 20px;
+		line-height: 20px;
+		font-size: 14px;
+		color: #1B90CB;
+		user-select: text;
+		-webkit-user-select: text;
+	}
+
+	.SetCustomer:hover .SetCustomerIcon {
+		background: url('./Images/Menu/Person.png') center center;
+		background-size: contain;
+	}
+
+	.SetCustomer:hover .SetCustomerText {
+		color: #0075AF;
+	}
+
+	.SetCustomerIcon {
+		display: inline-block;
+		background: url('./Images/Menu/Person.Gray.png') center center;
+		background-size: contain;
+	}
+
+	.SetCustomerText {
+		color: #BABABA;
+	}
+
+	.SetCustomer {
+		cursor: pointer;
+	}
+
+	.AppLeftMenuBackground .RadioButton {
+		margin-left: 5px;
+		margin-top: 5px;
+	}
+
+	.GreenAddButtonDisabled {
+		pointer-events: none;
+	}
+
+	.GreenAddButton:hover {
+		background: url('./Images/Buttons/AddGreenSolid.png') center center;
+		background-size: contain;
+	}
+
+	.GreenAddButton {
+		width: 12px;
+		height: 12px;
+		background: url('./Images/Buttons/AddGreenBrush.png') center center;
+		background-size: contain;
+		cursor: pointer;
+	}
+
+	.Pakages {
+		font-size: 11px;
+		font-style: italic;
+		position: relative;
+		left: 30px;
+		color: rgb(110, 113, 114);
+	}
+
+    .FlightDate {
+        position: relative;
+        font-size: 12px;
+        color: rgb(110, 113, 114); 
+    }
+
+	.Disabled {
+		pointer-events: none;
+		opacity: 0.5;
+	}
+
+	.IconButton img {
+		position: absolute;
+		top: 1px;
+		left: 1px;
+		bottom: 0;
+		right: 0;
+		margin: auto;
+	}
+
+	.IconButton:focus:not(:disabled) {
+		border: 1px solid #3BB3E2;
+		-webkit-box-shadow: 0px 0px 6px 0px #3BB3E2;
+		-moz-box-shadow: 0px 0px 6px 0px #3BB3E2;
+		box-shadow: 0px 0px 6px 0px #3BB3E2;
+	}
+
+	.IconButton:hover:not(:disabled) {
+		cursor: pointer;
+		background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(221, 232, 245, 1) 100%);
+		background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+		background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(221, 232, 245, 1) ));
+		background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+		background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+	}
+
+	.IconButton:disabled {
+		opacity: 0.5;
+		pointer-events: none;
+	}
+
+	.IconButton {
+		display: block;
+		float: left;
+		width: 21px;
+		height: 21px;
+		outline: none;
+		border: 1px solid #6A8299;
+		border-radius: 3px;
+		-moz-border-radius: 3px;
+		-webkit-border-radius: 3px;
+		position: relative;
+		box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
+		background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+		background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
+		background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+		background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+	}
+
+    .RedPoint {
+        width: 7px;
+        height: 7px;
+        background: #E45A26;
+        -webkit-border-radius: 25px;
+        -moz-border-radius: 25px;
+        border-radius: 25px;
+        position: relative;
+        top: 12px;
+    }
+	 
+</style>
+ 
+
+<table>
+	<tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+		<td>
+			<ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<div class="FillParent CurvedArea">
+				<table>
+					<tr>
+						<td style="width: 155px; vertical-align: top" class="AppLeftMenuBackground">
+
+							<!-- Origin Mood -->
+							<table>
+								<tr style="height: 1px">
+									<td>
+										<!-- Directions -->
+										<div style="margin: 10px;">
+											<div style="font-size: 13px; color: #6E7172;">Direction{{'Shipment.F.DirectionId' | TextCodeTranslationPipe}}:</div>
+											<div style="margin-top: -2px;">
+												<div class="RadioButton" *ngFor="let item of DirectionsList" [attr.id]="'DirectionRadio_Div_' + SessionIndex + item.Code">
+													<input [attr.id]="'DirectionRadio_' + SessionIndex + item.Code" [attr.name]="'DirectionsRadio' + SessionIndex" type="radio" [checked]="DirectionId == item.Code" (click)="changeDirection(item.Code)" />
+													<label [attr.for]="'DirectionRadio_' + SessionIndex + item.Code" style="text-indent: 40px; font-size: 12px" [ngStyle]="{color: DirectionId == item.Code ? '#287828':'#282E30'}">
+														<img class="LeftCenter" style="margin-left: 20px;" [attr.src]="item.Code == 'C'? './Images/Directions/I.png' : './Images/Directions/' + item.Code + '.png'" />
+														 
+														{{item.Name}}
+													</label>
+												</div>
+											</div>
+										</div>
+
+										<!-- Transport Modes -->
+										<div *ngIf="DirectionId == 'E'" style="margin: 10px;">
+											<div style="font-size: 13px; color: #6E7172">Transport{{'Shipment.F.TransportModeId.Short' | TextCodeTranslationPipe}}:</div>
+											<div style="margin-top: -2px;">
+												<div class="RadioButton" *ngFor="let item of TransportModesList" [attr.id]="'TransportModeRadio_Div_' + SessionIndex + item.Code">
+													<input [disabled]="item.Code != 'A'" [attr.id]="'TransportModeRadio_' + SessionIndex + item.Code" [attr.name]="'TransportModesRadio' + SessionIndex" type="radio" [checked]="TransportModeId == item.Code" (click)="TransportModeId = item.Code" />
+													<label [attr.for]="'TransportModeRadio_' + SessionIndex + item.Code" style="text-indent: 40px; font-size: 12px" [ngStyle]="{color: TransportModeId == item.Code ? '#287828':'#282E30'}">
+														<img class="LeftCenter" style="margin-left: 20px;" [attr.src]="'./Images/Icons/' + item.Code + '.png'" />
+														{{item.Name}}
+													</label>
+												</div>
+											</div>
+										</div>
+
+
+									</td>
+								</tr>
+
+								<tr>
+									<td>
+										<div></div>
+									</td>
+								</tr>
+							</table>
+
+						</td>
+
+						<td>
+							<table>
+
+								<tr>
+									<td>
+										<div class="ScrollViewer" style="padding: 10px; padding-top: 5px; top: 3px; right: 3px; bottom: 3px;">
+											<div class="ScrollContent" [ngStyle]="{opacity: ScreenOpacity}">
+												<table *ngIf="DirectionId == 'E'">
+													<tr style="height: 30px;">
+														<td>
+															<div class="ScrollViewer" style="padding: 10px; padding-top: 5px; top: 3px; right: 3px; bottom: 3px;">
+																<div class="ScrollContent" [ngStyle]="{opacity: ScreenOpacity}">
+
+																	<!-- Order Details -->
+																	<div>
+																		<div class="SectionTitle">
+																			<table>
+																				<tr>
+																					<td>Order Details</td>
+																				</tr>
+																			</table>
+																		</div>
+
+																		<table>
+
+																			<tr class="FormFieldRow">
+																				  
+																				<td [style.width.px]="LabelColumnWidth">
+																					<div class="RedPoint"></div>
+																					<label style="padding-left:10px;color: rgb(110, 113, 114);">
+																						Reference:
+																					</label>
+																				</td>
+
+																				<td [style.width.px]="ControlColumnWidth">
+																					<LogTextBox [ObjectFieldName]="'CustomerReference2'" [Text]="CustomerReference2" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+																				</td>
+
+																				<td style="width: 20px;">
+																					<div></div>
+																				</td>
+
+
+																				<td [style.width.px]="LabelColumnWidth">
+																					<label style="padding-left:10px;color: rgb(110, 113, 114);">
+																						Invoice Number:
+																					</label>
+																				</td>
+
+																				<td [style.width.px]="ControlColumnWidth">
+																					<LogTextBox [ObjectFieldName]="'PrivateLabelInvoiceNumber'" [Text]="PrivateLabelInvoiceNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+																				</td>
+
+																				<td style="width: 20px;">
+																					<div></div>
+																				</td>
+
+
+																			</tr>
+
+
+																		</table>
+
+																		<div style="height:1px; width: 100%; background: #999999; opacity:0.3; margin-top: 5px; margin-bottom: 5px;"></div>
+																	</div>
+
+
+																</div>
+															</div>
+														</td>
+													</tr>
+
+													<tr style="height: 30px;">
+														<td>
+															<div class="ScrollViewer" style="padding: 10px; padding-top: 5px; top: 3px; right: 3px; bottom: 3px;">
+																<div class="ScrollContent" [ngStyle]="{opacity: ScreenOpacity}">
+
+																	<!-- Consignee -->
+																	<div>
+																		<div class="SectionTitle">
+																			<table>
+																				<tr>
+																					<td>Consignee</td>
+																				</tr>
+																			</table>
+																		</div>
+
+																		<table>
+
+																			<tr class="FormFieldRow">
+																				<td [style.width.px]="LabelColumnWidth">
+																					<label style="padding-left:10px;color: rgb(110, 113, 114);">
+																						Name:
+																					</label>
+																				</td>
+
+																				<td [style.width.px]="ControlColumnWidth">
+																					<LogTextBox [ObjectFieldName]="'ConsigneeName'" [Text]="ConsigneeName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+																				</td>
+
+																				<td style="width: 20px;">
+																					<div></div>
+																				</td>
+
+																				<td [style.width.px]="LabelColumnWidth">
+																					<div class="RedPoint"></div>
+																					<label style="padding-left:10px;color: rgb(110, 113, 114);">
+																						Destination:
+																					</label>
+																				</td>
+
+																				<td [style.width.px]="ControlColumnWidth">
+																					<LogLov [ObjectFieldName]="'MainCarriageToPortId'"
+																							[SelectedValue]="MainCarriageToPortId"
+																							[ObjectTableName]="ObjectTableName"
+																							[DataContext]="DataContext"
+																							[LookUpTableName]="'Port'"
+																							[DependencyFilter1Value]="TransportModeId">
+																					</LogLov>
+																				</td>
+
+																				<td style="width: 20px;">
+																					<div></div>
+																				</td>
+
+
+																			</tr>
+
+
+																		</table>
+
+																		<div style="height:1px; width: 100%; background: #999999; opacity:0.3; margin-top: 5px; margin-bottom: 5px;"></div>
+																	</div>
+
+
+																</div>
+															</div>
+														</td>
+													</tr>
+
+													<tr style="height: 30px;">
+														<td>
+															<div class="ScrollViewer" style="padding: 10px; padding-top: 5px; top: 3px; right: 3px; bottom: 3px;">
+																<div class="ScrollContent" [ngStyle]="{opacity: ScreenOpacity}">
+
+																	<!-- Pickup and Delivery -->
+																	<div>
+																		<div class="SectionTitle">
+																			<table>
+																				<tr>
+																					<td>Pickup</td>
+
+																					<td style="width: 20px;">
+																						<div></div>
+																					</td>
+
+																					<td style="position: relative; left: 35px;">Delivery</td>
+																				</tr>
+																			</table>
+																		</div>
+
+																		<table>
+
+																			<tr class="FormFieldRow">
+																				<td>
+																					<table>
+																						<tr class="FormFieldRow">
+																							<td [style.width.px]="LabelColumnWidth">
+																								<label style="padding-left:10px;color: rgb(110, 113, 114);">
+																									Include Pickup:
+																								</label>
+																							</td>
+
+																							<td [style.width.px]="ControlColumnWidth">
+																								<LogCheckBox [ObjectFieldName]="'PrivateLabelIncludePickup'" [Checked]="PrivateLabelIncludePickup" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+																							</td>
+
+																							<td style="width: 5px;">
+																								<div></div>
+																							</td>
+
+																							<td [style.width.px]="LabelColumnWidth">
+																								<label style="padding-left:10px;color: rgb(110, 113, 114);">
+																									Include Delivery:
+																								</label>
+																							</td>
+
+																							<td [style.width.px]="ControlColumnWidth">
+																								<LogCheckBox [ObjectFieldName]="'PrivateLabelIncludeDelivery'" [Checked]="PrivateLabelIncludeDelivery" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+																							</td>
+
+																						</tr>
+																					</table>
+																				</td>
+																			</tr>
+																			 
+																		</table>
+
+																		<div style="height:1px; width: 100%; background: #999999; opacity:0.3; margin-top: 5px; margin-bottom: 5px;"></div>
+																	</div>
+
+
+																</div>
+															</div>
+														</td>
+													</tr>
+
+													<tr style="height: 30px;">
+														<td>
+															<div class="ScrollViewer" style="padding: 10px; padding-top: 5px; top: 3px; right: 3px; bottom: 3px;">
+																<div class="ScrollContent" [ngStyle]="{opacity: ScreenOpacity}">
+
+																	<!-- General -->
+																	<div>
+																		<div>
+																			<table>
+																				<tr>
+																					<td class="SectionTitle">General</td>
+
+																					<td style="width: 290px;">
+																						<div></div>
+																					</td>
+
+																					<td class="FlightDate">Requested Flight Date:</td>
+
+																					<td style="width: 5px;">
+																						<div></div>
+																					</td>
+																					<td style="width:150px;position: relative; right: 60px;">
+																						<LogDatePicker [ObjectTableName]="ObjectTableName" [ObjectFieldName]="'RequestedFlightDate'" [DataContext]="DataContext"></LogDatePicker>
+																					</td>
+
+																				</tr>
+																			</table>
+																		</div>
+
+																		<table>
+
+																			<tr class="FormFieldRow">
+
+																				<td [style.width.px]="LabelColumnWidth">
+																					<div class="RedPoint"></div>
+																					<label style="padding-left:10px;color: rgb(110, 113, 114);">
+																						Incoterm:
+																					</label>
+																				</td>
+
+																				<td [style.width.px]="ControlColumnWidth">
+																					<LogLov [ObjectFieldName]="'IncotermId'"
+																							[SelectedValue]="IncotermId"
+																							[ObjectTableName]="ObjectTableName"
+																							[DataContext]="DataContext"
+																							[LookUpTableName]="'Incoterm'">
+																					</LogLov>
+																				</td>
+																				<td style="width: 20px;">
+																					<div></div>
+																				</td>
+
+																				<td [style.width.px]="LabelColumnWidth">
+																					<label style="padding-left:10px;color: rgb(110, 113, 114);">
+																						Dangerouse Goods:
+																					</label>
+																				</td>
+																				<td style="width: 5px;">
+																					<div></div>
+																				</td>
+
+																				<td [style.width.px]="ControlColumnWidth">
+																					<LogCheckBox [ObjectFieldName]="'OrderIsDangerouseGoods'" [Checked]="OrderIsDangerouseGoods" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+																				</td>
+
+
+																				<td style="width: 20px;">
+																					<div></div>
+																				</td>
+
+
+																			</tr>
+
+
+																		</table>
+
+																		<div style="height:1px; width: 100%; background: #999999; opacity:0.3; margin-top: 5px; margin-bottom: 5px;"></div>
+																	</div>
+
+
+																</div>
+															</div>
+														</td>
+													</tr>
+
+
+													<tr style="height: 55px;">
+														<td>
+															<div class="ScrollViewer" style="padding: 10px; padding-top: 5px; top: 3px; right: 3px; bottom: 3px;">
+																<div class="ScrollContent" [ngStyle]="{opacity: ScreenOpacity}">
+
+																	<!-- Pakages -->
+																	<div>
+																		<div>
+																			<table>
+																				<tr>
+																					<td class="Pakages">Please insert totals or <a (click)="AddPackage()">Fill Dimensions</a></td>
+																				</tr>
+																			</table>
+																		</div>
+
+																		<table>
+
+																			<tr class="FormFieldRow">
+																				<td [style.width.px]="LabelColumnWidth">
+																					<div class="RedPoint"></div>
+																					<label style="padding-left:10px;color: rgb(110, 113, 114);">
+																						Number of Packages:
+																					</label>
+																				</td>
+
+																				<td [style.width.px]="ControlColumnWidth">
+																					<LogTextBox [ObjectFieldName]="'BookingNumberOfPackages'" [Text]="BookingNumberOfPackages" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+																				</td>
+
+																				<td style="width: 20px;">
+																					<div></div>
+																				</td>
+
+																				<td style="width: 330px;">
+																					<table>
+																						<tr class="FormFieldRow" style="height: 20px;">
+																							<td colspan="2" style="position: relative; bottom: 10px;">
+																								<label style="padding-left:10px;color: rgb(110, 113, 114);">
+																									Notes:
+																								</label>
+																							</td>
+																						</tr>
+
+																						<tr class="FormFieldRow" style="height:auto;">
+																							<td style="width: 10px;">
+																								<div></div>
+																							</td>
+
+																							<td>
+																								<div class="FillParent">
+																									<LogTextBox [ObjectFieldName]="'Notes'" [Text]="Notes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+																								</div>
+																							</td>
+																						</tr>
+
+																						<tr style="height: 5px;">
+																							<td colspan="2">
+																								<div></div>
+																							</td>
+																						</tr>
+																					</table>
+																				</td>
+																			</tr>
+
+																			<tr class="FormFieldRow">
+
+																				<td [style.width.px]="LabelColumnWidth">
+																					<div class="RedPoint"></div>
+																					<label style="padding-left:10px;color: rgb(110, 113, 114);">
+																						Gross Weight (MT):
+																					</label>
+																				</td>
+
+																				<td [style.width.px]="ControlColumnWidth">
+																					<LogTextBox [ObjectFieldName]="'OrderGrossWeight'" [Text]="OrderGrossWeight" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+																				</td>
+
+																				<td style="width: 20px;">
+																					<div></div>
+																				</td>
+
+
+
+
+																			</tr>
+
+																			<tr class="FormFieldRow">
+
+																				<td [style.width.px]="LabelColumnWidth">
+																					<label style="padding-left:10px;color: rgb(110, 113, 114);">
+																						Volume (CBM):
+																					</label>
+																				</td>
+
+																				<td [style.width.px]="ControlColumnWidth">
+																					<LogTextBox [ObjectFieldName]="'BookingVolume'" [Text]="BookingVolume" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+																				</td>
+
+
+																				<td style="width: 20px;">
+																					<div></div>
+																				</td>
+
+
+
+
+																			</tr>
+
+
+																		</table>
+
+																		<div style="height:1px; width: 100%; background: #999999; opacity:0.3; margin-top: 5px; margin-bottom: 5px;"></div>
+																	</div>
+
+
+																</div>
+															</div>
+														</td>
+													</tr>
+
+
+												</table>
+
+									 
+
+												<table *ngIf="DirectionId == 'C'">  
+													<tr>
+														<td>
+															<table>
+																<tr style="height: 10px;">
+																	<td style="height: 10px;">
+																		<div></div>
+																	</td>
+																	<td style="height: 10px;">
+																		<div></div>
+																	</td>
+																</tr>
+																<tr>
+																	<td style="width:112px;">
+																		<table>
+																			<tr style="        height: 33px;">
+																				<td style="height: 22px;">
+																					<table>
+																						<tr>
+																							<td>
+																								<div style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
+																							</td>
+																							<td>
+																								<label style="padding-left:10px;color: rgb(110, 113, 114);">
+																									Transportation Type
+																								</label>
+																							</td>
+																						</tr>
+																					</table>
+																				</td>
+																			</tr>
+																			<tr style="        height: 33px;">
+																				<td style="height: 22px;">
+																					<table>
+																						<tr>
+																							<td style="width:7px;"> 
+																							</td>
+																							<td>
+																								<label style="padding-left:10px;color: rgb(110, 113, 114);">
+																									Customs Site
+																								</label>
+																							</td>
+																						</tr>
+																					</table>
+																				</td>
+																			</tr>
+																			<tr style="        height: 33px;">
+																				<td style="height: 22px;">
+																					<table>
+																						<tr>
+																							<td>
+																								<div style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
+																							</td>
+																							<td>
+																								<label style="padding-left:10px;color: rgb(110, 113, 114);">
+																									Order Number
+																								</label>
+																							</td>
+																						</tr>
+																					</table>
+
+																				</td>
+																			</tr>
+
+
+																			<tr *ngIf="!IsDSVTenant" style="        height: 33px;">
+																				<td style="height: 22px;">
+																					<table>
+																						<tr>
+																							<td style="width:7px;">
+																							</td>
+																							<td>
+																								<label style="padding-left:10px;color: rgb(110, 113, 114);">
+																									Supplier Name
+																								</label>
+																							</td>
+																						</tr>
+																					</table>
+
+																				</td>
+																			</tr>
+
+																			<tr *ngIf="!IsDSVTenant" style="height: 33px;">
+																				<td style="height: 22px;">
+																					<table>
+																						<tr>
+																							<td style="width:7px;">
+																							</td>
+																							<td>
+																								<label style="padding-left:10px;color: rgb(110, 113, 114);">
+																									Remarks
+																								</label>
+																							</td>
+																						</tr>
+																					</table>
+
+																				</td>
+																			</tr>
+
+																			<tr *ngIf="IsDSVTenant" style="height: 30px;">
+																				<td style="height: 22px;">
+																					<label style="padding-left:10px;color:#2F75DD;font-size:14px;">
+																						Optional Fields
+																					</label>
+																				</td>
+																			</tr>
+
+																			<tr>
+																				<td></td>
+																			</tr>
+
+
+																		</table>
+																	</td>
+																	<td style="width:20px;"><div></div></td>
+																	<td style="width:200px;float:left;">
+																		<table>
+																			<tr style="height: 33px;">
+																				<td style="height: 22px;width:164px;">
+																					<table>
+																						<tr style="height: 22px;">
+																							<td>
+																								<ul class="FiltersMenu">
+																									<li (click)="transportItemClicked('A')" (mouseover)="transportItemMouseOver('A')" (mouseleave)="transportItemMouseLeave('A')" [class.SelectedFilter]="TransportModeId === 'A'" title="Air">
+																										<img [attr.id]="FilterId_A" class="CenterCenter" src="./_Resources/Images/Icons/TransportModes/Filters/A_g.png" style="top: 1px;" />
+																									</li>
+																									<li (click)="transportItemClicked('O')" (mouseover)="transportItemMouseOver('O')" (mouseleave)="transportItemMouseLeave('O')" [class.SelectedFilter]="TransportModeId === 'O'" title="Ocean">
+																										<img [attr.id]="FilterId_O" class="CenterCenter" src="./_Resources/Images/Icons/TransportModes/Filters/O_g.png" style="top: 1px;" />
+																									</li>
+																									<li *ngIf="IsDSVTenant" (click)="transportItemClicked('I')" (mouseover)="transportItemMouseOver('I')" (mouseleave)="transportItemMouseLeave('I')" [class.SelectedFilter]="TransportModeId === 'I'" title="Inland">
+																										<img [attr.id]="FilterId_I" class="CenterCenter" src="./_Resources/Images/Icons/TransportModes/Filters/I_g.png" style="top: 1px;" />
+																									</li>
+																								</ul>
+																							</td>
+																						</tr>
+																					</table>
+
+																				</td>
+																			</tr>
+																			<tr style="height: 33px;">
+																				<td style="height: 22px;">
+																					<ul *ngIf="TransportModeId" class="FiltersMenu" style="float: left;width:220px;">
+																						<li *ngFor="let item of TransportationTypes" [title]="item.Name" (click)="onTransportationTypeChange(item)" (mouseover)="itemMouseOver(item.Id)" style="width:55px;" [class.SelectedFilter]="SelectedTransportationTypes && (SelectedTransportationTypes.ToPortCode === item.ToPortCode || TransportationTypes.length == 1)">
+																							{{item.Name}}
+																						</li>
+																					</ul>
+																				</td>
+																			</tr>
+
+																			<tr style="height: 33px;">
+																				<td style="height: 22px;">
+																					<LogTextBox [ObjectFieldName]="'CustomerReference1'" [DataContext]="DataContext"></LogTextBox>
+																				</td>
+																			</tr>
+
+
+																			<tr *ngIf="!IsDSVTenant" style="height: 33px;">
+																				<td style="height: 22px;">
+																					<LogTextBox [ObjectFieldName]="'ShipperName'" [DataContext]="DataContext"></LogTextBox>
+																				</td>
+																			</tr>
+
+																			<tr *ngIf="!IsDSVTenant" style="height: 33px;">
+																				<td style="height: 22px;">
+																					<LogTextBox [ObjectFieldName]="'Remarks'" [DataContext]="DataContext"></LogTextBox>
+																				</td>
+																			</tr>  
+																		</table>
+																	</td>
+																	<td style="width:3px;"><div></div></td>
+																</tr>
+
+															</table>
+														</td>
+													</tr>
+													<tr *ngIf="IsDSVTenant">
+														<td>
+															<table>
+																<tr style="height: 30px;">
+																	<td style="height: 22px;width:50%;">
+																		<table>
+																			<tr>
+																				<td style="width:105px;">
+																					<label style="padding-left:10px;color: rgb(110, 113, 114);">
+																						My Reference
+																					</label>
+																				</td>
+																				<td style="height: 22px;">
+																					<LogTextBox [ObjectFieldName]="'CustomerReference2'" [DataContext]="DataContext"></LogTextBox>
+																				</td>
+																			</tr>
+																		</table>
+
+																	</td>
+																	<td style="height: 22px;width:50%;" *ngIf="TransportModeId == 'A'">
+																		<table>
+																			<tr>
+																				<td style="width:105px;">
+																					<label style="padding-left:10px;color: rgb(110, 113, 114);">
+																						Master AWB
+																					</label>
+																				</td>
+																				<td style="height: 22px;">
+																					<LogTextBox [ObjectFieldName]="'Master'" [DataContext]="DataContext"></LogTextBox>
+																				</td>
+																			</tr>
+																		</table>
+
+																	</td>
+																	<td style="height: 22px;width:50%;" *ngIf="TransportModeId == 'O' || TransportModeId == 'I'">
+																		<table>
+																			<tr>
+																				<td style="width:105px;">
+																					<label style="padding-left:10px;color: rgb(110, 113, 114);">
+																						Container #
+																					</label>
+																				</td>
+																				<td style="height: 22px;">
+																					<LogTextBox [ObjectFieldName]="'ContainerNumber'" [DataContext]="DataContext" (LostFocus)="ValidateContainerNumber($event)"></LogTextBox>
+																				</td>
+																			</tr>
+																		</table>
+
+																	</td>
+																</tr>
+																<tr style="height: 30px;">
+																	<td style="width:50%;">
+																		<table>
+																			<tr>
+																				<td style="height: 22px;">
+																					<label style="padding-left:10px;color: rgb(110, 113, 114);">
+																						Supplier Name
+																					</label>
+																				</td>
+																				<td style="width:10px;">
+																					<div></div>
+																				</td>
+																				<td style="height: 22px;">
+																					<LogTextBox [ObjectFieldName]="'ShipperName'" [DataContext]="DataContext"></LogTextBox>
+																				</td>
+																				<td>
+																					<div></div>
+																				</td>
+																			</tr>
+																		</table>
+																	</td>
+																	<td style="height: 22px;width:50%;" *ngIf="TransportModeId == 'A'">
+																		<table>
+																			<tr>
+																				<td style="width:105px;">
+																					<label style="padding-left:10px;color: rgb(110, 113, 114);">
+																						House AWB
+																					</label>
+																				</td>
+																				<td style="height: 22px;">
+																					<LogTextBox [ObjectFieldName]="'House'" [DataContext]="DataContext"></LogTextBox>
+																				</td>
+																			</tr>
+																		</table>
+
+																	</td>
+																</tr>
+																<tr style="height: 30px;">
+																	<td style="width:50%;">
+																		<table>
+																			<tr>
+																				<td style="height: 22px;width:105px;">
+																					<label style="padding-left:10px;color: rgb(110, 113, 114);">
+																						Origin Port
+																					</label>
+																				</td>
+
+																				<td style="height: 22px;">
+																					<LogLov [RunToggleMode]="true"
+																							[ObjectFieldName]="'FromPortId'"
+																							[DataContext]="DataContext"
+																							[LookUpTableName]="'Port'">
+																					</LogLov>
+																				</td>
+																				<td>
+																					<div></div>
+																				</td>
+																			</tr>
+																		</table>
+																	</td>
+																	<td style="width:50%;">
+																		<table>
+																			<tr>
+																				<td style="height: 22px;width:120px;">
+																					<label style="padding-left:10px;color: rgb(110, 113, 114);">
+																						{{PLShortName}} Forwarding
+																					</label>
+																				</td>
+																				<td style="height: 22px;">
+																					<ul class="FiltersMenu">
+																						<li style="width:50px;" (click)="PLForwardingClicked('Yes')" (mouseover)="itemMouseOver('Yes')" (mouseleave)="itemMouseLeave('Yes')" [class.SelectedFilter]="PLForwarding === true">
+																							Yes
+																						</li>
+																						<li style="width:50px;" (click)="PLForwardingClicked('No')" (mouseover)="itemMouseOver('No')" (mouseleave)="itemMouseLeave('No')" [class.SelectedFilter]="PLForwarding === false">
+																							No
+																						</li>
+																					</ul>
+																				</td>
+																				<td>
+																					<div></div>
+																				</td>
+																			</tr>
+																		</table>
+																	</td>
+
+																</tr>
+																<tr style="height: 30px;">
+																	<td style="width:51%;">
+																		<table>
+																			<tr>
+																				<td style="height: 22px;width:104px">
+																					<label style="padding-left:10px;color: rgb(110, 113, 114);">
+																						Quantity
+																					</label>
+																				</td> 
+																				<td style="height: 22px;width:50px;">
+																					<LogTextBox [ObjectFieldName]="'PackagesQuantity'" [DataContext]="DataContext" [HideColumns]="true" [HideLastColumn]="true"></LogTextBox>
+																				</td> 
+																				<td style="height: 22px;width:59px;">
+																					<label style="padding-left:10px;color: rgb(110, 113, 114);">
+																						Weight
+																					</label>
+																				</td> 
+																				<td style="height: 22px;width:46px;">
+																					<LogTextBox [ObjectFieldName]="'GrossWeight'" [DataContext]="DataContext" [HideColumns]="true" [HideLastColumn]="true"></LogTextBox>
+																				</td>
+																				<td style="height: 22px;">
+																					<label style="padding-left:10px;color: rgb(110, 113, 114);">
+																						Kg
+																					</label>
+																				</td>
+																				<td>
+																					<div></div>
+																				</td>
+																			</tr>
+																		</table>
+																	</td>
+																	<td style="width:50%;" [class.Disabled]="!TransportModeId || TransportModeId != 'O'">
+																		<table>
+																			<tr>
+																				<td style="height: 22px;width:120px;">
+																					<label style="padding-left:10px;color: rgb(110, 113, 114);">
+																						Package Type
+																					</label>
+																				</td>
+																				<td style="height: 22px;">
+																					<ul class="FiltersMenu" [class.Disabled]="SelectedTransportationTypes.TransporationType == 'A'">
+																						<li style="width:50px;" (click)="PackageTypeClicked('FCL')" (mouseover)="itemMouseOver('FCL')" (mouseleave)="itemMouseLeave('FCL')" [class.SelectedFilter]="PackageType === 'FCL' && SelectedTransportationTypes.TransporationType != 'A'">
+																							FCL
+																						</li>
+																						<li style="width:50px;" (click)="PackageTypeClicked('LCL')" (mouseover)="itemMouseOver('LCL')" (mouseleave)="itemMouseLeave('LCL')" [class.SelectedFilter]="PackageType === 'LCL' && SelectedTransportationTypes.TransporationType != 'A'">
+																							LCL
+																						</li>
+																						<li style="width:50px;" (click)="PackageTypeClicked('OTHER')" (mouseover)="itemMouseOver('OTHER')" (mouseleave)="itemMouseLeave('OTHER')" [class.SelectedFilter]="(PackageType != 'LCL' && PackageType != 'FCL') || SelectedTransportationTypes.TransporationType == 'A'">
+																							Other
+																						</li>
+																					</ul>
+																				</td>
+																				<td>
+																					<div></div>
+																				</td>
+																			</tr>
+																		</table>
+																	</td>
+
+																</tr>
+															</table>
+														</td>
+													</tr>
+
+
+													<tr style="height:33px;" *ngIf="!IsDSVTenant">
+
+														<td>
+															<table style="height:33px">
+																<tr style="height:33px">
+
+
+																	<td style="width:7px;">
+																		<div style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
+
+																	</td>
+																	<td>
+																		<button id="{{'AddLogboxDocument' | IdGeneratorPipe}}" class="IconButton" style="width:114px;height:26px;margin-right:5px;margin-left:10px" (click)="AddDocumentClick()">
+																			<img src="./Images/LogBox/Add.png" style="visibility:inherit;left:-2px;vertical-align:middle;position:relative;" />
+																			<span style="vertical-align:middle;">Add Document</span>
+																		</button>
+																	</td>
+
+
+																	<td style="width:100px"></td>
+																	<td *ngIf="TransportModeId === 'O'" [class.Disabled]="!TransportModeId || TransportModeId != 'O'">
+																		<table>
+																			<tr>
+
+																				<td style="width:7px;">
+																					<div style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
+
+																				</td>
+
+																				<td style="height: 22px;width:100px;">
+																					<label style="padding-left:5px;color: rgb(110, 113, 114);">
+																						Package Type
+																					</label>
+																				</td>
+																				<td style="height: 22px;">
+																					<ul class="FiltersMenu" [class.Disabled]="SelectedTransportationTypes.TransporationType == 'A'">
+																						<li style="width:50px;" (click)="PackageTypeClicked('FCL')" (mouseover)="itemMouseOver('FCL')" (mouseleave)="itemMouseLeave('FCL')" [class.SelectedFilter]="PackageType === 'FCL' && SelectedTransportationTypes.TransporationType != 'A'">
+																							FCL
+																						</li>
+																						<li style="width:50px;" (click)="PackageTypeClicked('LCL')" (mouseover)="itemMouseOver('LCL')" (mouseleave)="itemMouseLeave('LCL')" [class.SelectedFilter]="PackageType === 'LCL' && SelectedTransportationTypes.TransporationType != 'A'">
+																							LCL
+																						</li>
+																						<li style="width:50px;" (click)="PackageTypeClicked('OTHER')" (mouseover)="itemMouseOver('OTHER')" (mouseleave)="itemMouseLeave('OTHER')" [class.SelectedFilter]="(PackageType != 'LCL' && PackageType != 'FCL') || SelectedTransportationTypes.TransporationType == 'A'">
+																							Other
+																						</li>
+																					</ul>
+																				</td>
+																				<td>
+																					<div></div>
+																				</td>
+																			</tr>
+																		</table>
+																	</td>
+
+
+																</tr>
+															</table>
+
+
+														</td>
+
+													</tr>
+
+
+													<tr style="height:100px" *ngIf="!IsDSVTenant">
+
+														<td class="CellStretch">
+															<div class="SimpleGridView">
+																<div class="SimpleGridViewHeader">
+																	<table>
+																		<tr>
+																			<td style="width: 32px; min-width: 32px;"></td>
+																			<td style="width: 150px; min-width: 150px"> Description </td>
+																			<td style="width: 100px; min-width: 100px;">Document Type</td>
+																			<td style="width: 32px; min-width: 32px;"></td>
+
+																			<td></td>
+
+																		</tr>
+																	</table>
+																</div>
+																<div class="SimpleGridViewBody">
+																	<table>
+																		<tr style="height: 1px;">
+																			<td>
+																				<table>
+																					<tr class="SimpleGridViewRow RowHover" *ngFor="let item of documentsFilings">
+																						<td>
+																							<table>
+																								<tr>
+
+																									<td class="CellStretched" style="width: 32px; min-width: 32px; max-width: 32px; position: relative;">
+
+																										<img [src]="item.FileExtension | AttatchmentIconPipe" style="width:17px;height:20px;margin-left:5px;cursor:pointer;" (click)="DownloadDocumentFile(item)" />
+
+
+																									</td>
+
+
+
+																									<td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px; position: relative;">
+
+																										{{item.Description}}
+																									</td>
+
+																									<td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px; position: relative;">
+																										<div>{{item.DocumentTypeName}}</div>
+																									</td>
+
+																									<td class="CellStretched" style="width: 32px; min-width: 32px; max-width: 32px; position: relative;">
+
+																										<img style="margin-left:5px" *ngIf="item.IsDigitallySigned" src="./Images/DigitallySigned.png" [title]="item.SignersList" />
+																										<img style="margin-left:5px" *ngIf="!item.IsDigitallySigned" src="./Images/DigitallySignedG.png" (click)="SetDigitallySigned(item)" />
+
+																									</td>
+																									<td>
+																										<div></div>
+																									</td>
+
+																									<td>
+																										<div></div>
+																									</td>
+
+
+																								</tr>
+																								<tr><td colspan="4"></td></tr>
+																							</table>
+
+
+																						</td>
+																					</tr>
+																				</table>
+																			</td>
+																		</tr>
+
+																		<tr>
+																			<td>
+																				<div></div>
+																			</td>
+																		</tr>
+																	</table>
+																</div>
+															</div>
+														</td>
+
+													</tr>
+
+
+													<tr>
+														<td></td>
+													</tr> 
+												</table>
+
+
+											</div>
+										</div>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</td>
+	</tr>
+
+	<tr style="height: 32px;">
+		<td style="vertical-align: bottom">
+			<table style="height: 22px;">
+				<tr>
+					<td>
+						<div></div>
+					</td>
+
+					<td style="width: 57px;">
+						<button class="Button" id="{{'ShipmentCancelbtn' | IdGeneratorPipe}}" (click)="CloseButtonClicked()">Cancel</button>
+					</td>
+
+					<td style="width: 5px;">
+						<div></div>
+					</td>
+
+					<td style="width: 57px;">
+						<button class="RedButton" (click)="OkButtonClicked()" id="{{'ShipmentCreatebtn' | IdGeneratorPipe}}">Create</button>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+
