@@ -877,6 +877,11 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
                         this.invoiceLinesAdded = false;
                         this.SaveAPInvoiceMultipleShortEntity();
                     }
+
+                    else if (this.missingVATPayables.length > 0) {
+                        var window: MessageWindow = new MessageWindow();
+                        window.Show("Some of the payables in this shipment don't have a VAT type and will not be added.");
+                    }
                 });
             });
         });
