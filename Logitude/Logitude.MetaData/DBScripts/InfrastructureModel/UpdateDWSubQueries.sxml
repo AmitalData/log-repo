@@ -13,4 +13,5 @@ WHERE DWFactTableCode = 'Fact_Shipments' or DWFactTableCode = 'Fact_Charges'
 
     ]]>
   </Sql>
+  <Oracle Version="1"></Oracle>
 </Script>
