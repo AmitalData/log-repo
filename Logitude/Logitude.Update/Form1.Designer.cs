@@ -216,6 +216,8 @@
             this.button46 = new System.Windows.Forms.Button();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
             this.button54 = new System.Windows.Forms.Button();
             this.label12 = new System.Windows.Forms.Label();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
@@ -225,8 +227,6 @@
             this.button52 = new System.Windows.Forms.Button();
             this.fixJournalsButton = new System.Windows.Forms.Button();
             this.button51 = new System.Windows.Forms.Button();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
             this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -393,7 +393,7 @@
             this.batchTaskExecutionToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1144, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1144, 30);
             this.menuStrip1.TabIndex = 13;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -408,7 +408,7 @@
             this.createDecToolStripMenuItem,
             this.accountingTesterToolStripMenuItem});
             this.sandBoxToolStripMenuItem.Name = "sandBoxToolStripMenuItem";
-            this.sandBoxToolStripMenuItem.Size = new System.Drawing.Size(81, 24);
+            this.sandBoxToolStripMenuItem.Size = new System.Drawing.Size(81, 26);
             this.sandBoxToolStripMenuItem.Text = "SandBox";
             // 
             // fillCustomsTableToolStripMenuItem
@@ -487,7 +487,7 @@
             // productionToolStripMenuItem
             // 
             this.productionToolStripMenuItem.Name = "productionToolStripMenuItem";
-            this.productionToolStripMenuItem.Size = new System.Drawing.Size(141, 24);
+            this.productionToolStripMenuItem.Size = new System.Drawing.Size(141, 26);
             this.productionToolStripMenuItem.Text = "Update-Database";
             this.productionToolStripMenuItem.Click += new System.EventHandler(this.productionToolStripMenuItem_Click);
             // 
@@ -496,7 +496,7 @@
             this.customsBookToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.importToolStripMenuItem});
             this.customsBookToolStripMenuItem.Name = "customsBookToolStripMenuItem";
-            this.customsBookToolStripMenuItem.Size = new System.Drawing.Size(113, 24);
+            this.customsBookToolStripMenuItem.Size = new System.Drawing.Size(113, 26);
             this.customsBookToolStripMenuItem.Text = "CustomsBook";
             // 
             // importToolStripMenuItem
@@ -509,7 +509,7 @@
             // metaDataUpdateToolStripMenuItem
             // 
             this.metaDataUpdateToolStripMenuItem.Name = "metaDataUpdateToolStripMenuItem";
-            this.metaDataUpdateToolStripMenuItem.Size = new System.Drawing.Size(146, 24);
+            this.metaDataUpdateToolStripMenuItem.Size = new System.Drawing.Size(146, 26);
             this.metaDataUpdateToolStripMenuItem.Text = "Meta Data Update";
             this.metaDataUpdateToolStripMenuItem.Click += new System.EventHandler(this.metaDataUpdateToolStripMenuItem_Click);
             // 
@@ -519,7 +519,7 @@
             this.exportToolStripMenuItem,
             this.importToolStripMenuItem1});
             this.expImpToolStripMenuItem.Name = "expImpToolStripMenuItem";
-            this.expImpToolStripMenuItem.Size = new System.Drawing.Size(79, 24);
+            this.expImpToolStripMenuItem.Size = new System.Drawing.Size(79, 26);
             this.expImpToolStripMenuItem.Text = "Exp/Imp";
             // 
             // exportToolStripMenuItem
@@ -575,7 +575,7 @@
             this.rTLToolStripMenuItem,
             this.lTRToolStripMenuItem});
             this.tenantRTLToolStripMenuItem.Name = "tenantRTLToolStripMenuItem";
-            this.tenantRTLToolStripMenuItem.Size = new System.Drawing.Size(94, 24);
+            this.tenantRTLToolStripMenuItem.Size = new System.Drawing.Size(94, 26);
             this.tenantRTLToolStripMenuItem.Text = "Tenant RTL";
             // 
             // tenantTxtBox
@@ -604,7 +604,7 @@
             this.batchTaskExecutionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.executeToolStripMenuItem});
             this.batchTaskExecutionToolStripMenuItem.Name = "batchTaskExecutionToolStripMenuItem";
-            this.batchTaskExecutionToolStripMenuItem.Size = new System.Drawing.Size(159, 24);
+            this.batchTaskExecutionToolStripMenuItem.Size = new System.Drawing.Size(159, 26);
             this.batchTaskExecutionToolStripMenuItem.Text = "Batch Task Execution";
             // 
             // executeToolStripMenuItem
@@ -1556,11 +1556,11 @@
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 28);
+            this.tabControl1.Location = new System.Drawing.Point(0, 30);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1144, 801);
+            this.tabControl1.Size = new System.Drawing.Size(1144, 799);
             this.tabControl1.TabIndex = 84;
             // 
             // tabPage1
@@ -1629,7 +1629,7 @@
             this.tabPage1.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage1.Size = new System.Drawing.Size(1136, 772);
+            this.tabPage1.Size = new System.Drawing.Size(1136, 770);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Update";
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
@@ -2299,7 +2299,7 @@
             this.tabPage4.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage4.Size = new System.Drawing.Size(1136, 772);
+            this.tabPage4.Size = new System.Drawing.Size(1136, 770);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Accounting Tools";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -2318,6 +2318,28 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(406, 233);
             this.panel1.TabIndex = 4;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.ForeColor = System.Drawing.Color.Lime;
+            this.label14.Location = new System.Drawing.Point(285, 177);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(75, 17);
+            this.label14.TabIndex = 10;
+            this.label14.Text = "Completed";
+            this.label14.Visible = false;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.ForeColor = System.Drawing.Color.Lime;
+            this.label13.Location = new System.Drawing.Point(285, 125);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(75, 17);
+            this.label13.TabIndex = 9;
+            this.label13.Text = "Completed";
+            this.label13.Visible = false;
             // 
             // button54
             // 
@@ -2406,28 +2428,6 @@
             this.button51.Text = "Verify Redeemed Cheques";
             this.button51.UseVisualStyleBackColor = true;
             this.button51.Click += new System.EventHandler(this.button51_Click_1);
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.ForeColor = System.Drawing.Color.Lime;
-            this.label13.Location = new System.Drawing.Point(285, 125);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(75, 17);
-            this.label13.TabIndex = 9;
-            this.label13.Text = "Completed";
-            this.label13.Visible = false;
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.ForeColor = System.Drawing.Color.Lime;
-            this.label14.Location = new System.Drawing.Point(285, 177);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(75, 17);
-            this.label14.TabIndex = 10;
-            this.label14.Text = "Completed";
-            this.label14.Visible = false;
             // 
             // Form1
             // 

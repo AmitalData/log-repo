@@ -4706,8 +4706,7 @@ User/Pass",
         {
 
         }
-
-        private void button53_Click(object sender, EventArgs e)
+        private void CreateBackup()
         {
             IAccountingContext Context = AccountingContext.GetContext(0);
             string connectionString = Context.GetConnection().ConnectionString;
@@ -4720,12 +4719,16 @@ User/Pass",
                 Connection = sqlConnection1
             };
 
-            
-                sqlConnection1.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-                sqlConnection1.Close();
 
-            
+            sqlConnection1.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            sqlConnection1.Close();
+
+        }
+        private void button53_Click(object sender, EventArgs e)
+        {
+            CreateBackup();
+            int tenant = Convert.ToInt32(textBox3.Text);
             LoggedContactResolver.RegisterLoggedContactUtil();
             timer2.Enabled = true;
             timer2.Start();
@@ -4738,6 +4741,7 @@ User/Pass",
 
         private void button54_Click(object sender, EventArgs e)
         {
+            CreateBackup();
             LoggedContactResolver.RegisterLoggedContactUtil();
             int tenant = Convert.ToInt32(textBox3.Text);
             JournalAdditionalDataCreationService journalAdditionalDataCreationService = new JournalAdditionalDataCreationService(tenant, dateTimePicker1.Value);
