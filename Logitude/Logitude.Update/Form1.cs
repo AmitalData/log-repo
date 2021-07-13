@@ -95,6 +95,8 @@ using Logitude.Accounting.Data.Repositories;
 using Logitude.Update.SandBox;
 using Logitude.BL.InfrastructureModel.APIDataContract.Messages;
 using WebFreight.Web.Security;
+using Logitude.Accounting.Data.DataContract;
+
 namespace Logitude.Update
 {
     public partial class Form1 : Form
@@ -4697,11 +4699,54 @@ User/Pass",
             LoggedContactResolver.RegisterLoggedContactUtil();
             ExchangeRatesFromExternalLinkUpdateService ratesUpdateService = new ExchangeRatesFromExternalLinkUpdateService(Convert.ToInt16( textBox2.Text));
             ratesUpdateService.UpdateRatesByExternalXML();
-
+         
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
+
+        }
+        private void CreateBackup()
+        {
+            IAccountingContext Context = AccountingContext.GetContext(0);
+            string connectionString = Context.GetConnection().ConnectionString;
+            SqlConnection sqlConnection1 = new SqlConnection(connectionString);
+
+            int tenant = Convert.ToInt32(textBox3.Text);
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = String.Format("IF object_id('[dbo].[TempJournalAdditional]') IS  NULL Begin SELECT * INTO TempJournalAdditional FROM JournalAdditionalDatas End", tenant),
+                Connection = sqlConnection1
+            };
+
+
+            sqlConnection1.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            sqlConnection1.Close();
+
+        }
+        private void button53_Click(object sender, EventArgs e)
+        {
+            CreateBackup();
+            int tenant = Convert.ToInt32(textBox3.Text);
+            LoggedContactResolver.RegisterLoggedContactUtil();
+            timer2.Enabled = true;
+            timer2.Start();
+
+             JournalAdditionalDataCreationService journalAdditionalDataCreationService = new JournalAdditionalDataCreationService(tenant, dateTimePicker1.Value);
+            journalAdditionalDataCreationService.CreateJournalAdditionalDataforTenantAndDate("input");
+            label13.Visible = true;
+            timer2.Stop();
+        }
+
+        private void button54_Click(object sender, EventArgs e)
+        {
+            CreateBackup();
+            LoggedContactResolver.RegisterLoggedContactUtil();
+            int tenant = Convert.ToInt32(textBox3.Text);
+            JournalAdditionalDataCreationService journalAdditionalDataCreationService = new JournalAdditionalDataCreationService(tenant, dateTimePicker1.Value);
+            journalAdditionalDataCreationService.CreateJournalAdditionalDataforTenantAndDate("output");
+            label14.Visible = true;
 
         }
     }
