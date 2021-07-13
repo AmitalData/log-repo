@@ -264,13 +264,14 @@ namespace WebFreight.Web.Helpers
                                     }
                                     else
                                     {
-                                        WhereStmt += " " + AndOr + " " + fieldName + OperationSimpol;// + " " +;//" = " + "'" + filter.TextValue + "' and ";
+                                        WhereStmt += " " + AndOr + (HaveNotEqulOperation(OperationSimpol) ? " ( " : " ") + fieldName + OperationSimpol;
+                                        AddNullConditionForNotEqulOperation(OperationSimpol, fieldName);
                                     }
 
                                 }
                                 else
                                 {
-                                    WhereStmt += "( " + fieldName + OperationSimpol;// + " " +;//" = " + "'" + filter.TextValue + "' and ";
+                                    WhereStmt += "( " + (HaveNotEqulOperation(OperationSimpol) ? " ( " : " ") + fieldName + OperationSimpol;// + " " +;//" = " + "'" + filter.TextValue + "' and ";
                                     AddNullConditionForNotEqulOperation(OperationSimpol, fieldName);
                                 }
                                 //WhereStmt += AndOr + " " + fieldName + OperationSimpol;// + " " +;//" = " + "'" + filter.TextValue + "' and ";
@@ -321,11 +322,21 @@ namespace WebFreight.Web.Helpers
             return sqlCommandDefinition;
         }
 
-        private void AddNullConditionForNotEqulOperation(string OperationSimpol, string fieldName)
+        private bool HaveNotEqulOperation(string OperationSimpol)
         {
             if (OperationSimpol != null && OperationSimpol.IndexOf(" not IN ") > -1)
             {
-                WhereStmt += " or " + fieldName + " is NULL ";
+                return true;
+            }
+
+            return false;
+        }
+
+        private void AddNullConditionForNotEqulOperation(string OperationSimpol, string fieldName)
+        {
+            if (HaveNotEqulOperation(OperationSimpol))
+            {
+                WhereStmt += " or " + fieldName + " is NULL ) ";
             }
         }
 
