@@ -240,8 +240,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
 
     private InitializeExportShipmentFields() {
         this.CurrentSession.StartBusyIndicator("Creating...");
-        this.EntityPM.MainCarriageFinalDestinationPortId = this.EntityPM.MainCarriageToPortId;
-        this.EntityPM.DepartmentId = '1-131';
+        this.EntityPM.MainCarriageFinalDestinationPortId = this.EntityPM.MainCarriageToPortId; 
         this.EntityPM.StatusDate = DateTool.GetCurrentDateTimeAsUtc(); 
         //SessionLocator.TenantPM.CustomerId = '1-10001';
         this.EntityPM.IsImporterShipment = true;
