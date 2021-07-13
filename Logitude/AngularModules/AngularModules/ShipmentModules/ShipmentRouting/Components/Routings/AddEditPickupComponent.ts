@@ -778,7 +778,7 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
         var args = new NewShipmentComponentArgs();
         args.Shipment = shipmentPM;
         args.IsStandalone = true;
-
+        args.ForwarderShipmentPickUpDeliveryTypeCode = "Pickup";
         var str: string = TextCodeTranslator.Translate("General.O.NewEntity");
         str = str.replace("%Entity", TextCodeTranslator.TranslateTable("Shipment"));
 
