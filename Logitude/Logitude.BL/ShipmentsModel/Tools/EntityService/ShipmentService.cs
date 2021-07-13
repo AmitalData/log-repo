@@ -5505,6 +5505,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.CreatePickUpDeliveryPackageHarmonize(itemHarmonizePM, pickUpDeliveryPackagePM.Id);
                 }
             }
+            UpdateShipmentConcectedPackagesByContainerEntityId(pickUpDeliveryPackagePM);
         }
         private void UpdateShipmentPickUpDeliveryPackage(ShipmentPickUpDeliveryPackagePM pickUpDeliveryPackagePM)
         {
@@ -5540,6 +5541,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
                 }
             }
+            UpdateShipmentConcectedPackagesByContainerEntityId(pickUpDeliveryPackagePM);
         }
         private void DeleteShipmentPickUpDeliveryPackage(ShipmentPickUpDeliveryPackagePM pickUpDeliveryPackagePM)
         {
@@ -7088,6 +7090,45 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private bool IsInlandDomesticShipment(ShipmentPM entityPM)
         {
             return entityPM.DirectionId == "D" && entityPM.TransportModeId == "I";
+        }
+        private void UpdateShipmentConcectedPackagesByContainerEntityId(ShipmentPickUpDeliveryPackagePM shipmentPickUpDeliveryPackagePM)
+        {
+            ShipmentPackagePM shipmentPackagePM = this.entityPM.ShipmentPackages.Find(d => d.ContainerEntityId == shipmentPickUpDeliveryPackagePM.ContainerEntityId);
+            if (shipmentPackagePM == null)
+            {
+                return;
+            }
+            if (this.IsConnectedForwaderShipmentPackageFieldsUpdated(shipmentPackagePM, shipmentPickUpDeliveryPackagePM))
+            {
+                this.MapUpdatedConnectedForwaderShipmentPackage(shipmentPackagePM, shipmentPickUpDeliveryPackagePM);
+                this.UpdateShipmentPackage(shipmentPackagePM);
+            }
+        }
+        private void MapUpdatedConnectedForwaderShipmentPackage(ShipmentPackagePM shipmentPackagePM, ShipmentPickUpDeliveryPackagePM shipmentPickUpDeliveryPackagePM)
+        {
+            shipmentPackagePM.ContainerNumber = shipmentPickUpDeliveryPackagePM.ContainerNumber;
+            shipmentPackagePM.Description = shipmentPickUpDeliveryPackagePM.Description;
+            shipmentPackagePM.PackageTypeId = shipmentPickUpDeliveryPackagePM.PackageTypeId;
+            shipmentPackagePM.Quantity = shipmentPickUpDeliveryPackagePM.Quantity;
+            shipmentPackagePM.Volume = shipmentPickUpDeliveryPackagePM.Volume;
+            shipmentPackagePM.Weight = shipmentPickUpDeliveryPackagePM.Weight;
+            shipmentPackagePM.ShipperSeal = shipmentPickUpDeliveryPackagePM.ShipperSeal;
+        }
+        private bool IsConnectedForwaderShipmentPackageFieldsUpdated(ShipmentPackagePM shipmentPackagePM , ShipmentPickUpDeliveryPackagePM shipmentPickUpDeliveryPackagePM)
+        {
+            if (shipmentPickUpDeliveryPackagePM.ChangeSetOp == ChangeSetOperation.Update)
+            {
+                return true;
+            }
+            bool isUpdated = false;
+            isUpdated = shipmentPackagePM.ContainerNumber != shipmentPickUpDeliveryPackagePM.ContainerNumber ? true : isUpdated ;
+            isUpdated = shipmentPackagePM.Description != shipmentPickUpDeliveryPackagePM.Description ? true : isUpdated;
+            isUpdated = shipmentPackagePM.PackageTypeId != shipmentPickUpDeliveryPackagePM.PackageTypeId ? true : isUpdated;
+            isUpdated = shipmentPackagePM.Quantity != shipmentPickUpDeliveryPackagePM.Quantity ? true : isUpdated;
+            isUpdated = shipmentPackagePM.Volume != shipmentPickUpDeliveryPackagePM.Volume ? true : isUpdated;
+            isUpdated = shipmentPackagePM.Weight != shipmentPickUpDeliveryPackagePM.Weight ? true : isUpdated;
+            isUpdated = shipmentPackagePM.ShipperSeal != shipmentPickUpDeliveryPackagePM.ShipperSeal ? true : isUpdated;
+            return isUpdated;
         }
     }
 

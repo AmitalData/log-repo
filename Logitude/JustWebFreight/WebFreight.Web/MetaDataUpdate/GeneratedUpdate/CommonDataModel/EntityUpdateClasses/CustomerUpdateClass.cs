@@ -8343,7 +8343,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreditLimitAmount",
 					  						DefaultText =  "Credit Amount",
-					  						FullLocalDefaultText =  "מסגרת אשראי",
+					  						FullLocalDefaultText =  "מסגרת םשרםי",
 					  						ListFieldLable =  "CreditLimitAmountListLable",
 					  						ListLableDefaultText =  "Credit Amount",
 					  						IsMaxLength =  false,
@@ -9467,7 +9467,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
-
 			  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -9513,10 +9512,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InsuredcreditLimit",
 					  						DefaultText =  "Insured Credit Limit",
-					  						FullLocalDefaultText =  "מסגרת אשראי מבוטחת",
+					  						FullLocalDefaultText =  "מסגרת םשרםי מבוטחת",
 					  						ListFieldLable =  "InsuredcreditLimitListLable",
 					  						ListLableDefaultText =  "Insured Credit Limit",
-					  						ListLocalDefaultText =  "מסגרת אשראי מבוטחת",
+					  						ListLocalDefaultText =  "מסגרת םשרםי מבוטחת",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
