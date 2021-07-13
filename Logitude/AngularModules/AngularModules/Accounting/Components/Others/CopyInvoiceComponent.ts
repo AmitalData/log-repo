@@ -22,6 +22,8 @@ import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { APInvoiceLinePM } from '../../../Invoice/EntityPMs/APInvoiceLinePM';
 import { EntitlementTypeList } from '../../../Customs/EntityLists/EntitlementTypeList';
+import { ChargesTypePMService } from '../../../Common/Services/StandardPMs/ChargesTypePMService';
+import { VatTypePMService } from '../../../Common/Services/StandardPMs/VatTypePMService';
 
 
 @Component({
@@ -48,6 +50,8 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
     private paymentTermListService: PaymentTermListService = new PaymentTermListService();
     private invoiceDomainService: InvoiceDomainService = new InvoiceDomainService();
     private cardPMService: CardPMService = new CardPMService();
+    private chargesTypePMService: ChargesTypePMService = new ChargesTypePMService();
+    private vatTypePMService: VatTypePMService = new VatTypePMService();
     private cardListService: CardListService = new CardListService();
     private gLAccountPMService: GLAccountPMService = new GLAccountPMService();
     private currencyListService: CurrencyListService = new CurrencyListService();
@@ -774,8 +778,7 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
 
     CopyInvoiceLines(entityPM) {
         for (var i = 0; i < this.EntityPM.InvoiceLines.length; i++) {
-            var line: APInvoiceLinePM = this.MapNewInvoiceLine(entityPM, this.EntityPM.InvoiceLines[i]);
-            entityPM.InvoiceLines.push(line);
+            entityPM.InvoiceLines.push(this.MapNewInvoiceLine(entityPM, this.EntityPM.InvoiceLines[i]));
         }
 
     }
@@ -783,14 +786,48 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
     MapNewInvoiceLine(apInvoicePM: APInvoicePM, originalAPInvoiceLine: APInvoiceLinePM) {
         var apInvoiceLinePM = new APInvoiceLinePM(apInvoicePM);
         apInvoiceLinePM = originalAPInvoiceLine;
-        apInvoiceLinePM.ChargesTypeId = this.IsCopyLinesChecked ? originalAPInvoiceLine.ChargesTypeId : null;
+        this.SetChargesTypeIdIfActive(originalAPInvoiceLine, apInvoiceLinePM);
+        this.SetVatTypeIdIfActive(originalAPInvoiceLine, apInvoiceLinePM);
         apInvoiceLinePM.InvoiceCurrencyAmount = this.IsCopyAmountsChecked ? originalAPInvoiceLine.InvoiceCurrencyAmount : 0;
         apInvoiceLinePM.ForiegnCurrencyAmount = this.IsCopyAmountsChecked ? originalAPInvoiceLine.ForiegnCurrencyAmount : 0;
+        apInvoiceLinePM.OpenAmount = this.IsCopyAmountsChecked ? originalAPInvoiceLine.OpenAmount : 0;
         apInvoiceLinePM.LocalDescription = originalAPInvoiceLine.LocalDescription;
         apInvoiceLinePM.VendorId = this.VendorId;
         return apInvoiceLinePM;
     }
 
+
+    private SetChargesTypeIdIfActive(originalAPInvoiceLine: APInvoiceLinePM, copiedAPInvoiceLinePM: APInvoiceLinePM) {
+        this.chargesTypePMService.get(originalAPInvoiceLine.ChargesTypeId).subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+                var chargetype = response.Result;
+                if (!chargetype.InActive)
+                    copiedAPInvoiceLinePM.ChargesTypeId = this.IsCopyLinesChecked ? originalAPInvoiceLine.ChargesTypeId : null;
+                else {
+                    this.ResetChargeTypeValues(copiedAPInvoiceLinePM);
+                }
+            }
+        });
+    }
+
+    private ResetChargeTypeValues(copiedAPInvoiceLinePM: APInvoiceLinePM) {
+        copiedAPInvoiceLinePM.ChargesTypeId = null;
+        copiedAPInvoiceLinePM.LocalDescription = null;
+        copiedAPInvoiceLinePM.Description = null;
+        copiedAPInvoiceLinePM.ChargesTypeCode = null;
+    }
+
+    private SetVatTypeIdIfActive(originalAPInvoiceLine: APInvoiceLinePM, copiedAPInvoiceLinePM: APInvoiceLinePM) {
+        this.vatTypePMService.get(originalAPInvoiceLine.VatTypeId).subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+                var vattype = response.Result;
+                if (!vattype.InActive)
+                    copiedAPInvoiceLinePM.VatTypeId = this.IsCopyLinesChecked ? originalAPInvoiceLine.VatTypeId : null;
+                else
+                    copiedAPInvoiceLinePM.VatTypeId = null;
+            }
+        });
+    }
 
     private InitializeProfitCurrency(entityPM) {
         if (this.EntityPM.IsMultipleEntities) {
@@ -817,19 +854,18 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
     GetCurrencyRate(currencyId: string) {
         var result: number = null;
 
-        if (!AppTool.IsNullOrEmpty(currencyId)) {
-            if (currencyId == SessionLocator.TenantPM.CurrencyId) {
-                result = 1;
-            }
-
-            else {
-                var lastRate: LastRate = this.LastRatesList.filter(d => d.ForeignCurrencyId == currencyId)[0];
-                if (lastRate != null) {
-                    result = lastRate.Rate;
-                }
-            }
+        if (AppTool.IsNullOrEmpty(currencyId)) { return; }
+        if (currencyId == SessionLocator.TenantPM.CurrencyId) {
+            result = 1;
         }
 
+        else {
+            var lastRate: LastRate = this.LastRatesList.filter(d => d.ForeignCurrencyId == currencyId)[0];
+            if (lastRate != null) {
+                result = lastRate.Rate;
+            }
+        }
+        
         return result;
     }
 
