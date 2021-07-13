@@ -16,5 +16,9 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string Name { get; set; }
         public string Brand { get; set; }
         public string SearchFields { get; set; }
+        public string ASIN { get; set; }
+        public string UPC { get; set; }
+        public string OriginCountryId { get; set; }
+        public string OriginCountryName { get; set; }
     }
 }

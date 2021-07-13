@@ -25,6 +25,9 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.Description = entityPM.Description;
             poco.Name = entityPM.Name;
             poco.Brand = entityPM.Brand;
+            poco.ASIN = entityPM.ASIN;
+            poco.UPC = entityPM.UPC;
+            poco.OriginCountryId = entityPM.OriginCountryId;
 
             BuildSearchField(entityPM, poco);
         }

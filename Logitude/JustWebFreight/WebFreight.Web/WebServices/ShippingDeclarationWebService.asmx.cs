@@ -3222,6 +3222,9 @@ namespace WebFreight.Web.WebServices
                         insidePackage.Reference3 = insideItem.Reference3;
                         insidePackage.CommodityNumber = insideItem.CommodityNumber;
 
+                        // Horse 
+                        this.SetHorseDetails(insidePackage, insideItem);
+                        
                         #region Car Details
                         insidePackage.Make = insideItem.Make;
                         insidePackage.Model = insideItem.Model;
@@ -3817,6 +3820,44 @@ namespace WebFreight.Web.WebServices
             return myDataProvider;
         }
 
+        private void SetHorseDetails(InsidePackageLine insidePackage, InsideShipmentPackage insideItem)
+        {
+            if (!string.IsNullOrEmpty(insideItem.HorseId))
+            {
+                Horse horse = (from h in commonContext.Horses
+                               where h.Id == insideItem.HorseId
+                               select h).FirstOrDefault();
+
+                if (horse != null)
+                {
+                    insidePackage.HorseName = horse.Name;
+                    insidePackage.HorseYearOfBirth = horse.YearOfBirth;
+                    insidePackage.HorseColor = horse.Color;
+                    insidePackage.HorseGender = horse.Gender;
+                    insidePackage.HorseBreed = horse.Breed;
+                    insidePackage.HorseDiscipline = horse.Discipline;
+                    insidePackage.HorseTravelBehavior = horse.TravelBehavior;
+                    insidePackage.HorseMicochipNumber = horse.MicochipNumber;
+                    insidePackage.HorsePassportNumber = horse.PassportNumber;
+                    insidePackage.HorseCurrentStable = horse.CurrentStable;
+                    insidePackage.HorseOwner = horse.Owner;
+                    insidePackage.HorseRemarks = horse.Remarks;
+
+                    if (!string.IsNullOrEmpty(horse.CountryOfBirthId))
+                    {
+                        Country country = (from pa in commonContext.Countries
+                                           where pa.Id == horse.CountryOfBirthId
+                                           select pa).FirstOrDefault();
+
+                        if (country != null)
+                        {
+                            insidePackage.HorseCountryOfBirthName = country.EnglishName;
+                        }
+                    }
+                }
+            }
+        }
+
         private void SetCustomerDetails(ShippingDeclarationDataProvider myDataProvider)
         {
             myDataProvider.CustomerReferenceNumber = shipment.CustomerReference1 != null ? shipment.CustomerReference1 : "";
@@ -4297,6 +4338,42 @@ namespace WebFreight.Web.WebServices
             line.PackageGrossWeight = weight.ToString() + " " + String.Format("{0:#0.00}", package.Weight.Value) + " " + (shipment.GrossWeightUnitCode != null ? shipment.GrossWeightUnitCode : "");
             line.PackageVolume = volume.ToString() + String.Format("{0:#0.00}", package.Volume.Value) + " " + (shipment.VolumeUnitCode != null ? shipment.VolumeUnitCode : "");
             line.PackageVolumetricWeight = Volumetricweight.ToString() + " " + String.Format("{0:#0.00}", package.VolumetricWeight.Value) + " " + (shipment.ChargeableWeightUnitCode != null ? shipment.ChargeableWeightUnitCode : "");
+
+            #region Horse 
+            if (!string.IsNullOrEmpty(package.HorseId))
+            {
+                Horse horse = (from h in commonContext.Horses
+                               where h.Id == package.HorseId
+                               select h).FirstOrDefault();
+
+                if (horse != null)
+                {
+                    line.HorseName = horse.Name;
+                    line.HorseYearOfBirth = horse.YearOfBirth;
+                    line.HorseColor = horse.Color;
+                    line.HorseGender = horse.Gender;
+                    line.HorseBreed = horse.Breed;
+                    line.HorseDiscipline = horse.Discipline;
+                    line.HorseTravelBehavior = horse.TravelBehavior;
+                    line.HorseMicochipNumber = horse.MicochipNumber;
+                    line.HorsePassportNumber = horse.PassportNumber;
+                    line.HorseCurrentStable = horse.CurrentStable;
+                    line.HorseOwner = horse.Owner;
+                    line.HorseRemarks = horse.Remarks;
+
+                    if (!string.IsNullOrEmpty(horse.CountryOfBirthId))
+                    {
+                        Country country = (from pa in commonContext.Countries
+                                           where pa.Id == horse.CountryOfBirthId
+                                           select pa).FirstOrDefault();
+                        if (country != null)
+                        {
+                            line.HorseCountryOfBirthName = country.EnglishName;
+                        }
+                    }
+                }
+            }
+            #endregion
 
             #region Car Details
             line.Make = package.Make;

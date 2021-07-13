@@ -148,7 +148,7 @@ var InvoiceListClass = function () {
 var QuotesRequest = function () {
 
     this.Id = "";
-    this.ReferenceNumber = "";
+    this.QuoteNumber = "";
     this.CreateDate = "";
     this.QuotationUpdateDate = "";
     this.QuotationPreparedTickVisibility = "";
@@ -159,8 +159,14 @@ var QuotesRequest = function () {
     this.IsRejected = false;
     this.IsApproved = false;
     this.CommentsReadOnlyProperty = "";
-    this.OptionDisabledProperty = ""
-
+    this.OptionDisabledProperty = "";
+    this.ContactName = "";
+    this.OwnerName = "";
+    this.Subject = "";
+    this.Status = "";
+    this.ReferenceNumber = "";
+    this.PONumber = "";
+    this.Brand = "";
 
 }
 
@@ -1734,7 +1740,14 @@ function GetNewInStanceFromQuotesRequest(quotesRequest, tenantDateTimeFormat) {
     newQuotesRequest.IsApproved = quotesRequest.Feedback == "Approved" ? "selected" : "";
     newQuotesRequest.IsRejected = quotesRequest.Feedback == "Rejected" ? "selected" : "";
     newQuotesRequest.CreateDate = $.Convert.ToShortDate(quotesRequest.CreateDate, tenantDateTimeFormat);
-    newQuotesRequest.ReferenceNumber = $.trim(quotesRequest.ReferenceNumber);
+    newQuotesRequest.QuoteNumber = $.trim(quotesRequest.QuoteNumber);
+    newQuotesRequest.ContactName = quotesRequest.ContactName;
+    newQuotesRequest.OwnerName = quotesRequest.OwnerName;
+    newQuotesRequest.Subject = quotesRequest.Subject;
+    newQuotesRequest.Status = quotesRequest.Status;
+    newQuotesRequest.ReferenceNumber = quotesRequest.ReferenceNumber;
+    newQuotesRequest.PONumber = quotesRequest.PONumber;
+    newQuotesRequest.Brand = quotesRequest.Brand;
     if (quotesRequest.QuotationDocumentFiling) {
         newQuotesRequest.QuotationDocumentFiling = quotesRequest.QuotationDocumentFiling;
         newQuotesRequest.QuotationPreparedTickVisibility = "visible";

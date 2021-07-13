@@ -564,5 +564,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public DateTime? ApprovedCargoReadyDate { get; set; }
         public string HandlerUserId { get; set; }
         
+        public string StandalonePickupDeliveryId { get; set; }
+
     }
 }

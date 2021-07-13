@@ -635,11 +635,11 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
 
             if (this.isCreateStandaloneShipmentClicked) {
                 this.isCreateStandaloneShipmentClicked = false;
-                this.CreateStandaloneShipment();
+                this.ValidateStandaloneAddresses();
             }
             if (this.isConnctingStandaloneShipmentClicked) {
                 this.isConnctingStandaloneShipmentClicked = false;
-                this.ChooseStandAloneShipment();
+                this.ValidateStandaloneAddresses();
             }
 
 
@@ -907,7 +907,7 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
         var args = new NewShipmentComponentArgs();
         args.Shipment = shipmentPM;
         args.IsStandalone = true;
-
+        args.ForwarderShipmentPickUpDeliveryTypeCode = "Delivery";
         var str: string = TextCodeTranslator.Translate("General.O.NewEntity");
         str = str.replace("%Entity", TextCodeTranslator.TranslateTable("Shipment"));
 
