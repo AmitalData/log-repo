@@ -101,6 +101,7 @@
     <Compile Include="EntityPMs\Generated\NbcDeclarationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\NDMessageActionCodePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\PartyRelationshipTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\PoaStatusTypeLookUpPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ReferantExceptionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ReferantTeamPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ReferenceInputTypePM.Generated.cs" />

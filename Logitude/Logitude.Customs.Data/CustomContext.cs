@@ -596,6 +596,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new PhysicalCheckStatusMessageMap());
 	
+            modelBuilder.Configurations.Add(new PoaStatusTypeLookUpMap());
+	
             modelBuilder.Configurations.Add(new PointerLevelMap());
 	
             modelBuilder.Configurations.Add(new ProceduralFaultMap());
@@ -2914,6 +2916,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<PhysicalCheckStatusMessage> PhysicalCheckStatusMessages 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<PoaStatusTypeLookUp> PoaStatusTypeLookUps 
 	 {
 	      get; set;
 	 

@@ -340,6 +340,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		PhysicalCheckUpdateClass  PhysicalCheckUpdateClass = new PhysicalCheckUpdateClass();
 		PhysicalCheckOperationUpdateClass  PhysicalCheckOperationUpdateClass = new PhysicalCheckOperationUpdateClass();
 		PhysicalCheckStatusMessageUpdateClass  PhysicalCheckStatusMessageUpdateClass = new PhysicalCheckStatusMessageUpdateClass();
+		PoaStatusTypeLookUpUpdateClass  PoaStatusTypeLookUpUpdateClass = new PoaStatusTypeLookUpUpdateClass();
 		PointerLevelUpdateClass  PointerLevelUpdateClass = new PointerLevelUpdateClass();
 		ProceduralFaultUpdateClass  ProceduralFaultUpdateClass = new ProceduralFaultUpdateClass();
 		ProceduralFaultInProcessTypeUpdateClass  ProceduralFaultInProcessTypeUpdateClass = new ProceduralFaultInProcessTypeUpdateClass();
@@ -856,6 +857,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 			TablesHashStrings.Add("PhysicalCheck",  PhysicalCheckUpdateClass.HashString);
 			TablesHashStrings.Add("PhysicalCheckOperation",  PhysicalCheckOperationUpdateClass.HashString);
 			TablesHashStrings.Add("PhysicalCheckStatusMessage",  PhysicalCheckStatusMessageUpdateClass.HashString);
+			TablesHashStrings.Add("PoaStatusTypeLookUp",  PoaStatusTypeLookUpUpdateClass.HashString);
 			TablesHashStrings.Add("PointerLevel",  PointerLevelUpdateClass.HashString);
 			TablesHashStrings.Add("ProceduralFault",  ProceduralFaultUpdateClass.HashString);
 			TablesHashStrings.Add("ProceduralFaultInProcessType",  ProceduralFaultInProcessTypeUpdateClass.HashString);
@@ -9734,6 +9736,39 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.PoaStatusTypeLookUp", ObjectTables, PoaStatusTypeLookUpUpdateClass.HashString))
+			{
+				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+				{				
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.PoaStatusTypeLookUp");
+					PoaStatusTypeLookUpUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					List<ObjectField> addedFields = new List<ObjectField>();
+					List<TextCode> addedTextCodes = new List<TextCode>();
+					PoaStatusTypeLookUpUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository, addedFields, addedTextCodes);
+					SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+					SqlBulkInsert.BulkInsert("ObjectFields", addedFields);					
+					//this.ObjectContext.TextCodes.AddRange(addedTextCodes);
+					//this.ObjectContext.ObjectFields.AddRange(addedFields);
+					//this.ObjectContext.SaveChanges();
+					PoaStatusTypeLookUpUpdateClass.AddTableQueries(Queries, QueryColumns, ObjectTables, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters,tenantQueryGroups);
+					//this.ObjectContext.SaveChanges();
+					PoaStatusTypeLookUpUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+					//this.ObjectContext.SaveChanges();
+					PoaStatusTypeLookUpUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+					//this.ObjectContext.SaveChanges();
+					PoaStatusTypeLookUpUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+					//this.ObjectContext.SaveChanges();
+					PoaStatusTypeLookUpUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					//this.ObjectContext.SaveChanges();
+					PoaStatusTypeLookUpUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					//this.ObjectContext.SaveChanges();
+					PoaStatusTypeLookUpUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					scope.Complete();
+				}
+			}
+
 			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.PointerLevel", ObjectTables, PointerLevelUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -13407,6 +13442,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   PhysicalCheckStatusMessageUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
+	   	   PoaStatusTypeLookUpUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+	
 	   	   PointerLevelUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
 	   	   ProceduralFaultUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
@@ -14135,6 +14172,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   //PhysicalCheckStatusMessageUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
+	   	   //PoaStatusTypeLookUpUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository);
+	
 	   	   //PointerLevelUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
 	   	   //ProceduralFaultUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository);
@@ -14861,6 +14900,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   PhysicalCheckOperationUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups);
 	
 	   	   PhysicalCheckStatusMessageUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups);
+	
+	   	   PoaStatusTypeLookUpUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups);
 	
 	   	   PointerLevelUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups);
 	
@@ -15589,6 +15630,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   PhysicalCheckStatusMessageUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
 	
+	   	   PoaStatusTypeLookUpUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
+	
 	   	   PointerLevelUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
 	
 	   	   ProceduralFaultUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
@@ -16315,6 +16358,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   PhysicalCheckOperationUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
 	   	   PhysicalCheckStatusMessageUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
+	
+	   	   PoaStatusTypeLookUpUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
 	   	   PointerLevelUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
@@ -17043,6 +17088,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   PhysicalCheckStatusMessageUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
 	
+	   	   PoaStatusTypeLookUpUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
+	
 	   	   PointerLevelUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
 	
 	   	   ProceduralFaultUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
@@ -17770,6 +17817,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   PhysicalCheckStatusMessageUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
+	   	   PoaStatusTypeLookUpUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+	
 	   	   PointerLevelUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
 	   	   ProceduralFaultUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
@@ -18495,6 +18544,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   PhysicalCheckOperationUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
 	   	   PhysicalCheckStatusMessageUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+	
+	   	   PoaStatusTypeLookUpUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
 	   	   PointerLevelUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
@@ -19222,6 +19273,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   PhysicalCheckStatusMessageUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
 	
+	   	   PoaStatusTypeLookUpUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
+	
 	   	   PointerLevelUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
 	
 	   	   ProceduralFaultUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
@@ -19417,6 +19470,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		public void CreateAllClosedTables()
         {
    
+	   
 	   
 	   
 	   

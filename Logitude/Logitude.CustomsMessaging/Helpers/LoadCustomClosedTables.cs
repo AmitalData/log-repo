@@ -469,6 +469,11 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(vendorTypeTable, vendorTypeObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(vendorTypeTable);
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData PoaStatusTypeLookUpTable = closedSystemTables.Where(d => d.id == "1599").FirstOrDefault();
+            ObjectTable PoaStatusTypeLookUpObjectTable = objectTableRepository.GetObjectTableByName("Customs.PoaStatusTypeLookUp", 0, false);
+            InsertClosedTableRecord(PoaStatusTypeLookUpTable, PoaStatusTypeLookUpObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(PoaStatusTypeLookUpTable);
+
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData CustomerClassificationTypeTable = closedSystemTables.Where(d => d.id == "1055").FirstOrDefault();
             ObjectTable CustomerClassificationTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.CustomerClassificationType", 0, false);
             InsertClosedTableRecord(CustomerClassificationTypeTable, CustomerClassificationTypeObjectTable, customsClosedTables, customsClosedTableRepository);

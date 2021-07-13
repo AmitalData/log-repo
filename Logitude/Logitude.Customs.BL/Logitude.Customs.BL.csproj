@@ -168,6 +168,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\LoadingSiteTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\NDMessageActionCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\PartyRelationshipTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\PoaStatusTypeLookUpDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ReleaseMessageTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\SecurityClearenceTypeCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\StuffingSiteTypeDetails.Generated.cs" />
@@ -765,6 +766,7 @@
     <Compile Include="EntityDataMappings\Generated\PhysicalCheckDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PhysicalCheckOperationDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PhysicalCheckStatusMessageDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\PoaStatusTypeLookUpDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PointerLevelDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ProceduralFaultDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ProceduralFaultInProcessTypeDataMapping.Generated.cs" />
@@ -930,6 +932,7 @@
     <Compile Include="EntityDataMappings\PhysicalCheckDataMapping.cs" />
     <Compile Include="EntityDataMappings\PhysicalCheckOperationDataMapping.cs" />
     <Compile Include="EntityDataMappings\PhysicalCheckStatusMessageDataMapping.cs" />
+    <Compile Include="EntityDataMappings\PoaStatusTypeLookUpDataMapping.cs" />
     <Compile Include="EntityDataMappings\PointerLevelDataMapping.cs" />
     <Compile Include="EntityDataMappings\ProceduralFaultInProcessTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ProceduralFaultInSourceTypeDataMapping.cs" />
@@ -1060,6 +1063,7 @@
     <Compile Include="EntityQueryServices\Generated\LoadingSiteTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\LogisticsReferenceTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\NDMessageActionCodeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\PoaStatusTypeLookUpQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ReferantTeamQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ReferenceInputTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ReferenceStatusQueryService.Generated.cs" />
@@ -1596,6 +1600,7 @@
     <Compile Include="EntityUpdateServices\Generated\NbcDeclarationTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\NDMessageActionCodeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\PartyRelationshipTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\PoaStatusTypeLookUpUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ReferantTeamUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ReferenceInputTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ReferenceStatusUpdateService.Generated.cs" />
