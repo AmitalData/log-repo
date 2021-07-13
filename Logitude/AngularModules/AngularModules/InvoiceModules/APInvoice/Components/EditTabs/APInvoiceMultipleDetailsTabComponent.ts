@@ -852,6 +852,7 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
     private VatTypePercentagesList: VatTypePercentageList[] = [];
     private LoadOpenPayables() {
         this.CurrentSession.StartBusyIndicatorLoading();
+        this.missingVATPayables = [];
         this.invoiceDomainService.GetInvoiceOpenAmountPayables(this.editingShipmentId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.myOpenPayables = myResponse.Result;
