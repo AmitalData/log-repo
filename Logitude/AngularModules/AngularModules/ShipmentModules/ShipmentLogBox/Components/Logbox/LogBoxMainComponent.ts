@@ -884,15 +884,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         newWindow.WindowArgs = windowArgs;
         newWindow.Title = "Create New Shipment";
 
-        if (this.AirShipmentToggle) {
-            newWindow.Width = this.IsDSV ? 600 : 960;
-            newWindow.Height = this.isPrivateLabel ? (this.IsDSV ? 376 : 600) : 350; 
-            newWindowComponentPath += this.isPrivateLabel ? 'AddPrivateLabelShipmentComponent' : 'AddEditImporterShipmentComponent'; 
-        } else { 
-            newWindow.Width = 600;
-            newWindow.Height = this.isPrivateLabel ? (this.IsDSV ? 376 : 420) : 350; 
-            newWindowComponentPath += this.isPrivateLabel ? 'AddEditPrivateLabelShipmentComponent' : 'AddEditImporterShipmentComponent';
-        } 
+        newWindowComponentPath = this.GetWindowComponentPath(newWindowComponentPath, newWindow); 
         newWindow.Show(newWindowComponentPath);
         newWindow.WindowClosed.subscribe(($event: any) => {
             if ($event == "MyShipmentAdded") {
@@ -900,6 +892,29 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 this.LoadImporterShipments();
             }
         });
+    }
+
+    private GetWindowComponentPath(newWindowComponentPath: string, newWindow: LogitudeWindow) {
+        if (this.AirShipmentToggle) {
+            newWindowComponentPath = this.LoadNewAddShipmentComponent(newWindow, newWindowComponentPath);
+        } else {
+            newWindowComponentPath = this.LoadAddEditComponent(newWindow, newWindowComponentPath);
+        }
+        return newWindowComponentPath;
+    }
+
+    private LoadAddEditComponent(newWindow: LogitudeWindow, newWindowComponentPath: string) {
+        newWindow.Width = 600;
+        newWindow.Height = this.isPrivateLabel ? (this.IsDSV ? 376 : 420) : 350;
+        newWindowComponentPath += this.isPrivateLabel ? 'AddEditPrivateLabelShipmentComponent' : 'AddEditImporterShipmentComponent';
+        return newWindowComponentPath;
+    }
+
+    private LoadNewAddShipmentComponent(newWindow: LogitudeWindow, newWindowComponentPath: string) {
+        newWindow.Width = this.IsDSV ? 600 : 960;
+        newWindow.Height = this.isPrivateLabel ? (this.IsDSV ? 376 : 600) : 350;
+        newWindowComponentPath += this.isPrivateLabel ? 'AddPrivateLabelShipmentComponent' : 'AddEditImporterShipmentComponent';
+        return newWindowComponentPath;
     }
 
     onSearchTextChangeEvent(event) {

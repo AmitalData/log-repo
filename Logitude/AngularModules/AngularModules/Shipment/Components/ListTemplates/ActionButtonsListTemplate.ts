@@ -64,7 +64,7 @@ export class ActionButtonsListTemplate {
             });
         }
 
-      //  let x = this.rowData['DirectionId'].toLowerCase();
+     
 
         //this.fieldName = fieldName;
         //var myService: WebFreightDomainService = new WebFreightDomainService();
@@ -166,7 +166,8 @@ export class ActionButtonsListTemplate {
 
     EditButtonClicked() {
 
-         
+        let isExportAirShipment = this.rowData['DirectionId']== 'E';
+        if (isExportAirShipment) return; 
         this.CurrentSession.PseventRowSelectEvent.emit("PreventLogBoxSelect");
         this.CurrentSession.StartBusyIndicator("Loading ..."); 
         this._ShipmentPMService.get(this.rowData.Id).subscribe((myResult:any) => {
@@ -196,5 +197,4 @@ export class ActionButtonsListTemplate {
             }
         });
     }
-
 }
