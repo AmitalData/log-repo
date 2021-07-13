@@ -383,15 +383,16 @@ export class ShipmentDetailsComponent implements AfterViewInit
             .map((milstone: Milestone) =>
             {
                 var newCard = new MilestoneCard();
+                var CurrentMilestoneExceptions= this.Shipment.ShipmentList.CurrentMilestoneExceptions;
                 newCard.Date = milstone.Done ? milstone.Date : (milstone.EstimationDate || milstone.Date);
                 newCard.Code = 'No. ' + milstone.Id;
                 newCard.Title = milstone.Name;
                 newCard.Description = milstone.Notes;
                 newCard.IsDimmed = milstone.IsEstimation && !milstone.Done;
                 newCard.IsActive = milstone.Id + '' == this.Shipment.ShipmentList.CurrentMilestoneCode;
-                newCard.HasWarning = milstone.IsCurrent && this.Shipment.ShipmentList.CurrentMilestoneExceptions != null;
-                newCard.WarningMessage = this.Shipment.ShipmentList.CurrentMilestoneExceptions?.split("\n")[1];
-                newCard.WarningDate = this.datePipe.transform(this.Shipment.ShipmentList.CurrentMilestoneExceptions?.split("")[0], 'dd/MM/yyyy, HH:mm');
+                newCard.HasWarning = milstone.IsCurrent && CurrentMilestoneExceptions.trim().length > 0;
+                newCard.WarningMessage = newCard.HasWarning ? CurrentMilestoneExceptions?.split(',')[1] : null;
+                newCard.WarningDate = newCard.HasWarning ? this.datePipe.transform(CurrentMilestoneExceptions?.split(',')[0], 'dd/MM/yyyy, HH:mm'): null;
                 return newCard;
             });
         this.SetNoMilstonesFound();
