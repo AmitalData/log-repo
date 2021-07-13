@@ -8,6 +8,7 @@ import { PortListService } from '../../../../Common/Services/StandardLists/PortL
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { EntityStatusListService } from '../../../../Infrastructure/Services/StandardLists/EntityStatusListService';
 import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { Guid } from '../../../../Infrastructure/Utilities/Guid';
@@ -48,19 +49,29 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     public entityStatusListService: EntityStatusListService;
     public errorMessage = TextCodeTranslator.Translate("General.M.FieldIsRequired"); 
     private args: any;
-    EntityProgressStatusId: string; 
+    EntityProgressStatusId: string;
+    private entityResourceService: EntityResourceService;
     constructor() {
         super();
         this.InitializeServices();
         this.BuildFiltersLists();
+        this.LoadEntityResource(this.ObjectTableName);
     }
 
+    LoadEntityResource(objectTableName: string) { 
+ 
+        this.entityResourceService.getEntityResourceByTableName(objectTableName).subscribe((response: any) => { 
 
+            });
+
+        
+    }
     InitializeServices() {
         this.portListService = new PortListService();
         this.incotermListService = new IncotermListService();
         this.shipmentPMService = new ShipmentPMService();  
         this.entityStatusListService = new EntityStatusListService();
+        this.entityResourceService= new EntityResourceService();
     }
 
     SetWindowArgs(args: any) { 

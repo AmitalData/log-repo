@@ -50,6 +50,8 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         "LongName": false
     }
 
+    public AirShipmentToggle: boolean = false;
+
     constructor(private _entityListService: EntityListService) {
         this.myShipmentDomainService = new ShipmentDomainService();
         this.myUserPMService = new UserExtendedPMService();
@@ -60,6 +62,16 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LEX")[0];
         if (FeatureToggle) {
             this.ToggleIsExportShipments = true;
+        }
+
+        this.checkAirShipmentToggle();
+    }
+
+    private checkAirShipmentToggle() {
+        let AirShipmentFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "PLE")[0];
+        if (AirShipmentFeatureToggle) {
+            this.AirShipmentToggle = true;
+
         }
     }
 
@@ -868,12 +880,19 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         let windowArgs: any = {};
         windowArgs.IsNew = true;
         let newWindow = new LogitudeWindow();
-        newWindow.Width = this.IsDSV ? 600 : 960;
-        newWindow.Height = this.isPrivateLabel ? (this.IsDSV ? 376 : 600) : 350;
-        newWindow.Title = "Create New Shipment";
-        newWindow.WindowArgs = windowArgs;
         let newWindowComponentPath = './ShipmentModules/ShipmentLogBox/Components/Logbox/';
-        newWindowComponentPath += this.isPrivateLabel ? 'AddPrivateLabelShipmentComponent' : 'AddEditImporterShipmentComponent';
+        newWindow.WindowArgs = windowArgs;
+        newWindow.Title = "Create New Shipment";
+
+        if (this.AirShipmentToggle) {
+            newWindow.Width = this.IsDSV ? 600 : 960;
+            newWindow.Height = this.isPrivateLabel ? (this.IsDSV ? 376 : 600) : 350; 
+            newWindowComponentPath += this.isPrivateLabel ? 'AddPrivateLabelShipmentComponent' : 'AddEditImporterShipmentComponent'; 
+        } else { 
+            newWindow.Width = 600;
+            newWindow.Height = this.isPrivateLabel ? (this.IsDSV ? 376 : 420) : 350; 
+            newWindowComponentPath += this.isPrivateLabel ? 'AddEditPrivateLabelShipmentComponent' : 'AddEditImporterShipmentComponent';
+        } 
         newWindow.Show(newWindowComponentPath);
         newWindow.WindowClosed.subscribe(($event: any) => {
             if ($event == "MyShipmentAdded") {

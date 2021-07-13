@@ -21,10 +21,9 @@ import {DepositionRequestComponent} from './Components/Logbox/DepositionRequestC
 import { UserIdNumberMobileComponent } from './Components/Logbox/UserIdNumberMobileComponent';
 import { WarningApprovePaymentComponent } from './Components/Logbox/WarningApprovePaymentComponent';
 import { PrivateLabelApprovePaymentComponent } from './Components/Logbox/PrivateLabelApprovePaymentComponent';
-import { ApprovePaymentBaseComponent } from './Components/Logbox/ApprovePaymentBaseComponent';
-import { AddPrivateLabelShipmentComponent } from './Components/Logbox/AddPrivateLabelShipmentComponent';
+import { ApprovePaymentBaseComponent } from './Components/Logbox/ApprovePaymentBaseComponent'; 
 import { PrivateLabelPackageComponent } from './Components/Logbox/PrivateLabelPackageComponent';
-
+import { AddPrivateLabelShipmentComponent } from './Components/Logbox/AddPrivateLabelShipmentComponent';
 
 
 export const Components =

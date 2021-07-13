@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;820a&quot;"
+  Code="&quot;907c&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -572,6 +572,11 @@
       SearchFields="&quot;LCP,Lock Counter Procedure&quot;"
       Description="&quot;Lock Counter Procedure&quot;"
       Code="&quot;LCP&quot;" />
+    <Record
+      Code="&quot;PLE&quot;"
+      Name="&quot;PL Export Shipments&quot;"
+      SearchFields="&quot;PLE,PL Export Shipments,Allow to Create New Air Shipment From Private Label&quot;"
+      Description="&quot;Allow to Create New Air Shipment From Private Label&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

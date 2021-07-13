@@ -326,7 +326,6 @@
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\ApprovePaymentBaseComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\PrivateLabelApprovePaymentComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\PrivateLabelPackageComponent.html" />
-    <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\PrivateLabelShipmentComponent.html" />
     <Content Include="ShipmentModules\ShipmentRouting\Components\Routings\ChooseStandaloneShipmentComponent.html" />
     <Content Include="ShipmentModules\ShipmentRouting\Components\Routings\SelectStandalonePackagesComponent.html" />
     <Content Include="ShipmentModules\ShipmentRouting\Components\Routings\StandAlonePickupDeilveryActionsComponent.html" />
@@ -4601,12 +4600,10 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentINTTRA\Components\Wizard\AddEBookingVesselComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentINTTRA\Components\Wizard\SimulatorBookingComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentINTTRA\Components\Wizard\SimulatorBookingLoadComponent.ts" />
-    <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\AddPrivateLabelShipmentComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\DepositionRequestComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\ApprovePaymentBaseComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\PrivateLabelApprovePaymentComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\PrivateLabelPackageComponent.ts" />
-    <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\PrivateLabelShipmentComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\UserIdNumberMobileComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\LogBoxPackagesComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\ECommercePaymentRequestMobileComponent.ts" />
