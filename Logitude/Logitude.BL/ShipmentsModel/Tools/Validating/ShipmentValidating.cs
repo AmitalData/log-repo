@@ -1496,9 +1496,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 ShipmentSubTypeRepository subTypeRepository = new ShipmentSubTypeRepository(entityPM.Tenant);
                 ShipmentSubType subType = subTypeRepository.GetSingleShipmentSubType(entityPM.ShipmentSubTypeId, entityPM.Tenant);
 
-                if (subType != null)
+                if (subType != null && subType.Code?.ToLower() != "horse")
                 {
-                    if(entityPM.ShipmentTypeId.ToLower() != subType.ShipmentTypeCode.ToLower())
+                    if(entityPM.ShipmentTypeId.ToLower() != subType.ShipmentTypeCode?.ToLower())
                     {
                         throw new ApplicationException("Sub Type is not allowed with this shipment type");
                     }

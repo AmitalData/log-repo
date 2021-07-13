@@ -5,7 +5,9 @@
         public static string Default = "CTool";
         public static string ShipmentsUpdateTopic = "shipmentsupdate_topic";
         public static string ShipmentsCreateTopic = "shipmentscreate_topic";
+        public static string ShipmentSetValues = "shipmentsetvalues_topic";
         public static string TasksUpdateTopic = "tasksupdate_topic";
+        public static string TasksDoneTopic = "tasksdone_topic";
         public static string TasksCreateTopic = "taskscreate_topic";
         public static string LookupsTopic = "lookups_topic";
     }

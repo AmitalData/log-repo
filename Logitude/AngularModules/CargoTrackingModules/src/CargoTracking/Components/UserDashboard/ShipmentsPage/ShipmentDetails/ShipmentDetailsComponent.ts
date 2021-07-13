@@ -391,7 +391,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
                 newCard.IsActive = milstone.Id + '' == this.Shipment.ShipmentList.CurrentMilestoneCode;
                 newCard.HasWarning = milstone.IsCurrent && this.Shipment.ShipmentList.CurrentMilestoneExceptions != null;
                 newCard.WarningMessage = this.Shipment.ShipmentList.CurrentMilestoneExceptions?.split("\n")[1];
-                newCard.WarningDate = this.datePipe.transform(this.Shipment.ShipmentList.CurrentMilestoneExceptions?.split("\n")[0], 'dd/MM/yyyy, HH:mm');
+                newCard.WarningDate = this.datePipe.transform(this.Shipment.ShipmentList.CurrentMilestoneExceptions?.split("")[0], 'dd/MM/yyyy, HH:mm');
                 return newCard;
             });
         this.SetNoMilstonesFound();
@@ -904,12 +904,12 @@ export class ShipmentDetailsComponent implements AfterViewInit
         this.DetailsSectionToggleEvent.emit();
     }
 
-    OpenMessageWindow(messageText) {
+    OpenMessageWindow(messageDescription, messageDate) {
         this.dialog.open(MessageWindowComponent, {
             data: {
                 title: 'Alert',
-                date : messageText?.split("\n")[0],
-                description : messageText?.split("\n")[1],
+                date: messageDate,
+                description: messageDescription,
             }
         });
     } 

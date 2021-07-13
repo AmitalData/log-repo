@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ReconciliationUpdateClass
    {  		
-		public const string HashString = "8c61fb993beceee4f5bc6356c449ad28";
+		public const string HashString = "da2d0c1f353918a04ad558ae5ec1583f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -122,7 +122,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "התאמה",
 			      				    DefaultText =  "Reconciliation",
-			      				    Code =  "eb7b",
+			      				    Code =  "ded7",
 			      				    Name =  "Reconciliation Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -1232,6 +1232,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode ReconciliationTextCode_ReconciliationOCantReconcileMutipleARPayment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliation.O.CantReconcileMutipleARPayment", DefaultText = "Can’t include more than one AR payment in the same reconciliation",LocalDefaultText = @"לא ניתן לכלול יותר מקבלה אחת באותה התאמה", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ReconciliationTextCode_ReconciliationOCantReconcileMutipleAPPayment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliation.O.CantReconcileMutipleAPPayment", DefaultText = "Can’t include more than one AP payment in the same reconciliation",LocalDefaultText = @"לא ניתן לכלול יותר מתשלום אחד באותה התאמה", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ReconciliationTextCode_ReconciliationOAdditionalReconciliationsHasBeenCreated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliation.O.AdditionalReconciliationsHasBeenCreated", DefaultText = "Reconcile has been created, additional Reconciliations of the Transfer will be created in the background and can be found on the in the Reconcile Management screen at the end of the process",LocalDefaultText = @" התאמות נוצרו, התאמות נוספות לתנועות מחשבון הדחויים יווצרו ברקע וניתן יהיה לראותם במסך ניהול ההתאמות בסיום התהליך ", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

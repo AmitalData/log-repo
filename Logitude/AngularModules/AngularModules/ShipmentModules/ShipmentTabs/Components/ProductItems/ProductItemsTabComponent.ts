@@ -67,6 +67,7 @@ export class ProductItemsTabComponent extends BaseComponent implements OnInit, O
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.CustomerId = this.EntityPM.CustomerId;
                     this.ToCountryId = this.EntityPM.ToCountryId;
+                    this.BuildProductItems();
                 }
             });
 
@@ -75,6 +76,7 @@ export class ProductItemsTabComponent extends BaseComponent implements OnInit, O
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.CustomerId = this.EntityPM.CustomerId;
                     this.ToCountryId = this.EntityPM.ToCountryId;
+                    this.BuildProductItems();
                 }
             });
         }
@@ -148,6 +150,8 @@ export class ProductItemsTabComponent extends BaseComponent implements OnInit, O
                             if (customerProductItem) {
                                 var logitudeWindow = new LogitudeWindow();
                                 logitudeWindow.Title = "Edit Customer Product Item";
+                                logitudeWindow.Height = 550;
+                                logitudeWindow.Width = 800; 
                                 logitudeWindow.WindowArgs = { EntityPM: customerProductItem, ShipmentPM: this.EntityPM };
                                 logitudeWindow.Show('./ShipmentModules/ShipmentTabs/Components/ProductItems/EditCustomerProductItemComponent');
                                 logitudeWindow.ComponentLoaded.subscribe(comp => {
@@ -176,6 +180,10 @@ export class ProductItemsTabComponent extends BaseComponent implements OnInit, O
         shipmentProductItem.SKU = customerItem.SKU;
         shipmentProductItem.Name = customerItem.Name;
         shipmentProductItem.Brand = customerItem.Brand;
+        shipmentProductItem.ASIN = customerItem.ASIN;
+        shipmentProductItem.UPC = customerItem.UPC;
+        shipmentProductItem.OriginCountryId = customerItem.OriginCountryId;
+        shipmentProductItem.OriginCountryName = customerItem.OriginCountryName;
 
         var htsCode: HTSCodePM = customerItem.HTSCodes.filter(d => d.DestinationCountryId == this.EntityPM.ToCountryId && !d.InActive)[0];
         if (htsCode) {
@@ -251,6 +259,10 @@ export class ProductItem extends BaseComponent {
             this.Description = value.Description;
             this.Brand = value.Brand
             this.Name = value.Name
+            this.ASIN = value.ASIN;
+            this.UPC = value.UPC;
+            this.OriginCountryId = value.OriginCountryId;
+            this.OriginCountryName = value.OriginCountryName;
         }
 
         else {
@@ -258,6 +270,10 @@ export class ProductItem extends BaseComponent {
             this.Description = null;
             this.Brand = null;
             this.Name = null;
+            this.ASIN = null;
+            this.UPC = null;
+            this.OriginCountryId = null;
+            this.OriginCountryName = null;
         }
     }
 
@@ -300,6 +316,34 @@ export class ProductItem extends BaseComponent {
     set Name(newValue: string) {
         if (this.EntityPM.Name != newValue) {
             this.EntityPM.Name = newValue;
+        }
+    }
+
+    get ASIN() { return this.EntityPM.ASIN; }
+    set ASIN(newValue: string) {
+        if (this.EntityPM.ASIN != newValue) {
+            this.EntityPM.ASIN = newValue;
+        }
+    }
+
+    get UPC() { return this.EntityPM.UPC; }
+    set UPC(newValue: string) {
+        if (this.EntityPM.UPC != newValue) {
+            this.EntityPM.UPC = newValue;
+        }
+    }
+
+    get OriginCountryId() { return this.EntityPM.OriginCountryId; }
+    set OriginCountryId(newValue: string) {
+        if (this.EntityPM.OriginCountryId != newValue) {
+            this.EntityPM.OriginCountryId = newValue;
+        }
+    }
+
+    get OriginCountryName() { return this.EntityPM.OriginCountryName; }
+    set OriginCountryName(newValue: string) {
+        if (this.EntityPM.OriginCountryName != newValue) {
+            this.EntityPM.OriginCountryName = newValue;
         }
     }
 

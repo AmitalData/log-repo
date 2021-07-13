@@ -6995,6 +6995,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 Description = initializer.StandalonePackage.Description,
                 PackageTypeId = initializer.StandalonePackage.PackageTypeId,
                 Quantity = initializer.StandalonePackage.Quantity,
+                ContainerEntityId = initializer.StandalonePackage.ContainerEntityId,
                 Volume = initializer.StandalonePackage.Volume,
                 Weight = initializer.StandalonePackage.Weight,
                 ChangeSetOp = ChangeSetOperation.Insert,

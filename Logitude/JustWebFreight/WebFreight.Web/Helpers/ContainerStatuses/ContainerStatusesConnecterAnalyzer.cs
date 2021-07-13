@@ -322,7 +322,7 @@ namespace WebFreight.Web.Helpers.Analyzers
             var containerNumber = oceanInsight.ContainerNumber;
             if (!string.IsNullOrEmpty(containerNumber))
             {
-                container = containerQuery.GetContainerByContainerNumberAndTenant(containerNumber, logitudeTenant.Value);
+                container = containerQuery.GetContainerByNumberAndShipmentIdAndTenant(containerNumber, oceanInsight.ShipmentId, logitudeTenant.Value);
                 containerId = container?.Id;
                 container_number = container?.ContainerNumber;
             }

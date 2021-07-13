@@ -1,0 +1,66 @@
+﻿<Script DBType="Main" Module="Invoice">
+  <Sql Version="1">
+    <![CDATA[
+    
+  
+declare @Tenant as int
+declare @EntityId as varchar(15)
+declare @EnglishName as varchar(30)
+declare @BankCode as varchar(10)
+declare @BranchNumber as nvarchar(15)
+declare @AccountNumber as varchar(30)
+declare @MySearchFields as nvarchar(1000)
+
+BEGIN
+		DECLARE DataCursor CURSOR READ_ONLY
+		FOR
+		SELECT Id, Tenant, EnglishName, BankCode, BranchNumber, AccountNumber
+		FROM BankAccountLites		
+		OPEN DataCursor FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @EnglishName, @BankCode, @BranchNumber, @AccountNumber
+		WHILE @@FETCH_STATUS = 0
+		BEGIN
+
+		set @MySearchFields = ''
+
+			if (@EnglishName is not null)
+			begin
+				if (@MySearchFields = '') set @MySearchFields = @EnglishName
+				else set @MySearchFields = @MySearchFields + ',' + @EnglishName	
+			end
+
+			if (@BankCode is not null)
+			begin
+				if (@MySearchFields = '') set @MySearchFields = @BankCode
+				else set @MySearchFields = @MySearchFields + ',' + @BankCode	
+			end
+
+			if (@BranchNumber is not null)
+			begin
+				if (@MySearchFields = '') set @MySearchFields = @BranchNumber
+				else set @MySearchFields = @MySearchFields + ',' + @BranchNumber	
+			end
+
+			if (@AccountNumber is not null)
+			begin
+				if (@MySearchFields = '') set @MySearchFields = @AccountNumber
+				else set @MySearchFields = @MySearchFields + ',' + @AccountNumber	
+			end
+
+			update BankAccountLites
+			set
+			SearchFields = @MySearchFields
+			where Id = @EntityId AND Tenant = @Tenant
+
+		FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @EnglishName, @BankCode, @BranchNumber, @AccountNumber
+		END				
+		CLOSE DataCursor
+		DEALLOCATE DataCursor
+END
+
+
+
+  
+  
+    ]]>
+  </Sql>
+</Script>
