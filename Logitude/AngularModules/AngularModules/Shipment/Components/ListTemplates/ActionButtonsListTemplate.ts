@@ -42,21 +42,20 @@ export class ActionButtonsListTemplate {
     public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService;
     private CurrentSession = SessionLocator.SelectedSession;
     public IsDSV: boolean = false;
-    public IsPrivateLabel: boolean = false;
+    public IsPrivateLabel: boolean = false; 
     constructor(private CD: ChangeDetectorRef) {
         this._ShipmentPMService = new ShipmentPMService();
         if (SessionLocator.PrivateLableSettings) {
             this._documentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
             this.Width = 80;
-            this.IsPrivateLabel = true;
+            this.IsPrivateLabel = true; 
             this.IsDSV = SessionLocator.PrivateLableSettings.PrivateLabelDomain.toLowerCase().indexOf("dsv") > -1; 
             this.ConnectBtn = SessionLocator.PrivateLableSettings.PrivateLabelShortName + " Connect";
         }
     }
 
     setVariables(rowData: any, fieldName: string) {
-        this.rowData = rowData;
-        this.ShowButtons = this.rowData['StatusName'].toLowerCase() == "in progress" ? false : true;
+        this.rowData = rowData; 
         if (SessionLocator.PrivateLableSettings) {
             this._documentsFilingExtendedPMService.IsEntityHasSharedDocs(this.rowData['Id'], SessionLocator.Tenant).subscribe((res: any) => {
                 if (res.Result == false) {
@@ -64,6 +63,9 @@ export class ActionButtonsListTemplate {
                 }
             });
         }
+
+     
+
         //this.fieldName = fieldName;
         //var myService: WebFreightDomainService = new WebFreightDomainService();
         //if (rowData['PartnerLogoId']){
@@ -164,19 +166,20 @@ export class ActionButtonsListTemplate {
 
     EditButtonClicked() {
 
-   
+        let isExportAirShipment = this.rowData['DirectionId']== 'E';
+        if (isExportAirShipment) return; 
         this.CurrentSession.PseventRowSelectEvent.emit("PreventLogBoxSelect");
-        this.CurrentSession.StartBusyIndicator("Loading ...");
+        this.CurrentSession.StartBusyIndicator("Loading ..."); 
         this._ShipmentPMService.get(this.rowData.Id).subscribe((myResult:any) => {
             if (!myResult.HasError) {
-                this.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();  
                 var newWindow = new LogitudeWindow();
                 newWindow.Width = 600;
                 newWindow.Height = 350;
                 newWindow.Title = "Edit Shipment";
                 var windowArgs: any = {};
                 windowArgs.IsNew = false;
-                windowArgs.EntityPM = myResult.Result
+                windowArgs.EntityPM = myResult.Result 
                 newWindow.WindowArgs = windowArgs;
                 if ((SessionLocator.PrivateLableSettings)) {
                     newWindow.Height = this.IsDSV ?  376 : 420;
@@ -194,5 +197,4 @@ export class ActionButtonsListTemplate {
             }
         });
     }
-
 }

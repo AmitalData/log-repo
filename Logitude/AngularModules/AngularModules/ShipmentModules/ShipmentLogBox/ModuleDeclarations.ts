@@ -21,8 +21,9 @@ import {DepositionRequestComponent} from './Components/Logbox/DepositionRequestC
 import { UserIdNumberMobileComponent } from './Components/Logbox/UserIdNumberMobileComponent';
 import { WarningApprovePaymentComponent } from './Components/Logbox/WarningApprovePaymentComponent';
 import { PrivateLabelApprovePaymentComponent } from './Components/Logbox/PrivateLabelApprovePaymentComponent';
-import { ApprovePaymentBaseComponent } from './Components/Logbox/ApprovePaymentBaseComponent';
-
+import { ApprovePaymentBaseComponent } from './Components/Logbox/ApprovePaymentBaseComponent'; 
+import { PrivateLabelPackageComponent } from './Components/Logbox/PrivateLabelPackageComponent';
+import { AddPrivateLabelShipmentComponent } from './Components/Logbox/AddPrivateLabelShipmentComponent';
 
 
 export const Components =
@@ -51,6 +52,8 @@ export const Components =
         WarningApprovePaymentComponent,
         PrivateLabelApprovePaymentComponent,
         ApprovePaymentBaseComponent,
+        AddPrivateLabelShipmentComponent,
+        PrivateLabelPackageComponent,
     ];
 
 
@@ -83,7 +86,10 @@ export class ModuleDeclarations {
             case "UserIdNumberMobileComponent": { myResult = UserIdNumberMobileComponent; break; }
             case "WarningApprovePaymentComponent": { myResult = WarningApprovePaymentComponent; break; }
             case "PrivateLabelApprovePaymentComponent": { myResult = PrivateLabelApprovePaymentComponent; break; }            
-            case "ApprovePaymentBaseComponent": { myResult = ApprovePaymentBaseComponent; break; }            
+            case "ApprovePaymentBaseComponent": { myResult = ApprovePaymentBaseComponent; break; }
+            case "AddPrivateLabelShipmentComponent": { myResult = AddPrivateLabelShipmentComponent; break; }
+            case "PrivateLabelPackageComponent": { myResult = PrivateLabelPackageComponent; break; }
+                 
         }
 
         return myResult;

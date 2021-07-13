@@ -269,8 +269,6 @@ namespace Logitude.Infrastructure.BL
                 Description = "Ocean Insights Containers", 
 			});
 			 
-          
-
             all.Add(new ToggleDetails()
             {    
                 Name = "Reports in Shared Logistics", 
@@ -281,12 +279,19 @@ namespace Logitude.Infrastructure.BL
 			 
             all.Add(new ToggleDetails()
             {    
+                Code = "BIF", 
+                Name = "Invoices DWH", 
+                SearchFields = "BIF,Invoices DWH,Allow Tenants to Show Invoice Fact on the BI Report Screen", 
+                Description = "Allow Tenants to Show Invoice Fact on the BI Report Screen", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
                 Code = "CTL", 
                 Name = "CollaborationTool", 
                 SearchFields = "CTL,CollaborationTool", 
                 Description = "Collaboration Tool", 
 			});
-			 
 			 
             all.Add(new ToggleDetails()
             {    
@@ -302,6 +307,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "LCP,Lock Counter Procedure", 
                 Description = "Lock Counter Procedure", 
                 Code = "LCP", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "PLE", 
+                Name = "PL Export Shipments", 
+                SearchFields = "PLE,PL Export Shipments,Create New Air Shipment Frol Private Label", 
+                Description = "Create New Air Shipment Frol Private Label", 
 			});
 			
             return all;

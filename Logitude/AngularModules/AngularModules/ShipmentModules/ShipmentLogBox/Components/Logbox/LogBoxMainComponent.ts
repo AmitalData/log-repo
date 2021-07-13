@@ -49,7 +49,9 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         "ShortName": true,
         "LongName": false
     }
-     
+
+    public AirShipmentToggle: boolean = false;
+
     constructor(private _entityListService: EntityListService) {
         this.myShipmentDomainService = new ShipmentDomainService();
         this.myUserPMService = new UserExtendedPMService();
@@ -60,6 +62,16 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LEX")[0];
         if (FeatureToggle) {
             this.ToggleIsExportShipments = true;
+        }
+
+        this.checkAirShipmentToggle();
+    }
+
+    private checkAirShipmentToggle() {
+        let AirShipmentFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "PLE")[0];
+        if (AirShipmentFeatureToggle) {
+            this.AirShipmentToggle = true;
+
         }
     }
 
@@ -112,20 +124,20 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             this.SelectedFilter = this.AgentShipmentsLabel;
             this.RequestedDocsLable = "Action Required";
             this.RefTemplateWidth = '150px';
-             
+
         }
         else {
             this.RefTemplateWidth = this.ToggleIsExportShipments ? '250px' : '220px';
         }
     }
 
-    private getAgentShipmentsLabel(agentName: string) { 
-        let agentShipmentsLabel = "";  
+    private getAgentShipmentsLabel(agentName: string) {
+        let agentShipmentsLabel = "";
         if (agentName.length < 10 && this.AgentLabelClass.LongName) {
-            agentShipmentsLabel = agentName + '\n' + " Shipments"; 
+            agentShipmentsLabel = agentName + '\n' + " Shipments";
         } else {
-           
-            agentShipmentsLabel = agentName + " Shipments"; 
+
+            agentShipmentsLabel = agentName + " Shipments";
         }
         return agentShipmentsLabel;
     }
@@ -255,7 +267,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             console.log("4");
             this.SaveUserLastSettings("SelectedArchiveFilter", this.mySelectedArchiveFilter);
             ServiceLocator.SendTotangoUserActivity("LogBox", "Open/Close filter changed");
-           
+
         }
     }
 
@@ -305,7 +317,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 }
                 if (myTransportFilter.length > 0) {
                     this.mySelectedTransportFilter = myTransportFilter[0].FilterValue;
-                } 
+                }
             }
             this.LoadImporterShipments();
         });
@@ -669,7 +681,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         if (this.RowSelectedTimerToken) {
             clearTimeout(this.RowSelectedTimerToken);
         }
-        this.RowSelectedTimerToken = setTimeout(() => this.TriggerShipmentSelectedEvent(CurrentRow), 500); 
+        this.RowSelectedTimerToken = setTimeout(() => this.TriggerShipmentSelectedEvent(CurrentRow), 500);
     }
 
     TriggerShipmentSelectedEvent(CurrentRow) {
@@ -868,12 +880,11 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         let windowArgs: any = {};
         windowArgs.IsNew = true;
         let newWindow = new LogitudeWindow();
-        newWindow.Width = 600;
-        newWindow.Height = this.isPrivateLabel ? (this.IsDSV ? 376:  420) : 350;
-        newWindow.Title = "Create New Shipment";
-        newWindow.WindowArgs = windowArgs;
         let newWindowComponentPath = './ShipmentModules/ShipmentLogBox/Components/Logbox/';
-        newWindowComponentPath += this.isPrivateLabel ? 'AddEditPrivateLabelShipmentComponent' : 'AddEditImporterShipmentComponent';
+        newWindow.WindowArgs = windowArgs;
+        newWindow.Title = "Create New Shipment";
+
+        newWindowComponentPath = this.GetWindowComponentPath(newWindowComponentPath, newWindow); 
         newWindow.Show(newWindowComponentPath);
         newWindow.WindowClosed.subscribe(($event: any) => {
             if ($event == "MyShipmentAdded") {
@@ -881,6 +892,29 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 this.LoadImporterShipments();
             }
         });
+    }
+
+    private GetWindowComponentPath(newWindowComponentPath: string, newWindow: LogitudeWindow) {
+        if (this.AirShipmentToggle) {
+            newWindowComponentPath = this.LoadNewAddShipmentComponent(newWindow, newWindowComponentPath);
+        } else {
+            newWindowComponentPath = this.LoadAddEditComponent(newWindow, newWindowComponentPath);
+        }
+        return newWindowComponentPath;
+    }
+
+    private LoadAddEditComponent(newWindow: LogitudeWindow, newWindowComponentPath: string) {
+        newWindow.Width = 600;
+        newWindow.Height = this.isPrivateLabel ? (this.IsDSV ? 376 : 420) : 350;
+        newWindowComponentPath += this.isPrivateLabel ? 'AddEditPrivateLabelShipmentComponent' : 'AddEditImporterShipmentComponent';
+        return newWindowComponentPath;
+    }
+
+    private LoadNewAddShipmentComponent(newWindow: LogitudeWindow, newWindowComponentPath: string) {
+        newWindow.Width = this.IsDSV ? 600 : 960;
+        newWindow.Height = this.isPrivateLabel ? (this.IsDSV ? 376 : 600) : 350;
+        newWindowComponentPath += this.isPrivateLabel ? 'AddPrivateLabelShipmentComponent' : 'AddEditImporterShipmentComponent';
+        return newWindowComponentPath;
     }
 
     onSearchTextChangeEvent(event) {
