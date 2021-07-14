@@ -17,12 +17,12 @@ using System.Transactions;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
-  public   class JournalAdditionalDataCreationService
+  public class JournalAdditionalDataCreationService
     {
         public int tenant;
         public DateTime documentDate;
-        private static IAccountingContext accountingContext;
-        private static  FullAccountingSettingPM setting;
+        private  IAccountingContext accountingContext;
+        private   FullAccountingSettingPM setting;
         private  const int maxAllowedLinesCount=3000;
         public JournalAdditionalDataCreationService(int Tenant, DateTime DocumentDate)
         {
@@ -74,39 +74,49 @@ namespace Logitude.Accounting.BL.CoreBL
         }
         private List<TaxReportData> GetJournalOutputLines()
         {
-            List <TaxReportData> notIncludedJournals =   (from a in accountingContext.JournalAdditionalDatas
-           join journal in accountingContext.Journals on a.JournalId equals journal.Id
-                                                                    
-                                                                 where journal.AccountingEntityCode == "2" && a.Tenant == tenant 
-                                                                && (a.TaxReportId == null )
-
-                                                                    select new TaxReportData()
-                                                                    {
-                                                                        Id = a.TaxReportId,
-                                                                        JournalId = journal.Id,
-                                                                        JournalLineNumber = 1,
-                                                                        TransmitStatusCode = a.TaxReportTransmitStatusCode,
-                                                                        Tenant = a.Tenant
-
-                                                                    }).ToList();
-
-            List<TaxReportData> includedJournals = (from a in accountingContext.JournalAdditionalDatas
-                                                               join journal in accountingContext.Journals on a.JournalId equals journal.Id
-                                                               join taxreport in accountingContext.TaxReports on a.TaxReportId equals taxreport.Id
-                                                               where journal.AccountingEntityCode == "2" && a.Tenant == tenant
-                                                              && (a.TaxReportId != null && (taxreport.StatusCode == "D" || taxreport.StatusCode == "E"))
-                                                            select new TaxReportData()
-                                                            {
-                                                                Id = a.TaxReportId,
-                                                                JournalId = journal.Id,
-                                                                JournalLineNumber = 1,
-                                                                TransmitStatusCode = a.TaxReportTransmitStatusCode,
-                                                                Tenant = a.Tenant
-
-                                                            }).ToList();
+            List<TaxReportData> notIncludedJournals = new List<TaxReportData>();
+            notIncludedJournals = GetJournalAdditionalLinesThatNotIncludedInAnyReport(tenant);
+            List<TaxReportData> includedJournals = new List<TaxReportData>();
+            includedJournals = GetJournalAdditionalLinesThatIncludedInTaxReports(tenant);        
             notIncludedJournals= notIncludedJournals.Concat(includedJournals).ToList();
             return notIncludedJournals;
         }
+        private List<TaxReportData> GetJournalAdditionalLinesThatIncludedInTaxReports(int tenant)
+        {
+            return (from a in accountingContext.JournalAdditionalDatas
+                    join journal in accountingContext.Journals on a.JournalId equals journal.Id
+                    join taxreport in accountingContext.TaxReports on a.TaxReportId equals taxreport.Id
+                    where journal.AccountingEntityCode == "2" && a.Tenant == tenant
+                   && (a.TaxReportId != null && (taxreport.StatusCode == "D" || taxreport.StatusCode == "E"))
+                    select new TaxReportData()
+                    {
+                        Id = a.TaxReportId,
+                        JournalId = journal.Id,
+                        JournalLineNumber = 1,
+                        TransmitStatusCode = a.TaxReportTransmitStatusCode,
+                        Tenant = a.Tenant
+
+                    }).ToList();
+        }
+        private List<TaxReportData> GetJournalAdditionalLinesThatNotIncludedInAnyReport(int tenant)
+        {
+          return  (from a in accountingContext.JournalAdditionalDatas
+             join journal in accountingContext.Journals on a.JournalId equals journal.Id
+             where journal.AccountingEntityCode == "2" && a.Tenant == tenant
+            && (a.TaxReportId == null)
+
+             select new TaxReportData()
+             {
+                 Id = a.TaxReportId,
+                 JournalId = journal.Id,
+                 JournalLineNumber = 1,
+                 TransmitStatusCode = a.TaxReportTransmitStatusCode,
+                 Tenant = a.Tenant
+
+             }).ToList();
+
+        }
+
         private  void CreateJournalAdditionalDataFroJournalInputLines()
         {
             List<TaxReportData> inputLines = GetTenantJournalInputLinesByDateDate(tenant, documentDate);
@@ -162,13 +172,12 @@ namespace Logitude.Accounting.BL.CoreBL
 
             }
         }
-        private static void SaveJournalAdditionalData(JournalAdditionalDataPM journalAdditionalDataPM)
-        {
-         
+        private  void SaveJournalAdditionalData(JournalAdditionalDataPM journalAdditionalDataPM)
+        {         
             JournalAdditionalDataUpdateService journalAdditionalDataUpdateService = new JournalAdditionalDataUpdateService(accountingContext, new Dictionary<string, IContext>(), journalAdditionalDataPM.Tenant);
             journalAdditionalDataUpdateService.Update(journalAdditionalDataPM, true);
         }
-        private static JournalAdditionalDataPM MapJournalAdditionalLinePMFields(TaxReportData reportData, JournalAdditionalData journalAdditionalData)
+        private  JournalAdditionalDataPM MapJournalAdditionalLinePMFields(TaxReportData reportData, JournalAdditionalData journalAdditionalData)
         {
             return new JournalAdditionalDataPM()
             {
@@ -182,10 +191,19 @@ namespace Logitude.Accounting.BL.CoreBL
 
         }
       
-        private static  List<TaxReportData> GetTenantJournalInputLinesByDateDate(int tenant, DateTime documentDate)
+        private   List<TaxReportData> GetTenantJournalInputLinesByDateDate(int tenant, DateTime documentDate)
         {
             List<TaxReportData> notIncludedTransactions = new List<TaxReportData>();
-            notIncludedTransactions = (from transaction in accountingContext.LedgerTransactions
+            notIncludedTransactions = GetInputLinesThatNotIncludedInAnyReport(tenant);
+            List<TaxReportData> includedTransactions = new List<TaxReportData>();
+            includedTransactions = GetInputLinesThatIncludedInTaxReport(tenant);          
+            notIncludedTransactions = notIncludedTransactions.Concat(includedTransactions).ToList();
+            return notIncludedTransactions;
+        }
+        private  List<TaxReportData> GetInputLinesThatNotIncludedInAnyReport(int tenant)
+        {
+       
+           return (from transaction in accountingContext.LedgerTransactions
                                        join d in accountingContext.JournalAdditionalDatas on transaction.JournalId equals d.JournalId
 
                                        where transaction.AccountId == setting.VATInputsGLAccountId && transaction.Tenant == tenant &&
@@ -202,8 +220,10 @@ namespace Logitude.Accounting.BL.CoreBL
                                            Tenant = transaction.Tenant
 
                                        }).Distinct().ToList();
-            List<TaxReportData> includedTransactions = new List<TaxReportData>();
-            includedTransactions = (from transaction in accountingContext.LedgerTransactions
+        }
+        private List<TaxReportData> GetInputLinesThatIncludedInTaxReport(int tenant)
+        {
+           return(from transaction in accountingContext.LedgerTransactions
                                     join d in accountingContext.JournalAdditionalDatas on transaction.JournalId equals d.JournalId
                                     join taxreport in accountingContext.TaxReports on d.TaxReportId equals taxreport.Id
                                     where transaction.AccountId == setting.VATInputsGLAccountId && transaction.Tenant == tenant &&
@@ -222,11 +242,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                         Tenant = transaction.Tenant
 
                                     }).Distinct().ToList();
-
-            notIncludedTransactions = notIncludedTransactions.Concat(includedTransactions).ToList();
-            return notIncludedTransactions;
         }
-
         private  FullAccountingSettingPM GetTenantFullAccountingSetting()
         {
             FullAccountingSettingQueryService fullAccountingSettingQueryService = new FullAccountingSettingQueryService(tenant);
