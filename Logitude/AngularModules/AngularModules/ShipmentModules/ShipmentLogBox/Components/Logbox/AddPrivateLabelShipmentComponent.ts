@@ -223,9 +223,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
             }
             else {
                 this.EntityPM = serviceResponse.Result;
-                this.CurrentSession.CloseCurrentWindow();
-                if (this.EntityPM) {
-                }
+                this.CurrentSession.CloseCurrentWindowEmit("MyShipmentAdded"); 
 
             }
         });
