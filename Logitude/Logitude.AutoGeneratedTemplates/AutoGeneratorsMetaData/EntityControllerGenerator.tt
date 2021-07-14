@@ -202,6 +202,10 @@ void SaveEntityControllerOutput(string outputFileName)
 	if(modelname.Contains("Accounting") || modelname.Contains("Customs") || modelname.Contains("CargoTracking")){
 	location="Def";
 	}
+    if(modelname.Contains("QuoteOPM") ){
+	location="Def";
+	}
+
 	string pmsspacestring =  modelname + "."+ location +".EntityPMs;";
 	string listspacestring  = modelname + ".Data.EntityLists;";
 	string dataspacestring = modelname + ".Data;";
@@ -601,8 +605,13 @@ if(hasTenant && enableSecurity)
 	string keysName = tableName+"Keys";
 	string pocosspacestring = modelname+ ".Data.EntityPOCOs;";
 	string location="BL";
-	if(modelname.Contains("Accounting") || modelname.Contains("Customs")|| modelname.Contains("CargoTracking")){
+	if(modelname.Contains("Accounting") || modelname.Contains("Customs")|| modelname.Contains("CargoTracking")   ){
 	location="Def";
+	}
+     
+     
+    if(modelname.Contains("QuoteOPM") ){
+	  location="Def";
 	}
 	string pmsspacestring =  modelname + "."+ location +".EntityPMs;";
 	string listspacestring  = modelname + ".Data.EntityLists;";

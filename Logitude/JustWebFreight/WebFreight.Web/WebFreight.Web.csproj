@@ -1062,6 +1062,8 @@
     <Compile Include="Controllers\Integration\Shipment\ShipmentIntegrationVariables.cs" />
     <Compile Include="Controllers\QuoteModel\Generated\PMControllers\QuoteClosingReasonController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingBrandingController.cs" />
+    <Compile Include="Controllers\QuoteOPMModel\Generated\ListControllers\QuoteOPViewsController.Generated.cs" />
+    <Compile Include="Controllers\QuoteOPMModel\Generated\PMControllers\QuoteOPController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\LogboxShipmentExportExcelController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\ShipmentCargoTrackingController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\AccountingInformationIdentifierViewsController.Generated.cs" />
@@ -6958,6 +6960,8 @@
   <ItemGroup>
     <Folder Include="BookingModel\DomainServices\Generated\" />
     <Folder Include="CargoTrackingModel\" />
+    <Folder Include="Controllers\QuoteOPMModel\ApiHelpers\" />
+    <Folder Include="Controllers\QuoteOPMModel\Extended\" />
     <Folder Include="CRMModel\Controllers\Generated\" />
     <Folder Include="CustomModel\Tools\TraceEvents\" />
     <Folder Include="images\ToolBar\" />
@@ -6970,6 +6974,7 @@
     <Folder Include="MobileApplication\Views\QuoteApiV1\" />
     <Folder Include="MobileApplication\Views\SupplierInvioceItemCertificats\" />
     <Folder Include="OceanInsights\" />
+    <Folder Include="QuoteOPMModel\DomainServices\" />
     <Folder Include="SocialModel\DomainServices\Generated\" />
     <Folder Include="Stimulsoft\CacheFiles\" />
     <Folder Include="Temp\" />
@@ -6994,6 +6999,18 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Amital.QuoteOPM.BL\Amital.QuoteOPM.BL.csproj">
+      <Project>{8ff2bd5f-45c0-4077-b25f-8b90154510d0}</Project>
+      <Name>Amital.QuoteOPM.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Amital.QuoteOPM.Data\Amital.QuoteOPM.Data.csproj">
+      <Project>{bf906c23-b5a0-4e33-a2f4-6728778395f3}</Project>
+      <Name>Amital.QuoteOPM.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Amital.QuoteOPM.Def\Amital.QuoteOPM.Def.csproj">
+      <Project>{97ebbd11-f7e1-4d22-a236-3d1f5261cddc}</Project>
+      <Name>Amital.QuoteOPM.Def</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\ContainerMonitoring\ContainerMonitoring.csproj">
       <Project>{1758a10f-0068-45c1-8e60-06022bbfb8b8}</Project>
       <Name>ContainerMonitoring</Name>
