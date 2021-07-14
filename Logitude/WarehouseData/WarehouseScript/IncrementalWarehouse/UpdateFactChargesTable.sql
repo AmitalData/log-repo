@@ -106,6 +106,8 @@
    declare @ForiegnCurrencyId as int 
    declare @InvoiceChargeLineDescription as nvarchar(500)
    declare @ChargeTypeNote as nvarchar(250)
+   declare @ShipmentPayablesReceivablesInvoiceStatusCode as varchar(2)
+   declare @ShipmentPayablesReceivablesInvoiceDraftNumber as varchar(20)
 
 	DECLARE ShipmentsChargesCursor CURSOR READ_ONLY
 	FOR
@@ -113,9 +115,9 @@
 
 
 	 
-	with ShipmentPayablesReceivables as(select ShipmentId,ChargesTypeId,EntityType,InvoiceNumber,InvoiceCurrencyId,InvoiceCurrencyExchangeRate  ,AmountInInvoiceCurrency,  OpenPayablesinLocal , OpenPayablesinProfit , AccountedPayablesinLocal , AccountedPayablesinProfit , InvoiceLineId , ReceivablesTotalAmount , ReceivablesTotalAmountLocal ,PayableId,ReceivableId , BillTo ,Vendor,InvoiceId, InvoiceDate,InvoiceLineAmountForeign, ForiegnCurrencyId, InvoiceChargeLineDescription, ChargeTypeNote    from(
+	with ShipmentPayablesReceivables as(select ShipmentId,ChargesTypeId,EntityType,InvoiceNumber,InvoiceCurrencyId,InvoiceCurrencyExchangeRate  ,AmountInInvoiceCurrency,  OpenPayablesinLocal , OpenPayablesinProfit , AccountedPayablesinLocal , AccountedPayablesinProfit , InvoiceLineId , ReceivablesTotalAmount , ReceivablesTotalAmountLocal ,PayableId,ReceivableId , BillTo ,Vendor,InvoiceId, InvoiceDate,InvoiceLineAmountForeign, ForiegnCurrencyId, InvoiceChargeLineDescription, ChargeTypeNote, InvoiceStatusCode, InvoiceDraftNumber    from(
 		
-		select dw_ShipmentPayables.ShipmentId ,dw_ShipmentPayables.ChargesTypeId, 'Payables' as EntityType , dw_APInvoices.InvoiceNumber,dw_APInvoices.InvoiceCurrencyId,dw_APInvoices.InvoiceCurrencyExchangeRate ,  dw_APInvoices.AmountInInvoiceCurrency, 0 as OpenPayablesinLocal ,0 as OpenPayablesinProfit , dw_APInvoiceLines.LocalCurrencyAmount as AccountedPayablesinLocal ,dw_APInvoiceLines.ProfitCurrencyAmount   as AccountedPayablesinProfit , '' as  InvoiceLineId , 0 as ReceivablesTotalAmount ,0 as ReceivablesTotalAmountLocal , dw_ShipmentPayables.Id as PayableId, null as ReceivableId , 1 as BillTo  , vendorPartners.Id_Number as  Vendor , dw_APInvoices.Id as InvoiceId, dw_APInvoices.InvoiceDate as InvoiceDate, dw_APInvoiceLines.ForiegnCurrencyAmount   as InvoiceLineAmountForeign, dw_APInvoiceLines.ForiegnCurrencyId   as ForiegnCurrencyId,dw_APInvoiceLines.Notes  as InvoiceChargeLineDescription, dw_ShipmentPayables.Notes as  ChargeTypeNote      from dw_shipments 
+		select dw_ShipmentPayables.ShipmentId ,dw_ShipmentPayables.ChargesTypeId, 'Payables' as EntityType , dw_APInvoices.InvoiceNumber,dw_APInvoices.InvoiceCurrencyId,dw_APInvoices.InvoiceCurrencyExchangeRate ,  dw_APInvoices.AmountInInvoiceCurrency, 0 as OpenPayablesinLocal ,0 as OpenPayablesinProfit , dw_APInvoiceLines.LocalCurrencyAmount as AccountedPayablesinLocal ,dw_APInvoiceLines.ProfitCurrencyAmount   as AccountedPayablesinProfit , '' as  InvoiceLineId , 0 as ReceivablesTotalAmount ,0 as ReceivablesTotalAmountLocal , dw_ShipmentPayables.Id as PayableId, null as ReceivableId , 1 as BillTo  , vendorPartners.Id_Number as  Vendor , dw_APInvoices.Id as InvoiceId, dw_APInvoices.InvoiceDate as InvoiceDate, dw_APInvoiceLines.ForiegnCurrencyAmount   as InvoiceLineAmountForeign, dw_APInvoiceLines.ForiegnCurrencyId   as ForiegnCurrencyId,dw_APInvoiceLines.Notes  as InvoiceChargeLineDescription, dw_ShipmentPayables.Notes as  ChargeTypeNote, null as InvoiceStatusCode, null as InvoiceDraftNumber       from dw_shipments 
  
         inner JOIN dw_ShipmentPayables  ON dw_shipments.Id = dw_ShipmentPayables.ShipmentId
       	inner JOIN DIM_Partners vendorPartners ON dw_ShipmentPayables.VendorId = vendorPartners.Id
@@ -127,7 +129,7 @@
 
 
  
-		select dw_ShipmentPayables.ShipmentId ,dw_ShipmentPayables.ChargesTypeId, 'Payables' as EntityType , dw_APInvoices.InvoiceNumber,dw_APInvoices.InvoiceCurrencyId,dw_APInvoices.InvoiceCurrencyExchangeRate ,  dw_APInvoices.AmountInInvoiceCurrency, 0 as OpenPayablesinLocal ,0 as OpenPayablesinProfit , dw_ShipmentPayables.AccountedAmountInLocalCurrency as AccountedPayablesinLocal ,dw_ShipmentPayables.AccountedAmountInProfitCurrency   as AccountedPayablesinProfit , '' as  InvoiceLineId , 0 as ReceivablesTotalAmount ,0 as ReceivablesTotalAmountLocal , dw_ShipmentPayables.Id as PayableId, null as ReceivableId , 1 as BillTo  , vendorPartners.Id_Number as  Vendor ,dw_APInvoices.Id as InvoiceId, dw_APInvoices.InvoiceDate as InvoiceDate, dw_APInvoiceLines.ForiegnCurrencyAmount   as InvoiceLineAmountForeign, dw_APInvoiceLines.ForiegnCurrencyId   as ForiegnCurrencyId, dw_APInvoiceLines.Notes  as InvoiceChargeLineDescription, dw_ShipmentPayables.Notes as  ChargeTypeNote      from dw_shipments 
+		select dw_ShipmentPayables.ShipmentId ,dw_ShipmentPayables.ChargesTypeId, 'Payables' as EntityType , dw_APInvoices.InvoiceNumber,dw_APInvoices.InvoiceCurrencyId,dw_APInvoices.InvoiceCurrencyExchangeRate ,  dw_APInvoices.AmountInInvoiceCurrency, 0 as OpenPayablesinLocal ,0 as OpenPayablesinProfit , dw_ShipmentPayables.AccountedAmountInLocalCurrency as AccountedPayablesinLocal ,dw_ShipmentPayables.AccountedAmountInProfitCurrency   as AccountedPayablesinProfit , '' as  InvoiceLineId , 0 as ReceivablesTotalAmount ,0 as ReceivablesTotalAmountLocal , dw_ShipmentPayables.Id as PayableId, null as ReceivableId , 1 as BillTo  , vendorPartners.Id_Number as  Vendor ,dw_APInvoices.Id as InvoiceId, dw_APInvoices.InvoiceDate as InvoiceDate, dw_APInvoiceLines.ForiegnCurrencyAmount   as InvoiceLineAmountForeign, dw_APInvoiceLines.ForiegnCurrencyId   as ForiegnCurrencyId, dw_APInvoiceLines.Notes  as InvoiceChargeLineDescription, dw_ShipmentPayables.Notes as  ChargeTypeNote, null as InvoiceStatusCode, null as InvoiceDraftNumber       from dw_shipments 
  
         inner JOIN dw_ShipmentPayables  ON dw_shipments.Id = dw_ShipmentPayables.ShipmentId
 		inner JOIN dw_ShipmentPayables masterPayables  ON dw_ShipmentPayables.ShipmentPayableParentId = masterPayables.Id
@@ -141,7 +143,7 @@
 
 
  
-      select dw_ShipmentReceivables.ShipmentId ,dw_ShipmentReceivables.ChargesTypeId ,'Receivables' as EntityType , dw_ARInvoices.InvoiceNumber,dw_ARInvoices.InvoiceCurrencyId,dw_ARInvoices.InvoiceCurrencyExchangeRate ,dw_ARInvoices.AmountInInvoiceCurrency ,0 as OpenPayablesinLocal  , 0 as OpenPayablesinProfit,  0 as AccountedPayablesinLocal ,0 as AccountedPayablesinProfit, dw_ShipmentReceivables.ARInvoiceLineId as InvoiceLineId , dw_ShipmentReceivables.AmountInProfitCurrency as ReceivablesTotalAmount ,dw_ShipmentReceivables.TotalAmountLocal as ReceivablesTotalAmountLocal ,null as PayableId  , dw_ShipmentReceivables.Id as ReceivableId , billToPartners.Id_Number as  BillTo , 1 as Vendor ,dw_ARInvoices.Id as InvoiceId, dw_ARInvoices.InvoiceDate as InvoiceDate, dw_ARInvoiceLines.ForiegnCurrencyAmount   as InvoiceLineAmountForeign, dw_ARInvoiceLines.ForiegnCurrencyId   as ForiegnCurrencyId, dw_ARInvoiceLines.Notes  as InvoiceChargeLineDescription, dw_ShipmentReceivables.Notes as  ChargeTypeNote   from dw_shipments 
+      select dw_ShipmentReceivables.ShipmentId ,dw_ShipmentReceivables.ChargesTypeId ,'Receivables' as EntityType , dw_ARInvoices.InvoiceNumber,dw_ARInvoices.InvoiceCurrencyId,dw_ARInvoices.InvoiceCurrencyExchangeRate ,dw_ARInvoices.AmountInInvoiceCurrency ,0 as OpenPayablesinLocal  , 0 as OpenPayablesinProfit,  0 as AccountedPayablesinLocal ,0 as AccountedPayablesinProfit, dw_ShipmentReceivables.ARInvoiceLineId as InvoiceLineId , dw_ShipmentReceivables.AmountInProfitCurrency as ReceivablesTotalAmount ,dw_ShipmentReceivables.TotalAmountLocal as ReceivablesTotalAmountLocal ,null as PayableId  , dw_ShipmentReceivables.Id as ReceivableId , billToPartners.Id_Number as  BillTo , 1 as Vendor ,dw_ARInvoices.Id as InvoiceId, dw_ARInvoices.InvoiceDate as InvoiceDate, dw_ARInvoiceLines.ForiegnCurrencyAmount   as InvoiceLineAmountForeign, dw_ARInvoiceLines.ForiegnCurrencyId   as ForiegnCurrencyId, dw_ARInvoiceLines.Notes  as InvoiceChargeLineDescription, dw_ShipmentReceivables.Notes as  ChargeTypeNote, dw_ARInvoices.StatusCode as InvoiceStatusCode, dw_ARInvoices.DraftNumber  as InvoiceDraftNumber   from dw_shipments 
  
         inner JOIN dw_ShipmentReceivables  ON dw_shipments.Id = dw_ShipmentReceivables.ShipmentId
         left JOIN dw_ARInvoiceLines  ON dw_ShipmentReceivables.Id = dw_ARInvoiceLines.ReceivableId
@@ -154,7 +156,7 @@
 		
  
 	    select dw_ShipmentReceivables.ShipmentId ,dw_ShipmentReceivables.ChargesTypeId ,'Receivables' as EntityType , dw_ARInvoices.InvoiceNumber,dw_ARInvoices.InvoiceCurrencyId,dw_ARInvoices.InvoiceCurrencyExchangeRate ,dw_ARInvoices.AmountInInvoiceCurrency ,0 as OpenPayablesinLocal  , 0 as OpenPayablesinProfit,  0 as AccountedPayablesinLocal ,0 as AccountedPayablesinProfit, dw_ShipmentReceivables.ARInvoiceLineId as InvoiceLineId , dw_ShipmentReceivables.AmountInProfitCurrency as ReceivablesTotalAmount ,dw_ShipmentReceivables.TotalAmountLocal as ReceivablesTotalAmountLocal ,null as PayableId  , dw_ShipmentReceivables.Id as ReceivableId , billToPartners.Id_Number as  BillTo , 
-		1 as Vendor ,dw_ARInvoices.Id as InvoiceId, dw_ARInvoices.InvoiceDate as InvoiceDate, dw_ARInvoiceLines.ForiegnCurrencyAmount   as InvoiceLineAmountForeign, dw_ARInvoiceLines.ForiegnCurrencyId   as ForiegnCurrencyId, dw_ARInvoiceLines.Notes  as InvoiceChargeLineDescription, dw_ShipmentReceivables.Notes as  ChargeTypeNote         from dw_shipments 
+		1 as Vendor ,dw_ARInvoices.Id as InvoiceId, dw_ARInvoices.InvoiceDate as InvoiceDate, dw_ARInvoiceLines.ForiegnCurrencyAmount   as InvoiceLineAmountForeign, dw_ARInvoiceLines.ForiegnCurrencyId   as ForiegnCurrencyId, dw_ARInvoiceLines.Notes  as InvoiceChargeLineDescription, dw_ShipmentReceivables.Notes as  ChargeTypeNote, dw_ARInvoices.StatusCode as InvoiceStatusCode, dw_ARInvoices.DraftNumber  as InvoiceDraftNumber         from dw_shipments 
  
         inner JOIN dw_ShipmentReceivables  ON dw_shipments.Id = dw_ShipmentReceivables.ShipmentId
 		inner JOIN dw_ShipmentReceivables masterReceivables  ON dw_ShipmentReceivables.ShipmentReceivableParentId = masterReceivables.Id
@@ -168,7 +170,7 @@
 
  
 		select dw_ShipmentPayables.ShipmentId ,dw_ShipmentPayables.ChargesTypeId, 'Payables' as EntityType , null , null , null  ,  null, dw_ShipmentPayables.OpenAmountInLocalCurrency as OpenPayablesinLocal ,dw_ShipmentPayables.OpenAmountInProfitCurrency as OpenPayablesinProfit , 0 as AccountedPayablesinLocal ,
-		0 as AccountedPayablesinProfit , '' as  InvoiceLineId , 0 as ReceivablesTotalAmount ,0 as ReceivablesTotalAmountLocal , dw_ShipmentPayables.Id as PayableId, null as ReceivableId,  1 as BillTo  , vendorPartners.Id_Number as  Vendor ,null as InvoiceId, null as InvoiceDate, 0 as InvoiceLineAmountForeign, null  as ForiegnCurrencyId, null as InvoiceChargeLineDescription,  dw_ShipmentPayables.Notes as  ChargeTypeNote from dw_shipments 
+		0 as AccountedPayablesinProfit , '' as  InvoiceLineId , 0 as ReceivablesTotalAmount ,0 as ReceivablesTotalAmountLocal , dw_ShipmentPayables.Id as PayableId, null as ReceivableId,  1 as BillTo  , vendorPartners.Id_Number as  Vendor ,null as InvoiceId, null as InvoiceDate, 0 as InvoiceLineAmountForeign, null  as ForiegnCurrencyId, null as InvoiceChargeLineDescription,  dw_ShipmentPayables.Notes as  ChargeTypeNote, null as InvoiceStatusCode, null as InvoiceDraftNumber from dw_shipments 
  
         inner JOIN dw_ShipmentPayables  ON dw_shipments.Id = dw_ShipmentPayables.ShipmentId
 		 inner JOIN DIM_Partners vendorPartners ON dw_ShipmentPayables.VendorId = vendorPartners.Id
@@ -193,7 +195,7 @@
  
 	,ShipmentPayablesReceivables.BillTo,  ShipmentPayablesReceivables.Vendor ,ShipmentPayablesReceivables.InvoiceId, dw_Shipments.OperationalCloseDate, dw_Shipments.AccountingCloseDate, dw_Shipments.RegistryDate, dw_Shipments.ProjectNumber,shipperPartners.Id_Number, consigneePartners.Id_Number, dw_Shipments.Routing, DIM_Incoterms.Id_Number, ShipmentPayablesReceivables.InvoiceDate,  ShipmentPayablesReceivables.InvoiceLineAmountForeign,  ForiegnCurrencyId.Id_Number, ShipmentPayablesReceivables.InvoiceChargeLineDescription, ShipmentPayablesReceivables.ChargeTypeNote,    dw_Shipments.HousesOpenPayablesInLocal, dw_Shipments.HousesOpenPayablesInProfit, dw_Shipments.HousesACCTPayablesInLocal, dw_Shipments.HousesACCTPayablesInProfit, dw_Shipments.HousesOpenReceivablesInLocal, dw_Shipments.HousesOpenReceivablesInProfit, dw_Shipments.HousesACCTReceivablesInLocal, dw_Shipments.HousesACCTReceivablesInProfit
  
-	,DIM_ShipmentStatuses.Id_Number
+	,DIM_ShipmentStatuses.Id_Number, ShipmentPayablesReceivables.InvoiceStatusCode, ShipmentPayablesReceivables.InvoiceDraftNumber
 
 	
 	From dw_Shipments
@@ -240,7 +242,7 @@
 	,@OpenPayablesinLocal,@OpenPayablesinProfit,@AccountedPayablesinLocal,@AccountedPayablesinProfit 
 	,@ReceivablesTotalAmount , @ReceivablesTotalAmountLocal, @ReceivablesInvoiceLineId,@VATamountinInvoiceCurrency, @PayableId,@ReceivableId,@BillTo , @Vendor,@InvoiceId, @OperationalCloseDate, @AccountingCloseDate, @RegistryDate, @ProjectNumber, @Shipper, @Consignee, @Routing, @Incoterm, @InvoiceDate,  @InvoiceLineAmountForeign, @ForiegnCurrencyId, @InvoiceChargeLineDescription, @ChargeTypeNote,@HousesOpenPayablesInLocal, @HousesOpenPayablesInProfit, @HousesACCTPayablesInLocal, @HousesACCTPayablesInProfit, @HousesOpenReceivablesInLocal, @HousesOpenReceivablesInProfit, @HousesACCTReceivablesInLocal, @HousesACCTReceivablesInProfit
  
-		,@ComputedStatus
+		,@ComputedStatus, @ShipmentPayablesReceivablesInvoiceStatusCode, @ShipmentPayablesReceivablesInvoiceDraftNumber
 
 	
 
@@ -310,7 +312,20 @@
 				   begin   set @IsOpenReceivable = 1; end
 				  End
 
+		--------------AR Invoice Number------------------
 
+				IF(@ShipmentPayablesReceivablesInvoiceStatusCode = 'DR' or @ShipmentPayablesReceivablesInvoiceStatusCode = 'LL')
+					BEGIN
+						IF(@ShipmentPayablesReceivablesInvoiceDraftNumber is not null)
+							BEGIN
+								SET @InvoiceNumber = @ShipmentPayablesReceivablesInvoiceDraftNumber;
+							END
+						ELSE
+							BEGIN
+								SET @InvoiceNumber = @InvoiceId;
+							END
+					END
+		----------------------------------------------
 
 
 		 End
@@ -371,7 +386,7 @@ END CATCH
  
 	,@OperationalCloseDate, @AccountingCloseDate, @RegistryDate, @ProjectNumber, @Shipper, @Consignee, @Routing, @Incoterm, @InvoiceDate, @InvoiceLineAmountForeign, @ForiegnCurrencyId,@InvoiceChargeLineDescription, @ChargeTypeNote, @HousesOpenPayablesInLocal, @HousesOpenPayablesInProfit, @HousesACCTPayablesInLocal, @HousesACCTPayablesInProfit, @HousesOpenReceivablesInLocal, @HousesOpenReceivablesInProfit, @HousesACCTReceivablesInLocal, @HousesACCTReceivablesInProfit
  
-,@ComputedStatus
+,@ComputedStatus, @ShipmentPayablesReceivablesInvoiceStatusCode, @ShipmentPayablesReceivablesInvoiceDraftNumber
 		End
 	CLOSE ShipmentsChargesCursor
 	DEALLOCATE ShipmentsChargesCursor
