@@ -171,6 +171,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         throw new BusinessErrorException("dirtyDeclarationPM.CustomFileNo could not convert to long ");
                     }
                 }
+                if(this._DirtyDeclarationPM.Consignments == null || this._DirtyDeclarationPM.Consignments.Count() < 1)
+                {
+                    ConsignmentQueryService consignmentService = new ConsignmentQueryService(this._Context);
+                    this._DirtyDeclarationPM.Consignments = consignmentService.GetMulti(new DeclarationKeys() { Id = this._DirtyDeclarationPM.Id, }, true);
+                }
                 // moran 22.2.16 - Task 19654 - enter into 'if', not save changes always
                 if (_DirtyDeclarationPM.CurrentContextTag == Logitude.Customs.BL.EntityUpdateServices.DeclarationUpdateService.UpdateUnifreightBillingConst ||
                     _DirtyDeclarationPM.CurrentContextTag == Logitude.Customs.BL.EntityUpdateServices.DeclarationUpdateService.CreateUnifreightPaymentConst ||
